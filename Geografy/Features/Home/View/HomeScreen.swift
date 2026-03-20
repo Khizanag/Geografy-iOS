@@ -52,63 +52,37 @@ struct HomeScreen: View {
 
 private extension HomeScreen {
     var topBar: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            topRow
-            currencyRow
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            profileButton
+            statsButton
+            friendsButton
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
-    var topRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            profileButton
-            xpButton
-            friendsButton
-        }
-    }
-
     var profileButton: some View {
         Button { showProfile = true } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "star.fill")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.warning)
-
-                Text("Lv. 5")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
+            Image(systemName: "person.fill")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
+                .frame(width: 40, height: 40)
         }
-        .glassEffect(.regular.interactive(), in: .capsule)
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 
-    var xpButton: some View {
+    var statsButton: some View {
         Button { showProfile = true } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                xpProgressBar
-                Text("175/190")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            HStack(spacing: DesignSystem.Spacing.md) {
+                xpIndicator
+                divider
+                currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
+                divider
+                currencyItem(icon: "diamond.fill", color: .cyan, value: "45")
             }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.xs)
         }
         .glassEffect(.regular.interactive(), in: .capsule)
-    }
-
-    var xpProgressBar: some View {
-        ZStack(alignment: .leading) {
-            Capsule()
-                .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                .frame(width: 60, height: 6)
-
-            Capsule()
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 60 * (175.0 / 190.0), height: 6)
-        }
     }
 
     var friendsButton: some View {
@@ -123,31 +97,51 @@ private extension HomeScreen {
                 .glassEffect(.regular.interactive(), in: .circle)
             }
     }
+}
 
-    var currencyRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            currencyPill(icon: "circle.fill", color: .yellow, value: "1,250")
-            currencyPill(icon: "diamond.fill", color: .cyan, value: "45")
-            Spacer()
+// MARK: - Stats Button Content
+
+private extension HomeScreen {
+    var xpIndicator: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            xpProgressBar
+
+            Text("Lv.5")
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
 
-    func currencyPill(icon: String, color: Color, value: String) -> some View {
-        Button {} label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(color)
+    var xpProgressBar: some View {
+        ZStack(alignment: .leading) {
+            Capsule()
+                .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                .frame(width: 40, height: 5)
 
-                Text(value)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
+            Capsule()
+                .fill(DesignSystem.Color.accent)
+                .frame(width: 40 * (175.0 / 190.0), height: 5)
         }
-        .glassEffect(.regular.interactive(), in: .capsule)
+    }
+
+    func currencyItem(icon: String, color: Color, value: String) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: icon)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(color)
+
+            Text(value)
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
+    }
+
+    var divider: some View {
+        Rectangle()
+            .fill(DesignSystem.Color.textTertiary.opacity(0.3))
+            .frame(width: 1, height: 14)
     }
 }
 
