@@ -19,7 +19,7 @@ struct HomeScreen: View {
     var body: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                profileSection
+                topBar
                 mapCarousel
                 actionButtons
             }
@@ -44,101 +44,106 @@ struct HomeScreen: View {
     }
 }
 
-// MARK: - Profile Section
+// MARK: - Top Bar
 
 private extension HomeScreen {
-    var profileSection: some View {
+    var topBar: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            profileTopRow
+            topRow
             currencyRow
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
-    var profileTopRow: some View {
+    var topRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            profileBadge
-            xpProgressBar
+            profileButton
+            xpButton
             friendsButton
         }
     }
 
-    var profileBadge: some View {
-        Button {
-            showProfile = true
-        } label: {
-            ZStack {
-                Image(systemName: "star.circle.fill")
-                    .font(DesignSystem.IconSize.large)
-                    .foregroundStyle(DesignSystem.Color.error)
+    var profileButton: some View {
+        Button { showProfile = true } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "star.fill")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.warning)
 
-                Text("5")
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 2)
-                    .background(DesignSystem.Color.accent)
-                    .clipShape(Capsule())
-                    .offset(x: 14, y: 14)
+                Text("Lv. 5")
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
             }
-            .frame(width: 48, height: 48)
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xs)
         }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .circle)
+        .glassEffect(.regular.interactive(), in: .capsule)
+    }
+
+    var xpButton: some View {
+        Button { showProfile = true } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                xpProgressBar
+                Text("175/190")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xs)
+        }
+        .glassEffect(.regular.interactive(), in: .capsule)
     }
 
     var xpProgressBar: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            Text("175/190 XP")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+        ZStack(alignment: .leading) {
+            Capsule()
+                .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                .frame(width: 60, height: 6)
 
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .fill(DesignSystem.Color.cardBackground)
-
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .fill(DesignSystem.Color.accent)
-                        .frame(width: geometry.size.width * (175.0 / 190.0))
-                }
-            }
-            .frame(height: 8)
+            Capsule()
+                .fill(DesignSystem.Color.accent)
+                .frame(width: 60 * (175.0 / 190.0), height: 6)
         }
     }
 
     var friendsButton: some View {
-        Button {
-            showFriends = true
-        } label: {
-            Image(systemName: "person.2.fill")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(width: 48, height: 48)
-        }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .circle)
+        Spacer()
+            .overlay(alignment: .trailing) {
+                Button { showFriends = true } label: {
+                    Image(systemName: "person.2.fill")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.iconPrimary)
+                        .frame(width: 40, height: 40)
+                }
+                .glassEffect(.regular.interactive(), in: .circle)
+            }
     }
 
     var currencyRow: some View {
-        HStack(spacing: DesignSystem.Spacing.lg) {
-            currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
-            currencyItem(icon: "diamond.fill", color: .cyan, value: "45")
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            currencyPill(icon: "circle.fill", color: .yellow, value: "1,250")
+            currencyPill(icon: "diamond.fill", color: .cyan, value: "45")
             Spacer()
         }
     }
 
-    func currencyItem(icon: String, color: Color, value: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(color)
+    func currencyPill(icon: String, color: Color, value: String) -> some View {
+        Button {} label: {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(color)
 
-            Text(value)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(value)
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+            }
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xxs)
         }
+        .glassEffect(.regular.interactive(), in: .capsule)
     }
 }
 
@@ -181,7 +186,7 @@ private extension HomeScreen {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "chart.bar.fill")
                         .font(DesignSystem.Font.title2)
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(DesignSystem.Color.blue)
 
                     Text("Statistics")
                         .font(DesignSystem.Font.headline)
@@ -217,4 +222,3 @@ private extension HomeScreen {
         .buttonStyle(.plain)
     }
 }
-
