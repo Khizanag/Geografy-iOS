@@ -9,7 +9,6 @@ struct MapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     @State private var screenSize: CGSize = .zero
-    @State private var isLoading = true
     @State private var isInitialized = false
 
     var body: some View {
@@ -29,11 +28,10 @@ struct MapScreen: View {
                     }
             }
 
-            // TODO: Re-enable loading animation
-            // if isLoading {
-            //     MapLoadingView()
-            //         .transition(.opacity)
-            // }
+            if mapState.countryShapes.isEmpty {
+                MapLoadingView()
+                    .transition(.opacity)
+            }
         }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
@@ -65,11 +63,6 @@ struct MapScreen: View {
         }
         .task {
             await loadMapData()
-            // TODO: Re-enable loading animation
-            // try? await Task.sleep(for: .milliseconds(3000))
-            // withAnimation(.easeOut(duration: 0.3)) {
-            //     isLoading = false
-            // }
         }
     }
 }
@@ -310,8 +303,11 @@ private extension MapScreen {
               let data = try? Data(contentsOf: url) else { return }
 
         let shapes = GeoJSONParser.parse(data: data)
-        mapState.countryShapes = shapes
         mapState.contentBounds = computeContentBounds(from: shapes)
+
+        withAnimation(.easeOut(duration: 0.3)) {
+            mapState.countryShapes = shapes
+        }
 
         if screenSize.width > 0 {
             setInitialScale(for: screenSize)
