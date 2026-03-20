@@ -72,9 +72,10 @@ private extension HomeScreen {
 
     var statsButton: some View {
         Button { showProfile = true } label: {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
+            HStack(spacing: DesignSystem.Spacing.md) {
                 xpIndicator
-                currencyRow
+                divider
+                currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.xs)
@@ -111,24 +112,21 @@ private extension HomeScreen {
     }
 
     var xpProgressBar: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
+        ZStack(alignment: .leading) {
+            Capsule()
+                .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                .frame(width: 60, height: 5)
 
-                Capsule()
-                    .fill(DesignSystem.Color.accent)
-                    .frame(width: geo.size.width * (175.0 / 190.0))
-            }
+            Capsule()
+                .fill(DesignSystem.Color.accent)
+                .frame(width: 60 * (175.0 / 190.0), height: 5)
         }
-        .frame(height: 5)
     }
 
-    var currencyRow: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
-            currencyItem(icon: "diamond.fill", color: .cyan, value: "45")
-        }
+    var divider: some View {
+        Rectangle()
+            .fill(DesignSystem.Color.textTertiary.opacity(0.3))
+            .frame(width: 1, height: 14)
     }
 
     func currencyItem(icon: String, color: Color, value: String) -> some View {
