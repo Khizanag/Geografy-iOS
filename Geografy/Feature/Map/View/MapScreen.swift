@@ -256,10 +256,17 @@ private extension MapScreen {
 
     func computeMinScale(for size: CGSize) -> CGFloat {
         let bounds = mapState.contentBounds
+        guard bounds.width > 0, bounds.height > 0 else {
+            return size.width / MapProjection.mapWidth
+        }
+
+        if continentFilter != nil {
+            let fitContentWidth = size.width / bounds.width
+            let fitContentHeight = size.height / bounds.height
+            return min(fitContentWidth, fitContentHeight) * 0.9
+        }
+
         let fitWidth = size.width / MapProjection.mapWidth
-
-        guard bounds.height > 0 else { return fitWidth }
-
         let isLandscape = size.width > size.height
         if isLandscape {
             let fitContentHeight = size.height / bounds.height
@@ -271,14 +278,18 @@ private extension MapScreen {
 
     func centerOnContent() {
         let bounds = mapState.contentBounds
-        guard bounds.height > 0 else { return }
+        guard bounds.width > 0, bounds.height > 0 else { return }
 
+        let contentCenterX = (bounds.minX + bounds.maxX) / 2
         let contentCenterY = (bounds.minY + bounds.maxY) / 2
+        let mapCenterX = MapProjection.mapWidth / 2
         let mapCenterY = MapProjection.mapHeight / 2
+
+        let offsetX = (mapCenterX - contentCenterX) * mapState.scale
         let offsetY = (mapCenterY - contentCenterY) * mapState.scale
 
-        mapState.offset.height = offsetY
-        mapState.lastOffset.height = offsetY
+        mapState.offset = CGSize(width: offsetX, height: offsetY)
+        mapState.lastOffset = mapState.offset
     }
 
     func handleTap(at point: CGPoint, in size: CGSize) {
