@@ -98,7 +98,12 @@ private extension CountryListScreen {
                 searchText = ""
             }
         } label: {
-            Label("Reset All", systemImage: "arrow.counterclockwise")
+            Label {
+                Text("Reset All")
+            } icon: {
+                Image(systemName: "arrow.counterclockwise")
+                    .foregroundStyle(DesignSystem.Color.error)
+            }
         }
     }
 
