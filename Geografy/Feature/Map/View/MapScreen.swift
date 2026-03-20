@@ -38,7 +38,6 @@ struct MapScreen: View {
                 labelsToggleButton
             }
         }
-        .navigationBarBackButtonHidden()
         .navigationDestination(item: $navigateToCountry) { country in
             CountryDetailScreen(country: country)
         }
