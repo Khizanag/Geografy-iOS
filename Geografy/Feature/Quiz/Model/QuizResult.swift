@@ -1,7 +1,10 @@
 import Foundation
 
-struct QuizResult: Identifiable {
+struct QuizResult: Identifiable, Hashable {
     let id = UUID()
+
+    static func == (lhs: QuizResult, rhs: QuizResult) -> Bool { lhs.id == rhs.id }
+    func hash(into hasher: inout Hasher) { hasher.combine(id) }
     let configuration: QuizConfiguration
     let answers: [QuizAnswer]
     let totalTime: TimeInterval

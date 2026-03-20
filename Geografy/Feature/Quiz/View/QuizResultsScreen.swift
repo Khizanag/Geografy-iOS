@@ -7,29 +7,22 @@ struct QuizResultsScreen: View {
     let onPlayAgain: () -> Void
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    scoreSection
-                    statsRow
-                    answersSection
-                }
-                .padding(.vertical, DesignSystem.Spacing.lg)
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                scoreSection
+                statsRow
+                answersSection
             }
-            .safeAreaInset(edge: .bottom) {
-                actionButtons
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.bottom, DesignSystem.Spacing.md)
-            }
-            .background(DesignSystem.Color.background)
-            .navigationTitle("Results")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton()
-                }
-            }
+            .padding(.vertical, DesignSystem.Spacing.lg)
         }
+        .safeAreaInset(edge: .bottom) {
+            actionButtons
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.md)
+        }
+        .background(DesignSystem.Color.background)
+        .navigationTitle("Results")
+        .navigationBarBackButtonHidden()
     }
 }
 
@@ -141,22 +134,25 @@ private extension QuizResultsScreen {
                 Text("Play Again")
                     .font(DesignSystem.Font.headline)
             }
-            .foregroundStyle(DesignSystem.Color.onAccent)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.accent)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glass)
     }
 
     var doneButton: some View {
         Button { dismiss() } label: {
-            Text("Done")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: "checkmark")
+                    .font(DesignSystem.Font.headline)
+
+                Text("Done")
+                    .font(DesignSystem.Font.headline)
+            }
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.md)
         }
         .buttonStyle(.glass)
     }

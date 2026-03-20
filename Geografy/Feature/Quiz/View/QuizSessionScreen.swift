@@ -15,7 +15,7 @@ struct QuizSessionScreen: View {
     @State private var questionStartTime = Date()
     @State private var showQuitAlert = false
     @State private var showFlagPreview = false
-    @State private var presentedResult: QuizResult?
+    @State private var navigateToResult: QuizResult?
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
@@ -40,9 +40,9 @@ struct QuizSessionScreen: View {
                 Text("Your progress will be lost.")
             }
             .task { loadQuiz() }
-            .fullScreenCover(item: $presentedResult) { result in
+            .navigationDestination(item: $navigateToResult) { result in
                 QuizResultsScreen(result: result) {
-                    presentedResult = nil
+                    navigateToResult = nil
                     loadQuiz()
                 }
             }
@@ -176,7 +176,7 @@ private extension QuizSessionScreen {
 
     func finishQuiz() {
         let totalTime = Date().timeIntervalSince(startTime)
-        presentedResult = QuizResult(
+        navigateToResult = QuizResult(
             configuration: configuration,
             answers: answers,
             totalTime: totalTime
