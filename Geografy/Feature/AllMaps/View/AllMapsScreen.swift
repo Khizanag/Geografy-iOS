@@ -32,7 +32,7 @@ private extension AllMapsScreen {
                 NavigationLink(value: NavigationRoute.map) {
                     mapCard(name: map.name, icon: map.icon)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.glass)
             }
         }
         .padding(DesignSystem.Spacing.md)
