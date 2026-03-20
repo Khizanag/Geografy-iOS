@@ -119,12 +119,7 @@ private extension CountryListScreen {
                 showPopulation = true
             }
         } label: {
-            Label {
-                Text("Reset All")
-            } icon: {
-                Image(systemName: "arrow.counterclockwise")
-                    .foregroundStyle(DesignSystem.Color.error)
-            }
+            Label("Reset All", systemImage: "arrow.counterclockwise")
         }
     }
 
