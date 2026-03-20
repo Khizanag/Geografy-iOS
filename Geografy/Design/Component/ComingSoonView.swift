@@ -39,11 +39,12 @@ struct ComingSoonView: View {
 
 private extension ComingSoonView {
     var isLandscape: Bool { verticalSizeClass == .compact }
+    var circleScale: CGFloat { isLandscape ? 0.6 : 1.0 }
 
     var portraitLayout: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             Spacer()
-            iconSection
+            pulsingIcon
             textSection
             Spacer()
             Spacer()
@@ -52,7 +53,7 @@ private extension ComingSoonView {
 
     var landscapeLayout: some View {
         HStack(spacing: DesignSystem.Spacing.xxl) {
-            iconSection
+            pulsingIcon
             textSection
         }
     }
@@ -61,35 +62,9 @@ private extension ComingSoonView {
 // MARK: - Subviews
 
 private extension ComingSoonView {
-    var circleScale: CGFloat { isLandscape ? 0.6 : 1.0 }
-
-    var iconSection: some View {
-        ZStack {
-            pulsingCircles
-            iconView
-        }
-        .scaleEffect(circleScale)
-        .frame(
-            width: DesignSystem.Size.feature * circleScale,
-            height: DesignSystem.Size.feature * circleScale
-        )
-    }
-
-    var pulsingCircles: some View {
-        ZStack {
-            pulsingCircle(size: 270, opacity: 0.015, delay: 0)
-            pulsingCircle(size: 240, opacity: 0.025, delay: 0.25)
-            pulsingCircle(size: 210, opacity: 0.035, delay: 0.5)
-            pulsingCircle(size: 180, opacity: 0.045, delay: 0.75)
-            pulsingCircle(size: 150, opacity: 0.06, delay: 1.0)
-            pulsingCircle(size: 120, opacity: 0.08, delay: 1.25)
-        }
-    }
-
-    var iconView: some View {
-        Image(systemName: icon)
-            .font(DesignSystem.IconSize.xLarge)
-            .foregroundStyle(DesignSystem.Color.accent)
+    var pulsingIcon: some View {
+        PulsingCirclesView(icon: icon, isAnimating: isAnimating)
+            .scaleEffect(circleScale)
     }
 
     var textSection: some View {
@@ -102,23 +77,5 @@ private extension ComingSoonView {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
-    }
-}
-
-// MARK: - Helpers
-
-private extension ComingSoonView {
-    func pulsingCircle(size: CGFloat, opacity: Double, delay: Double) -> some View {
-        Circle()
-            .fill(DesignSystem.Color.accent.opacity(opacity))
-            .frame(width: size, height: size)
-            .scaleEffect(isAnimating ? 1.06 : 0.94)
-            .opacity(isAnimating ? 1 : 0.4)
-            .animation(
-                .easeInOut(duration: 1.8)
-                .repeatForever(autoreverses: true)
-                .delay(delay),
-                value: isAnimating
-            )
     }
 }
