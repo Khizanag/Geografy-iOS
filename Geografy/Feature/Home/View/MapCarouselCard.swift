@@ -70,17 +70,10 @@ private extension MapCarouselCard {
 
     var openMapButton: some View {
         Button { onOpenMap() } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Text("Open map")
-                    .font(DesignSystem.Font.headline)
-                Image(systemName: "chevron.right")
-            }
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.accent)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            Label("Open map", systemImage: "map.fill")
+                .font(DesignSystem.Font.headline)
+                .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glass)
     }
 }

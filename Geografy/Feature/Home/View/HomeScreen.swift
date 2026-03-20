@@ -190,19 +190,10 @@ private extension HomeScreen {
 private extension HomeScreen {
     var playButton: some View {
         Button { showQuiz = true } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "puzzlepiece.fill")
-                    .font(DesignSystem.Font.title2)
-
-                Text("Play")
-                    .font(DesignSystem.Font.title2)
-            }
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.accent)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            Label("Play", systemImage: "play.fill")
+                .font(DesignSystem.Font.title2)
+                .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glass)
     }
 }
