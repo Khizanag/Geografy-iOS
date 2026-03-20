@@ -2,32 +2,32 @@ import SwiftUI
 
 extension DesignSystem {
     enum Color {
-        static let background = SwiftUI.Color("GeoBackground")
-        static let cardBackground = SwiftUI.Color("GeoCardBackground")
-        static let cardBackgroundHighlighted = SwiftUI.Color("GeoCardBackgroundHighlighted")
+        static let background = SwiftUI.Color("Background")
+        static let cardBackground = SwiftUI.Color("CardBackground")
+        static let cardBackgroundHighlighted = SwiftUI.Color("CardBackgroundHighlighted")
 
-        static let accent = SwiftUI.Color("GeoAccent")
-        static let accentDark = SwiftUI.Color("GeoAccentDark")
+        static let accent = SwiftUI.Color("Accent")
+        static let accentDark = SwiftUI.Color("AccentDark")
 
-        static let textPrimary = SwiftUI.Color("GeoTextPrimary")
-        static let textSecondary = SwiftUI.Color("GeoTextSecondary")
-        static let textTertiary = SwiftUI.Color("GeoTextTertiary")
+        static let textPrimary = SwiftUI.Color("TextPrimary")
+        static let textSecondary = SwiftUI.Color("TextSecondary")
+        static let textTertiary = SwiftUI.Color("TextTertiary")
 
-        static let iconPrimary = SwiftUI.Color("GeoIconPrimary")
-        static let iconSecondary = SwiftUI.Color("GeoIconSecondary")
+        static let iconPrimary = SwiftUI.Color("IconPrimary")
+        static let iconSecondary = SwiftUI.Color("IconSecondary")
 
-        static let onAccent = SwiftUI.Color("GeoOnAccent")
+        static let onAccent = SwiftUI.Color("OnAccent")
 
-        static let ocean = SwiftUI.Color("GeoOcean")
+        static let ocean = SwiftUI.Color("Ocean")
 
-        static let success = SwiftUI.Color("GeoSuccess")
-        static let warning = SwiftUI.Color("GeoWarning")
-        static let error = SwiftUI.Color("GeoError")
+        static let success = SwiftUI.Color("Success")
+        static let warning = SwiftUI.Color("Warning")
+        static let error = SwiftUI.Color("Error")
 
-        static let indigo = SwiftUI.Color("GeoIndigo")
-        static let blue = SwiftUI.Color("GeoBlue")
-        static let purple = SwiftUI.Color("GeoPurple")
-        static let orange = SwiftUI.Color("GeoOrange")
+        static let indigo = SwiftUI.Color("Indigo")
+        static let blue = SwiftUI.Color("Blue")
+        static let purple = SwiftUI.Color("Purple")
+        static let orange = SwiftUI.Color("Orange")
 
         static let mapColors: [SwiftUI.Color] = [
             SwiftUI.Color(hex: "E74C3C"),
