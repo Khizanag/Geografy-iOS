@@ -87,21 +87,16 @@ private extension MapScreen {
     }
 
     var labelsToggleButton: some View {
-        Button {
-            mapState.showLabels.toggle()
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        } label: {
+        Toggle(isOn: $mapState.showLabels) {
             Text("Aa")
                 .font(DesignSystem.Font.headline)
-                .fontWeight(mapState.showLabels ? .bold : .regular)
-                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary)
-                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                .contentShape(Circle())
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
-        .glassEffect(
-            mapState.showLabels ? .regular.interactive().tint(DesignSystem.Color.accent) : .regular.interactive(),
-            in: .circle
-        )
+        .toggleStyle(.button)
+        .buttonStyle(.glass)
+        .onChange(of: mapState.showLabels) {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        }
     }
 }
 
