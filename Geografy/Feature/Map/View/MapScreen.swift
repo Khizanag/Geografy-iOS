@@ -28,6 +28,11 @@ struct MapScreen: View {
                     .transition(.opacity)
             }
         }
+        .overlay(alignment: .top) {
+            bannerOverlay
+                .padding(.top, DesignSystem.Spacing.xxl)
+                .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+        }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
         .toolbarBackground(.clear, for: .navigationBar)
@@ -56,10 +61,7 @@ struct MapScreen: View {
 
 private extension MapScreen {
     func mapContent(in size: CGSize) -> some View {
-        ZStack {
-            mapCanvas(in: size)
-            bannerOverlay
-        }
+        mapCanvas(in: size)
     }
 
     func mapCanvas(in size: CGSize) -> some View {
@@ -110,22 +112,17 @@ private extension MapScreen {
 private extension MapScreen {
     @ViewBuilder
     var bannerOverlay: some View {
-        VStack {
-            if let shape = mapState.selectedShape {
-                let country = countryDataService.country(for: shape.id)
+        if let shape = mapState.selectedShape {
+            let country = countryDataService.country(for: shape.id)
 
-                CountryBannerView(
-                    name: shape.name,
-                    country: country,
-                    onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
-                    onDismiss: { mapState.selectedCountryCode = nil }
-                )
-            }
-
-            Spacer()
+            CountryBannerView(
+                name: shape.name,
+                country: country,
+                onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
+                onDismiss: { mapState.selectedCountryCode = nil }
+            )
+            .transition(.move(edge: .top).combined(with: .opacity))
         }
-        .allowsHitTesting(mapState.selectedShape != nil)
-        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
     }
 }
 
