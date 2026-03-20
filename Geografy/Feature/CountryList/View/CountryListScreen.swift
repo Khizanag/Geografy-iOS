@@ -34,7 +34,7 @@ struct CountryListScreen: View {
                 groupedList
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.sidebar)
         .scrollContentBackground(.hidden)
         .background(DesignSystem.Color.background)
         .navigationTitle("Countries")
