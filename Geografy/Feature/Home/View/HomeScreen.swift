@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeScreen: View {
     @State private var selectedMapIndex = 0
     @State private var showMap = false
+    @State private var showQuiz = false
     @State private var showProfile = false
     @State private var showFriends = false
 
@@ -44,6 +45,11 @@ struct HomeScreen: View {
         }
         .sheet(isPresented: $showFriends) {
             ComingSoonSheet(title: "Friends", icon: "person.2.fill")
+        }
+        .fullScreenCover(isPresented: $showQuiz) {
+            NavigationStack {
+                QuizPlaceholderScreen()
+            }
         }
     }
 }
@@ -166,7 +172,7 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var playButton: some View {
-        NavigationLink(value: NavigationRoute.quiz) {
+        Button { showQuiz = true } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "puzzlepiece.fill")
                     .font(DesignSystem.Font.title2)
