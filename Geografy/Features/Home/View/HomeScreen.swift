@@ -47,25 +47,28 @@ private extension HomeScreen {
     }
 
     var profileBadge: some View {
-        ZStack {
-            Circle()
-                .fill(GeoColors.cardBackground)
-                .frame(width: 48, height: 48)
+        Button {
+            // Profile action
+        } label: {
+            ZStack {
+                Image(systemName: "star.circle.fill")
+                    .font(.system(size: 28))
+                    .foregroundStyle(GeoColors.error)
 
-            Image(systemName: "star.circle.fill")
-                .font(.system(size: 28))
-                .foregroundStyle(GeoColors.error)
-
-            Text("5")
-                .font(GeoFont.caption2)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
-                .padding(.horizontal, 5)
-                .padding(.vertical, 2)
-                .background(GeoColors.accent)
-                .clipShape(Capsule())
-                .offset(x: 14, y: 14)
+                Text("5")
+                    .font(GeoFont.caption2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 2)
+                    .background(GeoColors.accent)
+                    .clipShape(Capsule())
+                    .offset(x: 14, y: 14)
+            }
+            .frame(width: 48, height: 48)
         }
+        .buttonStyle(.plain)
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 
     var xpProgressBar: some View {
@@ -89,9 +92,16 @@ private extension HomeScreen {
     }
 
     var friendsButton: some View {
-        GeoIconButton(systemImage: "person.2.fill") {
+        Button {
             // Friends action
+        } label: {
+            Image(systemName: "person.2.fill")
+                .font(GeoFont.headline)
+                .foregroundStyle(GeoColors.textPrimary)
+                .frame(width: 48, height: 48)
         }
+        .buttonStyle(.plain)
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 
     var currencyRow: some View {
