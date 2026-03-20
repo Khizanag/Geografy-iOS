@@ -142,6 +142,7 @@ private extension MapScreen {
                     height: mapState.offset.height * scaleRatio
                 )
                 mapState.scale = newScale
+                clampVerticalOffset()
             }
             .onEnded { _ in
                 mapState.lastScale = mapState.scale
@@ -156,6 +157,7 @@ private extension MapScreen {
                     width: mapState.lastOffset.width + value.translation.width,
                     height: mapState.lastOffset.height + value.translation.height
                 )
+                clampVerticalOffset()
             }
             .onEnded { _ in
                 wrapHorizontalOffset()
@@ -167,6 +169,12 @@ private extension MapScreen {
 // MARK: - Actions
 
 private extension MapScreen {
+    func clampVerticalOffset() {
+        let mapHeightScaled = MapProjection.mapHeight * mapState.scale
+        let maxOffsetY = max(0, (mapHeightScaled - screenSize.height) / 2)
+        mapState.offset.height = min(max(mapState.offset.height, -maxOffsetY), maxOffsetY)
+    }
+
     func wrapHorizontalOffset() {
         let mapWidthScaled = MapProjection.mapWidth * mapState.scale
         let halfWidth = mapWidthScaled / 2
