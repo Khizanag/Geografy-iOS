@@ -50,9 +50,7 @@ struct HomeScreen: View {
             ComingSoonSheet(title: "Friends", icon: "person.2.fill")
         }
         .fullScreenCover(isPresented: $showQuiz) {
-            NavigationStack {
-                ComingSoonView(icon: "questionmark.circle.fill", title: "Quiz", isDismissible: true)
-            }
+            QuizSetupScreen()
         }
     }
 }

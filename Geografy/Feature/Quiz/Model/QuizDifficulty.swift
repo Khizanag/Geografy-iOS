@@ -1,0 +1,48 @@
+import Foundation
+
+enum QuizDifficulty: String, CaseIterable, Identifiable {
+    case easy
+    case medium
+    case hard
+
+    var id: String { rawValue }
+}
+
+// MARK: - Properties
+
+extension QuizDifficulty {
+    var displayName: String {
+        switch self {
+        case .easy: "Easy"
+        case .medium: "Medium"
+        case .hard: "Hard"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .easy: "tortoise.fill"
+        case .medium: "hare.fill"
+        case .hard: "bolt.fill"
+        }
+    }
+
+    var optionCount: Int {
+        switch self {
+        case .easy: 4
+        case .medium: 4
+        case .hard: 0
+        }
+    }
+
+    var hasTimer: Bool {
+        self == .medium
+    }
+
+    var timerDuration: TimeInterval {
+        switch self {
+        case .medium: 30
+        default: 0
+        }
+    }
+}

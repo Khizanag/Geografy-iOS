@@ -90,7 +90,7 @@ private extension ContentView {
         case .settings:
             SettingsScreen()
         case .quiz:
-            QuizPlaceholderScreen()
+            QuizSetupScreen()
         }
     }
 }
