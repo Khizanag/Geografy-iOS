@@ -28,8 +28,8 @@ struct MapScreen: View {
             }
         }
         .background(DesignSystem.Color.ocean)
-        .ignoresSafeArea(edges: .bottom)
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .ignoresSafeArea()
+        .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 closeButton
