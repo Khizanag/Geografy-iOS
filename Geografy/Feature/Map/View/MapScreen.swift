@@ -8,6 +8,7 @@ struct MapScreen: View {
     @State private var navigateToCountry: Country?
     @State private var screenSize: CGSize = .zero
     @State private var isLoading = true
+    @State private var isInitialized = false
 
     var body: some View {
         ZStack {
@@ -15,7 +16,10 @@ struct MapScreen: View {
                 mapContent(in: geometry.size)
                     .onAppear {
                         screenSize = geometry.size
-                        setInitialScale(for: geometry.size)
+                        if !isInitialized {
+                            setInitialScale(for: geometry.size)
+                            isInitialized = true
+                        }
                     }
                     .onChange(of: geometry.size) { _, newSize in
                         screenSize = newSize
