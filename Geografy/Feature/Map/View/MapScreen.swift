@@ -29,10 +29,11 @@ struct MapScreen: View {
                     }
             }
 
-            if isLoading {
-                MapLoadingView()
-                    .transition(.opacity)
-            }
+            // TODO: Re-enable loading animation
+            // if isLoading {
+            //     MapLoadingView()
+            //         .transition(.opacity)
+            // }
         }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
@@ -62,10 +63,11 @@ struct MapScreen: View {
         }
         .task {
             await loadMapData()
-            try? await Task.sleep(for: .milliseconds(3000))
-            withAnimation(.easeOut(duration: 0.3)) {
-                isLoading = false
-            }
+            // TODO: Re-enable loading animation
+            // try? await Task.sleep(for: .milliseconds(3000))
+            // withAnimation(.easeOut(duration: 0.3)) {
+            //     isLoading = false
+            // }
         }
     }
 }
