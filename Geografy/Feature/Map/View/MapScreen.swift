@@ -28,14 +28,12 @@ struct MapScreen: View {
                     .transition(.opacity)
             }
         }
-        .overlay(alignment: .top) {
-            bannerOverlay
-                .safeAreaPadding(.top)
-                .padding(.top, DesignSystem.Spacing.xxl)
-                .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-        }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
+        .safeAreaInset(edge: .top) {
+            bannerOverlay
+                .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+        }
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
