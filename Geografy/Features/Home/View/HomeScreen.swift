@@ -173,35 +173,8 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var actionButtons: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            statisticsButton
-            playButton
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    var statisticsButton: some View {
-        NavigationLink(value: NavigationRoute.achievements) {
-            GeoCard {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "chart.bar.fill")
-                        .font(DesignSystem.Font.title2)
-                        .foregroundStyle(DesignSystem.Color.blue)
-
-                    Text("Statistics")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                .padding(DesignSystem.Spacing.md)
-            }
-        }
-        .buttonStyle(.plain)
+        playButton
+            .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     var playButton: some View {
