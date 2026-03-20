@@ -169,7 +169,12 @@ private extension MapScreen {
             y: (point.y - originY) / mapState.scale
         )
 
-        for shape in mapState.countryShapes.reversed() {
+        // Check smaller countries first so enclaves (e.g. Lesotho) are tappable
+        let sortedByArea = mapState.countryShapes.sorted {
+            $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
+        }
+
+        for shape in sortedByArea {
             if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil

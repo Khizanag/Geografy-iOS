@@ -7,9 +7,13 @@ enum GeoJSONParser {
             return []
         }
 
-        return collection.features.enumerated().compactMap { index, feature in
+        var shapes = collection.features.enumerated().compactMap { index, feature in
             parseFeature(feature, at: index)
         }
+
+        MapColorPalette.assignColors(to: &shapes)
+
+        return shapes
     }
 }
 
@@ -67,7 +71,7 @@ private extension GeoJSONParser {
 
         let centroid = calculateCentroid(from: allPoints)
         let boundingBox = calculateBoundingBox(from: allPoints)
-        let color = MapColorPalette.color(for: code, at: index)
+        let color = GeoColors.mapColors[index % GeoColors.mapColors.count]
 
         return CountryShape(
             id: code,
