@@ -43,9 +43,7 @@ private extension ComingSoonSheet {
     }
 
     var dismissButton: some View {
-        Button("Close") { dismiss() }
-            .font(GeoFont.headline)
-            .foregroundStyle(GeoColors.accent)
+        GeoGlassButton("Close", systemImage: "xmark") { dismiss() }
             .padding(.bottom, GeoSpacing.lg)
     }
 }
