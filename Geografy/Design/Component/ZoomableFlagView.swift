@@ -22,7 +22,8 @@ struct ZoomableFlagView: View {
 
 private extension ZoomableFlagView {
     var backdrop: some View {
-        Color.black.opacity(0.7)
+        Rectangle()
+            .fill(.ultraThinMaterial)
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
     }
