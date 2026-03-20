@@ -6,11 +6,11 @@ struct GeoCloseButton: View {
     var body: some View {
         Button { dismiss() } label: {
             Image(systemName: "xmark")
-                .font(.system(size: 14, weight: .semibold))
+                .font(.system(size: 12, weight: .bold))
                 .foregroundStyle(GeoColors.textSecondary)
                 .frame(width: 30, height: 30)
-                .contentShape(Circle())
         }
+        .buttonStyle(.borderless)
         .glassEffect(.regular.interactive(), in: .circle)
     }
 }
