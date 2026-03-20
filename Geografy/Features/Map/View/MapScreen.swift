@@ -9,14 +9,8 @@ struct MapScreen: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                mapCanvas(in: geometry.size)
-                controlsOverlay
-                bannerOverlay
-            }
-            .onAppear {
-                setInitialScale(for: geometry.size)
-            }
+            mapContent(in: geometry.size)
+                .onAppear { setInitialScale(for: geometry.size) }
         }
         .background(GeoColors.ocean)
         .ignoresSafeArea()
@@ -24,15 +18,22 @@ struct MapScreen: View {
         .navigationDestination(item: $navigateToCountry) { country in
             CountryDetailScreen(country: country)
         }
-        .task {
-            await loadMapData()
-        }
+        .task { await loadMapData() }
     }
 }
 
 // MARK: - Subviews
 
 private extension MapScreen {
+    func mapContent(in size: CGSize) -> some View {
+        ZStack {
+            mapCanvas(in: size)
+            tapLayer(in: size)
+            controlsOverlay
+            bannerOverlay
+        }
+    }
+
     func mapCanvas(in size: CGSize) -> some View {
         MapCanvasView(
             countryShapes: mapState.countryShapes,
@@ -44,44 +45,28 @@ private extension MapScreen {
         )
         .simultaneousGesture(magnifyGesture)
         .simultaneousGesture(dragGesture(in: size))
-        .onTapGesture { location in
-            handleTap(at: location, in: size)
-        }
+    }
+
+    func tapLayer(in size: CGSize) -> some View {
+        Color.clear
+            .contentShape(Rectangle())
+            .onTapGesture { location in
+                handleTap(at: location, in: size)
+            }
     }
 
     var controlsOverlay: some View {
         VStack {
             HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(GeoFont.headline)
-                        .foregroundStyle(GeoColors.textPrimary)
-                        .frame(width: 44, height: 44)
-                }
-                .buttonStyle(.plain)
-                .glassEffect(.regular.interactive(), in: .circle)
-
+                closeButton
                 Spacer()
-
-                Button {
-                    mapState.showLabels.toggle()
-                } label: {
-                    Text("Aa")
-                        .font(GeoFont.headline)
-                        .foregroundStyle(mapState.showLabels ? .white : GeoColors.textPrimary)
-                        .frame(width: 44, height: 44)
-                }
-                .buttonStyle(.plain)
-                .glassEffect(.regular.interactive(), in: .circle)
+                labelsToggleButton
             }
             .padding(.horizontal, GeoSpacing.md)
             .padding(.top, GeoSpacing.xxl)
 
             Spacer()
         }
-        .allowsHitTesting(true)
     }
 
     @ViewBuilder
@@ -99,7 +84,34 @@ private extension MapScreen {
 
             Spacer()
         }
+        .allowsHitTesting(mapState.selectedShape != nil)
         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+    }
+}
+
+// MARK: - Controls
+
+private extension MapScreen {
+    var closeButton: some View {
+        Button { dismiss() } label: {
+            Image(systemName: "xmark")
+                .font(GeoFont.headline)
+                .foregroundStyle(GeoColors.textPrimary)
+                .frame(width: 44, height: 44)
+        }
+        .buttonStyle(.plain)
+        .glassEffect(.regular.interactive(), in: .circle)
+    }
+
+    var labelsToggleButton: some View {
+        Button { mapState.showLabels.toggle() } label: {
+            Text("Aa")
+                .font(GeoFont.headline)
+                .foregroundStyle(mapState.showLabels ? .white : GeoColors.textPrimary)
+                .frame(width: 44, height: 44)
+        }
+        .buttonStyle(.plain)
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 }
 
@@ -111,10 +123,6 @@ private extension MapScreen {
             .onChanged { value in
                 let newScale = min(max(mapState.lastScale * value.magnification, 0.15), 20.0)
                 let scaleRatio = newScale / mapState.scale
-
-                // Adjust offset to keep the pinch anchor point stable
-                let anchorX = value.startAnchor.x
-                let anchorY = value.startAnchor.y
 
                 mapState.offset = CGSize(
                     width: mapState.offset.width * scaleRatio,
@@ -140,7 +148,6 @@ private extension MapScreen {
                 mapState.lastOffset = mapState.offset
             }
     }
-
 }
 
 // MARK: - Actions
@@ -154,17 +161,21 @@ private extension MapScreen {
     }
 
     func handleTap(at point: CGPoint, in size: CGSize) {
-        let centerX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
-        let centerY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
+        let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
+        let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
 
-        let mapX = (point.x - centerX) / mapState.scale
-        let mapY = (point.y - centerY) / mapState.scale
-
-        let mapPoint = CGPoint(x: mapX, y: mapY)
+        let mapPoint = CGPoint(
+            x: (point.x - originX) / mapState.scale,
+            y: (point.y - originY) / mapState.scale
+        )
 
         for shape in mapState.countryShapes.reversed() {
             if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-                mapState.selectedCountryCode = shape.id
+                if mapState.selectedCountryCode == shape.id {
+                    mapState.selectedCountryCode = nil
+                } else {
+                    mapState.selectedCountryCode = shape.id
+                }
                 return
             }
         }
