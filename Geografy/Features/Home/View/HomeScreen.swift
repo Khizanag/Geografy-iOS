@@ -78,8 +78,7 @@ private extension HomeScreen {
                 divider
                 currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.xs)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
         }
         .buttonStyle(.glass)
     }
