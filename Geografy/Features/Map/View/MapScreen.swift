@@ -55,7 +55,7 @@ private extension MapScreen {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: "xmark")
                         .font(GeoFont.headline)
                         .foregroundStyle(GeoColors.textPrimary)
                         .frame(width: 44, height: 44)
@@ -109,11 +109,22 @@ private extension MapScreen {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
             .onChanged { value in
-                let newScale = mapState.lastScale * value.magnification
-                mapState.scale = min(max(newScale, 0.15), 20.0)
+                let newScale = min(max(mapState.lastScale * value.magnification, 0.15), 20.0)
+                let scaleRatio = newScale / mapState.scale
+
+                // Adjust offset to keep the pinch anchor point stable
+                let anchorX = value.startAnchor.x
+                let anchorY = value.startAnchor.y
+
+                mapState.offset = CGSize(
+                    width: mapState.offset.width * scaleRatio,
+                    height: mapState.offset.height * scaleRatio
+                )
+                mapState.scale = newScale
             }
             .onEnded { _ in
                 mapState.lastScale = mapState.scale
+                mapState.lastOffset = mapState.offset
             }
     }
 
@@ -143,11 +154,11 @@ private extension MapScreen {
     }
 
     func handleTap(at point: CGPoint, in size: CGSize) {
-        let centerX = size.width / 2 - MapProjection.mapWidth / 2
-        let centerY = size.height / 2 - MapProjection.mapHeight / 2
+        let centerX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
+        let centerY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
 
-        let mapX = (point.x - centerX - mapState.offset.width) / mapState.scale
-        let mapY = (point.y - centerY - mapState.offset.height) / mapState.scale
+        let mapX = (point.x - centerX) / mapState.scale
+        let mapY = (point.y - centerY) / mapState.scale
 
         let mapPoint = CGPoint(x: mapX, y: mapY)
 

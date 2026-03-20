@@ -93,11 +93,10 @@ private extension MapCanvasView {
 
 private extension MapCanvasView {
     func makeTransform(for size: CGSize) -> CGAffineTransform {
-        let centerX = size.width / 2 - MapProjection.mapWidth / 2
-        let centerY = size.height / 2 - MapProjection.mapHeight / 2
+        let centerX = size.width / 2 - (MapProjection.mapWidth * scale) / 2 + offset.width
+        let centerY = size.height / 2 - (MapProjection.mapHeight * scale) / 2 + offset.height
 
-        return CGAffineTransform(translationX: centerX, y: centerY)
-            .scaledBy(x: scale, y: scale)
-            .translatedBy(x: offset.width / scale, y: offset.height / scale)
+        return CGAffineTransform(scaleX: scale, y: scale)
+            .translatedBy(x: centerX / scale, y: centerY / scale)
     }
 }
