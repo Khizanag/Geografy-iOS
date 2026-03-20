@@ -133,7 +133,7 @@ private extension MapScreen {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
             .onChanged { value in
-                let newScale = min(max(mapState.lastScale * value.magnification, 0.15), 20.0)
+                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
                 let scaleRatio = newScale / mapState.scale
 
                 mapState.offset = CGSize(
@@ -178,10 +178,13 @@ private extension MapScreen {
     }
 
     func setInitialScale(for size: CGSize) {
-        guard size.width > 0 else { return }
-        let fitScale = size.width / MapProjection.mapWidth
+        guard size.width > 0, size.height > 0 else { return }
+        let fitWidth = size.width / MapProjection.mapWidth
+        let fitHeight = size.height / MapProjection.mapHeight
+        let fitScale = max(fitWidth, fitHeight)
         mapState.scale = fitScale
         mapState.lastScale = fitScale
+        mapState.minScale = fitScale
     }
 
     func handleTap(at point: CGPoint, in size: CGSize) {

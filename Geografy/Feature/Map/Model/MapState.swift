@@ -6,6 +6,7 @@ final class MapState {
     var offset: CGSize = .zero
     var lastScale: CGFloat = 1.0
     var lastOffset: CGSize = .zero
+    var minScale: CGFloat = 0.15
     var selectedCountryCode: String?
     var showLabels = false
     var countryShapes: [CountryShape] = []
