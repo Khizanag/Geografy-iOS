@@ -25,6 +25,10 @@ struct CountryListScreen: View {
     @State private var sortAscending = true
     @State private var continentFilter: Country.Continent?
     @State private var expandedSections: Set<String> = []
+    @State private var showFlag = true
+    @State private var showCapital = true
+    @State private var showArea = true
+    @State private var showPopulation = true
 
     var body: some View {
         List {
@@ -79,6 +83,8 @@ private extension CountryListScreen {
             Divider()
             continentFilterSubmenu
             Divider()
+            displaySubmenu
+            Divider()
             resetButton
         } label: {
             Image(systemName: hasActiveFilters ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
@@ -90,6 +96,15 @@ private extension CountryListScreen {
         groupBy != .none || sortBy != .name || !sortAscending || continentFilter != nil
     }
 
+    var displaySubmenu: some View {
+        Menu("Display") {
+            Toggle("Flag", isOn: $showFlag)
+            Toggle("Capital", isOn: $showCapital)
+            Toggle("Area", isOn: $showArea)
+            Toggle("Population", isOn: $showPopulation)
+        }
+    }
+
     var resetButton: some View {
         Button(role: .destructive) {
             withAnimation {
@@ -98,6 +113,10 @@ private extension CountryListScreen {
                 sortAscending = true
                 continentFilter = nil
                 searchText = ""
+                showFlag = true
+                showCapital = true
+                showArea = true
+                showPopulation = true
             }
         } label: {
             Label {
@@ -229,7 +248,9 @@ private extension CountryListScreen {
     func countryRow(for country: Country) -> some View {
         NavigationLink(value: country) {
             HStack(alignment: .center, spacing: DesignSystem.Spacing.sm) {
-                flagView(for: country)
+                if showFlag {
+                    flagView(for: country)
+                }
                 countryDetails(for: country)
             }
             .padding(.vertical, DesignSystem.Spacing.xxs)
@@ -252,8 +273,12 @@ private extension CountryListScreen {
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            capitalLabel(for: country)
-            statsLabel(for: country)
+            if showCapital {
+                capitalLabel(for: country)
+            }
+            if showArea || showPopulation {
+                statsLabel(for: country)
+            }
         }
     }
 
@@ -271,28 +296,34 @@ private extension CountryListScreen {
 
     func statsLabel(for country: Country) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
-            Label {
-                Text(country.area.formatArea())
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            } icon: {
-                Image(systemName: "map")
-                    .font(DesignSystem.Font.caption2)
+            if showArea {
+                Label {
+                    Text(country.area.formatArea())
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                } icon: {
+                    Image(systemName: "map")
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+            }
+
+            if showArea, showPopulation {
+                Text("\u{00B7}")
+                    .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
 
-            Text("\u{00B7}")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-
-            Label {
-                Text(country.population.formatPopulation())
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            } icon: {
-                Image(systemName: "person.2")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            if showPopulation {
+                Label {
+                    Text(country.population.formatPopulation())
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                } icon: {
+                    Image(systemName: "person.2")
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
             }
         }
     }
