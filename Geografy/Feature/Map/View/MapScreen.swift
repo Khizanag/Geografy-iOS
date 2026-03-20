@@ -51,6 +51,8 @@ struct MapScreen: View {
             ToolbarItem(placement: .principal) {
                 if isLandscape {
                     bannerOverlay
+                        .padding(.horizontal, -DesignSystem.Spacing.md)
+                        .frame(maxWidth: .infinity)
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
