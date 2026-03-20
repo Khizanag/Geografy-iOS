@@ -51,11 +51,19 @@ private extension QuizQuestionView {
     }
 
     func textPrompt(_ text: String) -> some View {
-        Text(text)
-            .font(DesignSystem.Font.title)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .multilineTextAlignment(.center)
-            .padding(.vertical, DesignSystem.Spacing.lg)
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text(text)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+
+            if let subject = question.promptSubject {
+                Text(subject)
+                    .font(DesignSystem.Font.largeTitle)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+        }
+        .multilineTextAlignment(.center)
+        .padding(.vertical, DesignSystem.Spacing.lg)
     }
 }
 

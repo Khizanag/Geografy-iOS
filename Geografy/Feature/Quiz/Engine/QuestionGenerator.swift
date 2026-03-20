@@ -56,6 +56,7 @@ private extension QuestionGenerator {
         return QuizQuestion(
             id: UUID(),
             promptText: "What country has this flag?",
+            promptSubject: nil,
             promptFlag: country.code,
             options: options,
             correctOptionID: correctID,
@@ -76,7 +77,8 @@ private extension QuestionGenerator {
 
         return QuizQuestion(
             id: UUID(),
-            promptText: "What is the capital of \(country.name)?",
+            promptText: "What is the capital of",
+            promptSubject: country.name,
             promptFlag: nil,
             options: options,
             correctOptionID: correctID,
@@ -97,7 +99,8 @@ private extension QuestionGenerator {
 
         return QuizQuestion(
             id: UUID(),
-            promptText: "Which flag belongs to \(country.name)?",
+            promptText: "Which flag belongs to",
+            promptSubject: country.name,
             promptFlag: nil,
             options: options,
             correctOptionID: correctID,
@@ -118,7 +121,8 @@ private extension QuestionGenerator {
 
         return QuizQuestion(
             id: UUID(),
-            promptText: "\(country.capital) is the capital of which country?",
+            promptText: "is the capital of which country?",
+            promptSubject: country.capital,
             promptFlag: nil,
             options: options,
             correctOptionID: correctID,
@@ -142,6 +146,7 @@ private extension QuestionGenerator {
         return QuizQuestion(
             id: UUID(),
             promptText: "Which country has the largest population?",
+            promptSubject: nil,
             promptFlag: nil,
             options: options,
             correctOptionID: correctID,
@@ -165,6 +170,7 @@ private extension QuestionGenerator {
         return QuizQuestion(
             id: UUID(),
             promptText: "Which country has the largest area?",
+            promptSubject: nil,
             promptFlag: nil,
             options: options,
             correctOptionID: correctID,
