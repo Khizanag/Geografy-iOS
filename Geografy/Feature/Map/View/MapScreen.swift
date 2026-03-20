@@ -6,8 +6,6 @@ struct MapScreen: View {
 
     var continentFilter: String?
 
-    @AppStorage("showDisputedTerritories") private var showDisputedTerritories = false
-
     @State private var mapState = MapState()
     @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
@@ -304,7 +302,6 @@ private extension MapScreen {
         guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
               let data = try? Data(contentsOf: url) else { return }
 
-        GeoJSONParser.showDisputedTerritories = showDisputedTerritories
         var shapes = GeoJSONParser.parse(data: data)
         if let continentFilter {
             shapes = shapes.filter { $0.continent == continentFilter }

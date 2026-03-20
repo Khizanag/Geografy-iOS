@@ -2,13 +2,24 @@ import CoreGraphics
 import SwiftUI
 
 enum GeoJSONParser {
-    nonisolated(unsafe) static var showDisputedTerritories = false
-
-    private static let territoryMergeMap: [String: String] = [
-        "Somaliland": "SO",
-        "W. Sahara": "MA",
-        "N. Cyprus": "CY"
+    private static let territorySettings: [(name: String, parentCode: String, key: String)] = [
+        ("Somaliland", "SO", "territory_somaliland"),
+        ("W. Sahara", "MA", "territory_western_sahara"),
+        ("N. Cyprus", "CY", "territory_northern_cyprus"),
+        ("Kosovo", "RS", "territory_kosovo"),
+        ("Palestine", "IL", "territory_palestine"),
     ]
+
+    private static var territoryMergeMap: [String: String] {
+        var map: [String: String] = [:]
+        for setting in territorySettings {
+            let value = UserDefaults.standard.string(forKey: setting.key) ?? "merge"
+            if value == "merge" {
+                map[setting.name] = setting.parentCode
+            }
+        }
+        return map
+    }
 
     private static let filteredTerritories: Set<String> = [
         "Bir Tawil", "Cyprus U.N. Buffer Zone", "Siachen Glacier",
@@ -108,7 +119,7 @@ private extension GeoJSONParser {
     }
 
     static func resolveCountryCode(rawCode: String, name: String) -> String {
-        if let mergeCode = territoryMergeMap[name], !showDisputedTerritories {
+        if let mergeCode = territoryMergeMap[name] {
             return mergeCode
         }
         if rawCode.count == 3 {

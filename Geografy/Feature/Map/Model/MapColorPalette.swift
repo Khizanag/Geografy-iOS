@@ -10,6 +10,12 @@ enum MapColorPalette {
 
         for i in sortedIndices {
             let code = shapes[i].id
+
+            if let existingIndex = assigned[code] {
+                shapes[i].color = colors[existingIndex]
+                continue
+            }
+
             let neighborColorIndices = neighborColors(for: code, adjacency: adjacency, assigned: assigned)
             let colorIndex = firstAvailableColor(excluding: neighborColorIndices, totalColors: colors.count)
 
