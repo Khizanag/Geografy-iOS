@@ -282,6 +282,8 @@ private extension MapScreen {
     }
 
     func loadMapData() async {
+        countryDataService.loadCountries()
+
         guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
               let data = try? Data(contentsOf: url) else { return }
 
