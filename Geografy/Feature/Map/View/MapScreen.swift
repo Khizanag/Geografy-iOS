@@ -111,14 +111,15 @@ private extension MapScreen {
     @ViewBuilder
     var bannerOverlay: some View {
         VStack {
-            if let shape = mapState.selectedShape,
-               let country = countryDataService.country(for: shape.id) {
+            if let shape = mapState.selectedShape {
+                let country = countryDataService.country(for: shape.id)
+
                 CountryBannerView(
+                    name: shape.name,
                     country: country,
-                    onMoreInfo: { navigateToCountry = country },
+                    onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
                     onDismiss: { mapState.selectedCountryCode = nil }
                 )
-                .padding(.top, DesignSystem.Spacing.xxl + 56)
             }
 
             Spacer()
