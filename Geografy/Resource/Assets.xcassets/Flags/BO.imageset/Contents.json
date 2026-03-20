@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "BO.svg",
-      "idiom" : "universal"
+      "filename" : "BO.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

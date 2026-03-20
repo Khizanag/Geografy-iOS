@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "TM.svg",
-      "idiom" : "universal"
+      "filename" : "TM.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

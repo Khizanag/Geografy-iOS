@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "FM.svg",
-      "idiom" : "universal"
+      "filename" : "FM.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

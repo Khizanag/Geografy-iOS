@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "DG.svg",
-      "idiom" : "universal"
+      "filename" : "DG.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }
