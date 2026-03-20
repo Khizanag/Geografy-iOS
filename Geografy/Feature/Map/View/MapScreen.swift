@@ -170,9 +170,21 @@ private extension MapScreen {
 
 private extension MapScreen {
     func clampVerticalOffset() {
-        let mapHeightScaled = MapProjection.mapHeight * mapState.scale
-        let maxOffsetY = max(0, (mapHeightScaled - screenSize.height) / 2)
-        mapState.offset.height = min(max(mapState.offset.height, -maxOffsetY), maxOffsetY)
+        let bounds = mapState.contentBounds
+        guard bounds.height > 0 else { return }
+
+        let contentTop = bounds.minY * mapState.scale
+        let contentBottom = bounds.maxY * mapState.scale
+        let contentHeight = contentBottom - contentTop
+        let contentCenterY = (contentTop + contentBottom) / 2
+        let mapCenterY = (MapProjection.mapHeight * mapState.scale) / 2
+
+        let contentOffsetFromCenter = contentCenterY - mapCenterY
+
+        let maxOffsetY = max(0, (contentHeight - screenSize.height) / 2)
+        let adjustedOffset = mapState.offset.height + contentOffsetFromCenter
+        let clamped = min(max(adjustedOffset, -maxOffsetY), maxOffsetY)
+        mapState.offset.height = clamped - contentOffsetFromCenter
     }
 
     func wrapHorizontalOffset() {
@@ -188,9 +200,7 @@ private extension MapScreen {
 
     func updateMinScale(for size: CGSize) {
         guard size.width > 0, size.height > 0 else { return }
-        let fitWidth = size.width / MapProjection.mapWidth
-        let fitHeight = size.height / MapProjection.mapHeight
-        let newMin = max(fitWidth, fitHeight)
+        let newMin = computeMinScale(for: size)
         mapState.minScale = newMin
 
         if mapState.scale < newMin {
@@ -201,12 +211,33 @@ private extension MapScreen {
 
     func setInitialScale(for size: CGSize) {
         guard size.width > 0, size.height > 0 else { return }
-        let fitWidth = size.width / MapProjection.mapWidth
-        let fitHeight = size.height / MapProjection.mapHeight
-        let fitScale = max(fitWidth, fitHeight)
+        let fitScale = computeMinScale(for: size)
         mapState.scale = fitScale
         mapState.lastScale = fitScale
         mapState.minScale = fitScale
+        centerOnContent()
+    }
+
+    func computeMinScale(for size: CGSize) -> CGFloat {
+        let bounds = mapState.contentBounds
+        let fitWidth = size.width / MapProjection.mapWidth
+
+        guard bounds.height > 0 else { return fitWidth }
+
+        let fitContentHeight = size.height / bounds.height
+        return max(fitWidth, fitContentHeight)
+    }
+
+    func centerOnContent() {
+        let bounds = mapState.contentBounds
+        guard bounds.height > 0 else { return }
+
+        let contentCenterY = (bounds.minY + bounds.maxY) / 2
+        let mapCenterY = MapProjection.mapHeight / 2
+        let offsetY = (mapCenterY - contentCenterY) * mapState.scale
+
+        mapState.offset.height = offsetY
+        mapState.lastOffset.height = offsetY
     }
 
     func handleTap(at point: CGPoint, in size: CGSize) {
@@ -242,6 +273,29 @@ private extension MapScreen {
         guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
               let data = try? Data(contentsOf: url) else { return }
 
-        mapState.countryShapes = GeoJSONParser.parse(data: data)
+        let shapes = GeoJSONParser.parse(data: data)
+        mapState.countryShapes = shapes
+        mapState.contentBounds = computeContentBounds(from: shapes)
+
+        if screenSize.width > 0 {
+            setInitialScale(for: screenSize)
+        }
+    }
+
+    func computeContentBounds(from shapes: [CountryShape]) -> CGRect {
+        guard let first = shapes.first else { return .zero }
+        var minX = first.boundingBox.minX
+        var minY = first.boundingBox.minY
+        var maxX = first.boundingBox.maxX
+        var maxY = first.boundingBox.maxY
+
+        for shape in shapes.dropFirst() {
+            minX = min(minX, shape.boundingBox.minX)
+            minY = min(minY, shape.boundingBox.minY)
+            maxX = max(maxX, shape.boundingBox.maxX)
+            maxY = max(maxY, shape.boundingBox.maxY)
+        }
+
+        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 
 enum MapProjection {
     static let mapWidth: CGFloat = 2048
-    static let mapHeight: CGFloat = 1400
+    static let mapHeight: CGFloat = 2048
 }
 
 // MARK: - Projection

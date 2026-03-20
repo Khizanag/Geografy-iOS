@@ -10,6 +10,7 @@ final class MapState {
     var selectedCountryCode: String?
     var showLabels = false
     var countryShapes: [CountryShape] = []
+    var contentBounds: CGRect = .zero
 
     var selectedShape: CountryShape? {
         countryShapes.first { $0.id == selectedCountryCode }
