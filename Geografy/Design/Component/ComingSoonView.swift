@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ComingSoonView: View {
     let icon: String
+    var title: String?
+    var isDismissible: Bool = false
 
     @State private var isAnimating = false
 
@@ -15,6 +17,14 @@ struct ComingSoonView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignSystem.Color.background)
+        .navigationTitle(title ?? "")
+        .toolbar {
+            if isDismissible {
+                ToolbarItem(placement: .topBarTrailing) {
+                    GeoCircleCloseButton()
+                }
+            }
+        }
         .onAppear {
             withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
                 isAnimating = true
