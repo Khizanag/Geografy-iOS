@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct AllMapsScreen: View {
+    @State private var showMap = false
+
     private let maps: [(name: String, icon: String)] = [
         ("World", "globe"),
         ("Europe", "globe.europe.africa"),
@@ -17,6 +19,14 @@ struct AllMapsScreen: View {
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("All Maps")
+        .fullScreenCover(isPresented: $showMap) {
+            NavigationStack {
+                MapScreen()
+                    .navigationDestination(for: Country.self) { country in
+                        CountryDetailScreen(country: country)
+                    }
+            }
+        }
     }
 }
 
@@ -29,7 +39,7 @@ private extension AllMapsScreen {
             spacing: DesignSystem.Spacing.md
         ) {
             ForEach(Array(maps.enumerated()), id: \.offset) { _, map in
-                NavigationLink(value: NavigationRoute.map) {
+                Button { showMap = true } label: {
                     mapCard(name: map.name, icon: map.icon)
                 }
                 .buttonStyle(.glass)
