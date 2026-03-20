@@ -16,6 +16,7 @@ struct QuizSessionScreen: View {
     @State private var showQuitAlert = false
     @State private var showResults = false
     @State private var quizResult: QuizResult?
+    @State private var countryDataService = CountryDataService()
 
     var body: some View {
         NavigationStack {
@@ -38,6 +39,7 @@ struct QuizSessionScreen: View {
             } message: {
                 Text("Your progress will be lost.")
             }
+            .task { loadQuiz() }
             .fullScreenCover(isPresented: $showResults) {
                 if let quizResult {
                     QuizResultsScreen(result: quizResult) {
@@ -174,6 +176,20 @@ private extension QuizSessionScreen {
             totalTime: totalTime
         )
         showResults = true
+    }
+
+    func loadQuiz() {
+        countryDataService.loadCountries()
+        let pool = configuration.region.filter(countryDataService.countries)
+        questions = QuestionGenerator.generate(
+            type: configuration.type,
+            countries: pool,
+            count: configuration.questionCount.rawValue,
+            optionCount: configuration.difficulty.optionCount
+        )
+        startTime = Date()
+        questionStartTime = Date()
+        timerRemaining = configuration.difficulty.timerDuration
     }
 
     func resetQuiz() {
