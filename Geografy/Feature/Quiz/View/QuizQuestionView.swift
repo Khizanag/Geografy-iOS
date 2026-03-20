@@ -8,16 +8,28 @@ struct QuizQuestionView: View {
     let showFeedback: Bool
     let onSelectOption: (UUID) -> Void
 
+    @State private var showFlagPreview = false
+
     var body: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
+        VStack {
+            Spacer()
             promptSection
+            Spacer()
             optionsSection
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
+        .overlay {
+            if showFlagPreview, let flagCode = question.promptFlag {
+                ZoomableFlagView(countryCode: flagCode) {
+                    showFlagPreview = false
+                }
+            }
+        }
     }
 }
 
-// MARK: - Subviews
+// MARK: - Prompt
 
 private extension QuizQuestionView {
     @ViewBuilder
@@ -25,13 +37,7 @@ private extension QuizQuestionView {
         switch quizType {
         case .flagQuiz:
             flagPrompt
-        case .capitalQuiz:
-            textPrompt(question.promptText)
-        case .reverseFlag:
-            textPrompt(question.promptText)
-        case .reverseCapital:
-            textPrompt(question.promptText)
-        case .populationOrder, .areaOrder:
+        case .capitalQuiz, .reverseFlag, .reverseCapital, .populationOrder, .areaOrder:
             textPrompt(question.promptText)
         }
     }
@@ -39,8 +45,11 @@ private extension QuizQuestionView {
     var flagPrompt: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             if let flagCode = question.promptFlag {
-                FlagView(countryCode: flagCode, height: DesignSystem.Size.hero)
-                    .shadow(radius: DesignSystem.Spacing.xs)
+                Button { showFlagPreview = true } label: {
+                    FlagView(countryCode: flagCode, height: DesignSystem.Size.hero * 1.5)
+                        .shadow(radius: DesignSystem.Spacing.xs)
+                }
+                .buttonStyle(.plain)
             }
 
             Text(question.promptText)
@@ -56,7 +65,11 @@ private extension QuizQuestionView {
             .multilineTextAlignment(.center)
             .padding(.vertical, DesignSystem.Spacing.lg)
     }
+}
 
+// MARK: - Options
+
+private extension QuizQuestionView {
     @ViewBuilder
     var optionsSection: some View {
         if quizType == .reverseFlag {
