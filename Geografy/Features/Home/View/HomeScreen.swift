@@ -64,9 +64,9 @@ private extension HomeScreen {
     var profileButton: some View {
         Button { showProfile = true } label: {
             Image(systemName: "person.fill")
-                .font(DesignSystem.Font.subheadline)
+                .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
+                .padding(DesignSystem.Spacing.sm)
         }
         .glassEffect(.regular.interactive(), in: .circle)
     }
@@ -87,9 +87,9 @@ private extension HomeScreen {
     var friendsButton: some View {
         Button { showFriends = true } label: {
             Image(systemName: "person.2.fill")
-                .font(DesignSystem.Font.subheadline)
+                .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
+                .padding(DesignSystem.Spacing.sm)
         }
         .glassEffect(.regular.interactive(), in: .circle)
     }
