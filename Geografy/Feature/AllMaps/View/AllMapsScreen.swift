@@ -3,17 +3,12 @@ import SwiftUI
 struct AllMapsScreen: View {
     private let maps: [(name: String, icon: String)] = [
         ("World", "globe"),
-        ("Europe", "globe.europe.africa"),
+        ("Europe", "globe.central.south.asia"),
         ("Asia", "globe.asia.australia"),
         ("Africa", "globe.europe.africa"),
         ("North America", "globe.americas"),
-        ("South America", "globe.americas"),
-        ("Oceania", "globe.asia.australia"),
-    ]
-
-    private let columns = [
-        GridItem(.flexible(), spacing: DesignSystem.Spacing.md),
-        GridItem(.flexible(), spacing: DesignSystem.Spacing.md),
+        ("South America", "globe.americas.fill"),
+        ("Oceania", "globe.asia.australia.fill"),
     ]
 
     var body: some View {
@@ -29,7 +24,10 @@ struct AllMapsScreen: View {
 
 private extension AllMapsScreen {
     var mapGrid: some View {
-        LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.md) {
+        LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 140), spacing: DesignSystem.Spacing.md)],
+            spacing: DesignSystem.Spacing.md
+        ) {
             ForEach(Array(maps.enumerated()), id: \.offset) { _, map in
                 NavigationLink(value: NavigationRoute.map) {
                     mapCard(name: map.name, icon: map.icon)
