@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     @State private var selectedMapIndex = 0
+    @State private var showMap = false
 
     private let maps: [(name: String, icon: String)] = [
         ("World map", "globe"),
@@ -24,6 +25,14 @@ struct HomeScreen: View {
         }
         .background(GeoColors.background)
         .navigationBarHidden(true)
+        .fullScreenCover(isPresented: $showMap) {
+            NavigationStack {
+                MapScreen()
+                    .navigationDestination(for: Country.self) { country in
+                        CountryDetailScreen(country: country)
+                    }
+            }
+        }
     }
 }
 
@@ -134,7 +143,9 @@ private extension HomeScreen {
                 MapCarouselCard(
                     mapName: map.name,
                     systemImage: map.icon
-                )
+                ) {
+                    showMap = true
+                }
                 .padding(.horizontal, GeoSpacing.md)
                 .padding(.bottom, GeoSpacing.xl)
                 .tag(index)

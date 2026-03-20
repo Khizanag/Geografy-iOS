@@ -14,6 +14,9 @@ struct MapScreen: View {
                 controlsOverlay
                 bannerOverlay
             }
+            .onAppear {
+                setInitialScale(for: geometry.size)
+            }
         }
         .background(GeoColors.ocean)
         .ignoresSafeArea()
@@ -23,15 +26,6 @@ struct MapScreen: View {
         }
         .task {
             await loadMapData()
-        }
-        .onGeometryChange(for: CGSize.self) { proxy in
-            proxy.size
-        } action: { size in
-            if mapState.scale == 1.0, size.width > 0 {
-                let fitScale = size.width / MapProjection.mapWidth
-                mapState.scale = fitScale
-                mapState.lastScale = fitScale
-            }
         }
     }
 }
@@ -54,10 +48,37 @@ private extension MapScreen {
     }
 
     var controlsOverlay: some View {
-        MapControlsView(showLabels: $mapState.showLabels) {
-            dismiss()
+        VStack {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(GeoFont.headline)
+                        .foregroundStyle(GeoColors.textPrimary)
+                        .frame(width: 44, height: 44)
+                }
+                .buttonStyle(.plain)
+                .glassEffect(.regular.interactive(), in: .circle)
+
+                Spacer()
+
+                Button {
+                    mapState.showLabels.toggle()
+                } label: {
+                    Text("Aa")
+                        .font(GeoFont.headline)
+                        .foregroundStyle(mapState.showLabels ? .white : GeoColors.textPrimary)
+                        .frame(width: 44, height: 44)
+                }
+                .buttonStyle(.plain)
+                .glassEffect(.regular.interactive(), in: .circle)
+            }
+            .padding(.horizontal, GeoSpacing.md)
+            .padding(.top, GeoSpacing.xxl)
+
+            Spacer()
         }
-        .padding(.top, GeoSpacing.xxl)
     }
 
     @ViewBuilder
@@ -86,7 +107,6 @@ private extension MapScreen {
         MagnifyGesture()
             .onChanged { value in
                 let newScale = mapState.lastScale * value.magnification
-                let minScale = mapState.lastScale > 0.1 ? mapState.lastScale * 0.5 : 0.1
                 mapState.scale = min(max(newScale, 0.15), 20.0)
             }
             .onEnded { _ in
@@ -101,7 +121,6 @@ private extension MapScreen {
                     width: mapState.lastOffset.width + value.translation.width,
                     height: mapState.lastOffset.height + value.translation.height
                 )
-                mapState.clampOffset(in: size)
             }
             .onEnded { _ in
                 mapState.lastOffset = mapState.offset
@@ -119,6 +138,13 @@ private extension MapScreen {
 // MARK: - Actions
 
 private extension MapScreen {
+    func setInitialScale(for size: CGSize) {
+        guard size.width > 0 else { return }
+        let fitScale = size.width / MapProjection.mapWidth
+        mapState.scale = fitScale
+        mapState.lastScale = fitScale
+    }
+
     func handleTap(at point: CGPoint, in size: CGSize) {
         let centerX = size.width / 2 - MapProjection.mapWidth / 2
         let centerY = size.height / 2 - MapProjection.mapHeight / 2
@@ -129,11 +155,7 @@ private extension MapScreen {
         let mapPoint = CGPoint(x: mapX, y: mapY)
 
         for shape in mapState.countryShapes.reversed() {
-            let hitDetected = shape.polygons.contains { path in
-                path.contains(mapPoint)
-            }
-
-            if hitDetected {
+            if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
                 mapState.selectedCountryCode = shape.id
                 return
             }

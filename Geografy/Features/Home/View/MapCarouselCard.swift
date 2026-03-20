@@ -3,10 +3,12 @@ import SwiftUI
 struct MapCarouselCard: View {
     private let mapName: String
     private let systemImage: String
+    private let onOpenMap: () -> Void
 
-    init(mapName: String, systemImage: String) {
+    init(mapName: String, systemImage: String, onOpenMap: @escaping () -> Void) {
         self.mapName = mapName
         self.systemImage = systemImage
+        self.onOpenMap = onOpenMap
     }
 
     var body: some View {
@@ -39,7 +41,9 @@ private extension MapCarouselCard {
     }
 
     var openMapButton: some View {
-        NavigationLink(value: NavigationRoute.map) {
+        Button {
+            onOpenMap()
+        } label: {
             HStack(spacing: GeoSpacing.xs) {
                 Text("Open map")
                     .font(GeoFont.headline)
