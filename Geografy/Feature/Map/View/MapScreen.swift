@@ -79,20 +79,9 @@ private extension MapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
     func flagPreview(for code: String) -> some View {
-        ZStack {
-            Color.black.opacity(0.6)
-                .ignoresSafeArea()
-                .onTapGesture {
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        showFlagPreview = false
-                    }
-                }
-
-            FlagView(countryCode: code, height: DesignSystem.Size.hero)
-                .shadow(radius: DesignSystem.Spacing.md)
+        ZoomableFlagView(countryCode: code) {
+            showFlagPreview = false
         }
-        .transition(.opacity)
-        .animation(.easeInOut(duration: 0.2), value: showFlagPreview)
     }
 
     var selectedCapitalPoint: CGPoint? {
