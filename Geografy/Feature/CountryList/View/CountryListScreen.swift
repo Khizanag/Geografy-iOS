@@ -72,7 +72,7 @@ private extension CountryListScreen {
         } label: {
             Image(systemName: sortAscending ? "arrow.up" : "arrow.down")
                 .font(DesignSystem.Font.footnote)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
     }
 
@@ -88,7 +88,7 @@ private extension CountryListScreen {
             resetButton
         } label: {
             Image(systemName: hasActiveFilters ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
     }
 
