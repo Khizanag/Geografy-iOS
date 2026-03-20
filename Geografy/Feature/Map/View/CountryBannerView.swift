@@ -7,6 +7,8 @@ struct CountryBannerView: View {
     let onMoreInfo: (() -> Void)?
     let onDismiss: () -> Void
 
+    @State private var dragOffset: CGFloat = 0
+
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             flagView
@@ -22,14 +24,9 @@ struct CountryBannerView: View {
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .gesture(
-            DragGesture(minimumDistance: 20)
-                .onEnded { value in
-                    if value.translation.height < -20 {
-                        onDismiss()
-                    }
-                }
-        )
+        .offset(y: min(dragOffset, 0))
+        .opacity(1 + Double(min(dragOffset, 0)) / 100)
+        .gesture(swipeToDismiss)
     }
 }
 
@@ -77,10 +74,34 @@ private extension CountryBannerView {
     var closeButton: some View {
         Button(action: onDismiss) {
             Image(systemName: "xmark")
-                .font(DesignSystem.Font.caption2)
+                .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .padding(.vertical, DesignSystem.Spacing.xs)
         }
-        .buttonStyle(.glass)
+        .glassEffect(.regular.interactive(), in: .circle)
+    }
+}
+
+// MARK: - Gestures
+
+private extension CountryBannerView {
+    var swipeToDismiss: some Gesture {
+        DragGesture(minimumDistance: 10)
+            .onChanged { value in
+                dragOffset = value.translation.height
+            }
+            .onEnded { value in
+                if value.translation.height < -30 {
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        dragOffset = -200
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        onDismiss()
+                    }
+                } else {
+                    withAnimation(.spring(response: 0.3)) {
+                        dragOffset = 0
+                    }
+                }
+            }
     }
 }
