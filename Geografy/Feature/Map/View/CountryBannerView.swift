@@ -70,9 +70,9 @@ private extension CountryBannerView {
         Button(action: onDismiss) {
             Image(systemName: "xmark")
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.iconSecondary)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .padding(DesignSystem.Spacing.xs)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glass)
     }
 }
