@@ -108,6 +108,11 @@ private extension MapCanvasView {
 private extension MapCanvasView {
     var horizontalOffsets: [CGFloat] {
         let mapWidthScaled = MapProjection.mapWidth * scale
+
+        guard mapWidthScaled < canvasSize.width * 1.5 else {
+            return [0]
+        }
+
         return [-mapWidthScaled, 0, mapWidthScaled]
     }
 

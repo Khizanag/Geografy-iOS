@@ -19,6 +19,7 @@ struct MapScreen: View {
                     }
                     .onChange(of: geometry.size) { _, newSize in
                         screenSize = newSize
+                        updateMinScale(for: newSize)
                     }
             }
 
@@ -174,6 +175,19 @@ private extension MapScreen {
             mapState.offset.width -= mapWidthScaled
         } else if mapState.offset.width < -halfWidth {
             mapState.offset.width += mapWidthScaled
+        }
+    }
+
+    func updateMinScale(for size: CGSize) {
+        guard size.width > 0, size.height > 0 else { return }
+        let fitWidth = size.width / MapProjection.mapWidth
+        let fitHeight = size.height / MapProjection.mapHeight
+        let newMin = max(fitWidth, fitHeight)
+        mapState.minScale = newMin
+
+        if mapState.scale < newMin {
+            mapState.scale = newMin
+            mapState.lastScale = newMin
         }
     }
 
