@@ -34,8 +34,8 @@ private extension ZoomableFlagView {
             FlagView(countryCode: countryCode, height: flagWidth * 0.6)
                 .scaleEffect(scale)
                 .offset(offset)
-                .gesture(magnifyGesture)
-                .gesture(dragGesture)
+                .simultaneousGesture(magnifyGesture)
+                .simultaneousGesture(dragGesture)
                 .onTapGesture(count: 2) { toggleZoom() }
                 .onTapGesture(count: 1) { dismiss() }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
