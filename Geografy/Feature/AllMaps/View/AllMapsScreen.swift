@@ -3,12 +3,12 @@ import SwiftUI
 struct AllMapsScreen: View {
     private let maps: [(name: String, icon: String)] = [
         ("World", "globe"),
-        ("Europe", "building.columns"),
+        ("Europe", "globe.europe.africa"),
         ("Asia", "globe.asia.australia"),
         ("Africa", "globe.europe.africa"),
         ("North America", "globe.americas"),
-        ("South America", "leaf"),
-        ("Oceania", "water.waves"),
+        ("South America", "globe.americas"),
+        ("Oceania", "globe.asia.australia"),
     ]
 
     var body: some View {
