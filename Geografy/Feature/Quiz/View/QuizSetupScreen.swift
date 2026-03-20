@@ -9,20 +9,24 @@ struct QuizSetupScreen: View {
     @State private var selectedCount: QuestionCount = .ten
     @State private var showQuizSession = false
 
+    private let gridColumns = [
+        GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+        GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+    ]
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                     quizTypeSection
-                    regionSection
+                    regionRow
                     difficultySection
-                    questionCountSection
+                    questionCountRow
                 }
                 .padding(.vertical, DesignSystem.Spacing.md)
             }
             .safeAreaInset(edge: .bottom) {
                 startButton
-                    .padding(.horizontal, DesignSystem.Spacing.md)
                     .padding(.bottom, DesignSystem.Spacing.md)
             }
             .background(DesignSystem.Color.background)
@@ -47,14 +51,12 @@ private extension QuizSetupScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Quiz Type")
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    ForEach(QuizType.allCases) { type in
-                        quizTypeCard(type)
-                    }
+            LazyVGrid(columns: gridColumns, spacing: DesignSystem.Spacing.sm) {
+                ForEach(QuizType.allCases) { type in
+                    quizTypeCard(type)
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
         }
     }
 
@@ -62,7 +64,7 @@ private extension QuizSetupScreen {
         Button { selectedType = type } label: {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: type.icon)
-                    .font(DesignSystem.Font.title)
+                    .font(DesignSystem.Font.title2)
                     .foregroundStyle(
                         selectedType == type
                             ? DesignSystem.Color.accent
@@ -70,7 +72,7 @@ private extension QuizSetupScreen {
                     )
 
                 Text(type.displayName)
-                    .font(DesignSystem.Font.caption)
+                    .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(1)
@@ -81,7 +83,7 @@ private extension QuizSetupScreen {
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
             }
-            .frame(width: DesignSystem.Size.hero)
+            .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
@@ -100,45 +102,13 @@ private extension QuizSetupScreen {
     }
 }
 
-// MARK: - Region Section
+// MARK: - Region Row
 
 private extension QuizSetupScreen {
-    var regionSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Region")
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    ForEach(QuizRegion.allCases) { region in
-                        regionChip(region)
-                    }
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-            }
+    var regionRow: some View {
+        pickerRow("Region", selection: $selectedRegion) { region in
+            Text(region.displayName).tag(region)
         }
-    }
-
-    func regionChip(_ region: QuizRegion) -> some View {
-        Button { selectedRegion = region } label: {
-            Text(region.displayName)
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.medium)
-                .foregroundStyle(
-                    selectedRegion == region
-                        ? DesignSystem.Color.onAccent
-                        : DesignSystem.Color.textSecondary
-                )
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(
-                    selectedRegion == region
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.cardBackground
-                )
-                .clipShape(Capsule())
-        }
-        .buttonStyle(.plain)
-        .animation(.easeInOut, value: selectedRegion)
     }
 }
 
@@ -149,68 +119,23 @@ private extension QuizSetupScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Difficulty")
 
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            Picker("Difficulty", selection: $selectedDifficulty) {
                 ForEach(QuizDifficulty.allCases) { difficulty in
-                    difficultyCard(difficulty)
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-        }
-    }
-
-    func difficultyCard(_ difficulty: QuizDifficulty) -> some View {
-        Button { selectedDifficulty = difficulty } label: {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: difficulty.icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(difficultyColor(difficulty))
-
-                Text(difficulty.displayName)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                VStack(spacing: DesignSystem.Spacing.xxs) {
-                    ForEach(difficultyFeatures(difficulty), id: \.self) { feature in
-                        Text(feature)
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .stroke(
-                        selectedDifficulty == difficulty
-                            ? difficultyColor(difficulty)
-                            : DesignSystem.Color.cardBackground,
-                        lineWidth: 2
-                    )
-            )
-        }
-        .buttonStyle(.plain)
-        .animation(.easeInOut, value: selectedDifficulty)
-    }
-}
-
-// MARK: - Question Count Section
-
-private extension QuizSetupScreen {
-    var questionCountSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Questions")
-
-            Picker("Questions", selection: $selectedCount) {
-                ForEach(QuestionCount.allCases) { count in
-                    Text(count.displayName).tag(count)
+                    Text(difficulty.displayName).tag(difficulty)
                 }
             }
             .pickerStyle(.segmented)
             .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+    }
+}
+
+// MARK: - Question Count Row
+
+private extension QuizSetupScreen {
+    var questionCountRow: some View {
+        pickerRow("Questions", selection: $selectedCount) { count in
+            Text(count.displayName).tag(count)
         }
     }
 }
@@ -220,20 +145,10 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var startButton: some View {
         Button { showQuizSession = true } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "play.fill")
-                    .font(DesignSystem.Font.title2)
-
-                Text("Start Quiz")
-                    .font(DesignSystem.Font.title2)
-            }
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.accent)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            Label("Start Quiz", systemImage: "play.fill")
+                .font(DesignSystem.Font.headline)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glass)
     }
 }
 
@@ -247,31 +162,35 @@ private extension QuizSetupScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
+    func pickerRow<T: Hashable, Content: View>(
+        _ title: String,
+        selection: Binding<T>,
+        @ViewBuilder content: @escaping (T) -> Content
+    ) -> some View where T: CaseIterable, T: Identifiable, T.AllCases: RandomAccessCollection {
+        HStack {
+            Text(title)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            Spacer()
+
+            Picker(title, selection: selection) {
+                ForEach(Array(T.allCases)) { item in
+                    content(item)
+                }
+            }
+            .pickerStyle(.menu)
+            .tint(DesignSystem.Color.accent)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
     func makeConfiguration() -> QuizConfiguration {
         QuizConfiguration(
             type: selectedType,
             region: selectedRegion,
             difficulty: selectedDifficulty,
-            questionCount: selectedCount
+            questionCount: selectedCount,
         )
-    }
-
-    func difficultyColor(_ difficulty: QuizDifficulty) -> Color {
-        switch difficulty {
-        case .easy: DesignSystem.Color.success
-        case .medium: DesignSystem.Color.warning
-        case .hard: DesignSystem.Color.error
-        }
-    }
-
-    func difficultyFeatures(_ difficulty: QuizDifficulty) -> [String] {
-        switch difficulty {
-        case .easy:
-            ["4 options", "No timer", "Relaxed"]
-        case .medium:
-            ["4 options", "30s timer", "Moderate"]
-        case .hard:
-            ["Type answer", "No hints", "Expert"]
-        }
     }
 }
