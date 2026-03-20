@@ -19,10 +19,6 @@ struct MapScreen: View {
                 mapContent(in: geometry.size)
                     .onAppear {
                         screenSize = geometry.size
-                        if !isInitialized {
-                            setInitialScale(for: geometry.size)
-                            isInitialized = true
-                        }
                     }
                     .onChange(of: geometry.size) { _, newSize in
                         screenSize = newSize
@@ -338,8 +334,9 @@ private extension MapScreen {
             mapState.countryShapes = shapes
         }
 
-        if screenSize.width > 0 {
+        if screenSize.width > 0, !isInitialized {
             setInitialScale(for: screenSize)
+            isInitialized = true
         }
     }
 
