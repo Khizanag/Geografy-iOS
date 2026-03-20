@@ -9,32 +9,16 @@ struct CountryBannerView: View {
 
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            Text(flag)
-                .font(DesignSystem.IconSize.large)
-
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(name)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Image(systemName: "star.fill")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.accent)
-
-                    Text(capital)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-            }
-
+            flagView
+            infoSection
             Spacer()
-
             if let onMoreInfo {
                 moreInfoButton(action: onMoreInfo)
             }
+            closeButton
         }
-        .padding(DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.sm)
+        .padding(.vertical, DesignSystem.Spacing.xs)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -44,6 +28,29 @@ struct CountryBannerView: View {
 // MARK: - Subviews
 
 private extension CountryBannerView {
+    var flagView: some View {
+        Text(flag)
+            .font(DesignSystem.IconSize.large)
+    }
+
+    var infoSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            Text(name)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: "star.fill")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.accent)
+
+                Text(capital)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+        }
+    }
+
     func moreInfoButton(action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: DesignSystem.Spacing.xxs) {
@@ -52,11 +59,19 @@ private extension CountryBannerView {
                 Image(systemName: "chevron.right")
                     .font(DesignSystem.Font.caption2)
             }
-            .foregroundStyle(DesignSystem.Color.onAccent)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(DesignSystem.Color.accent)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        }
+        .buttonStyle(.glass)
+    }
+
+    var closeButton: some View {
+        Button(action: onDismiss) {
+            Image(systemName: "xmark")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.iconSecondary)
+                .padding(DesignSystem.Spacing.xs)
         }
         .buttonStyle(.plain)
     }

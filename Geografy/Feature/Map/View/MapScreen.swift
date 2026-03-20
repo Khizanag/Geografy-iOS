@@ -118,13 +118,15 @@ private extension MapScreen {
 private extension MapScreen {
     @ViewBuilder
     var bannerOverlay: some View {
-        if let shape = mapState.selectedShape,
-           let country = countryDataService.country(for: shape.id) {
+        if let shape = mapState.selectedShape {
+            let country = countryDataService.country(for: shape.id)
+            let basicInfo = CountryBasicInfo.info(for: shape.id)
+
             CountryBannerView(
-                name: country.name,
-                flag: country.flagEmoji,
-                capital: country.capital,
-                onMoreInfo: { navigateToCountry = country },
+                name: country?.name ?? shape.name,
+                flag: country?.flagEmoji ?? basicInfo?.flag ?? "🏳️",
+                capital: country?.capital ?? basicInfo?.capital ?? "",
+                onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
             .transition(.move(edge: .top).combined(with: .opacity))
