@@ -50,7 +50,7 @@ private extension SettingsScreen {
     var accountSection: some View {
         GeoCard {
             Button {
-                // TODO: Navigate to account settings
+                // Account settings — coming soon
             } label: {
                 HStack(spacing: GeoSpacing.sm) {
                     avatarPlaceholder
@@ -99,9 +99,8 @@ private extension SettingsScreen {
                 icon: "exclamationmark.triangle.fill",
                 iconColor: GeoColors.warning,
                 title: "Territorial disputes",
-            ) {
-                // TODO: Navigate to territorial disputes
-            }
+                comingSoon: true
+            ) {}
 
             settingsDivider
 
@@ -109,9 +108,8 @@ private extension SettingsScreen {
                 icon: "square.grid.2x2.fill",
                 iconColor: Color(hex: "5C6BC0"),
                 title: "Manage additions",
-            ) {
-                // TODO: Navigate to manage additions
-            }
+                comingSoon: true
+            ) {}
 
             settingsDivider
 
@@ -120,9 +118,8 @@ private extension SettingsScreen {
                 iconColor: Color(hex: "3498DB"),
                 title: "Change language",
                 value: selectedLanguage,
-            ) {
-                // TODO: Navigate to language picker
-            }
+                comingSoon: true
+            ) {}
 
             settingsDivider
 
@@ -131,9 +128,8 @@ private extension SettingsScreen {
                 iconColor: Color(hex: "9B59B6"),
                 title: "Theme",
                 value: selectedTheme,
-            ) {
-                // TODO: Navigate to theme picker
-            }
+                comingSoon: true
+            ) {}
 
             settingsDivider
 
@@ -142,9 +138,8 @@ private extension SettingsScreen {
                 iconColor: GeoColors.textSecondary,
                 title: "Orientation",
                 value: "Auto",
-            ) {
-                // TODO: Navigate to orientation picker
-            }
+                comingSoon: true
+            ) {}
         }
     }
 
@@ -246,6 +241,7 @@ private struct SettingsNavigationRow: View {
     let iconColor: Color
     let title: String
     var value: String?
+    var comingSoon: Bool = false
     let action: () -> Void
 
     var body: some View {
@@ -259,7 +255,15 @@ private struct SettingsNavigationRow: View {
 
                 Spacer()
 
-                if let value {
+                if comingSoon {
+                    Text("Soon")
+                        .font(GeoFont.caption2)
+                        .foregroundStyle(GeoColors.textTertiary)
+                        .padding(.horizontal, GeoSpacing.xs)
+                        .padding(.vertical, GeoSpacing.xxs)
+                        .background(GeoColors.cardBackgroundHighlighted)
+                        .clipShape(Capsule())
+                } else if let value {
                     Text(value)
                         .font(GeoFont.subheadline)
                         .foregroundStyle(GeoColors.textSecondary)
@@ -273,6 +277,7 @@ private struct SettingsNavigationRow: View {
             .padding(.vertical, GeoSpacing.sm)
         }
         .buttonStyle(.plain)
+        .disabled(comingSoon)
     }
 }
 
