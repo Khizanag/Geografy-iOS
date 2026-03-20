@@ -72,12 +72,9 @@ private extension HomeScreen {
 
     var statsButton: some View {
         Button { showProfile = true } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 xpIndicator
-                divider
-                currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
-                divider
-                currencyItem(icon: "diamond.fill", color: .cyan, value: "45")
+                currencyRow
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.xs)
@@ -103,10 +100,10 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var xpIndicator: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
+        HStack(spacing: DesignSystem.Spacing.xs) {
             xpProgressBar
 
-            Text("Lv.5")
+            Text("Lv. 5")
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -114,14 +111,23 @@ private extension HomeScreen {
     }
 
     var xpProgressBar: some View {
-        ZStack(alignment: .leading) {
-            Capsule()
-                .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                .frame(width: 40, height: 5)
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
 
-            Capsule()
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 40 * (175.0 / 190.0), height: 5)
+                Capsule()
+                    .fill(DesignSystem.Color.accent)
+                    .frame(width: geo.size.width * (175.0 / 190.0))
+            }
+        }
+        .frame(height: 5)
+    }
+
+    var currencyRow: some View {
+        HStack(spacing: DesignSystem.Spacing.md) {
+            currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
+            currencyItem(icon: "diamond.fill", color: .cyan, value: "45")
         }
     }
 
@@ -136,12 +142,6 @@ private extension HomeScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
         }
-    }
-
-    var divider: some View {
-        Rectangle()
-            .fill(DesignSystem.Color.textTertiary.opacity(0.3))
-            .frame(width: 1, height: 14)
     }
 }
 
