@@ -6,6 +6,8 @@ struct MapScreen: View {
     @State private var mapState = MapState()
     @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
     @State private var screenSize: CGSize = .zero
     @State private var isLoading = true
     @State private var isInitialized = false
@@ -35,13 +37,21 @@ struct MapScreen: View {
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
         .safeAreaInset(edge: .top) {
-            bannerOverlay
-                .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+            if !isLandscape {
+                bannerOverlay
+                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+            }
         }
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 closeButton
+            }
+            ToolbarItem(placement: .principal) {
+                if isLandscape {
+                    bannerOverlay
+                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 labelsToggleButton
@@ -63,6 +73,8 @@ struct MapScreen: View {
 // MARK: - Content
 
 private extension MapScreen {
+    var isLandscape: Bool { verticalSizeClass == .compact }
+
     var selectedCapitalPoint: CGPoint? {
         guard let code = mapState.selectedCountryCode,
               let info = CountryBasicInfo.info(for: code) else { return nil }
