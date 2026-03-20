@@ -7,43 +7,50 @@ struct ComingSoonSheet: View {
     let icon: String
 
     var body: some View {
-        VStack(spacing: GeoSpacing.lg) {
-            Spacer()
-            iconView
-            titleView
-            subtitleView
-            Spacer()
-            dismissButton
+        NavigationStack {
+            content
+                .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button { dismiss() } label: {
+                            Image(systemName: "xmark")
+                                .font(GeoFont.footnote)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(GeoColors.textSecondary)
+                                .frame(width: 30, height: 30)
+                                .contentShape(Circle())
+                        }
+                        .glassEffect(.regular.interactive(), in: .circle)
+                    }
+                }
         }
-        .padding(GeoSpacing.lg)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(GeoColors.background)
     }
 }
 
 // MARK: - Subviews
 
 private extension ComingSoonSheet {
+    var content: some View {
+        VStack(spacing: GeoSpacing.lg) {
+            Spacer()
+            iconView
+            subtitleView
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(GeoColors.background)
+    }
+
     var iconView: some View {
         Image(systemName: icon)
             .font(.system(size: 60))
             .foregroundStyle(GeoColors.accent.opacity(0.6))
     }
 
-    var titleView: some View {
-        Text(title)
-            .font(GeoFont.title)
-            .foregroundStyle(GeoColors.textPrimary)
-    }
-
     var subtitleView: some View {
         Text("Coming Soon")
             .font(GeoFont.body)
             .foregroundStyle(GeoColors.textSecondary)
-    }
-
-    var dismissButton: some View {
-        GeoGlassButton("Close", systemImage: "xmark") { dismiss() }
-            .padding(.bottom, GeoSpacing.lg)
     }
 }
