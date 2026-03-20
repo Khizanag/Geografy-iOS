@@ -1,40 +1,619 @@
 [
     {
-        "code": "US",
-        "name": "United States",
-        "capital": "Washington, D.C.",
-        "flagEmoji": "\ud83c\uddfa\ud83c\uddf8",
-        "continent": "northAmerica",
-        "area": 9833520,
-        "population": 334914895,
-        "populationDensity": 34.1,
-        "currency": {
-            "name": "United States Dollar",
-            "code": "USD"
-        },
+        "code": "AF",
+        "name": "Afghanistan",
+        "capital": "Kabul",
+        "flagEmoji": "🇦🇫",
+        "continent": "asia",
+        "area": 652230,
+        "population": 42239854,
+        "populationDensity": 64.8,
+        "currency": { "name": "Afghan Afghani", "code": "AFN" },
         "languages": [
-            { "name": "English", "percentage": 78.5 },
-            { "name": "Spanish", "percentage": 13.4 }
+            { "name": "Pashto", "percentage": 50.0 },
+            { "name": "Dari", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Unitary theocratic provisional government",
+        "gdp": 14500000000,
+        "gdpPerCapita": 364,
+        "gdpPPP": 81000000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "AL",
+        "name": "Albania",
+        "capital": "Tirana",
+        "flagEmoji": "🇦🇱",
+        "continent": "europe",
+        "area": 28748,
+        "population": 2745972,
+        "populationDensity": 95.5,
+        "currency": { "name": "Albanian Lek", "code": "ALL" },
+        "languages": [
+            { "name": "Albanian", "percentage": 98.8 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 22980000000,
+        "gdpPerCapita": 8370,
+        "gdpPPP": 46000000000,
+        "organizations": ["UN", "NATO", "WTO"]
+    },
+    {
+        "code": "DZ",
+        "name": "Algeria",
+        "capital": "Algiers",
+        "flagEmoji": "🇩🇿",
+        "continent": "africa",
+        "area": 2381741,
+        "population": 45606480,
+        "populationDensity": 19.1,
+        "currency": { "name": "Algerian Dinar", "code": "DZD" },
+        "languages": [
+            { "name": "Arabic", "percentage": 72.0 },
+            { "name": "Berber", "percentage": 27.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential constitutional republic",
+        "gdp": 240000000000,
+        "gdpPerCapita": 5270,
+        "gdpPPP": 632000000000,
+        "organizations": ["UN", "AU", "OPEC", "Arab League", "WTO"]
+    },
+    {
+        "code": "AD",
+        "name": "Andorra",
+        "capital": "Andorra la Vella",
+        "flagEmoji": "🇦🇩",
+        "continent": "europe",
+        "area": 468,
+        "population": 80088,
+        "populationDensity": 171.1,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Catalan", "percentage": 38.8 },
+            { "name": "Spanish", "percentage": 35.4 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional diarchy",
+        "gdp": 3400000000,
+        "gdpPerCapita": 42460,
+        "gdpPPP": 3400000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "AO",
+        "name": "Angola",
+        "capital": "Luanda",
+        "flagEmoji": "🇦🇴",
+        "continent": "africa",
+        "area": 1246700,
+        "population": 36684202,
+        "populationDensity": 29.4,
+        "currency": { "name": "Angolan Kwanza", "code": "AOA" },
+        "languages": [
+            { "name": "Portuguese", "percentage": 71.2 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 92100000000,
+        "gdpPerCapita": 2510,
+        "gdpPPP": 228000000000,
+        "organizations": ["UN", "AU", "OPEC", "WTO"]
+    },
+    {
+        "code": "AG",
+        "name": "Antigua and Barbuda",
+        "capital": "St. John's",
+        "flagEmoji": "🇦🇬",
+        "continent": "northAmerica",
+        "area": 442,
+        "population": 100772,
+        "populationDensity": 227.9,
+        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "languages": [
+            { "name": "English", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 1900000000,
+        "gdpPerCapita": 18860,
+        "gdpPPP": 2100000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "AR",
+        "name": "Argentina",
+        "capital": "Buenos Aires",
+        "flagEmoji": "🇦🇷",
+        "continent": "southAmerica",
+        "area": 2780400,
+        "population": 46654581,
+        "populationDensity": 16.8,
+        "currency": { "name": "Argentine Peso", "code": "ARS" },
+        "languages": [
+            { "name": "Spanish", "percentage": 98.1 }
         ],
         "formOfGovernment": "Federal presidential constitutional republic",
-        "gdp": 28780000000000,
-        "gdpPerCapita": 85370,
-        "gdpPPP": 28780000000000,
-        "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO"]
+        "gdp": 641000000000,
+        "gdpPerCapita": 13690,
+        "gdpPPP": 1150000000000,
+        "organizations": ["UN", "G20", "WTO", "Mercosur"]
+    },
+    {
+        "code": "AM",
+        "name": "Armenia",
+        "capital": "Yerevan",
+        "flagEmoji": "🇦🇲",
+        "continent": "asia",
+        "area": 29743,
+        "population": 2777970,
+        "populationDensity": 93.4,
+        "currency": { "name": "Armenian Dram", "code": "AMD" },
+        "languages": [
+            { "name": "Armenian", "percentage": 97.9 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 24200000000,
+        "gdpPerCapita": 8720,
+        "gdpPPP": 51000000000,
+        "organizations": ["UN", "CIS", "WTO"]
+    },
+    {
+        "code": "AU",
+        "name": "Australia",
+        "capital": "Canberra",
+        "flagEmoji": "🇦🇺",
+        "continent": "oceania",
+        "area": 7692024,
+        "population": 26638544,
+        "populationDensity": 3.5,
+        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "languages": [
+            { "name": "English", "percentage": 72.7 },
+            { "name": "Mandarin", "percentage": 2.7 }
+        ],
+        "formOfGovernment": "Federal parliamentary constitutional monarchy",
+        "gdp": 1720000000000,
+        "gdpPerCapita": 64490,
+        "gdpPPP": 1720000000000,
+        "organizations": ["UN", "G20", "OECD", "WTO", "Commonwealth"]
+    },
+    {
+        "code": "AT",
+        "name": "Austria",
+        "capital": "Vienna",
+        "flagEmoji": "🇦🇹",
+        "continent": "europe",
+        "area": 83871,
+        "population": 9104772,
+        "populationDensity": 108.6,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "German", "percentage": 88.6 }
+        ],
+        "formOfGovernment": "Federal parliamentary republic",
+        "gdp": 515000000000,
+        "gdpPerCapita": 56510,
+        "gdpPPP": 594000000000,
+        "organizations": ["UN", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "AZ",
+        "name": "Azerbaijan",
+        "capital": "Baku",
+        "flagEmoji": "🇦🇿",
+        "continent": "asia",
+        "area": 86600,
+        "population": 10412651,
+        "populationDensity": 120.2,
+        "currency": { "name": "Azerbaijani Manat", "code": "AZN" },
+        "languages": [
+            { "name": "Azerbaijani", "percentage": 92.5 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 72400000000,
+        "gdpPerCapita": 6950,
+        "gdpPPP": 186000000000,
+        "organizations": ["UN", "CIS", "WTO"]
+    },
+    {
+        "code": "BS",
+        "name": "Bahamas",
+        "capital": "Nassau",
+        "flagEmoji": "🇧🇸",
+        "continent": "northAmerica",
+        "area": 13943,
+        "population": 412623,
+        "populationDensity": 29.6,
+        "currency": { "name": "Bahamian Dollar", "code": "BSD" },
+        "languages": [
+            { "name": "English", "percentage": 94.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 14300000000,
+        "gdpPerCapita": 34670,
+        "gdpPPP": 15200000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "BH",
+        "name": "Bahrain",
+        "capital": "Manama",
+        "flagEmoji": "🇧🇭",
+        "continent": "asia",
+        "area": 765,
+        "population": 1485509,
+        "populationDensity": 1941.8,
+        "currency": { "name": "Bahraini Dinar", "code": "BHD" },
+        "languages": [
+            { "name": "Arabic", "percentage": 70.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 44400000000,
+        "gdpPerCapita": 29890,
+        "gdpPPP": 91000000000,
+        "organizations": ["UN", "Arab League", "WTO"]
+    },
+    {
+        "code": "BD",
+        "name": "Bangladesh",
+        "capital": "Dhaka",
+        "flagEmoji": "🇧🇩",
+        "continent": "asia",
+        "area": 147570,
+        "population": 172954319,
+        "populationDensity": 1172.0,
+        "currency": { "name": "Bangladeshi Taka", "code": "BDT" },
+        "languages": [
+            { "name": "Bengali", "percentage": 98.8 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 460200000000,
+        "gdpPerCapita": 2660,
+        "gdpPPP": 1340000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "BB",
+        "name": "Barbados",
+        "capital": "Bridgetown",
+        "flagEmoji": "🇧🇧",
+        "continent": "northAmerica",
+        "area": 430,
+        "population": 281995,
+        "populationDensity": 655.8,
+        "currency": { "name": "Barbadian Dollar", "code": "BBD" },
+        "languages": [
+            { "name": "English", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 6000000000,
+        "gdpPerCapita": 21280,
+        "gdpPPP": 6100000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "BY",
+        "name": "Belarus",
+        "capital": "Minsk",
+        "flagEmoji": "🇧🇾",
+        "continent": "europe",
+        "area": 207600,
+        "population": 9200617,
+        "populationDensity": 44.3,
+        "currency": { "name": "Belarusian Ruble", "code": "BYN" },
+        "languages": [
+            { "name": "Belarusian", "percentage": 23.4 },
+            { "name": "Russian", "percentage": 70.2 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 73000000000,
+        "gdpPerCapita": 7940,
+        "gdpPPP": 205000000000,
+        "organizations": ["UN", "CIS"]
+    },
+    {
+        "code": "BE",
+        "name": "Belgium",
+        "capital": "Brussels",
+        "flagEmoji": "🇧🇪",
+        "continent": "europe",
+        "area": 30528,
+        "population": 11686140,
+        "populationDensity": 382.7,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Dutch", "percentage": 55.0 },
+            { "name": "French", "percentage": 36.0 },
+            { "name": "German", "percentage": 0.7 }
+        ],
+        "formOfGovernment": "Federal parliamentary constitutional monarchy",
+        "gdp": 632000000000,
+        "gdpPerCapita": 54080,
+        "gdpPPP": 724000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "BZ",
+        "name": "Belize",
+        "capital": "Belmopan",
+        "flagEmoji": "🇧🇿",
+        "continent": "northAmerica",
+        "area": 22966,
+        "population": 410825,
+        "populationDensity": 17.9,
+        "currency": { "name": "Belize Dollar", "code": "BZD" },
+        "languages": [
+            { "name": "English", "percentage": 62.9 },
+            { "name": "Spanish", "percentage": 56.6 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 3280000000,
+        "gdpPerCapita": 7980,
+        "gdpPPP": 4900000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "BJ",
+        "name": "Benin",
+        "capital": "Porto-Novo",
+        "flagEmoji": "🇧🇯",
+        "continent": "africa",
+        "area": 112622,
+        "population": 13352864,
+        "populationDensity": 118.6,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "French", "percentage": 35.0 },
+            { "name": "Fon", "percentage": 24.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 19500000000,
+        "gdpPerCapita": 1460,
+        "gdpPPP": 52000000000,
+        "organizations": ["UN", "AU", "WTO"]
+    },
+    {
+        "code": "BT",
+        "name": "Bhutan",
+        "capital": "Thimphu",
+        "flagEmoji": "🇧🇹",
+        "continent": "asia",
+        "area": 38394,
+        "population": 787424,
+        "populationDensity": 20.5,
+        "currency": { "name": "Bhutanese Ngultrum", "code": "BTN" },
+        "languages": [
+            { "name": "Dzongkha", "percentage": 24.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 2890000000,
+        "gdpPerCapita": 3670,
+        "gdpPPP": 10800000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "BO",
+        "name": "Bolivia",
+        "capital": "Sucre",
+        "flagEmoji": "🇧🇴",
+        "continent": "southAmerica",
+        "area": 1098581,
+        "population": 12388571,
+        "populationDensity": 11.3,
+        "currency": { "name": "Bolivian Boliviano", "code": "BOB" },
+        "languages": [
+            { "name": "Spanish", "percentage": 83.0 },
+            { "name": "Quechua", "percentage": 18.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 44010000000,
+        "gdpPerCapita": 3550,
+        "gdpPPP": 115000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "BA",
+        "name": "Bosnia and Herzegovina",
+        "capital": "Sarajevo",
+        "flagEmoji": "🇧🇦",
+        "continent": "europe",
+        "area": 51197,
+        "population": 3210847,
+        "populationDensity": 62.7,
+        "currency": { "name": "Bosnia and Herzegovina Convertible Mark", "code": "BAM" },
+        "languages": [
+            { "name": "Bosnian", "percentage": 52.9 },
+            { "name": "Serbian", "percentage": 30.8 },
+            { "name": "Croatian", "percentage": 14.6 }
+        ],
+        "formOfGovernment": "Federal parliamentary constitutional republic",
+        "gdp": 24900000000,
+        "gdpPerCapita": 7760,
+        "gdpPPP": 59000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "BW",
+        "name": "Botswana",
+        "capital": "Gaborone",
+        "flagEmoji": "🇧🇼",
+        "continent": "africa",
+        "area": 581730,
+        "population": 2630296,
+        "populationDensity": 4.5,
+        "currency": { "name": "Botswana Pula", "code": "BWP" },
+        "languages": [
+            { "name": "Setswana", "percentage": 77.3 },
+            { "name": "English", "percentage": 2.8 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 19400000000,
+        "gdpPerCapita": 7380,
+        "gdpPPP": 46000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "BR",
+        "name": "Brazil",
+        "capital": "Brasília",
+        "flagEmoji": "🇧🇷",
+        "continent": "southAmerica",
+        "area": 8515767,
+        "population": 216422446,
+        "populationDensity": 25.4,
+        "currency": { "name": "Brazilian Real", "code": "BRL" },
+        "languages": [
+            { "name": "Portuguese", "percentage": 97.9 }
+        ],
+        "formOfGovernment": "Federal presidential constitutional republic",
+        "gdp": 2170000000000,
+        "gdpPerCapita": 10110,
+        "gdpPPP": 4020000000000,
+        "organizations": ["UN", "G20", "WTO", "Mercosur", "BRICS"]
+    },
+    {
+        "code": "BN",
+        "name": "Brunei",
+        "capital": "Bandar Seri Begawan",
+        "flagEmoji": "🇧🇳",
+        "continent": "asia",
+        "area": 5765,
+        "population": 452524,
+        "populationDensity": 78.5,
+        "currency": { "name": "Brunei Dollar", "code": "BND" },
+        "languages": [
+            { "name": "Malay", "percentage": 83.0 }
+        ],
+        "formOfGovernment": "Unitary Islamic absolute monarchy",
+        "gdp": 15100000000,
+        "gdpPerCapita": 33400,
+        "gdpPPP": 36000000000,
+        "organizations": ["UN", "ASEAN", "WTO", "Commonwealth"]
+    },
+    {
+        "code": "BG",
+        "name": "Bulgaria",
+        "capital": "Sofia",
+        "flagEmoji": "🇧🇬",
+        "continent": "europe",
+        "area": 110879,
+        "population": 6447710,
+        "populationDensity": 58.1,
+        "currency": { "name": "Bulgarian Lev", "code": "BGN" },
+        "languages": [
+            { "name": "Bulgarian", "percentage": 85.2 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 100600000000,
+        "gdpPerCapita": 15610,
+        "gdpPPP": 218000000000,
+        "organizations": ["UN", "NATO", "EU", "WTO"]
+    },
+    {
+        "code": "BF",
+        "name": "Burkina Faso",
+        "capital": "Ouagadougou",
+        "flagEmoji": "🇧🇫",
+        "continent": "africa",
+        "area": 274200,
+        "population": 22673762,
+        "populationDensity": 82.7,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "French", "percentage": 25.0 },
+            { "name": "Mooré", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Unitary military junta",
+        "gdp": 19400000000,
+        "gdpPerCapita": 860,
+        "gdpPPP": 54000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "BI",
+        "name": "Burundi",
+        "capital": "Gitega",
+        "flagEmoji": "🇧🇮",
+        "continent": "africa",
+        "area": 27834,
+        "population": 13238559,
+        "populationDensity": 475.6,
+        "currency": { "name": "Burundian Franc", "code": "BIF" },
+        "languages": [
+            { "name": "Kirundi", "percentage": 97.0 },
+            { "name": "French", "percentage": 8.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 3070000000,
+        "gdpPerCapita": 232,
+        "gdpPPP": 10800000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "CV",
+        "name": "Cabo Verde",
+        "capital": "Praia",
+        "flagEmoji": "🇨🇻",
+        "continent": "africa",
+        "area": 4033,
+        "population": 598682,
+        "populationDensity": 148.4,
+        "currency": { "name": "Cape Verdean Escudo", "code": "CVE" },
+        "languages": [
+            { "name": "Portuguese", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 2400000000,
+        "gdpPerCapita": 4010,
+        "gdpPPP": 4600000000,
+        "organizations": ["UN", "AU", "WTO"]
+    },
+    {
+        "code": "KH",
+        "name": "Cambodia",
+        "capital": "Phnom Penh",
+        "flagEmoji": "🇰🇭",
+        "continent": "asia",
+        "area": 181035,
+        "population": 16944826,
+        "populationDensity": 93.6,
+        "currency": { "name": "Cambodian Riel", "code": "KHR" },
+        "languages": [
+            { "name": "Khmer", "percentage": 95.8 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 31800000000,
+        "gdpPerCapita": 1880,
+        "gdpPPP": 85000000000,
+        "organizations": ["UN", "ASEAN", "WTO"]
+    },
+    {
+        "code": "CM",
+        "name": "Cameroon",
+        "capital": "Yaoundé",
+        "flagEmoji": "🇨🇲",
+        "continent": "africa",
+        "area": 475442,
+        "population": 28647293,
+        "populationDensity": 60.3,
+        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "languages": [
+            { "name": "French", "percentage": 57.6 },
+            { "name": "English", "percentage": 16.8 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 44340000000,
+        "gdpPerCapita": 1550,
+        "gdpPPP": 115000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
     },
     {
         "code": "CA",
         "name": "Canada",
         "capital": "Ottawa",
-        "flagEmoji": "\ud83c\udde8\ud83c\udde6",
+        "flagEmoji": "🇨🇦",
         "continent": "northAmerica",
         "area": 9984670,
         "population": 40769890,
         "populationDensity": 4.1,
-        "currency": {
-            "name": "Canadian Dollar",
-            "code": "CAD"
-        },
+        "currency": { "name": "Canadian Dollar", "code": "CAD" },
         "languages": [
             { "name": "English", "percentage": 56.9 },
             { "name": "French", "percentage": 21.3 }
@@ -46,242 +625,74 @@
         "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO", "Commonwealth"]
     },
     {
-        "code": "MX",
-        "name": "Mexico",
-        "capital": "Mexico City",
-        "flagEmoji": "\ud83c\uddf2\ud83c\uddfd",
-        "continent": "northAmerica",
-        "area": 1964375,
-        "population": 129875530,
-        "populationDensity": 66.1,
-        "currency": {
-            "name": "Mexican Peso",
-            "code": "MXN"
-        },
+        "code": "CF",
+        "name": "Central African Republic",
+        "capital": "Bangui",
+        "flagEmoji": "🇨🇫",
+        "continent": "africa",
+        "area": 622984,
+        "population": 5742315,
+        "populationDensity": 9.2,
+        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
         "languages": [
-            { "name": "Spanish", "percentage": 93.8 },
-            { "name": "Nahuatl", "percentage": 1.7 }
+            { "name": "French", "percentage": 29.0 },
+            { "name": "Sango", "percentage": 90.0 }
         ],
-        "formOfGovernment": "Federal presidential constitutional republic",
-        "gdp": 1789000000000,
-        "gdpPerCapita": 13800,
-        "gdpPPP": 2940000000000,
-        "organizations": ["UN", "G20", "OECD", "WTO", "USMCA"]
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 2560000000,
+        "gdpPerCapita": 446,
+        "gdpPPP": 5100000000,
+        "organizations": ["UN", "AU"]
     },
     {
-        "code": "BR",
-        "name": "Brazil",
-        "capital": "Bras\u00edlia",
-        "flagEmoji": "\ud83c\udde7\ud83c\uddf7",
+        "code": "TD",
+        "name": "Chad",
+        "capital": "N'Djamena",
+        "flagEmoji": "🇹🇩",
+        "continent": "africa",
+        "area": 1284000,
+        "population": 18278568,
+        "populationDensity": 14.2,
+        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "languages": [
+            { "name": "French", "percentage": 12.0 },
+            { "name": "Arabic", "percentage": 12.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 12600000000,
+        "gdpPerCapita": 690,
+        "gdpPPP": 30000000000,
+        "organizations": ["UN", "AU", "OPEC"]
+    },
+    {
+        "code": "CL",
+        "name": "Chile",
+        "capital": "Santiago",
+        "flagEmoji": "🇨🇱",
         "continent": "southAmerica",
-        "area": 8515767,
-        "population": 216422446,
-        "populationDensity": 25.4,
-        "currency": {
-            "name": "Brazilian Real",
-            "code": "BRL"
-        },
+        "area": 756102,
+        "population": 19603733,
+        "populationDensity": 25.9,
+        "currency": { "name": "Chilean Peso", "code": "CLP" },
         "languages": [
-            { "name": "Portuguese", "percentage": 97.9 }
+            { "name": "Spanish", "percentage": 99.5 }
         ],
-        "formOfGovernment": "Federal presidential constitutional republic",
-        "gdp": 2170000000000,
-        "gdpPerCapita": 10110,
-        "gdpPPP": 4020000000000,
-        "organizations": ["UN", "G20", "WTO", "Mercosur", "BRICS"]
-    },
-    {
-        "code": "AR",
-        "name": "Argentina",
-        "capital": "Buenos Aires",
-        "flagEmoji": "\ud83c\udde6\ud83c\uddf7",
-        "continent": "southAmerica",
-        "area": 2780400,
-        "population": 46654581,
-        "populationDensity": 16.8,
-        "currency": {
-            "name": "Argentine Peso",
-            "code": "ARS"
-        },
-        "languages": [
-            { "name": "Spanish", "percentage": 98.1 }
-        ],
-        "formOfGovernment": "Federal presidential constitutional republic",
-        "gdp": 641000000000,
-        "gdpPerCapita": 13690,
-        "gdpPPP": 1150000000000,
-        "organizations": ["UN", "G20", "WTO", "Mercosur"]
-    },
-    {
-        "code": "GB",
-        "name": "United Kingdom",
-        "capital": "London",
-        "flagEmoji": "\ud83c\uddec\ud83c\udde7",
-        "continent": "europe",
-        "area": 242495,
-        "population": 68350000,
-        "populationDensity": 281.9,
-        "currency": {
-            "name": "Pound Sterling",
-            "code": "GBP"
-        },
-        "languages": [
-            { "name": "English", "percentage": 94.0 },
-            { "name": "Welsh", "percentage": 1.1 }
-        ],
-        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
-        "gdp": 3340000000000,
-        "gdpPerCapita": 48910,
-        "gdpPPP": 3860000000000,
-        "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO", "Commonwealth"]
-    },
-    {
-        "code": "FR",
-        "name": "France",
-        "capital": "Paris",
-        "flagEmoji": "\ud83c\uddeb\ud83c\uddf7",
-        "continent": "europe",
-        "area": 640679,
-        "population": 68170000,
-        "populationDensity": 106.4,
-        "currency": {
-            "name": "Euro",
-            "code": "EUR"
-        },
-        "languages": [
-            { "name": "French", "percentage": 93.6 }
-        ],
-        "formOfGovernment": "Unitary semi-presidential constitutional republic",
-        "gdp": 3030000000000,
-        "gdpPerCapita": 44410,
-        "gdpPPP": 3870000000000,
-        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
-    },
-    {
-        "code": "DE",
-        "name": "Germany",
-        "capital": "Berlin",
-        "flagEmoji": "\ud83c\udde9\ud83c\uddea",
-        "continent": "europe",
-        "area": 357022,
-        "population": 84482267,
-        "populationDensity": 236.7,
-        "currency": {
-            "name": "Euro",
-            "code": "EUR"
-        },
-        "languages": [
-            { "name": "German", "percentage": 94.8 }
-        ],
-        "formOfGovernment": "Federal parliamentary republic",
-        "gdp": 4460000000000,
-        "gdpPerCapita": 52820,
-        "gdpPPP": 5370000000000,
-        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
-    },
-    {
-        "code": "IT",
-        "name": "Italy",
-        "capital": "Rome",
-        "flagEmoji": "\ud83c\uddee\ud83c\uddf9",
-        "continent": "europe",
-        "area": 301340,
-        "population": 58853482,
-        "populationDensity": 195.3,
-        "currency": {
-            "name": "Euro",
-            "code": "EUR"
-        },
-        "languages": [
-            { "name": "Italian", "percentage": 93.0 }
-        ],
-        "formOfGovernment": "Unitary parliamentary constitutional republic",
-        "gdp": 2250000000000,
-        "gdpPerCapita": 38200,
-        "gdpPPP": 3110000000000,
-        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
-    },
-    {
-        "code": "ES",
-        "name": "Spain",
-        "capital": "Madrid",
-        "flagEmoji": "\ud83c\uddea\ud83c\uddf8",
-        "continent": "europe",
-        "area": 505990,
-        "population": 48592909,
-        "populationDensity": 96.1,
-        "currency": {
-            "name": "Euro",
-            "code": "EUR"
-        },
-        "languages": [
-            { "name": "Spanish", "percentage": 74.0 },
-            { "name": "Catalan", "percentage": 17.0 }
-        ],
-        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
-        "gdp": 1580000000000,
-        "gdpPerCapita": 32550,
-        "gdpPPP": 2280000000000,
-        "organizations": ["UN", "NATO", "EU", "G20", "OECD", "WTO"]
-    },
-    {
-        "code": "RU",
-        "name": "Russia",
-        "capital": "Moscow",
-        "flagEmoji": "\ud83c\uddf7\ud83c\uddfa",
-        "continent": "europe",
-        "area": 17098242,
-        "population": 144236933,
-        "populationDensity": 8.4,
-        "currency": {
-            "name": "Russian Ruble",
-            "code": "RUB"
-        },
-        "languages": [
-            { "name": "Russian", "percentage": 85.7 }
-        ],
-        "formOfGovernment": "Federal semi-presidential constitutional republic",
-        "gdp": 2020000000000,
-        "gdpPerCapita": 14010,
-        "gdpPPP": 5080000000000,
-        "organizations": ["UN", "G20", "WTO", "BRICS", "CIS"]
-    },
-    {
-        "code": "UA",
-        "name": "Ukraine",
-        "capital": "Kyiv",
-        "flagEmoji": "\ud83c\uddfa\ud83c\udde6",
-        "continent": "europe",
-        "area": 603550,
-        "population": 37000000,
-        "populationDensity": 61.3,
-        "currency": {
-            "name": "Ukrainian Hryvnia",
-            "code": "UAH"
-        },
-        "languages": [
-            { "name": "Ukrainian", "percentage": 67.5 },
-            { "name": "Russian", "percentage": 29.6 }
-        ],
-        "formOfGovernment": "Unitary semi-presidential constitutional republic",
-        "gdp": 179000000000,
-        "gdpPerCapita": 4840,
-        "gdpPPP": 560000000000,
-        "organizations": ["UN", "WTO"]
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 335500000000,
+        "gdpPerCapita": 17120,
+        "gdpPPP": 568000000000,
+        "organizations": ["UN", "OECD", "WTO"]
     },
     {
         "code": "CN",
         "name": "China",
         "capital": "Beijing",
-        "flagEmoji": "\ud83c\udde8\ud83c\uddf3",
+        "flagEmoji": "🇨🇳",
         "continent": "asia",
         "area": 9596961,
         "population": 1425671352,
         "populationDensity": 148.6,
-        "currency": {
-            "name": "Chinese Yuan",
-            "code": "CNY"
-        },
+        "currency": { "name": "Chinese Yuan", "code": "CNY" },
         "languages": [
             { "name": "Mandarin Chinese", "percentage": 73.1 }
         ],
@@ -292,40 +703,796 @@
         "organizations": ["UN", "G20", "WTO", "BRICS", "SCO"]
     },
     {
-        "code": "JP",
-        "name": "Japan",
-        "capital": "Tokyo",
-        "flagEmoji": "\ud83c\uddef\ud83c\uddf5",
-        "continent": "asia",
-        "area": 377975,
-        "population": 123294513,
-        "populationDensity": 326.2,
-        "currency": {
-            "name": "Japanese Yen",
-            "code": "JPY"
-        },
+        "code": "CO",
+        "name": "Colombia",
+        "capital": "Bogotá",
+        "flagEmoji": "🇨🇴",
+        "continent": "southAmerica",
+        "area": 1141748,
+        "population": 52085168,
+        "populationDensity": 45.6,
+        "currency": { "name": "Colombian Peso", "code": "COP" },
         "languages": [
-            { "name": "Japanese", "percentage": 99.1 }
+            { "name": "Spanish", "percentage": 99.2 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 363500000000,
+        "gdpPerCapita": 6980,
+        "gdpPPP": 935000000000,
+        "organizations": ["UN", "OECD", "WTO"]
+    },
+    {
+        "code": "KM",
+        "name": "Comoros",
+        "capital": "Moroni",
+        "flagEmoji": "🇰🇲",
+        "continent": "africa",
+        "area": 2235,
+        "population": 836774,
+        "populationDensity": 374.3,
+        "currency": { "name": "Comorian Franc", "code": "KMF" },
+        "languages": [
+            { "name": "Comorian", "percentage": 96.0 },
+            { "name": "Arabic", "percentage": 2.0 },
+            { "name": "French", "percentage": 2.0 }
+        ],
+        "formOfGovernment": "Federal presidential republic",
+        "gdp": 1350000000,
+        "gdpPerCapita": 1610,
+        "gdpPPP": 3100000000,
+        "organizations": ["UN", "AU", "Arab League"]
+    },
+    {
+        "code": "CG",
+        "name": "Republic of the Congo",
+        "capital": "Brazzaville",
+        "flagEmoji": "🇨🇬",
+        "continent": "africa",
+        "area": 342000,
+        "population": 6106869,
+        "populationDensity": 17.9,
+        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "languages": [
+            { "name": "French", "percentage": 60.0 },
+            { "name": "Lingala", "percentage": 20.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 13600000000,
+        "gdpPerCapita": 2230,
+        "gdpPPP": 28000000000,
+        "organizations": ["UN", "AU", "OPEC", "WTO"]
+    },
+    {
+        "code": "CD",
+        "name": "Democratic Republic of the Congo",
+        "capital": "Kinshasa",
+        "flagEmoji": "🇨🇩",
+        "continent": "africa",
+        "area": 2344858,
+        "population": 102262808,
+        "populationDensity": 43.6,
+        "currency": { "name": "Congolese Franc", "code": "CDF" },
+        "languages": [
+            { "name": "French", "percentage": 51.0 },
+            { "name": "Lingala", "percentage": 20.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 65200000000,
+        "gdpPerCapita": 638,
+        "gdpPPP": 149000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "CR",
+        "name": "Costa Rica",
+        "capital": "San José",
+        "flagEmoji": "🇨🇷",
+        "continent": "northAmerica",
+        "area": 51100,
+        "population": 5212173,
+        "populationDensity": 102.0,
+        "currency": { "name": "Costa Rican Colón", "code": "CRC" },
+        "languages": [
+            { "name": "Spanish", "percentage": 97.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 68400000000,
+        "gdpPerCapita": 13120,
+        "gdpPPP": 113000000000,
+        "organizations": ["UN", "OECD", "WTO"]
+    },
+    {
+        "code": "CI",
+        "name": "Côte d'Ivoire",
+        "capital": "Yamoussoukro",
+        "flagEmoji": "🇨🇮",
+        "continent": "africa",
+        "area": 322463,
+        "population": 28873034,
+        "populationDensity": 89.5,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "French", "percentage": 36.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 78800000000,
+        "gdpPerCapita": 2730,
+        "gdpPPP": 184000000000,
+        "organizations": ["UN", "AU", "WTO"]
+    },
+    {
+        "code": "HR",
+        "name": "Croatia",
+        "capital": "Zagreb",
+        "flagEmoji": "🇭🇷",
+        "continent": "europe",
+        "area": 56594,
+        "population": 3855600,
+        "populationDensity": 68.1,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Croatian", "percentage": 95.6 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 82500000000,
+        "gdpPerCapita": 21400,
+        "gdpPPP": 143000000000,
+        "organizations": ["UN", "NATO", "EU", "WTO"]
+    },
+    {
+        "code": "CU",
+        "name": "Cuba",
+        "capital": "Havana",
+        "flagEmoji": "🇨🇺",
+        "continent": "northAmerica",
+        "area": 109884,
+        "population": 11194449,
+        "populationDensity": 101.9,
+        "currency": { "name": "Cuban Peso", "code": "CUP" },
+        "languages": [
+            { "name": "Spanish", "percentage": 99.7 }
+        ],
+        "formOfGovernment": "Unitary one-party socialist republic",
+        "gdp": 107400000000,
+        "gdpPerCapita": 9590,
+        "gdpPPP": null,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "CY",
+        "name": "Cyprus",
+        "capital": "Nicosia",
+        "flagEmoji": "🇨🇾",
+        "continent": "asia",
+        "area": 9251,
+        "population": 1260138,
+        "populationDensity": 136.2,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Greek", "percentage": 80.9 },
+            { "name": "Turkish", "percentage": 8.4 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 31400000000,
+        "gdpPerCapita": 24920,
+        "gdpPPP": 42000000000,
+        "organizations": ["UN", "EU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "CZ",
+        "name": "Czech Republic",
+        "capital": "Prague",
+        "flagEmoji": "🇨🇿",
+        "continent": "europe",
+        "area": 78867,
+        "population": 10827529,
+        "populationDensity": 137.3,
+        "currency": { "name": "Czech Koruna", "code": "CZK" },
+        "languages": [
+            { "name": "Czech", "percentage": 95.4 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 330900000000,
+        "gdpPerCapita": 30560,
+        "gdpPPP": 515000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "DK",
+        "name": "Denmark",
+        "capital": "Copenhagen",
+        "flagEmoji": "🇩🇰",
+        "continent": "europe",
+        "area": 43094,
+        "population": 5946952,
+        "populationDensity": 138.0,
+        "currency": { "name": "Danish Krone", "code": "DKK" },
+        "languages": [
+            { "name": "Danish", "percentage": 93.0 }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
-        "gdp": 4210000000000,
-        "gdpPerCapita": 34170,
-        "gdpPPP": 6490000000000,
-        "organizations": ["UN", "G7", "G20", "OECD", "WTO"]
+        "gdp": 404200000000,
+        "gdpPerCapita": 67960,
+        "gdpPPP": 395000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "DJ",
+        "name": "Djibouti",
+        "capital": "Djibouti",
+        "flagEmoji": "🇩🇯",
+        "continent": "africa",
+        "area": 23200,
+        "population": 1120849,
+        "populationDensity": 48.3,
+        "currency": { "name": "Djiboutian Franc", "code": "DJF" },
+        "languages": [
+            { "name": "French", "percentage": 34.0 },
+            { "name": "Arabic", "percentage": 36.0 },
+            { "name": "Somali", "percentage": 30.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 3780000000,
+        "gdpPerCapita": 3370,
+        "gdpPPP": 6600000000,
+        "organizations": ["UN", "AU", "Arab League"]
+    },
+    {
+        "code": "DM",
+        "name": "Dominica",
+        "capital": "Roseau",
+        "flagEmoji": "🇩🇲",
+        "continent": "northAmerica",
+        "area": 751,
+        "population": 72737,
+        "populationDensity": 96.9,
+        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "languages": [
+            { "name": "English", "percentage": 94.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 640000000,
+        "gdpPerCapita": 8800,
+        "gdpPPP": 900000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "DO",
+        "name": "Dominican Republic",
+        "capital": "Santo Domingo",
+        "flagEmoji": "🇩🇴",
+        "continent": "northAmerica",
+        "area": 48671,
+        "population": 11332972,
+        "populationDensity": 232.9,
+        "currency": { "name": "Dominican Peso", "code": "DOP" },
+        "languages": [
+            { "name": "Spanish", "percentage": 98.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 113100000000,
+        "gdpPerCapita": 9980,
+        "gdpPPP": 250000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "EC",
+        "name": "Ecuador",
+        "capital": "Quito",
+        "flagEmoji": "🇪🇨",
+        "continent": "southAmerica",
+        "area": 283561,
+        "population": 18190484,
+        "populationDensity": 64.2,
+        "currency": { "name": "United States Dollar", "code": "USD" },
+        "languages": [
+            { "name": "Spanish", "percentage": 93.0 },
+            { "name": "Quechua", "percentage": 4.1 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 118800000000,
+        "gdpPerCapita": 6530,
+        "gdpPPP": 217000000000,
+        "organizations": ["UN", "OPEC", "WTO"]
+    },
+    {
+        "code": "EG",
+        "name": "Egypt",
+        "capital": "Cairo",
+        "flagEmoji": "🇪🇬",
+        "continent": "africa",
+        "area": 1002450,
+        "population": 109262178,
+        "populationDensity": 109.0,
+        "currency": { "name": "Egyptian Pound", "code": "EGP" },
+        "languages": [
+            { "name": "Arabic", "percentage": 94.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential constitutional republic",
+        "gdp": 395000000000,
+        "gdpPerCapita": 3620,
+        "gdpPPP": 1820000000000,
+        "organizations": ["UN", "AU", "Arab League", "WTO"]
+    },
+    {
+        "code": "SV",
+        "name": "El Salvador",
+        "capital": "San Salvador",
+        "flagEmoji": "🇸🇻",
+        "continent": "northAmerica",
+        "area": 21041,
+        "population": 6364943,
+        "populationDensity": 302.3,
+        "currency": { "name": "United States Dollar", "code": "USD" },
+        "languages": [
+            { "name": "Spanish", "percentage": 99.7 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 33100000000,
+        "gdpPerCapita": 5200,
+        "gdpPPP": 65000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "GQ",
+        "name": "Equatorial Guinea",
+        "capital": "Malabo",
+        "flagEmoji": "🇬🇶",
+        "continent": "africa",
+        "area": 28051,
+        "population": 1714671,
+        "populationDensity": 61.1,
+        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "languages": [
+            { "name": "Spanish", "percentage": 67.6 },
+            { "name": "French", "percentage": 32.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 12300000000,
+        "gdpPerCapita": 7170,
+        "gdpPPP": 25000000000,
+        "organizations": ["UN", "AU", "OPEC"]
+    },
+    {
+        "code": "ER",
+        "name": "Eritrea",
+        "capital": "Asmara",
+        "flagEmoji": "🇪🇷",
+        "continent": "africa",
+        "area": 117600,
+        "population": 3748901,
+        "populationDensity": 31.9,
+        "currency": { "name": "Eritrean Nakfa", "code": "ERN" },
+        "languages": [
+            { "name": "Tigrinya", "percentage": 55.0 },
+            { "name": "Arabic", "percentage": 5.0 }
+        ],
+        "formOfGovernment": "Unitary one-party presidential republic",
+        "gdp": 2300000000,
+        "gdpPerCapita": 614,
+        "gdpPPP": 7500000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "EE",
+        "name": "Estonia",
+        "capital": "Tallinn",
+        "flagEmoji": "🇪🇪",
+        "continent": "europe",
+        "area": 45228,
+        "population": 1373101,
+        "populationDensity": 30.4,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Estonian", "percentage": 68.5 },
+            { "name": "Russian", "percentage": 29.6 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 40200000000,
+        "gdpPerCapita": 29270,
+        "gdpPPP": 60000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "SZ",
+        "name": "Eswatini",
+        "capital": "Mbabane",
+        "flagEmoji": "🇸🇿",
+        "continent": "africa",
+        "area": 17364,
+        "population": 1210822,
+        "populationDensity": 69.7,
+        "currency": { "name": "Swazi Lilangeni", "code": "SZL" },
+        "languages": [
+            { "name": "Swati", "percentage": 83.0 },
+            { "name": "English", "percentage": 8.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary absolute monarchy",
+        "gdp": 4780000000,
+        "gdpPerCapita": 3950,
+        "gdpPPP": 13000000000,
+        "organizations": ["UN", "AU", "Commonwealth"]
+    },
+    {
+        "code": "ET",
+        "name": "Ethiopia",
+        "capital": "Addis Ababa",
+        "flagEmoji": "🇪🇹",
+        "continent": "africa",
+        "area": 1104300,
+        "population": 126527060,
+        "populationDensity": 114.6,
+        "currency": { "name": "Ethiopian Birr", "code": "ETB" },
+        "languages": [
+            { "name": "Oromo", "percentage": 33.8 },
+            { "name": "Amharic", "percentage": 29.3 }
+        ],
+        "formOfGovernment": "Federal parliamentary republic",
+        "gdp": 155800000000,
+        "gdpPerCapita": 1230,
+        "gdpPPP": 394000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "FJ",
+        "name": "Fiji",
+        "capital": "Suva",
+        "flagEmoji": "🇫🇯",
+        "continent": "oceania",
+        "area": 18274,
+        "population": 936375,
+        "populationDensity": 51.2,
+        "currency": { "name": "Fijian Dollar", "code": "FJD" },
+        "languages": [
+            { "name": "English", "percentage": 44.0 },
+            { "name": "Fijian", "percentage": 37.0 },
+            { "name": "Hindi", "percentage": 19.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 5320000000,
+        "gdpPerCapita": 5680,
+        "gdpPPP": 13000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "FI",
+        "name": "Finland",
+        "capital": "Helsinki",
+        "flagEmoji": "🇫🇮",
+        "continent": "europe",
+        "area": 338145,
+        "population": 5563970,
+        "populationDensity": 16.5,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Finnish", "percentage": 86.5 },
+            { "name": "Swedish", "percentage": 5.2 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 300500000000,
+        "gdpPerCapita": 54030,
+        "gdpPPP": 310000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "FR",
+        "name": "France",
+        "capital": "Paris",
+        "flagEmoji": "🇫🇷",
+        "continent": "europe",
+        "area": 640679,
+        "population": 68170000,
+        "populationDensity": 106.4,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "French", "percentage": 93.6 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential constitutional republic",
+        "gdp": 3030000000000,
+        "gdpPerCapita": 44410,
+        "gdpPPP": 3870000000000,
+        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
+    },
+    {
+        "code": "GA",
+        "name": "Gabon",
+        "capital": "Libreville",
+        "flagEmoji": "🇬🇦",
+        "continent": "africa",
+        "area": 267668,
+        "population": 2436566,
+        "populationDensity": 9.1,
+        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "languages": [
+            { "name": "French", "percentage": 80.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 20200000000,
+        "gdpPerCapita": 8290,
+        "gdpPPP": 41000000000,
+        "organizations": ["UN", "AU", "OPEC", "WTO"]
+    },
+    {
+        "code": "GM",
+        "name": "Gambia",
+        "capital": "Banjul",
+        "flagEmoji": "🇬🇲",
+        "continent": "africa",
+        "area": 11295,
+        "population": 2773168,
+        "populationDensity": 245.5,
+        "currency": { "name": "Gambian Dalasi", "code": "GMD" },
+        "languages": [
+            { "name": "English", "percentage": 40.0 },
+            { "name": "Mandinka", "percentage": 34.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 2170000000,
+        "gdpPerCapita": 783,
+        "gdpPPP": 6700000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "GE",
+        "name": "Georgia",
+        "capital": "Tbilisi",
+        "flagEmoji": "🇬🇪",
+        "continent": "asia",
+        "area": 69700,
+        "population": 3728573,
+        "populationDensity": 53.5,
+        "currency": { "name": "Georgian Lari", "code": "GEL" },
+        "languages": [
+            { "name": "Georgian", "percentage": 87.6 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 30500000000,
+        "gdpPerCapita": 8190,
+        "gdpPPP": 75000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "DE",
+        "name": "Germany",
+        "capital": "Berlin",
+        "flagEmoji": "🇩🇪",
+        "continent": "europe",
+        "area": 357022,
+        "population": 84482267,
+        "populationDensity": 236.7,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "German", "percentage": 94.8 }
+        ],
+        "formOfGovernment": "Federal parliamentary republic",
+        "gdp": 4460000000000,
+        "gdpPerCapita": 52820,
+        "gdpPPP": 5370000000000,
+        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
+    },
+    {
+        "code": "GH",
+        "name": "Ghana",
+        "capital": "Accra",
+        "flagEmoji": "🇬🇭",
+        "continent": "africa",
+        "area": 238533,
+        "population": 33475870,
+        "populationDensity": 140.3,
+        "currency": { "name": "Ghanaian Cedi", "code": "GHS" },
+        "languages": [
+            { "name": "English", "percentage": 58.0 },
+            { "name": "Akan", "percentage": 44.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 76400000000,
+        "gdpPerCapita": 2280,
+        "gdpPPP": 230000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "GR",
+        "name": "Greece",
+        "capital": "Athens",
+        "flagEmoji": "🇬🇷",
+        "continent": "europe",
+        "area": 131957,
+        "population": 10341277,
+        "populationDensity": 78.4,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Greek", "percentage": 99.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 238200000000,
+        "gdpPerCapita": 23040,
+        "gdpPPP": 378000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "GD",
+        "name": "Grenada",
+        "capital": "St. George's",
+        "flagEmoji": "🇬🇩",
+        "continent": "northAmerica",
+        "area": 344,
+        "population": 125438,
+        "populationDensity": 364.6,
+        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "languages": [
+            { "name": "English", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 1300000000,
+        "gdpPerCapita": 10360,
+        "gdpPPP": 2000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "GT",
+        "name": "Guatemala",
+        "capital": "Guatemala City",
+        "flagEmoji": "🇬🇹",
+        "continent": "northAmerica",
+        "area": 108889,
+        "population": 18092026,
+        "populationDensity": 166.1,
+        "currency": { "name": "Guatemalan Quetzal", "code": "GTQ" },
+        "languages": [
+            { "name": "Spanish", "percentage": 69.9 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 95000000000,
+        "gdpPerCapita": 5250,
+        "gdpPPP": 180000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "GN",
+        "name": "Guinea",
+        "capital": "Conakry",
+        "flagEmoji": "🇬🇳",
+        "continent": "africa",
+        "area": 245857,
+        "population": 14190612,
+        "populationDensity": 57.7,
+        "currency": { "name": "Guinean Franc", "code": "GNF" },
+        "languages": [
+            { "name": "French", "percentage": 25.0 },
+            { "name": "Fula", "percentage": 33.9 }
+        ],
+        "formOfGovernment": "Unitary military junta",
+        "gdp": 20400000000,
+        "gdpPerCapita": 1440,
+        "gdpPPP": 42000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "GW",
+        "name": "Guinea-Bissau",
+        "capital": "Bissau",
+        "flagEmoji": "🇬🇼",
+        "continent": "africa",
+        "area": 36125,
+        "population": 2150842,
+        "populationDensity": 59.5,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "Portuguese", "percentage": 14.0 },
+            { "name": "Crioulo", "percentage": 44.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 1870000000,
+        "gdpPerCapita": 870,
+        "gdpPPP": 5000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "GY",
+        "name": "Guyana",
+        "capital": "Georgetown",
+        "flagEmoji": "🇬🇾",
+        "continent": "southAmerica",
+        "area": 214969,
+        "population": 813834,
+        "populationDensity": 3.8,
+        "currency": { "name": "Guyanese Dollar", "code": "GYD" },
+        "languages": [
+            { "name": "English", "percentage": 89.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 21400000000,
+        "gdpPerCapita": 26310,
+        "gdpPPP": 42000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "HT",
+        "name": "Haiti",
+        "capital": "Port-au-Prince",
+        "flagEmoji": "🇭🇹",
+        "continent": "northAmerica",
+        "area": 27750,
+        "population": 11724763,
+        "populationDensity": 422.5,
+        "currency": { "name": "Haitian Gourde", "code": "HTG" },
+        "languages": [
+            { "name": "Haitian Creole", "percentage": 95.0 },
+            { "name": "French", "percentage": 5.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 20300000000,
+        "gdpPerCapita": 1730,
+        "gdpPPP": 35000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "HN",
+        "name": "Honduras",
+        "capital": "Tegucigalpa",
+        "flagEmoji": "🇭🇳",
+        "continent": "northAmerica",
+        "area": 112492,
+        "population": 10433282,
+        "populationDensity": 92.7,
+        "currency": { "name": "Honduran Lempira", "code": "HNL" },
+        "languages": [
+            { "name": "Spanish", "percentage": 98.7 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 31700000000,
+        "gdpPerCapita": 3040,
+        "gdpPPP": 65000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "HU",
+        "name": "Hungary",
+        "capital": "Budapest",
+        "flagEmoji": "🇭🇺",
+        "continent": "europe",
+        "area": 93028,
+        "population": 9597085,
+        "populationDensity": 103.2,
+        "currency": { "name": "Hungarian Forint", "code": "HUF" },
+        "languages": [
+            { "name": "Hungarian", "percentage": 99.6 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 212100000000,
+        "gdpPerCapita": 22100,
+        "gdpPPP": 405000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "IS",
+        "name": "Iceland",
+        "capital": "Reykjavik",
+        "flagEmoji": "🇮🇸",
+        "continent": "europe",
+        "area": 103000,
+        "population": 383726,
+        "populationDensity": 3.7,
+        "currency": { "name": "Icelandic Króna", "code": "ISK" },
+        "languages": [
+            { "name": "Icelandic", "percentage": 93.2 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 30500000000,
+        "gdpPerCapita": 79470,
+        "gdpPPP": 24000000000,
+        "organizations": ["UN", "NATO", "OECD", "WTO"]
     },
     {
         "code": "IN",
         "name": "India",
         "capital": "New Delhi",
-        "flagEmoji": "\ud83c\uddee\ud83c\uddf3",
+        "flagEmoji": "🇮🇳",
         "continent": "asia",
         "area": 3287263,
         "population": 1428627663,
         "populationDensity": 434.5,
-        "currency": {
-            "name": "Indian Rupee",
-            "code": "INR"
-        },
+        "currency": { "name": "Indian Rupee", "code": "INR" },
         "languages": [
             { "name": "Hindi", "percentage": 43.6 },
             { "name": "English", "percentage": 10.6 },
@@ -338,18 +1505,270 @@
         "organizations": ["UN", "G20", "WTO", "BRICS", "Commonwealth"]
     },
     {
+        "code": "ID",
+        "name": "Indonesia",
+        "capital": "Jakarta",
+        "flagEmoji": "🇮🇩",
+        "continent": "asia",
+        "area": 1904569,
+        "population": 277534122,
+        "populationDensity": 145.7,
+        "currency": { "name": "Indonesian Rupiah", "code": "IDR" },
+        "languages": [
+            { "name": "Indonesian", "percentage": 94.0 },
+            { "name": "Javanese", "percentage": 34.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 1417000000000,
+        "gdpPerCapita": 5110,
+        "gdpPPP": 4390000000000,
+        "organizations": ["UN", "G20", "ASEAN", "OPEC", "WTO"]
+    },
+    {
+        "code": "IR",
+        "name": "Iran",
+        "capital": "Tehran",
+        "flagEmoji": "🇮🇷",
+        "continent": "asia",
+        "area": 1648195,
+        "population": 88550570,
+        "populationDensity": 53.7,
+        "currency": { "name": "Iranian Rial", "code": "IRR" },
+        "languages": [
+            { "name": "Persian", "percentage": 53.0 },
+            { "name": "Azerbaijani", "percentage": 18.0 }
+        ],
+        "formOfGovernment": "Unitary theocratic presidential republic",
+        "gdp": 401500000000,
+        "gdpPerCapita": 4530,
+        "gdpPPP": 1640000000000,
+        "organizations": ["UN", "OPEC"]
+    },
+    {
+        "code": "IQ",
+        "name": "Iraq",
+        "capital": "Baghdad",
+        "flagEmoji": "🇮🇶",
+        "continent": "asia",
+        "area": 438317,
+        "population": 44496122,
+        "populationDensity": 101.5,
+        "currency": { "name": "Iraqi Dinar", "code": "IQD" },
+        "languages": [
+            { "name": "Arabic", "percentage": 79.0 },
+            { "name": "Kurdish", "percentage": 21.0 }
+        ],
+        "formOfGovernment": "Federal parliamentary republic",
+        "gdp": 264200000000,
+        "gdpPerCapita": 5940,
+        "gdpPPP": 512000000000,
+        "organizations": ["UN", "OPEC", "Arab League"]
+    },
+    {
+        "code": "IE",
+        "name": "Ireland",
+        "capital": "Dublin",
+        "flagEmoji": "🇮🇪",
+        "continent": "europe",
+        "area": 70273,
+        "population": 5149139,
+        "populationDensity": 73.3,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "English", "percentage": 94.0 },
+            { "name": "Irish", "percentage": 39.8 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 545600000000,
+        "gdpPerCapita": 106000,
+        "gdpPPP": 616000000000,
+        "organizations": ["UN", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "IL",
+        "name": "Israel",
+        "capital": "Jerusalem",
+        "flagEmoji": "🇮🇱",
+        "continent": "asia",
+        "area": 20770,
+        "population": 9842000,
+        "populationDensity": 473.9,
+        "currency": { "name": "Israeli New Shekel", "code": "ILS" },
+        "languages": [
+            { "name": "Hebrew", "percentage": 87.0 },
+            { "name": "Arabic", "percentage": 13.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 525000000000,
+        "gdpPerCapita": 53350,
+        "gdpPPP": 504000000000,
+        "organizations": ["UN", "OECD", "WTO"]
+    },
+    {
+        "code": "IT",
+        "name": "Italy",
+        "capital": "Rome",
+        "flagEmoji": "🇮🇹",
+        "continent": "europe",
+        "area": 301340,
+        "population": 58853482,
+        "populationDensity": 195.3,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Italian", "percentage": 93.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 2250000000000,
+        "gdpPerCapita": 38200,
+        "gdpPPP": 3110000000000,
+        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
+    },
+    {
+        "code": "JM",
+        "name": "Jamaica",
+        "capital": "Kingston",
+        "flagEmoji": "🇯🇲",
+        "continent": "northAmerica",
+        "area": 10991,
+        "population": 2825544,
+        "populationDensity": 257.1,
+        "currency": { "name": "Jamaican Dollar", "code": "JMD" },
+        "languages": [
+            { "name": "English", "percentage": 94.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 18600000000,
+        "gdpPerCapita": 6590,
+        "gdpPPP": 30000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "JP",
+        "name": "Japan",
+        "capital": "Tokyo",
+        "flagEmoji": "🇯🇵",
+        "continent": "asia",
+        "area": 377975,
+        "population": 123294513,
+        "populationDensity": 326.2,
+        "currency": { "name": "Japanese Yen", "code": "JPY" },
+        "languages": [
+            { "name": "Japanese", "percentage": 99.1 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 4210000000000,
+        "gdpPerCapita": 34170,
+        "gdpPPP": 6490000000000,
+        "organizations": ["UN", "G7", "G20", "OECD", "WTO"]
+    },
+    {
+        "code": "JO",
+        "name": "Jordan",
+        "capital": "Amman",
+        "flagEmoji": "🇯🇴",
+        "continent": "asia",
+        "area": 89342,
+        "population": 11337052,
+        "populationDensity": 126.9,
+        "currency": { "name": "Jordanian Dinar", "code": "JOD" },
+        "languages": [
+            { "name": "Arabic", "percentage": 97.9 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 50800000000,
+        "gdpPerCapita": 4480,
+        "gdpPPP": 113000000000,
+        "organizations": ["UN", "Arab League", "WTO"]
+    },
+    {
+        "code": "KZ",
+        "name": "Kazakhstan",
+        "capital": "Astana",
+        "flagEmoji": "🇰🇿",
+        "continent": "asia",
+        "area": 2724900,
+        "population": 19900000,
+        "populationDensity": 7.3,
+        "currency": { "name": "Kazakhstani Tenge", "code": "KZT" },
+        "languages": [
+            { "name": "Kazakh", "percentage": 83.1 },
+            { "name": "Russian", "percentage": 94.4 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 261000000000,
+        "gdpPerCapita": 13120,
+        "gdpPPP": 620000000000,
+        "organizations": ["UN", "CIS", "SCO", "WTO"]
+    },
+    {
+        "code": "KE",
+        "name": "Kenya",
+        "capital": "Nairobi",
+        "flagEmoji": "🇰🇪",
+        "continent": "africa",
+        "area": 580367,
+        "population": 55100586,
+        "populationDensity": 94.9,
+        "currency": { "name": "Kenyan Shilling", "code": "KES" },
+        "languages": [
+            { "name": "Swahili", "percentage": 67.2 },
+            { "name": "English", "percentage": 16.3 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 113000000000,
+        "gdpPerCapita": 2050,
+        "gdpPPP": 330000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "KI",
+        "name": "Kiribati",
+        "capital": "Tarawa",
+        "flagEmoji": "🇰🇮",
+        "continent": "oceania",
+        "area": 811,
+        "population": 131232,
+        "populationDensity": 161.8,
+        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "languages": [
+            { "name": "English", "percentage": 85.0 },
+            { "name": "Gilbertese", "percentage": 97.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 248000000,
+        "gdpPerCapita": 1890,
+        "gdpPPP": 280000000,
+        "organizations": ["UN", "Commonwealth"]
+    },
+    {
+        "code": "KP",
+        "name": "North Korea",
+        "capital": "Pyongyang",
+        "flagEmoji": "🇰🇵",
+        "continent": "asia",
+        "area": 120538,
+        "population": 26160821,
+        "populationDensity": 217.0,
+        "currency": { "name": "North Korean Won", "code": "KPW" },
+        "languages": [
+            { "name": "Korean", "percentage": 99.9 }
+        ],
+        "formOfGovernment": "Unitary one-party socialist republic",
+        "gdp": 18000000000,
+        "gdpPerCapita": 688,
+        "gdpPPP": 40000000000,
+        "organizations": ["UN"]
+    },
+    {
         "code": "KR",
         "name": "South Korea",
         "capital": "Seoul",
-        "flagEmoji": "\ud83c\uddf0\ud83c\uddf7",
+        "flagEmoji": "🇰🇷",
         "continent": "asia",
         "area": 100210,
         "population": 51744876,
         "populationDensity": 516.4,
-        "currency": {
-            "name": "South Korean Won",
-            "code": "KRW"
-        },
+        "currency": { "name": "South Korean Won", "code": "KRW" },
         "languages": [
             { "name": "Korean", "percentage": 99.2 }
         ],
@@ -360,63 +1779,723 @@
         "organizations": ["UN", "G20", "OECD", "WTO"]
     },
     {
-        "code": "TR",
-        "name": "Turkey",
-        "capital": "Ankara",
-        "flagEmoji": "\ud83c\uddf9\ud83c\uddf7",
+        "code": "KW",
+        "name": "Kuwait",
+        "capital": "Kuwait City",
+        "flagEmoji": "🇰🇼",
         "continent": "asia",
-        "area": 783562,
-        "population": 85279553,
-        "populationDensity": 108.8,
-        "currency": {
-            "name": "Turkish Lira",
-            "code": "TRY"
-        },
+        "area": 17818,
+        "population": 4310108,
+        "populationDensity": 241.9,
+        "currency": { "name": "Kuwaiti Dinar", "code": "KWD" },
         "languages": [
-            { "name": "Turkish", "percentage": 85.5 },
-            { "name": "Kurdish", "percentage": 11.9 }
+            { "name": "Arabic", "percentage": 78.0 }
         ],
-        "formOfGovernment": "Unitary presidential constitutional republic",
-        "gdp": 1110000000000,
-        "gdpPerCapita": 13020,
-        "gdpPPP": 3320000000000,
-        "organizations": ["UN", "NATO", "G20", "OECD", "WTO"]
+        "formOfGovernment": "Unitary constitutional monarchy",
+        "gdp": 164900000000,
+        "gdpPerCapita": 38250,
+        "gdpPPP": 303000000000,
+        "organizations": ["UN", "OPEC", "Arab League", "WTO"]
     },
     {
-        "code": "EG",
-        "name": "Egypt",
-        "capital": "Cairo",
-        "flagEmoji": "\ud83c\uddea\ud83c\uddec",
-        "continent": "africa",
-        "area": 1002450,
-        "population": 109262178,
-        "populationDensity": 109.0,
-        "currency": {
-            "name": "Egyptian Pound",
-            "code": "EGP"
-        },
+        "code": "KG",
+        "name": "Kyrgyzstan",
+        "capital": "Bishkek",
+        "flagEmoji": "🇰🇬",
+        "continent": "asia",
+        "area": 199951,
+        "population": 7100000,
+        "populationDensity": 35.5,
+        "currency": { "name": "Kyrgyzstani Som", "code": "KGS" },
         "languages": [
-            { "name": "Arabic", "percentage": 94.0 }
+            { "name": "Kyrgyz", "percentage": 71.4 },
+            { "name": "Russian", "percentage": 14.4 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 11900000000,
+        "gdpPerCapita": 1680,
+        "gdpPPP": 42000000000,
+        "organizations": ["UN", "CIS", "SCO", "WTO"]
+    },
+    {
+        "code": "LA",
+        "name": "Laos",
+        "capital": "Vientiane",
+        "flagEmoji": "🇱🇦",
+        "continent": "asia",
+        "area": 236800,
+        "population": 7633779,
+        "populationDensity": 32.2,
+        "currency": { "name": "Lao Kip", "code": "LAK" },
+        "languages": [
+            { "name": "Lao", "percentage": 82.0 }
+        ],
+        "formOfGovernment": "Unitary one-party socialist republic",
+        "gdp": 15800000000,
+        "gdpPerCapita": 2070,
+        "gdpPPP": 68000000000,
+        "organizations": ["UN", "ASEAN", "WTO"]
+    },
+    {
+        "code": "LV",
+        "name": "Latvia",
+        "capital": "Riga",
+        "flagEmoji": "🇱🇻",
+        "continent": "europe",
+        "area": 64589,
+        "population": 1830211,
+        "populationDensity": 28.3,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Latvian", "percentage": 62.1 },
+            { "name": "Russian", "percentage": 37.2 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 43400000000,
+        "gdpPerCapita": 23720,
+        "gdpPPP": 70000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "LB",
+        "name": "Lebanon",
+        "capital": "Beirut",
+        "flagEmoji": "🇱🇧",
+        "continent": "asia",
+        "area": 10452,
+        "population": 5489739,
+        "populationDensity": 525.2,
+        "currency": { "name": "Lebanese Pound", "code": "LBP" },
+        "languages": [
+            { "name": "Arabic", "percentage": 93.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 21780000000,
+        "gdpPerCapita": 3970,
+        "gdpPPP": 70000000000,
+        "organizations": ["UN", "Arab League"]
+    },
+    {
+        "code": "LS",
+        "name": "Lesotho",
+        "capital": "Maseru",
+        "flagEmoji": "🇱🇸",
+        "continent": "africa",
+        "area": 30355,
+        "population": 2330318,
+        "populationDensity": 76.8,
+        "currency": { "name": "Lesotho Loti", "code": "LSL" },
+        "languages": [
+            { "name": "Sesotho", "percentage": 93.0 },
+            { "name": "English", "percentage": 7.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 2500000000,
+        "gdpPerCapita": 1070,
+        "gdpPPP": 6800000000,
+        "organizations": ["UN", "AU", "Commonwealth"]
+    },
+    {
+        "code": "LR",
+        "name": "Liberia",
+        "capital": "Monrovia",
+        "flagEmoji": "🇱🇷",
+        "continent": "africa",
+        "area": 111369,
+        "population": 5418377,
+        "populationDensity": 48.7,
+        "currency": { "name": "Liberian Dollar", "code": "LRD" },
+        "languages": [
+            { "name": "English", "percentage": 20.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 4000000000,
+        "gdpPerCapita": 740,
+        "gdpPPP": 8500000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "LY",
+        "name": "Libya",
+        "capital": "Tripoli",
+        "flagEmoji": "🇱🇾",
+        "continent": "africa",
+        "area": 1759540,
+        "population": 7137931,
+        "populationDensity": 4.1,
+        "currency": { "name": "Libyan Dinar", "code": "LYD" },
+        "languages": [
+            { "name": "Arabic", "percentage": 97.0 }
+        ],
+        "formOfGovernment": "Provisional government",
+        "gdp": 45600000000,
+        "gdpPerCapita": 6390,
+        "gdpPPP": 100000000000,
+        "organizations": ["UN", "AU", "OPEC", "Arab League"]
+    },
+    {
+        "code": "LI",
+        "name": "Liechtenstein",
+        "capital": "Vaduz",
+        "flagEmoji": "🇱🇮",
+        "continent": "europe",
+        "area": 160,
+        "population": 39584,
+        "populationDensity": 247.4,
+        "currency": { "name": "Swiss Franc", "code": "CHF" },
+        "languages": [
+            { "name": "German", "percentage": 94.5 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 7200000000,
+        "gdpPerCapita": 181900,
+        "gdpPPP": 7200000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "LT",
+        "name": "Lithuania",
+        "capital": "Vilnius",
+        "flagEmoji": "🇱🇹",
+        "continent": "europe",
+        "area": 65300,
+        "population": 2871897,
+        "populationDensity": 44.0,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Lithuanian", "percentage": 85.3 },
+            { "name": "Russian", "percentage": 8.2 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 78300000000,
+        "gdpPerCapita": 27280,
+        "gdpPPP": 126000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "LU",
+        "name": "Luxembourg",
+        "capital": "Luxembourg",
+        "flagEmoji": "🇱🇺",
+        "continent": "europe",
+        "area": 2586,
+        "population": 660809,
+        "populationDensity": 255.5,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Luxembourgish", "percentage": 55.8 },
+            { "name": "French", "percentage": 15.7 },
+            { "name": "German", "percentage": 12.1 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 86900000000,
+        "gdpPerCapita": 131580,
+        "gdpPPP": 88000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "MG",
+        "name": "Madagascar",
+        "capital": "Antananarivo",
+        "flagEmoji": "🇲🇬",
+        "continent": "africa",
+        "area": 587041,
+        "population": 30325732,
+        "populationDensity": 51.7,
+        "currency": { "name": "Malagasy Ariary", "code": "MGA" },
+        "languages": [
+            { "name": "Malagasy", "percentage": 99.0 },
+            { "name": "French", "percentage": 20.0 }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
-        "gdp": 395000000000,
-        "gdpPerCapita": 3620,
-        "gdpPPP": 1820000000000,
+        "gdp": 15800000000,
+        "gdpPerCapita": 521,
+        "gdpPPP": 47000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "MW",
+        "name": "Malawi",
+        "capital": "Lilongwe",
+        "flagEmoji": "🇲🇼",
+        "continent": "africa",
+        "area": 118484,
+        "population": 20931751,
+        "populationDensity": 176.7,
+        "currency": { "name": "Malawian Kwacha", "code": "MWK" },
+        "languages": [
+            { "name": "Chichewa", "percentage": 57.2 },
+            { "name": "English", "percentage": 7.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 14000000000,
+        "gdpPerCapita": 670,
+        "gdpPPP": 33000000000,
+        "organizations": ["UN", "AU", "Commonwealth"]
+    },
+    {
+        "code": "MY",
+        "name": "Malaysia",
+        "capital": "Kuala Lumpur",
+        "flagEmoji": "🇲🇾",
+        "continent": "asia",
+        "area": 330803,
+        "population": 34308525,
+        "populationDensity": 103.7,
+        "currency": { "name": "Malaysian Ringgit", "code": "MYR" },
+        "languages": [
+            { "name": "Malay", "percentage": 69.1 },
+            { "name": "English", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Federal parliamentary constitutional monarchy",
+        "gdp": 415600000000,
+        "gdpPerCapita": 12110,
+        "gdpPPP": 1060000000000,
+        "organizations": ["UN", "ASEAN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "MV",
+        "name": "Maldives",
+        "capital": "Malé",
+        "flagEmoji": "🇲🇻",
+        "continent": "asia",
+        "area": 298,
+        "population": 521021,
+        "populationDensity": 1748.4,
+        "currency": { "name": "Maldivian Rufiyaa", "code": "MVR" },
+        "languages": [
+            { "name": "Dhivehi", "percentage": 98.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 6600000000,
+        "gdpPerCapita": 12670,
+        "gdpPPP": 12000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "ML",
+        "name": "Mali",
+        "capital": "Bamako",
+        "flagEmoji": "🇲🇱",
+        "continent": "africa",
+        "area": 1240192,
+        "population": 22593590,
+        "populationDensity": 18.2,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "French", "percentage": 11.0 },
+            { "name": "Bambara", "percentage": 46.3 }
+        ],
+        "formOfGovernment": "Unitary military junta",
+        "gdp": 19300000000,
+        "gdpPerCapita": 850,
+        "gdpPPP": 52000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "MT",
+        "name": "Malta",
+        "capital": "Valletta",
+        "flagEmoji": "🇲🇹",
+        "continent": "europe",
+        "area": 316,
+        "population": 535064,
+        "populationDensity": 1693.2,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Maltese", "percentage": 90.1 },
+            { "name": "English", "percentage": 6.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 20900000000,
+        "gdpPerCapita": 39060,
+        "gdpPPP": 27000000000,
+        "organizations": ["UN", "EU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "MH",
+        "name": "Marshall Islands",
+        "capital": "Majuro",
+        "flagEmoji": "🇲🇭",
+        "continent": "oceania",
+        "area": 181,
+        "population": 42050,
+        "populationDensity": 232.3,
+        "currency": { "name": "United States Dollar", "code": "USD" },
+        "languages": [
+            { "name": "Marshallese", "percentage": 98.2 },
+            { "name": "English", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 280000000,
+        "gdpPerCapita": 6660,
+        "gdpPPP": 280000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "MR",
+        "name": "Mauritania",
+        "capital": "Nouakchott",
+        "flagEmoji": "🇲🇷",
+        "continent": "africa",
+        "area": 1030700,
+        "population": 4736139,
+        "populationDensity": 4.6,
+        "currency": { "name": "Mauritanian Ouguiya", "code": "MRU" },
+        "languages": [
+            { "name": "Arabic", "percentage": 80.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 10500000000,
+        "gdpPerCapita": 2220,
+        "gdpPPP": 28000000000,
+        "organizations": ["UN", "AU", "Arab League"]
+    },
+    {
+        "code": "MU",
+        "name": "Mauritius",
+        "capital": "Port Louis",
+        "flagEmoji": "🇲🇺",
+        "continent": "africa",
+        "area": 2040,
+        "population": 1300557,
+        "populationDensity": 637.5,
+        "currency": { "name": "Mauritian Rupee", "code": "MUR" },
+        "languages": [
+            { "name": "Mauritian Creole", "percentage": 86.5 },
+            { "name": "English", "percentage": 5.0 },
+            { "name": "French", "percentage": 4.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 14900000000,
+        "gdpPerCapita": 11460,
+        "gdpPPP": 32000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "MX",
+        "name": "Mexico",
+        "capital": "Mexico City",
+        "flagEmoji": "🇲🇽",
+        "continent": "northAmerica",
+        "area": 1964375,
+        "population": 129875530,
+        "populationDensity": 66.1,
+        "currency": { "name": "Mexican Peso", "code": "MXN" },
+        "languages": [
+            { "name": "Spanish", "percentage": 93.8 },
+            { "name": "Nahuatl", "percentage": 1.7 }
+        ],
+        "formOfGovernment": "Federal presidential constitutional republic",
+        "gdp": 1789000000000,
+        "gdpPerCapita": 13800,
+        "gdpPPP": 2940000000000,
+        "organizations": ["UN", "G20", "OECD", "WTO", "USMCA"]
+    },
+    {
+        "code": "FM",
+        "name": "Micronesia",
+        "capital": "Palikir",
+        "flagEmoji": "🇫🇲",
+        "continent": "oceania",
+        "area": 702,
+        "population": 114164,
+        "populationDensity": 162.6,
+        "currency": { "name": "United States Dollar", "code": "USD" },
+        "languages": [
+            { "name": "English", "percentage": 60.0 }
+        ],
+        "formOfGovernment": "Federal parliamentary republic",
+        "gdp": 440000000,
+        "gdpPerCapita": 3860,
+        "gdpPPP": 440000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "MD",
+        "name": "Moldova",
+        "capital": "Chișinău",
+        "flagEmoji": "🇲🇩",
+        "continent": "europe",
+        "area": 33846,
+        "population": 2512758,
+        "populationDensity": 74.2,
+        "currency": { "name": "Moldovan Leu", "code": "MDL" },
+        "languages": [
+            { "name": "Romanian", "percentage": 82.2 },
+            { "name": "Russian", "percentage": 14.5 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 16500000000,
+        "gdpPerCapita": 6570,
+        "gdpPPP": 40000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "MC",
+        "name": "Monaco",
+        "capital": "Monaco",
+        "flagEmoji": "🇲🇨",
+        "continent": "europe",
+        "area": 2.02,
+        "population": 39050,
+        "populationDensity": 19332.7,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "French", "percentage": 50.0 },
+            { "name": "Monégasque", "percentage": 20.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 8600000000,
+        "gdpPerCapita": 220200,
+        "gdpPPP": 8600000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "MN",
+        "name": "Mongolia",
+        "capital": "Ulaanbaatar",
+        "flagEmoji": "🇲🇳",
+        "continent": "asia",
+        "area": 1564116,
+        "population": 3447157,
+        "populationDensity": 2.2,
+        "currency": { "name": "Mongolian Tögrög", "code": "MNT" },
+        "languages": [
+            { "name": "Mongolian", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 20000000000,
+        "gdpPerCapita": 5800,
+        "gdpPPP": 49000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "ME",
+        "name": "Montenegro",
+        "capital": "Podgorica",
+        "flagEmoji": "🇲🇪",
+        "continent": "europe",
+        "area": 13812,
+        "population": 616695,
+        "populationDensity": 44.6,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Montenegrin", "percentage": 42.9 },
+            { "name": "Serbian", "percentage": 37.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 7400000000,
+        "gdpPerCapita": 12000,
+        "gdpPPP": 15000000000,
+        "organizations": ["UN", "NATO", "WTO"]
+    },
+    {
+        "code": "MA",
+        "name": "Morocco",
+        "capital": "Rabat",
+        "flagEmoji": "🇲🇦",
+        "continent": "africa",
+        "area": 446550,
+        "population": 37840044,
+        "populationDensity": 84.7,
+        "currency": { "name": "Moroccan Dirham", "code": "MAD" },
+        "languages": [
+            { "name": "Arabic", "percentage": 65.0 },
+            { "name": "Berber", "percentage": 26.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 141500000000,
+        "gdpPerCapita": 3740,
+        "gdpPPP": 380000000000,
         "organizations": ["UN", "AU", "Arab League", "WTO"]
+    },
+    {
+        "code": "MZ",
+        "name": "Mozambique",
+        "capital": "Maputo",
+        "flagEmoji": "🇲🇿",
+        "continent": "africa",
+        "area": 801590,
+        "population": 33897354,
+        "populationDensity": 42.3,
+        "currency": { "name": "Mozambican Metical", "code": "MZN" },
+        "languages": [
+            { "name": "Portuguese", "percentage": 50.4 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 20500000000,
+        "gdpPerCapita": 605,
+        "gdpPPP": 47000000000,
+        "organizations": ["UN", "AU", "Commonwealth"]
+    },
+    {
+        "code": "MM",
+        "name": "Myanmar",
+        "capital": "Naypyidaw",
+        "flagEmoji": "🇲🇲",
+        "continent": "asia",
+        "area": 676578,
+        "population": 54179306,
+        "populationDensity": 80.1,
+        "currency": { "name": "Myanmar Kyat", "code": "MMK" },
+        "languages": [
+            { "name": "Burmese", "percentage": 68.0 }
+        ],
+        "formOfGovernment": "Unitary military junta",
+        "gdp": 59400000000,
+        "gdpPerCapita": 1100,
+        "gdpPPP": 250000000000,
+        "organizations": ["UN", "ASEAN"]
+    },
+    {
+        "code": "NA",
+        "name": "Namibia",
+        "capital": "Windhoek",
+        "flagEmoji": "🇳🇦",
+        "continent": "africa",
+        "area": 824292,
+        "population": 2604172,
+        "populationDensity": 3.2,
+        "currency": { "name": "Namibian Dollar", "code": "NAD" },
+        "languages": [
+            { "name": "English", "percentage": 11.0 },
+            { "name": "Oshiwambo", "percentage": 49.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 12800000000,
+        "gdpPerCapita": 4920,
+        "gdpPPP": 29000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "NR",
+        "name": "Nauru",
+        "capital": "Yaren",
+        "flagEmoji": "🇳🇷",
+        "continent": "oceania",
+        "area": 21,
+        "population": 12780,
+        "populationDensity": 608.6,
+        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "languages": [
+            { "name": "Nauruan", "percentage": 93.0 },
+            { "name": "English", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 150000000,
+        "gdpPerCapita": 11740,
+        "gdpPPP": 150000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "NP",
+        "name": "Nepal",
+        "capital": "Kathmandu",
+        "flagEmoji": "🇳🇵",
+        "continent": "asia",
+        "area": 147181,
+        "population": 30896590,
+        "populationDensity": 209.9,
+        "currency": { "name": "Nepalese Rupee", "code": "NPR" },
+        "languages": [
+            { "name": "Nepali", "percentage": 44.6 },
+            { "name": "Maithili", "percentage": 11.7 }
+        ],
+        "formOfGovernment": "Federal parliamentary republic",
+        "gdp": 40830000000,
+        "gdpPerCapita": 1320,
+        "gdpPPP": 141000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "NL",
+        "name": "Netherlands",
+        "capital": "Amsterdam",
+        "flagEmoji": "🇳🇱",
+        "continent": "europe",
+        "area": 41543,
+        "population": 17811291,
+        "populationDensity": 428.7,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Dutch", "percentage": 95.6 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 1092000000000,
+        "gdpPerCapita": 61350,
+        "gdpPPP": 1170000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "NZ",
+        "name": "New Zealand",
+        "capital": "Wellington",
+        "flagEmoji": "🇳🇿",
+        "continent": "oceania",
+        "area": 268021,
+        "population": 5228100,
+        "populationDensity": 19.5,
+        "currency": { "name": "New Zealand Dollar", "code": "NZD" },
+        "languages": [
+            { "name": "English", "percentage": 95.4 },
+            { "name": "Māori", "percentage": 4.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 253500000000,
+        "gdpPerCapita": 48510,
+        "gdpPPP": 263000000000,
+        "organizations": ["UN", "OECD", "WTO", "Commonwealth"]
+    },
+    {
+        "code": "NI",
+        "name": "Nicaragua",
+        "capital": "Managua",
+        "flagEmoji": "🇳🇮",
+        "continent": "northAmerica",
+        "area": 130373,
+        "population": 6948392,
+        "populationDensity": 53.3,
+        "currency": { "name": "Nicaraguan Córdoba", "code": "NIO" },
+        "languages": [
+            { "name": "Spanish", "percentage": 97.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 17600000000,
+        "gdpPerCapita": 2530,
+        "gdpPPP": 47000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "NE",
+        "name": "Niger",
+        "capital": "Niamey",
+        "flagEmoji": "🇳🇪",
+        "continent": "africa",
+        "area": 1267000,
+        "population": 26207977,
+        "populationDensity": 20.7,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "French", "percentage": 10.0 },
+            { "name": "Hausa", "percentage": 53.1 }
+        ],
+        "formOfGovernment": "Unitary military junta",
+        "gdp": 16800000000,
+        "gdpPerCapita": 640,
+        "gdpPPP": 40000000000,
+        "organizations": ["UN", "AU"]
     },
     {
         "code": "NG",
         "name": "Nigeria",
         "capital": "Abuja",
-        "flagEmoji": "\ud83c\uddf3\ud83c\uddec",
+        "flagEmoji": "🇳🇬",
         "continent": "africa",
         "area": 923768,
         "population": 223804632,
         "populationDensity": 242.3,
-        "currency": {
-            "name": "Nigerian Naira",
-            "code": "NGN"
-        },
+        "currency": { "name": "Nigerian Naira", "code": "NGN" },
         "languages": [
             { "name": "English", "percentage": 53.0 },
             { "name": "Hausa", "percentage": 18.8 },
@@ -429,18 +2508,663 @@
         "organizations": ["UN", "AU", "OPEC", "Commonwealth", "WTO"]
     },
     {
+        "code": "MK",
+        "name": "North Macedonia",
+        "capital": "Skopje",
+        "flagEmoji": "🇲🇰",
+        "continent": "europe",
+        "area": 25713,
+        "population": 1832696,
+        "populationDensity": 71.3,
+        "currency": { "name": "Macedonian Denar", "code": "MKD" },
+        "languages": [
+            { "name": "Macedonian", "percentage": 66.5 },
+            { "name": "Albanian", "percentage": 25.1 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 14200000000,
+        "gdpPerCapita": 7750,
+        "gdpPPP": 39000000000,
+        "organizations": ["UN", "NATO", "WTO"]
+    },
+    {
+        "code": "NO",
+        "name": "Norway",
+        "capital": "Oslo",
+        "flagEmoji": "🇳🇴",
+        "continent": "europe",
+        "area": 323802,
+        "population": 5550203,
+        "populationDensity": 17.1,
+        "currency": { "name": "Norwegian Krone", "code": "NOK" },
+        "languages": [
+            { "name": "Norwegian", "percentage": 95.2 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 485500000000,
+        "gdpPerCapita": 87470,
+        "gdpPPP": 430000000000,
+        "organizations": ["UN", "NATO", "OECD", "WTO"]
+    },
+    {
+        "code": "OM",
+        "name": "Oman",
+        "capital": "Muscat",
+        "flagEmoji": "🇴🇲",
+        "continent": "asia",
+        "area": 309500,
+        "population": 4644384,
+        "populationDensity": 15.0,
+        "currency": { "name": "Omani Rial", "code": "OMR" },
+        "languages": [
+            { "name": "Arabic", "percentage": 90.0 }
+        ],
+        "formOfGovernment": "Unitary absolute monarchy",
+        "gdp": 104900000000,
+        "gdpPerCapita": 22590,
+        "gdpPPP": 193000000000,
+        "organizations": ["UN", "Arab League", "WTO"]
+    },
+    {
+        "code": "PK",
+        "name": "Pakistan",
+        "capital": "Islamabad",
+        "flagEmoji": "🇵🇰",
+        "continent": "asia",
+        "area": 881913,
+        "population": 240485658,
+        "populationDensity": 272.7,
+        "currency": { "name": "Pakistani Rupee", "code": "PKR" },
+        "languages": [
+            { "name": "Urdu", "percentage": 7.6 },
+            { "name": "Punjabi", "percentage": 38.8 },
+            { "name": "English", "percentage": 10.0 }
+        ],
+        "formOfGovernment": "Federal parliamentary constitutional republic",
+        "gdp": 338200000000,
+        "gdpPerCapita": 1410,
+        "gdpPPP": 1500000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "PW",
+        "name": "Palau",
+        "capital": "Ngerulmud",
+        "flagEmoji": "🇵🇼",
+        "continent": "oceania",
+        "area": 459,
+        "population": 18233,
+        "populationDensity": 39.7,
+        "currency": { "name": "United States Dollar", "code": "USD" },
+        "languages": [
+            { "name": "Palauan", "percentage": 64.7 },
+            { "name": "English", "percentage": 9.4 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 290000000,
+        "gdpPerCapita": 15900,
+        "gdpPPP": 290000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "PS",
+        "name": "Palestine",
+        "capital": "Ramallah",
+        "flagEmoji": "🇵🇸",
+        "continent": "asia",
+        "area": 6020,
+        "population": 5483450,
+        "populationDensity": 910.9,
+        "currency": { "name": "Israeli New Shekel", "code": "ILS" },
+        "languages": [
+            { "name": "Arabic", "percentage": 96.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 19100000000,
+        "gdpPerCapita": 3480,
+        "gdpPPP": 35000000000,
+        "organizations": ["UN", "Arab League"]
+    },
+    {
+        "code": "PA",
+        "name": "Panama",
+        "capital": "Panama City",
+        "flagEmoji": "🇵🇦",
+        "continent": "northAmerica",
+        "area": 75417,
+        "population": 4468087,
+        "populationDensity": 59.2,
+        "currency": { "name": "Panamanian Balboa", "code": "PAB" },
+        "languages": [
+            { "name": "Spanish", "percentage": 93.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 76520000000,
+        "gdpPerCapita": 17130,
+        "gdpPPP": 160000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "PG",
+        "name": "Papua New Guinea",
+        "capital": "Port Moresby",
+        "flagEmoji": "🇵🇬",
+        "continent": "oceania",
+        "area": 462840,
+        "population": 10329931,
+        "populationDensity": 22.3,
+        "currency": { "name": "Papua New Guinean Kina", "code": "PGK" },
+        "languages": [
+            { "name": "Tok Pisin", "percentage": 36.2 },
+            { "name": "English", "percentage": 1.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 32200000000,
+        "gdpPerCapita": 3120,
+        "gdpPPP": 42000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "PY",
+        "name": "Paraguay",
+        "capital": "Asunción",
+        "flagEmoji": "🇵🇾",
+        "continent": "southAmerica",
+        "area": 406752,
+        "population": 6861524,
+        "populationDensity": 16.9,
+        "currency": { "name": "Paraguayan Guaraní", "code": "PYG" },
+        "languages": [
+            { "name": "Spanish", "percentage": 87.0 },
+            { "name": "Guaraní", "percentage": 77.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 43000000000,
+        "gdpPerCapita": 6260,
+        "gdpPPP": 107000000000,
+        "organizations": ["UN", "Mercosur", "WTO"]
+    },
+    {
+        "code": "PE",
+        "name": "Peru",
+        "capital": "Lima",
+        "flagEmoji": "🇵🇪",
+        "continent": "southAmerica",
+        "area": 1285216,
+        "population": 34352719,
+        "populationDensity": 26.7,
+        "currency": { "name": "Peruvian Sol", "code": "PEN" },
+        "languages": [
+            { "name": "Spanish", "percentage": 82.9 },
+            { "name": "Quechua", "percentage": 13.6 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 268200000000,
+        "gdpPerCapita": 7810,
+        "gdpPPP": 536000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "PH",
+        "name": "Philippines",
+        "capital": "Manila",
+        "flagEmoji": "🇵🇭",
+        "continent": "asia",
+        "area": 342353,
+        "population": 117337368,
+        "populationDensity": 342.8,
+        "currency": { "name": "Philippine Peso", "code": "PHP" },
+        "languages": [
+            { "name": "Filipino", "percentage": 45.0 },
+            { "name": "English", "percentage": 37.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 437100000000,
+        "gdpPerCapita": 3730,
+        "gdpPPP": 1280000000000,
+        "organizations": ["UN", "ASEAN", "WTO"]
+    },
+    {
+        "code": "PL",
+        "name": "Poland",
+        "capital": "Warsaw",
+        "flagEmoji": "🇵🇱",
+        "continent": "europe",
+        "area": 312696,
+        "population": 36753736,
+        "populationDensity": 117.5,
+        "currency": { "name": "Polish Złoty", "code": "PLN" },
+        "languages": [
+            { "name": "Polish", "percentage": 97.8 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 842200000000,
+        "gdpPerCapita": 22930,
+        "gdpPPP": 1630000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "PT",
+        "name": "Portugal",
+        "capital": "Lisbon",
+        "flagEmoji": "🇵🇹",
+        "continent": "europe",
+        "area": 92212,
+        "population": 10467366,
+        "populationDensity": 113.5,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Portuguese", "percentage": 96.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential constitutional republic",
+        "gdp": 287100000000,
+        "gdpPerCapita": 27430,
+        "gdpPPP": 425000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "QA",
+        "name": "Qatar",
+        "capital": "Doha",
+        "flagEmoji": "🇶🇦",
+        "continent": "asia",
+        "area": 11586,
+        "population": 2716391,
+        "populationDensity": 234.5,
+        "currency": { "name": "Qatari Riyal", "code": "QAR" },
+        "languages": [
+            { "name": "Arabic", "percentage": 40.0 }
+        ],
+        "formOfGovernment": "Unitary semi-constitutional monarchy",
+        "gdp": 221400000000,
+        "gdpPerCapita": 81510,
+        "gdpPPP": 320000000000,
+        "organizations": ["UN", "OPEC", "Arab League", "WTO"]
+    },
+    {
+        "code": "RO",
+        "name": "Romania",
+        "capital": "Bucharest",
+        "flagEmoji": "🇷🇴",
+        "continent": "europe",
+        "area": 238397,
+        "population": 18643970,
+        "populationDensity": 78.2,
+        "currency": { "name": "Romanian Leu", "code": "RON" },
+        "languages": [
+            { "name": "Romanian", "percentage": 85.4 },
+            { "name": "Hungarian", "percentage": 6.3 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 350700000000,
+        "gdpPerCapita": 18810,
+        "gdpPPP": 737000000000,
+        "organizations": ["UN", "NATO", "EU", "WTO"]
+    },
+    {
+        "code": "RU",
+        "name": "Russia",
+        "capital": "Moscow",
+        "flagEmoji": "🇷🇺",
+        "continent": "europe",
+        "area": 17098242,
+        "population": 144236933,
+        "populationDensity": 8.4,
+        "currency": { "name": "Russian Ruble", "code": "RUB" },
+        "languages": [
+            { "name": "Russian", "percentage": 85.7 }
+        ],
+        "formOfGovernment": "Federal semi-presidential constitutional republic",
+        "gdp": 2020000000000,
+        "gdpPerCapita": 14010,
+        "gdpPPP": 5080000000000,
+        "organizations": ["UN", "G20", "WTO", "BRICS", "CIS"]
+    },
+    {
+        "code": "RW",
+        "name": "Rwanda",
+        "capital": "Kigali",
+        "flagEmoji": "🇷🇼",
+        "continent": "africa",
+        "area": 26338,
+        "population": 14094683,
+        "populationDensity": 535.2,
+        "currency": { "name": "Rwandan Franc", "code": "RWF" },
+        "languages": [
+            { "name": "Kinyarwanda", "percentage": 93.2 },
+            { "name": "English", "percentage": 2.0 },
+            { "name": "French", "percentage": 2.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 14100000000,
+        "gdpPerCapita": 1000,
+        "gdpPPP": 39000000000,
+        "organizations": ["UN", "AU", "Commonwealth"]
+    },
+    {
+        "code": "KN",
+        "name": "Saint Kitts and Nevis",
+        "capital": "Basseterre",
+        "flagEmoji": "🇰🇳",
+        "continent": "northAmerica",
+        "area": 261,
+        "population": 47755,
+        "populationDensity": 182.9,
+        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "languages": [
+            { "name": "English", "percentage": 98.0 }
+        ],
+        "formOfGovernment": "Federal parliamentary constitutional monarchy",
+        "gdp": 1100000000,
+        "gdpPerCapita": 23040,
+        "gdpPPP": 1600000000,
+        "organizations": ["UN", "Commonwealth"]
+    },
+    {
+        "code": "LC",
+        "name": "Saint Lucia",
+        "capital": "Castries",
+        "flagEmoji": "🇱🇨",
+        "continent": "northAmerica",
+        "area": 617,
+        "population": 180251,
+        "populationDensity": 292.1,
+        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "languages": [
+            { "name": "English", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 2300000000,
+        "gdpPerCapita": 12770,
+        "gdpPPP": 3400000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "VC",
+        "name": "Saint Vincent and the Grenadines",
+        "capital": "Kingstown",
+        "flagEmoji": "🇻🇨",
+        "continent": "northAmerica",
+        "area": 389,
+        "population": 101145,
+        "populationDensity": 260.0,
+        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "languages": [
+            { "name": "English", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 960000000,
+        "gdpPerCapita": 9490,
+        "gdpPPP": 1500000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "WS",
+        "name": "Samoa",
+        "capital": "Apia",
+        "flagEmoji": "🇼🇸",
+        "continent": "oceania",
+        "area": 2842,
+        "population": 225681,
+        "populationDensity": 79.4,
+        "currency": { "name": "Samoan Tālā", "code": "WST" },
+        "languages": [
+            { "name": "Samoan", "percentage": 91.1 },
+            { "name": "English", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 910000000,
+        "gdpPerCapita": 4030,
+        "gdpPPP": 1300000000,
+        "organizations": ["UN", "Commonwealth"]
+    },
+    {
+        "code": "SM",
+        "name": "San Marino",
+        "capital": "San Marino",
+        "flagEmoji": "🇸🇲",
+        "continent": "europe",
+        "area": 61,
+        "population": 33642,
+        "populationDensity": 551.5,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Italian", "percentage": 97.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary directorial republic",
+        "gdp": 1860000000,
+        "gdpPerCapita": 55290,
+        "gdpPPP": 2200000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "ST",
+        "name": "São Tomé and Príncipe",
+        "capital": "São Tomé",
+        "flagEmoji": "🇸🇹",
+        "continent": "africa",
+        "area": 964,
+        "population": 227679,
+        "populationDensity": 236.2,
+        "currency": { "name": "São Tomé and Príncipe Dobra", "code": "STN" },
+        "languages": [
+            { "name": "Portuguese", "percentage": 98.4 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 600000000,
+        "gdpPerCapita": 2640,
+        "gdpPPP": 1200000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "SA",
+        "name": "Saudi Arabia",
+        "capital": "Riyadh",
+        "flagEmoji": "🇸🇦",
+        "continent": "asia",
+        "area": 2149690,
+        "population": 36947025,
+        "populationDensity": 17.2,
+        "currency": { "name": "Saudi Riyal", "code": "SAR" },
+        "languages": [
+            { "name": "Arabic", "percentage": 90.0 }
+        ],
+        "formOfGovernment": "Unitary Islamic absolute monarchy",
+        "gdp": 1069000000000,
+        "gdpPerCapita": 28930,
+        "gdpPPP": 2110000000000,
+        "organizations": ["UN", "G20", "OPEC", "Arab League", "WTO"]
+    },
+    {
+        "code": "SN",
+        "name": "Senegal",
+        "capital": "Dakar",
+        "flagEmoji": "🇸🇳",
+        "continent": "africa",
+        "area": 196722,
+        "population": 17763163,
+        "populationDensity": 90.3,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "French", "percentage": 26.0 },
+            { "name": "Wolof", "percentage": 39.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 28300000000,
+        "gdpPerCapita": 1590,
+        "gdpPPP": 75000000000,
+        "organizations": ["UN", "AU", "WTO"]
+    },
+    {
+        "code": "RS",
+        "name": "Serbia",
+        "capital": "Belgrade",
+        "flagEmoji": "🇷🇸",
+        "continent": "europe",
+        "area": 77474,
+        "population": 6647003,
+        "populationDensity": 85.8,
+        "currency": { "name": "Serbian Dinar", "code": "RSD" },
+        "languages": [
+            { "name": "Serbian", "percentage": 88.1 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 75200000000,
+        "gdpPerCapita": 11300,
+        "gdpPPP": 173000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "SC",
+        "name": "Seychelles",
+        "capital": "Victoria",
+        "flagEmoji": "🇸🇨",
+        "continent": "africa",
+        "area": 455,
+        "population": 119773,
+        "populationDensity": 263.2,
+        "currency": { "name": "Seychellois Rupee", "code": "SCR" },
+        "languages": [
+            { "name": "Seychellois Creole", "percentage": 89.1 },
+            { "name": "English", "percentage": 5.0 },
+            { "name": "French", "percentage": 3.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 2100000000,
+        "gdpPerCapita": 17530,
+        "gdpPPP": 3600000000,
+        "organizations": ["UN", "AU", "Commonwealth"]
+    },
+    {
+        "code": "SL",
+        "name": "Sierra Leone",
+        "capital": "Freetown",
+        "flagEmoji": "🇸🇱",
+        "continent": "africa",
+        "area": 71740,
+        "population": 8791092,
+        "populationDensity": 122.5,
+        "currency": { "name": "Sierra Leonean Leone", "code": "SLE" },
+        "languages": [
+            { "name": "English", "percentage": 12.0 },
+            { "name": "Krio", "percentage": 87.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 4240000000,
+        "gdpPerCapita": 480,
+        "gdpPPP": 16000000000,
+        "organizations": ["UN", "AU", "Commonwealth"]
+    },
+    {
+        "code": "SG",
+        "name": "Singapore",
+        "capital": "Singapore",
+        "flagEmoji": "🇸🇬",
+        "continent": "asia",
+        "area": 733,
+        "population": 5917600,
+        "populationDensity": 8073.8,
+        "currency": { "name": "Singapore Dollar", "code": "SGD" },
+        "languages": [
+            { "name": "English", "percentage": 48.3 },
+            { "name": "Mandarin", "percentage": 29.9 },
+            { "name": "Malay", "percentage": 9.2 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 497300000000,
+        "gdpPerCapita": 84010,
+        "gdpPPP": 690000000000,
+        "organizations": ["UN", "ASEAN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "SK",
+        "name": "Slovakia",
+        "capital": "Bratislava",
+        "flagEmoji": "🇸🇰",
+        "continent": "europe",
+        "area": 49035,
+        "population": 5460185,
+        "populationDensity": 111.3,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Slovak", "percentage": 81.4 },
+            { "name": "Hungarian", "percentage": 8.5 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 128700000000,
+        "gdpPerCapita": 23570,
+        "gdpPPP": 212000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "SI",
+        "name": "Slovenia",
+        "capital": "Ljubljana",
+        "flagEmoji": "🇸🇮",
+        "continent": "europe",
+        "area": 20273,
+        "population": 2116972,
+        "populationDensity": 104.4,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Slovenian", "percentage": 87.7 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 68200000000,
+        "gdpPerCapita": 32240,
+        "gdpPPP": 103000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "SB",
+        "name": "Solomon Islands",
+        "capital": "Honiara",
+        "flagEmoji": "🇸🇧",
+        "continent": "oceania",
+        "area": 28896,
+        "population": 740424,
+        "populationDensity": 25.6,
+        "currency": { "name": "Solomon Islands Dollar", "code": "SBD" },
+        "languages": [
+            { "name": "English", "percentage": 2.0 },
+            { "name": "Solomons Pijin", "percentage": 80.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 1700000000,
+        "gdpPerCapita": 2300,
+        "gdpPPP": 1900000000,
+        "organizations": ["UN", "Commonwealth"]
+    },
+    {
+        "code": "SO",
+        "name": "Somalia",
+        "capital": "Mogadishu",
+        "flagEmoji": "🇸🇴",
+        "continent": "africa",
+        "area": 637657,
+        "population": 18143378,
+        "populationDensity": 28.5,
+        "currency": { "name": "Somali Shilling", "code": "SOS" },
+        "languages": [
+            { "name": "Somali", "percentage": 95.0 },
+            { "name": "Arabic", "percentage": 5.0 }
+        ],
+        "formOfGovernment": "Federal parliamentary republic",
+        "gdp": 8920000000,
+        "gdpPerCapita": 492,
+        "gdpPPP": 22000000000,
+        "organizations": ["UN", "AU", "Arab League"]
+    },
+    {
         "code": "ZA",
         "name": "South Africa",
         "capital": "Pretoria",
-        "flagEmoji": "\ud83c\uddff\ud83c\udde6",
+        "flagEmoji": "🇿🇦",
         "continent": "africa",
         "area": 1219090,
         "population": 62027503,
         "populationDensity": 50.9,
-        "currency": {
-            "name": "South African Rand",
-            "code": "ZAR"
-        },
+        "currency": { "name": "South African Rand", "code": "ZAR" },
         "languages": [
             { "name": "Zulu", "percentage": 25.3 },
             { "name": "Xhosa", "percentage": 14.8 },
@@ -454,26 +3178,699 @@
         "organizations": ["UN", "AU", "G20", "BRICS", "Commonwealth", "WTO"]
     },
     {
-        "code": "AU",
-        "name": "Australia",
-        "capital": "Canberra",
-        "flagEmoji": "\ud83c\udde6\ud83c\uddfa",
-        "continent": "oceania",
-        "area": 7692024,
-        "population": 26638544,
-        "populationDensity": 3.5,
-        "currency": {
-            "name": "Australian Dollar",
-            "code": "AUD"
-        },
+        "code": "SS",
+        "name": "South Sudan",
+        "capital": "Juba",
+        "flagEmoji": "🇸🇸",
+        "continent": "africa",
+        "area": 619745,
+        "population": 11088796,
+        "populationDensity": 17.9,
+        "currency": { "name": "South Sudanese Pound", "code": "SSP" },
         "languages": [
-            { "name": "English", "percentage": 72.7 },
-            { "name": "Mandarin", "percentage": 2.7 }
+            { "name": "English", "percentage": 27.0 },
+            { "name": "Dinka", "percentage": 35.0 }
         ],
-        "formOfGovernment": "Federal parliamentary constitutional monarchy",
-        "gdp": 1720000000000,
-        "gdpPerCapita": 64490,
-        "gdpPPP": 1720000000000,
-        "organizations": ["UN", "G20", "OECD", "WTO", "Commonwealth"]
+        "formOfGovernment": "Federal presidential republic",
+        "gdp": 6400000000,
+        "gdpPerCapita": 578,
+        "gdpPPP": 16000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "ES",
+        "name": "Spain",
+        "capital": "Madrid",
+        "flagEmoji": "🇪🇸",
+        "continent": "europe",
+        "area": 505990,
+        "population": 48592909,
+        "populationDensity": 96.1,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Spanish", "percentage": 74.0 },
+            { "name": "Catalan", "percentage": 17.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 1580000000000,
+        "gdpPerCapita": 32550,
+        "gdpPPP": 2280000000000,
+        "organizations": ["UN", "NATO", "EU", "G20", "OECD", "WTO"]
+    },
+    {
+        "code": "LK",
+        "name": "Sri Lanka",
+        "capital": "Sri Jayawardenepura Kotte",
+        "flagEmoji": "🇱🇰",
+        "continent": "asia",
+        "area": 65610,
+        "population": 22156000,
+        "populationDensity": 337.7,
+        "currency": { "name": "Sri Lankan Rupee", "code": "LKR" },
+        "languages": [
+            { "name": "Sinhala", "percentage": 74.9 },
+            { "name": "Tamil", "percentage": 25.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential constitutional republic",
+        "gdp": 84400000000,
+        "gdpPerCapita": 3810,
+        "gdpPPP": 306000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "SD",
+        "name": "Sudan",
+        "capital": "Khartoum",
+        "flagEmoji": "🇸🇩",
+        "continent": "africa",
+        "area": 1886068,
+        "population": 48109006,
+        "populationDensity": 25.5,
+        "currency": { "name": "Sudanese Pound", "code": "SDG" },
+        "languages": [
+            { "name": "Arabic", "percentage": 70.0 },
+            { "name": "English", "percentage": 2.0 }
+        ],
+        "formOfGovernment": "Federal provisional government",
+        "gdp": 51700000000,
+        "gdpPerCapita": 1070,
+        "gdpPPP": 168000000000,
+        "organizations": ["UN", "AU", "Arab League"]
+    },
+    {
+        "code": "SR",
+        "name": "Suriname",
+        "capital": "Paramaribo",
+        "flagEmoji": "🇸🇷",
+        "continent": "southAmerica",
+        "area": 163820,
+        "population": 618040,
+        "populationDensity": 3.8,
+        "currency": { "name": "Surinamese Dollar", "code": "SRD" },
+        "languages": [
+            { "name": "Dutch", "percentage": 60.0 },
+            { "name": "Sranan Tongo", "percentage": 22.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 4020000000,
+        "gdpPerCapita": 6500,
+        "gdpPPP": 10500000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "SE",
+        "name": "Sweden",
+        "capital": "Stockholm",
+        "flagEmoji": "🇸🇪",
+        "continent": "europe",
+        "area": 450295,
+        "population": 10551707,
+        "populationDensity": 23.4,
+        "currency": { "name": "Swedish Krona", "code": "SEK" },
+        "languages": [
+            { "name": "Swedish", "percentage": 86.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 593300000000,
+        "gdpPerCapita": 56230,
+        "gdpPPP": 641000000000,
+        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+    },
+    {
+        "code": "CH",
+        "name": "Switzerland",
+        "capital": "Bern",
+        "flagEmoji": "🇨🇭",
+        "continent": "europe",
+        "area": 41285,
+        "population": 8851431,
+        "populationDensity": 214.4,
+        "currency": { "name": "Swiss Franc", "code": "CHF" },
+        "languages": [
+            { "name": "German", "percentage": 62.1 },
+            { "name": "French", "percentage": 22.8 },
+            { "name": "Italian", "percentage": 8.0 }
+        ],
+        "formOfGovernment": "Federal directorial republic",
+        "gdp": 884900000000,
+        "gdpPerCapita": 100000,
+        "gdpPPP": 720000000000,
+        "organizations": ["UN", "OECD", "WTO"]
+    },
+    {
+        "code": "SY",
+        "name": "Syria",
+        "capital": "Damascus",
+        "flagEmoji": "🇸🇾",
+        "continent": "asia",
+        "area": 185180,
+        "population": 23227014,
+        "populationDensity": 125.4,
+        "currency": { "name": "Syrian Pound", "code": "SYP" },
+        "languages": [
+            { "name": "Arabic", "percentage": 90.0 },
+            { "name": "Kurdish", "percentage": 9.0 }
+        ],
+        "formOfGovernment": "Provisional government",
+        "gdp": 11000000000,
+        "gdpPerCapita": 474,
+        "gdpPPP": null,
+        "organizations": ["UN", "Arab League"]
+    },
+    {
+        "code": "TW",
+        "name": "Taiwan",
+        "capital": "Taipei",
+        "flagEmoji": "🇹🇼",
+        "continent": "asia",
+        "area": 36193,
+        "population": 23580712,
+        "populationDensity": 651.5,
+        "currency": { "name": "New Taiwan Dollar", "code": "TWD" },
+        "languages": [
+            { "name": "Mandarin Chinese", "percentage": 83.5 },
+            { "name": "Hokkien", "percentage": 81.9 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential constitutional republic",
+        "gdp": 790000000000,
+        "gdpPerCapita": 33510,
+        "gdpPPP": 1530000000000,
+        "organizations": ["WTO"]
+    },
+    {
+        "code": "TJ",
+        "name": "Tajikistan",
+        "capital": "Dushanbe",
+        "flagEmoji": "🇹🇯",
+        "continent": "asia",
+        "area": 143100,
+        "population": 10143543,
+        "populationDensity": 70.9,
+        "currency": { "name": "Tajikistani Somoni", "code": "TJS" },
+        "languages": [
+            { "name": "Tajik", "percentage": 84.4 },
+            { "name": "Russian", "percentage": 15.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 11600000000,
+        "gdpPerCapita": 1140,
+        "gdpPPP": 45000000000,
+        "organizations": ["UN", "CIS", "SCO"]
+    },
+    {
+        "code": "TZ",
+        "name": "Tanzania",
+        "capital": "Dodoma",
+        "flagEmoji": "🇹🇿",
+        "continent": "africa",
+        "area": 945087,
+        "population": 65497748,
+        "populationDensity": 69.3,
+        "currency": { "name": "Tanzanian Shilling", "code": "TZS" },
+        "languages": [
+            { "name": "Swahili", "percentage": 90.0 },
+            { "name": "English", "percentage": 10.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 79160000000,
+        "gdpPerCapita": 1210,
+        "gdpPPP": 218000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "TH",
+        "name": "Thailand",
+        "capital": "Bangkok",
+        "flagEmoji": "🇹🇭",
+        "continent": "asia",
+        "area": 513120,
+        "population": 71801279,
+        "populationDensity": 139.9,
+        "currency": { "name": "Thai Baht", "code": "THB" },
+        "languages": [
+            { "name": "Thai", "percentage": 90.7 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 514900000000,
+        "gdpPerCapita": 7170,
+        "gdpPPP": 1550000000000,
+        "organizations": ["UN", "ASEAN", "WTO"]
+    },
+    {
+        "code": "TL",
+        "name": "Timor-Leste",
+        "capital": "Dili",
+        "flagEmoji": "🇹🇱",
+        "continent": "asia",
+        "area": 14919,
+        "population": 1360596,
+        "populationDensity": 91.2,
+        "currency": { "name": "United States Dollar", "code": "USD" },
+        "languages": [
+            { "name": "Tetum", "percentage": 36.6 },
+            { "name": "Portuguese", "percentage": 12.0 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential republic",
+        "gdp": 3100000000,
+        "gdpPerCapita": 2280,
+        "gdpPPP": 5100000000,
+        "organizations": ["UN", "ASEAN"]
+    },
+    {
+        "code": "TG",
+        "name": "Togo",
+        "capital": "Lomé",
+        "flagEmoji": "🇹🇬",
+        "continent": "africa",
+        "area": 56785,
+        "population": 8848699,
+        "populationDensity": 155.8,
+        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "languages": [
+            { "name": "French", "percentage": 31.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 8600000000,
+        "gdpPerCapita": 970,
+        "gdpPPP": 23000000000,
+        "organizations": ["UN", "AU", "WTO"]
+    },
+    {
+        "code": "TO",
+        "name": "Tonga",
+        "capital": "Nukuʻalofa",
+        "flagEmoji": "🇹🇴",
+        "continent": "oceania",
+        "area": 747,
+        "population": 106858,
+        "populationDensity": 143.1,
+        "currency": { "name": "Tongan Paʻanga", "code": "TOP" },
+        "languages": [
+            { "name": "Tongan", "percentage": 96.0 },
+            { "name": "English", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 510000000,
+        "gdpPerCapita": 4770,
+        "gdpPPP": 700000000,
+        "organizations": ["UN", "Commonwealth"]
+    },
+    {
+        "code": "TT",
+        "name": "Trinidad and Tobago",
+        "capital": "Port of Spain",
+        "flagEmoji": "🇹🇹",
+        "continent": "northAmerica",
+        "area": 5131,
+        "population": 1531044,
+        "populationDensity": 298.4,
+        "currency": { "name": "Trinidad and Tobago Dollar", "code": "TTD" },
+        "languages": [
+            { "name": "English", "percentage": 95.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 27700000000,
+        "gdpPerCapita": 18090,
+        "gdpPPP": 42000000000,
+        "organizations": ["UN", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "TN",
+        "name": "Tunisia",
+        "capital": "Tunis",
+        "flagEmoji": "🇹🇳",
+        "continent": "africa",
+        "area": 163610,
+        "population": 12458223,
+        "populationDensity": 76.1,
+        "currency": { "name": "Tunisian Dinar", "code": "TND" },
+        "languages": [
+            { "name": "Arabic", "percentage": 97.0 },
+            { "name": "French", "percentage": 52.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 46300000000,
+        "gdpPerCapita": 3710,
+        "gdpPPP": 152000000000,
+        "organizations": ["UN", "AU", "Arab League", "WTO"]
+    },
+    {
+        "code": "TR",
+        "name": "Turkey",
+        "capital": "Ankara",
+        "flagEmoji": "🇹🇷",
+        "continent": "asia",
+        "area": 783562,
+        "population": 85279553,
+        "populationDensity": 108.8,
+        "currency": { "name": "Turkish Lira", "code": "TRY" },
+        "languages": [
+            { "name": "Turkish", "percentage": 85.5 },
+            { "name": "Kurdish", "percentage": 11.9 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 1110000000000,
+        "gdpPerCapita": 13020,
+        "gdpPPP": 3320000000000,
+        "organizations": ["UN", "NATO", "G20", "OECD", "WTO"]
+    },
+    {
+        "code": "TM",
+        "name": "Turkmenistan",
+        "capital": "Ashgabat",
+        "flagEmoji": "🇹🇲",
+        "continent": "asia",
+        "area": 488100,
+        "population": 6430770,
+        "populationDensity": 13.2,
+        "currency": { "name": "Turkmenistani Manat", "code": "TMT" },
+        "languages": [
+            { "name": "Turkmen", "percentage": 72.0 },
+            { "name": "Russian", "percentage": 12.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 52600000000,
+        "gdpPerCapita": 8180,
+        "gdpPPP": 109000000000,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "TV",
+        "name": "Tuvalu",
+        "capital": "Funafuti",
+        "flagEmoji": "🇹🇻",
+        "continent": "oceania",
+        "area": 26,
+        "population": 11396,
+        "populationDensity": 438.3,
+        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "languages": [
+            { "name": "Tuvaluan", "percentage": 93.0 },
+            { "name": "English", "percentage": 50.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 60000000,
+        "gdpPerCapita": 5270,
+        "gdpPPP": 60000000,
+        "organizations": ["UN", "Commonwealth"]
+    },
+    {
+        "code": "UG",
+        "name": "Uganda",
+        "capital": "Kampala",
+        "flagEmoji": "🇺🇬",
+        "continent": "africa",
+        "area": 241038,
+        "population": 48582334,
+        "populationDensity": 201.6,
+        "currency": { "name": "Ugandan Shilling", "code": "UGX" },
+        "languages": [
+            { "name": "English", "percentage": 16.0 },
+            { "name": "Luganda", "percentage": 16.5 },
+            { "name": "Swahili", "percentage": 10.0 }
+        ],
+        "formOfGovernment": "Unitary presidential republic",
+        "gdp": 49300000000,
+        "gdpPerCapita": 1010,
+        "gdpPPP": 130000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "UA",
+        "name": "Ukraine",
+        "capital": "Kyiv",
+        "flagEmoji": "🇺🇦",
+        "continent": "europe",
+        "area": 603550,
+        "population": 37000000,
+        "populationDensity": 61.3,
+        "currency": { "name": "Ukrainian Hryvnia", "code": "UAH" },
+        "languages": [
+            { "name": "Ukrainian", "percentage": 67.5 },
+            { "name": "Russian", "percentage": 29.6 }
+        ],
+        "formOfGovernment": "Unitary semi-presidential constitutional republic",
+        "gdp": 179000000000,
+        "gdpPerCapita": 4840,
+        "gdpPPP": 560000000000,
+        "organizations": ["UN", "WTO"]
+    },
+    {
+        "code": "AE",
+        "name": "United Arab Emirates",
+        "capital": "Abu Dhabi",
+        "flagEmoji": "🇦🇪",
+        "continent": "asia",
+        "area": 83600,
+        "population": 9441129,
+        "populationDensity": 112.9,
+        "currency": { "name": "UAE Dirham", "code": "AED" },
+        "languages": [
+            { "name": "Arabic", "percentage": 40.0 },
+            { "name": "English", "percentage": 30.0 }
+        ],
+        "formOfGovernment": "Federal constitutional monarchy",
+        "gdp": 509200000000,
+        "gdpPerCapita": 53920,
+        "gdpPPP": 830000000000,
+        "organizations": ["UN", "OPEC", "Arab League", "WTO"]
+    },
+    {
+        "code": "GB",
+        "name": "United Kingdom",
+        "capital": "London",
+        "flagEmoji": "🇬🇧",
+        "continent": "europe",
+        "area": 242495,
+        "population": 68350000,
+        "populationDensity": 281.9,
+        "currency": { "name": "Pound Sterling", "code": "GBP" },
+        "languages": [
+            { "name": "English", "percentage": 94.0 },
+            { "name": "Welsh", "percentage": 1.1 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional monarchy",
+        "gdp": 3340000000000,
+        "gdpPerCapita": 48910,
+        "gdpPPP": 3860000000000,
+        "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO", "Commonwealth"]
+    },
+    {
+        "code": "US",
+        "name": "United States",
+        "capital": "Washington, D.C.",
+        "flagEmoji": "🇺🇸",
+        "continent": "northAmerica",
+        "area": 9833520,
+        "population": 334914895,
+        "populationDensity": 34.1,
+        "currency": { "name": "United States Dollar", "code": "USD" },
+        "languages": [
+            { "name": "English", "percentage": 78.5 },
+            { "name": "Spanish", "percentage": 13.4 }
+        ],
+        "formOfGovernment": "Federal presidential constitutional republic",
+        "gdp": 28780000000000,
+        "gdpPerCapita": 85370,
+        "gdpPPP": 28780000000000,
+        "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO"]
+    },
+    {
+        "code": "UY",
+        "name": "Uruguay",
+        "capital": "Montevideo",
+        "flagEmoji": "🇺🇾",
+        "continent": "southAmerica",
+        "area": 176215,
+        "population": 3423108,
+        "populationDensity": 19.4,
+        "currency": { "name": "Uruguayan Peso", "code": "UYU" },
+        "languages": [
+            { "name": "Spanish", "percentage": 98.4 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 71400000000,
+        "gdpPerCapita": 20850,
+        "gdpPPP": 97000000000,
+        "organizations": ["UN", "Mercosur", "WTO"]
+    },
+    {
+        "code": "UZ",
+        "name": "Uzbekistan",
+        "capital": "Tashkent",
+        "flagEmoji": "🇺🇿",
+        "continent": "asia",
+        "area": 447400,
+        "population": 35648100,
+        "populationDensity": 79.7,
+        "currency": { "name": "Uzbekistani Som", "code": "UZS" },
+        "languages": [
+            { "name": "Uzbek", "percentage": 74.3 },
+            { "name": "Russian", "percentage": 14.2 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 90400000000,
+        "gdpPerCapita": 2540,
+        "gdpPPP": 315000000000,
+        "organizations": ["UN", "CIS", "SCO"]
+    },
+    {
+        "code": "VU",
+        "name": "Vanuatu",
+        "capital": "Port Vila",
+        "flagEmoji": "🇻🇺",
+        "continent": "oceania",
+        "area": 12189,
+        "population": 326740,
+        "populationDensity": 26.8,
+        "currency": { "name": "Vanuatu Vatu", "code": "VUV" },
+        "languages": [
+            { "name": "Bislama", "percentage": 63.2 },
+            { "name": "English", "percentage": 34.0 },
+            { "name": "French", "percentage": 31.0 }
+        ],
+        "formOfGovernment": "Unitary parliamentary republic",
+        "gdp": 1060000000,
+        "gdpPerCapita": 3250,
+        "gdpPPP": 1000000000,
+        "organizations": ["UN", "Commonwealth"]
+    },
+    {
+        "code": "VA",
+        "name": "Vatican City",
+        "capital": "Vatican City",
+        "flagEmoji": "🇻🇦",
+        "continent": "europe",
+        "area": 0.44,
+        "population": 800,
+        "populationDensity": 1818.2,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Italian", "percentage": 50.0 },
+            { "name": "Latin", "percentage": 30.0 }
+        ],
+        "formOfGovernment": "Unitary theocratic elective absolute monarchy",
+        "gdp": null,
+        "gdpPerCapita": null,
+        "gdpPPP": null,
+        "organizations": ["UN"]
+    },
+    {
+        "code": "VE",
+        "name": "Venezuela",
+        "capital": "Caracas",
+        "flagEmoji": "🇻🇪",
+        "continent": "southAmerica",
+        "area": 916445,
+        "population": 28838499,
+        "populationDensity": 31.5,
+        "currency": { "name": "Venezuelan Bolívar", "code": "VES" },
+        "languages": [
+            { "name": "Spanish", "percentage": 97.3 }
+        ],
+        "formOfGovernment": "Federal presidential constitutional republic",
+        "gdp": 98400000000,
+        "gdpPerCapita": 3410,
+        "gdpPPP": null,
+        "organizations": ["UN", "OPEC"]
+    },
+    {
+        "code": "VN",
+        "name": "Vietnam",
+        "capital": "Hanoi",
+        "flagEmoji": "🇻🇳",
+        "continent": "asia",
+        "area": 331212,
+        "population": 100987686,
+        "populationDensity": 304.9,
+        "currency": { "name": "Vietnamese Đồng", "code": "VND" },
+        "languages": [
+            { "name": "Vietnamese", "percentage": 85.7 }
+        ],
+        "formOfGovernment": "Unitary one-party socialist republic",
+        "gdp": 433700000000,
+        "gdpPerCapita": 4290,
+        "gdpPPP": 1340000000000,
+        "organizations": ["UN", "ASEAN", "WTO"]
+    },
+    {
+        "code": "YE",
+        "name": "Yemen",
+        "capital": "Sana'a",
+        "flagEmoji": "🇾🇪",
+        "continent": "asia",
+        "area": 527968,
+        "population": 34449825,
+        "populationDensity": 65.2,
+        "currency": { "name": "Yemeni Rial", "code": "YER" },
+        "languages": [
+            { "name": "Arabic", "percentage": 99.0 }
+        ],
+        "formOfGovernment": "Provisional government",
+        "gdp": 21600000000,
+        "gdpPerCapita": 627,
+        "gdpPPP": 55000000000,
+        "organizations": ["UN", "Arab League"]
+    },
+    {
+        "code": "ZM",
+        "name": "Zambia",
+        "capital": "Lusaka",
+        "flagEmoji": "🇿🇲",
+        "continent": "africa",
+        "area": 752618,
+        "population": 20569737,
+        "populationDensity": 27.3,
+        "currency": { "name": "Zambian Kwacha", "code": "ZMW" },
+        "languages": [
+            { "name": "English", "percentage": 8.0 },
+            { "name": "Bemba", "percentage": 33.4 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 28100000000,
+        "gdpPerCapita": 1370,
+        "gdpPPP": 72000000000,
+        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+    },
+    {
+        "code": "ZW",
+        "name": "Zimbabwe",
+        "capital": "Harare",
+        "flagEmoji": "🇿🇼",
+        "continent": "africa",
+        "area": 390757,
+        "population": 16665409,
+        "populationDensity": 42.7,
+        "currency": { "name": "Zimbabwe Gold", "code": "ZiG" },
+        "languages": [
+            { "name": "English", "percentage": 7.0 },
+            { "name": "Shona", "percentage": 70.0 },
+            { "name": "Ndebele", "percentage": 20.0 }
+        ],
+        "formOfGovernment": "Unitary presidential constitutional republic",
+        "gdp": 28400000000,
+        "gdpPerCapita": 1710,
+        "gdpPPP": 40000000000,
+        "organizations": ["UN", "AU"]
+    },
+    {
+        "code": "XK",
+        "name": "Kosovo",
+        "capital": "Pristina",
+        "flagEmoji": "🇽🇰",
+        "continent": "europe",
+        "area": 10887,
+        "population": 1883018,
+        "populationDensity": 172.9,
+        "currency": { "name": "Euro", "code": "EUR" },
+        "languages": [
+            { "name": "Albanian", "percentage": 94.5 },
+            { "name": "Serbian", "percentage": 1.6 }
+        ],
+        "formOfGovernment": "Unitary parliamentary constitutional republic",
+        "gdp": 10400000000,
+        "gdpPerCapita": 5530,
+        "gdpPPP": 24000000000,
+        "organizations": []
     }
 ]
