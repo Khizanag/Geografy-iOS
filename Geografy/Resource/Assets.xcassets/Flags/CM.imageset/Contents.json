@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "CM.pdf",
-      "idiom" : "universal"
+      "filename" : "CM.png",
+      "idiom" : "universal",
+      "scale" : "2x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

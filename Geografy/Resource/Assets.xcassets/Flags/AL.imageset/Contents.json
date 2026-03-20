@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "AL.pdf",
-      "idiom" : "universal"
+      "filename" : "AL.png",
+      "idiom" : "universal",
+      "scale" : "2x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "WS.pdf",
-      "idiom" : "universal"
+      "filename" : "WS.png",
+      "idiom" : "universal",
+      "scale" : "2x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

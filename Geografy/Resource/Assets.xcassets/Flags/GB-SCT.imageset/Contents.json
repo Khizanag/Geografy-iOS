@@ -1,15 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "GB-SCT.pdf",
-      "idiom" : "universal"
+      "filename" : "GB-SCT.png",
+      "idiom" : "universal",
+      "scale" : "2x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }
