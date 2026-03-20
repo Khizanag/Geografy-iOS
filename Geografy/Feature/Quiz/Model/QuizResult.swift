@@ -1,6 +1,7 @@
 import Foundation
 
-struct QuizResult {
+struct QuizResult: Identifiable {
+    let id = UUID()
     let configuration: QuizConfiguration
     let answers: [QuizAnswer]
     let totalTime: TimeInterval
