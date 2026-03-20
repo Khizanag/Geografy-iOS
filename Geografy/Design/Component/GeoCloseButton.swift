@@ -6,7 +6,7 @@ struct GeoCloseButton: View {
     var body: some View {
         Button { dismiss() } label: {
             Image(systemName: "xmark")
-                .font(GeoIconSize.small)
+//                .font(GeoIconSize.small)
                 .foregroundStyle(GeoColors.textSecondary)
         }
         .buttonStyle(.borderless)

@@ -1,27 +1,27 @@
 import SwiftUI
 
 enum GeoColors {
-    static let background = Color(hex: "1C1C1E")
-    static let cardBackground = Color(hex: "2C2C2E")
-    static let cardBackgroundHighlighted = Color(hex: "3C3C3E")
+    static let background = Color("GeoBackground")
+    static let cardBackground = Color("GeoCardBackground")
+    static let cardBackgroundHighlighted = Color("GeoCardBackgroundHighlighted")
 
-    static let accent = Color(hex: "2EC4B6")
-    static let accentDark = Color(hex: "1A7A6E")
+    static let accent = Color("GeoAccent")
+    static let accentDark = Color("GeoAccentDark")
 
-    static let textPrimary = Color.white
-    static let textSecondary = Color(hex: "8E8E93")
-    static let textTertiary = Color(hex: "636366")
+    static let textPrimary = Color("GeoTextPrimary")
+    static let textSecondary = Color("GeoTextSecondary")
+    static let textTertiary = Color("GeoTextTertiary")
 
-    static let ocean = Color(hex: "0D1117")
+    static let ocean = Color("GeoOcean")
 
-    static let success = Color(hex: "34C759")
-    static let warning = Color(hex: "FF9500")
-    static let error = Color(hex: "FF3B30")
+    static let success = Color("GeoSuccess")
+    static let warning = Color("GeoWarning")
+    static let error = Color("GeoError")
 
-    static let indigo = Color(hex: "5C6BC0")
-    static let blue = Color(hex: "3498DB")
-    static let purple = Color(hex: "9B59B6")
-    static let orange = Color(hex: "E67E22")
+    static let indigo = Color("GeoIndigo")
+    static let blue = Color("GeoBlue")
+    static let purple = Color("GeoPurple")
+    static let orange = Color("GeoOrange")
 
     static let mapColors: [Color] = [
         Color(hex: "9B59B6"),

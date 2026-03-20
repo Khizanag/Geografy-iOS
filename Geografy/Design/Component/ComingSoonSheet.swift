@@ -8,9 +8,8 @@ struct ComingSoonSheet: View {
         NavigationStack {
             ComingSoonView(icon: icon)
                 .navigationTitle(title)
-                .navigationBarTitleDisplayMode(.large)
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
+                    ToolbarItem(placement: .destructiveAction) {
                         GeoCloseButton()
                     }
                 }
