@@ -30,8 +30,12 @@ struct CountryDetailScreen: View {
                 )
             }
         }
-        .fullScreenCover(isPresented: $showFlagFullScreen) {
-            FlagFullScreenView(countryCode: country.code, countryName: country.name)
+        .overlay {
+            if showFlagFullScreen {
+                ZoomableFlagView(countryCode: country.code) {
+                    showFlagFullScreen = false
+                }
+            }
         }
     }
 }
