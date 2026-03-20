@@ -2,12 +2,13 @@ import SwiftUI
 
 struct MapScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+    var continentFilter: String?
 
     @State private var mapState = MapState()
     @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
 
@@ -302,7 +303,10 @@ private extension MapScreen {
         guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
               let data = try? Data(contentsOf: url) else { return }
 
-        let shapes = GeoJSONParser.parse(data: data)
+        var shapes = GeoJSONParser.parse(data: data)
+        if let continentFilter {
+            shapes = shapes.filter { $0.continent == continentFilter }
+        }
         mapState.contentBounds = computeContentBounds(from: shapes)
 
         withAnimation(.easeOut(duration: 0.3)) {

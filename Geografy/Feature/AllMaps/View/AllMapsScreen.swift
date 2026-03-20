@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AllMapsScreen: View {
     @State private var showMap = false
+    @State private var continentFilter: String?
 
     private let maps: [(name: String, icon: String)] = [
         ("World", "globe"),
@@ -21,12 +22,21 @@ struct AllMapsScreen: View {
         .navigationTitle("All Maps")
         .fullScreenCover(isPresented: $showMap) {
             NavigationStack {
-                MapScreen()
+                MapScreen(continentFilter: continentFilter)
                     .navigationDestination(for: Country.self) { country in
                         CountryDetailScreen(country: country)
                     }
             }
         }
+    }
+}
+
+// MARK: - Actions
+
+private extension AllMapsScreen {
+    func openMap(named name: String) {
+        continentFilter = name == "World" ? nil : name
+        showMap = true
     }
 }
 
@@ -39,7 +49,7 @@ private extension AllMapsScreen {
             spacing: DesignSystem.Spacing.md
         ) {
             ForEach(Array(maps.enumerated()), id: \.offset) { _, map in
-                Button { showMap = true } label: {
+                Button { openMap(named: map.name) } label: {
                     mapCard(name: map.name, icon: map.icon)
                 }
                 .buttonStyle(.glass)

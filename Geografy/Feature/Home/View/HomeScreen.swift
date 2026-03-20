@@ -5,6 +5,7 @@ struct HomeScreen: View {
 
     @State private var selectedMapIndex = 0
     @State private var showMap = false
+    @State private var continentFilter: String?
     @State private var showQuiz = false
     @State private var showProfile = false
     @State private var showFriends = false
@@ -36,7 +37,7 @@ struct HomeScreen: View {
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showMap) {
             NavigationStack {
-                MapScreen()
+                MapScreen(continentFilter: continentFilter)
                     .navigationDestination(for: Country.self) { country in
                         CountryDetailScreen(country: country)
                     }
@@ -165,7 +166,7 @@ private extension HomeScreen {
                     systemImage: map.icon,
                     compact: isLandscape
                 ) {
-                    showMap = true
+                    openMap(named: map.name)
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.bottom, DesignSystem.Spacing.xl)
@@ -174,6 +175,15 @@ private extension HomeScreen {
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
         .frame(height: carouselHeight)
+    }
+}
+
+// MARK: - Actions
+
+private extension HomeScreen {
+    func openMap(named name: String) {
+        continentFilter = name == "World map" ? nil : name
+        showMap = true
     }
 }
 

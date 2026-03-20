@@ -4,6 +4,7 @@ import SwiftUI
 struct CountryShape: Identifiable {
     let id: String
     let name: String
+    let continent: String
     let polygons: [CGPath]
     let centroid: CGPoint
     let boundingBox: CGRect

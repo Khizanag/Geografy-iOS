@@ -24,6 +24,7 @@ private extension GeoJSONParser {
         let rawCode = feature.id
             ?? extractProperty(from: feature, keys: ["ISO_A2", "ISO_A2_EH", "iso_a2", "ISO_A3", "iso_a3", "ADM0_A3"])
         let name = extractProperty(from: feature, keys: ["name", "NAME", "ADMIN"])
+        let continent = extractProperty(from: feature, keys: ["CONTINENT"]) ?? ""
 
         guard let rawCode, let name, rawCode != "-99" else {
             return nil
@@ -76,6 +77,7 @@ private extension GeoJSONParser {
         return CountryShape(
             id: code,
             name: name,
+            continent: continent,
             polygons: paths,
             centroid: centroid,
             boundingBox: boundingBox,
