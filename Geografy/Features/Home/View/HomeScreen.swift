@@ -124,9 +124,7 @@ private extension HomeScreen {
                 MapCarouselCard(
                     mapName: map.name,
                     systemImage: map.icon
-                ) {
-                    handleOpenMap(at: index)
-                }
+                )
                 .padding(.horizontal, GeoSpacing.md)
                 .padding(.bottom, GeoSpacing.xl)
                 .tag(index)
@@ -191,10 +189,3 @@ private extension HomeScreen {
     }
 }
 
-// MARK: - Actions
-
-private extension HomeScreen {
-    func handleOpenMap(at index: Int) {
-        // Navigate to MapScreen — for now all go to world map
-    }
-}

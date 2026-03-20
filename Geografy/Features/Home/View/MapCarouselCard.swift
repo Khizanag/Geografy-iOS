@@ -3,16 +3,10 @@ import SwiftUI
 struct MapCarouselCard: View {
     private let mapName: String
     private let systemImage: String
-    private let onOpenMap: () -> Void
 
-    init(
-        mapName: String,
-        systemImage: String,
-        onOpenMap: @escaping () -> Void
-    ) {
+    init(mapName: String, systemImage: String) {
         self.mapName = mapName
         self.systemImage = systemImage
-        self.onOpenMap = onOpenMap
     }
 
     var body: some View {
@@ -45,9 +39,18 @@ private extension MapCarouselCard {
     }
 
     var openMapButton: some View {
-        GeoButton("Open map", systemImage: "arrow.right") {
-            onOpenMap()
+        NavigationLink(value: NavigationRoute.map) {
+            HStack(spacing: GeoSpacing.xs) {
+                Text("Open map")
+                    .font(GeoFont.headline)
+                Image(systemName: "chevron.right")
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, GeoSpacing.sm)
+            .background(GeoColors.accent)
+            .clipShape(RoundedRectangle(cornerRadius: GeoCornerRadius.medium))
         }
-        .frame(maxWidth: .infinity)
+        .buttonStyle(.plain)
     }
 }
