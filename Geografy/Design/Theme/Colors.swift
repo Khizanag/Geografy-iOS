@@ -28,18 +28,30 @@ extension DesignSystem {
         static let orange = SwiftUI.Color("GeoOrange")
 
         static let mapColors: [SwiftUI.Color] = [
-            SwiftUI.Color(hex: "9B59B6"),
-            SwiftUI.Color(hex: "E67E22"),
-            SwiftUI.Color(hex: "3498DB"),
             SwiftUI.Color(hex: "E74C3C"),
+            SwiftUI.Color(hex: "3498DB"),
             SwiftUI.Color(hex: "2ECC71"),
-            SwiftUI.Color(hex: "F1C40F"),
-            SwiftUI.Color(hex: "00BCD4"),
+            SwiftUI.Color(hex: "F39C12"),
+            SwiftUI.Color(hex: "9B59B6"),
+            SwiftUI.Color(hex: "1ABC9C"),
             SwiftUI.Color(hex: "E91E63"),
-            SwiftUI.Color(hex: "009688"),
-            SwiftUI.Color(hex: "FF6B9D"),
+            SwiftUI.Color(hex: "00BCD4"),
+            SwiftUI.Color(hex: "FF5722"),
+            SwiftUI.Color(hex: "8BC34A"),
             SwiftUI.Color(hex: "5C6BC0"),
-            SwiftUI.Color(hex: "FFB300"),
+            SwiftUI.Color(hex: "FFEB3B"),
+            SwiftUI.Color(hex: "FF6B9D"),
+            SwiftUI.Color(hex: "26A69A"),
+            SwiftUI.Color(hex: "AB47BC"),
+            SwiftUI.Color(hex: "42A5F5"),
+            SwiftUI.Color(hex: "EF5350"),
+            SwiftUI.Color(hex: "66BB6A"),
+            SwiftUI.Color(hex: "FFA726"),
+            SwiftUI.Color(hex: "7E57C2"),
+            SwiftUI.Color(hex: "29B6F6"),
+            SwiftUI.Color(hex: "EC407A"),
+            SwiftUI.Color(hex: "26C6DA"),
+            SwiftUI.Color(hex: "D4E157"),
         ]
     }
 }
