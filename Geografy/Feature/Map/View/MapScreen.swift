@@ -82,14 +82,7 @@ private extension MapScreen {
 
 private extension MapScreen {
     var closeButton: some View {
-        Button { dismiss() } label: {
-            Image(systemName: "xmark")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                .contentShape(Circle())
-        }
-        .glassEffect(.regular.interactive(), in: .circle)
+        GeoCircleCloseButton()
     }
 
     var labelsToggleButton: some View {
