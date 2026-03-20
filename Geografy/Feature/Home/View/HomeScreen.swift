@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeScreen: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
     @State private var selectedMapIndex = 0
     @State private var showMap = false
     @State private var showQuiz = false
@@ -149,12 +151,17 @@ private extension HomeScreen {
 // MARK: - Map Carousel
 
 private extension HomeScreen {
+    var isLandscape: Bool { verticalSizeClass == .compact }
+
+    var carouselHeight: CGFloat { isLandscape ? 220 : DesignSystem.Size.section }
+
     var mapCarousel: some View {
         TabView(selection: $selectedMapIndex) {
             ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
                 MapCarouselCard(
                     mapName: map.name,
-                    systemImage: map.icon
+                    systemImage: map.icon,
+                    compact: isLandscape
                 ) {
                     showMap = true
                 }
@@ -164,7 +171,7 @@ private extension HomeScreen {
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
-        .frame(height: DesignSystem.Size.section)
+        .frame(height: carouselHeight)
     }
 }
 

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ComingSoonView: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
     let icon: String
     var title: String?
     var isDismissible: Bool = false
@@ -8,12 +10,12 @@ struct ComingSoonView: View {
     @State private var isAnimating = false
 
     var body: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-            iconSection
-            textSection
-            Spacer()
-            Spacer()
+        Group {
+            if isLandscape {
+                landscapeLayout
+            } else {
+                portraitLayout
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignSystem.Color.background)
@@ -33,15 +35,44 @@ struct ComingSoonView: View {
     }
 }
 
+// MARK: - Layouts
+
+private extension ComingSoonView {
+    var isLandscape: Bool { verticalSizeClass == .compact }
+
+    var portraitLayout: some View {
+        VStack(spacing: DesignSystem.Spacing.xl) {
+            Spacer()
+            iconSection
+            textSection
+            Spacer()
+            Spacer()
+        }
+    }
+
+    var landscapeLayout: some View {
+        HStack(spacing: DesignSystem.Spacing.xxl) {
+            iconSection
+            textSection
+        }
+    }
+}
+
 // MARK: - Subviews
 
 private extension ComingSoonView {
+    var circleScale: CGFloat { isLandscape ? 0.6 : 1.0 }
+
     var iconSection: some View {
         ZStack {
             pulsingCircles
             iconView
         }
-        .frame(width: DesignSystem.Size.feature, height: DesignSystem.Size.feature)
+        .scaleEffect(circleScale)
+        .frame(
+            width: DesignSystem.Size.feature * circleScale,
+            height: DesignSystem.Size.feature * circleScale
+        )
     }
 
     var pulsingCircles: some View {

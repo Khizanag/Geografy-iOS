@@ -3,23 +3,51 @@ import SwiftUI
 struct MapCarouselCard: View {
     private let mapName: String
     private let systemImage: String
+    private let compact: Bool
     private let onOpenMap: () -> Void
 
-    init(mapName: String, systemImage: String, onOpenMap: @escaping () -> Void) {
+    init(mapName: String, systemImage: String, compact: Bool = false, onOpenMap: @escaping () -> Void) {
         self.mapName = mapName
         self.systemImage = systemImage
+        self.compact = compact
         self.onOpenMap = onOpenMap
     }
 
     var body: some View {
         GeoCard {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                illustrationArea
+            if compact {
+                compactLayout
+            } else {
+                regularLayout
+            }
+        }
+    }
+}
+
+// MARK: - Layouts
+
+private extension MapCarouselCard {
+    var regularLayout: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            illustrationArea
+            mapLabel
+            openMapButton
+        }
+        .padding(DesignSystem.Spacing.lg)
+    }
+
+    var compactLayout: some View {
+        HStack(spacing: DesignSystem.Spacing.lg) {
+            Image(systemName: systemImage)
+                .font(DesignSystem.IconSize.xLarge)
+                .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
+
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 mapLabel
                 openMapButton
             }
-            .padding(DesignSystem.Spacing.lg)
         }
+        .padding(DesignSystem.Spacing.md)
     }
 }
 
@@ -41,9 +69,7 @@ private extension MapCarouselCard {
     }
 
     var openMapButton: some View {
-        Button {
-            onOpenMap()
-        } label: {
+        Button { onOpenMap() } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Open map")
                     .font(DesignSystem.Font.headline)

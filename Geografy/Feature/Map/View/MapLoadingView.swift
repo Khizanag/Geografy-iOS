@@ -32,7 +32,7 @@ private extension MapLoadingView {
 
     var globe: some View {
         Image(systemName: "globe.americas.fill")
-            .font(.system(size: 80, weight: .ultraLight))
+            .font(DesignSystem.IconSize.hero)
             .foregroundStyle(DesignSystem.Color.accent)
             .rotationEffect(.degrees(globeRotation))
             .scaleEffect(isAnimating ? 1.0 : 0.6)
