@@ -36,12 +36,13 @@ private extension MapScreen {
         ZStack {
             mapCanvas(in: size)
 
-            VStack {
-                controlsBar
-                    .padding(.top, DesignSystem.Spacing.xs)
-                Spacer()
+            GeometryReader { geo in
+                VStack {
+                    controlsBar
+                        .padding(.top, geo.safeAreaInsets.top + DesignSystem.Spacing.xs)
+                    Spacer()
+                }
             }
-            .safeAreaPadding(.top)
 
             bannerOverlay
         }
