@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("selectedTheme") private var selectedTheme = "Auto"
+
     @State private var selectedTab = 0
 
     var body: some View {
@@ -29,32 +31,49 @@ struct ContentView: View {
                 }
             }
 
-            Tab("Achievements", systemImage: "trophy.fill", value: 2) {
+            Tab("Countries", systemImage: "list.bullet", value: 2) {
+                NavigationStack {
+                    CountryListScreen()
+                        .navigationDestination(for: Country.self) { country in
+                            CountryDetailScreen(country: country)
+                        }
+                }
+            }
+
+            Tab("Achievements", systemImage: "trophy.fill", value: 3) {
                 NavigationStack {
                     AchievementsScreen()
                 }
             }
 
-            Tab("Themes", systemImage: "paintbrush.fill", value: 3) {
+            Tab("Themes", systemImage: "paintbrush.fill", value: 4) {
                 NavigationStack {
                     ThemesScreen()
                 }
             }
 
-            Tab("Settings", systemImage: "gearshape.fill", value: 4) {
+            Tab("Settings", systemImage: "gearshape.fill", value: 5) {
                 NavigationStack {
                     SettingsScreen()
                 }
             }
         }
         .tint(DesignSystem.Color.accent)
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(colorScheme)
     }
 }
 
 // MARK: - Helpers
 
 private extension ContentView {
+    var colorScheme: ColorScheme? {
+        switch selectedTheme {
+        case "Light": .light
+        case "Dark": .dark
+        default: nil
+        }
+    }
+
     @ViewBuilder
     func destinationView(for route: NavigationRoute) -> some View {
         switch route {

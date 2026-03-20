@@ -9,6 +9,7 @@ struct SettingsScreen: View {
     @AppStorage("vibrationEnabled") private var vibrationEnabled = true
     @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
+    @AppStorage("selectedOrientation") private var selectedOrientation = "Auto"
     @AppStorage("selectedLanguage") private var selectedLanguage = "English"
 
     var body: some View {
@@ -106,30 +107,30 @@ private extension SettingsScreen {
             SettingsNavigationRow(
                 icon: "globe",
                 iconColor: DesignSystem.Color.blue,
-                title: "Change language",
+                title: "Language",
                 value: selectedLanguage,
                 comingSoon: true
             ) {}
 
             settingsDivider
 
-            SettingsNavigationRow(
+            settingsPickerRow(
                 icon: "paintbrush.fill",
                 iconColor: DesignSystem.Color.purple,
                 title: "Theme",
-                value: selectedTheme,
-                comingSoon: true
-            ) {}
+                selection: $selectedTheme,
+                options: ["Auto", "Light", "Dark"]
+            )
 
             settingsDivider
 
-            SettingsNavigationRow(
+            settingsPickerRow(
                 icon: "arrow.up.arrow.down",
                 iconColor: DesignSystem.Color.textSecondary,
                 title: "Orientation",
-                value: "Auto",
-                comingSoon: true
-            ) {}
+                selection: $selectedOrientation,
+                options: ["Auto", "Portrait", "Landscape"]
+            )
         }
     }
 
@@ -171,6 +172,34 @@ private extension SettingsScreen {
                 isOn: $soundEffectsEnabled,
             )
         }
+    }
+
+    func settingsPickerRow(
+        icon: String,
+        iconColor: Color,
+        title: String,
+        selection: Binding<String>,
+        options: [String]
+    ) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SettingsIconBadge(systemImage: icon, color: iconColor)
+
+            Text(title)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            Spacer()
+
+            Picker("", selection: selection) {
+                ForEach(options, id: \.self) { option in
+                    Text(option).tag(option)
+                }
+            }
+            .pickerStyle(.menu)
+            .tint(DesignSystem.Color.textSecondary)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 
     var settingsDivider: some View {

@@ -285,6 +285,7 @@ private extension MapScreen {
             if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 } else {
                     mapState.selectedCountryCode = shape.id
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
