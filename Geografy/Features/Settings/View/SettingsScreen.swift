@@ -62,7 +62,7 @@ private extension SettingsScreen {
     var avatarPlaceholder: some View {
         Circle()
             .fill(DesignSystem.Color.cardBackgroundHighlighted)
-            .frame(width: 48, height: 48)
+            .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
             .overlay {
                 Image(systemName: "person.fill")
                     .font(DesignSystem.Font.title2)
@@ -275,7 +275,7 @@ private struct SettingsIconBadge: View {
         Image(systemName: systemImage)
             .font(DesignSystem.IconSize.medium)
             .foregroundStyle(.white)
-            .frame(width: 28, height: 28)
+            .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
             .background(color)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
     }

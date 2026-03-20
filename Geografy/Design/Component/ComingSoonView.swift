@@ -31,7 +31,7 @@ private extension ComingSoonView {
             pulsingCircles
             iconView
         }
-        .frame(width: 280, height: 280)
+        .frame(width: DesignSystem.Size.feature, height: DesignSystem.Size.feature)
     }
 
     var pulsingCircles: some View {

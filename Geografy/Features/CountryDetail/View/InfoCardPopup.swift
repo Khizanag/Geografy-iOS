@@ -48,7 +48,7 @@ private extension InfoCardPopup {
                 }
             }
             .padding(DesignSystem.Spacing.xl)
-            .frame(maxWidth: 320)
+            .frame(maxWidth: DesignSystem.Size.section)
         }
     }
 

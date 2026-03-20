@@ -82,7 +82,7 @@ private extension MapScreen {
             Image(systemName: "xmark")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(width: 44, height: 44)
+                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 .contentShape(Circle())
         }
         .glassEffect(.regular.interactive(), in: .circle)
@@ -97,7 +97,7 @@ private extension MapScreen {
                 .font(DesignSystem.Font.headline)
                 .fontWeight(mapState.showLabels ? .bold : .regular)
                 .foregroundStyle(mapState.showLabels ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary)
-                .frame(width: 44, height: 44)
+                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 .contentShape(Circle())
         }
         .glassEffect(

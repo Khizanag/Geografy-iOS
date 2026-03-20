@@ -46,7 +46,7 @@ private extension AllMapsScreen {
                 Image(systemName: icon)
                     .font(DesignSystem.IconSize.xLarge)
                     .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
-                    .frame(height: 60)
+                    .frame(height: DesignSystem.Size.xxxl)
 
                 Text(name)
                     .font(DesignSystem.Font.headline)

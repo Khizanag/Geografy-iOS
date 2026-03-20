@@ -30,7 +30,7 @@ private extension MapCarouselCard {
         Image(systemName: systemImage)
             .font(DesignSystem.IconSize.hero)
             .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
-            .frame(height: 120)
+            .frame(height: DesignSystem.Size.hero)
             .frame(maxWidth: .infinity)
     }
 

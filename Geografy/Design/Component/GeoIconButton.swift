@@ -20,7 +20,7 @@ struct GeoIconButton: View {
             Image(systemName: systemImage)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(isActive ? .white : DesignSystem.Color.textPrimary)
-                .frame(width: 44, height: 44)
+                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 .background(backgroundColor)
                 .clipShape(Circle())
         }

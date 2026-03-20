@@ -65,7 +65,7 @@ private extension HomeScreen {
             Image(systemName: "person.fill")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .frame(width: 40, height: 40)
+                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
         }
         .glassEffect(.regular.interactive(), in: .circle)
     }
@@ -90,7 +90,7 @@ private extension HomeScreen {
                     Image(systemName: "person.2.fill")
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.iconPrimary)
-                        .frame(width: 40, height: 40)
+                        .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
                 }
                 .glassEffect(.regular.interactive(), in: .circle)
             }
@@ -115,18 +115,18 @@ private extension HomeScreen {
         ZStack(alignment: .leading) {
             Capsule()
                 .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                .frame(width: 60, height: 5)
+                .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xs)
 
             Capsule()
                 .fill(DesignSystem.Color.accent)
-                .frame(width: 60 * (175.0 / 190.0), height: 5)
+                .frame(width: DesignSystem.Size.xxxl * (175.0 / 190.0), height: DesignSystem.Size.xs)
         }
     }
 
     var divider: some View {
         Rectangle()
             .fill(DesignSystem.Color.textTertiary.opacity(0.3))
-            .frame(width: 1, height: 14)
+            .frame(width: DesignSystem.Size.xxs, height: DesignSystem.Size.sm)
     }
 
     func currencyItem(icon: String, color: Color, value: String) -> some View {
@@ -161,7 +161,7 @@ private extension HomeScreen {
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
-        .frame(height: 320)
+        .frame(height: DesignSystem.Size.section)
     }
 }
 

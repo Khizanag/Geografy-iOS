@@ -60,7 +60,7 @@ private extension CountryBannerView {
             Image(systemName: "xmark")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: 28, height: 28)
+                .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
                 .background(Color.white.opacity(0.1))
                 .clipShape(Circle())
         }
