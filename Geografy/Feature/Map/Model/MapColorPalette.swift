@@ -33,7 +33,7 @@ private extension MapColorPalette {
 
         for i in shapes.indices {
             for j in (i + 1)..<shapes.count {
-                guard shapes[i].boundingBox.intersects(shapes[j].boundingBox.insetBy(dx: -5, dy: -5)) else {
+                guard shapes[i].boundingBox.intersects(shapes[j].boundingBox.insetBy(dx: -20, dy: -20)) else {
                     continue
                 }
 
@@ -59,7 +59,7 @@ private extension MapColorPalette {
             for pathB in b.polygons {
                 let boxA = pathA.boundingBoxOfPath
                 let boxB = pathB.boundingBoxOfPath
-                let threshold: CGFloat = 3
+                let threshold: CGFloat = 15
 
                 let expanded = boxA.insetBy(dx: -threshold, dy: -threshold)
                 if expanded.intersects(boxB) {
