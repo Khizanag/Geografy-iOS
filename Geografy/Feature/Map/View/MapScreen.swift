@@ -30,6 +30,7 @@ struct MapScreen: View {
         }
         .overlay(alignment: .top) {
             bannerOverlay
+                .safeAreaPadding(.top)
                 .padding(.top, DesignSystem.Spacing.xxl)
                 .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
         }
@@ -114,10 +115,12 @@ private extension MapScreen {
     var bannerOverlay: some View {
         if let shape = mapState.selectedShape {
             let country = countryDataService.country(for: shape.id)
+            let basicInfo = CountryBasicInfo.info(for: shape.id)
 
             CountryBannerView(
                 name: shape.name,
-                country: country,
+                flag: country?.flagEmoji ?? basicInfo?.flag ?? "🏳️",
+                capital: country?.capital ?? basicInfo?.capital ?? "",
                 onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
