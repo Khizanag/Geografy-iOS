@@ -16,7 +16,7 @@ struct ComingSoonView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignSystem.Color.background)
         .onAppear {
-            withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+            withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
                 isAnimating = true
             }
         }
@@ -74,7 +74,7 @@ private extension ComingSoonView {
             .scaleEffect(isAnimating ? 1.06 : 0.94)
             .opacity(isAnimating ? 1 : 0.4)
             .animation(
-                .easeInOut(duration: 2.5)
+                .easeInOut(duration: 1.8)
                 .repeatForever(autoreverses: true)
                 .delay(delay),
                 value: isAnimating
