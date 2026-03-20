@@ -38,8 +38,10 @@ private extension MapScreen {
 
             VStack {
                 controlsBar
+                    .padding(.top, DesignSystem.Spacing.xs)
                 Spacer()
             }
+            .safeAreaPadding(.top)
 
             bannerOverlay
         }
@@ -72,7 +74,6 @@ private extension MapScreen {
             labelsToggleButton
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.top, DesignSystem.Spacing.xs)
     }
 
     var closeButton: some View {
