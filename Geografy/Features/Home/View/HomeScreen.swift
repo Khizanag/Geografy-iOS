@@ -21,9 +21,13 @@ struct HomeScreen: View {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 topBar
                 mapCarousel
-                actionButtons
             }
             .padding(.vertical, DesignSystem.Spacing.md)
+        }
+        .safeAreaInset(edge: .bottom) {
+            playButton
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.xs)
         }
         .background(DesignSystem.Color.background)
         .navigationBarHidden(true)
@@ -169,14 +173,9 @@ private extension HomeScreen {
     }
 }
 
-// MARK: - Action Buttons
+// MARK: - Play Button
 
 private extension HomeScreen {
-    var actionButtons: some View {
-        playButton
-            .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
     var playButton: some View {
         NavigationLink(value: NavigationRoute.quiz) {
             HStack(spacing: DesignSystem.Spacing.sm) {
