@@ -80,9 +80,8 @@ private extension HomeScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(.ultraThinMaterial, in: Capsule())
         }
-        .buttonStyle(.plain)
+        .glassEffect(.regular, in: .capsule)
     }
 
     var friendsButton: some View {
