@@ -3,6 +3,8 @@ import SwiftUI
 struct HomeScreen: View {
     @State private var selectedMapIndex = 0
     @State private var showMap = false
+    @State private var showProfile = false
+    @State private var showFriends = false
 
     private let maps: [(name: String, icon: String)] = [
         ("World map", "globe"),
@@ -33,6 +35,12 @@ struct HomeScreen: View {
                     }
             }
         }
+        .sheet(isPresented: $showProfile) {
+            ComingSoonSheet(title: "Profile", icon: "person.circle.fill")
+        }
+        .sheet(isPresented: $showFriends) {
+            ComingSoonSheet(title: "Friends", icon: "person.2.fill")
+        }
     }
 }
 
@@ -57,7 +65,7 @@ private extension HomeScreen {
 
     var profileBadge: some View {
         Button {
-            // Profile action
+            showProfile = true
         } label: {
             ZStack {
                 Image(systemName: "star.circle.fill")
@@ -102,7 +110,7 @@ private extension HomeScreen {
 
     var friendsButton: some View {
         Button {
-            // Friends action
+            showFriends = true
         } label: {
             Image(systemName: "person.2.fill")
                 .font(GeoFont.headline)

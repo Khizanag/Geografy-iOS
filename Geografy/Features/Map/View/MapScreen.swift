@@ -6,11 +6,18 @@ struct MapScreen: View {
     @State private var mapState = MapState()
     @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
+    @State private var screenSize: CGSize = .zero
 
     var body: some View {
         GeometryReader { geometry in
             mapContent(in: geometry.size)
-                .onAppear { setInitialScale(for: geometry.size) }
+                .onAppear {
+                    screenSize = geometry.size
+                    setInitialScale(for: geometry.size)
+                }
+                .onChange(of: geometry.size) { _, newSize in
+                    screenSize = newSize
+                }
         }
         .background(GeoColors.ocean)
         .ignoresSafeArea()
@@ -22,14 +29,18 @@ struct MapScreen: View {
     }
 }
 
-// MARK: - Subviews
+// MARK: - Content
 
 private extension MapScreen {
     func mapContent(in size: CGSize) -> some View {
         ZStack {
             mapCanvas(in: size)
-            tapLayer(in: size)
-            controlsOverlay
+
+            VStack {
+                controlsBar
+                Spacer()
+            }
+
             bannerOverlay
         }
     }
@@ -43,32 +54,53 @@ private extension MapScreen {
             showLabels: mapState.showLabels,
             canvasSize: size
         )
-        .simultaneousGesture(magnifyGesture)
-        .simultaneousGesture(dragGesture(in: size))
-    }
-
-    func tapLayer(in size: CGSize) -> some View {
-        Color.clear
-            .contentShape(Rectangle())
-            .onTapGesture { location in
-                handleTap(at: location, in: size)
-            }
-    }
-
-    var controlsOverlay: some View {
-        VStack {
-            HStack {
-                closeButton
-                Spacer()
-                labelsToggleButton
-            }
-            .padding(.horizontal, GeoSpacing.md)
-            .padding(.top, GeoSpacing.xxl)
-
-            Spacer()
+        .gesture(dragGesture)
+        .gesture(magnifyGesture)
+        .onTapGesture(count: 1) { location in
+            handleTap(at: location, in: size)
         }
     }
+}
 
+// MARK: - Controls
+
+private extension MapScreen {
+    var controlsBar: some View {
+        HStack {
+            closeButton
+            Spacer()
+            labelsToggleButton
+        }
+        .padding(.horizontal, GeoSpacing.md)
+        .padding(.top, GeoSpacing.xxl)
+    }
+
+    var closeButton: some View {
+        Button { dismiss() } label: {
+            Image(systemName: "xmark")
+                .font(GeoFont.headline)
+                .foregroundStyle(GeoColors.textPrimary)
+                .frame(width: 44, height: 44)
+                .contentShape(Circle())
+        }
+        .glassEffect(.regular.interactive(), in: .circle)
+    }
+
+    var labelsToggleButton: some View {
+        Button { mapState.showLabels.toggle() } label: {
+            Text("Aa")
+                .font(GeoFont.headline)
+                .foregroundStyle(mapState.showLabels ? .white : GeoColors.textPrimary)
+                .frame(width: 44, height: 44)
+                .contentShape(Circle())
+        }
+        .glassEffect(.regular.interactive(), in: .circle)
+    }
+}
+
+// MARK: - Banner
+
+private extension MapScreen {
     @ViewBuilder
     var bannerOverlay: some View {
         VStack {
@@ -86,32 +118,6 @@ private extension MapScreen {
         }
         .allowsHitTesting(mapState.selectedShape != nil)
         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-    }
-}
-
-// MARK: - Controls
-
-private extension MapScreen {
-    var closeButton: some View {
-        Button { dismiss() } label: {
-            Image(systemName: "xmark")
-                .font(GeoFont.headline)
-                .foregroundStyle(GeoColors.textPrimary)
-                .frame(width: 44, height: 44)
-        }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .circle)
-    }
-
-    var labelsToggleButton: some View {
-        Button { mapState.showLabels.toggle() } label: {
-            Text("Aa")
-                .font(GeoFont.headline)
-                .foregroundStyle(mapState.showLabels ? .white : GeoColors.textPrimary)
-                .frame(width: 44, height: 44)
-        }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .circle)
     }
 }
 
@@ -136,7 +142,7 @@ private extension MapScreen {
             }
     }
 
-    func dragGesture(in size: CGSize) -> some Gesture {
+    var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
                 mapState.offset = CGSize(
@@ -169,7 +175,7 @@ private extension MapScreen {
             y: (point.y - originY) / mapState.scale
         )
 
-        // Check smaller countries first so enclaves (e.g. Lesotho) are tappable
+        // Check smaller countries first so enclaves are tappable
         let sortedByArea = mapState.countryShapes.sorted {
             $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
         }
