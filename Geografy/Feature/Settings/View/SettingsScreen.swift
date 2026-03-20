@@ -274,7 +274,7 @@ private struct SettingsIconBadge: View {
     var body: some View {
         Image(systemName: systemImage)
             .font(DesignSystem.IconSize.medium)
-            .foregroundStyle(.white)
+            .foregroundStyle(DesignSystem.Color.onAccent)
             .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
             .background(color)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))

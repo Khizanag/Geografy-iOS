@@ -187,7 +187,7 @@ private extension HomeScreen {
                 Text("Play")
                     .font(DesignSystem.Font.title2)
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(DesignSystem.Color.onAccent)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.md)
             .background(DesignSystem.Color.accent)

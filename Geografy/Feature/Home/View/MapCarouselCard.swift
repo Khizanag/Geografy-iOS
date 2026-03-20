@@ -75,7 +75,7 @@ private extension MapCarouselCard {
                     .font(DesignSystem.Font.headline)
                 Image(systemName: "chevron.right")
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(DesignSystem.Color.onAccent)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.accent)

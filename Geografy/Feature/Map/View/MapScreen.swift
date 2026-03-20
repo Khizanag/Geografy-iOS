@@ -93,7 +93,7 @@ private extension MapScreen {
         } label: {
             Text("Aa")
                 .font(DesignSystem.Font.headline)
-                .foregroundStyle(mapState.showLabels ? .white : DesignSystem.Color.iconSecondary)
+                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.textPrimary : DesignSystem.Color.iconSecondary)
                 .padding(DesignSystem.Spacing.xs)
                 .background {
                     if mapState.showLabels {

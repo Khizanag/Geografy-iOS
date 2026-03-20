@@ -16,6 +16,8 @@ extension DesignSystem {
         static let iconPrimary = SwiftUI.Color("GeoIconPrimary")
         static let iconSecondary = SwiftUI.Color("GeoIconSecondary")
 
+        static let onAccent = SwiftUI.Color.white
+
         static let ocean = SwiftUI.Color("GeoOcean")
 
         static let success = SwiftUI.Color("GeoSuccess")
