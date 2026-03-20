@@ -48,7 +48,7 @@ struct MapScreen: View {
         }
         .task {
             await loadMapData()
-            try? await Task.sleep(for: .milliseconds(1500))
+            try? await Task.sleep(for: .milliseconds(3000))
             withAnimation(.easeOut(duration: 0.3)) {
                 isLoading = false
             }
