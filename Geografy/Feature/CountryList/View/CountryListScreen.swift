@@ -39,8 +39,7 @@ struct CountryListScreen: View {
             }
         }
         .listStyle(.sidebar)
-        .scrollContentBackground(.hidden)
-        .background(DesignSystem.Color.background)
+        .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Countries")
         .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
         .toolbar { toolbarContent }
