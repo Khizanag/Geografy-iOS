@@ -173,18 +173,17 @@ private extension MapScreen {
         let bounds = mapState.contentBounds
         guard bounds.height > 0 else { return }
 
-        let contentTop = bounds.minY * mapState.scale
-        let contentBottom = bounds.maxY * mapState.scale
-        let contentHeight = contentBottom - contentTop
-        let contentCenterY = (contentTop + contentBottom) / 2
-        let mapCenterY = (MapProjection.mapHeight * mapState.scale) / 2
+        let scaledContentHeight = bounds.height * mapState.scale
+        let maxOffsetY = max(0, (scaledContentHeight - screenSize.height) / 2)
 
-        let contentOffsetFromCenter = contentCenterY - mapCenterY
+        // Center offset accounts for content not being centered in the map
+        let contentCenterInMap = (bounds.minY + bounds.maxY) / 2
+        let mapCenter = MapProjection.mapHeight / 2
+        let centerCorrection = (mapCenter - contentCenterInMap) * mapState.scale
 
-        let maxOffsetY = max(0, (contentHeight - screenSize.height) / 2)
-        let adjustedOffset = mapState.offset.height + contentOffsetFromCenter
-        let clamped = min(max(adjustedOffset, -maxOffsetY), maxOffsetY)
-        mapState.offset.height = clamped - contentOffsetFromCenter
+        let correctedOffset = mapState.offset.height - centerCorrection
+        let clamped = min(max(correctedOffset, -maxOffsetY), maxOffsetY)
+        mapState.offset.height = clamped + centerCorrection
     }
 
     func wrapHorizontalOffset() {
