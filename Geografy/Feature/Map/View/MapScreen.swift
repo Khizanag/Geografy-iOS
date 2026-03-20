@@ -157,6 +157,7 @@ private extension MapScreen {
                 )
             }
             .onEnded { _ in
+                wrapHorizontalOffset()
                 mapState.lastOffset = mapState.offset
             }
     }
@@ -165,6 +166,17 @@ private extension MapScreen {
 // MARK: - Actions
 
 private extension MapScreen {
+    func wrapHorizontalOffset() {
+        let mapWidthScaled = MapProjection.mapWidth * mapState.scale
+        let halfWidth = mapWidthScaled / 2
+
+        if mapState.offset.width > halfWidth {
+            mapState.offset.width -= mapWidthScaled
+        } else if mapState.offset.width < -halfWidth {
+            mapState.offset.width += mapWidthScaled
+        }
+    }
+
     func setInitialScale(for size: CGSize) {
         guard size.width > 0 else { return }
         let fitScale = size.width / MapProjection.mapWidth

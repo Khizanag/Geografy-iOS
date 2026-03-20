@@ -10,15 +10,15 @@ struct MapCanvasView: View {
 
     var body: some View {
         Canvas { context, size in
-            let transform = makeTransform(for: size)
             let visibleRect = CGRect(origin: .zero, size: size)
 
-            for shape in countryShapes {
-                drawCountry(shape, in: &context, transform: transform, visibleRect: visibleRect)
-            }
+            for horizontalCopy in horizontalOffsets {
+                let transform = makeTransform(for: size, horizontalShift: horizontalCopy)
+                drawAllCountries(in: &context, transform: transform, visibleRect: visibleRect)
 
-            if showLabels {
-                drawLabels(in: &context, transform: transform, visibleRect: visibleRect)
+                if showLabels {
+                    drawLabels(in: &context, transform: transform, visibleRect: visibleRect)
+                }
             }
         }
         .frame(width: canvasSize.width, height: canvasSize.height)
@@ -28,6 +28,16 @@ struct MapCanvasView: View {
 // MARK: - Drawing
 
 private extension MapCanvasView {
+    func drawAllCountries(
+        in context: inout GraphicsContext,
+        transform: CGAffineTransform,
+        visibleRect: CGRect
+    ) {
+        for shape in countryShapes {
+            drawCountry(shape, in: &context, transform: transform, visibleRect: visibleRect)
+        }
+    }
+
     func drawCountry(
         _ shape: CountryShape,
         in context: inout GraphicsContext,
@@ -68,10 +78,6 @@ private extension MapCanvasView {
             let point = shape.centroid.applying(transform)
             let fontSize = min(max(transformedBounds.width / CGFloat(shape.name.count), 6), 14)
 
-            let text = Text(shape.name)
-                .font(.system(size: fontSize, weight: .semibold))
-                .foregroundStyle(.white)
-
             var shadowContext = context
             shadowContext.opacity = 0.7
             shadowContext.draw(
@@ -84,7 +90,15 @@ private extension MapCanvasView {
                 anchor: .center
             )
 
-            context.draw(context.resolve(text), at: point, anchor: .center)
+            context.draw(
+                context.resolve(
+                    Text(shape.name)
+                        .font(.system(size: fontSize, weight: .semibold))
+                        .foregroundStyle(.white)
+                ),
+                at: point,
+                anchor: .center
+            )
         }
     }
 }
@@ -92,8 +106,13 @@ private extension MapCanvasView {
 // MARK: - Helpers
 
 private extension MapCanvasView {
-    func makeTransform(for size: CGSize) -> CGAffineTransform {
-        let centerX = size.width / 2 - (MapProjection.mapWidth * scale) / 2 + offset.width
+    var horizontalOffsets: [CGFloat] {
+        let mapWidthScaled = MapProjection.mapWidth * scale
+        return [-mapWidthScaled, 0, mapWidthScaled]
+    }
+
+    func makeTransform(for size: CGSize, horizontalShift: CGFloat) -> CGAffineTransform {
+        let centerX = size.width / 2 - (MapProjection.mapWidth * scale) / 2 + offset.width + horizontalShift
         let centerY = size.height / 2 - (MapProjection.mapHeight * scale) / 2 + offset.height
 
         return CGAffineTransform(scaleX: scale, y: scale)
