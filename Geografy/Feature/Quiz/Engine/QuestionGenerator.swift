@@ -137,9 +137,8 @@ private extension QuestionGenerator {
     ) -> QuizQuestion {
         let correctID = UUID()
         let correctOption = QuizOption(id: correctID, text: country.name, flagCode: nil)
-        let distractors = selectDistractors(for: country, from: allCountries, count: optionCount - 1)
-            .filter { $0.population < country.population }
-
+        let smallerCountries = allCountries.filter { $0.code != country.code && $0.population < country.population }
+        let distractors = Array(smallerCountries.shuffled().prefix(optionCount - 1))
         let distractorOptions = distractors.map { QuizOption(id: UUID(), text: $0.name, flagCode: nil) }
         let options = ([correctOption] + distractorOptions).shuffled()
 
@@ -161,9 +160,8 @@ private extension QuestionGenerator {
     ) -> QuizQuestion {
         let correctID = UUID()
         let correctOption = QuizOption(id: correctID, text: country.name, flagCode: nil)
-        let distractors = selectDistractors(for: country, from: allCountries, count: optionCount - 1)
-            .filter { $0.area < country.area }
-
+        let smallerCountries = allCountries.filter { $0.code != country.code && $0.area < country.area }
+        let distractors = Array(smallerCountries.shuffled().prefix(optionCount - 1))
         let distractorOptions = distractors.map { QuizOption(id: UUID(), text: $0.name, flagCode: nil) }
         let options = ([correctOption] + distractorOptions).shuffled()
 
