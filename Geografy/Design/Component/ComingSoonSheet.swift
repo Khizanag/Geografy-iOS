@@ -10,18 +10,10 @@ struct ComingSoonSheet: View {
         NavigationStack {
             content
                 .navigationTitle(title)
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.large)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button { dismiss() } label: {
-                            Image(systemName: "xmark")
-                                .font(GeoFont.footnote)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(GeoColors.textSecondary)
-                                .frame(width: 30, height: 30)
-                                .contentShape(Circle())
-                        }
-                        .glassEffect(.regular.interactive(), in: .circle)
+                        GeoCloseButton()
                     }
                 }
         }
