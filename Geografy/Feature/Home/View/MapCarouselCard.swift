@@ -73,6 +73,7 @@ private extension MapCarouselCard {
             Label("Open map", systemImage: "map.fill")
                 .font(DesignSystem.Font.headline)
                 .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.xxs)
         }
         .buttonStyle(.glass)
     }

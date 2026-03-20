@@ -48,6 +48,8 @@ private extension CountryBannerView {
             Text(name)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
 
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "star.fill")
@@ -57,6 +59,7 @@ private extension CountryBannerView {
                 Text(capital)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(1)
             }
         }
     }
@@ -72,6 +75,7 @@ private extension CountryBannerView {
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
+            .fixedSize()
         }
         .buttonStyle(.glass)
     }

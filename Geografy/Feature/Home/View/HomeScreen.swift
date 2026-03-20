@@ -193,6 +193,7 @@ private extension HomeScreen {
             Label("Play", systemImage: "play.fill")
                 .font(DesignSystem.Font.title2)
                 .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.xs)
         }
         .buttonStyle(.glass)
     }
