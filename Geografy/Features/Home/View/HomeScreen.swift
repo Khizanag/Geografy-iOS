@@ -55,6 +55,7 @@ private extension HomeScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             profileButton
             statsButton
+            Spacer()
             friendsButton
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -84,16 +85,13 @@ private extension HomeScreen {
     }
 
     var friendsButton: some View {
-        Spacer()
-            .overlay(alignment: .trailing) {
-                Button { showFriends = true } label: {
-                    Image(systemName: "person.2.fill")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.iconPrimary)
-                        .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
-                }
-                .glassEffect(.regular.interactive(), in: .circle)
-            }
+        Button { showFriends = true } label: {
+            Image(systemName: "person.2.fill")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
+                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
+        }
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 }
 
