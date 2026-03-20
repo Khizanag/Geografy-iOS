@@ -206,6 +206,10 @@ private extension MapScreen {
             mapState.scale = newMin
             mapState.lastScale = newMin
         }
+
+        centerOnContent()
+        clampVerticalOffset()
+        mapState.lastOffset = mapState.offset
     }
 
     func setInitialScale(for size: CGSize) {
