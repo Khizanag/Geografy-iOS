@@ -27,7 +27,7 @@ struct HomeScreen: View {
         .safeAreaInset(edge: .bottom) {
             playButton
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.xs)
+                .padding(.bottom, DesignSystem.Spacing.md)
         }
         .background(DesignSystem.Color.background)
         .navigationBarHidden(true)
