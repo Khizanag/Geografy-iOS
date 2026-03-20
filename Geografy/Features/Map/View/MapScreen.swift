@@ -44,7 +44,9 @@ private extension MapScreen {
         )
         .simultaneousGesture(magnifyGesture)
         .simultaneousGesture(dragGesture(in: size))
-        .gesture(tapGesture(in: size))
+        .onTapGesture { location in
+            handleTap(at: location, in: size)
+        }
     }
 
     var controlsOverlay: some View {
@@ -79,6 +81,7 @@ private extension MapScreen {
 
             Spacer()
         }
+        .allowsHitTesting(true)
     }
 
     @ViewBuilder
@@ -127,12 +130,6 @@ private extension MapScreen {
             }
     }
 
-    func tapGesture(in size: CGSize) -> some Gesture {
-        SpatialTapGesture()
-            .onEnded { value in
-                handleTap(at: value.location, in: size)
-            }
-    }
 }
 
 // MARK: - Actions
