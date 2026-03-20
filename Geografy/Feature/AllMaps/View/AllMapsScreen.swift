@@ -39,19 +39,17 @@ private extension AllMapsScreen {
     }
 
     func mapCard(name: String, icon: String) -> some View {
-        GeoCard {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: icon)
-                    .font(DesignSystem.IconSize.xLarge)
-                    .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
-                    .frame(height: DesignSystem.Size.xxxl)
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: icon)
+                .font(DesignSystem.IconSize.xLarge)
+                .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
+                .frame(height: DesignSystem.Size.xxxl)
 
-                Text(name)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.md)
+            Text(name)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
+        .frame(maxWidth: .infinity)
+        .padding(DesignSystem.Spacing.md)
     }
 }
