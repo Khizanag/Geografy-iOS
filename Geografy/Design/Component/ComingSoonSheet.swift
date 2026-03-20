@@ -10,7 +10,7 @@ struct ComingSoonSheet: View {
                 .navigationTitle(title)
                 .toolbar {
                     ToolbarItem(placement: .destructiveAction) {
-                        GeoCloseButton()
+                        GeoCircleCloseButton()
                     }
                 }
         }

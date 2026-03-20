@@ -12,6 +12,9 @@ enum GeoColors {
     static let textSecondary = Color("GeoTextSecondary")
     static let textTertiary = Color("GeoTextTertiary")
 
+    static let iconPrimary = Color("GeoIconPrimary")
+    static let iconSecondary = Color("GeoIconSecondary")
+
     static let ocean = Color("GeoOcean")
 
     static let success = Color("GeoSuccess")
