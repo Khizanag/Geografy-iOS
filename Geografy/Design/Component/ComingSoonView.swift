@@ -31,16 +31,15 @@ private extension ComingSoonView {
             pulsingCircles
             iconView
         }
-        .frame(width: 240, height: 240)
+        .frame(width: 280, height: 280)
     }
 
     var pulsingCircles: some View {
         ZStack {
-            pulsingCircle(size: 240, opacity: 0.03, delay: 0)
-            pulsingCircle(size: 200, opacity: 0.05, delay: 0.3)
-            pulsingCircle(size: 160, opacity: 0.07, delay: 0.6)
-            pulsingCircle(size: 120, opacity: 0.10, delay: 0.9)
-            pulsingCircle(size: 90, opacity: 0.14, delay: 1.2)
+            pulsingCircle(size: 260, opacity: 0.02, delay: 0)
+            pulsingCircle(size: 220, opacity: 0.04, delay: 0.4)
+            pulsingCircle(size: 180, opacity: 0.06, delay: 0.8)
+            pulsingCircle(size: 140, opacity: 0.09, delay: 1.2)
         }
     }
 
@@ -68,12 +67,13 @@ private extension ComingSoonView {
 private extension ComingSoonView {
     func pulsingCircle(size: CGFloat, opacity: Double, delay: Double) -> some View {
         Circle()
-            .fill(DesignSystem.Color.accent.opacity(opacity))
+            .stroke(DesignSystem.Color.accent.opacity(opacity * 2), lineWidth: 1.5)
+            .background(Circle().fill(DesignSystem.Color.accent.opacity(opacity)))
             .frame(width: size, height: size)
-            .scaleEffect(isAnimating ? 1.08 : 0.92)
-            .opacity(isAnimating ? 1 : 0.6)
+            .scaleEffect(isAnimating ? 1.06 : 0.94)
+            .opacity(isAnimating ? 1 : 0.5)
             .animation(
-                .easeInOut(duration: 2)
+                .easeInOut(duration: 2.5)
                 .repeatForever(autoreverses: true)
                 .delay(delay),
                 value: isAnimating
