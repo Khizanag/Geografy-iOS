@@ -71,7 +71,6 @@ private extension CountryBannerView {
             Image(systemName: "xmark")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .padding(DesignSystem.Spacing.xs)
         }
         .buttonStyle(.glass)
     }
