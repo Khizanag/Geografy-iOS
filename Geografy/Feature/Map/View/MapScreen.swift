@@ -28,8 +28,17 @@ struct MapScreen: View {
             }
         }
         .background(DesignSystem.Color.ocean)
-        .ignoresSafeArea()
-        .navigationBarHidden(true)
+        .ignoresSafeArea(edges: .bottom)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                closeButton
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                labelsToggleButton
+            }
+        }
+        .navigationBarBackButtonHidden()
         .navigationDestination(item: $navigateToCountry) { country in
             CountryDetailScreen(country: country)
         }
@@ -49,15 +58,6 @@ private extension MapScreen {
     func mapContent(in size: CGSize) -> some View {
         ZStack {
             mapCanvas(in: size)
-
-            GeometryReader { geo in
-                VStack {
-                    controlsBar
-                        .padding(.top, geo.safeAreaInsets.top + DesignSystem.Spacing.xs)
-                    Spacer()
-                }
-            }
-
             bannerOverlay
         }
     }
@@ -82,15 +82,6 @@ private extension MapScreen {
 // MARK: - Controls
 
 private extension MapScreen {
-    var controlsBar: some View {
-        HStack {
-            closeButton
-            Spacer()
-            labelsToggleButton
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
     var closeButton: some View {
         Button { dismiss() } label: {
             Image(systemName: "xmark")
