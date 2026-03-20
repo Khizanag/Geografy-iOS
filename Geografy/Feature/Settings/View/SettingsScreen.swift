@@ -6,6 +6,7 @@ struct SettingsScreen: View {
     @AppStorage("notificationsEnabled") private var notificationsEnabled = true
     @AppStorage("showCorrectAnswer") private var showCorrectAnswer = true
     @AppStorage("hideDependentTerritories") private var hideDependentTerritories = false
+    @AppStorage("showDisputedTerritories") private var showDisputedTerritories = false
     @AppStorage("vibrationEnabled") private var vibrationEnabled = true
     @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
@@ -81,12 +82,12 @@ private extension SettingsScreen {
 
             settingsDivider
 
-            SettingsNavigationRow(
+            SettingsToggleRow(
                 icon: "exclamationmark.triangle.fill",
                 iconColor: DesignSystem.Color.warning,
-                title: "Territorial disputes",
-                comingSoon: true
-            ) {}
+                title: "Show disputed territories",
+                isOn: $showDisputedTerritories,
+            )
 
             settingsDivider
 

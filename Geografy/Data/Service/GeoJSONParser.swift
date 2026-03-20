@@ -2,6 +2,22 @@ import CoreGraphics
 import SwiftUI
 
 enum GeoJSONParser {
+    nonisolated(unsafe) static var showDisputedTerritories = false
+
+    private static let territoryMergeMap: [String: String] = [
+        "Somaliland": "SO",
+        "W. Sahara": "MA",
+        "N. Cyprus": "CY"
+    ]
+
+    private static let filteredTerritories: Set<String> = [
+        "Bir Tawil", "Cyprus U.N. Buffer Zone", "Siachen Glacier",
+        "Bajo Nuevo Bank", "Scarborough Reef", "Serranilla Bank", "Spratly Is.",
+        "Southern Patagonian Ice Field", "Brazilian I.",
+        "Akrotiri", "Dhekelia", "Baikonur", "USNB Guantanamo Bay",
+        "Clipperton I.", "Coral Sea Is.", "Indian Ocean Ter.", "Ashmore and Cartier Is."
+    ]
+
     static func parse(data: Data) -> [CountryShape] {
         guard let collection = try? JSONDecoder().decode(GeoJSONFeatureCollection.self, from: data) else {
             return []
@@ -33,13 +49,10 @@ private extension GeoJSONParser {
         // Filter Antarctica
         guard rawCode != "ATA", name != "Antarctica" else { return nil }
 
-        // Convert 3-letter to 2-letter ISO code if needed
-        let code: String
-        if rawCode.count == 3 {
-            code = ISOCountryCodes.alpha2(from: rawCode) ?? rawCode
-        } else {
-            code = rawCode
-        }
+        // Filter non-country territories
+        guard !filteredTerritories.contains(name) else { return nil }
+
+        let code = resolveCountryCode(rawCode: rawCode, name: name)
 
         let ringArrays = extractRings(from: feature.geometry)
         guard !ringArrays.isEmpty else { return nil }
@@ -92,6 +105,16 @@ private extension GeoJSONParser {
             }
         }
         return nil
+    }
+
+    static func resolveCountryCode(rawCode: String, name: String) -> String {
+        if let mergeCode = territoryMergeMap[name], !showDisputedTerritories {
+            return mergeCode
+        }
+        if rawCode.count == 3 {
+            return ISOCountryCodes.alpha2(from: rawCode) ?? rawCode
+        }
+        return rawCode
     }
 
     static func extractRings(from geometry: GeoJSONGeometry) -> [[[[Double]]]] {
