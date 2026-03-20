@@ -76,9 +76,29 @@ private extension CountryListScreen {
             sortBySubmenu
             Divider()
             continentFilterSubmenu
+            Divider()
+            resetButton
         } label: {
-            Image(systemName: "line.3.horizontal.decrease")
+            Image(systemName: hasActiveFilters ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
                 .foregroundStyle(DesignSystem.Color.accent)
+        }
+    }
+
+    var hasActiveFilters: Bool {
+        groupBy != .none || sortBy != .name || !sortAscending || continentFilter != nil
+    }
+
+    var resetButton: some View {
+        Button(role: .destructive) {
+            withAnimation {
+                groupBy = .none
+                sortBy = .name
+                sortAscending = true
+                continentFilter = nil
+                searchText = ""
+            }
+        } label: {
+            Label("Reset All", systemImage: "arrow.counterclockwise")
         }
     }
 
@@ -159,40 +179,18 @@ private extension CountryListScreen {
     }
 
     func sectionView(key: String, countries: [Country]) -> some View {
-        Section {
-            if expandedSections.contains(key) {
-                ForEach(countries) { country in
-                    countryRow(for: country)
-                }
+        Section(isExpanded: sectionBinding(for: key)) {
+            ForEach(countries) { country in
+                countryRow(for: country)
             }
         } header: {
-            sectionHeader(key: key, count: countries.count)
-        }
-    }
-
-    func sectionHeader(key: String, count: Int) -> some View {
-        Button {
-            withAnimation(.easeInOut) {
-                if expandedSections.contains(key) {
-                    expandedSections.remove(key)
-                } else {
-                    expandedSections.insert(key)
-                }
-            }
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: expandedSections.contains(key) ? "chevron.down" : "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.accent)
-
+            HStack {
                 Text(key)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
 
                 Spacer()
 
-                Text("\(count)")
-                    .font(DesignSystem.Font.caption)
+                Text("\(countries.count)")
+                    .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
                     .padding(.horizontal, DesignSystem.Spacing.xs)
                     .padding(.vertical, DesignSystem.Spacing.xxs)
@@ -202,7 +200,19 @@ private extension CountryListScreen {
                     )
             }
         }
-        .buttonStyle(.plain)
+    }
+
+    func sectionBinding(for key: String) -> Binding<Bool> {
+        Binding(
+            get: { expandedSections.contains(key) },
+            set: { isExpanded in
+                if isExpanded {
+                    expandedSections.insert(key)
+                } else {
+                    expandedSections.remove(key)
+                }
+            }
+        )
     }
 }
 
