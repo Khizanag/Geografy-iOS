@@ -1,13 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "CG.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "CG.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

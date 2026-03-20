@@ -1,13 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "SH-AC.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "SH-AC.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
