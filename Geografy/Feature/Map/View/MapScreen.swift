@@ -227,8 +227,13 @@ private extension MapScreen {
 
         guard bounds.height > 0 else { return fitWidth }
 
-        let fitContentHeight = size.height / bounds.height
-        return max(fitWidth, fitContentHeight)
+        let isLandscape = size.width > size.height
+        if isLandscape {
+            let fitContentHeight = size.height / bounds.height
+            return max(fitWidth, fitContentHeight)
+        }
+
+        return fitWidth
     }
 
     func centerOnContent() {
