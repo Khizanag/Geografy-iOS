@@ -117,15 +117,17 @@ private extension HomeScreen {
     }
 
     var xpProgressBar: some View {
-        ZStack(alignment: .leading) {
-            Capsule()
-                .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xs)
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
 
-            Capsule()
-                .fill(DesignSystem.Color.accent)
-                .frame(width: DesignSystem.Size.xxxl * (175.0 / 190.0), height: DesignSystem.Size.xs)
+                Capsule()
+                    .fill(DesignSystem.Color.accent)
+                    .frame(width: geo.size.width * (175.0 / 190.0))
+            }
         }
+        .frame(height: DesignSystem.Size.xs)
     }
 
     var divider: some View {
