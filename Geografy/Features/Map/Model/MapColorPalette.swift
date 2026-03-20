@@ -3,7 +3,7 @@ import SwiftUI
 enum MapColorPalette {
     static func assignColors(to shapes: inout [CountryShape]) {
         let adjacency = buildAdjacencyMap(from: shapes)
-        let colors = GeoColors.mapColors
+        let colors = DesignSystem.Color.mapColors
         var assigned: [String: Int] = [:]
 
         let sortedIndices = shapes.indices.sorted { shapes[$0].name < shapes[$1].name }

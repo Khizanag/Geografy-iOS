@@ -18,7 +18,7 @@ struct GeoCircleCloseButton: View {
             }
         } label: {
             Image(systemName: "xmark")
-                .foregroundStyle(GeoColors.iconSecondary)
+                .foregroundStyle(DesignSystem.Color.iconSecondary)
         }
     }
 }

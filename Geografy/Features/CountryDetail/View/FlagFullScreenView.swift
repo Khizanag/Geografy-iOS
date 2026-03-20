@@ -13,7 +13,7 @@ struct FlagFullScreenView: View {
 
     var body: some View {
         ZStack {
-            GeoColors.background
+            DesignSystem.Color.background
                 .ignoresSafeArea()
 
             flagContent
@@ -26,13 +26,13 @@ struct FlagFullScreenView: View {
 
 private extension FlagFullScreenView {
     var flagContent: some View {
-        VStack(spacing: GeoSpacing.lg) {
+        VStack(spacing: DesignSystem.Spacing.lg) {
             Text(flagEmoji)
-                .font(GeoIconSize.flag)
+                .font(DesignSystem.IconSize.flag)
 
             Text(countryName)
-                .font(GeoFont.largeTitle)
-                .foregroundStyle(GeoColors.textPrimary)
+                .font(DesignSystem.Font.largeTitle)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
     }
 }

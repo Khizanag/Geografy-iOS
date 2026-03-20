@@ -47,7 +47,7 @@ struct ContentView: View {
                 }
             }
         }
-        .tint(GeoColors.accent)
+        .tint(DesignSystem.Color.accent)
         .preferredColorScheme(.dark)
     }
 }

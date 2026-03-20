@@ -18,14 +18,14 @@ struct HomeScreen: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: GeoSpacing.lg) {
+            VStack(spacing: DesignSystem.Spacing.lg) {
                 profileSection
                 mapCarousel
                 actionButtons
             }
-            .padding(.vertical, GeoSpacing.md)
+            .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .background(GeoColors.background)
+        .background(DesignSystem.Color.background)
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showMap) {
             NavigationStack {
@@ -48,15 +48,15 @@ struct HomeScreen: View {
 
 private extension HomeScreen {
     var profileSection: some View {
-        VStack(spacing: GeoSpacing.sm) {
+        VStack(spacing: DesignSystem.Spacing.sm) {
             profileTopRow
             currencyRow
         }
-        .padding(.horizontal, GeoSpacing.md)
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     var profileTopRow: some View {
-        HStack(spacing: GeoSpacing.sm) {
+        HStack(spacing: DesignSystem.Spacing.sm) {
             profileBadge
             xpProgressBar
             friendsButton
@@ -69,16 +69,16 @@ private extension HomeScreen {
         } label: {
             ZStack {
                 Image(systemName: "star.circle.fill")
-                    .font(GeoIconSize.large)
-                    .foregroundStyle(GeoColors.error)
+                    .font(DesignSystem.IconSize.large)
+                    .foregroundStyle(DesignSystem.Color.error)
 
                 Text("5")
-                    .font(GeoFont.caption2)
+                    .font(DesignSystem.Font.caption2)
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
                     .padding(.horizontal, 5)
                     .padding(.vertical, 2)
-                    .background(GeoColors.accent)
+                    .background(DesignSystem.Color.accent)
                     .clipShape(Capsule())
                     .offset(x: 14, y: 14)
             }
@@ -89,18 +89,18 @@ private extension HomeScreen {
     }
 
     var xpProgressBar: some View {
-        VStack(alignment: .leading, spacing: GeoSpacing.xxs) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
             Text("175/190 XP")
-                .font(GeoFont.caption)
-                .foregroundStyle(GeoColors.textSecondary)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
 
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: GeoCornerRadius.small)
-                        .fill(GeoColors.cardBackground)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                        .fill(DesignSystem.Color.cardBackground)
 
-                    RoundedRectangle(cornerRadius: GeoCornerRadius.small)
-                        .fill(GeoColors.accent)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                        .fill(DesignSystem.Color.accent)
                         .frame(width: geometry.size.width * (175.0 / 190.0))
                 }
             }
@@ -113,8 +113,8 @@ private extension HomeScreen {
             showFriends = true
         } label: {
             Image(systemName: "person.2.fill")
-                .font(GeoFont.headline)
-                .foregroundStyle(GeoColors.textPrimary)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .frame(width: 48, height: 48)
         }
         .buttonStyle(.plain)
@@ -122,7 +122,7 @@ private extension HomeScreen {
     }
 
     var currencyRow: some View {
-        HStack(spacing: GeoSpacing.lg) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
             currencyItem(icon: "diamond.fill", color: .cyan, value: "45")
             Spacer()
@@ -130,14 +130,14 @@ private extension HomeScreen {
     }
 
     func currencyItem(icon: String, color: Color, value: String) -> some View {
-        HStack(spacing: GeoSpacing.xs) {
+        HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
-                .font(GeoFont.body)
+                .font(DesignSystem.Font.body)
                 .foregroundStyle(color)
 
             Text(value)
-                .font(GeoFont.headline)
-                .foregroundStyle(GeoColors.textPrimary)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
     }
 }
@@ -154,8 +154,8 @@ private extension HomeScreen {
                 ) {
                     showMap = true
                 }
-                .padding(.horizontal, GeoSpacing.md)
-                .padding(.bottom, GeoSpacing.xl)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.xl)
                 .tag(index)
             }
         }
@@ -168,32 +168,32 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var actionButtons: some View {
-        VStack(spacing: GeoSpacing.sm) {
+        VStack(spacing: DesignSystem.Spacing.sm) {
             statisticsButton
             playButton
         }
-        .padding(.horizontal, GeoSpacing.md)
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     var statisticsButton: some View {
         NavigationLink(value: NavigationRoute.achievements) {
             GeoCard {
-                HStack(spacing: GeoSpacing.sm) {
+                HStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "chart.bar.fill")
-                        .font(GeoFont.title2)
+                        .font(DesignSystem.Font.title2)
                         .foregroundStyle(.blue)
 
                     Text("Statistics")
-                        .font(GeoFont.headline)
-                        .foregroundStyle(GeoColors.textPrimary)
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
 
                     Spacer()
 
                     Image(systemName: "chevron.right")
-                        .font(GeoFont.subheadline)
-                        .foregroundStyle(GeoColors.textTertiary)
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
-                .padding(GeoSpacing.md)
+                .padding(DesignSystem.Spacing.md)
             }
         }
         .buttonStyle(.plain)
@@ -201,18 +201,18 @@ private extension HomeScreen {
 
     var playButton: some View {
         NavigationLink(value: NavigationRoute.quiz) {
-            HStack(spacing: GeoSpacing.sm) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "puzzlepiece.fill")
-                    .font(GeoFont.title2)
+                    .font(DesignSystem.Font.title2)
 
                 Text("Play")
-                    .font(GeoFont.title2)
+                    .font(DesignSystem.Font.title2)
             }
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, GeoSpacing.md)
-            .background(GeoColors.accent)
-            .clipShape(RoundedRectangle(cornerRadius: GeoCornerRadius.large))
+            .padding(.vertical, DesignSystem.Spacing.md)
+            .background(DesignSystem.Color.accent)
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         }
         .buttonStyle(.plain)
     }

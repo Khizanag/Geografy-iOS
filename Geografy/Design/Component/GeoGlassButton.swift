@@ -13,18 +13,18 @@ struct GeoGlassButton: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: GeoSpacing.xs) {
+            HStack(spacing: DesignSystem.Spacing.xs) {
                 if let systemImage {
                     Image(systemName: systemImage)
-                        .font(GeoFont.headline)
+                        .font(DesignSystem.Font.headline)
                 }
 
                 Text(title)
-                    .font(GeoFont.headline)
+                    .font(DesignSystem.Font.headline)
             }
-            .foregroundStyle(GeoColors.textPrimary)
-            .padding(.horizontal, GeoSpacing.lg)
-            .padding(.vertical, GeoSpacing.sm)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .padding(.horizontal, DesignSystem.Spacing.lg)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
         .glassEffect(.regular.interactive(), in: .capsule)
     }

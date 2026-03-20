@@ -19,7 +19,7 @@ struct MapScreen: View {
                     screenSize = newSize
                 }
         }
-        .background(GeoColors.ocean)
+        .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
         .navigationBarHidden(true)
         .navigationDestination(item: $navigateToCountry) { country in
@@ -71,15 +71,15 @@ private extension MapScreen {
             Spacer()
             labelsToggleButton
         }
-        .padding(.horizontal, GeoSpacing.md)
-        .padding(.top, GeoSpacing.xs)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.top, DesignSystem.Spacing.xs)
     }
 
     var closeButton: some View {
         Button { dismiss() } label: {
             Image(systemName: "xmark")
-                .font(GeoFont.headline)
-                .foregroundStyle(GeoColors.textPrimary)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .frame(width: 44, height: 44)
                 .contentShape(Circle())
         }
@@ -92,14 +92,14 @@ private extension MapScreen {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
             Text("Aa")
-                .font(GeoFont.headline)
+                .font(DesignSystem.Font.headline)
                 .fontWeight(mapState.showLabels ? .bold : .regular)
-                .foregroundStyle(mapState.showLabels ? GeoColors.accent : GeoColors.textSecondary)
+                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary)
                 .frame(width: 44, height: 44)
                 .contentShape(Circle())
         }
         .glassEffect(
-            mapState.showLabels ? .regular.interactive().tint(GeoColors.accent) : .regular.interactive(),
+            mapState.showLabels ? .regular.interactive().tint(DesignSystem.Color.accent) : .regular.interactive(),
             in: .circle
         )
     }
@@ -118,7 +118,7 @@ private extension MapScreen {
                     onMoreInfo: { navigateToCountry = country },
                     onDismiss: { mapState.selectedCountryCode = nil }
                 )
-                .padding(.top, GeoSpacing.xxl + 56)
+                .padding(.top, DesignSystem.Spacing.xxl + 56)
             }
 
             Spacer()

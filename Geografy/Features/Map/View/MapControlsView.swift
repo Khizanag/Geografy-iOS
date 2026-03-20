@@ -11,8 +11,8 @@ struct MapControlsView: View {
                 Spacer()
                 labelsToggleButton
             }
-            .padding(.horizontal, GeoSpacing.md)
-            .padding(.top, GeoSpacing.xs)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.top, DesignSystem.Spacing.xs)
 
             Spacer()
         }

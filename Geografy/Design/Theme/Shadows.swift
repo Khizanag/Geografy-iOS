@@ -1,14 +1,16 @@
 import SwiftUI
 
-enum GeoShadow {
-    case card
-    case elevated
-    case subtle
+extension DesignSystem {
+    enum Shadow {
+        case card
+        case elevated
+        case subtle
+    }
 }
 
 // MARK: - ViewModifier
 
-extension GeoShadow {
+extension DesignSystem.Shadow {
     var radius: CGFloat {
         switch self {
         case .card: 8
@@ -37,7 +39,7 @@ extension GeoShadow {
 // MARK: - View Extension
 
 extension View {
-    func geoShadow(_ style: GeoShadow = .card) -> some View {
+    func geoShadow(_ style: DesignSystem.Shadow = .card) -> some View {
         shadow(
             color: .black.opacity(style.opacity),
             radius: style.radius,

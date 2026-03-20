@@ -71,7 +71,7 @@ private extension GeoJSONParser {
 
         let centroid = calculateCentroid(from: allPoints)
         let boundingBox = calculateBoundingBox(from: allPoints)
-        let color = GeoColors.mapColors[index % GeoColors.mapColors.count]
+        let color = DesignSystem.Color.mapColors[index % DesignSystem.Color.mapColors.count]
 
         return CountryShape(
             id: code,

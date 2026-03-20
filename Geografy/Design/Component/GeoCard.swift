@@ -2,12 +2,12 @@ import SwiftUI
 
 struct GeoCard<Content: View>: View {
     private let cornerRadius: CGFloat
-    private let shadow: GeoShadow?
+    private let shadow: DesignSystem.Shadow?
     private let content: Content
 
     init(
-        cornerRadius: CGFloat = GeoCornerRadius.medium,
-        shadow: GeoShadow? = nil,
+        cornerRadius: CGFloat = DesignSystem.CornerRadius.medium,
+        shadow: DesignSystem.Shadow? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.cornerRadius = cornerRadius
@@ -17,7 +17,7 @@ struct GeoCard<Content: View>: View {
 
     var body: some View {
         content
-            .background(GeoColors.cardBackground)
+            .background(DesignSystem.Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .optionalShadow(shadow)
     }
@@ -27,7 +27,7 @@ struct GeoCard<Content: View>: View {
 
 private extension View {
     @ViewBuilder
-    func optionalShadow(_ shadow: GeoShadow?) -> some View {
+    func optionalShadow(_ shadow: DesignSystem.Shadow?) -> some View {
         if let shadow {
             self.geoShadow(shadow)
         } else {

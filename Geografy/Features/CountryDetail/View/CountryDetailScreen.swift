@@ -12,13 +12,13 @@ struct CountryDetailScreen: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: GeoSpacing.lg) {
+            VStack(spacing: DesignSystem.Spacing.lg) {
                 flagSection
                 infoGrid
             }
-            .padding(GeoSpacing.md)
+            .padding(DesignSystem.Spacing.md)
         }
-        .background(GeoColors.background)
+        .background(DesignSystem.Color.background)
         .navigationTitle(country.name)
         .overlay {
             if let selectedInfo {
@@ -54,17 +54,17 @@ private extension CountryDetailScreen {
     var flagSection: some View {
         Button { showFlagFullScreen = true } label: {
             Text(country.flagEmoji)
-                .font(GeoIconSize.hero)
+                .font(DesignSystem.IconSize.hero)
         }
         .buttonStyle(.plain)
         .frame(maxWidth: .infinity)
-        .padding(.vertical, GeoSpacing.md)
+        .padding(.vertical, DesignSystem.Spacing.md)
     }
 
     var infoGrid: some View {
         LazyVGrid(
-            columns: [GridItem(.adaptive(minimum: 160), spacing: GeoSpacing.sm)],
-            spacing: GeoSpacing.sm
+            columns: [GridItem(.adaptive(minimum: 160), spacing: DesignSystem.Spacing.sm)],
+            spacing: DesignSystem.Spacing.sm
         ) {
             ForEach(infoItems) { item in
                 GeoInfoTile(

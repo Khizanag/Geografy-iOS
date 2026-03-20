@@ -13,19 +13,19 @@ struct SettingsScreen: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: GeoSpacing.md) {
+            VStack(spacing: DesignSystem.Spacing.md) {
                 accountSection
                 generalSettingsSection
                 gameSettingsSection
                 soundAndVibrationSection
             }
-            .padding(.horizontal, GeoSpacing.md)
-            .padding(.vertical, GeoSpacing.sm)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .background(GeoColors.background)
+        .background(DesignSystem.Color.background)
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(GeoColors.background, for: .navigationBar)
+        .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
     }
 }
@@ -38,22 +38,22 @@ private extension SettingsScreen {
             Button {
                 // Account settings — coming soon
             } label: {
-                HStack(spacing: GeoSpacing.sm) {
+                HStack(spacing: DesignSystem.Spacing.sm) {
                     avatarPlaceholder
-                    VStack(alignment: .leading, spacing: GeoSpacing.xxs) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text("Guest")
-                            .font(GeoFont.headline)
-                            .foregroundStyle(GeoColors.textPrimary)
+                            .font(DesignSystem.Font.headline)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
                         Text("Account settings")
-                            .font(GeoFont.caption)
-                            .foregroundStyle(GeoColors.textSecondary)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .font(GeoFont.caption)
-                        .foregroundStyle(GeoColors.textTertiary)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
-                .padding(GeoSpacing.md)
+                .padding(DesignSystem.Spacing.md)
             }
             .buttonStyle(.plain)
         }
@@ -61,12 +61,12 @@ private extension SettingsScreen {
 
     var avatarPlaceholder: some View {
         Circle()
-            .fill(GeoColors.cardBackgroundHighlighted)
+            .fill(DesignSystem.Color.cardBackgroundHighlighted)
             .frame(width: 48, height: 48)
             .overlay {
                 Image(systemName: "person.fill")
-                    .font(GeoFont.title2)
-                    .foregroundStyle(GeoColors.textSecondary)
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
     }
 
@@ -74,7 +74,7 @@ private extension SettingsScreen {
         settingsGroup(header: "General settings") {
             SettingsToggleRow(
                 icon: "bell.fill",
-                iconColor: GeoColors.accent,
+                iconColor: DesignSystem.Color.accent,
                 title: "Notifications",
                 isOn: $notificationsEnabled,
             )
@@ -83,7 +83,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "exclamationmark.triangle.fill",
-                iconColor: GeoColors.warning,
+                iconColor: DesignSystem.Color.warning,
                 title: "Territorial disputes",
                 comingSoon: true
             ) {}
@@ -92,7 +92,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "square.grid.2x2.fill",
-                iconColor: GeoColors.indigo,
+                iconColor: DesignSystem.Color.indigo,
                 title: "Manage additions",
                 comingSoon: true
             ) {}
@@ -101,7 +101,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "globe",
-                iconColor: GeoColors.blue,
+                iconColor: DesignSystem.Color.blue,
                 title: "Change language",
                 value: selectedLanguage,
                 comingSoon: true
@@ -111,7 +111,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "paintbrush.fill",
-                iconColor: GeoColors.purple,
+                iconColor: DesignSystem.Color.purple,
                 title: "Theme",
                 value: selectedTheme,
                 comingSoon: true
@@ -121,7 +121,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "arrow.up.arrow.down",
-                iconColor: GeoColors.textSecondary,
+                iconColor: DesignSystem.Color.textSecondary,
                 title: "Orientation",
                 value: "Auto",
                 comingSoon: true
@@ -133,7 +133,7 @@ private extension SettingsScreen {
         settingsGroup(header: "Game settings") {
             SettingsToggleRow(
                 icon: "checkmark.circle.fill",
-                iconColor: GeoColors.success,
+                iconColor: DesignSystem.Color.success,
                 title: "Show correct answer",
                 isOn: $showCorrectAnswer,
             )
@@ -142,7 +142,7 @@ private extension SettingsScreen {
 
             SettingsToggleRow(
                 icon: "eye.slash.fill",
-                iconColor: GeoColors.textSecondary,
+                iconColor: DesignSystem.Color.textSecondary,
                 title: "Hide dependent territories",
                 isOn: $hideDependentTerritories,
             )
@@ -153,7 +153,7 @@ private extension SettingsScreen {
         settingsGroup(header: "Sound and vibration") {
             SettingsToggleRow(
                 icon: "iphone.radiowaves.left.and.right",
-                iconColor: GeoColors.accent,
+                iconColor: DesignSystem.Color.accent,
                 title: "Vibration",
                 isOn: $vibrationEnabled,
             )
@@ -162,7 +162,7 @@ private extension SettingsScreen {
 
             SettingsToggleRow(
                 icon: "speaker.wave.2.fill",
-                iconColor: GeoColors.orange,
+                iconColor: DesignSystem.Color.orange,
                 title: "Sound effects",
                 isOn: $soundEffectsEnabled,
             )
@@ -171,8 +171,8 @@ private extension SettingsScreen {
 
     var settingsDivider: some View {
         Divider()
-            .background(GeoColors.cardBackgroundHighlighted)
-            .padding(.leading, GeoSpacing.xxl)
+            .background(DesignSystem.Color.cardBackgroundHighlighted)
+            .padding(.leading, DesignSystem.Spacing.xxl)
     }
 }
 
@@ -180,11 +180,11 @@ private extension SettingsScreen {
 
 private extension SettingsScreen {
     func settingsGroup(header: String, @ViewBuilder content: () -> some View) -> some View {
-        VStack(alignment: .leading, spacing: GeoSpacing.xs) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text(header.uppercased())
-                .font(GeoFont.caption)
-                .foregroundStyle(GeoColors.textTertiary)
-                .padding(.horizontal, GeoSpacing.xs)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .padding(.horizontal, DesignSystem.Spacing.xs)
 
             GeoCard {
                 VStack(spacing: 0) {
@@ -204,21 +204,21 @@ private struct SettingsToggleRow: View {
     @Binding var isOn: Bool
 
     var body: some View {
-        HStack(spacing: GeoSpacing.sm) {
+        HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
 
             Text(title)
-                .font(GeoFont.body)
-                .foregroundStyle(GeoColors.textPrimary)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Spacer()
 
             Toggle("", isOn: $isOn)
                 .labelsHidden()
-                .tint(GeoColors.success)
+                .tint(DesignSystem.Color.success)
         }
-        .padding(.horizontal, GeoSpacing.md)
-        .padding(.vertical, GeoSpacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 }
 
@@ -232,35 +232,35 @@ private struct SettingsNavigationRow: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: GeoSpacing.sm) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 SettingsIconBadge(systemImage: icon, color: iconColor)
 
                 Text(title)
-                    .font(GeoFont.body)
-                    .foregroundStyle(GeoColors.textPrimary)
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Spacer()
 
                 if comingSoon {
                     Text("Soon")
-                        .font(GeoFont.caption2)
-                        .foregroundStyle(GeoColors.textTertiary)
-                        .padding(.horizontal, GeoSpacing.xs)
-                        .padding(.vertical, GeoSpacing.xxs)
-                        .background(GeoColors.cardBackgroundHighlighted)
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .padding(.horizontal, DesignSystem.Spacing.xs)
+                        .padding(.vertical, DesignSystem.Spacing.xxs)
+                        .background(DesignSystem.Color.cardBackgroundHighlighted)
                         .clipShape(Capsule())
                 } else if let value {
                     Text(value)
-                        .font(GeoFont.subheadline)
-                        .foregroundStyle(GeoColors.textSecondary)
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
 
                 Image(systemName: "chevron.right")
-                    .font(GeoFont.caption)
-                    .foregroundStyle(GeoColors.textTertiary)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
             }
-            .padding(.horizontal, GeoSpacing.md)
-            .padding(.vertical, GeoSpacing.sm)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
         .buttonStyle(.plain)
         .disabled(comingSoon)
@@ -273,11 +273,11 @@ private struct SettingsIconBadge: View {
 
     var body: some View {
         Image(systemName: systemImage)
-            .font(GeoIconSize.medium)
+            .font(DesignSystem.IconSize.medium)
             .foregroundStyle(.white)
             .frame(width: 28, height: 28)
             .background(color)
-            .clipShape(RoundedRectangle(cornerRadius: GeoCornerRadius.small))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
     }
 }
 

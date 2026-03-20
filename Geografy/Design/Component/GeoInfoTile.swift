@@ -21,7 +21,7 @@ struct GeoInfoTile: View {
     var body: some View {
         GeoCard {
             tileContent
-                .padding(GeoSpacing.sm)
+                .padding(DesignSystem.Spacing.sm)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .onTapGesture(perform: onTap)
@@ -32,18 +32,18 @@ struct GeoInfoTile: View {
 
 private extension GeoInfoTile {
     var tileContent: some View {
-        VStack(alignment: .leading, spacing: GeoSpacing.xs) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
-                .font(GeoFont.headline)
-                .foregroundStyle(GeoColors.accent)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.accent)
 
             Text(title)
-                .font(GeoFont.caption)
-                .foregroundStyle(GeoColors.textSecondary)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
 
             Text(value)
-                .font(GeoFont.headline)
-                .foregroundStyle(GeoColors.textPrimary)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
     }
 }

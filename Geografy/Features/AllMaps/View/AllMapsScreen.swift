@@ -12,15 +12,15 @@ struct AllMapsScreen: View {
     ]
 
     private let columns = [
-        GridItem(.flexible(), spacing: GeoSpacing.md),
-        GridItem(.flexible(), spacing: GeoSpacing.md),
+        GridItem(.flexible(), spacing: DesignSystem.Spacing.md),
+        GridItem(.flexible(), spacing: DesignSystem.Spacing.md),
     ]
 
     var body: some View {
         ScrollView {
             mapGrid
         }
-        .background(GeoColors.background)
+        .background(DesignSystem.Color.background)
         .navigationTitle("All Maps")
     }
 }
@@ -29,7 +29,7 @@ struct AllMapsScreen: View {
 
 private extension AllMapsScreen {
     var mapGrid: some View {
-        LazyVGrid(columns: columns, spacing: GeoSpacing.md) {
+        LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.md) {
             ForEach(Array(maps.enumerated()), id: \.offset) { _, map in
                 NavigationLink(value: NavigationRoute.map) {
                     mapCard(name: map.name, icon: map.icon)
@@ -37,23 +37,23 @@ private extension AllMapsScreen {
                 .buttonStyle(.plain)
             }
         }
-        .padding(GeoSpacing.md)
+        .padding(DesignSystem.Spacing.md)
     }
 
     func mapCard(name: String, icon: String) -> some View {
         GeoCard {
-            VStack(spacing: GeoSpacing.sm) {
+            VStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: icon)
-                    .font(GeoIconSize.xLarge)
-                    .foregroundStyle(GeoColors.accent.opacity(0.7))
+                    .font(DesignSystem.IconSize.xLarge)
+                    .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
                     .frame(height: 60)
 
                 Text(name)
-                    .font(GeoFont.headline)
-                    .foregroundStyle(GeoColors.textPrimary)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
             }
             .frame(maxWidth: .infinity)
-            .padding(GeoSpacing.md)
+            .padding(DesignSystem.Spacing.md)
         }
     }
 }

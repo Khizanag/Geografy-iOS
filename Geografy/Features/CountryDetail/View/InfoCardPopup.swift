@@ -39,15 +39,15 @@ private extension InfoCardPopup {
     }
 
     var popupCard: some View {
-        GeoCard(cornerRadius: GeoCornerRadius.large) {
-            VStack(spacing: GeoSpacing.lg) {
+        GeoCard(cornerRadius: DesignSystem.CornerRadius.large) {
+            VStack(spacing: DesignSystem.Spacing.lg) {
                 headerRow
                 valueSection
                 if showMapButton {
                     mapButton
                 }
             }
-            .padding(GeoSpacing.xl)
+            .padding(DesignSystem.Spacing.xl)
             .frame(maxWidth: 320)
         }
     }
@@ -55,8 +55,8 @@ private extension InfoCardPopup {
     var headerRow: some View {
         HStack {
             Text(title)
-                .font(GeoFont.title2)
-                .foregroundStyle(GeoColors.textSecondary)
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
 
             Spacer()
 
@@ -68,8 +68,8 @@ private extension InfoCardPopup {
 
     var valueSection: some View {
         Text(value)
-            .font(GeoFont.title)
-            .foregroundStyle(GeoColors.textPrimary)
+            .font(DesignSystem.Font.title)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 

@@ -6,7 +6,7 @@ struct ComingSoonView: View {
     @State private var isAnimating = false
 
     var body: some View {
-        VStack(spacing: GeoSpacing.xl) {
+        VStack(spacing: DesignSystem.Spacing.xl) {
             Spacer()
             iconSection
             textSection
@@ -14,7 +14,7 @@ struct ComingSoonView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(GeoColors.background)
+        .background(DesignSystem.Color.background)
         .onAppear {
             withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
                 isAnimating = true
@@ -46,19 +46,19 @@ private extension ComingSoonView {
 
     var iconView: some View {
         Image(systemName: icon)
-            .font(GeoIconSize.xxLarge)
-            .foregroundStyle(GeoColors.accent)
+            .font(DesignSystem.IconSize.xxLarge)
+            .foregroundStyle(DesignSystem.Color.accent)
     }
 
     var textSection: some View {
-        VStack(spacing: GeoSpacing.xs) {
+        VStack(spacing: DesignSystem.Spacing.xs) {
             Text("Coming Soon")
-                .font(GeoFont.title2)
-                .foregroundStyle(GeoColors.textPrimary)
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text("We're working on something great.")
-                .font(GeoFont.subheadline)
-                .foregroundStyle(GeoColors.textSecondary)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
 }
@@ -68,7 +68,7 @@ private extension ComingSoonView {
 private extension ComingSoonView {
     func pulsingCircle(size: CGFloat, opacity: Double, delay: Double) -> some View {
         Circle()
-            .fill(GeoColors.accent.opacity(opacity))
+            .fill(DesignSystem.Color.accent.opacity(opacity))
             .frame(width: size, height: size)
             .scaleEffect(isAnimating ? 1.08 : 0.92)
             .opacity(isAnimating ? 1 : 0.6)

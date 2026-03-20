@@ -18,8 +18,8 @@ struct GeoIconButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
-                .font(GeoFont.headline)
-                .foregroundStyle(isActive ? .white : GeoColors.textPrimary)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(isActive ? .white : DesignSystem.Color.textPrimary)
                 .frame(width: 44, height: 44)
                 .background(backgroundColor)
                 .clipShape(Circle())
@@ -33,7 +33,7 @@ struct GeoIconButton: View {
 private extension GeoIconButton {
     var backgroundColor: Color {
         if isActive {
-            GeoColors.accent
+            DesignSystem.Color.accent
         } else {
             Color.black.opacity(0.5)
         }

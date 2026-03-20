@@ -36,24 +36,24 @@ struct GeoButton: View {
 
 private extension GeoButton {
     var label: some View {
-        HStack(spacing: GeoSpacing.xs) {
+        HStack(spacing: DesignSystem.Spacing.xs) {
             if let systemImage {
                 Image(systemName: systemImage)
-                    .font(GeoFont.headline)
+                    .font(DesignSystem.Font.headline)
             }
 
             Text(title)
-                .font(GeoFont.headline)
+                .font(DesignSystem.Font.headline)
         }
         .foregroundStyle(foregroundColor)
-        .padding(.horizontal, GeoSpacing.lg)
-        .padding(.vertical, GeoSpacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.lg)
+        .padding(.vertical, DesignSystem.Spacing.sm)
         .background(backgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: GeoCornerRadius.medium))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
         .overlay {
             if style == .secondary {
-                RoundedRectangle(cornerRadius: GeoCornerRadius.medium)
-                    .strokeBorder(GeoColors.accent, lineWidth: 1.5)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    .strokeBorder(DesignSystem.Color.accent, lineWidth: 1.5)
             }
         }
     }
@@ -65,14 +65,14 @@ private extension GeoButton {
     var foregroundColor: Color {
         switch style {
         case .primary: .white
-        case .secondary: GeoColors.accent
-        case .text: GeoColors.accent
+        case .secondary: DesignSystem.Color.accent
+        case .text: DesignSystem.Color.accent
         }
     }
 
     var backgroundColor: Color {
         switch style {
-        case .primary: GeoColors.accent
+        case .primary: DesignSystem.Color.accent
         case .secondary: .clear
         case .text: .clear
         }
