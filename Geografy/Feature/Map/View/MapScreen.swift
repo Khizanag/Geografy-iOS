@@ -59,6 +59,12 @@ struct MapScreen: View {
 // MARK: - Content
 
 private extension MapScreen {
+    var selectedCapitalPoint: CGPoint? {
+        guard let code = mapState.selectedCountryCode,
+              let info = CountryBasicInfo.info(for: code) else { return nil }
+        return MapProjection.project(longitude: info.capitalLongitude, latitude: info.capitalLatitude)
+    }
+
     func mapContent(in size: CGSize) -> some View {
         mapCanvas(in: size)
     }
@@ -70,7 +76,8 @@ private extension MapScreen {
             offset: mapState.offset,
             selectedCountryCode: mapState.selectedCountryCode,
             showLabels: mapState.showLabels,
-            canvasSize: size
+            canvasSize: size,
+            capitalPoint: selectedCapitalPoint
         )
         .gesture(dragGesture)
         .gesture(magnifyGesture)

@@ -7,6 +7,7 @@ struct MapCanvasView: View {
     let selectedCountryCode: String?
     let showLabels: Bool
     let canvasSize: CGSize
+    var capitalPoint: CGPoint?
 
     var body: some View {
         Canvas { context, size in
@@ -18,6 +19,10 @@ struct MapCanvasView: View {
 
                 if showLabels {
                     drawLabels(in: &context, transform: transform, visibleRect: visibleRect)
+                }
+
+                if let capitalPoint {
+                    drawCapitalPin(in: &context, at: capitalPoint, transform: transform, visibleRect: visibleRect)
                 }
             }
         }
@@ -100,6 +105,42 @@ private extension MapCanvasView {
                 anchor: .center
             )
         }
+    }
+}
+
+// MARK: - Capital Pin
+
+private extension MapCanvasView {
+    func drawCapitalPin(
+        in context: inout GraphicsContext,
+        at mapPoint: CGPoint,
+        transform: CGAffineTransform,
+        visibleRect: CGRect
+    ) {
+        let screenPoint = mapPoint.applying(transform)
+        guard visibleRect.contains(screenPoint) else { return }
+
+        let pinSize: CGFloat = 8
+        let outerSize: CGFloat = 14
+
+        // Outer ring
+        let outerRect = CGRect(
+            x: screenPoint.x - outerSize / 2,
+            y: screenPoint.y - outerSize / 2,
+            width: outerSize,
+            height: outerSize
+        )
+        context.fill(Path(ellipseIn: outerRect), with: .color(.white.opacity(0.4)))
+
+        // Inner dot
+        let innerRect = CGRect(
+            x: screenPoint.x - pinSize / 2,
+            y: screenPoint.y - pinSize / 2,
+            width: pinSize,
+            height: pinSize
+        )
+        context.fill(Path(ellipseIn: innerRect), with: .color(.white))
+        context.stroke(Path(ellipseIn: innerRect), with: .color(.black.opacity(0.3)), lineWidth: 1)
     }
 }
 
