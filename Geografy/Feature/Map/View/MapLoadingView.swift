@@ -12,7 +12,7 @@ struct MapLoadingView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(DesignSystem.Color.ocean)
+        .background(DesignSystem.Color.background)
         .ignoresSafeArea()
         .onAppear {
             withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
