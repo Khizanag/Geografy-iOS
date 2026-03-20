@@ -42,6 +42,8 @@ struct CountryListScreen: View {
         .toolbar { toolbarContent }
         .task {
             countryDataService.loadCountries()
+        }
+        .onChange(of: groupBy) {
             expandedSections = Set(sectionKeys)
         }
     }
