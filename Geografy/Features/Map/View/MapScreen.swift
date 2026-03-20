@@ -72,7 +72,7 @@ private extension MapScreen {
             labelsToggleButton
         }
         .padding(.horizontal, GeoSpacing.md)
-        .padding(.top, GeoSpacing.xxl)
+        .padding(.top, GeoSpacing.xs)
     }
 
     var closeButton: some View {
@@ -87,14 +87,21 @@ private extension MapScreen {
     }
 
     var labelsToggleButton: some View {
-        Button { mapState.showLabels.toggle() } label: {
+        Button {
+            mapState.showLabels.toggle()
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        } label: {
             Text("Aa")
                 .font(GeoFont.headline)
-                .foregroundStyle(mapState.showLabels ? .white : GeoColors.textPrimary)
+                .fontWeight(mapState.showLabels ? .bold : .regular)
+                .foregroundStyle(mapState.showLabels ? GeoColors.accent : GeoColors.textSecondary)
                 .frame(width: 44, height: 44)
                 .contentShape(Circle())
         }
-        .glassEffect(.regular.interactive(), in: .circle)
+        .glassEffect(
+            mapState.showLabels ? .regular.interactive().tint(GeoColors.accent) : .regular.interactive(),
+            in: .circle
+        )
     }
 }
 
@@ -186,6 +193,7 @@ private extension MapScreen {
                     mapState.selectedCountryCode = nil
                 } else {
                     mapState.selectedCountryCode = shape.id
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 }
                 return
             }
