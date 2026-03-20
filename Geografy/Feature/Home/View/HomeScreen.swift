@@ -81,14 +81,14 @@ private extension HomeScreen {
 
     var statsButton: some View {
         Button { showProfile = true } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 xpIndicator
                 divider
                 currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
             }
-            .padding(.horizontal, DesignSystem.Spacing.xs)
         }
         .buttonStyle(.glass)
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     var friendsButton: some View {
