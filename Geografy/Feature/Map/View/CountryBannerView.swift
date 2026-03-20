@@ -5,6 +5,7 @@ struct CountryBannerView: View {
     let name: String
     let flag: String
     let capital: String
+    let onFlagTap: (() -> Void)?
     let onMoreInfo: (() -> Void)?
     let onDismiss: () -> Void
 
@@ -35,7 +36,11 @@ struct CountryBannerView: View {
 
 private extension CountryBannerView {
     var flagView: some View {
-        FlagView(countryCode: countryCode, height: DesignSystem.Size.md)
+        Button { onFlagTap?() } label: {
+            FlagView(countryCode: countryCode, height: DesignSystem.Size.md)
+        }
+        .buttonStyle(.plain)
+        .disabled(onFlagTap == nil)
     }
 
     var infoSection: some View {

@@ -3,13 +3,8 @@ import SwiftUI
 struct FlagFullScreenView: View {
     @Environment(\.dismiss) private var dismiss
 
-    private let flagEmoji: String
-    private let countryName: String
-
-    init(flagEmoji: String, countryName: String) {
-        self.flagEmoji = flagEmoji
-        self.countryName = countryName
-    }
+    let countryCode: String
+    let countryName: String
 
     var body: some View {
         ZStack {
@@ -27,8 +22,8 @@ struct FlagFullScreenView: View {
 private extension FlagFullScreenView {
     var flagContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            Text(flagEmoji)
-                .font(DesignSystem.IconSize.flag)
+            FlagView(countryCode: countryCode, height: DesignSystem.Size.hero)
+                .shadow(radius: DesignSystem.Spacing.sm)
 
             Text(countryName)
                 .font(DesignSystem.Font.largeTitle)

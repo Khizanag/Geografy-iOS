@@ -31,7 +31,7 @@ struct CountryDetailScreen: View {
             }
         }
         .fullScreenCover(isPresented: $showFlagFullScreen) {
-            FlagFullScreenView(flagEmoji: country.flagEmoji, countryName: country.name)
+            FlagFullScreenView(countryCode: country.code, countryName: country.name)
         }
     }
 }
@@ -53,8 +53,8 @@ private extension CountryDetailScreen {
 private extension CountryDetailScreen {
     var flagSection: some View {
         Button { showFlagFullScreen = true } label: {
-            Text(country.flagEmoji)
-                .font(DesignSystem.IconSize.hero)
+            FlagView(countryCode: country.code, height: DesignSystem.Size.xxxl)
+                .shadow(radius: DesignSystem.Spacing.xs)
         }
         .buttonStyle(.plain)
         .frame(maxWidth: .infinity)

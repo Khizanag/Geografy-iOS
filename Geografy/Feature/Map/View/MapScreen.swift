@@ -9,6 +9,7 @@ struct MapScreen: View {
     @State private var mapState = MapState()
     @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
+    @State private var showFlagPreview = false
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
 
@@ -61,6 +62,11 @@ struct MapScreen: View {
         .navigationDestination(item: $navigateToCountry) { country in
             CountryDetailScreen(country: country)
         }
+        .overlay {
+            if showFlagPreview, let code = mapState.selectedCountryCode {
+                flagPreview(for: code)
+            }
+        }
         .task {
             await loadMapData()
         }
@@ -71,6 +77,23 @@ struct MapScreen: View {
 
 private extension MapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
+
+    func flagPreview(for code: String) -> some View {
+        ZStack {
+            Color.black.opacity(0.6)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        showFlagPreview = false
+                    }
+                }
+
+            FlagView(countryCode: code, height: DesignSystem.Size.hero)
+                .shadow(radius: DesignSystem.Spacing.md)
+        }
+        .transition(.opacity)
+        .animation(.easeInOut(duration: 0.2), value: showFlagPreview)
+    }
 
     var selectedCapitalPoint: CGPoint? {
         guard let code = mapState.selectedCountryCode,
@@ -140,6 +163,7 @@ private extension MapScreen {
                 name: country?.name ?? shape.name,
                 flag: country?.flagEmoji ?? basicInfo?.flag ?? "🏳️",
                 capital: country?.capital ?? basicInfo?.capital ?? "",
+                onFlagTap: { showFlagPreview = true },
                 onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
