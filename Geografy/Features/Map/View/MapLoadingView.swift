@@ -65,17 +65,17 @@ private extension MapLoadingView {
             .scaleEffect(ringsExpanded ? 1.3 : 0.5)
             .opacity(ringsExpanded ? 0 : 0.8)
             .animation(
-                .easeOut(duration: 0.7)
+                .easeOut(duration: 1.5)
                 .delay(delay),
                 value: ringsExpanded
             )
     }
 
     func startAnimations() {
-        withAnimation(.easeOut(duration: 0.4)) {
+        withAnimation(.easeOut(duration: 0.6)) {
             isAnimating = true
         }
-        withAnimation(.linear(duration: 0.7)) {
+        withAnimation(.linear(duration: 1.5)) {
             globeRotation = 360
         }
         ringsExpanded = true
