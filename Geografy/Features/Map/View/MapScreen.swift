@@ -7,17 +7,25 @@ struct MapScreen: View {
     @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
     @State private var screenSize: CGSize = .zero
+    @State private var isLoading = true
 
     var body: some View {
-        GeometryReader { geometry in
-            mapContent(in: geometry.size)
-                .onAppear {
-                    screenSize = geometry.size
-                    setInitialScale(for: geometry.size)
-                }
-                .onChange(of: geometry.size) { _, newSize in
-                    screenSize = newSize
-                }
+        ZStack {
+            GeometryReader { geometry in
+                mapContent(in: geometry.size)
+                    .onAppear {
+                        screenSize = geometry.size
+                        setInitialScale(for: geometry.size)
+                    }
+                    .onChange(of: geometry.size) { _, newSize in
+                        screenSize = newSize
+                    }
+            }
+
+            if isLoading {
+                MapLoadingView()
+                    .transition(.opacity)
+            }
         }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
@@ -25,7 +33,13 @@ struct MapScreen: View {
         .navigationDestination(item: $navigateToCountry) { country in
             CountryDetailScreen(country: country)
         }
-        .task { await loadMapData() }
+        .task {
+            await loadMapData()
+            try? await Task.sleep(for: .milliseconds(700))
+            withAnimation(.easeOut(duration: 0.3)) {
+                isLoading = false
+            }
+        }
     }
 }
 
