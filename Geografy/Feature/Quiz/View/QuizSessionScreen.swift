@@ -14,6 +14,7 @@ struct QuizSessionScreen: View {
     @State private var startTime = Date()
     @State private var questionStartTime = Date()
     @State private var showQuitAlert = false
+    @State private var showFlagPreview = false
     @State private var presentedResult: QuizResult?
     @State private var countryDataService = CountryDataService()
 
@@ -43,6 +44,13 @@ struct QuizSessionScreen: View {
                 QuizResultsScreen(result: result) {
                     presentedResult = nil
                     loadQuiz()
+                }
+            }
+        }
+        .overlay {
+            if showFlagPreview, let flagCode = currentQuestion?.promptFlag {
+                ZoomableFlagView(countryCode: flagCode) {
+                    showFlagPreview = false
                 }
             }
         }
@@ -111,6 +119,7 @@ private extension QuizSessionScreen {
                 selectedOptionID: selectedOptionID,
                 correctOptionID: question.correctOptionID,
                 showFeedback: showFeedback,
+                showFlagPreview: $showFlagPreview,
                 onSelectOption: { optionID in selectOption(optionID) }
             )
             .id(question.id)

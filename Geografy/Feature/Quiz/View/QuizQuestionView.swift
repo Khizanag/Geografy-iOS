@@ -6,9 +6,8 @@ struct QuizQuestionView: View {
     let selectedOptionID: UUID?
     let correctOptionID: UUID
     let showFeedback: Bool
+    @Binding var showFlagPreview: Bool
     let onSelectOption: (UUID) -> Void
-
-    @State private var showFlagPreview = false
 
     var body: some View {
         VStack {
@@ -19,13 +18,6 @@ struct QuizQuestionView: View {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
-        .overlay {
-            if showFlagPreview, let flagCode = question.promptFlag {
-                ZoomableFlagView(countryCode: flagCode) {
-                    showFlagPreview = false
-                }
-            }
-        }
     }
 }
 
