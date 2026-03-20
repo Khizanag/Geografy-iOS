@@ -44,7 +44,7 @@ private extension AllMapsScreen {
         GeoCard {
             VStack(spacing: GeoSpacing.sm) {
                 Image(systemName: icon)
-                    .font(.system(size: 40, weight: .thin))
+                    .font(GeoIconSize.xLarge)
                     .foregroundStyle(GeoColors.accent.opacity(0.7))
                     .frame(height: 60)
 

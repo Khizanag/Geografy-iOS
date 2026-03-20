@@ -28,7 +28,7 @@ struct CountryBannerView: View {
 private extension CountryBannerView {
     var flagSection: some View {
         Text(country.flagEmoji)
-            .font(.system(size: 32))
+            .font(GeoIconSize.large)
     }
 
     var infoSection: some View {

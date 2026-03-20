@@ -8,7 +8,7 @@ struct ComingSoonView: View {
             Spacer()
 
             Image(systemName: icon)
-                .font(.system(size: 60))
+                .font(GeoIconSize.xxLarge)
                 .foregroundStyle(GeoColors.accent.opacity(0.6))
 
             Text("Coming Soon")

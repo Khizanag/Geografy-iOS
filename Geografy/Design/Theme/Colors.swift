@@ -18,6 +18,11 @@ enum GeoColors {
     static let warning = Color(hex: "FF9500")
     static let error = Color(hex: "FF3B30")
 
+    static let indigo = Color(hex: "5C6BC0")
+    static let blue = Color(hex: "3498DB")
+    static let purple = Color(hex: "9B59B6")
+    static let orange = Color(hex: "E67E22")
+
     static let mapColors: [Color] = [
         Color(hex: "9B59B6"),
         Color(hex: "E67E22"),

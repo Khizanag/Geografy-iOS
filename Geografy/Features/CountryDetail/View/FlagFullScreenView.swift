@@ -28,7 +28,7 @@ private extension FlagFullScreenView {
     var flagContent: some View {
         VStack(spacing: GeoSpacing.lg) {
             Text(flagEmoji)
-                .font(.system(size: 200))
+                .font(GeoIconSize.flag)
 
             Text(countryName)
                 .font(GeoFont.largeTitle)

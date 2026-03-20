@@ -54,7 +54,7 @@ private extension CountryDetailScreen {
     var flagSection: some View {
         Button { showFlagFullScreen = true } label: {
             Text(country.flagEmoji)
-                .font(.system(size: 80))
+                .font(GeoIconSize.hero)
         }
         .buttonStyle(.plain)
         .frame(maxWidth: .infinity)

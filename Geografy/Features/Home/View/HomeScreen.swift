@@ -69,7 +69,7 @@ private extension HomeScreen {
         } label: {
             ZStack {
                 Image(systemName: "star.circle.fill")
-                    .font(.system(size: 28))
+                    .font(GeoIconSize.large)
                     .foregroundStyle(GeoColors.error)
 
                 Text("5")

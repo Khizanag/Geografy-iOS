@@ -28,7 +28,7 @@ struct MapCarouselCard: View {
 private extension MapCarouselCard {
     var illustrationArea: some View {
         Image(systemName: systemImage)
-            .font(.system(size: 80, weight: .thin))
+            .font(GeoIconSize.hero)
             .foregroundStyle(GeoColors.accent.opacity(0.7))
             .frame(height: 120)
             .frame(maxWidth: .infinity)

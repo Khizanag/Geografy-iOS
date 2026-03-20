@@ -92,7 +92,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "square.grid.2x2.fill",
-                iconColor: Color(hex: "5C6BC0"),
+                iconColor: GeoColors.indigo,
                 title: "Manage additions",
                 comingSoon: true
             ) {}
@@ -101,7 +101,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "globe",
-                iconColor: Color(hex: "3498DB"),
+                iconColor: GeoColors.blue,
                 title: "Change language",
                 value: selectedLanguage,
                 comingSoon: true
@@ -111,7 +111,7 @@ private extension SettingsScreen {
 
             SettingsNavigationRow(
                 icon: "paintbrush.fill",
-                iconColor: Color(hex: "9B59B6"),
+                iconColor: GeoColors.purple,
                 title: "Theme",
                 value: selectedTheme,
                 comingSoon: true
@@ -162,7 +162,7 @@ private extension SettingsScreen {
 
             SettingsToggleRow(
                 icon: "speaker.wave.2.fill",
-                iconColor: Color(hex: "E67E22"),
+                iconColor: GeoColors.orange,
                 title: "Sound effects",
                 isOn: $soundEffectsEnabled,
             )
@@ -273,7 +273,7 @@ private struct SettingsIconBadge: View {
 
     var body: some View {
         Image(systemName: systemImage)
-            .font(.system(size: 14, weight: .semibold))
+            .font(GeoIconSize.medium)
             .foregroundStyle(.white)
             .frame(width: 28, height: 28)
             .background(color)
