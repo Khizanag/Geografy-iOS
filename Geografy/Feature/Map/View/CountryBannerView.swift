@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CountryBannerView: View {
+    let countryCode: String
     let name: String
     let flag: String
     let capital: String
@@ -34,8 +35,7 @@ struct CountryBannerView: View {
 
 private extension CountryBannerView {
     var flagView: some View {
-        Text(flag)
-            .font(DesignSystem.IconSize.large)
+        FlagView(countryCode: countryCode, height: DesignSystem.Size.md)
     }
 
     var infoSection: some View {

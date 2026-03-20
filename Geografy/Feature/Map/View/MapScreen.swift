@@ -136,6 +136,7 @@ private extension MapScreen {
             let basicInfo = CountryBasicInfo.info(for: shape.id)
 
             CountryBannerView(
+                countryCode: shape.id,
                 name: country?.name ?? shape.name,
                 flag: country?.flagEmoji ?? basicInfo?.flag ?? "🏳️",
                 capital: country?.capital ?? basicInfo?.capital ?? "",

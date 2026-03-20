@@ -254,12 +254,7 @@ private extension CountryListScreen {
     }
 
     func flagView(for country: Country) -> some View {
-        Text(country.flagEmoji)
-            .font(DesignSystem.IconSize.large)
-            .frame(
-                width: DesignSystem.Size.xl,
-                height: DesignSystem.Size.xl
-            )
+        FlagView(countryCode: country.code, height: DesignSystem.Size.md)
     }
 
     func countryDetails(for country: Country) -> some View {
