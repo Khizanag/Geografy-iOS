@@ -147,6 +147,7 @@ private extension QuizSetupScreen {
         Button { showQuizSession = true } label: {
             Label("Start Quiz", systemImage: "play.fill")
                 .font(DesignSystem.Font.headline)
+                .frame(maxWidth: .infinity)
         }
         .buttonStyle(.glass)
     }
