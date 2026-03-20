@@ -25,12 +25,6 @@ struct SettingsScreen: View {
         .background(GeoColors.background)
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                backButton
-            }
-        }
         .toolbarBackground(GeoColors.background, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
     }
@@ -39,14 +33,6 @@ struct SettingsScreen: View {
 // MARK: - Subviews
 
 private extension SettingsScreen {
-    var backButton: some View {
-        Button { dismiss() } label: {
-            Image(systemName: "chevron.left")
-                .font(GeoFont.headline)
-                .foregroundStyle(GeoColors.textPrimary)
-        }
-    }
-
     var accountSection: some View {
         GeoCard {
             Button {
