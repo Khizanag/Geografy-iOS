@@ -22,7 +22,7 @@ enum GeoJSONParser {
 private extension GeoJSONParser {
     static func parseFeature(_ feature: GeoJSONFeature, at index: Int) -> CountryShape? {
         let rawCode = feature.id
-            ?? extractProperty(from: feature, keys: ["ISO_A2", "iso_a2", "ISO_A3", "iso_a3"])
+            ?? extractProperty(from: feature, keys: ["ISO_A2", "ISO_A2_EH", "iso_a2", "ISO_A3", "iso_a3", "ADM0_A3"])
         let name = extractProperty(from: feature, keys: ["name", "NAME", "ADMIN"])
 
         guard let rawCode, let name, rawCode != "-99" else {
@@ -85,7 +85,7 @@ private extension GeoJSONParser {
 
     static func extractProperty(from feature: GeoJSONFeature, keys: [String]) -> String? {
         for key in keys {
-            if let value = feature.properties[key]?.stringValue {
+            if let value = feature.properties[key]?.stringValue, value != "-99" {
                 return value
             }
         }
