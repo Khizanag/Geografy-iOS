@@ -186,12 +186,19 @@ private extension QuizSessionScreen {
     func loadQuiz() {
         countryDataService.loadCountries()
         let pool = configuration.region.filter(countryDataService.countries)
+        let optionCount = max(configuration.difficulty.optionCount, 4)
+        guard pool.count >= optionCount else { return }
+
         questions = QuestionGenerator.generate(
             type: configuration.type,
             countries: pool,
-            count: configuration.questionCount.rawValue,
-            optionCount: configuration.difficulty.optionCount
+            count: min(configuration.questionCount.rawValue, pool.count),
+            optionCount: optionCount
         )
+        currentIndex = 0
+        answers = []
+        selectedOptionID = nil
+        showFeedback = false
         startTime = Date()
         questionStartTime = Date()
         timerRemaining = configuration.difficulty.timerDuration
