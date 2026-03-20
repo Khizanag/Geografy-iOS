@@ -74,8 +74,10 @@ private extension CountryBannerView {
     var closeButton: some View {
         Button(action: onDismiss) {
             Image(systemName: "xmark")
-                .font(DesignSystem.Font.subheadline)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
+                .padding(DesignSystem.Spacing.xs)
         }
         .glassEffect(.regular.interactive(), in: .circle)
     }

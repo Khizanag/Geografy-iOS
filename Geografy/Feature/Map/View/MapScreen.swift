@@ -37,23 +37,13 @@ struct MapScreen: View {
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
         .safeAreaInset(edge: .top) {
-            if !isLandscape {
-                bannerOverlay
-                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-            }
+            bannerOverlay
+                .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
         }
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 closeButton
-            }
-            ToolbarItem(placement: .principal) {
-                if isLandscape {
-                    bannerOverlay
-                        .padding(.horizontal, -DesignSystem.Spacing.md)
-                        .frame(maxWidth: .infinity)
-                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-                }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 labelsToggleButton
