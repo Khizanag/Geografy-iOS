@@ -2,82 +2,75 @@ import SwiftUI
 
 struct MapLoadingView: View {
     @State private var isAnimating = false
-    @State private var globeRotation: Double = 0
-    @State private var ringsExpanded = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.ocean
-                .ignoresSafeArea()
-
-            pulsingRings
-            globe
-            shimmerOverlay
+        VStack(spacing: DesignSystem.Spacing.xl) {
+            Spacer()
+            iconSection
+            textSection
+            Spacer()
+            Spacer()
         }
-        .onAppear { startAnimations() }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(DesignSystem.Color.ocean)
+        .ignoresSafeArea()
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
+                isAnimating = true
+            }
+        }
     }
 }
 
 // MARK: - Subviews
 
 private extension MapLoadingView {
-    var pulsingRings: some View {
+    var iconSection: some View {
         ZStack {
-            ringView(size: 300, delay: 0)
-            ringView(size: 240, delay: 0.08)
-            ringView(size: 180, delay: 0.16)
-            ringView(size: 120, delay: 0.24)
+            pulsingCircles
+            iconView
+        }
+        .frame(width: DesignSystem.Size.feature, height: DesignSystem.Size.feature)
+    }
+
+    var pulsingCircles: some View {
+        ZStack {
+            pulsingCircle(size: 270, opacity: 0.015, delay: 0)
+            pulsingCircle(size: 240, opacity: 0.025, delay: 0.25)
+            pulsingCircle(size: 210, opacity: 0.035, delay: 0.5)
+            pulsingCircle(size: 180, opacity: 0.045, delay: 0.75)
+            pulsingCircle(size: 150, opacity: 0.06, delay: 1.0)
+            pulsingCircle(size: 120, opacity: 0.08, delay: 1.25)
         }
     }
 
-    var globe: some View {
+    var iconView: some View {
         Image(systemName: "globe.americas.fill")
-            .font(DesignSystem.IconSize.hero)
+            .font(DesignSystem.IconSize.xLarge)
             .foregroundStyle(DesignSystem.Color.accent)
-            .rotationEffect(.degrees(globeRotation))
-            .scaleEffect(isAnimating ? 1.0 : 0.6)
-            .opacity(isAnimating ? 1 : 0)
     }
 
-    var shimmerOverlay: some View {
-        VStack {
-            Spacer()
-
-            Text("Loading map...")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .opacity(isAnimating ? 1 : 0)
-                .padding(.bottom, DesignSystem.Spacing.xxl)
-        }
+    var textSection: some View {
+        Text("Loading map...")
+            .font(DesignSystem.Font.subheadline)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
     }
 }
 
 // MARK: - Helpers
 
 private extension MapLoadingView {
-    func ringView(size: CGFloat, delay: Double) -> some View {
+    func pulsingCircle(size: CGFloat, opacity: Double, delay: Double) -> some View {
         Circle()
-            .stroke(
-                DesignSystem.Color.accent.opacity(0.15),
-                lineWidth: 1.5
-            )
+            .fill(DesignSystem.Color.accent.opacity(opacity))
             .frame(width: size, height: size)
-            .scaleEffect(ringsExpanded ? 1.3 : 0.5)
-            .opacity(ringsExpanded ? 0 : 0.8)
+            .scaleEffect(isAnimating ? 1.06 : 0.94)
+            .opacity(isAnimating ? 1 : 0.4)
             .animation(
-                .easeOut(duration: 1.5)
+                .easeInOut(duration: 1.8)
+                .repeatForever(autoreverses: true)
                 .delay(delay),
-                value: ringsExpanded
+                value: isAnimating
             )
-    }
-
-    func startAnimations() {
-        withAnimation(.easeOut(duration: 0.6)) {
-            isAnimating = true
-        }
-        withAnimation(.linear(duration: 1.5)) {
-            globeRotation = 360
-        }
-        ringsExpanded = true
     }
 }
