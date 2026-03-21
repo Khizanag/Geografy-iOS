@@ -72,6 +72,7 @@ These components MUST be reused — NEVER create alternatives:
 - **VStack spacing over padding**: Use `VStack(spacing:)` for consistent spacing between sections — NEVER repeat `.padding(.top, X)` on every item. Prefer default spacing (omit parameter) when Apple's automatic value is appropriate — `spacing: 0` is not always correct
 - **Full variable names**: Always use full names (e.g., `geometryReader` not `geo`, `index` not `idx`, `button` not `btn`)
 - **Decompose for readability**: Split code into well-named functions and computed properties — keep `body` and helper views concise
+- **Never disable SwiftLint**: Do NOT use `swiftlint:disable` comments. Fix the underlying issue instead — break long lines, extract methods, refactor code
 - **Screen size compatibility**: Every page must work on both smallest (iPhone 12 Mini, 375pt) and largest iPhones. Use `.adaptive(minimum:)` with safe values, `Spacer(minLength: 0)`, `.lineLimit(1)`, `.minimumScaleFactor()`. Move blobs to `.background {}` — NEVER put them in a ZStack with content (they expand layout width)
 - **Folder names**: Always singular (Feature, Model, View, Service — NOT plural)
 - **No hardcoded values**: Colors → `DesignSystem.Color.*`, fonts → `DesignSystem.Font.*`, spacing → `DesignSystem.Spacing.*`, sizes → `DesignSystem.Size.*`

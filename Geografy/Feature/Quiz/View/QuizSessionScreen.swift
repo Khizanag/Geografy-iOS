@@ -27,7 +27,11 @@ struct QuizSessionScreen: View {
             quizContent
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar { toolbarContent }
-                .alert("Quit Quiz?", isPresented: $showQuitAlert, actions: { quitAlertActions }, message: { Text("Your progress will be lost.") })
+                .alert("Quit Quiz?", isPresented: $showQuitAlert) {
+                    quitAlertActions
+                } message: {
+                    Text("Your progress will be lost.")
+                }
                 .task { loadQuiz() }
                 .onAppear { startBlobAnimation() }
                 .onDisappear { timerCancellable?.cancel() }
@@ -188,7 +192,7 @@ private extension QuizSessionScreen {
         .background(timerColor.opacity(0.15), in: Capsule())
         .overlay(Capsule().strokeBorder(timerColor.opacity(0.3), lineWidth: 1))
         .scaleEffect(timerRemaining <= configuration.difficulty.timerDuration * 0.25 ? 1.08 : 1.0)
-        .opacity(timerRemaining <= configuration.difficulty.timerDuration * 0.4 ? (timerRemaining.truncatingRemainder(dividingBy: 2) < 1 ? 0.7 : 1.0) : 1.0)
+        .opacity(timerPulseOpacity)
         .animation(.easeInOut(duration: 0.3), value: timerRemaining)
         .animation(.easeInOut(duration: 0.3), value: timerColor)
     }
@@ -243,8 +247,11 @@ private extension QuizSessionScreen {
         // - Answered in < 3s of timerDuration: "Lightning Fast" bonus XP
         // - Answered in < 5s of timerDuration: "Quick" bonus XP
 
-        let haptic = UINotificationFeedbackGenerator()
-        haptic.notificationOccurred(isCorrect ? .success : .error)
+        if isCorrect {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        } else {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        }
 
         let answer = QuizAnswer(
             id: UUID(),
@@ -340,8 +347,7 @@ private extension QuizSessionScreen {
         let question = questions[currentIndex]
         let timeSpent = configuration.difficulty.timerDuration
 
-        let haptic = UINotificationFeedbackGenerator()
-        haptic.notificationOccurred(.error)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
 
         let answer = QuizAnswer(
             id: UUID(),
@@ -378,6 +384,12 @@ private extension QuizSessionScreen {
     var timerProgress: CGFloat {
         guard configuration.difficulty.timerDuration > 0 else { return 0 }
         return timerRemaining / configuration.difficulty.timerDuration
+    }
+
+    var timerPulseOpacity: Double {
+        let threshold = configuration.difficulty.timerDuration * 0.4
+        guard timerRemaining <= threshold else { return 1.0 }
+        return timerRemaining.truncatingRemainder(dividingBy: 2) < 1 ? 0.7 : 1.0
     }
 
     var timerColor: Color {

@@ -60,7 +60,7 @@ private extension MapLoadingView {
             pulseRing(size: 200, opacity: 0.08, delay: 0.00)
             pulseRing(size: 160, opacity: 0.13, delay: 0.15)
             pulseRing(size: 120, opacity: 0.20, delay: 0.30)
-            pulseRing(size: 84,  opacity: 0.28, delay: 0.45)
+            pulseRing(size: 84, opacity: 0.28, delay: 0.45)
         }
     }
 

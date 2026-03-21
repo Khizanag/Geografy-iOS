@@ -15,7 +15,7 @@ struct CountryDetailScreen: View {
     @State private var showFlagFullScreen = false
     @State private var showContinentMap = false
 
-    private let country: Country
+    let country: Country
 
     init(country: Country) {
         self.country = country
@@ -100,8 +100,11 @@ private extension CountryDetailScreen {
                 }
             } label: {
                 Image(systemName: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart")
-                    // swiftlint:disable:next line_length
-                    .foregroundStyle(favoritesService.isFavorite(code: country.code) ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
+                    .foregroundStyle(
+                        favoritesService.isFavorite(code: country.code)
+                            ? DesignSystem.Color.error
+                            : DesignSystem.Color.iconPrimary
+                    )
                     .symbolEffect(.bounce, value: favoritesService.isFavorite(code: country.code))
             }
         }
@@ -268,8 +271,11 @@ private extension CountryDetailScreen {
                         Text(currentStatus?.label ?? "Not set")
                             .font(DesignSystem.Font.subheadline)
                             .fontWeight(.semibold)
-                            // swiftlint:disable:next line_length
-                            .foregroundStyle(currentStatus != nil ? DesignSystem.Color.textPrimary : DesignSystem.Color.textTertiary)
+                            .foregroundStyle(
+                                currentStatus != nil
+                                    ? DesignSystem.Color.textPrimary
+                                    : DesignSystem.Color.textTertiary
+                            )
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
@@ -373,16 +379,28 @@ private extension CountryDetailScreen {
             sectionHeader("Economy", premium: true)
             HStack(spacing: DesignSystem.Spacing.sm) {
                 if let gdp = country.gdp {
-                    // swiftlint:disable:next line_length
-                    economyTile(icon: "chart.bar.fill", label: "GDP", value: gdp.formatGDP(), color: DesignSystem.Color.accent)
+                    economyTile(
+                        icon: "chart.bar.fill",
+                        label: "GDP",
+                        value: gdp.formatGDP(),
+                        color: DesignSystem.Color.accent
+                    )
                 }
                 if let perCapita = country.gdpPerCapita {
-                    // swiftlint:disable:next line_length
-                    economyTile(icon: "person.crop.circle", label: "Per Capita", value: perCapita.formatCurrency(), color: DesignSystem.Color.blue)
+                    economyTile(
+                        icon: "person.crop.circle",
+                        label: "Per Capita",
+                        value: perCapita.formatCurrency(),
+                        color: DesignSystem.Color.blue
+                    )
                 }
                 if let ppp = country.gdpPPP {
-                    // swiftlint:disable:next line_length
-                    economyTile(icon: "chart.bar", label: "GDP PPP", value: ppp.formatGDP(), color: DesignSystem.Color.indigo)
+                    economyTile(
+                        icon: "chart.bar",
+                        label: "GDP PPP",
+                        value: ppp.formatGDP(),
+                        color: DesignSystem.Color.indigo
+                    )
                 }
             }
         }
@@ -463,83 +481,6 @@ private extension CountryDetailScreen {
     }
 }
 
-// MARK: - Organizations
-
-private extension CountryDetailScreen {
-    var memberOrganizations: [Organization] {
-        country.organizations.compactMap { Organization.find($0) }
-    }
-
-    var organizationsSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Member Of", premium: true)
-            CardView {
-                VStack(spacing: 0) {
-                    ForEach(Array(memberOrganizations.enumerated()), id: \.element.id) { index, org in
-                        NavigationLink(value: org) {
-                            orgRow(org)
-                        }
-                        .buttonStyle(GeoPressButtonStyle())
-                        .simultaneousGesture(TapGesture().onEnded {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        })
-
-                        if index < memberOrganizations.count - 1 {
-                            Divider()
-                                .padding(.leading, 60)
-                        }
-                    }
-                }
-            }
-        }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.48), value: appeared)
-    }
-
-    func orgRow(_ org: Organization) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(org.highlightColor.opacity(0.15))
-                    .frame(width: 38, height: 38)
-                Image(systemName: org.icon)
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(org.highlightColor)
-            }
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(org.displayName)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                if org.fullName != org.displayName {
-                    Text(org.fullName)
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .lineLimit(1)
-                }
-            }
-
-            Spacer()
-
-            let memberCount = countryDataService.countries.filter { $0.organizations.contains(org.id) }.count
-            if memberCount > 0 {
-                Text("\(memberCount) members")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-
-            Image(systemName: "chevron.right")
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .contentShape(Rectangle())
-    }
-}
-
 // MARK: - Gamification
 
 private extension CountryDetailScreen {
@@ -551,6 +492,19 @@ private extension CountryDetailScreen {
         UserDefaults.standard.set(Array(explored), forKey: key)
         xpService.award(5, source: .countryExplored)
         achievementService.checkExplorerAchievements(totalExplored: explored.count)
+    }
+}
+
+// MARK: - Section Header
+
+extension CountryDetailScreen {
+    func sectionHeader(_ title: String, premium: Bool = false) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: title)
+            if premium, subscriptionService.isPremium {
+                PremiumBadge()
+            }
+        }
     }
 }
 
@@ -581,31 +535,25 @@ private extension CountryDetailScreen {
         }
     }
 
-    func sectionHeader(_ title: String, premium: Bool = false) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: title)
-            if premium, subscriptionService.isPremium {
-                PremiumBadge()
+    var capitalInfoValue: String {
+        country.allCapitals.map { capital in
+            if let role = capital.role {
+                "\(capital.name) (\(role))"
+            } else {
+                capital.name
             }
+        }.joined(separator: "\n")
+    }
+
+    func densityColor(for fraction: Double) -> Color {
+        if fraction > 0.7 {
+            DesignSystem.Color.error
+        } else if fraction > 0.4 {
+            DesignSystem.Color.warning
+        } else {
+            DesignSystem.Color.success
         }
     }
-
-    var capitalInfoValue: String {
-        // swiftlint:disable statement_position
-        country.allCapitals.map { cap in
-            if let role = cap.role { "\(cap.name) (\(role))" }
-            else { cap.name }
-        }.joined(separator: "\n")
-        // swiftlint:enable statement_position
-    }
-
-    // swiftlint:disable statement_position
-    func densityColor(for fraction: Double) -> Color {
-        if fraction > 0.7 { DesignSystem.Color.error }
-        else if fraction > 0.4 { DesignSystem.Color.warning }
-        else { DesignSystem.Color.success }
-    }
-    // swiftlint:enable statement_position
 
     var contentScrollView: some View {
         ScrollView {
@@ -626,7 +574,10 @@ private extension CountryDetailScreen {
                     currencySection
                 }
                 if !memberOrganizations.isEmpty, subscriptionService.isPremium {
-                    organizationsSection
+                    organizationsSection(
+                        appeared: appeared,
+                        countryDataService: countryDataService
+                    )
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)

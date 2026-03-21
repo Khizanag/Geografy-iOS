@@ -59,70 +59,93 @@ private extension HomeScreen {
 
     var scrollableBlobs: some View {
         ZStack(alignment: .top) {
-            // swiftlint:disable line_length
             // Section 1 — top hero
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.35), .clear], center: .center, startRadius: 0, endRadius: 280))
-                .frame(width: 560, height: 420).blur(radius: 40)
-                .offset(x: -100, y: 0)
-                .scaleEffect(blobAnimating ? 1.12 : 0.88)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.28), .clear], center: .center, startRadius: 0, endRadius: 240))
-                .frame(width: 480, height: 380).blur(radius: 48)
-                .offset(x: 180, y: 60)
-                .scaleEffect(blobAnimating ? 0.86 : 1.12)
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.accent, opacity: 0.35,
+                endRadius: 280, width: 560, height: 420, blur: 40,
+                offset: (-100, 0), scale: blobAnimating ? 1.12 : 0.88
+            ))
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.indigo, opacity: 0.28,
+                endRadius: 240, width: 480, height: 380, blur: 48,
+                offset: (180, 60), scale: blobAnimating ? 0.86 : 1.12
+            ))
             // Section 2 — carousel
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.22), .clear], center: .center, startRadius: 0, endRadius: 220))
-                .frame(width: 440, height: 340).blur(radius: 44)
-                .offset(x: -140, y: 550)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.purple.opacity(0.18), .clear], center: .center, startRadius: 0, endRadius: 200))
-                .frame(width: 400, height: 360).blur(radius: 52)
-                .offset(x: 200, y: 800)
-                .scaleEffect(blobAnimating ? 0.90 : 1.10)
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.blue, opacity: 0.22,
+                endRadius: 220, width: 440, height: 340, blur: 44,
+                offset: (-140, 550), scale: blobAnimating ? 1.08 : 0.92
+            ))
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.purple, opacity: 0.18,
+                endRadius: 200, width: 400, height: 360, blur: 52,
+                offset: (200, 800), scale: blobAnimating ? 0.90 : 1.10
+            ))
             // Section 3 — quiz / discover
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.20), .clear], center: .center, startRadius: 0, endRadius: 220))
-                .frame(width: 440, height: 340).blur(radius: 48)
-                .offset(x: -80, y: 1200)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.22), .clear], center: .center, startRadius: 0, endRadius: 200))
-                .frame(width: 400, height: 320).blur(radius: 44)
-                .offset(x: 180, y: 1500)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.accent, opacity: 0.20,
+                endRadius: 220, width: 440, height: 340, blur: 48,
+                offset: (-80, 1200), scale: blobAnimating ? 1.06 : 0.94
+            ))
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.indigo, opacity: 0.22,
+                endRadius: 200, width: 400, height: 320, blur: 44,
+                offset: (180, 1500), scale: blobAnimating ? 0.88 : 1.10
+            ))
             // Section 4 — records / orgs
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.18), .clear], center: .center, startRadius: 0, endRadius: 240))
-                .frame(width: 480, height: 360).blur(radius: 52)
-                .offset(x: -120, y: 1900)
-                .scaleEffect(blobAnimating ? 1.07 : 0.93)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.purple.opacity(0.16), .clear], center: .center, startRadius: 0, endRadius: 220))
-                .frame(width: 440, height: 340).blur(radius: 48)
-                .offset(x: 160, y: 2250)
-                .scaleEffect(blobAnimating ? 0.91 : 1.09)
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.blue, opacity: 0.18,
+                endRadius: 240, width: 480, height: 360, blur: 52,
+                offset: (-120, 1900), scale: blobAnimating ? 1.07 : 0.93
+            ))
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.purple, opacity: 0.16,
+                endRadius: 220, width: 440, height: 340, blur: 48,
+                offset: (160, 2250), scale: blobAnimating ? 0.91 : 1.09
+            ))
             // Section 5 — stats / coming soon
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.16), .clear], center: .center, startRadius: 0, endRadius: 240))
-                .frame(width: 480, height: 360).blur(radius: 52)
-                .offset(x: -100, y: 2700)
-                .scaleEffect(blobAnimating ? 1.05 : 0.95)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.18), .clear], center: .center, startRadius: 0, endRadius: 220))
-                .frame(width: 440, height: 340).blur(radius: 44)
-                .offset(x: 140, y: 3100)
-                .scaleEffect(blobAnimating ? 0.92 : 1.08)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.14), .clear], center: .center, startRadius: 0, endRadius: 260))
-                .frame(width: 520, height: 380).blur(radius: 56)
-                .offset(x: -80, y: 3500)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
-            // swiftlint:enable line_length
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.accent, opacity: 0.16,
+                endRadius: 240, width: 480, height: 360, blur: 52,
+                offset: (-100, 2700), scale: blobAnimating ? 1.05 : 0.95
+            ))
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.indigo, opacity: 0.18,
+                endRadius: 220, width: 440, height: 340, blur: 44,
+                offset: (140, 3100), scale: blobAnimating ? 0.92 : 1.08
+            ))
+            homeBlob(BlobConfig(
+                color: DesignSystem.Color.blue, opacity: 0.14,
+                endRadius: 260, width: 520, height: 380, blur: 56,
+                offset: (-80, 3500), scale: blobAnimating ? 1.06 : 0.94
+            ))
         }
         .allowsHitTesting(false)
+    }
+
+    struct BlobConfig {
+        let color: Color
+        let opacity: Double
+        let endRadius: CGFloat
+        let width: CGFloat
+        let height: CGFloat
+        let blur: CGFloat
+        let offset: (CGFloat, CGFloat)
+        let scale: CGFloat
+    }
+
+    func homeBlob(_ config: BlobConfig) -> some View {
+        Ellipse()
+            .fill(RadialGradient(
+                colors: [config.color.opacity(config.opacity), .clear],
+                center: .center,
+                startRadius: 0,
+                endRadius: config.endRadius
+            ))
+            .frame(width: config.width, height: config.height)
+            .blur(radius: config.blur)
+            .offset(x: config.offset.0, y: config.offset.1)
+            .scaleEffect(config.scale)
     }
 }
 
@@ -290,9 +313,7 @@ private extension HomeScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
     var isCompactHeight: Bool { UIScreen.main.bounds.height <= 812 }
     var carouselHeight: CGFloat {
-        if isLandscape { 200 }
-        else if isCompactHeight { 240 }
-        else { 300 }
+        if isLandscape { 200 } else if isCompactHeight { 240 } else { 300 }
     }
 
     var carouselSection: some View {
@@ -307,7 +328,7 @@ private extension HomeScreen {
 
     var carouselHeader: some View {
         HStack {
-            SectionHeaderView(title:"Explore Maps")
+            SectionHeaderView(title: "Explore Maps")
             Spacer()
             Text("\(selectedMapIndex + 1) / \(maps.count)")
                 .font(DesignSystem.Font.caption)
@@ -328,7 +349,7 @@ private extension HomeScreen {
             let spacing: CGFloat = DesignSystem.Spacing.sm
             let sidePadding = (outerGeo.size.width - cardWidth) / 2
 
-            ScrollViewReader { proxy in
+            ScrollViewReader { _ in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: spacing) {
                         ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
@@ -397,7 +418,7 @@ private extension HomeScreen {
 private extension HomeScreen {
     func spotlightSection(_ country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title:"Discover")
+            SectionHeaderView(title: "Discover")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             NavigationLink(value: country) {
                 HomeCountrySpotlightCard(country: country)
@@ -421,7 +442,7 @@ private extension HomeScreen {
 private extension HomeScreen {
     var streakSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title:"Daily Streak")
+            SectionHeaderView(title: "Daily Streak")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeStreakCard(streak: streakService.currentStreak) {
                 activeSheet = .quiz
@@ -456,7 +477,7 @@ private extension HomeScreen {
 private extension HomeScreen {
     var progressSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title:"Statistics")
+            SectionHeaderView(title: "Statistics")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeProgressCard(
                 favoriteCount: favoritesService.favoriteCodes.count,

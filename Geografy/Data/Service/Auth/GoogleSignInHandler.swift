@@ -37,11 +37,22 @@ final class GoogleSignInHandler: NSObject {
     /// Format: XXXXXXXXXX.apps.googleusercontent.com
     static let clientID = "PLACEHOLDER_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
 
-    // swiftlint:disable force_unwrapping
-    private static let authorizationEndpoint = URL(string: "https://accounts.google.com/o/oauth2/v2/auth")!
-    private static let tokenEndpoint = URL(string: "https://oauth2.googleapis.com/token")!
-    private static let userInfoEndpoint = URL(string: "https://www.googleapis.com/oauth2/v3/userinfo")!
-    // swiftlint:enable force_unwrapping
+    private static let authorizationEndpoint = makeURL(
+        "https://accounts.google.com/o/oauth2/v2/auth"
+    )
+    private static let tokenEndpoint = makeURL(
+        "https://oauth2.googleapis.com/token"
+    )
+    private static let userInfoEndpoint = makeURL(
+        "https://www.googleapis.com/oauth2/v3/userinfo"
+    )
+
+    private static func makeURL(_ string: String) -> URL {
+        guard let url = URL(string: string) else {
+            fatalError("Invalid hardcoded URL: \(string)")
+        }
+        return url
+    }
 
     private static var redirectURI: String {
         let reversed = clientID
@@ -145,8 +156,12 @@ private extension GoogleSignInHandler {
     }
 
     func buildAuthURL(codeChallenge: String, state: String) -> URL {
-        // swiftlint:disable:next force_unwrapping
-        var components = URLComponents(url: Self.authorizationEndpoint, resolvingAgainstBaseURL: false)!
+        guard var components = URLComponents(
+            url: Self.authorizationEndpoint,
+            resolvingAgainstBaseURL: false
+        ) else {
+            fatalError("Invalid authorization endpoint URL")
+        }
         components.queryItems = [
             URLQueryItem(name: "client_id", value: Self.clientID),
             URLQueryItem(name: "redirect_uri", value: Self.redirectURI),
@@ -156,9 +171,10 @@ private extension GoogleSignInHandler {
             URLQueryItem(name: "code_challenge_method", value: "S256"),
             URLQueryItem(name: "state", value: state),
         ]
-        // URL is guaranteed non-nil because queryItems are all valid strings
-        // swiftlint:disable:next force_unwrapping
-        return components.url!
+        guard let url = components.url else {
+            fatalError("Failed to build authorization URL")
+        }
+        return url
     }
 }
 

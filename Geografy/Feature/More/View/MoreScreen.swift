@@ -91,32 +91,55 @@ private extension MoreScreen {
 
 private extension MoreScreen {
     var ambientBlobs: some View {
-        // swiftlint:disable line_length
         ZStack {
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.28), .clear], center: .center, startRadius: 0, endRadius: 220))
-                .frame(width: 440, height: 320).blur(radius: 32)
-                .offset(x: -80, y: -80)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.20), .clear], center: .center, startRadius: 0, endRadius: 180))
-                .frame(width: 360, height: 300).blur(radius: 40)
-                .offset(x: 140, y: 80)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.14), .clear], center: .center, startRadius: 0, endRadius: 160))
-                .frame(width: 320, height: 260).blur(radius: 36)
-                .offset(x: -100, y: 400)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
-            Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.purple.opacity(0.12), .clear], center: .center, startRadius: 0, endRadius: 160))
-                .frame(width: 320, height: 280).blur(radius: 44)
-                .offset(x: 160, y: 650)
-                .scaleEffect(blobAnimating ? 0.92 : 1.08)
-            // swiftlint:enable line_length
+            blobEllipse(BlobConfig(
+                color: DesignSystem.Color.accent, opacity: 0.28,
+                endRadius: 220, width: 440, height: 320, blur: 32,
+                offset: (-80, -80), scale: blobAnimating ? 1.10 : 0.90
+            ))
+            blobEllipse(BlobConfig(
+                color: DesignSystem.Color.indigo, opacity: 0.20,
+                endRadius: 180, width: 360, height: 300, blur: 40,
+                offset: (140, 80), scale: blobAnimating ? 0.88 : 1.10
+            ))
+            blobEllipse(BlobConfig(
+                color: DesignSystem.Color.blue, opacity: 0.14,
+                endRadius: 160, width: 320, height: 260, blur: 36,
+                offset: (-100, 400), scale: blobAnimating ? 1.06 : 0.94
+            ))
+            blobEllipse(BlobConfig(
+                color: DesignSystem.Color.purple, opacity: 0.12,
+                endRadius: 160, width: 320, height: 280, blur: 44,
+                offset: (160, 650), scale: blobAnimating ? 0.92 : 1.08
+            ))
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+    }
+
+    struct BlobConfig {
+        let color: Color
+        let opacity: Double
+        let endRadius: CGFloat
+        let width: CGFloat
+        let height: CGFloat
+        let blur: CGFloat
+        let offset: (CGFloat, CGFloat)
+        let scale: CGFloat
+    }
+
+    func blobEllipse(_ config: BlobConfig) -> some View {
+        Ellipse()
+            .fill(RadialGradient(
+                colors: [config.color.opacity(config.opacity), .clear],
+                center: .center,
+                startRadius: 0,
+                endRadius: config.endRadius
+            ))
+            .frame(width: config.width, height: config.height)
+            .blur(radius: config.blur)
+            .offset(x: config.offset.0, y: config.offset.1)
+            .scaleEffect(config.scale)
     }
 
     var itemList: some View {
@@ -182,7 +205,6 @@ private extension MoreScreen {
     }
 
     @ViewBuilder
-    // swiftlint:disable:next function_body_length
     func sheetContent(for sheet: MoreSheet) -> some View {
         NavigationStack {
             Group {

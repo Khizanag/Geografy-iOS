@@ -211,8 +211,10 @@ private extension SettingsScreen {
                 authService.signOut()
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
-                    // swiftlint:disable:next line_length
-                    SettingsIconBadge(systemImage: "rectangle.portrait.and.arrow.right", color: DesignSystem.Color.warning)
+                    SettingsIconBadge(
+                        systemImage: "rectangle.portrait.and.arrow.right",
+                        color: DesignSystem.Color.warning
+                    )
                     Text("Sign Out")
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textPrimary)

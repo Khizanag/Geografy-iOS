@@ -105,7 +105,9 @@ private extension AllMapsScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
     var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: isLandscape ? 180 : 140), spacing: isLandscape ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm)]
+        let minSize: CGFloat = isLandscape ? 180 : 140
+        let spacing = isLandscape ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm
+        return [GridItem(.adaptive(minimum: minSize), spacing: spacing)]
     }
 
     var scrollContent: some View {
@@ -123,7 +125,7 @@ private extension AllMapsScreen {
 
     var headerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            SectionHeaderView(title:"Explore Maps")
+            SectionHeaderView(title: "Explore Maps")
             Text("Choose a region to dive into")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)

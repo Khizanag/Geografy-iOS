@@ -177,9 +177,13 @@ private extension CoinPackPreviewSheet {
 
 private extension CoinPackPreviewSheet {
     var tagColor: Color {
-        if pack.isPopular { DesignSystem.Color.accent }
-        else if pack.isBestValue { DesignSystem.Color.success }
-        else { DesignSystem.Color.orange }
+        if pack.isPopular {
+            DesignSystem.Color.accent
+        } else if pack.isBestValue {
+            DesignSystem.Color.success
+        } else {
+            DesignSystem.Color.orange
+        }
     }
 
     var coinGradient: LinearGradient {

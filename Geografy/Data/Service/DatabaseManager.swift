@@ -18,7 +18,10 @@ final class DatabaseManager {
             StreakRecord.self,
         ])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
-        // swiftlint:disable:next force_try
-        container = try! ModelContainer(for: schema, configurations: [config])
+        do {
+            container = try ModelContainer(for: schema, configurations: [config])
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error.localizedDescription)")
+        }
     }
 }

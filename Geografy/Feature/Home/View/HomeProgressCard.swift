@@ -85,8 +85,12 @@ private extension HomeProgressCard {
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
-            // swiftlint:disable:next line_length
-            .background(DesignSystem.Color.cardBackgroundHighlighted, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .background(
+                DesignSystem.Color.cardBackgroundHighlighted,
+                in: RoundedRectangle(
+                    cornerRadius: DesignSystem.CornerRadius.medium
+                )
+            )
         }
         .buttonStyle(GeoPressButtonStyle())
     }

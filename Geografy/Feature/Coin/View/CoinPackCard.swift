@@ -83,9 +83,13 @@ private extension CoinPackCard {
 
 private extension CoinPackCard {
     var tagColor: Color {
-        if pack.isPopular { DesignSystem.Color.accent }
-        else if pack.isBestValue { DesignSystem.Color.success }
-        else { DesignSystem.Color.orange }
+        if pack.isPopular {
+            DesignSystem.Color.accent
+        } else if pack.isBestValue {
+            DesignSystem.Color.success
+        } else {
+            DesignSystem.Color.orange
+        }
     }
 
     var cardBackground: some View {
@@ -110,9 +114,13 @@ private extension CoinPackCard {
     }
 
     var borderColor: Color {
-        if pack.isPopular { DesignSystem.Color.accent }
-        else if pack.isBestValue { DesignSystem.Color.success }
-        else { DesignSystem.Color.textTertiary }
+        if pack.isPopular {
+            DesignSystem.Color.accent
+        } else if pack.isBestValue {
+            DesignSystem.Color.success
+        } else {
+            DesignSystem.Color.textTertiary
+        }
     }
 
     var coinGradient: LinearGradient {

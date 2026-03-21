@@ -26,7 +26,11 @@ struct ProfileScreen: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar { toolbarContent }
         .sheet(item: $activeSheet) { sheet in profileSheetContent(for: sheet) }
-        .alert("Delete Account", isPresented: $showDeleteAlert, actions: { deleteAlertActions }, message: { deleteAlertMessage })
+        .alert("Delete Account", isPresented: $showDeleteAlert) {
+            deleteAlertActions
+        } message: {
+            deleteAlertMessage
+        }
         .onAppear { handleAppear() }
     }
 }
@@ -139,7 +143,7 @@ private extension ProfileScreen {
 private extension ProfileScreen {
     var statsGridSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title:"Statistics")
+            SectionHeaderView(title: "Statistics")
             LazyVGrid(
                 columns: [
                     GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
@@ -198,7 +202,7 @@ private extension ProfileScreen {
     var achievementsPreviewSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             HStack {
-                SectionHeaderView(title:"Achievements")
+                SectionHeaderView(title: "Achievements")
                 Spacer()
                 Text("\(achievementService.unlockedAchievements.count) / \(AchievementCatalog.all.count)")
                     .font(DesignSystem.Font.caption)
@@ -284,7 +288,7 @@ private extension ProfileScreen {
 private extension ProfileScreen {
     var quizHistorySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title:"Recent Quizzes")
+            SectionHeaderView(title: "Recent Quizzes")
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(recentQuizzes.prefix(3), id: \.id) { record in
                     quizHistoryRow(record)
@@ -386,7 +390,7 @@ private extension ProfileScreen {
 private extension ProfileScreen {
     var accountSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title:"Account")
+            SectionHeaderView(title: "Account")
             VStack(spacing: DesignSystem.Spacing.xs) {
                 if authService.isGuest {
                     signInRow
@@ -580,9 +584,11 @@ private extension ProfileScreen {
         }
     }
 
-    // swiftlint:disable:next line_length
     var deleteAlertMessage: some View {
-        Text("This will permanently delete your account, XP, achievements, and quiz history. This action cannot be undone.")
+        Text(
+            "This will permanently delete your account, XP, achievements, "
+            + "and quiz history. This action cannot be undone."
+        )
     }
 
     func handleAppear() {

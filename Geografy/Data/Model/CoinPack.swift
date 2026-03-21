@@ -93,10 +93,15 @@ extension CoinPack {
     }
 
     var tagText: String? {
-        if isPopular { "Popular" }
-        else if isBestValue { "Best Value" }
-        else if bonusPercentage > 0 { "+\(bonusPercentage)% Bonus" }
-        else { nil }
+        if isPopular {
+            "Popular"
+        } else if isBestValue {
+            "Best Value"
+        } else if bonusPercentage > 0 {
+            "+\(bonusPercentage)% Bonus"
+        } else {
+            nil
+        }
     }
 
     var detailDescription: String {
