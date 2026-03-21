@@ -20,6 +20,7 @@ struct MapLoadingView: View {
 
             VStack(spacing: DesignSystem.Spacing.lg) {
                 Spacer()
+                Spacer()
                 globeSection
                 textSection
                 Spacer()
