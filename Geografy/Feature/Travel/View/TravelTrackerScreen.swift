@@ -7,6 +7,8 @@ struct TravelTrackerScreen: View {
     @State private var selectedFilter: TravelStatus? = nil
     @State private var searchText = ""
     @State private var showCountryPicker = false
+    @State private var showTravelMap = false
+    @State private var travelMapFilter: TravelMapFilter = .visited
     @State private var selectedCountry: Country?
     @State private var appeared = false
     @State private var blobAnimating = false
@@ -23,6 +25,11 @@ struct TravelTrackerScreen: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar { addButton }
         .task { countryDataService.loadCountries() }
+        .fullScreenCover(isPresented: $showTravelMap) {
+            NavigationStack {
+                TravelMapScreen(filter: travelMapFilter)
+            }
+        }
         .sheet(isPresented: $showCountryPicker) {
             TravelCountryPickerSheet(
                 countries: countryDataService.countries,
@@ -87,6 +94,13 @@ private extension TravelTrackerScreen {
                         .offset(y: appeared ? 0 : 20)
                         .animation(.easeOut(duration: 0.5), value: appeared)
 
+                    viewOnMapSection
+                        .padding(.top, DesignSystem.Spacing.lg)
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                        .opacity(appeared ? 1 : 0)
+                        .offset(y: appeared ? 0 : 20)
+                        .animation(.easeOut(duration: 0.5).delay(0.08), value: appeared)
+
                     filterTabs
                         .padding(.top, DesignSystem.Spacing.lg)
                         .opacity(appeared ? 1 : 0)
@@ -145,6 +159,78 @@ private extension TravelTrackerScreen {
             totalCountries: countryDataService.countries.count,
             continentBreakdown: continentBreakdown
         )
+    }
+
+    var viewOnMapSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(DesignSystem.Color.accent)
+                    .frame(width: 3, height: 18)
+                Text("View on Map")
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+            }
+
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                mapFilterButton(
+                    filter: .visited,
+                    icon: "checkmark.circle.fill",
+                    label: "Visited",
+                    count: travelService.visitedCodes.count,
+                    color: DesignSystem.Color.success
+                )
+                mapFilterButton(
+                    filter: .wantToVisit,
+                    icon: "heart.fill",
+                    label: "Want to Visit",
+                    count: travelService.wantToVisitCodes.count,
+                    color: DesignSystem.Color.warning
+                )
+                mapFilterButton(
+                    filter: .all,
+                    icon: "globe",
+                    label: "All",
+                    count: travelService.visitedCodes.count + travelService.wantToVisitCodes.count,
+                    color: DesignSystem.Color.accent
+                )
+            }
+        }
+    }
+
+    func mapFilterButton(
+        filter: TravelMapFilter,
+        icon: String,
+        label: String,
+        count: Int,
+        color: Color
+    ) -> some View {
+        Button {
+            travelMapFilter = filter
+            showTravelMap = true
+        } label: {
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(color)
+
+                Text(label)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(1)
+
+                Text("\(count)")
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(color.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        }
+        .buttonStyle(GeoPressButtonStyle())
     }
 
     var filterTabs: some View {
