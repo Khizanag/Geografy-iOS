@@ -9,7 +9,7 @@ struct HomeProgressCard: View {
     let onProfileTap: () -> Void
 
     var body: some View {
-        GeoCard {
+        CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 cardHeader
                 statsRow

@@ -8,7 +8,7 @@ struct CoinPack: Identifiable {
     let bonusPercentage: Int
     let isPopular: Bool
     let isBestValue: Bool
-    let icon: String
+    let badgeIcon: String
 }
 
 // MARK: - Available Packs
@@ -23,7 +23,7 @@ extension CoinPack {
             bonusPercentage: 0,
             isPopular: false,
             isBestValue: false,
-            icon: "circle.fill"
+            badgeIcon: ""
         ),
         CoinPack(
             id: "com.khizanag.geografy.coins.500",
@@ -33,7 +33,7 @@ extension CoinPack {
             bonusPercentage: 25,
             isPopular: false,
             isBestValue: false,
-            icon: "circle.circle.fill"
+            badgeIcon: "plus.circle.fill"
         ),
         CoinPack(
             id: "com.khizanag.geografy.coins.1200",
@@ -43,7 +43,7 @@ extension CoinPack {
             bonusPercentage: 50,
             isPopular: true,
             isBestValue: false,
-            icon: "star.circle.fill"
+            badgeIcon: "star.fill"
         ),
         CoinPack(
             id: "com.khizanag.geografy.coins.3000",
@@ -53,7 +53,7 @@ extension CoinPack {
             bonusPercentage: 100,
             isPopular: false,
             isBestValue: true,
-            icon: "shield.fill"
+            badgeIcon: "bolt.fill"
         ),
         CoinPack(
             id: "com.khizanag.geografy.coins.7500",
@@ -63,7 +63,7 @@ extension CoinPack {
             bonusPercentage: 150,
             isPopular: false,
             isBestValue: false,
-            icon: "bolt.circle.fill"
+            badgeIcon: "flame.fill"
         ),
         CoinPack(
             id: "com.khizanag.geografy.coins.20000",
@@ -73,7 +73,7 @@ extension CoinPack {
             bonusPercentage: 200,
             isPopular: false,
             isBestValue: false,
-            icon: "crown.fill"
+            badgeIcon: "crown.fill"
         ),
     ]
 }
@@ -90,5 +90,28 @@ extension CoinPack {
     var coinsPerDollar: Int {
         guard priceValue > 0 else { return 0 }
         return Int(Double(coins) / priceValue)
+    }
+
+    var tagText: String? {
+        if isPopular { "Popular" }
+        else if isBestValue { "Best Value" }
+        else if bonusPercentage > 0 { "+\(bonusPercentage)% Bonus" }
+        else { nil }
+    }
+
+    var detailDescription: String {
+        if isBestValue {
+            "Our best value pack — maximize your coin collection with the highest bonus rate."
+        } else if isPopular {
+            "The most popular choice among explorers. Great balance of value and coins."
+        } else if bonusPercentage >= 150 {
+            "A massive coin haul for the most dedicated geography enthusiasts."
+        } else if bonusPercentage >= 100 {
+            "Double your coins! Perfect for unlocking premium content faster."
+        } else if bonusPercentage > 0 {
+            "Get extra bonus coins on top of your purchase."
+        } else {
+            "A starter pack to get you going on your geography journey."
+        }
     }
 }

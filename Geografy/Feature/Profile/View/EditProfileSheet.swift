@@ -48,21 +48,8 @@ private extension EditProfileSheet {
 
     var avatarSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 96, height: 96)
-                Text(avatarInitials)
-                    .font(.system(size: 36, weight: .bold))
-                    .foregroundStyle(.white)
-            }
-            .shadow(color: DesignSystem.Color.accent.opacity(0.35), radius: 16, x: 0, y: 4)
+            ProfileAvatarView(name: displayName.isEmpty ? "E" : displayName, size: 96)
+                .shadow(color: DesignSystem.Color.accent.opacity(0.35), radius: 16, x: 0, y: 4)
             Text("Tap to change photo")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -104,15 +91,6 @@ private extension EditProfileSheet {
 // MARK: - Helpers
 
 private extension EditProfileSheet {
-    var avatarInitials: String {
-        let name = displayName.isEmpty ? "E" : displayName
-        let words = name.split(separator: " ")
-        if words.count >= 2 {
-            return "\(words[0].prefix(1))\(words[1].prefix(1))".uppercased()
-        }
-        return String(name.prefix(2)).uppercased()
-    }
-
     func saveProfile() {
         let trimmed = displayName.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }

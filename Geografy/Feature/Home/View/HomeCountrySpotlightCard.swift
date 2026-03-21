@@ -4,7 +4,7 @@ struct HomeCountrySpotlightCard: View {
     let country: Country
 
     var body: some View {
-        GeoCard(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
+        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 headerRow
                 countryInfoRow
@@ -47,7 +47,7 @@ private extension HomeCountrySpotlightCard {
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(1)
-                infoChip(icon: "mappin.fill", text: country.capital)
+                infoChip(icon: "mappin.and.ellipse", text: country.capital)
                 infoChip(icon: "globe.americas.fill", text: country.continent.displayName)
             }
             Spacer(minLength: 0)

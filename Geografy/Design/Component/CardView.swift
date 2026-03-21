@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GeoCard<Content: View>: View {
+struct CardView<Content: View>: View {
     private let cornerRadius: CGFloat
     private let shadow: DesignSystem.Shadow?
     private let content: Content

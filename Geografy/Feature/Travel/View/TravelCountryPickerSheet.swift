@@ -59,7 +59,7 @@ private extension TravelCountryPickerSheet {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             selectedCountry = country
         } label: {
-            GeoCard {
+            CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: country.code, height: 36)
                         .clipShape(RoundedRectangle(cornerRadius: 4))

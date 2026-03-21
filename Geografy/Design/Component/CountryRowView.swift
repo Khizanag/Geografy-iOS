@@ -1,0 +1,153 @@
+import SwiftUI
+
+struct CountryRowView: View {
+    let country: Country
+    let isFavorite: Bool
+    var showFlag: Bool = true
+    var showCapital: Bool = true
+    var showStats: Bool = true
+    var showContinent: Bool = true
+    var onFavoriteTap: (() -> Void)?
+
+    var body: some View {
+        HStack(spacing: 0) {
+            accentStripe
+            contentRow
+        }
+        .background(DesignSystem.Color.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .strokeBorder(Color.white.opacity(0.06), lineWidth: 1)
+        )
+    }
+}
+
+// MARK: - Subviews
+
+private extension CountryRowView {
+    var accentStripe: some View {
+        let codeValue = country.code.unicodeScalars.reduce(0) { $0 + Int($1.value) }
+        let color = DesignSystem.Color.mapColors[codeValue % DesignSystem.Color.mapColors.count]
+        return color
+            .frame(width: 3)
+            .clipShape(
+                UnevenRoundedRectangle(
+                    topLeadingRadius: DesignSystem.CornerRadius.medium,
+                    bottomLeadingRadius: DesignSystem.CornerRadius.medium,
+                    bottomTrailingRadius: 0,
+                    topTrailingRadius: 0
+                )
+            )
+    }
+
+    var contentRow: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            if showFlag {
+                FlagView(countryCode: country.code, height: 36)
+                    .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+            }
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text(country.name)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(1)
+
+                if showCapital {
+                    capitalLabel
+                }
+
+                if showStats {
+                    statsRow
+                }
+            }
+
+            Spacer(minLength: 0)
+
+            trailingContent
+        }
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .padding(.trailing, DesignSystem.Spacing.sm)
+        .padding(.leading, DesignSystem.Spacing.xs)
+    }
+
+    var capitalLabel: some View {
+        HStack(spacing: 3) {
+            Image(systemName: "mappin.and.ellipse")
+                .font(.system(size: 8, weight: .bold))
+                .foregroundStyle(DesignSystem.Color.accent)
+            Text(country.allCapitals.map(\.name).joined(separator: " · "))
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
+        }
+    }
+
+    var statsRow: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            HStack(spacing: 3) {
+                Image(systemName: "map")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                Text(country.area.formatArea())
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+
+            Text("·")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+
+            HStack(spacing: 3) {
+                Image(systemName: "person.2")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                Text(country.population.formatPopulation())
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+        }
+    }
+
+    var trailingContent: some View {
+        HStack(alignment: .center, spacing: DesignSystem.Spacing.sm) {
+            if showContinent {
+                continentBadge
+            }
+            favoriteIcon
+        }
+    }
+
+    var continentBadge: some View {
+        Text(country.continent.displayName)
+            .font(.system(size: 9, weight: .semibold))
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
+    }
+
+    @ViewBuilder
+    var favoriteIcon: some View {
+        if let onFavoriteTap {
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                    onFavoriteTap()
+                }
+            } label: {
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
+                    .symbolEffect(.bounce, value: isFavorite)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        } else {
+            Image(systemName: isFavorite ? "heart.fill" : "heart")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
+        }
+    }
+}

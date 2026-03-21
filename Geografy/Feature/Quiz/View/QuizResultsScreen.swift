@@ -87,7 +87,7 @@ private extension QuizResultsScreen {
     }
 
     func statItem(icon: String, value: String, color: Color) -> some View {
-        GeoCard {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.title2)
@@ -116,7 +116,7 @@ private extension QuizResultsScreen {
     }
 
     func answerRow(index: Int, answer: QuizAnswer) -> some View {
-        GeoCard {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Text("\(index)")
                     .font(DesignSystem.Font.caption)

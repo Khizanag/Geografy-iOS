@@ -5,7 +5,7 @@ struct LanguageBarChart: View {
     let appeared: Bool
 
     var body: some View {
-        GeoCard {
+        CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 headerRow
                 ForEach(Array(sortedLanguages.enumerated()), id: \.element.name) { index, language in

@@ -256,12 +256,41 @@ private extension GeoJSONParser {
 // MARK: - Geometry Calculations
 
 private extension GeoJSONParser {
+    /// Computes the geometric centroid of a polygon using the signed-area formula.
+    /// Unlike simple vertex averaging, this is not biased by vertex density
+    /// along coastlines or complex borders (e.g. Egypt's Nile Delta).
     static func calculateCentroid(from points: [CGPoint]) -> CGPoint {
-        guard !points.isEmpty else { return .zero }
-        let sumX = points.reduce(0.0) { $0 + $1.x }
-        let sumY = points.reduce(0.0) { $0 + $1.y }
-        let count = CGFloat(points.count)
-        return CGPoint(x: sumX / count, y: sumY / count)
+        guard points.count >= 3 else {
+            guard !points.isEmpty else { return .zero }
+            let sumX = points.reduce(0.0) { $0 + $1.x }
+            let sumY = points.reduce(0.0) { $0 + $1.y }
+            let count = CGFloat(points.count)
+            return CGPoint(x: sumX / count, y: sumY / count)
+        }
+
+        var signedArea: CGFloat = 0
+        var centroidX: CGFloat = 0
+        var centroidY: CGFloat = 0
+
+        for index in 0..<points.count {
+            let current = points[index]
+            let next = points[(index + 1) % points.count]
+            let cross = current.x * next.y - next.x * current.y
+            signedArea += cross
+            centroidX += (current.x + next.x) * cross
+            centroidY += (current.y + next.y) * cross
+        }
+
+        signedArea *= 0.5
+        guard abs(signedArea) > 0.0001 else {
+            let sumX = points.reduce(0.0) { $0 + $1.x }
+            let sumY = points.reduce(0.0) { $0 + $1.y }
+            let count = CGFloat(points.count)
+            return CGPoint(x: sumX / count, y: sumY / count)
+        }
+
+        let factor = 1.0 / (6.0 * signedArea)
+        return CGPoint(x: centroidX * factor, y: centroidY * factor)
     }
 
     static func calculateBoundingBox(from points: [CGPoint]) -> CGRect {

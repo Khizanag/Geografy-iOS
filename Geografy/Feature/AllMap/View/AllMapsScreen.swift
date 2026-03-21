@@ -107,7 +107,7 @@ private extension AllMapsScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
     var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: isLandscape ? 180 : 150), spacing: DesignSystem.Spacing.md)]
+        [GridItem(.adaptive(minimum: isLandscape ? 180 : 140), spacing: isLandscape ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm)]
     }
 
     var scrollContent: some View {
@@ -125,7 +125,7 @@ private extension AllMapsScreen {
 
     var headerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            sectionLabel("Explore Maps")
+            SectionHeaderView(title:"Explore Maps")
             Text("Choose a region to dive into")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -194,18 +194,6 @@ private extension AllMapsScreen {
 private extension AllMapsScreen {
     func openMap(named name: String) {
         mapTarget = MapTarget(continentFilter: name == "World" ? nil : name)
-    }
-
-    func sectionLabel(_ title: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 3, height: 18)
-            Text(title)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
     }
 
     func gradientColors(for name: String) -> (Color, Color) {

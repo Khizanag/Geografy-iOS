@@ -10,11 +10,9 @@ struct LeaderboardScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            ambientBlobs
-            scrollContent
-        }
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Leaderboards")
         .navigationBarTitleDisplayMode(.large)
         .sheet(isPresented: $showSignIn) {
@@ -95,7 +93,7 @@ private extension LeaderboardScreen {
     }
 
     func leaderboardCard(_ info: LeaderboardInfo) -> some View {
-        GeoCard {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     ZStack {

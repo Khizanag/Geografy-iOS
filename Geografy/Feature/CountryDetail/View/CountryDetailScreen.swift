@@ -11,11 +11,9 @@ struct CountryDetailScreen: View {
 
     @State private var countryDataService = CountryDataService()
     @State private var appeared = false
-    @State private var selectedInfo: InfoItem?
+    @State private var activeSheet: CountryDetailSheet?
     @State private var showFlagFullScreen = false
     @State private var showContinentMap = false
-    @State private var showTravelPicker = false
-    @State private var showPaywall = false
 
     private let country: Country
 
@@ -24,76 +22,19 @@ struct CountryDetailScreen: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-                heroSection
-                quickFactsCard
-                travelSection
-                peopleSection
-                if hasEconomyData {
-                    if subscriptionService.isPremium {
-                        economySection
-                    } else {
-                        lockedSection(title: "Economy", icon: "chart.bar.fill")
-                    }
-                }
-                if subscriptionService.isPremium {
-                    governmentSection
-                    currencySection
-                }
-                if !memberOrganizations.isEmpty, subscriptionService.isPremium {
-                    organizationsSection
-                }
+        contentScrollView
+            .background(DesignSystem.Color.background)
+            .navigationTitle(country.name)
+            .toolbar { favoriteToolbarItem }
+            .task { countryDataService.loadCountries() }
+            .task { trackExploration() }
+            .onAppear { appeared = true }
+            .sheet(item: $activeSheet) { sheet in countryDetailSheetContent(for: sheet) }
+            .fullScreenCover(isPresented: $showContinentMap) { continentMapCover }
+            .navigationDestination(for: Organization.self) { organization in
+                OrganizationDetailScreen(organization: organization)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle(country.name)
-        .toolbar { favoriteToolbarItem }
-        .task { countryDataService.loadCountries() }
-        .task { trackExploration() }
-        .onAppear { appeared = true }
-        .sheet(isPresented: $showTravelPicker) {
-            TravelStatusPickerSheet(country: country, isPresented: $showTravelPicker)
-        }
-        .sheet(isPresented: $showPaywall) {
-            PaywallScreen()
-        }
-        .sheet(item: $selectedInfo) { item in
-            PropertyDetailSheet(
-                icon: item.icon,
-                title: item.title,
-                value: item.value,
-                supportsMap: item.supportsMap,
-                mapButtonTitle: item.mapButtonTitle,
-                onShowMap: {
-                    selectedInfo = nil
-                    showContinentMap = true
-                }
-            )
-        }
-        .fullScreenCover(isPresented: $showContinentMap) {
-            NavigationStack {
-                MapScreen(continentFilter: country.continent.displayName)
-                    // swiftlint:disable:next identifier_name
-                    .navigationDestination(for: Country.self) { c in
-                        CountryDetailScreen(country: c)
-                    }
-            }
-        }
-        .navigationDestination(for: Organization.self) { org in
-            OrganizationDetailScreen(organization: org)
-        }
-        .overlay {
-            if showFlagFullScreen {
-                ZoomableFlagView(countryCode: country.code, namespace: flagNamespace) {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
-                        showFlagFullScreen = false
-                    }
-                }
-            }
-        }
+            .overlay { flagFullScreenOverlay }
     }
 }
 
@@ -107,6 +48,42 @@ private extension CountryDetailScreen {
         let value: String
         let supportsMap: Bool
         var mapButtonTitle: String = "Show on the map"
+    }
+
+    enum CountryDetailSheet: Identifiable {
+        case travelPicker
+        case paywall
+        case info(InfoItem)
+
+        var id: String {
+            switch self {
+            case .travelPicker: "travelPicker"
+            case .paywall: "paywall"
+            case .info(let item): "info-\(item.id)"
+            }
+        }
+    }
+}
+
+// MARK: - Sheet Content
+
+private extension CountryDetailScreen {
+    @ViewBuilder
+    func countryDetailSheetContent(for sheet: CountryDetailSheet) -> some View {
+        switch sheet {
+        case .travelPicker:
+            TravelStatusPickerSheet(
+                country: country,
+                isPresented: Binding(
+                    get: { activeSheet != nil },
+                    set: { if !$0 { activeSheet = nil } }
+                )
+            )
+        case .paywall:
+            PaywallScreen()
+        case .info(let item):
+            propertyDetailSheet(for: item)
+        }
     }
 }
 
@@ -135,7 +112,7 @@ private extension CountryDetailScreen {
 
 private extension CountryDetailScreen {
     var heroSection: some View {
-        GeoCard(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
+        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 Button {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
@@ -154,13 +131,13 @@ private extension CountryDetailScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Button {
-                    selectedInfo = InfoItem(
+                    activeSheet = .info(InfoItem(
                         icon: "globe.americas.fill",
                         title: "Continent",
                         value: country.continent.displayName,
                         supportsMap: true,
                         mapButtonTitle: "Open \(country.continent.displayName) Map"
-                    )
+                    ))
                 } label: {
                     HStack(spacing: DesignSystem.Spacing.xxs) {
                         Text(country.continent.displayName)
@@ -191,15 +168,15 @@ private extension CountryDetailScreen {
 
 private extension CountryDetailScreen {
     var quickFactsCard: some View {
-        GeoCard {
+        CardView {
             HStack(spacing: 0) {
                 Button {
-                    selectedInfo = InfoItem(
-                        icon: "mappin.fill",
+                    activeSheet = .info(InfoItem(
+                        icon: "mappin.and.ellipse",
                         title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
                         value: capitalInfoValue,
                         supportsMap: false
-                    )
+                    ))
                 } label: {
                     factChip(
                         icon: "mappin",
@@ -212,12 +189,12 @@ private extension CountryDetailScreen {
                 Divider().frame(height: 44)
 
                 Button {
-                    selectedInfo = InfoItem(
+                    activeSheet = .info(InfoItem(
                         icon: "map.fill",
                         title: "Area",
                         value: country.area.formatArea(),
                         supportsMap: false
-                    )
+                    ))
                 } label: {
                     factChip(icon: "map", label: "Area", value: country.area.formatArea())
                 }
@@ -226,13 +203,13 @@ private extension CountryDetailScreen {
                 Divider().frame(height: 44)
 
                 Button {
-                    selectedInfo = InfoItem(
+                    activeSheet = .info(InfoItem(
                         icon: "globe.americas.fill",
                         title: "Continent",
                         value: country.continent.displayName,
                         supportsMap: true,
                         mapButtonTitle: "Open \(country.continent.displayName) Map"
-                    )
+                    ))
                 } label: {
                     factChip(icon: "globe", label: "Continent", value: country.continent.displayName)
                 }
@@ -272,9 +249,9 @@ private extension CountryDetailScreen {
         let currentStatus = travelService.status(for: country.code)
         return Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            showTravelPicker = true
+            activeSheet = .travelPicker
         } label: {
-            GeoCard {
+            CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     ZStack {
                         Circle()
@@ -333,7 +310,7 @@ private extension CountryDetailScreen {
     }
 
     var populationCard: some View {
-        GeoCard {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
@@ -415,7 +392,7 @@ private extension CountryDetailScreen {
     }
 
     func economyTile(icon: String, label: String, value: String, color: Color) -> some View {
-        GeoCard {
+        CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.headline)
@@ -447,12 +424,12 @@ private extension CountryDetailScreen {
                 title: "Form of Government",
                 value: country.formOfGovernment
             ) {
-                selectedInfo = InfoItem(
+                activeSheet = .info(InfoItem(
                     icon: "building.columns.fill",
                     title: "Form of Government",
                     value: country.formOfGovernment,
                     supportsMap: false
-                )
+                ))
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -472,12 +449,12 @@ private extension CountryDetailScreen {
                 title: country.currency.name,
                 value: country.currency.code
             ) {
-                selectedInfo = InfoItem(
+                activeSheet = .info(InfoItem(
                     icon: "dollarsign.circle.fill",
                     title: "Currency",
                     value: "\(country.currency.name) (\(country.currency.code))",
                     supportsMap: false
-                )
+                ))
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -496,7 +473,7 @@ private extension CountryDetailScreen {
     var organizationsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Member Of", premium: true)
-            GeoCard {
+            CardView {
                 VStack(spacing: 0) {
                     ForEach(Array(memberOrganizations.enumerated()), id: \.element.id) { index, org in
                         NavigationLink(value: org) {
@@ -587,7 +564,7 @@ private extension CountryDetailScreen {
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                     .fill(DesignSystem.Color.cardBackground)
                     .frame(height: 80)
-                PremiumLockedOverlay(onUnlock: { showPaywall = true })
+                PremiumLockedOverlay(onUnlock: { activeSheet = .paywall })
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -600,18 +577,13 @@ private extension CountryDetailScreen {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 .fill(DesignSystem.Color.cardBackground)
                 .frame(height: height)
-            PremiumLockedOverlay(onUnlock: { showPaywall = true })
+            PremiumLockedOverlay(onUnlock: { activeSheet = .paywall })
         }
     }
 
     func sectionHeader(_ title: String, premium: Bool = false) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 3, height: 18)
-            Text(title)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+            SectionHeaderView(title: title)
             if premium, subscriptionService.isPremium {
                 PremiumBadge()
             }
@@ -634,4 +606,65 @@ private extension CountryDetailScreen {
         else { DesignSystem.Color.success }
     }
     // swiftlint:enable statement_position
+
+    var contentScrollView: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
+                heroSection
+                quickFactsCard
+                travelSection
+                peopleSection
+                if hasEconomyData {
+                    if subscriptionService.isPremium {
+                        economySection
+                    } else {
+                        lockedSection(title: "Economy", icon: "chart.bar.fill")
+                    }
+                }
+                if subscriptionService.isPremium {
+                    governmentSection
+                    currencySection
+                }
+                if !memberOrganizations.isEmpty, subscriptionService.isPremium {
+                    organizationsSection
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+        }
+    }
+
+    func propertyDetailSheet(for item: InfoItem) -> some View {
+        PropertyDetailSheet(
+            icon: item.icon,
+            title: item.title,
+            value: item.value,
+            supportsMap: item.supportsMap,
+            mapButtonTitle: item.mapButtonTitle,
+            onShowMap: {
+                activeSheet = nil
+                showContinentMap = true
+            }
+        )
+    }
+
+    var continentMapCover: some View {
+        NavigationStack {
+            MapScreen(continentFilter: country.continent.displayName)
+                .navigationDestination(for: Country.self) { detailCountry in
+                    CountryDetailScreen(country: detailCountry)
+                }
+        }
+    }
+
+    @ViewBuilder
+    var flagFullScreenOverlay: some View {
+        if showFlagFullScreen {
+            ZoomableFlagView(countryCode: country.code, namespace: flagNamespace) {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                    showFlagFullScreen = false
+                }
+            }
+        }
+    }
 }

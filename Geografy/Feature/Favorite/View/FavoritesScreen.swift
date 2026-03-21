@@ -57,54 +57,10 @@ private extension FavoritesScreen {
     }
 
     func countryCard(for country: Country) -> some View {
-        GeoCard {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(countryCode: country.code, height: DesignSystem.Size.md)
-
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(country.name)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-
-                    Label(country.capital, systemImage: "star.fill")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .labelStyle(SpacedLabelStyle())
-
-                    HStack(spacing: DesignSystem.Spacing.xxs) {
-                        Label(country.area.formatArea(), systemImage: "map")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                            .labelStyle(SpacedLabelStyle())
-                        Text("·")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                        Label(country.population.formatPopulation(), systemImage: "person.2")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                            .labelStyle(SpacedLabelStyle())
-                    }
-                }
-
-                Spacer()
-
-                Image(systemName: "heart.fill")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.error)
-            }
-            .padding(DesignSystem.Spacing.sm)
-        }
-    }
-}
-
-// MARK: - Label Style
-
-private struct SpacedLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: 4) {
-            configuration.icon
-            configuration.title
-        }
+        CountryRowView(
+            country: country,
+            isFavorite: true,
+            showContinent: false
+        )
     }
 }

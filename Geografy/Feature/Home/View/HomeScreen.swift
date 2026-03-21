@@ -1,11 +1,5 @@
 import SwiftUI
 
-private struct ComingSoonItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let icon: String
-}
-
 struct HomeScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(AuthService.self) private var authService
@@ -13,20 +7,12 @@ struct HomeScreen: View {
     @Environment(XPService.self) private var xpService
     @Environment(StreakService.self) private var streakService
     @Environment(CoinService.self) private var coinService
+    @Environment(HomeSectionOrderService.self) private var sectionOrderService
 
     @State private var countryDataService = CountryDataService()
     @State private var selectedMapIndex = 0
     @State private var mapTarget: MapTarget?
-    @State private var showQuiz = false
-    @State private var showProfile = false
-    @State private var showSignIn = false
-    @State private var showFriends = false
-    @State private var showAllOrgs = false
-    @State private var selectedOrg: Organization?
-    @State private var comingSoonItem: ComingSoonItem?
-    @State private var showFavorites = false
-    @State private var showCountries = false
-    @State private var showCoinStore = false
+    @State private var activeSheet: HomeSheet?
     @State private var blobAnimating = false
     @State private var appeared = false
 
@@ -47,72 +33,18 @@ struct HomeScreen: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                profileButton
-            }
-            ToolbarItem(placement: .principal) {
-                statsButton
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                friendsButton
-            }
-        }
+        .toolbar { toolbarContent }
         .fullScreenCover(item: $mapTarget) { target in
-            NavigationStack {
-                MapScreen(continentFilter: target.continentFilter)
-                    .navigationDestination(for: Country.self) { country in
-                        CountryDetailScreen(country: country)
-                    }
-            }
+            mapFullScreenCover(for: target)
         }
-        .sheet(isPresented: $showQuiz) {
-            QuizSetupScreen()
-        }
-        .sheet(isPresented: $showSignIn) {
-            SignInOptionsSheet()
-        }
-        .sheet(isPresented: $showProfile) {
-            NavigationStack {
-                ProfileScreen()
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-        }
-        .sheet(isPresented: $showFriends) {
-            ComingSoonSheet(title: "Friends", icon: "person.2.fill")
-        }
-        .sheet(isPresented: $showAllOrgs) {
-            NavigationStack {
-                OrganizationsScreen()
-            }
-        }
-        .sheet(item: $selectedOrg) { org in
-            NavigationStack {
-                OrganizationDetailScreen(organization: org)
-            }
-        }
-        .sheet(item: $comingSoonItem) { item in
-            ComingSoonSheet(title: item.title, icon: item.icon)
-        }
-        .sheet(isPresented: $showFavorites) {
-            NavigationStack { FavoritesScreen() }
-        }
-        .sheet(isPresented: $showCountries) {
-            NavigationStack { CountryListScreen() }
-        }
-        .sheet(isPresented: $showCoinStore) {
-            CoinStoreScreen()
-        }
+        .modifier(
+            HomeSheetsModifier(
+                activeSheet: $activeSheet,
+                sectionOrder: sectionOrderService.sections
+            )
+        )
         .task { countryDataService.loadCountries() }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
-            withAnimation(.easeOut(duration: 0.7)) {
-                appeared = true
-            }
-        }
+        .onAppear { startAnimations() }
     }
 }
 
@@ -197,50 +129,17 @@ private extension HomeScreen {
 private extension HomeScreen {
     var mainFeed: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 0) {
-                    greetingSection
-                        .padding(.top, DesignSystem.Spacing.lg)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .feedSection(appeared: appeared, delay: 0.05)
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                greetingSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .feedSection(appeared: appeared, delay: 0.05)
 
-                    GuestModePromptBanner()
-                        .padding(.top, DesignSystem.Spacing.md)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .feedSection(appeared: appeared, delay: 0.08)
-
-                    carouselSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .feedSection(appeared: appeared, delay: 0.10)
-
-                    if let country = spotlightCountry {
-                        spotlightSection(country)
-                            .padding(.top, DesignSystem.Spacing.xl)
-                            .padding(.horizontal, DesignSystem.Spacing.md)
-                            .feedSection(appeared: appeared, delay: 0.20)
-                    }
-
-                    streakSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .feedSection(appeared: appeared, delay: 0.22)
-
-                    worldRecordsSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .feedSection(appeared: appeared, delay: 0.24)
-
-                    orgsSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .feedSection(appeared: appeared, delay: 0.27)
-
-                    progressSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .feedSection(appeared: appeared, delay: 0.30)
-
-                    comingSoonSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .feedSection(appeared: appeared, delay: 0.35)
+                ForEach(Array(sectionOrderService.sections.enumerated()), id: \.element) { index, section in
+                    sectionView(for: section)
+                        .feedSection(appeared: appeared, delay: 0.08 + Double(index) * 0.04)
+                }
             }
+            .padding(.top, DesignSystem.Spacing.lg)
             .padding(.bottom, DesignSystem.Spacing.xxl)
         }
         .background { scrollableBlobs.ignoresSafeArea() }
@@ -251,43 +150,21 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var profileButton: some View {
-        Button { showProfile = true } label: {
+        Button { activeSheet = .profile } label: {
             profileAvatar
         }
         .buttonStyle(.plain)
     }
 
     var profileAvatar: some View {
-        let name = authService.currentProfile?.displayName ?? "Explorer"
-        let initials = profileInitials(from: name)
-
-        return ZStack {
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-            Text(initials)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-        }
-        .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-    }
-
-    func profileInitials(from name: String) -> String {
-        let words = name.split(separator: " ")
-        if words.count >= 2 {
-            return "\(words[0].prefix(1))\(words[1].prefix(1))".uppercased()
-        }
-        return String(name.prefix(2)).uppercased()
+        ProfileAvatarView(
+            name: authService.currentProfile?.displayName ?? "Explorer",
+            size: DesignSystem.Size.md
+        )
     }
 
     var statsButton: some View {
-        Button { showCoinStore = true } label: {
+        Button { activeSheet = .coinStore } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 xpIndicator
                 divider
@@ -312,7 +189,7 @@ private extension HomeScreen {
     }
 
     var friendsButton: some View {
-        Button { showFriends = true } label: {
+        Button { activeSheet = .friends } label: {
             Image(systemName: "person.2")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
@@ -370,8 +247,18 @@ private extension HomeScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
             }
             Spacer()
+            editSectionsButton
             globeBadge
         }
+    }
+
+    var editSectionsButton: some View {
+        Button { activeSheet = .sectionEditor } label: {
+            Image(systemName: "slider.horizontal.3")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+        }
+        .buttonStyle(.plain)
     }
 
     var greetingLabel: String {
@@ -413,7 +300,7 @@ private extension HomeScreen {
 
     var carouselHeader: some View {
         HStack {
-            sectionLabel("Explore Maps")
+            SectionHeaderView(title:"Explore Maps")
             Spacer()
             Text("\(selectedMapIndex + 1) / \(maps.count)")
                 .font(DesignSystem.Font.caption)
@@ -471,10 +358,12 @@ private extension HomeScreen {
                 }
                 .scrollClipDisabled()
                 .scrollTargetBehavior(.viewAligned)
-                .scrollPosition(id: .init(
-                    get: { selectedMapIndex },
-                    set: { if let newValue = $0 { selectedMapIndex = newValue } }
-                ))
+                .scrollPosition(
+                    id: .init(
+                        get: { selectedMapIndex },
+                        set: { if let newValue = $0 { selectedMapIndex = newValue } }
+                    )
+                )
             }
         }
         .frame(height: carouselHeight + DesignSystem.Spacing.xxl + DesignSystem.Spacing.lg)
@@ -501,7 +390,7 @@ private extension HomeScreen {
 private extension HomeScreen {
     func spotlightSection(_ country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Discover")
+            SectionHeaderView(title:"Discover")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             NavigationLink(value: country) {
                 HomeCountrySpotlightCard(country: country)
@@ -522,10 +411,10 @@ private extension HomeScreen {
 private extension HomeScreen {
     var streakSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Daily Streak")
+            SectionHeaderView(title:"Daily Streak")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeStreakCard(streak: streakService.currentStreak) {
-                showQuiz = true
+                activeSheet = .quiz
             }
         }
     }
@@ -545,8 +434,8 @@ private extension HomeScreen {
     var orgsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             HomeOrgsCard(
-                onOrgTap: { selectedOrg = $0 },
-                onSeeAll: { showAllOrgs = true }
+                onOrgTap: { activeSheet = .orgDetail($0) },
+                onSeeAll: { activeSheet = .allOrgs }
             )
         }
     }
@@ -557,15 +446,15 @@ private extension HomeScreen {
 private extension HomeScreen {
     var progressSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Statistics")
+            SectionHeaderView(title:"Statistics")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeProgressCard(
                 favoriteCount: favoritesService.favoriteCodes.count,
                 exploredContinents: exploredContinents,
                 currentLevel: xpService.currentLevel.level,
-                onFavoritesTap: { showFavorites = true },
-                onCountriesTap: { showCountries = true },
-                onProfileTap: { showProfile = true }
+                onFavoritesTap: { activeSheet = .favorites },
+                onCountriesTap: { activeSheet = .countries },
+                onProfileTap: { activeSheet = .profile }
             )
         }
     }
@@ -586,7 +475,7 @@ private extension HomeScreen {
 private extension HomeScreen {
     var comingSoonSection: some View {
         HomeComingSoonSection { title, icon in
-            comingSoonItem = ComingSoonItem(title: title, icon: icon)
+            activeSheet = .comingSoon(title: title, icon: icon)
         }
     }
 }
@@ -594,20 +483,67 @@ private extension HomeScreen {
 // MARK: - Helpers
 
 private extension HomeScreen {
-    func sectionLabel(_ title: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 3, height: 18)
-            Text(title)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            profileButton
+        }
+        ToolbarItem(placement: .principal) {
+            statsButton
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            friendsButton
+        }
+    }
+
+    func mapFullScreenCover(for target: MapTarget) -> some View {
+        NavigationStack {
+            MapScreen(continentFilter: target.continentFilter)
+                .navigationDestination(for: Country.self) { country in
+                    CountryDetailScreen(country: country)
+                }
+        }
+    }
+
+    func startAnimations() {
+        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+            blobAnimating = true
+        }
+        withAnimation(.easeOut(duration: 0.7)) {
+            appeared = true
         }
     }
 
     func openMap(named name: String) {
         mapTarget = MapTarget(continentFilter: name == "World map" ? nil : name)
+    }
+
+    @ViewBuilder
+    func sectionView(for section: HomeSection) -> some View {
+        switch section {
+        case .guestBanner:
+            GuestModePromptBanner()
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .carousel:
+            carouselSection
+        case .spotlight:
+            if let country = spotlightCountry {
+                spotlightSection(country)
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+            }
+        case .streak:
+            streakSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .worldRecords:
+            worldRecordsSection
+        case .organizations:
+            orgsSection
+        case .progress:
+            progressSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .comingSoon:
+            comingSoonSection
+        }
     }
 }
 

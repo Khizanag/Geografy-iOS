@@ -6,6 +6,7 @@ struct CoinStoreScreen: View {
 
     @State private var showAllTransactions = false
     @State private var earnInfoExpanded = false
+    @State private var selectedPack: CoinPack?
 
     var body: some View {
         NavigationStack {
@@ -27,6 +28,9 @@ struct CoinStoreScreen: View {
                 }
             }
         }
+        .sheet(item: $selectedPack) { pack in
+            CoinPackPreviewSheet(pack: pack)
+        }
     }
 }
 
@@ -34,12 +38,7 @@ struct CoinStoreScreen: View {
 
 private extension CoinStoreScreen {
     var closeButton: some View {
-        Button { dismiss() } label: {
-            Image(systemName: "xmark.circle.fill")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-        .buttonStyle(.plain)
+        GeoCircleCloseButton()
     }
 
     var balanceSection: some View {
@@ -63,7 +62,7 @@ private extension CoinStoreScreen {
 
     var transactionHeader: some View {
         HStack {
-            sectionLabel("History", icon: "clock.fill")
+            SectionHeaderView(title:"History", icon: "clock.fill")
             Spacer()
             if coinService.transactions.count > 5 {
                 Button { showAllTransactions = true } label: {
@@ -77,7 +76,7 @@ private extension CoinStoreScreen {
     }
 
     var emptyTransactionsView: some View {
-        GeoCard {
+        CardView {
             HStack {
                 Spacer()
                 VStack(spacing: DesignSystem.Spacing.xs) {
@@ -99,7 +98,7 @@ private extension CoinStoreScreen {
     }
 
     var transactionList: some View {
-        GeoCard {
+        CardView {
             VStack(spacing: 0) {
                 let displayedTransactions = showAllTransactions
                     ? coinService.transactions
@@ -123,7 +122,7 @@ private extension CoinStoreScreen {
 
     var coinPacksSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Get More Coins", icon: "plus.circle.fill")
+            SectionHeaderView(title:"Get More Coins", icon: "plus.circle.fill")
                 .padding(.horizontal, DesignSystem.Spacing.md)
 
             LazyVGrid(
@@ -135,7 +134,7 @@ private extension CoinStoreScreen {
             ) {
                 ForEach(CoinPack.allPacks) { pack in
                     CoinPackCard(pack: pack) {
-                        handlePurchase(pack)
+                        selectedPack = pack
                     }
                 }
             }
@@ -147,20 +146,29 @@ private extension CoinStoreScreen {
 
     var earnInfoSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            Button { withAnimation(.spring(response: 0.3)) { earnInfoExpanded.toggle() } } label: {
-                HStack {
-                    sectionLabel("How to Earn Coins", icon: "info.circle.fill")
-                    Spacer()
-                    Image(systemName: earnInfoExpanded ? "chevron.up" : "chevron.down")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+            Button {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    earnInfoExpanded.toggle()
+                }
+            } label: {
+                CardView {
+                    HStack {
+                        SectionHeaderView(title:"How to Earn Coins", icon: "info.circle.fill")
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .font(DesignSystem.Font.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                            .rotationEffect(.degrees(earnInfoExpanded ? -180 : 0))
+                    }
+                    .padding(DesignSystem.Spacing.md)
                 }
             }
-            .buttonStyle(.plain)
+            .buttonStyle(GeoPressButtonStyle())
             .padding(.horizontal, DesignSystem.Spacing.md)
 
             if earnInfoExpanded {
-                GeoCard {
+                CardView {
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                         earnRow(icon: "checkmark.circle.fill", title: "Complete Quizzes", detail: "Earn coins for every quiz you finish")
                         earnRow(icon: "calendar.badge.checkmark", title: "Daily Login", detail: "Log in every day to collect bonus coins")
@@ -170,7 +178,12 @@ private extension CoinStoreScreen {
                     .padding(DesignSystem.Spacing.md)
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .transition(.opacity.combined(with: .move(edge: .top)))
+                .transition(
+                    .asymmetric(
+                        insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)),
+                        removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top))
+                    )
+                )
             }
         }
     }
@@ -179,18 +192,6 @@ private extension CoinStoreScreen {
 // MARK: - Helpers
 
 private extension CoinStoreScreen {
-    func sectionLabel(_ title: String, icon: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text(title)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-    }
-
     func earnRow(icon: String, title: String, detail: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
@@ -209,7 +210,4 @@ private extension CoinStoreScreen {
         }
     }
 
-    func handlePurchase(_ pack: CoinPack) {
-        coinService.earn(pack.coins, reason: .purchase)
-    }
 }

@@ -93,7 +93,7 @@ private extension OrganizationDetailScreen {
     }
 
     var headerCard: some View {
-        GeoCard {
+        CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     orgLogo
@@ -205,7 +205,7 @@ private extension OrganizationDetailScreen {
 
             ForEach(memberCountries) { country in
                 NavigationLink(value: country) {
-                    GeoCard {
+                    CardView {
                         HStack(spacing: DesignSystem.Spacing.sm) {
                             FlagView(countryCode: country.code, height: DesignSystem.Size.md)
                             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {

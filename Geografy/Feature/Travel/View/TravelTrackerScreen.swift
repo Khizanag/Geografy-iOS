@@ -84,9 +84,7 @@ private extension TravelTrackerScreen {
 
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
-            ZStack(alignment: .top) {
-                ambientBlobs
-                VStack(spacing: 0) {
+            VStack(spacing: 0) {
                     statsSection
                         .padding(.horizontal, DesignSystem.Spacing.md)
                         .padding(.top, DesignSystem.Spacing.md)
@@ -116,10 +114,10 @@ private extension TravelTrackerScreen {
                         .padding(.horizontal, DesignSystem.Spacing.md)
                         .opacity(appeared ? 1 : 0)
                         .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
-                }
-                .padding(.bottom, DesignSystem.Spacing.xxl)
             }
+            .padding(.bottom, DesignSystem.Spacing.xxl)
         }
+        .background { ambientBlobs }
     }
 
     var ambientBlobs: some View {
@@ -166,7 +164,7 @@ private extension TravelTrackerScreen {
             travelMapFilter = currentTravelMapFilter
             showTravelMap = true
         } label: {
-            GeoCard {
+            CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "map.fill")
                         .font(DesignSystem.Font.title2)
@@ -353,7 +351,7 @@ private extension TravelTrackerScreen {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             selectedCountry = country
         } label: {
-            GeoCard {
+            CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: country.code, height: 36)
                         .clipShape(RoundedRectangle(cornerRadius: 4))

@@ -6,13 +6,13 @@ struct MoreScreen: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                ambientBlobs
-                itemList
-            }
-            .navigationTitle("More")
-            .navigationBarTitleDisplayMode(.large)
+            itemList
+                .background {
+                    ambientBlobs
+                }
+                .background(DesignSystem.Color.background.ignoresSafeArea())
+                .navigationTitle("More")
+                .navigationBarTitleDisplayMode(.large)
         }
         .sheet(item: $activeSheet) { sheet in
             sheetContent(for: sheet)
@@ -140,7 +140,7 @@ private extension MoreScreen {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             activeSheet = sheet
         } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 ZStack {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                         .fill(sheet.color.opacity(0.15))
@@ -150,12 +150,13 @@ private extension MoreScreen {
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(sheet.color)
                 }
-                .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
+                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
 
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(sheet.label)
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
+                        .lineLimit(1)
 
                     Text(sheet.subtitle)
                         .font(DesignSystem.Font.caption)
@@ -163,13 +164,13 @@ private extension MoreScreen {
                         .lineLimit(1)
                 }
 
-                Spacer()
+                Spacer(minLength: 0)
 
                 Image(systemName: "chevron.right")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(sheet.color.opacity(0.6))
             }
-            .padding(DesignSystem.Spacing.md)
+            .padding(DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
             .overlay(
@@ -183,77 +184,45 @@ private extension MoreScreen {
     @ViewBuilder
     // swiftlint:disable:next function_body_length
     func sheetContent(for sheet: MoreSheet) -> some View {
-        switch sheet {
-        case .profile:
-            NavigationStack {
-                ProfileScreen()
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-
-        case .orgs:
-            NavigationStack {
-                OrganizationsScreen()
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-
-        case .favorites:
-            NavigationStack {
-                FavoritesScreen()
-                    .navigationDestination(for: Country.self) { country in
-                        CountryDetailScreen(country: country)
-                    }
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-
-        case .travel:
-            NavigationStack {
-                TravelTrackerScreen()
-                    .navigationDestination(for: Country.self) { country in
-                        CountryDetailScreen(country: country)
-                    }
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-
-        case .achievements:
-            NavigationStack {
-                AchievementsScreen()
-                    .navigationTitle("Achievements")
-                    .navigationBarTitleDisplayMode(.large)
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-
-        case .leaderboards:
-            NavigationStack {
-                LeaderboardScreen()
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-
-        case .themes:
-            NavigationStack {
-                ThemesScreen()
-                    .navigationTitle("Themes")
-                    .navigationBarTitleDisplayMode(.large)
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
-
-        case .settings:
-            NavigationStack {
-                SettingsScreen()
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            GeoCircleCloseButton { activeSheet = nil }
+        NavigationStack {
+            Group {
+                switch sheet {
+                case .profile:
+                    ProfileScreen()
+                case .orgs:
+                    OrganizationsScreen()
+                case .favorites:
+                    FavoritesScreen()
+                        .navigationDestination(for: Country.self) { country in
+                            CountryDetailScreen(country: country)
                         }
-                    }
+                case .travel:
+                    TravelTrackerScreen()
+                        .navigationDestination(for: Country.self) { country in
+                            CountryDetailScreen(country: country)
+                        }
+                case .achievements:
+                    AchievementsScreen()
+                        .navigationTitle("Achievements")
+                        .navigationBarTitleDisplayMode(.large)
+                case .leaderboards:
+                    LeaderboardScreen()
+                case .themes:
+                    ThemesScreen()
+                        .navigationTitle("Themes")
+                        .navigationBarTitleDisplayMode(.large)
+                case .settings:
+                    SettingsScreen()
+                }
             }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.automatic)
+            .toolbar {
+                if sheet != .profile {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        GeoCircleCloseButton { activeSheet = nil }
+                    }
+                }
+            }
         }
+        .presentationDetents([.large])
     }
 }

@@ -5,7 +5,7 @@ struct HomeStreakCard: View {
     let onStartQuiz: () -> Void
 
     var body: some View {
-        GeoCard {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
                 streakIcon
                 streakInfo

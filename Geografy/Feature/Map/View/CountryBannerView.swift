@@ -14,10 +14,10 @@ struct CountryBannerView: View {
     @State private var dragOffset: CGFloat = 0
 
     var body: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        HStack(spacing: DesignSystem.Spacing.xs) {
             flagView
             infoSection
-            Spacer()
+            Spacer(minLength: DesignSystem.Spacing.xxs)
             if let onMoreInfo {
                 moreInfoButton(action: onMoreInfo)
             }
@@ -55,15 +55,15 @@ private extension CountryBannerView {
                 .lineLimit(2)
                 .minimumScaleFactor(0.8)
 
-            HStack(spacing: DesignSystem.Spacing.xxs) {
+            HStack(alignment: .top, spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "star.fill")
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .padding(.top, 2)
 
                 Text(capital)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(1)
             }
         }
     }

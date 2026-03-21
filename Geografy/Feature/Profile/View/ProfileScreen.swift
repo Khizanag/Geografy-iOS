@@ -13,60 +13,21 @@ struct ProfileScreen: View {
 
     @State private var recentQuizzes: [QuizHistoryRecord] = []
     @State private var totalQuizCount: Int = 0
-    @State private var showEditProfile = false
-    @State private var showSignIn = false
-    @State private var showPaywall = false
+    @State private var activeSheet: ProfileSheet?
     @State private var showDeleteAlert = false
     @State private var blobAnimating = false
     @State private var appeared = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            ambientBlobs
-            scrollContent
-        }
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            if !authService.isGuest {
-                ToolbarItem(placement: .topBarLeading) {
-                    editButton
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                GeoCircleCloseButton()
-            }
-        }
-        .sheet(isPresented: $showEditProfile) {
-            EditProfileSheet()
-        }
-        .sheet(isPresented: $showSignIn) {
-            SignInOptionsSheet()
-        }
-        .sheet(isPresented: $showPaywall) {
-            PaywallScreen()
-        }
-        .alert("Delete Account", isPresented: $showDeleteAlert) {
-            Button("Cancel", role: .cancel) {}
-            Button("Delete", role: .destructive) {
-                authService.deleteAccount()
-            }
-        } message: {
-            // swiftlint:disable:next line_length
-            Text("This will permanently delete your account, XP, achievements, and quiz history. This action cannot be undone.")
-        }
-        .onAppear {
-            fetchQuizData()
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                withAnimation(.easeOut(duration: 0.4)) {
-                    appeared = true
-                }
-            }
-        }
+        .toolbar { toolbarContent }
+        .sheet(item: $activeSheet) { sheet in profileSheetContent(for: sheet) }
+        .alert("Delete Account", isPresented: $showDeleteAlert, actions: { deleteAlertActions }, message: { deleteAlertMessage })
+        .onAppear { handleAppear() }
     }
 }
 
@@ -104,7 +65,7 @@ private extension ProfileScreen {
 
 private extension ProfileScreen {
     var headerSection: some View {
-        GeoCard {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     avatarView
@@ -129,15 +90,8 @@ private extension ProfileScreen {
     }
 
     var avatarView: some View {
-        ZStack {
-            Circle()
-                .fill(avatarGradient)
-                .frame(width: 72, height: 72)
-            Text(avatarInitials)
-                .font(.system(size: 26, weight: .bold))
-                .foregroundStyle(.white)
-        }
-        .shadow(color: DesignSystem.Color.accent.opacity(0.35), radius: 12, x: 0, y: 4)
+        ProfileAvatarView(name: displayName, size: 64)
+            .shadow(color: DesignSystem.Color.accent.opacity(0.35), radius: 12, x: 0, y: 4)
     }
 
     var userInfoStack: some View {
@@ -168,7 +122,7 @@ private extension ProfileScreen {
     var editButton: some View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            showEditProfile = true
+            activeSheet = .editProfile
         } label: {
             Image(systemName: "pencil")
         }
@@ -178,22 +132,6 @@ private extension ProfileScreen {
         authService.currentProfile?.displayName ?? "Explorer"
     }
 
-    var avatarInitials: String {
-        let name = displayName
-        let words = name.split(separator: " ")
-        if words.count >= 2 {
-            return "\(words[0].prefix(1))\(words[1].prefix(1))".uppercased()
-        }
-        return String(name.prefix(2)).uppercased()
-    }
-
-    var avatarGradient: LinearGradient {
-        LinearGradient(
-            colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
 }
 
 // MARK: - Stats Grid
@@ -201,7 +139,7 @@ private extension ProfileScreen {
 private extension ProfileScreen {
     var statsGridSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Statistics")
+            SectionHeaderView(title:"Statistics")
             LazyVGrid(
                 columns: [
                     GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
@@ -226,13 +164,13 @@ private extension ProfileScreen {
     }
 
     func statCard(icon: String, color: Color, value: String, label: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        HStack(spacing: DesignSystem.Spacing.xs) {
             ZStack {
                 Circle()
                     .fill(color.opacity(0.15))
-                    .frame(width: 36, height: 36)
+                    .frame(width: 32, height: 32)
                 Image(systemName: icon)
-                    .font(.system(size: 14))
+                    .font(.system(size: 13))
                     .foregroundStyle(color)
             }
             VStack(alignment: .leading, spacing: 2) {
@@ -240,15 +178,16 @@ private extension ProfileScreen {
                     .font(DesignSystem.Font.headline)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .minimumScaleFactor(0.7)
+                    .minimumScaleFactor(0.6)
                     .lineLimit(1)
                 Text(label)
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(1)
             }
-            Spacer()
+            Spacer(minLength: 0)
         }
-        .padding(DesignSystem.Spacing.sm)
+        .padding(DesignSystem.Spacing.xs)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 }
@@ -259,7 +198,7 @@ private extension ProfileScreen {
     var achievementsPreviewSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             HStack {
-                sectionLabel("Achievements")
+                SectionHeaderView(title:"Achievements")
                 Spacer()
                 Text("\(achievementService.unlockedAchievements.count) / \(AchievementCatalog.all.count)")
                     .font(DesignSystem.Font.caption)
@@ -345,7 +284,7 @@ private extension ProfileScreen {
 private extension ProfileScreen {
     var quizHistorySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Recent Quizzes")
+            SectionHeaderView(title:"Recent Quizzes")
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(recentQuizzes.prefix(3), id: \.id) { record in
                     quizHistoryRow(record)
@@ -401,7 +340,7 @@ private extension ProfileScreen {
 
 private extension ProfileScreen {
     var premiumBannerSection: some View {
-        Button { showPaywall = true } label: {
+        Button { activeSheet = .paywall } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 ZStack {
                     Circle()
@@ -447,7 +386,7 @@ private extension ProfileScreen {
 private extension ProfileScreen {
     var accountSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Account")
+            SectionHeaderView(title:"Account")
             VStack(spacing: DesignSystem.Spacing.xs) {
                 if authService.isGuest {
                     signInRow
@@ -458,14 +397,13 @@ private extension ProfileScreen {
                     deleteAccountRow
                 }
             }
-            appVersionInfo
         }
     }
 
     var signInRow: some View {
         Button {
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            showSignIn = true
+            activeSheet = .signIn
         } label: {
             accountRowLabel(
                 icon: "person.badge.plus.fill",
@@ -527,15 +465,6 @@ private extension ProfileScreen {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 
-    var appVersionInfo: some View {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
-        return Text("Geografy v\(version) (\(build))")
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, DesignSystem.Spacing.xs)
-    }
 }
 
 // MARK: - Background
@@ -593,21 +522,33 @@ private extension ProfileScreen {
     }
 }
 
+// MARK: - Sheet Type
+
+private extension ProfileScreen {
+    enum ProfileSheet: Identifiable {
+        case editProfile
+        case signIn
+        case paywall
+
+        var id: Self { self }
+    }
+
+    @ViewBuilder
+    func profileSheetContent(for sheet: ProfileSheet) -> some View {
+        switch sheet {
+        case .editProfile:
+            EditProfileSheet()
+        case .signIn:
+            SignInOptionsSheet()
+        case .paywall:
+            PaywallScreen()
+        }
+    }
+}
+
 // MARK: - Helpers
 
 private extension ProfileScreen {
-    func sectionLabel(_ title: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 3, height: 18)
-            Text(title)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-    }
-
     func fetchQuizData() {
         let userID = authService.currentUserID
         var descriptor = FetchDescriptor<QuizHistoryRecord>(
@@ -617,6 +558,43 @@ private extension ProfileScreen {
         let all = (try? database.mainContext.fetch(descriptor)) ?? []
         totalQuizCount = all.count
         recentQuizzes = Array(all.prefix(3))
+    }
+
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        if !authService.isGuest {
+            ToolbarItem(placement: .topBarLeading) {
+                editButton
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            GeoCircleCloseButton()
+        }
+    }
+
+    @ViewBuilder
+    var deleteAlertActions: some View {
+        Button("Cancel", role: .cancel) {}
+        Button("Delete", role: .destructive) {
+            authService.deleteAccount()
+        }
+    }
+
+    // swiftlint:disable:next line_length
+    var deleteAlertMessage: some View {
+        Text("This will permanently delete your account, XP, achievements, and quiz history. This action cannot be undone.")
+    }
+
+    func handleAppear() {
+        fetchQuizData()
+        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+            blobAnimating = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            withAnimation(.easeOut(duration: 0.4)) {
+                appeared = true
+            }
+        }
     }
 }
 

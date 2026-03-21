@@ -24,53 +24,72 @@ struct QuizSessionScreen: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                ambientBlobs
-                VStack(spacing: DesignSystem.Spacing.md) {
-                    progressSection
-                    questionContent
-                    Spacer(minLength: 0)
+            quizContent
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { toolbarContent }
+                .alert("Quit Quiz?", isPresented: $showQuitAlert, actions: { quitAlertActions }, message: { Text("Your progress will be lost.") })
+                .task { loadQuiz() }
+                .onAppear { startBlobAnimation() }
+                .navigationDestination(item: $navigateToResult) { result in
+                    resultsDestination(for: result)
                 }
-                .padding(.top, DesignSystem.Spacing.sm)
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton { showQuitAlert = true }
+        }
+        .overlay { flagPreviewOverlay }
+    }
+}
+
+// MARK: - Body Subviews
+
+private extension QuizSessionScreen {
+    var quizContent: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            progressSection
+            questionContent
+            Spacer(minLength: 0)
+        }
+        .padding(.top, DesignSystem.Spacing.sm)
+        .background { ambientBlobs }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+    }
+
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            GeoCircleCloseButton { showQuitAlert = true }
+        }
+    }
+
+    @ViewBuilder
+    var quitAlertActions: some View {
+        Button("Cancel", role: .cancel) {}
+        Button("Quit", role: .destructive) { dismiss() }
+    }
+
+    func resultsDestination(for result: QuizResult) -> some View {
+        QuizResultsScreen(
+            result: result,
+            onPlayAgain: {
+                navigateToResult = nil
+                loadQuiz()
+            },
+            onDone: { dismiss() }
+        )
+    }
+
+    @ViewBuilder
+    var flagPreviewOverlay: some View {
+        if showFlagPreview, let flagCode = currentQuestion?.promptFlag {
+            ZoomableFlagView(countryCode: flagCode, namespace: flagNamespace) {
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                    showFlagPreview = false
                 }
-            }
-            .alert("Quit Quiz?", isPresented: $showQuitAlert) {
-                Button("Cancel", role: .cancel) {}
-                Button("Quit", role: .destructive) { dismiss() }
-            } message: {
-                Text("Your progress will be lost.")
-            }
-            .task { loadQuiz() }
-            .onAppear {
-                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                    blobAnimating = true
-                }
-            }
-            .navigationDestination(item: $navigateToResult) { result in
-                QuizResultsScreen(
-                    result: result,
-                    onPlayAgain: {
-                        navigateToResult = nil
-                        loadQuiz()
-                    },
-                    onDone: { dismiss() }
-                )
             }
         }
-        .overlay {
-            if showFlagPreview, let flagCode = currentQuestion?.promptFlag {
-                ZoomableFlagView(countryCode: flagCode, namespace: flagNamespace) {
-                    withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                        showFlagPreview = false
-                    }
-                }
-            }
+    }
+
+    func startBlobAnimation() {
+        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+            blobAnimating = true
         }
     }
 }
@@ -147,7 +166,7 @@ private extension QuizSessionScreen {
     }
 
     var questionCounterPill: some View {
-        Text("Q\(currentIndex + 1)/\(questions.count)")
+        Text("\(currentIndex + 1)/\(questions.count)")
             .font(.system(size: 13, weight: .black, design: .rounded))
             .foregroundStyle(DesignSystem.Color.textSecondary)
             .padding(.horizontal, 10)

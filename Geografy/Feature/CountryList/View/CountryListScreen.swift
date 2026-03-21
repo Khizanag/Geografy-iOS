@@ -139,7 +139,6 @@ private extension CountryListScreen {
             }
         } label: {
             Label("Reset All", systemImage: "arrow.counterclockwise")
-                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 
@@ -314,7 +313,15 @@ private extension CountryListScreen {
     func countryCard(for country: Country) -> some View {
         let isFavorite = favoritesService.isFavorite(code: country.code)
         return NavigationLink(value: country) {
-            cardContent(for: country)
+            CountryRowView(
+                country: country,
+                isFavorite: isFavorite,
+                showFlag: showFlag,
+                showCapital: showCapital,
+                showStats: showArea || showPopulation,
+                showContinent: true,
+                onFavoriteTap: { favoritesService.toggle(code: country.code) }
+            )
         }
         .buttonStyle(GeoPressButtonStyle())
         .simultaneousGesture(TapGesture().onEnded {
@@ -333,139 +340,6 @@ private extension CountryListScreen {
                 )
             }
             .tint(isFavorite ? DesignSystem.Color.textSecondary : DesignSystem.Color.error)
-        }
-    }
-
-    func cardContent(for country: Country) -> some View {
-        HStack(spacing: 0) {
-            accentStripe(for: country)
-
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                if showFlag {
-                    FlagView(countryCode: country.code, height: 36)
-                        .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
-                }
-
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(country.name)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-
-                    if showCapital {
-                        capitalLabel(for: country)
-                    }
-
-                    if showArea || showPopulation {
-                        statsRow(for: country)
-                    }
-                }
-
-                Spacer(minLength: 0)
-
-                trailingContent(for: country)
-            }
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .padding(.trailing, DesignSystem.Spacing.sm)
-            .padding(.leading, DesignSystem.Spacing.xs)
-        }
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .strokeBorder(Color.white.opacity(0.06), lineWidth: 1)
-        )
-    }
-
-    func accentStripe(for country: Country) -> some View {
-        let codeValue = country.code.unicodeScalars.reduce(0) { $0 + Int($1.value) }
-        let color = DesignSystem.Color.mapColors[codeValue % DesignSystem.Color.mapColors.count]
-        return color
-            .frame(width: 3)
-            .clipShape(
-                UnevenRoundedRectangle(
-                    topLeadingRadius: DesignSystem.CornerRadius.medium,
-                    bottomLeadingRadius: DesignSystem.CornerRadius.medium,
-                    bottomTrailingRadius: 0,
-                    topTrailingRadius: 0
-                )
-            )
-    }
-
-    func capitalLabel(for country: Country) -> some View {
-        HStack(spacing: 3) {
-            Image(systemName: "mappin.fill")
-                .font(.system(size: 8, weight: .bold))
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text(country.allCapitals.map(\.name).joined(separator: " · "))
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
-        }
-    }
-
-    func trailingContent(for country: Country) -> some View {
-        HStack(alignment: .center, spacing: DesignSystem.Spacing.sm) {
-            continentBadge(for: country)
-            favoriteButton(for: country)
-        }
-    }
-
-    func favoriteButton(for country: Country) -> some View {
-        let isFav = favoritesService.isFavorite(code: country.code)
-        return Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                favoritesService.toggle(code: country.code)
-            }
-        } label: {
-            Image(systemName: isFav ? "heart.fill" : "heart")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(isFav ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
-                .symbolEffect(.bounce, value: isFav)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-    }
-
-    func continentBadge(for country: Country) -> some View {
-        Text(country.continent.displayName)
-            .font(.system(size: 9, weight: .semibold))
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
-            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
-    }
-
-    func statsRow(for country: Country) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            if showArea {
-                HStack(spacing: 3) {
-                    Image(systemName: "map")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                    Text(country.area.formatArea())
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-            }
-
-            if showArea, showPopulation {
-                Text("·")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-
-            if showPopulation {
-                HStack(spacing: 3) {
-                    Image(systemName: "person.2")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                    Text(country.population.formatPopulation())
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-            }
         }
     }
 }

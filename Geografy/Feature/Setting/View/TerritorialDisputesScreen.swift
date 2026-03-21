@@ -37,7 +37,7 @@ struct TerritorialDisputesScreen: View {
 
 private extension TerritorialDisputesScreen {
     var introCard: some View {
-        GeoCard {
+        CardView {
             HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(DesignSystem.Font.title2)
@@ -67,7 +67,7 @@ private extension TerritorialDisputesScreen {
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
 
-            GeoCard {
+            CardView {
                 VStack(spacing: 0) {
                     ForEach(Array(disputes.enumerated()), id: \.element.id) { index, dispute in
                         disputeRow(dispute)

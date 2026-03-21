@@ -44,6 +44,8 @@
 - [x] Glass effects (iOS 26)
 - [x] PDF flag assets (255 countries)
 - [x] Zoomable flag preview with blur
+- [ ] Fix flag aspect ratios — ensure all `FlagView` usages render flags at correct width:height ratio (most flags are 3:2 or 2:1, not square). Audit every usage across the app
+- [ ] Smooth flag transition — animate from Map banner's flag to full-screen flag preview (and back) using matchedGeometryEffect or hero animation
 - [ ] Orientation locking (needs AppDelegate)
 - [ ] Language/Localization support
 - [ ] iPad layout optimization

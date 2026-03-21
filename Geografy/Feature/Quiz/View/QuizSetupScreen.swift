@@ -31,11 +31,6 @@ struct QuizSetupScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle("Quiz")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton()
-                }
-            }
             .fullScreenCover(isPresented: $showQuizSession) {
                 QuizSessionScreen(configuration: makeConfiguration())
             }
@@ -54,7 +49,7 @@ private extension QuizSetupScreen {
             sectionTitle("Quiz Type")
 
             LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: 150), spacing: DesignSystem.Spacing.sm)],
+                columns: [GridItem(.adaptive(minimum: 140), spacing: DesignSystem.Spacing.sm)],
                 spacing: DesignSystem.Spacing.sm
             ) {
                 ForEach(QuizType.allCases) { type in

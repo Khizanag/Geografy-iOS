@@ -7,6 +7,7 @@ struct GeografyApp: App {
     @State private var favoritesService = FavoritesService()
     @State private var travelService = TravelService()
     @State private var gameCenterService = GameCenterService()
+    @State private var homeSectionOrderService = HomeSectionOrderService()
     @State private var databaseManager: DatabaseManager
     @State private var authService: AuthService
     @State private var xpService: XPService
@@ -35,6 +36,7 @@ struct GeografyApp: App {
                 .environment(favoritesService)
                 .environment(travelService)
                 .environment(gameCenterService)
+                .environment(homeSectionOrderService)
                 .environment(databaseManager)
                 .environment(authService)
                 .environment(xpService)

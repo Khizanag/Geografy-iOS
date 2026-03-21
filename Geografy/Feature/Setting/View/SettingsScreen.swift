@@ -24,6 +24,7 @@ struct SettingsScreen: View {
                 generalSection
                 mapSection
                 quizSection
+                appVersionInfo
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
@@ -364,12 +365,22 @@ private extension SettingsScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
-            GeoCard {
+            CardView {
                 VStack(spacing: 0) {
                     content()
                 }
             }
         }
+    }
+
+    var appVersionInfo: some View {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return Text("Geografy v\(version) (\(build))")
+            .font(DesignSystem.Font.caption2)
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.top, DesignSystem.Spacing.xs)
     }
 
     func requestNotificationPermission() {
@@ -431,6 +442,7 @@ private struct SettingsNavigationRow: View {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
+        .contentShape(Rectangle())
     }
 }
 

@@ -14,7 +14,7 @@ struct OrganizationsScreen: View {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(sortedOrgs) { org in
                     NavigationLink(value: org) {
-                        GeoCard {
+                        CardView {
                             HStack(spacing: DesignSystem.Spacing.sm) {
                                 orgLogo(org)
                                 orgInfo(org)

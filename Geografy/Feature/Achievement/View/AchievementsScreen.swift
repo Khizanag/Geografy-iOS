@@ -17,18 +17,16 @@ struct AchievementsScreen: View {
     ]
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            ambientBlobs
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    progressSection
-                    achievementSections
-                }
-                .padding(DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.xl)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                progressSection
+                achievementSections
             }
+            .padding(DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xl)
         }
+        .background { ambientBlobs }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .sheet(item: $selectedAchievement) { achievement in
             AchievementDetailSheet(
                 definition: achievement,
@@ -53,7 +51,7 @@ struct AchievementsScreen: View {
 
 private extension AchievementsScreen {
     var progressSection: some View {
-        GeoCard {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 HStack {
                     LevelBadgeView(level: xpService.currentLevel, size: .small)

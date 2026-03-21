@@ -23,7 +23,7 @@ struct TravelCountryRow: View {
 
 private extension TravelCountryRow {
     var rowContent: some View {
-        GeoCard {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: country.code, height: 36)
                     .clipShape(RoundedRectangle(cornerRadius: 4))

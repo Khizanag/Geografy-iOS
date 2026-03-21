@@ -2,51 +2,55 @@ import SwiftUI
 
 struct CoinPackCard: View {
     let pack: CoinPack
-    let onPurchase: () -> Void
+    let onTap: () -> Void
 
     var body: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            tagBadge
-            coinDisplay
-            priceSection
-            buyButton
+        Button(action: onTap) {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                tagBadge
+                coinDisplay
+                priceSection
+            }
+            .padding(DesignSystem.Spacing.md)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            .overlay(cardBorder)
+            .geoShadow(.card)
         }
-        .padding(DesignSystem.Spacing.md)
-        .frame(maxWidth: .infinity)
-        .background(cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-        .overlay(cardBorder)
-        .geoShadow(.card)
+        .buttonStyle(GeoPressButtonStyle())
     }
 }
 
 // MARK: - Subviews
 
 private extension CoinPackCard {
-    @ViewBuilder
     var tagBadge: some View {
-        if pack.isPopular {
-            tagLabel("Popular", color: DesignSystem.Color.accent)
-        } else if pack.isBestValue {
-            tagLabel("Best Value", color: DesignSystem.Color.success)
-        } else if pack.bonusPercentage > 0 {
-            tagLabel("+\(pack.bonusPercentage)% Bonus", color: DesignSystem.Color.orange)
+        Group {
+            if let tagText = pack.tagText {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
+                    if !pack.badgeIcon.isEmpty {
+                        Image(systemName: pack.badgeIcon)
+                            .font(.system(size: 9, weight: .bold))
+                    }
+                    Text(tagText)
+                }
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+                .padding(.horizontal, DesignSystem.Spacing.xs)
+                .padding(.vertical, DesignSystem.Spacing.xxs)
+                .background(tagColor, in: Capsule())
+            } else {
+                Color.clear
+                    .frame(height: 20)
+            }
         }
-    }
-
-    func tagLabel(_ text: String, color: Color) -> some View {
-        Text(text)
-            .font(DesignSystem.Font.caption2)
-            .fontWeight(.bold)
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
-            .background(color, in: Capsule())
     }
 
     var coinDisplay: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: pack.icon)
+            Image(systemName: "dollarsign.circle.fill")
                 .font(DesignSystem.IconSize.large)
                 .foregroundStyle(coinGradient)
 
@@ -73,24 +77,17 @@ private extension CoinPackCard {
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
     }
-
-    var buyButton: some View {
-        Button(action: onPurchase) {
-            Text("Buy")
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(buyButtonGradient, in: Capsule())
-        }
-        .buttonStyle(.plain)
-    }
 }
 
 // MARK: - Styles
 
 private extension CoinPackCard {
+    var tagColor: Color {
+        if pack.isPopular { DesignSystem.Color.accent }
+        else if pack.isBestValue { DesignSystem.Color.success }
+        else { DesignSystem.Color.orange }
+    }
+
     var cardBackground: some View {
         LinearGradient(
             colors: [
@@ -113,24 +110,16 @@ private extension CoinPackCard {
     }
 
     var borderColor: Color {
-        if pack.isPopular { return DesignSystem.Color.accent }
-        if pack.isBestValue { return DesignSystem.Color.success }
-        return DesignSystem.Color.textTertiary
+        if pack.isPopular { DesignSystem.Color.accent }
+        else if pack.isBestValue { DesignSystem.Color.success }
+        else { DesignSystem.Color.textTertiary }
     }
 
     var coinGradient: LinearGradient {
         LinearGradient(
             colors: [DesignSystem.Color.warning, DesignSystem.Color.orange],
             startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
-    var buyButtonGradient: LinearGradient {
-        LinearGradient(
-            colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-            startPoint: .leading,
-            endPoint: .trailing
+            endPoint: .bottomTrailing,
         )
     }
 }

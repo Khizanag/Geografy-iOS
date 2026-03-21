@@ -7,7 +7,7 @@ struct TravelStatsCard: View {
     let continentBreakdown: [(name: String, visited: Int, total: Int)]
 
     var body: some View {
-        GeoCard(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
+        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 heroStats
                 statsPills
