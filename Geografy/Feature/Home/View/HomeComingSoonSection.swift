@@ -22,6 +22,24 @@ struct HomeComingSoonSection: View {
             "Compete globally",
             [Color(hex: "F7971E"), Color(hex: "FFD200")]
         ),
+        (
+            "airplane",
+            "Travel Tracker",
+            "Log countries you've visited",
+            [Color(hex: "0F9B8E"), Color(hex: "11998E")]
+        ),
+        (
+            "chart.bar.fill",
+            "Country Compare",
+            "Compare stats side by side",
+            [Color(hex: "8E44AD"), Color(hex: "3498DB")]
+        ),
+        (
+            "clock.arrow.trianglehead.counterclockwise.rotate.90",
+            "Historical Maps",
+            "Explore borders through time",
+            [Color(hex: "C0392B"), Color(hex: "E74C3C")]
+        ),
     ]
 
     var body: some View {
@@ -44,6 +62,11 @@ private extension HomeComingSoonSection {
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            Text("Tap to vote")
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.accent)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }

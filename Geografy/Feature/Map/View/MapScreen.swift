@@ -307,9 +307,12 @@ private extension MapScreen {
     func continentViewportBounds(for filter: String) -> CGRect? {
         typealias Bounds = (minLng: Double, maxLng: Double, minLat: Double, maxLat: Double)
         let lookup: [String: Bounds] = [
-            "Europe": (-25, 65, 33, 72),
-            "North America": (-168, -52, 7, 84),
-            "Oceania": (110, 180, -52, 5),
+            "Europe": (-25, 45, 34, 72),
+            "North America": (-170, -50, 7, 84),
+            "Oceania": (110, 180, -50, 15),
+            "Asia": (26, 145, -11, 78),
+            "Africa": (-20, 55, -35, 38),
+            "South America": (-82, -34, -56, 13),
         ]
         guard let b = lookup[filter] else { return nil }
         let topLeft = MapProjection.project(longitude: b.minLng, latitude: b.maxLat)

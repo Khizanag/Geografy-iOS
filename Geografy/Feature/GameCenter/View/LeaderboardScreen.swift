@@ -5,6 +5,7 @@ struct LeaderboardScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
 
     @State private var showLeaderboard = false
+    @State private var showSignIn = false
     @State private var selectedLeaderboardID = ""
     @State private var blobAnimating = false
 
@@ -16,6 +17,9 @@ struct LeaderboardScreen: View {
         }
         .navigationTitle("Leaderboards")
         .navigationBarTitleDisplayMode(.large)
+        .sheet(isPresented: $showSignIn) {
+            SignInOptionsSheet()
+        }
         .fullScreenCover(isPresented: $showLeaderboard) {
             GameCenterViewControllerRepresentable(
                 isPresented: $showLeaderboard,
@@ -64,9 +68,22 @@ private extension LeaderboardScreen {
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(statusSubtitle)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                if gameCenterService.isAuthenticated {
+                    Text(statusSubtitle)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                } else {
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        showSignIn = true
+                    } label: {
+                        Text("Sign In")
+                            .font(DesignSystem.Font.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.accent)
+                    }
+                    .buttonStyle(.plain)
+                }
             }
             Spacer()
             Circle()

@@ -33,7 +33,8 @@ private extension MapCarouselCard {
                 cardContent
             }
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge))
-            .shadow(color: gradientColors.0.opacity(0.4), radius: 20, y: 8)
+            .shadow(color: gradientColors.0.opacity(0.5), radius: 24, y: 12)
+            .contentShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
         .buttonStyle(GeoPressButtonStyle())
     }

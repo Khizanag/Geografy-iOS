@@ -108,13 +108,16 @@ private extension OrganizationsScreen {
             Text(org.displayName)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(nil)
             if org.fullName != org.displayName {
                 Text(org.fullName)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+        .layoutPriority(1)
     }
 
     func orgTrailing(_ org: Organization) -> some View {

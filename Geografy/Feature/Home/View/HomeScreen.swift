@@ -121,52 +121,68 @@ private extension HomeScreen {
     var scrollableBlobs: some View {
         ZStack(alignment: .top) {
             // swiftlint:disable line_length
-            // Section 1 — top
+            // Section 1 — top hero
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.28), .clear], center: .center, startRadius: 0, endRadius: 220))
-                .frame(width: 440, height: 320).blur(radius: 32)
-                .offset(x: -80, y: 20)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.35), .clear], center: .center, startRadius: 0, endRadius: 280))
+                .frame(width: 560, height: 420).blur(radius: 40)
+                .offset(x: -100, y: 0)
+                .scaleEffect(blobAnimating ? 1.12 : 0.88)
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.20), .clear], center: .center, startRadius: 0, endRadius: 180))
-                .frame(width: 360, height: 300).blur(radius: 40)
-                .offset(x: 140, y: 80)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-            // Section 2 — mid
+                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.28), .clear], center: .center, startRadius: 0, endRadius: 240))
+                .frame(width: 480, height: 380).blur(radius: 48)
+                .offset(x: 180, y: 60)
+                .scaleEffect(blobAnimating ? 0.86 : 1.12)
+            // Section 2 — carousel
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.14), .clear], center: .center, startRadius: 0, endRadius: 160))
-                .frame(width: 320, height: 260).blur(radius: 36)
-                .offset(x: -100, y: 600)
+                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.22), .clear], center: .center, startRadius: 0, endRadius: 220))
+                .frame(width: 440, height: 340).blur(radius: 44)
+                .offset(x: -140, y: 550)
+                .scaleEffect(blobAnimating ? 1.08 : 0.92)
+            Ellipse()
+                .fill(RadialGradient(colors: [DesignSystem.Color.purple.opacity(0.18), .clear], center: .center, startRadius: 0, endRadius: 200))
+                .frame(width: 400, height: 360).blur(radius: 52)
+                .offset(x: 200, y: 800)
+                .scaleEffect(blobAnimating ? 0.90 : 1.10)
+            // Section 3 — quiz / discover
+            Ellipse()
+                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.20), .clear], center: .center, startRadius: 0, endRadius: 220))
+                .frame(width: 440, height: 340).blur(radius: 48)
+                .offset(x: -80, y: 1200)
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.purple.opacity(0.12), .clear], center: .center, startRadius: 0, endRadius: 160))
-                .frame(width: 320, height: 280).blur(radius: 44)
-                .offset(x: 160, y: 900)
-                .scaleEffect(blobAnimating ? 0.92 : 1.08)
-            // Section 3 — lower-mid
+                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.22), .clear], center: .center, startRadius: 0, endRadius: 200))
+                .frame(width: 400, height: 320).blur(radius: 44)
+                .offset(x: 180, y: 1500)
+                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+            // Section 4 — records / orgs
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.12), .clear], center: .center, startRadius: 0, endRadius: 180))
-                .frame(width: 360, height: 280).blur(radius: 40)
-                .offset(x: -60, y: 1300)
-                .scaleEffect(blobAnimating ? 1.04 : 0.96)
+                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.18), .clear], center: .center, startRadius: 0, endRadius: 240))
+                .frame(width: 480, height: 360).blur(radius: 52)
+                .offset(x: -120, y: 1900)
+                .scaleEffect(blobAnimating ? 1.07 : 0.93)
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.14), .clear], center: .center, startRadius: 0, endRadius: 160))
-                .frame(width: 320, height: 260).blur(radius: 36)
-                .offset(x: 140, y: 1650)
-                .scaleEffect(blobAnimating ? 0.90 : 1.08)
-            // Section 4 — bottom
+                .fill(RadialGradient(colors: [DesignSystem.Color.purple.opacity(0.16), .clear], center: .center, startRadius: 0, endRadius: 220))
+                .frame(width: 440, height: 340).blur(radius: 48)
+                .offset(x: 160, y: 2250)
+                .scaleEffect(blobAnimating ? 0.91 : 1.09)
+            // Section 5 — stats / coming soon
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.10), .clear], center: .center, startRadius: 0, endRadius: 200))
-                .frame(width: 400, height: 300).blur(radius: 50)
-                .offset(x: -80, y: 2000)
+                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.16), .clear], center: .center, startRadius: 0, endRadius: 240))
+                .frame(width: 480, height: 360).blur(radius: 52)
+                .offset(x: -100, y: 2700)
                 .scaleEffect(blobAnimating ? 1.05 : 0.95)
             Ellipse()
-                .fill(RadialGradient(colors: [DesignSystem.Color.accent.opacity(0.10), .clear], center: .center, startRadius: 0, endRadius: 180))
-                .frame(width: 360, height: 280).blur(radius: 44)
-                .offset(x: 120, y: 2350)
-                .scaleEffect(blobAnimating ? 0.93 : 1.07)
+                .fill(RadialGradient(colors: [DesignSystem.Color.indigo.opacity(0.18), .clear], center: .center, startRadius: 0, endRadius: 220))
+                .frame(width: 440, height: 340).blur(radius: 44)
+                .offset(x: 140, y: 3100)
+                .scaleEffect(blobAnimating ? 0.92 : 1.08)
+            Ellipse()
+                .fill(RadialGradient(colors: [DesignSystem.Color.blue.opacity(0.14), .clear], center: .center, startRadius: 0, endRadius: 260))
+                .frame(width: 520, height: 380).blur(radius: 56)
+                .offset(x: -80, y: 3500)
+                .scaleEffect(blobAnimating ? 1.06 : 0.94)
+            // swiftlint:enable line_length
         }
-        // swiftlint:enable line_length
         .allowsHitTesting(false)
     }
 }
@@ -193,11 +209,6 @@ private extension HomeScreen {
                         .padding(.top, DesignSystem.Spacing.xl)
                         .feedSection(appeared: appeared, delay: 0.10)
 
-                    quizSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .feedSection(appeared: appeared, delay: 0.15)
-
                     if let country = spotlightCountry {
                         spotlightSection(country)
                             .padding(.top, DesignSystem.Spacing.xl)
@@ -205,9 +216,18 @@ private extension HomeScreen {
                             .feedSection(appeared: appeared, delay: 0.20)
                     }
 
+                    streakSection
+                        .padding(.top, DesignSystem.Spacing.xl)
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                        .feedSection(appeared: appeared, delay: 0.22)
+
+                    worldRecordsSection
+                        .padding(.top, DesignSystem.Spacing.xl)
+                        .feedSection(appeared: appeared, delay: 0.24)
+
                     orgsSection
                         .padding(.top, DesignSystem.Spacing.xl)
-                        .feedSection(appeared: appeared, delay: 0.25)
+                        .feedSection(appeared: appeared, delay: 0.27)
 
                     progressSection
                         .padding(.top, DesignSystem.Spacing.xl)
@@ -351,7 +371,7 @@ private extension HomeScreen {
     var carouselHeight: CGFloat { isLandscape ? 200 : 320 }
 
     var carouselSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             carouselHeader
                 .padding(.horizontal, DesignSystem.Spacing.md)
             mapCarousel
@@ -367,22 +387,62 @@ private extension HomeScreen {
             Text("\(selectedMapIndex + 1) / \(maps.count)")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
+                .padding(.trailing, DesignSystem.Spacing.xs)
+            NavigationLink(value: NavigationRoute.allMaps) {
+                Text("See All")
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
         }
     }
 
     var mapCarousel: some View {
-        TabView(selection: $selectedMapIndex) {
-            ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
-                MapCarouselCard(mapName: map.name, systemImage: map.icon, compact: isLandscape) {
-                    openMap(named: map.name)
+        GeometryReader { outerGeo in
+            let cardWidth = outerGeo.size.width * 0.78
+            let spacing: CGFloat = DesignSystem.Spacing.sm
+            let sidePadding = (outerGeo.size.width - cardWidth) / 2
+
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: spacing) {
+                        ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
+                            GeometryReader { cardGeo in
+                                let midX = cardGeo.frame(in: .global).midX
+                                let screenMidX = outerGeo.size.width / 2
+                                let distance = midX - screenMidX
+                                let maxDistance = outerGeo.size.width
+                                let normalized = distance / maxDistance
+                                let scale = 1.0 - abs(normalized) * 0.12
+                                let rotation = normalized * -5
+
+                                MapCarouselCard(
+                                    mapName: map.name,
+                                    systemImage: map.icon,
+                                    compact: isLandscape
+                                ) {
+                                    openMap(named: map.name)
+                                }
+                                .scaleEffect(scale)
+                                .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))
+                                .opacity(1.0 - abs(normalized) * 0.3)
+                                .animation(.interactiveSpring(response: 0.35, dampingFraction: 0.8), value: normalized)
+                            }
+                            .frame(width: cardWidth, height: carouselHeight)
+                            .id(index)
+                        }
+                    }
+                    .scrollTargetLayout()
+                    .padding(.horizontal, sidePadding)
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, 20)
-                .tag(index)
+                .scrollTargetBehavior(.viewAligned)
+                .scrollPosition(id: .init(
+                    get: { selectedMapIndex },
+                    set: { if let newValue = $0 { selectedMapIndex = newValue } }
+                ))
             }
         }
-        .tabViewStyle(.page(indexDisplayMode: .never))
-        .frame(height: carouselHeight + 20)
+        .frame(height: carouselHeight + DesignSystem.Spacing.lg)
     }
 
     var pageIndicator: some View {
@@ -397,18 +457,7 @@ private extension HomeScreen {
             }
             Spacer()
         }
-    }
-}
-
-// MARK: - Quiz Section
-
-private extension HomeScreen {
-    var quizSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionLabel("Daily Quiz")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeQuizCard { showQuiz = true }
-        }
+        .padding(.top, DesignSystem.Spacing.xs)
     }
 }
 
@@ -430,6 +479,28 @@ private extension HomeScreen {
         guard !countryDataService.countries.isEmpty else { return nil }
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
         return countryDataService.countries[(dayOfYear - 1) % countryDataService.countries.count]
+    }
+}
+
+// MARK: - Streak Section
+
+private extension HomeScreen {
+    var streakSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionLabel("Daily Streak")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeStreakCard(streak: streakService.currentStreak) {
+                showQuiz = true
+            }
+        }
+    }
+}
+
+// MARK: - World Records Section
+
+private extension HomeScreen {
+    var worldRecordsSection: some View {
+        HomeWorldRecordsCard()
     }
 }
 

@@ -22,15 +22,15 @@ struct CountryListScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @State private var countryDataService = CountryDataService()
     @State private var searchText = ""
-    @State private var groupBy: GroupOption = .none
+    @State private var groupBy: GroupOption = .firstLetter
     @State private var sortBy: SortOption = .name
     @State private var sortAscending = true
     @State private var continentFilter: Country.Continent?
     @State private var expandedSections: Set<String> = []
     @State private var showFlag = true
     @State private var showCapital = true
-    @State private var showArea = true
-    @State private var showPopulation = true
+    @State private var showArea = false
+    @State private var showPopulation = false
 
     var body: some View {
         ScrollView {
@@ -45,15 +45,24 @@ struct CountryListScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
-            .padding(.top, DesignSystem.Spacing.sm)
+            .padding(.top, DesignSystem.Spacing.xs)
         }
         .background(DesignSystem.Color.background)
         .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Countries")
         .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
         .toolbar { toolbarContent }
-        .task { countryDataService.loadCountries() }
-        .onChange(of: groupBy) { expandedSections = Set(sectionKeys) }
+        .task {
+            countryDataService.loadCountries()
+        }
+        .onChange(of: groupBy) {
+            expandedSections = Set(sectionKeys)
+        }
+        .onChange(of: countryDataService.countries.count) {
+            if expandedSections.isEmpty {
+                expandedSections = Set(sectionKeys)
+            }
+        }
     }
 }
 
@@ -91,14 +100,16 @@ private extension CountryListScreen {
             Divider()
             resetButton
         } label: {
-            let filterIcon = hasActiveFilters ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease"
-            Image(systemName: filterIcon)
+            let icon = hasActiveFilters
+                ? "line.3.horizontal.decrease.circle.fill"
+                : "line.3.horizontal.decrease"
+            Image(systemName: icon)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
     }
 
     var hasActiveFilters: Bool {
-        groupBy != .none || sortBy != .name || !sortAscending || continentFilter != nil
+        groupBy != .firstLetter || sortBy != .name || !sortAscending || continentFilter != nil
     }
 
     var displaySubmenu: some View {
@@ -113,19 +124,18 @@ private extension CountryListScreen {
     var resetButton: some View {
         Button(role: .destructive) {
             withAnimation {
-                groupBy = .none
+                groupBy = .firstLetter
                 sortBy = .name
                 sortAscending = true
                 continentFilter = nil
                 searchText = ""
                 showFlag = true
                 showCapital = true
-                showArea = true
-                showPopulation = true
+                showArea = false
+                showPopulation = false
             }
         } label: {
             Label("Reset All", systemImage: "arrow.counterclockwise")
-                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 
@@ -162,7 +172,7 @@ private extension CountryListScreen {
     }
 
     var continentFilterSubmenu: some View {
-        Menu("Filter") {
+        Menu("Filter by Continent") {
             Button {
                 continentFilter = nil
             } label: {
@@ -208,14 +218,14 @@ private extension CountryListScreen {
                     }
                 }
             } header: {
-                sectionHeaderView(key: section.key, count: section.countries.count)
+                sectionHeader(key: section.key, count: section.countries.count)
             }
         }
     }
 
-    func sectionHeaderView(key: String, count: Int) -> some View {
+    func sectionHeader(key: String, count: Int) -> some View {
         Button {
-            withAnimation(.easeInOut(duration: 0.25)) {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 if expandedSections.contains(key) {
                     expandedSections.remove(key)
                 } else {
@@ -223,29 +233,55 @@ private extension CountryListScreen {
                 }
             }
         } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Text(key)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                Spacer()
-
-                Text("\(count)")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .padding(.horizontal, DesignSystem.Spacing.xs)
-                    .padding(.vertical, DesignSystem.Spacing.xxs)
-                    .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
-
-                Image(systemName: expandedSections.contains(key) ? "chevron.up" : "chevron.down")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(DesignSystem.Color.background)
+            sectionHeaderLabel(key: key, count: count)
         }
         .buttonStyle(.plain)
+    }
+
+    func sectionHeaderLabel(key: String, count: Int) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.12))
+                Circle()
+                    .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
+                Text(String(key.prefix(1)).uppercased())
+                    .font(.system(size: groupBy == .firstLetter ? 16 : 13, weight: .bold, design: .rounded))
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+            .frame(width: groupBy == .firstLetter ? 36 : 30, height: groupBy == .firstLetter ? 36 : 30)
+
+            if groupBy != .firstLetter {
+                Text(key)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(1)
+            }
+
+            Rectangle()
+                .fill(Color.white.opacity(0.07))
+                .frame(height: 1)
+
+            HStack(spacing: 4) {
+                Text("\(count)")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .monospacedDigit()
+                Image(
+                    systemName: expandedSections.contains(key) ? "chevron.up" : "chevron.down"
+                )
+                .font(.system(size: 9, weight: .bold))
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
+        }
+        .padding(.horizontal, 2)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .frame(maxWidth: .infinity)
+        .background(DesignSystem.Color.background)
     }
 }
 
@@ -253,57 +289,128 @@ private extension CountryListScreen {
 
 private extension CountryListScreen {
     func countryCard(for country: Country) -> some View {
-        NavigationLink(value: country) {
-            GeoCard {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    if showFlag {
-                        FlagView(countryCode: country.code, height: DesignSystem.Size.md)
-                    }
-
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(country.name)
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .lineLimit(1)
-
-                        if showCapital {
-                            HStack(spacing: 4) {
-                                Image(systemName: "star.fill")
-                                    .font(DesignSystem.Font.caption2)
-                                    .foregroundStyle(DesignSystem.Color.accent)
-                                Text(country.allCapitals.map(\.name).joined(separator: " · "))
-                                    .font(DesignSystem.Font.caption)
-                                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                                    .lineLimit(1)
-                            }
-                        }
-
-                        if showArea || showPopulation {
-                            statsRow(for: country)
-                        }
-                    }
-
-                    Spacer(minLength: 0)
-
-                    if favoritesService.isFavorite(code: country.code) {
-                        Image(systemName: "heart.fill")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.error)
-                    }
-                }
-                .padding(DesignSystem.Spacing.sm)
-            }
+        let isFavorite = favoritesService.isFavorite(code: country.code)
+        return NavigationLink(value: country) {
+            cardContent(for: country)
         }
         .buttonStyle(GeoPressButtonStyle())
         .simultaneousGesture(TapGesture().onEnded {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         })
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                    favoritesService.toggle(code: country.code)
+                }
+            } label: {
+                Label(
+                    isFavorite ? "Unfavorite" : "Favorite",
+                    systemImage: isFavorite ? "heart.slash.fill" : "heart.fill"
+                )
+            }
+            .tint(isFavorite ? DesignSystem.Color.textSecondary : DesignSystem.Color.error)
+        }
+    }
+
+    func cardContent(for country: Country) -> some View {
+        HStack(spacing: 0) {
+            accentStripe(for: country)
+
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                if showFlag {
+                    FlagView(countryCode: country.code, height: 36)
+                        .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(country.name)
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                        .lineLimit(1)
+
+                    if showCapital {
+                        capitalLabel(for: country)
+                    }
+
+                    if showArea || showPopulation {
+                        statsRow(for: country)
+                    }
+                }
+
+                Spacer(minLength: 0)
+
+                trailingContent(for: country)
+            }
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .padding(.trailing, DesignSystem.Spacing.sm)
+            .padding(.leading, DesignSystem.Spacing.xs)
+        }
+        .background(DesignSystem.Color.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .strokeBorder(Color.white.opacity(0.06), lineWidth: 1)
+        )
+    }
+
+    func accentStripe(for country: Country) -> some View {
+        let codeValue = country.code.unicodeScalars.reduce(0) { $0 + Int($1.value) }
+        let color = DesignSystem.Color.mapColors[codeValue % DesignSystem.Color.mapColors.count]
+        return color
+            .frame(width: 3)
+            .clipShape(
+                UnevenRoundedRectangle(
+                    topLeadingRadius: DesignSystem.CornerRadius.medium,
+                    bottomLeadingRadius: DesignSystem.CornerRadius.medium,
+                    bottomTrailingRadius: 0,
+                    topTrailingRadius: 0
+                )
+            )
+    }
+
+    func capitalLabel(for country: Country) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: "mappin.fill")
+                .font(.system(size: 8, weight: .bold))
+                .foregroundStyle(DesignSystem.Color.accent)
+            Text(country.allCapitals.map(\.name).joined(separator: " · "))
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
+        }
+    }
+
+    func trailingContent(for country: Country) -> some View {
+        VStack(alignment: .trailing, spacing: 5) {
+            continentBadge(for: country)
+
+            HStack(spacing: 5) {
+                if favoritesService.isFavorite(code: country.code) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 10))
+                        .foregroundStyle(DesignSystem.Color.error)
+                }
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.5))
+            }
+        }
+    }
+
+    func continentBadge(for country: Country) -> some View {
+        Text(country.continent.displayName)
+            .font(.system(size: 9, weight: .semibold))
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
     }
 
     func statsRow(for country: Country) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             if showArea {
-                HStack(spacing: 4) {
+                HStack(spacing: 3) {
                     Image(systemName: "map")
                         .font(DesignSystem.Font.caption2)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -320,7 +427,7 @@ private extension CountryListScreen {
             }
 
             if showPopulation {
-                HStack(spacing: 4) {
+                HStack(spacing: 3) {
                     Image(systemName: "person.2")
                         .font(DesignSystem.Font.caption2)
                         .foregroundStyle(DesignSystem.Color.textTertiary)

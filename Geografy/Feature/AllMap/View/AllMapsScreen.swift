@@ -32,10 +32,10 @@ struct AllMapsScreen: View {
             }
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 5).repeatForever(autoreverses: true)) {
+            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }
-            withAnimation(.easeOut(duration: 0.6)) {
+            withAnimation(.easeOut(duration: 0.7)) {
                 appeared = true
             }
         }
@@ -51,39 +51,51 @@ private extension AllMapsScreen {
 
             Ellipse()
                 .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.18), .clear],
+                    colors: [DesignSystem.Color.accent.opacity(0.26), .clear],
                     center: .center,
                     startRadius: 0,
-                    endRadius: 200
+                    endRadius: 220
                 ))
-                .frame(width: 360, height: 280)
-                .blur(radius: 30)
-                .offset(x: -60, y: -180)
-                .scaleEffect(blobAnimating ? 1.08 : 0.94)
+                .frame(width: 440, height: 320)
+                .blur(radius: 32)
+                .offset(x: -80, y: -200)
+                .scaleEffect(blobAnimating ? 1.10 : 0.90)
 
             Ellipse()
                 .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.13), .clear],
+                    colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 180
+                ))
+                .frame(width: 360, height: 300)
+                .blur(radius: 40)
+                .offset(x: 140, y: 100)
+                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [DesignSystem.Color.blue.opacity(0.12), .clear],
                     center: .center,
                     startRadius: 0,
                     endRadius: 160
                 ))
-                .frame(width: 300, height: 260)
-                .blur(radius: 40)
-                .offset(x: 120, y: 260)
-                .scaleEffect(blobAnimating ? 0.92 : 1.06)
+                .frame(width: 320, height: 260)
+                .blur(radius: 36)
+                .offset(x: -100, y: 400)
+                .scaleEffect(blobAnimating ? 1.06 : 0.94)
 
             Ellipse()
                 .fill(RadialGradient(
-                    colors: [DesignSystem.Color.blue.opacity(0.08), .clear],
+                    colors: [DesignSystem.Color.purple.opacity(0.10), .clear],
                     center: .center,
                     startRadius: 0,
-                    endRadius: 120
+                    endRadius: 160
                 ))
-                .frame(width: 220, height: 180)
-                .blur(radius: 30)
-                .offset(x: 90, y: -40)
-                .scaleEffect(blobAnimating ? 1.05 : 0.95)
+                .frame(width: 300, height: 280)
+                .blur(radius: 44)
+                .offset(x: 160, y: 650)
+                .scaleEffect(blobAnimating ? 0.92 : 1.08)
         }
         .ignoresSafeArea()
     }
@@ -99,22 +111,35 @@ private extension AllMapsScreen {
     }
 
     var scrollContent: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.md) {
-                ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
-                    mapCard(name: map.name, icon: map.icon)
-                        .opacity(appeared ? 1 : 0)
-                        .scaleEffect(appeared ? 1 : 0.9)
-                        .animation(
-                            .spring(response: 0.5, dampingFraction: 0.75)
-                                .delay(Double(index) * 0.06),
-                            value: appeared
-                        )
-                }
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                headerSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .feedSection(appeared: appeared, delay: 0.0)
+
+                mapGrid
             }
-            .padding(DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
         }
+    }
+
+    var headerSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            sectionLabel("Explore Maps")
+            Text("Choose a region to dive into")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+    }
+
+    var mapGrid: some View {
+        LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.md) {
+            ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
+                mapCard(name: map.name, icon: map.icon)
+                    .feedSection(appeared: appeared, delay: Double(index) * 0.06 + 0.08)
+            }
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     func mapCard(name: String, icon: String) -> some View {
@@ -171,6 +196,18 @@ private extension AllMapsScreen {
         mapTarget = MapTarget(continentFilter: name == "World" ? nil : name)
     }
 
+    func sectionLabel(_ title: String) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            RoundedRectangle(cornerRadius: 2)
+                .fill(DesignSystem.Color.accent)
+                .frame(width: 3, height: 18)
+            Text(title)
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
+    }
+
     func gradientColors(for name: String) -> (Color, Color) {
         switch name {
         case "World":
@@ -190,5 +227,16 @@ private extension AllMapsScreen {
         default:
             (Color(hex: "1A237E"), Color(hex: "3949AB"))
         }
+    }
+}
+
+// MARK: - Feed Section Modifier
+
+private extension View {
+    func feedSection(appeared: Bool, delay: Double) -> some View {
+        self
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 20)
+            .animation(.easeOut(duration: 0.5).delay(delay), value: appeared)
     }
 }
