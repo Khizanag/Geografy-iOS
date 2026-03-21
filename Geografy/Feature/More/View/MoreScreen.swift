@@ -198,6 +198,10 @@ private extension MoreScreen {
         }
     }
 
+    var sheetsWithOwnCloseButton: Set<MoreSheet> {
+        [.profile, .dailyChallenge, .customQuiz, .multiplayer, .exploreGame, .timeline]
+    }
+
     var allSheets: [MoreSheet] {
         [
             .profile, .countries, .favorites,
@@ -314,7 +318,7 @@ private extension MoreScreen {
                 }
             }
             .toolbar {
-                if sheet != .profile {
+                if !sheetsWithOwnCloseButton.contains(sheet) {
                     ToolbarItem(placement: .topBarTrailing) {
                         GeoCircleCloseButton { activeSheet = nil }
                     }
