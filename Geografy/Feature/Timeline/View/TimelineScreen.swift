@@ -8,6 +8,7 @@ struct TimelineScreen: View {
     @State private var filter = TimelineFilter()
     @State private var selectedEvent: HistoricalEvent?
     @State private var showTodaySection = true
+    @State private var showHistoricalMap = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -21,6 +22,10 @@ struct TimelineScreen: View {
         .onAppear {
             countryDataService.loadCountries()
             timelineService.loadEvents()
+        }
+        .toolbar { historicalMapToolbarItem }
+        .fullScreenCover(isPresented: $showHistoricalMap) {
+            HistoricalMapScreen(initialYear: selectedYear)
         }
         .sheet(item: $selectedEvent) { event in
             eventDetailSheet(for: event)
@@ -307,6 +312,19 @@ private extension TimelineScreen {
                     Spacer(minLength: 0)
                 }
                 .padding(DesignSystem.Spacing.md)
+            }
+        }
+    }
+}
+
+// MARK: - Toolbar
+
+private extension TimelineScreen {
+    @ToolbarContentBuilder
+    var historicalMapToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button { showHistoricalMap = true } label: {
+                Label("Historical Map", systemImage: "map.fill")
             }
         }
     }
