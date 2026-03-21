@@ -46,6 +46,7 @@ private extension CompareScreen {
         }
 
         CompareCountryPicker(
+            countries: countryDataService.countries,
             excludedCountry: excluded
         ) { selected in
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {

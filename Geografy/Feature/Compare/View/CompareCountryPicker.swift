@@ -2,11 +2,11 @@ import SwiftUI
 
 struct CompareCountryPicker: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(CountryDataService.self) private var countryDataService
     @Environment(FavoritesService.self) private var favoritesService
 
     @State private var searchText = ""
 
+    let countries: [Country]
     let excludedCountry: Country?
     let onSelect: (Country) -> Void
 
@@ -71,17 +71,17 @@ private extension CompareCountryPicker {
 
 private extension CompareCountryPicker {
     var filteredCountries: [Country] {
-        var countries = countryDataService.countries
+        var result = countries
             .filter { $0.code != excludedCountry?.code }
 
         if !searchText.isEmpty {
             let query = searchText.lowercased()
-            countries = countries.filter {
+            result = result.filter {
                 $0.name.lowercased().contains(query) ||
                 $0.capital.lowercased().contains(query)
             }
         }
 
-        return countries.sorted { $0.name < $1.name }
+        return result.sorted { $0.name < $1.name }
     }
 }

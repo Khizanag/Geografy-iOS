@@ -6,6 +6,8 @@ struct TimelineSlider: View {
     let decades: [Int]
     let eventCountForDecade: (Int) -> Int
 
+    @State private var showYearPicker = false
+
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             yearLabel
@@ -14,6 +16,7 @@ struct TimelineSlider: View {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
+        .sheet(isPresented: $showYearPicker) { yearPickerSheet }
     }
 }
 
@@ -21,11 +24,39 @@ struct TimelineSlider: View {
 
 private extension TimelineSlider {
     var yearLabel: some View {
-        Text(String(selectedYear))
-            .font(DesignSystem.Font.title)
-            .foregroundStyle(DesignSystem.Color.accent)
-            .contentTransition(.numericText())
-            .animation(.snappy, value: selectedYear)
+        Button { showYearPicker = true } label: {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Text(String(selectedYear))
+                    .font(DesignSystem.Font.title)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .contentTransition(.numericText())
+                Image(systemName: "chevron.up.chevron.down")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+        }
+        .buttonStyle(.plain)
+        .animation(.snappy, value: selectedYear)
+    }
+
+    var yearPickerSheet: some View {
+        NavigationStack {
+            Picker("Year", selection: $selectedYear) {
+                ForEach(range.reversed(), id: \.self) { year in
+                    Text(String(year)).tag(year)
+                }
+            }
+            .pickerStyle(.wheel)
+            .navigationTitle("Select Year")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") { showYearPicker = false }
+                        .fontWeight(.semibold)
+                }
+            }
+        }
+        .presentationDetents([.medium])
     }
 
     var sliderControl: some View {
