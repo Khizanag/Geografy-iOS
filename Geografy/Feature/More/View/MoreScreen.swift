@@ -29,13 +29,14 @@ struct MoreScreen: View {
 
 private extension MoreScreen {
     enum MoreSheet: Identifiable {
-        case profile, orgs, favorites, travel, achievements, leaderboards, themes, settings
+        case profile, countries, orgs, favorites, travel, achievements, leaderboards, themes, settings
 
         var id: Self { self }
 
         var label: String {
             switch self {
             case .profile: "Profile"
+            case .countries: "Countries"
             case .orgs: "Organizations"
             case .favorites: "Favorites"
             case .travel: "Travel Tracker"
@@ -49,6 +50,7 @@ private extension MoreScreen {
         var icon: String {
             switch self {
             case .profile: "person.fill"
+            case .countries: "list.bullet"
             case .orgs: "building.2.fill"
             case .favorites: "heart.fill"
             case .travel: "airplane.departure"
@@ -62,6 +64,7 @@ private extension MoreScreen {
         var subtitle: String {
             switch self {
             case .profile: "View your stats and level"
+            case .countries: "Browse all 197 countries"
             case .orgs: "International organizations"
             case .favorites: "Your saved countries"
             case .travel: "Track your adventures"
@@ -75,7 +78,8 @@ private extension MoreScreen {
         var color: Color {
             switch self {
             case .profile: DesignSystem.Color.accent
-            case .orgs: DesignSystem.Color.blue
+            case .countries: DesignSystem.Color.blue
+            case .orgs: DesignSystem.Color.indigo
             case .favorites: DesignSystem.Color.error
             case .travel: Color(hex: "00C9A7")
             case .achievements: DesignSystem.Color.warning
@@ -155,7 +159,7 @@ private extension MoreScreen {
     }
 
     var allSheets: [MoreSheet] {
-        [.profile, .orgs, .favorites, .travel, .achievements, .leaderboards, .themes, .settings]
+        [.profile, .countries, .orgs, .favorites, .travel, .achievements, .leaderboards, .themes, .settings]
     }
 
     func rowButton(for sheet: MoreSheet) -> some View {
@@ -211,6 +215,11 @@ private extension MoreScreen {
                 switch sheet {
                 case .profile:
                     ProfileScreen()
+                case .countries:
+                    CountryListScreen()
+                        .navigationDestination(for: Country.self) { country in
+                            CountryDetailScreen(country: country)
+                        }
                 case .orgs:
                     OrganizationsScreen()
                 case .favorites:

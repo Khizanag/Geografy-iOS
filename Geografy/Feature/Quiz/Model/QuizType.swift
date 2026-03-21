@@ -1,6 +1,6 @@
 import Foundation
 
-enum QuizType: String, CaseIterable, Identifiable {
+enum QuizType: String, CaseIterable, Identifiable, Codable {
     case flagQuiz
     case capitalQuiz
     case reverseFlag

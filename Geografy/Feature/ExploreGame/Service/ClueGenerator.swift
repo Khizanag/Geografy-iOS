@@ -62,13 +62,14 @@ private extension ClueGenerator {
     static func bordersClue(for country: Country) -> ExploreClue {
         let borderNames = borderCountryNames(for: country.code)
 
-        let detail: String = if borderNames.isEmpty {
-            "This is an island nation with no land borders."
+        let detail: String
+        if borderNames.isEmpty {
+            detail = "This is an island nation with no land borders."
         } else if borderNames.count <= 3 {
-            "It borders: \(borderNames.joined(separator: ", "))."
+            detail = "It borders: \(borderNames.joined(separator: ", "))."
         } else {
-            let shown = borderNames.prefix(3)
-            "It borders \(borderNames.count) countries, including \(shown.joined(separator: ", "))."
+            let shown = borderNames.prefix(3).joined(separator: ", ")
+            detail = "It borders \(borderNames.count) countries, including \(shown)."
         }
 
         return ExploreClue(

@@ -284,6 +284,6 @@ private extension ExploreGameScreen {
 
 // MARK: - ExploreGameState + Identifiable
 
-extension ExploreGameState: @retroactive Identifiable {
+extension ExploreGameState: Identifiable {
     var id: String { targetCountry.id }
 }

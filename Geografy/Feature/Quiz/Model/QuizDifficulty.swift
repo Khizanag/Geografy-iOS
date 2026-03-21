@@ -1,6 +1,6 @@
 import Foundation
 
-enum QuizDifficulty: String, CaseIterable, Identifiable {
+enum QuizDifficulty: String, CaseIterable, Identifiable, Codable {
     case easy
     case medium
     case hard

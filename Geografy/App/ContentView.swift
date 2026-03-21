@@ -90,16 +90,7 @@ private extension ContentView {
                 }
             }
 
-            Tab("Countries", systemImage: "list.bullet", value: 4) {
-                NavigationStack {
-                    CountryListScreen()
-                        .navigationDestination(for: Country.self) { country in
-                            CountryDetailScreen(country: country)
-                        }
-                }
-            }
-
-            Tab("More", systemImage: "ellipsis", value: 5) {
+            Tab("More", systemImage: "ellipsis", value: 4) {
                 MoreScreen()
             }
         }

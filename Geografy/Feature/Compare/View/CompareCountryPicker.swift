@@ -1,0 +1,87 @@
+import SwiftUI
+
+struct CompareCountryPicker: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(CountryDataService.self) private var countryDataService
+    @Environment(FavoritesService.self) private var favoritesService
+
+    @State private var searchText = ""
+
+    let excludedCountry: Country?
+    let onSelect: (Country) -> Void
+
+    var body: some View {
+        NavigationStack {
+            countryList
+                .background(DesignSystem.Color.background)
+                .navigationTitle("Select Country")
+                .navigationBarTitleDisplayMode(.inline)
+                .searchable(text: $searchText, prompt: "Search countries")
+                .toolbar { closeToolbarItem }
+        }
+    }
+}
+
+// MARK: - Toolbar
+
+private extension CompareCountryPicker {
+    @ToolbarContentBuilder
+    var closeToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            GeoCircleCloseButton()
+        }
+    }
+}
+
+// MARK: - Subviews
+
+private extension CompareCountryPicker {
+    var countryList: some View {
+        ScrollView {
+            LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(filteredCountries) { country in
+                    countryButton(country)
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.top, DesignSystem.Spacing.xs)
+        }
+        .scrollDismissesKeyboard(.interactively)
+    }
+
+    func countryButton(_ country: Country) -> some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            onSelect(country)
+            dismiss()
+        } label: {
+            CountryRowView(
+                country: country,
+                isFavorite: favoritesService.isFavorite(code: country.code),
+                showStats: false,
+                showContinent: true
+            )
+        }
+        .buttonStyle(GeoPressButtonStyle())
+    }
+}
+
+// MARK: - Helpers
+
+private extension CompareCountryPicker {
+    var filteredCountries: [Country] {
+        var countries = countryDataService.countries
+            .filter { $0.code != excludedCountry?.code }
+
+        if !searchText.isEmpty {
+            let query = searchText.lowercased()
+            countries = countries.filter {
+                $0.name.lowercased().contains(query) ||
+                $0.capital.lowercased().contains(query)
+            }
+        }
+
+        return countries.sorted { $0.name < $1.name }
+    }
+}

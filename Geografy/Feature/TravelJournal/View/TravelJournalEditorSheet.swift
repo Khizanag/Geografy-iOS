@@ -349,9 +349,9 @@ private extension TravelJournalEditorSheet {
     var photosGrid: some View {
         TravelJournalPhotoGrid(
             images: loadedImages.map(\.image),
-            onDelete: { index in
+            onDelete: { deleteIndex in
                 withAnimation {
-                    loadedImages.remove(at: index)
+                    _ = loadedImages.remove(at: deleteIndex)
                 }
             }
         )
