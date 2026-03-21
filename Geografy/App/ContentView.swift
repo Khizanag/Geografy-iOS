@@ -74,7 +74,11 @@ private extension ContentView {
                 QuizSetupScreen()
             }
 
-            Tab("All Maps", systemImage: "map.fill", value: 2) {
+            Tab("Flashcards", systemImage: "rectangle.on.rectangle.angled", value: 2) {
+                FlashcardScreen()
+            }
+
+            Tab("All Maps", systemImage: "map.fill", value: 3) {
                 NavigationStack {
                     AllMapsScreen()
                         .navigationDestination(for: NavigationRoute.self) { route in
@@ -86,7 +90,7 @@ private extension ContentView {
                 }
             }
 
-            Tab("Countries", systemImage: "list.bullet", value: 3) {
+            Tab("Countries", systemImage: "list.bullet", value: 4) {
                 NavigationStack {
                     CountryListScreen()
                         .navigationDestination(for: Country.self) { country in
@@ -95,7 +99,7 @@ private extension ContentView {
                 }
             }
 
-            Tab("More", systemImage: "ellipsis", value: 4) {
+            Tab("More", systemImage: "ellipsis", value: 5) {
                 MoreScreen()
             }
         }
