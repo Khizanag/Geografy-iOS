@@ -8,6 +8,7 @@ struct MapCanvasView: View {
     let showLabels: Bool
     let canvasSize: CGSize
     var capitalPoint: CGPoint?
+    var travelStatuses: [String: TravelStatus] = [:]
 
     var body: some View {
         Canvas { context, size in
@@ -61,6 +62,10 @@ private extension MapCanvasView {
             let fillColor = isSelected ? shape.color.opacity(1) : shape.color.opacity(0.85)
             context.fill(path, with: .color(fillColor))
 
+            if let travelStatus = travelStatuses[shape.id] {
+                context.fill(path, with: .color(travelStatus.color.opacity(0.35)))
+            }
+
             if isSelected {
                 context.stroke(path, with: .color(.white), lineWidth: 2)
             }
@@ -80,7 +85,17 @@ private extension MapCanvasView {
             guard transformedBounds.width > minLabelWidth,
                   transformedBounds.intersects(visibleRect) else { continue }
 
-            let point = shape.centroid.applying(transform)
+            // Clamp the centroid within the country's transformed bounding box so labels
+            // never appear outside narrow or geographically non-convex countries (e.g. UAE, Chile).
+            let rawPoint = shape.centroid.applying(transform)
+            let insetBounds = transformedBounds.insetBy(dx: 2, dy: 2)
+            let point = CGPoint(
+                x: max(insetBounds.minX, min(rawPoint.x, insetBounds.maxX)),
+                y: max(insetBounds.minY, min(rawPoint.y, insetBounds.maxY))
+            )
+
+            guard visibleRect.contains(point) else { continue }
+
             let fontSize = min(max(transformedBounds.width / CGFloat(shape.name.count), 6), 14)
 
             var shadowContext = context

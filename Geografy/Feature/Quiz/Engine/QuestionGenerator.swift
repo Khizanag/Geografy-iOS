@@ -181,7 +181,9 @@ private extension QuestionGenerator {
 
 private extension QuestionGenerator {
     static func selectDistractors(for country: Country, from allCountries: [Country], count: Int) -> [Country] {
-        let sameContinentCountries = allCountries.filter { $0.code != country.code && $0.continent == country.continent }
+        let sameContinentCountries = allCountries.filter {
+            $0.code != country.code && $0.continent == country.continent
+        }
         let otherCountries = allCountries.filter { $0.code != country.code && $0.continent != country.continent }
 
         var distractors: [Country] = []

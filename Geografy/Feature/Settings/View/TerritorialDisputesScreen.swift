@@ -1,45 +1,19 @@
 import SwiftUI
 
 struct TerritorialDisputesScreen: View {
-    @AppStorage("territory_somaliland") private var somaliland = "merge"
-    @AppStorage("territory_western_sahara") private var westernSahara = "merge"
-    @AppStorage("territory_northern_cyprus") private var northernCyprus = "merge"
-    @AppStorage("territory_kosovo") private var kosovo = "merge"
-    @AppStorage("territory_palestine") private var palestine = "merge"
+    @State private var selections: [String: String] = [:]
+    @State private var showingResetAlert = false
 
     var body: some View {
         ScrollView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                territoryRow(
-                    flag: "🇸🇴",
-                    name: "Somaliland",
-                    parent: "Somalia",
-                    selection: $somaliland,
-                )
-                territoryRow(
-                    flag: "🇪🇭",
-                    name: "Western Sahara",
-                    parent: "Morocco",
-                    selection: $westernSahara,
-                )
-                territoryRow(
-                    flag: "🇨🇾",
-                    name: "Northern Cyprus",
-                    parent: "Cyprus",
-                    selection: $northernCyprus,
-                )
-                territoryRow(
-                    flag: "🇽🇰",
-                    name: "Kosovo",
-                    parent: "Serbia",
-                    selection: $kosovo,
-                )
-                territoryRow(
-                    flag: "🇵🇸",
-                    name: "Palestine",
-                    parent: "Israel",
-                    selection: $palestine,
-                )
+            VStack(spacing: DesignSystem.Spacing.md) {
+                introCard
+
+                ForEach(TerritorialDispute.grouped(), id: \.region.rawValue) { group in
+                    regionSection(group.region, disputes: group.disputes)
+                }
+
+                resetButton
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
@@ -49,44 +23,146 @@ struct TerritorialDisputesScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .onAppear(perform: loadSelections)
+        .alert("Reset to Defaults", isPresented: $showingResetAlert) {
+            Button("Reset", role: .destructive, action: resetToDefaults)
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("All territorial dispute settings will be reset to their internationally recognized defaults.")
+        }
     }
 }
 
 // MARK: - Subviews
 
 private extension TerritorialDisputesScreen {
-    func territoryRow(
-        flag: String,
-        name: String,
-        parent: String,
-        selection: Binding<String>
-    ) -> some View {
+    var introCard: some View {
         GeoCard {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Text(flag)
-                    .font(.system(size: 32))
+            HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.system(size: 20))
+                    .foregroundStyle(DesignSystem.Color.warning)
+                    .padding(.top, 2)
 
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(name)
+                    Text("About This Setting")
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
 
-                    Text(parent)
+                    Text("Choose how disputed territories appear on the map. Defaults reflect international consensus.")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(DesignSystem.Spacing.md)
+        }
+    }
+
+    func regionSection(_ region: TerritorialDispute.Region, disputes: [TerritorialDispute]) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+            Text(region.rawValue.uppercased())
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .padding(.horizontal, DesignSystem.Spacing.xs)
+
+            GeoCard {
+                VStack(spacing: 0) {
+                    ForEach(Array(disputes.enumerated()), id: \.element.id) { index, dispute in
+                        disputeRow(dispute)
+
+                        if index < disputes.count - 1 {
+                            Divider()
+                                .background(DesignSystem.Color.cardBackgroundHighlighted)
+                                .padding(.leading, 56)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func disputeRow(_ dispute: TerritorialDispute) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                flagBadge(dispute.flag)
+
+                Text(dispute.name)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Spacer()
 
-                Picker("Status", selection: selection) {
-                    Text("Part of \(parent)")
-                        .tag("merge")
-                    Text("Separate")
-                        .tag("separate")
+                Picker("", selection: selectionBinding(for: dispute)) {
+                    ForEach(dispute.options, id: \.key) { option in
+                        Text(option.label).tag(option.key)
+                    }
                 }
-                .tint(DesignSystem.Color.textSecondary)
+                .pickerStyle(.menu)
+                .tint(DesignSystem.Color.accent)
             }
-            .padding(DesignSystem.Spacing.md)
+
+            Text(dispute.description)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.leading, 44)
+        }
+        .padding(DesignSystem.Spacing.md)
+    }
+
+    func flagBadge(_ flag: String) -> some View {
+        Text(flag)
+            .font(.system(size: 24))
+            .frame(width: 32, height: 32)
+    }
+
+    var resetButton: some View {
+        Button {
+            showingResetAlert = true
+        } label: {
+            Text("Reset to Defaults")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.error)
+                .frame(maxWidth: .infinity)
+                .padding(DesignSystem.Spacing.md)
+                .background(DesignSystem.Color.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        }
+    }
+}
+
+// MARK: - Actions
+
+private extension TerritorialDisputesScreen {
+    func selectionBinding(for dispute: TerritorialDispute) -> Binding<String> {
+        Binding(
+            get: { selections[dispute.id] ?? dispute.defaultOptionKey },
+            set: { newValue in
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                selections[dispute.id] = newValue
+                UserDefaults.standard.set(newValue, forKey: dispute.userDefaultsKey)
+            }
+        )
+    }
+
+    func loadSelections() {
+        for dispute in TerritorialDispute.all {
+            let stored = UserDefaults.standard.string(forKey: dispute.userDefaultsKey)
+            if let stored, dispute.options.contains(where: { $0.key == stored }) {
+                selections[dispute.id] = stored
+            } else {
+                selections[dispute.id] = dispute.defaultOptionKey
+            }
+        }
+    }
+
+    func resetToDefaults() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        for dispute in TerritorialDispute.all {
+            UserDefaults.standard.set(dispute.defaultOptionKey, forKey: dispute.userDefaultsKey)
+            selections[dispute.id] = dispute.defaultOptionKey
         }
     }
 }

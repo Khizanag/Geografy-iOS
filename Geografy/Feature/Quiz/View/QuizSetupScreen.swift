@@ -2,17 +2,15 @@ import SwiftUI
 
 struct QuizSetupScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(SubscriptionService.self) private var subscriptionService
 
-    @State private var selectedType: QuizType = .flagQuiz
-    @State private var selectedRegion: QuizRegion = .world
-    @State private var selectedDifficulty: QuizDifficulty = .easy
-    @State private var selectedCount: QuestionCount = .ten
+    @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz
+    @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
+    @AppStorage("quiz_selectedDifficulty") private var selectedDifficulty: QuizDifficulty = .easy
+    @AppStorage("quiz_selectedCount") private var selectedCount: QuestionCount = .ten
     @State private var showQuizSession = false
-
-    private let gridColumns = [
-        GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-        GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-    ]
+    @State private var showPaywall = false
+    @State private var emojiBounce: [QuizType: Int] = [:]
 
     var body: some View {
         NavigationStack {
@@ -27,6 +25,7 @@ struct QuizSetupScreen: View {
             }
             .safeAreaInset(edge: .bottom) {
                 startButton
+                    .padding(.horizontal, DesignSystem.Spacing.md)
                     .padding(.bottom, DesignSystem.Spacing.md)
             }
             .background(DesignSystem.Color.background)
@@ -40,6 +39,9 @@ struct QuizSetupScreen: View {
             .fullScreenCover(isPresented: $showQuizSession) {
                 QuizSessionScreen(configuration: makeConfiguration())
             }
+            .sheet(isPresented: $showPaywall) {
+                PaywallScreen()
+            }
         }
     }
 }
@@ -51,7 +53,10 @@ private extension QuizSetupScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Quiz Type")
 
-            LazyVGrid(columns: gridColumns, spacing: DesignSystem.Spacing.sm) {
+            LazyVGrid(
+                columns: [GridItem(.adaptive(minimum: 150), spacing: DesignSystem.Spacing.sm)],
+                spacing: DesignSystem.Spacing.sm
+            ) {
                 ForEach(QuizType.allCases) { type in
                     quizTypeCard(type)
                 }
@@ -61,44 +66,118 @@ private extension QuizSetupScreen {
     }
 
     func quizTypeCard(_ type: QuizType) -> some View {
-        Button { selectedType = type } label: {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: type.icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(
-                        selectedType == type
-                            ? DesignSystem.Color.accent
-                            : DesignSystem.Color.iconPrimary
-                    )
+        let isSelected = selectedType == type
+        let colors = quizTypeGradient(type)
+        let isLocked = type.isPremium && !subscriptionService.isPremium
 
-                Text(type.displayName)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
-
-                Text(type.description)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
+        return Button {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            if type.isPremium, !subscriptionService.isPremium {
+                showPaywall = true
+            } else {
+                selectedType = type
+                emojiBounce[type, default: 0] += 1
             }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .stroke(
-                        selectedType == type
-                            ? DesignSystem.Color.accent
-                            : DesignSystem.Color.cardBackground,
-                        lineWidth: 2
-                    )
-            )
+        } label: {
+            quizTypeCardLabel(type: type, isSelected: isSelected, colors: colors, isLocked: isLocked)
         }
         .buttonStyle(.plain)
-        .animation(.easeInOut, value: selectedType)
+    }
+
+    func quizTypeCardLabel(
+        type: QuizType,
+        isSelected: Bool,
+        colors: (Color, Color),
+        isLocked: Bool
+    ) -> some View {
+        ZStack(alignment: .topTrailing) {
+            LinearGradient(colors: [colors.0, colors.1], startPoint: .topLeading, endPoint: .bottomTrailing)
+            Image(systemName: type.icon)
+                .font(.system(size: 72))
+                .foregroundStyle(.white.opacity(0.10))
+                .offset(x: 18, y: -12)
+                .clipped()
+            quizTypeCardInfo(type: type)
+            if isLocked { quizTypeLockOverlay }
+        }
+        .frame(minHeight: 130)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                .strokeBorder(.white.opacity(isSelected ? 0.55 : 0), lineWidth: 2)
+        )
+        .shadow(color: colors.0.opacity(isSelected ? 0.55 : 0.25), radius: isSelected ? 16 : 8, y: 5)
+        .scaleEffect(isSelected ? 1.03 : 1.0)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+    }
+
+    func quizTypeCardInfo(type: QuizType) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            Text(type.emoji)
+                .font(.system(size: 30))
+                .keyframeAnimator(
+                    initialValue: EmojiAnimation(),
+                    trigger: emojiBounce[type, default: 0]
+                ) { content, value in
+                    content
+                        .scaleEffect(value.scale)
+                        .rotationEffect(.degrees(value.rotation))
+                } keyframes: { _ in
+                    KeyframeTrack(\.scale) {
+                        SpringKeyframe(1.5, duration: 0.15, spring: .bouncy(duration: 0.2, extraBounce: 0.3))
+                        SpringKeyframe(1.0, duration: 0.35, spring: .bouncy(duration: 0.3, extraBounce: 0.1))
+                    }
+                    KeyframeTrack(\.rotation) {
+                        SpringKeyframe(12.0, duration: 0.12, spring: .bouncy)
+                        SpringKeyframe(-8.0, duration: 0.12, spring: .bouncy)
+                        SpringKeyframe(0.0, duration: 0.2, spring: .bouncy)
+                    }
+                }
+            Text(type.displayName)
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.bold)
+                .foregroundStyle(.white)
+                .lineLimit(1)
+            Text(type.description)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(.white.opacity(0.75))
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+        .padding(DesignSystem.Spacing.sm)
+    }
+
+    var quizTypeLockOverlay: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                .fill(.black.opacity(0.45))
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Label("Premium", systemImage: "lock.fill")
+                        .font(DesignSystem.Font.caption2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, DesignSystem.Spacing.xs)
+                        .padding(.vertical, DesignSystem.Spacing.xxs)
+                        .background(.ultraThinMaterial, in: Capsule())
+                        .padding(DesignSystem.Spacing.xs)
+                }
+            }
+        }
+    }
+
+    func quizTypeGradient(_ type: QuizType) -> (Color, Color) {
+        switch type {
+        case .flagQuiz:         (Color(hex: "C62828"), Color(hex: "E53935"))
+        case .capitalQuiz:      (Color(hex: "1565C0"), Color(hex: "1E88E5"))
+        case .reverseFlag:      (Color(hex: "6A1B9A"), Color(hex: "8E24AA"))
+        case .reverseCapital:   (Color(hex: "00695C"), Color(hex: "00897B"))
+        case .populationOrder:  (Color(hex: "E65100"), Color(hex: "FB8C00"))
+        case .areaOrder:        (Color(hex: "2E7D32"), Color(hex: "43A047"))
+        }
     }
 }
 
@@ -144,10 +223,18 @@ private extension QuizSetupScreen {
 
 private extension QuizSetupScreen {
     var startButton: some View {
-        Button { showQuizSession = true } label: {
+        Button {
+            if selectedType.isPremium, !subscriptionService.isPremium {
+                showPaywall = true
+            } else {
+                showQuizSession = true
+            }
+        } label: {
             Label("Start Quiz", systemImage: "play.fill")
                 .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.xxs)
         }
         .buttonStyle(.glass)
     }
@@ -194,4 +281,11 @@ private extension QuizSetupScreen {
             questionCount: selectedCount,
         )
     }
+}
+
+// MARK: - Emoji Animation
+
+private struct EmojiAnimation {
+    var scale: CGFloat = 1.0
+    var rotation: Double = 0.0
 }

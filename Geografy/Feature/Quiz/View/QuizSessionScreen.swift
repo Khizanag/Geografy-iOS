@@ -17,16 +17,21 @@ struct QuizSessionScreen: View {
     @State private var showFlagPreview = false
     @State private var navigateToResult: QuizResult?
     @State private var countryDataService = CountryDataService()
+    @State private var blobAnimating = false
+    @Namespace private var flagNamespace
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                progressSection
-                questionContent
-                Spacer()
+            ZStack {
+                DesignSystem.Color.background.ignoresSafeArea()
+                ambientBlobs
+                VStack(spacing: DesignSystem.Spacing.md) {
+                    progressSection
+                    questionContent
+                    Spacer(minLength: 0)
+                }
+                .padding(.top, DesignSystem.Spacing.sm)
             }
-            .padding(.top, DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.background)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -40,20 +45,66 @@ struct QuizSessionScreen: View {
                 Text("Your progress will be lost.")
             }
             .task { loadQuiz() }
-            .navigationDestination(item: $navigateToResult) { result in
-                QuizResultsScreen(result: result) {
-                    navigateToResult = nil
-                    loadQuiz()
+            .onAppear {
+                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                    blobAnimating = true
                 }
+            }
+            .navigationDestination(item: $navigateToResult) { result in
+                QuizResultsScreen(
+                    result: result,
+                    onPlayAgain: {
+                        navigateToResult = nil
+                        loadQuiz()
+                    },
+                    onDone: { dismiss() }
+                )
             }
         }
         .overlay {
             if showFlagPreview, let flagCode = currentQuestion?.promptFlag {
-                ZoomableFlagView(countryCode: flagCode) {
-                    showFlagPreview = false
+                ZoomableFlagView(countryCode: flagCode, namespace: flagNamespace) {
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                        showFlagPreview = false
+                    }
                 }
             }
         }
+    }
+}
+
+// MARK: - Background
+
+private extension QuizSessionScreen {
+    var ambientBlobs: some View {
+        ZStack {
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
+                    center: .center, startRadius: 0, endRadius: 200
+                ))
+                .frame(width: 420, height: 320).blur(radius: 36)
+                .offset(x: -80, y: -100)
+                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                    center: .center, startRadius: 0, endRadius: 180
+                ))
+                .frame(width: 360, height: 300).blur(radius: 44)
+                .offset(x: 140, y: 60)
+                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
+                    center: .center, startRadius: 0, endRadius: 160
+                ))
+                .frame(width: 320, height: 260).blur(radius: 40)
+                .offset(x: -40, y: 400)
+                .scaleEffect(blobAnimating ? 1.05 : 0.95)
+        }
+        .allowsHitTesting(false)
+        .ignoresSafeArea()
     }
 }
 
@@ -62,14 +113,14 @@ struct QuizSessionScreen: View {
 private extension QuizSessionScreen {
     var progressSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            HStack {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 progressBar
-                questionCounter
+                questionCounterPill
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
 
             if configuration.difficulty.hasTimer {
-                timerIndicator
+                timerPill
             }
         }
     }
@@ -78,36 +129,44 @@ private extension QuizSessionScreen {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
                 Capsule()
-                    .fill(DesignSystem.Color.cardBackground)
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
 
                 Capsule()
-                    .fill(DesignSystem.Color.accent)
+                    .fill(LinearGradient(
+                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accent.opacity(0.7)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ))
                     .frame(width: geo.size.width * progress)
-                    .animation(.easeInOut, value: progress)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.8), value: progress)
             }
         }
-        .frame(height: DesignSystem.Size.xs)
+        .frame(height: 6)
     }
 
-    var questionCounter: some View {
-        Text("\(currentIndex + 1)/\(questions.count)")
-            .font(DesignSystem.Font.caption)
-            .fontWeight(.semibold)
+    var questionCounterPill: some View {
+        Text("Q\(currentIndex + 1)/\(questions.count)")
+            .font(.system(size: 13, weight: .black, design: .rounded))
             .foregroundStyle(DesignSystem.Color.textSecondary)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
     }
 
-    var timerIndicator: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "clock.fill")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(timerColor)
-
+    var timerPill: some View {
+        HStack(spacing: 5) {
+            Image(systemName: "timer")
+                .font(.system(size: 12, weight: .semibold))
             Text("\(Int(timerRemaining))s")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(timerColor)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
                 .contentTransition(.numericText())
         }
+        .foregroundStyle(timerColor)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 5)
+        .background(timerColor.opacity(0.15), in: Capsule())
+        .overlay(Capsule().strokeBorder(timerColor.opacity(0.3), lineWidth: 1))
+        .animation(.easeInOut(duration: 0.3), value: timerColor)
     }
 
     @ViewBuilder
@@ -142,6 +201,9 @@ private extension QuizSessionScreen {
         let isCorrect = optionID == question.correctOptionID
         let timeSpent = Date().timeIntervalSince(questionStartTime)
 
+        let haptic = UINotificationFeedbackGenerator()
+        haptic.notificationOccurred(isCorrect ? .success : .error)
+
         let answer = QuizAnswer(
             id: UUID(),
             question: question,
@@ -155,14 +217,14 @@ private extension QuizSessionScreen {
             showFeedback = true
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
             advanceToNext()
         }
     }
 
     func advanceToNext() {
         if currentIndex + 1 < questions.count {
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                 currentIndex += 1
                 selectedOptionID = nil
                 showFeedback = false
@@ -195,16 +257,6 @@ private extension QuizSessionScreen {
             count: min(configuration.questionCount.rawValue, pool.count),
             optionCount: optionCount
         )
-        currentIndex = 0
-        answers = []
-        selectedOptionID = nil
-        showFeedback = false
-        startTime = Date()
-        questionStartTime = Date()
-        timerRemaining = configuration.difficulty.timerDuration
-    }
-
-    func resetQuiz() {
         currentIndex = 0
         answers = []
         selectedOptionID = nil

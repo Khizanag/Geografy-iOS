@@ -1,0 +1,451 @@
+import SwiftUI
+
+struct TravelTrackerScreen: View {
+    @Environment(TravelService.self) private var travelService
+
+    @State private var countryDataService = CountryDataService()
+    @State private var selectedFilter: TravelStatus? = nil
+    @State private var searchText = ""
+    @State private var showCountryPicker = false
+    @State private var selectedCountry: Country?
+    @State private var appeared = false
+    @State private var blobAnimating = false
+
+    var body: some View {
+        ZStack {
+            if countryDataService.countries.isEmpty {
+                loadingView
+            } else {
+                mainContent
+            }
+        }
+        .navigationTitle("Travel Tracker")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar { addButton }
+        .task { countryDataService.loadCountries() }
+        .sheet(isPresented: $showCountryPicker) {
+            TravelCountryPickerSheet(
+                countries: countryDataService.countries,
+                isPresented: $showCountryPicker
+            )
+        }
+        .sheet(item: $selectedCountry) { country in
+            TravelStatusPickerSheet(
+                country: country,
+                isPresented: Binding(
+                    get: { selectedCountry != nil },
+                    set: { if !$0 { selectedCountry = nil } }
+                )
+            )
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                blobAnimating = true
+            }
+            withAnimation(.easeOut(duration: 0.6)) {
+                appeared = true
+            }
+        }
+    }
+}
+
+// MARK: - Toolbar
+
+private extension TravelTrackerScreen {
+    @ToolbarContentBuilder
+    var addButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                showCountryPicker = true
+            } label: {
+                Image(systemName: "plus")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+        }
+    }
+}
+
+// MARK: - Subviews
+
+private extension TravelTrackerScreen {
+    var loadingView: some View {
+        ProgressView()
+            .tint(DesignSystem.Color.accent)
+    }
+
+    var mainContent: some View {
+        ScrollView(showsIndicators: false) {
+            ZStack(alignment: .top) {
+                ambientBlobs
+                VStack(spacing: 0) {
+                    statsSection
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                        .padding(.top, DesignSystem.Spacing.md)
+                        .opacity(appeared ? 1 : 0)
+                        .offset(y: appeared ? 0 : 20)
+                        .animation(.easeOut(duration: 0.5), value: appeared)
+
+                    filterTabs
+                        .padding(.top, DesignSystem.Spacing.lg)
+                        .opacity(appeared ? 1 : 0)
+                        .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
+
+                    searchBar
+                        .padding(.top, DesignSystem.Spacing.sm)
+                        .opacity(appeared ? 1 : 0)
+                        .animation(.easeOut(duration: 0.5).delay(0.12), value: appeared)
+
+                    countryList
+                        .padding(.top, DesignSystem.Spacing.sm)
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                        .opacity(appeared ? 1 : 0)
+                        .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
+                }
+                .padding(.bottom, DesignSystem.Spacing.xxl)
+            }
+        }
+    }
+
+    var ambientBlobs: some View {
+        ZStack {
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [Color(hex: "00C9A7").opacity(0.18), .clear],
+                    center: .center, startRadius: 0, endRadius: 200
+                ))
+                .frame(width: 400, height: 300).blur(radius: 40)
+                .offset(x: -80, y: 40)
+                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [Color(hex: "845EC2").opacity(0.14), .clear],
+                    center: .center, startRadius: 0, endRadius: 180
+                ))
+                .frame(width: 360, height: 300).blur(radius: 44)
+                .offset(x: 140, y: 100)
+                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [DesignSystem.Color.accent.opacity(0.10), .clear],
+                    center: .center, startRadius: 0, endRadius: 160
+                ))
+                .frame(width: 320, height: 260).blur(radius: 36)
+                .offset(x: -60, y: 600)
+                .scaleEffect(blobAnimating ? 1.05 : 0.95)
+        }
+        .allowsHitTesting(false)
+    }
+
+    var statsSection: some View {
+        TravelStatsCard(
+            visitedCount: travelService.visitedCodes.count,
+            wantToVisitCount: travelService.wantToVisitCodes.count,
+            totalCountries: countryDataService.countries.count,
+            continentBreakdown: continentBreakdown
+        )
+    }
+
+    var filterTabs: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                filterTab(nil, icon: "globe", label: "All")
+                ForEach(TravelStatus.allCases) { status in
+                    filterTab(status, icon: status.icon, label: status.label)
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+    }
+
+    func filterTab(_ filter: TravelStatus?, icon: String, label: String) -> some View {
+        let isActive = selectedFilter == filter && !isSearching
+        let activeColor: Color = filter?.color ?? DesignSystem.Color.accent
+        return Button {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                selectedFilter = filter
+            }
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: icon)
+                    .font(.system(size: 12))
+                Text(label)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+                if isActive, let count = filteredCount(for: filter), count > 0 {
+                    Text("\(count)")
+                        .font(DesignSystem.Font.caption2)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 1)
+                        .background(.white.opacity(0.25), in: Capsule())
+                }
+            }
+            .foregroundStyle(isActive ? .white : DesignSystem.Color.textSecondary)
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xs)
+            .background(
+                Capsule().fill(isActive ? activeColor : DesignSystem.Color.cardBackgroundHighlighted)
+            )
+        }
+        .buttonStyle(GeoPressButtonStyle())
+    }
+
+    var searchBar: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .font(DesignSystem.Font.subheadline)
+            TextField("Search countries…", text: $searchText)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .tint(DesignSystem.Color.accent)
+                .autocorrectionDisabled()
+            if !searchText.isEmpty {
+                Button {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                        searchText = ""
+                    }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+            }
+        }
+        .padding(.horizontal, DesignSystem.Spacing.sm)
+        .padding(.vertical, DesignSystem.Spacing.xs + 2)
+        .background(
+            DesignSystem.Color.cardBackgroundHighlighted,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: searchText.isEmpty)
+    }
+
+    var countryList: some View {
+        Group {
+            if isSearching {
+                searchResultsList
+            } else {
+                trackedCountryList
+            }
+        }
+    }
+
+    var trackedCountryList: some View {
+        let countries = filteredCountries
+        return Group {
+            if countries.isEmpty {
+                emptyState
+            } else {
+                LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                    ForEach(countries) { country in
+                        if let status = travelService.status(for: country.code) {
+                            TravelCountryRow(country: country, status: status)
+                                .transition(.asymmetric(
+                                    insertion: .push(from: .trailing),
+                                    removal: .push(from: .leading)
+                                ))
+                        }
+                    }
+                }
+                .animation(.spring(response: 0.35, dampingFraction: 0.75), value: travelService.entries.count)
+            }
+        }
+    }
+
+    var searchResultsList: some View {
+        let results = searchResults
+        return Group {
+            if results.isEmpty {
+                noResultsState
+            } else {
+                LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                    searchResultsHeader(count: results.count)
+                    ForEach(results) { country in
+                        searchResultRow(country)
+                    }
+                }
+            }
+        }
+    }
+
+    func searchResultsHeader(count: Int) -> some View {
+        HStack {
+            Text("\(count) \(count == 1 ? "country" : "countries") found")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+            Spacer()
+        }
+        .padding(.bottom, DesignSystem.Spacing.xxs)
+    }
+
+    func searchResultRow(_ country: Country) -> some View {
+        let status = travelService.status(for: country.code)
+        return Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            selectedCountry = country
+        } label: {
+            GeoCard {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    FlagView(countryCode: country.code, height: 36)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .frame(width: 54)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(country.name)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(country.continent.displayName)
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                    Spacer(minLength: 0)
+                    searchRowTrailing(status)
+                }
+                .padding(DesignSystem.Spacing.sm)
+            }
+        }
+        .buttonStyle(GeoPressButtonStyle())
+    }
+
+    func searchRowTrailing(_ status: TravelStatus?) -> some View {
+        Group {
+            if let status {
+                HStack(spacing: 4) {
+                    Image(systemName: status.icon)
+                        .font(.system(size: 9))
+                    Text(status.shortLabel)
+                        .font(DesignSystem.Font.caption2)
+                        .fontWeight(.semibold)
+                }
+                .foregroundStyle(status.color)
+                .padding(.horizontal, DesignSystem.Spacing.xs)
+                .padding(.vertical, DesignSystem.Spacing.xxs)
+                .background(status.color.opacity(0.15), in: Capsule())
+            } else {
+                Image(systemName: "plus.circle")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
+            }
+        }
+    }
+
+    var emptyState: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            Image(systemName: selectedFilter?.icon ?? "airplane.departure")
+                .font(.system(size: 48))
+                .foregroundStyle(selectedFilter?.color ?? DesignSystem.Color.textTertiary)
+                .padding(.top, DesignSystem.Spacing.xxl)
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Text(emptyStateTitle)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(emptyStateSubtitle)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+            Button {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                showCountryPicker = true
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Image(systemName: "plus")
+                        .fontWeight(.semibold)
+                    Text("Add Country")
+                        .fontWeight(.semibold)
+                }
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(.white)
+                .padding(.horizontal, DesignSystem.Spacing.lg)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                .background(DesignSystem.Color.accent, in: Capsule())
+            }
+            .buttonStyle(GeoPressButtonStyle())
+            .padding(.top, DesignSystem.Spacing.xs)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.xxl)
+    }
+
+    var noResultsState: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 36))
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .padding(.top, DesignSystem.Spacing.xl)
+            Text("No countries found")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text("Try a different spelling or search term")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.xxl)
+    }
+
+    func filteredCount(for filter: TravelStatus?) -> Int? {
+        guard let filter else { return travelService.entries.count }
+        return switch filter {
+        case .visited: travelService.visitedCodes.count
+        case .wantToVisit: travelService.wantToVisitCodes.count
+        }
+    }
+}
+
+// MARK: - Data
+
+private extension TravelTrackerScreen {
+    var isSearching: Bool { !searchText.isEmpty }
+
+    var emptyStateTitle: String {
+        switch selectedFilter {
+        case .visited: "No visited countries yet"
+        case .wantToVisit: "No wishlist yet"
+        case nil: "Start tracking your journey"
+        }
+    }
+
+    var emptyStateSubtitle: String {
+        switch selectedFilter {
+        case .visited: "Search above or tap + to add countries you've visited"
+        case .wantToVisit: "Search above or tap + to build your travel wishlist"
+        case nil: "Search for a country above, or tap + to browse all countries"
+        }
+    }
+
+    var searchResults: [Country] {
+        countryDataService.countries
+            .filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+            .sorted { $0.name < $1.name }
+    }
+
+    var filteredCountries: [Country] {
+        let codes: Set<String>
+        switch selectedFilter {
+        case .visited: codes = travelService.visitedCodes
+        case .wantToVisit: codes = travelService.wantToVisitCodes
+        case nil: codes = Set(travelService.entries.keys)
+        }
+        return countryDataService.countries
+            .filter { codes.contains($0.code) }
+            .sorted { $0.name < $1.name }
+    }
+
+    var continentBreakdown: [(name: String, visited: Int, total: Int)] {
+        let allContinents = Country.Continent.allCases
+        let visitedCodes = travelService.visitedCodes
+        return allContinents.map { continent in
+            let total = countryDataService.countries.filter { $0.continent == continent }.count
+            let visited = countryDataService.countries.filter {
+                $0.continent == continent && visitedCodes.contains($0.code)
+            }.count
+            return (name: continent.displayName, visited: visited, total: total)
+        }
+        .filter { $0.total > 0 }
+    }
+}

@@ -32,6 +32,15 @@ private extension QuizType {
         .areaOrder: "map.fill",
     ]
 
+    static let emojis: [QuizType: String] = [
+        .flagQuiz: "🚩",
+        .capitalQuiz: "🏛️",
+        .reverseFlag: "🏴",
+        .reverseCapital: "🏙️",
+        .populationOrder: "👥",
+        .areaOrder: "🗺️",
+    ]
+
     static let descriptions: [QuizType: String] = [
         .flagQuiz: "Identify the country by its flag",
         .capitalQuiz: "Guess the capital of a given country",
@@ -53,7 +62,18 @@ extension QuizType {
         Self.icons[self] ?? "questionmark.circle"
     }
 
+    var emoji: String {
+        Self.emojis[self] ?? "❓"
+    }
+
     var description: String {
         Self.descriptions[self] ?? ""
+    }
+
+    var isPremium: Bool {
+        switch self {
+        case .reverseFlag, .reverseCapital, .populationOrder: true
+        default: false
+        }
     }
 }

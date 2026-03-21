@@ -8,16 +8,27 @@
         "area": 652230,
         "population": 42239854,
         "populationDensity": 64.8,
-        "currency": { "name": "Afghan Afghani", "code": "AFN" },
+        "currency": {
+            "name": "Afghan Afghani",
+            "code": "AFN"
+        },
         "languages": [
-            { "name": "Pashto", "percentage": 50.0 },
-            { "name": "Dari", "percentage": 50.0 }
+            {
+                "name": "Pashto",
+                "percentage": 50.0
+            },
+            {
+                "name": "Dari",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Unitary theocratic provisional government",
         "gdp": 14500000000,
         "gdpPerCapita": 364,
         "gdpPPP": 81000000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "AL",
@@ -28,15 +39,25 @@
         "area": 28748,
         "population": 2745972,
         "populationDensity": 95.5,
-        "currency": { "name": "Albanian Lek", "code": "ALL" },
+        "currency": {
+            "name": "Albanian Lek",
+            "code": "ALL"
+        },
         "languages": [
-            { "name": "Albanian", "percentage": 98.8 }
+            {
+                "name": "Albanian",
+                "percentage": 98.8
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 22980000000,
         "gdpPerCapita": 8370,
         "gdpPPP": 46000000000,
-        "organizations": ["UN", "NATO", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "WTO"
+        ]
     },
     {
         "code": "DZ",
@@ -47,16 +68,31 @@
         "area": 2381741,
         "population": 45606480,
         "populationDensity": 19.1,
-        "currency": { "name": "Algerian Dinar", "code": "DZD" },
+        "currency": {
+            "name": "Algerian Dinar",
+            "code": "DZD"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 72.0 },
-            { "name": "Berber", "percentage": 27.0 }
+            {
+                "name": "Arabic",
+                "percentage": 72.0
+            },
+            {
+                "name": "Berber",
+                "percentage": 27.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 240000000000,
         "gdpPerCapita": 5270,
         "gdpPPP": 632000000000,
-        "organizations": ["UN", "AU", "OPEC", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "AD",
@@ -67,16 +103,27 @@
         "area": 468,
         "population": 80088,
         "populationDensity": 171.1,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Catalan", "percentage": 38.8 },
-            { "name": "Spanish", "percentage": 35.4 }
+            {
+                "name": "Catalan",
+                "percentage": 38.8
+            },
+            {
+                "name": "Spanish",
+                "percentage": 35.4
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional diarchy",
         "gdp": 3400000000,
         "gdpPerCapita": 42460,
         "gdpPPP": 3400000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "AO",
@@ -87,15 +134,26 @@
         "area": 1246700,
         "population": 36684202,
         "populationDensity": 29.4,
-        "currency": { "name": "Angolan Kwanza", "code": "AOA" },
+        "currency": {
+            "name": "Angolan Kwanza",
+            "code": "AOA"
+        },
         "languages": [
-            { "name": "Portuguese", "percentage": 71.2 }
+            {
+                "name": "Portuguese",
+                "percentage": 71.2
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 92100000000,
         "gdpPerCapita": 2510,
         "gdpPPP": 228000000000,
-        "organizations": ["UN", "AU", "OPEC", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC",
+            "WTO"
+        ]
     },
     {
         "code": "AG",
@@ -106,15 +164,25 @@
         "area": 442,
         "population": 100772,
         "populationDensity": 227.9,
-        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "currency": {
+            "name": "East Caribbean Dollar",
+            "code": "XCD"
+        },
         "languages": [
-            { "name": "English", "percentage": 95.0 }
+            {
+                "name": "English",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 1900000000,
         "gdpPerCapita": 18860,
         "gdpPPP": 2100000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "AR",
@@ -125,15 +193,26 @@
         "area": 2780400,
         "population": 46654581,
         "populationDensity": 16.8,
-        "currency": { "name": "Argentine Peso", "code": "ARS" },
+        "currency": {
+            "name": "Argentine Peso",
+            "code": "ARS"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 98.1 }
+            {
+                "name": "Spanish",
+                "percentage": 98.1
+            }
         ],
         "formOfGovernment": "Federal presidential constitutional republic",
         "gdp": 641000000000,
         "gdpPerCapita": 13690,
         "gdpPPP": 1150000000000,
-        "organizations": ["UN", "G20", "WTO", "Mercosur"]
+        "organizations": [
+            "UN",
+            "G20",
+            "WTO",
+            "Mercosur"
+        ]
     },
     {
         "code": "AM",
@@ -144,15 +223,25 @@
         "area": 29743,
         "population": 2777970,
         "populationDensity": 93.4,
-        "currency": { "name": "Armenian Dram", "code": "AMD" },
+        "currency": {
+            "name": "Armenian Dram",
+            "code": "AMD"
+        },
         "languages": [
-            { "name": "Armenian", "percentage": 97.9 }
+            {
+                "name": "Armenian",
+                "percentage": 97.9
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 24200000000,
         "gdpPerCapita": 8720,
         "gdpPPP": 51000000000,
-        "organizations": ["UN", "CIS", "WTO"]
+        "organizations": [
+            "UN",
+            "CIS",
+            "WTO"
+        ]
     },
     {
         "code": "AU",
@@ -163,16 +252,31 @@
         "area": 7692024,
         "population": 26638544,
         "populationDensity": 3.5,
-        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "currency": {
+            "name": "Australian Dollar",
+            "code": "AUD"
+        },
         "languages": [
-            { "name": "English", "percentage": 72.7 },
-            { "name": "Mandarin", "percentage": 2.7 }
+            {
+                "name": "English",
+                "percentage": 72.7
+            },
+            {
+                "name": "Mandarin",
+                "percentage": 2.7
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional monarchy",
         "gdp": 1720000000000,
         "gdpPerCapita": 64490,
         "gdpPPP": 1720000000000,
-        "organizations": ["UN", "G20", "OECD", "WTO", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "G20",
+            "OECD",
+            "WTO",
+            "Commonwealth"
+        ]
     },
     {
         "code": "AT",
@@ -183,15 +287,26 @@
         "area": 83871,
         "population": 9104772,
         "populationDensity": 108.6,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "German", "percentage": 88.6 }
+            {
+                "name": "German",
+                "percentage": 88.6
+            }
         ],
         "formOfGovernment": "Federal parliamentary republic",
         "gdp": 515000000000,
         "gdpPerCapita": 56510,
         "gdpPPP": 594000000000,
-        "organizations": ["UN", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "AZ",
@@ -202,15 +317,25 @@
         "area": 86600,
         "population": 10412651,
         "populationDensity": 120.2,
-        "currency": { "name": "Azerbaijani Manat", "code": "AZN" },
+        "currency": {
+            "name": "Azerbaijani Manat",
+            "code": "AZN"
+        },
         "languages": [
-            { "name": "Azerbaijani", "percentage": 92.5 }
+            {
+                "name": "Azerbaijani",
+                "percentage": 92.5
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 72400000000,
         "gdpPerCapita": 6950,
         "gdpPPP": 186000000000,
-        "organizations": ["UN", "CIS", "WTO"]
+        "organizations": [
+            "UN",
+            "CIS",
+            "WTO"
+        ]
     },
     {
         "code": "BS",
@@ -221,15 +346,25 @@
         "area": 13943,
         "population": 412623,
         "populationDensity": 29.6,
-        "currency": { "name": "Bahamian Dollar", "code": "BSD" },
+        "currency": {
+            "name": "Bahamian Dollar",
+            "code": "BSD"
+        },
         "languages": [
-            { "name": "English", "percentage": 94.0 }
+            {
+                "name": "English",
+                "percentage": 94.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 14300000000,
         "gdpPerCapita": 34670,
         "gdpPPP": 15200000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "BH",
@@ -240,15 +375,25 @@
         "area": 765,
         "population": 1485509,
         "populationDensity": 1941.8,
-        "currency": { "name": "Bahraini Dinar", "code": "BHD" },
+        "currency": {
+            "name": "Bahraini Dinar",
+            "code": "BHD"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 70.0 }
+            {
+                "name": "Arabic",
+                "percentage": 70.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 44400000000,
         "gdpPerCapita": 29890,
         "gdpPPP": 91000000000,
-        "organizations": ["UN", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "BD",
@@ -259,15 +404,25 @@
         "area": 147570,
         "population": 172954319,
         "populationDensity": 1172.0,
-        "currency": { "name": "Bangladeshi Taka", "code": "BDT" },
+        "currency": {
+            "name": "Bangladeshi Taka",
+            "code": "BDT"
+        },
         "languages": [
-            { "name": "Bengali", "percentage": 98.8 }
+            {
+                "name": "Bengali",
+                "percentage": 98.8
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 460200000000,
         "gdpPerCapita": 2660,
         "gdpPPP": 1340000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "BB",
@@ -278,15 +433,25 @@
         "area": 430,
         "population": 281995,
         "populationDensity": 655.8,
-        "currency": { "name": "Barbadian Dollar", "code": "BBD" },
+        "currency": {
+            "name": "Barbadian Dollar",
+            "code": "BBD"
+        },
         "languages": [
-            { "name": "English", "percentage": 95.0 }
+            {
+                "name": "English",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 6000000000,
         "gdpPerCapita": 21280,
         "gdpPPP": 6100000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "BY",
@@ -297,16 +462,28 @@
         "area": 207600,
         "population": 9200617,
         "populationDensity": 44.3,
-        "currency": { "name": "Belarusian Ruble", "code": "BYN" },
+        "currency": {
+            "name": "Belarusian Ruble",
+            "code": "BYN"
+        },
         "languages": [
-            { "name": "Belarusian", "percentage": 23.4 },
-            { "name": "Russian", "percentage": 70.2 }
+            {
+                "name": "Belarusian",
+                "percentage": 23.4
+            },
+            {
+                "name": "Russian",
+                "percentage": 70.2
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 73000000000,
         "gdpPerCapita": 7940,
         "gdpPPP": 205000000000,
-        "organizations": ["UN", "CIS"]
+        "organizations": [
+            "UN",
+            "CIS"
+        ]
     },
     {
         "code": "BE",
@@ -317,17 +494,35 @@
         "area": 30528,
         "population": 11686140,
         "populationDensity": 382.7,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Dutch", "percentage": 55.0 },
-            { "name": "French", "percentage": 36.0 },
-            { "name": "German", "percentage": 0.7 }
+            {
+                "name": "Dutch",
+                "percentage": 55.0
+            },
+            {
+                "name": "French",
+                "percentage": 36.0
+            },
+            {
+                "name": "German",
+                "percentage": 0.7
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional monarchy",
         "gdp": 632000000000,
         "gdpPerCapita": 54080,
         "gdpPPP": 724000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "BZ",
@@ -338,16 +533,29 @@
         "area": 22966,
         "population": 410825,
         "populationDensity": 17.9,
-        "currency": { "name": "Belize Dollar", "code": "BZD" },
+        "currency": {
+            "name": "Belize Dollar",
+            "code": "BZD"
+        },
         "languages": [
-            { "name": "English", "percentage": 62.9 },
-            { "name": "Spanish", "percentage": 56.6 }
+            {
+                "name": "English",
+                "percentage": 62.9
+            },
+            {
+                "name": "Spanish",
+                "percentage": 56.6
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 3280000000,
         "gdpPerCapita": 7980,
         "gdpPPP": 4900000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "BJ",
@@ -358,16 +566,29 @@
         "area": 112622,
         "population": 13352864,
         "populationDensity": 118.6,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "French", "percentage": 35.0 },
-            { "name": "Fon", "percentage": 24.0 }
+            {
+                "name": "French",
+                "percentage": 35.0
+            },
+            {
+                "name": "Fon",
+                "percentage": 24.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 19500000000,
         "gdpPerCapita": 1460,
         "gdpPPP": 52000000000,
-        "organizations": ["UN", "AU", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "WTO"
+        ]
     },
     {
         "code": "BT",
@@ -378,15 +599,23 @@
         "area": 38394,
         "population": 787424,
         "populationDensity": 20.5,
-        "currency": { "name": "Bhutanese Ngultrum", "code": "BTN" },
+        "currency": {
+            "name": "Bhutanese Ngultrum",
+            "code": "BTN"
+        },
         "languages": [
-            { "name": "Dzongkha", "percentage": 24.0 }
+            {
+                "name": "Dzongkha",
+                "percentage": 24.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 2890000000,
         "gdpPerCapita": 3670,
         "gdpPPP": 10800000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "BO",
@@ -397,16 +626,38 @@
         "area": 1098581,
         "population": 12388571,
         "populationDensity": 11.3,
-        "currency": { "name": "Bolivian Boliviano", "code": "BOB" },
+        "currency": {
+            "name": "Bolivian Boliviano",
+            "code": "BOB"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 83.0 },
-            { "name": "Quechua", "percentage": 18.0 }
+            {
+                "name": "Spanish",
+                "percentage": 83.0
+            },
+            {
+                "name": "Quechua",
+                "percentage": 18.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 44010000000,
         "gdpPerCapita": 3550,
         "gdpPPP": 115000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ],
+        "capitals": [
+            {
+                "name": "Sucre",
+                "role": "Constitutional"
+            },
+            {
+                "name": "La Paz",
+                "role": "Seat of Government"
+            }
+        ]
     },
     {
         "code": "BA",
@@ -417,17 +668,32 @@
         "area": 51197,
         "population": 3210847,
         "populationDensity": 62.7,
-        "currency": { "name": "Bosnia and Herzegovina Convertible Mark", "code": "BAM" },
+        "currency": {
+            "name": "Bosnia and Herzegovina Convertible Mark",
+            "code": "BAM"
+        },
         "languages": [
-            { "name": "Bosnian", "percentage": 52.9 },
-            { "name": "Serbian", "percentage": 30.8 },
-            { "name": "Croatian", "percentage": 14.6 }
+            {
+                "name": "Bosnian",
+                "percentage": 52.9
+            },
+            {
+                "name": "Serbian",
+                "percentage": 30.8
+            },
+            {
+                "name": "Croatian",
+                "percentage": 14.6
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional republic",
         "gdp": 24900000000,
         "gdpPerCapita": 7760,
         "gdpPPP": 59000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "BW",
@@ -438,16 +704,30 @@
         "area": 581730,
         "population": 2630296,
         "populationDensity": 4.5,
-        "currency": { "name": "Botswana Pula", "code": "BWP" },
+        "currency": {
+            "name": "Botswana Pula",
+            "code": "BWP"
+        },
         "languages": [
-            { "name": "Setswana", "percentage": 77.3 },
-            { "name": "English", "percentage": 2.8 }
+            {
+                "name": "Setswana",
+                "percentage": 77.3
+            },
+            {
+                "name": "English",
+                "percentage": 2.8
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 19400000000,
         "gdpPerCapita": 7380,
         "gdpPPP": 46000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "BR",
@@ -458,15 +738,27 @@
         "area": 8515767,
         "population": 216422446,
         "populationDensity": 25.4,
-        "currency": { "name": "Brazilian Real", "code": "BRL" },
+        "currency": {
+            "name": "Brazilian Real",
+            "code": "BRL"
+        },
         "languages": [
-            { "name": "Portuguese", "percentage": 97.9 }
+            {
+                "name": "Portuguese",
+                "percentage": 97.9
+            }
         ],
         "formOfGovernment": "Federal presidential constitutional republic",
         "gdp": 2170000000000,
         "gdpPerCapita": 10110,
         "gdpPPP": 4020000000000,
-        "organizations": ["UN", "G20", "WTO", "Mercosur", "BRICS"]
+        "organizations": [
+            "UN",
+            "G20",
+            "WTO",
+            "Mercosur",
+            "BRICS"
+        ]
     },
     {
         "code": "BN",
@@ -477,15 +769,26 @@
         "area": 5765,
         "population": 452524,
         "populationDensity": 78.5,
-        "currency": { "name": "Brunei Dollar", "code": "BND" },
+        "currency": {
+            "name": "Brunei Dollar",
+            "code": "BND"
+        },
         "languages": [
-            { "name": "Malay", "percentage": 83.0 }
+            {
+                "name": "Malay",
+                "percentage": 83.0
+            }
         ],
         "formOfGovernment": "Unitary Islamic absolute monarchy",
         "gdp": 15100000000,
         "gdpPerCapita": 33400,
         "gdpPPP": 36000000000,
-        "organizations": ["UN", "ASEAN", "WTO", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "WTO",
+            "Commonwealth"
+        ]
     },
     {
         "code": "BG",
@@ -496,15 +799,26 @@
         "area": 110879,
         "population": 6447710,
         "populationDensity": 58.1,
-        "currency": { "name": "Bulgarian Lev", "code": "BGN" },
+        "currency": {
+            "name": "Bulgarian Lev",
+            "code": "BGN"
+        },
         "languages": [
-            { "name": "Bulgarian", "percentage": 85.2 }
+            {
+                "name": "Bulgarian",
+                "percentage": 85.2
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 100600000000,
         "gdpPerCapita": 15610,
         "gdpPPP": 218000000000,
-        "organizations": ["UN", "NATO", "EU", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "WTO"
+        ]
     },
     {
         "code": "BF",
@@ -515,16 +829,28 @@
         "area": 274200,
         "population": 22673762,
         "populationDensity": 82.7,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "French", "percentage": 25.0 },
-            { "name": "Mooré", "percentage": 50.0 }
+            {
+                "name": "French",
+                "percentage": 25.0
+            },
+            {
+                "name": "Mooré",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Unitary military junta",
         "gdp": 19400000000,
         "gdpPerCapita": 860,
         "gdpPPP": 54000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "BI",
@@ -535,16 +861,28 @@
         "area": 27834,
         "population": 13238559,
         "populationDensity": 475.6,
-        "currency": { "name": "Burundian Franc", "code": "BIF" },
+        "currency": {
+            "name": "Burundian Franc",
+            "code": "BIF"
+        },
         "languages": [
-            { "name": "Kirundi", "percentage": 97.0 },
-            { "name": "French", "percentage": 8.0 }
+            {
+                "name": "Kirundi",
+                "percentage": 97.0
+            },
+            {
+                "name": "French",
+                "percentage": 8.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 3070000000,
         "gdpPerCapita": 232,
         "gdpPPP": 10800000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "CV",
@@ -555,15 +893,25 @@
         "area": 4033,
         "population": 598682,
         "populationDensity": 148.4,
-        "currency": { "name": "Cape Verdean Escudo", "code": "CVE" },
+        "currency": {
+            "name": "Cape Verdean Escudo",
+            "code": "CVE"
+        },
         "languages": [
-            { "name": "Portuguese", "percentage": 95.0 }
+            {
+                "name": "Portuguese",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 2400000000,
         "gdpPerCapita": 4010,
         "gdpPPP": 4600000000,
-        "organizations": ["UN", "AU", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "WTO"
+        ]
     },
     {
         "code": "KH",
@@ -574,15 +922,25 @@
         "area": 181035,
         "population": 16944826,
         "populationDensity": 93.6,
-        "currency": { "name": "Cambodian Riel", "code": "KHR" },
+        "currency": {
+            "name": "Cambodian Riel",
+            "code": "KHR"
+        },
         "languages": [
-            { "name": "Khmer", "percentage": 95.8 }
+            {
+                "name": "Khmer",
+                "percentage": 95.8
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 31800000000,
         "gdpPerCapita": 1880,
         "gdpPPP": 85000000000,
-        "organizations": ["UN", "ASEAN", "WTO"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "WTO"
+        ]
     },
     {
         "code": "CM",
@@ -593,16 +951,30 @@
         "area": 475442,
         "population": 28647293,
         "populationDensity": 60.3,
-        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "currency": {
+            "name": "Central African CFA Franc",
+            "code": "XAF"
+        },
         "languages": [
-            { "name": "French", "percentage": 57.6 },
-            { "name": "English", "percentage": 16.8 }
+            {
+                "name": "French",
+                "percentage": 57.6
+            },
+            {
+                "name": "English",
+                "percentage": 16.8
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 44340000000,
         "gdpPerCapita": 1550,
         "gdpPPP": 115000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "CA",
@@ -613,16 +985,33 @@
         "area": 9984670,
         "population": 40769890,
         "populationDensity": 4.1,
-        "currency": { "name": "Canadian Dollar", "code": "CAD" },
+        "currency": {
+            "name": "Canadian Dollar",
+            "code": "CAD"
+        },
         "languages": [
-            { "name": "English", "percentage": 56.9 },
-            { "name": "French", "percentage": 21.3 }
+            {
+                "name": "English",
+                "percentage": 56.9
+            },
+            {
+                "name": "French",
+                "percentage": 21.3
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional monarchy",
         "gdp": 2140000000000,
         "gdpPerCapita": 52720,
         "gdpPPP": 2240000000000,
-        "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "G7",
+            "G20",
+            "OECD",
+            "WTO",
+            "Commonwealth"
+        ]
     },
     {
         "code": "CF",
@@ -633,16 +1022,28 @@
         "area": 622984,
         "population": 5742315,
         "populationDensity": 9.2,
-        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "currency": {
+            "name": "Central African CFA Franc",
+            "code": "XAF"
+        },
         "languages": [
-            { "name": "French", "percentage": 29.0 },
-            { "name": "Sango", "percentage": 90.0 }
+            {
+                "name": "French",
+                "percentage": 29.0
+            },
+            {
+                "name": "Sango",
+                "percentage": 90.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 2560000000,
         "gdpPerCapita": 446,
         "gdpPPP": 5100000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "TD",
@@ -653,16 +1054,29 @@
         "area": 1284000,
         "population": 18278568,
         "populationDensity": 14.2,
-        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "currency": {
+            "name": "Central African CFA Franc",
+            "code": "XAF"
+        },
         "languages": [
-            { "name": "French", "percentage": 12.0 },
-            { "name": "Arabic", "percentage": 12.0 }
+            {
+                "name": "French",
+                "percentage": 12.0
+            },
+            {
+                "name": "Arabic",
+                "percentage": 12.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 12600000000,
         "gdpPerCapita": 690,
         "gdpPPP": 30000000000,
-        "organizations": ["UN", "AU", "OPEC"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC"
+        ]
     },
     {
         "code": "CL",
@@ -673,15 +1087,25 @@
         "area": 756102,
         "population": 19603733,
         "populationDensity": 25.9,
-        "currency": { "name": "Chilean Peso", "code": "CLP" },
+        "currency": {
+            "name": "Chilean Peso",
+            "code": "CLP"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 99.5 }
+            {
+                "name": "Spanish",
+                "percentage": 99.5
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 335500000000,
         "gdpPerCapita": 17120,
         "gdpPPP": 568000000000,
-        "organizations": ["UN", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "CN",
@@ -692,15 +1116,27 @@
         "area": 9596961,
         "population": 1425671352,
         "populationDensity": 148.6,
-        "currency": { "name": "Chinese Yuan", "code": "CNY" },
+        "currency": {
+            "name": "Chinese Yuan",
+            "code": "CNY"
+        },
         "languages": [
-            { "name": "Mandarin Chinese", "percentage": 73.1 }
+            {
+                "name": "Mandarin Chinese",
+                "percentage": 73.1
+            }
         ],
         "formOfGovernment": "Unitary one-party socialist republic",
         "gdp": 17960000000000,
         "gdpPerCapita": 12600,
         "gdpPPP": 34900000000000,
-        "organizations": ["UN", "G20", "WTO", "BRICS", "SCO"]
+        "organizations": [
+            "UN",
+            "G20",
+            "WTO",
+            "BRICS",
+            "SCO"
+        ]
     },
     {
         "code": "CO",
@@ -711,15 +1147,25 @@
         "area": 1141748,
         "population": 52085168,
         "populationDensity": 45.6,
-        "currency": { "name": "Colombian Peso", "code": "COP" },
+        "currency": {
+            "name": "Colombian Peso",
+            "code": "COP"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 99.2 }
+            {
+                "name": "Spanish",
+                "percentage": 99.2
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 363500000000,
         "gdpPerCapita": 6980,
         "gdpPPP": 935000000000,
-        "organizations": ["UN", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "KM",
@@ -730,17 +1176,33 @@
         "area": 2235,
         "population": 836774,
         "populationDensity": 374.3,
-        "currency": { "name": "Comorian Franc", "code": "KMF" },
+        "currency": {
+            "name": "Comorian Franc",
+            "code": "KMF"
+        },
         "languages": [
-            { "name": "Comorian", "percentage": 96.0 },
-            { "name": "Arabic", "percentage": 2.0 },
-            { "name": "French", "percentage": 2.0 }
+            {
+                "name": "Comorian",
+                "percentage": 96.0
+            },
+            {
+                "name": "Arabic",
+                "percentage": 2.0
+            },
+            {
+                "name": "French",
+                "percentage": 2.0
+            }
         ],
         "formOfGovernment": "Federal presidential republic",
         "gdp": 1350000000,
         "gdpPerCapita": 1610,
         "gdpPPP": 3100000000,
-        "organizations": ["UN", "AU", "Arab League"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League"
+        ]
     },
     {
         "code": "CG",
@@ -751,16 +1213,30 @@
         "area": 342000,
         "population": 6106869,
         "populationDensity": 17.9,
-        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "currency": {
+            "name": "Central African CFA Franc",
+            "code": "XAF"
+        },
         "languages": [
-            { "name": "French", "percentage": 60.0 },
-            { "name": "Lingala", "percentage": 20.0 }
+            {
+                "name": "French",
+                "percentage": 60.0
+            },
+            {
+                "name": "Lingala",
+                "percentage": 20.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 13600000000,
         "gdpPerCapita": 2230,
         "gdpPPP": 28000000000,
-        "organizations": ["UN", "AU", "OPEC", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC",
+            "WTO"
+        ]
     },
     {
         "code": "CD",
@@ -771,16 +1247,28 @@
         "area": 2344858,
         "population": 102262808,
         "populationDensity": 43.6,
-        "currency": { "name": "Congolese Franc", "code": "CDF" },
+        "currency": {
+            "name": "Congolese Franc",
+            "code": "CDF"
+        },
         "languages": [
-            { "name": "French", "percentage": 51.0 },
-            { "name": "Lingala", "percentage": 20.0 }
+            {
+                "name": "French",
+                "percentage": 51.0
+            },
+            {
+                "name": "Lingala",
+                "percentage": 20.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 65200000000,
         "gdpPerCapita": 638,
         "gdpPPP": 149000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "CR",
@@ -791,15 +1279,25 @@
         "area": 51100,
         "population": 5212173,
         "populationDensity": 102.0,
-        "currency": { "name": "Costa Rican Colón", "code": "CRC" },
+        "currency": {
+            "name": "Costa Rican Colón",
+            "code": "CRC"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 97.0 }
+            {
+                "name": "Spanish",
+                "percentage": 97.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 68400000000,
         "gdpPerCapita": 13120,
         "gdpPPP": 113000000000,
-        "organizations": ["UN", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "CI",
@@ -810,15 +1308,35 @@
         "area": 322463,
         "population": 28873034,
         "populationDensity": 89.5,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "French", "percentage": 36.0 }
+            {
+                "name": "French",
+                "percentage": 36.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 78800000000,
         "gdpPerCapita": 2730,
         "gdpPPP": 184000000000,
-        "organizations": ["UN", "AU", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "WTO"
+        ],
+        "capitals": [
+            {
+                "name": "Yamoussoukro",
+                "role": "Official"
+            },
+            {
+                "name": "Abidjan",
+                "role": "Economic"
+            }
+        ]
     },
     {
         "code": "HR",
@@ -829,15 +1347,26 @@
         "area": 56594,
         "population": 3855600,
         "populationDensity": 68.1,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Croatian", "percentage": 95.6 }
+            {
+                "name": "Croatian",
+                "percentage": 95.6
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 82500000000,
         "gdpPerCapita": 21400,
         "gdpPPP": 143000000000,
-        "organizations": ["UN", "NATO", "EU", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "WTO"
+        ]
     },
     {
         "code": "CU",
@@ -848,15 +1377,23 @@
         "area": 109884,
         "population": 11194449,
         "populationDensity": 101.9,
-        "currency": { "name": "Cuban Peso", "code": "CUP" },
+        "currency": {
+            "name": "Cuban Peso",
+            "code": "CUP"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 99.7 }
+            {
+                "name": "Spanish",
+                "percentage": 99.7
+            }
         ],
         "formOfGovernment": "Unitary one-party socialist republic",
         "gdp": 107400000000,
         "gdpPerCapita": 9590,
         "gdpPPP": null,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "CY",
@@ -867,16 +1404,30 @@
         "area": 9251,
         "population": 1260138,
         "populationDensity": 136.2,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Greek", "percentage": 80.9 },
-            { "name": "Turkish", "percentage": 8.4 }
+            {
+                "name": "Greek",
+                "percentage": 80.9
+            },
+            {
+                "name": "Turkish",
+                "percentage": 8.4
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 31400000000,
         "gdpPerCapita": 24920,
         "gdpPPP": 42000000000,
-        "organizations": ["UN", "EU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "EU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "CZ",
@@ -887,15 +1438,27 @@
         "area": 78867,
         "population": 10827529,
         "populationDensity": 137.3,
-        "currency": { "name": "Czech Koruna", "code": "CZK" },
+        "currency": {
+            "name": "Czech Koruna",
+            "code": "CZK"
+        },
         "languages": [
-            { "name": "Czech", "percentage": 95.4 }
+            {
+                "name": "Czech",
+                "percentage": 95.4
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 330900000000,
         "gdpPerCapita": 30560,
         "gdpPPP": 515000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "DK",
@@ -906,15 +1469,27 @@
         "area": 43094,
         "population": 5946952,
         "populationDensity": 138.0,
-        "currency": { "name": "Danish Krone", "code": "DKK" },
+        "currency": {
+            "name": "Danish Krone",
+            "code": "DKK"
+        },
         "languages": [
-            { "name": "Danish", "percentage": 93.0 }
+            {
+                "name": "Danish",
+                "percentage": 93.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 404200000000,
         "gdpPerCapita": 67960,
         "gdpPPP": 395000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "DJ",
@@ -925,17 +1500,33 @@
         "area": 23200,
         "population": 1120849,
         "populationDensity": 48.3,
-        "currency": { "name": "Djiboutian Franc", "code": "DJF" },
+        "currency": {
+            "name": "Djiboutian Franc",
+            "code": "DJF"
+        },
         "languages": [
-            { "name": "French", "percentage": 34.0 },
-            { "name": "Arabic", "percentage": 36.0 },
-            { "name": "Somali", "percentage": 30.0 }
+            {
+                "name": "French",
+                "percentage": 34.0
+            },
+            {
+                "name": "Arabic",
+                "percentage": 36.0
+            },
+            {
+                "name": "Somali",
+                "percentage": 30.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 3780000000,
         "gdpPerCapita": 3370,
         "gdpPPP": 6600000000,
-        "organizations": ["UN", "AU", "Arab League"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League"
+        ]
     },
     {
         "code": "DM",
@@ -946,15 +1537,25 @@
         "area": 751,
         "population": 72737,
         "populationDensity": 96.9,
-        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "currency": {
+            "name": "East Caribbean Dollar",
+            "code": "XCD"
+        },
         "languages": [
-            { "name": "English", "percentage": 94.0 }
+            {
+                "name": "English",
+                "percentage": 94.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 640000000,
         "gdpPerCapita": 8800,
         "gdpPPP": 900000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "DO",
@@ -965,15 +1566,24 @@
         "area": 48671,
         "population": 11332972,
         "populationDensity": 232.9,
-        "currency": { "name": "Dominican Peso", "code": "DOP" },
+        "currency": {
+            "name": "Dominican Peso",
+            "code": "DOP"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 98.0 }
+            {
+                "name": "Spanish",
+                "percentage": 98.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 113100000000,
         "gdpPerCapita": 9980,
         "gdpPPP": 250000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "EC",
@@ -984,16 +1594,29 @@
         "area": 283561,
         "population": 18190484,
         "populationDensity": 64.2,
-        "currency": { "name": "United States Dollar", "code": "USD" },
+        "currency": {
+            "name": "United States Dollar",
+            "code": "USD"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 93.0 },
-            { "name": "Quechua", "percentage": 4.1 }
+            {
+                "name": "Spanish",
+                "percentage": 93.0
+            },
+            {
+                "name": "Quechua",
+                "percentage": 4.1
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 118800000000,
         "gdpPerCapita": 6530,
         "gdpPPP": 217000000000,
-        "organizations": ["UN", "OPEC", "WTO"]
+        "organizations": [
+            "UN",
+            "OPEC",
+            "WTO"
+        ]
     },
     {
         "code": "EG",
@@ -1004,15 +1627,26 @@
         "area": 1002450,
         "population": 109262178,
         "populationDensity": 109.0,
-        "currency": { "name": "Egyptian Pound", "code": "EGP" },
+        "currency": {
+            "name": "Egyptian Pound",
+            "code": "EGP"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 94.0 }
+            {
+                "name": "Arabic",
+                "percentage": 94.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 395000000000,
         "gdpPerCapita": 3620,
         "gdpPPP": 1820000000000,
-        "organizations": ["UN", "AU", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "SV",
@@ -1023,15 +1657,24 @@
         "area": 21041,
         "population": 6364943,
         "populationDensity": 302.3,
-        "currency": { "name": "United States Dollar", "code": "USD" },
+        "currency": {
+            "name": "United States Dollar",
+            "code": "USD"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 99.7 }
+            {
+                "name": "Spanish",
+                "percentage": 99.7
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 33100000000,
         "gdpPerCapita": 5200,
         "gdpPPP": 65000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "GQ",
@@ -1042,16 +1685,29 @@
         "area": 28051,
         "population": 1714671,
         "populationDensity": 61.1,
-        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "currency": {
+            "name": "Central African CFA Franc",
+            "code": "XAF"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 67.6 },
-            { "name": "French", "percentage": 32.0 }
+            {
+                "name": "Spanish",
+                "percentage": 67.6
+            },
+            {
+                "name": "French",
+                "percentage": 32.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 12300000000,
         "gdpPerCapita": 7170,
         "gdpPPP": 25000000000,
-        "organizations": ["UN", "AU", "OPEC"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC"
+        ]
     },
     {
         "code": "ER",
@@ -1062,16 +1718,28 @@
         "area": 117600,
         "population": 3748901,
         "populationDensity": 31.9,
-        "currency": { "name": "Eritrean Nakfa", "code": "ERN" },
+        "currency": {
+            "name": "Eritrean Nakfa",
+            "code": "ERN"
+        },
         "languages": [
-            { "name": "Tigrinya", "percentage": 55.0 },
-            { "name": "Arabic", "percentage": 5.0 }
+            {
+                "name": "Tigrinya",
+                "percentage": 55.0
+            },
+            {
+                "name": "Arabic",
+                "percentage": 5.0
+            }
         ],
         "formOfGovernment": "Unitary one-party presidential republic",
         "gdp": 2300000000,
         "gdpPerCapita": 614,
         "gdpPPP": 7500000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "EE",
@@ -1082,16 +1750,31 @@
         "area": 45228,
         "population": 1373101,
         "populationDensity": 30.4,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Estonian", "percentage": 68.5 },
-            { "name": "Russian", "percentage": 29.6 }
+            {
+                "name": "Estonian",
+                "percentage": 68.5
+            },
+            {
+                "name": "Russian",
+                "percentage": 29.6
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 40200000000,
         "gdpPerCapita": 29270,
         "gdpPPP": 60000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "SZ",
@@ -1102,16 +1785,39 @@
         "area": 17364,
         "population": 1210822,
         "populationDensity": 69.7,
-        "currency": { "name": "Swazi Lilangeni", "code": "SZL" },
+        "currency": {
+            "name": "Swazi Lilangeni",
+            "code": "SZL"
+        },
         "languages": [
-            { "name": "Swati", "percentage": 83.0 },
-            { "name": "English", "percentage": 8.0 }
+            {
+                "name": "Swati",
+                "percentage": 83.0
+            },
+            {
+                "name": "English",
+                "percentage": 8.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary absolute monarchy",
         "gdp": 4780000000,
         "gdpPerCapita": 3950,
         "gdpPPP": 13000000000,
-        "organizations": ["UN", "AU", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth"
+        ],
+        "capitals": [
+            {
+                "name": "Mbabane",
+                "role": "Administrative"
+            },
+            {
+                "name": "Lobamba",
+                "role": "Royal & Legislative"
+            }
+        ]
     },
     {
         "code": "ET",
@@ -1122,16 +1828,28 @@
         "area": 1104300,
         "population": 126527060,
         "populationDensity": 114.6,
-        "currency": { "name": "Ethiopian Birr", "code": "ETB" },
+        "currency": {
+            "name": "Ethiopian Birr",
+            "code": "ETB"
+        },
         "languages": [
-            { "name": "Oromo", "percentage": 33.8 },
-            { "name": "Amharic", "percentage": 29.3 }
+            {
+                "name": "Oromo",
+                "percentage": 33.8
+            },
+            {
+                "name": "Amharic",
+                "percentage": 29.3
+            }
         ],
         "formOfGovernment": "Federal parliamentary republic",
         "gdp": 155800000000,
         "gdpPerCapita": 1230,
         "gdpPPP": 394000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "FJ",
@@ -1142,17 +1860,33 @@
         "area": 18274,
         "population": 936375,
         "populationDensity": 51.2,
-        "currency": { "name": "Fijian Dollar", "code": "FJD" },
+        "currency": {
+            "name": "Fijian Dollar",
+            "code": "FJD"
+        },
         "languages": [
-            { "name": "English", "percentage": 44.0 },
-            { "name": "Fijian", "percentage": 37.0 },
-            { "name": "Hindi", "percentage": 19.0 }
+            {
+                "name": "English",
+                "percentage": 44.0
+            },
+            {
+                "name": "Fijian",
+                "percentage": 37.0
+            },
+            {
+                "name": "Hindi",
+                "percentage": 19.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 5320000000,
         "gdpPerCapita": 5680,
         "gdpPPP": 13000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "FI",
@@ -1163,16 +1897,31 @@
         "area": 338145,
         "population": 5563970,
         "populationDensity": 16.5,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Finnish", "percentage": 86.5 },
-            { "name": "Swedish", "percentage": 5.2 }
+            {
+                "name": "Finnish",
+                "percentage": 86.5
+            },
+            {
+                "name": "Swedish",
+                "percentage": 5.2
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 300500000000,
         "gdpPerCapita": 54030,
         "gdpPPP": 310000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "FR",
@@ -1183,15 +1932,29 @@
         "area": 640679,
         "population": 68170000,
         "populationDensity": 106.4,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "French", "percentage": 93.6 }
+            {
+                "name": "French",
+                "percentage": 93.6
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 3030000000000,
         "gdpPerCapita": 44410,
         "gdpPPP": 3870000000000,
-        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "G7",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "GA",
@@ -1202,15 +1965,26 @@
         "area": 267668,
         "population": 2436566,
         "populationDensity": 9.1,
-        "currency": { "name": "Central African CFA Franc", "code": "XAF" },
+        "currency": {
+            "name": "Central African CFA Franc",
+            "code": "XAF"
+        },
         "languages": [
-            { "name": "French", "percentage": 80.0 }
+            {
+                "name": "French",
+                "percentage": 80.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 20200000000,
         "gdpPerCapita": 8290,
         "gdpPPP": 41000000000,
-        "organizations": ["UN", "AU", "OPEC", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC",
+            "WTO"
+        ]
     },
     {
         "code": "GM",
@@ -1221,16 +1995,30 @@
         "area": 11295,
         "population": 2773168,
         "populationDensity": 245.5,
-        "currency": { "name": "Gambian Dalasi", "code": "GMD" },
+        "currency": {
+            "name": "Gambian Dalasi",
+            "code": "GMD"
+        },
         "languages": [
-            { "name": "English", "percentage": 40.0 },
-            { "name": "Mandinka", "percentage": 34.0 }
+            {
+                "name": "English",
+                "percentage": 40.0
+            },
+            {
+                "name": "Mandinka",
+                "percentage": 34.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 2170000000,
         "gdpPerCapita": 783,
         "gdpPPP": 6700000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "GE",
@@ -1241,15 +2029,24 @@
         "area": 69700,
         "population": 3728573,
         "populationDensity": 53.5,
-        "currency": { "name": "Georgian Lari", "code": "GEL" },
+        "currency": {
+            "name": "Georgian Lari",
+            "code": "GEL"
+        },
         "languages": [
-            { "name": "Georgian", "percentage": 87.6 }
+            {
+                "name": "Georgian",
+                "percentage": 87.6
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 30500000000,
         "gdpPerCapita": 8190,
         "gdpPPP": 75000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "DE",
@@ -1260,15 +2057,29 @@
         "area": 357022,
         "population": 84482267,
         "populationDensity": 236.7,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "German", "percentage": 94.8 }
+            {
+                "name": "German",
+                "percentage": 94.8
+            }
         ],
         "formOfGovernment": "Federal parliamentary republic",
         "gdp": 4460000000000,
         "gdpPerCapita": 52820,
         "gdpPPP": 5370000000000,
-        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "G7",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "GH",
@@ -1279,16 +2090,30 @@
         "area": 238533,
         "population": 33475870,
         "populationDensity": 140.3,
-        "currency": { "name": "Ghanaian Cedi", "code": "GHS" },
+        "currency": {
+            "name": "Ghanaian Cedi",
+            "code": "GHS"
+        },
         "languages": [
-            { "name": "English", "percentage": 58.0 },
-            { "name": "Akan", "percentage": 44.0 }
+            {
+                "name": "English",
+                "percentage": 58.0
+            },
+            {
+                "name": "Akan",
+                "percentage": 44.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 76400000000,
         "gdpPerCapita": 2280,
         "gdpPPP": 230000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "GR",
@@ -1299,15 +2124,27 @@
         "area": 131957,
         "population": 10341277,
         "populationDensity": 78.4,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Greek", "percentage": 99.0 }
+            {
+                "name": "Greek",
+                "percentage": 99.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 238200000000,
         "gdpPerCapita": 23040,
         "gdpPPP": 378000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "GD",
@@ -1318,15 +2155,25 @@
         "area": 344,
         "population": 125438,
         "populationDensity": 364.6,
-        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "currency": {
+            "name": "East Caribbean Dollar",
+            "code": "XCD"
+        },
         "languages": [
-            { "name": "English", "percentage": 95.0 }
+            {
+                "name": "English",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 1300000000,
         "gdpPerCapita": 10360,
         "gdpPPP": 2000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "GT",
@@ -1337,15 +2184,24 @@
         "area": 108889,
         "population": 18092026,
         "populationDensity": 166.1,
-        "currency": { "name": "Guatemalan Quetzal", "code": "GTQ" },
+        "currency": {
+            "name": "Guatemalan Quetzal",
+            "code": "GTQ"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 69.9 }
+            {
+                "name": "Spanish",
+                "percentage": 69.9
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 95000000000,
         "gdpPerCapita": 5250,
         "gdpPPP": 180000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "GN",
@@ -1356,16 +2212,28 @@
         "area": 245857,
         "population": 14190612,
         "populationDensity": 57.7,
-        "currency": { "name": "Guinean Franc", "code": "GNF" },
+        "currency": {
+            "name": "Guinean Franc",
+            "code": "GNF"
+        },
         "languages": [
-            { "name": "French", "percentage": 25.0 },
-            { "name": "Fula", "percentage": 33.9 }
+            {
+                "name": "French",
+                "percentage": 25.0
+            },
+            {
+                "name": "Fula",
+                "percentage": 33.9
+            }
         ],
         "formOfGovernment": "Unitary military junta",
         "gdp": 20400000000,
         "gdpPerCapita": 1440,
         "gdpPPP": 42000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "GW",
@@ -1376,16 +2244,28 @@
         "area": 36125,
         "population": 2150842,
         "populationDensity": 59.5,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "Portuguese", "percentage": 14.0 },
-            { "name": "Crioulo", "percentage": 44.0 }
+            {
+                "name": "Portuguese",
+                "percentage": 14.0
+            },
+            {
+                "name": "Crioulo",
+                "percentage": 44.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 1870000000,
         "gdpPerCapita": 870,
         "gdpPPP": 5000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "GY",
@@ -1396,15 +2276,25 @@
         "area": 214969,
         "population": 813834,
         "populationDensity": 3.8,
-        "currency": { "name": "Guyanese Dollar", "code": "GYD" },
+        "currency": {
+            "name": "Guyanese Dollar",
+            "code": "GYD"
+        },
         "languages": [
-            { "name": "English", "percentage": 89.0 }
+            {
+                "name": "English",
+                "percentage": 89.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 21400000000,
         "gdpPerCapita": 26310,
         "gdpPPP": 42000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "HT",
@@ -1415,16 +2305,28 @@
         "area": 27750,
         "population": 11724763,
         "populationDensity": 422.5,
-        "currency": { "name": "Haitian Gourde", "code": "HTG" },
+        "currency": {
+            "name": "Haitian Gourde",
+            "code": "HTG"
+        },
         "languages": [
-            { "name": "Haitian Creole", "percentage": 95.0 },
-            { "name": "French", "percentage": 5.0 }
+            {
+                "name": "Haitian Creole",
+                "percentage": 95.0
+            },
+            {
+                "name": "French",
+                "percentage": 5.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 20300000000,
         "gdpPerCapita": 1730,
         "gdpPPP": 35000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "HN",
@@ -1435,15 +2337,24 @@
         "area": 112492,
         "population": 10433282,
         "populationDensity": 92.7,
-        "currency": { "name": "Honduran Lempira", "code": "HNL" },
+        "currency": {
+            "name": "Honduran Lempira",
+            "code": "HNL"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 98.7 }
+            {
+                "name": "Spanish",
+                "percentage": 98.7
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 31700000000,
         "gdpPerCapita": 3040,
         "gdpPPP": 65000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "HU",
@@ -1454,15 +2365,27 @@
         "area": 93028,
         "population": 9597085,
         "populationDensity": 103.2,
-        "currency": { "name": "Hungarian Forint", "code": "HUF" },
+        "currency": {
+            "name": "Hungarian Forint",
+            "code": "HUF"
+        },
         "languages": [
-            { "name": "Hungarian", "percentage": 99.6 }
+            {
+                "name": "Hungarian",
+                "percentage": 99.6
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 212100000000,
         "gdpPerCapita": 22100,
         "gdpPPP": 405000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "IS",
@@ -1473,15 +2396,26 @@
         "area": 103000,
         "population": 383726,
         "populationDensity": 3.7,
-        "currency": { "name": "Icelandic Króna", "code": "ISK" },
+        "currency": {
+            "name": "Icelandic Króna",
+            "code": "ISK"
+        },
         "languages": [
-            { "name": "Icelandic", "percentage": 93.2 }
+            {
+                "name": "Icelandic",
+                "percentage": 93.2
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 30500000000,
         "gdpPerCapita": 79470,
         "gdpPPP": 24000000000,
-        "organizations": ["UN", "NATO", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "IN",
@@ -1492,17 +2426,35 @@
         "area": 3287263,
         "population": 1428627663,
         "populationDensity": 434.5,
-        "currency": { "name": "Indian Rupee", "code": "INR" },
+        "currency": {
+            "name": "Indian Rupee",
+            "code": "INR"
+        },
         "languages": [
-            { "name": "Hindi", "percentage": 43.6 },
-            { "name": "English", "percentage": 10.6 },
-            { "name": "Bengali", "percentage": 8.0 }
+            {
+                "name": "Hindi",
+                "percentage": 43.6
+            },
+            {
+                "name": "English",
+                "percentage": 10.6
+            },
+            {
+                "name": "Bengali",
+                "percentage": 8.0
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional republic",
         "gdp": 3940000000000,
         "gdpPerCapita": 2730,
         "gdpPPP": 14590000000000,
-        "organizations": ["UN", "G20", "WTO", "BRICS", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "G20",
+            "WTO",
+            "BRICS",
+            "Commonwealth"
+        ]
     },
     {
         "code": "ID",
@@ -1513,16 +2465,31 @@
         "area": 1904569,
         "population": 277534122,
         "populationDensity": 145.7,
-        "currency": { "name": "Indonesian Rupiah", "code": "IDR" },
+        "currency": {
+            "name": "Indonesian Rupiah",
+            "code": "IDR"
+        },
         "languages": [
-            { "name": "Indonesian", "percentage": 94.0 },
-            { "name": "Javanese", "percentage": 34.0 }
+            {
+                "name": "Indonesian",
+                "percentage": 94.0
+            },
+            {
+                "name": "Javanese",
+                "percentage": 34.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 1417000000000,
         "gdpPerCapita": 5110,
         "gdpPPP": 4390000000000,
-        "organizations": ["UN", "G20", "ASEAN", "OPEC", "WTO"]
+        "organizations": [
+            "UN",
+            "G20",
+            "ASEAN",
+            "OPEC",
+            "WTO"
+        ]
     },
     {
         "code": "IR",
@@ -1533,16 +2500,28 @@
         "area": 1648195,
         "population": 88550570,
         "populationDensity": 53.7,
-        "currency": { "name": "Iranian Rial", "code": "IRR" },
+        "currency": {
+            "name": "Iranian Rial",
+            "code": "IRR"
+        },
         "languages": [
-            { "name": "Persian", "percentage": 53.0 },
-            { "name": "Azerbaijani", "percentage": 18.0 }
+            {
+                "name": "Persian",
+                "percentage": 53.0
+            },
+            {
+                "name": "Azerbaijani",
+                "percentage": 18.0
+            }
         ],
         "formOfGovernment": "Unitary theocratic presidential republic",
         "gdp": 401500000000,
         "gdpPerCapita": 4530,
         "gdpPPP": 1640000000000,
-        "organizations": ["UN", "OPEC"]
+        "organizations": [
+            "UN",
+            "OPEC"
+        ]
     },
     {
         "code": "IQ",
@@ -1553,16 +2532,29 @@
         "area": 438317,
         "population": 44496122,
         "populationDensity": 101.5,
-        "currency": { "name": "Iraqi Dinar", "code": "IQD" },
+        "currency": {
+            "name": "Iraqi Dinar",
+            "code": "IQD"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 79.0 },
-            { "name": "Kurdish", "percentage": 21.0 }
+            {
+                "name": "Arabic",
+                "percentage": 79.0
+            },
+            {
+                "name": "Kurdish",
+                "percentage": 21.0
+            }
         ],
         "formOfGovernment": "Federal parliamentary republic",
         "gdp": 264200000000,
         "gdpPerCapita": 5940,
         "gdpPPP": 512000000000,
-        "organizations": ["UN", "OPEC", "Arab League"]
+        "organizations": [
+            "UN",
+            "OPEC",
+            "Arab League"
+        ]
     },
     {
         "code": "IE",
@@ -1573,16 +2565,30 @@
         "area": 70273,
         "population": 5149139,
         "populationDensity": 73.3,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "English", "percentage": 94.0 },
-            { "name": "Irish", "percentage": 39.8 }
+            {
+                "name": "English",
+                "percentage": 94.0
+            },
+            {
+                "name": "Irish",
+                "percentage": 39.8
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 545600000000,
         "gdpPerCapita": 106000,
         "gdpPPP": 616000000000,
-        "organizations": ["UN", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "IL",
@@ -1593,16 +2599,29 @@
         "area": 20770,
         "population": 9842000,
         "populationDensity": 473.9,
-        "currency": { "name": "Israeli New Shekel", "code": "ILS" },
+        "currency": {
+            "name": "Israeli New Shekel",
+            "code": "ILS"
+        },
         "languages": [
-            { "name": "Hebrew", "percentage": 87.0 },
-            { "name": "Arabic", "percentage": 13.0 }
+            {
+                "name": "Hebrew",
+                "percentage": 87.0
+            },
+            {
+                "name": "Arabic",
+                "percentage": 13.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 525000000000,
         "gdpPerCapita": 53350,
         "gdpPPP": 504000000000,
-        "organizations": ["UN", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "IT",
@@ -1613,15 +2632,29 @@
         "area": 301340,
         "population": 58853482,
         "populationDensity": 195.3,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Italian", "percentage": 93.0 }
+            {
+                "name": "Italian",
+                "percentage": 93.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 2250000000000,
         "gdpPerCapita": 38200,
         "gdpPPP": 3110000000000,
-        "organizations": ["UN", "NATO", "EU", "G7", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "G7",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "JM",
@@ -1632,15 +2665,25 @@
         "area": 10991,
         "population": 2825544,
         "populationDensity": 257.1,
-        "currency": { "name": "Jamaican Dollar", "code": "JMD" },
+        "currency": {
+            "name": "Jamaican Dollar",
+            "code": "JMD"
+        },
         "languages": [
-            { "name": "English", "percentage": 94.0 }
+            {
+                "name": "English",
+                "percentage": 94.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 18600000000,
         "gdpPerCapita": 6590,
         "gdpPPP": 30000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "JP",
@@ -1651,15 +2694,27 @@
         "area": 377975,
         "population": 123294513,
         "populationDensity": 326.2,
-        "currency": { "name": "Japanese Yen", "code": "JPY" },
+        "currency": {
+            "name": "Japanese Yen",
+            "code": "JPY"
+        },
         "languages": [
-            { "name": "Japanese", "percentage": 99.1 }
+            {
+                "name": "Japanese",
+                "percentage": 99.1
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 4210000000000,
         "gdpPerCapita": 34170,
         "gdpPPP": 6490000000000,
-        "organizations": ["UN", "G7", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "G7",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "JO",
@@ -1670,15 +2725,25 @@
         "area": 89342,
         "population": 11337052,
         "populationDensity": 126.9,
-        "currency": { "name": "Jordanian Dinar", "code": "JOD" },
+        "currency": {
+            "name": "Jordanian Dinar",
+            "code": "JOD"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 97.9 }
+            {
+                "name": "Arabic",
+                "percentage": 97.9
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 50800000000,
         "gdpPerCapita": 4480,
         "gdpPPP": 113000000000,
-        "organizations": ["UN", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "KZ",
@@ -1689,16 +2754,30 @@
         "area": 2724900,
         "population": 19900000,
         "populationDensity": 7.3,
-        "currency": { "name": "Kazakhstani Tenge", "code": "KZT" },
+        "currency": {
+            "name": "Kazakhstani Tenge",
+            "code": "KZT"
+        },
         "languages": [
-            { "name": "Kazakh", "percentage": 83.1 },
-            { "name": "Russian", "percentage": 94.4 }
+            {
+                "name": "Kazakh",
+                "percentage": 83.1
+            },
+            {
+                "name": "Russian",
+                "percentage": 94.4
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 261000000000,
         "gdpPerCapita": 13120,
         "gdpPPP": 620000000000,
-        "organizations": ["UN", "CIS", "SCO", "WTO"]
+        "organizations": [
+            "UN",
+            "CIS",
+            "SCO",
+            "WTO"
+        ]
     },
     {
         "code": "KE",
@@ -1709,16 +2788,30 @@
         "area": 580367,
         "population": 55100586,
         "populationDensity": 94.9,
-        "currency": { "name": "Kenyan Shilling", "code": "KES" },
+        "currency": {
+            "name": "Kenyan Shilling",
+            "code": "KES"
+        },
         "languages": [
-            { "name": "Swahili", "percentage": 67.2 },
-            { "name": "English", "percentage": 16.3 }
+            {
+                "name": "Swahili",
+                "percentage": 67.2
+            },
+            {
+                "name": "English",
+                "percentage": 16.3
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 113000000000,
         "gdpPerCapita": 2050,
         "gdpPPP": 330000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "KI",
@@ -1729,16 +2822,28 @@
         "area": 811,
         "population": 131232,
         "populationDensity": 161.8,
-        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "currency": {
+            "name": "Australian Dollar",
+            "code": "AUD"
+        },
         "languages": [
-            { "name": "English", "percentage": 85.0 },
-            { "name": "Gilbertese", "percentage": 97.0 }
+            {
+                "name": "English",
+                "percentage": 85.0
+            },
+            {
+                "name": "Gilbertese",
+                "percentage": 97.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 248000000,
         "gdpPerCapita": 1890,
         "gdpPPP": 280000000,
-        "organizations": ["UN", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "Commonwealth"
+        ]
     },
     {
         "code": "KP",
@@ -1749,15 +2854,23 @@
         "area": 120538,
         "population": 26160821,
         "populationDensity": 217.0,
-        "currency": { "name": "North Korean Won", "code": "KPW" },
+        "currency": {
+            "name": "North Korean Won",
+            "code": "KPW"
+        },
         "languages": [
-            { "name": "Korean", "percentage": 99.9 }
+            {
+                "name": "Korean",
+                "percentage": 99.9
+            }
         ],
         "formOfGovernment": "Unitary one-party socialist republic",
         "gdp": 18000000000,
         "gdpPerCapita": 688,
         "gdpPPP": 40000000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "KR",
@@ -1768,15 +2881,26 @@
         "area": 100210,
         "population": 51744876,
         "populationDensity": 516.4,
-        "currency": { "name": "South Korean Won", "code": "KRW" },
+        "currency": {
+            "name": "South Korean Won",
+            "code": "KRW"
+        },
         "languages": [
-            { "name": "Korean", "percentage": 99.2 }
+            {
+                "name": "Korean",
+                "percentage": 99.2
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 1710000000000,
         "gdpPerCapita": 33150,
         "gdpPPP": 2830000000000,
-        "organizations": ["UN", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "KW",
@@ -1787,15 +2911,26 @@
         "area": 17818,
         "population": 4310108,
         "populationDensity": 241.9,
-        "currency": { "name": "Kuwaiti Dinar", "code": "KWD" },
+        "currency": {
+            "name": "Kuwaiti Dinar",
+            "code": "KWD"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 78.0 }
+            {
+                "name": "Arabic",
+                "percentage": 78.0
+            }
         ],
         "formOfGovernment": "Unitary constitutional monarchy",
         "gdp": 164900000000,
         "gdpPerCapita": 38250,
         "gdpPPP": 303000000000,
-        "organizations": ["UN", "OPEC", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "OPEC",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "KG",
@@ -1806,16 +2941,30 @@
         "area": 199951,
         "population": 7100000,
         "populationDensity": 35.5,
-        "currency": { "name": "Kyrgyzstani Som", "code": "KGS" },
+        "currency": {
+            "name": "Kyrgyzstani Som",
+            "code": "KGS"
+        },
         "languages": [
-            { "name": "Kyrgyz", "percentage": 71.4 },
-            { "name": "Russian", "percentage": 14.4 }
+            {
+                "name": "Kyrgyz",
+                "percentage": 71.4
+            },
+            {
+                "name": "Russian",
+                "percentage": 14.4
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 11900000000,
         "gdpPerCapita": 1680,
         "gdpPPP": 42000000000,
-        "organizations": ["UN", "CIS", "SCO", "WTO"]
+        "organizations": [
+            "UN",
+            "CIS",
+            "SCO",
+            "WTO"
+        ]
     },
     {
         "code": "LA",
@@ -1826,15 +2975,25 @@
         "area": 236800,
         "population": 7633779,
         "populationDensity": 32.2,
-        "currency": { "name": "Lao Kip", "code": "LAK" },
+        "currency": {
+            "name": "Lao Kip",
+            "code": "LAK"
+        },
         "languages": [
-            { "name": "Lao", "percentage": 82.0 }
+            {
+                "name": "Lao",
+                "percentage": 82.0
+            }
         ],
         "formOfGovernment": "Unitary one-party socialist republic",
         "gdp": 15800000000,
         "gdpPerCapita": 2070,
         "gdpPPP": 68000000000,
-        "organizations": ["UN", "ASEAN", "WTO"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "WTO"
+        ]
     },
     {
         "code": "LV",
@@ -1845,16 +3004,31 @@
         "area": 64589,
         "population": 1830211,
         "populationDensity": 28.3,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Latvian", "percentage": 62.1 },
-            { "name": "Russian", "percentage": 37.2 }
+            {
+                "name": "Latvian",
+                "percentage": 62.1
+            },
+            {
+                "name": "Russian",
+                "percentage": 37.2
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 43400000000,
         "gdpPerCapita": 23720,
         "gdpPPP": 70000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "LB",
@@ -1865,15 +3039,24 @@
         "area": 10452,
         "population": 5489739,
         "populationDensity": 525.2,
-        "currency": { "name": "Lebanese Pound", "code": "LBP" },
+        "currency": {
+            "name": "Lebanese Pound",
+            "code": "LBP"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 93.0 }
+            {
+                "name": "Arabic",
+                "percentage": 93.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 21780000000,
         "gdpPerCapita": 3970,
         "gdpPPP": 70000000000,
-        "organizations": ["UN", "Arab League"]
+        "organizations": [
+            "UN",
+            "Arab League"
+        ]
     },
     {
         "code": "LS",
@@ -1884,16 +3067,29 @@
         "area": 30355,
         "population": 2330318,
         "populationDensity": 76.8,
-        "currency": { "name": "Lesotho Loti", "code": "LSL" },
+        "currency": {
+            "name": "Lesotho Loti",
+            "code": "LSL"
+        },
         "languages": [
-            { "name": "Sesotho", "percentage": 93.0 },
-            { "name": "English", "percentage": 7.0 }
+            {
+                "name": "Sesotho",
+                "percentage": 93.0
+            },
+            {
+                "name": "English",
+                "percentage": 7.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 2500000000,
         "gdpPerCapita": 1070,
         "gdpPPP": 6800000000,
-        "organizations": ["UN", "AU", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth"
+        ]
     },
     {
         "code": "LR",
@@ -1904,15 +3100,24 @@
         "area": 111369,
         "population": 5418377,
         "populationDensity": 48.7,
-        "currency": { "name": "Liberian Dollar", "code": "LRD" },
+        "currency": {
+            "name": "Liberian Dollar",
+            "code": "LRD"
+        },
         "languages": [
-            { "name": "English", "percentage": 20.0 }
+            {
+                "name": "English",
+                "percentage": 20.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 4000000000,
         "gdpPerCapita": 740,
         "gdpPPP": 8500000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "LY",
@@ -1923,15 +3128,26 @@
         "area": 1759540,
         "population": 7137931,
         "populationDensity": 4.1,
-        "currency": { "name": "Libyan Dinar", "code": "LYD" },
+        "currency": {
+            "name": "Libyan Dinar",
+            "code": "LYD"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 97.0 }
+            {
+                "name": "Arabic",
+                "percentage": 97.0
+            }
         ],
         "formOfGovernment": "Provisional government",
         "gdp": 45600000000,
         "gdpPerCapita": 6390,
         "gdpPPP": 100000000000,
-        "organizations": ["UN", "AU", "OPEC", "Arab League"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC",
+            "Arab League"
+        ]
     },
     {
         "code": "LI",
@@ -1942,15 +3158,24 @@
         "area": 160,
         "population": 39584,
         "populationDensity": 247.4,
-        "currency": { "name": "Swiss Franc", "code": "CHF" },
+        "currency": {
+            "name": "Swiss Franc",
+            "code": "CHF"
+        },
         "languages": [
-            { "name": "German", "percentage": 94.5 }
+            {
+                "name": "German",
+                "percentage": 94.5
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 7200000000,
         "gdpPerCapita": 181900,
         "gdpPPP": 7200000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "LT",
@@ -1961,16 +3186,31 @@
         "area": 65300,
         "population": 2871897,
         "populationDensity": 44.0,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Lithuanian", "percentage": 85.3 },
-            { "name": "Russian", "percentage": 8.2 }
+            {
+                "name": "Lithuanian",
+                "percentage": 85.3
+            },
+            {
+                "name": "Russian",
+                "percentage": 8.2
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 78300000000,
         "gdpPerCapita": 27280,
         "gdpPPP": 126000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "LU",
@@ -1981,17 +3221,35 @@
         "area": 2586,
         "population": 660809,
         "populationDensity": 255.5,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Luxembourgish", "percentage": 55.8 },
-            { "name": "French", "percentage": 15.7 },
-            { "name": "German", "percentage": 12.1 }
+            {
+                "name": "Luxembourgish",
+                "percentage": 55.8
+            },
+            {
+                "name": "French",
+                "percentage": 15.7
+            },
+            {
+                "name": "German",
+                "percentage": 12.1
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 86900000000,
         "gdpPerCapita": 131580,
         "gdpPPP": 88000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "MG",
@@ -2002,16 +3260,28 @@
         "area": 587041,
         "population": 30325732,
         "populationDensity": 51.7,
-        "currency": { "name": "Malagasy Ariary", "code": "MGA" },
+        "currency": {
+            "name": "Malagasy Ariary",
+            "code": "MGA"
+        },
         "languages": [
-            { "name": "Malagasy", "percentage": 99.0 },
-            { "name": "French", "percentage": 20.0 }
+            {
+                "name": "Malagasy",
+                "percentage": 99.0
+            },
+            {
+                "name": "French",
+                "percentage": 20.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 15800000000,
         "gdpPerCapita": 521,
         "gdpPPP": 47000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "MW",
@@ -2022,16 +3292,29 @@
         "area": 118484,
         "population": 20931751,
         "populationDensity": 176.7,
-        "currency": { "name": "Malawian Kwacha", "code": "MWK" },
+        "currency": {
+            "name": "Malawian Kwacha",
+            "code": "MWK"
+        },
         "languages": [
-            { "name": "Chichewa", "percentage": 57.2 },
-            { "name": "English", "percentage": 7.0 }
+            {
+                "name": "Chichewa",
+                "percentage": 57.2
+            },
+            {
+                "name": "English",
+                "percentage": 7.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 14000000000,
         "gdpPerCapita": 670,
         "gdpPPP": 33000000000,
-        "organizations": ["UN", "AU", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth"
+        ]
     },
     {
         "code": "MY",
@@ -2042,16 +3325,40 @@
         "area": 330803,
         "population": 34308525,
         "populationDensity": 103.7,
-        "currency": { "name": "Malaysian Ringgit", "code": "MYR" },
+        "currency": {
+            "name": "Malaysian Ringgit",
+            "code": "MYR"
+        },
         "languages": [
-            { "name": "Malay", "percentage": 69.1 },
-            { "name": "English", "percentage": 50.0 }
+            {
+                "name": "Malay",
+                "percentage": 69.1
+            },
+            {
+                "name": "English",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional monarchy",
         "gdp": 415600000000,
         "gdpPerCapita": 12110,
         "gdpPPP": 1060000000000,
-        "organizations": ["UN", "ASEAN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "Commonwealth",
+            "WTO"
+        ],
+        "capitals": [
+            {
+                "name": "Kuala Lumpur",
+                "role": "Official"
+            },
+            {
+                "name": "Putrajaya",
+                "role": "Administrative"
+            }
+        ]
     },
     {
         "code": "MV",
@@ -2062,15 +3369,25 @@
         "area": 298,
         "population": 521021,
         "populationDensity": 1748.4,
-        "currency": { "name": "Maldivian Rufiyaa", "code": "MVR" },
+        "currency": {
+            "name": "Maldivian Rufiyaa",
+            "code": "MVR"
+        },
         "languages": [
-            { "name": "Dhivehi", "percentage": 98.0 }
+            {
+                "name": "Dhivehi",
+                "percentage": 98.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 6600000000,
         "gdpPerCapita": 12670,
         "gdpPPP": 12000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "ML",
@@ -2081,16 +3398,28 @@
         "area": 1240192,
         "population": 22593590,
         "populationDensity": 18.2,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "French", "percentage": 11.0 },
-            { "name": "Bambara", "percentage": 46.3 }
+            {
+                "name": "French",
+                "percentage": 11.0
+            },
+            {
+                "name": "Bambara",
+                "percentage": 46.3
+            }
         ],
         "formOfGovernment": "Unitary military junta",
         "gdp": 19300000000,
         "gdpPerCapita": 850,
         "gdpPPP": 52000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "MT",
@@ -2101,16 +3430,30 @@
         "area": 316,
         "population": 535064,
         "populationDensity": 1693.2,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Maltese", "percentage": 90.1 },
-            { "name": "English", "percentage": 6.0 }
+            {
+                "name": "Maltese",
+                "percentage": 90.1
+            },
+            {
+                "name": "English",
+                "percentage": 6.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 20900000000,
         "gdpPerCapita": 39060,
         "gdpPPP": 27000000000,
-        "organizations": ["UN", "EU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "EU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "MH",
@@ -2121,16 +3464,27 @@
         "area": 181,
         "population": 42050,
         "populationDensity": 232.3,
-        "currency": { "name": "United States Dollar", "code": "USD" },
+        "currency": {
+            "name": "United States Dollar",
+            "code": "USD"
+        },
         "languages": [
-            { "name": "Marshallese", "percentage": 98.2 },
-            { "name": "English", "percentage": 50.0 }
+            {
+                "name": "Marshallese",
+                "percentage": 98.2
+            },
+            {
+                "name": "English",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 280000000,
         "gdpPerCapita": 6660,
         "gdpPPP": 280000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "MR",
@@ -2141,15 +3495,25 @@
         "area": 1030700,
         "population": 4736139,
         "populationDensity": 4.6,
-        "currency": { "name": "Mauritanian Ouguiya", "code": "MRU" },
+        "currency": {
+            "name": "Mauritanian Ouguiya",
+            "code": "MRU"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 80.0 }
+            {
+                "name": "Arabic",
+                "percentage": 80.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 10500000000,
         "gdpPerCapita": 2220,
         "gdpPPP": 28000000000,
-        "organizations": ["UN", "AU", "Arab League"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League"
+        ]
     },
     {
         "code": "MU",
@@ -2160,17 +3524,34 @@
         "area": 2040,
         "population": 1300557,
         "populationDensity": 637.5,
-        "currency": { "name": "Mauritian Rupee", "code": "MUR" },
+        "currency": {
+            "name": "Mauritian Rupee",
+            "code": "MUR"
+        },
         "languages": [
-            { "name": "Mauritian Creole", "percentage": 86.5 },
-            { "name": "English", "percentage": 5.0 },
-            { "name": "French", "percentage": 4.0 }
+            {
+                "name": "Mauritian Creole",
+                "percentage": 86.5
+            },
+            {
+                "name": "English",
+                "percentage": 5.0
+            },
+            {
+                "name": "French",
+                "percentage": 4.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 14900000000,
         "gdpPerCapita": 11460,
         "gdpPPP": 32000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "MX",
@@ -2181,16 +3562,31 @@
         "area": 1964375,
         "population": 129875530,
         "populationDensity": 66.1,
-        "currency": { "name": "Mexican Peso", "code": "MXN" },
+        "currency": {
+            "name": "Mexican Peso",
+            "code": "MXN"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 93.8 },
-            { "name": "Nahuatl", "percentage": 1.7 }
+            {
+                "name": "Spanish",
+                "percentage": 93.8
+            },
+            {
+                "name": "Nahuatl",
+                "percentage": 1.7
+            }
         ],
         "formOfGovernment": "Federal presidential constitutional republic",
         "gdp": 1789000000000,
         "gdpPerCapita": 13800,
         "gdpPPP": 2940000000000,
-        "organizations": ["UN", "G20", "OECD", "WTO", "USMCA"]
+        "organizations": [
+            "UN",
+            "G20",
+            "OECD",
+            "WTO",
+            "USMCA"
+        ]
     },
     {
         "code": "FM",
@@ -2201,15 +3597,23 @@
         "area": 702,
         "population": 114164,
         "populationDensity": 162.6,
-        "currency": { "name": "United States Dollar", "code": "USD" },
+        "currency": {
+            "name": "United States Dollar",
+            "code": "USD"
+        },
         "languages": [
-            { "name": "English", "percentage": 60.0 }
+            {
+                "name": "English",
+                "percentage": 60.0
+            }
         ],
         "formOfGovernment": "Federal parliamentary republic",
         "gdp": 440000000,
         "gdpPerCapita": 3860,
         "gdpPPP": 440000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "MD",
@@ -2220,16 +3624,28 @@
         "area": 33846,
         "population": 2512758,
         "populationDensity": 74.2,
-        "currency": { "name": "Moldovan Leu", "code": "MDL" },
+        "currency": {
+            "name": "Moldovan Leu",
+            "code": "MDL"
+        },
         "languages": [
-            { "name": "Romanian", "percentage": 82.2 },
-            { "name": "Russian", "percentage": 14.5 }
+            {
+                "name": "Romanian",
+                "percentage": 82.2
+            },
+            {
+                "name": "Russian",
+                "percentage": 14.5
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 16500000000,
         "gdpPerCapita": 6570,
         "gdpPPP": 40000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "MC",
@@ -2240,16 +3656,27 @@
         "area": 2.02,
         "population": 39050,
         "populationDensity": 19332.7,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "French", "percentage": 50.0 },
-            { "name": "Monégasque", "percentage": 20.0 }
+            {
+                "name": "French",
+                "percentage": 50.0
+            },
+            {
+                "name": "Monégasque",
+                "percentage": 20.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 8600000000,
         "gdpPerCapita": 220200,
         "gdpPPP": 8600000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "MN",
@@ -2260,15 +3687,24 @@
         "area": 1564116,
         "population": 3447157,
         "populationDensity": 2.2,
-        "currency": { "name": "Mongolian Tögrög", "code": "MNT" },
+        "currency": {
+            "name": "Mongolian Tögrög",
+            "code": "MNT"
+        },
         "languages": [
-            { "name": "Mongolian", "percentage": 95.0 }
+            {
+                "name": "Mongolian",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 20000000000,
         "gdpPerCapita": 5800,
         "gdpPPP": 49000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "ME",
@@ -2279,16 +3715,29 @@
         "area": 13812,
         "population": 616695,
         "populationDensity": 44.6,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Montenegrin", "percentage": 42.9 },
-            { "name": "Serbian", "percentage": 37.0 }
+            {
+                "name": "Montenegrin",
+                "percentage": 42.9
+            },
+            {
+                "name": "Serbian",
+                "percentage": 37.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 7400000000,
         "gdpPerCapita": 12000,
         "gdpPPP": 15000000000,
-        "organizations": ["UN", "NATO", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "WTO"
+        ]
     },
     {
         "code": "MA",
@@ -2299,16 +3748,30 @@
         "area": 446550,
         "population": 37840044,
         "populationDensity": 84.7,
-        "currency": { "name": "Moroccan Dirham", "code": "MAD" },
+        "currency": {
+            "name": "Moroccan Dirham",
+            "code": "MAD"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 65.0 },
-            { "name": "Berber", "percentage": 26.0 }
+            {
+                "name": "Arabic",
+                "percentage": 65.0
+            },
+            {
+                "name": "Berber",
+                "percentage": 26.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 141500000000,
         "gdpPerCapita": 3740,
         "gdpPPP": 380000000000,
-        "organizations": ["UN", "AU", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "MZ",
@@ -2319,15 +3782,25 @@
         "area": 801590,
         "population": 33897354,
         "populationDensity": 42.3,
-        "currency": { "name": "Mozambican Metical", "code": "MZN" },
+        "currency": {
+            "name": "Mozambican Metical",
+            "code": "MZN"
+        },
         "languages": [
-            { "name": "Portuguese", "percentage": 50.4 }
+            {
+                "name": "Portuguese",
+                "percentage": 50.4
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 20500000000,
         "gdpPerCapita": 605,
         "gdpPPP": 47000000000,
-        "organizations": ["UN", "AU", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth"
+        ]
     },
     {
         "code": "MM",
@@ -2338,15 +3811,34 @@
         "area": 676578,
         "population": 54179306,
         "populationDensity": 80.1,
-        "currency": { "name": "Myanmar Kyat", "code": "MMK" },
+        "currency": {
+            "name": "Myanmar Kyat",
+            "code": "MMK"
+        },
         "languages": [
-            { "name": "Burmese", "percentage": 68.0 }
+            {
+                "name": "Burmese",
+                "percentage": 68.0
+            }
         ],
         "formOfGovernment": "Unitary military junta",
         "gdp": 59400000000,
         "gdpPerCapita": 1100,
         "gdpPPP": 250000000000,
-        "organizations": ["UN", "ASEAN"]
+        "organizations": [
+            "UN",
+            "ASEAN"
+        ],
+        "capitals": [
+            {
+                "name": "Naypyidaw",
+                "role": "Official"
+            },
+            {
+                "name": "Yangon",
+                "role": "Economic"
+            }
+        ]
     },
     {
         "code": "NA",
@@ -2357,16 +3849,30 @@
         "area": 824292,
         "population": 2604172,
         "populationDensity": 3.2,
-        "currency": { "name": "Namibian Dollar", "code": "NAD" },
+        "currency": {
+            "name": "Namibian Dollar",
+            "code": "NAD"
+        },
         "languages": [
-            { "name": "English", "percentage": 11.0 },
-            { "name": "Oshiwambo", "percentage": 49.0 }
+            {
+                "name": "English",
+                "percentage": 11.0
+            },
+            {
+                "name": "Oshiwambo",
+                "percentage": 49.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 12800000000,
         "gdpPerCapita": 4920,
         "gdpPPP": 29000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "NR",
@@ -2377,16 +3883,27 @@
         "area": 21,
         "population": 12780,
         "populationDensity": 608.6,
-        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "currency": {
+            "name": "Australian Dollar",
+            "code": "AUD"
+        },
         "languages": [
-            { "name": "Nauruan", "percentage": 93.0 },
-            { "name": "English", "percentage": 50.0 }
+            {
+                "name": "Nauruan",
+                "percentage": 93.0
+            },
+            {
+                "name": "English",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 150000000,
         "gdpPerCapita": 11740,
         "gdpPPP": 150000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "NP",
@@ -2397,16 +3914,28 @@
         "area": 147181,
         "population": 30896590,
         "populationDensity": 209.9,
-        "currency": { "name": "Nepalese Rupee", "code": "NPR" },
+        "currency": {
+            "name": "Nepalese Rupee",
+            "code": "NPR"
+        },
         "languages": [
-            { "name": "Nepali", "percentage": 44.6 },
-            { "name": "Maithili", "percentage": 11.7 }
+            {
+                "name": "Nepali",
+                "percentage": 44.6
+            },
+            {
+                "name": "Maithili",
+                "percentage": 11.7
+            }
         ],
         "formOfGovernment": "Federal parliamentary republic",
         "gdp": 40830000000,
         "gdpPerCapita": 1320,
         "gdpPPP": 141000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "NL",
@@ -2417,15 +3946,37 @@
         "area": 41543,
         "population": 17811291,
         "populationDensity": 428.7,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Dutch", "percentage": 95.6 }
+            {
+                "name": "Dutch",
+                "percentage": 95.6
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 1092000000000,
         "gdpPerCapita": 61350,
         "gdpPPP": 1170000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ],
+        "capitals": [
+            {
+                "name": "Amsterdam",
+                "role": "Constitutional"
+            },
+            {
+                "name": "The Hague",
+                "role": "Seat of Government"
+            }
+        ]
     },
     {
         "code": "NZ",
@@ -2436,16 +3987,30 @@
         "area": 268021,
         "population": 5228100,
         "populationDensity": 19.5,
-        "currency": { "name": "New Zealand Dollar", "code": "NZD" },
+        "currency": {
+            "name": "New Zealand Dollar",
+            "code": "NZD"
+        },
         "languages": [
-            { "name": "English", "percentage": 95.4 },
-            { "name": "Māori", "percentage": 4.0 }
+            {
+                "name": "English",
+                "percentage": 95.4
+            },
+            {
+                "name": "Māori",
+                "percentage": 4.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 253500000000,
         "gdpPerCapita": 48510,
         "gdpPPP": 263000000000,
-        "organizations": ["UN", "OECD", "WTO", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "OECD",
+            "WTO",
+            "Commonwealth"
+        ]
     },
     {
         "code": "NI",
@@ -2456,15 +4021,24 @@
         "area": 130373,
         "population": 6948392,
         "populationDensity": 53.3,
-        "currency": { "name": "Nicaraguan Córdoba", "code": "NIO" },
+        "currency": {
+            "name": "Nicaraguan Córdoba",
+            "code": "NIO"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 97.0 }
+            {
+                "name": "Spanish",
+                "percentage": 97.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 17600000000,
         "gdpPerCapita": 2530,
         "gdpPPP": 47000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "NE",
@@ -2475,16 +4049,28 @@
         "area": 1267000,
         "population": 26207977,
         "populationDensity": 20.7,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "French", "percentage": 10.0 },
-            { "name": "Hausa", "percentage": 53.1 }
+            {
+                "name": "French",
+                "percentage": 10.0
+            },
+            {
+                "name": "Hausa",
+                "percentage": 53.1
+            }
         ],
         "formOfGovernment": "Unitary military junta",
         "gdp": 16800000000,
         "gdpPerCapita": 640,
         "gdpPPP": 40000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "NG",
@@ -2495,17 +4081,35 @@
         "area": 923768,
         "population": 223804632,
         "populationDensity": 242.3,
-        "currency": { "name": "Nigerian Naira", "code": "NGN" },
+        "currency": {
+            "name": "Nigerian Naira",
+            "code": "NGN"
+        },
         "languages": [
-            { "name": "English", "percentage": 53.0 },
-            { "name": "Hausa", "percentage": 18.8 },
-            { "name": "Yoruba", "percentage": 12.1 }
+            {
+                "name": "English",
+                "percentage": 53.0
+            },
+            {
+                "name": "Hausa",
+                "percentage": 18.8
+            },
+            {
+                "name": "Yoruba",
+                "percentage": 12.1
+            }
         ],
         "formOfGovernment": "Federal presidential constitutional republic",
         "gdp": 363000000000,
         "gdpPerCapita": 1620,
         "gdpPPP": 1270000000000,
-        "organizations": ["UN", "AU", "OPEC", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "OPEC",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "MK",
@@ -2516,16 +4120,29 @@
         "area": 25713,
         "population": 1832696,
         "populationDensity": 71.3,
-        "currency": { "name": "Macedonian Denar", "code": "MKD" },
+        "currency": {
+            "name": "Macedonian Denar",
+            "code": "MKD"
+        },
         "languages": [
-            { "name": "Macedonian", "percentage": 66.5 },
-            { "name": "Albanian", "percentage": 25.1 }
+            {
+                "name": "Macedonian",
+                "percentage": 66.5
+            },
+            {
+                "name": "Albanian",
+                "percentage": 25.1
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 14200000000,
         "gdpPerCapita": 7750,
         "gdpPPP": 39000000000,
-        "organizations": ["UN", "NATO", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "WTO"
+        ]
     },
     {
         "code": "NO",
@@ -2536,15 +4153,26 @@
         "area": 323802,
         "population": 5550203,
         "populationDensity": 17.1,
-        "currency": { "name": "Norwegian Krone", "code": "NOK" },
+        "currency": {
+            "name": "Norwegian Krone",
+            "code": "NOK"
+        },
         "languages": [
-            { "name": "Norwegian", "percentage": 95.2 }
+            {
+                "name": "Norwegian",
+                "percentage": 95.2
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 485500000000,
         "gdpPerCapita": 87470,
         "gdpPPP": 430000000000,
-        "organizations": ["UN", "NATO", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "OM",
@@ -2555,15 +4183,25 @@
         "area": 309500,
         "population": 4644384,
         "populationDensity": 15.0,
-        "currency": { "name": "Omani Rial", "code": "OMR" },
+        "currency": {
+            "name": "Omani Rial",
+            "code": "OMR"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 90.0 }
+            {
+                "name": "Arabic",
+                "percentage": 90.0
+            }
         ],
         "formOfGovernment": "Unitary absolute monarchy",
         "gdp": 104900000000,
         "gdpPerCapita": 22590,
         "gdpPPP": 193000000000,
-        "organizations": ["UN", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "PK",
@@ -2574,17 +4212,33 @@
         "area": 881913,
         "population": 240485658,
         "populationDensity": 272.7,
-        "currency": { "name": "Pakistani Rupee", "code": "PKR" },
+        "currency": {
+            "name": "Pakistani Rupee",
+            "code": "PKR"
+        },
         "languages": [
-            { "name": "Urdu", "percentage": 7.6 },
-            { "name": "Punjabi", "percentage": 38.8 },
-            { "name": "English", "percentage": 10.0 }
+            {
+                "name": "Urdu",
+                "percentage": 7.6
+            },
+            {
+                "name": "Punjabi",
+                "percentage": 38.8
+            },
+            {
+                "name": "English",
+                "percentage": 10.0
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional republic",
         "gdp": 338200000000,
         "gdpPerCapita": 1410,
         "gdpPPP": 1500000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "PW",
@@ -2595,16 +4249,27 @@
         "area": 459,
         "population": 18233,
         "populationDensity": 39.7,
-        "currency": { "name": "United States Dollar", "code": "USD" },
+        "currency": {
+            "name": "United States Dollar",
+            "code": "USD"
+        },
         "languages": [
-            { "name": "Palauan", "percentage": 64.7 },
-            { "name": "English", "percentage": 9.4 }
+            {
+                "name": "Palauan",
+                "percentage": 64.7
+            },
+            {
+                "name": "English",
+                "percentage": 9.4
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 290000000,
         "gdpPerCapita": 15900,
         "gdpPPP": 290000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "PS",
@@ -2615,15 +4280,24 @@
         "area": 6020,
         "population": 5483450,
         "populationDensity": 910.9,
-        "currency": { "name": "Israeli New Shekel", "code": "ILS" },
+        "currency": {
+            "name": "Israeli New Shekel",
+            "code": "ILS"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 96.0 }
+            {
+                "name": "Arabic",
+                "percentage": 96.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 19100000000,
         "gdpPerCapita": 3480,
         "gdpPPP": 35000000000,
-        "organizations": ["UN", "Arab League"]
+        "organizations": [
+            "UN",
+            "Arab League"
+        ]
     },
     {
         "code": "PA",
@@ -2634,15 +4308,24 @@
         "area": 75417,
         "population": 4468087,
         "populationDensity": 59.2,
-        "currency": { "name": "Panamanian Balboa", "code": "PAB" },
+        "currency": {
+            "name": "Panamanian Balboa",
+            "code": "PAB"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 93.0 }
+            {
+                "name": "Spanish",
+                "percentage": 93.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 76520000000,
         "gdpPerCapita": 17130,
         "gdpPPP": 160000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "PG",
@@ -2653,16 +4336,29 @@
         "area": 462840,
         "population": 10329931,
         "populationDensity": 22.3,
-        "currency": { "name": "Papua New Guinean Kina", "code": "PGK" },
+        "currency": {
+            "name": "Papua New Guinean Kina",
+            "code": "PGK"
+        },
         "languages": [
-            { "name": "Tok Pisin", "percentage": 36.2 },
-            { "name": "English", "percentage": 1.0 }
+            {
+                "name": "Tok Pisin",
+                "percentage": 36.2
+            },
+            {
+                "name": "English",
+                "percentage": 1.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 32200000000,
         "gdpPerCapita": 3120,
         "gdpPPP": 42000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "PY",
@@ -2673,16 +4369,29 @@
         "area": 406752,
         "population": 6861524,
         "populationDensity": 16.9,
-        "currency": { "name": "Paraguayan Guaraní", "code": "PYG" },
+        "currency": {
+            "name": "Paraguayan Guaraní",
+            "code": "PYG"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 87.0 },
-            { "name": "Guaraní", "percentage": 77.0 }
+            {
+                "name": "Spanish",
+                "percentage": 87.0
+            },
+            {
+                "name": "Guaraní",
+                "percentage": 77.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 43000000000,
         "gdpPerCapita": 6260,
         "gdpPPP": 107000000000,
-        "organizations": ["UN", "Mercosur", "WTO"]
+        "organizations": [
+            "UN",
+            "Mercosur",
+            "WTO"
+        ]
     },
     {
         "code": "PE",
@@ -2693,16 +4402,28 @@
         "area": 1285216,
         "population": 34352719,
         "populationDensity": 26.7,
-        "currency": { "name": "Peruvian Sol", "code": "PEN" },
+        "currency": {
+            "name": "Peruvian Sol",
+            "code": "PEN"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 82.9 },
-            { "name": "Quechua", "percentage": 13.6 }
+            {
+                "name": "Spanish",
+                "percentage": 82.9
+            },
+            {
+                "name": "Quechua",
+                "percentage": 13.6
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 268200000000,
         "gdpPerCapita": 7810,
         "gdpPPP": 536000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "PH",
@@ -2713,16 +4434,29 @@
         "area": 342353,
         "population": 117337368,
         "populationDensity": 342.8,
-        "currency": { "name": "Philippine Peso", "code": "PHP" },
+        "currency": {
+            "name": "Philippine Peso",
+            "code": "PHP"
+        },
         "languages": [
-            { "name": "Filipino", "percentage": 45.0 },
-            { "name": "English", "percentage": 37.0 }
+            {
+                "name": "Filipino",
+                "percentage": 45.0
+            },
+            {
+                "name": "English",
+                "percentage": 37.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 437100000000,
         "gdpPerCapita": 3730,
         "gdpPPP": 1280000000000,
-        "organizations": ["UN", "ASEAN", "WTO"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "WTO"
+        ]
     },
     {
         "code": "PL",
@@ -2733,15 +4467,27 @@
         "area": 312696,
         "population": 36753736,
         "populationDensity": 117.5,
-        "currency": { "name": "Polish Złoty", "code": "PLN" },
+        "currency": {
+            "name": "Polish Złoty",
+            "code": "PLN"
+        },
         "languages": [
-            { "name": "Polish", "percentage": 97.8 }
+            {
+                "name": "Polish",
+                "percentage": 97.8
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 842200000000,
         "gdpPerCapita": 22930,
         "gdpPPP": 1630000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "PT",
@@ -2752,15 +4498,27 @@
         "area": 92212,
         "population": 10467366,
         "populationDensity": 113.5,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Portuguese", "percentage": 96.0 }
+            {
+                "name": "Portuguese",
+                "percentage": 96.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 287100000000,
         "gdpPerCapita": 27430,
         "gdpPPP": 425000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "QA",
@@ -2771,15 +4529,26 @@
         "area": 11586,
         "population": 2716391,
         "populationDensity": 234.5,
-        "currency": { "name": "Qatari Riyal", "code": "QAR" },
+        "currency": {
+            "name": "Qatari Riyal",
+            "code": "QAR"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 40.0 }
+            {
+                "name": "Arabic",
+                "percentage": 40.0
+            }
         ],
         "formOfGovernment": "Unitary semi-constitutional monarchy",
         "gdp": 221400000000,
         "gdpPerCapita": 81510,
         "gdpPPP": 320000000000,
-        "organizations": ["UN", "OPEC", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "OPEC",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "RO",
@@ -2790,16 +4559,30 @@
         "area": 238397,
         "population": 18643970,
         "populationDensity": 78.2,
-        "currency": { "name": "Romanian Leu", "code": "RON" },
+        "currency": {
+            "name": "Romanian Leu",
+            "code": "RON"
+        },
         "languages": [
-            { "name": "Romanian", "percentage": 85.4 },
-            { "name": "Hungarian", "percentage": 6.3 }
+            {
+                "name": "Romanian",
+                "percentage": 85.4
+            },
+            {
+                "name": "Hungarian",
+                "percentage": 6.3
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 350700000000,
         "gdpPerCapita": 18810,
         "gdpPPP": 737000000000,
-        "organizations": ["UN", "NATO", "EU", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "WTO"
+        ]
     },
     {
         "code": "RU",
@@ -2810,15 +4593,27 @@
         "area": 17098242,
         "population": 144236933,
         "populationDensity": 8.4,
-        "currency": { "name": "Russian Ruble", "code": "RUB" },
+        "currency": {
+            "name": "Russian Ruble",
+            "code": "RUB"
+        },
         "languages": [
-            { "name": "Russian", "percentage": 85.7 }
+            {
+                "name": "Russian",
+                "percentage": 85.7
+            }
         ],
         "formOfGovernment": "Federal semi-presidential constitutional republic",
         "gdp": 2020000000000,
         "gdpPerCapita": 14010,
         "gdpPPP": 5080000000000,
-        "organizations": ["UN", "G20", "WTO", "BRICS", "CIS"]
+        "organizations": [
+            "UN",
+            "G20",
+            "WTO",
+            "BRICS",
+            "CIS"
+        ]
     },
     {
         "code": "RW",
@@ -2829,17 +4624,33 @@
         "area": 26338,
         "population": 14094683,
         "populationDensity": 535.2,
-        "currency": { "name": "Rwandan Franc", "code": "RWF" },
+        "currency": {
+            "name": "Rwandan Franc",
+            "code": "RWF"
+        },
         "languages": [
-            { "name": "Kinyarwanda", "percentage": 93.2 },
-            { "name": "English", "percentage": 2.0 },
-            { "name": "French", "percentage": 2.0 }
+            {
+                "name": "Kinyarwanda",
+                "percentage": 93.2
+            },
+            {
+                "name": "English",
+                "percentage": 2.0
+            },
+            {
+                "name": "French",
+                "percentage": 2.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 14100000000,
         "gdpPerCapita": 1000,
         "gdpPPP": 39000000000,
-        "organizations": ["UN", "AU", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth"
+        ]
     },
     {
         "code": "KN",
@@ -2850,15 +4661,24 @@
         "area": 261,
         "population": 47755,
         "populationDensity": 182.9,
-        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "currency": {
+            "name": "East Caribbean Dollar",
+            "code": "XCD"
+        },
         "languages": [
-            { "name": "English", "percentage": 98.0 }
+            {
+                "name": "English",
+                "percentage": 98.0
+            }
         ],
         "formOfGovernment": "Federal parliamentary constitutional monarchy",
         "gdp": 1100000000,
         "gdpPerCapita": 23040,
         "gdpPPP": 1600000000,
-        "organizations": ["UN", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "Commonwealth"
+        ]
     },
     {
         "code": "LC",
@@ -2869,15 +4689,25 @@
         "area": 617,
         "population": 180251,
         "populationDensity": 292.1,
-        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "currency": {
+            "name": "East Caribbean Dollar",
+            "code": "XCD"
+        },
         "languages": [
-            { "name": "English", "percentage": 95.0 }
+            {
+                "name": "English",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 2300000000,
         "gdpPerCapita": 12770,
         "gdpPPP": 3400000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "VC",
@@ -2888,15 +4718,25 @@
         "area": 389,
         "population": 101145,
         "populationDensity": 260.0,
-        "currency": { "name": "East Caribbean Dollar", "code": "XCD" },
+        "currency": {
+            "name": "East Caribbean Dollar",
+            "code": "XCD"
+        },
         "languages": [
-            { "name": "English", "percentage": 95.0 }
+            {
+                "name": "English",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 960000000,
         "gdpPerCapita": 9490,
         "gdpPPP": 1500000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "WS",
@@ -2907,16 +4747,28 @@
         "area": 2842,
         "population": 225681,
         "populationDensity": 79.4,
-        "currency": { "name": "Samoan Tālā", "code": "WST" },
+        "currency": {
+            "name": "Samoan Tālā",
+            "code": "WST"
+        },
         "languages": [
-            { "name": "Samoan", "percentage": 91.1 },
-            { "name": "English", "percentage": 50.0 }
+            {
+                "name": "Samoan",
+                "percentage": 91.1
+            },
+            {
+                "name": "English",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 910000000,
         "gdpPerCapita": 4030,
         "gdpPPP": 1300000000,
-        "organizations": ["UN", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "Commonwealth"
+        ]
     },
     {
         "code": "SM",
@@ -2927,15 +4779,23 @@
         "area": 61,
         "population": 33642,
         "populationDensity": 551.5,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Italian", "percentage": 97.0 }
+            {
+                "name": "Italian",
+                "percentage": 97.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary directorial republic",
         "gdp": 1860000000,
         "gdpPerCapita": 55290,
         "gdpPPP": 2200000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "ST",
@@ -2946,15 +4806,24 @@
         "area": 964,
         "population": 227679,
         "populationDensity": 236.2,
-        "currency": { "name": "São Tomé and Príncipe Dobra", "code": "STN" },
+        "currency": {
+            "name": "São Tomé and Príncipe Dobra",
+            "code": "STN"
+        },
         "languages": [
-            { "name": "Portuguese", "percentage": 98.4 }
+            {
+                "name": "Portuguese",
+                "percentage": 98.4
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 600000000,
         "gdpPerCapita": 2640,
         "gdpPPP": 1200000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "SA",
@@ -2965,15 +4834,27 @@
         "area": 2149690,
         "population": 36947025,
         "populationDensity": 17.2,
-        "currency": { "name": "Saudi Riyal", "code": "SAR" },
+        "currency": {
+            "name": "Saudi Riyal",
+            "code": "SAR"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 90.0 }
+            {
+                "name": "Arabic",
+                "percentage": 90.0
+            }
         ],
         "formOfGovernment": "Unitary Islamic absolute monarchy",
         "gdp": 1069000000000,
         "gdpPerCapita": 28930,
         "gdpPPP": 2110000000000,
-        "organizations": ["UN", "G20", "OPEC", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "G20",
+            "OPEC",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "SN",
@@ -2984,16 +4865,29 @@
         "area": 196722,
         "population": 17763163,
         "populationDensity": 90.3,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "French", "percentage": 26.0 },
-            { "name": "Wolof", "percentage": 39.0 }
+            {
+                "name": "French",
+                "percentage": 26.0
+            },
+            {
+                "name": "Wolof",
+                "percentage": 39.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 28300000000,
         "gdpPerCapita": 1590,
         "gdpPPP": 75000000000,
-        "organizations": ["UN", "AU", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "WTO"
+        ]
     },
     {
         "code": "RS",
@@ -3004,15 +4898,24 @@
         "area": 77474,
         "population": 6647003,
         "populationDensity": 85.8,
-        "currency": { "name": "Serbian Dinar", "code": "RSD" },
+        "currency": {
+            "name": "Serbian Dinar",
+            "code": "RSD"
+        },
         "languages": [
-            { "name": "Serbian", "percentage": 88.1 }
+            {
+                "name": "Serbian",
+                "percentage": 88.1
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 75200000000,
         "gdpPerCapita": 11300,
         "gdpPPP": 173000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "SC",
@@ -3023,17 +4926,33 @@
         "area": 455,
         "population": 119773,
         "populationDensity": 263.2,
-        "currency": { "name": "Seychellois Rupee", "code": "SCR" },
+        "currency": {
+            "name": "Seychellois Rupee",
+            "code": "SCR"
+        },
         "languages": [
-            { "name": "Seychellois Creole", "percentage": 89.1 },
-            { "name": "English", "percentage": 5.0 },
-            { "name": "French", "percentage": 3.0 }
+            {
+                "name": "Seychellois Creole",
+                "percentage": 89.1
+            },
+            {
+                "name": "English",
+                "percentage": 5.0
+            },
+            {
+                "name": "French",
+                "percentage": 3.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 2100000000,
         "gdpPerCapita": 17530,
         "gdpPPP": 3600000000,
-        "organizations": ["UN", "AU", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth"
+        ]
     },
     {
         "code": "SL",
@@ -3044,16 +4963,29 @@
         "area": 71740,
         "population": 8791092,
         "populationDensity": 122.5,
-        "currency": { "name": "Sierra Leonean Leone", "code": "SLE" },
+        "currency": {
+            "name": "Sierra Leonean Leone",
+            "code": "SLE"
+        },
         "languages": [
-            { "name": "English", "percentage": 12.0 },
-            { "name": "Krio", "percentage": 87.0 }
+            {
+                "name": "English",
+                "percentage": 12.0
+            },
+            {
+                "name": "Krio",
+                "percentage": 87.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 4240000000,
         "gdpPerCapita": 480,
         "gdpPPP": 16000000000,
-        "organizations": ["UN", "AU", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth"
+        ]
     },
     {
         "code": "SG",
@@ -3064,17 +4996,34 @@
         "area": 733,
         "population": 5917600,
         "populationDensity": 8073.8,
-        "currency": { "name": "Singapore Dollar", "code": "SGD" },
+        "currency": {
+            "name": "Singapore Dollar",
+            "code": "SGD"
+        },
         "languages": [
-            { "name": "English", "percentage": 48.3 },
-            { "name": "Mandarin", "percentage": 29.9 },
-            { "name": "Malay", "percentage": 9.2 }
+            {
+                "name": "English",
+                "percentage": 48.3
+            },
+            {
+                "name": "Mandarin",
+                "percentage": 29.9
+            },
+            {
+                "name": "Malay",
+                "percentage": 9.2
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 497300000000,
         "gdpPerCapita": 84010,
         "gdpPPP": 690000000000,
-        "organizations": ["UN", "ASEAN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "SK",
@@ -3085,16 +5034,31 @@
         "area": 49035,
         "population": 5460185,
         "populationDensity": 111.3,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Slovak", "percentage": 81.4 },
-            { "name": "Hungarian", "percentage": 8.5 }
+            {
+                "name": "Slovak",
+                "percentage": 81.4
+            },
+            {
+                "name": "Hungarian",
+                "percentage": 8.5
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 128700000000,
         "gdpPerCapita": 23570,
         "gdpPPP": 212000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "SI",
@@ -3105,15 +5069,27 @@
         "area": 20273,
         "population": 2116972,
         "populationDensity": 104.4,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Slovenian", "percentage": 87.7 }
+            {
+                "name": "Slovenian",
+                "percentage": 87.7
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 68200000000,
         "gdpPerCapita": 32240,
         "gdpPPP": 103000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "SB",
@@ -3124,16 +5100,28 @@
         "area": 28896,
         "population": 740424,
         "populationDensity": 25.6,
-        "currency": { "name": "Solomon Islands Dollar", "code": "SBD" },
+        "currency": {
+            "name": "Solomon Islands Dollar",
+            "code": "SBD"
+        },
         "languages": [
-            { "name": "English", "percentage": 2.0 },
-            { "name": "Solomons Pijin", "percentage": 80.0 }
+            {
+                "name": "English",
+                "percentage": 2.0
+            },
+            {
+                "name": "Solomons Pijin",
+                "percentage": 80.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 1700000000,
         "gdpPerCapita": 2300,
         "gdpPPP": 1900000000,
-        "organizations": ["UN", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "Commonwealth"
+        ]
     },
     {
         "code": "SO",
@@ -3144,16 +5132,29 @@
         "area": 637657,
         "population": 18143378,
         "populationDensity": 28.5,
-        "currency": { "name": "Somali Shilling", "code": "SOS" },
+        "currency": {
+            "name": "Somali Shilling",
+            "code": "SOS"
+        },
         "languages": [
-            { "name": "Somali", "percentage": 95.0 },
-            { "name": "Arabic", "percentage": 5.0 }
+            {
+                "name": "Somali",
+                "percentage": 95.0
+            },
+            {
+                "name": "Arabic",
+                "percentage": 5.0
+            }
         ],
         "formOfGovernment": "Federal parliamentary republic",
         "gdp": 8920000000,
         "gdpPerCapita": 492,
         "gdpPPP": 22000000000,
-        "organizations": ["UN", "AU", "Arab League"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League"
+        ]
     },
     {
         "code": "ZA",
@@ -3164,18 +5165,54 @@
         "area": 1219090,
         "population": 62027503,
         "populationDensity": 50.9,
-        "currency": { "name": "South African Rand", "code": "ZAR" },
+        "currency": {
+            "name": "South African Rand",
+            "code": "ZAR"
+        },
         "languages": [
-            { "name": "Zulu", "percentage": 25.3 },
-            { "name": "Xhosa", "percentage": 14.8 },
-            { "name": "Afrikaans", "percentage": 12.2 },
-            { "name": "English", "percentage": 8.1 }
+            {
+                "name": "Zulu",
+                "percentage": 25.3
+            },
+            {
+                "name": "Xhosa",
+                "percentage": 14.8
+            },
+            {
+                "name": "Afrikaans",
+                "percentage": 12.2
+            },
+            {
+                "name": "English",
+                "percentage": 8.1
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 377000000000,
         "gdpPerCapita": 6080,
         "gdpPPP": 960000000000,
-        "organizations": ["UN", "AU", "G20", "BRICS", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "G20",
+            "BRICS",
+            "Commonwealth",
+            "WTO"
+        ],
+        "capitals": [
+            {
+                "name": "Pretoria",
+                "role": "Executive"
+            },
+            {
+                "name": "Cape Town",
+                "role": "Legislative"
+            },
+            {
+                "name": "Bloemfontein",
+                "role": "Judicial"
+            }
+        ]
     },
     {
         "code": "SS",
@@ -3186,16 +5223,28 @@
         "area": 619745,
         "population": 11088796,
         "populationDensity": 17.9,
-        "currency": { "name": "South Sudanese Pound", "code": "SSP" },
+        "currency": {
+            "name": "South Sudanese Pound",
+            "code": "SSP"
+        },
         "languages": [
-            { "name": "English", "percentage": 27.0 },
-            { "name": "Dinka", "percentage": 35.0 }
+            {
+                "name": "English",
+                "percentage": 27.0
+            },
+            {
+                "name": "Dinka",
+                "percentage": 35.0
+            }
         ],
         "formOfGovernment": "Federal presidential republic",
         "gdp": 6400000000,
         "gdpPerCapita": 578,
         "gdpPPP": 16000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "ES",
@@ -3206,16 +5255,32 @@
         "area": 505990,
         "population": 48592909,
         "populationDensity": 96.1,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 74.0 },
-            { "name": "Catalan", "percentage": 17.0 }
+            {
+                "name": "Spanish",
+                "percentage": 74.0
+            },
+            {
+                "name": "Catalan",
+                "percentage": 17.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 1580000000000,
         "gdpPerCapita": 32550,
         "gdpPPP": 2280000000000,
-        "organizations": ["UN", "NATO", "EU", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "LK",
@@ -3226,16 +5291,39 @@
         "area": 65610,
         "population": 22156000,
         "populationDensity": 337.7,
-        "currency": { "name": "Sri Lankan Rupee", "code": "LKR" },
+        "currency": {
+            "name": "Sri Lankan Rupee",
+            "code": "LKR"
+        },
         "languages": [
-            { "name": "Sinhala", "percentage": 74.9 },
-            { "name": "Tamil", "percentage": 25.0 }
+            {
+                "name": "Sinhala",
+                "percentage": 74.9
+            },
+            {
+                "name": "Tamil",
+                "percentage": 25.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 84400000000,
         "gdpPerCapita": 3810,
         "gdpPPP": 306000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ],
+        "capitals": [
+            {
+                "name": "Sri Jayawardenepura Kotte",
+                "role": "Official"
+            },
+            {
+                "name": "Colombo",
+                "role": "Commercial"
+            }
+        ]
     },
     {
         "code": "SD",
@@ -3246,16 +5334,29 @@
         "area": 1886068,
         "population": 48109006,
         "populationDensity": 25.5,
-        "currency": { "name": "Sudanese Pound", "code": "SDG" },
+        "currency": {
+            "name": "Sudanese Pound",
+            "code": "SDG"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 70.0 },
-            { "name": "English", "percentage": 2.0 }
+            {
+                "name": "Arabic",
+                "percentage": 70.0
+            },
+            {
+                "name": "English",
+                "percentage": 2.0
+            }
         ],
         "formOfGovernment": "Federal provisional government",
         "gdp": 51700000000,
         "gdpPerCapita": 1070,
         "gdpPPP": 168000000000,
-        "organizations": ["UN", "AU", "Arab League"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League"
+        ]
     },
     {
         "code": "SR",
@@ -3266,16 +5367,28 @@
         "area": 163820,
         "population": 618040,
         "populationDensity": 3.8,
-        "currency": { "name": "Surinamese Dollar", "code": "SRD" },
+        "currency": {
+            "name": "Surinamese Dollar",
+            "code": "SRD"
+        },
         "languages": [
-            { "name": "Dutch", "percentage": 60.0 },
-            { "name": "Sranan Tongo", "percentage": 22.0 }
+            {
+                "name": "Dutch",
+                "percentage": 60.0
+            },
+            {
+                "name": "Sranan Tongo",
+                "percentage": 22.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 4020000000,
         "gdpPerCapita": 6500,
         "gdpPPP": 10500000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "SE",
@@ -3286,15 +5399,27 @@
         "area": 450295,
         "population": 10551707,
         "populationDensity": 23.4,
-        "currency": { "name": "Swedish Krona", "code": "SEK" },
+        "currency": {
+            "name": "Swedish Krona",
+            "code": "SEK"
+        },
         "languages": [
-            { "name": "Swedish", "percentage": 86.0 }
+            {
+                "name": "Swedish",
+                "percentage": 86.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 593300000000,
         "gdpPerCapita": 56230,
         "gdpPPP": 641000000000,
-        "organizations": ["UN", "NATO", "EU", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "EU",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "CH",
@@ -3305,17 +5430,33 @@
         "area": 41285,
         "population": 8851431,
         "populationDensity": 214.4,
-        "currency": { "name": "Swiss Franc", "code": "CHF" },
+        "currency": {
+            "name": "Swiss Franc",
+            "code": "CHF"
+        },
         "languages": [
-            { "name": "German", "percentage": 62.1 },
-            { "name": "French", "percentage": 22.8 },
-            { "name": "Italian", "percentage": 8.0 }
+            {
+                "name": "German",
+                "percentage": 62.1
+            },
+            {
+                "name": "French",
+                "percentage": 22.8
+            },
+            {
+                "name": "Italian",
+                "percentage": 8.0
+            }
         ],
         "formOfGovernment": "Federal directorial republic",
         "gdp": 884900000000,
         "gdpPerCapita": 100000,
         "gdpPPP": 720000000000,
-        "organizations": ["UN", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "SY",
@@ -3326,16 +5467,28 @@
         "area": 185180,
         "population": 23227014,
         "populationDensity": 125.4,
-        "currency": { "name": "Syrian Pound", "code": "SYP" },
+        "currency": {
+            "name": "Syrian Pound",
+            "code": "SYP"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 90.0 },
-            { "name": "Kurdish", "percentage": 9.0 }
+            {
+                "name": "Arabic",
+                "percentage": 90.0
+            },
+            {
+                "name": "Kurdish",
+                "percentage": 9.0
+            }
         ],
         "formOfGovernment": "Provisional government",
         "gdp": 11000000000,
         "gdpPerCapita": 474,
         "gdpPPP": null,
-        "organizations": ["UN", "Arab League"]
+        "organizations": [
+            "UN",
+            "Arab League"
+        ]
     },
     {
         "code": "TW",
@@ -3346,16 +5499,27 @@
         "area": 36193,
         "population": 23580712,
         "populationDensity": 651.5,
-        "currency": { "name": "New Taiwan Dollar", "code": "TWD" },
+        "currency": {
+            "name": "New Taiwan Dollar",
+            "code": "TWD"
+        },
         "languages": [
-            { "name": "Mandarin Chinese", "percentage": 83.5 },
-            { "name": "Hokkien", "percentage": 81.9 }
+            {
+                "name": "Mandarin Chinese",
+                "percentage": 83.5
+            },
+            {
+                "name": "Hokkien",
+                "percentage": 81.9
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 790000000000,
         "gdpPerCapita": 33510,
         "gdpPPP": 1530000000000,
-        "organizations": ["WTO"]
+        "organizations": [
+            "WTO"
+        ]
     },
     {
         "code": "TJ",
@@ -3366,16 +5530,29 @@
         "area": 143100,
         "population": 10143543,
         "populationDensity": 70.9,
-        "currency": { "name": "Tajikistani Somoni", "code": "TJS" },
+        "currency": {
+            "name": "Tajikistani Somoni",
+            "code": "TJS"
+        },
         "languages": [
-            { "name": "Tajik", "percentage": 84.4 },
-            { "name": "Russian", "percentage": 15.0 }
+            {
+                "name": "Tajik",
+                "percentage": 84.4
+            },
+            {
+                "name": "Russian",
+                "percentage": 15.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 11600000000,
         "gdpPerCapita": 1140,
         "gdpPPP": 45000000000,
-        "organizations": ["UN", "CIS", "SCO"]
+        "organizations": [
+            "UN",
+            "CIS",
+            "SCO"
+        ]
     },
     {
         "code": "TZ",
@@ -3386,16 +5563,40 @@
         "area": 945087,
         "population": 65497748,
         "populationDensity": 69.3,
-        "currency": { "name": "Tanzanian Shilling", "code": "TZS" },
+        "currency": {
+            "name": "Tanzanian Shilling",
+            "code": "TZS"
+        },
         "languages": [
-            { "name": "Swahili", "percentage": 90.0 },
-            { "name": "English", "percentage": 10.0 }
+            {
+                "name": "Swahili",
+                "percentage": 90.0
+            },
+            {
+                "name": "English",
+                "percentage": 10.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 79160000000,
         "gdpPerCapita": 1210,
         "gdpPPP": 218000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ],
+        "capitals": [
+            {
+                "name": "Dodoma",
+                "role": "Official"
+            },
+            {
+                "name": "Dar es Salaam",
+                "role": "Economic"
+            }
+        ]
     },
     {
         "code": "TH",
@@ -3406,15 +5607,25 @@
         "area": 513120,
         "population": 71801279,
         "populationDensity": 139.9,
-        "currency": { "name": "Thai Baht", "code": "THB" },
+        "currency": {
+            "name": "Thai Baht",
+            "code": "THB"
+        },
         "languages": [
-            { "name": "Thai", "percentage": 90.7 }
+            {
+                "name": "Thai",
+                "percentage": 90.7
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 514900000000,
         "gdpPerCapita": 7170,
         "gdpPPP": 1550000000000,
-        "organizations": ["UN", "ASEAN", "WTO"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "WTO"
+        ]
     },
     {
         "code": "TL",
@@ -3425,16 +5636,28 @@
         "area": 14919,
         "population": 1360596,
         "populationDensity": 91.2,
-        "currency": { "name": "United States Dollar", "code": "USD" },
+        "currency": {
+            "name": "United States Dollar",
+            "code": "USD"
+        },
         "languages": [
-            { "name": "Tetum", "percentage": 36.6 },
-            { "name": "Portuguese", "percentage": 12.0 }
+            {
+                "name": "Tetum",
+                "percentage": 36.6
+            },
+            {
+                "name": "Portuguese",
+                "percentage": 12.0
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential republic",
         "gdp": 3100000000,
         "gdpPerCapita": 2280,
         "gdpPPP": 5100000000,
-        "organizations": ["UN", "ASEAN"]
+        "organizations": [
+            "UN",
+            "ASEAN"
+        ]
     },
     {
         "code": "TG",
@@ -3445,15 +5668,25 @@
         "area": 56785,
         "population": 8848699,
         "populationDensity": 155.8,
-        "currency": { "name": "West African CFA Franc", "code": "XOF" },
+        "currency": {
+            "name": "West African CFA Franc",
+            "code": "XOF"
+        },
         "languages": [
-            { "name": "French", "percentage": 31.0 }
+            {
+                "name": "French",
+                "percentage": 31.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 8600000000,
         "gdpPerCapita": 970,
         "gdpPPP": 23000000000,
-        "organizations": ["UN", "AU", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "WTO"
+        ]
     },
     {
         "code": "TO",
@@ -3464,16 +5697,28 @@
         "area": 747,
         "population": 106858,
         "populationDensity": 143.1,
-        "currency": { "name": "Tongan Paʻanga", "code": "TOP" },
+        "currency": {
+            "name": "Tongan Paʻanga",
+            "code": "TOP"
+        },
         "languages": [
-            { "name": "Tongan", "percentage": 96.0 },
-            { "name": "English", "percentage": 50.0 }
+            {
+                "name": "Tongan",
+                "percentage": 96.0
+            },
+            {
+                "name": "English",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 510000000,
         "gdpPerCapita": 4770,
         "gdpPPP": 700000000,
-        "organizations": ["UN", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "Commonwealth"
+        ]
     },
     {
         "code": "TT",
@@ -3484,15 +5729,25 @@
         "area": 5131,
         "population": 1531044,
         "populationDensity": 298.4,
-        "currency": { "name": "Trinidad and Tobago Dollar", "code": "TTD" },
+        "currency": {
+            "name": "Trinidad and Tobago Dollar",
+            "code": "TTD"
+        },
         "languages": [
-            { "name": "English", "percentage": 95.0 }
+            {
+                "name": "English",
+                "percentage": 95.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 27700000000,
         "gdpPerCapita": 18090,
         "gdpPPP": 42000000000,
-        "organizations": ["UN", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "TN",
@@ -3503,16 +5758,30 @@
         "area": 163610,
         "population": 12458223,
         "populationDensity": 76.1,
-        "currency": { "name": "Tunisian Dinar", "code": "TND" },
+        "currency": {
+            "name": "Tunisian Dinar",
+            "code": "TND"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 97.0 },
-            { "name": "French", "percentage": 52.0 }
+            {
+                "name": "Arabic",
+                "percentage": 97.0
+            },
+            {
+                "name": "French",
+                "percentage": 52.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 46300000000,
         "gdpPerCapita": 3710,
         "gdpPPP": 152000000000,
-        "organizations": ["UN", "AU", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "TR",
@@ -3523,16 +5792,31 @@
         "area": 783562,
         "population": 85279553,
         "populationDensity": 108.8,
-        "currency": { "name": "Turkish Lira", "code": "TRY" },
+        "currency": {
+            "name": "Turkish Lira",
+            "code": "TRY"
+        },
         "languages": [
-            { "name": "Turkish", "percentage": 85.5 },
-            { "name": "Kurdish", "percentage": 11.9 }
+            {
+                "name": "Turkish",
+                "percentage": 85.5
+            },
+            {
+                "name": "Kurdish",
+                "percentage": 11.9
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 1110000000000,
         "gdpPerCapita": 13020,
         "gdpPPP": 3320000000000,
-        "organizations": ["UN", "NATO", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "TM",
@@ -3543,16 +5827,27 @@
         "area": 488100,
         "population": 6430770,
         "populationDensity": 13.2,
-        "currency": { "name": "Turkmenistani Manat", "code": "TMT" },
+        "currency": {
+            "name": "Turkmenistani Manat",
+            "code": "TMT"
+        },
         "languages": [
-            { "name": "Turkmen", "percentage": 72.0 },
-            { "name": "Russian", "percentage": 12.0 }
+            {
+                "name": "Turkmen",
+                "percentage": 72.0
+            },
+            {
+                "name": "Russian",
+                "percentage": 12.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 52600000000,
         "gdpPerCapita": 8180,
         "gdpPPP": 109000000000,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "TV",
@@ -3563,16 +5858,28 @@
         "area": 26,
         "population": 11396,
         "populationDensity": 438.3,
-        "currency": { "name": "Australian Dollar", "code": "AUD" },
+        "currency": {
+            "name": "Australian Dollar",
+            "code": "AUD"
+        },
         "languages": [
-            { "name": "Tuvaluan", "percentage": 93.0 },
-            { "name": "English", "percentage": 50.0 }
+            {
+                "name": "Tuvaluan",
+                "percentage": 93.0
+            },
+            {
+                "name": "English",
+                "percentage": 50.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 60000000,
         "gdpPerCapita": 5270,
         "gdpPPP": 60000000,
-        "organizations": ["UN", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "Commonwealth"
+        ]
     },
     {
         "code": "UG",
@@ -3583,17 +5890,34 @@
         "area": 241038,
         "population": 48582334,
         "populationDensity": 201.6,
-        "currency": { "name": "Ugandan Shilling", "code": "UGX" },
+        "currency": {
+            "name": "Ugandan Shilling",
+            "code": "UGX"
+        },
         "languages": [
-            { "name": "English", "percentage": 16.0 },
-            { "name": "Luganda", "percentage": 16.5 },
-            { "name": "Swahili", "percentage": 10.0 }
+            {
+                "name": "English",
+                "percentage": 16.0
+            },
+            {
+                "name": "Luganda",
+                "percentage": 16.5
+            },
+            {
+                "name": "Swahili",
+                "percentage": 10.0
+            }
         ],
         "formOfGovernment": "Unitary presidential republic",
         "gdp": 49300000000,
         "gdpPerCapita": 1010,
         "gdpPPP": 130000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "UA",
@@ -3604,16 +5928,28 @@
         "area": 603550,
         "population": 37000000,
         "populationDensity": 61.3,
-        "currency": { "name": "Ukrainian Hryvnia", "code": "UAH" },
+        "currency": {
+            "name": "Ukrainian Hryvnia",
+            "code": "UAH"
+        },
         "languages": [
-            { "name": "Ukrainian", "percentage": 67.5 },
-            { "name": "Russian", "percentage": 29.6 }
+            {
+                "name": "Ukrainian",
+                "percentage": 67.5
+            },
+            {
+                "name": "Russian",
+                "percentage": 29.6
+            }
         ],
         "formOfGovernment": "Unitary semi-presidential constitutional republic",
         "gdp": 179000000000,
         "gdpPerCapita": 4840,
         "gdpPPP": 560000000000,
-        "organizations": ["UN", "WTO"]
+        "organizations": [
+            "UN",
+            "WTO"
+        ]
     },
     {
         "code": "AE",
@@ -3624,16 +5960,30 @@
         "area": 83600,
         "population": 9441129,
         "populationDensity": 112.9,
-        "currency": { "name": "UAE Dirham", "code": "AED" },
+        "currency": {
+            "name": "UAE Dirham",
+            "code": "AED"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 40.0 },
-            { "name": "English", "percentage": 30.0 }
+            {
+                "name": "Arabic",
+                "percentage": 40.0
+            },
+            {
+                "name": "English",
+                "percentage": 30.0
+            }
         ],
         "formOfGovernment": "Federal constitutional monarchy",
         "gdp": 509200000000,
         "gdpPerCapita": 53920,
         "gdpPPP": 830000000000,
-        "organizations": ["UN", "OPEC", "Arab League", "WTO"]
+        "organizations": [
+            "UN",
+            "OPEC",
+            "Arab League",
+            "WTO"
+        ]
     },
     {
         "code": "GB",
@@ -3644,16 +5994,33 @@
         "area": 242495,
         "population": 68350000,
         "populationDensity": 281.9,
-        "currency": { "name": "Pound Sterling", "code": "GBP" },
+        "currency": {
+            "name": "Pound Sterling",
+            "code": "GBP"
+        },
         "languages": [
-            { "name": "English", "percentage": 94.0 },
-            { "name": "Welsh", "percentage": 1.1 }
+            {
+                "name": "English",
+                "percentage": 94.0
+            },
+            {
+                "name": "Welsh",
+                "percentage": 1.1
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional monarchy",
         "gdp": 3340000000000,
         "gdpPerCapita": 48910,
         "gdpPPP": 3860000000000,
-        "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "G7",
+            "G20",
+            "OECD",
+            "WTO",
+            "Commonwealth"
+        ]
     },
     {
         "code": "US",
@@ -3664,16 +6031,32 @@
         "area": 9833520,
         "population": 334914895,
         "populationDensity": 34.1,
-        "currency": { "name": "United States Dollar", "code": "USD" },
+        "currency": {
+            "name": "United States Dollar",
+            "code": "USD"
+        },
         "languages": [
-            { "name": "English", "percentage": 78.5 },
-            { "name": "Spanish", "percentage": 13.4 }
+            {
+                "name": "English",
+                "percentage": 78.5
+            },
+            {
+                "name": "Spanish",
+                "percentage": 13.4
+            }
         ],
         "formOfGovernment": "Federal presidential constitutional republic",
         "gdp": 28780000000000,
         "gdpPerCapita": 85370,
         "gdpPPP": 28780000000000,
-        "organizations": ["UN", "NATO", "G7", "G20", "OECD", "WTO"]
+        "organizations": [
+            "UN",
+            "NATO",
+            "G7",
+            "G20",
+            "OECD",
+            "WTO"
+        ]
     },
     {
         "code": "UY",
@@ -3684,15 +6067,25 @@
         "area": 176215,
         "population": 3423108,
         "populationDensity": 19.4,
-        "currency": { "name": "Uruguayan Peso", "code": "UYU" },
+        "currency": {
+            "name": "Uruguayan Peso",
+            "code": "UYU"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 98.4 }
+            {
+                "name": "Spanish",
+                "percentage": 98.4
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 71400000000,
         "gdpPerCapita": 20850,
         "gdpPPP": 97000000000,
-        "organizations": ["UN", "Mercosur", "WTO"]
+        "organizations": [
+            "UN",
+            "Mercosur",
+            "WTO"
+        ]
     },
     {
         "code": "UZ",
@@ -3703,16 +6096,29 @@
         "area": 447400,
         "population": 35648100,
         "populationDensity": 79.7,
-        "currency": { "name": "Uzbekistani Som", "code": "UZS" },
+        "currency": {
+            "name": "Uzbekistani Som",
+            "code": "UZS"
+        },
         "languages": [
-            { "name": "Uzbek", "percentage": 74.3 },
-            { "name": "Russian", "percentage": 14.2 }
+            {
+                "name": "Uzbek",
+                "percentage": 74.3
+            },
+            {
+                "name": "Russian",
+                "percentage": 14.2
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 90400000000,
         "gdpPerCapita": 2540,
         "gdpPPP": 315000000000,
-        "organizations": ["UN", "CIS", "SCO"]
+        "organizations": [
+            "UN",
+            "CIS",
+            "SCO"
+        ]
     },
     {
         "code": "VU",
@@ -3723,17 +6129,32 @@
         "area": 12189,
         "population": 326740,
         "populationDensity": 26.8,
-        "currency": { "name": "Vanuatu Vatu", "code": "VUV" },
+        "currency": {
+            "name": "Vanuatu Vatu",
+            "code": "VUV"
+        },
         "languages": [
-            { "name": "Bislama", "percentage": 63.2 },
-            { "name": "English", "percentage": 34.0 },
-            { "name": "French", "percentage": 31.0 }
+            {
+                "name": "Bislama",
+                "percentage": 63.2
+            },
+            {
+                "name": "English",
+                "percentage": 34.0
+            },
+            {
+                "name": "French",
+                "percentage": 31.0
+            }
         ],
         "formOfGovernment": "Unitary parliamentary republic",
         "gdp": 1060000000,
         "gdpPerCapita": 3250,
         "gdpPPP": 1000000000,
-        "organizations": ["UN", "Commonwealth"]
+        "organizations": [
+            "UN",
+            "Commonwealth"
+        ]
     },
     {
         "code": "VA",
@@ -3744,16 +6165,27 @@
         "area": 0.44,
         "population": 800,
         "populationDensity": 1818.2,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Italian", "percentage": 50.0 },
-            { "name": "Latin", "percentage": 30.0 }
+            {
+                "name": "Italian",
+                "percentage": 50.0
+            },
+            {
+                "name": "Latin",
+                "percentage": 30.0
+            }
         ],
         "formOfGovernment": "Unitary theocratic elective absolute monarchy",
         "gdp": null,
         "gdpPerCapita": null,
         "gdpPPP": null,
-        "organizations": ["UN"]
+        "organizations": [
+            "UN"
+        ]
     },
     {
         "code": "VE",
@@ -3764,15 +6196,24 @@
         "area": 916445,
         "population": 28838499,
         "populationDensity": 31.5,
-        "currency": { "name": "Venezuelan Bolívar", "code": "VES" },
+        "currency": {
+            "name": "Venezuelan Bolívar",
+            "code": "VES"
+        },
         "languages": [
-            { "name": "Spanish", "percentage": 97.3 }
+            {
+                "name": "Spanish",
+                "percentage": 97.3
+            }
         ],
         "formOfGovernment": "Federal presidential constitutional republic",
         "gdp": 98400000000,
         "gdpPerCapita": 3410,
         "gdpPPP": null,
-        "organizations": ["UN", "OPEC"]
+        "organizations": [
+            "UN",
+            "OPEC"
+        ]
     },
     {
         "code": "VN",
@@ -3783,15 +6224,25 @@
         "area": 331212,
         "population": 100987686,
         "populationDensity": 304.9,
-        "currency": { "name": "Vietnamese Đồng", "code": "VND" },
+        "currency": {
+            "name": "Vietnamese Đồng",
+            "code": "VND"
+        },
         "languages": [
-            { "name": "Vietnamese", "percentage": 85.7 }
+            {
+                "name": "Vietnamese",
+                "percentage": 85.7
+            }
         ],
         "formOfGovernment": "Unitary one-party socialist republic",
         "gdp": 433700000000,
         "gdpPerCapita": 4290,
         "gdpPPP": 1340000000000,
-        "organizations": ["UN", "ASEAN", "WTO"]
+        "organizations": [
+            "UN",
+            "ASEAN",
+            "WTO"
+        ]
     },
     {
         "code": "YE",
@@ -3802,15 +6253,24 @@
         "area": 527968,
         "population": 34449825,
         "populationDensity": 65.2,
-        "currency": { "name": "Yemeni Rial", "code": "YER" },
+        "currency": {
+            "name": "Yemeni Rial",
+            "code": "YER"
+        },
         "languages": [
-            { "name": "Arabic", "percentage": 99.0 }
+            {
+                "name": "Arabic",
+                "percentage": 99.0
+            }
         ],
         "formOfGovernment": "Provisional government",
         "gdp": 21600000000,
         "gdpPerCapita": 627,
         "gdpPPP": 55000000000,
-        "organizations": ["UN", "Arab League"]
+        "organizations": [
+            "UN",
+            "Arab League"
+        ]
     },
     {
         "code": "ZM",
@@ -3821,16 +6281,30 @@
         "area": 752618,
         "population": 20569737,
         "populationDensity": 27.3,
-        "currency": { "name": "Zambian Kwacha", "code": "ZMW" },
+        "currency": {
+            "name": "Zambian Kwacha",
+            "code": "ZMW"
+        },
         "languages": [
-            { "name": "English", "percentage": 8.0 },
-            { "name": "Bemba", "percentage": 33.4 }
+            {
+                "name": "English",
+                "percentage": 8.0
+            },
+            {
+                "name": "Bemba",
+                "percentage": 33.4
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 28100000000,
         "gdpPerCapita": 1370,
         "gdpPPP": 72000000000,
-        "organizations": ["UN", "AU", "Commonwealth", "WTO"]
+        "organizations": [
+            "UN",
+            "AU",
+            "Commonwealth",
+            "WTO"
+        ]
     },
     {
         "code": "ZW",
@@ -3841,17 +6315,32 @@
         "area": 390757,
         "population": 16665409,
         "populationDensity": 42.7,
-        "currency": { "name": "Zimbabwe Gold", "code": "ZiG" },
+        "currency": {
+            "name": "Zimbabwe Gold",
+            "code": "ZiG"
+        },
         "languages": [
-            { "name": "English", "percentage": 7.0 },
-            { "name": "Shona", "percentage": 70.0 },
-            { "name": "Ndebele", "percentage": 20.0 }
+            {
+                "name": "English",
+                "percentage": 7.0
+            },
+            {
+                "name": "Shona",
+                "percentage": 70.0
+            },
+            {
+                "name": "Ndebele",
+                "percentage": 20.0
+            }
         ],
         "formOfGovernment": "Unitary presidential constitutional republic",
         "gdp": 28400000000,
         "gdpPerCapita": 1710,
         "gdpPPP": 40000000000,
-        "organizations": ["UN", "AU"]
+        "organizations": [
+            "UN",
+            "AU"
+        ]
     },
     {
         "code": "XK",
@@ -3862,10 +6351,19 @@
         "area": 10887,
         "population": 1883018,
         "populationDensity": 172.9,
-        "currency": { "name": "Euro", "code": "EUR" },
+        "currency": {
+            "name": "Euro",
+            "code": "EUR"
+        },
         "languages": [
-            { "name": "Albanian", "percentage": 94.5 },
-            { "name": "Serbian", "percentage": 1.6 }
+            {
+                "name": "Albanian",
+                "percentage": 94.5
+            },
+            {
+                "name": "Serbian",
+                "percentage": 1.6
+            }
         ],
         "formOfGovernment": "Unitary parliamentary constitutional republic",
         "gdp": 10400000000,

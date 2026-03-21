@@ -10,10 +10,10 @@ struct QuizQuestionView: View {
     let onSelectOption: (UUID) -> Void
 
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(spacing: 0) {
+            Spacer(minLength: DesignSystem.Spacing.md)
             promptSection
-            Spacer()
+            Spacer(minLength: DesignSystem.Spacing.lg)
             optionsSection
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -29,41 +29,67 @@ private extension QuizQuestionView {
         switch quizType {
         case .flagQuiz:
             flagPrompt
-        case .capitalQuiz, .reverseFlag, .reverseCapital, .populationOrder, .areaOrder:
-            textPrompt(question.promptText)
+        case .reverseFlag:
+            textPrompt(question.promptText, subject: question.promptSubject)
+        case .capitalQuiz, .reverseCapital, .populationOrder, .areaOrder:
+            textPrompt(question.promptText, subject: question.promptSubject)
         }
     }
 
     var flagPrompt: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
+        VStack(spacing: DesignSystem.Spacing.sm) {
             if let flagCode = question.promptFlag {
                 Button { showFlagPreview = true } label: {
-                    FlagView(countryCode: flagCode, height: DesignSystem.Size.hero * 1.5)
-                        .shadow(radius: DesignSystem.Spacing.xs)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(DesignSystem.Color.accent.opacity(0.12))
+                            .blur(radius: 24)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+
+                        FlagView(countryCode: flagCode, height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                            .shadow(color: .black.opacity(0.45), radius: 22, y: 10)
+                            .shadow(color: DesignSystem.Color.accent.opacity(0.15), radius: 12, y: 4)
+                    }
                 }
                 .buttonStyle(.plain)
+
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                        .font(.system(size: 9))
+                    Text("Tap to zoom")
+                        .font(DesignSystem.Font.caption2)
+                }
+                .foregroundStyle(DesignSystem.Color.textTertiary)
             }
 
             Text(question.promptText)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.top, DesignSystem.Spacing.xxs)
         }
     }
 
-    func textPrompt(_ text: String) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
+    func textPrompt(_ text: String, subject: String?) -> some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
             Text(text)
                 .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .multilineTextAlignment(.center)
 
-            if let subject = question.promptSubject {
+            if let subject {
                 Text(subject)
-                    .font(DesignSystem.Font.largeTitle)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .font(.system(size: 34, weight: .black, design: .rounded))
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(3)
+                    .padding(.horizontal, DesignSystem.Spacing.xs)
             }
         }
-        .multilineTextAlignment(.center)
-        .padding(.vertical, DesignSystem.Spacing.lg)
+        .padding(.vertical, DesignSystem.Spacing.xl)
     }
 }
 
@@ -81,11 +107,12 @@ private extension QuizQuestionView {
 
     var textOptionsList: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(question.options) { option in
+            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
                 QuizOptionButton(
                     text: option.text,
                     flagCode: nil,
                     state: optionState(for: option),
+                    index: index,
                     action: { onSelectOption(option.id) }
                 )
             }
@@ -100,11 +127,12 @@ private extension QuizQuestionView {
             ],
             spacing: DesignSystem.Spacing.sm
         ) {
-            ForEach(question.options) { option in
+            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
                 QuizOptionButton(
                     text: nil,
                     flagCode: option.flagCode,
                     state: optionState(for: option),
+                    index: index,
                     action: { onSelectOption(option.id) }
                 )
             }

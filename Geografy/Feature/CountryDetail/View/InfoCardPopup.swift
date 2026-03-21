@@ -1,19 +1,24 @@
 import SwiftUI
 
 struct InfoCardPopup: View {
+    private let icon: String
     private let title: String
     private let value: String
     private let showMapButton: Bool
     private let onClose: () -> Void
     private let onShowMap: () -> Void
 
+    @State private var appeared = false
+
     init(
+        icon: String,
         title: String,
         value: String,
         showMapButton: Bool = false,
         onClose: @escaping () -> Void,
         onShowMap: @escaping () -> Void = {}
     ) {
+        self.icon = icon
         self.title = title
         self.value = value
         self.showMapButton = showMapButton
@@ -23,8 +28,15 @@ struct InfoCardPopup: View {
 
     var body: some View {
         ZStack {
-            dimmedBackground
+            backdrop
             popupCard
+                .scaleEffect(appeared ? 1.0 : 0.85)
+                .opacity(appeared ? 1.0 : 0.0)
+        }
+        .onAppear {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.72)) {
+                appeared = true
+            }
         }
     }
 }
@@ -32,45 +44,81 @@ struct InfoCardPopup: View {
 // MARK: - Subviews
 
 private extension InfoCardPopup {
-    var dimmedBackground: some View {
-        Color.black.opacity(0.6)
-            .ignoresSafeArea()
-            .onTapGesture(perform: onClose)
+    var backdrop: some View {
+        ZStack {
+            Color.black.opacity(0.5)
+            Rectangle().fill(.ultraThinMaterial)
+        }
+        .ignoresSafeArea()
+        .onTapGesture(perform: onClose)
     }
 
     var popupCard: some View {
-        GeoCard(cornerRadius: DesignSystem.CornerRadius.large) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                headerRow
-                valueSection
-                if showMapButton {
-                    mapButton
-                }
-            }
-            .padding(DesignSystem.Spacing.xl)
-            .frame(maxWidth: DesignSystem.Size.section)
-        }
-    }
+        VStack(spacing: 0) {
+            closeButton
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.bottom, DesignSystem.Spacing.md)
 
-    var headerRow: some View {
-        HStack {
+            iconCircle
+                .padding(.bottom, DesignSystem.Spacing.lg)
+
             Text(title)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .textCase(.uppercase)
+                .kerning(1.2)
+                .padding(.bottom, DesignSystem.Spacing.xs)
+
+            Text(value)
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
 
-            Spacer()
-
-            GeoIconButton(systemImage: "xmark") {
-                onClose()
+            if showMapButton {
+                mapButton
+                    .padding(.top, DesignSystem.Spacing.lg)
             }
+        }
+        .padding(DesignSystem.Spacing.xl)
+        .background {
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+                .fill(.ultraThinMaterial)
+                .overlay {
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+                        .fill(DesignSystem.Color.cardBackground.opacity(0.85))
+                }
+        }
+        .shadow(color: .black.opacity(0.4), radius: 24, y: 8)
+        .padding(.horizontal, DesignSystem.Spacing.xl)
+        .frame(maxWidth: 380)
+    }
+
+    var iconCircle: some View {
+        ZStack {
+            Circle()
+                .fill(DesignSystem.Color.accent.opacity(0.12))
+                .frame(width: 80, height: 80)
+            Image(systemName: icon)
+                .font(.system(size: 32, weight: .medium))
+                .foregroundStyle(DesignSystem.Color.accent)
         }
     }
 
-    var valueSection: some View {
-        Text(value)
-            .font(DesignSystem.Font.title)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity, alignment: .leading)
+    var closeButton: some View {
+        Button(action: onClose) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                    .frame(width: 30, height: 30)
+                Image(systemName: "xmark")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+        }
+        .buttonStyle(.plain)
     }
 
     var mapButton: some View {

@@ -4,20 +4,34 @@ struct QuizOptionButton: View {
     let text: String?
     let flagCode: String?
     let state: OptionState
+    let index: Int
     let action: () -> Void
+
+    @State private var shakeOffset: CGFloat = 0
 
     var body: some View {
         Button(action: action) {
             content
                 .frame(maxWidth: .infinity)
-                .padding(DesignSystem.Spacing.md)
-                .background(backgroundColor)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm + 2)
+                .background { backgroundLayer }
                 .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .overlay {
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                        .strokeBorder(borderColor, lineWidth: 1.5)
+                }
         }
-        .buttonStyle(.plain)
-        .disabled(state == .disabled || state == .correct || state == .incorrect)
-        .opacity(state == .disabled ? 0.4 : 1)
-        .animation(.easeInOut, value: state)
+        .buttonStyle(GeoPressButtonStyle())
+        .disabled(state != .default)
+        .shadow(color: glowColor, radius: glowRadius, y: 3)
+        .offset(x: shakeOffset)
+        .animation(.easeInOut(duration: 0.2), value: state)
+        .onChange(of: state) { _, newState in
+            if newState == .incorrect {
+                Task { await shake() }
+            }
+        }
     }
 }
 
@@ -37,20 +51,43 @@ extension QuizOptionButton {
 private extension QuizOptionButton {
     @ViewBuilder
     var content: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            if let flagCode {
-                FlagView(countryCode: flagCode, height: DesignSystem.Size.md)
-            }
+        if let flagCode {
+            flagContent(flagCode)
+        } else {
+            textContent
+        }
+    }
 
+    var textContent: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            letterBadge
             if let text {
                 Text(text)
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(textColor)
-                    .frame(maxWidth: .infinity, alignment: flagCode != nil ? .leading : .center)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
             }
-
             stateIcon
         }
+    }
+
+    func flagContent(_ code: String) -> some View {
+        ZStack {
+            FlagView(countryCode: code, height: DesignSystem.Size.xl + 12)
+                .frame(maxWidth: .infinity)
+            stateIconOverlay
+        }
+    }
+
+    var letterBadge: some View {
+        let letters = ["A", "B", "C", "D", "E", "F"]
+        let letter = index < letters.count ? letters[index] : ""
+        return Text(letter)
+            .font(.system(size: 13, weight: .black, design: .rounded))
+            .foregroundStyle(badgeTextColor)
+            .frame(width: 26, height: 26)
+            .background(badgeBackground, in: RoundedRectangle(cornerRadius: 7))
     }
 
     @ViewBuilder
@@ -59,13 +96,45 @@ private extension QuizOptionButton {
         case .correct:
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .foregroundStyle(.white)
+                .transition(.scale.combined(with: .opacity))
         case .incorrect:
             Image(systemName: "xmark.circle.fill")
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .foregroundStyle(.white)
+                .transition(.scale.combined(with: .opacity))
         default:
             EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    var stateIconOverlay: some View {
+        switch state {
+        case .correct:
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 32))
+                .foregroundStyle(.white)
+                .shadow(color: DesignSystem.Color.success.opacity(0.8), radius: 8)
+                .transition(.scale.combined(with: .opacity))
+        case .incorrect:
+            Image(systemName: "xmark.circle.fill")
+                .font(.system(size: 32))
+                .foregroundStyle(.white)
+                .shadow(color: DesignSystem.Color.error.opacity(0.8), radius: 8)
+                .transition(.scale.combined(with: .opacity))
+        default:
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    var backgroundLayer: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .fill(.ultraThinMaterial)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .fill(overlayColor)
         }
     }
 }
@@ -73,23 +142,73 @@ private extension QuizOptionButton {
 // MARK: - Helpers
 
 private extension QuizOptionButton {
-    var backgroundColor: Color {
+    var overlayColor: Color {
         switch state {
-        case .default, .disabled:
-            DesignSystem.Color.cardBackground
-        case .correct:
-            DesignSystem.Color.success
-        case .incorrect:
-            DesignSystem.Color.error
+        case .default:      .clear
+        case .correct:      DesignSystem.Color.success.opacity(0.30)
+        case .incorrect:    DesignSystem.Color.error.opacity(0.28)
+        case .disabled:     .black.opacity(0.08)
+        }
+    }
+
+    var borderColor: Color {
+        switch state {
+        case .default:      .white.opacity(0.08)
+        case .correct:      DesignSystem.Color.success.opacity(0.70)
+        case .incorrect:    DesignSystem.Color.error.opacity(0.60)
+        case .disabled:     .clear
+        }
+    }
+
+    var glowColor: Color {
+        switch state {
+        case .correct:   DesignSystem.Color.success.opacity(0.45)
+        case .incorrect: DesignSystem.Color.error.opacity(0.35)
+        default:         .clear
+        }
+    }
+
+    var glowRadius: CGFloat {
+        switch state {
+        case .correct:   14
+        case .incorrect: 10
+        default:         0
         }
     }
 
     var textColor: Color {
         switch state {
-        case .default, .disabled:
-            DesignSystem.Color.textPrimary
-        case .correct, .incorrect:
-            DesignSystem.Color.textPrimary
+        case .correct, .incorrect: .white
+        case .disabled:            DesignSystem.Color.textTertiary
+        default:                   DesignSystem.Color.textPrimary
         }
+    }
+
+    var badgeBackground: Color {
+        switch state {
+        case .correct:   DesignSystem.Color.success.opacity(0.5)
+        case .incorrect: DesignSystem.Color.error.opacity(0.4)
+        case .disabled:  DesignSystem.Color.cardBackground.opacity(0.5)
+        default:         DesignSystem.Color.cardBackgroundHighlighted
+        }
+    }
+
+    var badgeTextColor: Color {
+        switch state {
+        case .correct, .incorrect: .white
+        case .disabled:            DesignSystem.Color.textTertiary
+        default:                   DesignSystem.Color.textSecondary
+        }
+    }
+
+    func shake() async {
+        let step: Duration = .milliseconds(60)
+        for _ in 0..<4 {
+            withAnimation(.easeInOut(duration: 0.06)) { shakeOffset = 9 }
+            try? await Task.sleep(for: step)
+            withAnimation(.easeInOut(duration: 0.06)) { shakeOffset = -9 }
+            try? await Task.sleep(for: step)
+        }
+        withAnimation(.easeInOut(duration: 0.06)) { shakeOffset = 0 }
     }
 }

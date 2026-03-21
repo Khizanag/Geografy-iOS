@@ -1,11 +1,62 @@
+import Combine
 import SwiftUI
 
 struct ContentView: View {
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
 
+    @Environment(XPService.self) private var xpService
+    @Environment(AchievementService.self) private var achievementService
+
     @State private var selectedTab = 0
+    @State private var levelUpLevel: UserLevel?
+    @State private var currentBannerAchievement: AchievementDefinition?
+    @State private var bannerQueue: [AchievementDefinition] = []
 
     var body: some View {
+        ZStack(alignment: .top) {
+            tabContent
+            if let achievement = currentBannerAchievement {
+                AchievementUnlockedBanner(
+                    achievement: achievement,
+                    onDismiss: {
+                        currentBannerAchievement = nil
+                        showNextBanner()
+                    }
+                )
+                .zIndex(50)
+                .padding(.top, 8)
+                .transition(.move(edge: .top).combined(with: .opacity))
+            }
+            if let level = levelUpLevel {
+                LevelUpSheet(newLevel: level) {
+                    withAnimation(.easeOut(duration: 0.3)) {
+                        levelUpLevel = nil
+                    }
+                }
+                .zIndex(100)
+                .transition(.opacity)
+            }
+        }
+        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: currentBannerAchievement?.id)
+        .animation(.easeOut(duration: 0.3), value: levelUpLevel != nil)
+        .onReceive(xpService.levelUpPublisher) { newLevel in
+            levelUpLevel = newLevel
+        }
+        .onReceive(achievementService.unlockPublisher) { achievement in
+            bannerQueue.append(achievement)
+            if currentBannerAchievement == nil {
+                showNextBanner()
+            }
+        }
+        .tint(DesignSystem.Color.accent)
+        .preferredColorScheme(colorScheme)
+    }
+}
+
+// MARK: - Helpers
+
+private extension ContentView {
+    var tabContent: some View {
         TabView(selection: $selectedTab) {
             Tab("Home", systemImage: "house.fill", value: 0) {
                 NavigationStack {
@@ -19,7 +70,11 @@ struct ContentView: View {
                 }
             }
 
-            Tab("All Maps", systemImage: "map.fill", value: 1) {
+            Tab("Quiz", systemImage: "gamecontroller.fill", value: 1) {
+                QuizSetupScreen()
+            }
+
+            Tab("All Maps", systemImage: "map.fill", value: 2) {
                 NavigationStack {
                     AllMapsScreen()
                         .navigationDestination(for: NavigationRoute.self) { route in
@@ -31,7 +86,7 @@ struct ContentView: View {
                 }
             }
 
-            Tab("Countries", systemImage: "list.bullet", value: 2) {
+            Tab("Countries", systemImage: "list.bullet", value: 3) {
                 NavigationStack {
                     CountryListScreen()
                         .navigationDestination(for: Country.self) { country in
@@ -40,32 +95,12 @@ struct ContentView: View {
                 }
             }
 
-            Tab("Achievements", systemImage: "trophy.fill", value: 3) {
-                NavigationStack {
-                    AchievementsScreen()
-                }
-            }
-
-            Tab("Themes", systemImage: "paintbrush.fill", value: 4) {
-                NavigationStack {
-                    ThemesScreen()
-                }
-            }
-
-            Tab("Settings", systemImage: "gearshape.fill", value: 5) {
-                NavigationStack {
-                    SettingsScreen()
-                }
+            Tab("More", systemImage: "ellipsis.circle.fill", value: 4) {
+                MoreScreen()
             }
         }
-        .tint(DesignSystem.Color.accent)
-        .preferredColorScheme(colorScheme)
     }
-}
 
-// MARK: - Helpers
-
-private extension ContentView {
     var colorScheme: ColorScheme? {
         switch selectedTheme {
         case "Light": .light
@@ -92,5 +127,10 @@ private extension ContentView {
         case .quiz:
             QuizSetupScreen()
         }
+    }
+
+    func showNextBanner() {
+        guard !bannerQueue.isEmpty else { return }
+        currentBannerAchievement = bannerQueue.removeFirst()
     }
 }

@@ -1,10 +1,18 @@
+import SwiftData
 import SwiftUI
 
 struct QuizResultsScreen: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(XPService.self) private var xpService
+    @Environment(AchievementService.self) private var achievementService
+    @Environment(DatabaseManager.self) private var database
+    @Environment(GameCenterService.self) private var gameCenterService
 
     let result: QuizResult
     let onPlayAgain: () -> Void
+    let onDone: () -> Void
+
+    @State private var xpEarned = 0
+    @State private var showXPBadge = false
 
     var body: some View {
         ScrollView {
@@ -23,6 +31,7 @@ struct QuizResultsScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Results")
         .navigationBarBackButtonHidden()
+        .task { processQuizResult() }
     }
 }
 
@@ -36,6 +45,22 @@ private extension QuizResultsScreen {
             Text(scoreMessage)
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            if showXPBadge, xpEarned > 0 {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
+                    Image(systemName: "star.fill")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                    Text("+\(xpEarned) XP")
+                        .font(DesignSystem.Font.headline)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.xs)
+                .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
+                .transition(.scale(scale: 0.7).combined(with: .opacity))
+            }
         }
         .padding(.top, DesignSystem.Spacing.lg)
     }
@@ -142,7 +167,7 @@ private extension QuizResultsScreen {
     }
 
     var doneButton: some View {
-        Button { dismiss() } label: {
+        Button { onDone() } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "checkmark")
                     .font(DesignSystem.Font.headline)
@@ -155,6 +180,59 @@ private extension QuizResultsScreen {
             .padding(.vertical, DesignSystem.Spacing.md)
         }
         .buttonStyle(.glass)
+    }
+}
+
+// MARK: - Gamification
+
+private extension QuizResultsScreen {
+    func processQuizResult() {
+        let difficulty = result.configuration.difficulty
+        let base: Int
+        let maxBonus: Int
+        let source: XPSource
+        switch difficulty {
+        case .easy: base = 15; maxBonus = 10; source = .quizCompletedEasy
+        case .medium: base = 25; maxBonus = 15; source = .quizCompletedMedium
+        case .hard: base = 40; maxBonus = 20; source = .quizCompletedHard
+        }
+        let earnedXP = base + Int(result.accuracy * Double(maxBonus))
+
+        let record = QuizHistoryRecord(
+            userID: xpService.currentUserID,
+            quizType: result.configuration.type.rawValue,
+            difficulty: difficulty.rawValue,
+            region: result.configuration.region.rawValue,
+            correctCount: result.correctCount,
+            totalCount: result.answers.count,
+            totalTimeSeconds: result.totalTime,
+            xpEarned: earnedXP
+        )
+        database.mainContext.insert(record)
+        try? database.mainContext.save()
+
+        xpService.award(earnedXP, source: source)
+        xpEarned = earnedXP
+
+        let quizScore = Int(result.accuracy * 100)
+        Task {
+            await gameCenterService.submitScore(
+                quizScore,
+                to: GameCenterService.LeaderboardID.quizHighScore
+            )
+        }
+
+        let userID = xpService.currentUserID
+        var descriptor = FetchDescriptor<QuizHistoryRecord>(
+            predicate: #Predicate { $0.userID == userID }
+        )
+        descriptor.fetchLimit = 200
+        let history = (try? database.mainContext.fetch(descriptor)) ?? []
+        achievementService.checkQuizAchievements(history: history)
+
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.5)) {
+            showXPBadge = true
+        }
     }
 }
 

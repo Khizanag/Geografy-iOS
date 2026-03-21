@@ -5,6 +5,8 @@ struct CountryBannerView: View {
     let name: String
     let flag: String
     let capital: String
+    let namespace: Namespace.ID
+    let isFlagHidden: Bool
     let onFlagTap: (() -> Void)?
     let onMoreInfo: (() -> Void)?
     let onDismiss: () -> Void
@@ -37,7 +39,9 @@ struct CountryBannerView: View {
 private extension CountryBannerView {
     var flagView: some View {
         Button { onFlagTap?() } label: {
-            FlagView(countryCode: countryCode, height: DesignSystem.Size.md)
+            FlagView(countryCode: countryCode, height: DesignSystem.Size.xl)
+                .matchedGeometryEffect(id: countryCode, in: namespace)
+                .opacity(isFlagHidden ? 0 : 1)
         }
         .buttonStyle(.plain)
         .disabled(onFlagTap == nil)

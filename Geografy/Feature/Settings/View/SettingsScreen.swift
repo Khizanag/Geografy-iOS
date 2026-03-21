@@ -1,87 +1,293 @@
 import SwiftUI
+import UserNotifications
 
 struct SettingsScreen: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(AuthService.self) private var authService
 
-    @AppStorage("notificationsEnabled") private var notificationsEnabled = true
+    @AppStorage("notificationsEnabled") private var notificationsEnabled = false
+    @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
     @AppStorage("showCorrectAnswer") private var showCorrectAnswer = true
     @AppStorage("hideDependentTerritories") private var hideDependentTerritories = false
-    @AppStorage("vibrationEnabled") private var vibrationEnabled = true
-    @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
-    @AppStorage("selectedOrientation") private var selectedOrientation = "Auto"
-    @AppStorage("selectedLanguage") private var selectedLanguage = "English"
+
+    @State private var showSignIn = false
+    @State private var showDeleteConfirmation = false
+    @State private var showPaywall = false
 
     var body: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.md) {
+                premiumSection
                 accountSection
-                generalSettingsSection
-                gameSettingsSection
-                soundAndVibrationSection
+                appearanceSection
+                generalSection
+                mapSection
+                quizSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .background(DesignSystem.Color.background)
         .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .task { await syncNotificationStatus() }
+        .sheet(isPresented: $showSignIn) {
+            SignInOptionsSheet()
+        }
+        .sheet(isPresented: $showPaywall) {
+            PaywallScreen()
+        }
+        .confirmationDialog(
+            "Delete Account",
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete Account", role: .destructive) {
+                authService.deleteAccount()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("All your progress, XP, and achievements will be permanently deleted.")
+        }
     }
 }
 
-// MARK: - Subviews
+// MARK: - Premium Section
 
 private extension SettingsScreen {
+    @ViewBuilder
+    var premiumSection: some View {
+        if subscriptionService.isPremium {
+            settingsGroup(header: "Subscription") {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Geografy Premium")
+                            .font(DesignSystem.Font.body)
+                            .fontWeight(.medium)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text("Active subscription")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.success)
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                settingsDivider
+                Button {
+                    Task { await subscriptionService.restorePurchases() }
+                } label: {
+                    HStack(spacing: DesignSystem.Spacing.sm) {
+                        SettingsIconBadge(systemImage: "arrow.clockwise", color: DesignSystem.Color.blue)
+                        Text("Restore Purchases")
+                            .font(DesignSystem.Font.body)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Spacer()
+                    }
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.vertical, DesignSystem.Spacing.sm)
+                }
+                .buttonStyle(.plain)
+            }
+        } else {
+            settingsGroup(header: "Premium") {
+                Button { showPaywall = true } label: {
+                    HStack(spacing: DesignSystem.Spacing.sm) {
+                        SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Upgrade to Premium")
+                                .font(DesignSystem.Font.body)
+                                .fontWeight(.medium)
+                                .foregroundStyle(DesignSystem.Color.textPrimary)
+                            Text("Unlock all quiz types & advanced stats")
+                                .font(DesignSystem.Font.caption)
+                                .foregroundStyle(DesignSystem.Color.textTertiary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    }
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.vertical, DesignSystem.Spacing.sm)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+}
+
+// MARK: - Account Section
+
+private extension SettingsScreen {
+    @ViewBuilder
     var accountSection: some View {
-        GeoCard {
+        if authService.isGuest {
+            guestAccountSection
+        } else {
+            authenticatedAccountSection
+        }
+    }
+
+    var guestAccountSection: some View {
+        settingsGroup(header: "Account") {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                SettingsIconBadge(systemImage: "person.fill", color: DesignSystem.Color.textSecondary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Guest")
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text("Progress is saved on this device only")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+                Spacer()
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+
+            settingsDivider
+
             Button {
-                // Account settings — coming soon
+                showSignIn = true
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
-                    avatarPlaceholder
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text("Guest")
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text("Account settings")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
+                    SettingsIconBadge(systemImage: "person.badge.plus", color: DesignSystem.Color.accent)
+                    Text("Sign In with Apple")
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.accent)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
-                .padding(DesignSystem.Spacing.md)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
             }
             .buttonStyle(.plain)
         }
     }
 
-    var avatarPlaceholder: some View {
-        Circle()
-            .fill(DesignSystem.Color.cardBackgroundHighlighted)
-            .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
-            .overlay {
-                Image(systemName: "person.fill")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+    @ViewBuilder
+    var authenticatedAccountSection: some View {
+        let profile = authService.currentProfile
+        settingsGroup(header: "Account") {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ZStack {
+                    Circle()
+                        .fill(DesignSystem.Color.accent.opacity(0.15))
+                        .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
+                    Image(systemName: "person.fill")
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(profile?.displayName ?? "Explorer")
+                        .font(DesignSystem.Font.body)
+                        .fontWeight(.medium)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    if let email = profile?.email {
+                        Text(email)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    } else {
+                        Text("Signed in with Apple")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    }
+                }
+                Spacer()
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+
+            settingsDivider
+
+            Button {
+                authService.signOut()
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    // swiftlint:disable:next line_length
+                    SettingsIconBadge(systemImage: "rectangle.portrait.and.arrow.right", color: DesignSystem.Color.warning)
+                    Text("Sign Out")
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Spacer()
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+            }
+            .buttonStyle(.plain)
+
+            settingsDivider
+
+            Button {
+                showDeleteConfirmation = true
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    SettingsIconBadge(systemImage: "trash.fill", color: DesignSystem.Color.error)
+                    Text("Delete Account")
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.error)
+                    Spacer()
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+}
+
+// MARK: - Sections
+
+private extension SettingsScreen {
+    var appearanceSection: some View {
+        settingsGroup(header: "Appearance") {
+            settingsPickerRow(
+                icon: "circle.lefthalf.filled",
+                iconColor: DesignSystem.Color.indigo,
+                title: "Theme",
+                selection: $selectedTheme,
+                options: ["Auto", "Light", "Dark"]
+            )
+        }
     }
 
-    var generalSettingsSection: some View {
-        settingsGroup(header: "General settings") {
+    var generalSection: some View {
+        settingsGroup(header: "General") {
             SettingsToggleRow(
                 icon: "bell.fill",
                 iconColor: DesignSystem.Color.accent,
                 title: "Notifications",
-                isOn: $notificationsEnabled,
+                isOn: Binding(
+                    get: { notificationsEnabled },
+                    set: { newValue in
+                        if newValue {
+                            requestNotificationPermission()
+                        } else {
+                            notificationsEnabled = false
+                        }
+                    }
+                )
             )
 
             settingsDivider
 
+            SettingsToggleRow(
+                icon: "iphone.radiowaves.left.and.right",
+                iconColor: Color(hex: "00C9A7"),
+                title: "Haptic feedback",
+                isOn: $hapticFeedbackEnabled
+            )
+        }
+    }
+
+    var mapSection: some View {
+        settingsGroup(header: "Map") {
             NavigationLink {
                 TerritorialDisputesScreen()
             } label: {
@@ -89,59 +295,9 @@ private extension SettingsScreen {
                     icon: "exclamationmark.triangle.fill",
                     iconColor: DesignSystem.Color.warning,
                     title: "Territorial disputes"
-                ) {}
+                )
             }
             .buttonStyle(.plain)
-
-            settingsDivider
-
-            SettingsNavigationRow(
-                icon: "square.grid.2x2.fill",
-                iconColor: DesignSystem.Color.indigo,
-                title: "Manage additions",
-                comingSoon: true
-            ) {}
-
-            settingsDivider
-
-            SettingsNavigationRow(
-                icon: "globe",
-                iconColor: DesignSystem.Color.blue,
-                title: "Language",
-                value: selectedLanguage,
-                comingSoon: true
-            ) {}
-
-            settingsDivider
-
-            settingsPickerRow(
-                icon: "paintbrush.fill",
-                iconColor: DesignSystem.Color.purple,
-                title: "Theme",
-                selection: $selectedTheme,
-                options: ["Auto", "Light", "Dark"]
-            )
-
-            settingsDivider
-
-            settingsPickerRow(
-                icon: "arrow.up.arrow.down",
-                iconColor: DesignSystem.Color.textSecondary,
-                title: "Orientation",
-                selection: $selectedOrientation,
-                options: ["Auto", "Portrait", "Landscape"]
-            )
-        }
-    }
-
-    var gameSettingsSection: some View {
-        settingsGroup(header: "Game settings") {
-            SettingsToggleRow(
-                icon: "checkmark.circle.fill",
-                iconColor: DesignSystem.Color.success,
-                title: "Show correct answer",
-                isOn: $showCorrectAnswer,
-            )
 
             settingsDivider
 
@@ -149,31 +305,26 @@ private extension SettingsScreen {
                 icon: "eye.slash.fill",
                 iconColor: DesignSystem.Color.textSecondary,
                 title: "Hide dependent territories",
-                isOn: $hideDependentTerritories,
+                isOn: $hideDependentTerritories
             )
         }
     }
 
-    var soundAndVibrationSection: some View {
-        settingsGroup(header: "Sound and vibration") {
+    var quizSection: some View {
+        settingsGroup(header: "Quiz") {
             SettingsToggleRow(
-                icon: "iphone.radiowaves.left.and.right",
-                iconColor: DesignSystem.Color.accent,
-                title: "Vibration",
-                isOn: $vibrationEnabled,
-            )
-
-            settingsDivider
-
-            SettingsToggleRow(
-                icon: "speaker.wave.2.fill",
-                iconColor: DesignSystem.Color.orange,
-                title: "Sound effects",
-                isOn: $soundEffectsEnabled,
+                icon: "checkmark.circle.fill",
+                iconColor: DesignSystem.Color.success,
+                title: "Show correct answer",
+                isOn: $showCorrectAnswer
             )
         }
     }
+}
 
+// MARK: - Row Helpers
+
+private extension SettingsScreen {
     func settingsPickerRow(
         icon: String,
         iconColor: Color,
@@ -183,17 +334,12 @@ private extension SettingsScreen {
     ) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
-
             Text(title)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-
             Spacer()
-
             Picker("", selection: selection) {
-                ForEach(options, id: \.self) { option in
-                    Text(option).tag(option)
-                }
+                ForEach(options, id: \.self) { Text($0).tag($0) }
             }
             .pickerStyle(.menu)
             .tint(DesignSystem.Color.textSecondary)
@@ -218,12 +364,27 @@ private extension SettingsScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
-
             GeoCard {
                 VStack(spacing: 0) {
                     content()
                 }
             }
+        }
+    }
+
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
+            DispatchQueue.main.async {
+                notificationsEnabled = granted
+            }
+        }
+    }
+
+    func syncNotificationStatus() async {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        let authorized = settings.authorizationStatus == .authorized
+        if notificationsEnabled, !authorized {
+            notificationsEnabled = false
         }
     }
 }
@@ -239,13 +400,10 @@ private struct SettingsToggleRow: View {
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
-
             Text(title)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-
             Spacer()
-
             Toggle("", isOn: $isOn)
                 .labelsHidden()
                 .tint(DesignSystem.Color.success)
@@ -259,44 +417,20 @@ private struct SettingsNavigationRow: View {
     let icon: String
     let iconColor: Color
     let title: String
-    var value: String?
-    var comingSoon: Bool = false
-    let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(systemImage: icon, color: iconColor)
-
-                Text(title)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                Spacer()
-
-                if comingSoon {
-                    Text("Soon")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .padding(.horizontal, DesignSystem.Spacing.xs)
-                        .padding(.vertical, DesignSystem.Spacing.xxs)
-                        .background(DesignSystem.Color.cardBackgroundHighlighted)
-                        .clipShape(Capsule())
-                } else if let value {
-                    Text(value)
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SettingsIconBadge(systemImage: icon, color: iconColor)
+            Text(title)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
         }
-        .buttonStyle(.plain)
-        .disabled(comingSoon)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 }
 

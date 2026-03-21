@@ -6,7 +6,6 @@ struct FlagView: View {
 
     var body: some View {
         flagImage
-            .frame(height: height)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2))
     }
 }
@@ -18,10 +17,11 @@ private extension FlagView {
     var flagImage: some View {
         let assetName = "Flags/\(countryCode.uppercased())"
 
-        if UIImage(named: assetName) != nil {
-            Image(assetName)
+        if let uiImage = UIImage(named: assetName) {
+            let ratio = uiImage.size.width / uiImage.size.height
+            Image(uiImage: uiImage)
                 .resizable()
-                .scaledToFit()
+                .frame(width: height * ratio, height: height)
         } else {
             Text(fallbackEmoji)
                 .font(DesignSystem.Font.title)

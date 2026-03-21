@@ -2,23 +2,21 @@ import CoreGraphics
 import SwiftUI
 
 enum GeoJSONParser {
-    private static let territorySettings: [(name: String, parentCode: String, key: String)] = [
-        ("Somaliland", "SO", "territory_somaliland"),
-        ("W. Sahara", "MA", "territory_western_sahara"),
-        ("N. Cyprus", "CY", "territory_northern_cyprus"),
-        ("Kosovo", "RS", "territory_kosovo"),
-        ("Palestine", "IL", "territory_palestine"),
-    ]
-
     private static var territoryMergeMap: [String: String] {
-        var map: [String: String] = [:]
-        for setting in territorySettings {
-            let value = UserDefaults.standard.string(forKey: setting.key) ?? "merge"
-            if value == "merge" {
-                map[setting.name] = setting.parentCode
+        TerritorialDispute.all.reduce(into: [:]) { map, dispute in
+            guard let geoJSONName = dispute.geoJSONName else { return }
+            let stored = UserDefaults.standard.string(forKey: dispute.userDefaultsKey)
+            let selectedKey: String
+            if let stored, dispute.options.contains(where: { $0.key == stored }) {
+                selectedKey = stored
+            } else {
+                selectedKey = dispute.defaultOptionKey
+            }
+            if let option = dispute.options.first(where: { $0.key == selectedKey }),
+               let mergeCode = option.mergesInto {
+                map[geoJSONName] = mergeCode
             }
         }
-        return map
     }
 
     private static let filteredTerritories: Set<String> = [
@@ -26,7 +24,7 @@ enum GeoJSONParser {
         "Bajo Nuevo Bank", "Scarborough Reef", "Serranilla Bank", "Spratly Is.",
         "Southern Patagonian Ice Field", "Brazilian I.",
         "Akrotiri", "Dhekelia", "Baikonur", "USNB Guantanamo Bay",
-        "Clipperton I.", "Coral Sea Is.", "Indian Ocean Ter.", "Ashmore and Cartier Is."
+        "Clipperton I.", "Coral Sea Is.", "Indian Ocean Ter.", "Ashmore and Cartier Is.",
     ]
 
     static func parse(data: Data) -> [CountryShape] {
@@ -48,8 +46,7 @@ enum GeoJSONParser {
 
 private extension GeoJSONParser {
     static func parseFeature(_ feature: GeoJSONFeature, at index: Int) -> CountryShape? {
-        let rawCode = feature.id
-            ?? extractProperty(from: feature, keys: ["ISO_A2", "ISO_A2_EH", "iso_a2", "ISO_A3", "iso_a3", "ADM0_A3"])
+        let rawCode = feature.id ?? extractISOCode(from: feature)
         let name = extractProperty(from: feature, keys: ["name", "NAME", "ADMIN"])
         let continent = extractProperty(from: feature, keys: ["CONTINENT"]) ?? ""
 
@@ -111,6 +108,28 @@ private extension GeoJSONParser {
 
     static func extractProperty(from feature: GeoJSONFeature, keys: [String]) -> String? {
         for key in keys {
+            if let value = feature.properties[key]?.stringValue, value != "-99" {
+                return value
+            }
+        }
+        return nil
+    }
+
+    // Extracts a clean ISO country code, preferring ISO_A2_EH over ISO_A2 for 2-letter codes.
+    // ISO_A2 can contain non-standard political encodings like "CN-TW" for Taiwan;
+    // ISO_A2_EH always contains the standard alphabetic-only 2-letter code.
+    static func extractISOCode(from feature: GeoJSONFeature) -> String? {
+        let twoLetterKeys = ["ISO_A2_EH", "ISO_A2", "iso_a2"]
+        for key in twoLetterKeys {
+            if let value = feature.properties[key]?.stringValue,
+               value != "-99",
+               value.count == 2,
+               value.allSatisfy(\.isLetter) {
+                return value
+            }
+        }
+        let threeLetterKeys = ["ISO_A3", "iso_a3", "ADM0_A3"]
+        for key in threeLetterKeys {
             if let value = feature.properties[key]?.stringValue, value != "-99" {
                 return value
             }

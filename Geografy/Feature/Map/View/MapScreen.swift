@@ -3,8 +3,11 @@ import SwiftUI
 struct MapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(TravelService.self) private var travelService
 
     var continentFilter: String?
+
+    @Namespace private var flagNamespace
 
     @State private var mapState = MapState()
     @State private var countryDataService = CountryDataService()
@@ -33,6 +36,8 @@ struct MapScreen: View {
         }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
+        .navigationTitle(continentFilter ?? "World Map")
+        .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .top) {
             if !isLandscape {
                 bannerOverlay
@@ -75,8 +80,10 @@ private extension MapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
     func flagPreview(for code: String) -> some View {
-        ZoomableFlagView(countryCode: code) {
-            showFlagPreview = false
+        ZoomableFlagView(countryCode: code, namespace: flagNamespace) {
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                showFlagPreview = false
+            }
         }
     }
 
@@ -98,7 +105,8 @@ private extension MapScreen {
             selectedCountryCode: mapState.selectedCountryCode,
             showLabels: mapState.showLabels,
             canvasSize: size,
-            capitalPoint: selectedCapitalPoint
+            capitalPoint: selectedCapitalPoint,
+            travelStatuses: travelService.entries
         )
         .gesture(dragGesture)
         .gesture(magnifyGesture)
@@ -148,7 +156,13 @@ private extension MapScreen {
                 name: country?.name ?? shape.name,
                 flag: country?.flagEmoji ?? basicInfo?.flag ?? "🏳️",
                 capital: country?.capital ?? basicInfo?.capital ?? "",
-                onFlagTap: { showFlagPreview = true },
+                namespace: flagNamespace,
+                isFlagHidden: showFlagPreview,
+                onFlagTap: {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                        showFlagPreview = true
+                    }
+                },
                 onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
@@ -205,7 +219,6 @@ private extension MapScreen {
         let scaledContentHeight = bounds.height * mapState.scale
         let maxOffsetY = max(0, (scaledContentHeight - screenSize.height) / 2)
 
-        // Center offset accounts for content not being centered in the map
         let contentCenterInMap = (bounds.minY + bounds.maxY) / 2
         let mapCenter = MapProjection.mapHeight / 2
         let centerCorrection = (mapCenter - contentCenterInMap) * mapState.scale
@@ -251,12 +264,11 @@ private extension MapScreen {
     }
 
     func computeMinScale(for size: CGSize) -> CGFloat {
-        let bounds = mapState.contentBounds
-        guard bounds.width > 0, bounds.height > 0 else {
-            return size.width / MapProjection.mapWidth
-        }
-
         if continentFilter != nil {
+            let bounds = effectiveViewportBounds
+            guard bounds.width > 0, bounds.height > 0 else {
+                return size.width / MapProjection.mapWidth
+            }
             let fitContentWidth = size.width / bounds.width
             let fitContentHeight = size.height / bounds.height
             return min(fitContentWidth, fitContentHeight) * 0.9
@@ -265,6 +277,8 @@ private extension MapScreen {
         let fitWidth = size.width / MapProjection.mapWidth
         let isLandscape = size.width > size.height
         if isLandscape {
+            let bounds = mapState.contentBounds
+            guard bounds.height > 0 else { return fitWidth }
             let fitContentHeight = size.height / bounds.height
             return max(fitWidth, fitContentHeight)
         }
@@ -273,7 +287,7 @@ private extension MapScreen {
     }
 
     func centerOnContent() {
-        let bounds = mapState.contentBounds
+        let bounds = effectiveViewportBounds
         guard bounds.width > 0, bounds.height > 0 else { return }
 
         let contentCenterX = (bounds.minX + bounds.maxX) / 2
@@ -288,6 +302,33 @@ private extension MapScreen {
         mapState.lastOffset = mapState.offset
     }
 
+    // Returns a viewport rect for continents that span the antimeridian or
+    // have outlier territories that would skew the computed bounding box.
+    func continentViewportBounds(for filter: String) -> CGRect? {
+        typealias Bounds = (minLng: Double, maxLng: Double, minLat: Double, maxLat: Double)
+        let lookup: [String: Bounds] = [
+            "Europe": (-25, 65, 33, 72),
+            "North America": (-168, -52, 7, 84),
+            "Oceania": (110, 180, -52, 5),
+        ]
+        guard let b = lookup[filter] else { return nil }
+        let topLeft = MapProjection.project(longitude: b.minLng, latitude: b.maxLat)
+        let bottomRight = MapProjection.project(longitude: b.maxLng, latitude: b.minLat)
+        return CGRect(
+            x: topLeft.x,
+            y: topLeft.y,
+            width: bottomRight.x - topLeft.x,
+            height: bottomRight.y - topLeft.y
+        )
+    }
+
+    var effectiveViewportBounds: CGRect {
+        if let filter = continentFilter, let vp = continentViewportBounds(for: filter) {
+            return vp
+        }
+        return mapState.contentBounds
+    }
+
     func handleTap(at point: CGPoint, in size: CGSize) {
         let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
         let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
@@ -297,7 +338,6 @@ private extension MapScreen {
             y: (point.y - originY) / mapState.scale
         )
 
-        // Check smaller countries first so enclaves are tappable
         let sortedByArea = mapState.countryShapes.sorted {
             $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
         }
@@ -321,13 +361,23 @@ private extension MapScreen {
     func loadMapData() async {
         countryDataService.loadCountries()
 
-        guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
-              let data = try? Data(contentsOf: url) else { return }
+        // Capture on main thread before switching to background
+        let filter = continentFilter
 
-        var shapes = GeoJSONParser.parse(data: data)
-        if let continentFilter {
-            shapes = shapes.filter { $0.continent == continentFilter }
-        }
+        // Move heavy I/O and parsing off the main thread so the loading
+        // indicator renders immediately
+        let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
+            guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
+                  let data = try? Data(contentsOf: url) else { return [] }
+            var parsed = GeoJSONParser.parse(data: data)
+            if let filter {
+                parsed = parsed.filter { $0.continent == filter }
+            }
+            return parsed
+        }.value
+
+        guard !shapes.isEmpty else { return }
+
         mapState.contentBounds = computeContentBounds(from: shapes)
 
         withAnimation(.easeOut(duration: 0.3)) {

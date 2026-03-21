@@ -6,6 +6,7 @@ struct Country: Identifiable, Hashable, Codable {
     let code: String
     let name: String
     let capital: String
+    let capitals: [Capital]?
     let flagEmoji: String
     let continent: Continent
     let area: Double
@@ -18,6 +19,20 @@ struct Country: Identifiable, Hashable, Codable {
     let gdpPerCapita: Double?
     let gdpPPP: Double?
     let organizations: [String]
+
+    var allCapitals: [Capital] {
+        if let caps = capitals, !caps.isEmpty { return caps }
+        return [Capital(name: capital, role: nil)]
+    }
+}
+
+// MARK: - Capital
+
+extension Country {
+    struct Capital: Codable, Hashable {
+        let name: String
+        let role: String?
+    }
 }
 
 // MARK: - Continent

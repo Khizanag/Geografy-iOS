@@ -1,7 +1,7 @@
 import CoreGraphics
 import SwiftUI
 
-struct CountryShape: Identifiable {
+struct CountryShape: Identifiable, @unchecked Sendable {
     let id: String
     let name: String
     let continent: String
