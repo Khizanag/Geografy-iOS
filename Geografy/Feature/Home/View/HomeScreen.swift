@@ -253,19 +253,32 @@ private extension HomeScreen {
     }
 
     var profileAvatar: some View {
-        ZStack {
+        let name = authService.currentProfile?.displayName ?? "Explorer"
+        let initials = profileInitials(from: name)
+
+        return ZStack {
             Circle()
-                .fill(DesignSystem.Color.accent)
-            Text(levelInitials)
-                .font(DesignSystem.Font.headline)
+                .fill(
+                    LinearGradient(
+                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+            Text(initials)
+                .font(DesignSystem.Font.caption)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.onAccent)
         }
-        .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
+        .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
     }
 
-    var levelInitials: String {
-        String(xpService.currentLevel.title.prefix(2)).uppercased()
+    func profileInitials(from name: String) -> String {
+        let words = name.split(separator: " ")
+        if words.count >= 2 {
+            return "\(words[0].prefix(1))\(words[1].prefix(1))".uppercased()
+        }
+        return String(name.prefix(2)).uppercased()
     }
 
     var statsButton: some View {
