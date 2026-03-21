@@ -113,11 +113,13 @@ private extension CountryListScreen {
     }
 
     var displaySubmenu: some View {
-        Menu("Display") {
-            Toggle("Flag", isOn: $showFlag)
-            Toggle("Capital", isOn: $showCapital)
-            Toggle("Area", isOn: $showArea)
-            Toggle("Population", isOn: $showPopulation)
+        Menu {
+            Toggle(isOn: $showFlag) { Label("Flag", systemImage: "flag.fill") }
+            Toggle(isOn: $showCapital) { Label("Capital", systemImage: "mappin") }
+            Toggle(isOn: $showArea) { Label("Area", systemImage: "map") }
+            Toggle(isOn: $showPopulation) { Label("Population", systemImage: "person.2") }
+        } label: {
+            Label("Display", systemImage: "eye")
         }
     }
 
@@ -141,47 +143,39 @@ private extension CountryListScreen {
     }
 
     var groupBySubmenu: some View {
-        Menu("Group by") {
+        Menu {
             ForEach(GroupOption.allCases, id: \.self) { option in
                 Button {
                     withAnimation { groupBy = option }
                 } label: {
-                    if groupBy == option {
-                        Label(option.rawValue, systemImage: "checkmark")
-                    } else {
-                        Text(option.rawValue)
-                    }
+                    Label(option.rawValue, systemImage: groupIcon(for: option))
                 }
             }
+        } label: {
+            Label("Group by", systemImage: "rectangle.3.group")
         }
     }
 
     var sortBySubmenu: some View {
-        Menu("Sort by") {
+        Menu {
             ForEach(SortOption.allCases, id: \.self) { option in
                 Button {
                     sortBy = option
                 } label: {
-                    if sortBy == option {
-                        Label(option.rawValue, systemImage: "checkmark")
-                    } else {
-                        Text(option.rawValue)
-                    }
+                    Label(option.rawValue, systemImage: sortIcon(for: option))
                 }
             }
+        } label: {
+            Label("Sort by", systemImage: "arrow.up.arrow.down")
         }
     }
 
     var continentFilterSubmenu: some View {
-        Menu("Filter by Continent") {
+        Menu {
             Button {
                 continentFilter = nil
             } label: {
-                if continentFilter == nil {
-                    Label("All Continents", systemImage: "checkmark")
-                } else {
-                    Text("All Continents")
-                }
+                Label("All Continents", systemImage: "globe")
             }
 
             Divider()
@@ -190,13 +184,41 @@ private extension CountryListScreen {
                 Button {
                     continentFilter = continent
                 } label: {
-                    if continentFilter == continent {
-                        Label(continent.displayName, systemImage: "checkmark")
-                    } else {
-                        Text(continent.displayName)
-                    }
+                    Label(continent.displayName, systemImage: continentIcon(for: continent))
                 }
             }
+        } label: {
+            Label("Continent", systemImage: "globe.americas")
+        }
+    }
+
+    func groupIcon(for option: GroupOption) -> String {
+        switch option {
+        case .none: "list.bullet"
+        case .firstLetter: "textformat.abc"
+        case .continent: "globe.americas"
+        case .government: "building.columns"
+        }
+    }
+
+    func sortIcon(for option: SortOption) -> String {
+        switch option {
+        case .name: "textformat"
+        case .population: "person.3"
+        case .area: "map"
+        case .gdp: "chart.bar"
+        }
+    }
+
+    func continentIcon(for continent: Country.Continent) -> String {
+        switch continent {
+        case .africa: "globe.europe.africa"
+        case .asia: "globe.asia.australia"
+        case .europe: "globe.europe.africa"
+        case .northAmerica: "globe.americas"
+        case .southAmerica: "globe.americas"
+        case .oceania: "globe.asia.australia"
+        case .antarctica: "snowflake"
         }
     }
 }

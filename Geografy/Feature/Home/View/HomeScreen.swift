@@ -295,10 +295,11 @@ private extension HomeScreen {
 
     var friendsButton: some View {
         Button { showFriends = true } label: {
-            Image(systemName: "person.2.fill")
-                .font(DesignSystem.Font.headline)
+            Image(systemName: "person.2")
+                .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
+        .buttonStyle(.plain)
         .glassEffect(.regular.interactive(), in: .circle)
     }
 
