@@ -7,12 +7,15 @@ struct FlashcardSessionScreen: View {
     let deck: FlashcardDeck
     let cards: [FlashcardItem]
 
+    @State private var countryDataService = CountryDataService()
     @State private var currentIndex = 0
     @State private var isFlipped = false
     @State private var showResults = false
     @State private var correctCount = 0
     @State private var dragOffset: CGSize = .zero
     @State private var showQuitAlert = false
+    @State private var detailCountry: Country?
+    @State private var skipFeedback: String?
     @State private var blobAnimating = false
 
     var body: some View {
@@ -25,7 +28,13 @@ struct FlashcardSessionScreen: View {
                 } message: {
                     Text("Your progress will be saved.")
                 }
+                .sheet(item: $detailCountry) { country in
+                    NavigationStack {
+                        CountryDetailScreen(country: country)
+                    }
+                }
                 .onAppear { startBlobAnimation() }
+                .task { countryDataService.loadCountries() }
         }
     }
 }
@@ -137,18 +146,21 @@ private extension FlashcardSessionScreen {
 private extension FlashcardSessionScreen {
     var cardSection: some View {
         GeometryReader { geometry in
-            FlashcardCardView(
-                card: currentCard,
-                isFlipped: isFlipped,
-                onTap: flipCard
-            )
-            .frame(
-                width: geometry.size.width - DesignSystem.Spacing.xl * 2,
-                height: geometry.size.height * 0.85
-            )
-            .offset(dragOffset)
-            .rotationEffect(.degrees(dragRotation))
-            .gesture(swipeGesture)
+            ZStack {
+                FlashcardCardView(
+                    card: currentCard,
+                    isFlipped: isFlipped,
+                    onTap: flipCard
+                )
+                .frame(
+                    width: geometry.size.width - DesignSystem.Spacing.xl * 2,
+                    height: geometry.size.height * 0.85
+                )
+                .offset(dragOffset)
+                .rotationEffect(.degrees(dragRotation))
+                .gesture(swipeGesture)
+                .overlay(alignment: .leading) { skipLabel }
+            }
             .frame(
                 maxWidth: .infinity,
                 maxHeight: .infinity,
@@ -158,15 +170,37 @@ private extension FlashcardSessionScreen {
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
+    @ViewBuilder
+    var skipLabel: some View {
+        if let feedback = skipFeedback {
+            Text(feedback)
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.success)
+                .padding(DesignSystem.Spacing.sm)
+                .transition(.opacity)
+        }
+    }
+
     var swipeGesture: some Gesture {
         DragGesture()
             .onChanged { value in
-                guard isFlipped else { return }
-                dragOffset = value.translation
+                if isFlipped {
+                    dragOffset = value.translation
+                } else if value.translation.width < -20 {
+                    dragOffset = value.translation
+                }
             }
             .onEnded { value in
-                guard isFlipped else { return }
-                handleSwipeEnd(translation: value.translation.width)
+                if isFlipped {
+                    handleSwipeEnd(translation: value.translation.width)
+                } else if value.translation.width < -100 {
+                    skipAsKnown()
+                } else {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                        dragOffset = .zero
+                    }
+                }
             }
     }
 }
@@ -177,12 +211,28 @@ private extension FlashcardSessionScreen {
     @ViewBuilder
     var ratingSection: some View {
         if isFlipped {
-            ratingButtons
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-                .padding(.bottom, DesignSystem.Spacing.md)
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                ratingButtons
+                countryInfoButton
+            }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+            .padding(.bottom, DesignSystem.Spacing.md)
         } else {
             Spacer(minLength: 0)
         }
+    }
+
+    var countryInfoButton: some View {
+        Button { showCountryDetail() } label: {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: "info.circle")
+                    .font(DesignSystem.Font.caption)
+                Text("Country Details")
+                    .font(DesignSystem.Font.caption)
+            }
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .buttonStyle(.plain)
     }
 
     var ratingButtons: some View {
@@ -298,6 +348,24 @@ private extension FlashcardSessionScreen {
 // MARK: - Actions
 
 private extension FlashcardSessionScreen {
+    func skipAsKnown() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        withAnimation(.spring(response: 0.3)) {
+            skipFeedback = "Known!"
+            dragOffset = CGSize(width: -300, height: 0)
+        }
+        recordReview(.easy)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            skipFeedback = nil
+        }
+    }
+
+    func showCountryDetail() {
+        let code = currentCard.countryCode
+        let country = countryDataService.countries.first { $0.code == code }
+        detailCountry = country
+    }
+
     func flipCard() {
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
             isFlipped.toggle()
