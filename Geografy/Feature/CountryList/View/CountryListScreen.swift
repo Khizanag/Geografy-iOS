@@ -106,6 +106,7 @@ private extension CountryListScreen {
             Image(systemName: icon)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
+        .tint(DesignSystem.Color.textPrimary)
     }
 
     var hasActiveFilters: Bool {
