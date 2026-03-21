@@ -29,13 +29,13 @@ struct ProfileScreen: View {
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                GeoCircleCloseButton()
-            }
             if !authService.isGuest {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     editButton
                 }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                GeoCircleCloseButton()
             }
         }
         .sheet(isPresented: $showEditProfile) {
@@ -57,13 +57,15 @@ struct ProfileScreen: View {
             Text("This will permanently delete your account, XP, achievements, and quiz history. This action cannot be undone.")
         }
         .onAppear {
+            fetchQuizData()
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }
-            withAnimation(.easeOut(duration: 0.5)) {
-                appeared = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                withAnimation(.easeOut(duration: 0.4)) {
+                    appeared = true
+                }
             }
-            fetchQuizData()
         }
     }
 }
