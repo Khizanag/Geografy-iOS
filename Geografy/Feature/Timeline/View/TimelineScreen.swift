@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TimelineScreen: View {
-    @Environment(CountryDataService.self) private var countryDataService
+    @State private var countryDataService = CountryDataService()
 
     @State private var timelineService = TimelineService()
     @State private var selectedYear = 1960
@@ -18,7 +18,10 @@ struct TimelineScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Timeline")
         .navigationBarTitleDisplayMode(.large)
-        .onAppear { timelineService.loadEvents() }
+        .onAppear {
+            countryDataService.loadCountries()
+            timelineService.loadEvents()
+        }
         .sheet(item: $selectedEvent) { event in
             eventDetailSheet(for: event)
         }
