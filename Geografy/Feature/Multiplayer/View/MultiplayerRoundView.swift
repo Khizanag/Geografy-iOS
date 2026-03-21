@@ -1,0 +1,227 @@
+import SwiftUI
+
+struct MultiplayerRoundView: View {
+    let question: QuizQuestion
+    let quizType: QuizType
+    let opponentIsThinking: Bool
+    let opponentHasAnswered: Bool
+    let selectedOptionID: UUID?
+    let showFeedback: Bool
+    let opponentSelectedOptionID: UUID?
+    let onSelectOption: (UUID) -> Void
+
+    var body: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            questionPrompt
+            optionsGrid
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+}
+
+// MARK: - Subviews
+
+private extension MultiplayerRoundView {
+    var questionPrompt: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            if let promptFlag = question.promptFlag {
+                FlagView(countryCode: promptFlag, height: 80)
+            }
+
+            if let subject = question.promptSubject {
+                Text(question.promptText)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
+
+                Text(subject)
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+            } else {
+                Text(question.promptText)
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+            }
+
+            opponentStatusIndicator
+        }
+    }
+
+    var opponentStatusIndicator: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            if opponentHasAnswered {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.success)
+                Text("Opponent answered")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            } else if opponentIsThinking {
+                thinkingDots
+                Text("Opponent thinking")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+        }
+        .animation(.easeInOut(duration: 0.3), value: opponentHasAnswered)
+        .animation(.easeInOut(duration: 0.3), value: opponentIsThinking)
+    }
+
+    var thinkingDots: some View {
+        HStack(spacing: 3) {
+            ForEach(0..<3, id: \.self) { index in
+                Circle()
+                    .fill(DesignSystem.Color.textTertiary)
+                    .frame(width: 4, height: 4)
+                    .opacity(opponentIsThinking ? 1 : 0.3)
+                    .animation(
+                        .easeInOut(duration: 0.5)
+                            .repeatForever(autoreverses: true)
+                            .delay(Double(index) * 0.2),
+                        value: opponentIsThinking
+                    )
+            }
+        }
+    }
+
+    var optionsGrid: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(question.options) { option in
+                optionButton(option)
+            }
+        }
+    }
+
+    func optionButton(_ option: QuizOption) -> some View {
+        let isSelected = selectedOptionID == option.id
+        let isCorrect = option.id == question.correctOptionID
+        let opponentSelected = opponentSelectedOptionID == option.id
+
+        return Button { onSelectOption(option.id) } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                if let flagCode = option.flagCode {
+                    FlagView(countryCode: flagCode, height: DesignSystem.Spacing.xl)
+                }
+
+                if let text = option.text {
+                    Text(text)
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(optionTextColor(
+                            isSelected: isSelected,
+                            isCorrect: isCorrect
+                        ))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                }
+
+                Spacer(minLength: 0)
+
+                if showFeedback {
+                    feedbackIcon(isCorrect: isCorrect, isSelected: isSelected)
+                }
+
+                if showFeedback, opponentSelected {
+                    opponentMarker
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(optionBackground(
+                isSelected: isSelected,
+                isCorrect: isCorrect
+            ))
+            .clipShape(RoundedRectangle(
+                cornerRadius: DesignSystem.CornerRadius.medium
+            ))
+            .overlay(
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    .strokeBorder(
+                        optionBorderColor(
+                            isSelected: isSelected,
+                            isCorrect: isCorrect
+                        ),
+                        lineWidth: isSelected || (showFeedback && isCorrect) ? 2 : 0
+                    )
+            )
+        }
+        .buttonStyle(.plain)
+        .disabled(selectedOptionID != nil)
+    }
+
+    @ViewBuilder
+    func feedbackIcon(isCorrect: Bool, isSelected: Bool) -> some View {
+        if isCorrect {
+            Image(systemName: "checkmark.circle.fill")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.success)
+        } else if isSelected {
+            Image(systemName: "xmark.circle.fill")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.error)
+        }
+    }
+
+    var opponentMarker: some View {
+        Text("OPP")
+            .font(.system(size: 9, weight: .bold))
+            .foregroundStyle(DesignSystem.Color.onAccent)
+            .padding(.horizontal, DesignSystem.Spacing.xxs)
+            .padding(.vertical, 2)
+            .background(DesignSystem.Color.purple, in: Capsule())
+    }
+}
+
+// MARK: - Helpers
+
+private extension MultiplayerRoundView {
+    func optionTextColor(isSelected: Bool, isCorrect: Bool) -> Color {
+        guard showFeedback else {
+            return isSelected
+                ? DesignSystem.Color.accent
+                : DesignSystem.Color.textPrimary
+        }
+
+        if isCorrect {
+            return DesignSystem.Color.success
+        } else if isSelected {
+            return DesignSystem.Color.error
+        }
+        return DesignSystem.Color.textSecondary
+    }
+
+    func optionBackground(isSelected: Bool, isCorrect: Bool) -> Color {
+        guard showFeedback else {
+            return isSelected
+                ? DesignSystem.Color.accent.opacity(0.12)
+                : DesignSystem.Color.cardBackground
+        }
+
+        if isCorrect {
+            return DesignSystem.Color.success.opacity(0.12)
+        } else if isSelected {
+            return DesignSystem.Color.error.opacity(0.12)
+        }
+        return DesignSystem.Color.cardBackground.opacity(0.5)
+    }
+
+    func optionBorderColor(isSelected: Bool, isCorrect: Bool) -> Color {
+        guard showFeedback else {
+            return isSelected
+                ? DesignSystem.Color.accent
+                : DesignSystem.Color.cardBackground
+        }
+
+        if isCorrect {
+            return DesignSystem.Color.success
+        } else if isSelected {
+            return DesignSystem.Color.error
+        }
+        return DesignSystem.Color.cardBackground
+    }
+}
