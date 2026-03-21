@@ -41,7 +41,7 @@ struct CountryDetailScreen: View {
                     governmentSection
                     currencySection
                 }
-                if !memberOrganizations.isEmpty {
+                if !memberOrganizations.isEmpty, subscriptionService.isPremium {
                     organizationsSection
                 }
             }
@@ -393,7 +393,7 @@ private extension CountryDetailScreen {
 
     var economySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Economy")
+            sectionHeader("Economy", premium: true)
             HStack(spacing: DesignSystem.Spacing.sm) {
                 if let gdp = country.gdp {
                     // swiftlint:disable:next line_length
@@ -441,7 +441,7 @@ private extension CountryDetailScreen {
 private extension CountryDetailScreen {
     var governmentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Government")
+            sectionHeader("Government", premium: true)
             GeoInfoTile(
                 icon: "building.columns",
                 title: "Form of Government",
@@ -466,7 +466,7 @@ private extension CountryDetailScreen {
 private extension CountryDetailScreen {
     var currencySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Currency")
+            sectionHeader("Currency", premium: true)
             GeoInfoTile(
                 icon: "dollarsign.circle",
                 title: country.currency.name,
@@ -495,7 +495,7 @@ private extension CountryDetailScreen {
 
     var organizationsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Member Of")
+            sectionHeader("Member Of", premium: true)
             GeoCard {
                 VStack(spacing: 0) {
                     ForEach(Array(memberOrganizations.enumerated()), id: \.element.id) { index, org in
@@ -604,7 +604,7 @@ private extension CountryDetailScreen {
         }
     }
 
-    func sectionHeader(_ title: String) -> some View {
+    func sectionHeader(_ title: String, premium: Bool = false) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             RoundedRectangle(cornerRadius: 2)
                 .fill(DesignSystem.Color.accent)
@@ -612,6 +612,9 @@ private extension CountryDetailScreen {
             Text(title)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+            if premium, subscriptionService.isPremium {
+                PremiumBadge()
+            }
         }
     }
 

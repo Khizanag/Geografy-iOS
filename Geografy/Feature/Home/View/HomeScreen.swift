@@ -432,6 +432,7 @@ private extension HomeScreen {
                     }
                     .scrollTargetLayout()
                     .padding(.horizontal, sidePadding)
+                    .padding(.vertical, DesignSystem.Spacing.lg)
                 }
                 .scrollTargetBehavior(.viewAligned)
                 .scrollPosition(id: .init(
@@ -440,7 +441,7 @@ private extension HomeScreen {
                 ))
             }
         }
-        .frame(height: carouselHeight + DesignSystem.Spacing.lg)
+        .frame(height: carouselHeight + DesignSystem.Spacing.xxl * 2)
     }
 
     var pageIndicator: some View {

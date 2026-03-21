@@ -11,10 +11,23 @@ final class SubscriptionService {
         static let all = [monthly, yearly, lifetime]
     }
 
+    #if DEBUG
+    /// Enable premium for testing. Set to `true` to unlock all features.
+    private static let debugPremiumOverride = true
+    #endif
+
     private(set) var products: [Product] = []
-    private(set) var isPremium = false
     private(set) var isLoading = false
     private(set) var purchaseError: String?
+
+    var isPremium: Bool {
+        #if DEBUG
+        if Self.debugPremiumOverride { return true }
+        #endif
+        return _isPremium
+    }
+
+    private var _isPremium = false
 
     init() {
         Task { @MainActor [weak self] in
@@ -73,7 +86,7 @@ final class SubscriptionService {
                 hasPremium = true
             }
         }
-        isPremium = hasPremium
+        _isPremium = hasPremium
     }
 }
 
