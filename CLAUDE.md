@@ -1,109 +1,81 @@
 # Geografy-iOS
 
-Geography learning app — interactive maps, country facts, flags, capitals, quizzes.
+Geography learning app — interactive maps, country facts, flags, capitals, quizzes, travel tracker, gamification.
 
 ## App Identity
 - **Name**: Geografy
 - **Bundle ID**: `com.khizanag.geografy`
 - **Minimum iOS**: 26.0
-- **Reference app**: StudyGe (App Store)
+- **GitHub**: Khizanag/Geografy-iOS (SSH host: github-khizanag)
+- **Git author**: khizanag@gmail.com
 
 ## Shared Guidelines
 Follow all rules in `~/.claude/rules/personal-apps.md` (shared across all personal apps).
 
-## Core Features (MVP)
+## Architecture
+- **UI**: SwiftUI only (UIKit only when SwiftUI can't achieve the goal)
+- **Design pattern**: Views with extracted subviews. MVVM only when views become large
+- **Design system**: `DesignSystem.Color`, `DesignSystem.Font`, `DesignSystem.Spacing`, `DesignSystem.Size`, `DesignSystem.CornerRadius`, `DesignSystem.IconSize`
+- **Components**: `GeoCard`, `GeoButton`, `GeoInfoTile`, `GeoIconButton`, `GeoCircleCloseButton`, `GeoGlassButton`, `FlagView`, `PulsingCirclesView`, `ZoomableFlagView`, `PremiumBadge`, `LevelBadgeView`, `ScoreRingView`
+- **Data**: 197 countries in `countries.json`, 10m GeoJSON for map borders, 255 PDF flag assets
+- **Offline-first**: All data bundled, no network required
 
-### 1. Interactive World Map (PRIMARY FEATURE)
-- Full-screen political map with all countries rendered in distinct colors
-- Dark background (dark gray/charcoal, NOT pure black)
-- Smooth pinch-to-zoom and pan with high-quality rendering at all zoom levels
-- **T button** (top-right): toggles country name labels on/off
-- **Back button** (top-left): returns to home
-- Tap country to select → shows top banner with:
-  - Country flag (small)
-  - Country name
-  - Capital city (with star icon)
-  - "More info" button → navigates to Country Detail
-
-### 2. Country Detail Screen
-- Country name in navigation title
-- 2-column grid of info cards (dark cards with icon + title + value):
-  - Capital
-  - Form of government
-  - Area (km²)
-  - Currency
-  - International organizations (UN, NATO, EU, etc.)
-  - Language(s) — with pie chart visualization
-  - Population — with historical line chart
-  - Population density
-  - GDP, GDP per capita, GDP PPP — with trend charts
-- Tapping an info card shows a popup/modal with:
-  - The detail info
-  - "Show on the map" button (where applicable — e.g., area, currency zones)
-- Tapping the flag shows full-screen flag view
-
-### 3. Home Screen
-- User profile section (level, XP progress bar)
-- Map carousel (swipeable cards: World map, continent maps, etc.)
-  - Each card: illustration + map name + "Open map" button
-- "Statistics" button
-- "Play" (quiz) button — large, prominent
-- Bottom tab bar: All Maps, Achievements, Themes, Settings
-
-### 4. Settings Screen
-- Account settings (profile, login)
-- General settings: Notifications, Language, Theme (Auto/Light/Dark), Orientation
-- Game settings: Show correct answer toggle, Hide dependent territories toggle
-- Sound and vibration settings
-
-### 5. Authentication
-- Sign in with Apple
-- Email/password registration and login
-- Guest mode (use app without account, sync when they sign up)
-
-## Map Implementation Notes
-- Consider GeoJSON data for country boundaries
-- Each country needs: unique color, boundary path, label position, tap target
-- Colors should be distinct enough that neighboring countries are easily distinguishable
-- Ocean/sea areas: very dark (near-black) to contrast with colorful countries
-- Antarctica: dark gray, non-interactive
-- Zoom levels should maintain crisp borders (vector-based, not raster)
-
-## Data Model (Per Country)
+## Folder Structure
 ```
-Country:
-  - code (ISO 3166-1 alpha-2)
-  - name (localized)
-  - capital
-  - flag (emoji or asset)
-  - area (km²)
-  - population
-  - populationDensity
-  - currency (name + code)
-  - languages ([Language])
-  - formOfGovernment
-  - gdp, gdpPerCapita, gdpPPP
-  - organizations ([Organization])
-  - continent
-  - geoJSON (boundary data)
-  - color (for map rendering)
+Geografy/
+  App/                    — Entry point, ContentView, NavigationRoute
+  Design/
+    Theme/                — Colors, Font, Spacing, Size, CornerRadius, IconSize, Shadow
+    Component/            — Reusable UI components
+  Feature/
+    Home/View/            — Home screen, carousel cards, quiz card, streak, world records
+    Map/View/             — MapScreen, MapCanvasView, MapLoadingView, CountryBannerView
+    Map/Model/            — MapState, CountryShape, MapProjection, MapColorPalette
+    CountryDetail/View/   — Country detail, info popup, flag full screen
+    CountryList/View/     — Searchable country list with grouping/sorting/filtering
+    Quiz/Model/           — QuizType, QuizDifficulty, QuizRegion, QuizConfiguration, QuizQuestion, QuizResult
+    Quiz/Engine/          — QuizEngine, QuestionGenerator
+    Quiz/View/            — Setup, session, question, option button, results, score ring
+    Travel/View/          — Travel tracker, travel map, travel status picker
+    Auth/View/            — Sign in options
+    Profile/View/         — Profile screen, edit profile
+    Achievement/View/     — Achievements screen, cards, banners
+    Setting/View/         — Settings, territorial disputes
+    Organization/View/    — Organizations list and detail
+    Favorite/View/        — Favorites screen
+    Subscription/View/    — Paywall, subscription cards
+    AllMap/View/          — All maps grid
+    GameCenter/           — Game Center integration
+  Data/
+    Model/                — Country, GeoJSONModels, UserLevel, Organization, etc.
+    Service/              — CountryDataService, GeoJSONParser, CountryBasicInfo, ISOCountryCodes, SubscriptionService, etc.
+  Resource/
+    Assets.xcassets/      — Colors, AppIcon, Flags (255 PDF imagesets)
+    countries.json        — 197 countries with full data
+    countries.geojson     — 10m Natural Earth borders (13MB)
+  Utility/                — NumberFormatting, CGPath+Contains
 ```
 
-## Design System Prefix
-- All design system components use `Geo` prefix: `GeoButton`, `GeoCard`, `GeoInfoTile`, etc.
+## Key Conventions
+- **Folder names**: Always singular (Feature, Model, View, Service — NOT plural)
+- **No hardcoded values**: Colors → `DesignSystem.Color.*`, fonts → `DesignSystem.Font.*`, spacing → `DesignSystem.Spacing.*`, sizes → `DesignSystem.Size.*`
+- **Asset catalog colors**: Named without prefix (e.g., "Accent", "Background" — NOT "GeoAccent")
+- **Glass effects**: Use iOS 26 `.glassEffect()` and `.buttonStyle(.glass)` for interactive elements
+- **Flags**: PDF vector assets in `Assets.xcassets/Flags/`, loaded via `FlagView(countryCode:height:)`
+- **Map data**: Natural Earth 10m GeoJSON, parsed via `GeoJSONParser`, rendered via `MapCanvasView` Canvas
+- **Disputed territories**: Configurable per-territory merge/separate in Settings
+- **Trunk-based development**: Commit + push every valid increment immediately
+- **Build on iPhone before commit**: Always deploy to iPhone before committing
 
-## Color Palette Direction
-- Dark theme primary (matches StudyGe aesthetic)
-- Primary accent: Green (similar to StudyGe's teal/green buttons)
-- Background: Dark charcoal (#1C1C1E or similar)
-- Cards: Slightly lighter dark (#2C2C2E)
-- Map countries: Vibrant, saturated colors (purple, orange, blue, red, green, yellow, cyan, magenta)
-- Text: White primary, gray secondary
-
-## Phase Plan
-1. **Phase 1 (MVP)**: Project setup, design system, interactive map with country selection, country detail screen
-2. **Phase 2**: Home screen, map types carousel, settings
-3. **Phase 3**: Authentication (Sign in with Apple + email)
-4. **Phase 4**: Quizzes and gamification
-5. **Phase 5**: Statistics, achievements, themes
-6. **Phase 6**: Monetization (TBD)
+## Current State
+- Interactive world map with 258 countries, zoom/pan, country selection, capital pins
+- Continent-filtered maps (Europe, Asia, Africa, etc.)
+- Country detail with hero flag, quick facts, people, economy, government, currency, organizations
+- Quiz mode with 6 types, 3 difficulties, region filter, timer, results with XP
+- Travel tracker with visited/want-to-visit status, travel map with highlighted countries
+- Countries list with search, grouping, sorting, filtering, favorites
+- Authentication (Google Sign In, Apple Sign In, guest mode)
+- Gamification: XP system, 10 levels, achievements, streaks
+- Subscription/premium system (debug override enabled for testing)
+- Settings: theme, orientation, territorial disputes, notifications, sound
+- Game Center integration

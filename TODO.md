@@ -1,35 +1,63 @@
 # Geografy iOS — TODO
 
 ## Map
-- [x] Continent filter from All Maps page (open only filtered countries)
-- [x] Label placement algorithm — clamp centroid to bounding box so labels stay within country bounds
-- [ ] Small countries missing on map (Bahrain visible but very tiny)
+- [x] Continent filter from All Maps page
+- [x] Label placement algorithm
+- [x] High-res 10m GeoJSON borders
+- [x] Endless horizontal scrolling
+- [x] Disputed territories handling with per-territory settings
 - [ ] Physical map type (terrain/elevation)
+- [ ] Country-on-map quiz type (highlight country, guess name)
+- [ ] Standardize all map instances into single configurable MapScreen
 
 ## Auth
-- [x] Google Sign In — ASWebAuthenticationSession + PKCE OAuth2 flow (zero external dependencies)
-  - Needs real Google Cloud Console Client ID (see GoogleSignInHandler.swift setup comments)
+- [x] Google Sign In (PKCE OAuth2)
+- [x] Apple Sign In
+- [x] Guest mode
+- [ ] Real Google Cloud Console Client ID needed
 
-## Data
-- [ ] Orientation locking — picker works visually but needs AppDelegate integration
-- [ ] Language/Localization support
-- [ ] Game Center integration
+## Quiz
+- [x] 6 quiz types (flag, capital, reverse flag, reverse capital, population order, area order)
+- [x] 3 difficulties (easy, medium with timer, hard)
+- [x] Region filter
+- [x] Results with score ring and answer review
+- [x] XP rewards
+- [ ] Country-on-map quiz
+- [ ] Reorder quiz (drag countries by population/area)
+- [ ] Hard mode (type answer) UI
+
+## Gamification
+- [x] XP system with 10 levels
+- [x] Achievements system with categories
+- [x] Daily streak tracking
+- [x] Game Center integration
+- [ ] Leaderboard improvements
+
+## Travel
+- [x] Travel tracker with visited/want-to-visit
+- [x] Travel map with highlighted countries
+- [ ] Travel statistics (% of world visited)
 
 ## UI/UX
-- [ ] Flag preview on map toast — improve blur overlay
-- [ ] Country Detail page — needs full redesign with charts (population, GDP trends)
-- [x] Home screen carousel — gradient card design with continent colors (replaces SF Symbols)
-
-## Quizzes
-- [ ] Quiz feature — flag quiz, capital quiz, map quiz
-- [ ] Gamification — XP system, levels, achievements
+- [x] 3D carousel with rotation effects
+- [x] Glass effects (iOS 26)
+- [x] PDF flag assets (255 countries)
+- [x] Zoomable flag preview with blur
+- [ ] Orientation locking (needs AppDelegate)
+- [ ] Language/Localization support
+- [ ] iPad layout optimization
 
 ## Monetization
-- [ ] Decide on model (freemium + ads, subscription, one-time purchase)
-- [ ] Implement in-app purchases
+- [x] Subscription service structure
+- [x] Paywall screen
+- [x] Premium badge on locked sections
+- [x] Debug premium override for testing
+- [ ] Real App Store Connect product IDs
+- [ ] Decide pricing model
 
 ## Technical
-- [ ] Remove CountryBasicInfo once all countries have full data in countries.json
-- [ ] Performance — optimize Canvas rendering for 10m GeoJSON on older devices
+- [x] SwiftLint configuration
+- [ ] Remove CountryBasicInfo (redundant with full countries.json)
+- [ ] Performance — optimize Canvas for 10m GeoJSON on older devices
 - [ ] Add unit tests
-- [x] SwiftLint configuration (.swiftlint.yml)
+- [ ] CI/CD pipeline
