@@ -12,6 +12,7 @@ struct HomeScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(XPService.self) private var xpService
     @Environment(StreakService.self) private var streakService
+    @Environment(CoinService.self) private var coinService
 
     @State private var countryDataService = CountryDataService()
     @State private var selectedMapIndex = 0
@@ -25,6 +26,7 @@ struct HomeScreen: View {
     @State private var comingSoonItem: ComingSoonItem?
     @State private var showFavorites = false
     @State private var showCountries = false
+    @State private var showCoinStore = false
     @State private var blobAnimating = false
     @State private var appeared = false
 
@@ -98,6 +100,9 @@ struct HomeScreen: View {
         }
         .sheet(isPresented: $showCountries) {
             NavigationStack { CountryListScreen() }
+        }
+        .sheet(isPresented: $showCoinStore) {
+            CoinStoreScreen()
         }
         .task { countryDataService.loadCountries() }
         .onAppear {
@@ -282,15 +287,28 @@ private extension HomeScreen {
     }
 
     var statsButton: some View {
-        Button { showProfile = true } label: {
+        Button { showCoinStore = true } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 xpIndicator
                 divider
-                currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
+                coinIndicator
             }
             .fixedSize()
         }
         .buttonStyle(.glass)
+    }
+
+    var coinIndicator: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: "dollarsign.circle.fill")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.warning)
+            Text(coinService.formattedBalance)
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .contentTransition(.numericText())
+        }
     }
 
     var friendsButton: some View {
@@ -332,17 +350,6 @@ private extension HomeScreen {
             .frame(width: DesignSystem.Size.xxs, height: DesignSystem.Size.sm)
     }
 
-    func currencyItem(icon: String, color: Color, value: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-    }
 }
 
 // MARK: - Greeting

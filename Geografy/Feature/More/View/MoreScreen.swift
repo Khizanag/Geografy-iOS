@@ -59,6 +59,19 @@ private extension MoreScreen {
             }
         }
 
+        var subtitle: String {
+            switch self {
+            case .profile: "View your stats and level"
+            case .orgs: "International organizations"
+            case .favorites: "Your saved countries"
+            case .travel: "Track your adventures"
+            case .achievements: "Unlock badges and rewards"
+            case .leaderboards: "Compete with others"
+            case .themes: "Customize your experience"
+            case .settings: "App preferences"
+            }
+        }
+
         var color: Color {
             switch self {
             case .profile: DesignSystem.Color.accent
@@ -127,26 +140,42 @@ private extension MoreScreen {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             activeSheet = sheet
         } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            HStack(spacing: DesignSystem.Spacing.md) {
                 ZStack {
-                    Circle()
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                         .fill(sheet.color.opacity(0.15))
-                        .frame(width: 40, height: 40)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                        .strokeBorder(sheet.color.opacity(0.3), lineWidth: 1)
                     Image(systemName: sheet.icon)
-                        .font(.system(size: 16))
+                        .font(DesignSystem.Font.headline)
                         .foregroundStyle(sheet.color)
                 }
-                Text(sheet.label)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
+
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    Text(sheet.label)
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                    Text(sheet.subtitle)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .lineLimit(1)
+                }
+
                 Spacer()
+
                 Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(sheet.color.opacity(0.6))
             }
-            .padding(DesignSystem.Spacing.sm)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .padding(DesignSystem.Spacing.md)
+            .background(DesignSystem.Color.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            .overlay(
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                    .strokeBorder(sheet.color.opacity(0.15), lineWidth: 1)
+            )
         }
         .buttonStyle(GeoPressButtonStyle())
     }

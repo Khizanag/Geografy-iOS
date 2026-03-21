@@ -12,6 +12,7 @@ struct GeografyApp: App {
     @State private var xpService: XPService
     @State private var streakService: StreakService
     @State private var achievementService: AchievementService
+    @State private var coinService = CoinService()
     @State private var subscriptionService = SubscriptionService()
 
     init() {
@@ -39,6 +40,7 @@ struct GeografyApp: App {
                 .environment(xpService)
                 .environment(streakService)
                 .environment(achievementService)
+                .environment(coinService)
                 .environment(subscriptionService)
                 .task { await authService.validateOnLaunch() }
                 .task { await subscriptionService.checkEntitlements() }
