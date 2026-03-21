@@ -288,7 +288,12 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
-    var carouselHeight: CGFloat { isLandscape ? 200 : 320 }
+    var isCompactHeight: Bool { UIScreen.main.bounds.height <= 812 }
+    var carouselHeight: CGFloat {
+        if isLandscape { 200 }
+        else if isCompactHeight { 240 }
+        else { 300 }
+    }
 
     var carouselSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
