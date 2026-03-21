@@ -29,8 +29,8 @@ struct CountryListScreen: View {
     @State private var expandedSections: Set<String> = []
     @State private var showFlag = true
     @State private var showCapital = true
-    @State private var showArea = false
-    @State private var showPopulation = false
+    @State private var showArea = true
+    @State private var showPopulation = true
 
     var body: some View {
         ScrollView {
@@ -131,11 +131,12 @@ private extension CountryListScreen {
                 searchText = ""
                 showFlag = true
                 showCapital = true
-                showArea = false
-                showPopulation = false
+                showArea = true
+                showPopulation = true
             }
         } label: {
             Label("Reset All", systemImage: "arrow.counterclockwise")
+                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 
@@ -278,10 +279,14 @@ private extension CountryListScreen {
             .padding(.vertical, 4)
             .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
         }
-        .padding(.horizontal, 2)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .frame(maxWidth: .infinity)
-        .background(DesignSystem.Color.background)
+        .background {
+            Rectangle()
+                .fill(DesignSystem.Color.background)
+                .padding(.horizontal, -DesignSystem.Spacing.md)
+        }
     }
 }
 
@@ -382,14 +387,8 @@ private extension CountryListScreen {
     }
 
     func trailingContent(for country: Country) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxs) {
-                continentBadge(for: country)
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.5))
-            }
-
+        HStack(alignment: .center, spacing: DesignSystem.Spacing.sm) {
+            continentBadge(for: country)
             favoriteButton(for: country)
         }
     }
