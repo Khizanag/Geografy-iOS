@@ -23,7 +23,7 @@ extension QuizDifficulty {
         switch self {
         case .easy: "No timer · 4 options"
         case .medium: "15s timer · 4 options"
-        case .hard: "8s timer · Type answer"
+        case .hard: "8s timer · 4 options"
         }
     }
 
