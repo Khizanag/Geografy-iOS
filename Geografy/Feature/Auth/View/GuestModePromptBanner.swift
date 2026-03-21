@@ -21,7 +21,7 @@ struct GuestModePromptBanner: View {
 
 private extension GuestModePromptBanner {
     var bannerContent: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "person.crop.circle.badge.questionmark")
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.accent)
@@ -36,15 +36,15 @@ private extension GuestModePromptBanner {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
 
-            Spacer()
+            Spacer(minLength: DesignSystem.Spacing.xxs)
 
-            HStack(spacing: DesignSystem.Spacing.xs) {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
                 signInButton
                 dismissButton
             }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.sm)
+        .padding(.vertical, DesignSystem.Spacing.xs)
         .background(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 .fill(DesignSystem.Color.cardBackground)
