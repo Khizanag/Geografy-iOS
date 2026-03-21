@@ -142,13 +142,10 @@ private extension CountryListScreen {
     }
 
     var groupBySubmenu: some View {
-        Menu {
+        Picker(selection: $groupBy.animation()) {
             ForEach(GroupOption.allCases, id: \.self) { option in
-                Button {
-                    withAnimation { groupBy = option }
-                } label: {
-                    Label(option.rawValue, systemImage: groupIcon(for: option))
-                }
+                Label(option.rawValue, systemImage: groupIcon(for: option))
+                    .tag(option)
             }
         } label: {
             Label("Group by", systemImage: "rectangle.3.group")
@@ -156,13 +153,10 @@ private extension CountryListScreen {
     }
 
     var sortBySubmenu: some View {
-        Menu {
+        Picker(selection: $sortBy) {
             ForEach(SortOption.allCases, id: \.self) { option in
-                Button {
-                    sortBy = option
-                } label: {
-                    Label(option.rawValue, systemImage: sortIcon(for: option))
-                }
+                Label(option.rawValue, systemImage: sortIcon(for: option))
+                    .tag(option)
             }
         } label: {
             Label("Sort by", systemImage: "arrow.up.arrow.down")
@@ -174,7 +168,11 @@ private extension CountryListScreen {
             Button {
                 continentFilter = nil
             } label: {
-                Label("All Continents", systemImage: "globe")
+                if continentFilter == nil {
+                    Label("All Continents", systemImage: "checkmark")
+                } else {
+                    Label("All Continents", systemImage: "globe")
+                }
             }
 
             Divider()
@@ -183,7 +181,11 @@ private extension CountryListScreen {
                 Button {
                     continentFilter = continent
                 } label: {
-                    Label(continent.displayName, systemImage: continentIcon(for: continent))
+                    if continentFilter == continent {
+                        Label(continent.displayName, systemImage: "checkmark")
+                    } else {
+                        Label(continent.displayName, systemImage: continentIcon(for: continent))
+                    }
                 }
             }
         } label: {
