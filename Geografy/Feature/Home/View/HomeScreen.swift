@@ -421,8 +421,9 @@ private extension HomeScreen {
                                 .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))
                                 .opacity(1.0 - abs(normalized) * 0.3)
                                 .animation(.interactiveSpring(response: 0.35, dampingFraction: 0.8), value: normalized)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                             }
-                            .frame(width: cardWidth, height: carouselHeight)
+                            .frame(width: cardWidth, height: carouselHeight + DesignSystem.Spacing.xxl)
                             .id(index)
                         }
                     }
