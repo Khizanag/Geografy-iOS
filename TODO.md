@@ -31,6 +31,7 @@
 - [x] Achievements system with categories
 - [x] Daily streak tracking
 - [x] Game Center integration
+- [ ] Game Center Friends list integration (replace Friends placeholder)
 - [ ] Leaderboard improvements
 
 ## Travel
