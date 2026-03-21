@@ -196,8 +196,7 @@ private extension HomeScreen {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .circle)
+        .buttonStyle(.glass)
     }
 
     var xpIndicator: some View {
@@ -408,8 +407,11 @@ private extension HomeScreen {
 
     var spotlightCountry: Country? {
         guard !countryDataService.countries.isEmpty else { return nil }
-        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
-        return countryDataService.countries[(dayOfYear - 1) % countryDataService.countries.count]
+        let sorted = countryDataService.countries.sorted { $0.code < $1.code }
+        let year = Calendar.current.component(.year, from: Date())
+        let dayOfYear = (Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1) - 1
+        let shuffled = sorted.seededShuffle(seed: UInt64(year) * 6_364_136_223_846_793_005)
+        return shuffled[dayOfYear % shuffled.count]
     }
 }
 
