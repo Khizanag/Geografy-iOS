@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct QuizPackBrowserScreen: View {
-    @Environment(QuizPackService.self) private var packService
     @Environment(SubscriptionService.self) private var subscriptionService
+
+    @State private var packService = QuizPackService()
 
     @State private var selectedCategory: QuizPackCategory?
     @State private var selectedPack: QuizPack?
@@ -22,7 +23,8 @@ struct QuizPackBrowserScreen: View {
                 .sheet(item: $selectedPack) { pack in
                     QuizPackDetailScreen(
                         pack: pack,
-                        allPacks: allPacks
+                        allPacks: allPacks,
+                        packService: packService
                     )
                 }
                 .sheet(isPresented: $showingPaywall) {

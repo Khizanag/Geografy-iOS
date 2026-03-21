@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CompareScreen: View {
-    @Environment(CountryDataService.self) private var countryDataService
+    @State private var countryDataService = CountryDataService()
 
     @State private var leftCountry: Country?
     @State private var rightCountry: Country?
@@ -13,6 +13,7 @@ struct CompareScreen: View {
         contentScrollView
             .background(DesignSystem.Color.background)
             .navigationTitle("Compare")
+            .task { countryDataService.loadCountries() }
             .onAppear { loadRecentPairs(); appeared = true }
             .sheet(item: $activeSheet) { sheetContent(for: $0) }
     }

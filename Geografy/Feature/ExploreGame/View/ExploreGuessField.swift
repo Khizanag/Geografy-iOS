@@ -10,11 +10,11 @@ struct ExploreGuessField: View {
     let onSubmit: (Country) -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            searchField
+        VStack(spacing: DesignSystem.Spacing.xxs) {
             if !filteredSuggestions.isEmpty, isFocused {
                 suggestionList
             }
+            searchField
         }
     }
 }

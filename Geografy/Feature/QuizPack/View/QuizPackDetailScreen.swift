@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct QuizPackDetailScreen: View {
-    @Environment(QuizPackService.self) private var packService
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(\.dismiss) private var dismiss
 
     let pack: QuizPack
     let allPacks: [QuizPack]
+    let packService: QuizPackService
 
     @State private var showingPaywall = false
 

@@ -2,10 +2,9 @@ import SwiftUI
 
 struct CustomQuizBuilderScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(CustomQuizService.self) private var quizService
-
     let existingQuiz: CustomQuiz?
     let countryDataService: CountryDataService
+    let quizService: CustomQuizService
 
     @State private var currentStep: BuilderStep = .name
     @State private var quizName = ""
@@ -18,10 +17,12 @@ struct CustomQuizBuilderScreen: View {
 
     init(
         existingQuiz: CustomQuiz? = nil,
-        countryDataService: CountryDataService
+        countryDataService: CountryDataService,
+        quizService: CustomQuizService
     ) {
         self.existingQuiz = existingQuiz
         self.countryDataService = countryDataService
+        self.quizService = quizService
     }
 
     var body: some View {

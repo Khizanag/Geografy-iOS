@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CustomQuizLibraryScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(CustomQuizService.self) private var quizService
+    @State private var quizService = CustomQuizService()
 
     @State private var showBuilder = false
     @State private var editingQuiz: CustomQuiz?
@@ -134,6 +134,7 @@ private extension CustomQuizLibraryScreen {
     var builderSheet: some View {
         CustomQuizBuilderScreen(
             countryDataService: countryDataService,
+            quizService: quizService
         )
     }
 
@@ -141,6 +142,7 @@ private extension CustomQuizLibraryScreen {
         CustomQuizBuilderScreen(
             existingQuiz: quiz,
             countryDataService: countryDataService,
+            quizService: quizService
         )
     }
 
