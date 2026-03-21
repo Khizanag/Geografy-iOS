@@ -200,6 +200,17 @@ private extension QuizSetupScreen {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal, DesignSystem.Spacing.md)
+
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: selectedDifficulty.icon)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                Text(selectedDifficulty.subtitle)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .animation(.easeInOut(duration: 0.2), value: selectedDifficulty)
         }
     }
 }

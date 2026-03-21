@@ -19,6 +19,14 @@ extension QuizDifficulty {
         }
     }
 
+    var subtitle: String {
+        switch self {
+        case .easy: "No timer · 4 options"
+        case .medium: "15s timer · 4 options"
+        case .hard: "8s timer · Type answer"
+        }
+    }
+
     var icon: String {
         switch self {
         case .easy: "tortoise.fill"
