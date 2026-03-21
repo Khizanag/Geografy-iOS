@@ -247,32 +247,28 @@ private extension HomeScreen {
 private extension HomeScreen {
     var profileButton: some View {
         Button { showProfile = true } label: {
-            profileAvatarView
+            LevelBadgeView(level: xpService.currentLevel, size: .small)
         }
-    }
-
-    var profileAvatarView: some View {
-        LevelBadgeView(level: xpService.currentLevel, size: .small)
+        .buttonStyle(.plain)
     }
 
     var statsButton: some View {
         Button { showProfile = true } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            HStack(spacing: DesignSystem.Spacing.xs) {
                 xpIndicator
                 divider
                 currencyItem(icon: "circle.fill", color: .yellow, value: "1,250")
             }
+            .fixedSize()
         }
         .buttonStyle(.glass)
-        .fixedSize(horizontal: false, vertical: true)
     }
 
     var friendsButton: some View {
         Button { showFriends = true } label: {
             Image(systemName: "person.2.fill")
-                .font(DesignSystem.Font.title2)
+                .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .padding(DesignSystem.Spacing.sm)
         }
         .glassEffect(.regular.interactive(), in: .circle)
     }
@@ -297,7 +293,7 @@ private extension HomeScreen {
                     .animation(.easeInOut(duration: 0.5), value: xpService.progressFraction)
             }
         }
-        .frame(height: DesignSystem.Size.xs)
+        .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xs)
     }
 
     var divider: some View {
@@ -581,7 +577,6 @@ private extension View {
     func feedSection(appeared: Bool, delay: Double) -> some View {
         self
             .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 20)
-            .animation(.easeOut(duration: 0.5).delay(delay), value: appeared)
+            .animation(.easeOut(duration: 0.4).delay(delay), value: appeared)
     }
 }
