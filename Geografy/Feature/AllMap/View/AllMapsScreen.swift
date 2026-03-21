@@ -18,10 +18,8 @@ struct AllMapsScreen: View {
     ]
 
     var body: some View {
-        ZStack {
-            ambientBackground
-            scrollContent
-        }
+        scrollContent
+            .background { ambientBackground }
         .navigationTitle("All Maps")
         .fullScreenCover(item: $mapTarget) { target in
             NavigationStack {
