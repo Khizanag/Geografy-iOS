@@ -1,0 +1,742 @@
+{
+  "US": {
+    "countryCode": "US",
+    "funFacts": [
+      { "emoji": "🗽", "text": "The Statue of Liberty was a gift from France in 1886 and weighs about 225 tons." },
+      { "emoji": "🌙", "text": "The US is the only country to have landed humans on the Moon — 12 astronauts walked on its surface." },
+      { "emoji": "🍕", "text": "Americans eat approximately 3 billion pizzas every year, roughly 23 pounds per person." },
+      { "emoji": "🦅", "text": "Alaska is so large that it could fit Texas inside it more than two times." },
+      { "emoji": "🎸", "text": "The US invented jazz, blues, rock and roll, hip-hop, and country music." }
+    ],
+    "culture": {
+      "traditionalFood": ["Apple Pie", "BBQ Ribs", "Clam Chowder", "Cornbread"],
+      "music": "Birthplace of jazz, blues, rock and roll, hip-hop, and country music.",
+      "art": "Home to the Metropolitan Museum of Art and pioneered pop art through Andy Warhol.",
+      "festivals": ["Independence Day (July 4)", "Thanksgiving", "Mardi Gras", "Burning Man"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Hello / Hey", "pronunciation": "heh-LOH / hey" },
+      { "english": "Thank you", "local": "Thank you", "pronunciation": "THANK yoo" },
+      { "english": "Goodbye", "local": "Goodbye / See ya", "pronunciation": "good-BYE / see yah" }
+    ],
+    "geography": {
+      "climate": "Extremely diverse — from arctic in Alaska to tropical in Hawaii and Florida.",
+      "terrain": "Vast central plains, western mountains (Rockies, Sierra Nevada), eastern forests (Appalachians).",
+      "naturalWonders": ["Grand Canyon", "Yellowstone Geysers", "Niagara Falls", "Yosemite Valley"],
+      "borderingCountries": ["Canada", "Mexico"]
+    },
+    "timeline": [
+      { "year": "1776", "title": "Declaration of Independence", "description": "The thirteen colonies declared independence from Great Britain." },
+      { "year": "1865", "title": "End of Civil War", "description": "The Union prevailed, slavery was abolished via the 13th Amendment." },
+      { "year": "1969", "title": "Moon Landing", "description": "Apollo 11 astronauts became the first humans to walk on the Moon." }
+    ],
+    "economy": {
+      "majorIndustries": ["Technology", "Finance", "Healthcare", "Energy"],
+      "topExports": ["Refined Petroleum", "Aircraft", "Semiconductors", "Pharmaceuticals"],
+      "gdpRank": 1
+    }
+  },
+  "GB": {
+    "countryCode": "GB",
+    "funFacts": [
+      { "emoji": "🍵", "text": "The British drink about 165 million cups of tea per day." },
+      { "emoji": "👑", "text": "The British monarchy is the oldest in Europe, dating back over 1,200 years." },
+      { "emoji": "🏰", "text": "There are over 1,500 castles scattered across the United Kingdom." },
+      { "emoji": "🎭", "text": "William Shakespeare invented over 1,700 words still used in English today." },
+      { "emoji": "🔬", "text": "The UK has produced 137 Nobel Prize winners — third most in the world." }
+    ],
+    "culture": {
+      "traditionalFood": ["Fish and Chips", "Sunday Roast", "Shepherd's Pie", "Scones with Clotted Cream"],
+      "music": "Gave the world The Beatles, The Rolling Stones, Adele, and the British Invasion of the 1960s.",
+      "art": "Home to the Tate Modern and National Gallery; birthplace of Turner and Banksy.",
+      "festivals": ["Notting Hill Carnival", "Guy Fawkes Night", "Glastonbury Festival", "Royal Ascot"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Hello / Hiya", "pronunciation": "heh-LOH / HY-ah" },
+      { "english": "Thank you", "local": "Thank you / Cheers", "pronunciation": "THANK yoo / cheerz" },
+      { "english": "Goodbye", "local": "Goodbye / Cheerio", "pronunciation": "good-BYE / CHEER-ee-oh" }
+    ],
+    "geography": {
+      "climate": "Temperate maritime with mild winters and cool summers; famously rainy.",
+      "terrain": "Rolling hills, Scottish Highlands, Lake District, chalk cliffs of Dover.",
+      "naturalWonders": ["Giant's Causeway", "White Cliffs of Dover", "Scottish Highlands", "Lake District"],
+      "borderingCountries": ["Ireland"]
+    },
+    "timeline": [
+      { "year": "1066", "title": "Norman Conquest", "description": "William the Conqueror defeated King Harold at the Battle of Hastings." },
+      { "year": "1215", "title": "Magna Carta", "description": "King John signed the Magna Carta, limiting royal power." },
+      { "year": "1945", "title": "End of World War II", "description": "Britain celebrated victory after six years of war." }
+    ],
+    "economy": {
+      "majorIndustries": ["Financial Services", "Aerospace", "Pharmaceuticals", "Technology"],
+      "topExports": ["Cars", "Medicines", "Jet Engines", "Gold"],
+      "gdpRank": 6
+    }
+  },
+  "FR": {
+    "countryCode": "FR",
+    "funFacts": [
+      { "emoji": "🗼", "text": "The Eiffel Tower was supposed to be temporary and was almost torn down in 1909." },
+      { "emoji": "🧀", "text": "France produces over 1,600 varieties of cheese — more than any other country." },
+      { "emoji": "🍷", "text": "France is the world's most visited country, welcoming over 89 million tourists annually." },
+      { "emoji": "🥐", "text": "The croissant actually originated in Austria, not France." },
+      { "emoji": "🎨", "text": "The Louvre is the world's most visited museum with 9.6 million visitors per year." }
+    ],
+    "culture": {
+      "traditionalFood": ["Croissants", "Coq au Vin", "Ratatouille", "Crème Brûlée"],
+      "music": "Famous for chanson, Edith Piaf, and a thriving electronic music scene (Daft Punk).",
+      "art": "Capital of Impressionism; home to Monet, Renoir, and the Louvre Museum.",
+      "festivals": ["Bastille Day (July 14)", "Cannes Film Festival", "Fête de la Musique", "Nice Carnival"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Bonjour", "pronunciation": "bohn-ZHOOR" },
+      { "english": "Thank you", "local": "Merci", "pronunciation": "mehr-SEE" },
+      { "english": "Goodbye", "local": "Au revoir", "pronunciation": "oh reh-VWAHR" }
+    ],
+    "geography": {
+      "climate": "Temperate in the north, Mediterranean in the south, alpine in the east.",
+      "terrain": "Flat plains in the north, Alps and Pyrenees mountains, Mediterranean coast.",
+      "naturalWonders": ["Mont Blanc", "Gorges du Verdon", "Calanques of Marseille", "Dune of Pilat"],
+      "borderingCountries": ["Belgium", "Luxembourg", "Germany", "Switzerland", "Italy", "Spain", "Andorra", "Monaco"]
+    },
+    "timeline": [
+      { "year": "1789", "title": "French Revolution", "description": "The storming of the Bastille marked the beginning of the end for absolute monarchy." },
+      { "year": "1804", "title": "Napoleon Crowned Emperor", "description": "Napoleon Bonaparte crowned himself Emperor of the French at Notre-Dame." },
+      { "year": "1944", "title": "Liberation of Paris", "description": "Paris was freed from Nazi occupation during World War II." }
+    ],
+    "economy": {
+      "majorIndustries": ["Aerospace", "Luxury Goods", "Agriculture", "Tourism"],
+      "topExports": ["Aircraft", "Wine", "Perfume", "Pharmaceuticals"],
+      "gdpRank": 7
+    }
+  },
+  "DE": {
+    "countryCode": "DE",
+    "funFacts": [
+      { "emoji": "🍺", "text": "Germany has over 1,500 different beers brewed according to the 1516 Reinheitsgebot purity law." },
+      { "emoji": "🚗", "text": "The Autobahn has sections with no speed limit — some drivers exceed 250 km/h." },
+      { "emoji": "🎄", "text": "Germany is the origin of the Christmas tree tradition, dating back to the 16th century." },
+      { "emoji": "📚", "text": "The first printed book (Gutenberg Bible) was produced in Germany around 1455." },
+      { "emoji": "🏰", "text": "Neuschwanstein Castle inspired Disney's Sleeping Beauty Castle." }
+    ],
+    "culture": {
+      "traditionalFood": ["Bratwurst", "Schnitzel", "Pretzels", "Black Forest Cake"],
+      "music": "Home of Bach, Beethoven, and the world-renowned Berlin Philharmonic.",
+      "art": "Birthplace of Bauhaus design movement; Expressionism through artists like Kirchner.",
+      "festivals": ["Oktoberfest", "Carnival (Karneval)", "Berlin Festival of Lights", "Christmas Markets"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Hallo", "pronunciation": "HAH-loh" },
+      { "english": "Thank you", "local": "Danke", "pronunciation": "DAHN-keh" },
+      { "english": "Goodbye", "local": "Auf Wiedersehen", "pronunciation": "owf VEE-der-zay-en" }
+    ],
+    "geography": {
+      "climate": "Temperate with warm summers and cold winters; wetter in the west.",
+      "terrain": "Northern plains, central uplands, Bavarian Alps in the south, Rhine Valley.",
+      "naturalWonders": ["Black Forest", "Bavarian Alps", "Rhine Valley", "Saxon Switzerland"],
+      "borderingCountries": ["Denmark", "Poland", "Czech Republic", "Austria", "Switzerland", "France", "Luxembourg", "Belgium", "Netherlands"]
+    },
+    "timeline": [
+      { "year": "1871", "title": "German Unification", "description": "The German Empire was proclaimed at Versailles under Otto von Bismarck." },
+      { "year": "1945", "title": "End of World War II", "description": "Nazi Germany surrendered unconditionally, ending the war in Europe." },
+      { "year": "1990", "title": "German Reunification", "description": "East and West Germany reunified after the fall of the Berlin Wall." }
+    ],
+    "economy": {
+      "majorIndustries": ["Automotive", "Machinery", "Chemicals", "Engineering"],
+      "topExports": ["Cars", "Vehicle Parts", "Packaged Medicines", "Computers"],
+      "gdpRank": 3
+    }
+  },
+  "JP": {
+    "countryCode": "JP",
+    "funFacts": [
+      { "emoji": "🗻", "text": "Mount Fuji last erupted in 1707, and over 300,000 people climb it every year." },
+      { "emoji": "🚄", "text": "Japan's bullet trains (Shinkansen) have an average delay of less than 1 minute per year." },
+      { "emoji": "🍣", "text": "There are more Michelin-starred restaurants in Tokyo than in any other city in the world." },
+      { "emoji": "🤖", "text": "Japan has more robots per capita than any other country, with over 300,000 industrial robots." },
+      { "emoji": "🏯", "text": "Japan has over 6,800 islands, though only about 430 are inhabited." }
+    ],
+    "culture": {
+      "traditionalFood": ["Sushi", "Ramen", "Tempura", "Mochi"],
+      "music": "Traditional gagaku court music alongside J-Pop; invented karaoke.",
+      "art": "Ukiyo-e woodblock prints inspired Impressionism; anime is a global cultural export.",
+      "festivals": ["Cherry Blossom (Hanami)", "Gion Matsuri", "Tanabata", "Obon"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Konnichiwa", "pronunciation": "kohn-NEE-chee-wah" },
+      { "english": "Thank you", "local": "Arigatou", "pronunciation": "ah-ree-GAH-toh" },
+      { "english": "Goodbye", "local": "Sayounara", "pronunciation": "sah-YOH-nah-rah" }
+    ],
+    "geography": {
+      "climate": "Ranges from subarctic in Hokkaido to subtropical in Okinawa; monsoon season in summer.",
+      "terrain": "Mountainous volcanic archipelago; 73% of the land is mountains and forests.",
+      "naturalWonders": ["Mount Fuji", "Yakushima Forest", "Jigokudani Monkey Park", "Oirase Gorge"],
+      "borderingCountries": []
+    },
+    "timeline": [
+      { "year": "1868", "title": "Meiji Restoration", "description": "Imperial rule was restored, launching Japan's rapid modernization." },
+      { "year": "1945", "title": "End of World War II", "description": "Japan surrendered after atomic bombings, beginning a new era of peace." },
+      { "year": "1964", "title": "Tokyo Olympics", "description": "The first Olympics held in Asia showcased Japan's postwar recovery." }
+    ],
+    "economy": {
+      "majorIndustries": ["Automotive", "Electronics", "Robotics", "Steel"],
+      "topExports": ["Cars", "Integrated Circuits", "Vehicle Parts", "Machinery"],
+      "gdpRank": 4
+    }
+  },
+  "BR": {
+    "countryCode": "BR",
+    "funFacts": [
+      { "emoji": "🌳", "text": "The Amazon Rainforest produces about 20% of the world's oxygen." },
+      { "emoji": "⚽", "text": "Brazil has won the FIFA World Cup 5 times — more than any other country." },
+      { "emoji": "🎭", "text": "Rio Carnival is the world's largest carnival, attracting 2 million people per day." },
+      { "emoji": "☕", "text": "Brazil is the world's largest coffee producer, supplying about 1/3 of global coffee." },
+      { "emoji": "🐆", "text": "Brazil has the highest biodiversity of any country, with over 50,000 plant species." }
+    ],
+    "culture": {
+      "traditionalFood": ["Feijoada", "Pão de Queijo", "Açaí Bowl", "Brigadeiro"],
+      "music": "Birthplace of samba, bossa nova, and forró; heavily influenced global music.",
+      "art": "Oscar Niemeyer's modernist architecture; vibrant street art scene in São Paulo.",
+      "festivals": ["Carnival", "Festa Junina", "Parintins Folklore Festival", "Círio de Nazaré"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Olá", "pronunciation": "oh-LAH" },
+      { "english": "Thank you", "local": "Obrigado/Obrigada", "pronunciation": "oh-bree-GAH-doo / oh-bree-GAH-dah" },
+      { "english": "Goodbye", "local": "Tchau", "pronunciation": "CHOW" }
+    ],
+    "geography": {
+      "climate": "Mostly tropical; equatorial in the north, temperate in the south.",
+      "terrain": "Amazon basin, Brazilian Highlands, Pantanal wetlands, Atlantic coast.",
+      "naturalWonders": ["Amazon Rainforest", "Iguazu Falls", "Fernando de Noronha", "Chapada Diamantina"],
+      "borderingCountries": ["Argentina", "Bolivia", "Colombia", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"]
+    },
+    "timeline": [
+      { "year": "1500", "title": "Portuguese Arrival", "description": "Pedro Álvares Cabral landed in Brazil, claiming it for Portugal." },
+      { "year": "1822", "title": "Independence", "description": "Prince Pedro declared Brazil's independence from Portugal." },
+      { "year": "2016", "title": "Rio Olympics", "description": "Brazil hosted the first Olympic Games in South America." }
+    ],
+    "economy": {
+      "majorIndustries": ["Agriculture", "Mining", "Oil", "Manufacturing"],
+      "topExports": ["Soybeans", "Iron Ore", "Crude Petroleum", "Sugar"],
+      "gdpRank": 9
+    }
+  },
+  "IN": {
+    "countryCode": "IN",
+    "funFacts": [
+      { "emoji": "🏛️", "text": "The Taj Mahal took 22 years and 20,000 workers to build, completed in 1653." },
+      { "emoji": "🧮", "text": "India invented the number zero, the decimal system, and the game of chess." },
+      { "emoji": "🎬", "text": "Bollywood produces over 1,800 films per year — more than any other film industry." },
+      { "emoji": "🌶️", "text": "India is the world's largest producer and consumer of spices." },
+      { "emoji": "🚂", "text": "Indian Railways employs over 1.3 million people, one of the largest employers on Earth." }
+    ],
+    "culture": {
+      "traditionalFood": ["Biryani", "Butter Chicken", "Dosa", "Samosa"],
+      "music": "Classical traditions of Hindustani and Carnatic music; Bollywood film scores.",
+      "art": "Ancient cave paintings at Ajanta; intricate Mughal miniatures; contemporary art boom.",
+      "festivals": ["Diwali", "Holi", "Navratri", "Pongal"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Namaste", "pronunciation": "nah-mah-STAY" },
+      { "english": "Thank you", "local": "Dhanyavaad", "pronunciation": "dhun-yah-VAHD" },
+      { "english": "Goodbye", "local": "Alvida", "pronunciation": "ahl-vee-DAH" }
+    ],
+    "geography": {
+      "climate": "Tropical monsoon in the south, temperate in the north, arid in the west.",
+      "terrain": "Himalayas in the north, Thar Desert, Deccan Plateau, coastal plains.",
+      "naturalWonders": ["Himalayas", "Thar Desert", "Kerala Backwaters", "Valley of Flowers"],
+      "borderingCountries": ["Pakistan", "China", "Nepal", "Bhutan", "Bangladesh", "Myanmar"]
+    },
+    "timeline": [
+      { "year": "1857", "title": "First War of Independence", "description": "The Sepoy Mutiny marked the first large-scale revolt against British rule." },
+      { "year": "1947", "title": "Independence", "description": "India gained independence from British rule under Mahatma Gandhi's leadership." },
+      { "year": "2014", "title": "Mars Orbiter Mission", "description": "India became the first Asian nation to reach Mars orbit on its first attempt." }
+    ],
+    "economy": {
+      "majorIndustries": ["IT Services", "Agriculture", "Textiles", "Pharmaceuticals"],
+      "topExports": ["Refined Petroleum", "Diamonds", "Medicines", "IT Services"],
+      "gdpRank": 5
+    }
+  },
+  "AU": {
+    "countryCode": "AU",
+    "funFacts": [
+      { "emoji": "🐨", "text": "Australia has more kangaroos than people — about 50 million kangaroos vs 26 million humans." },
+      { "emoji": "🪸", "text": "The Great Barrier Reef is the largest living structure on Earth, visible from space." },
+      { "emoji": "🕷️", "text": "Australia is home to 21 of the world's 25 most venomous snakes." },
+      { "emoji": "🏖️", "text": "Australia has over 10,000 beaches — you could visit a new one every day for 27 years." },
+      { "emoji": "🦆", "text": "The platypus is one of only five species of egg-laying mammals in the world." }
+    ],
+    "culture": {
+      "traditionalFood": ["Vegemite on Toast", "Meat Pie", "Lamingtons", "Barramundi"],
+      "music": "Birthplace of AC/DC, INXS, and Kylie Minogue; didgeridoo is the world's oldest wind instrument.",
+      "art": "Aboriginal dot paintings represent the oldest continuous art tradition (65,000+ years).",
+      "festivals": ["Australia Day", "Vivid Sydney", "Melbourne Cup", "Sydney New Year's Eve"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "G'day", "pronunciation": "guh-DAY" },
+      { "english": "Thank you", "local": "Thanks / Ta", "pronunciation": "thanks / tah" },
+      { "english": "Goodbye", "local": "See ya", "pronunciation": "see yah" }
+    ],
+    "geography": {
+      "climate": "Mostly arid interior; tropical in the north, temperate in the southeast.",
+      "terrain": "Vast outback deserts, Great Dividing Range, tropical rainforests, coastal beaches.",
+      "naturalWonders": ["Great Barrier Reef", "Uluru", "Blue Mountains", "Twelve Apostles"],
+      "borderingCountries": []
+    },
+    "timeline": [
+      { "year": "1770", "title": "Captain Cook's Arrival", "description": "James Cook claimed the east coast of Australia for Britain." },
+      { "year": "1901", "title": "Federation", "description": "The six colonies united to form the Commonwealth of Australia." },
+      { "year": "2000", "title": "Sydney Olympics", "description": "Australia hosted a celebrated Olympic Games in Sydney." }
+    ],
+    "economy": {
+      "majorIndustries": ["Mining", "Agriculture", "Finance", "Tourism"],
+      "topExports": ["Iron Ore", "Coal", "Natural Gas", "Gold"],
+      "gdpRank": 13
+    }
+  },
+  "IT": {
+    "countryCode": "IT",
+    "funFacts": [
+      { "emoji": "🏛️", "text": "Italy has 58 UNESCO World Heritage Sites — more than any other country." },
+      { "emoji": "🍝", "text": "There are over 600 different pasta shapes registered in Italy." },
+      { "emoji": "⛲", "text": "Visitors throw an estimated €1.5 million into Rome's Trevi Fountain each year." },
+      { "emoji": "🎻", "text": "The piano was invented in Italy by Bartolomeo Cristofori around 1700." },
+      { "emoji": "🚗", "text": "Italy is home to Ferrari, Lamborghini, Maserati, and Alfa Romeo." }
+    ],
+    "culture": {
+      "traditionalFood": ["Pasta Carbonara", "Risotto", "Tiramisu", "Gelato"],
+      "music": "Birthplace of opera; Verdi, Puccini, and Vivaldi are among the greatest composers.",
+      "art": "The Renaissance began here — Leonardo da Vinci, Michelangelo, and Raphael.",
+      "festivals": ["Venice Carnival", "Palio di Siena", "Festa della Repubblica", "Infiorata"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Ciao", "pronunciation": "CHOW" },
+      { "english": "Thank you", "local": "Grazie", "pronunciation": "GRAH-tsee-eh" },
+      { "english": "Goodbye", "local": "Arrivederci", "pronunciation": "ah-ree-veh-DEHR-chee" }
+    ],
+    "geography": {
+      "climate": "Mediterranean in the south, continental in the north, alpine in the mountains.",
+      "terrain": "Alpine north, Po Valley, Apennine mountain spine, coastal Mediterranean.",
+      "naturalWonders": ["Dolomites", "Amalfi Coast", "Mount Etna", "Cinque Terre"],
+      "borderingCountries": ["France", "Switzerland", "Austria", "Slovenia", "San Marino", "Vatican City"]
+    },
+    "timeline": [
+      { "year": "753 BC", "title": "Founding of Rome", "description": "According to legend, Romulus founded Rome on the Palatine Hill." },
+      { "year": "1861", "title": "Italian Unification", "description": "The Kingdom of Italy was proclaimed under King Victor Emmanuel II." },
+      { "year": "1946", "title": "Italian Republic", "description": "Italians voted to abolish the monarchy and establish a republic." }
+    ],
+    "economy": {
+      "majorIndustries": ["Fashion", "Automotive", "Food Processing", "Tourism"],
+      "topExports": ["Medicines", "Cars", "Wine", "Refined Petroleum"],
+      "gdpRank": 8
+    }
+  },
+  "CN": {
+    "countryCode": "CN",
+    "funFacts": [
+      { "emoji": "🧱", "text": "The Great Wall of China is over 21,000 km long and took over 2,000 years to build." },
+      { "emoji": "🐼", "text": "China is the only country where giant pandas live in the wild — about 1,800 remain." },
+      { "emoji": "🥢", "text": "China uses about 80 billion pairs of disposable chopsticks per year." },
+      { "emoji": "🎆", "text": "Gunpowder, paper, printing, and the compass were all invented in China." },
+      { "emoji": "🚄", "text": "China has the world's largest high-speed rail network — over 42,000 km." }
+    ],
+    "culture": {
+      "traditionalFood": ["Peking Duck", "Dim Sum", "Kung Pao Chicken", "Mooncakes"],
+      "music": "Traditional instruments like erhu and guzheng; rich operatic traditions (Peking Opera).",
+      "art": "Renowned for calligraphy, silk painting, porcelain (china), and jade carving.",
+      "festivals": ["Chinese New Year", "Mid-Autumn Festival", "Dragon Boat Festival", "Lantern Festival"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Nǐ hǎo", "pronunciation": "nee HOW" },
+      { "english": "Thank you", "local": "Xièxiè", "pronunciation": "syeh-SYEH" },
+      { "english": "Goodbye", "local": "Zàijiàn", "pronunciation": "zye-JEE-en" }
+    ],
+    "geography": {
+      "climate": "Varies from tropical in the south to subarctic in the northeast.",
+      "terrain": "Himalayan plateau in the west, deserts in the northwest, fertile plains in the east.",
+      "naturalWonders": ["Zhangjiajie Pillars", "Guilin Karst Mountains", "Tiger Leaping Gorge", "Yellow Mountains"],
+      "borderingCountries": ["Mongolia", "Russia", "North Korea", "Vietnam", "Laos", "Myanmar", "India", "Bhutan", "Nepal", "Pakistan", "Afghanistan", "Tajikistan", "Kyrgyzstan", "Kazakhstan"]
+    },
+    "timeline": [
+      { "year": "221 BC", "title": "First Emperor", "description": "Qin Shi Huang unified China and began building the Great Wall." },
+      { "year": "1949", "title": "People's Republic Founded", "description": "Mao Zedong proclaimed the People's Republic of China." },
+      { "year": "2008", "title": "Beijing Olympics", "description": "China hosted the Olympic Games, showcasing its modernization." }
+    ],
+    "economy": {
+      "majorIndustries": ["Manufacturing", "Technology", "Construction", "Mining"],
+      "topExports": ["Electronics", "Machinery", "Textiles", "Furniture"],
+      "gdpRank": 2
+    }
+  },
+  "MX": {
+    "countryCode": "MX",
+    "funFacts": [
+      { "emoji": "🍫", "text": "The ancient Aztecs used cacao beans as currency and invented chocolate drinks." },
+      { "emoji": "🌮", "text": "Mexico has 35 UNESCO World Heritage Sites, more than any other country in the Americas." },
+      { "emoji": "🦋", "text": "Every winter, 300 million monarch butterflies migrate to Mexico from Canada." },
+      { "emoji": "🌶️", "text": "Mexico is the origin of corn (maize), tomatoes, vanilla, and avocados." },
+      { "emoji": "💀", "text": "Día de los Muertos (Day of the Dead) is a UNESCO-recognized tradition dating back 3,000 years." }
+    ],
+    "culture": {
+      "traditionalFood": ["Tacos al Pastor", "Mole", "Tamales", "Churros"],
+      "music": "Mariachi music is UNESCO Intangible Cultural Heritage; also known for norteño and cumbia.",
+      "art": "Frida Kahlo and Diego Rivera revolutionized Mexican and global art.",
+      "festivals": ["Día de los Muertos", "Guelaguetza", "Independence Day (Sep 16)", "Carnival of Veracruz"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Hola", "pronunciation": "OH-lah" },
+      { "english": "Thank you", "local": "Gracias", "pronunciation": "GRAH-see-ahs" },
+      { "english": "Goodbye", "local": "Adiós", "pronunciation": "ah-dee-OHS" }
+    ],
+    "geography": {
+      "climate": "Desert in the north, tropical in the south, temperate in the highlands.",
+      "terrain": "Sierra Madre mountain ranges, Yucatán Peninsula, Sonoran Desert, volcanic belt.",
+      "naturalWonders": ["Copper Canyon", "Cenotes of Yucatán", "Hierve el Agua", "Sumidero Canyon"],
+      "borderingCountries": ["United States", "Guatemala", "Belize"]
+    },
+    "timeline": [
+      { "year": "1325", "title": "Tenochtitlan Founded", "description": "The Aztecs founded their capital on an island in Lake Texcoco." },
+      { "year": "1810", "title": "War of Independence", "description": "Miguel Hidalgo's cry of Dolores sparked the independence movement." },
+      { "year": "1910", "title": "Mexican Revolution", "description": "A decade-long revolution reshaped Mexico's political and social landscape." }
+    ],
+    "economy": {
+      "majorIndustries": ["Automotive", "Oil", "Electronics", "Agriculture"],
+      "topExports": ["Cars", "Vehicle Parts", "Computers", "Crude Petroleum"],
+      "gdpRank": 12
+    }
+  },
+  "EG": {
+    "countryCode": "EG",
+    "funFacts": [
+      { "emoji": "🏛️", "text": "The Great Pyramid of Giza is the only surviving Wonder of the Ancient World." },
+      { "emoji": "😸", "text": "Ancient Egyptians worshipped cats and shaved their eyebrows to mourn a cat's death." },
+      { "emoji": "📜", "text": "Egyptians invented papyrus paper, toothpaste, and one of the first written languages." },
+      { "emoji": "🌊", "text": "The Suez Canal handles about 12% of all global trade — over 19,000 ships per year." },
+      { "emoji": "🗿", "text": "The Great Sphinx is about 4,500 years old and its nose remains a mystery to historians." }
+    ],
+    "culture": {
+      "traditionalFood": ["Koshari", "Ful Medames", "Molokhia", "Basbousa"],
+      "music": "Umm Kulthum is the most famous Arab singer of all time; oud is the iconic instrument.",
+      "art": "Ancient pharaonic art; intricate Islamic geometric patterns and calligraphy.",
+      "festivals": ["Sham el-Nessim", "Ramadan", "Eid al-Fitr", "Abu Simbel Sun Festival"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Ahlan", "pronunciation": "AH-lan" },
+      { "english": "Thank you", "local": "Shukran", "pronunciation": "SHOO-kran" },
+      { "english": "Goodbye", "local": "Ma'a salama", "pronunciation": "MAH-ah sah-LAH-mah" }
+    ],
+    "geography": {
+      "climate": "Hot desert climate; very little rainfall; scorching summers.",
+      "terrain": "Sahara Desert covers 96% of Egypt; fertile Nile Delta and Valley.",
+      "naturalWonders": ["Nile River", "White Desert", "Siwa Oasis", "Red Sea Coral Reefs"],
+      "borderingCountries": ["Libya", "Sudan", "Israel", "Palestine"]
+    },
+    "timeline": [
+      { "year": "3100 BC", "title": "Unification of Egypt", "description": "King Menes unified Upper and Lower Egypt, founding the first dynasty." },
+      { "year": "1869", "title": "Suez Canal Opens", "description": "The Suez Canal opened, connecting the Mediterranean and Red Sea." },
+      { "year": "2011", "title": "Egyptian Revolution", "description": "Mass protests led to the end of President Mubarak's 30-year rule." }
+    ],
+    "economy": {
+      "majorIndustries": ["Tourism", "Oil and Gas", "Agriculture", "Textiles"],
+      "topExports": ["Crude Petroleum", "Refined Petroleum", "Gold", "Natural Gas"],
+      "gdpRank": 33
+    }
+  },
+  "KR": {
+    "countryCode": "KR",
+    "funFacts": [
+      { "emoji": "🎮", "text": "South Korea is the birthplace of esports and has the world's fastest average internet speed." },
+      { "emoji": "💄", "text": "The K-beauty industry is worth over $13 billion; Koreans pioneered the 10-step skincare routine." },
+      { "emoji": "🎵", "text": "BTS became the first K-pop act to top the Billboard Hot 100 chart." },
+      { "emoji": "🥬", "text": "Koreans consume about 40 pounds of kimchi per person per year." },
+      { "emoji": "🏗️", "text": "Seoul's Incheon Airport has been rated the world's best airport multiple times." }
+    ],
+    "culture": {
+      "traditionalFood": ["Kimchi", "Bibimbap", "Korean BBQ", "Tteokbokki"],
+      "music": "K-Pop is a global phenomenon; traditional gugak music dates back centuries.",
+      "art": "Celadon pottery is world-renowned; Hangul script is considered a design masterpiece.",
+      "festivals": ["Chuseok (Harvest Festival)", "Seollal (Lunar New Year)", "Boryeong Mud Festival", "Jinju Lantern Festival"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Annyeonghaseyo", "pronunciation": "ahn-nyeong-hah-SEH-yoh" },
+      { "english": "Thank you", "local": "Gamsahamnida", "pronunciation": "kahm-sah-HAHM-nee-dah" },
+      { "english": "Goodbye", "local": "Annyeonghi gaseyo", "pronunciation": "ahn-nyeong-hee gah-SEH-yoh" }
+    ],
+    "geography": {
+      "climate": "Continental with hot, humid summers and cold, dry winters; monsoon in summer.",
+      "terrain": "Mountainous east, flat western coastal plains, volcanic Jeju Island.",
+      "naturalWonders": ["Jeju Island", "Seoraksan National Park", "Boseong Tea Fields", "Hallasan Crater Lake"],
+      "borderingCountries": ["North Korea"]
+    },
+    "timeline": [
+      { "year": "1945", "title": "Liberation from Japan", "description": "Korea was freed from 35 years of Japanese colonial rule." },
+      { "year": "1988", "title": "Seoul Olympics", "description": "South Korea showcased its modernization to the world." },
+      { "year": "2020", "title": "Parasite Wins Oscar", "description": "First non-English film to win Best Picture at the Academy Awards." }
+    ],
+    "economy": {
+      "majorIndustries": ["Electronics", "Automotive", "Shipbuilding", "Semiconductors"],
+      "topExports": ["Semiconductors", "Cars", "Ships", "Displays"],
+      "gdpRank": 10
+    }
+  },
+  "ZA": {
+    "countryCode": "ZA",
+    "funFacts": [
+      { "emoji": "🌍", "text": "South Africa has 11 official languages — more than almost any other country." },
+      { "emoji": "💎", "text": "The world's largest diamond, the Cullinan (3,106 carats), was found in South Africa in 1905." },
+      { "emoji": "🐧", "text": "African penguins live on the beaches of Cape Town — one of the few places penguins live in Africa." },
+      { "emoji": "🏉", "text": "The Springboks' 1995 Rugby World Cup win united the nation after apartheid." },
+      { "emoji": "🫀", "text": "The world's first heart transplant was performed in Cape Town in 1967." }
+    ],
+    "culture": {
+      "traditionalFood": ["Braai (BBQ)", "Bobotie", "Biltong", "Bunny Chow"],
+      "music": "Township jazz, Afrikaans folk, and Amapiano have shaped global music.",
+      "art": "Rich tradition of Zulu beadwork, Ndebele murals, and contemporary art in Johannesburg.",
+      "festivals": ["Heritage Day", "Cape Town Jazz Festival", "Grahamstown Arts Festival", "Diwali in Durban"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Sawubona", "pronunciation": "sah-woo-BOH-nah" },
+      { "english": "Thank you", "local": "Ngiyabonga", "pronunciation": "ngee-yah-BOHN-gah" },
+      { "english": "Goodbye", "local": "Hamba kahle", "pronunciation": "HAHM-bah KAH-leh" }
+    ],
+    "geography": {
+      "climate": "Mostly semiarid; subtropical on the east coast, Mediterranean around Cape Town.",
+      "terrain": "Interior plateau (highveld), Drakensberg mountains, coastal lowlands.",
+      "naturalWonders": ["Table Mountain", "Blyde River Canyon", "Drakensberg Mountains", "Kruger National Park"],
+      "borderingCountries": ["Namibia", "Botswana", "Zimbabwe", "Mozambique", "Eswatini", "Lesotho"]
+    },
+    "timeline": [
+      { "year": "1652", "title": "Dutch Settlement", "description": "Jan van Riebeeck established the first European settlement at the Cape." },
+      { "year": "1948", "title": "Apartheid Begins", "description": "The National Party instituted apartheid, a system of racial segregation." },
+      { "year": "1994", "title": "End of Apartheid", "description": "Nelson Mandela was elected president in the first democratic election." }
+    ],
+    "economy": {
+      "majorIndustries": ["Mining", "Agriculture", "Finance", "Manufacturing"],
+      "topExports": ["Gold", "Platinum", "Iron Ore", "Diamonds"],
+      "gdpRank": 32
+    }
+  },
+  "ES": {
+    "countryCode": "ES",
+    "funFacts": [
+      { "emoji": "😴", "text": "The Spanish siesta tradition dates back thousands of years — shops still close at 2 PM." },
+      { "emoji": "🍅", "text": "La Tomatina festival sees 150,000 tomatoes thrown in just one hour." },
+      { "emoji": "🏃", "text": "The Running of the Bulls in Pamplona has been held annually since 1591." },
+      { "emoji": "🌐", "text": "Spanish is the world's second most spoken language by native speakers (over 470 million)." },
+      { "emoji": "🏟️", "text": "Spain's La Liga is one of the most watched sports leagues on Earth." }
+    ],
+    "culture": {
+      "traditionalFood": ["Paella", "Tapas", "Gazpacho", "Churros con Chocolate"],
+      "music": "Flamenco is a UNESCO Intangible Cultural Heritage; vibrant pop and reggaeton scene.",
+      "art": "Home of Picasso, Dalí, and Gaudí's surreal architecture in Barcelona.",
+      "festivals": ["La Tomatina", "San Fermín (Running of the Bulls)", "Las Fallas", "Semana Santa"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Hola", "pronunciation": "OH-lah" },
+      { "english": "Thank you", "local": "Gracias", "pronunciation": "GRAH-thee-ahs" },
+      { "english": "Goodbye", "local": "Adiós", "pronunciation": "ah-dee-OHS" }
+    ],
+    "geography": {
+      "climate": "Mediterranean on the coast, continental on the plateau, oceanic in the north.",
+      "terrain": "Central plateau (Meseta), Pyrenees, Sierra Nevada, coastal plains.",
+      "naturalWonders": ["Caminito del Rey", "Teide Volcano (Canary Islands)", "Ordesa Valley", "Tabernas Desert"],
+      "borderingCountries": ["Portugal", "France", "Andorra", "Gibraltar (UK)", "Morocco"]
+    },
+    "timeline": [
+      { "year": "1492", "title": "Columbus Discovers America", "description": "Christopher Columbus sailed from Spain, reaching the Americas." },
+      { "year": "1588", "title": "Spanish Armada", "description": "Spain's Invincible Armada was defeated by England, ending Spanish naval dominance." },
+      { "year": "1978", "title": "New Constitution", "description": "Spain transitioned to democracy after Franco's dictatorship." }
+    ],
+    "economy": {
+      "majorIndustries": ["Tourism", "Automotive", "Agriculture", "Renewable Energy"],
+      "topExports": ["Cars", "Refined Petroleum", "Medicines", "Olive Oil"],
+      "gdpRank": 15
+    }
+  },
+  "RU": {
+    "countryCode": "RU",
+    "funFacts": [
+      { "emoji": "🌍", "text": "Russia spans 11 time zones — the most of any country in the world." },
+      { "emoji": "🚀", "text": "Russia launched the first satellite (Sputnik, 1957) and first human (Yuri Gagarin, 1961) into space." },
+      { "emoji": "🌲", "text": "Siberian forests (taiga) produce more oxygen than the Amazon Rainforest." },
+      { "emoji": "🏛️", "text": "The Hermitage Museum in St. Petersburg has over 3 million items — it would take 11 years to see each one for 1 minute." },
+      { "emoji": "🥶", "text": "The coldest inhabited place on Earth is Oymyakon, Russia, where temperatures hit −67.7°C." }
+    ],
+    "culture": {
+      "traditionalFood": ["Borscht", "Pelmeni", "Blini", "Beef Stroganoff"],
+      "music": "Tchaikovsky, Rachmaninoff, and Stravinsky shaped classical music worldwide.",
+      "art": "Russian avant-garde (Malevich, Kandinsky); Fabergé eggs are national treasures.",
+      "festivals": ["Maslenitsa (Pancake Week)", "White Nights Festival", "Victory Day (May 9)", "Scarlet Sails"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Zdravstvuyte", "pronunciation": "ZDRAHV-stvooy-tyeh" },
+      { "english": "Thank you", "local": "Spasibo", "pronunciation": "spah-SEE-boh" },
+      { "english": "Goodbye", "local": "Do svidaniya", "pronunciation": "dah svee-DAH-nee-yah" }
+    ],
+    "geography": {
+      "climate": "Arctic in the north, subarctic in Siberia, continental in the center, subtropical on the Black Sea coast.",
+      "terrain": "Vast Siberian plains, Ural Mountains, Caucasus Mountains, tundra, taiga forests.",
+      "naturalWonders": ["Lake Baikal", "Kamchatka Volcanoes", "Valley of Geysers", "Lena Pillars"],
+      "borderingCountries": ["Norway", "Finland", "Estonia", "Latvia", "Lithuania", "Poland", "Belarus", "Ukraine", "Georgia", "Azerbaijan", "Kazakhstan", "China", "Mongolia", "North Korea"]
+    },
+    "timeline": [
+      { "year": "1917", "title": "Russian Revolution", "description": "The Bolshevik Revolution ended the Russian Empire and established the Soviet Union." },
+      { "year": "1961", "title": "First Human in Space", "description": "Yuri Gagarin became the first person to orbit Earth aboard Vostok 1." },
+      { "year": "1991", "title": "Dissolution of USSR", "description": "The Soviet Union dissolved into 15 independent republics." }
+    ],
+    "economy": {
+      "majorIndustries": ["Oil and Gas", "Mining", "Defense", "Agriculture"],
+      "topExports": ["Crude Petroleum", "Natural Gas", "Metals", "Wheat"],
+      "gdpRank": 11
+    }
+  },
+  "CA": {
+    "countryCode": "CA",
+    "funFacts": [
+      { "emoji": "🍁", "text": "Canada produces 71% of the world's maple syrup — 13 million gallons per year." },
+      { "emoji": "🏒", "text": "Hockey is the official winter sport, and Canada has won more Olympic hockey golds than any nation." },
+      { "emoji": "🌊", "text": "Canada has the longest coastline in the world at 243,042 km." },
+      { "emoji": "🐻", "text": "Two-thirds of the world's polar bears live in Canada." },
+      { "emoji": "🗣️", "text": "Canada is officially bilingual — English and French are both national languages." }
+    ],
+    "culture": {
+      "traditionalFood": ["Poutine", "Butter Tarts", "Nanaimo Bars", "Tourtière"],
+      "music": "Home to Drake, Celine Dion, Joni Mitchell, and The Weeknd.",
+      "art": "Group of Seven painters captured Canada's wilderness; Inuit soapstone carvings.",
+      "festivals": ["Canada Day (July 1)", "Calgary Stampede", "Winterlude", "Toronto International Film Festival"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Hello / Bonjour", "pronunciation": "heh-LOH / bohn-ZHOOR" },
+      { "english": "Thank you", "local": "Thank you / Merci", "pronunciation": "THANK yoo / mehr-SEE" },
+      { "english": "Goodbye", "local": "Goodbye / Au revoir", "pronunciation": "good-BYE / oh reh-VWAHR" }
+    ],
+    "geography": {
+      "climate": "Arctic in the north, subarctic, continental, and temperate on the coasts.",
+      "terrain": "Rocky Mountains, Canadian Shield, prairies, boreal forests, Arctic tundra.",
+      "naturalWonders": ["Niagara Falls", "Banff National Park", "Bay of Fundy", "Northern Lights"],
+      "borderingCountries": ["United States"]
+    },
+    "timeline": [
+      { "year": "1867", "title": "Confederation", "description": "The British North America Act united four provinces into the Dominion of Canada." },
+      { "year": "1965", "title": "Maple Leaf Flag", "description": "Canada adopted its iconic red and white maple leaf flag." },
+      { "year": "2010", "title": "Vancouver Olympics", "description": "Canada topped the gold medal count at the Winter Olympics for the first time." }
+    ],
+    "economy": {
+      "majorIndustries": ["Oil and Gas", "Mining", "Forestry", "Technology"],
+      "topExports": ["Crude Petroleum", "Cars", "Gold", "Natural Gas"],
+      "gdpRank": 9
+    }
+  },
+  "TR": {
+    "countryCode": "TR",
+    "funFacts": [
+      { "emoji": "🕌", "text": "Istanbul is the only city in the world that spans two continents — Europe and Asia." },
+      { "emoji": "🌷", "text": "Tulips originated in Turkey, not the Netherlands — they were exported to Holland in the 1500s." },
+      { "emoji": "☕", "text": "Turkish coffee is UNESCO Intangible Cultural Heritage and has been brewed since the 15th century." },
+      { "emoji": "🏛️", "text": "Turkey has more ancient Greek ruins than Greece itself." },
+      { "emoji": "🎈", "text": "Cappadocia's fairy chimneys were formed by volcanic eruptions millions of years ago." }
+    ],
+    "culture": {
+      "traditionalFood": ["Kebab", "Baklava", "Lahmacun", "Turkish Delight"],
+      "music": "Ottoman classical music, Turkish folk, and arabesque pop; home of whirling dervishes.",
+      "art": "İznik tiles, Ottoman calligraphy, and miniature painting traditions.",
+      "festivals": ["Ramadan Feast", "Republic Day (Oct 29)", "Whirling Dervish Festival", "Istanbul Biennial"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Merhaba", "pronunciation": "mehr-HAH-bah" },
+      { "english": "Thank you", "local": "Teşekkür ederim", "pronunciation": "teh-sheh-KOOR eh-deh-REEM" },
+      { "english": "Goodbye", "local": "Hoşça kal", "pronunciation": "HOSH-chah kahl" }
+    ],
+    "geography": {
+      "climate": "Mediterranean on the coast, continental in the interior, oceanic on the Black Sea.",
+      "terrain": "Anatolian plateau, Taurus and Pontic Mountains, coastal lowlands, volcanic peaks.",
+      "naturalWonders": ["Cappadocia", "Pamukkale Travertines", "Mount Ararat", "Ölüdeniz Blue Lagoon"],
+      "borderingCountries": ["Greece", "Bulgaria", "Georgia", "Armenia", "Iran", "Iraq", "Syria"]
+    },
+    "timeline": [
+      { "year": "330", "title": "Constantinople Founded", "description": "Roman Emperor Constantine made Byzantium (Istanbul) the new capital." },
+      { "year": "1453", "title": "Fall of Constantinople", "description": "The Ottoman Empire conquered Constantinople, ending the Byzantine Empire." },
+      { "year": "1923", "title": "Republic of Turkey", "description": "Mustafa Kemal Atatürk founded the Republic of Turkey." }
+    ],
+    "economy": {
+      "majorIndustries": ["Textiles", "Automotive", "Agriculture", "Tourism"],
+      "topExports": ["Cars", "Textiles", "Steel", "Jewelry"],
+      "gdpRank": 17
+    }
+  },
+  "GE": {
+    "countryCode": "GE",
+    "funFacts": [
+      { "emoji": "🍷", "text": "Georgia is the birthplace of wine — archaeologists found 8,000-year-old wine residue in clay vessels." },
+      { "emoji": "🏔️", "text": "Georgia has 5 UNESCO World Heritage Sites, including ancient cave monasteries." },
+      { "emoji": "🔤", "text": "The Georgian alphabet is one of only 14 unique scripts still in use in the world." },
+      { "emoji": "🎶", "text": "Georgian polyphonic singing is a UNESCO Intangible Cultural Heritage masterpiece." },
+      { "emoji": "🏔️", "text": "Ushguli, one of Europe's highest continuously inhabited settlements, sits at 2,200 meters." }
+    ],
+    "culture": {
+      "traditionalFood": ["Khachapuri", "Khinkali", "Churchkhela", "Pkhali"],
+      "music": "UNESCO-recognized polyphonic singing dates back centuries; toastmaster (tamada) traditions.",
+      "art": "Medieval frescoes, goldsmith work, cloisonné enamel, and the Gelati Monastery murals.",
+      "festivals": ["Tbilisoba", "Rtveli (Grape Harvest)", "Alaverdoba", "Independence Day (May 26)"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Gamarjoba", "pronunciation": "gah-mahr-JOH-bah" },
+      { "english": "Thank you", "local": "Madloba", "pronunciation": "mahd-LOH-bah" },
+      { "english": "Goodbye", "local": "Nakhvamdis", "pronunciation": "nahkh-VAHM-dees" }
+    ],
+    "geography": {
+      "climate": "Subtropical on the Black Sea coast, continental in the east, alpine in the mountains.",
+      "terrain": "Greater Caucasus Mountains, lush Colchic lowlands, semi-arid eastern plains.",
+      "naturalWonders": ["Caucasus Mountains", "Prometheus Cave", "Okatse Canyon", "Martvili Canyon"],
+      "borderingCountries": ["Russia", "Turkey", "Armenia", "Azerbaijan"]
+    },
+    "timeline": [
+      { "year": "1008", "title": "United Georgian Kingdom", "description": "King Bagrat III unified the Georgian kingdoms, beginning a golden age." },
+      { "year": "1918", "title": "First Republic", "description": "Georgia declared independence, establishing the Democratic Republic of Georgia." },
+      { "year": "1991", "title": "Independence Restored", "description": "Georgia declared independence from the Soviet Union." }
+    ],
+    "economy": {
+      "majorIndustries": ["Agriculture", "Tourism", "Mining", "Wine Production"],
+      "topExports": ["Wine", "Copper Ore", "Ferroalloys", "Mineral Water"],
+      "gdpRank": 115
+    }
+  },
+  "NG": {
+    "countryCode": "NG",
+    "funFacts": [
+      { "emoji": "🎬", "text": "Nollywood produces over 2,500 films per year — second only to India's Bollywood." },
+      { "emoji": "👥", "text": "Nigeria is Africa's most populous country with over 220 million people and 250+ ethnic groups." },
+      { "emoji": "🦍", "text": "Nigeria is home to the endangered Cross River gorilla — fewer than 300 remain in the wild." },
+      { "emoji": "🎵", "text": "Afrobeats, pioneered by Fela Kuti, has become one of the world's most popular music genres." },
+      { "emoji": "📚", "text": "Wole Soyinka became the first African to win the Nobel Prize in Literature in 1986." }
+    ],
+    "culture": {
+      "traditionalFood": ["Jollof Rice", "Suya", "Pounded Yam with Egusi", "Puff-Puff"],
+      "music": "Fela Kuti created Afrobeats; Burna Boy, Wizkid, and Davido are global superstars.",
+      "art": "Benin Bronzes are among the finest metal sculptures ever made; Nok terracottas date to 500 BC.",
+      "festivals": ["Durbar Festival", "Osun-Osogbo Festival", "Lagos Carnival", "New Yam Festival"]
+    },
+    "phrases": [
+      { "english": "Hello", "local": "Bawo ni (Yoruba)", "pronunciation": "BAH-woh nee" },
+      { "english": "Thank you", "local": "E se (Yoruba)", "pronunciation": "EH sheh" },
+      { "english": "Goodbye", "local": "O dabo (Yoruba)", "pronunciation": "oh DAH-boh" }
+    ],
+    "geography": {
+      "climate": "Tropical in the south, semiarid in the north; rainy season from April to October.",
+      "terrain": "Coastal swamps, tropical forests, savanna grasslands, Jos Plateau.",
+      "naturalWonders": ["Zuma Rock", "Aso Rock", "Obudu Plateau", "Erin Ijesha Waterfalls"],
+      "borderingCountries": ["Benin", "Niger", "Chad", "Cameroon"]
+    },
+    "timeline": [
+      { "year": "1960", "title": "Independence", "description": "Nigeria gained independence from the United Kingdom." },
+      { "year": "1967", "title": "Biafran War", "description": "A civil war erupted when southeastern Nigeria declared independence as Biafra." },
+      { "year": "1999", "title": "Return to Democracy", "description": "Nigeria transitioned from military to civilian democratic rule." }
+    ],
+    "economy": {
+      "majorIndustries": ["Oil and Gas", "Telecommunications", "Banking", "Agriculture"],
+      "topExports": ["Crude Petroleum", "Natural Gas", "Cocoa", "Rubber"],
+      "gdpRank": 27
+    }
+  }
+}
