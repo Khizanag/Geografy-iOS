@@ -29,8 +29,13 @@ struct ProfileScreen: View {
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                editButton
+            ToolbarItem(placement: .topBarLeading) {
+                GeoCircleCloseButton()
+            }
+            if !authService.isGuest {
+                ToolbarItem(placement: .topBarTrailing) {
+                    editButton
+                }
             }
         }
         .sheet(isPresented: $showEditProfile) {
