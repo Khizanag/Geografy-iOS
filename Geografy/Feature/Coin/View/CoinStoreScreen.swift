@@ -24,7 +24,7 @@ struct CoinStoreScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    closeButton
+                    GeoCircleCloseButton()
                 }
             }
         }
@@ -34,20 +34,18 @@ struct CoinStoreScreen: View {
     }
 }
 
-// MARK: - Subviews
+// MARK: - Balance
 
 private extension CoinStoreScreen {
-    var closeButton: some View {
-        GeoCircleCloseButton()
-    }
-
     var balanceSection: some View {
         CoinBalanceView()
             .padding(.top, DesignSystem.Spacing.lg)
     }
+}
 
-    // MARK: Transaction History
+// MARK: - Transaction History
 
+private extension CoinStoreScreen {
     var transactionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             transactionHeader
@@ -62,16 +60,20 @@ private extension CoinStoreScreen {
 
     var transactionHeader: some View {
         HStack {
-            SectionHeaderView(title:"History", icon: "clock.fill")
+            SectionHeaderView(title: "History")
             Spacer()
             if coinService.transactions.count > 5 {
-                Button { showAllTransactions = true } label: {
-                    Text("See All")
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
+                seeAllButton
             }
+        }
+    }
+
+    var seeAllButton: some View {
+        Button { showAllTransactions = true } label: {
+            Text("See All")
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.accent)
         }
     }
 
@@ -117,12 +119,14 @@ private extension CoinStoreScreen {
             .padding(.vertical, DesignSystem.Spacing.xs)
         }
     }
+}
 
-    // MARK: Coin Packs
+// MARK: - Coin Packs
 
+private extension CoinStoreScreen {
     var coinPacksSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title:"Get More Coins", icon: "plus.circle.fill")
+            SectionHeaderView(title: "Get More Coins")
                 .padding(.horizontal, DesignSystem.Spacing.md)
 
             LazyVGrid(
@@ -141,84 +145,84 @@ private extension CoinStoreScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
     }
+}
 
-    // MARK: Earn Info
+// MARK: - Earn Info
 
+private extension CoinStoreScreen {
     var earnInfoSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            Button {
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                    earnInfoExpanded.toggle()
-                }
-            } label: {
-                CardView {
-                    HStack {
-                        SectionHeaderView(title:"How to Earn Coins", icon: "info.circle.fill")
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .font(DesignSystem.Font.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                            .rotationEffect(.degrees(earnInfoExpanded ? -180 : 0))
-                    }
-                    .padding(DesignSystem.Spacing.md)
-                }
-            }
-            .buttonStyle(GeoPressButtonStyle())
-            .padding(.horizontal, DesignSystem.Spacing.md)
+            earnInfoHeader
+                .padding(.horizontal, DesignSystem.Spacing.md)
 
             if earnInfoExpanded {
-                CardView {
-                    VStack(spacing: 0) {
-                        earnRow(
-                            icon: "checkmark.circle.fill",
-                            color: DesignSystem.Color.success,
-                            title: "Complete Quizzes",
-                            detail: "Earn coins for every quiz you finish"
+                earnInfoItems
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .transition(
+                        .asymmetric(
+                            insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)),
+                            removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top))
                         )
-                        earnDivider
-                        earnRow(
-                            icon: "calendar.badge.checkmark",
-                            color: DesignSystem.Color.accent,
-                            title: "Daily Login",
-                            detail: "Log in every day to collect bonus coins"
-                        )
-                        earnDivider
-                        earnRow(
-                            icon: "trophy.fill",
-                            color: DesignSystem.Color.warning,
-                            title: "Unlock Achievements",
-                            detail: "Earn rewards for reaching milestones"
-                        )
-                        earnDivider
-                        earnRow(
-                            icon: "arrow.up.circle.fill",
-                            color: DesignSystem.Color.indigo,
-                            title: "Level Up",
-                            detail: "Get coin bonuses when you gain a new level"
-                        )
-                    }
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .transition(
-                    .asymmetric(
-                        insertion: .opacity.combined(with: .scale(scale: 0.95, anchor: .top)),
-                        removal: .opacity.combined(with: .scale(scale: 0.95, anchor: .top))
                     )
-                )
             }
         }
     }
-}
 
-// MARK: - Helpers
+    var earnInfoHeader: some View {
+        Button {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                earnInfoExpanded.toggle()
+            }
+        } label: {
+            HStack {
+                SectionHeaderView(title: "How to Earn Coins")
+                Spacer()
+                Image(systemName: "chevron.down")
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .rotationEffect(.degrees(earnInfoExpanded ? -180 : 0))
+            }
+        }
+        .buttonStyle(.plain)
+    }
 
-private extension CoinStoreScreen {
-    func earnRow(icon: String, color: Color, title: String, detail: String) -> some View {
+    var earnInfoItems: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            earnInfoRow(
+                icon: "checkmark.circle.fill",
+                color: DesignSystem.Color.success,
+                title: "Complete Quizzes",
+                detail: "Earn coins for every quiz you finish"
+            )
+            earnInfoRow(
+                icon: "calendar.badge.checkmark",
+                color: DesignSystem.Color.accent,
+                title: "Daily Login",
+                detail: "Log in every day to collect bonus coins"
+            )
+            earnInfoRow(
+                icon: "trophy.fill",
+                color: DesignSystem.Color.warning,
+                title: "Unlock Achievements",
+                detail: "Earn rewards for reaching milestones"
+            )
+            earnInfoRow(
+                icon: "arrow.up.circle.fill",
+                color: DesignSystem.Color.indigo,
+                title: "Level Up",
+                detail: "Get coin bonuses when you gain a new level"
+            )
+        }
+    }
+
+    func earnInfoRow(icon: String, color: Color, title: String, detail: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                     .fill(color.opacity(0.15))
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    .strokeBorder(color.opacity(0.3), lineWidth: 1)
                 Image(systemName: icon)
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(color)
@@ -237,13 +241,8 @@ private extension CoinStoreScreen {
 
             Spacer(minLength: 0)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
+        .padding(DesignSystem.Spacing.sm)
+        .background(DesignSystem.Color.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
-
-    var earnDivider: some View {
-        Divider()
-            .padding(.leading, DesignSystem.Spacing.xxl + DesignSystem.Spacing.md)
-    }
-
 }
