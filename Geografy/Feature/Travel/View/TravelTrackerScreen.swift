@@ -162,75 +162,55 @@ private extension TravelTrackerScreen {
     }
 
     var viewOnMapSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(DesignSystem.Color.accent)
-                    .frame(width: 3, height: 18)
-                Text("View on Map")
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
+        Button {
+            travelMapFilter = currentTravelMapFilter
+            showTravelMap = true
+        } label: {
+            GeoCard {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    Image(systemName: "map.fill")
+                        .font(DesignSystem.Font.title2)
+                        .foregroundStyle(DesignSystem.Color.accent)
 
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                mapFilterButton(
-                    filter: .visited,
-                    icon: "checkmark.circle.fill",
-                    label: "Visited",
-                    count: travelService.visitedCodes.count,
-                    color: DesignSystem.Color.success
-                )
-                mapFilterButton(
-                    filter: .wantToVisit,
-                    icon: "heart.fill",
-                    label: "Want to Visit",
-                    count: travelService.wantToVisitCodes.count,
-                    color: DesignSystem.Color.warning
-                )
-                mapFilterButton(
-                    filter: .all,
-                    icon: "globe",
-                    label: "All",
-                    count: travelService.visitedCodes.count + travelService.wantToVisitCodes.count,
-                    color: DesignSystem.Color.accent
-                )
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text("View on Map")
+                            .font(DesignSystem.Font.headline)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(currentFilterLabel)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+                .padding(DesignSystem.Spacing.md)
             }
+        }
+        .buttonStyle(GeoPressButtonStyle())
+    }
+
+    var currentTravelMapFilter: TravelMapFilter {
+        if let filter = selectedFilter {
+            switch filter {
+            case .visited: .visited
+            case .wantToVisit: .wantToVisit
+            default: .all
+            }
+        } else {
+            .all
         }
     }
 
-    func mapFilterButton(
-        filter: TravelMapFilter,
-        icon: String,
-        label: String,
-        count: Int,
-        color: Color
-    ) -> some View {
-        Button {
-            travelMapFilter = filter
-            showTravelMap = true
-        } label: {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(color)
-
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(1)
-
-                Text("\(count)")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(color.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+    var currentFilterLabel: String {
+        if let filter = selectedFilter {
+            "Show \(filter.label.lowercased()) countries on map"
+        } else {
+            "Show all travel countries on map"
         }
-        .buttonStyle(GeoPressButtonStyle())
     }
 
     var filterTabs: some View {

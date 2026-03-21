@@ -59,11 +59,11 @@ struct TravelMapScreen: View {
 private extension TravelMapScreen {
     func mapCanvas(in size: CGSize) -> some View {
         MapCanvasView(
-            countryShapes: mapState.countryShapes,
+            countryShapes: styledShapes,
             scale: mapState.scale,
             offset: mapState.offset,
             selectedCountryCode: nil,
-            showLabels: true,
+            showLabels: false,
             canvasSize: size,
             capitalPoint: nil,
             travelStatuses: highlightedStatuses
@@ -78,6 +78,20 @@ private extension TravelMapScreen {
             travelService.entries.filter { $0.value == .wantToVisit }
         case .all:
             travelService.entries
+        }
+    }
+
+    var travelCodes: Set<String> {
+        Set(highlightedStatuses.keys)
+    }
+
+    var styledShapes: [CountryShape] {
+        mapState.countryShapes.map { shape in
+            var modified = shape
+            if !travelCodes.contains(shape.id) {
+                modified.color = Color(hex: "1A1A2E").opacity(0.6)
+            }
+            return modified
         }
     }
 }
