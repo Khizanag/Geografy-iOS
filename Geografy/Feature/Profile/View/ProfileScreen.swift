@@ -624,7 +624,6 @@ private extension View {
     func profileSection(appeared: Bool, delay: Double) -> some View {
         self
             .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 16)
-            .animation(.easeOut(duration: 0.5).delay(delay), value: appeared)
+            .animation(.easeOut(duration: 0.4).delay(delay), value: appeared)
     }
 }
