@@ -30,6 +30,7 @@ struct QuizSessionScreen: View {
                 .alert("Quit Quiz?", isPresented: $showQuitAlert, actions: { quitAlertActions }, message: { Text("Your progress will be lost.") })
                 .task { loadQuiz() }
                 .onAppear { startBlobAnimation() }
+                .onDisappear { timerCancellable?.cancel() }
                 .navigationDestination(item: $navigateToResult) { result in
                     resultsDestination(for: result)
                 }
