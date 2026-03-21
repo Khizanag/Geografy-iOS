@@ -36,13 +36,17 @@ extension QuizDifficulty {
     }
 
     var hasTimer: Bool {
-        self == .medium
+        switch self {
+        case .easy: false
+        case .medium, .hard: true
+        }
     }
 
     var timerDuration: TimeInterval {
         switch self {
-        case .medium: 30
-        default: 0
+        case .easy: 0
+        case .medium: 15
+        case .hard: 8
         }
     }
 }

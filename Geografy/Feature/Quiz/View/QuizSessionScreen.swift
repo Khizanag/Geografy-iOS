@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 
 struct QuizSessionScreen: View {
@@ -11,6 +12,7 @@ struct QuizSessionScreen: View {
     @State private var selectedOptionID: UUID?
     @State private var showFeedback = false
     @State private var timerRemaining: TimeInterval = 0
+    @State private var timerCancellable: AnyCancellable?
     @State private var startTime = Date()
     @State private var questionStartTime = Date()
     @State private var showQuitAlert = false
@@ -154,9 +156,8 @@ private extension QuizSessionScreen {
     }
 
     var timerPill: some View {
-        HStack(spacing: 5) {
-            Image(systemName: "timer")
-                .font(.system(size: 12, weight: .semibold))
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            timerProgressRing
             Text("\(Int(timerRemaining))s")
                 .font(.system(size: 13, weight: .bold, design: .rounded))
                 .contentTransition(.numericText())
@@ -166,7 +167,23 @@ private extension QuizSessionScreen {
         .padding(.vertical, 5)
         .background(timerColor.opacity(0.15), in: Capsule())
         .overlay(Capsule().strokeBorder(timerColor.opacity(0.3), lineWidth: 1))
+        .scaleEffect(timerRemaining <= configuration.difficulty.timerDuration * 0.25 ? 1.08 : 1.0)
+        .opacity(timerRemaining <= configuration.difficulty.timerDuration * 0.4 ? (timerRemaining.truncatingRemainder(dividingBy: 2) < 1 ? 0.7 : 1.0) : 1.0)
+        .animation(.easeInOut(duration: 0.3), value: timerRemaining)
         .animation(.easeInOut(duration: 0.3), value: timerColor)
+    }
+
+    var timerProgressRing: some View {
+        ZStack {
+            Circle()
+                .stroke(timerColor.opacity(0.2), lineWidth: 2)
+            Circle()
+                .trim(from: 0, to: timerProgress)
+                .stroke(timerColor, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .animation(.linear(duration: 1), value: timerProgress)
+        }
+        .frame(width: 16, height: 16)
     }
 
     @ViewBuilder
@@ -195,11 +212,16 @@ private extension QuizSessionScreen {
 private extension QuizSessionScreen {
     func selectOption(_ optionID: UUID) {
         guard selectedOptionID == nil else { return }
+        timerCancellable?.cancel()
         selectedOptionID = optionID
 
         let question = questions[currentIndex]
         let isCorrect = optionID == question.correctOptionID
         let timeSpent = Date().timeIntervalSince(questionStartTime)
+
+        // TODO: Speed bonus for future implementation
+        // - Answered in < 3s of timerDuration: "Lightning Fast" bonus XP
+        // - Answered in < 5s of timerDuration: "Quick" bonus XP
 
         let haptic = UINotificationFeedbackGenerator()
         haptic.notificationOccurred(isCorrect ? .success : .error)
@@ -231,7 +253,9 @@ private extension QuizSessionScreen {
                 questionStartTime = Date()
                 timerRemaining = configuration.difficulty.timerDuration
             }
+            startTimer()
         } else {
+            timerCancellable?.cancel()
             finishQuiz()
         }
     }
@@ -264,6 +288,57 @@ private extension QuizSessionScreen {
         startTime = Date()
         questionStartTime = Date()
         timerRemaining = configuration.difficulty.timerDuration
+        startTimer()
+    }
+}
+
+// MARK: - Timer
+
+private extension QuizSessionScreen {
+    func startTimer() {
+        timerCancellable?.cancel()
+        guard configuration.difficulty.hasTimer else { return }
+
+        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                guard !showFeedback else { return }
+
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    timerRemaining -= 1
+                }
+
+                if timerRemaining <= 0 {
+                    handleTimerExpired()
+                }
+            }
+    }
+
+    func handleTimerExpired() {
+        timerCancellable?.cancel()
+
+        let question = questions[currentIndex]
+        let timeSpent = configuration.difficulty.timerDuration
+
+        let haptic = UINotificationFeedbackGenerator()
+        haptic.notificationOccurred(.error)
+
+        let answer = QuizAnswer(
+            id: UUID(),
+            question: question,
+            selectedOptionID: nil,
+            isCorrect: false,
+            timeSpent: timeSpent
+        )
+        answers.append(answer)
+
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showFeedback = true
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+            advanceToNext()
+        }
     }
 }
 
@@ -280,13 +355,19 @@ private extension QuizSessionScreen {
         return CGFloat(currentIndex) / CGFloat(questions.count)
     }
 
+    var timerProgress: CGFloat {
+        guard configuration.difficulty.timerDuration > 0 else { return 0 }
+        return timerRemaining / configuration.difficulty.timerDuration
+    }
+
     var timerColor: Color {
-        if timerRemaining <= 5 {
+        let duration = configuration.difficulty.timerDuration
+        return if timerRemaining <= duration * 0.25 {
             DesignSystem.Color.error
-        } else if timerRemaining <= 10 {
+        } else if timerRemaining <= duration * 0.5 {
             DesignSystem.Color.warning
         } else {
-            DesignSystem.Color.textSecondary
+            DesignSystem.Color.accent
         }
     }
 }
