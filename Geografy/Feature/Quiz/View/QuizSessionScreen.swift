@@ -17,6 +17,7 @@ struct QuizSessionScreen: View {
     @State private var questionStartTime = Date()
     @State private var showQuitAlert = false
     @State private var showFlagPreview = false
+    @State private var isPaused = false
     @State private var navigateToResult: QuizResult?
     @State private var countryDataService = CountryDataService()
     @State private var blobAnimating = false
@@ -40,6 +41,7 @@ struct QuizSessionScreen: View {
                 }
         }
         .overlay { flagPreviewOverlay }
+        .overlay { pauseOverlay }
     }
 }
 
@@ -59,9 +61,25 @@ private extension QuizSessionScreen {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
+        if configuration.difficulty.hasTimer {
+            ToolbarItem(placement: .topBarLeading) {
+                pauseButton
+            }
+        }
         ToolbarItem(placement: .topBarTrailing) {
             GeoCircleCloseButton { showQuitAlert = true }
         }
+    }
+
+    var pauseButton: some View {
+        Button { togglePause() } label: {
+            Image(systemName: "pause.fill")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .buttonStyle(.plain)
+        .disabled(showFeedback)
+        .opacity(showFeedback ? 0.4 : 1)
     }
 
     @ViewBuilder
@@ -90,6 +108,63 @@ private extension QuizSessionScreen {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    var pauseOverlay: some View {
+        if isPaused {
+            ZStack {
+                DesignSystem.Color.background.opacity(0.95)
+                    .ignoresSafeArea()
+
+                VStack(spacing: DesignSystem.Spacing.xl) {
+                    pauseIcon
+                    pauseInfo
+                    resumeButton
+                }
+            }
+            .transition(.opacity)
+        }
+    }
+
+    var pauseIcon: some View {
+        ZStack {
+            Circle()
+                .fill(DesignSystem.Color.accent.opacity(0.12))
+                .frame(width: 80, height: 80)
+            Image(systemName: "pause.circle.fill")
+                .font(.system(size: 44))
+                .foregroundStyle(DesignSystem.Color.accent)
+        }
+    }
+
+    var pauseInfo: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text("Paused")
+                .font(DesignSystem.Font.title)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text("\(Int(timerRemaining))s remaining")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+            Text("Question \(currentIndex + 1) of \(questions.count)")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+        }
+    }
+
+    var resumeButton: some View {
+        Button { togglePause() } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "play.fill")
+                Text("Resume")
+            }
+            .font(DesignSystem.Font.headline)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .frame(width: 200)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .buttonStyle(.glass)
     }
 
     func startBlobAnimation() {
@@ -234,6 +309,17 @@ private extension QuizSessionScreen {
 // MARK: - Actions
 
 private extension QuizSessionScreen {
+    func togglePause() {
+        withAnimation(.easeInOut(duration: 0.25)) {
+            isPaused.toggle()
+        }
+        if isPaused {
+            timerCancellable?.cancel()
+        } else {
+            startTimer()
+        }
+    }
+
     func selectOption(_ optionID: UUID) {
         guard selectedOptionID == nil else { return }
         timerCancellable?.cancel()
@@ -329,7 +415,7 @@ private extension QuizSessionScreen {
         timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                guard !showFeedback else { return }
+                guard !showFeedback, !isPaused else { return }
 
                 withAnimation(.easeInOut(duration: 0.3)) {
                     timerRemaining -= 1
