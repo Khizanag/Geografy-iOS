@@ -382,20 +382,33 @@ private extension CountryListScreen {
     }
 
     func trailingContent(for country: Country) -> some View {
-        VStack(alignment: .trailing, spacing: 5) {
-            continentBadge(for: country)
-
-            HStack(spacing: 5) {
-                if favoritesService.isFavorite(code: country.code) {
-                    Image(systemName: "heart.fill")
-                        .font(.system(size: 10))
-                        .foregroundStyle(DesignSystem.Color.error)
-                }
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxs) {
+                continentBadge(for: country)
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.5))
             }
+
+            favoriteButton(for: country)
         }
+    }
+
+    func favoriteButton(for country: Country) -> some View {
+        let isFav = favoritesService.isFavorite(code: country.code)
+        return Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                favoritesService.toggle(code: country.code)
+            }
+        } label: {
+            Image(systemName: isFav ? "heart.fill" : "heart")
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(isFav ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
+                .symbolEffect(.bounce, value: isFav)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 
     func continentBadge(for country: Country) -> some View {
