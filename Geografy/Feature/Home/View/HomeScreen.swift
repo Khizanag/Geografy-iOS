@@ -247,9 +247,25 @@ private extension HomeScreen {
 private extension HomeScreen {
     var profileButton: some View {
         Button { showProfile = true } label: {
-            LevelBadgeView(level: xpService.currentLevel, size: .small)
+            profileAvatar
         }
         .buttonStyle(.plain)
+    }
+
+    var profileAvatar: some View {
+        ZStack {
+            Circle()
+                .fill(DesignSystem.Color.accent)
+            Text(levelInitials)
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+        }
+        .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
+    }
+
+    var levelInitials: String {
+        String(xpService.currentLevel.title.prefix(2)).uppercased()
     }
 
     var statsButton: some View {
@@ -293,7 +309,7 @@ private extension HomeScreen {
                     .animation(.easeInOut(duration: 0.5), value: xpService.progressFraction)
             }
         }
-        .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xs)
+        .frame(width: DesignSystem.Size.hero, height: DesignSystem.Size.xs)
     }
 
     var divider: some View {
