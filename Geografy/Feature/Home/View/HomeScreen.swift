@@ -230,12 +230,33 @@ private extension HomeScreen {
 
     var profileButton: some View {
         Button { showProfile = true } label: {
-            Image(systemName: "person.fill")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
+            profileAvatarView
                 .padding(DesignSystem.Spacing.sm)
         }
         .glassEffect(.regular.interactive(), in: .circle)
+    }
+
+    @ViewBuilder
+    var profileAvatarView: some View {
+        if authService.isGuest || (authService.currentProfile?.displayName ?? "").isEmpty {
+            Image(systemName: "person.fill")
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
+        } else {
+            Text(profileInitials)
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
+    }
+
+    var profileInitials: String {
+        let name = authService.currentProfile?.displayName ?? ""
+        let words = name.split(separator: " ")
+        if words.count >= 2 {
+            return "\(words[0].prefix(1))\(words[1].prefix(1))".uppercased()
+        }
+        return String(name.prefix(2)).uppercased()
     }
 
     var statsButton: some View {
