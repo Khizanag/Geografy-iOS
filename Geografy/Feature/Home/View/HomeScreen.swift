@@ -192,9 +192,7 @@ private extension HomeScreen {
 private extension HomeScreen {
     var mainFeed: some View {
         ScrollView(showsIndicators: false) {
-            ZStack(alignment: .top) {
-                scrollableBlobs
-                VStack(spacing: 0) {
+            VStack(spacing: 0) {
                     greetingSection
                         .padding(.top, DesignSystem.Spacing.lg)
                         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -237,10 +235,10 @@ private extension HomeScreen {
                     comingSoonSection
                         .padding(.top, DesignSystem.Spacing.xl)
                         .feedSection(appeared: appeared, delay: 0.35)
-                }
-                .padding(.bottom, DesignSystem.Spacing.xxl)
             }
+            .padding(.bottom, DesignSystem.Spacing.xxl)
         }
+        .background { scrollableBlobs.ignoresSafeArea() }
     }
 }
 
