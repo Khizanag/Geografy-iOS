@@ -29,7 +29,11 @@ struct MoreScreen: View {
 
 private extension MoreScreen {
     enum MoreSheet: Identifiable {
-        case profile, countries, orgs, favorites, travel, achievements, leaderboards, themes, settings
+        case profile, countries, orgs, favorites, travel
+        case dailyChallenge, compare, travelJournal
+        case quizPacks, customQuiz, multiplayer, exploreGame
+        case badges, timeline
+        case achievements, leaderboards, themes, settings
 
         var id: Self { self }
 
@@ -40,6 +44,15 @@ private extension MoreScreen {
             case .orgs: "Organizations"
             case .favorites: "Favorites"
             case .travel: "Travel Tracker"
+            case .dailyChallenge: "Daily Challenge"
+            case .compare: "Compare Countries"
+            case .travelJournal: "Travel Journal"
+            case .quizPacks: "Quiz Packs"
+            case .customQuiz: "Custom Quizzes"
+            case .multiplayer: "Multiplayer"
+            case .exploreGame: "Mystery Country"
+            case .badges: "Badge Collection"
+            case .timeline: "Historical Timeline"
             case .achievements: "Achievements"
             case .leaderboards: "Leaderboards"
             case .themes: "Themes"
@@ -54,6 +67,15 @@ private extension MoreScreen {
             case .orgs: "building.2.fill"
             case .favorites: "heart.fill"
             case .travel: "airplane.departure"
+            case .dailyChallenge: "calendar.badge.exclamationmark"
+            case .compare: "arrow.left.arrow.right"
+            case .travelJournal: "book.fill"
+            case .quizPacks: "square.stack.fill"
+            case .customQuiz: "pencil.and.list.clipboard"
+            case .multiplayer: "person.2.fill"
+            case .exploreGame: "magnifyingglass"
+            case .badges: "medal.fill"
+            case .timeline: "clock.arrow.circlepath"
             case .achievements: "trophy.fill"
             case .leaderboards: "list.number"
             case .themes: "paintbrush.fill"
@@ -68,6 +90,15 @@ private extension MoreScreen {
             case .orgs: "International organizations"
             case .favorites: "Your saved countries"
             case .travel: "Track your adventures"
+            case .dailyChallenge: "New puzzle every day"
+            case .compare: "Side-by-side country stats"
+            case .travelJournal: "Photos, notes & memories"
+            case .quizPacks: "Themed quiz progression"
+            case .customQuiz: "Build your own quizzes"
+            case .multiplayer: "Challenge opponents"
+            case .exploreGame: "Guess from clues"
+            case .badges: "Collect and showcase"
+            case .timeline: "Borders through history"
             case .achievements: "Unlock badges and rewards"
             case .leaderboards: "Compete with others"
             case .themes: "Customize your experience"
@@ -82,6 +113,15 @@ private extension MoreScreen {
             case .orgs: DesignSystem.Color.indigo
             case .favorites: DesignSystem.Color.error
             case .travel: Color(hex: "00C9A7")
+            case .dailyChallenge: DesignSystem.Color.orange
+            case .compare: DesignSystem.Color.blue
+            case .travelJournal: Color(hex: "00C9A7")
+            case .quizPacks: DesignSystem.Color.purple
+            case .customQuiz: DesignSystem.Color.accent
+            case .multiplayer: DesignSystem.Color.error
+            case .exploreGame: DesignSystem.Color.warning
+            case .badges: DesignSystem.Color.warning
+            case .timeline: DesignSystem.Color.indigo
             case .achievements: DesignSystem.Color.warning
             case .leaderboards: DesignSystem.Color.success
             case .themes: DesignSystem.Color.indigo
@@ -159,7 +199,14 @@ private extension MoreScreen {
     }
 
     var allSheets: [MoreSheet] {
-        [.profile, .countries, .orgs, .favorites, .travel, .achievements, .leaderboards, .themes, .settings]
+        [
+            .profile, .countries, .favorites,
+            .dailyChallenge, .exploreGame, .compare,
+            .quizPacks, .customQuiz, .multiplayer,
+            .travel, .travelJournal,
+            .orgs, .badges, .timeline,
+            .achievements, .leaderboards, .themes, .settings,
+        ]
     }
 
     func rowButton(for sheet: MoreSheet) -> some View {
@@ -232,6 +279,26 @@ private extension MoreScreen {
                         .navigationDestination(for: Country.self) { country in
                             CountryDetailScreen(country: country)
                         }
+                case .dailyChallenge:
+                    DailyChallengeScreen()
+                case .compare:
+                    CompareScreen()
+                case .travelJournal:
+                    TravelJournalScreen()
+                case .quizPacks:
+                    QuizPackBrowserScreen()
+                case .customQuiz:
+                    CustomQuizLibraryScreen()
+                case .multiplayer:
+                    MultiplayerLobbyScreen(
+                        multiplayerService: MultiplayerService()
+                    )
+                case .exploreGame:
+                    ExploreGameScreen()
+                case .badges:
+                    BadgeCollectionScreen(badgeService: BadgeService())
+                case .timeline:
+                    TimelineScreen()
                 case .achievements:
                     AchievementsScreen()
                         .navigationTitle("Achievements")
