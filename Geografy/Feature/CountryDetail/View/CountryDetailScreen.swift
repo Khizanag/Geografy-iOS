@@ -82,6 +82,7 @@ struct CountryDetailScreen: View {
                     }
             }
         }
+<<<<<<< ours
         .navigationDestination(for: Organization.self) { org in
             OrganizationDetailScreen(organization: org)
         }
@@ -91,6 +92,12 @@ struct CountryDetailScreen: View {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
                         showFlagFullScreen = false
                     }
+=======
+        .overlay {
+            if showFlagFullScreen {
+                ZoomableFlagView(countryCode: country.code) {
+                    showFlagFullScreen = false
+>>>>>>> theirs
                 }
             }
         }

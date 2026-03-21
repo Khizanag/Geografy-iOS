@@ -5,22 +5,41 @@ enum MapColorPalette {
         let adjacency = buildAdjacencyMap(from: shapes)
         let colors = DesignSystem.Color.mapColors
         var assigned: [String: Int] = [:]
+        var colorUsageCount = [Int: Int]()
 
-        let sortedIndices = shapes.indices.sorted { shapes[$0].name < shapes[$1].name }
-
-        for i in sortedIndices {
-            let code = shapes[i].id
-
-            if let existingIndex = assigned[code] {
-                shapes[i].color = colors[existingIndex]
-                continue
+        // Collect unique codes preserving first-occurrence order
+        var seen = Set<String>()
+        var codes = [String]()
+        for shape in shapes {
+            if seen.insert(shape.id).inserted {
+                codes.append(shape.id)
             }
+        }
 
-            let neighborColorIndices = neighborColors(for: code, adjacency: adjacency, assigned: assigned)
-            let colorIndex = firstAvailableColor(excluding: neighborColorIndices, totalColors: colors.count)
+        // Welsh-Powell: process high-degree countries first for optimal coloring,
+        // then alphabetically for determinism across runs.
+        let sortedCodes = codes.sorted { a, b in
+            let degreeA = adjacency[a]?.count ?? 0
+            let degreeB = adjacency[b]?.count ?? 0
+            if degreeA != degreeB { return degreeA > degreeB }
+            return a < b
+        }
 
+        for code in sortedCodes {
+            let usedByNeighbors = neighborColors(for: code, adjacency: adjacency, assigned: assigned)
+            let colorIndex = leastUsedAvailableColor(
+                excluding: usedByNeighbors,
+                totalColors: colors.count,
+                usageCounts: colorUsageCount
+            )
             assigned[code] = colorIndex
-            shapes[i].color = colors[colorIndex]
+            colorUsageCount[colorIndex, default: 0] += 1
+        }
+
+        for i in shapes.indices {
+            if let colorIndex = assigned[shapes[i].id] {
+                shapes[i].color = colors[colorIndex]
+            }
         }
     }
 }
@@ -44,7 +63,8 @@ private extension MapColorPalette {
             }
         }
 
-        // Hardcoded adjacencies for enclaves and edge cases
+        // Hardcoded adjacencies for enclaves and very small countries
+        // that geometry-based detection may miss
         addAdjacency("LS", "ZA", to: &adjacency) // Lesotho inside South Africa
         addAdjacency("SZ", "ZA", to: &adjacency) // Eswatini near South Africa
         addAdjacency("GM", "SN", to: &adjacency) // Gambia inside Senegal
@@ -54,20 +74,52 @@ private extension MapColorPalette {
         return adjacency
     }
 
+    // Checks adjacency by sampling boundary points from each path and testing
+    // if any point lies within the expanded bounding box of the opposing path.
+    // A tight 3px threshold filters out false positives from narrow straits.
     static func shapesAreAdjacent(_ a: CountryShape, _ b: CountryShape) -> Bool {
+        let threshold: CGFloat = 3.0
+
         for pathA in a.polygons {
             for pathB in b.polygons {
                 let boxA = pathA.boundingBoxOfPath
                 let boxB = pathB.boundingBoxOfPath
-                let threshold: CGFloat = 15
 
-                let expanded = boxA.insetBy(dx: -threshold, dy: -threshold)
-                if expanded.intersects(boxB) {
+                guard boxA.insetBy(dx: -threshold * 4, dy: -threshold * 4).intersects(boxB) else {
+                    continue
+                }
+
+                let expandedB = boxB.insetBy(dx: -threshold, dy: -threshold)
+                if sampledPoints(from: pathA).contains(where: { expandedB.contains($0) }) {
+                    return true
+                }
+
+                let expandedA = boxA.insetBy(dx: -threshold, dy: -threshold)
+                if sampledPoints(from: pathB).contains(where: { expandedA.contains($0) }) {
                     return true
                 }
             }
         }
         return false
+    }
+
+    static func sampledPoints(from path: CGPath, maxPoints: Int = 40) -> [CGPoint] {
+        var allPoints = [CGPoint]()
+        path.applyWithBlock { elementPtr in
+            switch elementPtr.pointee.type {
+            case .moveToPoint, .addLineToPoint:
+                allPoints.append(elementPtr.pointee.points[0])
+            case .addQuadCurveToPoint:
+                allPoints.append(elementPtr.pointee.points[1])
+            case .addCurveToPoint:
+                allPoints.append(elementPtr.pointee.points[2])
+            default:
+                break
+            }
+        }
+        guard allPoints.count > maxPoints else { return allPoints }
+        let step = allPoints.count / maxPoints
+        return (0..<maxPoints).map { allPoints[$0 * step] }
     }
 
     static func addAdjacency(_ a: String, _ b: String, to adjacency: inout [String: Set<String>]) {
@@ -94,12 +146,24 @@ private extension MapColorPalette {
         return usedColors
     }
 
-    static func firstAvailableColor(excluding used: Set<Int>, totalColors: Int) -> Int {
+    // Picks the available color used least often globally, so isolated
+    // countries (islands) spread evenly across the palette instead of
+    // all clustering on index 0.
+    static func leastUsedAvailableColor(
+        excluding used: Set<Int>,
+        totalColors: Int,
+        usageCounts: [Int: Int]
+    ) -> Int {
+        var bestIndex = -1
+        var lowestUsage = Int.max
         for i in 0..<totalColors {
-            if !used.contains(i) {
-                return i
+            guard !used.contains(i) else { continue }
+            let usage = usageCounts[i] ?? 0
+            if usage < lowestUsage {
+                lowestUsage = usage
+                bestIndex = i
             }
         }
-        return 0
+        return bestIndex >= 0 ? bestIndex : 0
     }
 }

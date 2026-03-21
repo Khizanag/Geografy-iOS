@@ -43,7 +43,19 @@ struct HomeScreen: View {
             ambientBackground
             mainFeed
         }
-        .navigationBarHidden(true)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                profileButton
+            }
+            ToolbarItem(placement: .principal) {
+                statsButton
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                friendsButton
+            }
+        }
         .fullScreenCover(item: $mapTarget) { target in
             NavigationStack {
                 MapScreen(continentFilter: target.continentFilter)
@@ -167,9 +179,6 @@ private extension HomeScreen {
             ZStack(alignment: .top) {
                 scrollableBlobs
                 VStack(spacing: 0) {
-                    topBar
-                        .padding(.top, DesignSystem.Spacing.xs)
-
                     greetingSection
                         .padding(.top, DesignSystem.Spacing.lg)
                         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -218,45 +227,14 @@ private extension HomeScreen {
 // MARK: - Top Bar
 
 private extension HomeScreen {
-    var topBar: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            profileButton
-            statsButton
-            Spacer()
-            friendsButton
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
     var profileButton: some View {
         Button { showProfile = true } label: {
             profileAvatarView
-                .padding(DesignSystem.Spacing.sm)
         }
-        .glassEffect(.regular.interactive(), in: .circle)
     }
 
-    @ViewBuilder
     var profileAvatarView: some View {
-        if authService.isGuest || (authService.currentProfile?.displayName ?? "").isEmpty {
-            Image(systemName: "person.fill")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
-        } else {
-            Text(profileInitials)
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-    }
-
-    var profileInitials: String {
-        let name = authService.currentProfile?.displayName ?? ""
-        let words = name.split(separator: " ")
-        if words.count >= 2 {
-            return "\(words[0].prefix(1))\(words[1].prefix(1))".uppercased()
-        }
-        return String(name.prefix(2)).uppercased()
+        LevelBadgeView(level: xpService.currentLevel, size: .small)
     }
 
     var statsButton: some View {
