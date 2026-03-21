@@ -168,6 +168,75 @@ private extension TravelJournalService {
             ]
         )
         entries = (try? context.fetch(descriptor)) ?? []
+        if entries.isEmpty {
+            seedSampleEntries()
+        }
+    }
+
+    func seedSampleEntries() {
+        let calendar = Calendar.current
+        let samples: [(String, String, String, Int, Int, Int)] = [
+            (
+                "JP", "Tokyo & Kyoto Adventure",
+                "Explored ancient temples in Kyoto and the bustling streets of Shibuya. The food was incredible — sushi, ramen, and matcha everything!",
+                5, -45, -38
+            ),
+            (
+                "IT", "Italian Dream",
+                "Rome's Colosseum took my breath away. Venice canals at sunset were magical. The gelato in Florence was the best I've ever had.",
+                5, -120, -110
+            ),
+            (
+                "GE", "Hidden Gem of the Caucasus",
+                "Tbilisi's old town charm, Kazbegi's mountain views, and the warmest hospitality I've experienced. Georgian cuisine is underrated!",
+                4, -30, -25
+            ),
+            (
+                "BR", "Rio & Amazon",
+                "Christ the Redeemer at sunrise was unforgettable. A boat trip through the Amazon rainforest showed me wildlife I'd only seen in documentaries.",
+                4, -90, -83
+            ),
+        ]
+        let context = makeContext()
+        for (index, sample) in samples.enumerated() {
+            let startDate = calendar.date(
+                byAdding: .day,
+                value: sample.4,
+                to: Date()
+            ) ?? Date()
+            let endDate = calendar.date(
+                byAdding: .day,
+                value: sample.5,
+                to: Date()
+            ) ?? Date()
+            let entry = TravelJournalEntry(
+                countryCode: sample.0,
+                title: sample.1,
+                notes: sample.2,
+                rating: sample.3,
+                startDate: startDate,
+                endDate: endDate,
+                photoFileNames: []
+            )
+            entry.createdAt = calendar.date(
+                byAdding: .day,
+                value: sample.4 - index,
+                to: Date()
+            ) ?? Date()
+            context.insert(entry)
+        }
+        saveContext(context)
+        loadEntriesWithoutSeed()
+    }
+
+    func loadEntriesWithoutSeed() {
+        let context = makeContext()
+        let descriptor = FetchDescriptor<TravelJournalEntry>(
+            sortBy: [
+                SortDescriptor(\.startDate, order: .reverse),
+            ]
+        )
+        entries = (try? context.fetch(descriptor)) ?? []
     }
 
     func averageRating(
