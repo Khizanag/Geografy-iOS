@@ -188,75 +188,106 @@ private extension MoreScreen {
 
     var itemList: some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(allSheets, id: \.id) { sheet in
-                    rowButton(for: sheet)
-                }
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                hubSection(title: "You", items: youItems)
+                hubSection(title: "Play", items: playItems)
+                hubSection(title: "Explore", items: exploreItems)
+                hubSection(title: "Travel", items: travelItems)
+                hubSection(title: "App", items: appItems)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
     }
 
-    var sheetsWithOwnCloseButton: Set<MoreSheet> {
-        [.profile, .dailyChallenge, .customQuiz, .multiplayer, .exploreGame, .timeline]
+    func hubSection(title: String, items: [MoreSheet]) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: title)
+            LazyVGrid(
+                columns: [
+                    GridItem(
+                        .adaptive(minimum: 100),
+                        spacing: DesignSystem.Spacing.sm
+                    ),
+                ],
+                spacing: DesignSystem.Spacing.sm
+            ) {
+                ForEach(items, id: \.id) { sheet in
+                    gridTile(for: sheet)
+                }
+            }
+        }
     }
 
-    var allSheets: [MoreSheet] {
-        [
-            .profile, .countries, .favorites,
-            .dailyChallenge, .exploreGame, .compare,
-            .quizPacks, .customQuiz, .multiplayer,
-            .travel, .travelJournal,
-            .orgs, .badges, .timeline,
-            .achievements, .leaderboards, .themes, .settings,
-        ]
-    }
-
-    func rowButton(for sheet: MoreSheet) -> some View {
+    func gridTile(for sheet: MoreSheet) -> some View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             activeSheet = sheet
         } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            VStack(spacing: DesignSystem.Spacing.xs) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .fill(sheet.color.opacity(0.15))
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .strokeBorder(sheet.color.opacity(0.3), lineWidth: 1)
+                    RoundedRectangle(
+                        cornerRadius: DesignSystem.CornerRadius.small
+                    )
+                    .fill(sheet.color.opacity(0.15))
+                    .frame(width: 36, height: 36)
                     Image(systemName: sheet.icon)
-                        .font(DesignSystem.Font.headline)
+                        .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(sheet.color)
                 }
-                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
-
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(sheet.label)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-
-                    Text(sheet.subtitle)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .lineLimit(1)
-                }
-
-                Spacer(minLength: 0)
-
-                Image(systemName: "chevron.right")
+                Text(sheet.label)
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(sheet.color.opacity(0.6))
+                    .fontWeight(.medium)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
-            .padding(DesignSystem.Spacing.sm)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DesignSystem.CornerRadius.medium
+                )
+            )
             .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                    .strokeBorder(sheet.color.opacity(0.15), lineWidth: 1)
+                RoundedRectangle(
+                    cornerRadius: DesignSystem.CornerRadius.medium
+                )
+                .strokeBorder(sheet.color.opacity(0.12), lineWidth: 1)
             )
         }
         .buttonStyle(GeoPressButtonStyle())
+    }
+
+    var sheetsWithOwnCloseButton: Set<MoreSheet> {
+        [
+            .profile, .dailyChallenge, .customQuiz,
+            .multiplayer, .exploreGame, .timeline,
+        ]
+    }
+
+    var youItems: [MoreSheet] {
+        [.profile, .countries, .favorites, .badges]
+    }
+
+    var playItems: [MoreSheet] {
+        [
+            .dailyChallenge, .exploreGame, .multiplayer,
+            .quizPacks, .customQuiz,
+        ]
+    }
+
+    var exploreItems: [MoreSheet] {
+        [.compare, .timeline, .orgs]
+    }
+
+    var travelItems: [MoreSheet] {
+        [.travel, .travelJournal]
+    }
+
+    var appItems: [MoreSheet] {
+        [.achievements, .leaderboards, .themes, .settings]
     }
 
     @ViewBuilder
