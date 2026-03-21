@@ -112,14 +112,18 @@ private extension FlashcardScreen {
     }
 
     var cardTypePicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(FlashcardType.allCases) { type in
-                    cardTypeChip(type)
-                }
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.xs),
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.xs),
+            ],
+            spacing: DesignSystem.Spacing.xs
+        ) {
+            ForEach(FlashcardType.allCases) { type in
+                cardTypeChip(type)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     func cardTypeChip(_ type: FlashcardType) -> some View {

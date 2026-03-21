@@ -299,8 +299,9 @@ private extension FlashcardSessionScreen {
 
 private extension FlashcardSessionScreen {
     func flipCard() {
-        guard !isFlipped else { return }
-        withAnimation { isFlipped = true }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+            isFlipped.toggle()
+        }
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
