@@ -429,8 +429,10 @@ private extension HomeScreen {
                     }
                     .scrollTargetLayout()
                     .padding(.horizontal, sidePadding)
-                    .padding(.vertical, DesignSystem.Spacing.lg)
+                    .padding(.top, DesignSystem.Spacing.sm)
+                    .padding(.bottom, DesignSystem.Spacing.xxl)
                 }
+                .scrollClipDisabled()
                 .scrollTargetBehavior(.viewAligned)
                 .scrollPosition(id: .init(
                     get: { selectedMapIndex },
@@ -438,7 +440,7 @@ private extension HomeScreen {
                 ))
             }
         }
-        .frame(height: carouselHeight + DesignSystem.Spacing.xxl * 2)
+        .frame(height: carouselHeight + DesignSystem.Spacing.xxl + DesignSystem.Spacing.lg)
     }
 
     var pageIndicator: some View {
