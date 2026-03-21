@@ -263,7 +263,7 @@ private extension QuizPackService {
         let largest = Array(bySizeDesc.prefix(50))
         let smallest = Array(bySizeDesc.suffix(50))
         let landlocked = countries.filter {
-            $0.area < 1_000_000, $0.population > 100_000
+            $0.area < 1_000_000 && $0.population > 100_000
         }
 
         return [
