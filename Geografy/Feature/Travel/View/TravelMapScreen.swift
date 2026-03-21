@@ -11,6 +11,8 @@ struct TravelMapScreen: View {
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
     @State private var selectedFilter: TravelMapFilter
+    @State private var showLabels = false
+    @State private var isLoaded = false
 
     init(filter: TravelMapFilter) {
         self.filter = filter
@@ -34,13 +36,21 @@ struct TravelMapScreen: View {
         }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
+        .navigationTitle(selectedFilter.displayName)
+        .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .top) {
-            infoBanner
+            if isLoaded {
+                infoBanner
+                    .transition(.move(edge: .top).combined(with: .opacity))
+            }
         }
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 GeoCircleCloseButton()
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                labelsToggle
             }
             ToolbarItem(placement: .topBarTrailing) {
                 filterMenu
@@ -59,7 +69,7 @@ private extension TravelMapScreen {
             scale: mapState.scale,
             offset: mapState.offset,
             selectedCountryCode: nil,
-            showLabels: true,
+            showLabels: showLabels,
             canvasSize: size,
             capitalPoint: nil,
             travelStatuses: highlightedStatuses
@@ -122,8 +132,51 @@ private extension TravelMapScreen {
             var modified = shape
             if !travelCodes.contains(shape.id) {
                 modified.color = Color(hex: "1A1A2E").opacity(0.5)
+                // Hide labels for non-travel countries
+                modified.name = ""
             }
             return modified
+        }
+    }
+}
+
+// MARK: - Toolbar
+
+private extension TravelMapScreen {
+    var labelsToggle: some View {
+        Button {
+            showLabels.toggle()
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        } label: {
+            Text("Aa")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
+                .padding(DesignSystem.Spacing.xs)
+                .background {
+                    if showLabels {
+                        Circle().fill(DesignSystem.Color.accent)
+                    }
+                }
+        }
+        .buttonStyle(.plain)
+    }
+
+    var filterMenu: some View {
+        Menu {
+            ForEach(TravelMapFilter.allCases, id: \.self) { mapFilter in
+                Button {
+                    withAnimation { selectedFilter = mapFilter }
+                } label: {
+                    if selectedFilter == mapFilter {
+                        Label(mapFilter.displayName, systemImage: "checkmark")
+                    } else {
+                        Text(mapFilter.displayName)
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "line.3.horizontal.decrease")
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
     }
 }
@@ -153,6 +206,7 @@ private extension TravelMapScreen {
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
+        .animation(.easeInOut(duration: 0.3), value: selectedFilter)
     }
 
     var filterIcon: String {
@@ -168,29 +222,6 @@ private extension TravelMapScreen {
         case .visited: DesignSystem.Color.success
         case .wantToVisit: DesignSystem.Color.warning
         case .all: DesignSystem.Color.accent
-        }
-    }
-}
-
-// MARK: - Filter Menu
-
-private extension TravelMapScreen {
-    var filterMenu: some View {
-        Menu {
-            ForEach(TravelMapFilter.allCases, id: \.self) { mapFilter in
-                Button {
-                    withAnimation { selectedFilter = mapFilter }
-                } label: {
-                    if selectedFilter == mapFilter {
-                        Label(mapFilter.displayName, systemImage: "checkmark")
-                    } else {
-                        Text(mapFilter.displayName)
-                    }
-                }
-            }
-        } label: {
-            Image(systemName: "line.3.horizontal.decrease")
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
     }
 }
@@ -221,6 +252,10 @@ private extension TravelMapScreen {
             mapState.lastScale = fitScale
             mapState.minScale = fitScale
             isInitialized = true
+        }
+
+        withAnimation(.easeInOut(duration: 0.4).delay(0.3)) {
+            isLoaded = true
         }
     }
 

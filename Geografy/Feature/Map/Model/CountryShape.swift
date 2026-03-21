@@ -3,7 +3,7 @@ import SwiftUI
 
 struct CountryShape: Identifiable, @unchecked Sendable {
     let id: String
-    let name: String
+    var name: String
     let continent: String
     let polygons: [CGPath]
     let centroid: CGPoint
