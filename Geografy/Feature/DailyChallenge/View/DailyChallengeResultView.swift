@@ -1,0 +1,287 @@
+import SwiftUI
+
+struct DailyChallengeResultView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let score: Int
+    let maxScore: Int
+    let challengeType: DailyChallengeType
+    let timeSpent: Double
+    let streak: Int
+    let onDismiss: () -> Void
+
+    @State private var animatedScore: Int = 0
+    @State private var showShareCard = false
+    @State private var blobAnimating = false
+
+    var body: some View {
+        NavigationStack {
+            resultContent
+                .navigationTitle("Results")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { toolbarContent }
+                .onAppear { animateScore() }
+                .sheet(isPresented: $showShareCard) {
+                    shareCardSheet
+                }
+        }
+    }
+}
+
+// MARK: - Toolbar
+
+private extension DailyChallengeResultView {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            GeoCircleCloseButton { onDismiss() }
+        }
+    }
+}
+
+// MARK: - Content
+
+private extension DailyChallengeResultView {
+    var resultContent: some View {
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                scoreSection
+                statsRow
+                streakBadge
+            }
+            .padding(.vertical, DesignSystem.Spacing.lg)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+        .safeAreaInset(edge: .bottom) { actionButtons }
+        .background { ambientBlobs }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+    }
+}
+
+// MARK: - Score Section
+
+private extension DailyChallengeResultView {
+    var scoreSection: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            ScoreRingView(progress: Double(score) / Double(maxScore))
+            Text(scoreMessage)
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text("\(animatedScore) / \(maxScore) points")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .contentTransition(.numericText())
+        }
+        .padding(.top, DesignSystem.Spacing.lg)
+    }
+}
+
+// MARK: - Stats Row
+
+private extension DailyChallengeResultView {
+    var statsRow: some View {
+        HStack(spacing: DesignSystem.Spacing.lg) {
+            statItem(
+                icon: "star.fill",
+                value: "\(score)",
+                label: "Score",
+                color: DesignSystem.Color.accent
+            )
+            statItem(
+                icon: "clock.fill",
+                value: formattedTime,
+                label: "Time",
+                color: DesignSystem.Color.warning
+            )
+            statItem(
+                icon: challengeType.iconName,
+                value: challengeType.title,
+                label: "Type",
+                color: DesignSystem.Color.indigo
+            )
+        }
+    }
+
+    func statItem(
+        icon: String,
+        value: String,
+        label: String,
+        color: Color
+    ) -> some View {
+        CardView {
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(color)
+                Text(value)
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(label)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(DesignSystem.Spacing.sm)
+        }
+    }
+}
+
+// MARK: - Streak Badge
+
+private extension DailyChallengeResultView {
+    var streakBadge: some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                ZStack {
+                    Circle()
+                        .fill(DesignSystem.Color.orange.opacity(0.15))
+                        .frame(
+                            width: DesignSystem.Size.xl,
+                            height: DesignSystem.Size.xl
+                        )
+                    Image(systemName: "flame.fill")
+                        .font(DesignSystem.Font.title2)
+                        .foregroundStyle(DesignSystem.Color.orange)
+                }
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    Text("Challenge Streak")
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text("\(streak) day\(streak == 1 ? "" : "s") in a row")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
+                Spacer()
+            }
+            .padding(DesignSystem.Spacing.md)
+        }
+    }
+}
+
+// MARK: - Action Buttons
+
+private extension DailyChallengeResultView {
+    var actionButtons: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            shareButton
+            doneButton
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
+    }
+
+    var shareButton: some View {
+        Button { showShareCard = true } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "square.and.arrow.up")
+                    .font(DesignSystem.Font.headline)
+                Text("Share Result")
+                    .font(DesignSystem.Font.headline)
+            }
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .buttonStyle(.glass)
+    }
+
+    var doneButton: some View {
+        Button { onDismiss() } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "checkmark")
+                    .font(DesignSystem.Font.headline)
+                Text("Done")
+                    .font(DesignSystem.Font.headline)
+            }
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .buttonStyle(.glass)
+    }
+
+    var shareCardSheet: some View {
+        NavigationStack {
+            DailyChallengeShareCard(
+                score: score,
+                maxScore: maxScore,
+                challengeType: challengeType,
+                streak: streak,
+                date: .now
+            )
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    GeoCircleCloseButton()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Background
+
+private extension DailyChallengeResultView {
+    var ambientBlobs: some View {
+        ZStack {
+            Ellipse()
+                .fill(RadialGradient(
+                    colors: [
+                        DesignSystem.Color.accent.opacity(0.22),
+                        .clear,
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 200
+                ))
+                .frame(width: 420, height: 320)
+                .blur(radius: 36)
+                .offset(x: -80, y: -60)
+                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+        }
+        .allowsHitTesting(false)
+        .ignoresSafeArea()
+        .onAppear {
+            withAnimation(
+                .easeInOut(duration: 6)
+                    .repeatForever(autoreverses: true)
+            ) {
+                blobAnimating = true
+            }
+        }
+    }
+}
+
+// MARK: - Helpers
+
+private extension DailyChallengeResultView {
+    var scoreMessage: String {
+        let accuracy = Double(score) / Double(maxScore)
+        if accuracy >= 0.9 {
+            return "Outstanding!"
+        } else if accuracy >= 0.7 {
+            return "Great Job!"
+        } else if accuracy >= 0.5 {
+            return "Good Effort!"
+        } else {
+            return "Keep Trying!"
+        }
+    }
+
+    var formattedTime: String {
+        let minutes = Int(timeSpent) / 60
+        let seconds = Int(timeSpent) % 60
+        if minutes > 0 {
+            return "\(minutes)m \(seconds)s"
+        }
+        return "\(seconds)s"
+    }
+
+    func animateScore() {
+        withAnimation(.easeOut(duration: 1.2)) {
+            animatedScore = score
+        }
+    }
+}
