@@ -195,8 +195,9 @@ private extension HomeScreen {
             Image(systemName: "person.2")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
+                .accessibilityLabel("Friends")
         }
-        .buttonStyle(.glass)
+        .buttonStyle(.plain)
     }
 
     var xpIndicator: some View {
