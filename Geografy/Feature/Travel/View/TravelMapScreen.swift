@@ -21,9 +21,7 @@ struct TravelMapScreen: View {
         ZStack {
             GeometryReader { geometry in
                 mapCanvas(in: geometry.size)
-                    .onAppear {
-                        screenSize = geometry.size
-                    }
+                    .onAppear { screenSize = geometry.size }
                     .onChange(of: geometry.size) { _, newSize in
                         screenSize = newSize
                     }
@@ -36,9 +34,10 @@ struct TravelMapScreen: View {
         }
         .background(DesignSystem.Color.ocean)
         .ignoresSafeArea()
-        .navigationTitle(selectedFilter.displayName)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
+        .safeAreaInset(edge: .top) {
+            infoBanner
+        }
+        .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 GeoCircleCloseButton()
@@ -46,9 +45,6 @@ struct TravelMapScreen: View {
             ToolbarItem(placement: .topBarTrailing) {
                 filterMenu
             }
-        }
-        .safeAreaInset(edge: .bottom) {
-            legendBar
         }
         .task { await loadMapData() }
     }
@@ -63,13 +59,49 @@ private extension TravelMapScreen {
             scale: mapState.scale,
             offset: mapState.offset,
             selectedCountryCode: nil,
-            showLabels: false,
+            showLabels: true,
             canvasSize: size,
             capitalPoint: nil,
             travelStatuses: highlightedStatuses
         )
+        .gesture(dragGesture)
+        .gesture(magnifyGesture)
     }
 
+    var magnifyGesture: some Gesture {
+        MagnifyGesture()
+            .onChanged { value in
+                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
+                let scaleRatio = newScale / mapState.scale
+                mapState.offset = CGSize(
+                    width: mapState.offset.width * scaleRatio,
+                    height: mapState.offset.height * scaleRatio
+                )
+                mapState.scale = newScale
+            }
+            .onEnded { _ in
+                mapState.lastScale = mapState.scale
+                mapState.lastOffset = mapState.offset
+            }
+    }
+
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                mapState.offset = CGSize(
+                    width: mapState.lastOffset.width + value.translation.width,
+                    height: mapState.lastOffset.height + value.translation.height
+                )
+            }
+            .onEnded { _ in
+                mapState.lastOffset = mapState.offset
+            }
+    }
+}
+
+// MARK: - Data
+
+private extension TravelMapScreen {
     var highlightedStatuses: [String: TravelStatus] {
         switch selectedFilter {
         case .visited:
@@ -89,14 +121,58 @@ private extension TravelMapScreen {
         mapState.countryShapes.map { shape in
             var modified = shape
             if !travelCodes.contains(shape.id) {
-                modified.color = Color(hex: "1A1A2E").opacity(0.6)
+                modified.color = Color(hex: "1A1A2E").opacity(0.5)
             }
             return modified
         }
     }
 }
 
-// MARK: - Toolbar
+// MARK: - Info Banner
+
+private extension TravelMapScreen {
+    var infoBanner: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: filterIcon)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(filterColor)
+
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text(selectedFilter.displayName)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                Text("\(travelCodes.count) countries")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+
+            Spacer()
+        }
+        .padding(DesignSystem.Spacing.sm)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
+    var filterIcon: String {
+        switch selectedFilter {
+        case .visited: "checkmark.circle.fill"
+        case .wantToVisit: "heart.fill"
+        case .all: "globe"
+        }
+    }
+
+    var filterColor: Color {
+        switch selectedFilter {
+        case .visited: DesignSystem.Color.success
+        case .wantToVisit: DesignSystem.Color.warning
+        case .all: DesignSystem.Color.accent
+        }
+    }
+}
+
+// MARK: - Filter Menu
 
 private extension TravelMapScreen {
     var filterMenu: some View {
@@ -115,37 +191,6 @@ private extension TravelMapScreen {
         } label: {
             Image(systemName: "line.3.horizontal.decrease")
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
-        }
-    }
-}
-
-// MARK: - Legend
-
-private extension TravelMapScreen {
-    var legendBar: some View {
-        HStack(spacing: DesignSystem.Spacing.lg) {
-            legendItem(color: TravelStatus.visited.color, label: "Visited", count: travelService.visitedCodes.count)
-            legendItem(color: TravelStatus.wantToVisit.color, label: "Want to Visit", count: travelService.wantToVisitCodes.count)
-        }
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .padding(.horizontal, DesignSystem.Spacing.lg)
-        .background(.ultraThinMaterial)
-    }
-
-    func legendItem(color: Color, label: String, count: Int) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Circle()
-                .fill(color)
-                .frame(width: DesignSystem.Spacing.sm, height: DesignSystem.Spacing.sm)
-
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-
-            Text("\(count)")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
     }
 }
