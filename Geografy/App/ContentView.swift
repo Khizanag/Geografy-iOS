@@ -95,7 +95,7 @@ private extension ContentView {
                 }
             }
 
-            Tab("More", systemImage: "ellipsis.circle.fill", value: 4) {
+            Tab("More", systemImage: "ellipsis.circle", value: 4) {
                 MoreScreen()
             }
         }

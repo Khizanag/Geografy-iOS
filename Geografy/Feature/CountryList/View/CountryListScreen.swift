@@ -282,11 +282,6 @@ private extension CountryListScreen {
         .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .frame(maxWidth: .infinity)
-        .background {
-            Rectangle()
-                .fill(DesignSystem.Color.background)
-                .padding(.horizontal, -DesignSystem.Spacing.md)
-        }
     }
 }
 
