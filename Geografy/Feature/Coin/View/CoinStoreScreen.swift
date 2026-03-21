@@ -169,13 +169,35 @@ private extension CoinStoreScreen {
 
             if earnInfoExpanded {
                 CardView {
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
-                        earnRow(icon: "checkmark.circle.fill", title: "Complete Quizzes", detail: "Earn coins for every quiz you finish")
-                        earnRow(icon: "calendar.badge.checkmark", title: "Daily Login", detail: "Log in every day to collect bonus coins")
-                        earnRow(icon: "trophy.fill", title: "Unlock Achievements", detail: "Earn rewards for reaching milestones")
-                        earnRow(icon: "arrow.up.circle.fill", title: "Level Up", detail: "Get coin bonuses when you gain a new level")
+                    VStack(spacing: 0) {
+                        earnRow(
+                            icon: "checkmark.circle.fill",
+                            color: DesignSystem.Color.success,
+                            title: "Complete Quizzes",
+                            detail: "Earn coins for every quiz you finish"
+                        )
+                        earnDivider
+                        earnRow(
+                            icon: "calendar.badge.checkmark",
+                            color: DesignSystem.Color.accent,
+                            title: "Daily Login",
+                            detail: "Log in every day to collect bonus coins"
+                        )
+                        earnDivider
+                        earnRow(
+                            icon: "trophy.fill",
+                            color: DesignSystem.Color.warning,
+                            title: "Unlock Achievements",
+                            detail: "Earn rewards for reaching milestones"
+                        )
+                        earnDivider
+                        earnRow(
+                            icon: "arrow.up.circle.fill",
+                            color: DesignSystem.Color.indigo,
+                            title: "Level Up",
+                            detail: "Get coin bonuses when you gain a new level"
+                        )
                     }
-                    .padding(DesignSystem.Spacing.md)
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .transition(
@@ -192,22 +214,36 @@ private extension CoinStoreScreen {
 // MARK: - Helpers
 
 private extension CoinStoreScreen {
-    func earnRow(icon: String, title: String, detail: String) -> some View {
+    func earnRow(icon: String, color: Color, title: String, detail: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.warning)
-                .frame(width: DesignSystem.Size.md)
+            ZStack {
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    .fill(color.opacity(0.15))
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(color)
+            }
+            .frame(width: 34, height: 34)
+
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(title)
                     .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.medium)
+                    .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                 Text(detail)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
+
+            Spacer(minLength: 0)
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+    }
+
+    var earnDivider: some View {
+        Divider()
+            .padding(.leading, DesignSystem.Spacing.xxl + DesignSystem.Spacing.md)
     }
 
 }
