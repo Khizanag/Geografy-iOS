@@ -484,9 +484,7 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var comingSoonSection: some View {
-        HomeComingSoonSection { title, icon in
-            activeSheet = .comingSoon(title: title, icon: icon)
-        }
+        HomeComingSoonSection()
     }
 }
 

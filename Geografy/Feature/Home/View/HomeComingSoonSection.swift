@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct HomeComingSoonSection: View {
-    let onItemTap: (String, String) -> Void
+    @AppStorage("comingSoonVotes") private var votesData: Data = Data()
+    @State private var votes: [String: Int] = [:]
+    @State private var votedFeature: String?
 
     private let features: [(icon: String, title: String, description: String, colors: [Color])] = [
         (
@@ -15,18 +17,6 @@ struct HomeComingSoonSection: View {
             "Daily Challenges",
             "Geography puzzles every day",
             [Color(hex: "FF6B6B"), Color(hex: "FFA500")]
-        ),
-        (
-            "trophy.fill",
-            "Leaderboards",
-            "Compete globally",
-            [Color(hex: "F7971E"), Color(hex: "FFD200")]
-        ),
-        (
-            "airplane",
-            "Travel Tracker",
-            "Log countries you've visited",
-            [Color(hex: "0F9B8E"), Color(hex: "11998E")]
         ),
         (
             "chart.bar.fill",
@@ -47,6 +37,7 @@ struct HomeComingSoonSection: View {
             sectionHeader
             featuresGrid
         }
+        .onAppear { loadVotes() }
     }
 }
 
@@ -54,19 +45,12 @@ struct HomeComingSoonSection: View {
 
 private extension HomeComingSoonSection {
     var sectionHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 3, height: 18)
-            Text("Coming Soon")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+        HStack {
+            SectionHeaderView(title: "Coming Soon")
             Spacer()
-            Text("Tap to vote")
+            Text("Tap to vote!")
                 .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
@@ -84,7 +68,12 @@ private extension HomeComingSoonSection {
     }
 
     func featureCard(_ feature: (icon: String, title: String, description: String, colors: [Color])) -> some View {
-        Button { onItemTap(feature.title, feature.icon) } label: {
+        let voteCount = votes[feature.title, default: 0]
+        let hasVoted = votedFeature == feature.title
+
+        return Button {
+            castVote(for: feature.title)
+        } label: {
             ZStack(alignment: .bottomLeading) {
                 LinearGradient(
                     colors: feature.colors,
@@ -98,13 +87,7 @@ private extension HomeComingSoonSection {
                     .offset(x: 10, y: -10)
                     .clipped()
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text("SOON")
-                        .font(DesignSystem.Font.caption2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(.white.opacity(0.8))
-                        .padding(.horizontal, DesignSystem.Spacing.xs)
-                        .padding(.vertical, 2)
-                        .background(.white.opacity(0.2), in: Capsule())
+                    voteBadge(count: voteCount, hasVoted: hasVoted)
                     Text(feature.title)
                         .font(DesignSystem.Font.subheadline)
                         .fontWeight(.bold)
@@ -122,5 +105,52 @@ private extension HomeComingSoonSection {
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         }
         .buttonStyle(GeoPressButtonStyle())
+    }
+
+    func voteBadge(count: Int, hasVoted: Bool) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: hasVoted ? "hand.thumbsup.fill" : "hand.thumbsup")
+                .font(.system(size: 10, weight: .bold))
+            Text("\(count)")
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.bold)
+                .contentTransition(.numericText())
+        }
+        .foregroundStyle(.white.opacity(hasVoted ? 1 : 0.8))
+        .padding(.horizontal, DesignSystem.Spacing.xs)
+        .padding(.vertical, 2)
+        .background(.white.opacity(hasVoted ? 0.35 : 0.2), in: Capsule())
+    }
+}
+
+// MARK: - Actions
+
+private extension HomeComingSoonSection {
+    func castVote(for feature: String) {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+            if votedFeature == feature {
+                votes[feature, default: 0] = max(0, votes[feature, default: 0] - 1)
+                votedFeature = nil
+            } else {
+                if let previous = votedFeature {
+                    votes[previous, default: 0] = max(0, votes[previous, default: 0] - 1)
+                }
+                votes[feature, default: 0] += 1
+                votedFeature = feature
+            }
+        }
+        saveVotes()
+    }
+
+    func loadVotes() {
+        guard !votesData.isEmpty,
+              let decoded = try? JSONDecoder().decode([String: Int].self, from: votesData) else { return }
+        votes = decoded
+    }
+
+    func saveVotes() {
+        guard let encoded = try? JSONEncoder().encode(votes) else { return }
+        votesData = encoded
     }
 }

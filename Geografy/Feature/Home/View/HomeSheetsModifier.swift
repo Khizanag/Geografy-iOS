@@ -7,7 +7,6 @@ enum HomeSheet: Identifiable {
     case friends
     case allOrgs
     case orgDetail(Organization)
-    case comingSoon(title: String, icon: String)
     case favorites
     case countries
     case coinStore
@@ -21,7 +20,6 @@ enum HomeSheet: Identifiable {
         case .friends: "friends"
         case .allOrgs: "allOrgs"
         case .orgDetail(let organization): "orgDetail-\(organization.id)"
-        case .comingSoon(let title, _): "comingSoon-\(title)"
         case .favorites: "favorites"
         case .countries: "countries"
         case .coinStore: "coinStore"
@@ -60,8 +58,6 @@ private extension HomeSheetsModifier {
             sheetWithCloseButton { OrganizationsScreen() }
         case .orgDetail(let organization):
             sheetWithCloseButton { OrganizationDetailScreen(organization: organization) }
-        case .comingSoon(let title, let icon):
-            ComingSoonSheet(title: title, icon: icon)
         case .favorites:
             sheetWithCloseButton { FavoritesScreen() }
         case .countries:
