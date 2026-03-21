@@ -9,7 +9,7 @@ struct PremiumLockedOverlay: View {
                 .fill(.ultraThinMaterial)
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "lock.fill")
-                    .font(.system(size: 28))
+                    .font(DesignSystem.Font.title)
                     .foregroundStyle(DesignSystem.Color.accent)
                 Text("Premium Feature")
                     .font(DesignSystem.Font.headline)
@@ -18,7 +18,7 @@ struct PremiumLockedOverlay: View {
                     Text("Unlock with Premium")
                         .font(DesignSystem.Font.caption)
                         .fontWeight(.semibold)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Color.onAccent)
                         .padding(.horizontal, DesignSystem.Spacing.md)
                         .padding(.vertical, DesignSystem.Spacing.xs)
                         .background(DesignSystem.Color.accent, in: Capsule())

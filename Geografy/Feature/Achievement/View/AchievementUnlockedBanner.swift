@@ -49,9 +49,9 @@ private extension AchievementUnlockedBanner {
         ZStack {
             Circle()
                 .fill(categoryColor.opacity(0.18))
-                .frame(width: 44, height: 44)
+                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
             Image(systemName: achievement.iconName)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.title2)
                 .foregroundStyle(categoryColor)
         }
     }
@@ -73,7 +73,7 @@ private extension AchievementUnlockedBanner {
         Text("+\(achievement.xpReward) XP")
             .font(DesignSystem.Font.caption)
             .fontWeight(.bold)
-            .foregroundStyle(.white)
+            .foregroundStyle(DesignSystem.Color.onAccent)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xxs)
             .background(categoryColor, in: Capsule())

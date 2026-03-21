@@ -358,9 +358,9 @@ private extension HomeScreen {
         ZStack {
             Circle()
                 .fill(DesignSystem.Color.accent.opacity(0.12))
-                .frame(width: 60, height: 60)
+                .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
             Image(systemName: "globe.americas.fill")
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.title)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }

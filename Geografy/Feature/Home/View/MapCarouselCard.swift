@@ -44,12 +44,12 @@ private extension MapCarouselCard {
                 gradientBackground
                 HStack(spacing: DesignSystem.Spacing.lg) {
                     Image(systemName: systemImage)
-                        .font(.system(size: 40))
-                        .foregroundStyle(.white.opacity(0.9))
+                        .font(DesignSystem.IconSize.xLarge)
+                        .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.9))
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                         Text(mapName)
                             .font(DesignSystem.Font.title2)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(DesignSystem.Color.onAccent)
                             .fontWeight(.bold)
                         openMapLabel
                     }
@@ -72,8 +72,8 @@ private extension MapCarouselCard {
 
     var backgroundIcon: some View {
         Image(systemName: systemImage)
-            .font(.system(size: 180))
-            .foregroundStyle(.white.opacity(0.08))
+            .font(DesignSystem.IconSize.flag)
+            .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.08))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 40, y: -20)
             .clipped()
@@ -85,7 +85,7 @@ private extension MapCarouselCard {
             Text(mapName)
                 .font(DesignSystem.Font.title)
                 .fontWeight(.bold)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
             openMapLabel
         }
         .padding(DesignSystem.Spacing.lg)
@@ -100,12 +100,12 @@ private extension MapCarouselCard {
             Text("Open Map")
                 .font(DesignSystem.Font.headline)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(DesignSystem.Color.onAccent)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(.white.opacity(0.2))
+        .background(DesignSystem.Color.onAccent.opacity(0.2))
         .clipShape(Capsule())
-        .overlay(Capsule().strokeBorder(.white.opacity(0.3), lineWidth: 1))
+        .overlay(Capsule().strokeBorder(DesignSystem.Color.onAccent.opacity(0.3), lineWidth: 1))
     }
 
     var gradientColors: (Color, Color) {

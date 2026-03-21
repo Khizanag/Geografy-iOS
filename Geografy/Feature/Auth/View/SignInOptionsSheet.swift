@@ -94,8 +94,8 @@ private extension SignInOptionsSheet {
                 .animation(.spring(response: 0.6, dampingFraction: 0.7), value: appeared)
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Geografy")
-                    .font(.system(size: 40, weight: .black, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(DesignSystem.IconSize.xLarge.weight(.black).width(.expanded))
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
                     .opacity(appeared ? 1 : 0)
                     .offset(y: appeared ? 0 : 12)
                     .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
@@ -129,8 +129,8 @@ private extension SignInOptionsSheet {
                     .frame(width: 90, height: 90)
                     .shadow(color: DesignSystem.Color.accent.opacity(0.6), radius: 20, y: 8)
                 Image(systemName: "globe.americas.fill")
-                    .font(.system(size: 46))
-                    .foregroundStyle(.white)
+                    .font(DesignSystem.IconSize.xLarge)
+                    .foregroundStyle(DesignSystem.Color.onAccent)
             }
         }
     }
@@ -150,7 +150,7 @@ private extension SignInOptionsSheet {
     func statPill(value: String, label: String) -> some View {
         VStack(spacing: 2) {
             Text(value)
-                .font(.system(size: 20, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.title2.weight(.black))
                 .foregroundStyle(DesignSystem.Color.accent)
             Text(label)
                 .font(DesignSystem.Font.caption2)
@@ -220,9 +220,9 @@ private extension SignInOptionsSheet {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(benefit.color.opacity(0.18))
-                    .frame(width: 44, height: 44)
+                    .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 Image(systemName: benefit.icon)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(DesignSystem.Font.headline)
                     .foregroundStyle(benefit.color)
             }
             VStack(alignment: .leading, spacing: 2) {
@@ -311,7 +311,7 @@ private extension SignInOptionsSheet {
                 GoogleGLogo()
                     .frame(width: 22, height: 22)
                 Text("Sign in with Google")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(DesignSystem.Font.headline)
                     .foregroundStyle(Color(white: 0.18))
             }
             .frame(maxWidth: .infinity)
@@ -343,12 +343,12 @@ private extension SignInOptionsSheet {
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "hammer.fill")
-                    .font(.system(size: 13))
+                    .font(DesignSystem.Font.footnote)
                 Text("Debug Sign In (Giga)")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(DesignSystem.Color.onAccent)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(

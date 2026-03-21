@@ -5,7 +5,7 @@ struct HomeOrgsCard: View {
     let onSeeAll: () -> Void
 
     private let featuredOrgs: [Organization] = {
-        ["UN", "EU", "NATO", "ASEAN", "G20", "WTO", "African Union"]
+        ["UN", "EU", "NATO", "ASEAN", "G20", "WTO", "AU"]
             .compactMap { Organization.find($0) }
     }()
 
@@ -55,30 +55,7 @@ private extension HomeOrgsCard {
     func orgChip(_ org: Organization) -> some View {
         Button { onOrgTap(org) } label: {
             VStack(spacing: DesignSystem.Spacing.xs) {
-                ZStack {
-                    Circle()
-                        .fill(org.highlightColor.opacity(0.15))
-                        .frame(width: 60, height: 60)
-                    if let urlString = org.logoURL, let url = URL(string: urlString) {
-                        AsyncImage(url: url) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 44, height: 44)
-                            default:
-                                Image(systemName: org.icon)
-                                    .font(.system(size: 22))
-                                    .foregroundStyle(org.highlightColor)
-                            }
-                        }
-                    } else {
-                        Image(systemName: org.icon)
-                            .font(.system(size: 22))
-                            .foregroundStyle(org.highlightColor)
-                    }
-                }
+                orgChipLogo(org)
                 Text(org.displayName)
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
@@ -93,5 +70,37 @@ private extension HomeOrgsCard {
             )
         }
         .buttonStyle(GeoPressButtonStyle())
+    }
+
+    func orgChipLogo(_ org: Organization) -> some View {
+        Group {
+            if let urlString = org.logoURL, let url = URL(string: urlString) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 52, height: 52)
+                    default:
+                        orgChipFallback(org)
+                    }
+                }
+            } else {
+                orgChipFallback(org)
+            }
+        }
+        .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
+    }
+
+    func orgChipFallback(_ org: Organization) -> some View {
+        ZStack {
+            Circle()
+                .fill(org.highlightColor.opacity(0.15))
+                .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
+            Image(systemName: org.icon)
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(org.highlightColor)
+        }
     }
 }

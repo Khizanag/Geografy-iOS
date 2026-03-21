@@ -93,7 +93,7 @@ private extension QuizSetupScreen {
         ZStack(alignment: .topTrailing) {
             LinearGradient(colors: [colors.0, colors.1], startPoint: .topLeading, endPoint: .bottomTrailing)
             Image(systemName: type.icon)
-                .font(.system(size: 72))
+                .font(DesignSystem.IconSize.hero)
                 .foregroundStyle(.white.opacity(0.10))
                 .offset(x: 18, y: -12)
                 .clipped()
@@ -114,7 +114,7 @@ private extension QuizSetupScreen {
     func quizTypeCardInfo(type: QuizType) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
             Text(type.emoji)
-                .font(.system(size: 30))
+                .font(DesignSystem.Font.title)
                 .keyframeAnimator(
                     initialValue: EmojiAnimation(),
                     trigger: emojiBounce[type, default: 0]
@@ -136,7 +136,7 @@ private extension QuizSetupScreen {
             Text(type.displayName)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.bold)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .lineLimit(1)
             Text(type.description)
                 .font(DesignSystem.Font.caption2)
@@ -159,7 +159,7 @@ private extension QuizSetupScreen {
                     Label("Premium", systemImage: "lock.fill")
                         .font(DesignSystem.Font.caption2)
                         .fontWeight(.bold)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Color.onAccent)
                         .padding(.horizontal, DesignSystem.Spacing.xs)
                         .padding(.vertical, DesignSystem.Spacing.xxs)
                         .background(.ultraThinMaterial, in: Capsule())

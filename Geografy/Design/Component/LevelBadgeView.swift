@@ -14,7 +14,7 @@ enum LevelBadgeSize {
     var numberFont: Font {
         switch self {
         case .small: DesignSystem.Font.headline
-        case .large: .system(size: 34, weight: .black)
+        case .large: DesignSystem.Font.largeTitle.weight(.black)
         }
     }
 
@@ -60,7 +60,7 @@ private extension LevelBadgeView {
             Text("\(level.level)")
                 .font(size.numberFont)
                 .fontWeight(.black)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
         }
         .onAppear {
             guard animated else { return }

@@ -81,7 +81,7 @@ private extension OrganizationsScreen {
                         image
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 48, height: 48)
+                            .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
                     default:
                         orgLogoFallback(org)
                     }
@@ -96,9 +96,9 @@ private extension OrganizationsScreen {
         ZStack {
             Circle()
                 .fill(org.highlightColor.opacity(0.15))
-                .frame(width: 48, height: 48)
+                .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
             Image(systemName: org.icon)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.title2)
                 .foregroundStyle(org.highlightColor)
         }
     }

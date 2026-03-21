@@ -141,7 +141,7 @@ private extension OrganizationDetailScreen {
                             image
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 64, height: 64)
+                                .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
                         default:
                             orgLogoFallback
                         }
@@ -158,9 +158,9 @@ private extension OrganizationDetailScreen {
         ZStack {
             Circle()
                 .fill(organization.highlightColor.opacity(0.15))
-                .frame(width: 64, height: 64)
+                .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
             Image(systemName: organization.icon)
-                .font(.system(size: 26))
+                .font(DesignSystem.IconSize.large)
                 .foregroundStyle(organization.highlightColor)
         }
     }
@@ -180,7 +180,7 @@ private extension OrganizationDetailScreen {
                 Image(systemName: "arrow.right")
                     .font(DesignSystem.Font.headline)
             }
-            .foregroundStyle(.white)
+            .foregroundStyle(DesignSystem.Color.onAccent)
             .padding(DesignSystem.Spacing.md)
             .background(
                 LinearGradient(

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 71;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXFileReference section */
@@ -11,16 +11,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A1B2C3D4E5F60718293A4B5C /* Geografy */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Geografy; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5C /* Geografy */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Geografy;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B2C3D4E5F60718293A4B5C6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -53,14 +55,10 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				A1B2C3D4E5F60718293A4B5C /* Geografy */,
 			);
 			name = Geografy;
-			packageProductDependencies = (
-			);
 			productName = Geografy;
 			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
 			productType = "com.apple.product-type.application";
@@ -81,7 +79,6 @@
 				};
 			};
 			buildConfigurationList = B4C5D6E7F8091A2B3C4D5E6F /* Build configuration list for PBXProject "Geografy" */;
-			compatibilityVersion = "Xcode 16.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -90,6 +87,7 @@
 			);
 			mainGroup = C3D4E5F60718293A4B5C6D7E;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = D4E5F60718293A4B5C6D7E8F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -102,25 +100,21 @@
 /* Begin PBXResourcesBuildPhase section */
 		29A3B4C5D6E7F8091A2B3C4D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1829A3B4C5D6E7F8091A2B3C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		C5D6E7F8091A2B3C4D5E6F70 /* Debug */ = {
+		C5D6E7F8091A2B3C4D5E6F70 /* Debug configuration for PBXProject "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -185,7 +179,7 @@
 			};
 			name = Debug;
 		};
-		D6E7F8091A2B3C4D5E6F7081 /* Release */ = {
+		D6E7F8091A2B3C4D5E6F7081 /* Release configuration for PBXProject "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -243,11 +237,12 @@
 			};
 			name = Release;
 		};
-		E7F8091A2B3C4D5E6F708192 /* Debug */ = {
+		E7F8091A2B3C4D5E6F708192 /* Debug configuration for PBXNativeTarget "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Geografy/Geografy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 622JHLJRAK;
@@ -269,11 +264,12 @@
 			};
 			name = Debug;
 		};
-		F8091A2B3C4D5E6F70819203 /* Release */ = {
+		F8091A2B3C4D5E6F70819203 /* Release configuration for PBXNativeTarget "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Geografy/Geografy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 622JHLJRAK;
@@ -301,19 +297,17 @@
 		071829A3B4C5D6E7F8091A2B /* Build configuration list for PBXNativeTarget "Geografy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E7F8091A2B3C4D5E6F708192 /* Debug */,
-				F8091A2B3C4D5E6F70819203 /* Release */,
+				E7F8091A2B3C4D5E6F708192 /* Debug configuration for PBXNativeTarget "Geografy" */,
+				F8091A2B3C4D5E6F70819203 /* Release configuration for PBXNativeTarget "Geografy" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		B4C5D6E7F8091A2B3C4D5E6F /* Build configuration list for PBXProject "Geografy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C5D6E7F8091A2B3C4D5E6F70 /* Debug */,
-				D6E7F8091A2B3C4D5E6F7081 /* Release */,
+				C5D6E7F8091A2B3C4D5E6F70 /* Debug configuration for PBXProject "Geografy" */,
+				D6E7F8091A2B3C4D5E6F7081 /* Release configuration for PBXProject "Geografy" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */

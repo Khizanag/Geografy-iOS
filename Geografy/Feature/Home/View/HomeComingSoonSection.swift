@@ -69,7 +69,7 @@ private extension HomeComingSoonSection {
                     endPoint: .bottomTrailing
                 )
                 Image(systemName: feature.icon)
-                    .font(.system(size: 56))
+                    .font(DesignSystem.IconSize.xxLarge)
                     .foregroundStyle(.white.opacity(0.09))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     .offset(x: 10, y: -10)
@@ -85,7 +85,7 @@ private extension HomeComingSoonSection {
                     Text(feature.title)
                         .font(DesignSystem.Font.subheadline)
                         .fontWeight(.bold)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Color.onAccent)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                     Text(feature.description)

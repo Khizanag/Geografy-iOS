@@ -40,7 +40,7 @@ private extension TerritorialDisputesScreen {
         GeoCard {
             HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.title2)
                     .foregroundStyle(DesignSystem.Color.warning)
                     .padding(.top, 2)
 
@@ -114,8 +114,8 @@ private extension TerritorialDisputesScreen {
 
     func flagBadge(_ flag: String) -> some View {
         Text(flag)
-            .font(.system(size: 24))
-            .frame(width: 32, height: 32)
+            .font(DesignSystem.Font.title2)
+            .frame(width: DesignSystem.Spacing.xl, height: DesignSystem.Spacing.xl)
     }
 
     var resetButton: some View {

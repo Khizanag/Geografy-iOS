@@ -54,9 +54,9 @@ private extension LeaderboardScreen {
             ZStack {
                 Circle()
                     .fill(statusColor.opacity(0.15))
-                    .frame(width: 36, height: 36)
+                    .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
                 Image(systemName: statusIcon)
-                    .font(.system(size: 16))
+                    .font(DesignSystem.Font.callout)
                     .foregroundStyle(statusColor)
             }
             VStack(alignment: .leading, spacing: 2) {
@@ -71,7 +71,7 @@ private extension LeaderboardScreen {
             Spacer()
             Circle()
                 .fill(statusColor)
-                .frame(width: 8, height: 8)
+                .frame(width: DesignSystem.Spacing.xs, height: DesignSystem.Spacing.xs)
         }
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
@@ -84,9 +84,9 @@ private extension LeaderboardScreen {
                     ZStack {
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                             .fill(info.color.opacity(0.18))
-                            .frame(width: 44, height: 44)
+                            .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                         Image(systemName: info.icon)
-                            .font(.system(size: 20))
+                            .font(DesignSystem.Font.title2)
                             .foregroundStyle(info.color)
                     }
                     VStack(alignment: .leading, spacing: 4) {

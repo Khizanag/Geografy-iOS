@@ -49,9 +49,9 @@ private extension ZoomableOrgLogoView {
                 ZStack {
                     Circle()
                         .fill(organization.highlightColor.opacity(0.15))
-                        .frame(width: 160, height: 160)
+                        .frame(width: DesignSystem.Size.feature / 2, height: DesignSystem.Size.feature / 2)
                     Image(systemName: organization.icon)
-                        .font(.system(size: 64))
+                        .font(DesignSystem.IconSize.xxLarge)
                         .foregroundStyle(organization.highlightColor)
                 }
                 .onTapGesture { dismiss() }
@@ -65,7 +65,7 @@ private extension ZoomableOrgLogoView {
                 Spacer()
                 Button { onDismiss() } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 30))
+                        .font(DesignSystem.Font.title)
                         .foregroundStyle(.secondary)
                         .padding(DesignSystem.Spacing.md)
                 }

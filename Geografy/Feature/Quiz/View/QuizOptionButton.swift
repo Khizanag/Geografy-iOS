@@ -84,9 +84,9 @@ private extension QuizOptionButton {
         let letters = ["A", "B", "C", "D", "E", "F"]
         let letter = index < letters.count ? letters[index] : ""
         return Text(letter)
-            .font(.system(size: 13, weight: .black, design: .rounded))
+            .font(DesignSystem.Font.footnote.weight(.black))
             .foregroundStyle(badgeTextColor)
-            .frame(width: 26, height: 26)
+            .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
             .background(badgeBackground, in: RoundedRectangle(cornerRadius: 7))
     }
 
@@ -96,12 +96,12 @@ private extension QuizOptionButton {
         case .correct:
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .transition(.scale.combined(with: .opacity))
         case .incorrect:
             Image(systemName: "xmark.circle.fill")
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .transition(.scale.combined(with: .opacity))
         default:
             EmptyView()
@@ -113,14 +113,14 @@ private extension QuizOptionButton {
         switch state {
         case .correct:
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 32))
-                .foregroundStyle(.white)
+                .font(DesignSystem.Font.title)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .shadow(color: DesignSystem.Color.success.opacity(0.8), radius: 8)
                 .transition(.scale.combined(with: .opacity))
         case .incorrect:
             Image(systemName: "xmark.circle.fill")
-                .font(.system(size: 32))
-                .foregroundStyle(.white)
+                .font(DesignSystem.Font.title)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .shadow(color: DesignSystem.Color.error.opacity(0.8), radius: 8)
                 .transition(.scale.combined(with: .opacity))
         default:
@@ -178,7 +178,7 @@ private extension QuizOptionButton {
 
     var textColor: Color {
         switch state {
-        case .correct, .incorrect: .white
+        case .correct, .incorrect: DesignSystem.Color.onAccent
         case .disabled:            DesignSystem.Color.textTertiary
         default:                   DesignSystem.Color.textPrimary
         }
@@ -195,7 +195,7 @@ private extension QuizOptionButton {
 
     var badgeTextColor: Color {
         switch state {
-        case .correct, .incorrect: .white
+        case .correct, .incorrect: DesignSystem.Color.onAccent
         case .disabled:            DesignSystem.Color.textTertiary
         default:                   DesignSystem.Color.textSecondary
         }

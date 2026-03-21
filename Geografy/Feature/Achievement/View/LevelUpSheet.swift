@@ -47,7 +47,7 @@ private extension LevelUpSheet {
     var levelUpHeadline: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             Text("LEVEL UP!")
-                .font(.system(size: 42, weight: .black))
+                .font(DesignSystem.IconSize.xLarge.weight(.black))
                 .foregroundStyle(
                     LinearGradient(
                         colors: [.yellow, .orange],
@@ -80,7 +80,7 @@ private extension LevelUpSheet {
             Text("Continue")
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.semibold)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, DesignSystem.Spacing.sm)
                 .background(DesignSystem.Color.accent)

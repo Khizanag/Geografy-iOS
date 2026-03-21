@@ -128,7 +128,7 @@ private extension AllMapsScreen {
                 )
 
                 Image(systemName: icon)
-                    .font(.system(size: 90))
+                    .font(DesignSystem.IconSize.hero)
                     .foregroundStyle(.white.opacity(0.10))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     .offset(x: 24, y: -12)
@@ -138,7 +138,7 @@ private extension AllMapsScreen {
                     Text(name)
                         .font(DesignSystem.Font.headline)
                         .fontWeight(.bold)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Color.onAccent)
 
                     HStack(spacing: 4) {
                         Text("Open")

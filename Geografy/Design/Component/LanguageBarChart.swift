@@ -53,12 +53,12 @@ private extension LanguageBarChart {
                         )
                 }
             }
-            .frame(height: 8)
+            .frame(height: DesignSystem.Spacing.xs)
 
             Text("\(Int(language.percentage))%")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
-                .frame(width: 32, alignment: .trailing)
+                .frame(width: DesignSystem.Spacing.xl, alignment: .trailing)
         }
     }
 }

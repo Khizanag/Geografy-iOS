@@ -41,7 +41,7 @@ struct CountryDetailScreen: View {
                     governmentSection
                     currencySection
                 }
-                if !memberOrganizations.isEmpty, subscriptionService.isPremium {
+                if !memberOrganizations.isEmpty {
                     organizationsSection
                 }
             }
@@ -60,6 +60,19 @@ struct CountryDetailScreen: View {
         .sheet(isPresented: $showPaywall) {
             PaywallScreen()
         }
+        .sheet(item: $selectedInfo) { item in
+            PropertyDetailSheet(
+                icon: item.icon,
+                title: item.title,
+                value: item.value,
+                supportsMap: item.supportsMap,
+                mapButtonTitle: item.mapButtonTitle,
+                onShowMap: {
+                    selectedInfo = nil
+                    showContinentMap = true
+                }
+            )
+        }
         .fullScreenCover(isPresented: $showContinentMap) {
             NavigationStack {
                 MapScreen(continentFilter: country.continent.displayName)
@@ -67,21 +80,6 @@ struct CountryDetailScreen: View {
                     .navigationDestination(for: Country.self) { c in
                         CountryDetailScreen(country: c)
                     }
-            }
-        }
-        .overlay {
-            if let selectedInfo {
-                InfoCardPopup(
-                    icon: selectedInfo.icon,
-                    title: selectedInfo.title,
-                    value: selectedInfo.value,
-                    showMapButton: selectedInfo.supportsMap,
-                    onClose: { self.selectedInfo = nil },
-                    onShowMap: {
-                        self.selectedInfo = nil
-                        self.showContinentMap = true
-                    }
-                )
             }
         }
         .navigationDestination(for: Organization.self) { org in
@@ -108,6 +106,7 @@ private extension CountryDetailScreen {
         let title: String
         let value: String
         let supportsMap: Bool
+        var mapButtonTitle: String = "Show on the map"
     }
 }
 
@@ -159,7 +158,8 @@ private extension CountryDetailScreen {
                         icon: "globe.americas.fill",
                         title: "Continent",
                         value: country.continent.displayName,
-                        supportsMap: true
+                        supportsMap: true,
+                        mapButtonTitle: "Open \(country.continent.displayName) Map"
                     )
                 } label: {
                     HStack(spacing: DesignSystem.Spacing.xxs) {
@@ -230,7 +230,8 @@ private extension CountryDetailScreen {
                         icon: "globe.americas.fill",
                         title: "Continent",
                         value: country.continent.displayName,
-                        supportsMap: true
+                        supportsMap: true,
+                        mapButtonTitle: "Open \(country.continent.displayName) Map"
                     )
                 } label: {
                     factChip(icon: "globe", label: "Continent", value: country.continent.displayName)
@@ -317,7 +318,10 @@ private extension CountryDetailScreen {
             populationCard
             if !country.languages.isEmpty {
                 if subscriptionService.isPremium {
-                    LanguageBarChart(languages: country.languages, appeared: appeared)
+                    LanguageBarChart(
+                        languages: country.languages.sorted { $0.percentage > $1.percentage },
+                        appeared: appeared
+                    )
                 } else {
                     lockedPlaceholder(height: 80)
                 }
@@ -492,22 +496,23 @@ private extension CountryDetailScreen {
     var organizationsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Member Of")
-            ForEach(memberOrganizations) { org in
-                NavigationLink(value: org) {
-                    GeoCard {
-                        HStack(spacing: DesignSystem.Spacing.sm) {
-                            orgLogoView(org)
-                            orgInfoView(org)
-                            Spacer(minLength: 0)
-                            orgTrailingView(org)
+            GeoCard {
+                VStack(spacing: 0) {
+                    ForEach(Array(memberOrganizations.enumerated()), id: \.element.id) { index, org in
+                        NavigationLink(value: org) {
+                            orgRow(org)
                         }
-                        .padding(DesignSystem.Spacing.sm)
+                        .buttonStyle(GeoPressButtonStyle())
+                        .simultaneousGesture(TapGesture().onEnded {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        })
+
+                        if index < memberOrganizations.count - 1 {
+                            Divider()
+                                .padding(.leading, 60)
+                        }
                     }
                 }
-                .buttonStyle(GeoPressButtonStyle())
-                .simultaneousGesture(TapGesture().onEnded {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                })
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -515,64 +520,46 @@ private extension CountryDetailScreen {
         .animation(.easeOut(duration: 0.5).delay(0.48), value: appeared)
     }
 
-    func orgLogoView(_ org: Organization) -> some View {
-        Group {
-            if let urlString = org.logoURL, let url = URL(string: urlString) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image.resizable().scaledToFit().frame(width: 40, height: 40)
-                    default:
-                        orgLogoFallback(org, size: 40)
-                    }
-                }
-            } else {
-                orgLogoFallback(org, size: 40)
-            }
-        }
-    }
-
-    func orgLogoFallback(_ org: Organization, size: CGFloat) -> some View {
-        ZStack {
-            Circle()
-                .fill(org.highlightColor.opacity(0.15))
-                .frame(width: size, height: size)
-            Image(systemName: org.icon)
-                .font(.system(size: size * 0.42))
-                .foregroundStyle(org.highlightColor)
-        }
-    }
-
-    func orgInfoView(_ org: Organization) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            Text(org.displayName)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            if org.fullName != org.displayName {
-                Text(org.fullName)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-        }
-    }
-
-    func orgTrailingView(_ org: Organization) -> some View {
-        let count = countryDataService.countries.filter { $0.organizations.contains(org.id) }.count
-        return HStack(spacing: DesignSystem.Spacing.xs) {
-            if count > 0 {
-                Text("\(count)")
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
+    func orgRow(_ org: Organization) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(org.highlightColor.opacity(0.15))
+                    .frame(width: 38, height: 38)
+                Image(systemName: org.icon)
+                    .font(.system(size: 16, weight: .medium))
                     .foregroundStyle(org.highlightColor)
-                    .padding(.horizontal, DesignSystem.Spacing.xs)
-                    .padding(.vertical, DesignSystem.Spacing.xxs)
-                    .background(org.highlightColor.opacity(0.12), in: Capsule())
             }
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(org.displayName)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                if org.fullName != org.displayName {
+                    Text(org.fullName)
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .lineLimit(1)
+                }
+            }
+
+            Spacer()
+
+            let memberCount = countryDataService.countries.filter { $0.organizations.contains(org.id) }.count
+            if memberCount > 0 {
+                Text("\(memberCount) members")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+
             Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption2)
+                .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .contentShape(Rectangle())
     }
 }
 

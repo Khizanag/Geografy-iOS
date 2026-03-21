@@ -37,7 +37,7 @@ private extension HomeQuizCard {
 
     var watermarkIcon: some View {
         Image(systemName: "gamecontroller.fill")
-            .font(.system(size: 140))
+            .font(DesignSystem.IconSize.flag)
             .foregroundStyle(.white.opacity(0.06))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 24, y: -16)
@@ -72,7 +72,7 @@ private extension HomeQuizCard {
         Text("Test Your\nKnowledge")
             .font(DesignSystem.Font.largeTitle)
             .fontWeight(.bold)
-            .foregroundStyle(.white)
+            .foregroundStyle(DesignSystem.Color.onAccent)
             .lineSpacing(2)
     }
 
@@ -97,7 +97,7 @@ private extension HomeQuizCard {
             Image(systemName: "arrow.right")
                 .font(DesignSystem.Font.subheadline)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(DesignSystem.Color.onAccent)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(DesignSystem.Color.accent.opacity(0.85))

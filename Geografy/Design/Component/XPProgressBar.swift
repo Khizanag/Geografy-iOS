@@ -57,13 +57,13 @@ private extension XPProgressBar {
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.pill)
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    .frame(height: 8)
+                    .frame(height: DesignSystem.Spacing.xs)
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.pill)
                     .fill(progressGradient)
                     .frame(width: geometry.size.width * animatedProgress, height: 8)
             }
         }
-        .frame(height: 8)
+        .frame(height: DesignSystem.Spacing.xs)
     }
 
     var xpCountLabel: some View {
