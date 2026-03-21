@@ -43,8 +43,10 @@ struct HomeScreen: View {
                 sectionOrder: sectionOrderService.sections
             )
         )
-        .task { countryDataService.loadCountries() }
-        .onAppear { startAnimations() }
+        .task {
+            countryDataService.loadCountries()
+            startAnimations()
+        }
     }
 }
 
@@ -506,11 +508,13 @@ private extension HomeScreen {
     }
 
     func startAnimations() {
-        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-            blobAnimating = true
-        }
-        withAnimation(.easeOut(duration: 0.7)) {
+        withAnimation(.easeOut(duration: 0.5)) {
             appeared = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                blobAnimating = true
+            }
         }
     }
 
@@ -553,6 +557,10 @@ private extension View {
     func feedSection(appeared: Bool, delay: Double) -> some View {
         self
             .opacity(appeared ? 1 : 0)
-            .animation(.easeOut(duration: 0.4).delay(delay), value: appeared)
+            .transaction { transaction in
+                if appeared {
+                    transaction.animation = .easeOut(duration: 0.4).delay(delay)
+                }
+            }
     }
 }
