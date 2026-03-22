@@ -14,6 +14,7 @@ struct CountryDetailScreen: View {
     @State private var activeSheet: CountryDetailSheet?
     @State private var showFlagFullScreen = false
     @State private var showContinentMap = false
+    @State private var flagScrolledUp = false
 
     let country: Country
 
@@ -26,6 +27,19 @@ struct CountryDetailScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle(country.name)
             .toolbar { favoriteToolbarItem }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack(spacing: DesignSystem.Spacing.xs) {
+                        if flagScrolledUp {
+                            FlagView(countryCode: country.code, height: 20)
+                                .transition(.scale.combined(with: .opacity))
+                        }
+                        Text(country.name)
+                            .font(DesignSystem.Font.headline)
+                    }
+                    .animation(.spring(response: 0.35, dampingFraction: 0.8), value: flagScrolledUp)
+                }
+            }
             .task { countryDataService.loadCountries() }
             .task { trackExploration() }
             .onAppear { appeared = true }
@@ -126,6 +140,11 @@ private extension CountryDetailScreen {
                         .matchedGeometryEffect(id: country.code, in: flagNamespace)
                         .opacity(showFlagFullScreen ? 0 : 1)
                         .geoShadow(.elevated)
+                        .onGeometryChange(for: Bool.self) { proxy in
+                            proxy.frame(in: .scrollView).maxY < 0
+                        } action: { isHidden in
+                            flagScrolledUp = isHidden
+                        }
                 }
                 .buttonStyle(.plain)
 
