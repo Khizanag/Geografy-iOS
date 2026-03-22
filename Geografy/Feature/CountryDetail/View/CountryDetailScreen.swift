@@ -25,7 +25,7 @@ struct CountryDetailScreen: View {
     var body: some View {
         contentScrollView
             .background(DesignSystem.Color.background)
-            .navigationTitle(country.name)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar { favoriteToolbarItem }
             .toolbar {
                 ToolbarItem(placement: .principal) {
