@@ -129,9 +129,14 @@ private extension FlashcardSessionScreen {
                             endPoint: .trailing
                         )
                     )
-                    .frame(width: geometry.size.width * progressFraction)
+                    .frame(width: max(geometry.size.width * progressFraction, 0))
+                    .shadow(
+                        color: DesignSystem.Color.accent.opacity(0.5),
+                        radius: 6,
+                        x: 4
+                    )
                     .animation(
-                        .spring(response: 0.4, dampingFraction: 0.8),
+                        .spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.3),
                         value: progressFraction
                     )
             }
@@ -141,6 +146,7 @@ private extension FlashcardSessionScreen {
 
     var counterPill: some View {
         Text("\(currentIndex + 1)/\(cards.count)")
+            .contentTransition(.numericText())
             .font(.system(size: 13, weight: .black, design: .rounded))
             .foregroundStyle(DesignSystem.Color.textSecondary)
             .padding(.horizontal, 10)
