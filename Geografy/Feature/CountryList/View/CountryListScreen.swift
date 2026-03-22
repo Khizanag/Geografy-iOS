@@ -100,7 +100,6 @@ private extension CountryListScreen {
             continentFilterSubmenu
             Divider()
             displaySubmenu
-            Divider()
             resetButton
         } label: {
             let icon = hasActiveFilters
@@ -109,6 +108,7 @@ private extension CountryListScreen {
             Image(systemName: icon)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
+        .tint(DesignSystem.Color.onAccent)
     }
 
     var hasActiveFilters: Bool {
