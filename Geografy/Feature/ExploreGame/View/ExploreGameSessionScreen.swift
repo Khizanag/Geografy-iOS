@@ -10,16 +10,18 @@ struct ExploreGameSessionScreen: View {
     @State private var result: ExploreGameResult?
     @State private var blobAnimating = false
     @State private var showQuitAlert = false
-    @State private var showRules = false
+    @Binding var showRules: Bool
 
     private let gameService: ExploreGameService
 
     init(
         initialState: ExploreGameState,
-        gameService: ExploreGameService
+        gameService: ExploreGameService,
+        showRules: Binding<Bool>
     ) {
         _gameState = State(initialValue: initialState)
         self.gameService = gameService
+        _showRules = showRules
     }
 
     var body: some View {
@@ -35,7 +37,6 @@ struct ExploreGameSessionScreen: View {
                 }
                 .onAppear { startBlobAnimation() }
         }
-        .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
     }
 }
 

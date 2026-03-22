@@ -5,6 +5,7 @@ struct ExploreGameScreen: View {
 
     @State private var gameService = ExploreGameService()
     @State private var activeSession: ExploreGameState?
+    @State private var showRules = false
     @State private var blobAnimating = false
 
     var body: some View {
@@ -17,8 +18,10 @@ struct ExploreGameScreen: View {
                 .fullScreenCover(item: $activeSession) { state in
                     ExploreGameSessionScreen(
                         initialState: state,
-                        gameService: gameService
+                        gameService: gameService,
+                        showRules: $showRules
                     )
+                    .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
                 }
         }
     }
