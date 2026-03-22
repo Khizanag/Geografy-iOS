@@ -109,7 +109,6 @@ private extension FlashcardScreen {
                 selectedIDs: [selectedCardType.id],
                 onSelect: { selectedCardType = $0 }
             )
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
     }
 }

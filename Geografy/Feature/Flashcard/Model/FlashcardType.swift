@@ -39,6 +39,15 @@ extension FlashcardType: SelectableType {
         }
     }
 
+    var description: String {
+        switch self {
+        case .countryToCapital: "Guess the capital city"
+        case .flagToCountry: "Identify country by flag"
+        case .capitalToCountry: "Name the country from capital"
+        case .countryToFlag: "Match country to its flag"
+        }
+    }
+
     var promptLabel: String {
         switch self {
         case .countryToCapital: "What is the capital?"

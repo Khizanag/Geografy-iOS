@@ -49,7 +49,6 @@ private extension QuizSetupScreen {
                 },
                 isLocked: { $0.isPremium && !subscriptionService.isPremium }
             )
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
     }
 }
