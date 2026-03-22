@@ -1,24 +1,32 @@
 import SwiftUI
 
-struct ExploreGameRulesScreen: View {
+struct ExploreGameRulesSheet: View {
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                ForEach(ExploreGameRules.sections) { section in
-                    rulesSectionView(section)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                    ForEach(ExploreGameRules.sections) { section in
+                        rulesSectionView(section)
+                    }
+                }
+                .padding(DesignSystem.Spacing.md)
+            }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("How to Play")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton()
                 }
             }
-            .padding(DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("How to Play")
-        .navigationBarTitleDisplayMode(.inline)
+        .presentationDetents([.medium])
     }
 }
 
 // MARK: - Subviews
 
-private extension ExploreGameRulesScreen {
+private extension ExploreGameRulesSheet {
     func rulesSectionView(_ section: ExploreGameRuleSection) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: section.title, icon: section.icon)

@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct ExploreGameSessionScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var gameState: ExploreGameState
     @State private var suggestions: [Country] = []
     @State private var showWrongGuess = false
@@ -12,13 +10,16 @@ struct ExploreGameSessionScreen: View {
     @State private var showRules = false
 
     private let gameService: ExploreGameService
+    private let onDismiss: () -> Void
 
     init(
         initialState: ExploreGameState,
-        gameService: ExploreGameService
+        gameService: ExploreGameService,
+        onDismiss: @escaping () -> Void
     ) {
         _gameState = State(initialValue: initialState)
         self.gameService = gameService
+        self.onDismiss = onDismiss
     }
 
     var body: some View {
@@ -32,10 +33,8 @@ struct ExploreGameSessionScreen: View {
                 } message: {
                     Text("Your progress will be lost.")
                 }
-                .navigationDestination(isPresented: $showRules) {
-                    ExploreGameRulesScreen()
-                }
         }
+        .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
     }
 }
 
@@ -48,7 +47,7 @@ private extension ExploreGameSessionScreen {
             ExploreGameResultView(
                 result: result,
                 onPlayAgain: { handlePlayAgain() },
-                onDone: { dismiss() }
+                onDone: { onDismiss() }
             )
         } else {
             gameplayContent
@@ -81,7 +80,7 @@ private extension ExploreGameSessionScreen {
     @ViewBuilder
     var quitAlertActions: some View {
         Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { dismiss() }
+        Button("Quit", role: .destructive) { onDismiss() }
     }
 }
 

@@ -8,18 +8,20 @@ struct ExploreGameScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            mainContent
-                .navigationTitle("Mystery Country")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
-                .onAppear { startBlobAnimation() }
-                .fullScreenCover(item: $activeSession) { state in
-                    ExploreGameSessionScreen(
-                        initialState: state,
-                        gameService: gameService
-                    )
-                }
+        if let activeSession {
+            ExploreGameSessionScreen(
+                initialState: activeSession,
+                gameService: gameService,
+                onDismiss: { self.activeSession = nil }
+            )
+        } else {
+            NavigationStack {
+                mainContent
+                    .navigationTitle("Mystery Country")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar { toolbarContent }
+                    .onAppear { startBlobAnimation() }
+            }
         }
     }
 }
