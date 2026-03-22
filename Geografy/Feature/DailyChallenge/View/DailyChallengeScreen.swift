@@ -10,17 +10,15 @@ struct DailyChallengeScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            contentView
-                .navigationTitle("Daily Challenge")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
-                .task { loadData() }
-                .onAppear { startBlobAnimation() }
-                .fullScreenCover(isPresented: $showSession) {
-                    sessionCover
-                }
-        }
+        contentView
+            .navigationTitle("Daily Challenge")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .task { loadData() }
+            .onAppear { startBlobAnimation() }
+            .fullScreenCover(isPresented: $showSession) {
+                sessionCover
+            }
     }
 }
 

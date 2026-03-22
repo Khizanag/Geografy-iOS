@@ -14,23 +14,21 @@ struct QuizPackBrowserScreen: View {
     @State private var appeared = false
 
     var body: some View {
-        NavigationStack {
-            scrollContent
-                .background { ambientBackground }
-                .navigationTitle("Quiz Packs")
-                .task { loadData() }
-                .onAppear { startAnimations() }
-                .sheet(item: $selectedPack) { pack in
-                    QuizPackDetailScreen(
-                        pack: pack,
-                        allPacks: allPacks,
-                        packService: packService
-                    )
-                }
-                .sheet(isPresented: $showingPaywall) {
-                    PaywallScreen()
-                }
-        }
+        scrollContent
+            .background { ambientBackground }
+            .navigationTitle("Quiz Packs")
+            .task { loadData() }
+            .onAppear { startAnimations() }
+            .sheet(item: $selectedPack) { pack in
+                QuizPackDetailScreen(
+                    pack: pack,
+                    allPacks: allPacks,
+                    packService: packService
+                )
+            }
+            .sheet(isPresented: $showingPaywall) {
+                PaywallScreen()
+            }
     }
 }
 

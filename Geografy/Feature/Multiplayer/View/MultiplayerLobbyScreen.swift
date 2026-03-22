@@ -14,28 +14,26 @@ struct MultiplayerLobbyScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    ratingHeader
-                    configurationSection
-                    findOpponentSection
-                }
-                .padding(.vertical, DesignSystem.Spacing.lg)
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                ratingHeader
+                configurationSection
+                findOpponentSection
             }
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Multiplayer")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { dismiss() }
-                }
+            .padding(.vertical, DesignSystem.Spacing.lg)
+        }
+        .background { ambientBlobs }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("Multiplayer")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton { dismiss() }
             }
-            .onAppear { startBlobAnimation() }
-            .fullScreenCover(isPresented: $showMatch) {
-                matchDestination
-            }
+        }
+        .onAppear { startBlobAnimation() }
+        .fullScreenCover(isPresented: $showMatch) {
+            matchDestination
         }
     }
 }

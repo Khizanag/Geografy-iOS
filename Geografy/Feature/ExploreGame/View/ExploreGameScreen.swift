@@ -15,13 +15,11 @@ struct ExploreGameScreen: View {
                 onDismiss: { self.activeSession = nil }
             )
         } else {
-            NavigationStack {
-                mainContent
-                    .navigationTitle("Mystery Country")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar { toolbarContent }
-                    .onAppear { startBlobAnimation() }
-            }
+            mainContent
+                .navigationTitle("Mystery Country")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { toolbarContent }
+                .onAppear { startBlobAnimation() }
         }
     }
 }

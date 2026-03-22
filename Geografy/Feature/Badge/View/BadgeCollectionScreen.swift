@@ -11,47 +11,45 @@ struct BadgeCollectionScreen: View {
     @State private var appeared = false
 
     var body: some View {
-        NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    collectionProgressCard
-                    showcaseSection
-                    filterBar
-                    badgeSections
-                }
-                .padding(DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.xl)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                collectionProgressCard
+                showcaseSection
+                filterBar
+                badgeSections
             }
-            .background { ambientBlobs }
-            .background(
-                DesignSystem.Color.background.ignoresSafeArea()
+            .padding(DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xl)
+        }
+        .background { ambientBlobs }
+        .background(
+            DesignSystem.Color.background.ignoresSafeArea()
+        )
+        .navigationTitle("Badge Collection")
+        .navigationBarTitleDisplayMode(.large)
+        .sheet(item: $selectedBadge) { badge in
+            BadgeDetailSheet(
+                definition: badge,
+                isUnlocked: badgeService.isUnlocked(badge.id),
+                progress: badgeService.progress(for: badge),
+                isPinned: badgeService.isPinned(badge.id),
+                canPin: badgeService.pinnedBadgeIDs.count < 3,
+                onTogglePin: { badgeService.togglePin(badge.id) }
             )
-            .navigationTitle("Badge Collection")
-            .navigationBarTitleDisplayMode(.large)
-            .sheet(item: $selectedBadge) { badge in
-                BadgeDetailSheet(
-                    definition: badge,
-                    isUnlocked: badgeService.isUnlocked(badge.id),
-                    progress: badgeService.progress(for: badge),
-                    isPinned: badgeService.isPinned(badge.id),
-                    canPin: badgeService.pinnedBadgeIDs.count < 3,
-                    onTogglePin: { badgeService.togglePin(badge.id) }
-                )
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.automatic)
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.automatic)
+        }
+        .onAppear {
+            withAnimation(
+                .easeInOut(duration: 6)
+                    .repeatForever(autoreverses: true)
+            ) {
+                blobAnimating = true
             }
-            .onAppear {
-                withAnimation(
-                    .easeInOut(duration: 6)
-                        .repeatForever(autoreverses: true)
-                ) {
-                    blobAnimating = true
-                }
-                withAnimation(
-                    .easeOut(duration: 0.4).delay(0.1)
-                ) {
-                    appeared = true
-                }
+            withAnimation(
+                .easeOut(duration: 0.4).delay(0.1)
+            ) {
+                appeared = true
             }
         }
     }

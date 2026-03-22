@@ -9,23 +9,21 @@ struct CoinStoreScreen: View {
     @State private var selectedPack: CoinPack?
 
     var body: some View {
-        NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    balanceSection
-                    transactionSection
-                    coinPacksSection
-                    earnInfoSection
-                }
-                .padding(.bottom, DesignSystem.Spacing.xxl)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                balanceSection
+                transactionSection
+                coinPacksSection
+                earnInfoSection
             }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Coins")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+        }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("Coins")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
             }
         }
         .sheet(item: $selectedPack) { pack in

@@ -37,7 +37,8 @@ enum SheetFactory {
             }
 
         case .coinStore:
-            CoinStoreScreen()
+            NavigationStack { CoinStoreScreen() }
+                .presentationDetents([.large])
 
         case .paywall:
             PaywallScreen()

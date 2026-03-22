@@ -11,18 +11,16 @@ struct CustomQuizLibraryScreen: View {
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
-        NavigationStack {
-            content
-                .background(DesignSystem.Color.background)
-                .navigationTitle("My Quizzes")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
-                .sheet(isPresented: $showBuilder) { builderSheet }
-                .sheet(item: $editingQuiz) { quiz in editSheet(for: quiz) }
-                .sheet(item: $shareableQuiz) { quiz in shareSheet(for: quiz) }
-                .alert("Delete Quiz?", isPresented: deleteAlertBinding) { deleteAlertActions }
-                .task { countryDataService.loadCountries() }
-        }
+        content
+            .background(DesignSystem.Color.background)
+            .navigationTitle("My Quizzes")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .sheet(isPresented: $showBuilder) { builderSheet }
+            .sheet(item: $editingQuiz) { quiz in editSheet(for: quiz) }
+            .sheet(item: $shareableQuiz) { quiz in shareSheet(for: quiz) }
+            .alert("Delete Quiz?", isPresented: deleteAlertBinding) { deleteAlertActions }
+            .task { countryDataService.loadCountries() }
     }
 }
 
