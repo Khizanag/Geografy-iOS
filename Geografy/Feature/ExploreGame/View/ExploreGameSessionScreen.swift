@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct ExploreGameSessionScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var gameState: ExploreGameState
     @State private var suggestions: [Country] = []
     @State private var showWrongGuess = false
@@ -11,17 +9,20 @@ struct ExploreGameSessionScreen: View {
     @State private var blobAnimating = false
     @State private var showQuitAlert = false
     @Binding var showRules: Bool
+    @Binding var activeSession: ExploreGameState?
 
     private let gameService: ExploreGameService
 
     init(
         initialState: ExploreGameState,
         gameService: ExploreGameService,
-        showRules: Binding<Bool>
+        showRules: Binding<Bool>,
+        activeSession: Binding<ExploreGameState?>
     ) {
         _gameState = State(initialValue: initialState)
         self.gameService = gameService
         _showRules = showRules
+        _activeSession = activeSession
     }
 
     var body: some View {
@@ -50,7 +51,7 @@ private extension ExploreGameSessionScreen {
             ExploreGameResultView(
                 result: result,
                 onPlayAgain: { handlePlayAgain() },
-                onDone: { dismiss() }
+                onDone: { activeSession = nil }
             )
         } else {
             gameplayContent
@@ -84,7 +85,7 @@ private extension ExploreGameSessionScreen {
     @ViewBuilder
     var quitAlertActions: some View {
         Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { dismiss() }
+        Button("Quit", role: .destructive) { activeSession = nil }
     }
 }
 

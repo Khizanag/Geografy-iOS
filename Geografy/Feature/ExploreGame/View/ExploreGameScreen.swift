@@ -19,7 +19,8 @@ struct ExploreGameScreen: View {
                     ExploreGameSessionScreen(
                         initialState: state,
                         gameService: gameService,
-                        showRules: $showRules
+                        showRules: $showRules,
+                        activeSession: $activeSession
                     )
                 }
         }
