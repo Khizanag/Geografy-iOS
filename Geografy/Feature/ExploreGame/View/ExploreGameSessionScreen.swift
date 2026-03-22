@@ -1,28 +1,24 @@
 import SwiftUI
 
 struct ExploreGameSessionScreen: View {
+    @Environment(\.dismiss) private var dismiss
+
     @State private var gameState: ExploreGameState
     @State private var suggestions: [Country] = []
     @State private var showWrongGuess = false
     @State private var wrongGuessName = ""
     @State private var result: ExploreGameResult?
-    @State private var blobAnimating = false
     @State private var showQuitAlert = false
-    @Binding var showRules: Bool
-    @Binding var activeSession: ExploreGameState?
+    @State private var showRules = false
 
     private let gameService: ExploreGameService
 
     init(
         initialState: ExploreGameState,
-        gameService: ExploreGameService,
-        showRules: Binding<Bool>,
-        activeSession: Binding<ExploreGameState?>
+        gameService: ExploreGameService
     ) {
         _gameState = State(initialValue: initialState)
         self.gameService = gameService
-        _showRules = showRules
-        _activeSession = activeSession
     }
 
     var body: some View {
@@ -36,9 +32,10 @@ struct ExploreGameSessionScreen: View {
                 } message: {
                     Text("Your progress will be lost.")
                 }
-                .onAppear { startBlobAnimation() }
+                .navigationDestination(isPresented: $showRules) {
+                    ExploreGameRulesScreen()
+                }
         }
-        .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
     }
 }
 
@@ -51,7 +48,7 @@ private extension ExploreGameSessionScreen {
             ExploreGameResultView(
                 result: result,
                 onPlayAgain: { handlePlayAgain() },
-                onDone: { activeSession = nil }
+                onDone: { dismiss() }
             )
         } else {
             gameplayContent
@@ -65,7 +62,6 @@ private extension ExploreGameSessionScreen {
             Spacer(minLength: 0)
             bottomControls
         }
-        .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 
@@ -85,7 +81,7 @@ private extension ExploreGameSessionScreen {
     @ViewBuilder
     var quitAlertActions: some View {
         Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { activeSession = nil }
+        Button("Quit", role: .destructive) { dismiss() }
     }
 }
 
@@ -223,47 +219,6 @@ private extension ExploreGameSessionScreen {
                     .padding(.vertical, DesignSystem.Spacing.xs)
             }
             .buttonStyle(.glass)
-        }
-    }
-}
-
-// MARK: - Background
-
-private extension ExploreGameSessionScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.18), .clear],
-                        center: .center, startRadius: 0, endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 40)
-                .offset(x: -60, y: -120)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.14), .clear],
-                        center: .center, startRadius: 0, endRadius: 160
-                    )
-                )
-                .frame(width: 340, height: 280)
-                .blur(radius: 44)
-                .offset(x: 120, y: 80)
-                .scaleEffect(blobAnimating ? 0.90 : 1.08)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-    }
-
-    func startBlobAnimation() {
-        withAnimation(
-            .easeInOut(duration: 6).repeatForever(autoreverses: true)
-        ) {
-            blobAnimating = true
         }
     }
 }
