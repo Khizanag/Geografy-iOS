@@ -412,15 +412,18 @@ private extension FlashcardSessionScreen {
             correctCount += 1
         }
 
-        advanceToNext()
+        let exitRight = result != .again
+        advanceToNext(exitRight: exitRight)
     }
 
-    func advanceToNext() {
+    func advanceToNext(exitRight: Bool = false) {
+        let exitX: CGFloat = exitRight ? 400 : -400
+
         withAnimation(.easeIn(duration: 0.2)) {
-            dragOffset = CGSize(width: -400, height: 0)
+            dragOffset = CGSize(width: exitX, height: 0)
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             if currentIndex + 1 < cards.count {
                 var transaction = Transaction()
                 transaction.disablesAnimations = true
@@ -465,7 +468,7 @@ private extension FlashcardSessionScreen {
         flashcardService.recordReview(cardID: currentCard.id, result: result)
         if result != .again { correctCount += 1 }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if currentIndex + 1 < cards.count {
                 var transaction = Transaction()
                 transaction.disablesAnimations = true
