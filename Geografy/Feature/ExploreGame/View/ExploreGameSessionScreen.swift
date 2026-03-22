@@ -13,16 +13,13 @@ struct ExploreGameSessionScreen: View {
     @State private var showRules = false
 
     private let gameService: ExploreGameService
-    private let onFinish: (ExploreGameResult) -> Void
 
     init(
         initialState: ExploreGameState,
-        gameService: ExploreGameService,
-        onFinish: @escaping (ExploreGameResult) -> Void
+        gameService: ExploreGameService
     ) {
         _gameState = State(initialValue: initialState)
         self.gameService = gameService
-        self.onFinish = onFinish
     }
 
     var body: some View {
@@ -302,7 +299,6 @@ private extension ExploreGameSessionScreen {
     func finishGame() {
         let gameResult = ExploreGameResult(from: gameState)
         gameService.recordResult(gameResult)
-        onFinish(gameResult)
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
             result = gameResult
         }

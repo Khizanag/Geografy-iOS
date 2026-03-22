@@ -5,15 +5,7 @@ struct ExploreGameScreen: View {
 
     @State private var gameService = ExploreGameService()
     @State private var activeSession: ExploreGameState?
-    @State private var lastResult: ExploreGameResult?
     @State private var blobAnimating = false
-
-    private var showSession: Binding<Bool> {
-        Binding(
-            get: { activeSession != nil },
-            set: { if !$0 { activeSession = nil } }
-        )
-    }
 
     var body: some View {
         NavigationStack {
@@ -22,15 +14,11 @@ struct ExploreGameScreen: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar { toolbarContent }
                 .onAppear { startBlobAnimation() }
-                .fullScreenCover(isPresented: showSession) {
-                    if let activeSession {
-                        ExploreGameSessionScreen(
-                            initialState: activeSession,
-                            gameService: gameService
-                        ) { result in
-                            lastResult = result
-                        }
-                    }
+                .fullScreenCover(item: $activeSession) { state in
+                    ExploreGameSessionScreen(
+                        initialState: state,
+                        gameService: gameService
+                    )
                 }
         }
     }
