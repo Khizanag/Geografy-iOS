@@ -77,54 +77,22 @@ private extension FlagSequenceView {
         correct: Country
     ) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(options, id: \.code) { option in
-                optionButton(option: option, correct: correct)
+            ForEach(
+                Array(options.enumerated()),
+                id: \.element.code
+            ) { index, option in
+                QuizOptionButton(
+                    text: option.name,
+                    flagCode: nil,
+                    state: optionState(
+                        option: option,
+                        correct: correct
+                    ),
+                    index: index
+                ) {
+                    selectOption(option, correct: correct)
+                }
             }
-        }
-    }
-
-    func optionButton(
-        option: Country,
-        correct: Country
-    ) -> some View {
-        Button { selectOption(option, correct: correct) } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Text(option.name)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(
-                        textColor(
-                            option: option,
-                            correct: correct
-                        )
-                    )
-                Spacer()
-                feedbackIcon(option: option, correct: correct)
-            }
-            .padding(DesignSystem.Spacing.md)
-            .background(
-                backgroundColor(
-                    option: option,
-                    correct: correct
-                )
-            )
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-        .disabled(showFeedback)
-    }
-
-    @ViewBuilder
-    func feedbackIcon(option: Country, correct: Country) -> some View {
-        if showFeedback, option.code == correct.code {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(DesignSystem.Color.success)
-        } else if showFeedback, selectedOption?.code == option.code {
-            Image(systemName: "xmark.circle.fill")
-                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 }
@@ -188,29 +156,13 @@ private extension FlagSequenceView {
 // MARK: - Helpers
 
 private extension FlagSequenceView {
-    func textColor(option: Country, correct: Country) -> Color {
-        guard showFeedback else {
-            return DesignSystem.Color.textPrimary
-        }
-        if option.code == correct.code {
-            return DesignSystem.Color.success
-        }
-        if selectedOption?.code == option.code {
-            return DesignSystem.Color.error
-        }
-        return DesignSystem.Color.textSecondary
-    }
-
-    func backgroundColor(option: Country, correct: Country) -> Color {
-        guard showFeedback else {
-            return DesignSystem.Color.cardBackground
-        }
-        if option.code == correct.code {
-            return DesignSystem.Color.success.opacity(0.15)
-        }
-        if selectedOption?.code == option.code {
-            return DesignSystem.Color.error.opacity(0.15)
-        }
-        return DesignSystem.Color.cardBackground
+    func optionState(
+        option: Country,
+        correct: Country
+    ) -> QuizOptionButton.OptionState {
+        guard showFeedback else { return .default }
+        if option.code == correct.code { return .correct }
+        if selectedOption?.code == option.code { return .incorrect }
+        return .disabled
     }
 }

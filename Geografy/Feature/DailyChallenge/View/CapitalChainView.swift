@@ -90,62 +90,22 @@ private extension CapitalChainView {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.accent)
 
-            ForEach(step.options, id: \.code) { option in
-                optionButton(option: option, step: step)
+            ForEach(
+                Array(step.options.enumerated()),
+                id: \.element.code
+            ) { index, option in
+                QuizOptionButton(
+                    text: option.name,
+                    flagCode: option.code,
+                    state: optionState(
+                        option: option,
+                        step: step
+                    ),
+                    index: index
+                ) {
+                    selectOption(option, step: step)
+                }
             }
-        }
-    }
-
-    func optionButton(
-        option: Country,
-        step: DailyChallenge.ChainStep
-    ) -> some View {
-        Button { selectOption(option, step: step) } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(
-                    countryCode: option.code,
-                    height: DesignSystem.Spacing.lg
-                )
-                Text(option.name)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(
-                        textColor(
-                            option: option,
-                            step: step
-                        )
-                    )
-                Spacer()
-                feedbackIcon(option: option, step: step)
-            }
-            .padding(DesignSystem.Spacing.md)
-            .background(
-                backgroundColor(
-                    option: option,
-                    step: step
-                )
-            )
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-        .disabled(showFeedback)
-    }
-
-    @ViewBuilder
-    func feedbackIcon(
-        option: Country,
-        step: DailyChallenge.ChainStep
-    ) -> some View {
-        if showFeedback, option.code == step.expectedCountry.code {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(DesignSystem.Color.success)
-        } else if showFeedback,
-                  selectedOption?.code == option.code {
-            Image(systemName: "xmark.circle.fill")
-                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 }
@@ -194,35 +154,13 @@ private extension CapitalChainView {
 // MARK: - Helpers
 
 private extension CapitalChainView {
-    func textColor(
+    func optionState(
         option: Country,
         step: DailyChallenge.ChainStep
-    ) -> Color {
-        guard showFeedback else {
-            return DesignSystem.Color.textPrimary
-        }
-        if option.code == step.expectedCountry.code {
-            return DesignSystem.Color.success
-        }
-        if selectedOption?.code == option.code {
-            return DesignSystem.Color.error
-        }
-        return DesignSystem.Color.textSecondary
-    }
-
-    func backgroundColor(
-        option: Country,
-        step: DailyChallenge.ChainStep
-    ) -> Color {
-        guard showFeedback else {
-            return DesignSystem.Color.cardBackground
-        }
-        if option.code == step.expectedCountry.code {
-            return DesignSystem.Color.success.opacity(0.15)
-        }
-        if selectedOption?.code == option.code {
-            return DesignSystem.Color.error.opacity(0.15)
-        }
-        return DesignSystem.Color.cardBackground
+    ) -> QuizOptionButton.OptionState {
+        guard showFeedback else { return .default }
+        if option.code == step.expectedCountry.code { return .correct }
+        if selectedOption?.code == option.code { return .incorrect }
+        return .disabled
     }
 }

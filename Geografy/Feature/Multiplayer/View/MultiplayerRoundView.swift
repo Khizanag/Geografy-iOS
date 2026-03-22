@@ -92,84 +92,26 @@ private extension MultiplayerRoundView {
 
     var optionsGrid: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(question.options) { option in
-                optionButton(option)
-            }
-        }
-    }
-
-    func optionButton(_ option: QuizOption) -> some View {
-        let isSelected = selectedOptionID == option.id
-        let isCorrect = option.id == question.correctOptionID
-        let opponentSelected = opponentSelectedOptionID == option.id
-
-        return Button { onSelectOption(option.id) } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                if let flagCode = option.flagCode {
-                    FlagView(countryCode: flagCode, height: DesignSystem.Spacing.xl)
+            ForEach(
+                Array(question.options.enumerated()),
+                id: \.element.id
+            ) { index, option in
+                QuizOptionButton(
+                    text: option.text,
+                    flagCode: option.flagCode,
+                    state: optionState(for: option),
+                    index: index
+                ) {
+                    onSelectOption(option.id)
                 }
-
-                if let text = option.text {
-                    Text(text)
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(
-                            optionTextColor(
-                                isSelected: isSelected,
-                                isCorrect: isCorrect
-                            )
-                        )
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                }
-
-                Spacer(minLength: 0)
-
-                if showFeedback {
-                    feedbackIcon(isCorrect: isCorrect, isSelected: isSelected)
-                }
-
-                if showFeedback, opponentSelected {
-                    opponentMarker
+                .overlay(alignment: .trailing) {
+                    if showFeedback,
+                       opponentSelectedOptionID == option.id {
+                        opponentMarker
+                            .padding(.trailing, DesignSystem.Spacing.md)
+                    }
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(
-                optionBackground(
-                    isSelected: isSelected,
-                    isCorrect: isCorrect
-                )
-            )
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .strokeBorder(
-                        optionBorderColor(
-                            isSelected: isSelected,
-                            isCorrect: isCorrect
-                        ),
-                        lineWidth: isSelected || (showFeedback && isCorrect) ? 2 : 0
-                    )
-            )
-        }
-        .buttonStyle(.plain)
-        .disabled(selectedOptionID != nil)
-    }
-
-    @ViewBuilder
-    func feedbackIcon(isCorrect: Bool, isSelected: Bool) -> some View {
-        if isCorrect {
-            Image(systemName: "checkmark.circle.fill")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.success)
-        } else if isSelected {
-            Image(systemName: "xmark.circle.fill")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 
@@ -186,48 +128,12 @@ private extension MultiplayerRoundView {
 // MARK: - Helpers
 
 private extension MultiplayerRoundView {
-    func optionTextColor(isSelected: Bool, isCorrect: Bool) -> Color {
+    func optionState(for option: QuizOption) -> QuizOptionButton.OptionState {
         guard showFeedback else {
-            return isSelected
-                ? DesignSystem.Color.accent
-                : DesignSystem.Color.textPrimary
+            return selectedOptionID != nil ? .disabled : .default
         }
-
-        if isCorrect {
-            return DesignSystem.Color.success
-        } else if isSelected {
-            return DesignSystem.Color.error
-        }
-        return DesignSystem.Color.textSecondary
-    }
-
-    func optionBackground(isSelected: Bool, isCorrect: Bool) -> Color {
-        guard showFeedback else {
-            return isSelected
-                ? DesignSystem.Color.accent.opacity(0.12)
-                : DesignSystem.Color.cardBackground
-        }
-
-        if isCorrect {
-            return DesignSystem.Color.success.opacity(0.12)
-        } else if isSelected {
-            return DesignSystem.Color.error.opacity(0.12)
-        }
-        return DesignSystem.Color.cardBackground.opacity(0.5)
-    }
-
-    func optionBorderColor(isSelected: Bool, isCorrect: Bool) -> Color {
-        guard showFeedback else {
-            return isSelected
-                ? DesignSystem.Color.accent
-                : DesignSystem.Color.cardBackground
-        }
-
-        if isCorrect {
-            return DesignSystem.Color.success
-        } else if isSelected {
-            return DesignSystem.Color.error
-        }
-        return DesignSystem.Color.cardBackground
+        if option.id == question.correctOptionID { return .correct }
+        if selectedOptionID == option.id { return .incorrect }
+        return .disabled
     }
 }
