@@ -177,8 +177,8 @@ private extension FlashcardSessionScreen {
                 .rotationEffect(.degrees(dragRotation))
                 .gesture(swipeGesture)
                 .overlay { swipeFeedbackOverlay }
-                .overlay(alignment: .trailing) { swipeHintRight }
-                .overlay(alignment: .leading) { swipeHintLeft }
+                .overlay(alignment: .bottomTrailing) { swipeHintRight }
+                .overlay(alignment: .bottomLeading) { swipeHintLeft }
             }
             .frame(
                 maxWidth: .infinity,
@@ -196,11 +196,13 @@ private extension FlashcardSessionScreen {
                 isFlipped ? "Correct" : "Knew It",
                 systemImage: isFlipped ? "checkmark.circle.fill" : "bolt.circle.fill"
             )
-            .font(DesignSystem.Font.headline)
-            .fontWeight(.bold)
+            .font(DesignSystem.Font.title2)
+            .fontWeight(.black)
             .foregroundStyle(DesignSystem.Color.success)
-            .padding(DesignSystem.Spacing.md)
+            .padding(DesignSystem.Spacing.lg)
+            .rotationEffect(.degrees(-15))
             .opacity(min(Double(dragOffset.width) / 100.0, 1.0))
+            .scaleEffect(min(Double(dragOffset.width) / 100.0, 1.0))
         }
     }
 
@@ -208,11 +210,13 @@ private extension FlashcardSessionScreen {
     var swipeHintLeft: some View {
         if isFlipped, dragOffset.width < -30 {
             Label("Wrong", systemImage: "xmark.circle.fill")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.black)
                 .foregroundStyle(DesignSystem.Color.error)
-                .padding(DesignSystem.Spacing.md)
+                .padding(DesignSystem.Spacing.lg)
+                .rotationEffect(.degrees(15))
                 .opacity(min(Double(-dragOffset.width) / 100.0, 1.0))
+                .scaleEffect(min(Double(-dragOffset.width) / 100.0, 1.0))
         }
     }
 
