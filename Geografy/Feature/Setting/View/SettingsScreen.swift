@@ -31,6 +31,11 @@ struct SettingsScreen: View {
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
+            }
+        }
         .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .task { await syncNotificationStatus() }

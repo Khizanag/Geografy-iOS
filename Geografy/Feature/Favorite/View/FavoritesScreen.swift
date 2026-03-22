@@ -26,6 +26,11 @@ struct FavoritesScreen: View {
             }
         }
         .navigationTitle("Favorites")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
+            }
+        }
         .task { countryDataService.loadCountries() }
     }
 }

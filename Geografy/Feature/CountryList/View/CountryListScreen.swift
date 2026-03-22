@@ -77,6 +77,9 @@ private extension CountryListScreen {
         ToolbarItem(placement: .topBarTrailing) {
             filterMenu
         }
+        ToolbarItem(placement: .topBarTrailing) {
+            CircleCloseButton()
+        }
     }
 
     var sortOrderButton: some View {

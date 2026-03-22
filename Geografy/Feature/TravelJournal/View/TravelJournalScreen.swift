@@ -64,6 +64,9 @@ private extension TravelJournalScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
             }
         }
+        ToolbarItem(placement: .topBarTrailing) {
+            CircleCloseButton()
+        }
     }
 }
 

@@ -13,28 +13,32 @@ enum SheetFactory {
                 .presentationDetents([.large])
 
         case .countries:
-            sheetWithCloseButton {
+            NavigationStack {
                 CountryListScreen()
                     .navigationDestination(for: Country.self) { country in
                         CountryDetailScreen(country: country)
                     }
             }
+            .presentationDetents([.large])
 
         case .favorites:
-            sheetWithCloseButton {
+            NavigationStack {
                 FavoritesScreen()
                     .navigationDestination(for: Country.self) { country in
                         CountryDetailScreen(country: country)
                     }
             }
+            .presentationDetents([.large])
 
         case .organizations:
-            sheetWithCloseButton { OrganizationsScreen() }
+            NavigationStack { OrganizationsScreen() }
+                .presentationDetents([.large])
 
         case .organizationDetail(let organization):
-            sheetWithCloseButton {
+            NavigationStack {
                 OrganizationDetailScreen(organization: organization)
             }
+            .presentationDetents([.large])
 
         case .coinStore:
             NavigationStack { CoinStoreScreen() }
@@ -62,54 +66,63 @@ enum SheetFactory {
             .presentationDetents([.large])
 
         case .quizPacks:
-            sheetWithCloseButton { QuizPackBrowserScreen() }
+            NavigationStack { QuizPackBrowserScreen() }
+                .presentationDetents([.large])
 
         case .customQuiz:
             NavigationStack { CustomQuizLibraryScreen() }
                 .presentationDetents([.large])
 
         case .compare:
-            sheetWithCloseButton { CompareScreen() }
+            NavigationStack { CompareScreen() }
+                .presentationDetents([.large])
 
         case .timeline:
             NavigationStack { TimelineScreen() }
                 .presentationDetents([.large])
 
         case .travelTracker:
-            sheetWithCloseButton {
+            NavigationStack {
                 TravelTrackerScreen()
                     .navigationDestination(for: Country.self) { country in
                         CountryDetailScreen(country: country)
                     }
             }
+            .presentationDetents([.large])
 
         case .travelJournal:
-            sheetWithCloseButton { TravelJournalScreen() }
+            NavigationStack { TravelJournalScreen() }
+                .presentationDetents([.large])
 
         case .badges:
-            sheetWithCloseButton {
+            NavigationStack {
                 BadgeCollectionScreen(badgeService: BadgeService())
             }
+            .presentationDetents([.large])
 
         case .leaderboards:
-            sheetWithCloseButton { LeaderboardScreen() }
+            NavigationStack { LeaderboardScreen() }
+                .presentationDetents([.large])
 
         case .achievements:
-            sheetWithCloseButton {
+            NavigationStack {
                 AchievementsScreen()
                     .navigationTitle("Achievements")
                     .navigationBarTitleDisplayMode(.large)
             }
+            .presentationDetents([.large])
 
         case .themes:
-            sheetWithCloseButton {
+            NavigationStack {
                 ThemesScreen()
                     .navigationTitle("Themes")
                     .navigationBarTitleDisplayMode(.large)
             }
+            .presentationDetents([.large])
 
         case .settings:
-            sheetWithCloseButton { SettingsScreen() }
+            NavigationStack { SettingsScreen() }
+                .presentationDetents([.large])
 
         case .sectionEditor:
             HomeSectionEditorSheet(sections: HomeSection.allCases.map { $0 })
@@ -117,23 +130,5 @@ enum SheetFactory {
         case .friends:
             ComingSoonSheet(title: "Friends", icon: "person.2.fill")
         }
-    }
-}
-
-// MARK: - Helpers
-
-private extension SheetFactory {
-    static func sheetWithCloseButton<Content: View>(
-        @ViewBuilder content: () -> Content
-    ) -> some View {
-        NavigationStack {
-            content()
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        CircleCloseButton()
-                    }
-                }
-        }
-        .presentationDetents([.large])
     }
 }

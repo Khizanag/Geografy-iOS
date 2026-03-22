@@ -18,6 +18,11 @@ struct OrganizationDetailScreen: View {
         }
         .navigationTitle(organization.displayName)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
+            }
+        }
         .background(DesignSystem.Color.background)
         .overlay {
             if showLogoZoom, let urlString = organization.logoURL, let url = URL(string: urlString) {

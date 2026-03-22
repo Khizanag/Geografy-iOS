@@ -27,6 +27,11 @@ struct AchievementsScreen: View {
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
+            }
+        }
         .sheet(item: $selectedAchievement) { achievement in
             AchievementDetailSheet(
                 definition: achievement,

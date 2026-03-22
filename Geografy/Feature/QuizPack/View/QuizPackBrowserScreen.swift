@@ -17,6 +17,11 @@ struct QuizPackBrowserScreen: View {
         scrollContent
             .background { ambientBackground }
             .navigationTitle("Quiz Packs")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton()
+                }
+            }
             .task { loadData() }
             .onAppear { startAnimations() }
             .sheet(item: $selectedPack) { pack in

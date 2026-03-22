@@ -27,6 +27,11 @@ struct BadgeCollectionScreen: View {
         )
         .navigationTitle("Badge Collection")
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
+            }
+        }
         .sheet(item: $selectedBadge) { badge in
             BadgeDetailSheet(
                 definition: badge,

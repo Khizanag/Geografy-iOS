@@ -13,6 +13,11 @@ struct CompareScreen: View {
         contentScrollView
             .background(DesignSystem.Color.background)
             .navigationTitle("Compare")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton()
+                }
+            }
             .task { countryDataService.loadCountries() }
             .onAppear { loadRecentPairs(); appeared = true }
             .sheet(item: $activeSheet) { sheetContent(for: $0) }

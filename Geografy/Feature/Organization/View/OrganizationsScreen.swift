@@ -66,6 +66,9 @@ private extension OrganizationsScreen {
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
         }
+        ToolbarItem(placement: .topBarTrailing) {
+            CircleCloseButton()
+        }
     }
 }
 

@@ -71,6 +71,9 @@ private extension TravelTrackerScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
             }
         }
+        ToolbarItem(placement: .topBarTrailing) {
+            CircleCloseButton()
+        }
     }
 }
 
