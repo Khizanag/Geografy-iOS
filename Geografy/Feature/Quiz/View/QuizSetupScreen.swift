@@ -117,20 +117,13 @@ private extension QuizSetupScreen {
 
 private extension QuizSetupScreen {
     var startButton: some View {
-        Button {
+        GlassButton("Start Quiz", systemImage: "play.fill", fullWidth: true) {
             if selectedType.isPremium, !subscriptionService.isPremium {
                 showPaywall = true
             } else {
                 showQuizSession = true
             }
-        } label: {
-            Label("Start Quiz", systemImage: "play.fill")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.xxs)
         }
-        .buttonStyle(.glass)
     }
 }
 

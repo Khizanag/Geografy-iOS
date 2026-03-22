@@ -144,16 +144,9 @@ private extension CustomQuizPreviewScreen {
 
 private extension CustomQuizPreviewScreen {
     var saveButton: some View {
-        Button {
+        GlassButton("Save Quiz", systemImage: "checkmark", fullWidth: true) {
             onSave(quiz)
-        } label: {
-            Label("Save Quiz", systemImage: "checkmark")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.xxs)
         }
-        .buttonStyle(.glass)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
     }

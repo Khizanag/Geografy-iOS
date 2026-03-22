@@ -213,16 +213,9 @@ private extension CustomQuizBuilderScreen {
                 subtitle: "Choose which countries to include (\(selectedCountryCodes.count) selected)",
             )
 
-            Button {
+            GlassButton("Pick Countries", systemImage: "globe", fullWidth: true) {
                 showCountryPicker = true
-            } label: {
-                Label("Pick Countries", systemImage: "globe")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.xxs)
             }
-            .buttonStyle(.glass)
 
             selectedCountrySummary
         }

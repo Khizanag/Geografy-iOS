@@ -273,14 +273,7 @@ private extension FlashcardSessionScreen {
     }
 
     var doneButton: some View {
-        Button { dismiss() } label: {
-            Label("Done", systemImage: "checkmark")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.xxs)
-        }
-        .buttonStyle(.glass)
+        GlassButton("Done", systemImage: "checkmark", fullWidth: true) { dismiss() }
     }
 }
 
