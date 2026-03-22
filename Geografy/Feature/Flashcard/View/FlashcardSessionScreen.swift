@@ -422,10 +422,14 @@ private extension FlashcardSessionScreen {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             if currentIndex + 1 < cards.count {
-                dragOffset = CGSize(width: 400, height: 0)
-                currentIndex += 1
-                isFlipped = false
-                cardShownAt = .now
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    currentIndex += 1
+                    isFlipped = false
+                    cardShownAt = .now
+                    dragOffset = CGSize(width: 400, height: 0)
+                }
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
@@ -462,11 +466,15 @@ private extension FlashcardSessionScreen {
         if result != .again { correctCount += 1 }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            dragOffset = CGSize(width: 400, height: 0)
             if currentIndex + 1 < cards.count {
-                currentIndex += 1
-                isFlipped = false
-                cardShownAt = .now
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    currentIndex += 1
+                    isFlipped = false
+                    cardShownAt = .now
+                    dragOffset = CGSize(width: 400, height: 0)
+                }
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
