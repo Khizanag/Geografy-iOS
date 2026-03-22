@@ -161,8 +161,8 @@ private extension FlashcardSessionScreen {
                     onTap: flipCard
                 )
                 .frame(
-                    width: geometry.size.width - DesignSystem.Spacing.xl * 2,
-                    height: geometry.size.height * 0.85
+                    width: max(geometry.size.width - DesignSystem.Spacing.xl * 2, 0),
+                    height: max(geometry.size.height * 0.85, 0)
                 )
                 .offset(dragOffset)
                 .rotationEffect(.degrees(dragRotation))
