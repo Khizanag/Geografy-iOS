@@ -145,10 +145,18 @@ private extension CountryListScreen {
     }
 
     var groupBySubmenu: some View {
-        Picker(selection: $groupBy.animation()) {
+        Menu {
             ForEach(GroupOption.allCases, id: \.self) { option in
-                Label(option.rawValue, systemImage: groupIcon(for: option))
-                    .tag(option)
+                Button {
+                    withAnimation { groupBy = option }
+                } label: {
+                    Label(
+                        option.rawValue,
+                        systemImage: groupBy == option
+                            ? "checkmark"
+                            : groupIcon(for: option)
+                    )
+                }
             }
         } label: {
             Label("Group by", systemImage: "rectangle.3.group")
@@ -156,10 +164,18 @@ private extension CountryListScreen {
     }
 
     var sortBySubmenu: some View {
-        Picker(selection: $sortBy) {
+        Menu {
             ForEach(SortOption.allCases, id: \.self) { option in
-                Label(option.rawValue, systemImage: sortIcon(for: option))
-                    .tag(option)
+                Button {
+                    sortBy = option
+                } label: {
+                    Label(
+                        option.rawValue,
+                        systemImage: sortBy == option
+                            ? "checkmark"
+                            : sortIcon(for: option)
+                    )
+                }
             }
         } label: {
             Label("Sort by", systemImage: "arrow.up.arrow.down")
