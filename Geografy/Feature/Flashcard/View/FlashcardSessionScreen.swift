@@ -17,6 +17,7 @@ struct FlashcardSessionScreen: View {
     @State private var detailCountry: Country?
     @State private var skipFeedback: String?
     @State private var blobAnimating = false
+    @State private var showGuide = false
 
     var body: some View {
         NavigationStack {
@@ -28,6 +29,7 @@ struct FlashcardSessionScreen: View {
                 } message: {
                     Text("Your progress will be saved.")
                 }
+                .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
                 .sheet(item: $detailCountry) { country in
                     NavigationStack {
                         CountryDetailScreen(country: country)
@@ -79,6 +81,12 @@ private extension FlashcardSessionScreen {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button { showGuide = true } label: {
+                Image(systemName: "questionmark.circle")
+            }
+            .buttonStyle(.plain)
+        }
         ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton { showQuitAlert = true }
         }

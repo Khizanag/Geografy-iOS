@@ -19,6 +19,7 @@ struct FlashcardScreen: View {
                     Button { showGuide = true } label: {
                         Image(systemName: "info.circle")
                     }
+                    .buttonStyle(.plain)
                 }
             }
             .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
