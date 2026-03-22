@@ -18,9 +18,16 @@ struct MultiplayerLobbyScreen: View {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 ratingHeader
                 configurationSection
-                findOpponentSection
+                if isSearching {
+                    searchingView
+                }
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
+        }
+        .safeAreaInset(edge: .bottom) {
+            if !isSearching {
+                footerButton
+            }
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
@@ -102,114 +109,31 @@ private extension MultiplayerLobbyScreen {
     var configurationSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             SectionHeaderView(title: "Quiz Type", icon: "questionmark.circle")
+                .padding(.horizontal, DesignSystem.Spacing.md)
 
-            quizTypePicker
+            TypeSelectionGrid(
+                items: QuizType.allCases.map { $0 },
+                selectedIDs: [selectedType.id],
+                onSelect: { selectedType = $0 }
+            )
 
             SectionHeaderView(title: "Region", icon: "globe")
+                .padding(.horizontal, DesignSystem.Spacing.md)
 
-            regionPicker
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    var quizTypePicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(QuizType.allCases) { type in
-                    quizTypeChip(type)
-                }
-            }
-        }
-    }
-
-    func quizTypeChip(_ type: QuizType) -> some View {
-        let isSelected = selectedType == type
-
-        return Button { selectedType = type } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: type.icon)
-                    .font(DesignSystem.Font.caption)
-                Text(type.displayName)
-                    .font(DesignSystem.Font.subheadline)
-            }
-            .foregroundStyle(
-                isSelected
-                    ? DesignSystem.Color.onAccent
-                    : DesignSystem.Color.textSecondary
-            )
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected
-                    ? DesignSystem.Color.accent
-                    : DesignSystem.Color.cardBackground,
-                in: Capsule()
+            TypeSelectionGrid(
+                items: QuizRegion.allCases.map { $0 },
+                selectedIDs: [selectedRegion.id],
+                onSelect: { selectedRegion = $0 }
             )
         }
-        .buttonStyle(.plain)
     }
 
-    var regionPicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(QuizRegion.allCases) { region in
-                    regionChip(region)
-                }
-            }
-        }
-    }
-
-    func regionChip(_ region: QuizRegion) -> some View {
-        let isSelected = selectedRegion == region
-
-        return Button { selectedRegion = region } label: {
-            Text(region.displayName)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(
-                    isSelected
-                        ? DesignSystem.Color.onAccent
-                        : DesignSystem.Color.textSecondary
-                )
-                .padding(.horizontal, DesignSystem.Spacing.sm)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(
-                    isSelected
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.cardBackground,
-                    in: Capsule()
-                )
-        }
-        .buttonStyle(.plain)
-    }
-
-    var findOpponentSection: some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            if isSearching {
-                searchingView
-            } else {
-                findOpponentButton
-            }
+    var footerButton: some View {
+        GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
+            startSearching()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.top, DesignSystem.Spacing.lg)
-    }
-
-    var findOpponentButton: some View {
-        Button { startSearching() } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "person.2.fill")
-                    .font(DesignSystem.Font.headline)
-                Text("Find Opponent")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.accent, in: RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            ))
-        }
-        .buttonStyle(.plain)
+        .padding(.bottom, DesignSystem.Spacing.md)
     }
 
     var searchingView: some View {
