@@ -57,11 +57,6 @@ enum FlashcardGuide {
                     title: "Swipe Left — Again",
                     description: "You didn't know it — review again soon"
                 ),
-                FlashcardGuideStep(
-                    icon: "hand.draw.fill",
-                    title: "Skip Before Flipping",
-                    description: "Swipe left without flipping to mark as already known"
-                ),
             ]
         ),
         FlashcardGuidePage(

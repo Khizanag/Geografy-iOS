@@ -15,7 +15,7 @@ struct FlashcardSessionScreen: View {
     @State private var dragOffset: CGSize = .zero
     @State private var showQuitAlert = false
     @State private var detailCountry: Country?
-    @State private var skipFeedback: String?
+    @State private var swipeFeedback: SwipeFeedback?
     @State private var blobAnimating = false
     @State private var showGuide = false
 
@@ -167,7 +167,9 @@ private extension FlashcardSessionScreen {
                 .offset(dragOffset)
                 .rotationEffect(.degrees(dragRotation))
                 .gesture(swipeGesture)
-                .overlay(alignment: .leading) { skipLabel }
+                .overlay { swipeFeedbackOverlay }
+                .overlay(alignment: .trailing) { swipeHintRight }
+                .overlay(alignment: .leading) { swipeHintLeft }
             }
             .frame(
                 maxWidth: .infinity,
@@ -179,14 +181,43 @@ private extension FlashcardSessionScreen {
     }
 
     @ViewBuilder
-    var skipLabel: some View {
-        if let feedback = skipFeedback {
-            Text(feedback)
+    var swipeHintRight: some View {
+        if isFlipped, dragOffset.width > 30 {
+            Label("Good", systemImage: "checkmark.circle.fill")
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.success)
-                .padding(DesignSystem.Spacing.sm)
-                .transition(.opacity)
+                .padding(DesignSystem.Spacing.md)
+                .opacity(min(Double(dragOffset.width) / 100.0, 1.0))
+        }
+    }
+
+    @ViewBuilder
+    var swipeHintLeft: some View {
+        if isFlipped, dragOffset.width < -30 {
+            Label("Again", systemImage: "arrow.counterclockwise")
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.error)
+                .padding(DesignSystem.Spacing.md)
+                .opacity(min(Double(-dragOffset.width) / 100.0, 1.0))
+        }
+    }
+
+    @ViewBuilder
+    var swipeFeedbackOverlay: some View {
+        if let feedback = swipeFeedback {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: feedback.icon)
+                    .font(.system(size: 48))
+                    .foregroundStyle(feedback.color)
+                    .symbolEffect(.bounce, value: swipeFeedback?.id)
+                Text(feedback.label)
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(feedback.color)
+            }
+            .transition(.scale(scale: 0.5).combined(with: .opacity))
         }
     }
 
@@ -195,15 +226,11 @@ private extension FlashcardSessionScreen {
             .onChanged { value in
                 if isFlipped {
                     dragOffset = value.translation
-                } else if value.translation.width < -20 {
-                    dragOffset = value.translation
                 }
             }
             .onEnded { value in
                 if isFlipped {
                     handleSwipeEnd(translation: value.translation.width)
-                } else if value.translation.width < -100 {
-                    skipAsKnown()
                 } else {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                         dragOffset = .zero
@@ -349,18 +376,6 @@ private extension FlashcardSessionScreen {
 // MARK: - Actions
 
 private extension FlashcardSessionScreen {
-    func skipAsKnown() {
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        withAnimation(.spring(response: 0.3)) {
-            skipFeedback = "Known!"
-            dragOffset = CGSize(width: -300, height: 0)
-        }
-        recordReview(.easy)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            skipFeedback = nil
-        }
-    }
-
     func showCountryDetail() {
         let code = currentCard.countryCode
         let country = countryDataService.countries.first { $0.code == code }
@@ -388,15 +403,20 @@ private extension FlashcardSessionScreen {
     }
 
     func advanceToNext() {
-        if currentIndex + 1 < cards.count {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+        withAnimation(.easeIn(duration: 0.2)) {
+            dragOffset = CGSize(width: -400, height: 0)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            if currentIndex + 1 < cards.count {
+                dragOffset = CGSize(width: 400, height: 0)
                 currentIndex += 1
                 isFlipped = false
-                dragOffset = .zero
-            }
-        } else {
-            withAnimation {
-                showResults = true
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    dragOffset = .zero
+                }
+            } else {
+                withAnimation { showResults = true }
             }
         }
     }
@@ -405,13 +425,55 @@ private extension FlashcardSessionScreen {
         let threshold: CGFloat = 100
 
         if translation > threshold {
-            recordReview(.good)
+            showSwipeFeedback(.good)
+            flyOffAndAdvance(direction: .right, result: .good)
         } else if translation < -threshold {
-            recordReview(.again)
+            showSwipeFeedback(.again)
+            flyOffAndAdvance(direction: .left, result: .again)
+        } else {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                dragOffset = .zero
+            }
+        }
+    }
+
+    func flyOffAndAdvance(direction: SwipeDirection, result: FlashcardReviewResult) {
+        let offscreenX: CGFloat = direction == .right ? 500 : -500
+
+        withAnimation(.easeIn(duration: 0.25)) {
+            dragOffset = CGSize(width: offscreenX, height: 0)
         }
 
+        flashcardService.recordReview(cardID: currentCard.id, result: result)
+        if result != .again { correctCount += 1 }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            dragOffset = CGSize(width: direction == .right ? -400 : 400, height: 0)
+            if currentIndex + 1 < cards.count {
+                currentIndex += 1
+                isFlipped = false
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    dragOffset = .zero
+                }
+            } else {
+                withAnimation { showResults = true }
+            }
+        }
+    }
+
+    enum SwipeDirection { case left, right }
+
+    func showSwipeFeedback(_ type: SwipeFeedback) {
+        UINotificationFeedbackGenerator().notificationOccurred(
+            type == .good ? .success : .warning
+        )
         withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-            dragOffset = .zero
+            swipeFeedback = type
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            withAnimation(.easeOut(duration: 0.2)) {
+                swipeFeedback = nil
+            }
         }
     }
 
@@ -438,5 +500,40 @@ private extension FlashcardSessionScreen {
 
     var dragRotation: Double {
         Double(dragOffset.width) / 20.0
+    }
+}
+
+// MARK: - Swipe Feedback
+
+enum SwipeFeedback: Identifiable, Equatable {
+    case good
+    case again
+
+    var id: String {
+        switch self {
+        case .good: "good"
+        case .again: "again"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .good: "checkmark.circle.fill"
+        case .again: "arrow.counterclockwise.circle.fill"
+        }
+    }
+
+    var label: String {
+        switch self {
+        case .good: "Got it!"
+        case .again: "Review again"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .good: DesignSystem.Color.success
+        case .again: DesignSystem.Color.error
+        }
     }
 }
