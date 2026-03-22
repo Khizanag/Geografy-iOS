@@ -18,6 +18,8 @@ struct FlashcardSessionScreen: View {
     @State private var swipeFeedback: SwipeFeedback?
     @State private var blobAnimating = false
     @State private var showGuide = false
+    @State private var cardShownAt: Date = .now
+    @State private var thinkingTimes: [TimeInterval] = []
 
     var body: some View {
         NavigationStack {
@@ -70,7 +72,8 @@ private extension FlashcardSessionScreen {
                 FlashcardStatsView(
                     cardsReviewed: cards.count,
                     correctCount: correctCount,
-                    totalCards: cards.count
+                    totalCards: cards.count,
+                    averageThinkingTime: averageThinkingTime
                 )
                 doneButton
             }
@@ -383,6 +386,10 @@ private extension FlashcardSessionScreen {
     }
 
     func flipCard() {
+        if !isFlipped {
+            let thinkingTime = Date.now.timeIntervalSince(cardShownAt)
+            thinkingTimes.append(thinkingTime)
+        }
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
             isFlipped.toggle()
         }
@@ -412,6 +419,7 @@ private extension FlashcardSessionScreen {
                 dragOffset = CGSize(width: 400, height: 0)
                 currentIndex += 1
                 isFlipped = false
+                cardShownAt = .now
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
@@ -452,6 +460,7 @@ private extension FlashcardSessionScreen {
             if currentIndex + 1 < cards.count {
                 currentIndex += 1
                 isFlipped = false
+                cardShownAt = .now
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
@@ -500,6 +509,11 @@ private extension FlashcardSessionScreen {
 
     var dragRotation: Double {
         Double(dragOffset.width) / 20.0
+    }
+
+    var averageThinkingTime: TimeInterval {
+        guard !thinkingTimes.isEmpty else { return 0 }
+        return thinkingTimes.reduce(0, +) / Double(thinkingTimes.count)
     }
 }
 

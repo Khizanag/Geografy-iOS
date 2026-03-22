@@ -6,6 +6,7 @@ struct FlashcardScreen: View {
 
     @State private var selectedCardType: FlashcardType = .countryToCapital
     @State private var countryDataService = CountryDataService()
+    @AppStorage("flashcard_sessionCardCount") private var sessionCardCount = 20
     @State private var blobAnimating = false
     @State private var appeared = false
     @State private var showGuide = false
@@ -39,6 +40,8 @@ private extension FlashcardScreen {
                     .feedSection(appeared: appeared, delay: 0.0)
                 cardTypeSection
                     .feedSection(appeared: appeared, delay: 0.08)
+                cardCountSection
+                    .feedSection(appeared: appeared, delay: 0.12)
                 dueForReviewSection
                     .feedSection(appeared: appeared, delay: 0.14)
                 deckGridSection
@@ -120,6 +123,25 @@ private extension FlashcardScreen {
                 onSelect: { selectedCardType = $0 }
             )
         }
+    }
+
+    var cardCountSection: some View {
+        HStack {
+            Text("Cards per Session")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            Spacer()
+
+            Picker("Cards", selection: $sessionCardCount) {
+                ForEach([5, 10, 15, 20, 30, 50], id: \.self) { count in
+                    Text("\(count)").tag(count)
+                }
+            }
+            .pickerStyle(.menu)
+            .tint(DesignSystem.Color.accent)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 }
 
@@ -276,7 +298,7 @@ private extension FlashcardScreen {
         let items = cardsForDeck(deck)
         guard !items.isEmpty else { return }
         let shuffled = items.shuffled()
-        let sessionCards = Array(shuffled.prefix(20))
+        let sessionCards = Array(shuffled.prefix(sessionCardCount))
         coordinator.presentFullScreen(
             .flashcardSession(deck: deck, cards: sessionCards)
         )
@@ -289,7 +311,7 @@ private extension FlashcardScreen {
         let deck = FlashcardDeck.makeDueForReviewDeck(
             cardType: selectedCardType
         )
-        let sessionCards = Array(dueCards.shuffled().prefix(20))
+        let sessionCards = Array(dueCards.shuffled().prefix(sessionCardCount))
         coordinator.presentFullScreen(
             .flashcardSession(deck: deck, cards: sessionCards)
         )

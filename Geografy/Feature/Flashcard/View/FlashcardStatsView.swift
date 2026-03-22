@@ -4,6 +4,7 @@ struct FlashcardStatsView: View {
     let cardsReviewed: Int
     let correctCount: Int
     let totalCards: Int
+    let averageThinkingTime: TimeInterval
 
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
@@ -35,7 +36,13 @@ private extension FlashcardStatsView {
     }
 
     var statsGrid: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+            ],
+            spacing: DesignSystem.Spacing.sm
+        ) {
             statItem(
                 value: "\(cardsReviewed)",
                 label: "Reviewed",
@@ -53,6 +60,12 @@ private extension FlashcardStatsView {
                 label: "Accuracy",
                 icon: "chart.bar.fill",
                 color: DesignSystem.Color.indigo
+            )
+            statItem(
+                value: formattedThinkingTime,
+                label: "Avg. Think Time",
+                icon: "brain.fill",
+                color: DesignSystem.Color.purple
             )
         }
     }
@@ -76,6 +89,7 @@ private extension FlashcardStatsView {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 
     var accuracyBar: some View {
@@ -119,5 +133,17 @@ private extension FlashcardStatsView {
         if percentage >= 80 { return DesignSystem.Color.success }
         if percentage >= 50 { return DesignSystem.Color.warning }
         return DesignSystem.Color.error
+    }
+
+    var formattedThinkingTime: String {
+        if averageThinkingTime < 1 {
+            return "<1s"
+        } else if averageThinkingTime < 60 {
+            return "\(Int(averageThinkingTime.rounded()))s"
+        } else {
+            let minutes = Int(averageThinkingTime) / 60
+            let seconds = Int(averageThinkingTime) % 60
+            return "\(minutes)m \(seconds)s"
+        }
     }
 }
