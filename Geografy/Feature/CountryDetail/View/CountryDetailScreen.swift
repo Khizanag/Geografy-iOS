@@ -8,7 +8,6 @@ struct CountryDetailScreen: View {
     @Environment(AchievementService.self) private var achievementService
 
     @Namespace private var flagNamespace
-    @Namespace private var scrollFlagNamespace
 
     @State private var countryDataService = CountryDataService()
     @State private var appeared = false
@@ -33,15 +32,12 @@ struct CountryDetailScreen: View {
                     HStack(spacing: DesignSystem.Spacing.xs) {
                         if flagScrolledUp {
                             FlagView(countryCode: country.code, height: 20)
-                                .matchedGeometryEffect(
-                                    id: "scrollFlag",
-                                    in: scrollFlagNamespace,
-                                    isSource: true
-                                )
+                                .transition(.scale(scale: 0.5).combined(with: .opacity))
                         }
                         Text(country.name)
                             .font(DesignSystem.Font.headline)
                     }
+                    .animation(.easeInOut(duration: 0.25), value: flagScrolledUp)
                 }
             }
             .task { countryDataService.loadCountries() }
@@ -142,11 +138,6 @@ private extension CountryDetailScreen {
                 } label: {
                     FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
                         .matchedGeometryEffect(id: country.code, in: flagNamespace)
-                        .matchedGeometryEffect(
-                            id: "scrollFlag",
-                            in: scrollFlagNamespace,
-                            isSource: false
-                        )
                         .opacity(showFlagFullScreen || flagScrolledUp ? 0 : 1)
                         .geoShadow(.elevated)
                         .onGeometryChange(for: Bool.self) { proxy in
