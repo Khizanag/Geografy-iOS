@@ -147,7 +147,7 @@ private extension CountryDetailScreen {
                             in: scrollFlagNamespace,
                             isSource: false
                         )
-                        .opacity(showFlagFullScreen ? 0 : 1)
+                        .opacity(showFlagFullScreen || flagScrolledUp ? 0 : 1)
                         .geoShadow(.elevated)
                         .onGeometryChange(for: Bool.self) { proxy in
                             proxy.frame(in: .scrollView).maxY < 0
