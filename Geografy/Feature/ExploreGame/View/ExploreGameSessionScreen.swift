@@ -36,9 +36,9 @@ struct ExploreGameSessionScreen: View {
                 } message: {
                     Text("Your progress will be lost.")
                 }
-                .sheet(isPresented: $showRules) { rulesSheet }
                 .onAppear { startBlobAnimation() }
         }
+        .sheet(isPresented: $showRules) { rulesSheet }
     }
 }
 
