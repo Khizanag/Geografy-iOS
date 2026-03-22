@@ -52,7 +52,7 @@ private extension CountryRowView {
                 Text(country.name)
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
+                    .lineLimit(2)
 
                 if showCapital {
                     capitalLabel
