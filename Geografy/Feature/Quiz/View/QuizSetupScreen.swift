@@ -13,7 +13,7 @@ struct QuizSetupScreen: View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 quizTypeSection
-                regionRow
+                regionSection
                 difficultySection
                 questionCountRow
             }
@@ -53,12 +53,18 @@ private extension QuizSetupScreen {
     }
 }
 
-// MARK: - Region Row
+// MARK: - Region Section
 
 private extension QuizSetupScreen {
-    var regionRow: some View {
-        pickerRow("Region", selection: $selectedRegion) { region in
-            Text(region.displayName).tag(region)
+    var regionSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Region")
+
+            RegionSelectionBar(
+                items: QuizRegion.allCases.map { $0 },
+                selectedID: selectedRegion.id,
+                onSelect: { selectedRegion = $0 }
+            )
         }
     }
 }

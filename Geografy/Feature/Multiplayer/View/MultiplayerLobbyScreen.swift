@@ -120,9 +120,9 @@ private extension MultiplayerLobbyScreen {
             SectionHeaderView(title: "Region", icon: "globe")
                 .padding(.horizontal, DesignSystem.Spacing.md)
 
-            TypeSelectionGrid(
+            RegionSelectionBar(
                 items: QuizRegion.allCases.map { $0 },
-                selectedIDs: [selectedRegion.id],
+                selectedID: selectedRegion.id,
                 onSelect: { selectedRegion = $0 }
             )
         }

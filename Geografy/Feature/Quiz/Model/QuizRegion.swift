@@ -14,20 +14,20 @@ enum QuizRegion: String, CaseIterable, Identifiable {
 
 // MARK: - Properties
 
-extension QuizRegion: SelectableType {
+extension QuizRegion: RegionSelectable {
     var displayName: String {
         switch self {
         case .world: "World"
         case .africa: "Africa"
         case .asia: "Asia"
         case .europe: "Europe"
-        case .northAmerica: "North America"
-        case .southAmerica: "South America"
+        case .northAmerica: "N. America"
+        case .southAmerica: "S. America"
         case .oceania: "Oceania"
         }
     }
 
-    var icon: String {
+    var regionIcon: String {
         switch self {
         case .world: "globe"
         case .africa: "globe.europe.africa"
@@ -36,30 +36,6 @@ extension QuizRegion: SelectableType {
         case .northAmerica: "globe.americas"
         case .southAmerica: "globe.americas"
         case .oceania: "globe.asia.australia"
-        }
-    }
-
-    var emoji: String {
-        switch self {
-        case .world: "🌍"
-        case .africa: "🌍"
-        case .asia: "🌏"
-        case .europe: "🌍"
-        case .northAmerica: "🌎"
-        case .southAmerica: "🌎"
-        case .oceania: "🌏"
-        }
-    }
-
-    var description: String {
-        switch self {
-        case .world: "All 197 countries"
-        case .africa: "54 countries"
-        case .asia: "48 countries"
-        case .europe: "44 countries"
-        case .northAmerica: "23 countries"
-        case .southAmerica: "12 countries"
-        case .oceania: "14 countries"
         }
     }
 }
