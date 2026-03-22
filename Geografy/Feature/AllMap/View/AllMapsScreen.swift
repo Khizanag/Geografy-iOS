@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct AllMapsScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
-    @State private var mapTarget: MapTarget?
     @State private var blobAnimating = false
     @State private var appeared = false
 
@@ -21,14 +21,6 @@ struct AllMapsScreen: View {
         scrollContent
             .background { ambientBackground }
         .navigationTitle("All Maps")
-        .fullScreenCover(item: $mapTarget) { target in
-            NavigationStack {
-                MapScreen(continentFilter: target.continentFilter)
-                    .navigationDestination(for: Country.self) { country in
-                        CountryDetailScreen(country: country)
-                    }
-            }
-        }
         .onAppear {
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
@@ -201,7 +193,9 @@ private extension AllMapsScreen {
 
 private extension AllMapsScreen {
     func openMap(named name: String) {
-        mapTarget = MapTarget(continentFilter: name == "World" ? nil : name)
+        coordinator.presentFullScreen(
+            .map(continentFilter: name == "World" ? nil : name)
+        )
     }
 
     func gradientColors(for name: String) -> (Color, Color) {

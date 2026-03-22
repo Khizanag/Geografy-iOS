@@ -1,28 +1,20 @@
 import SwiftUI
 
 struct FlashcardScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
 
     @State private var selectedCardType: FlashcardType = .countryToCapital
-    @State private var activeSession: FlashcardSessionInfo?
     @State private var countryDataService = CountryDataService()
     @State private var blobAnimating = false
     @State private var appeared = false
 
     var body: some View {
-        NavigationStack {
-            scrollContent
-                .background { ambientBackground }
-                .navigationTitle("Flashcards")
-                .fullScreenCover(item: $activeSession) { session in
-                    FlashcardSessionScreen(
-                        deck: session.deck,
-                        cards: session.cards
-                    )
-                }
-                .task { loadCountries() }
-                .onAppear { startAnimations() }
-        }
+        scrollContent
+            .background { ambientBackground }
+            .navigationTitle("Flashcards")
+            .task { loadCountries() }
+            .onAppear { startAnimations() }
     }
 }
 
@@ -276,9 +268,8 @@ private extension FlashcardScreen {
         guard !items.isEmpty else { return }
         let shuffled = items.shuffled()
         let sessionCards = Array(shuffled.prefix(20))
-        activeSession = FlashcardSessionInfo(
-            deck: deck,
-            cards: sessionCards
+        coordinator.presentFullScreen(
+            .flashcardSession(deck: deck, cards: sessionCards)
         )
     }
 
@@ -290,9 +281,8 @@ private extension FlashcardScreen {
             cardType: selectedCardType
         )
         let sessionCards = Array(dueCards.shuffled().prefix(20))
-        activeSession = FlashcardSessionInfo(
-            deck: deck,
-            cards: sessionCards
+        coordinator.presentFullScreen(
+            .flashcardSession(deck: deck, cards: sessionCards)
         )
     }
 
@@ -358,10 +348,3 @@ private extension View {
     }
 }
 
-// MARK: - Session Info
-
-struct FlashcardSessionInfo: Identifiable {
-    let id = UUID()
-    let deck: FlashcardDeck
-    let cards: [FlashcardItem]
-}

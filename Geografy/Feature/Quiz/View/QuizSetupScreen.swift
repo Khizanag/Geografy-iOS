@@ -1,42 +1,32 @@
 import SwiftUI
 
 struct QuizSetupScreen: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
 
     @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz
     @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
     @AppStorage("quiz_selectedDifficulty") private var selectedDifficulty: QuizDifficulty = .easy
     @AppStorage("quiz_selectedCount") private var selectedCount: QuestionCount = .ten
-    @State private var showQuizSession = false
-    @State private var showPaywall = false
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-                    quizTypeSection
-                    regionRow
-                    difficultySection
-                    questionCountRow
-                }
-                .padding(.vertical, DesignSystem.Spacing.md)
+        ScrollView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
+                quizTypeSection
+                regionRow
+                difficultySection
+                questionCountRow
             }
-            .safeAreaInset(edge: .bottom) {
-                startButton
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.bottom, DesignSystem.Spacing.md)
-            }
-            .background(DesignSystem.Color.background)
-            .navigationTitle("Quiz")
-            .navigationBarTitleDisplayMode(.inline)
-            .fullScreenCover(isPresented: $showQuizSession) {
-                QuizSessionScreen(configuration: makeConfiguration())
-            }
-            .sheet(isPresented: $showPaywall) {
-                PaywallScreen()
-            }
+            .padding(.vertical, DesignSystem.Spacing.md)
         }
+        .safeAreaInset(edge: .bottom) {
+            startButton
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.md)
+        }
+        .background(DesignSystem.Color.background)
+        .navigationTitle("Quiz")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -52,7 +42,7 @@ private extension QuizSetupScreen {
                 selectedIDs: [selectedType.id],
                 onSelect: { type in
                     if type.isPremium, !subscriptionService.isPremium {
-                        showPaywall = true
+                        coordinator.present(.paywall)
                     } else {
                         selectedType = type
                     }
@@ -119,9 +109,9 @@ private extension QuizSetupScreen {
     var startButton: some View {
         GlassButton("Start Quiz", systemImage: "play.fill", fullWidth: true) {
             if selectedType.isPremium, !subscriptionService.isPremium {
-                showPaywall = true
+                coordinator.present(.paywall)
             } else {
-                showQuizSession = true
+                coordinator.presentFullScreen(.quizSession(makeConfiguration()))
             }
         }
     }

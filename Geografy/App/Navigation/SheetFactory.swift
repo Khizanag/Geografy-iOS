@@ -43,7 +43,8 @@ enum SheetFactory {
             PaywallScreen()
 
         case .quizSetup:
-            QuizSetupScreen()
+            NavigationStack { QuizSetupScreen() }
+                .presentationDetents([.large])
 
         case .dailyChallenge:
             NavigationStack { DailyChallengeScreen() }
