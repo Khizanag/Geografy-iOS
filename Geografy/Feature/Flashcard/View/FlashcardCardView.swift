@@ -97,7 +97,7 @@ private extension FlashcardCardView {
     }
 
     var tapHint: some View {
-        Label("Tap to reveal", systemImage: "hand.tap.fill")
+        Label("Tap to reveal · Swipe right if you know it", systemImage: "hand.tap.fill")
             .font(DesignSystem.Font.caption2)
             .foregroundStyle(DesignSystem.Color.textTertiary)
     }

@@ -159,10 +159,10 @@ private extension FlashcardGuideSheet {
 
     var ratingButtonsIllustration: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            ratingMock(label: "Again", color: DesignSystem.Color.error, icon: "arrow.counterclockwise")
-            ratingMock(label: "Hard", color: DesignSystem.Color.orange, icon: "tortoise.fill")
-            ratingMock(label: "Good", color: DesignSystem.Color.accent, icon: "hand.thumbsup.fill")
-            ratingMock(label: "Easy", color: DesignSystem.Color.success, icon: "bolt.fill")
+            ratingMock(label: "Wrong", color: DesignSystem.Color.error, icon: "xmark.circle.fill")
+            ratingMock(label: "Struggled", color: DesignSystem.Color.orange, icon: "exclamationmark.triangle.fill")
+            ratingMock(label: "Correct", color: DesignSystem.Color.accent, icon: "checkmark.circle.fill")
+            ratingMock(label: "Knew It", color: DesignSystem.Color.success, icon: "bolt.circle.fill")
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .frame(height: 200, alignment: .center)

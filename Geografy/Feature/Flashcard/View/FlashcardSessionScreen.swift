@@ -185,20 +185,23 @@ private extension FlashcardSessionScreen {
 
     @ViewBuilder
     var swipeHintRight: some View {
-        if isFlipped, dragOffset.width > 30 {
-            Label("Good", systemImage: "checkmark.circle.fill")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.success)
-                .padding(DesignSystem.Spacing.md)
-                .opacity(min(Double(dragOffset.width) / 100.0, 1.0))
+        if dragOffset.width > 30 {
+            Label(
+                isFlipped ? "Correct" : "Knew It",
+                systemImage: isFlipped ? "checkmark.circle.fill" : "bolt.circle.fill"
+            )
+            .font(DesignSystem.Font.headline)
+            .fontWeight(.bold)
+            .foregroundStyle(DesignSystem.Color.success)
+            .padding(DesignSystem.Spacing.md)
+            .opacity(min(Double(dragOffset.width) / 100.0, 1.0))
         }
     }
 
     @ViewBuilder
     var swipeHintLeft: some View {
         if isFlipped, dragOffset.width < -30 {
-            Label("Again", systemImage: "arrow.counterclockwise")
+            Label("Wrong", systemImage: "xmark.circle.fill")
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.error)
@@ -227,13 +230,16 @@ private extension FlashcardSessionScreen {
     var swipeGesture: some Gesture {
         DragGesture()
             .onChanged { value in
-                if isFlipped {
+                if isFlipped || value.translation.width > 20 {
                     dragOffset = value.translation
                 }
             }
             .onEnded { value in
                 if isFlipped {
                     handleSwipeEnd(translation: value.translation.width)
+                } else if value.translation.width > 100 {
+                    showSwipeFeedback(.knewIt)
+                    flyOffAndAdvance(direction: .right, result: .easy)
                 } else {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                         dragOffset = .zero
@@ -433,10 +439,10 @@ private extension FlashcardSessionScreen {
         let threshold: CGFloat = 100
 
         if translation > threshold {
-            showSwipeFeedback(.good)
+            showSwipeFeedback(.correct)
             flyOffAndAdvance(direction: .right, result: .good)
         } else if translation < -threshold {
-            showSwipeFeedback(.again)
+            showSwipeFeedback(.wrong)
             flyOffAndAdvance(direction: .left, result: .again)
         } else {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
@@ -456,7 +462,7 @@ private extension FlashcardSessionScreen {
         if result != .again { correctCount += 1 }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            dragOffset = CGSize(width: direction == .right ? -400 : 400, height: 0)
+            dragOffset = CGSize(width: 400, height: 0)
             if currentIndex + 1 < cards.count {
                 currentIndex += 1
                 isFlipped = false
@@ -474,7 +480,7 @@ private extension FlashcardSessionScreen {
 
     func showSwipeFeedback(_ type: SwipeFeedback) {
         UINotificationFeedbackGenerator().notificationOccurred(
-            type == .good ? .success : .warning
+            type == .wrong ? .warning : .success
         )
         withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
             swipeFeedback = type
@@ -520,34 +526,39 @@ private extension FlashcardSessionScreen {
 // MARK: - Swipe Feedback
 
 enum SwipeFeedback: Identifiable, Equatable {
-    case good
-    case again
+    case correct
+    case wrong
+    case knewIt
 
     var id: String {
         switch self {
-        case .good: "good"
-        case .again: "again"
+        case .correct: "correct"
+        case .wrong: "wrong"
+        case .knewIt: "knewIt"
         }
     }
 
     var icon: String {
         switch self {
-        case .good: "checkmark.circle.fill"
-        case .again: "arrow.counterclockwise.circle.fill"
+        case .correct: "checkmark.circle.fill"
+        case .wrong: "xmark.circle.fill"
+        case .knewIt: "bolt.circle.fill"
         }
     }
 
     var label: String {
         switch self {
-        case .good: "Got it!"
-        case .again: "Review again"
+        case .correct: "Correct!"
+        case .wrong: "Review again"
+        case .knewIt: "Knew it!"
         }
     }
 
     var color: Color {
         switch self {
-        case .good: DesignSystem.Color.success
-        case .again: DesignSystem.Color.error
+        case .correct: DesignSystem.Color.success
+        case .wrong: DesignSystem.Color.error
+        case .knewIt: DesignSystem.Color.accent
         }
     }
 }

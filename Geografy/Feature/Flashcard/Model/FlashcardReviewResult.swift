@@ -14,19 +14,19 @@ enum FlashcardReviewResult: String, CaseIterable, Identifiable {
 extension FlashcardReviewResult {
     var displayName: String {
         switch self {
-        case .again: "Again"
-        case .hard: "Hard"
-        case .good: "Good"
-        case .easy: "Easy"
+        case .again: "Wrong"
+        case .hard: "Struggled"
+        case .good: "Correct"
+        case .easy: "Knew It"
         }
     }
 
     var icon: String {
         switch self {
-        case .again: "arrow.counterclockwise"
-        case .hard: "tortoise.fill"
-        case .good: "hand.thumbsup.fill"
-        case .easy: "bolt.fill"
+        case .again: "xmark.circle.fill"
+        case .hard: "exclamationmark.triangle.fill"
+        case .good: "checkmark.circle.fill"
+        case .easy: "bolt.circle.fill"
         }
     }
 

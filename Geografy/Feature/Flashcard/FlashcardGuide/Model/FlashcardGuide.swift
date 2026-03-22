@@ -44,18 +44,18 @@ enum FlashcardGuide {
         ),
         FlashcardGuidePage(
             title: "Swipe to Rate",
-            subtitle: "After flipping, swipe the card to quickly rate your answer. Or use the buttons below.",
+            subtitle: "Swipe the card to quickly rate your answer. You can even swipe right before flipping if you're sure you know it!",
             illustration: .swipeToRate,
             steps: [
                 FlashcardGuideStep(
                     icon: "arrow.right",
-                    title: "Swipe Right — Good",
-                    description: "You recalled the answer correctly"
+                    title: "Swipe Right — Correct",
+                    description: "You knew the answer. Swipe right even before flipping to mark as known"
                 ),
                 FlashcardGuideStep(
                     icon: "arrow.left",
-                    title: "Swipe Left — Again",
-                    description: "You didn't know it — review again soon"
+                    title: "Swipe Left — Wrong",
+                    description: "You didn't know it — card comes back for review"
                 ),
             ]
         ),
@@ -65,23 +65,23 @@ enum FlashcardGuide {
             illustration: .ratingButtons,
             steps: [
                 FlashcardGuideStep(
-                    icon: "arrow.counterclockwise",
-                    title: "Again",
+                    icon: "xmark.circle.fill",
+                    title: "Wrong",
                     description: "Didn't know it — shows again this session"
                 ),
                 FlashcardGuideStep(
-                    icon: "tortoise.fill",
-                    title: "Hard",
+                    icon: "exclamationmark.triangle.fill",
+                    title: "Struggled",
                     description: "Barely remembered — review tomorrow"
                 ),
                 FlashcardGuideStep(
-                    icon: "hand.thumbsup.fill",
-                    title: "Good",
+                    icon: "checkmark.circle.fill",
+                    title: "Correct",
                     description: "Recalled with effort — review in 2 days"
                 ),
                 FlashcardGuideStep(
-                    icon: "bolt.fill",
-                    title: "Easy",
+                    icon: "bolt.circle.fill",
+                    title: "Knew It",
                     description: "Knew it instantly — review in 4 days"
                 ),
             ]
