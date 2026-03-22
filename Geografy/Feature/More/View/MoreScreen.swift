@@ -1,27 +1,23 @@
 import SwiftUI
 
 struct MoreScreen: View {
-    @State private var activeSheet: MoreSheet?
+    @Environment(TabCoordinator.self) private var coordinator
+
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            itemList
-                .background {
-                    ambientBlobs
-                }
-                .background(DesignSystem.Color.background.ignoresSafeArea())
-                .navigationTitle("More")
-                .navigationBarTitleDisplayMode(.large)
-        }
-        .sheet(item: $activeSheet) { sheet in
-            sheetContent(for: sheet)
-        }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
+        itemList
+            .background {
+                ambientBlobs
             }
-        }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("More")
+            .navigationBarTitleDisplayMode(.large)
+            .onAppear {
+                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                    blobAnimating = true
+                }
+            }
     }
 }
 
@@ -127,7 +123,7 @@ private extension MoreScreen {
     func gridTile(for sheet: MoreSheet) -> some View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            activeSheet = sheet
+            coordinator.present(sheet.toSheet)
         } label: {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ZStack {
@@ -165,13 +161,6 @@ private extension MoreScreen {
         .buttonStyle(PressButtonStyle())
     }
 
-    var sheetsWithOwnCloseButton: Set<MoreSheet> {
-        [
-            .profile, .dailyChallenge, .customQuiz,
-            .multiplayer, .exploreGame, .timeline,
-        ]
-    }
-
     var youItems: [MoreSheet] {
         [.profile, .countries, .favorites, .badges]
     }
@@ -195,72 +184,4 @@ private extension MoreScreen {
         [.achievements, .leaderboards, .themes, .settings]
     }
 
-    @ViewBuilder
-    func sheetContent(for sheet: MoreSheet) -> some View {
-        NavigationStack {
-            Group {
-                switch sheet {
-                case .profile:
-                    ProfileScreen()
-                case .countries:
-                    CountryListScreen()
-                        .navigationDestination(for: Country.self) { country in
-                            CountryDetailScreen(country: country)
-                        }
-                case .orgs:
-                    OrganizationsScreen()
-                case .favorites:
-                    FavoritesScreen()
-                        .navigationDestination(for: Country.self) { country in
-                            CountryDetailScreen(country: country)
-                        }
-                case .travel:
-                    TravelTrackerScreen()
-                        .navigationDestination(for: Country.self) { country in
-                            CountryDetailScreen(country: country)
-                        }
-                case .dailyChallenge:
-                    DailyChallengeScreen()
-                case .compare:
-                    CompareScreen()
-                case .travelJournal:
-                    TravelJournalScreen()
-                case .quizPacks:
-                    QuizPackBrowserScreen()
-                case .customQuiz:
-                    CustomQuizLibraryScreen()
-                case .multiplayer:
-                    MultiplayerLobbyScreen(
-                        multiplayerService: MultiplayerService()
-                    )
-                case .exploreGame:
-                    ExploreGameScreen()
-                case .badges:
-                    BadgeCollectionScreen(badgeService: BadgeService())
-                case .timeline:
-                    TimelineScreen()
-                case .achievements:
-                    AchievementsScreen()
-                        .navigationTitle("Achievements")
-                        .navigationBarTitleDisplayMode(.large)
-                case .leaderboards:
-                    LeaderboardScreen()
-                case .themes:
-                    ThemesScreen()
-                        .navigationTitle("Themes")
-                        .navigationBarTitleDisplayMode(.large)
-                case .settings:
-                    SettingsScreen()
-                }
-            }
-            .toolbar {
-                if !sheetsWithOwnCloseButton.contains(sheet) {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        CircleCloseButton { activeSheet = nil }
-                    }
-                }
-            }
-        }
-        .presentationDetents([.large])
-    }
 }

@@ -100,4 +100,27 @@ enum MoreSheet: Identifiable {
         case .settings: DesignSystem.Color.textSecondary
         }
     }
+
+    var toSheet: Sheet {
+        switch self {
+        case .profile: .profile
+        case .countries: .countries
+        case .orgs: .organizations
+        case .favorites: .favorites
+        case .travel: .travelTracker
+        case .dailyChallenge: .dailyChallenge
+        case .compare: .compare
+        case .travelJournal: .travelJournal
+        case .quizPacks: .quizPacks
+        case .customQuiz: .customQuiz
+        case .multiplayer: .multiplayer
+        case .exploreGame: .exploreGame
+        case .badges: .badges
+        case .timeline: .timeline
+        case .achievements: .achievements
+        case .leaderboards: .leaderboards
+        case .themes: .themes
+        case .settings: .settings
+        }
+    }
 }

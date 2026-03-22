@@ -8,11 +8,10 @@ struct HomeScreen: View {
     @Environment(StreakService.self) private var streakService
     @Environment(CoinService.self) private var coinService
     @Environment(HomeSectionOrderService.self) private var sectionOrderService
+    @Environment(TabCoordinator.self) private var coordinator
 
     @State private var countryDataService = CountryDataService()
     @State private var selectedMapIndex = 0
-    @State private var mapTarget: MapTarget?
-    @State private var activeSheet: HomeSheet?
     @State private var blobAnimating = false
     @State private var appeared = false
 
@@ -34,15 +33,6 @@ struct HomeScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar { toolbarContent }
-        .fullScreenCover(item: $mapTarget) { target in
-            mapFullScreenCover(for: target)
-        }
-        .modifier(
-            HomeSheetsModifier(
-                activeSheet: $activeSheet,
-                sectionOrder: sectionOrderService.sections
-            )
-        )
         .task {
             countryDataService.loadCountries()
             startAnimations()
@@ -199,7 +189,7 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var profileButton: some View {
-        Button { activeSheet = .profile } label: {
+        Button { coordinator.present(.profile) } label: {
             profileAvatar
         }
         .buttonStyle(.plain)
@@ -213,7 +203,7 @@ private extension HomeScreen {
     }
 
     var statsButton: some View {
-        Button { activeSheet = .coinStore } label: {
+        Button { coordinator.present(.coinStore) } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 xpIndicator
                 divider
@@ -238,7 +228,7 @@ private extension HomeScreen {
     }
 
     var friendsButton: some View {
-        Button { activeSheet = .friends } label: {
+        Button { coordinator.present(.friends) } label: {
             Image(systemName: "person.2")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
@@ -302,7 +292,7 @@ private extension HomeScreen {
     }
 
     var editSectionsButton: some View {
-        Button { activeSheet = .sectionEditor } label: {
+        Button { coordinator.present(.sectionEditor) } label: {
             Image(systemName: "slider.horizontal.3")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -358,7 +348,7 @@ private extension HomeScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.trailing, DesignSystem.Spacing.xs)
-            NavigationLink(value: NavigationRoute.allMaps) {
+            NavigationLink(value: Screen.allMaps) {
                 Text("See All")
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -469,7 +459,7 @@ private extension HomeScreen {
             SectionHeaderView(title: "Daily Streak")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeStreakCard(streak: streakService.currentStreak) {
-                activeSheet = .quiz
+                coordinator.present(.quizSetup)
             }
         }
     }
@@ -489,8 +479,8 @@ private extension HomeScreen {
     var orgsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             HomeOrgsCard(
-                onOrgTap: { activeSheet = .orgDetail($0) },
-                onSeeAll: { activeSheet = .allOrgs }
+                onOrgTap: { coordinator.present(.organizationDetail($0)) },
+                onSeeAll: { coordinator.present(.organizations) }
             )
         }
     }
@@ -507,9 +497,9 @@ private extension HomeScreen {
                 favoriteCount: favoritesService.favoriteCodes.count,
                 exploredContinents: exploredContinents,
                 currentLevel: xpService.currentLevel.level,
-                onFavoritesTap: { activeSheet = .favorites },
-                onCountriesTap: { activeSheet = .countries },
-                onProfileTap: { activeSheet = .profile }
+                onFavoritesTap: { coordinator.present(.favorites) },
+                onCountriesTap: { coordinator.present(.countries) },
+                onProfileTap: { coordinator.present(.profile) }
             )
         }
     }
@@ -549,15 +539,6 @@ private extension HomeScreen {
         }
     }
 
-    func mapFullScreenCover(for target: MapTarget) -> some View {
-        NavigationStack {
-            MapScreen(continentFilter: target.continentFilter)
-                .navigationDestination(for: Country.self) { country in
-                    CountryDetailScreen(country: country)
-                }
-        }
-    }
-
     func startAnimations() {
         withAnimation(.easeOut(duration: 0.5)) {
             appeared = true
@@ -570,7 +551,7 @@ private extension HomeScreen {
     }
 
     func openMap(named name: String) {
-        mapTarget = MapTarget(continentFilter: name == "World map" ? nil : name)
+        coordinator.presentFullScreen(.map(continentFilter: name == "World map" ? nil : name))
     }
 
     @ViewBuilder
