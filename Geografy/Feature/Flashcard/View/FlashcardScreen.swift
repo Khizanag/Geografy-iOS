@@ -8,11 +8,20 @@ struct FlashcardScreen: View {
     @State private var countryDataService = CountryDataService()
     @State private var blobAnimating = false
     @State private var appeared = false
+    @State private var showGuide = false
 
     var body: some View {
         scrollContent
             .background { ambientBackground }
             .navigationTitle("Flashcards")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { showGuide = true } label: {
+                        Image(systemName: "info.circle")
+                    }
+                }
+            }
+            .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
             .task { loadCountries() }
             .onAppear { startAnimations() }
     }
