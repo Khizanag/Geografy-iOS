@@ -6,7 +6,6 @@ struct CompareScreen: View {
     @State private var leftCountry: Country?
     @State private var rightCountry: Country?
     @State private var activeSheet: CompareSheet?
-    @State private var appeared = false
     @State private var recentPairs: [ComparisonPair] = []
 
     var body: some View {
@@ -19,7 +18,7 @@ struct CompareScreen: View {
                 }
             }
             .task { countryDataService.loadCountries() }
-            .onAppear { loadRecentPairs(); appeared = true }
+            .onAppear { loadRecentPairs() }
             .sheet(item: $activeSheet) { sheetContent(for: $0) }
     }
 }
@@ -105,9 +104,6 @@ private extension CompareScreen {
                 activeSheet = .pickRight
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5), value: appeared)
     }
 
     var vsLabel: some View {
@@ -232,9 +228,6 @@ private extension CompareScreen {
 
             commonOrganizationsRow(left: left, right: right)
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
     }
 
     func commonOrganizationsRow(left: Country, right: Country) -> some View {
@@ -263,9 +256,6 @@ private extension CompareScreen {
                 recentPairRow(pair)
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.2), value: appeared)
     }
 
     func recentPairRow(_ pair: ComparisonPair) -> some View {
