@@ -145,41 +145,27 @@ private extension CountryListScreen {
     }
 
     var groupBySubmenu: some View {
-        Menu {
+        Picker(selection: $groupBy.animation()) {
             ForEach(GroupOption.allCases, id: \.self) { option in
-                Button {
-                    withAnimation { groupBy = option }
-                } label: {
-                    Label(
-                        option.rawValue,
-                        systemImage: groupBy == option
-                            ? "checkmark"
-                            : groupIcon(for: option)
-                    )
-                }
+                Label(option.rawValue, systemImage: groupIcon(for: option))
+                    .tag(option)
             }
         } label: {
             Label("Group by", systemImage: "rectangle.3.group")
         }
+        .pickerStyle(.menu)
     }
 
     var sortBySubmenu: some View {
-        Menu {
+        Picker(selection: $sortBy) {
             ForEach(SortOption.allCases, id: \.self) { option in
-                Button {
-                    sortBy = option
-                } label: {
-                    Label(
-                        option.rawValue,
-                        systemImage: sortBy == option
-                            ? "checkmark"
-                            : sortIcon(for: option)
-                    )
-                }
+                Label(option.rawValue, systemImage: sortIcon(for: option))
+                    .tag(option)
             }
         } label: {
             Label("Sort by", systemImage: "arrow.up.arrow.down")
         }
+        .pickerStyle(.menu)
     }
 
     var continentFilterSubmenu: some View {
