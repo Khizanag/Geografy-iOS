@@ -21,7 +21,6 @@ struct ExploreGameScreen: View {
                         gameService: gameService,
                         showRules: $showRules
                     )
-                    .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
                 }
         }
     }

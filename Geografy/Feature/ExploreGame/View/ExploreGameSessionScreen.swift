@@ -37,6 +37,7 @@ struct ExploreGameSessionScreen: View {
                 }
                 .onAppear { startBlobAnimation() }
         }
+        .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
     }
 }
 
