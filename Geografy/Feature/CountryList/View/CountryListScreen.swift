@@ -169,33 +169,20 @@ private extension CountryListScreen {
     }
 
     var continentFilterSubmenu: some View {
-        Menu {
-            Button {
-                continentFilter = nil
-            } label: {
-                if continentFilter == nil {
-                    Label("All Continents", systemImage: "checkmark")
-                } else {
-                    Label("All Continents", systemImage: "globe")
-                }
-            }
+        Picker(selection: $continentFilter) {
+            Label("All Continents", systemImage: "globe")
+                .tag(Country.Continent?.none)
 
             Divider()
 
             ForEach(Country.Continent.allCases, id: \.self) { continent in
-                Button {
-                    continentFilter = continent
-                } label: {
-                    if continentFilter == continent {
-                        Label(continent.displayName, systemImage: "checkmark")
-                    } else {
-                        Label(continent.displayName, systemImage: continentIcon(for: continent))
-                    }
-                }
+                Label(continent.displayName, systemImage: continentIcon(for: continent))
+                    .tag(Country.Continent?.some(continent))
             }
         } label: {
             Label("Continent", systemImage: "globe.americas")
         }
+        .pickerStyle(.menu)
     }
 
     func groupIcon(for option: GroupOption) -> String {
