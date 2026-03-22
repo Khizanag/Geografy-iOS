@@ -24,7 +24,7 @@ struct CoinStoreScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton()
+                    CircleCloseButton()
                 }
             }
         }

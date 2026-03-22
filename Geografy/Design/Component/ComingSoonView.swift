@@ -23,7 +23,7 @@ struct ComingSoonView: View {
         .toolbar {
             if isDismissible {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton()
+                    CircleCloseButton()
                 }
             }
         }

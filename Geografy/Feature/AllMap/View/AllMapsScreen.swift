@@ -48,48 +48,56 @@ private extension AllMapsScreen {
             DesignSystem.Color.background
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.26), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 220
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.26), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 220
+                    )
+                )
                 .frame(width: 440, height: 320)
                 .blur(radius: 32)
                 .offset(x: -80, y: -200)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
                 .frame(width: 360, height: 300)
                 .blur(radius: 40)
                 .offset(x: 140, y: 100)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.blue.opacity(0.12), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.blue.opacity(0.12), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 160
+                    )
+                )
                 .frame(width: 320, height: 260)
                 .blur(radius: 36)
                 .offset(x: -100, y: 400)
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.purple.opacity(0.10), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.purple.opacity(0.10), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 160
+                    )
+                )
                 .frame(width: 300, height: 280)
                 .blur(radius: 44)
                 .offset(x: 160, y: 650)
@@ -185,7 +193,7 @@ private extension AllMapsScreen {
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
             .shadow(color: colors.0.opacity(0.45), radius: 14, y: 5)
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

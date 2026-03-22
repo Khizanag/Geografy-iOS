@@ -112,10 +112,12 @@ private extension MultiplayerRoundView {
                 if let text = option.text {
                     Text(text)
                         .font(DesignSystem.Font.body)
-                        .foregroundStyle(optionTextColor(
-                            isSelected: isSelected,
-                            isCorrect: isCorrect
-                        ))
+                        .foregroundStyle(
+                            optionTextColor(
+                                isSelected: isSelected,
+                                isCorrect: isCorrect
+                            )
+                        )
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                 }
@@ -132,13 +134,17 @@ private extension MultiplayerRoundView {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(optionBackground(
-                isSelected: isSelected,
-                isCorrect: isCorrect
-            ))
-            .clipShape(RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            ))
+            .background(
+                optionBackground(
+                    isSelected: isSelected,
+                    isCorrect: isCorrect
+                )
+            )
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DesignSystem.CornerRadius.medium
+                )
+            )
             .overlay(
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                     .strokeBorder(

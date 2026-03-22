@@ -201,7 +201,7 @@ private extension BadgeCollectionScreen {
                     in: Capsule()
                 )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var badgeSections: some View {

@@ -18,7 +18,7 @@ struct CoinPackCard: View {
             .overlay(cardBorder)
             .geoShadow(.card)
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

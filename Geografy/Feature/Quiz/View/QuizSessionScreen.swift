@@ -67,7 +67,7 @@ private extension QuizSessionScreen {
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton { showQuitAlert = true }
+            CircleCloseButton { showQuitAlert = true }
         }
     }
 
@@ -180,27 +180,42 @@ private extension QuizSessionScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                    center: .center, startRadius: 0, endRadius: 200
-                ))
-                .frame(width: 420, height: 320).blur(radius: 36)
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
+                .frame(width: 420, height: 320)
+                .blur(radius: 36)
                 .offset(x: -80, y: -100)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
-                    center: .center, startRadius: 0, endRadius: 180
-                ))
-                .frame(width: 360, height: 300).blur(radius: 44)
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
+                .frame(width: 360, height: 300)
+                .blur(radius: 44)
                 .offset(x: 140, y: 60)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
-                    center: .center, startRadius: 0, endRadius: 160
-                ))
-                .frame(width: 320, height: 260).blur(radius: 40)
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 160
+                    )
+                )
+                .frame(width: 320, height: 260)
+                .blur(radius: 40)
                 .offset(x: -40, y: 400)
                 .scaleEffect(blobAnimating ? 1.05 : 0.95)
         }
@@ -233,11 +248,13 @@ private extension QuizSessionScreen {
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)
 
                 Capsule()
-                    .fill(LinearGradient(
-                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accent.opacity(0.7)],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    ))
+                    .fill(
+                        LinearGradient(
+                            colors: [DesignSystem.Color.accent, DesignSystem.Color.accent.opacity(0.7)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                     .frame(width: geo.size.width * progress)
                     .animation(.spring(response: 0.4, dampingFraction: 0.8), value: progress)
             }

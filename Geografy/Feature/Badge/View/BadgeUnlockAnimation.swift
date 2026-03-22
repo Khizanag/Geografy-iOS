@@ -147,7 +147,7 @@ private extension BadgeUnlockAnimation {
                     )
                 )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .opacity(bannerOpacity)
     }
 

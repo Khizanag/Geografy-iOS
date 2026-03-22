@@ -30,7 +30,10 @@ struct DailyChallengeSessionScreen: View {
                 } message: {
                     Text("Your progress will be lost.")
                 }
-                .sheet(isPresented: $showResult) { resultSheet }
+                .sheet(isPresented: $showResult) {
+                    resultSheet
+                        .interactiveDismissDisabled()
+                }
                 .onAppear { startBlobAnimation() }
         }
     }
@@ -43,7 +46,7 @@ private extension DailyChallengeSessionScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) { scorePill }
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton { showQuitAlert = true }
+            CircleCloseButton { showQuitAlert = true }
         }
     }
 
@@ -127,29 +130,33 @@ private extension DailyChallengeSessionScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.20),
-                        .clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.accent.opacity(0.20),
+                            .clear,
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
                 .frame(width: 420, height: 320)
                 .blur(radius: 36)
                 .offset(x: -80, y: -100)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.indigo.opacity(0.16),
-                        .clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.indigo.opacity(0.16),
+                            .clear,
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
                 .frame(width: 360, height: 300)
                 .blur(radius: 44)
                 .offset(x: 140, y: 200)
@@ -174,6 +181,11 @@ private extension DailyChallengeSessionScreen {
     func finishChallenge() {
         let timeSpent = Date().timeIntervalSince(startTime)
         service.saveResult(score: score, timeSpent: timeSpent)
-        showResult = true
+
+        // Delay sheet presentation to avoid dismissal caused by
+        // @Observable service updates triggering a parent re-render.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            showResult = true
+        }
     }
 }

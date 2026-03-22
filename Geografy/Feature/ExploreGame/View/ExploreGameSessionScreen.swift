@@ -80,7 +80,7 @@ private extension ExploreGameSessionScreen {
             .buttonStyle(.plain)
         }
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton { showQuitAlert = true }
+            CircleCloseButton { showQuitAlert = true }
         }
     }
 
@@ -136,7 +136,7 @@ private extension ExploreGameSessionScreen {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton()
+                    CircleCloseButton()
                 }
             }
         }
@@ -311,19 +311,23 @@ private extension ExploreGameSessionScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.18), .clear],
-                    center: .center, startRadius: 0, endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.18), .clear],
+                        center: .center, startRadius: 0, endRadius: 200
+                    )
+                )
                 .frame(width: 400, height: 300)
                 .blur(radius: 40)
                 .offset(x: -60, y: -120)
                 .scaleEffect(blobAnimating ? 1.08 : 0.92)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.14), .clear],
-                    center: .center, startRadius: 0, endRadius: 160
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.indigo.opacity(0.14), .clear],
+                        center: .center, startRadius: 0, endRadius: 160
+                    )
+                )
                 .frame(width: 340, height: 280)
                 .blur(radius: 44)
                 .offset(x: 120, y: 80)

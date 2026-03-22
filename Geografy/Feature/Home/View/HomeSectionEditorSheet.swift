@@ -57,7 +57,7 @@ private extension HomeSectionEditorSheet {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
         ToolbarItem(placement: .confirmationAction) {
             doneButton

@@ -324,7 +324,7 @@ private extension CountryListScreen {
                 onFavoriteTap: { favoritesService.toggle(code: country.code) }
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .simultaneousGesture(TapGesture().onEnded {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         })

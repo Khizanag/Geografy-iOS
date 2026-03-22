@@ -36,7 +36,7 @@ private extension MapCarouselCard {
             .shadow(color: gradientColors.0.opacity(0.4), radius: 16, y: 8)
             .contentShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var compactCard: some View {
@@ -60,7 +60,7 @@ private extension MapCarouselCard {
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge))
             .shadow(color: gradientColors.0.opacity(0.35), radius: 16, y: 6)
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var gradientBackground: some View {

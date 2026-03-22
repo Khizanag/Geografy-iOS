@@ -28,7 +28,7 @@ private extension CompareCountryPicker {
     @ToolbarContentBuilder
     var closeToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
     }
 }
@@ -63,7 +63,7 @@ private extension CompareCountryPicker {
                 showContinent: true
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

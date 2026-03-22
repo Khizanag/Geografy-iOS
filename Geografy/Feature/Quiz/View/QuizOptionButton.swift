@@ -22,7 +22,7 @@ struct QuizOptionButton: View {
                         .strokeBorder(borderColor, lineWidth: 1.5)
                 }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .disabled(state != .default)
         .shadow(color: glowColor, radius: glowRadius, y: 3)
         .offset(x: shakeOffset)

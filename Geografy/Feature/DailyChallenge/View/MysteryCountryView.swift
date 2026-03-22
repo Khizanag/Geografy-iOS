@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MysteryCountryView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     let content: DailyChallenge.MysteryCountryContent
 
     @Binding var score: Int
@@ -11,6 +13,18 @@ struct MysteryCountryView: View {
     let onFinish: () -> Void
 
     var body: some View {
+        if horizontalSizeClass == .regular {
+            regularLayout
+        } else {
+            compactLayout
+        }
+    }
+}
+
+// MARK: - Layouts
+
+private extension MysteryCountryView {
+    var compactLayout: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 promptSection
@@ -19,6 +33,27 @@ struct MysteryCountryView: View {
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
             .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+    }
+
+    var regularLayout: some View {
+        HStack(alignment: .top, spacing: DesignSystem.Spacing.lg) {
+            ScrollView {
+                VStack(spacing: DesignSystem.Spacing.lg) {
+                    promptSection
+                    cluesSection
+                }
+                .padding(.vertical, DesignSystem.Spacing.lg)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+            }
+            .frame(maxWidth: .infinity)
+
+            ScrollView {
+                guessSection
+                    .padding(.vertical, DesignSystem.Spacing.lg)
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+            }
+            .frame(maxWidth: .infinity)
         }
     }
 }
@@ -85,6 +120,7 @@ private extension MysteryCountryView {
             .frame(width: DesignSystem.Size.md)
     }
 
+    @ViewBuilder
     func clueText(
         clue: DailyChallenge.MysteryClue,
         isRevealed: Bool
@@ -94,9 +130,13 @@ private extension MysteryCountryView {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             if isRevealed {
-                Text(clue.value)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                if clue.label == "Flag" {
+                    FlagView(countryCode: clue.value, height: 32)
+                } else {
+                    Text(clue.value)
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                }
             } else {
                 Text("Tap to reveal (-\(clue.pointCost) pts)")
                     .font(DesignSystem.Font.subheadline)

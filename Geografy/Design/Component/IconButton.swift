@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GeoIconButton: View {
+struct IconButton: View {
     private let systemImage: String
     private let isActive: Bool
     private let action: () -> Void
@@ -30,7 +30,7 @@ struct GeoIconButton: View {
 
 // MARK: - Helpers
 
-private extension GeoIconButton {
+private extension IconButton {
     var backgroundColor: Color {
         if isActive {
             DesignSystem.Color.accent

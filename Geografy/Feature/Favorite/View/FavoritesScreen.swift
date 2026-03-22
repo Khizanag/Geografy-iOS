@@ -14,7 +14,7 @@ struct FavoritesScreen: View {
                         NavigationLink(value: country) {
                             countryCard(for: country)
                         }
-                        .buttonStyle(GeoPressButtonStyle())
+                        .buttonStyle(PressButtonStyle())
                         .simultaneousGesture(TapGesture().onEnded {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         })

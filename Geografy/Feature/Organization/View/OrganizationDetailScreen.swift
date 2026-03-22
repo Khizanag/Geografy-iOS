@@ -50,24 +50,28 @@ private extension OrganizationDetailScreen {
             DesignSystem.Color.background
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [organization.highlightColor.opacity(0.15), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [organization.highlightColor.opacity(0.15), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
                 .frame(width: 360, height: 280)
                 .blur(radius: 30)
                 .offset(x: -60, y: -180)
                 .scaleEffect(blobAnimating ? 1.08 : 0.94)
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.10), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.indigo.opacity(0.10), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 160
+                    )
+                )
                 .frame(width: 300, height: 260)
                 .blur(radius: 40)
                 .offset(x: 120, y: 260)
@@ -192,7 +196,7 @@ private extension OrganizationDetailScreen {
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
             .shadow(color: organization.highlightColor.opacity(0.4), radius: 10, y: 4)
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var memberCountriesSection: some View {
@@ -231,7 +235,7 @@ private extension OrganizationDetailScreen {
                         .padding(DesignSystem.Spacing.sm)
                     }
                 }
-                .buttonStyle(GeoPressButtonStyle())
+                .buttonStyle(PressButtonStyle())
                 .simultaneousGesture(TapGesture().onEnded {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 })

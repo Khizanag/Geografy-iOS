@@ -134,13 +134,15 @@ private extension CountryDetailScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Button {
-                    activeSheet = .info(InfoItem(
-                        icon: "globe.americas.fill",
-                        title: "Continent",
-                        value: country.continent.displayName,
-                        supportsMap: true,
-                        mapButtonTitle: "Open \(country.continent.displayName) Map"
-                    ))
+                    activeSheet = .info(
+                        InfoItem(
+                            icon: "globe.americas.fill",
+                            title: "Continent",
+                            value: country.continent.displayName,
+                            supportsMap: true,
+                            mapButtonTitle: "Open \(country.continent.displayName) Map"
+                        )
+                    )
                 } label: {
                     HStack(spacing: DesignSystem.Spacing.xxs) {
                         Text(country.continent.displayName)
@@ -174,12 +176,14 @@ private extension CountryDetailScreen {
         CardView {
             HStack(spacing: 0) {
                 Button {
-                    activeSheet = .info(InfoItem(
-                        icon: "mappin.and.ellipse",
-                        title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
-                        value: capitalInfoValue,
-                        supportsMap: false
-                    ))
+                    activeSheet = .info(
+                        InfoItem(
+                            icon: "mappin.and.ellipse",
+                            title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
+                            value: capitalInfoValue,
+                            supportsMap: false
+                        )
+                    )
                 } label: {
                     factChip(
                         icon: "mappin",
@@ -187,36 +191,40 @@ private extension CountryDetailScreen {
                         value: country.capital
                     )
                 }
-                .buttonStyle(GeoPressButtonStyle())
+                .buttonStyle(PressButtonStyle())
 
                 Divider().frame(height: 44)
 
                 Button {
-                    activeSheet = .info(InfoItem(
-                        icon: "map.fill",
-                        title: "Area",
-                        value: country.area.formatArea(),
-                        supportsMap: false
-                    ))
+                    activeSheet = .info(
+                        InfoItem(
+                            icon: "map.fill",
+                            title: "Area",
+                            value: country.area.formatArea(),
+                            supportsMap: false
+                        )
+                    )
                 } label: {
                     factChip(icon: "map", label: "Area", value: country.area.formatArea())
                 }
-                .buttonStyle(GeoPressButtonStyle())
+                .buttonStyle(PressButtonStyle())
 
                 Divider().frame(height: 44)
 
                 Button {
-                    activeSheet = .info(InfoItem(
-                        icon: "globe.americas.fill",
-                        title: "Continent",
-                        value: country.continent.displayName,
-                        supportsMap: true,
-                        mapButtonTitle: "Open \(country.continent.displayName) Map"
-                    ))
+                    activeSheet = .info(
+                        InfoItem(
+                            icon: "globe.americas.fill",
+                            title: "Continent",
+                            value: country.continent.displayName,
+                            supportsMap: true,
+                            mapButtonTitle: "Open \(country.continent.displayName) Map"
+                        )
+                    )
                 } label: {
                     factChip(icon: "globe", label: "Continent", value: country.continent.displayName)
                 }
-                .buttonStyle(GeoPressButtonStyle())
+                .buttonStyle(PressButtonStyle())
             }
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
@@ -285,7 +293,7 @@ private extension CountryDetailScreen {
                 .padding(DesignSystem.Spacing.sm)
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)
         .animation(.easeOut(duration: 0.5).delay(0.12), value: appeared)
@@ -437,17 +445,19 @@ private extension CountryDetailScreen {
     var governmentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Government", premium: true)
-            GeoInfoTile(
+            InfoTile(
                 icon: "building.columns",
                 title: "Form of Government",
                 value: country.formOfGovernment
             ) {
-                activeSheet = .info(InfoItem(
-                    icon: "building.columns.fill",
-                    title: "Form of Government",
-                    value: country.formOfGovernment,
-                    supportsMap: false
-                ))
+                activeSheet = .info(
+                    InfoItem(
+                        icon: "building.columns.fill",
+                        title: "Form of Government",
+                        value: country.formOfGovernment,
+                        supportsMap: false
+                    )
+                )
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -462,17 +472,19 @@ private extension CountryDetailScreen {
     var currencySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Currency", premium: true)
-            GeoInfoTile(
+            InfoTile(
                 icon: "dollarsign.circle",
                 title: country.currency.name,
                 value: country.currency.code
             ) {
-                activeSheet = .info(InfoItem(
-                    icon: "dollarsign.circle.fill",
-                    title: "Currency",
-                    value: "\(country.currency.name) (\(country.currency.code))",
-                    supportsMap: false
-                ))
+                activeSheet = .info(
+                    InfoItem(
+                        icon: "dollarsign.circle.fill",
+                        title: "Currency",
+                        value: "\(country.currency.name) (\(country.currency.code))",
+                        supportsMap: false
+                    )
+                )
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -536,13 +548,15 @@ private extension CountryDetailScreen {
     }
 
     var capitalInfoValue: String {
-        country.allCapitals.map { capital in
-            if let role = capital.role {
-                "\(capital.name) (\(role))"
-            } else {
-                capital.name
+        country.allCapitals
+            .map { capital in
+                if let role = capital.role {
+                    "\(capital.name) (\(role))"
+                } else {
+                    capital.name
+                }
             }
-        }.joined(separator: "\n")
+            .joined(separator: "\n")
     }
 
     func densityColor(for fraction: Double) -> Color {

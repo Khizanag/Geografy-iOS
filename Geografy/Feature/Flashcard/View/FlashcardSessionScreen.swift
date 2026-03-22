@@ -80,7 +80,7 @@ private extension FlashcardSessionScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton { showQuitAlert = true }
+            CircleCloseButton { showQuitAlert = true }
         }
     }
 

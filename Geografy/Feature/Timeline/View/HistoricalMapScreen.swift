@@ -199,7 +199,7 @@ private extension HistoricalMapScreen {
     @ToolbarContentBuilder
     var closeToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
     }
 }
@@ -214,7 +214,7 @@ private extension HistoricalMapScreen {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        GeoCircleCloseButton { selectedEvent = nil }
+                        CircleCloseButton { selectedEvent = nil }
                     }
                 }
         }
@@ -433,24 +433,25 @@ private extension HistoricalMapScreen {
     func applyColorsForYear(shapes: [CountryShape]) {
         let dimmedColor = SwiftUI.Color(hex: "3A3A3A")
 
-        let colored = shapes.map { shape -> CountryShape in
-            let isIndependent: Bool
-            if let year = independenceMap[shape.id] {
-                isIndependent = year <= selectedYear
-            } else {
-                isIndependent = true
-            }
+        let colored = shapes
+            .map { shape -> CountryShape in
+                let isIndependent: Bool
+                if let year = independenceMap[shape.id] {
+                    isIndependent = year <= selectedYear
+                } else {
+                    isIndependent = true
+                }
 
-            return CountryShape(
-                id: shape.id,
-                name: shape.name,
-                continent: shape.continent,
-                polygons: shape.polygons,
-                centroid: shape.centroid,
-                boundingBox: shape.boundingBox,
-                color: isIndependent ? shape.color : dimmedColor
-            )
-        }
+                return CountryShape(
+                    id: shape.id,
+                    name: shape.name,
+                    continent: shape.continent,
+                    polygons: shape.polygons,
+                    centroid: shape.centroid,
+                    boundingBox: shape.boundingBox,
+                    color: isIndependent ? shape.color : dimmedColor
+                )
+            }
 
         withAnimation(.easeInOut(duration: 0.2)) {
             mapState.countryShapes = colored

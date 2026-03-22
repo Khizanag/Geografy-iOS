@@ -47,7 +47,7 @@ struct TravelMapScreen: View {
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                GeoCircleCloseButton()
+                CircleCloseButton()
             }
             ToolbarItem(placement: .topBarTrailing) {
                 labelsToggle
@@ -128,15 +128,16 @@ private extension TravelMapScreen {
     }
 
     var styledShapes: [CountryShape] {
-        mapState.countryShapes.map { shape in
-            var modified = shape
-            if !travelCodes.contains(shape.id) {
-                modified.color = Color(hex: "1A1A2E").opacity(0.5)
-                // Hide labels for non-travel countries
-                modified.name = ""
+        mapState.countryShapes
+            .map { shape in
+                var modified = shape
+                if !travelCodes.contains(shape.id) {
+                    modified.color = Color(hex: "1A1A2E").opacity(0.5)
+                    // Hide labels for non-travel countries
+                    modified.name = ""
+                }
+                return modified
             }
-            return modified
-        }
     }
 }
 

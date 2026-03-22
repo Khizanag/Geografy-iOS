@@ -108,25 +108,29 @@ private extension CapitalChainView {
                 )
                 Text(option.name)
                     .font(DesignSystem.Font.body)
-                    .foregroundStyle(textColor(
-                        option: option,
-                        step: step
-                    ))
+                    .foregroundStyle(
+                        textColor(
+                            option: option,
+                            step: step
+                        )
+                    )
                 Spacer()
                 feedbackIcon(option: option, step: step)
             }
             .padding(DesignSystem.Spacing.md)
-            .background(backgroundColor(
-                option: option,
-                step: step
-            ))
+            .background(
+                backgroundColor(
+                    option: option,
+                    step: step
+                )
+            )
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: DesignSystem.CornerRadius.medium
                 )
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .disabled(showFeedback)
     }
 

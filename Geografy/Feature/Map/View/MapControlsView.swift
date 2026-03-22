@@ -23,11 +23,11 @@ struct MapControlsView: View {
 
 private extension MapControlsView {
     var backButton: some View {
-        GeoIconButton(systemImage: "chevron.left", action: onBack)
+        IconButton(systemImage: "chevron.left", action: onBack)
     }
 
     var labelsToggleButton: some View {
-        GeoIconButton(
+        IconButton(
             systemImage: "textformat",
             isActive: showLabels
         ) {

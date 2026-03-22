@@ -30,7 +30,7 @@ struct BadgeDetailSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton { dismiss() }
+                    CircleCloseButton { dismiss() }
                 }
             }
         }
@@ -254,7 +254,7 @@ private extension BadgeDetailSheet {
                 )
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .disabled(!canPin && !isPinned)
         .opacity(!canPin && !isPinned ? 0.5 : 1.0)
     }

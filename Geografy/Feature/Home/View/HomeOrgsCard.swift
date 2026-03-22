@@ -69,7 +69,7 @@ private extension HomeOrgsCard {
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     func orgChipLogo(_ org: Organization) -> some View {

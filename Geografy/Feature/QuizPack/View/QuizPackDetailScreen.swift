@@ -185,7 +185,7 @@ private extension QuizPackDetailScreen {
                 isLocked: locked
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .disabled(locked)
     }
 }
@@ -195,7 +195,7 @@ private extension QuizPackDetailScreen {
 private extension QuizPackDetailScreen {
     var closeToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton { dismiss() }
+            CircleCloseButton { dismiss() }
         }
     }
 }

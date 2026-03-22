@@ -13,7 +13,7 @@ struct CompareCountrySlot: View {
                     .padding(DesignSystem.Spacing.md)
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

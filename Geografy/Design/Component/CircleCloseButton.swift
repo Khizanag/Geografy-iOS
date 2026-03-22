@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GeoCircleCloseButton: View {
+struct CircleCloseButton: View {
     @Environment(\.dismiss) private var dismiss
 
     private let onClose: (() -> Void)?

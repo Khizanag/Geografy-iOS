@@ -253,7 +253,7 @@ private extension QuizPackBrowserScreen {
                 isUnlocked: unlocked
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

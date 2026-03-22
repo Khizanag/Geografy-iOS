@@ -272,27 +272,36 @@ private extension CompareScreen {
             }
         } label: {
             CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: pair.leftCode, height: 24)
-                    Text(pair.leftName)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-                    Spacer(minLength: 0)
-                    Text("vs")
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    HStack(spacing: DesignSystem.Spacing.xs) {
+                        FlagView(countryCode: pair.leftCode, height: 24)
+                        Text(pair.leftName)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+
+                    Text("VS")
                         .font(DesignSystem.Font.caption2)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
-                    Spacer(minLength: 0)
-                    Text(pair.rightName)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-                    FlagView(countryCode: pair.rightCode, height: 24)
+                        .fixedSize()
+
+                    HStack(spacing: DesignSystem.Spacing.xs) {
+                        Text(pair.rightName)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                        FlagView(countryCode: pair.rightCode, height: 24)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(DesignSystem.Spacing.sm)
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

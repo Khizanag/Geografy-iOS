@@ -15,7 +15,7 @@ struct HomeQuizCard: View {
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge))
             .shadow(color: Color(hex: "0F3460").opacity(0.5), radius: 24, y: 12)
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .onAppear {
             withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
                 pulseScale = 1.05

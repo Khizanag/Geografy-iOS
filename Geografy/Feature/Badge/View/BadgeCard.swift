@@ -13,7 +13,7 @@ struct BadgeCard: View {
         } label: {
             cardContent
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

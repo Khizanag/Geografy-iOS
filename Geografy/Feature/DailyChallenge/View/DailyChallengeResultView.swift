@@ -34,7 +34,7 @@ private extension DailyChallengeResultView {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton { onDismiss() }
+            CircleCloseButton { onDismiss() }
         }
     }
 }
@@ -214,7 +214,7 @@ private extension DailyChallengeResultView {
             )
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton()
+                    CircleCloseButton()
                 }
             }
         }
@@ -227,15 +227,17 @@ private extension DailyChallengeResultView {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.22),
-                        .clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.accent.opacity(0.22),
+                            .clear,
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
                 .frame(width: 420, height: 320)
                 .blur(radius: 36)
                 .offset(x: -80, y: -60)

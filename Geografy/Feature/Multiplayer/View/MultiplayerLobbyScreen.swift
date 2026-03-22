@@ -29,7 +29,7 @@ struct MultiplayerLobbyScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton { dismiss() }
+                    CircleCloseButton { dismiss() }
                 }
             }
             .onAppear { startBlobAnimation() }
@@ -290,30 +290,34 @@ private extension MultiplayerLobbyScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.18),
-                        DesignSystem.Color.background.opacity(0),
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.accent.opacity(0.18),
+                            DesignSystem.Color.background.opacity(0),
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
                 .frame(width: 400, height: 300)
                 .blur(radius: 40)
                 .offset(x: -60, y: -120)
                 .scaleEffect(blobAnimating ? 1.08 : 0.92)
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.purple.opacity(0.14),
-                        DesignSystem.Color.background.opacity(0),
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.purple.opacity(0.14),
+                            DesignSystem.Color.background.opacity(0),
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
                 .frame(width: 350, height: 280)
                 .blur(radius: 44)
                 .offset(x: 120, y: 80)

@@ -11,7 +11,7 @@ struct TravelJournalEntryCard: View {
         Button(action: onTap) {
             cardContent
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 

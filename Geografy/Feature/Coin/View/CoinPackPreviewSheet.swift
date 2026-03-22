@@ -22,7 +22,7 @@ struct CoinPackPreviewSheet: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .overlay(alignment: .topTrailing) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
                 .padding(DesignSystem.Spacing.md)
         }
         .onAppear {

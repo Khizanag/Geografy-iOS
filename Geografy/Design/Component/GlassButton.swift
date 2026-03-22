@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GeoGlassButton: View {
+struct GlassButton: View {
     private let title: String
     private let systemImage: String?
     private let action: () -> Void

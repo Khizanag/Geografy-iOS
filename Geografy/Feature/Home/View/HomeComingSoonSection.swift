@@ -104,7 +104,7 @@ private extension HomeComingSoonSection {
             .frame(height: 128)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     func voteBadge(count: Int, hasVoted: Bool) -> some View {

@@ -165,7 +165,7 @@ private extension CustomQuizPreviewScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
     }
 }

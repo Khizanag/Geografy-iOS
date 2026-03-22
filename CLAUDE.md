@@ -16,7 +16,7 @@ Follow all rules in `~/.claude/rules/personal-apps.md` (shared across all person
 - **UI**: SwiftUI only (UIKit only when SwiftUI can't achieve the goal)
 - **Design pattern**: Views with extracted subviews. MVVM only when views become large
 - **Design system**: `DesignSystem.Color`, `DesignSystem.Font`, `DesignSystem.Spacing`, `DesignSystem.Size`, `DesignSystem.CornerRadius`, `DesignSystem.IconSize`
-- **Components**: `CardView`, `GeoButton`, `GeoInfoTile`, `GeoIconButton`, `GeoCircleCloseButton`, `GeoGlassButton`, `FlagView`, `PulsingCirclesView`, `ZoomableFlagView`, `PremiumBadge`, `LevelBadgeView`, `ScoreRingView`, `ProfileAvatarView`, `CountryRowView`, `SectionHeaderView`
+- **Components**: `CardView`, `GeoButton`, `InfoTile`, `IconButton`, `CircleCloseButton`, `GlassButton`, `FlagView`, `PulsingCirclesView`, `ZoomableFlagView`, `PremiumBadge`, `LevelBadgeView`, `ScoreRingView`, `ProfileAvatarView`, `CountryRowView`, `SectionHeaderView`
 - **Data**: 197 countries in `countries.json`, 10m GeoJSON for map borders, 255 PDF flag assets
 - **Offline-first**: All data bundled, no network required
 
@@ -58,10 +58,10 @@ Geografy/
 
 ## Component Reuse Rules (CRITICAL)
 These components MUST be reused — NEVER create alternatives:
-- **Close button**: Always `GeoCircleCloseButton()` — every sheet MUST have a close button in toolbar. NEVER create a custom X button
+- **Close button**: Always `CircleCloseButton()` — every sheet MUST have a close button in toolbar. NEVER create a custom X button
 - **Flags**: Always `FlagView(countryCode:height:)` — NEVER use emoji or custom flag views
 - **Cards**: Always `CardView { content }` — NEVER create custom card backgrounds
-- **Press style**: Always `GeoPressButtonStyle()` for tappable cards — NEVER use plain with custom opacity
+- **Press style**: Always `PressButtonStyle()` for tappable cards — NEVER use plain with custom opacity
 - **Glass buttons**: Use `.buttonStyle(.glass)` or `.glassEffect(.regular.interactive(), in: .circle)` — NEVER use `.ultraThinMaterial` as a substitute
 - **Section headers**: Always `SectionHeaderView(title:icon:)` — accent bar (no icon) or icon style. NEVER create custom section headers
 - **Menu items**: ALWAYS use `Label("Title", systemImage: "icon")` — NEVER text-only menu items

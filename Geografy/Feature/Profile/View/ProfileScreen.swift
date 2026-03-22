@@ -370,7 +370,10 @@ private extension ProfileScreen {
             .padding(DesignSystem.Spacing.md)
             .background(
                 LinearGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.12), DesignSystem.Color.accent.opacity(0.05)],
+                    colors: [
+                        DesignSystem.Color.accent.opacity(0.12),
+                        DesignSystem.Color.accent.opacity(0.05),
+                    ],
                     startPoint: .leading,
                     endPoint: .trailing
                 ),
@@ -381,7 +384,7 @@ private extension ProfileScreen {
                     .strokeBorder(DesignSystem.Color.accent.opacity(0.25), lineWidth: 1)
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 
@@ -415,7 +418,7 @@ private extension ProfileScreen {
                 color: DesignSystem.Color.accent
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var signOutRow: some View {
@@ -429,7 +432,7 @@ private extension ProfileScreen {
                 color: DesignSystem.Color.textSecondary
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var deleteAccountRow: some View {
@@ -443,7 +446,7 @@ private extension ProfileScreen {
                 color: DesignSystem.Color.error
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     func accountRowLabel(icon: String, title: String, color: Color) -> some View {
@@ -477,45 +480,53 @@ private extension ProfileScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.25), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 220
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.25), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 220
+                    )
+                )
                 .frame(width: 440, height: 320)
                 .blur(radius: 32)
                 .offset(x: -80, y: -80)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
                 .frame(width: 360, height: 300)
                 .blur(radius: 40)
                 .offset(x: 140, y: 80)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.blue.opacity(0.12), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.blue.opacity(0.12), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 160
+                    )
+                )
                 .frame(width: 320, height: 260)
                 .blur(radius: 36)
                 .offset(x: -100, y: 400)
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.purple.opacity(0.10), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.purple.opacity(0.10), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 160
+                    )
+                )
                 .frame(width: 320, height: 280)
                 .blur(radius: 44)
                 .offset(x: 160, y: 700)
@@ -572,7 +583,7 @@ private extension ProfileScreen {
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
     }
 

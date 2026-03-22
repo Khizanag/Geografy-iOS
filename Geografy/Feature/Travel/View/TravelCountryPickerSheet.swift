@@ -71,7 +71,7 @@ private extension TravelCountryPickerSheet {
                 .padding(DesignSystem.Spacing.sm)
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     func countryInfo(_ country: Country) -> some View {

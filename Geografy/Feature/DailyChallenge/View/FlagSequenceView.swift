@@ -91,25 +91,29 @@ private extension FlagSequenceView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Text(option.name)
                     .font(DesignSystem.Font.body)
-                    .foregroundStyle(textColor(
-                        option: option,
-                        correct: correct
-                    ))
+                    .foregroundStyle(
+                        textColor(
+                            option: option,
+                            correct: correct
+                        )
+                    )
                 Spacer()
                 feedbackIcon(option: option, correct: correct)
             }
             .padding(DesignSystem.Spacing.md)
-            .background(backgroundColor(
-                option: option,
-                correct: correct
-            ))
+            .background(
+                backgroundColor(
+                    option: option,
+                    correct: correct
+                )
+            )
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: DesignSystem.CornerRadius.medium
                 )
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .disabled(showFeedback)
     }
 

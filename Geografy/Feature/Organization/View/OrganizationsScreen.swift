@@ -24,7 +24,7 @@ struct OrganizationsScreen: View {
                             .padding(DesignSystem.Spacing.sm)
                         }
                     }
-                    .buttonStyle(GeoPressButtonStyle())
+                    .buttonStyle(PressButtonStyle())
                     .simultaneousGesture(TapGesture().onEnded {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     })

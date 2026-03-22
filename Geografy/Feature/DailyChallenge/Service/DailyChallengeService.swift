@@ -103,7 +103,14 @@ private extension DailyChallengeService {
     func buildClues(
         for country: Country
     ) -> [DailyChallenge.MysteryClue] {
-        [
+        let neighborNames = ClueGenerator.borderCountryNames(
+            for: country.code
+        )
+        let neighborsValue = neighborNames.isEmpty
+            ? "Island nation"
+            : neighborNames.joined(separator: ", ")
+
+        return [
             DailyChallenge.MysteryClue(
                 id: 0,
                 label: "Continent",
@@ -120,23 +127,23 @@ private extension DailyChallengeService {
             ),
             DailyChallenge.MysteryClue(
                 id: 2,
-                label: "Language",
-                value: country.languages.first?.name ?? "Unknown",
-                iconName: "textformat",
-                pointCost: 200
-            ),
-            DailyChallenge.MysteryClue(
-                id: 3,
                 label: "Capital Hint",
                 value: capitalHint(for: country.capital),
                 iconName: "building.columns",
                 pointCost: 200
             ),
             DailyChallenge.MysteryClue(
+                id: 3,
+                label: "Flag",
+                value: country.code,
+                iconName: "flag.fill",
+                pointCost: 200
+            ),
+            DailyChallenge.MysteryClue(
                 id: 4,
-                label: "Currency",
-                value: country.currency.name,
-                iconName: "banknote",
+                label: "Neighbors",
+                value: neighborsValue,
+                iconName: "map.fill",
                 pointCost: 200
             ),
         ]

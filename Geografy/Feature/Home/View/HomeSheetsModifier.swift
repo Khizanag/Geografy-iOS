@@ -85,7 +85,7 @@ private extension HomeSheetsModifier {
             content()
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        GeoCircleCloseButton()
+                        CircleCloseButton()
                     }
                 }
         }

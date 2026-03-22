@@ -22,7 +22,7 @@ extension CountryDetailScreen {
                         NavigationLink(value: org) {
                             orgRow(org, countryDataService: countryDataService)
                         }
-                        .buttonStyle(GeoPressButtonStyle())
+                        .buttonStyle(PressButtonStyle())
                         .simultaneousGesture(TapGesture().onEnded {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         })

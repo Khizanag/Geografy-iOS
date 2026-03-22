@@ -122,32 +122,33 @@ private extension QuizPackService {
             (.oceania, "oceania", 5),
         ]
 
-        return continents.enumerated().map { index, entry in
-            let (continent, slug, _) = entry
-            let filtered = countries.filter {
-                $0.continent == continent
-            }
-            let levels = makeLevels(
-                packSlug: "capitals_\(slug)",
-                countries: filtered,
-                questionsPerLevel: 10
-            )
-            let previousID: String? = index > 0
-                ? "capitals_\(continents[index - 1].1)"
-                : nil
+        return continents.enumerated()
+            .map { index, entry in
+                let (continent, slug, _) = entry
+                let filtered = countries.filter {
+                    $0.continent == continent
+                }
+                let levels = makeLevels(
+                    packSlug: "capitals_\(slug)",
+                    countries: filtered,
+                    questionsPerLevel: 10
+                )
+                let previousID: String? = index > 0
+                    ? "capitals_\(continents[index - 1].1)"
+                    : nil
 
-            return QuizPack(
-                id: "capitals_\(slug)",
-                name: "\(continent.displayName) Capitals",
-                description: "Master all capitals in \(continent.displayName)",
-                icon: "building.columns.fill",
-                category: .capitals,
-                levels: levels,
-                gradientColors: QuizPackCategory.capitals.gradientColors,
-                isPremium: index >= 2,
-                prerequisitePackID: previousID
-            )
-        }
+                return QuizPack(
+                    id: "capitals_\(slug)",
+                    name: "\(continent.displayName) Capitals",
+                    description: "Master all capitals in \(continent.displayName)",
+                    icon: "building.columns.fill",
+                    category: .capitals,
+                    levels: levels,
+                    gradientColors: QuizPackCategory.capitals.gradientColors,
+                    isPremium: index >= 2,
+                    prerequisitePackID: previousID
+                )
+            }
     }
 }
 
@@ -392,26 +393,27 @@ private extension QuizPackService {
             ("NATO", "NATO", "shield.fill"),
         ]
 
-        return orgSlugs.map { code, name, icon in
-            let members = countries.filter {
-                $0.organizations.contains(code)
+        return orgSlugs
+            .map { code, name, icon in
+                let members = countries.filter {
+                    $0.organizations.contains(code)
+                }
+                return QuizPack(
+                    id: "org_\(code.lowercased())",
+                    name: "\(name) Members",
+                    description: "Which countries belong to the \(name)?",
+                    icon: icon,
+                    category: .organizations,
+                    levels: makeLevels(
+                        packSlug: "org_\(code.lowercased())",
+                        countries: members,
+                        questionsPerLevel: 10
+                    ),
+                    gradientColors: QuizPackCategory.organizations.gradientColors,
+                    isPremium: true,
+                    prerequisitePackID: nil
+                )
             }
-            return QuizPack(
-                id: "org_\(code.lowercased())",
-                name: "\(name) Members",
-                description: "Which countries belong to the \(name)?",
-                icon: icon,
-                category: .organizations,
-                levels: makeLevels(
-                    packSlug: "org_\(code.lowercased())",
-                    countries: members,
-                    questionsPerLevel: 10
-                ),
-                gradientColors: QuizPackCategory.organizations.gradientColors,
-                isPremium: true,
-                prerequisitePackID: nil
-            )
-        }
     }
 }
 
@@ -424,14 +426,15 @@ private extension QuizPackService {
         questionsPerLevel: Int
     ) -> [QuizPackLevel] {
         let chunks = countries.chunked(into: questionsPerLevel)
-        return chunks.enumerated().map { index, chunk in
-            QuizPackLevel(
-                id: "\(packSlug)_level_\(index + 1)",
-                name: "Level \(index + 1)",
-                questionCount: chunk.count,
-                countryCodes: chunk.map(\.code)
-            )
-        }
+        return chunks.enumerated()
+            .map { index, chunk in
+                QuizPackLevel(
+                    id: "\(packSlug)_level_\(index + 1)",
+                    name: "Level \(index + 1)",
+                    questionCount: chunk.count,
+                    countryCodes: chunk.map(\.code)
+                )
+            }
     }
 }
 

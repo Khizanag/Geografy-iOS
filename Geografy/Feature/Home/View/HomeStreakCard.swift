@@ -62,6 +62,6 @@ private extension HomeStreakCard {
                 .padding(.vertical, DesignSystem.Spacing.xs)
                 .background(DesignSystem.Color.accent, in: Capsule())
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }

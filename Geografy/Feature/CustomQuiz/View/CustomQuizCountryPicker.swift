@@ -149,7 +149,7 @@ private extension CustomQuizCountryPicker {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button("Done") { dismiss() }

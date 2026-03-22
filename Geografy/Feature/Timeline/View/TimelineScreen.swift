@@ -179,7 +179,7 @@ private extension TimelineScreen {
                         country: countryDataService.country(for: event.countryCode)
                     )
                 }
-                .buttonStyle(GeoPressButtonStyle())
+                .buttonStyle(PressButtonStyle())
             }
         }
     }
@@ -226,7 +226,7 @@ private extension TimelineScreen {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        GeoCircleCloseButton {
+                        CircleCloseButton {
                             selectedEvent = nil
                         }
                     }

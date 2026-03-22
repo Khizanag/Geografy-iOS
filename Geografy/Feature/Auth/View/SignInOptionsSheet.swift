@@ -54,26 +54,32 @@ private extension SignInOptionsSheet {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.30), .clear],
-                    center: .center, startRadius: 0, endRadius: 220
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.30), .clear],
+                        center: .center, startRadius: 0, endRadius: 220
+                    )
+                )
                 .frame(width: 460, height: 340).blur(radius: 36)
                 .offset(x: -90, y: 60)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.22), .clear],
-                    center: .center, startRadius: 0, endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.indigo.opacity(0.22), .clear],
+                        center: .center, startRadius: 0, endRadius: 200
+                    )
+                )
                 .frame(width: 380, height: 320).blur(radius: 44)
                 .offset(x: 150, y: 160)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
-                    center: .center, startRadius: 0, endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
+                        center: .center, startRadius: 0, endRadius: 180
+                    )
+                )
                 .frame(width: 340, height: 280).blur(radius: 40)
                 .offset(x: -60, y: 700)
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
@@ -360,7 +366,7 @@ private extension SignInOptionsSheet {
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 #endif
 }

@@ -56,7 +56,7 @@ struct TravelJournalEditorSheet: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                GeoCircleCloseButton()
+                CircleCloseButton()
             }
             ToolbarItem(placement: .topBarTrailing) {
                 saveButton
@@ -135,7 +135,7 @@ private extension TravelJournalEditorSheet {
                 .padding(DesignSystem.Spacing.sm)
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     @ViewBuilder
@@ -343,7 +343,7 @@ private extension TravelJournalEditorSheet {
                 .padding(DesignSystem.Spacing.sm)
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var photosGrid: some View {
@@ -364,7 +364,7 @@ private extension TravelJournalEditorSheet {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        GeoCircleCloseButton {
+                        CircleCloseButton {
                             showCountryPicker = false
                         }
                     }

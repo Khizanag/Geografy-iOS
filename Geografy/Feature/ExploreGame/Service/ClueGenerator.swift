@@ -325,7 +325,7 @@ private extension ClueGenerator {
 
 // MARK: - Border Data
 
-private extension ClueGenerator {
+extension ClueGenerator {
     static func borderCountryNames(
         for countryCode: String
     ) -> [String] {

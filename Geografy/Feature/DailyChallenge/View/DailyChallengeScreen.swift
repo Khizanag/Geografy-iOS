@@ -30,7 +30,7 @@ private extension DailyChallengeScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
     }
 }
@@ -325,11 +325,13 @@ private extension DailyChallengeScreen {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 historyDateLabel(dateKey: result.dateKey)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(result.challengeType.replacingOccurrences(
-                        of: "([a-z])([A-Z])",
-                        with: "$1 $2",
-                        options: .regularExpression
-                    ).capitalized)
+                    Text(
+                        result.challengeType.replacingOccurrences(
+                            of: "([a-z])([A-Z])",
+                            with: "$1 $2",
+                            options: .regularExpression
+                        ).capitalized
+                    )
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                         .lineLimit(1)
@@ -370,29 +372,33 @@ private extension DailyChallengeScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.22),
-                        .clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.accent.opacity(0.22),
+                            .clear,
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
                 .frame(width: 420, height: 320)
                 .blur(radius: 36)
                 .offset(x: -80, y: -100)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.indigo.opacity(0.18),
-                        .clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.indigo.opacity(0.18),
+                            .clear,
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
                 .frame(width: 360, height: 300)
                 .blur(radius: 44)
                 .offset(x: 140, y: 300)

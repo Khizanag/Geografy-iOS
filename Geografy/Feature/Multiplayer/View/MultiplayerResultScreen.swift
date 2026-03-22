@@ -30,7 +30,7 @@ struct MultiplayerResultScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton { onDone() }
+                    CircleCloseButton { onDone() }
                 }
             }
             .onAppear {
@@ -276,24 +276,28 @@ private extension MultiplayerResultScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [resultColor.opacity(0.20), DesignSystem.Color.background.opacity(0)],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 220
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [resultColor.opacity(0.20), DesignSystem.Color.background.opacity(0)],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 220
+                    )
+                )
                 .frame(width: 420, height: 340)
                 .blur(radius: 40)
                 .offset(x: -40, y: -80)
                 .scaleEffect(blobAnimating ? 1.08 : 0.92)
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.purple.opacity(0.14), DesignSystem.Color.background.opacity(0)],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.purple.opacity(0.14), DesignSystem.Color.background.opacity(0)],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
                 .frame(width: 360, height: 280)
                 .blur(radius: 44)
                 .offset(x: 100, y: 120)

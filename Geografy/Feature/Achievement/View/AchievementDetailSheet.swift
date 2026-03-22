@@ -28,7 +28,7 @@ struct AchievementDetailSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    GeoCircleCloseButton { dismiss() }
+                    CircleCloseButton { dismiss() }
                 }
             }
         }

@@ -30,7 +30,7 @@ struct TravelJournalDetailScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                GeoCircleCloseButton()
+                CircleCloseButton()
             }
             ToolbarItem(placement: .topBarTrailing) {
                 editButton
@@ -299,7 +299,7 @@ private extension TravelJournalDetailScreen {
                 )
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .padding(.top, DesignSystem.Spacing.sm)
     }
 }

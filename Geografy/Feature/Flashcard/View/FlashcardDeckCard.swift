@@ -80,6 +80,8 @@ private extension FlashcardDeckCard {
                 .font(DesignSystem.Font.caption2)
             Text(text)
                 .font(DesignSystem.Font.caption2)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
         .foregroundStyle(.white.opacity(0.9))
         .padding(.horizontal, DesignSystem.Spacing.xs)

@@ -12,7 +12,7 @@ struct TravelCountryRow: View {
         Button { showPicker = true } label: {
             rowContent
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
         .sheet(isPresented: $showPicker) {
             TravelStatusPickerSheet(country: country, isPresented: $showPicker)
         }

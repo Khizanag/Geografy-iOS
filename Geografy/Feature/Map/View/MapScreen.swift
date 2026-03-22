@@ -120,7 +120,7 @@ private extension MapScreen {
 
 private extension MapScreen {
     var closeButton: some View {
-        GeoCircleCloseButton()
+        CircleCloseButton()
     }
 
     var labelsToggleButton: some View {

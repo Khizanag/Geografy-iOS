@@ -97,7 +97,7 @@ private extension TravelStatusPickerSheet {
                     .stroke(isSelected ? status.color.opacity(0.5) : .clear, lineWidth: 1.5)
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     // MARK: - Gamification

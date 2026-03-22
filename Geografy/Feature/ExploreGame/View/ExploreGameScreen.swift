@@ -46,7 +46,7 @@ private extension ExploreGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
     }
 }
@@ -103,7 +103,7 @@ private extension ExploreGameScreen {
                 )
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var practiceGameCard: some View {
@@ -117,7 +117,7 @@ private extension ExploreGameScreen {
                 )
             }
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     func gameModeContent(
@@ -220,19 +220,23 @@ private extension ExploreGameScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.2), .clear],
-                    center: .center, startRadius: 0, endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.2), .clear],
+                        center: .center, startRadius: 0, endRadius: 200
+                    )
+                )
                 .frame(width: 420, height: 320)
                 .blur(radius: 36)
                 .offset(x: -80, y: -100)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.16), .clear],
-                    center: .center, startRadius: 0, endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.indigo.opacity(0.16), .clear],
+                        center: .center, startRadius: 0, endRadius: 180
+                    )
+                )
                 .frame(width: 360, height: 300)
                 .blur(radius: 44)
                 .offset(x: 140, y: 200)

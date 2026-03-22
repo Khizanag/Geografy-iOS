@@ -92,6 +92,6 @@ private extension HomeProgressCard {
                 )
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }

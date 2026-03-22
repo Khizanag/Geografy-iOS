@@ -86,7 +86,7 @@ private extension LevelUpSheet {
                 .background(DesignSystem.Color.accent)
                 .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var particleLayer: some View {

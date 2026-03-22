@@ -81,7 +81,7 @@ private extension CustomQuizLibraryScreen {
     func quizRow(_ quiz: CustomQuiz) -> some View {
         CustomQuizCard(quiz: quiz)
             .contextMenu { contextMenuItems(for: quiz) }
-            .buttonStyle(GeoPressButtonStyle())
+            .buttonStyle(PressButtonStyle())
     }
 
     func contextMenuItems(for quiz: CustomQuiz) -> some View {
@@ -115,7 +115,7 @@ private extension CustomQuizLibraryScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
@@ -165,7 +165,7 @@ private extension CustomQuizLibraryScreen {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    GeoCircleCloseButton { shareableQuiz = nil }
+                    CircleCloseButton { shareableQuiz = nil }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

@@ -233,23 +233,27 @@ private extension LeaderboardScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
                 .frame(width: 400, height: 300)
                 .blur(radius: 32)
                 .offset(x: -80, y: -60)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [DesignSystem.Color.warning.opacity(0.14), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.warning.opacity(0.14), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 160
+                    )
+                )
                 .frame(width: 320, height: 280)
                 .blur(radius: 40)
                 .offset(x: 140, y: 120)

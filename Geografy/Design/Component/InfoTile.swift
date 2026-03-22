@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GeoInfoTile: View {
+struct InfoTile: View {
     private let icon: String
     private let title: String
     private let value: String
@@ -30,7 +30,7 @@ struct GeoInfoTile: View {
 
 // MARK: - Subviews
 
-private extension GeoInfoTile {
+private extension InfoTile {
     var tileContent: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)

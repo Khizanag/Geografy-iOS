@@ -62,7 +62,7 @@ private extension MultiplayerMatchScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            GeoCircleCloseButton { showQuitAlert = true }
+            CircleCloseButton { showQuitAlert = true }
         }
     }
 
@@ -152,14 +152,16 @@ private extension MultiplayerMatchScreen {
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)
 
                 Capsule()
-                    .fill(LinearGradient(
-                        colors: [
-                            DesignSystem.Color.accent,
-                            DesignSystem.Color.accent.opacity(0.7),
-                        ],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    ))
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                DesignSystem.Color.accent,
+                                DesignSystem.Color.accent.opacity(0.7),
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                     .frame(width: geometryReader.size.width * progress)
                     .animation(
                         .spring(response: 0.4, dampingFraction: 0.8),
@@ -216,30 +218,34 @@ private extension MultiplayerMatchScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.20),
-                        DesignSystem.Color.background.opacity(0),
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.accent.opacity(0.20),
+                            DesignSystem.Color.background.opacity(0),
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
                 .frame(width: 420, height: 320)
                 .blur(radius: 36)
                 .offset(x: -80, y: -100)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
 
             Ellipse()
-                .fill(RadialGradient(
-                    colors: [
-                        DesignSystem.Color.purple.opacity(0.16),
-                        DesignSystem.Color.background.opacity(0),
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                ))
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            DesignSystem.Color.purple.opacity(0.16),
+                            DesignSystem.Color.background.opacity(0),
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
                 .frame(width: 360, height: 300)
                 .blur(radius: 44)
                 .offset(x: 140, y: 60)
