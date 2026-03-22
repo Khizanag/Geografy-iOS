@@ -54,6 +54,7 @@ private extension FavoritesScreen {
         }
         .padding(DesignSystem.Spacing.xxl)
         .frame(maxWidth: .infinity)
+        .containerRelativeFrame(.vertical)
     }
 
     func countryCard(for country: Country) -> some View {
