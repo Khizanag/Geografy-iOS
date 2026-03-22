@@ -5,9 +5,15 @@ struct ExploreGameScreen: View {
 
     @State private var gameService = ExploreGameService()
     @State private var activeSession: ExploreGameState?
-    @State private var showSession = false
     @State private var lastResult: ExploreGameResult?
     @State private var blobAnimating = false
+
+    private var showSession: Binding<Bool> {
+        Binding(
+            get: { activeSession != nil },
+            set: { if !$0 { activeSession = nil } }
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -16,7 +22,7 @@ struct ExploreGameScreen: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar { toolbarContent }
                 .onAppear { startBlobAnimation() }
-                .fullScreenCover(isPresented: $showSession) {
+                .fullScreenCover(isPresented: showSession) {
                     if let activeSession {
                         ExploreGameSessionScreen(
                             initialState: activeSession,
@@ -264,13 +270,11 @@ private extension ExploreGameScreen {
     func startDailyGame() {
         guard let state = gameService.makeDailyGame() else { return }
         activeSession = state
-        showSession = true
     }
 
     func startPracticeGame() {
         guard let state = gameService.makePracticeGame() else { return }
         activeSession = state
-        showSession = true
     }
 
     var averageScoreFormatted: String {
