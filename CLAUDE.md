@@ -17,13 +17,15 @@ Follow all rules in `~/.claude/rules/personal-apps.md` (shared across all person
 - **Design pattern**: Views with extracted subviews. MVVM only when views become large
 - **Design system**: `DesignSystem.Color`, `DesignSystem.Font`, `DesignSystem.Spacing`, `DesignSystem.Size`, `DesignSystem.CornerRadius`, `DesignSystem.IconSize`
 - **Components**: `CardView`, `GeoButton`, `InfoTile`, `IconButton`, `CircleCloseButton`, `GlassButton`, `FlagView`, `PulsingCirclesView`, `ZoomableFlagView`, `PremiumBadge`, `LevelBadgeView`, `ScoreRingView`, `ProfileAvatarView`, `CountryRowView`, `SectionHeaderView`
+- **Navigation**: Coordinator pattern — `AppCoordinator` owns per-tab `TabCoordinator`s. `Screen` (push), `Sheet` (modal), `Cover` (fullScreenCover) enums with factory views. `CoordinatedNavigationStack` wraps each tab.
 - **Data**: 197 countries in `countries.json`, 10m GeoJSON for map borders, 255 PDF flag assets
 - **Offline-first**: All data bundled, no network required
 
 ## Folder Structure
 ```
 Geografy/
-  App/                    — Entry point, ContentView, NavigationRoute
+  App/                    — Entry point, ContentView
+    Navigation/           — AppCoordinator, TabCoordinator, Screen/Sheet/Cover enums, Factories
   Design/
     Theme/                — Colors, Font, Spacing, Size, CornerRadius, IconSize, Shadow
     Component/            — Reusable UI components
