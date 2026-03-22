@@ -8,6 +8,7 @@ struct CountryDetailScreen: View {
     @Environment(AchievementService.self) private var achievementService
 
     @Namespace private var flagNamespace
+    @Namespace private var scrollFlagNamespace
 
     @State private var countryDataService = CountryDataService()
     @State private var appeared = false
@@ -32,12 +33,15 @@ struct CountryDetailScreen: View {
                     HStack(spacing: DesignSystem.Spacing.xs) {
                         if flagScrolledUp {
                             FlagView(countryCode: country.code, height: 20)
-                                .transition(.scale.combined(with: .opacity))
+                                .matchedGeometryEffect(
+                                    id: "scrollFlag",
+                                    in: scrollFlagNamespace,
+                                    isSource: true
+                                )
                         }
                         Text(country.name)
                             .font(DesignSystem.Font.headline)
                     }
-                    .animation(.spring(response: 0.35, dampingFraction: 0.8), value: flagScrolledUp)
                 }
             }
             .task { countryDataService.loadCountries() }
@@ -138,12 +142,19 @@ private extension CountryDetailScreen {
                 } label: {
                     FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
                         .matchedGeometryEffect(id: country.code, in: flagNamespace)
+                        .matchedGeometryEffect(
+                            id: "scrollFlag",
+                            in: scrollFlagNamespace,
+                            isSource: false
+                        )
                         .opacity(showFlagFullScreen ? 0 : 1)
                         .geoShadow(.elevated)
                         .onGeometryChange(for: Bool.self) { proxy in
                             proxy.frame(in: .scrollView).maxY < 0
                         } action: { isHidden in
-                            flagScrolledUp = isHidden
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                flagScrolledUp = isHidden
+                            }
                         }
                 }
                 .buttonStyle(.plain)
