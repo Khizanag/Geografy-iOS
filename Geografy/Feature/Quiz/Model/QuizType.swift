@@ -53,7 +53,7 @@ private extension QuizType {
 
 // MARK: - Computed Properties
 
-extension QuizType {
+extension QuizType: SelectableType {
     var displayName: String {
         Self.displayNames[self] ?? rawValue
     }

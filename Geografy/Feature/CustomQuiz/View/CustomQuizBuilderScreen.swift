@@ -276,57 +276,12 @@ private extension CustomQuizBuilderScreen {
                 subtitle: "Select one or more question formats",
             )
 
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(QuizType.allCases) { type in
-                    questionTypeRow(type)
-                }
-            }
-        }
-    }
-
-    func questionTypeRow(_ type: QuizType) -> some View {
-        let isSelected = selectedQuestionTypes.contains(type)
-        return Button {
-            toggleQuestionType(type)
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: type.icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(
-                        isSelected ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary
-                    )
-                    .frame(width: 32)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(type.displayName)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text(type.description)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .lineLimit(1)
-                }
-
-                Spacer(minLength: 0)
-
-                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(
-                        isSelected ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary
-                    )
-            }
-            .padding(DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .strokeBorder(
-                        isSelected ? DesignSystem.Color.accent.opacity(0.5) : DesignSystem.Color.cardBackgroundHighlighted,
-                        lineWidth: 1,
-                    )
+            TypeSelectionGrid(
+                items: QuizType.allCases.map { $0 },
+                selectedIDs: Set(selectedQuestionTypes.map(\.id)),
+                onSelect: { toggleQuestionType($0) }
             )
         }
-        .buttonStyle(.plain)
     }
 }
 
@@ -399,7 +354,7 @@ private extension CustomQuizBuilderScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            GeoCircleCloseButton()
+            CircleCloseButton()
         }
     }
 }

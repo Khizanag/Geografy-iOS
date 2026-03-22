@@ -136,26 +136,34 @@ private extension MoreScreen {
 private extension MoreScreen {
     var ambientBlobs: some View {
         ZStack {
-            blobEllipse(BlobConfig(
-                color: DesignSystem.Color.accent, opacity: 0.28,
-                endRadius: 220, width: 440, height: 320, blur: 32,
-                offset: (-80, -80), scale: blobAnimating ? 1.10 : 0.90
-            ))
-            blobEllipse(BlobConfig(
-                color: DesignSystem.Color.indigo, opacity: 0.20,
-                endRadius: 180, width: 360, height: 300, blur: 40,
-                offset: (140, 80), scale: blobAnimating ? 0.88 : 1.10
-            ))
-            blobEllipse(BlobConfig(
-                color: DesignSystem.Color.blue, opacity: 0.14,
-                endRadius: 160, width: 320, height: 260, blur: 36,
-                offset: (-100, 400), scale: blobAnimating ? 1.06 : 0.94
-            ))
-            blobEllipse(BlobConfig(
-                color: DesignSystem.Color.purple, opacity: 0.12,
-                endRadius: 160, width: 320, height: 280, blur: 44,
-                offset: (160, 650), scale: blobAnimating ? 0.92 : 1.08
-            ))
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.accent, opacity: 0.28,
+                    endRadius: 220, width: 440, height: 320, blur: 32,
+                    offset: (-80, -80), scale: blobAnimating ? 1.10 : 0.90
+                )
+            )
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.indigo, opacity: 0.20,
+                    endRadius: 180, width: 360, height: 300, blur: 40,
+                    offset: (140, 80), scale: blobAnimating ? 0.88 : 1.10
+                )
+            )
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.blue, opacity: 0.14,
+                    endRadius: 160, width: 320, height: 260, blur: 36,
+                    offset: (-100, 400), scale: blobAnimating ? 1.06 : 0.94
+                )
+            )
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.purple, opacity: 0.12,
+                    endRadius: 160, width: 320, height: 280, blur: 44,
+                    offset: (160, 650), scale: blobAnimating ? 0.92 : 1.08
+                )
+            )
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
@@ -174,12 +182,14 @@ private extension MoreScreen {
 
     func blobEllipse(_ config: BlobConfig) -> some View {
         Ellipse()
-            .fill(RadialGradient(
-                colors: [config.color.opacity(config.opacity), .clear],
-                center: .center,
-                startRadius: 0,
-                endRadius: config.endRadius
-            ))
+            .fill(
+                RadialGradient(
+                    colors: [config.color.opacity(config.opacity), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: config.endRadius
+                )
+            )
             .frame(width: config.width, height: config.height)
             .blur(radius: config.blur)
             .offset(x: config.offset.0, y: config.offset.1)
@@ -206,7 +216,7 @@ private extension MoreScreen {
             LazyVGrid(
                 columns: [
                     GridItem(
-                        .adaptive(minimum: 100),
+                        .adaptive(minimum: 120),
                         spacing: DesignSystem.Spacing.sm
                     ),
                 ],
@@ -257,7 +267,7 @@ private extension MoreScreen {
                 .strokeBorder(sheet.color.opacity(0.12), lineWidth: 1)
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 
     var sheetsWithOwnCloseButton: Set<MoreSheet> {
@@ -351,7 +361,7 @@ private extension MoreScreen {
             .toolbar {
                 if !sheetsWithOwnCloseButton.contains(sheet) {
                     ToolbarItem(placement: .topBarTrailing) {
-                        GeoCircleCloseButton { activeSheet = nil }
+                        CircleCloseButton { activeSheet = nil }
                     }
                 }
             }

@@ -11,7 +11,7 @@ enum FlashcardType: String, CaseIterable, Identifiable, Codable {
 
 // MARK: - Display
 
-extension FlashcardType {
+extension FlashcardType: SelectableType {
     var displayName: String {
         switch self {
         case .countryToCapital: "Country -> Capital"

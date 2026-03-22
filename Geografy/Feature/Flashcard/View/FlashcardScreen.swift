@@ -87,9 +87,13 @@ private extension FlashcardScreen {
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
             Text(label)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
@@ -107,60 +111,14 @@ private extension FlashcardScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Card Type")
                 .padding(.horizontal, DesignSystem.Spacing.md)
-            cardTypePicker
-        }
-    }
 
-    var cardTypePicker: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.xs),
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.xs),
-            ],
-            spacing: DesignSystem.Spacing.xs
-        ) {
-            ForEach(FlashcardType.allCases) { type in
-                cardTypeChip(type)
-            }
+            TypeSelectionGrid(
+                items: FlashcardType.allCases.map { $0 },
+                selectedIDs: [selectedCardType.id],
+                onSelect: { selectedCardType = $0 }
+            )
+            .padding(.horizontal, DesignSystem.Spacing.md)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    func cardTypeChip(_ type: FlashcardType) -> some View {
-        let isSelected = selectedCardType == type
-
-        return Button { selectedCardType = type } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Text(type.emoji)
-                    .font(DesignSystem.Font.subheadline)
-                Text(type.displayName)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(isSelected ? .bold : .regular)
-            }
-            .foregroundStyle(
-                isSelected
-                    ? DesignSystem.Color.onAccent
-                    : DesignSystem.Color.textPrimary
-            )
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected
-                    ? DesignSystem.Color.accent
-                    : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
-            .overlay(
-                Capsule().strokeBorder(
-                    isSelected
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.cardBackgroundHighlighted,
-                    lineWidth: 1
-                )
-            )
-        }
-        .buttonStyle(.plain)
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }
 
@@ -191,7 +149,7 @@ private extension FlashcardScreen {
                 dueCount: dueCardCount
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 
@@ -213,7 +171,7 @@ private extension FlashcardScreen {
         return LazyVGrid(
             columns: [
                 GridItem(
-                    .adaptive(minimum: 140),
+                    .adaptive(minimum: 160),
                     spacing: DesignSystem.Spacing.sm
                 ),
             ],
@@ -239,7 +197,7 @@ private extension FlashcardScreen {
                 dueCount: dueCount
             )
         }
-        .buttonStyle(GeoPressButtonStyle())
+        .buttonStyle(PressButtonStyle())
     }
 }
 
@@ -357,9 +315,10 @@ private extension FlashcardScreen {
         let countries = filteredCountries(
             for: deck.continentFilter
         )
-        return countries.map { country in
-            FlashcardItem.make(from: country, type: selectedCardType)
-        }
+        return countries
+            .map { country in
+                FlashcardItem.make(from: country, type: selectedCardType)
+            }
     }
 
     func filteredCountries(
@@ -374,9 +333,10 @@ private extension FlashcardScreen {
     }
 
     func makeAllCards() -> [FlashcardItem] {
-        countryDataService.countries.map { country in
-            FlashcardItem.make(from: country, type: selectedCardType)
-        }
+        countryDataService.countries
+            .map { country in
+                FlashcardItem.make(from: country, type: selectedCardType)
+            }
     }
 
     var dueCardCount: Int {
