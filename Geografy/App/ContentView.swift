@@ -50,6 +50,7 @@ struct ContentView: View {
         }
         .tint(DesignSystem.Color.accent)
         .preferredColorScheme(colorScheme)
+        .toolbarBackgroundVisibility(.hidden, for: .tabBar)
     }
 }
 
