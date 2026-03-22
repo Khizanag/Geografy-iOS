@@ -122,10 +122,23 @@ private extension ExploreGameResultView {
 
     var actionButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            GeoButton("Play Again", systemImage: "arrow.clockwise", action: onPlayAgain)
-                .frame(maxWidth: .infinity)
-            GeoButton("Done", style: .secondary, action: onDone)
-                .frame(maxWidth: .infinity)
+            Button(action: onPlayAgain) {
+                Label("Play Again", systemImage: "arrow.clockwise")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, DesignSystem.Spacing.xxs)
+            }
+            .buttonStyle(.glass)
+
+            Button(action: onDone) {
+                Label("Done", systemImage: "checkmark")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, DesignSystem.Spacing.xxs)
+            }
+            .buttonStyle(.glass)
         }
         .opacity(contentVisible ? 1 : 0)
     }
