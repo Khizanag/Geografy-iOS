@@ -20,6 +20,7 @@ struct FlashcardSessionScreen: View {
     @State private var showGuide = false
     @State private var cardShownAt: Date = .now
     @State private var thinkingTimes: [TimeInterval] = []
+    @State private var animatedProgress: CGFloat = 0
 
     var body: some View {
         NavigationStack {
@@ -129,15 +130,11 @@ private extension FlashcardSessionScreen {
                             endPoint: .trailing
                         )
                     )
-                    .frame(width: max(geometry.size.width * progressFraction, 0))
+                    .frame(width: max(geometry.size.width * animatedProgress, 0))
                     .shadow(
                         color: DesignSystem.Color.accent.opacity(0.5),
                         radius: 6,
                         x: 4
-                    )
-                    .animation(
-                        .spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.3),
-                        value: progressFraction
                     )
             }
         }
@@ -443,6 +440,7 @@ private extension FlashcardSessionScreen {
                     cardShownAt = .now
                     dragOffset = CGSize(width: 400, height: 0)
                 }
+                updateProgress()
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
@@ -488,6 +486,7 @@ private extension FlashcardSessionScreen {
                     cardShownAt = .now
                     dragOffset = CGSize(width: 400, height: 0)
                 }
+                updateProgress()
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
@@ -536,6 +535,12 @@ private extension FlashcardSessionScreen {
 
     var dragRotation: Double {
         Double(dragOffset.width) / 20.0
+    }
+
+    func updateProgress() {
+        withAnimation(.spring(response: 0.6, dampingFraction: 0.6)) {
+            animatedProgress = progressFraction
+        }
     }
 
     var averageThinkingTime: TimeInterval {
