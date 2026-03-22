@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct FlashcardGuideSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
     @State private var currentPage = 0
     @State private var animating = false
 
@@ -281,7 +283,7 @@ private extension FlashcardGuideSheet {
 
             if currentPage == pages.count - 1 {
                 GlassButton("Got it!", systemImage: "checkmark", fullWidth: true) {
-                    // Dismiss handled by CircleCloseButton
+                    dismiss()
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
