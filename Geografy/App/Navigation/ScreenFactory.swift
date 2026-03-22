@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 enum ScreenFactory {
     @ViewBuilder
     static func view(for screen: Screen) -> some View {
