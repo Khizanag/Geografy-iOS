@@ -7,7 +7,7 @@ struct ContentView: View {
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
 
-    @State private var selectedTab = 0
+    @State private var appCoordinator = AppCoordinator()
     @State private var levelUpLevel: UserLevel?
     @State private var currentBannerAchievement: AchievementDefinition?
     @State private var bannerQueue: [AchievementDefinition] = []
@@ -57,41 +57,35 @@ struct ContentView: View {
 
 private extension ContentView {
     var tabContent: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $appCoordinator.selectedTab) {
             Tab("Home", systemImage: "house.fill", value: 0) {
-                NavigationStack {
+                CoordinatedNavigationStack(coordinator: appCoordinator.homeCoordinator) {
                     HomeScreen()
-                        .navigationDestination(for: NavigationRoute.self) { route in
-                            destinationView(for: route)
-                        }
-                        .navigationDestination(for: Country.self) { country in
-                            CountryDetailScreen(country: country)
-                        }
                 }
             }
 
             Tab("Quiz", systemImage: "gamecontroller.fill", value: 1) {
-                QuizSetupScreen()
+                CoordinatedNavigationStack(coordinator: appCoordinator.quizCoordinator) {
+                    QuizSetupScreen()
+                }
             }
 
             Tab("Flashcards", systemImage: "rectangle.on.rectangle.angled", value: 2) {
-                FlashcardScreen()
+                CoordinatedNavigationStack(coordinator: appCoordinator.flashcardCoordinator) {
+                    FlashcardScreen()
+                }
             }
 
             Tab("All Maps", systemImage: "map.fill", value: 3) {
-                NavigationStack {
+                CoordinatedNavigationStack(coordinator: appCoordinator.allMapsCoordinator) {
                     AllMapsScreen()
-                        .navigationDestination(for: NavigationRoute.self) { route in
-                            destinationView(for: route)
-                        }
-                        .navigationDestination(for: Country.self) { country in
-                            CountryDetailScreen(country: country)
-                        }
                 }
             }
 
             Tab("More", systemImage: "ellipsis", value: 4) {
-                MoreScreen()
+                CoordinatedNavigationStack(coordinator: appCoordinator.moreCoordinator) {
+                    MoreScreen()
+                }
             }
         }
     }
@@ -101,26 +95,6 @@ private extension ContentView {
         case "Light": .light
         case "Dark": .dark
         default: nil
-        }
-    }
-
-    @ViewBuilder
-    func destinationView(for route: NavigationRoute) -> some View {
-        switch route {
-        case .map:
-            MapScreen()
-        case .countryDetail(let country):
-            CountryDetailScreen(country: country)
-        case .allMaps:
-            AllMapsScreen()
-        case .achievements:
-            AchievementsScreen()
-        case .themes:
-            ThemesScreen()
-        case .settings:
-            SettingsScreen()
-        case .quiz:
-            QuizSetupScreen()
         }
     }
 
