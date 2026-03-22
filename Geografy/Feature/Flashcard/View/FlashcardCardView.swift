@@ -44,6 +44,7 @@ private extension FlashcardCardView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 answerLabel
                 backContent
+                swipeHint
             }
             .padding(DesignSystem.Spacing.lg)
         }
@@ -58,8 +59,13 @@ private extension FlashcardCardView {
     var answerLabel: some View {
         Text("Answer")
             .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.accent)
-            .fontWeight(.semibold)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+    }
+
+    var swipeHint: some View {
+        Label("Swipe to rate", systemImage: "hand.draw.fill")
+            .font(DesignSystem.Font.caption2)
+            .foregroundStyle(DesignSystem.Color.textTertiary)
     }
 
     @ViewBuilder
