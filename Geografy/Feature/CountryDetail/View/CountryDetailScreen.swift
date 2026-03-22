@@ -30,14 +30,14 @@ struct CountryDetailScreen: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: DesignSystem.Spacing.xs) {
-                        if flagScrolledUp {
-                            FlagView(countryCode: country.code, height: 20)
-                                .transition(.scale(scale: 0.5).combined(with: .opacity))
-                        }
+                        FlagView(countryCode: country.code, height: 20)
+                            .opacity(flagScrolledUp ? 1 : 0)
+                            .scaleEffect(flagScrolledUp ? 1 : 0.5)
+                            .frame(width: flagScrolledUp ? nil : 0)
+                            .animation(.easeInOut(duration: 0.25), value: flagScrolledUp)
                         Text(country.name)
                             .font(DesignSystem.Font.headline)
                     }
-                    .animation(.easeInOut(duration: 0.25), value: flagScrolledUp)
                 }
             }
             .task { countryDataService.loadCountries() }
