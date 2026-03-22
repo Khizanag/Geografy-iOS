@@ -197,7 +197,7 @@ private extension FlashcardSessionScreen {
             .fontWeight(.black)
             .foregroundStyle(DesignSystem.Color.success)
             .padding(DesignSystem.Spacing.lg)
-            .rotationEffect(.degrees(-15))
+            .rotationEffect(.degrees(15))
             .opacity(min(Double(dragOffset.width) / 100.0, 1.0))
             .scaleEffect(min(Double(dragOffset.width) / 100.0, 1.0))
         }
@@ -211,7 +211,7 @@ private extension FlashcardSessionScreen {
                 .fontWeight(.black)
                 .foregroundStyle(DesignSystem.Color.error)
                 .padding(DesignSystem.Spacing.lg)
-                .rotationEffect(.degrees(15))
+                .rotationEffect(.degrees(-15))
                 .opacity(min(Double(-dragOffset.width) / 100.0, 1.0))
                 .scaleEffect(min(Double(-dragOffset.width) / 100.0, 1.0))
         }
