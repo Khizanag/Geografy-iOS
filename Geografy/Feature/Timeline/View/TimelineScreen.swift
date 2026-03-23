@@ -146,7 +146,7 @@ private extension TimelineScreen {
 
     var eventList: some View {
         ScrollView {
-            LazyVStack(spacing: DesignSystem.Spacing.sm) {
+            LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 if showTodaySection {
                     TimelineTodaySection(
                         events: todayEvents,
@@ -231,6 +231,9 @@ private extension TimelineScreen {
                         }
                     }
                 }
+                .navigationDestination(for: Country.self) { country in
+                    CountryDetailScreen(country: country)
+                }
         }
     }
 
@@ -295,24 +298,14 @@ private extension TimelineScreen {
     func detailCountryInfo(country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Country", icon: "globe")
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(
-                        countryCode: country.code,
-                        height: DesignSystem.Size.md
-                    )
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(country.name)
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text("\(country.continent.displayName) \u{2022} \(country.capital)")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                    Spacer(minLength: 0)
-                }
-                .padding(DesignSystem.Spacing.md)
+            NavigationLink(value: country) {
+                CountryRowView(
+                    country: country,
+                    isFavorite: false,
+                    showContinent: true
+                )
             }
+            .buttonStyle(PressButtonStyle())
         }
     }
 }
