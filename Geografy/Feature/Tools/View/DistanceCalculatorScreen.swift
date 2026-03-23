@@ -143,7 +143,8 @@ private extension DistanceCalculatorScreen {
     }
 
     var swapButton: some View {
-        HStack {
+        let hasCountry = originCountry != nil || destinationCountry != nil
+        return HStack {
             Spacer()
             Button {
                 hapticsService.impact(.light)
@@ -154,9 +155,10 @@ private extension DistanceCalculatorScreen {
             } label: {
                 Image(systemName: "arrow.up.arrow.down.circle.fill")
                     .font(.system(size: 28))
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(hasCountry ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary)
                     .background(DesignSystem.Color.background, in: Circle())
             }
+            .disabled(!hasCountry)
             Spacer()
         }
     }
