@@ -11,6 +11,7 @@ struct SpellingBeeScreen: View {
     @State private var score = 0
     @State private var roundNumber = 0
     @State private var showCorrectAnswer = false
+    @State private var showGuide = false
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
@@ -36,10 +37,17 @@ struct SpellingBeeScreen: View {
             .navigationTitle("Spelling Bee")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { showGuide = true } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .buttonStyle(.plain)
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     CircleCloseButton { dismiss() }
                 }
             }
+            .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
         }
         .onAppear {
             countryDataService.loadCountries()
