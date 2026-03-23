@@ -7,6 +7,7 @@ struct CountryDetailScreen: View {
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) var hapticsService
+    @Environment(WorldBankService.self) private var worldBankService
 
     @Namespace private var flagNamespace
 
@@ -16,6 +17,7 @@ struct CountryDetailScreen: View {
     @State private var showFlagFullScreen = false
     @State private var showContinentMap = false
     @State private var flagScrolledUp = false
+    @State private var selectedStatCategory: StatCategory = .economy
 
     let country: Country
 
@@ -186,9 +188,6 @@ private extension CountryDetailScreen {
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.xl)
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5), value: appeared)
     }
 }
 
@@ -251,9 +250,6 @@ private extension CountryDetailScreen {
             }
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.08), value: appeared)
     }
 
     func factChip(icon: String, label: String, value: String) -> some View {
@@ -317,9 +313,6 @@ private extension CountryDetailScreen {
             }
         }
         .buttonStyle(PressButtonStyle())
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.12), value: appeared)
     }
 }
 
@@ -341,9 +334,6 @@ private extension CountryDetailScreen {
                 }
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.16), value: appeared)
     }
 
     var populationCard: some View {
@@ -435,9 +425,6 @@ private extension CountryDetailScreen {
                 }
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.24), value: appeared)
     }
 
     func economyTile(icon: String, label: String, value: String, color: Color) -> some View {
@@ -483,9 +470,6 @@ private extension CountryDetailScreen {
                 )
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.32), value: appeared)
     }
 }
 
@@ -510,9 +494,6 @@ private extension CountryDetailScreen {
                 )
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.40), value: appeared)
     }
 }
 
@@ -546,7 +527,7 @@ extension CountryDetailScreen {
 // MARK: - Helpers
 
 private extension CountryDetailScreen {
-    func lockedSection(title: String, icon: String) -> some View {
+    func lockedSection(title: String) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader(title)
             ZStack {
@@ -556,9 +537,6 @@ private extension CountryDetailScreen {
                 PremiumLockedOverlay(onUnlock: { activeSheet = .paywall })
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.24), value: appeared)
     }
 
     func lockedPlaceholder(height: CGFloat) -> some View {
@@ -592,6 +570,55 @@ private extension CountryDetailScreen {
         }
     }
 
+    var religionItems: [PercentageItem] {
+        ReligionData.data[country.code] ?? []
+    }
+
+    var ethnicityItems: [PercentageItem] {
+        EthnicityData.data[country.code] ?? []
+    }
+
+    @ViewBuilder
+    var religionSection: some View {
+        if subscriptionService.isPremium {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                sectionHeader("Religion", premium: true)
+                PercentageBarChart(
+                    title: "Religion",
+                    icon: "hands.sparkles",
+                    items: religionItems.sorted { $0.percentage > $1.percentage },
+                    appeared: appeared
+                )
+            }
+        } else {
+            lockedSection(title: "Religion")
+        }
+    }
+
+    @ViewBuilder
+    var ethnicitySection: some View {
+        if subscriptionService.isPremium {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                sectionHeader("Ethnicity", premium: true)
+                PercentageBarChart(
+                    title: "Ethnicity",
+                    icon: "person.2",
+                    items: ethnicityItems.sorted { $0.percentage > $1.percentage },
+                    appeared: appeared
+                )
+            }
+        } else {
+            lockedSection(title: "Ethnicity")
+        }
+    }
+
+    var statisticsSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionHeader("Statistics", premium: true)
+            CountryStatisticsView(countryCode: country.code)
+        }
+    }
+
     var contentScrollView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
@@ -599,20 +626,26 @@ private extension CountryDetailScreen {
                 quickFactsCard
                 travelSection
                 peopleSection
+                if !religionItems.isEmpty {
+                    religionSection
+                }
+                if !ethnicityItems.isEmpty {
+                    ethnicitySection
+                }
                 if hasEconomyData {
                     if subscriptionService.isPremium {
                         economySection
                     } else {
-                        lockedSection(title: "Economy", icon: "chart.bar.fill")
+                        lockedSection(title: "Economy")
                     }
                 }
                 if subscriptionService.isPremium {
                     governmentSection
                     currencySection
+                    statisticsSection
                 }
                 if !memberOrganizations.isEmpty, subscriptionService.isPremium {
                     organizationsSection(
-                        appeared: appeared,
                         countryDataService: countryDataService,
                         hapticsService: hapticsService
                     )
