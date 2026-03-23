@@ -25,6 +25,8 @@ struct QuizSessionScreen: View {
     @State private var typingInput: String = ""
     @State private var showHint: Bool = false
     @State private var typingIsCorrect: Bool = false
+    @State private var currentStreak: Int = 0
+    @State private var showStreakBurst = false
     @Namespace private var flagNamespace
 
     var body: some View {
@@ -235,14 +237,43 @@ private extension QuizSessionScreen {
         VStack(spacing: DesignSystem.Spacing.xs) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 progressBar
-                questionCounterPill
+                if currentStreak >= 2 {
+                    streakBadge
+                        .transition(.scale.combined(with: .opacity))
+                } else {
+                    questionCounterPill
+                }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
+            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: currentStreak)
 
             if configuration.difficulty.hasTimer {
                 timerPill
             }
         }
+    }
+
+    var streakBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 11, weight: .black))
+            Text("\(currentStreak)×")
+                .font(.system(size: 13, weight: .black, design: .rounded))
+        }
+        .foregroundStyle(.white)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(
+            LinearGradient(
+                colors: [DesignSystem.Color.orange, DesignSystem.Color.error],
+                startPoint: .leading,
+                endPoint: .trailing
+            ),
+            in: Capsule()
+        )
+        .shadow(color: DesignSystem.Color.error.opacity(0.4), radius: 8, y: 2)
+        .scaleEffect(showStreakBurst ? 1.25 : 1.0)
+        .animation(.spring(response: 0.25, dampingFraction: 0.5), value: showStreakBurst)
     }
 
     var progressBar: some View {
@@ -376,8 +407,16 @@ private extension QuizSessionScreen {
 
         if isCorrect {
             hapticsService.notification(.success)
+            currentStreak += 1
+            if currentStreak >= 2 {
+                showStreakBurst = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    showStreakBurst = false
+                }
+            }
         } else {
             hapticsService.impact(.light)
+            currentStreak = 0
         }
 
         let answer = QuizAnswer(
@@ -430,8 +469,16 @@ private extension QuizSessionScreen {
 
         if isCorrect {
             hapticsService.notification(.success)
+            currentStreak += 1
+            if currentStreak >= 2 {
+                showStreakBurst = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    showStreakBurst = false
+                }
+            }
         } else {
             hapticsService.impact(.light)
+            currentStreak = 0
         }
 
         let answer = QuizAnswer(
@@ -481,6 +528,8 @@ private extension QuizSessionScreen {
         typingInput = ""
         showHint = false
         typingIsCorrect = false
+        currentStreak = 0
+        showStreakBurst = false
         startTime = Date()
         questionStartTime = Date()
         timerRemaining = configuration.difficulty.timerDuration
@@ -517,6 +566,7 @@ private extension QuizSessionScreen {
         let timeSpent = configuration.difficulty.timerDuration
 
         hapticsService.impact(.light)
+        currentStreak = 0
 
         let answer = QuizAnswer(
             id: UUID(),
