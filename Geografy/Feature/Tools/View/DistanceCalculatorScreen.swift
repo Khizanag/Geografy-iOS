@@ -30,8 +30,8 @@ struct DistanceCalculatorScreen: View {
         .navigationTitle("Distance Calculator")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { coordinator.dismissSheet() }
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
             }
         }
         .task { countryDataService.loadCountries() }
