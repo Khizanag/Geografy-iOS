@@ -13,6 +13,7 @@ struct TravelTrackerScreen: View {
     @State private var selectedCountry: Country?
     @State private var appeared = false
     @State private var blobAnimating = false
+    @State private var showBucketList = false
 
     var body: some View {
         ZStack {
@@ -46,6 +47,10 @@ struct TravelTrackerScreen: View {
                 )
             )
         }
+        .sheet(isPresented: $showBucketList) {
+            NavigationStack { TravelBucketListScreen() }
+                .presentationDetents([.large])
+        }
         .onAppear {
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
@@ -62,6 +67,15 @@ struct TravelTrackerScreen: View {
 private extension TravelTrackerScreen {
     @ToolbarContentBuilder
     var addButton: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button {
+                hapticsService.impact(.light)
+                showBucketList = true
+            } label: {
+                Label("Bucket List", systemImage: "list.star")
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+        }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
                 hapticsService.impact(.light)

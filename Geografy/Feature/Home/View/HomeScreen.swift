@@ -601,6 +601,9 @@ private extension HomeScreen {
         case .mapPuzzle: mapPuzzleSection
         case .landmarkQuiz: landmarkQuizSection
         case .geoFeed: geoFeedSection
+        case .continentStats: continentStatsSection
+        case .countryCompare: countryCompareSection
+        case .travelBucketList: travelBucketListSection
         default: EmptyView()
         }
     }

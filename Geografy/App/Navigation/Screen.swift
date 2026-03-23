@@ -15,4 +15,6 @@ enum Screen: Hashable {
     case worldRecords
     case learningPath
     case mapPuzzle
+    case continentPicker
+    case continentStats(String)
 }

@@ -18,6 +18,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case mapPuzzle
     case landmarkQuiz
     case geoFeed
+    case continentStats
+    case countryCompare
+    case travelBucketList
     case comingSoon
 
     var id: String { rawValue }
@@ -41,6 +44,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .mapPuzzle: "Map Puzzle"
         case .landmarkQuiz: "Landmark Quiz"
         case .geoFeed: "Geo Feed"
+        case .continentStats: "Continent Statistics"
+        case .countryCompare: "Country Comparison"
+        case .travelBucketList: "Travel Bucket List"
         case .comingSoon: "Coming Soon"
         }
     }
@@ -64,6 +70,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .mapPuzzle: "puzzlepiece.fill"
         case .landmarkQuiz: "building.columns.fill"
         case .geoFeed: "newspaper.fill"
+        case .continentStats: "chart.bar.xaxis.ascending"
+        case .countryCompare: "arrow.left.arrow.right"
+        case .travelBucketList: "list.star"
         case .comingSoon: "sparkles"
         }
     }
