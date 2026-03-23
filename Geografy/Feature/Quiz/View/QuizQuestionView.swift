@@ -9,15 +9,38 @@ struct QuizQuestionView: View {
     @Binding var showFlagPreview: Bool
     let onSelectOption: (UUID) -> Void
 
+    @State private var optionsVisible = false
+    @State private var promptVisible = false
+
     var body: some View {
         VStack(spacing: 0) {
             Spacer(minLength: DesignSystem.Spacing.md)
             promptSection
+                .opacity(promptVisible ? 1 : 0)
+                .scaleEffect(promptVisible ? 1 : 0.94)
+                .animation(.spring(response: 0.45, dampingFraction: 0.8), value: promptVisible)
             Spacer(minLength: DesignSystem.Spacing.lg)
             optionsSection
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
+        .onAppear { triggerEntrance() }
+        .onChange(of: question.id) { triggerEntrance() }
+    }
+}
+
+// MARK: - Entrance
+
+private extension QuizQuestionView {
+    func triggerEntrance() {
+        optionsVisible = false
+        promptVisible = false
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.8).delay(0.05)) {
+            promptVisible = true
+        }
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.85).delay(0.12)) {
+            optionsVisible = true
+        }
     }
 }
 
@@ -115,6 +138,13 @@ private extension QuizQuestionView {
                     index: index,
                     action: { onSelectOption(option.id) }
                 )
+                .opacity(optionsVisible ? 1 : 0)
+                .offset(y: optionsVisible ? 0 : 18)
+                .animation(
+                    .spring(response: 0.42, dampingFraction: 0.82)
+                        .delay(0.06 * Double(index)),
+                    value: optionsVisible
+                )
             }
         }
     }
@@ -134,6 +164,13 @@ private extension QuizQuestionView {
                     state: optionState(for: option),
                     index: index,
                     action: { onSelectOption(option.id) }
+                )
+                .opacity(optionsVisible ? 1 : 0)
+                .scaleEffect(optionsVisible ? 1 : 0.88)
+                .animation(
+                    .spring(response: 0.42, dampingFraction: 0.78)
+                        .delay(0.07 * Double(index)),
+                    value: optionsVisible
                 )
             }
         }

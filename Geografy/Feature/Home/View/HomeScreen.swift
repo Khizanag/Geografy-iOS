@@ -607,9 +607,10 @@ private extension HomeScreen {
         case .oceanExplorer: oceanExplorerSection
         case .languageExplorer: languageExplorerSection
         case .challengeRoom: challengeRoomSection
-        default: discoverSectionView(for: section)
+        default: newFeatureSectionView(for: section)
         }
     }
+
 
     @ViewBuilder
     func fullWidthSectionView(for section: HomeSection) -> some View {

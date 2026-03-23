@@ -47,30 +47,54 @@ private extension TypeSelectionGrid {
     func cardContent(item: T, isSelected: Bool, isLocked: Bool) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             HStack {
-                Image(systemName: item.icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(
-                        isSelected
-                            ? DesignSystem.Color.onAccent
-                            : DesignSystem.Color.accent
-                    )
+                ZStack {
+                    Circle()
+                        .fill(
+                            isSelected
+                                ? DesignSystem.Color.onAccent.opacity(0.20)
+                                : DesignSystem.Color.accent.opacity(0.15)
+                        )
+                        .frame(width: 36, height: 36)
+                    Image(systemName: item.icon)
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(
+                            isSelected
+                                ? DesignSystem.Color.onAccent
+                                : DesignSystem.Color.accent
+                        )
+                }
                 Spacer()
                 if isLocked {
                     Image(systemName: "lock.fill")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(
+                            isSelected
+                                ? DesignSystem.Color.onAccent.opacity(0.6)
+                                : DesignSystem.Color.textTertiary
+                        )
+                        .padding(6)
+                        .background(
+                            isSelected
+                                ? DesignSystem.Color.onAccent.opacity(0.12)
+                                : DesignSystem.Color.cardBackgroundHighlighted,
+                            in: Circle()
+                        )
                 } else if isSelected {
                     Image(systemName: "checkmark.circle.fill")
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.onAccent)
+                        .transition(.scale.combined(with: .opacity))
                 }
             }
 
             Spacer(minLength: 0)
 
+            Text(item.emoji)
+                .font(.system(size: 22))
+
             Text(item.displayName)
                 .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
+                .fontWeight(.bold)
                 .foregroundStyle(
                     isSelected
                         ? DesignSystem.Color.onAccent
@@ -83,35 +107,48 @@ private extension TypeSelectionGrid {
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(
                     isSelected
-                        ? DesignSystem.Color.onAccent.opacity(0.7)
+                        ? DesignSystem.Color.onAccent.opacity(0.75)
                         : DesignSystem.Color.textSecondary
                 )
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(DesignSystem.Spacing.sm)
-        .frame(width: 150, height: 130)
-        .background(
-            isSelected
-                ? DesignSystem.Color.accent
-                : DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-        )
+        .frame(width: 158, height: 148)
+        .background {
+            if isSelected {
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                    .fill(
+                        LinearGradient(
+                            colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            } else {
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                    .fill(.ultraThinMaterial)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                            .fill(DesignSystem.Color.cardBackground.opacity(0.6))
+                    )
+            }
+        }
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
                 .strokeBorder(
                     isSelected
-                        ? DesignSystem.Color.accent.opacity(0.8)
-                        : DesignSystem.Color.cardBackgroundHighlighted,
+                        ? DesignSystem.Color.accent.opacity(0.5)
+                        : .white.opacity(0.07),
                     lineWidth: 1
                 )
         )
         .shadow(
-            color: isSelected ? DesignSystem.Color.accent.opacity(0.3) : .clear,
-            radius: 12,
-            y: 4
+            color: isSelected ? DesignSystem.Color.accent.opacity(0.40) : .black.opacity(0.12),
+            radius: isSelected ? 16 : 4,
+            y: isSelected ? 6 : 2
         )
-        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .scaleEffect(isSelected ? 1.03 : 1.0)
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
 }

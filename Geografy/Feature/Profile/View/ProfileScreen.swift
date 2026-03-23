@@ -23,16 +23,16 @@ struct ProfileScreen: View {
         scrollContent
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Profile")
-        .navigationBarTitleDisplayMode(.large)
-        .toolbar { toolbarContent }
-        .sheet(item: $activeSheet) { sheet in profileSheetContent(for: sheet) }
-        .alert("Delete Account", isPresented: $showDeleteAlert) {
-            deleteAlertActions
-        } message: {
-            deleteAlertMessage
-        }
-        .onAppear { handleAppear() }
+            .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar { toolbarContent }
+            .sheet(item: $activeSheet) { sheet in profileSheetContent(for: sheet) }
+            .alert("Delete Account", isPresented: $showDeleteAlert) {
+                deleteAlertActions
+            } message: {
+                deleteAlertMessage
+            }
+            .onAppear { handleAppear() }
     }
 }
 
@@ -42,22 +42,28 @@ private extension ProfileScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
+                if authService.isGuest {
+                    guestBanner
+                        .profileSection(appeared: appeared, delay: 0.03)
+                }
                 headerSection
-                    .profileSection(appeared: appeared, delay: 0.05)
-                statsGridSection
+                    .profileSection(appeared: appeared, delay: 0.06)
+                levelProgressSection
                     .profileSection(appeared: appeared, delay: 0.10)
+                statsGridSection
+                    .profileSection(appeared: appeared, delay: 0.14)
                 achievementsPreviewSection
-                    .profileSection(appeared: appeared, delay: 0.15)
+                    .profileSection(appeared: appeared, delay: 0.18)
                 if !recentQuizzes.isEmpty {
                     quizHistorySection
-                        .profileSection(appeared: appeared, delay: 0.20)
+                        .profileSection(appeared: appeared, delay: 0.22)
                 }
                 if !subscriptionService.isPremium {
                     premiumBannerSection
-                        .profileSection(appeared: appeared, delay: 0.22)
+                        .profileSection(appeared: appeared, delay: 0.24)
                 }
                 accountSection
-                    .profileSection(appeared: appeared, delay: 0.25)
+                    .profileSection(appeared: appeared, delay: 0.28)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
@@ -66,37 +72,82 @@ private extension ProfileScreen {
     }
 }
 
+// MARK: - Guest Banner
+
+private extension ProfileScreen {
+    var guestBanner: some View {
+        Button {
+            hapticsService.impact(.medium)
+            activeSheet = .signIn
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                ZStack {
+                    Circle()
+                        .fill(DesignSystem.Color.warning.opacity(0.15))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "person.crop.circle.badge.exclamationmark.fill")
+                        .font(.system(size: 18))
+                        .foregroundStyle(DesignSystem.Color.warning)
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Save your progress")
+                        .font(DesignSystem.Font.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text("Create an account — your XP & achievements will be linked")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .lineLimit(2)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.warning)
+            }
+            .padding(DesignSystem.Spacing.md)
+            .background(
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    .fill(DesignSystem.Color.warning.opacity(0.08))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                            .strokeBorder(DesignSystem.Color.warning.opacity(0.30), lineWidth: 1)
+                    )
+            )
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+}
+
 // MARK: - Header
 
 private extension ProfileScreen {
     var headerSection: some View {
         CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    avatarView
-                    userInfoStack
-                    Spacer()
-                }
-                Divider()
-                    .overlay(Color.white.opacity(0.06))
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    LevelBadgeView(level: xpService.currentLevel, size: .small, animated: true)
-                    XPProgressBar(
-                        currentLevelNumber: xpService.currentLevel.level,
-                        nextLevelNumber: xpService.currentLevel.level < 10 ? xpService.currentLevel.level + 1 : nil,
-                        xpInCurrentLevel: xpService.xpInCurrentLevel,
-                        xpRequiredForNextLevel: xpService.xpRequiredForNextLevel,
-                        progressFraction: xpService.progressFraction
-                    )
-                }
+            HStack(spacing: DesignSystem.Spacing.md) {
+                avatarWithRing
+                userInfoStack
+                Spacer()
             }
             .padding(DesignSystem.Spacing.md)
         }
     }
 
-    var avatarView: some View {
-        ProfileAvatarView(name: displayName, size: 64)
-            .shadow(color: DesignSystem.Color.accent.opacity(0.35), radius: 12, x: 0, y: 4)
+    var avatarWithRing: some View {
+        ZStack {
+            Circle()
+                .stroke(
+                    AngularGradient(
+                        colors: [DesignSystem.Color.accent, DesignSystem.Color.indigo, DesignSystem.Color.accent],
+                        center: .center
+                    ),
+                    lineWidth: 3
+                )
+                .frame(width: 76, height: 76)
+                .opacity(0.6)
+
+            ProfileAvatarView(name: displayName, size: 66)
+                .shadow(color: DesignSystem.Color.accent.opacity(0.30), radius: 10, x: 0, y: 4)
+        }
     }
 
     var userInfoStack: some View {
@@ -112,16 +163,41 @@ private extension ProfileScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .lineLimit(1)
             }
-            if authService.isGuest {
-                Text("Guest Mode")
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.warning)
-                    .padding(.horizontal, DesignSystem.Spacing.xs)
-                    .padding(.vertical, 2)
-                    .background(DesignSystem.Color.warning.opacity(0.15), in: Capsule())
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                if authService.isGuest {
+                    guestPill
+                } else {
+                    LevelBadgeView(level: xpService.currentLevel, size: .small, animated: true)
+                }
+                if subscriptionService.isPremium {
+                    premiumPill
+                }
             }
         }
+    }
+
+    var guestPill: some View {
+        Text("Guest")
+            .font(DesignSystem.Font.caption2)
+            .fontWeight(.semibold)
+            .foregroundStyle(DesignSystem.Color.warning)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
+            .padding(.vertical, 3)
+            .background(DesignSystem.Color.warning.opacity(0.15), in: Capsule())
+    }
+
+    var premiumPill: some View {
+        HStack(spacing: 3) {
+            Image(systemName: "crown.fill")
+                .font(.system(size: 9))
+            Text("Premium")
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+        }
+        .foregroundStyle(DesignSystem.Color.accent)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
+        .padding(.vertical, 3)
+        .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
     }
 
     var editButton: some View {
@@ -136,7 +212,90 @@ private extension ProfileScreen {
     var displayName: String {
         authService.currentProfile?.displayName ?? "Explorer"
     }
+}
 
+// MARK: - Level Progress Section
+
+private extension ProfileScreen {
+    var levelProgressSection: some View {
+        CardView {
+            VStack(spacing: DesignSystem.Spacing.md) {
+                HStack(alignment: .center, spacing: DesignSystem.Spacing.md) {
+                    levelRing
+                    levelInfo
+                    Spacer()
+                    xpBadge
+                }
+                xpProgressView
+            }
+            .padding(DesignSystem.Spacing.md)
+        }
+    }
+
+    var levelRing: some View {
+        ZStack {
+            Circle()
+                .stroke(DesignSystem.Color.cardBackgroundHighlighted, lineWidth: 5)
+                .frame(width: 64, height: 64)
+
+            Circle()
+                .trim(from: 0, to: xpService.progressFraction)
+                .stroke(
+                    LinearGradient(
+                        colors: [DesignSystem.Color.accent, DesignSystem.Color.indigo],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    style: StrokeStyle(lineWidth: 5, lineCap: .round)
+                )
+                .frame(width: 64, height: 64)
+                .rotationEffect(.degrees(-90))
+                .animation(.spring(response: 0.6, dampingFraction: 0.8), value: xpService.progressFraction)
+
+            Text("\(xpService.currentLevel.level)")
+                .font(.system(size: 22, weight: .black, design: .rounded))
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
+    }
+
+    var levelInfo: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(xpService.currentLevel.title)
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            if xpService.currentLevel.level < 10 {
+                Text("\(xpService.xpInCurrentLevel) / \(xpService.xpRequiredForNextLevel) XP to next level")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            } else {
+                Text("Maximum level reached!")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+        }
+    }
+
+    var xpBadge: some View {
+        VStack(spacing: 2) {
+            Text("\(xpService.totalXP)")
+                .font(.system(size: 20, weight: .black, design: .rounded))
+                .foregroundStyle(DesignSystem.Color.accent)
+            Text("Total XP")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+    }
+
+    var xpProgressView: some View {
+        XPProgressBar(
+            currentLevelNumber: xpService.currentLevel.level,
+            nextLevelNumber: xpService.currentLevel.level < 10 ? xpService.currentLevel.level + 1 : nil,
+            xpInCurrentLevel: xpService.xpInCurrentLevel,
+            xpRequiredForNextLevel: xpService.xpRequiredForNextLevel,
+            progressFraction: xpService.progressFraction
+        )
+    }
 }
 
 // MARK: - Stats Grid
@@ -148,14 +307,11 @@ private extension ProfileScreen {
             LazyVGrid(
                 columns: [
                     GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+                    GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
                     GridItem(.flexible()),
                 ],
                 spacing: DesignSystem.Spacing.sm
             ) {
-                statCard(icon: "bolt.fill", color: DesignSystem.Color.accent,
-                         value: "\(xpService.totalXP)", label: "Total XP")
-                statCard(icon: "star.fill", color: .yellow,
-                         value: "Lv. \(xpService.currentLevel.level)", label: "Level")
                 statCard(icon: "globe.americas.fill", color: DesignSystem.Color.blue,
                          value: "\(favoritesService.favoriteCodes.count)", label: "Explored")
                 statCard(icon: "airplane.departure", color: Color(hex: "00C9A7"),
@@ -163,36 +319,45 @@ private extension ProfileScreen {
                 statCard(icon: "gamecontroller.fill", color: DesignSystem.Color.purple,
                          value: "\(totalQuizCount)", label: "Quizzes")
                 statCard(icon: "flame.fill", color: DesignSystem.Color.error,
-                         value: "\(streakService.currentStreak)", label: "Day Streak")
+                         value: "\(streakService.currentStreak)", label: "Streak")
+                statCard(icon: "star.fill", color: .yellow,
+                         value: "\(achievementService.unlockedAchievements.count)", label: "Badges")
+                statCard(icon: "calendar.badge.checkmark", color: DesignSystem.Color.indigo,
+                         value: memberSince, label: "Member")
             }
         }
     }
 
+    var memberSince: String {
+        guard let createdAt = authService.currentProfile?.createdAt else { return "—" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM yy"
+        return formatter.string(from: createdAt)
+    }
+
     func statCard(icon: String, color: Color, value: String, label: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
+        VStack(spacing: DesignSystem.Spacing.xs) {
             ZStack {
                 Circle()
                     .fill(color.opacity(0.15))
-                    .frame(width: 32, height: 32)
+                    .frame(width: 36, height: 36)
                 Image(systemName: icon)
-                    .font(.system(size: 13))
+                    .font(.system(size: 14))
                     .foregroundStyle(color)
             }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(value)
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .minimumScaleFactor(0.6)
-                    .lineLimit(1)
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(1)
-            }
-            Spacer(minLength: 0)
+            Text(value)
+                .font(.system(size: 17, weight: .black, design: .rounded))
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+            Text(label)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
         }
-        .padding(DesignSystem.Spacing.xs)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 }
@@ -205,10 +370,21 @@ private extension ProfileScreen {
             HStack {
                 SectionHeaderView(title: "Achievements")
                 Spacer()
-                Text("\(achievementService.unlockedAchievements.count) / \(AchievementCatalog.all.count)")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                Button {
+                    hapticsService.impact(.light)
+                    activeSheet = .achievements
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("\(achievementService.unlockedAchievements.count)/\(AchievementCatalog.all.count)")
+                            .font(DesignSystem.Font.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                        Image(systemName: "chevron.right")
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    }
+                }
+                .buttonStyle(.plain)
             }
             if recentUnlockedAchievements.isEmpty {
                 emptyAchievementsView
@@ -248,10 +424,13 @@ private extension ProfileScreen {
         VStack(spacing: DesignSystem.Spacing.xs) {
             ZStack {
                 Circle()
-                    .fill(achievementColor(for: definition.category).opacity(0.2))
-                    .frame(width: 48, height: 48)
+                    .fill(achievementColor(for: definition.category).opacity(0.18))
+                    .frame(width: 52, height: 52)
+                Circle()
+                    .stroke(achievementColor(for: definition.category).opacity(0.3), lineWidth: 1.5)
+                    .frame(width: 52, height: 52)
                 Image(systemName: definition.iconName)
-                    .font(.system(size: 20))
+                    .font(.system(size: 22))
                     .foregroundStyle(achievementColor(for: definition.category))
             }
             Text(definition.title)
@@ -260,7 +439,7 @@ private extension ProfileScreen {
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .frame(width: 72)
+                .frame(width: 76)
         }
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
@@ -269,7 +448,7 @@ private extension ProfileScreen {
     var recentUnlockedAchievements: [AchievementDefinition] {
         achievementService.unlockedAchievements
             .sorted { $0.unlockedAt > $1.unlockedAt }
-            .prefix(4)
+            .prefix(6)
             .compactMap { unlocked in AchievementCatalog.all.first { $0.id == unlocked.id } }
     }
 
@@ -359,7 +538,7 @@ private extension ProfileScreen {
                     Text("Get Geografy Premium")
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("Unlock all 6 quiz types, advanced stats & more")
+                    Text("Unlock all quiz types, advanced stats & more")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
@@ -472,7 +651,6 @@ private extension ProfileScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
-
 }
 
 // MARK: - Background
@@ -483,7 +661,7 @@ private extension ProfileScreen {
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.25), .clear],
+                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
                         center: .center,
                         startRadius: 0,
                         endRadius: 220
@@ -509,7 +687,7 @@ private extension ProfileScreen {
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.12), .clear],
+                        colors: [DesignSystem.Color.purple.opacity(0.12), .clear],
                         center: .center,
                         startRadius: 0,
                         endRadius: 160
@@ -517,21 +695,8 @@ private extension ProfileScreen {
                 )
                 .frame(width: 320, height: 260)
                 .blur(radius: 36)
-                .offset(x: -100, y: 400)
+                .offset(x: -100, y: 600)
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.purple.opacity(0.10), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 280)
-                .blur(radius: 44)
-                .offset(x: 160, y: 700)
-                .scaleEffect(blobAnimating ? 0.92 : 1.08)
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
@@ -545,6 +710,7 @@ private extension ProfileScreen {
         case editProfile
         case signIn
         case paywall
+        case achievements
 
         var id: Self { self }
     }
@@ -558,6 +724,10 @@ private extension ProfileScreen {
             SignInOptionsSheet()
         case .paywall:
             PaywallScreen()
+        case .achievements:
+            NavigationStack {
+                AchievementsScreen()
+            }
         }
     }
 }
@@ -622,6 +792,7 @@ private extension View {
     func profileSection(appeared: Bool, delay: Double) -> some View {
         self
             .opacity(appeared ? 1 : 0)
-            .animation(.easeOut(duration: 0.4).delay(delay), value: appeared)
+            .offset(y: appeared ? 0 : 14)
+            .animation(.easeOut(duration: 0.45).delay(delay), value: appeared)
     }
 }
