@@ -196,7 +196,7 @@ private extension CountryDetailScreen {
                     }
                 } label: {
                     FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
-                        .matchedGeometryEffect(id: country.code, in: flagNamespace)
+                        .matchedGeometryEffect(id: country.code, in: flagNamespace, isSource: true)
                         .opacity(showFlagFullScreen || flagScrolledUp ? 0 : 1)
                         .geoShadow(.elevated)
                         .onGeometryChange(for: Bool.self) { proxy in
@@ -271,7 +271,7 @@ private extension CountryDetailScreen {
                             label: country.allCapitals.count > 1
                                 ? "Capitals (\(country.allCapitals.count))"
                                 : "Capital",
-                            value: country.capital
+                            value: country.allCapitals.map(\.name).joined(separator: ", ")
                         )
                     }
                     .buttonStyle(PressButtonStyle())
@@ -527,7 +527,7 @@ private extension CountryDetailScreen {
                     currencySection
                     statisticsSection
                 }
-                if !memberOrganizations.isEmpty, subscriptionService.isPremium {
+                if !memberOrganizations.isEmpty {
                     organizationsSection(
                         countryDataService: countryDataService,
                         hapticsService: hapticsService

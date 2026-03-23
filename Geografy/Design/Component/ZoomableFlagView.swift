@@ -36,21 +36,24 @@ private extension ZoomableFlagView {
     }
 
     var flagContent: some View {
-        GeometryReader { geo in
-            let maxByWidth = geo.size.width * 0.85
-            let maxByHeight = geo.size.height * 0.7 / 0.6
-            let flagWidth = min(maxByWidth, maxByHeight)
+        GeometryReader { geometry in
+            let targetHeight = min(
+                geometry.size.width * 0.85,
+                geometry.size.height * 0.65
+            )
 
-            FlagView(countryCode: countryCode, height: flagWidth * 0.6)
-                .matchedGeometryEffect(id: countryCode, in: namespace)
-                .shadow(radius: DesignSystem.Spacing.lg)
-                .scaleEffect(scale)
-                .offset(offset)
-                .simultaneousGesture(magnifyGesture)
-                .simultaneousGesture(dragGesture)
-                .onTapGesture(count: 2) { if isReady { toggleZoom() } }
-                .onTapGesture(count: 1) { dismiss() }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            ZStack {
+                FlagView(countryCode: countryCode, height: targetHeight)
+                    .matchedGeometryEffect(id: countryCode, in: namespace, isSource: false)
+                    .shadow(radius: DesignSystem.Spacing.lg)
+                    .scaleEffect(scale)
+                    .offset(offset)
+                    .simultaneousGesture(magnifyGesture)
+                    .simultaneousGesture(dragGesture)
+                    .onTapGesture(count: 2) { if isReady { toggleZoom() } }
+                    .onTapGesture(count: 1) { dismiss() }
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
     }
 }

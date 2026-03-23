@@ -3,9 +3,12 @@ import SwiftUI
 struct TravelCountryPickerSheet: View {
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(XPService.self) private var xpService
+    @Environment(AchievementService.self) private var achievementService
 
     let countries: [Country]
     @Binding var isPresented: Bool
+    var preferredStatus: TravelStatus? = nil
 
     @State private var searchText = ""
     @State private var selectedCountry: Country?
@@ -16,7 +19,7 @@ struct TravelCountryPickerSheet: View {
                 DesignSystem.Color.background.ignoresSafeArea()
                 countryList
             }
-            .navigationTitle("Add Country")
+            .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { doneButton }
             .searchable(
@@ -42,6 +45,13 @@ struct TravelCountryPickerSheet: View {
 // MARK: - Subviews
 
 private extension TravelCountryPickerSheet {
+    var navigationTitle: String {
+        if let status = preferredStatus {
+            return "Add to \(status.label)"
+        }
+        return "Add Country"
+    }
+
     var countryList: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
@@ -55,10 +65,18 @@ private extension TravelCountryPickerSheet {
     }
 
     func pickerRow(_ country: Country) -> some View {
-        let status = travelService.status(for: country.code)
+        let currentStatus = travelService.status(for: country.code)
+        let isAlreadyInList = preferredStatus != nil && currentStatus == preferredStatus
         return Button {
             hapticsService.impact(.light)
-            selectedCountry = country
+            if let status = preferredStatus {
+                guard !isAlreadyInList else { return }
+                travelService.set(status: status, for: country.code)
+                awardTravelXP(for: status, countryCode: country.code)
+                checkTravelAchievements()
+            } else {
+                selectedCountry = country
+            }
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
@@ -67,7 +85,7 @@ private extension TravelCountryPickerSheet {
                         .frame(width: 54)
                     countryInfo(country)
                     Spacer(minLength: 0)
-                    trailingView(status)
+                    trailingView(currentStatus, isAlreadyInList: isAlreadyInList)
                 }
                 .padding(DesignSystem.Spacing.sm)
             }
@@ -87,15 +105,18 @@ private extension TravelCountryPickerSheet {
         }
     }
 
-    func trailingView(_ status: TravelStatus?) -> some View {
-        Group {
-            if let status {
-                statusBadge(status)
-            } else {
-                Image(systemName: "plus.circle")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
+    @ViewBuilder
+    func trailingView(_ status: TravelStatus?, isAlreadyInList: Bool) -> some View {
+        if isAlreadyInList {
+            Image(systemName: "checkmark.circle.fill")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(preferredStatus?.color ?? DesignSystem.Color.accent)
+        } else if let status {
+            statusBadge(status)
+        } else {
+            Image(systemName: "plus.circle")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
         }
     }
 
@@ -130,5 +151,31 @@ private extension TravelCountryPickerSheet {
         let sorted = countries.sorted { $0.name < $1.name }
         guard !searchText.isEmpty else { return sorted }
         return sorted.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
+}
+
+// MARK: - Gamification
+
+private extension TravelCountryPickerSheet {
+    func awardTravelXP(for status: TravelStatus, countryCode: String) {
+        let key = "travel_xp_awarded"
+        var awarded = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
+        let entryKey = "\(countryCode):\(status.rawValue)"
+        guard !awarded.contains(entryKey) else { return }
+        awarded.insert(entryKey)
+        UserDefaults.standard.set(Array(awarded), forKey: key)
+        switch status {
+        case .visited:
+            xpService.award(20, source: .travelVisited)
+        case .wantToVisit:
+            xpService.award(5, source: .travelWantToVisit)
+        }
+    }
+
+    func checkTravelAchievements() {
+        achievementService.checkTravelAchievements(
+            visitedCount: travelService.visitedCodes.count,
+            wantCount: travelService.wantToVisitCodes.count
+        )
     }
 }

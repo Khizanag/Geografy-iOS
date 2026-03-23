@@ -9,7 +9,7 @@ extension CountryDetailScreen {
 
     func organizationsSection(countryDataService: CountryDataService, hapticsService: HapticsService) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Member Of", premium: true)
+            sectionHeader("Member Of")
             CardView {
                 VStack(spacing: 0) {
                     ForEach(
@@ -39,14 +39,7 @@ extension CountryDetailScreen {
         countryDataService: CountryDataService
     ) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(org.highlightColor.opacity(0.15))
-                    .frame(width: 38, height: 38)
-                Image(systemName: org.icon)
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundStyle(org.highlightColor)
-            }
+            orgRowIcon(org)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(org.displayName)
@@ -78,5 +71,41 @@ extension CountryDetailScreen {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .contentShape(Rectangle())
+    }
+}
+
+// MARK: - Org Icon
+
+private extension CountryDetailScreen {
+    @ViewBuilder
+    func orgRowIcon(_ org: Organization) -> some View {
+        if let urlString = org.logoURL, let url = URL(string: urlString) {
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 38, height: 38)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                default:
+                    orgRowIconFallback(org)
+                }
+            }
+            .frame(width: 38, height: 38)
+        } else {
+            orgRowIconFallback(org)
+        }
+    }
+
+    func orgRowIconFallback(_ org: Organization) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(org.highlightColor.opacity(0.15))
+                .frame(width: 38, height: 38)
+            Image(systemName: org.icon)
+                .font(.system(size: 16, weight: .medium))
+                .foregroundStyle(org.highlightColor)
+        }
     }
 }
