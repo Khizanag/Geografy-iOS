@@ -22,4 +22,7 @@ enum Screen: Hashable {
     case independenceTimeline
     case economyExplorer
     case geographyFeatures
+    case cultureExplorer
+    case landmarkGallery
+    case mapColoring
 }

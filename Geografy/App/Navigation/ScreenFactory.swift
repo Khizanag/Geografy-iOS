@@ -73,6 +73,12 @@ private extension ScreenFactory {
             EconomyExplorerScreen()
         case .geographyFeatures:
             GeographyFeaturesScreen()
+        case .cultureExplorer:
+            CultureExplorerScreen()
+        case .landmarkGallery:
+            LandmarkGalleryScreen()
+        case .mapColoring:
+            MapColoringScreen()
         default:
             EmptyView()
         }

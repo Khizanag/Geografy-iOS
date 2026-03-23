@@ -27,6 +27,12 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case independenceTimeline
     case economyExplorer
     case geographyFeatures
+    case cultureExplorer
+    case landmarkGallery
+    case geoQuotes
+    case nationalSymbolsQuiz
+    case mapColoring
+    case countryNicknames
     case comingSoon
 
     var id: String { rawValue }
@@ -59,6 +65,12 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .independenceTimeline: "Independence Timeline"
         case .economyExplorer: "Economy Explorer"
         case .geographyFeatures: "Geography Features"
+        case .cultureExplorer: "Culture Explorer"
+        case .landmarkGallery: "Landmark Gallery"
+        case .geoQuotes: "Geo Quotes"
+        case .nationalSymbolsQuiz: "National Symbols Quiz"
+        case .mapColoring: "Map Coloring Book"
+        case .countryNicknames: "Country Nicknames"
         case .comingSoon: "Coming Soon"
         }
     }
@@ -91,6 +103,12 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .independenceTimeline: "calendar.badge.clock"
         case .economyExplorer: "chart.line.uptrend.xyaxis"
         case .geographyFeatures: "mountain.2.fill"
+        case .cultureExplorer: "music.note.house.fill"
+        case .landmarkGallery: "photo.on.rectangle.angled"
+        case .geoQuotes: "quote.bubble.fill"
+        case .nationalSymbolsQuiz: "pawprint.fill"
+        case .mapColoring: "paintpalette.fill"
+        case .countryNicknames: "tag.fill"
         case .comingSoon: "sparkles"
         }
     }
