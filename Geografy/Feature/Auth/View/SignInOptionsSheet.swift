@@ -18,7 +18,7 @@ struct SignInOptionsSheet: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     heroSection
-                        .padding(.top, DesignSystem.Spacing.xxl)
+                        .padding(.top, DesignSystem.Spacing.lg)
                     statsRow
                         .padding(.top, DesignSystem.Spacing.lg)
                         .opacity(appeared ? 1 : 0)
@@ -30,7 +30,7 @@ struct SignInOptionsSheet: View {
                         .padding(.top, DesignSystem.Spacing.xl)
                         .padding(.bottom, DesignSystem.Spacing.xxl)
                 }
-                .padding(.horizontal, DesignSystem.Spacing.lg)
+                .padding(.horizontal, DesignSystem.Spacing.md)
             }
         }
         .onAppear {
@@ -104,7 +104,7 @@ private extension SignInOptionsSheet {
                 .animation(.spring(response: 0.6, dampingFraction: 0.68), value: appeared)
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Geografy")
-                    .font(.system(size: 36, weight: .black, design: .rounded))
+                    .font(.system(size: 30, weight: .black, design: .rounded))
                     .foregroundStyle(
                         LinearGradient(
                             colors: [DesignSystem.Color.textPrimary, DesignSystem.Color.accent],
@@ -127,14 +127,12 @@ private extension SignInOptionsSheet {
 
     var appIconBadge: some View {
         ZStack {
-            // Ambient glow — fully blurred, no distinct shape
             DesignSystem.Color.accent.opacity(0.35)
-                .frame(width: 140, height: 140)
-                .blur(radius: 50)
+                .frame(width: 110, height: 110)
+                .blur(radius: 40)
                 .clipShape(Rectangle())
 
-            // Single app icon badge shape
-            RoundedRectangle(cornerRadius: 28)
+            RoundedRectangle(cornerRadius: 24)
                 .fill(
                     LinearGradient(
                         colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
@@ -142,15 +140,15 @@ private extension SignInOptionsSheet {
                         endPoint: .bottomTrailing
                     )
                 )
-                .frame(width: 96, height: 96)
-                .shadow(color: DesignSystem.Color.accent.opacity(0.55), radius: 28, x: 0, y: 10)
+                .frame(width: 76, height: 76)
+                .shadow(color: DesignSystem.Color.accent.opacity(0.55), radius: 20, x: 0, y: 8)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 28)
+                    RoundedRectangle(cornerRadius: 24)
                         .strokeBorder(.white.opacity(0.18), lineWidth: 1)
                 )
 
             Image(systemName: "globe.americas.fill")
-                .font(.system(size: 46))
+                .font(.system(size: 36))
                 .foregroundStyle(
                     LinearGradient(
                         colors: [.white, .white.opacity(0.82)],
@@ -159,7 +157,7 @@ private extension SignInOptionsSheet {
                     )
                 )
         }
-        .frame(width: 140, height: 140)
+        .frame(width: 110, height: 110)
     }
 }
 
@@ -180,8 +178,9 @@ private extension SignInOptionsSheet {
                 .font(.system(size: 13))
                 .foregroundStyle(color)
             Text(value)
-                .font(.system(size: 18, weight: .black, design: .rounded))
+                .font(.system(size: 16, weight: .black, design: .rounded))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .minimumScaleFactor(0.8)
             Text(label)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -325,7 +324,7 @@ private extension SignInOptionsSheet {
             }
         }
         .signInWithAppleButtonStyle(.white)
-        .frame(height: 56)
+        .frame(height: 50)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .shadow(color: .white.opacity(0.12), radius: 16, y: 4)
     }
@@ -353,7 +352,7 @@ private extension SignInOptionsSheet {
                     .foregroundStyle(Color(white: 0.18))
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 56)
+            .frame(height: 50)
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
             .shadow(color: .black.opacity(0.14), radius: 12, y: 4)
