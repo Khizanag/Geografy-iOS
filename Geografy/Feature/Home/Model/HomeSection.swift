@@ -24,6 +24,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case oceanExplorer
     case languageExplorer
     case challengeRoom
+    case independenceTimeline
+    case economyExplorer
+    case geographyFeatures
     case comingSoon
 
     var id: String { rawValue }
@@ -53,6 +56,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .oceanExplorer: "Ocean Explorer"
         case .languageExplorer: "Language Explorer"
         case .challengeRoom: "Challenge Room"
+        case .independenceTimeline: "Independence Timeline"
+        case .economyExplorer: "Economy Explorer"
+        case .geographyFeatures: "Geography Features"
         case .comingSoon: "Coming Soon"
         }
     }
@@ -82,6 +88,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .oceanExplorer: "water.waves"
         case .languageExplorer: "character.book.closed.fill"
         case .challengeRoom: "person.2.fill"
+        case .independenceTimeline: "calendar.badge.clock"
+        case .economyExplorer: "chart.line.uptrend.xyaxis"
+        case .geographyFeatures: "mountain.2.fill"
         case .comingSoon: "sparkles"
         }
     }
