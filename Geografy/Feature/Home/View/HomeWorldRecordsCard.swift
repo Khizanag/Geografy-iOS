@@ -1,6 +1,6 @@
 import SwiftUI
 
-private struct WorldRecord: Identifiable {
+private struct WorldRecordTile: Identifiable {
     let id = UUID()
     let emoji: String
     let title: String
@@ -10,43 +10,49 @@ private struct WorldRecord: Identifiable {
 }
 
 struct HomeWorldRecordsCard: View {
-    private let records: [WorldRecord] = [
-        WorldRecord(
+    let onSeeAll: (() -> Void)?
+
+    init(onSeeAll: (() -> Void)? = nil) {
+        self.onSeeAll = onSeeAll
+    }
+
+    private let records: [WorldRecordTile] = [
+        WorldRecordTile(
             emoji: "🌏",
             title: "Largest Country",
             value: "17.1M km²",
             country: "Russia",
             gradientColors: [Color(hex: "1565C0"), Color(hex: "0D47A1")]
         ),
-        WorldRecord(
+        WorldRecordTile(
             emoji: "👥",
             title: "Most Populous",
             value: "1.4B people",
             country: "India",
             gradientColors: [Color(hex: "E65100"), Color(hex: "BF360C")]
         ),
-        WorldRecord(
+        WorldRecordTile(
             emoji: "🏔️",
             title: "Highest Point",
             value: "8,849 m",
             country: "Nepal / China",
             gradientColors: [Color(hex: "1B5E20"), Color(hex: "2E7D32")]
         ),
-        WorldRecord(
+        WorldRecordTile(
             emoji: "🤏",
             title: "Smallest Country",
             value: "0.44 km²",
             country: "Vatican City",
             gradientColors: [Color(hex: "4A148C"), Color(hex: "6A1B9A")]
         ),
-        WorldRecord(
+        WorldRecordTile(
             emoji: "🌊",
             title: "Longest Coastline",
             value: "202,080 km",
             country: "Canada",
             gradientColors: [Color(hex: "006064"), Color(hex: "00838F")]
         ),
-        WorldRecord(
+        WorldRecordTile(
             emoji: "🏜️",
             title: "Largest Desert",
             value: "9.2M km²",
@@ -67,14 +73,19 @@ struct HomeWorldRecordsCard: View {
 
 private extension HomeWorldRecordsCard {
     var sectionHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 3, height: 18)
-            Text("World Records")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+        HStack {
+            SectionHeaderView(title: "World Records", icon: "trophy.fill")
+            Spacer()
+            if let onSeeAll {
+                Button(action: onSeeAll) {
+                    Text("See All")
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                }
+                .buttonStyle(.plain)
+                .padding(.trailing, DesignSystem.Spacing.xs)
+            }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
@@ -91,7 +102,7 @@ private extension HomeWorldRecordsCard {
         }
     }
 
-    func recordTile(_ record: WorldRecord) -> some View {
+    func recordTile(_ record: WorldRecordTile) -> some View {
         ZStack(alignment: .bottomLeading) {
             LinearGradient(
                 colors: record.gradientColors,

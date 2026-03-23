@@ -1,0 +1,137 @@
+import SwiftUI
+
+// MARK: - World Records Section
+
+extension HomeScreen {
+    var worldRecordsSection: some View {
+        HomeWorldRecordsCard {
+            coordinator.push(.worldRecords)
+        }
+    }
+}
+
+// MARK: - Organizations Section
+
+extension HomeScreen {
+    var orgsSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            HomeOrgsCard(
+                onOrgTap: { coordinator.present(.organizationDetail($0)) },
+                onSeeAll: { coordinator.present(.organizations) }
+            )
+        }
+    }
+}
+
+// MARK: - Daily Challenge Section
+
+extension HomeScreen {
+    var dailyChallengeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Daily Challenge")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeDailyChallengeCard(
+                streak: dailyChallengeService?.streak ?? 0,
+                hasCompletedToday: dailyChallengeService?.hasCompletedToday ?? false,
+                onTap: { coordinator.present(.dailyChallenge) }
+            )
+        }
+    }
+}
+
+// MARK: - Capital Quiz Section
+
+extension HomeScreen {
+    var capitalQuizSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Capital City Quiz")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeCapitalQuizCard { coordinator.present(.capitalQuiz) }
+        }
+    }
+}
+
+// MARK: - SRS Review Section
+
+extension HomeScreen {
+    var srsReviewSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Due for Review")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeSRSReviewCard(dueCount: dueReviewCount) {
+                coordinator.present(.srsStudy)
+            }
+        }
+    }
+
+    var dueReviewCount: Int {
+        let allCards = countryDataService.countries.map {
+            FlashcardItem.make(from: $0, type: .countryToCapital)
+        }
+        return flashcardService.dueCards(from: allCards).count
+    }
+}
+
+// MARK: - Flag Game Section
+
+extension HomeScreen {
+    var flagGameSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Flag Matching")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeFlagGameCard { coordinator.present(.flagGame) }
+        }
+    }
+}
+
+// MARK: - Geo Trivia Section
+
+extension HomeScreen {
+    var geoTriviaSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Geo Trivia")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeGeoTriviaCard { coordinator.present(.geoTrivia) }
+        }
+    }
+}
+
+// MARK: - Spelling Bee Section
+
+extension HomeScreen {
+    var spellingBeeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Spelling Bee")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeSpellingBeeCard { coordinator.present(.spellingBee) }
+        }
+    }
+}
+
+// MARK: - Learning Path Section
+
+extension HomeScreen {
+    var learningPathSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Learning Path")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeLearningPathCard {
+                coordinator.push(.learningPath)
+            }
+        }
+    }
+}
+
+// MARK: - Map Puzzle Section
+
+extension HomeScreen {
+    var mapPuzzleSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Map Puzzle")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeMapPuzzleCard {
+                coordinator.push(.mapPuzzle)
+            }
+        }
+    }
+}

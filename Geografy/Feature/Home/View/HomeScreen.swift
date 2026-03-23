@@ -8,11 +8,11 @@ struct HomeScreen: View {
     @Environment(StreakService.self) private var streakService
     @Environment(CoinService.self) private var coinService
     @Environment(HomeSectionOrderService.self) private var sectionOrderService
-    @Environment(FlashcardService.self) private var flashcardService
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(FlashcardService.self) var flashcardService
+    @Environment(TabCoordinator.self) var coordinator
 
-    @State private var countryDataService = CountryDataService()
-    @State private var dailyChallengeService: DailyChallengeService?
+    @State var countryDataService = CountryDataService()
+    @State var dailyChallengeService: DailyChallengeService?
     @State private var selectedMapIndex = 0
     @State private var blobAnimating = false
     @State private var appeared = false
@@ -486,27 +486,6 @@ private extension HomeScreen {
     }
 }
 
-// MARK: - World Records Section
-
-private extension HomeScreen {
-    var worldRecordsSection: some View {
-        HomeWorldRecordsCard()
-    }
-}
-
-// MARK: - Organizations Section
-
-private extension HomeScreen {
-    var orgsSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HomeOrgsCard(
-                onOrgTap: { coordinator.present(.organizationDetail($0)) },
-                onSeeAll: { coordinator.present(.organizations) }
-            )
-        }
-    }
-}
-
 // MARK: - Progress Section
 
 private extension HomeScreen {
@@ -533,91 +512,6 @@ private extension HomeScreen {
                 .map { $0.continent }
         )
         return continents.count
-    }
-}
-
-// MARK: - Daily Challenge Section
-
-private extension HomeScreen {
-    var dailyChallengeSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Daily Challenge")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeDailyChallengeCard(
-                streak: dailyChallengeService?.streak ?? 0,
-                hasCompletedToday: dailyChallengeService?.hasCompletedToday ?? false,
-                onTap: { coordinator.present(.dailyChallenge) }
-            )
-        }
-    }
-}
-
-// MARK: - Capital Quiz Section
-
-private extension HomeScreen {
-    var capitalQuizSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Capital City Quiz")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeCapitalQuizCard { coordinator.present(.capitalQuiz) }
-        }
-    }
-}
-
-// MARK: - SRS Review Section
-
-private extension HomeScreen {
-    var srsReviewSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Due for Review")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeSRSReviewCard(dueCount: dueReviewCount) {
-                coordinator.present(.srsStudy)
-            }
-        }
-    }
-
-    var dueReviewCount: Int {
-        let allCards = countryDataService.countries.map {
-            FlashcardItem.make(from: $0, type: .countryToCapital)
-        }
-        return flashcardService.dueCards(from: allCards).count
-    }
-}
-
-// MARK: - Flag Game Section
-
-private extension HomeScreen {
-    var flagGameSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Flag Matching")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeFlagGameCard { coordinator.present(.flagGame) }
-        }
-    }
-}
-
-// MARK: - Geo Trivia Section
-
-private extension HomeScreen {
-    var geoTriviaSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geo Trivia")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeGeoTriviaCard { coordinator.present(.geoTrivia) }
-        }
-    }
-}
-
-// MARK: - Spelling Bee Section
-
-private extension HomeScreen {
-    var spellingBeeSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Spelling Bee")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeSpellingBeeCard { coordinator.present(.spellingBee) }
-        }
     }
 }
 
@@ -674,47 +568,49 @@ private extension HomeScreen {
 
     @ViewBuilder
     func sectionView(for section: HomeSection) -> some View {
+        if sectionNeedsPadding(section) {
+            paddedSectionView(for: section)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        } else {
+            fullWidthSectionView(for: section)
+        }
+    }
+
+    @ViewBuilder
+    func paddedSectionView(for section: HomeSection) -> some View {
         switch section {
-        case .guestBanner:
-            GuestModePromptBanner()
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .carousel:
-            carouselSection
+        case .guestBanner: GuestModePromptBanner()
         case .spotlight:
-            if let country = spotlightCountry {
-                spotlightSection(country)
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-            }
-        case .streak:
-            streakSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .dailyChallenge:
-            dailyChallengeSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .capitalQuiz:
-            capitalQuizSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .srsReview:
-            srsReviewSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .worldRecords:
-            worldRecordsSection
-        case .organizations:
-            orgsSection
-        case .progress:
-            progressSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .flagGame:
-            flagGameSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .geoTrivia:
-            geoTriviaSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .spellingBee:
-            spellingBeeSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        case .comingSoon:
-            comingSoonSection
+            if let country = spotlightCountry { spotlightSection(country) }
+        case .streak: streakSection
+        case .dailyChallenge: dailyChallengeSection
+        case .capitalQuiz: capitalQuizSection
+        case .srsReview: srsReviewSection
+        case .progress: progressSection
+        case .flagGame: flagGameSection
+        case .geoTrivia: geoTriviaSection
+        case .spellingBee: spellingBeeSection
+        case .learningPath: learningPathSection
+        case .mapPuzzle: mapPuzzleSection
+        default: EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    func fullWidthSectionView(for section: HomeSection) -> some View {
+        switch section {
+        case .carousel: carouselSection
+        case .worldRecords: worldRecordsSection
+        case .organizations: orgsSection
+        case .comingSoon: comingSoonSection
+        default: EmptyView()
+        }
+    }
+
+    func sectionNeedsPadding(_ section: HomeSection) -> Bool {
+        switch section {
+        case .carousel, .worldRecords, .organizations, .comingSoon: false
+        default: true
         }
     }
 }
