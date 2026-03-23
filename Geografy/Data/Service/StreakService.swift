@@ -6,6 +6,7 @@ import SwiftData
 @MainActor
 final class StreakService {
     private(set) var currentStreak: Int = 0
+    private(set) var hasPlayedToday: Bool = false
 
     var currentUserID: String
 
@@ -61,6 +62,9 @@ private extension StreakService {
         descriptor.sortBy = [SortDescriptor(\.date, order: .reverse)]
         let records = (try? db.mainContext.fetch(descriptor)) ?? []
         currentStreak = computeConsecutiveDays(from: records)
+
+        let today = Calendar.current.startOfDay(for: .now)
+        hasPlayedToday = records.first.map { Calendar.current.isDate($0.date, inSameDayAs: today) } ?? false
     }
 
     func computeConsecutiveDays(from records: [StreakRecord]) -> Int {

@@ -480,7 +480,10 @@ private extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Daily Streak")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeStreakCard(streak: streakService.currentStreak) {
+            HomeStreakCard(
+                streak: streakService.currentStreak,
+                isAtRisk: streakService.currentStreak > 0 && !streakService.hasPlayedToday
+            ) {
                 coordinator.present(.quizSetup)
             }
         }
@@ -498,6 +501,11 @@ private extension HomeScreen {
                 favoriteCount: favoritesService.favoriteCodes.count,
                 exploredContinents: exploredContinents,
                 currentLevel: xpService.currentLevel.level,
+                currentLevelTitle: xpService.currentLevel.title,
+                nextLevelNumber: nextLevelNumber,
+                xpInCurrentLevel: xpService.xpInCurrentLevel,
+                xpRequiredForNextLevel: xpService.xpRequiredForNextLevel,
+                progressFraction: xpService.progressFraction,
                 onFavoritesTap: { coordinator.present(.favorites) },
                 onCountriesTap: { coordinator.present(.countries) },
                 onProfileTap: { coordinator.present(.profile) }
@@ -513,6 +521,12 @@ private extension HomeScreen {
                 .map { $0.continent }
         )
         return continents.count
+    }
+
+    var nextLevelNumber: Int? {
+        let current = xpService.currentLevel
+        guard current.maxXP != Int.max else { return nil }
+        return current.level + 1
     }
 }
 

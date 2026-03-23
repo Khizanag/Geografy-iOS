@@ -4,7 +4,10 @@ struct HomeStreakCard: View {
     @Environment(HapticsService.self) private var hapticsService
 
     let streak: Int
+    let isAtRisk: Bool
     let onStartQuiz: () -> Void
+
+    @State private var isPulsing = false
 
     var body: some View {
         CardView {
@@ -15,6 +18,14 @@ struct HomeStreakCard: View {
                 quizButton
             }
             .padding(DesignSystem.Spacing.md)
+        }
+        .onAppear {
+            if isAtRisk {
+                isPulsing = true
+            }
+        }
+        .onChange(of: isAtRisk) { _, newValue in
+            isPulsing = newValue
         }
     }
 }
@@ -27,25 +38,45 @@ private extension HomeStreakCard {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color(hex: "FF6B00").opacity(0.25), Color.clear],
+                        colors: [
+                            isAtRisk
+                                ? DesignSystem.Color.orange.opacity(0.4)
+                                : DesignSystem.Color.orange.opacity(0.25),
+                            Color.clear,
+                        ],
                         center: .center,
                         startRadius: 0,
-                        endRadius: 32
+                        endRadius: isAtRisk ? 36 : 32
                     )
                 )
                 .frame(width: 56, height: 56)
+                .scaleEffect(isPulsing ? 1.3 : 1.0)
+                .animation(
+                    isPulsing
+                        ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
+                        : .default,
+                    value: isPulsing
+                )
+
             Text(streak > 0 ? "🔥" : "💤")
                 .font(.system(size: 28))
+                .scaleEffect(isPulsing ? 1.2 : 1.0)
+                .animation(
+                    isPulsing
+                        ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
+                        : .default,
+                    value: isPulsing
+                )
         }
     }
 
     var streakInfo: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(streak > 0 ? "\(streak) day streak!" : "Start your streak")
+            Text(streakTitle)
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(streak > 0 ? "Keep exploring to maintain it" : "Play a quiz to begin")
+            Text(streakSubtitle)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
@@ -65,5 +96,29 @@ private extension HomeStreakCard {
                 .background(DesignSystem.Color.accent, in: Capsule())
         }
         .buttonStyle(PressButtonStyle())
+    }
+}
+
+// MARK: - Helpers
+
+private extension HomeStreakCard {
+    var streakTitle: String {
+        if streak == 0 {
+            "Start your streak"
+        } else if isAtRisk {
+            "\(streak) day streak at risk!"
+        } else {
+            "\(streak) day streak!"
+        }
+    }
+
+    var streakSubtitle: String {
+        if streak == 0 {
+            "Play a quiz to begin"
+        } else if isAtRisk {
+            "Play now to keep it alive"
+        } else {
+            "Keep exploring to maintain it"
+        }
     }
 }
