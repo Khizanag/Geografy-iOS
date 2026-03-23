@@ -1,5 +1,7 @@
 import Foundation
+import Observation
 
+@Observable
 final class GeoQuotesService {
     private let favoritesKey = "geo_quotes_favorites"
 
