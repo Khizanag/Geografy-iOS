@@ -209,7 +209,7 @@ private extension WorldBankIndicatorCard {
         }
         .chartXScale(domain: minYear...maxYear)
         .chartXAxis {
-            AxisMarks(values: .automatic(desiredCount: 4)) { value in
+            AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 3)) { value in
                 AxisGridLine()
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.2))
                 AxisValueLabel(centered: true) {
@@ -259,6 +259,22 @@ private extension WorldBankIndicatorCard {
 // MARK: - Helpers
 
 private extension WorldBankIndicatorCard {
+    func chartXValues(min minYear: Int, max maxYear: Int, count: Int) -> [Int] {
+        guard maxYear > minYear else { return [minYear] }
+        let range = maxYear - minYear
+        let step = max(1, range / count)
+        var values = [minYear]
+        var current = minYear + step
+        while current < maxYear {
+            values.append(current)
+            current += step
+        }
+        if values.last != maxYear {
+            values.append(maxYear)
+        }
+        return values
+    }
+
     func formattedCacheAge(_ date: Date) -> String {
         let interval = Date().timeIntervalSince(date)
         if interval < 3600 {
