@@ -22,6 +22,8 @@ extension HomeScreen {
         case .nationalSymbolsQuiz: nationalSymbolsQuizSection
         case .mapColoring: mapColoringSection
         case .countryNicknames: countryNicknamesSection
+        case .wordSearch: wordSearchSection
+        case .borderChallenge: borderChallengeSection
         default: discoverSectionView(for: section)
         }
     }
@@ -363,6 +365,30 @@ extension HomeScreen {
             SectionHeaderView(title: "Country Nicknames")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeCountryNicknamesCard { coordinator.present(.countryNicknames) }
+        }
+    }
+}
+
+// MARK: - Word Search Section
+
+extension HomeScreen {
+    var wordSearchSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Geography Word Search")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeWordSearchCard { coordinator.present(.wordSearch) }
+        }
+    }
+}
+
+// MARK: - Border Challenge Section
+
+extension HomeScreen {
+    var borderChallengeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Border Challenge")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeBorderChallengeCard { coordinator.present(.borderChallenge) }
         }
     }
 }
