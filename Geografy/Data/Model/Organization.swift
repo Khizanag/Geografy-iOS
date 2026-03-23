@@ -23,9 +23,12 @@ struct Organization: Identifiable, Hashable {
 extension Organization {
     static let all: [Organization] = [
         makeUN, makeNATO, makeEU, makeASEAN, makeAU,
-        makeArabLeague, makeBRICS, makeCIS, makeCommonwealth,
-        makeG7, makeG20, makeMercosur, makeOECD, makeOPEC,
-        makeSCO, makeUSMCA, makeWTO,
+        makeArabLeague, makeBRICS, makeCARICOM, makeCELAC,
+        makeCIS, makeCommonwealth, makeEAC, makeECOWAS,
+        makeG7, makeG20, makeGCC, makeMercosur,
+        makeNordicCouncil, makeOAS, makeOECD, makeOIF,
+        makeOPEC, makePIF, makeSAARC, makeSADC, makeSCO,
+        makeUSMCA, makeV4, makeWTO,
     ]
 
     private static let makeUN = Organization(
@@ -318,6 +321,210 @@ extension Organization {
         logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
             + "thumb/2/2f/WTO_logo.svg/"
             + "200px-WTO_logo.svg.png"
+    )
+
+    private static let makeCARICOM = Organization(
+        id: "CARICOM",
+        displayName: "CARICOM",
+        fullName: "Caribbean Community",
+        icon: "sun.max.fill",
+        highlightColor: Color(hex: "00ACC1"),
+        description: "Founded in 1973, the Caribbean Community is "
+            + "a grouping of 15 member states and 5 associate "
+            + "members in the Caribbean. It promotes economic "
+            + "integration, foreign policy coordination, and "
+            + "social development across the region.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/4/4e/CARICOM_Flag.svg/"
+            + "200px-CARICOM_Flag.svg.png"
+    )
+
+    private static let makeCELAC = Organization(
+        id: "CELAC",
+        displayName: "CELAC",
+        fullName: "Community of Latin American "
+            + "and Caribbean States",
+        icon: "globe.americas.fill",
+        highlightColor: Color(hex: "AB47BC"),
+        description: "Founded in 2011, CELAC is a regional "
+            + "intergovernmental mechanism of 33 Latin "
+            + "American and Caribbean states. It promotes "
+            + "regional integration and serves as a unified "
+            + "voice for the region in global affairs, "
+            + "excluding the United States and Canada.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/e/e8/CELAC_logo.svg/"
+            + "200px-CELAC_logo.svg.png"
+    )
+
+    private static let makeEAC = Organization(
+        id: "EAC",
+        displayName: "EAC",
+        fullName: "East African Community",
+        icon: "mountain.2.fill",
+        highlightColor: Color(hex: "43A047"),
+        description: "Revived in 2000, the East African Community "
+            + "is a regional intergovernmental organization "
+            + "of 8 member states in East and Central Africa. "
+            + "It aims to establish a common market, customs "
+            + "union, and ultimately a political federation "
+            + "among its members.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/6/6f/EAC_Logo.svg/"
+            + "200px-EAC_Logo.svg.png"
+    )
+
+    private static let makeECOWAS = Organization(
+        id: "ECOWAS",
+        displayName: "ECOWAS",
+        fullName: "Economic Community of West African States",
+        icon: "circle.hexagongrid.fill",
+        highlightColor: Color(hex: "FFA726"),
+        description: "Founded in 1975, ECOWAS is a regional "
+            + "organization of 15 West African countries. "
+            + "It promotes economic integration, peace, and "
+            + "stability across the region, and has played "
+            + "a key role in conflict resolution and "
+            + "democratic governance in West Africa.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/e/e9/ECOWAS_Logo.svg/"
+            + "200px-ECOWAS_Logo.svg.png"
+    )
+
+    private static let makeGCC = Organization(
+        id: "GCC",
+        displayName: "GCC",
+        fullName: "Gulf Cooperation Council",
+        icon: "drop.fill",
+        highlightColor: Color(hex: "26A69A"),
+        description: "Founded in 1981, the Gulf Cooperation "
+            + "Council is a regional intergovernmental "
+            + "political and economic union of 6 Arab states "
+            + "bordering the Persian Gulf. It coordinates "
+            + "economic, security, and cultural policies "
+            + "among its oil-rich member states.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/c/cb/GCC_Flag.svg/"
+            + "200px-GCC_Flag.svg.png"
+    )
+
+    private static let makeNordicCouncil = Organization(
+        id: "Nordic Council",
+        displayName: "Nordic Council",
+        fullName: "Nordic Council",
+        icon: "snowflake.circle.fill",
+        highlightColor: Color(hex: "42A5F5"),
+        description: "Founded in 1952, the Nordic Council is an "
+            + "official inter-parliamentary body for "
+            + "cooperation among the Nordic countries: "
+            + "Denmark, Finland, Iceland, Norway, and "
+            + "Sweden. It promotes shared values, free "
+            + "movement, and cultural cooperation.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/8/8e/Nordic_Council_Logo.svg/"
+            + "200px-Nordic_Council_Logo.svg.png"
+    )
+
+    private static let makeOAS = Organization(
+        id: "OAS",
+        displayName: "OAS",
+        fullName: "Organization of American States",
+        icon: "building.2.fill",
+        highlightColor: Color(hex: "5C6BC0"),
+        description: "Founded in 1948, the Organization of "
+            + "American States is the oldest regional "
+            + "organization in the world, comprising 35 "
+            + "independent states of the Americas. It "
+            + "promotes democracy, human rights, security, "
+            + "and development across the Western Hemisphere.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/0/0f/OAS_Seal.svg/"
+            + "200px-OAS_Seal.svg.png"
+    )
+
+    private static let makeOIF = Organization(
+        id: "OIF",
+        displayName: "Francophonie",
+        fullName: "Organisation Internationale de la Francophonie",
+        icon: "text.book.closed.fill",
+        highlightColor: Color(hex: "7E57C2"),
+        description: "Founded in 1970, the Organisation "
+            + "Internationale de la Francophonie brings "
+            + "together countries that share or have a "
+            + "connection with the French language. With "
+            + "around 88 member states and governments, it "
+            + "promotes the French language, cultural "
+            + "diversity, education, and democratic values.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/9/9a/OIF_Logo.svg/"
+            + "200px-OIF_Logo.svg.png"
+    )
+
+    private static let makePIF = Organization(
+        id: "PIF",
+        displayName: "Pacific Islands Forum",
+        fullName: "Pacific Islands Forum",
+        icon: "water.waves",
+        highlightColor: Color(hex: "0097A7"),
+        description: "Founded in 1971, the Pacific Islands Forum "
+            + "is an inter-governmental organization of 18 "
+            + "member states in the Pacific region. It "
+            + "addresses key issues including climate change, "
+            + "sustainable development, and regional security "
+            + "for Pacific Island nations.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/6/67/PIF_Logo.svg/"
+            + "200px-PIF_Logo.svg.png"
+    )
+
+    private static let makeSAARC = Organization(
+        id: "SAARC",
+        displayName: "SAARC",
+        fullName: "South Asian Association for Regional Cooperation",
+        icon: "leaf.fill",
+        highlightColor: Color(hex: "66BB6A"),
+        description: "Founded in 1985, SAARC is a regional "
+            + "intergovernmental organization of 8 South "
+            + "Asian member states. It aims to promote "
+            + "economic growth, social progress, and "
+            + "cultural development in the region, though "
+            + "it has been largely inactive since 2014.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/a/ab/SAARC_Logo.svg/"
+            + "200px-SAARC_Logo.svg.png"
+    )
+
+    private static let makeSADC = Organization(
+        id: "SADC",
+        displayName: "SADC",
+        fullName: "Southern African Development Community",
+        icon: "globe.europe.africa.fill",
+        highlightColor: Color(hex: "EF5350"),
+        description: "Founded in 1992, the Southern African "
+            + "Development Community is a regional economic "
+            + "community of 16 member states in southern "
+            + "Africa. It promotes economic integration, "
+            + "peace, security, and sustainable development "
+            + "across the region.",
+        logoURL: "https://upload.wikimedia.org/wikipedia/commons/"
+            + "thumb/e/e3/SADC_Logo.svg/"
+            + "200px-SADC_Logo.svg.png"
+    )
+
+    private static let makeV4 = Organization(
+        id: "V4",
+        displayName: "Visegrád Group",
+        fullName: "Visegrád Group",
+        icon: "square.grid.2x2.fill",
+        highlightColor: Color(hex: "EC407A"),
+        description: "Founded in 1991, the Visegrád Group is a "
+            + "cultural and political alliance of four "
+            + "Central European states: Czech Republic, "
+            + "Hungary, Poland, and Slovakia. Named after "
+            + "the 1335 meeting of kings in Visegrád, it "
+            + "coordinates EU policy positions and promotes "
+            + "regional cooperation.",
+        logoURL: nil
     )
 
     static func find(_ id: String) -> Organization? {
