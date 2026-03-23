@@ -14,11 +14,38 @@ struct SpellingBeeScreen: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
-        ZStack {
-            backgroundView
-            mainContent
+        NavigationStack {
+            ZStack {
+                DesignSystem.Color.background.ignoresSafeArea()
+                ScrollView {
+                    VStack(spacing: DesignSystem.Spacing.lg) {
+                        scorePill
+                        if let country = currentCountry {
+                            flagSection(for: country)
+                            hintSection(for: country)
+                            letterGrid
+                            inputSection
+                            hintButtons
+                        }
+                    }
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.top, DesignSystem.Spacing.lg)
+                    .padding(.bottom, DesignSystem.Spacing.xxl)
+                }
+                .safeAreaInset(edge: .bottom) {
+                    submitButton
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                        .padding(.bottom, DesignSystem.Spacing.md)
+                }
+            }
+            .navigationTitle("Spelling Bee")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton { dismiss() }
+                }
+            }
         }
-        .navigationBarHidden(true)
         .onAppear {
             countryDataService.loadCountries()
             loadNextCountry()
@@ -29,74 +56,31 @@ struct SpellingBeeScreen: View {
 // MARK: - Subviews
 
 private extension SpellingBeeScreen {
-    var backgroundView: some View {
-        DesignSystem.Color.background
-            .ignoresSafeArea()
-    }
-
-    var mainContent: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                topBar
-                if let country = currentCountry {
-                    flagSection(for: country)
-                    hintSection(for: country)
-                    letterGrid
-                    inputSection
-                    actionRow
-                }
-                Spacer(minLength: DesignSystem.Spacing.xxl)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.top, DesignSystem.Spacing.lg)
-        }
-    }
-
-    var topBar: some View {
-        HStack {
-            dismissButton
-            Spacer()
-            scoreView
-            Spacer()
-            roundView
-        }
-    }
-
-    var dismissButton: some View {
-        Button { dismiss() } label: {
-            Image(systemName: "xmark")
-                .font(DesignSystem.Font.subheadline)
+    var scorePill: some View {
+        HStack(spacing: DesignSystem.Spacing.md) {
+            Label("Round \(roundNumber)", systemImage: "flag")
+                .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .padding(DesignSystem.Spacing.xs)
-                .background(DesignSystem.Color.cardBackground, in: Circle())
+            Spacer()
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: "star.fill")
+                    .foregroundStyle(DesignSystem.Color.accent)
+                Text("\(score)")
+                    .fontWeight(.bold)
+                    .contentTransition(.numericText())
+            }
+            .font(DesignSystem.Font.subheadline)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
         }
-        .buttonStyle(.plain)
-    }
-
-    var scoreView: some View {
-        VStack(spacing: 2) {
-            Text("\(score)")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .contentTransition(.numericText())
-            Text("Score")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-    }
-
-    var roundView: some View {
-        Text("Round \(roundNumber)")
-            .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .frame(minWidth: 60, alignment: .trailing)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .background(DesignSystem.Color.cardBackground, in: Capsule())
     }
 
     func flagSection(for country: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: country.code, height: 80)
-                .shadow(color: .black.opacity(0.25), radius: 8, x: 0, y: 4)
+                .geoShadow(.subtle)
             Text(country.continent.displayName)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -109,13 +93,19 @@ private extension SpellingBeeScreen {
     func hintSection(for country: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             if usedHints.contains(.firstLetter) {
-                hintChip(text: "First letter: \(String(country.name.prefix(1)))", icon: "textformat")
+                hintChip(
+                    text: "First letter: \(String(country.name.prefix(1)))",
+                    icon: "textformat"
+                )
             }
             if usedHints.contains(.capital) {
                 hintChip(text: "Capital: \(country.capital)", icon: "building.columns")
             }
             if usedHints.contains(.population) {
-                hintChip(text: "Population: \(country.population.formatted())", icon: "person.2")
+                hintChip(
+                    text: "Population: \(country.population.formatted())",
+                    icon: "person.2"
+                )
             }
         }
     }
@@ -156,9 +146,17 @@ private extension SpellingBeeScreen {
         let letters = Array(typedText.lowercased())
         let targetLetters = Array(target.lowercased())
 
-        return FlowLayout(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(targetLetters.enumerated()), id: \.offset) { index, targetLetter in
-                let typedLetter: Character? = index < letters.count ? letters[index] : nil
+        return LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 32), spacing: DesignSystem.Spacing.xs)],
+            spacing: DesignSystem.Spacing.xs
+        ) {
+            ForEach(
+                Array(targetLetters.enumerated()),
+                id: \.offset
+            ) { index, targetLetter in
+                let typedLetter: Character? = index < letters.count
+                    ? letters[index]
+                    : nil
                 letterCell(
                     typed: typedLetter.map { String($0) },
                     isCorrect: typedLetter == targetLetter,
@@ -171,15 +169,20 @@ private extension SpellingBeeScreen {
     func letterCell(typed: String?, isCorrect: Bool, isSpace: Bool) -> some View {
         Group {
             if isSpace {
-                Spacer().frame(width: DesignSystem.Spacing.sm)
+                Color.clear.frame(width: DesignSystem.Spacing.sm, height: 36)
             } else {
                 ZStack {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                         .fill(cellBackground(typed: typed, isCorrect: isCorrect))
                         .frame(width: 32, height: 36)
                         .overlay(
-                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                                .stroke(cellBorderColor(typed: typed, isCorrect: isCorrect), lineWidth: 1.5)
+                            RoundedRectangle(
+                                cornerRadius: DesignSystem.CornerRadius.small
+                            )
+                            .stroke(
+                                cellBorderColor(typed: typed, isCorrect: isCorrect),
+                                lineWidth: 1.5
+                            )
                         )
                     if let letter = typed {
                         Text(letter.uppercased())
@@ -194,16 +197,6 @@ private extension SpellingBeeScreen {
                 }
             }
         }
-    }
-
-    func cellBackground(typed: String?, isCorrect: Bool) -> Color {
-        guard typed != nil else { return DesignSystem.Color.cardBackgroundHighlighted }
-        return isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error
-    }
-
-    func cellBorderColor(typed: String?, isCorrect: Bool) -> Color {
-        guard typed != nil else { return DesignSystem.Color.textTertiary.opacity(0.4) }
-        return isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error
     }
 
     var inputSection: some View {
@@ -230,13 +223,6 @@ private extension SpellingBeeScreen {
         }
     }
 
-    var actionRow: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            hintButtons
-            submitButton
-        }
-    }
-
     var hintButtons: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             hintButton(type: .firstLetter, icon: "textformat", label: "First Letter")
@@ -253,10 +239,18 @@ private extension SpellingBeeScreen {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: isUsed ? "\(icon).fill" : icon)
                     .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(isUsed ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary)
+                    .foregroundStyle(
+                        isUsed
+                            ? DesignSystem.Color.accent
+                            : DesignSystem.Color.textSecondary
+                    )
                 Text(label)
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(isUsed ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary)
+                    .foregroundStyle(
+                        isUsed
+                            ? DesignSystem.Color.accent
+                            : DesignSystem.Color.textTertiary
+                    )
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
@@ -272,19 +266,30 @@ private extension SpellingBeeScreen {
     }
 
     var submitButton: some View {
-        Button { submitAnswer() } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "checkmark")
-                Text("Submit")
-                    .fontWeight(.bold)
-            }
-            .font(DesignSystem.Font.headline)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
+        GlassButton(
+            "Submit",
+            systemImage: "checkmark",
+            fullWidth: true
+        ) {
+            submitAnswer()
         }
-        .buttonStyle(.glass)
         .disabled(typedText.trimmingCharacters(in: .whitespaces).isEmpty)
+    }
+}
+
+// MARK: - Helpers
+
+private extension SpellingBeeScreen {
+    func cellBackground(typed: String?, isCorrect: Bool) -> Color {
+        guard typed != nil else { return DesignSystem.Color.cardBackgroundHighlighted }
+        return isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error
+    }
+
+    func cellBorderColor(typed: String?, isCorrect: Bool) -> Color {
+        guard typed != nil else {
+            return DesignSystem.Color.textTertiary.opacity(0.4)
+        }
+        return isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error
     }
 }
 
@@ -313,7 +318,9 @@ private extension SpellingBeeScreen {
 
     func submitAnswer() {
         guard let country = currentCountry else { return }
-        let normalized = typedText.trimmingCharacters(in: .whitespaces).lowercased()
+        let normalized = typedText
+            .trimmingCharacters(in: .whitespaces)
+            .lowercased()
         let isCorrect = normalized == country.name.lowercased()
 
         if isCorrect {
@@ -351,44 +358,5 @@ private extension SpellingBeeScreen {
         case none
         case correct
         case wrong
-    }
-}
-
-// MARK: - FlowLayout
-
-private struct FlowLayout<Content: View>: View {
-    let spacing: CGFloat
-    let content: Content
-
-    init(spacing: CGFloat = 8, @ViewBuilder content: () -> Content) {
-        self.spacing = spacing
-        self.content = content()
-    }
-
-    var body: some View {
-        _VariadicView.Tree(FlowLayoutHelper(spacing: spacing)) {
-            content
-        }
-    }
-}
-
-private struct FlowLayoutHelper: _VariadicView_UnaryViewRoot {
-    let spacing: CGFloat
-
-    func body(children: _VariadicView.Children) -> some View {
-        GeometryReader { geometryReader in
-            let width = geometryReader.size.width
-            buildRows(children: children, width: width)
-        }
-    }
-
-    func buildRows(children: _VariadicView.Children, width: CGFloat) -> some View {
-        VStack(alignment: .leading, spacing: spacing) {
-            HStack(spacing: spacing) {
-                ForEach(children) { child in
-                    child
-                }
-            }
-        }
     }
 }
