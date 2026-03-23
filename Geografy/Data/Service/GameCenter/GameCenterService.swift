@@ -57,6 +57,31 @@ final class GameCenterService {
         }
     }
 
+    func loadFriends() async -> [GKPlayer] {
+        guard isAuthenticated else { return [] }
+        do {
+            return try await GKLocalPlayer.local.loadFriends()
+        } catch {
+            return []
+        }
+    }
+
+    func loadFriendLeaderboardEntries(for leaderboardID: String) async -> [GKLeaderboard.Entry] {
+        guard isAuthenticated else { return [] }
+        do {
+            let leaderboards = try await GKLeaderboard.loadLeaderboards(IDs: [leaderboardID])
+            guard let leaderboard = leaderboards.first else { return [] }
+            let (_, entries, _) = try await leaderboard.loadEntries(
+                for: .friendsOnly,
+                timeScope: .allTime,
+                range: NSRange(location: 1, length: 25)
+            )
+            return entries
+        } catch {
+            return []
+        }
+    }
+
     func retryPendingSubmissions() async {
         guard isAuthenticated else { return }
         let pending = loadQueue()

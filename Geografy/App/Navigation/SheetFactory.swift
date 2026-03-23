@@ -321,7 +321,9 @@ private extension SheetFactory {
             HomeSectionEditorSheet(sections: HomeSection.allCases.map { $0 })
 
         case .friends:
-            ComingSoonSheet(title: "Friends", icon: "person.2.fill")
+            NavigationStack { FriendsListScreen() }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
 
         case .geoFeed:
             NavigationStack { GeoFeedScreen() }
