@@ -5,6 +5,32 @@ enum SheetFactory {
     @ViewBuilder
     static func view(for sheet: Sheet) -> some View {
         switch sheet {
+        case .signIn, .profile, .countries, .favorites, .organizations,
+             .organizationDetail, .coinStore, .paywall:
+            coreView(for: sheet)
+
+        case .quizSetup, .speedRunSetup, .capitalQuiz, .exploreGame,
+             .multiplayer, .quizPacks, .customQuiz, .dailyChallenge,
+             .srsStudy, .flagGame, .geoTrivia, .spellingBee, .landmarkQuiz:
+            playView(for: sheet)
+
+        case .distanceCalculator, .currencyConverter, .timeZones,
+             .compare, .timeline, .travelTracker, .travelJournal:
+            exploreView(for: sheet)
+
+        case .badges, .leaderboards, .achievements, .themes, .settings,
+             .sectionEditor, .friends, .search, .geoFeed:
+            appView(for: sheet)
+        }
+    }
+}
+
+// MARK: - Core
+
+private extension SheetFactory {
+    @ViewBuilder
+    static func coreView(for sheet: Sheet) -> some View {
+        switch sheet {
         case .signIn:
             SignInOptionsSheet()
 
@@ -47,24 +73,24 @@ enum SheetFactory {
         case .paywall:
             PaywallScreen()
 
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Play
+
+private extension SheetFactory {
+    @ViewBuilder
+    static func playView(for sheet: Sheet) -> some View {
+        switch sheet {
         case .quizSetup:
             NavigationStack { QuizSetupScreen() }
                 .presentationDetents([.large])
 
         case .speedRunSetup:
             NavigationStack { SpeedRunSetupScreen() }
-                .presentationDetents([.large])
-
-        case .distanceCalculator:
-            NavigationStack { DistanceCalculatorScreen() }
-                .presentationDetents([.large])
-
-        case .currencyConverter:
-            NavigationStack { CurrencyConverterScreen() }
-                .presentationDetents([.large])
-
-        case .timeZones:
-            NavigationStack { TimeZoneScreen() }
                 .presentationDetents([.large])
 
         case .dailyChallenge:
@@ -93,8 +119,48 @@ enum SheetFactory {
             NavigationStack { CustomQuizLibraryScreen() }
                 .presentationDetents([.large])
 
-        case .search:
-            NavigationStack { SearchScreen() }
+        case .srsStudy:
+            NavigationStack { SRSStudyScreen() }
+                .presentationDetents([.large])
+
+        case .flagGame:
+            NavigationStack { FlagGameScreen() }
+                .presentationDetents([.large])
+
+        case .geoTrivia:
+            NavigationStack { GeoTriviaScreen() }
+                .presentationDetents([.large])
+
+        case .spellingBee:
+            NavigationStack { SpellingBeeScreen() }
+                .presentationDetents([.large])
+
+        case .landmarkQuiz:
+            NavigationStack { LandmarkQuizScreen() }
+                .presentationDetents([.large])
+
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Explore
+
+private extension SheetFactory {
+    @ViewBuilder
+    static func exploreView(for sheet: Sheet) -> some View {
+        switch sheet {
+        case .distanceCalculator:
+            NavigationStack { DistanceCalculatorScreen() }
+                .presentationDetents([.large])
+
+        case .currencyConverter:
+            NavigationStack { CurrencyConverterScreen() }
+                .presentationDetents([.large])
+
+        case .timeZones:
+            NavigationStack { TimeZoneScreen() }
                 .presentationDetents([.large])
 
         case .compare:
@@ -116,6 +182,22 @@ enum SheetFactory {
 
         case .travelJournal:
             NavigationStack { TravelJournalScreen() }
+                .presentationDetents([.large])
+
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - App
+
+private extension SheetFactory {
+    @ViewBuilder
+    static func appView(for sheet: Sheet) -> some View {
+        switch sheet {
+        case .search:
+            NavigationStack { SearchScreen() }
                 .presentationDetents([.large])
 
         case .badges:
@@ -154,21 +236,12 @@ enum SheetFactory {
         case .friends:
             ComingSoonSheet(title: "Friends", icon: "person.2.fill")
 
-        case .srsStudy:
-            NavigationStack { SRSStudyScreen() }
+        case .geoFeed:
+            NavigationStack { GeoFeedScreen() }
                 .presentationDetents([.large])
 
-        case .flagGame:
-            NavigationStack { FlagGameScreen() }
-                .presentationDetents([.large])
-
-        case .geoTrivia:
-            NavigationStack { GeoTriviaScreen() }
-                .presentationDetents([.large])
-
-        case .spellingBee:
-            NavigationStack { SpellingBeeScreen() }
-                .presentationDetents([.large])
+        default:
+            EmptyView()
         }
     }
 }
