@@ -23,6 +23,7 @@ struct SizeCompareView: View {
                         Image(systemName: "square.and.arrow.up")
                             .foregroundStyle(DesignSystem.Color.accent)
                     }
+                    .buttonStyle(.plain)
                 }
             }
         }

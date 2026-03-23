@@ -78,12 +78,14 @@ private extension EditProfileSheet {
 
     var cancelButton: some View {
         Button("Cancel") { dismiss() }
+            .buttonStyle(.plain)
     }
 
     var saveButton: some View {
         Button("Save") {
             saveProfile()
         }
+        .buttonStyle(.plain)
         .fontWeight(.semibold)
         .disabled(displayName.trimmingCharacters(in: .whitespaces).isEmpty || isSaving)
     }

@@ -9,27 +9,27 @@ struct NationalSymbolsQuizScreen: View {
     @State private var questions: [SymbolQuestion] = []
     @State private var currentIndex = 0
     @State private var score = 0
-    @State private var selectedAnswer: String?
+    @State private var selectedOptionIndex: Int?
+    @State private var showFeedback = false
     @State private var isGameOver = false
 
     private let totalQuestions = 15
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
+        Group {
             if isGameOver {
                 gameOverContent
             } else if questions.isEmpty {
-                ProgressView()
-                    .tint(DesignSystem.Color.accent)
+                ProgressView().tint(DesignSystem.Color.accent)
             } else {
                 quizContent
             }
         }
+        .background(DesignSystem.Color.background)
         .navigationTitle("National Symbols Quiz")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .topBarTrailing) {
                 CircleCloseButton { dismiss() }
             }
         }
@@ -41,61 +41,51 @@ struct NationalSymbolsQuizScreen: View {
 
 private extension NationalSymbolsQuizScreen {
     var quizContent: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                progressHeader
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                questionCard
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                answersSection
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                Spacer(minLength: DesignSystem.Spacing.xxl)
+        VStack(spacing: 0) {
+            progressSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.top, DesignSystem.Spacing.sm)
+                .padding(.bottom, DesignSystem.Spacing.md)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: DesignSystem.Spacing.lg) {
+                    questionPromptCard
+                    answerOptions
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.xxl)
             }
-            .padding(.top, DesignSystem.Spacing.md)
         }
     }
 
-    var progressHeader: some View {
-        HStack {
-            Text("\(currentIndex + 1) / \(questions.count)")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            Spacer()
-            scoreBadge
+    var progressSection: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SessionProgressBar(progress: progressFraction)
+            QuestionCounterPill(current: currentIndex + 1, total: questions.count)
         }
     }
 
-    var scoreBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "star.fill")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.warning)
-            Text("\(score)")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.cardBackground, in: Capsule())
+    var progressFraction: CGFloat {
+        guard !questions.isEmpty else { return 0 }
+        return CGFloat(currentIndex) / CGFloat(questions.count)
     }
 
-    var questionCard: some View {
+    var questionPromptCard: some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
-                questionTypeLabel
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.top, DesignSystem.Spacing.md)
-                progressBar
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                questionPrompt
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.bottom, DesignSystem.Spacing.md)
+                symbolTypeLabel
+                Text(currentQuestion.prompt)
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .frame(maxWidth: .infinity)
+            .padding(DesignSystem.Spacing.lg)
         }
     }
 
-    var questionTypeLabel: some View {
+    var symbolTypeLabel: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: currentQuestion.symbolType.icon)
                 .font(DesignSystem.Font.subheadline)
@@ -104,161 +94,42 @@ private extension NationalSymbolsQuizScreen {
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)
-            Spacer()
         }
     }
 
-    var progressBar: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    .frame(height: 4)
-                Capsule()
-                    .fill(DesignSystem.Color.accent)
-                    .frame(
-                        width: geometry.size.width * progressFraction,
-                        height: 4
-                    )
-                    .animation(.easeInOut(duration: 0.3), value: currentIndex)
-            }
-        }
-        .frame(height: 4)
-    }
-
-    var progressFraction: CGFloat {
-        guard !questions.isEmpty else { return 0 }
-        return CGFloat(currentIndex + 1) / CGFloat(questions.count)
-    }
-
-    var questionPrompt: some View {
-        Text(currentQuestion.prompt)
-            .font(DesignSystem.Font.title2)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: false, vertical: true)
-    }
-
-    @ViewBuilder
-    var answersSection: some View {
-        if currentQuestion.answerMode == .flags {
-            flagAnswersGrid
-        } else {
-            textAnswersStack
-        }
-    }
-
-    var flagAnswersGrid: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-            ],
-            spacing: DesignSystem.Spacing.sm
-        ) {
-            ForEach(currentQuestion.options, id: \.self) { option in
-                flagAnswerButton(for: option)
-            }
-        }
-    }
-
-    func flagAnswerButton(for countryCode: String) -> some View {
-        let country = countryDataService.countries.first { $0.code == countryCode }
-        let isSelected = selectedAnswer == countryCode
-        let isCorrect = countryCode == currentQuestion.correctAnswer
-        let showResult = selectedAnswer != nil
-
-        return Button { selectAnswer(countryCode) } label: {
-            CardView {
-                VStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: countryCode, height: 48)
-                        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-                    Text(country?.name ?? countryCode)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                }
-                .padding(DesignSystem.Spacing.sm)
-                .frame(maxWidth: .infinity)
-                .overlay {
-                    if showResult {
-                        answerOverlay(isCorrect: isCorrect, isSelected: isSelected)
+    var answerOptions: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(Array(currentQuestion.options.enumerated()), id: \.offset) { index, option in
+                if currentQuestion.answerMode == .flags {
+                    let country = countryDataService.country(for: option)
+                    QuizOptionButton(
+                        text: country?.name ?? option,
+                        flagCode: option,
+                        state: optionState(for: index),
+                        index: index
+                    ) {
+                        selectAnswer(at: index)
+                    }
+                } else {
+                    QuizOptionButton(
+                        text: option,
+                        flagCode: nil,
+                        state: optionState(for: index),
+                        index: index
+                    ) {
+                        selectAnswer(at: index)
                     }
                 }
             }
         }
-        .buttonStyle(PressButtonStyle())
-        .disabled(selectedAnswer != nil)
     }
 
-    var textAnswersStack: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(currentQuestion.options, id: \.self) { option in
-                textAnswerButton(for: option)
-            }
-        }
-    }
-
-    func textAnswerButton(for option: String) -> some View {
-        let isSelected = selectedAnswer == option
-        let isCorrect = option == currentQuestion.correctAnswer
-        let showResult = selectedAnswer != nil
-
-        return Button { selectAnswer(option) } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                Text(option)
-                    .font(DesignSystem.Font.body)
-                    .fontWeight(.medium)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.leading)
-                Spacer()
-                if showResult {
-                    let iconName = isCorrect
-                        ? "checkmark.circle.fill"
-                        : (isSelected ? "xmark.circle.fill" : "circle")
-                    let iconColor: Color = isCorrect
-                        ? DesignSystem.Color.success
-                        : (isSelected ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
-                    Image(systemName: iconName)
-                        .foregroundStyle(iconColor)
-                }
-            }
-            .padding(DesignSystem.Spacing.md)
-            .background(
-                showResult
-                    ? (isCorrect
-                        ? DesignSystem.Color.success.opacity(0.15)
-                        : (isSelected ? DesignSystem.Color.error.opacity(0.15) : DesignSystem.Color.cardBackground))
-                    : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-        .disabled(selectedAnswer != nil)
-    }
-
-    func answerOverlay(isCorrect: Bool, isSelected: Bool) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .fill(
-                    isCorrect
-                        ? DesignSystem.Color.success.opacity(0.25)
-                        : (isSelected ? DesignSystem.Color.error.opacity(0.25) : .clear)
-                )
-            if isCorrect {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.success)
-            } else if isSelected {
-                Image(systemName: "xmark.circle.fill")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.error)
-            }
-        }
+    func optionState(for index: Int) -> QuizOptionButton.OptionState {
+        guard showFeedback else { return .default }
+        let option = currentQuestion.options[index]
+        if option == currentQuestion.correctAnswer { return .correct }
+        if index == selectedOptionIndex { return .incorrect }
+        return .disabled
     }
 }
 
@@ -266,85 +137,72 @@ private extension NationalSymbolsQuizScreen {
 
 private extension NationalSymbolsQuizScreen {
     var gameOverContent: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-            resultIcon
-            resultTexts
-            scoreStats
-            Spacer()
-            playAgainButton
-                .padding(.horizontal, DesignSystem.Spacing.xl)
-            Spacer(minLength: DesignSystem.Spacing.xxl)
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                resultHeader
+                statsGrid
+            }
+            .padding(DesignSystem.Spacing.md)
+        }
+        .safeAreaInset(edge: .bottom) {
+            GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
+                restartQuiz()
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
-    var resultIcon: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.3), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 60
-                    )
-                )
-                .frame(width: 120, height: 120)
-            Image(systemName: gradeIcon)
-                .font(.system(size: 52))
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
-    }
-
-    var resultTexts: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
+    var resultHeader: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.12))
+                    .frame(width: 96, height: 96)
+                Image(systemName: gradeFraction >= 0.8 ? "trophy.fill" : "star.fill")
+                    .font(.system(size: 44))
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
             Text(gradeTitle)
-                .font(DesignSystem.Font.title)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(gradeSubtitle)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-    }
-
-    var scoreStats: some View {
-        HStack(spacing: DesignSystem.Spacing.xl) {
-            statTile(
-                value: "\(score)", label: "Correct",
-                icon: "checkmark.circle.fill", color: DesignSystem.Color.success
-            )
-            statTile(
-                value: "\(questions.count)", label: "Questions",
-                icon: "list.bullet", color: DesignSystem.Color.accent
-            )
-        }
-        .padding(DesignSystem.Spacing.lg)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-        )
-    }
-
-    func statTile(value: String, label: String, icon: String, color: Color) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
                 .font(DesignSystem.Font.title2)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, DesignSystem.Spacing.lg)
     }
 
-    var playAgainButton: some View {
-        GlassButton("Play Again", fullWidth: true) {
-            restartQuiz()
+    var statsGrid: some View {
+        CardView {
+            LazyVGrid(
+                columns: [GridItem(.flexible()), GridItem(.flexible())],
+                spacing: DesignSystem.Spacing.sm
+            ) {
+                ResultStatItem(
+                    icon: "checkmark.circle.fill",
+                    value: "\(score)",
+                    label: "Correct",
+                    color: DesignSystem.Color.success
+                )
+                ResultStatItem(
+                    icon: "xmark.circle.fill",
+                    value: "\(questions.count - score)",
+                    label: "Wrong",
+                    color: DesignSystem.Color.error
+                )
+                ResultStatItem(
+                    icon: "chart.bar.fill",
+                    value: "\(Int(gradeFraction * 100))%",
+                    label: "Accuracy",
+                    color: DesignSystem.Color.accent
+                )
+                ResultStatItem(
+                    icon: "number",
+                    value: "\(questions.count)",
+                    label: "Questions",
+                    color: DesignSystem.Color.indigo
+                )
+            }
+            .padding(DesignSystem.Spacing.md)
         }
     }
 
@@ -359,24 +217,6 @@ private extension NationalSymbolsQuizScreen {
         case 0.6..<0.8: "Well Done!"
         case 0.4..<0.6: "Getting There!"
         default: "Keep Learning!"
-        }
-    }
-
-    var gradeSubtitle: String {
-        switch gradeFraction {
-        case 0.8...: "You know your national symbols brilliantly"
-        case 0.6..<0.8: "Good knowledge of national symbols"
-        case 0.4..<0.6: "Keep exploring countries and their symbols"
-        default: "Every expert starts somewhere — keep going!"
-        }
-    }
-
-    var gradeIcon: String {
-        switch gradeFraction {
-        case 0.8...: "trophy.fill"
-        case 0.6..<0.8: "star.fill"
-        case 0.4..<0.6: "globe"
-        default: "book.fill"
         }
     }
 }
@@ -409,7 +249,7 @@ private extension NationalSymbolsQuizScreen {
         if useFlags {
             let wrongCodes = allSymbols
                 .filter { $0.countryCode != symbol.countryCode }
-                .map { $0.countryCode }
+                .map(\.countryCode)
                 .shuffled()
                 .prefix(3)
             let options = ([symbol.countryCode] + wrongCodes).shuffled()
@@ -449,17 +289,21 @@ private extension NationalSymbolsQuizScreen {
         }
     }
 
-    func selectAnswer(_ answer: String) {
-        guard selectedAnswer == nil else { return }
-        selectedAnswer = answer
-        let isCorrect = answer == currentQuestion.correctAnswer
+    func selectAnswer(at index: Int) {
+        guard !showFeedback else { return }
+        selectedOptionIndex = index
+        showFeedback = true
+
+        let option = currentQuestion.options[index]
+        let isCorrect = option == currentQuestion.correctAnswer
         if isCorrect {
             score += 1
-            hapticsService.impact(.medium)
+            hapticsService.notification(.success)
         } else {
             hapticsService.notification(.error)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
             advanceQuestion()
         }
     }
@@ -471,7 +315,8 @@ private extension NationalSymbolsQuizScreen {
         } else {
             withAnimation {
                 currentIndex = nextIndex
-                selectedAnswer = nil
+                selectedOptionIndex = nil
+                showFeedback = false
             }
         }
     }
@@ -479,7 +324,8 @@ private extension NationalSymbolsQuizScreen {
     func restartQuiz() {
         currentIndex = 0
         score = 0
-        selectedAnswer = nil
+        selectedOptionIndex = nil
+        showFeedback = false
         isGameOver = false
         buildQuestions()
     }

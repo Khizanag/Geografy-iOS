@@ -92,6 +92,7 @@ private extension CountryListScreen {
                 .font(DesignSystem.Font.footnote)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
+        .buttonStyle(.plain)
     }
 
     var filterMenu: some View {

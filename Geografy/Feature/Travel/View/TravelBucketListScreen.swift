@@ -166,6 +166,7 @@ private extension TravelBucketListScreen {
                 Image(systemName: "square.and.arrow.up")
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .buttonStyle(.plain)
         }
         ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton()

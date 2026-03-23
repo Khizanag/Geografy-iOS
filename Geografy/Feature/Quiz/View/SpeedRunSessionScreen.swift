@@ -352,8 +352,9 @@ private extension SpeedRunSessionScreen {
                         showQuitAlert = true
                     } label: {
                         Label("Quit", systemImage: "xmark")
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .buttonStyle(.plain)
                 }
             }
 
