@@ -1,5 +1,19 @@
 import SwiftUI
 
+// MARK: - Discover Section View
+
+extension HomeScreen {
+    @ViewBuilder
+    func discoverSectionView(for section: HomeSection) -> some View {
+        switch section {
+        case .independenceTimeline: independenceTimelineSection
+        case .economyExplorer: economyExplorerSection
+        case .geographyFeatures: geographyFeaturesSection
+        default: EmptyView()
+        }
+    }
+}
+
 // MARK: - World Records Section
 
 extension HomeScreen {
@@ -228,6 +242,42 @@ extension HomeScreen {
             SectionHeaderView(title: "Challenge Room")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeChallengeRoomCard { coordinator.present(.challengeRoom) }
+        }
+    }
+}
+
+// MARK: - Independence Timeline Section
+
+extension HomeScreen {
+    var independenceTimelineSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Independence Timeline")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeIndependenceTimelineCard { coordinator.push(.independenceTimeline) }
+        }
+    }
+}
+
+// MARK: - Economy Explorer Section
+
+extension HomeScreen {
+    var economyExplorerSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Economy Explorer")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeEconomyExplorerCard { coordinator.push(.economyExplorer) }
+        }
+    }
+}
+
+// MARK: - Geography Features Section
+
+extension HomeScreen {
+    var geographyFeaturesSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Geography Features")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeGeographyFeaturesCard { coordinator.push(.geographyFeatures) }
         }
     }
 }

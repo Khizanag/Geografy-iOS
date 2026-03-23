@@ -67,6 +67,12 @@ private extension ScreenFactory {
             OceanExplorerScreen()
         case .languageExplorer:
             LanguageExplorerScreen()
+        case .independenceTimeline:
+            IndependenceTimelineScreen()
+        case .economyExplorer:
+            EconomyExplorerScreen()
+        case .geographyFeatures:
+            GeographyFeaturesScreen()
         default:
             EmptyView()
         }

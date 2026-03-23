@@ -607,7 +607,7 @@ private extension HomeScreen {
         case .oceanExplorer: oceanExplorerSection
         case .languageExplorer: languageExplorerSection
         case .challengeRoom: challengeRoomSection
-        default: EmptyView()
+        default: discoverSectionView(for: section)
         }
     }
 

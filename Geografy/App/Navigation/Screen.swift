@@ -19,4 +19,7 @@ enum Screen: Hashable {
     case continentStats(String)
     case oceanExplorer
     case languageExplorer
+    case independenceTimeline
+    case economyExplorer
+    case geographyFeatures
 }
