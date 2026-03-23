@@ -69,6 +69,8 @@ enum Sheet: Identifiable {
 
     // Games & Quizzes
     case nationalSymbolsQuiz
+    case wordSearch
+    case borderChallenge
 
     // App
     case achievements
@@ -121,6 +123,8 @@ enum Sheet: Identifiable {
         case .geoQuotes: "geoQuotes"
         case .countryNicknames: "countryNicknames"
         case .nationalSymbolsQuiz: "nationalSymbolsQuiz"
+        case .wordSearch: "wordSearch"
+        case .borderChallenge: "borderChallenge"
         }
     }
 }

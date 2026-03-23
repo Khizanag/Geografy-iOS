@@ -33,6 +33,8 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case nationalSymbolsQuiz
     case mapColoring
     case countryNicknames
+    case wordSearch
+    case borderChallenge
     case comingSoon
 
     var id: String { rawValue }
@@ -71,6 +73,8 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .nationalSymbolsQuiz: "National Symbols Quiz"
         case .mapColoring: "Map Coloring Book"
         case .countryNicknames: "Country Nicknames"
+        case .wordSearch: "Geography Word Search"
+        case .borderChallenge: "Border Challenge"
         case .comingSoon: "Coming Soon"
         }
     }
@@ -109,6 +113,8 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .nationalSymbolsQuiz: "pawprint.fill"
         case .mapColoring: "paintpalette.fill"
         case .countryNicknames: "tag.fill"
+        case .wordSearch: "textformat.abc"
+        case .borderChallenge: "map.fill"
         case .comingSoon: "sparkles"
         }
     }
