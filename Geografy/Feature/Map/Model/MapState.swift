@@ -9,6 +9,7 @@ final class MapState {
     var minScale: CGFloat = 0.15
     var selectedCountryCode: String?
     var showLabels = false
+    var showDensityOverlay = false
     var countryShapes: [CountryShape] = []
     var contentBounds: CGRect = .zero
 

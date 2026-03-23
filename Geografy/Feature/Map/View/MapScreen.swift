@@ -58,7 +58,18 @@ struct MapScreen: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                labelsToggleButton
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    densityToggleButton
+                    labelsToggleButton
+                }
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            if mapState.showDensityOverlay {
+                densityLegend
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.bottom, DesignSystem.Spacing.sm)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
         .navigationDestination(item: $navigateToCountry) { country in
@@ -107,13 +118,19 @@ private extension MapScreen {
             showLabels: mapState.showLabels,
             canvasSize: size,
             capitalPoint: selectedCapitalPoint,
-            travelStatuses: travelService.entries
+            travelStatuses: travelService.entries,
+            densityData: densityData,
+            showDensityOverlay: mapState.showDensityOverlay
         )
         .gesture(dragGesture)
         .gesture(magnifyGesture)
         .onTapGesture(count: 1) { location in
             handleTap(at: location, in: size)
         }
+    }
+
+    var densityData: [String: Double] {
+        Dictionary(uniqueKeysWithValues: countryDataService.countries.map { ($0.code, $0.populationDensity) })
     }
 }
 
@@ -140,6 +157,68 @@ private extension MapScreen {
                 }
         }
         .buttonStyle(.plain)
+    }
+
+    var densityToggleButton: some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                mapState.showDensityOverlay.toggle()
+            }
+            hapticsService.impact(.light)
+        } label: {
+            Image(systemName: "flame.fill")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(mapState.showDensityOverlay ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
+                .padding(DesignSystem.Spacing.xs)
+                .background {
+                    if mapState.showDensityOverlay {
+                        Circle().fill(DesignSystem.Color.orange)
+                    }
+                }
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Density Legend
+
+private extension MapScreen {
+    var densityLegend: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            Text("Population Density (people/km²)")
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            LinearGradient(
+                colors: [
+                    Color(red: 1, green: 1, blue: 0.7),
+                    Color(red: 1, green: 0.65, blue: 0.2),
+                    Color(red: 1, green: 0.3, blue: 0),
+                    Color(red: 0.7, green: 0, blue: 0),
+                    Color(red: 0.45, green: 0, blue: 0),
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+            .frame(height: 10)
+            .clipShape(Capsule())
+            HStack {
+                Text("< 1")
+                Spacer()
+                Text("10")
+                Spacer()
+                Text("100")
+                Spacer()
+                Text("1k")
+                Spacer()
+                Text("> 10k")
+            }
+            .font(DesignSystem.Font.caption2)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .padding(DesignSystem.Spacing.sm)
+        .background(DesignSystem.Color.background.opacity(0.92))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 }
 

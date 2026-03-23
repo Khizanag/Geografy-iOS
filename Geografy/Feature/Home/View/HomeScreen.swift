@@ -8,6 +8,7 @@ struct HomeScreen: View {
     @Environment(StreakService.self) private var streakService
     @Environment(CoinService.self) private var coinService
     @Environment(HomeSectionOrderService.self) private var sectionOrderService
+    @Environment(FlashcardService.self) private var flashcardService
     @Environment(TabCoordinator.self) private var coordinator
 
     @State private var countryDataService = CountryDataService()
@@ -533,6 +534,27 @@ private extension HomeScreen {
     }
 }
 
+// MARK: - SRS Review Section
+
+private extension HomeScreen {
+    var srsReviewSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Due for Review")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeSRSReviewCard(dueCount: dueReviewCount) {
+                coordinator.present(.srsStudy)
+            }
+        }
+    }
+
+    var dueReviewCount: Int {
+        let allCards = countryDataService.countries.map {
+            FlashcardItem.make(from: $0, type: .countryToCapital)
+        }
+        return flashcardService.dueCards(from: allCards).count
+    }
+}
+
 // MARK: - Coming Soon Section
 
 private extension HomeScreen {
@@ -590,6 +612,9 @@ private extension HomeScreen {
             }
         case .streak:
             streakSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .srsReview:
+            srsReviewSection
                 .padding(.horizontal, DesignSystem.Spacing.md)
         case .worldRecords:
             worldRecordsSection

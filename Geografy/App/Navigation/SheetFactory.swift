@@ -141,6 +141,10 @@ enum SheetFactory {
 
         case .friends:
             ComingSoonSheet(title: "Friends", icon: "person.2.fill")
+
+        case .srsStudy:
+            NavigationStack { SRSStudyScreen() }
+                .presentationDetents([.large])
         }
     }
 }
