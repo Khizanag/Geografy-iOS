@@ -5,7 +5,7 @@ struct ExploreGameScreen: View {
 
     @State private var gameService = ExploreGameService()
     @State private var activeSession: ExploreGameState?
-    @State private var blobAnimating = false
+
 
     var body: some View {
         if let activeSession {
@@ -19,7 +19,6 @@ struct ExploreGameScreen: View {
                 .navigationTitle("Mystery Country")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar { toolbarContent }
-                .onAppear { startBlobAnimation() }
         }
     }
 }
@@ -36,7 +35,7 @@ private extension ExploreGameScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .background { ambientBlobs }
+        .background { AmbientBlobsView(.standard) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 
@@ -208,47 +207,6 @@ private extension ExploreGameScreen {
             DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
-    }
-}
-
-// MARK: - Background
-
-private extension ExploreGameScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.2), .clear],
-                        center: .center, startRadius: 0, endRadius: 200
-                    )
-                )
-                .frame(width: 420, height: 320)
-                .blur(radius: 36)
-                .offset(x: -80, y: -100)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.16), .clear],
-                        center: .center, startRadius: 0, endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 44)
-                .offset(x: 140, y: 200)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-    }
-
-    func startBlobAnimation() {
-        withAnimation(
-            .easeInOut(duration: 6).repeatForever(autoreverses: true)
-        ) {
-            blobAnimating = true
-        }
     }
 }
 

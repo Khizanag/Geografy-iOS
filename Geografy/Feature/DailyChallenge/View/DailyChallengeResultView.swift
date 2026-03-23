@@ -81,50 +81,32 @@ private extension DailyChallengeResultView {
 private extension DailyChallengeResultView {
     var statsRow: some View {
         HStack(spacing: DesignSystem.Spacing.lg) {
-            statItem(
-                icon: "star.fill",
-                value: "\(score)",
-                label: "Score",
-                color: DesignSystem.Color.accent
-            )
-            statItem(
-                icon: "clock.fill",
-                value: formattedTime,
-                label: "Time",
-                color: DesignSystem.Color.warning
-            )
-            statItem(
-                icon: challengeType.iconName,
-                value: challengeType.title,
-                label: "Type",
-                color: DesignSystem.Color.indigo
-            )
-        }
-    }
-
-    func statItem(
-        icon: String,
-        value: String,
-        label: String,
-        color: Color
-    ) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(color)
-                Text(value)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            CardView {
+                ResultStatItem(
+                    icon: "star.fill",
+                    value: "\(score)",
+                    label: "Score"
+                )
+                .padding(DesignSystem.Spacing.sm)
             }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.sm)
+            CardView {
+                ResultStatItem(
+                    icon: "clock.fill",
+                    value: formattedTime,
+                    label: "Time",
+                    color: DesignSystem.Color.warning
+                )
+                .padding(DesignSystem.Spacing.sm)
+            }
+            CardView {
+                ResultStatItem(
+                    icon: challengeType.iconName,
+                    value: challengeType.title,
+                    label: "Type",
+                    color: DesignSystem.Color.indigo
+                )
+                .padding(DesignSystem.Spacing.sm)
+            }
         }
     }
 }

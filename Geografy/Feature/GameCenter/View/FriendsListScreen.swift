@@ -89,28 +89,13 @@ private extension FriendsListScreen {
 
     var emptyStateView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            Spacer()
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.1))
-                    .frame(width: 100, height: 100)
-                Image(systemName: "person.2")
-                    .font(.system(size: 40))
-                    .foregroundStyle(DesignSystem.Color.accent.opacity(0.6))
-            }
-            Text("No Game Center Friends Yet")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Add friends through Game Center to see them here and compare your geography skills.")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.xl)
+            EmptyStateView(
+                icon: "person.2",
+                title: "No Game Center Friends Yet",
+                subtitle: "Add friends through Game Center to see them here and compare your geography skills."
+            )
             addFriendsButton
-            Spacer()
         }
-        .frame(maxWidth: .infinity)
     }
 }
 

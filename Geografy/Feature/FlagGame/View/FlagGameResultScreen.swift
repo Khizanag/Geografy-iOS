@@ -56,25 +56,22 @@ private extension FlagGameResultScreen {
     var scoreSection: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.xl) {
-                statItem(value: "\(score)", label: "Score", color: DesignSystem.Color.orange)
+                ResultStatItem(
+                    icon: "star.fill",
+                    value: "\(score)",
+                    label: "Score",
+                    color: DesignSystem.Color.orange
+                )
                 Divider().frame(height: 40)
-                statItem(value: "\(answeredCountries.count)", label: "Correct", color: DesignSystem.Color.success)
+                ResultStatItem(
+                    icon: "checkmark.circle.fill",
+                    value: "\(answeredCountries.count)",
+                    label: "Correct",
+                    color: DesignSystem.Color.success
+                )
             }
             .padding(DesignSystem.Spacing.lg)
         }
-    }
-
-    func statItem(value: String, label: String, color: Color) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(value)
-                .font(DesignSystem.Font.title)
-                .fontWeight(.bold)
-                .foregroundStyle(color)
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder

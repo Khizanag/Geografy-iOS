@@ -43,53 +43,30 @@ private extension FlashcardStatsView {
             ],
             spacing: DesignSystem.Spacing.sm
         ) {
-            statItem(
-                value: "\(cardsReviewed)",
-                label: "Reviewed",
+            ResultStatItem(
                 icon: "rectangle.on.rectangle",
-                color: DesignSystem.Color.accent
+                value: "\(cardsReviewed)",
+                label: "Reviewed"
             )
-            statItem(
+            ResultStatItem(
+                icon: "checkmark.circle.fill",
                 value: "\(correctCount)",
                 label: "Correct",
-                icon: "checkmark.circle.fill",
                 color: DesignSystem.Color.success
             )
-            statItem(
+            ResultStatItem(
+                icon: "chart.bar.fill",
                 value: "\(accuracyPercentage)%",
                 label: "Accuracy",
-                icon: "chart.bar.fill",
                 color: DesignSystem.Color.indigo
             )
-            statItem(
+            ResultStatItem(
+                icon: "brain.fill",
                 value: formattedThinkingTime,
                 label: "Avg. Think Time",
-                icon: "brain.fill",
                 color: DesignSystem.Color.purple
             )
         }
-    }
-
-    func statItem(
-        value: String,
-        label: String,
-        icon: String,
-        color: Color
-    ) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 
     var accuracyBar: some View {

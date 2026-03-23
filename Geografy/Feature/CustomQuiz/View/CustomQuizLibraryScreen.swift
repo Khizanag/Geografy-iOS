@@ -37,27 +37,14 @@ private extension CustomQuizLibraryScreen {
     }
 
     var emptyState: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: "plus.square.dashed")
-                .font(.system(size: 56))
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-
-            Text("No Custom Quizzes")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            Text("Create your own geography quiz by selecting countries and question types.")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.xxl)
-
-            GeoButton("Create Quiz", systemImage: "plus") {
-                showBuilder = true
-            }
-            .padding(.top, DesignSystem.Spacing.xs)
+        EmptyStateView(
+            icon: "plus.square.dashed",
+            title: "No Custom Quizzes",
+            subtitle: "Create your own geography quiz by selecting countries and question types.",
+            actionTitle: "Create Quiz"
+        ) {
+            showBuilder = true
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     var quizList: some View {

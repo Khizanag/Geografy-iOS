@@ -225,15 +225,10 @@ private extension CountryNicknamesScreen {
     }
 
     var emptyState: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: "magnifyingglass")
-                .font(.system(size: 40))
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Text("No nicknames found")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(DesignSystem.Spacing.xxl)
+        EmptyStateView(
+            icon: "magnifyingglass",
+            title: "No nicknames found",
+            subtitle: "Try a different search term or category filter."
+        )
     }
 }
