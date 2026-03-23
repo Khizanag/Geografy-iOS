@@ -12,4 +12,5 @@ enum XPSource: String {
     case streakMilestone7
     case streakMilestone30
     case streakMilestone100
+    case speedRunCompleted
 }

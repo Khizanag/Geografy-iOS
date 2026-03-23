@@ -51,6 +51,14 @@ enum SheetFactory {
             NavigationStack { QuizSetupScreen() }
                 .presentationDetents([.large])
 
+        case .speedRunSetup:
+            NavigationStack { SpeedRunSetupScreen() }
+                .presentationDetents([.large])
+
+        case .distanceCalculator:
+            NavigationStack { DistanceCalculatorScreen() }
+                .presentationDetents([.large])
+
         case .dailyChallenge:
             NavigationStack { DailyChallengeScreen() }
                 .presentationDetents([.large])
