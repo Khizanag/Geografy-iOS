@@ -6,7 +6,7 @@ struct SpeedRunSessionScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
-    @Environment(CountryDataService.self) private var countryDataService
+    @State private var countryDataService = CountryDataService()
 
     let region: QuizRegion
 
@@ -34,7 +34,10 @@ struct SpeedRunSessionScreen: View {
                     } message: {
                         Text("Your progress will be lost.")
                     }
-                    .task { startTimer() }
+                    .task {
+                        countryDataService.loadCountries()
+                        startTimer()
+                    }
                     .onAppear {
                         withAnimation(.easeInOut(duration: 5).repeatForever(autoreverses: true)) {
                             blobAnimating = true
