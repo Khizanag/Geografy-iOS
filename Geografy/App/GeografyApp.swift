@@ -59,7 +59,17 @@ struct GeografyApp: App {
                 .environment(pronunciationService)
                 .task { await authService.validateOnLaunch() }
                 .task { await subscriptionService.checkEntitlements() }
-                .task { gameCenterService.authenticatePlayer() }
+                .task {
+                    gameCenterService.authenticatePlayer()
+                    let longestStreak = authService.currentProfile?.longestStreak
+                        ?? streakService.currentStreak
+                    if longestStreak > 0 {
+                        await gameCenterService.submitScore(
+                            longestStreak,
+                            to: GameCenterService.LeaderboardID.longestStreak
+                        )
+                    }
+                }
                 .task {
                     widgetDataBridge.loadCountriesIfNeeded()
                     widgetDataBridge.synchronize(
@@ -99,6 +109,16 @@ struct GeografyApp: App {
                     )
                 }
                 .onChange(of: streakService.currentStreak) { _, newStreak in
+                    let longestStreak = max(
+                        newStreak,
+                        authService.currentProfile?.longestStreak ?? 0
+                    )
+                    Task {
+                        await gameCenterService.submitScore(
+                            longestStreak,
+                            to: GameCenterService.LeaderboardID.longestStreak
+                        )
+                    }
                     widgetDataBridge.synchronize(
                         streak: newStreak,
                         totalXP: xpService.totalXP,

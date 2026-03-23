@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DailyChallengeSessionScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(GameCenterService.self) private var gameCenterService
 
     let challenge: DailyChallenge
     let service: DailyChallengeService
@@ -181,6 +182,14 @@ private extension DailyChallengeSessionScreen {
     func finishChallenge() {
         let timeSpent = Date().timeIntervalSince(startTime)
         service.saveResult(score: score, timeSpent: timeSpent)
+
+        let totalWins = service.history.count
+        Task {
+            await gameCenterService.submitScore(
+                totalWins,
+                to: GameCenterService.LeaderboardID.dailyChallengesWon
+            )
+        }
 
         // Delay sheet presentation to avoid dismissal caused by
         // @Observable service updates triggering a parent re-render.

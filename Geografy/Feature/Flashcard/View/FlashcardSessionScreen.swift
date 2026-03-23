@@ -3,6 +3,7 @@ import SwiftUI
 struct FlashcardSessionScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(FlashcardService.self) private var flashcardService
+    @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
 
     let deck: FlashcardDeck
@@ -81,6 +82,7 @@ private extension FlashcardSessionScreen {
             .padding(DesignSystem.Spacing.md)
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
+        .onAppear { submitFlashcardAccuracy() }
     }
 
     @ToolbarContentBuilder
@@ -488,6 +490,19 @@ private extension FlashcardSessionScreen {
 
     func showSwipeFeedback(_ type: SwipeFeedback) {
         hapticsService.notification(type == .wrong ? .warning : .success)
+    }
+
+    func submitFlashcardAccuracy() {
+        guard !cards.isEmpty else { return }
+        let accuracyPercent = Int(
+            (Double(correctCount) / Double(cards.count)) * 100
+        )
+        Task {
+            await gameCenterService.submitScore(
+                accuracyPercent,
+                to: GameCenterService.LeaderboardID.quizHighScore
+            )
+        }
     }
 
     func startBlobAnimation() {

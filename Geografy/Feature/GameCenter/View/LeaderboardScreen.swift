@@ -207,6 +207,27 @@ private extension LeaderboardScreen {
                 icon: "airplane.departure",
                 color: DesignSystem.Color.blue
             ),
+            LeaderboardInfo(
+                id: GameCenterService.LeaderboardID.longestStreak,
+                title: "Longest Streak",
+                subtitle: "The longest consecutive daily login streak you've achieved",
+                icon: "flame.fill",
+                color: DesignSystem.Color.orange
+            ),
+            LeaderboardInfo(
+                id: GameCenterService.LeaderboardID.dailyChallengesWon,
+                title: "Daily Challenges",
+                subtitle: "Total number of daily challenges you've completed",
+                icon: "calendar.badge.checkmark",
+                color: DesignSystem.Color.indigo
+            ),
+            LeaderboardInfo(
+                id: GameCenterService.LeaderboardID.speedRunWorld,
+                title: "Speed Run — World",
+                subtitle: "Fastest time to complete the world speed run quiz",
+                icon: "bolt.circle.fill",
+                color: DesignSystem.Color.error
+            ),
         ]
     }
 }
