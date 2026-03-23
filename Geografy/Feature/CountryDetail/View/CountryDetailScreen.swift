@@ -53,6 +53,9 @@ struct CountryDetailScreen: View {
             .navigationDestination(for: Organization.self) { organization in
                 OrganizationDetailScreen(organization: organization)
             }
+            .navigationDestination(for: Country.self) { destination in
+                CountryDetailScreen(country: destination)
+            }
             .overlay { flagFullScreenOverlay }
     }
 }
@@ -634,6 +637,8 @@ private extension CountryDetailScreen {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 heroSection
                 quickFactsCard
+                funFactsSection
+                neighborsSection(countryDataService: countryDataService)
                 travelSection
                 peopleSection
                 if !religionItems.isEmpty {
