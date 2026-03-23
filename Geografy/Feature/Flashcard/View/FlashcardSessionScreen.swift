@@ -3,6 +3,7 @@ import SwiftUI
 struct FlashcardSessionScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(FlashcardService.self) private var flashcardService
+    @Environment(HapticsService.self) private var hapticsService
 
     let deck: FlashcardDeck
     let cards: [FlashcardItem]
@@ -15,7 +16,6 @@ struct FlashcardSessionScreen: View {
     @State private var dragOffset: CGSize = .zero
     @State private var showQuitAlert = false
     @State private var detailCountry: Country?
-    @State private var swipeFeedback: SwipeFeedback?
     @State private var blobAnimating = false
     @State private var showGuide = false
     @State private var cardShownAt: Date = .now
@@ -173,7 +173,12 @@ private extension FlashcardSessionScreen {
                 .offset(dragOffset)
                 .rotationEffect(.degrees(dragRotation))
                 .gesture(swipeGesture)
-                .overlay { swipeFeedbackOverlay }
+                .overlay {
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+                        .fill(swipeTintColor.opacity(swipeTintOpacity))
+                        .allowsHitTesting(false)
+                        .animation(.interactiveSpring(response: 0.15), value: dragOffset)
+                }
                 .overlay(alignment: .bottomTrailing) { swipeHintRight }
                 .overlay(alignment: .bottomLeading) { swipeHintLeft }
             }
@@ -214,23 +219,6 @@ private extension FlashcardSessionScreen {
                 .rotationEffect(.degrees(-15))
                 .opacity(min(Double(-dragOffset.width) / 100.0, 1.0))
                 .scaleEffect(min(Double(-dragOffset.width) / 100.0, 1.0))
-        }
-    }
-
-    @ViewBuilder
-    var swipeFeedbackOverlay: some View {
-        if let feedback = swipeFeedback {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: feedback.icon)
-                    .font(.system(size: 48))
-                    .foregroundStyle(feedback.color)
-                    .symbolEffect(.bounce, value: swipeFeedback?.id)
-                Text(feedback.label)
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(feedback.color)
-            }
-            .transition(.scale(scale: 0.5).combined(with: .opacity))
         }
     }
 
@@ -406,7 +394,7 @@ private extension FlashcardSessionScreen {
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
             isFlipped.toggle()
         }
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        hapticsService.impact(.light)
     }
 
     func recordReview(_ result: FlashcardReviewResult) {
@@ -499,17 +487,7 @@ private extension FlashcardSessionScreen {
     enum SwipeDirection { case left, right }
 
     func showSwipeFeedback(_ type: SwipeFeedback) {
-        UINotificationFeedbackGenerator().notificationOccurred(
-            type == .wrong ? .warning : .success
-        )
-        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-            swipeFeedback = type
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-            withAnimation(.easeOut(duration: 0.2)) {
-                swipeFeedback = nil
-            }
-        }
+        hapticsService.notification(type == .wrong ? .warning : .success)
     }
 
     func startBlobAnimation() {
@@ -537,6 +515,20 @@ private extension FlashcardSessionScreen {
         Double(dragOffset.width) / 20.0
     }
 
+    var swipeTintColor: Color {
+        dragOffset.width >= 0 ? DesignSystem.Color.success : DesignSystem.Color.error
+    }
+
+    var swipeTintOpacity: Double {
+        let offset = dragOffset.width
+        if offset > 0 {
+            return min(offset / 150.0, 0.35)
+        } else if isFlipped {
+            return min(-offset / 150.0, 0.35)
+        }
+        return 0
+    }
+
     func updateProgress() {
         withAnimation(.spring(response: 0.6, dampingFraction: 0.6)) {
             animatedProgress = progressFraction
@@ -551,40 +543,8 @@ private extension FlashcardSessionScreen {
 
 // MARK: - Swipe Feedback
 
-enum SwipeFeedback: Identifiable, Equatable {
+enum SwipeFeedback {
     case correct
     case wrong
     case knewIt
-
-    var id: String {
-        switch self {
-        case .correct: "correct"
-        case .wrong: "wrong"
-        case .knewIt: "knewIt"
-        }
-    }
-
-    var icon: String {
-        switch self {
-        case .correct: "checkmark.circle.fill"
-        case .wrong: "xmark.circle.fill"
-        case .knewIt: "bolt.circle.fill"
-        }
-    }
-
-    var label: String {
-        switch self {
-        case .correct: "Correct!"
-        case .wrong: "Review again"
-        case .knewIt: "Knew it!"
-        }
-    }
-
-    var color: Color {
-        switch self {
-        case .correct: DesignSystem.Color.success
-        case .wrong: DesignSystem.Color.error
-        case .knewIt: DesignSystem.Color.accent
-        }
-    }
 }

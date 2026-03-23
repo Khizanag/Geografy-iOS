@@ -6,6 +6,7 @@ struct CountryDetailScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
+    @Environment(HapticsService.self) var hapticsService
 
     @Namespace private var flagNamespace
 
@@ -109,7 +110,7 @@ private extension CountryDetailScreen {
     var favoriteToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                hapticsService.impact(.light)
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }
@@ -281,7 +282,7 @@ private extension CountryDetailScreen {
     var travelSection: some View {
         let currentStatus = travelService.status(for: country.code)
         return Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             activeSheet = .travelPicker
         } label: {
             CardView {
