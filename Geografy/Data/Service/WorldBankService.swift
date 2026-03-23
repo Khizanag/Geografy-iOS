@@ -362,7 +362,7 @@ private extension WorldBankService {
     }
 
     func parseResponse(_ data: Data) throws -> [DataPoint] {
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [[Any]],
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [Any],
               json.count >= 2,
               let records = json[1] as? [[String: Any]] else { return [] }
 
