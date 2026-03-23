@@ -212,7 +212,7 @@ private extension WorldBankIndicatorCard {
             AxisMarks(values: .automatic(desiredCount: 4)) { value in
                 AxisGridLine()
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.2))
-                AxisValueLabel {
+                AxisValueLabel(centered: true) {
                     if let year = value.as(Int.self) {
                         Text(String(year))
                             .font(DesignSystem.Font.caption2)
