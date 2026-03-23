@@ -1,107 +1,19 @@
 import SwiftUI
 
 struct SpellingBeeGuideSheet: View {
-    @Environment(\.dismiss) private var dismiss
-
-    @State private var currentPage = 0
     @State private var animating = false
 
-    private let pages = SpellingBeeGuide.pages
+    private let illustrations = SpellingBeeIllustration.allCases
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                TabView(selection: $currentPage) {
-                    ForEach(Array(pages.enumerated()), id: \.element.id) { index, page in
-                        guidePage(page)
-                            .tag(index)
-                    }
-                }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-
-                pageIndicatorAndButton
-            }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
-            }
-            .onAppear {
-                withAnimation(
-                    .easeInOut(duration: 2).repeatForever(autoreverses: true)
-                ) {
-                    animating = true
-                }
+        GuideSheet(pages: SpellingBeeGuide.pages) { index in
+            illustrationView(for: illustrations[index])
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+                animating = true
             }
         }
-    }
-}
-
-// MARK: - Page Content
-
-private extension SpellingBeeGuideSheet {
-    func guidePage(_ page: SpellingBeeGuidePage) -> some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                animatedIllustration(for: page.illustration)
-                pageText(page)
-                stepsSection(page.steps)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-        }
-    }
-
-    func pageText(_ page: SpellingBeeGuidePage) -> some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Text(page.title)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .multilineTextAlignment(.center)
-            Text(page.subtitle)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-
-    func stepsSection(_ steps: [SpellingBeeGuideStep]) -> some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(steps) { step in
-                stepCard(step)
-            }
-        }
-    }
-
-    func stepCard(_ step: SpellingBeeGuideStep) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                    .frame(width: 44, height: 44)
-                Image(systemName: step.icon)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(step.title)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(step.description)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-        )
     }
 }
 
@@ -109,16 +21,12 @@ private extension SpellingBeeGuideSheet {
 
 private extension SpellingBeeGuideSheet {
     @ViewBuilder
-    func animatedIllustration(for type: SpellingBeeGuidePage.Illustration) -> some View {
+    func illustrationView(for type: SpellingBeeIllustration) -> some View {
         switch type {
-        case .flagAndType:
-            flagAndTypeIllustration
-        case .letterFeedback:
-            letterFeedbackIllustration
-        case .hints:
-            hintsIllustration
-        case .scoring:
-            scoringIllustration
+        case .flagAndType: flagAndTypeIllustration
+        case .letterFeedback: letterFeedbackIllustration
+        case .hints: hintsIllustration
+        case .scoring: scoringIllustration
         }
     }
 
@@ -226,36 +134,5 @@ private extension SpellingBeeGuideSheet {
             filled ? DesignSystem.Color.accent.opacity(0.12) : DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
-    }
-}
-
-// MARK: - Page Indicator
-
-private extension SpellingBeeGuideSheet {
-    var pageIndicatorAndButton: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(0..<pages.count, id: \.self) { index in
-                    Capsule()
-                        .fill(
-                            index == currentPage
-                                ? DesignSystem.Color.accent
-                                : DesignSystem.Color.cardBackgroundHighlighted
-                        )
-                        .frame(width: index == currentPage ? 20 : 8, height: 8)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentPage)
-                }
-            }
-
-            if currentPage == pages.count - 1 {
-                GlassButton("Got it!", systemImage: "checkmark", fullWidth: true) {
-                    dismiss()
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
-        }
-        .padding(.vertical, DesignSystem.Spacing.md)
-        .animation(.easeInOut(duration: 0.25), value: currentPage)
     }
 }
