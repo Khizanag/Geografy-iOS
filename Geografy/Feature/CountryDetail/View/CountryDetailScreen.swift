@@ -79,6 +79,7 @@ private extension CountryDetailScreen {
         case paywall
         case info(InfoItem)
         case compare
+        case currencyConverter(String)
 
         var id: String {
             switch self {
@@ -86,6 +87,7 @@ private extension CountryDetailScreen {
             case .paywall: "paywall"
             case .info(let item): "info-\(item.id)"
             case .compare: "compare"
+            case .currencyConverter(let code): "currencyConverter-\(code)"
             }
         }
     }
@@ -111,6 +113,9 @@ private extension CountryDetailScreen {
             propertyDetailSheet(for: item)
         case .compare:
             NavigationStack { CompareScreen(preselectedCountry: country) }
+                .presentationDetents([.large])
+        case .currencyConverter(let code):
+            NavigationStack { CurrencyConverterScreen(preselectedCurrencyCode: code) }
                 .presentationDetents([.large])
         }
     }
@@ -549,6 +554,14 @@ private extension CountryDetailScreen {
                         supportsMap: false
                     )
                 )
+            }
+            GeoButton(
+                "Convert \(country.currency.code)",
+                systemImage: "arrow.left.arrow.right",
+                style: .secondary
+            ) {
+                hapticsService.impact(.light)
+                activeSheet = .currencyConverter(country.currency.code)
             }
         }
     }

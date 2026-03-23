@@ -173,7 +173,7 @@ private extension MoreScreen {
     }
 
     var exploreItems: [MoreSheet] {
-        [.search, .compare, .distanceCalculator, .timeline, .orgs]
+        [.search, .compare, .distanceCalculator, .currencyConverter, .timeZones, .timeline, .orgs]
     }
 
     var travelItems: [MoreSheet] {

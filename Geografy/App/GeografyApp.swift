@@ -18,6 +18,7 @@ struct GeografyApp: App {
     @State private var flashcardService = FlashcardService()
     @State private var subscriptionService = SubscriptionService()
     @State private var worldBankService = WorldBankService()
+    @State private var currencyService = CurrencyService()
     @State private var pronunciationService = PronunciationService()
     @State private var widgetDataBridge = WidgetDataBridge()
 
@@ -52,6 +53,7 @@ struct GeografyApp: App {
                 .environment(flashcardService)
                 .environment(subscriptionService)
                 .environment(worldBankService)
+                .environment(currencyService)
                 .environment(pronunciationService)
                 .task { await authService.validateOnLaunch() }
                 .task { await subscriptionService.checkEntitlements() }
