@@ -12,7 +12,8 @@ final class CountryDataService {
         }
 
         do {
-            let decoded = try JSONDecoder().decode([Country].self, from: data)
+            var decoded = try JSONDecoder().decode([Country].self, from: data)
+            applySupplementaryCapitals(&decoded)
             countries = decoded
             countriesByCode = Dictionary(uniqueKeysWithValues: decoded.map { ($0.code, $0) })
         } catch {
@@ -22,5 +23,17 @@ final class CountryDataService {
 
     func country(for code: String) -> Country? {
         countriesByCode[code]
+    }
+}
+
+// MARK: - Helpers
+
+private extension CountryDataService {
+    func applySupplementaryCapitals(_ countries: inout [Country]) {
+        for index in countries.indices where countries[index].capitals == nil {
+            if let supplementary = MultipleCapitalsData.data[countries[index].code] {
+                countries[index].capitals = supplementary
+            }
+        }
     }
 }

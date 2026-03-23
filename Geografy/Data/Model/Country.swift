@@ -6,7 +6,7 @@ struct Country: Identifiable, Hashable, Codable {
     let code: String
     let name: String
     let capital: String
-    let capitals: [Capital]?
+    var capitals: [Capital]?
     let flagEmoji: String
     let continent: Continent
     let area: Double
