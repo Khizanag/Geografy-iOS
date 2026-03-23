@@ -1,0 +1,143 @@
+import SwiftUI
+
+struct ContinentOverviewScreen: View {
+    let continent: Country.Continent
+
+    @State private var countryDataService = CountryDataService()
+    @State private var appeared = false
+
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
+                statsGrid
+                countryListSection
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+        }
+        .background(DesignSystem.Color.background)
+        .navigationTitle(continent.displayName)
+        .navigationBarTitleDisplayMode(.large)
+        .task { countryDataService.loadCountries() }
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.6)) { appeared = true }
+        }
+        .navigationDestination(for: Country.self) { country in
+            CountryDetailScreen(country: country)
+        }
+    }
+}
+
+// MARK: - Computed Properties
+
+private extension ContinentOverviewScreen {
+    var countries: [Country] {
+        countryDataService.countries
+            .filter { $0.continent == continent }
+            .sorted { $0.population > $1.population }
+    }
+
+    var totalPopulation: Int {
+        countries.reduce(0) { $0 + $1.population }
+    }
+
+    var totalArea: Double {
+        countries.reduce(0.0) { $0 + $1.area }
+    }
+
+    var largestCountry: Country? {
+        countries.max { $0.area < $1.area }
+    }
+
+    var mostPopulousCountry: Country? {
+        countries.first
+    }
+}
+
+// MARK: - Stats Grid
+
+private extension ContinentOverviewScreen {
+    var statsGrid: some View {
+        LazyVGrid(
+            columns: [GridItem(.flexible()), GridItem(.flexible())],
+            spacing: DesignSystem.Spacing.sm
+        ) {
+            statTile(
+                icon: "flag.fill",
+                label: "Countries",
+                value: "\(countries.count)",
+                color: DesignSystem.Color.accent
+            )
+            statTile(
+                icon: "person.3.fill",
+                label: "Total Population",
+                value: totalPopulation.formatPopulation(),
+                color: DesignSystem.Color.blue
+            )
+            if totalArea > 0 {
+                statTile(
+                    icon: "map.fill",
+                    label: "Total Area",
+                    value: "\(Int(totalArea / 1_000_000))M km²",
+                    color: DesignSystem.Color.success
+                )
+            }
+            if let largest = largestCountry {
+                statTile(
+                    icon: "arrow.up.right.and.arrow.down.left.rectangle.fill",
+                    label: "Largest Country",
+                    value: "\(largest.name) (\(Int(largest.area / 1000))K km²)",
+                    color: DesignSystem.Color.warning
+                )
+            }
+        }
+    }
+
+    func statTile(icon: String, label: String, value: String, color: Color) -> some View {
+        CardView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(color)
+                Text(label)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                Text(value)
+                    .font(DesignSystem.Font.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(DesignSystem.Spacing.sm)
+        }
+    }
+}
+
+// MARK: - Country List
+
+private extension ContinentOverviewScreen {
+    var countryListSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Countries", icon: "list.bullet")
+            ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
+                NavigationLink(value: country) {
+                    CountryRowView(
+                        country: country,
+                        isFavorite: false
+                    )
+                }
+                .buttonStyle(.plain)
+                .opacity(appeared ? 1 : 0)
+                .offset(y: appeared ? 0 : 16)
+                .animation(
+                    .spring(response: 0.5, dampingFraction: 0.8)
+                        .delay(Double(index) * 0.03 + 0.15),
+                    value: appeared
+                )
+            }
+        }
+    }
+}

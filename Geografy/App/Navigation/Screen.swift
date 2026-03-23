@@ -5,6 +5,7 @@ enum Screen: Hashable {
     case countryDetail(Country)
     case organizationDetail(Organization)
     case allMaps
+    case continentOverview(Country.Continent)
     case achievements
     case themes
     case settings

@@ -13,6 +13,8 @@ enum ScreenFactory {
             OrganizationDetailScreen(organization: organization)
         case .allMaps:
             AllMapsScreen()
+        case .continentOverview(let continent):
+            ContinentOverviewScreen(continent: continent)
         case .achievements:
             AchievementsScreen()
         case .themes:

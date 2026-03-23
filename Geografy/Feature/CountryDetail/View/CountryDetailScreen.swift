@@ -13,7 +13,7 @@ struct CountryDetailScreen: View {
     @Namespace private var flagNamespace
 
     @State private var countryDataService = CountryDataService()
-    @State private var profileService = CountryProfileService()
+    @State var profileService = CountryProfileService()
     @State var appeared = false
     @State var activeSheet: CountryDetailSheet?
     @State private var showFlagFullScreen = false
@@ -58,6 +58,9 @@ struct CountryDetailScreen: View {
             }
             .navigationDestination(for: Country.self) { destination in
                 CountryDetailScreen(country: destination)
+            }
+            .navigationDestination(for: Country.Continent.self) { continent in
+                ContinentOverviewScreen(continent: continent)
             }
             .overlay { flagFullScreenOverlay }
     }
@@ -494,6 +497,7 @@ private extension CountryDetailScreen {
                 heroSection
                 flagSymbolismSection
                 quickFactsCard
+                phrasebookSection
                 funFactsSection
                 neighborsSection(countryDataService: countryDataService)
                 travelSection
@@ -524,6 +528,7 @@ private extension CountryDetailScreen {
                 }
                 unescoSection
                 deepDiveSection
+                continentExploreSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
