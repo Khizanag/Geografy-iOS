@@ -54,6 +54,10 @@ enum Sheet: Identifiable {
     case flagGame
     case geoTrivia
     case spellingBee
+    case landmarkQuiz
+
+    // Discover
+    case geoFeed
 
     // App
     case achievements
@@ -99,6 +103,8 @@ enum Sheet: Identifiable {
         case .flagGame: "flagGame"
         case .geoTrivia: "geoTrivia"
         case .spellingBee: "spellingBee"
+        case .landmarkQuiz: "landmarkQuiz"
+        case .geoFeed: "geoFeed"
         }
     }
 }

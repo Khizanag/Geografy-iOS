@@ -587,11 +587,20 @@ private extension HomeScreen {
         case .capitalQuiz: capitalQuizSection
         case .srsReview: srsReviewSection
         case .progress: progressSection
+        default: gameSectionView(for: section)
+        }
+    }
+
+    @ViewBuilder
+    func gameSectionView(for section: HomeSection) -> some View {
+        switch section {
         case .flagGame: flagGameSection
         case .geoTrivia: geoTriviaSection
         case .spellingBee: spellingBeeSection
         case .learningPath: learningPathSection
         case .mapPuzzle: mapPuzzleSection
+        case .landmarkQuiz: landmarkQuizSection
+        case .geoFeed: geoFeedSection
         default: EmptyView()
         }
     }

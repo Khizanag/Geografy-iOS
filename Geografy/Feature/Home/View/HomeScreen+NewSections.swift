@@ -135,3 +135,27 @@ extension HomeScreen {
         }
     }
 }
+
+// MARK: - Landmark Quiz Section
+
+extension HomeScreen {
+    var landmarkQuizSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Landmark Quiz")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeLandmarkQuizCard { coordinator.present(.landmarkQuiz) }
+        }
+    }
+}
+
+// MARK: - Geo Feed Section
+
+extension HomeScreen {
+    var geoFeedSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Geo Feed")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeGeoFeedCard { coordinator.present(.geoFeed) }
+        }
+    }
+}
