@@ -185,19 +185,11 @@ private extension TimelineScreen {
     }
 
     var emptyStateView: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "clock.arrow.trianglehead.counterclockwise.rotate.90")
-                .font(DesignSystem.Font.largeTitle)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Text("No events in \(String(selectedYear))")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            Text("Try adjusting filters or selecting a different year")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, DesignSystem.Spacing.xxl)
+        EmptyStateView(
+            icon: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+            title: "No events in \(String(selectedYear))",
+            subtitle: "Try adjusting filters or selecting a different year"
+        )
     }
 
     var timelineSliderSection: some View {

@@ -5,7 +5,7 @@ struct AchievementsScreen: View {
     @Environment(XPService.self) private var xpService
 
     @State private var selectedAchievement: AchievementDefinition?
-    @State private var blobAnimating = false
+
     @State private var appeared = false
 
     private let categories: [(AchievementCategory, String, String)] = [
@@ -25,7 +25,7 @@ struct AchievementsScreen: View {
             .padding(DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xl)
         }
-        .background { ambientBlobs }
+        .background { AmbientBlobsView(.subtle) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -42,9 +42,6 @@ struct AchievementsScreen: View {
             .presentationDragIndicator(.automatic)
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
             withAnimation(.easeOut(duration: 0.4).delay(0.1)) {
                 appeared = true
             }
@@ -146,34 +143,4 @@ private extension AchievementsScreen {
         }
     }
 
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300).blur(radius: 36)
-                .offset(x: -60, y: -100)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.purple.opacity(0.14), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260).blur(radius: 40)
-                .offset(x: 120, y: 200)
-                .scaleEffect(blobAnimating ? 0.90 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-    }
 }

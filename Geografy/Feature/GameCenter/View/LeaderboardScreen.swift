@@ -8,11 +8,11 @@ struct LeaderboardScreen: View {
     @State private var showLeaderboard = false
     @State private var showSignIn = false
     @State private var selectedLeaderboardID = ""
-    @State private var blobAnimating = false
+
 
     var body: some View {
         scrollContent
-            .background { ambientBlobs }
+            .background { AmbientBlobsView(.leaderboard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Leaderboards")
         .navigationBarTitleDisplayMode(.large)
@@ -30,11 +30,6 @@ struct LeaderboardScreen: View {
                 leaderboardID: selectedLeaderboardID
             )
             .ignoresSafeArea()
-        }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
         }
     }
 }
@@ -254,39 +249,3 @@ private extension LeaderboardScreen {
     }
 }
 
-// MARK: - Background
-
-private extension LeaderboardScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 32)
-                .offset(x: -80, y: -60)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.warning.opacity(0.14), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 280)
-                .blur(radius: 40)
-                .offset(x: 140, y: 120)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-    }
-}

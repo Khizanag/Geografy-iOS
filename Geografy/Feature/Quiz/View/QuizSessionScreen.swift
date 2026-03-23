@@ -21,7 +21,7 @@ struct QuizSessionScreen: View {
     @State private var isPaused = false
     @State private var navigateToResult: QuizResult?
     @State private var countryDataService = CountryDataService()
-    @State private var blobAnimating = false
+
     @State private var typingInput: String = ""
     @State private var showHint: Bool = false
     @State private var typingIsCorrect: Bool = false
@@ -40,7 +40,6 @@ struct QuizSessionScreen: View {
                     Text("Your progress will be lost.")
                 }
                 .task { loadQuiz() }
-                .onAppear { startBlobAnimation() }
                 .onDisappear { timerCancellable?.cancel() }
                 .navigationDestination(item: $navigateToResult) { result in
                     resultsDestination(for: result)
@@ -61,7 +60,7 @@ private extension QuizSessionScreen {
             Spacer(minLength: 0)
         }
         .padding(.top, DesignSystem.Spacing.sm)
-        .background { ambientBlobs }
+        .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 
@@ -173,61 +172,6 @@ private extension QuizSessionScreen {
         .buttonStyle(.glass)
     }
 
-    func startBlobAnimation() {
-        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-            blobAnimating = true
-        }
-    }
-}
-
-// MARK: - Background
-
-private extension QuizSessionScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 420, height: 320)
-                .blur(radius: 36)
-                .offset(x: -80, y: -100)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 44)
-                .offset(x: 140, y: 60)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260)
-                .blur(radius: 40)
-                .offset(x: -40, y: 400)
-                .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-    }
 }
 
 // MARK: - Subviews
@@ -277,33 +221,11 @@ private extension QuizSessionScreen {
     }
 
     var progressBar: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-
-                Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [DesignSystem.Color.accent, DesignSystem.Color.accent.opacity(0.7)],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .frame(width: geo.size.width * progress)
-                    .animation(.spring(response: 0.4, dampingFraction: 0.8), value: progress)
-            }
-        }
-        .frame(height: 6)
+        SessionProgressBar(progress: progress)
     }
 
     var questionCounterPill: some View {
-        Text("\(currentIndex + 1)/\(questions.count)")
-            .font(.system(size: 13, weight: .black, design: .rounded))
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
+        QuestionCounterPill(current: currentIndex + 1, total: questions.count)
     }
 
     var timerPill: some View {

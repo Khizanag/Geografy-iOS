@@ -47,21 +47,11 @@ private extension FavoritesScreen {
     }
 
     var emptyState: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: "heart.slash")
-                .font(.system(size: 48))
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Text("No Favorites Yet")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Tap the heart icon on any country to save it here.")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .padding(DesignSystem.Spacing.xxl)
-        .frame(maxWidth: .infinity)
-        .containerRelativeFrame(.vertical)
+        EmptyStateView(
+            icon: "heart.slash",
+            title: "No Favorites Yet",
+            subtitle: "Tap the heart icon on any country to save it here."
+        )
     }
 
     func countryCard(for country: Country) -> some View {

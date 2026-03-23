@@ -17,12 +17,9 @@ struct FlashcardSessionScreen: View {
     @State private var dragOffset: CGSize = .zero
     @State private var showQuitAlert = false
     @State private var detailCountry: Country?
-    @State private var blobAnimating = false
     @State private var showGuide = false
     @State private var cardShownAt: Date = .now
     @State private var thinkingTimes: [TimeInterval] = []
-    @State private var animatedProgress: CGFloat = 0
-
     var body: some View {
         NavigationStack {
             sessionContent
@@ -39,7 +36,6 @@ struct FlashcardSessionScreen: View {
                         CountryDetailScreen(country: country)
                     }
                 }
-                .onAppear { startBlobAnimation() }
                 .task { countryDataService.loadCountries() }
         }
     }
@@ -64,7 +60,7 @@ private extension FlashcardSessionScreen {
             ratingSection
         }
         .padding(.top, DesignSystem.Spacing.sm)
-        .background { ambientBlobs }
+        .background { AmbientBlobsView(.rich) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 
@@ -117,43 +113,11 @@ private extension FlashcardSessionScreen {
     }
 
     var progressBar: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                DesignSystem.Color.accent,
-                                DesignSystem.Color.accent.opacity(0.7),
-                            ],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .frame(width: max(geometry.size.width * animatedProgress, 0))
-                    .shadow(
-                        color: DesignSystem.Color.accent.opacity(0.5),
-                        radius: 6,
-                        x: 4
-                    )
-            }
-        }
-        .frame(height: 6)
+        SessionProgressBar(progress: progressFraction)
     }
 
     var counterPill: some View {
-        Text("\(currentIndex + 1)/\(cards.count)")
-            .contentTransition(.numericText())
-            .font(.system(size: 13, weight: .black, design: .rounded))
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(
-                DesignSystem.Color.cardBackgroundHighlighted,
-                in: Capsule()
-            )
+        QuestionCounterPill(current: currentIndex + 1, total: cards.count)
     }
 }
 
@@ -318,67 +282,6 @@ private extension FlashcardSessionScreen {
     }
 }
 
-// MARK: - Background
-
-private extension FlashcardSessionScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.accent.opacity(0.22),
-                            .clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 420, height: 320)
-                .blur(radius: 36)
-                .offset(x: -80, y: -100)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.indigo.opacity(0.18),
-                            .clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 44)
-                .offset(x: 140, y: 60)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.purple.opacity(0.14),
-                            .clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260)
-                .blur(radius: 40)
-                .offset(x: -40, y: 400)
-                .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-    }
-}
-
 // MARK: - Actions
 
 private extension FlashcardSessionScreen {
@@ -430,7 +333,6 @@ private extension FlashcardSessionScreen {
                     cardShownAt = .now
                     dragOffset = CGSize(width: 400, height: 0)
                 }
-                updateProgress()
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
@@ -476,7 +378,6 @@ private extension FlashcardSessionScreen {
                     cardShownAt = .now
                     dragOffset = CGSize(width: 400, height: 0)
                 }
-                updateProgress()
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     dragOffset = .zero
                 }
@@ -505,13 +406,6 @@ private extension FlashcardSessionScreen {
         }
     }
 
-    func startBlobAnimation() {
-        withAnimation(
-            .easeInOut(duration: 6).repeatForever(autoreverses: true)
-        ) {
-            blobAnimating = true
-        }
-    }
 }
 
 // MARK: - Helpers
@@ -542,12 +436,6 @@ private extension FlashcardSessionScreen {
             return min(-offset / 150.0, 0.35)
         }
         return 0
-    }
-
-    func updateProgress() {
-        withAnimation(.spring(response: 0.6, dampingFraction: 0.6)) {
-            animatedProgress = progressFraction
-        }
     }
 
     var averageThinkingTime: TimeInterval {
