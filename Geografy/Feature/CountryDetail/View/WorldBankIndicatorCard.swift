@@ -180,7 +180,9 @@ private extension WorldBankIndicatorCard {
     }
 
     func lineChart(points: [WorldBankService.DataPoint]) -> some View {
-        Chart(points) { point in
+        let minYear = points.first?.year ?? 1990
+        let maxYear = points.last?.year ?? 2023
+        return Chart(points) { point in
             AreaMark(
                 x: .value("Year", point.year),
                 y: .value(indicator.title, point.value)
@@ -205,13 +207,18 @@ private extension WorldBankIndicatorCard {
             .lineStyle(StrokeStyle(lineWidth: 2))
             .interpolationMethod(.catmullRom)
         }
+        .chartXScale(domain: minYear...maxYear)
         .chartXAxis {
-            AxisMarks(values: .stride(by: 10)) { _ in
+            AxisMarks(values: .automatic(desiredCount: 4)) { value in
                 AxisGridLine()
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.2))
-                AxisValueLabel()
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                AxisValueLabel {
+                    if let year = value.as(Int.self) {
+                        Text(String(year))
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    }
+                }
             }
         }
         .chartYAxis {

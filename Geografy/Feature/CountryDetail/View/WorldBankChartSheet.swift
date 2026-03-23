@@ -115,6 +115,8 @@ private extension WorldBankChartSheet {
 
     var fullChart: some View {
         let points = filteredPoints
+        let minYear = points.first?.year ?? 1990
+        let maxYear = points.last?.year ?? 2023
         return Chart(points) { point in
             AreaMark(
                 x: .value("Year", point.year),
@@ -140,13 +142,18 @@ private extension WorldBankChartSheet {
             .lineStyle(StrokeStyle(lineWidth: 2.5))
             .interpolationMethod(.catmullRom)
         }
+        .chartXScale(domain: minYear...maxYear)
         .chartXAxis {
-            AxisMarks(values: .automatic(desiredCount: 6)) { _ in
+            AxisMarks(values: .automatic(desiredCount: 6)) { value in
                 AxisGridLine()
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.15))
-                AxisValueLabel()
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                AxisValueLabel {
+                    if let year = value.as(Int.self) {
+                        Text(String(year))
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                }
             }
         }
         .chartYAxis {
@@ -168,7 +175,7 @@ private extension WorldBankChartSheet {
 
     var statsSection: some View {
         let points = filteredPoints
-        return VStack(spacing: DesignSystem.Spacing.sm) {
+        return VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Summary")
             LazyVGrid(
                 columns: [GridItem(.flexible()), GridItem(.flexible())],
