@@ -255,31 +255,41 @@ private extension CountryDetailScreen {
     var quickFactsCard: some View {
         CardView {
             HStack(spacing: 0) {
-                ZStack(alignment: .topTrailing) {
-                    Button {
-                        activeSheet = .info(
-                            InfoItem(
-                                icon: "mappin.and.ellipse",
-                                title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
-                                value: capitalInfoValue,
-                                supportsMap: false
-                            )
+                Button {
+                    activeSheet = .info(
+                        InfoItem(
+                            icon: "mappin.and.ellipse",
+                            title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
+                            value: capitalInfoValue,
+                            supportsMap: false
                         )
-                    } label: {
-                        factChip(
-                            icon: "mappin",
-                            label: country.allCapitals.count > 1
+                    )
+                } label: {
+                    VStack(spacing: DesignSystem.Spacing.xxs) {
+                        Image(systemName: "mappin")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.accent)
+                        Text(
+                            country.allCapitals.count > 1
                                 ? "Capitals (\(country.allCapitals.count))"
-                                : "Capital",
-                            value: country.allCapitals.map(\.name).joined(separator: ", ")
+                                : "Capital"
                         )
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        HStack(spacing: DesignSystem.Spacing.xxs) {
+                            Text(country.allCapitals.map(\.name).joined(separator: ", "))
+                                .font(DesignSystem.Font.caption)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(DesignSystem.Color.textPrimary)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                            SpeakerButton(text: country.capital, countryCode: country.code)
+                                .scaleEffect(0.7)
+                        }
                     }
-                    .buttonStyle(PressButtonStyle())
-
-                    SpeakerButton(text: country.capital, countryCode: country.code)
-                        .scaleEffect(0.75)
-                        .offset(x: 4, y: -4)
+                    .frame(maxWidth: .infinity)
                 }
+                .buttonStyle(PressButtonStyle())
 
                 Divider().frame(height: 44)
 
