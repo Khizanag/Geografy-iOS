@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CountryDetailScreen: View {
-    @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) private var travelService
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(XPService.self) private var xpService
@@ -594,9 +594,9 @@ extension CountryDetailScreen {
     }
 }
 
-// MARK: - Helpers
+// MARK: - Locked Content
 
-private extension CountryDetailScreen {
+extension CountryDetailScreen {
     func lockedSection(title: String) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader(title)
@@ -617,7 +617,11 @@ private extension CountryDetailScreen {
             PremiumLockedOverlay(onUnlock: { activeSheet = .paywall })
         }
     }
+}
 
+// MARK: - Helpers
+
+private extension CountryDetailScreen {
     var capitalInfoValue: String {
         country.allCapitals
             .map { capital in
