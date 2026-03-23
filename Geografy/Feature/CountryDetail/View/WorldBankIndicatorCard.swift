@@ -7,14 +7,23 @@ struct WorldBankIndicatorCard: View {
     let cacheAge: Date?
 
     @State private var pulseOpacity: Double = 0.5
+    @State private var showFullChart = false
 
     var body: some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                cardHeader
-                cardContent
+        Button { showFullChart = true } label: {
+            CardView {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                    cardHeader
+                    cardContent
+                }
+                .padding(DesignSystem.Spacing.md)
             }
-            .padding(DesignSystem.Spacing.md)
+        }
+        .buttonStyle(PressButtonStyle())
+        .sheet(isPresented: $showFullChart) {
+            if case .loaded(let points) = state {
+                WorldBankChartSheet(indicator: indicator, allPoints: points)
+            }
         }
     }
 }
@@ -107,11 +116,19 @@ private extension WorldBankIndicatorCard {
     }
 
     func loadedView(points: [WorldBankService.DataPoint]) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+        let recentPoints = recentData(from: points, years: 30)
+        return VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             latestValueRow(points: points)
-            lineChart(points: points)
-            footerRow(points: points)
+            lineChart(points: recentPoints)
+            footerRow(points: recentPoints)
         }
+    }
+
+    func recentData(from points: [WorldBankService.DataPoint], years: Int) -> [WorldBankService.DataPoint] {
+        guard let latest = points.last else { return points }
+        let cutoff = latest.year - years
+        let filtered = points.filter { $0.year >= cutoff }
+        return filtered.count >= 2 ? filtered : points
     }
 }
 
