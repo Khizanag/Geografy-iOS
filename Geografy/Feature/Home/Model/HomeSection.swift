@@ -21,6 +21,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case continentStats
     case countryCompare
     case travelBucketList
+    case oceanExplorer
+    case languageExplorer
+    case challengeRoom
     case comingSoon
 
     var id: String { rawValue }
@@ -47,6 +50,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .continentStats: "Continent Statistics"
         case .countryCompare: "Country Comparison"
         case .travelBucketList: "Travel Bucket List"
+        case .oceanExplorer: "Ocean Explorer"
+        case .languageExplorer: "Language Explorer"
+        case .challengeRoom: "Challenge Room"
         case .comingSoon: "Coming Soon"
         }
     }
@@ -73,6 +79,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .continentStats: "chart.bar.xaxis.ascending"
         case .countryCompare: "arrow.left.arrow.right"
         case .travelBucketList: "list.star"
+        case .oceanExplorer: "water.waves"
+        case .languageExplorer: "character.book.closed.fill"
+        case .challengeRoom: "person.2.fill"
         case .comingSoon: "sparkles"
         }
     }

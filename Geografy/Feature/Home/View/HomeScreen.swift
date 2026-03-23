@@ -604,6 +604,9 @@ private extension HomeScreen {
         case .continentStats: continentStatsSection
         case .countryCompare: countryCompareSection
         case .travelBucketList: travelBucketListSection
+        case .oceanExplorer: oceanExplorerSection
+        case .languageExplorer: languageExplorerSection
+        case .challengeRoom: challengeRoomSection
         default: EmptyView()
         }
     }

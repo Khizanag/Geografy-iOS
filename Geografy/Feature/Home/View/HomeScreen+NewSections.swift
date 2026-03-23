@@ -195,3 +195,39 @@ extension HomeScreen {
         }
     }
 }
+
+// MARK: - Ocean Explorer Section
+
+extension HomeScreen {
+    var oceanExplorerSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Ocean Explorer")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeOceanExplorerCard { coordinator.push(.oceanExplorer) }
+        }
+    }
+}
+
+// MARK: - Language Explorer Section
+
+extension HomeScreen {
+    var languageExplorerSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Language Explorer")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeLanguageExplorerCard { coordinator.push(.languageExplorer) }
+        }
+    }
+}
+
+// MARK: - Challenge Room Section
+
+extension HomeScreen {
+    var challengeRoomSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Challenge Room")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeChallengeRoomCard { coordinator.present(.challengeRoom) }
+        }
+    }
+}

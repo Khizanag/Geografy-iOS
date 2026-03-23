@@ -63,6 +63,10 @@ private extension ScreenFactory {
             ContinentPickerScreen()
         case .continentStats(let continentName):
             ContinentStatsScreen(continentName: continentName)
+        case .oceanExplorer:
+            OceanExplorerScreen()
+        case .languageExplorer:
+            LanguageExplorerScreen()
         default:
             EmptyView()
         }
