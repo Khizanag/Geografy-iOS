@@ -3,10 +3,11 @@ import SwiftUI
 enum MoreSheet: Identifiable {
     case profile, countries, orgs, favorites, travel
     case dailyChallenge, compare, travelJournal
-    case quizPacks, customQuiz, multiplayer, exploreGame
+    case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
     case badges, timeline
     case achievements, leaderboards, themes, settings
     case search
+    case distanceCalculator
 
     var id: Self { self }
 
@@ -24,6 +25,8 @@ enum MoreSheet: Identifiable {
         case .customQuiz: "Custom Quizzes"
         case .multiplayer: "Multiplayer"
         case .exploreGame: "Mystery Country"
+        case .speedRun: "Speed Run"
+        case .distanceCalculator: "Distance Calculator"
         case .badges: "Badge Collection"
         case .timeline: "Historical Timeline"
         case .achievements: "Achievements"
@@ -48,6 +51,8 @@ enum MoreSheet: Identifiable {
         case .customQuiz: "pencil.and.list.clipboard"
         case .multiplayer: "person.2.fill"
         case .exploreGame: "magnifyingglass"
+        case .speedRun: "timer"
+        case .distanceCalculator: "ruler"
         case .badges: "medal.fill"
         case .timeline: "clock.arrow.circlepath"
         case .achievements: "trophy.fill"
@@ -72,6 +77,8 @@ enum MoreSheet: Identifiable {
         case .customQuiz: "Build your own quizzes"
         case .multiplayer: "Challenge opponents"
         case .exploreGame: "Guess from clues"
+        case .speedRun: "Name all countries, race the clock"
+        case .distanceCalculator: "Great circle distance between capitals"
         case .badges: "Collect and showcase"
         case .timeline: "Borders through history"
         case .achievements: "Unlock badges and rewards"
@@ -96,6 +103,8 @@ enum MoreSheet: Identifiable {
         case .customQuiz: DesignSystem.Color.accent
         case .multiplayer: DesignSystem.Color.error
         case .exploreGame: DesignSystem.Color.warning
+        case .speedRun: DesignSystem.Color.error
+        case .distanceCalculator: DesignSystem.Color.blue
         case .badges: DesignSystem.Color.warning
         case .timeline: DesignSystem.Color.indigo
         case .achievements: DesignSystem.Color.warning
@@ -120,6 +129,8 @@ enum MoreSheet: Identifiable {
         case .customQuiz: .customQuiz
         case .multiplayer: .multiplayer
         case .exploreGame: .exploreGame
+        case .speedRun: .speedRunSetup
+        case .distanceCalculator: .distanceCalculator
         case .badges: .badges
         case .timeline: .timeline
         case .achievements: .achievements

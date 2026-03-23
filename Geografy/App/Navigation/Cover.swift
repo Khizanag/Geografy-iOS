@@ -9,6 +9,7 @@ enum Cover: Identifiable {
     case exploreGameSession
     case travelMap(TravelMapFilter)
     case historicalMap(initialYear: Int)
+    case speedRunSession(region: QuizRegion)
 
     var id: String {
         switch self {
@@ -20,6 +21,7 @@ enum Cover: Identifiable {
         case .exploreGameSession: "exploreGameSession"
         case .travelMap: "travelMap"
         case .historicalMap(let year): "historicalMap-\(year)"
+        case .speedRunSession(let region): "speedRunSession-\(region.rawValue)"
         }
     }
 }

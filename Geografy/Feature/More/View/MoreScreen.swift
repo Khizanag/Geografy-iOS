@@ -22,7 +22,6 @@ struct MoreScreen: View {
     }
 }
 
-
 // MARK: - Subviews
 
 private extension MoreScreen {
@@ -168,13 +167,13 @@ private extension MoreScreen {
 
     var playItems: [MoreSheet] {
         [
-            .dailyChallenge, .exploreGame, .multiplayer,
-            .quizPacks, .customQuiz,
+            .dailyChallenge, .exploreGame, .speedRun,
+            .multiplayer, .quizPacks, .customQuiz,
         ]
     }
 
     var exploreItems: [MoreSheet] {
-        [.search, .compare, .timeline, .orgs]
+        [.search, .compare, .distanceCalculator, .timeline, .orgs]
     }
 
     var travelItems: [MoreSheet] {
