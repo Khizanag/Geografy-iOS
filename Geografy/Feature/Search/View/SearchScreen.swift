@@ -14,23 +14,21 @@ struct SearchScreen: View {
     ]
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            VStack(spacing: 0) {
-                searchBar
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.top, DesignSystem.Spacing.sm)
-                    .padding(.bottom, DesignSystem.Spacing.md)
-                Group {
-                    if query.isEmpty {
-                        emptyStateContent
-                    } else {
-                        resultContent
-                    }
-                }
-                .animation(.easeInOut(duration: 0.2), value: query.isEmpty)
+        Group {
+            if query.isEmpty {
+                emptyStateContent
+            } else {
+                resultContent
             }
         }
+        .animation(.easeInOut(duration: 0.2), value: query.isEmpty)
+        .safeAreaInset(edge: .bottom) {
+            searchBar
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                .background(.ultraThinMaterial)
+        }
+        .background(DesignSystem.Color.background)
         .navigationTitle("Search")
         .navigationBarTitleDisplayMode(.large)
         .toolbar { toolbarItems }
@@ -84,15 +82,17 @@ private extension SearchScreen {
     var emptyStateContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                Spacer(minLength: 0)
                 if !recentService.queries.isEmpty {
                     recentSearchesSection
                 }
                 trendingSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.top, DesignSystem.Spacing.xs)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.vertical, DesignSystem.Spacing.md)
+            .containerRelativeFrame(.vertical, alignment: .bottom)
         }
+        .defaultScrollAnchor(.bottom)
     }
 
     var recentSearchesSection: some View {
