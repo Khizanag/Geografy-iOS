@@ -3,6 +3,7 @@ import SwiftUI
 struct SectionHeaderView: View {
     let title: String
     var icon: String?
+    var isNew: Bool = false
 
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -17,6 +18,9 @@ struct SectionHeaderView: View {
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+            if isNew {
+                NewBadge()
+            }
         }
     }
 }

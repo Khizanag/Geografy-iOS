@@ -118,4 +118,21 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .comingSoon: "sparkles"
         }
     }
+
+    var isNew: Bool {
+        switch self {
+        case .borderChallenge,
+             .countryNicknames,
+             .economyExplorer,
+             .geoTrivia,
+             .geographyFeatures,
+             .mapColoring,
+             .nationalSymbolsQuiz,
+             .oceanExplorer,
+             .wordSearch:
+            true
+        default:
+            false
+        }
+    }
 }
