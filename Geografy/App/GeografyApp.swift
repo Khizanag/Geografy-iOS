@@ -19,6 +19,7 @@ struct GeografyApp: App {
     @State private var subscriptionService = SubscriptionService()
     @State private var worldBankService = WorldBankService()
     @State private var pronunciationService = PronunciationService()
+    @State private var widgetDataBridge = WidgetDataBridge()
 
     init() {
         let db = DatabaseManager()
@@ -55,6 +56,16 @@ struct GeografyApp: App {
                 .task { await authService.validateOnLaunch() }
                 .task { await subscriptionService.checkEntitlements() }
                 .task { gameCenterService.authenticatePlayer() }
+                .task {
+                    widgetDataBridge.loadCountriesIfNeeded()
+                    widgetDataBridge.synchronize(
+                        streak: streakService.currentStreak,
+                        totalXP: xpService.totalXP,
+                        level: xpService.currentLevel,
+                        progressFraction: xpService.progressFraction,
+                        visitedCount: travelService.visitedCodes.count
+                    )
+                }
                 .onReceive(achievementService.unlockPublisher) { definition in
                     Task {
                         await gameCenterService.reportAchievement(
@@ -75,6 +86,22 @@ struct GeografyApp: App {
                             to: GameCenterService.LeaderboardID.totalXP
                         )
                     }
+                    widgetDataBridge.synchronize(
+                        streak: streakService.currentStreak,
+                        totalXP: newXP,
+                        level: xpService.currentLevel,
+                        progressFraction: xpService.progressFraction,
+                        visitedCount: travelService.visitedCodes.count
+                    )
+                }
+                .onChange(of: streakService.currentStreak) { _, newStreak in
+                    widgetDataBridge.synchronize(
+                        streak: newStreak,
+                        totalXP: xpService.totalXP,
+                        level: xpService.currentLevel,
+                        progressFraction: xpService.progressFraction,
+                        visitedCount: travelService.visitedCodes.count
+                    )
                 }
                 .onChange(of: travelService.visitedCodes.count) { _, count in
                     Task {
@@ -83,6 +110,13 @@ struct GeografyApp: App {
                             to: GameCenterService.LeaderboardID.countriesVisited
                         )
                     }
+                    widgetDataBridge.synchronize(
+                        streak: streakService.currentStreak,
+                        totalXP: xpService.totalXP,
+                        level: xpService.currentLevel,
+                        progressFraction: xpService.progressFraction,
+                        visitedCount: count
+                    )
                 }
         }
         .onChange(of: scenePhase) { _, newPhase in
