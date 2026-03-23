@@ -31,7 +31,10 @@ struct SignInOptionsSheet: View {
                         .padding(.bottom, DesignSystem.Spacing.xxl)
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
+                .frame(maxWidth: 500)
+                .frame(maxWidth: .infinity)
             }
+            .safeAreaPadding(.horizontal, DesignSystem.Spacing.sm)
         }
         .onAppear {
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
