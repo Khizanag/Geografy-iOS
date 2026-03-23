@@ -71,9 +71,12 @@ private extension ContentView {
                 }
             }
 
-            Tab("Flashcards", systemImage: "rectangle.on.rectangle.angled", value: 2) {
-                CoordinatedNavigationStack(coordinator: appCoordinator.flashcardCoordinator) {
-                    FlashcardScreen()
+            Tab("Countries", systemImage: "globe", value: 2) {
+                CoordinatedNavigationStack(coordinator: appCoordinator.countriesCoordinator) {
+                    CountryListScreen()
+                        .navigationDestination(for: Country.self) { country in
+                            CountryDetailScreen(country: country)
+                        }
                 }
             }
 

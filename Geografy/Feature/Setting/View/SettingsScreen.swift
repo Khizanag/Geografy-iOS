@@ -9,7 +9,6 @@ struct SettingsScreen: View {
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
     @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
     @AppStorage("showCorrectAnswer") private var showCorrectAnswer = true
-    @AppStorage("hideDependentTerritories") private var hideDependentTerritories = false
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
 
     @State private var showSignIn = false
@@ -31,7 +30,7 @@ struct SettingsScreen: View {
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
         .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 CircleCloseButton()
@@ -316,15 +315,6 @@ private extension SettingsScreen {
                 )
             }
             .buttonStyle(.plain)
-
-            settingsDivider
-
-            SettingsToggleRow(
-                icon: "eye.slash.fill",
-                iconColor: DesignSystem.Color.textSecondary,
-                title: "Hide dependent territories",
-                isOn: $hideDependentTerritories
-            )
         }
     }
 
