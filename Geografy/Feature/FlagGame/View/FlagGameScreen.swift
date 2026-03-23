@@ -29,7 +29,7 @@ struct FlagGameScreen: View {
         .navigationTitle("Flag Game")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .topBarTrailing) {
                 CircleCloseButton()
             }
         }
@@ -84,19 +84,20 @@ private extension FlagGameScreen {
         VStack(spacing: DesignSystem.Spacing.lg) {
             scoreAndLivesBar
             countryNameCard
-            flagGrid
             Spacer(minLength: 0)
+            flagGrid
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.top, DesignSystem.Spacing.lg)
+        .padding(.vertical, DesignSystem.Spacing.md)
     }
 
     var scoreAndLivesBar: some View {
-        HStack {
-            Spacer()
+        ZStack {
             scoreLabel
-            Spacer()
-            livesView
+            HStack {
+                Spacer()
+                livesView
+            }
         }
     }
 
@@ -197,17 +198,8 @@ private extension FlagGameScreen {
     func flagCard(for country: Country) -> some View {
         let state = cardFeedbackState(for: country)
         return CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(countryCode: country.code, height: 56)
-                    .geoShadow(.subtle)
-                Text(country.name)
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(state == .none ? DesignSystem.Color.textSecondary : DesignSystem.Color.onAccent)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.7)
-            }
+            FlagView(countryCode: country.code, height: 56)
+                .geoShadow(.subtle)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.md)
             .padding(.horizontal, DesignSystem.Spacing.xs)
