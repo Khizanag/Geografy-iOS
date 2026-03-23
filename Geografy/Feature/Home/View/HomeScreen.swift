@@ -183,8 +183,10 @@ private extension HomeScreen {
             }
             .padding(.top, DesignSystem.Spacing.lg)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .background(alignment: .top) {
+                scrollableBlobs
+            }
         }
-        .background { scrollableBlobs.ignoresSafeArea() }
     }
 }
 
@@ -402,14 +404,13 @@ private extension HomeScreen {
                                 .animation(.interactiveSpring(response: 0.35, dampingFraction: 0.8), value: normalized)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                             }
-                            .frame(width: cardWidth, height: carouselHeight + DesignSystem.Spacing.xxl)
+                            .frame(width: cardWidth, height: carouselHeight)
                             .id(index)
                         }
                     }
                     .scrollTargetLayout()
                     .padding(.horizontal, sidePadding)
-                    .padding(.top, DesignSystem.Spacing.sm)
-                    .padding(.bottom, DesignSystem.Spacing.xxl)
+                    .padding(.bottom, DesignSystem.Spacing.xs)
                 }
                 .scrollClipDisabled()
                 .scrollTargetBehavior(.viewAligned)
@@ -421,7 +422,7 @@ private extension HomeScreen {
                 )
             }
         }
-        .frame(height: carouselHeight + DesignSystem.Spacing.xxl + DesignSystem.Spacing.lg)
+        .frame(height: carouselHeight + DesignSystem.Spacing.xl)
     }
 
     var pageIndicator: some View {
@@ -436,7 +437,7 @@ private extension HomeScreen {
             }
             Spacer()
         }
-        .padding(.top, DesignSystem.Spacing.xs)
+        .padding(.top, DesignSystem.Spacing.md)
     }
 }
 

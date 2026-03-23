@@ -21,14 +21,8 @@ struct HomeOrgsCard: View {
 
 private extension HomeOrgsCard {
     var sectionHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(DesignSystem.Color.accent)
-                .frame(width: 3, height: 18)
-            Text("Organizations")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+        HStack {
+            SectionHeaderView(title: "Organizations")
             Spacer()
             Button { onSeeAll() } label: {
                 Text("See All")
