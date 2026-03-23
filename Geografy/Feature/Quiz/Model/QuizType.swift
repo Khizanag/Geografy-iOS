@@ -76,4 +76,8 @@ extension QuizType: SelectableType {
         default: false
         }
     }
+
+    var supportsTypingMode: Bool {
+        self != .reverseFlag
+    }
 }
