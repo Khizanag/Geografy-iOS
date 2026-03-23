@@ -118,7 +118,7 @@ extension HomeScreen {
 extension HomeScreen {
     var geoTriviaSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geo Trivia")
+            SectionHeaderView(title: "Geo Trivia", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeGeoTriviaCard { coordinator.present(.geoTrivia) }
         }
@@ -230,7 +230,7 @@ extension HomeScreen {
 extension HomeScreen {
     var oceanExplorerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Ocean Explorer")
+            SectionHeaderView(title: "Ocean Explorer", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeOceanExplorerCard { coordinator.push(.oceanExplorer) }
         }
@@ -278,7 +278,7 @@ extension HomeScreen {
 extension HomeScreen {
     var economyExplorerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Economy Explorer")
+            SectionHeaderView(title: "Economy Explorer", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeEconomyExplorerCard { coordinator.push(.economyExplorer) }
         }
@@ -290,7 +290,7 @@ extension HomeScreen {
 extension HomeScreen {
     var geographyFeaturesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geography Features")
+            SectionHeaderView(title: "Geography Features", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeGeographyFeaturesCard { coordinator.push(.geographyFeatures) }
         }
@@ -338,7 +338,7 @@ extension HomeScreen {
 extension HomeScreen {
     var nationalSymbolsQuizSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "National Symbols Quiz")
+            SectionHeaderView(title: "National Symbols Quiz", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeNationalSymbolsCard { coordinator.present(.nationalSymbolsQuiz) }
         }
@@ -350,7 +350,7 @@ extension HomeScreen {
 extension HomeScreen {
     var mapColoringSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Map Coloring Book")
+            SectionHeaderView(title: "Map Coloring Book", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeMapColoringCard { coordinator.push(.mapColoring) }
         }
@@ -362,7 +362,7 @@ extension HomeScreen {
 extension HomeScreen {
     var countryNicknamesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Country Nicknames")
+            SectionHeaderView(title: "Country Nicknames", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeCountryNicknamesCard { coordinator.present(.countryNicknames) }
         }
@@ -374,7 +374,7 @@ extension HomeScreen {
 extension HomeScreen {
     var wordSearchSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geography Word Search")
+            SectionHeaderView(title: "Geography Word Search", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeWordSearchCard { coordinator.present(.wordSearch) }
         }
@@ -386,7 +386,7 @@ extension HomeScreen {
 extension HomeScreen {
     var borderChallengeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Border Challenge")
+            SectionHeaderView(title: "Border Challenge", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeBorderChallengeCard { coordinator.present(.borderChallenge) }
         }
