@@ -585,6 +585,42 @@ private extension HomeScreen {
     }
 }
 
+// MARK: - Flag Game Section
+
+private extension HomeScreen {
+    var flagGameSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Flag Matching")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeFlagGameCard { coordinator.present(.flagGame) }
+        }
+    }
+}
+
+// MARK: - Geo Trivia Section
+
+private extension HomeScreen {
+    var geoTriviaSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Geo Trivia")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeGeoTriviaCard { coordinator.present(.geoTrivia) }
+        }
+    }
+}
+
+// MARK: - Spelling Bee Section
+
+private extension HomeScreen {
+    var spellingBeeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Spelling Bee")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeSpellingBeeCard { coordinator.present(.spellingBee) }
+        }
+    }
+}
+
 // MARK: - Coming Soon Section
 
 private extension HomeScreen {
@@ -667,6 +703,15 @@ private extension HomeScreen {
             orgsSection
         case .progress:
             progressSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .flagGame:
+            flagGameSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .geoTrivia:
+            geoTriviaSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .spellingBee:
+            spellingBeeSection
                 .padding(.horizontal, DesignSystem.Spacing.md)
         case .comingSoon:
             comingSoonSection
