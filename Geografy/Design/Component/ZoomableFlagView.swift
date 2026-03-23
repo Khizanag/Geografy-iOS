@@ -37,10 +37,11 @@ private extension ZoomableFlagView {
 
     var flagContent: some View {
         GeometryReader { geometry in
-            let targetHeight = min(
-                geometry.size.width * 0.85,
-                geometry.size.height * 0.65
-            )
+            let aspectRatio = FlagAspectRatio.ratio(for: countryCode) ?? 1.5
+            let maxWidth = geometry.size.width * 0.9
+            let maxHeight = geometry.size.height * 0.65
+            let heightFromWidth = maxWidth / aspectRatio
+            let targetHeight = min(heightFromWidth, maxHeight)
 
             ZStack {
                 FlagView(countryCode: countryCode, height: targetHeight)
