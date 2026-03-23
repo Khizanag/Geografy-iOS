@@ -242,6 +242,7 @@ enum StatIndicator: String, CaseIterable, Identifiable {
 // MARK: - WorldBankService
 
 @Observable
+@MainActor
 final class WorldBankService {
     struct DataPoint: Identifiable, Codable, Hashable {
         let year: Int
@@ -347,14 +348,14 @@ private extension WorldBankService {
         Date().timeIntervalSince(date) > cacheExpiry
     }
 
-    func readDiskCache(key: String) -> CachedEntry? {
+    private func readDiskCache(key: String) -> CachedEntry? {
         let url = cacheDirectory.appendingPathComponent("\(key).json")
         guard let data = try? Data(contentsOf: url),
               let entry = try? JSONDecoder().decode(CachedEntry.self, from: data) else { return nil }
         return entry
     }
 
-    func writeDiskCache(_ entry: CachedEntry, key: String) {
+    private func writeDiskCache(_ entry: CachedEntry, key: String) {
         let url = cacheDirectory.appendingPathComponent("\(key).json")
         guard let data = try? JSONEncoder().encode(entry) else { return }
         try? data.write(to: url)
