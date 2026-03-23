@@ -6,6 +6,7 @@ enum MoreSheet: Identifiable {
     case quizPacks, customQuiz, multiplayer, exploreGame
     case badges, timeline
     case achievements, leaderboards, themes, settings
+    case search
 
     var id: Self { self }
 
@@ -29,6 +30,7 @@ enum MoreSheet: Identifiable {
         case .leaderboards: "Leaderboards"
         case .themes: "Themes"
         case .settings: "Settings"
+        case .search: "Global Search"
         }
     }
 
@@ -52,6 +54,7 @@ enum MoreSheet: Identifiable {
         case .leaderboards: "list.number"
         case .themes: "paintbrush.fill"
         case .settings: "gearshape.fill"
+        case .search: "magnifyingglass"
         }
     }
 
@@ -75,6 +78,7 @@ enum MoreSheet: Identifiable {
         case .leaderboards: "Compete with others"
         case .themes: "Customize your experience"
         case .settings: "App preferences"
+        case .search: "Search all countries & orgs"
         }
     }
 
@@ -98,6 +102,7 @@ enum MoreSheet: Identifiable {
         case .leaderboards: DesignSystem.Color.success
         case .themes: DesignSystem.Color.indigo
         case .settings: DesignSystem.Color.textSecondary
+        case .search: DesignSystem.Color.accent
         }
     }
 
@@ -121,6 +126,7 @@ enum MoreSheet: Identifiable {
         case .leaderboards: .leaderboards
         case .themes: .themes
         case .settings: .settings
+        case .search: .search
         }
     }
 }

@@ -174,7 +174,7 @@ private extension MoreScreen {
     }
 
     var exploreItems: [MoreSheet] {
-        [.compare, .timeline, .orgs]
+        [.search, .compare, .timeline, .orgs]
     }
 
     var travelItems: [MoreSheet] {

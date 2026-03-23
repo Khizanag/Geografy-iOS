@@ -73,6 +73,10 @@ enum SheetFactory {
             NavigationStack { CustomQuizLibraryScreen() }
                 .presentationDetents([.large])
 
+        case .search:
+            NavigationStack { SearchScreen() }
+                .presentationDetents([.large])
+
         case .compare:
             NavigationStack { CompareScreen() }
                 .presentationDetents([.large])

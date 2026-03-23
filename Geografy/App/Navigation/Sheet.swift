@@ -37,6 +37,9 @@ enum Sheet: Identifiable {
     case badges
     case leaderboards
 
+    // Discover
+    case search
+
     // App
     case achievements
     case themes
@@ -60,6 +63,7 @@ enum Sheet: Identifiable {
         case .multiplayer: "multiplayer"
         case .quizPacks: "quizPacks"
         case .customQuiz: "customQuiz"
+        case .search: "search"
         case .compare: "compare"
         case .timeline: "timeline"
         case .travelTracker: "travelTracker"
