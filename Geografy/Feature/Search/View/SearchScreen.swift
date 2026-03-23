@@ -53,7 +53,8 @@ private extension SearchScreen {
                 }
                 trendingSection
             }
-            .padding()
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.md)
             .containerRelativeFrame(.vertical, alignment: .bottom)
         }
         .defaultScrollAnchor(.bottom)
@@ -179,12 +180,16 @@ private extension SearchScreen {
     var resultsList: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                Spacer(minLength: 0)
                 ForEach(sections) { section in
                     resultSection(section)
                 }
             }
-            .padding()
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.md)
+            .containerRelativeFrame(.vertical, alignment: .bottom)
         }
+        .defaultScrollAnchor(.bottom)
     }
 
     func resultSection(_ section: SearchResultSection) -> some View {
