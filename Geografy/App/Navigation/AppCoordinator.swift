@@ -6,7 +6,7 @@ final class AppCoordinator {
 
     let homeCoordinator = TabCoordinator()
     let quizCoordinator = TabCoordinator()
-    let flashcardCoordinator = TabCoordinator()
+    let countriesCoordinator = TabCoordinator()
     let allMapsCoordinator = TabCoordinator()
     let moreCoordinator = TabCoordinator()
 
@@ -14,7 +14,7 @@ final class AppCoordinator {
         switch tab {
         case 0: homeCoordinator
         case 1: quizCoordinator
-        case 2: flashcardCoordinator
+        case 2: countriesCoordinator
         case 3: allMapsCoordinator
         case 4: moreCoordinator
         default: homeCoordinator

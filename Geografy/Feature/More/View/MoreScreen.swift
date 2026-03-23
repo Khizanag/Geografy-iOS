@@ -8,9 +8,6 @@ struct MoreScreen: View {
 
     var body: some View {
         itemList
-            .background {
-                ambientBlobs
-            }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("More")
             .navigationBarTitleDisplayMode(.large)
@@ -25,7 +22,7 @@ struct MoreScreen: View {
 // MARK: - Subviews
 
 private extension MoreScreen {
-    var ambientBlobs: some View {
+    var scrollableBlobs: some View {
         ZStack {
             blobEllipse(
                 BlobConfig(
@@ -52,12 +49,39 @@ private extension MoreScreen {
                 BlobConfig(
                     color: DesignSystem.Color.purple, opacity: 0.12,
                     endRadius: 160, width: 320, height: 280, blur: 44,
-                    offset: (160, 650), scale: blobAnimating ? 0.92 : 1.08
+                    offset: (160, 700), scale: blobAnimating ? 0.92 : 1.08
+                )
+            )
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.accent, opacity: 0.10,
+                    endRadius: 200, width: 400, height: 300, blur: 40,
+                    offset: (-120, 1050), scale: blobAnimating ? 1.05 : 0.95
+                )
+            )
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.indigo, opacity: 0.14,
+                    endRadius: 180, width: 360, height: 280, blur: 36,
+                    offset: (140, 1400), scale: blobAnimating ? 0.90 : 1.10
+                )
+            )
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.blue, opacity: 0.10,
+                    endRadius: 160, width: 320, height: 260, blur: 40,
+                    offset: (-80, 1800), scale: blobAnimating ? 1.08 : 0.92
+                )
+            )
+            blobEllipse(
+                BlobConfig(
+                    color: DesignSystem.Color.purple, opacity: 0.10,
+                    endRadius: 160, width: 320, height: 280, blur: 44,
+                    offset: (120, 2200), scale: blobAnimating ? 0.94 : 1.06
                 )
             )
         }
         .allowsHitTesting(false)
-        .ignoresSafeArea()
     }
 
     struct BlobConfig {
@@ -98,6 +122,7 @@ private extension MoreScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(alignment: .top) { scrollableBlobs }
         }
     }
 
@@ -145,24 +170,16 @@ private extension MoreScreen {
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-            )
-            .overlay(
-                RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-                .strokeBorder(sheet.color.opacity(0.12), lineWidth: 1)
+            .glassEffect(
+                .regular,
+                in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
             )
         }
         .buttonStyle(PressButtonStyle())
     }
 
     var youItems: [MoreSheet] {
-        [.profile, .countries, .favorites, .badges]
+        [.profile, .favorites, .badges]
     }
 
     var playItems: [MoreSheet] {
