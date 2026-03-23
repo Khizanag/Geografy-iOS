@@ -117,22 +117,8 @@ private extension ChallengeResultScreen {
     }
 
     var actionButtons: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Button {
-                onDismiss()
-            } label: {
-                Text("Done")
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.md)
-                    .background(
-                        DesignSystem.Color.accent,
-                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    )
-            }
-            .buttonStyle(PressButtonStyle())
+        GlassButton("Done", fullWidth: true) {
+            onDismiss()
         }
     }
 }
