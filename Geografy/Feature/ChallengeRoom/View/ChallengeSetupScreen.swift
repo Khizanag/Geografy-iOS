@@ -21,10 +21,15 @@ struct ChallengeSetupScreen: View {
                 headerSection
                 playersSection
                 settingsSection
-                startButton
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
+        }
+        .safeAreaInset(edge: .bottom) {
+            startButton
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                .background(.ultraThinMaterial)
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Challenge Room")
@@ -192,23 +197,11 @@ private extension ChallengeSetupScreen {
     }
 
     var startButton: some View {
-        Button {
+        GlassButton("Start Challenge", fullWidth: true) {
             startChallenge()
-        } label: {
-            Text("Start Challenge")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
-                .background(
-                    isFormValid ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary.opacity(0.3),
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                )
         }
         .disabled(!isFormValid)
-        .buttonStyle(PressButtonStyle())
-        .padding(.bottom, DesignSystem.Spacing.lg)
+        .opacity(isFormValid ? 1 : 0.5)
     }
 }
 

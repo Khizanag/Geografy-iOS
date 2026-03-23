@@ -107,25 +107,13 @@ private extension ChallengeGameScreen {
     }
 
     var passButton: some View {
-        Button {
+        GlassButton("I'm Ready — Show Question", fullWidth: true) {
             withAnimation(.easeInOut(duration: 0.3)) {
                 showingPassScreen = false
                 selectedOptionIndex = nil
                 showingResult = false
             }
-        } label: {
-            Text("I'm Ready — Show Question")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
-                .background(
-                    DesignSystem.Color.accent,
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                )
         }
-        .buttonStyle(PressButtonStyle())
     }
 
     var questionScreen: some View {
@@ -248,21 +236,9 @@ private extension ChallengeGameScreen {
     }
 
     var nextButton: some View {
-        Button {
+        GlassButton(isLastTurnInGame ? "See Results" : "Next", fullWidth: true) {
             advanceToNext()
-        } label: {
-            Text(isLastTurnInGame ? "See Results" : "Next →")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
-                .background(
-                    DesignSystem.Color.accent,
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                )
         }
-        .buttonStyle(PressButtonStyle())
         .transition(.move(edge: .bottom).combined(with: .opacity))
     }
 }

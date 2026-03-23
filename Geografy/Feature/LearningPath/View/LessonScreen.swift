@@ -14,9 +14,14 @@ struct LessonScreen: View {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 lessonTypeTag
                 lessonContent
-                completeButton
             }
             .padding(DesignSystem.Spacing.md)
+        }
+        .safeAreaInset(edge: .bottom) {
+            completeButton
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                .background(.ultraThinMaterial)
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
@@ -60,7 +65,7 @@ private extension LessonScreen {
     }
 
     var completeButton: some View {
-        GeoButton(lesson.isCompleted ? "Already Completed" : "Mark as Complete") {
+        GlassButton(lesson.isCompleted ? "Already Completed" : "Mark as Complete", fullWidth: true) {
             learningPathService.completeLesson(moduleID: module.id, lessonID: lesson.id)
             dismiss()
         }

@@ -343,7 +343,7 @@ private extension NationalSymbolsQuizScreen {
     }
 
     var playAgainButton: some View {
-        GeoButton("Play Again", style: .primary) {
+        GlassButton("Play Again", fullWidth: true) {
             restartQuiz()
         }
     }

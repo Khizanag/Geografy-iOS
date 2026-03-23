@@ -199,7 +199,7 @@ private extension NicknameQuizScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             Spacer()
-            GeoButton("Play Again", style: .primary) { restartQuiz() }
+            GlassButton("Play Again", fullWidth: true) { restartQuiz() }
                 .padding(.horizontal, DesignSystem.Spacing.xl)
             Spacer(minLength: DesignSystem.Spacing.xxl)
         }
