@@ -6,9 +6,9 @@ import StoreKit
 final class SubscriptionService {
     enum ProductID {
         static let monthly = "com.khizanag.geografy.premium.monthly"
-        static let yearly = "com.khizanag.geografy.premium.yearly"
+        static let annual = "com.khizanag.geografy.premium.annual"
         static let lifetime = "com.khizanag.geografy.premium.lifetime"
-        static let all = [monthly, yearly, lifetime]
+        static let all = [monthly, annual, lifetime]
     }
 
     #if DEBUG
@@ -17,6 +17,7 @@ final class SubscriptionService {
     #endif
 
     private(set) var products: [Product] = []
+    private(set) var purchasedProductIDs: Set<String> = []
     private(set) var isLoading = false
     private(set) var purchaseError: String?
 
@@ -24,17 +25,14 @@ final class SubscriptionService {
         #if DEBUG
         if Self.debugPremiumOverride { return true }
         #endif
-        return _isPremium
+        return !purchasedProductIDs.isEmpty
     }
 
-    private var _isPremium = false
+    private var transactionListener: Task<Void, Never>?
 
     init() {
-        Task { @MainActor [weak self] in
-            for await _ in Transaction.updates {
-                await self?.checkEntitlements()
-            }
-        }
+        transactionListener = listenForTransactions()
+        Task { await checkEntitlements() }
     }
 
     func loadProducts() async {
@@ -79,14 +77,14 @@ final class SubscriptionService {
     }
 
     func checkEntitlements() async {
-        var hasPremium = false
+        var purchased: Set<String> = []
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
                ProductID.all.contains(transaction.productID) {
-                hasPremium = true
+                purchased.insert(transaction.productID)
             }
         }
-        _isPremium = hasPremium
+        purchasedProductIDs = purchased
     }
 }
 
@@ -96,9 +94,20 @@ private extension SubscriptionService {
     func sortOrder(_ product: Product) -> Int {
         switch product.id {
         case ProductID.monthly:  0
-        case ProductID.yearly:   1
+        case ProductID.annual:   1
         case ProductID.lifetime: 2
         default:                 3
+        }
+    }
+
+    func listenForTransactions() -> Task<Void, Never> {
+        Task { [weak self] in
+            for await result in Transaction.updates {
+                if case .verified(let transaction) = result {
+                    await transaction.finish()
+                    await self?.checkEntitlements()
+                }
+            }
         }
     }
 }
