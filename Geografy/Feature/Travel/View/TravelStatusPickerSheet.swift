@@ -12,13 +12,18 @@ struct TravelStatusPickerSheet: View {
     var body: some View {
         VStack(spacing: 0) {
             header
+            Divider().padding(.horizontal, DesignSystem.Spacing.md)
             statusOptions
-            clearButton
+            if hasExistingStatus {
+                Divider().padding(.horizontal, DesignSystem.Spacing.md)
+                clearButton
+            }
         }
-        .padding(.top, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.lg)
-        .presentationDetents([.height(hasExistingStatus ? 270 : 220)])
-        .presentationDragIndicator(.automatic)
+        .padding(.top, DesignSystem.Spacing.sm)
+        .padding(.bottom, DesignSystem.Spacing.md)
+        .presentationDetents([.height(hasExistingStatus ? 240 : 200)])
+        .presentationDragIndicator(.visible)
+        .presentationCornerRadius(DesignSystem.CornerRadius.extraLarge)
     }
 }
 
@@ -31,14 +36,14 @@ private extension TravelStatusPickerSheet {
 
     var header: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: country.code, height: 32)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+            FlagView(countryCode: country.code, height: 28)
             VStack(alignment: .leading, spacing: 2) {
                 Text(country.name)
-                    .font(DesignSystem.Font.headline)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Mark your travel status")
-                    .font(DesignSystem.Font.caption)
+                Text("Set travel status")
+                    .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             Spacer()
@@ -48,12 +53,11 @@ private extension TravelStatusPickerSheet {
     }
 
     var statusOptions: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
+        VStack(spacing: 0) {
             ForEach(TravelStatus.allCases) { status in
                 statusRow(status)
             }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     func statusRow(_ status: TravelStatus) -> some View {
@@ -67,42 +71,47 @@ private extension TravelStatusPickerSheet {
                 isPresented = false
             }
         } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill(status.color.opacity(isSelected ? 0.2 : 0.1))
-                        .frame(width: 40, height: 40)
-                    Image(systemName: status.icon)
-                        .font(.system(size: 16))
-                        .foregroundStyle(status.color)
-                }
+            HStack(spacing: DesignSystem.Spacing.md) {
+                Image(systemName: status.icon)
+                    .font(.system(size: 18))
+                    .foregroundStyle(status.color)
+                    .frame(width: 24)
                 Text(status.label)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
+                    .font(DesignSystem.Font.body)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                 Spacer()
                 if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(status.color)
-                        .font(DesignSystem.Font.headline)
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .fill(isSelected ? status.color.opacity(0.1) : DesignSystem.Color.cardBackgroundHighlighted)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .stroke(isSelected ? status.color.opacity(0.5) : .clear, lineWidth: 1.5)
-            )
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .contentShape(Rectangle())
         }
         .buttonStyle(PressButtonStyle())
     }
 
-    // MARK: - Gamification
+    var clearButton: some View {
+        Button {
+            hapticsService.impact(.light)
+            travelService.set(status: nil, for: country.code)
+            isPresented = false
+        } label: {
+            Text("Remove Status")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.error)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+}
 
+// MARK: - Gamification
+
+private extension TravelStatusPickerSheet {
     func awardTravelXP(for status: TravelStatus) {
         let key = "travel_xp_awarded"
         var awarded = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
@@ -123,25 +132,5 @@ private extension TravelStatusPickerSheet {
             visitedCount: travelService.visitedCodes.count,
             wantCount: travelService.wantToVisitCodes.count
         )
-    }
-
-    var clearButton: some View {
-        Group {
-            if hasExistingStatus {
-                Button {
-                    hapticsService.impact(.light)
-                    travelService.set(status: nil, for: country.code)
-                    isPresented = false
-                } label: {
-                    Text("Remove Status")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.error)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, DesignSystem.Spacing.sm)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.top, DesignSystem.Spacing.xxs)
-            }
-        }
     }
 }

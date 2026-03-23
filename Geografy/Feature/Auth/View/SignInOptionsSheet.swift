@@ -9,6 +9,7 @@ struct SignInOptionsSheet: View {
     @State private var errorMessage = ""
     @State private var blobAnimating = false
     @State private var appeared = false
+    @State private var iconRotating = false
 
     var body: some View {
         ZStack {
@@ -36,6 +37,9 @@ struct SignInOptionsSheet: View {
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }
+            withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
+                iconRotating = true
+            }
             withAnimation(.easeOut(duration: 0.6)) {
                 appeared = true
             }
@@ -56,32 +60,32 @@ private extension SignInOptionsSheet {
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.30), .clear],
-                        center: .center, startRadius: 0, endRadius: 220
+                        colors: [DesignSystem.Color.accent.opacity(0.28), .clear],
+                        center: .center, startRadius: 0, endRadius: 240
                     )
                 )
-                .frame(width: 460, height: 340).blur(radius: 36)
-                .offset(x: -90, y: 60)
+                .frame(width: 480, height: 360).blur(radius: 40)
+                .offset(x: -90, y: 40)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.22), .clear],
+                        colors: [DesignSystem.Color.indigo.opacity(0.20), .clear],
                         center: .center, startRadius: 0, endRadius: 200
                     )
                 )
-                .frame(width: 380, height: 320).blur(radius: 44)
-                .offset(x: 150, y: 160)
+                .frame(width: 380, height: 320).blur(radius: 48)
+                .offset(x: 150, y: 200)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
+                        colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
                         center: .center, startRadius: 0, endRadius: 180
                     )
                 )
-                .frame(width: 340, height: 280).blur(radius: 40)
-                .offset(x: -60, y: 700)
+                .frame(width: 340, height: 280).blur(radius: 44)
+                .offset(x: -60, y: 750)
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
         }
         .allowsHitTesting(false)
@@ -94,19 +98,25 @@ private extension SignInOptionsSheet {
 private extension SignInOptionsSheet {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            globeIcon
+            appIconBadge
                 .opacity(appeared ? 1 : 0)
-                .scaleEffect(appeared ? 1 : 0.7)
-                .animation(.spring(response: 0.6, dampingFraction: 0.7), value: appeared)
+                .scaleEffect(appeared ? 1 : 0.6)
+                .animation(.spring(response: 0.6, dampingFraction: 0.68), value: appeared)
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Geografy")
-                    .font(DesignSystem.IconSize.xLarge.weight(.black).width(.expanded))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .font(.system(size: 36, weight: .black, design: .rounded))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [DesignSystem.Color.textPrimary, DesignSystem.Color.accent],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .opacity(appeared ? 1 : 0)
                     .offset(y: appeared ? 0 : 12)
                     .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
                 Text("Your world, explored.")
-                    .font(DesignSystem.Font.title2)
+                    .font(DesignSystem.Font.callout)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .opacity(appeared ? 1 : 0)
                     .offset(y: appeared ? 0 : 12)
@@ -115,30 +125,41 @@ private extension SignInOptionsSheet {
         }
     }
 
-    var globeIcon: some View {
+    var appIconBadge: some View {
         ZStack {
-            // outer glow
-            Circle()
-                .fill(DesignSystem.Color.accent.opacity(0.30))
-                .frame(width: 130, height: 130)
-                .blur(radius: 30)
-            // main badge
-            ZStack {
-                RoundedRectangle(cornerRadius: 26)
-                    .fill(
-                        LinearGradient(
-                            colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
+            // Ambient glow — fully blurred, no distinct shape
+            DesignSystem.Color.accent.opacity(0.35)
+                .frame(width: 140, height: 140)
+                .blur(radius: 50)
+                .clipShape(Rectangle())
+
+            // Single app icon badge shape
+            RoundedRectangle(cornerRadius: 28)
+                .fill(
+                    LinearGradient(
+                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
                     )
-                    .frame(width: 90, height: 90)
-                    .shadow(color: DesignSystem.Color.accent.opacity(0.6), radius: 20, y: 8)
-                Image(systemName: "globe.americas.fill")
-                    .font(DesignSystem.IconSize.xLarge)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-            }
+                )
+                .frame(width: 96, height: 96)
+                .shadow(color: DesignSystem.Color.accent.opacity(0.55), radius: 28, x: 0, y: 10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 28)
+                        .strokeBorder(.white.opacity(0.18), lineWidth: 1)
+                )
+
+            Image(systemName: "globe.americas.fill")
+                .font(.system(size: 46))
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [.white, .white.opacity(0.82)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
         }
+        .frame(width: 140, height: 140)
     }
 }
 
@@ -147,17 +168,20 @@ private extension SignInOptionsSheet {
 private extension SignInOptionsSheet {
     var statsRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            statPill(value: "195", label: "Countries")
-            statPill(value: "7", label: "Continents")
-            statPill(value: "∞", label: "Adventures")
+            statPill(value: "197", label: "Countries", icon: "flag.fill", color: DesignSystem.Color.accent)
+            statPill(value: "7", label: "Continents", icon: "globe.americas", color: DesignSystem.Color.blue)
+            statPill(value: "∞", label: "Adventures", icon: "star.fill", color: DesignSystem.Color.indigo)
         }
     }
 
-    func statPill(value: String, label: String) -> some View {
-        VStack(spacing: 2) {
+    func statPill(value: String, label: String, icon: String, color: Color) -> some View {
+        VStack(spacing: 5) {
+            Image(systemName: icon)
+                .font(.system(size: 13))
+                .foregroundStyle(color)
             Text(value)
-                .font(DesignSystem.Font.title2.weight(.black))
-                .foregroundStyle(DesignSystem.Color.accent)
+                .font(.system(size: 18, weight: .black, design: .rounded))
+                .foregroundStyle(DesignSystem.Color.textPrimary)
             Text(label)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -165,6 +189,10 @@ private extension SignInOptionsSheet {
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .strokeBorder(.white.opacity(0.06), lineWidth: 1)
+        )
     }
 }
 
@@ -216,16 +244,16 @@ private extension SignInOptionsSheet {
     var benefitsSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(Array(benefits.enumerated()), id: \.offset) { index, benefit in
-                benefitCard(benefit, delay: Double(index) * 0.07)
+                benefitRow(benefit, delay: Double(index) * 0.07)
             }
         }
     }
 
-    func benefitCard(_ benefit: SignInBenefit, delay: Double) -> some View {
+    func benefitRow(_ benefit: SignInBenefit, delay: Double) -> some View {
         HStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(benefit.color.opacity(0.18))
+                    .fill(benefit.color.opacity(0.16))
                     .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 Image(systemName: benefit.icon)
                     .font(DesignSystem.Font.headline)
@@ -244,6 +272,10 @@ private extension SignInOptionsSheet {
         }
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .strokeBorder(.white.opacity(0.05), lineWidth: 1)
+        )
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)
         .animation(.easeOut(duration: 0.5).delay(0.25 + delay), value: appeared)
@@ -295,7 +327,7 @@ private extension SignInOptionsSheet {
         .signInWithAppleButtonStyle(.white)
         .frame(height: 56)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-        .shadow(color: .white.opacity(0.15), radius: 12, y: 4)
+        .shadow(color: .white.opacity(0.12), radius: 16, y: 4)
     }
 
     var googleSignInButton: some View {
@@ -324,7 +356,7 @@ private extension SignInOptionsSheet {
             .frame(height: 56)
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-            .shadow(color: .black.opacity(0.12), radius: 8, y: 3)
+            .shadow(color: .black.opacity(0.14), radius: 12, y: 4)
         }
         .buttonStyle(.plain)
     }

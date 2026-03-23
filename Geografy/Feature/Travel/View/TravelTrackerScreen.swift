@@ -35,7 +35,8 @@ struct TravelTrackerScreen: View {
         .sheet(isPresented: $showCountryPicker) {
             TravelCountryPickerSheet(
                 countries: countryDataService.countries,
-                isPresented: $showCountryPicker
+                isPresented: $showCountryPicker,
+                preferredStatus: selectedFilter
             )
         }
         .sheet(item: $selectedCountry) { country in
@@ -337,10 +338,31 @@ private extension TravelTrackerScreen {
                                 ))
                         }
                     }
+                    addCountryFooter
                 }
                 .animation(.spring(response: 0.35, dampingFraction: 0.75), value: travelService.entries.count)
             }
         }
+    }
+
+    var addCountryFooter: some View {
+        Button {
+            hapticsService.impact(.light)
+            showCountryPicker = true
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "plus.circle.fill")
+                    .font(DesignSystem.Font.subheadline)
+                Text("Add Country")
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+            }
+            .foregroundStyle(DesignSystem.Color.accent)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.md)
+        }
+        .buttonStyle(PressButtonStyle())
+        .padding(.top, DesignSystem.Spacing.xs)
     }
 
     var searchResultsList: some View {

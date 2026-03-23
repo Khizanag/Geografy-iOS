@@ -18,7 +18,8 @@ private extension FlagView {
         let assetName = "Flags/\(countryCode.uppercased())"
 
         if let uiImage = UIImage(named: assetName) {
-            let ratio = uiImage.size.width / uiImage.size.height
+            let ratio = FlagAspectRatio.ratio(for: countryCode)
+                ?? (uiImage.size.width / uiImage.size.height)
             Image(uiImage: uiImage)
                 .resizable()
                 .frame(width: height * ratio, height: height)
