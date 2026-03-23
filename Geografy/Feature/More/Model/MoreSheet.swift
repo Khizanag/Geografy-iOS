@@ -2,8 +2,12 @@ import SwiftUI
 
 enum MoreSheet: Identifiable {
     case profile, countries, orgs, favorites, travel
-    case dailyChallenge, compare, travelJournal
+    case dailyChallenge, compare, travelJournal, travelBucketList
     case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
+    case capitalQuiz, flagGame, geoTrivia, spellingBee, landmarkQuiz
+    case wordSearch, borderChallenge, challengeRoom, countryNicknames
+    case nationalSymbolsQuiz, geoQuotes, geoFeed
+    case srsStudy, learningPath
     case badges, timeline
     case achievements, leaderboards, themes, settings
     case search
@@ -38,6 +42,21 @@ enum MoreSheet: Identifiable {
         case .themes: "Themes"
         case .settings: "Settings"
         case .search: "Global Search"
+        case .capitalQuiz: "Capital Quiz"
+        case .flagGame: "Flag Game"
+        case .geoTrivia: "Geo Trivia"
+        case .spellingBee: "Spelling Bee"
+        case .landmarkQuiz: "Landmark Quiz"
+        case .wordSearch: "Word Search"
+        case .borderChallenge: "Border Challenge"
+        case .challengeRoom: "Challenge Room"
+        case .countryNicknames: "Country Nicknames"
+        case .nationalSymbolsQuiz: "National Symbols"
+        case .geoQuotes: "Geo Quotes"
+        case .geoFeed: "Geo Feed"
+        case .srsStudy: "SRS Review"
+        case .learningPath: "Learning Path"
+        case .travelBucketList: "Bucket List"
         }
     }
 
@@ -66,6 +85,21 @@ enum MoreSheet: Identifiable {
         case .themes: "paintbrush.fill"
         case .settings: "gearshape.fill"
         case .search: "magnifyingglass"
+        case .capitalQuiz: "building.columns.fill"
+        case .flagGame: "flag.fill"
+        case .geoTrivia: "questionmark.bubble.fill"
+        case .spellingBee: "textformat.abc"
+        case .landmarkQuiz: "photo.fill"
+        case .wordSearch: "character.magnify"
+        case .borderChallenge: "square.dashed"
+        case .challengeRoom: "bolt.fill"
+        case .countryNicknames: "tag.fill"
+        case .nationalSymbolsQuiz: "leaf.fill"
+        case .geoQuotes: "quote.bubble.fill"
+        case .geoFeed: "newspaper.fill"
+        case .srsStudy: "brain.fill"
+        case .learningPath: "graduationcap.fill"
+        case .travelBucketList: "checklist"
         }
     }
 
@@ -94,6 +128,21 @@ enum MoreSheet: Identifiable {
         case .themes: "Customize your experience"
         case .settings: "App preferences"
         case .search: "Search all countries & orgs"
+        case .capitalQuiz: "Name every capital city"
+        case .flagGame: "Match flags to countries"
+        case .geoTrivia: "Geography trivia questions"
+        case .spellingBee: "Spell country names"
+        case .landmarkQuiz: "Identify famous landmarks"
+        case .wordSearch: "Find hidden country names"
+        case .borderChallenge: "Guess by outline shape"
+        case .challengeRoom: "Timed multi-round challenge"
+        case .countryNicknames: "Informal country names"
+        case .nationalSymbolsQuiz: "Animals, plants, emblems"
+        case .geoQuotes: "Geography quotes & facts"
+        case .geoFeed: "Curated geography news"
+        case .srsStudy: "Spaced repetition review"
+        case .learningPath: "Guided geography curriculum"
+        case .travelBucketList: "Countries you dream of visiting"
         }
     }
 
@@ -122,6 +171,21 @@ enum MoreSheet: Identifiable {
         case .themes: DesignSystem.Color.indigo
         case .settings: DesignSystem.Color.textSecondary
         case .search: DesignSystem.Color.accent
+        case .capitalQuiz: DesignSystem.Color.blue
+        case .flagGame: DesignSystem.Color.error
+        case .geoTrivia: DesignSystem.Color.purple
+        case .spellingBee: DesignSystem.Color.orange
+        case .landmarkQuiz: DesignSystem.Color.accent
+        case .wordSearch: DesignSystem.Color.indigo
+        case .borderChallenge: DesignSystem.Color.warning
+        case .challengeRoom: DesignSystem.Color.error
+        case .countryNicknames: DesignSystem.Color.purple
+        case .nationalSymbolsQuiz: DesignSystem.Color.success
+        case .geoQuotes: DesignSystem.Color.indigo
+        case .geoFeed: DesignSystem.Color.blue
+        case .srsStudy: DesignSystem.Color.accent
+        case .learningPath: DesignSystem.Color.success
+        case .travelBucketList: Color(hex: "00C9A7")
         }
     }
 
@@ -150,6 +214,21 @@ enum MoreSheet: Identifiable {
         case .themes: .themes
         case .settings: .settings
         case .search: .search
+        case .capitalQuiz: .capitalQuiz
+        case .flagGame: .flagGame
+        case .geoTrivia: .geoTrivia
+        case .spellingBee: .spellingBee
+        case .landmarkQuiz: .landmarkQuiz
+        case .wordSearch: .wordSearch
+        case .borderChallenge: .borderChallenge
+        case .challengeRoom: .challengeRoom
+        case .countryNicknames: .countryNicknames
+        case .nationalSymbolsQuiz: .nationalSymbolsQuiz
+        case .geoQuotes: .geoQuotes
+        case .geoFeed: .geoFeed
+        case .srsStudy: .srsStudy
+        case .learningPath: .learningPath
+        case .travelBucketList: .travelBucketList
         }
     }
 }

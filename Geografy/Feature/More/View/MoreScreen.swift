@@ -223,19 +223,27 @@ private extension MoreScreen {
         [
             .dailyChallenge, .exploreGame, .speedRun,
             .multiplayer, .quizPacks, .customQuiz,
+            .capitalQuiz, .flagGame, .geoTrivia,
+            .spellingBee, .landmarkQuiz, .wordSearch,
+            .borderChallenge, .challengeRoom,
+            .countryNicknames, .nationalSymbolsQuiz,
         ]
     }
 
     var exploreItems: [MoreSheet] {
-        [.search, .compare, .distanceCalculator, .currencyConverter, .timeZones, .timeline, .orgs]
+        [
+            .search, .compare, .distanceCalculator,
+            .currencyConverter, .timeZones, .timeline,
+            .orgs, .geoQuotes, .geoFeed, .learningPath,
+        ]
     }
 
     var travelItems: [MoreSheet] {
-        [.travel, .travelJournal]
+        [.travel, .travelJournal, .travelBucketList]
     }
 
     var appItems: [MoreSheet] {
-        [.achievements, .leaderboards, .themes, .settings]
+        [.achievements, .leaderboards, .srsStudy, .themes, .settings]
     }
 
 }
