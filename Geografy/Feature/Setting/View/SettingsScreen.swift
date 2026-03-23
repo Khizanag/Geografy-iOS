@@ -4,6 +4,7 @@ import UserNotifications
 struct SettingsScreen: View {
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(AuthService.self) private var authService
+    @Environment(TestingModeService.self) private var testingModeService
 
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
@@ -24,6 +25,7 @@ struct SettingsScreen: View {
                 generalSection
                 mapSection
                 quizSection
+                developerSection
                 appVersionInfo
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -325,6 +327,20 @@ private extension SettingsScreen {
                 iconColor: DesignSystem.Color.success,
                 title: "Show correct answer",
                 isOn: $showCorrectAnswer
+            )
+        }
+    }
+
+    var developerSection: some View {
+        settingsGroup(header: "Developer") {
+            SettingsToggleRow(
+                icon: "hammer.fill",
+                iconColor: DesignSystem.Color.orange,
+                title: "Testing Mode",
+                isOn: Binding(
+                    get: { testingModeService.isEnabled },
+                    set: { testingModeService.isEnabled = $0 }
+                )
             )
         }
     }

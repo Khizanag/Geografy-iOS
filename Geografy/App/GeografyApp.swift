@@ -5,6 +5,7 @@ struct GeografyApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     @State private var hapticsService = HapticsService()
+    @State private var testingModeService = TestingModeService()
     @State private var favoritesService = FavoritesService()
     @State private var travelService = TravelService()
     @State private var gameCenterService = GameCenterService()
@@ -57,6 +58,7 @@ struct GeografyApp: App {
                 .environment(currencyService)
                 .environment(learningPathService)
                 .environment(pronunciationService)
+                .environment(testingModeService)
                 .task { await authService.validateOnLaunch() }
                 .task { await subscriptionService.checkEntitlements() }
                 .task {
