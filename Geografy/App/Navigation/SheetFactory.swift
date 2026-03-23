@@ -71,6 +71,10 @@ enum SheetFactory {
             NavigationStack { DailyChallengeScreen() }
                 .presentationDetents([.large])
 
+        case .capitalQuiz:
+            NavigationStack { CapitalQuizSetupScreen() }
+                .presentationDetents([.large])
+
         case .exploreGame:
             NavigationStack { ExploreGameScreen() }
                 .presentationDetents([.large])

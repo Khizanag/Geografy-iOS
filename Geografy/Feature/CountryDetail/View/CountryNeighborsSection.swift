@@ -16,6 +16,7 @@ extension CountryDetailScreen {
                 noNeighborDataCard
             } else {
                 neighborScrollView(countries: neighborCountries)
+                exploreNeighborsButton
             }
         }
     }
@@ -103,5 +104,24 @@ private extension CountryDetailScreen {
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
+    }
+
+    var exploreNeighborsButton: some View {
+        Button {
+            hapticsService.impact(.light)
+            activeSheet = .neighborExplorer
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "point.3.filled.connected.trianglepath.dotted")
+                    .font(DesignSystem.Font.subheadline)
+                Text("Explore Neighbor Chain")
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+            }
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .buttonStyle(.glass)
     }
 }

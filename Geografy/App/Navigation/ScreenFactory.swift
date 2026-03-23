@@ -23,6 +23,10 @@ enum ScreenFactory {
             SettingsScreen()
         case .quizSetup:
             QuizSetupScreen()
+        case .neighborExplorer(let country):
+            NeighborExplorerScreen(country: country)
+        case .capitalQuizSetup:
+            CapitalQuizSetupScreen()
         }
     }
 }
