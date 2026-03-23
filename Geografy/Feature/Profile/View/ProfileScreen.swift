@@ -12,8 +12,9 @@ struct ProfileScreen: View {
     @Environment(DatabaseManager.self) private var database
     @Environment(HapticsService.self) private var hapticsService
 
+    @State private var badgeService = BadgeService()
     @State private var recentQuizzes: [QuizHistoryRecord] = []
-    @State private var totalQuizCount: Int = 0
+    @State private var statistics: UserStatistics?
     @State private var activeSheet: ProfileSheet?
     @State private var showDeleteAlert = false
     @State private var blobAnimating = false
@@ -52,18 +53,22 @@ private extension ProfileScreen {
                     .profileSection(appeared: appeared, delay: 0.10)
                 statsGridSection
                     .profileSection(appeared: appeared, delay: 0.14)
+                weeklyActivitySection
+                    .profileSection(appeared: appeared, delay: 0.16)
                 achievementsPreviewSection
-                    .profileSection(appeared: appeared, delay: 0.18)
+                    .profileSection(appeared: appeared, delay: 0.20)
+                badgeShowcaseSection
+                    .profileSection(appeared: appeared, delay: 0.22)
                 if !recentQuizzes.isEmpty {
                     quizHistorySection
-                        .profileSection(appeared: appeared, delay: 0.22)
+                        .profileSection(appeared: appeared, delay: 0.26)
                 }
                 if !subscriptionService.isPremium {
                     premiumBannerSection
-                        .profileSection(appeared: appeared, delay: 0.24)
+                        .profileSection(appeared: appeared, delay: 0.30)
                 }
                 accountSection
-                    .profileSection(appeared: appeared, delay: 0.28)
+                    .profileSection(appeared: appeared, delay: 0.34)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
@@ -312,27 +317,100 @@ private extension ProfileScreen {
                 ],
                 spacing: DesignSystem.Spacing.sm
             ) {
-                statCard(icon: "globe.americas.fill", color: DesignSystem.Color.blue,
-                         value: "\(favoritesService.favoriteCodes.count)", label: "Explored")
-                statCard(icon: "airplane.departure", color: Color(hex: "00C9A7"),
-                         value: "\(travelService.visitedCodes.count)", label: "Visited")
-                statCard(icon: "gamecontroller.fill", color: DesignSystem.Color.purple,
-                         value: "\(totalQuizCount)", label: "Quizzes")
-                statCard(icon: "flame.fill", color: DesignSystem.Color.error,
-                         value: "\(streakService.currentStreak)", label: "Streak")
-                statCard(icon: "star.fill", color: .yellow,
-                         value: "\(achievementService.unlockedAchievements.count)", label: "Badges")
-                statCard(icon: "calendar.badge.checkmark", color: DesignSystem.Color.indigo,
-                         value: memberSince, label: "Member")
+                accuracyCard
+                statCard(
+                    icon: "checkmark.seal.fill",
+                    color: DesignSystem.Color.accent,
+                    value: "\(statistics?.perfectScores ?? 0)",
+                    label: "Perfect"
+                )
+                statCard(
+                    icon: "flame.fill",
+                    color: DesignSystem.Color.error,
+                    value: "\(statistics?.longestStreak ?? 0)",
+                    label: "Best Streak"
+                )
+                statCard(
+                    icon: "gamecontroller.fill",
+                    color: DesignSystem.Color.purple,
+                    value: "\(statistics?.totalQuizzes ?? 0)",
+                    label: "Quizzes"
+                )
+                statCard(
+                    icon: "globe.americas.fill",
+                    color: DesignSystem.Color.blue,
+                    value: "\(statistics?.countriesExplored ?? 0)",
+                    label: "Explored"
+                )
+                statCard(
+                    icon: "airplane.departure",
+                    color: Color(hex: "00C9A7"),
+                    value: "\(statistics?.countriesVisited ?? 0)",
+                    label: "Visited"
+                )
+                statCard(
+                    icon: "star.fill",
+                    color: DesignSystem.Color.warning,
+                    value: "\(achievementService.unlockedAchievements.count)",
+                    label: "Badges"
+                )
+                statCard(
+                    icon: "bolt.fill",
+                    color: DesignSystem.Color.orange,
+                    value: "\(streakService.currentStreak)",
+                    label: "Streak"
+                )
+                statCard(
+                    icon: "calendar.badge.checkmark",
+                    color: DesignSystem.Color.indigo,
+                    value: statistics?.formattedMemberSince ?? "—",
+                    label: "Member"
+                )
             }
         }
     }
 
-    var memberSince: String {
-        guard let createdAt = authService.currentProfile?.createdAt else { return "—" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM yy"
-        return formatter.string(from: createdAt)
+    var accuracyCard: some View {
+        let percentage = statistics?.accuracyPercentage ?? 0
+        let rate = statistics?.accuracyRate ?? 0
+        let color = accuracyColor(for: rate)
+
+        return VStack(spacing: DesignSystem.Spacing.xs) {
+            ZStack {
+                Circle()
+                    .stroke(color.opacity(0.2), lineWidth: 3)
+                    .frame(width: 36, height: 36)
+                Circle()
+                    .trim(from: 0, to: rate)
+                    .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .frame(width: 36, height: 36)
+                    .rotationEffect(.degrees(-90))
+                Text("\(percentage)")
+                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .foregroundStyle(color)
+            }
+            Text("\(percentage)%")
+                .font(.system(size: 17, weight: .black, design: .rounded))
+                .foregroundStyle(color)
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+            Text("Accuracy")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+    }
+
+    func accuracyColor(for rate: Double) -> Color {
+        switch rate {
+        case 0.8...1.0: DesignSystem.Color.success
+        case 0.5..<0.8: DesignSystem.Color.warning
+        default:        DesignSystem.Color.error
+        }
     }
 
     func statCard(icon: String, color: Color, value: String, label: String) -> some View {
@@ -359,6 +437,114 @@ private extension ProfileScreen {
         .padding(.vertical, DesignSystem.Spacing.sm)
         .padding(.horizontal, DesignSystem.Spacing.xs)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+    }
+}
+
+// MARK: - Weekly Activity
+
+private extension ProfileScreen {
+    var weeklyActivitySection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "This Week", icon: "flame.fill")
+            CardView {
+                VStack(spacing: DesignSystem.Spacing.md) {
+                    streakBadgeRow
+                    weekdayCirclesRow
+                }
+                .padding(DesignSystem.Spacing.md)
+            }
+        }
+    }
+
+    var streakBadgeRow: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 20))
+                .foregroundStyle(
+                    streakService.currentStreak > 0
+                        ? DesignSystem.Color.error
+                        : DesignSystem.Color.textTertiary
+                )
+            Text("\(streakService.currentStreak)-day streak")
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            Text("\(activeDaysThisWeek)/7 days")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+    }
+
+    var weekdayCirclesRow: some View {
+        HStack(spacing: 0) {
+            ForEach(pastSevenDays, id: \.self) { day in
+                weekdayCircle(for: day)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+    }
+
+    func weekdayCircle(for date: Date) -> some View {
+        let calendar = Calendar.current
+        let isToday = calendar.isDateInToday(date)
+        let isActive = streakService.weekActivityDates.contains(
+            calendar.startOfDay(for: date)
+        )
+
+        return VStack(spacing: DesignSystem.Spacing.xs) {
+            ZStack {
+                Circle()
+                    .fill(
+                        isActive
+                            ? DesignSystem.Color.success.opacity(0.18)
+                            : DesignSystem.Color.cardBackgroundHighlighted
+                    )
+                    .frame(width: 32, height: 32)
+
+                if isActive {
+                    Image(systemName: isToday ? "flame.fill" : "checkmark")
+                        .font(.system(size: isToday ? 15 : 12, weight: .bold))
+                        .foregroundStyle(DesignSystem.Color.success)
+                } else {
+                    Circle()
+                        .fill(DesignSystem.Color.textTertiary.opacity(0.3))
+                        .frame(width: 8, height: 8)
+                }
+
+                if isToday {
+                    Circle()
+                        .strokeBorder(DesignSystem.Color.accent, lineWidth: 2)
+                        .frame(width: 32, height: 32)
+                }
+            }
+
+            Text(shortWeekdaySymbol(for: date))
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(isToday ? .bold : .regular)
+                .foregroundStyle(
+                    isToday
+                        ? DesignSystem.Color.accent
+                        : DesignSystem.Color.textTertiary
+                )
+        }
+    }
+
+    var pastSevenDays: [Date] {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        return (0..<7)
+            .compactMap { calendar.date(byAdding: .day, value: -6 + $0, to: today) }
+    }
+
+    var activeDaysThisWeek: Int {
+        streakService.weekActivityDates.count
+    }
+
+    func shortWeekdaySymbol(for date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE"
+        return String(formatter.string(from: date).prefix(2))
     }
 }
 
@@ -460,6 +646,99 @@ private extension ProfileScreen {
         case .streak:        DesignSystem.Color.error
         case .knowledge:     DesignSystem.Color.ocean
         }
+    }
+}
+
+// MARK: - Badge Showcase
+
+private extension ProfileScreen {
+    var badgeShowcaseSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            HStack {
+                SectionHeaderView(title: "My Badges", icon: "medal.fill")
+                Spacer()
+                Button {
+                    hapticsService.impact(.light)
+                    activeSheet = .badgeCollection
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("See All")
+                            .font(DesignSystem.Font.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                        Image(systemName: "chevron.right")
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+            if featuredBadges.isEmpty {
+                emptyBadgesView
+            } else {
+                badgesScrollRow
+            }
+        }
+    }
+
+    var badgesScrollRow: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(featuredBadges) { badge in
+                    miniBadgeCard(badge)
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+        .padding(.horizontal, -DesignSystem.Spacing.md)
+    }
+
+    var emptyBadgesView: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: "medal")
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+            Text("Earn badges by playing!")
+                .font(DesignSystem.Font.callout)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(DesignSystem.Spacing.md)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+    }
+
+    func miniBadgeCard(_ badge: BadgeDefinition) -> some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            ZStack {
+                Circle()
+                    .fill(badge.category.themeColor.opacity(0.18))
+                    .frame(width: 52, height: 52)
+                Circle()
+                    .strokeBorder(badge.rarity.borderGradient, lineWidth: badge.rarity.borderWidth)
+                    .frame(width: 52, height: 52)
+                Image(systemName: badge.iconName)
+                    .font(.system(size: 22))
+                    .foregroundStyle(badge.category.themeColor)
+            }
+            Text(badge.title)
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .frame(width: 76)
+        }
+        .padding(DesignSystem.Spacing.sm)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+    }
+
+    var featuredBadges: [BadgeDefinition] {
+        badgeService.unlockedBadges
+            .sorted { $0.unlockedAt > $1.unlockedAt }
+            .prefix(6)
+            .compactMap { unlocked in
+                BadgeDefinition.all.first { $0.id == unlocked.id }
+            }
     }
 }
 
@@ -711,6 +990,7 @@ private extension ProfileScreen {
         case signIn
         case paywall
         case achievements
+        case badgeCollection
 
         var id: Self { self }
     }
@@ -728,6 +1008,10 @@ private extension ProfileScreen {
             NavigationStack {
                 AchievementsScreen()
             }
+        case .badgeCollection:
+            NavigationStack {
+                BadgeCollectionScreen(badgeService: badgeService)
+            }
         }
     }
 }
@@ -741,9 +1025,29 @@ private extension ProfileScreen {
             predicate: #Predicate { $0.userID == userID }
         )
         descriptor.sortBy = [SortDescriptor(\.completedAt, order: .reverse)]
-        let all = (try? database.mainContext.fetch(descriptor)) ?? []
-        totalQuizCount = all.count
-        recentQuizzes = Array(all.prefix(3))
+        let allQuizzes = (try? database.mainContext.fetch(descriptor)) ?? []
+        recentQuizzes = Array(allQuizzes.prefix(3))
+        statistics = buildStatistics(from: allQuizzes)
+    }
+
+    func buildStatistics(from quizzes: [QuizHistoryRecord]) -> UserStatistics {
+        let totalCorrect = quizzes.reduce(0) { $0 + $1.correctCount }
+        let totalQuestions = quizzes.reduce(0) { $0 + $1.totalCount }
+        let perfectCount = quizzes.filter { $0.correctCount == $0.totalCount }.count
+        let longestStreak = authService.currentProfile?.longestStreak ?? streakService.currentStreak
+
+        return UserStatistics(
+            totalQuizzes: quizzes.count,
+            totalCorrectAnswers: totalCorrect,
+            totalQuestions: totalQuestions,
+            perfectScores: perfectCount,
+            currentStreak: streakService.currentStreak,
+            longestStreak: longestStreak,
+            countriesExplored: favoritesService.favoriteCodes.count,
+            countriesVisited: travelService.visitedCodes.count,
+            totalXP: xpService.totalXP,
+            memberSince: authService.currentProfile?.createdAt ?? .now
+        )
     }
 
     @ToolbarContentBuilder
