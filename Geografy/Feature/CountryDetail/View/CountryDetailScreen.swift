@@ -13,13 +13,14 @@ struct CountryDetailScreen: View {
     @Namespace private var flagNamespace
 
     @State private var countryDataService = CountryDataService()
-    @State private var appeared = false
-    @State private var activeSheet: CountryDetailSheet?
+    @State private var profileService = CountryProfileService()
+    @State var appeared = false
+    @State var activeSheet: CountryDetailSheet?
     @State private var showFlagFullScreen = false
     @State private var showContinentMap = false
     @State private var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
-    @State private var populationStartDate = Date()
+    @State var populationStartDate = Date()
 
     let country: Country
 
@@ -64,7 +65,7 @@ struct CountryDetailScreen: View {
 
 // MARK: - Info Item
 
-private extension CountryDetailScreen {
+extension CountryDetailScreen {
     struct InfoItem: Identifiable {
         let id = UUID()
         let icon: String
@@ -80,6 +81,7 @@ private extension CountryDetailScreen {
         case info(InfoItem)
         case compare
         case currencyConverter(String)
+        case deepDive
 
         var id: String {
             switch self {
@@ -88,6 +90,7 @@ private extension CountryDetailScreen {
             case .info(let item): "info-\(item.id)"
             case .compare: "compare"
             case .currencyConverter(let code): "currencyConverter-\(code)"
+            case .deepDive: "deepDive"
             }
         }
     }
@@ -117,6 +120,19 @@ private extension CountryDetailScreen {
         case .currencyConverter(let code):
             NavigationStack { CurrencyConverterScreen(preselectedCurrencyCode: code) }
                 .presentationDetents([.large])
+        case .deepDive:
+            NavigationStack {
+                CountryProfileScreen(
+                    country: country,
+                    profile: profileService.profile(for: country.code)
+                )
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        CircleCloseButton()
+                    }
+                }
+            }
+            .presentationDetents([.large])
         }
     }
 }
@@ -242,7 +258,9 @@ private extension CountryDetailScreen {
                     } label: {
                         factChip(
                             icon: "mappin",
-                            label: country.allCapitals.count > 1 ? "Capitals (\(country.allCapitals.count))" : "Capital",
+                            label: country.allCapitals.count > 1
+                                ? "Capitals (\(country.allCapitals.count))"
+                                : "Capital",
                             value: country.capital
                         )
                     }
@@ -354,219 +372,6 @@ private extension CountryDetailScreen {
     }
 }
 
-// MARK: - People
-
-private extension CountryDetailScreen {
-    var peopleSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("People")
-            populationCard
-            if !country.languages.isEmpty {
-                if subscriptionService.isPremium {
-                    LanguageBarChart(
-                        languages: country.languages.sorted { $0.percentage > $1.percentage },
-                        appeared: appeared
-                    )
-                } else {
-                    lockedPlaceholder(height: 80)
-                }
-            }
-        }
-    }
-
-    var populationCard: some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        livePopulationTicker
-                        Text("People (live estimate)")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxs) {
-                        Text("\(String(format: "%.1f", country.populationDensity))/km²")
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text("Density")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                }
-                densityBar
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    var livePopulationTicker: some View {
-        HStack(alignment: .center, spacing: DesignSystem.Spacing.xs) {
-            Circle()
-                .fill(DesignSystem.Color.success)
-                .frame(width: 6, height: 6)
-                .scaleEffect(appeared ? 1.5 : 1.0)
-                .opacity(appeared ? 0.4 : 1.0)
-                .animation(
-                    .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
-                    value: appeared
-                )
-            TimelineView(.periodic(from: populationStartDate, by: 1.0)) { timeline in
-                let elapsed = timeline.date.timeIntervalSince(populationStartDate)
-                let growthPerSecond = Double(country.population) * 0.009 / 31_557_600
-                let estimate = country.population + Int(growthPerSecond * elapsed)
-                Text(estimate.formatPopulation())
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.semibold)
-                    .monospacedDigit()
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .contentTransition(.numericText(countsDown: false))
-                    .animation(.easeInOut(duration: 0.6), value: estimate)
-            }
-        }
-    }
-
-    var densityBar: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            GeometryReader { geo in
-                let fraction = min(country.populationDensity / 500.0, 1.0)
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    Capsule()
-                        .fill(densityColor(for: fraction))
-                        .frame(width: geo.size.width * (appeared ? fraction : 0))
-                        .animation(
-                            .spring(response: 0.7, dampingFraction: 0.7).delay(0.4),
-                            value: appeared
-                        )
-                }
-            }
-            .frame(height: 6)
-            Text("Relative density (ref: 500/km²)")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-    }
-}
-
-// MARK: - Economy
-
-private extension CountryDetailScreen {
-    var hasEconomyData: Bool {
-        country.gdp != nil || country.gdpPerCapita != nil || country.gdpPPP != nil
-    }
-
-    var economySection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Economy", premium: true)
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                if let gdp = country.gdp {
-                    economyTile(
-                        icon: "chart.bar.fill",
-                        label: "GDP",
-                        value: gdp.formatGDP(),
-                        color: DesignSystem.Color.accent
-                    )
-                }
-                if let perCapita = country.gdpPerCapita {
-                    economyTile(
-                        icon: "person.crop.circle",
-                        label: "Per Capita",
-                        value: perCapita.formatCurrency(),
-                        color: DesignSystem.Color.blue
-                    )
-                }
-                if let ppp = country.gdpPPP {
-                    economyTile(
-                        icon: "chart.bar",
-                        label: "GDP PPP",
-                        value: ppp.formatGDP(),
-                        color: DesignSystem.Color.indigo
-                    )
-                }
-            }
-        }
-    }
-
-    func economyTile(icon: String, label: String, value: String, color: Color) -> some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(color)
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                Text(value)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(DesignSystem.Spacing.sm)
-        }
-    }
-}
-
-// MARK: - Government
-
-private extension CountryDetailScreen {
-    var governmentSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Government", premium: true)
-            InfoTile(
-                icon: "building.columns",
-                title: "Form of Government",
-                value: country.formOfGovernment
-            ) {
-                activeSheet = .info(
-                    InfoItem(
-                        icon: "building.columns.fill",
-                        title: "Form of Government",
-                        value: country.formOfGovernment,
-                        supportsMap: false
-                    )
-                )
-            }
-        }
-    }
-}
-
-// MARK: - Currency
-
-private extension CountryDetailScreen {
-    var currencySection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Currency", premium: true)
-            InfoTile(
-                icon: "dollarsign.circle",
-                title: country.currency.name,
-                value: country.currency.code
-            ) {
-                activeSheet = .info(
-                    InfoItem(
-                        icon: "dollarsign.circle.fill",
-                        title: "Currency",
-                        value: "\(country.currency.name) (\(country.currency.code))",
-                        supportsMap: false
-                    )
-                )
-            }
-            GeoButton(
-                "Convert \(country.currency.code)",
-                systemImage: "arrow.left.arrow.right",
-                style: .secondary
-            ) {
-                hapticsService.impact(.light)
-                activeSheet = .currencyConverter(country.currency.code)
-            }
-        }
-    }
-}
-
 // MARK: - Gamification
 
 private extension CountryDetailScreen {
@@ -632,16 +437,6 @@ private extension CountryDetailScreen {
                 }
             }
             .joined(separator: "\n")
-    }
-
-    func densityColor(for fraction: Double) -> Color {
-        if fraction > 0.7 {
-            DesignSystem.Color.error
-        } else if fraction > 0.4 {
-            DesignSystem.Color.warning
-        } else {
-            DesignSystem.Color.success
-        }
     }
 
     var religionItems: [PercentageItem] {
@@ -728,6 +523,7 @@ private extension CountryDetailScreen {
                     )
                 }
                 unescoSection
+                deepDiveSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
