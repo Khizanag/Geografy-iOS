@@ -22,6 +22,9 @@ final class StreakService {
         refreshStreak()
     }
 
+    /// Activity dates for the past 7 calendar days (Mon–Sun of the current week).
+    private(set) var weekActivityDates: Set<Date> = []
+
     func switchUser(id: String) {
         currentUserID = id
         refreshStreak()
@@ -65,6 +68,19 @@ private extension StreakService {
 
         let today = Calendar.current.startOfDay(for: .now)
         hasPlayedToday = records.first.map { Calendar.current.isDate($0.date, inSameDayAs: today) } ?? false
+
+        loadWeekActivityDates(from: records)
+    }
+
+    func loadWeekActivityDates(from records: [StreakRecord]) {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        guard let weekStart = calendar.date(byAdding: .day, value: -6, to: today) else { return }
+        weekActivityDates = Set(
+            records
+                .map { calendar.startOfDay(for: $0.date) }
+                .filter { $0 >= weekStart && $0 <= today }
+        )
     }
 
     func computeConsecutiveDays(from records: [StreakRecord]) -> Int {
