@@ -53,8 +53,7 @@ private extension SearchScreen {
                 }
                 trendingSection
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.md)
+            .padding()
             .containerRelativeFrame(.vertical, alignment: .bottom)
         }
         .defaultScrollAnchor(.bottom)
@@ -184,9 +183,7 @@ private extension SearchScreen {
                     resultSection(section)
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.top, DesignSystem.Spacing.xs)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding()
         }
     }
 
