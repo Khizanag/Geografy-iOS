@@ -12,10 +12,10 @@ struct GeoFeedScreen: View {
     var body: some View {
         scrollContent
             .background { backgroundGradient }
-            .navigationTitle("Geo Feed")
+            .navigationTitle("Feed")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .topBarTrailing) {
                     CircleCloseButton()
                 }
             }
