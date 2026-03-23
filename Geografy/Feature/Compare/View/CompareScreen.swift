@@ -10,6 +10,12 @@ struct CompareScreen: View {
     @State private var activeSheet: CompareSheet?
     @State private var recentPairs: [ComparisonPair] = []
 
+    private let preselectedCountry: Country?
+
+    init(preselectedCountry: Country? = nil) {
+        self.preselectedCountry = preselectedCountry
+    }
+
     var body: some View {
         contentScrollView
             .background(DesignSystem.Color.background)
@@ -20,7 +26,12 @@ struct CompareScreen: View {
                 }
             }
             .task { countryDataService.loadCountries() }
-            .onAppear { loadRecentPairs() }
+            .onAppear {
+            loadRecentPairs()
+            if let preselected = preselectedCountry, leftCountry == nil {
+                leftCountry = preselected
+            }
+        }
             .sheet(item: $activeSheet) { sheetContent(for: $0) }
     }
 }
