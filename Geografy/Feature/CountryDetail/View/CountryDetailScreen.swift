@@ -19,6 +19,7 @@ struct CountryDetailScreen: View {
     @State private var showContinentMap = false
     @State private var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
+    @State private var populationStartDate = Date()
 
     let country: Country
 
@@ -373,10 +374,8 @@ private extension CountryDetailScreen {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(country.population.formatPopulation())
-                            .font(DesignSystem.Font.title2)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text("People")
+                        livePopulationTicker
+                        Text("People (live estimate)")
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
@@ -393,6 +392,32 @@ private extension CountryDetailScreen {
                 densityBar
             }
             .padding(DesignSystem.Spacing.md)
+        }
+    }
+
+    var livePopulationTicker: some View {
+        HStack(alignment: .center, spacing: DesignSystem.Spacing.xs) {
+            Circle()
+                .fill(DesignSystem.Color.success)
+                .frame(width: 6, height: 6)
+                .scaleEffect(appeared ? 1.5 : 1.0)
+                .opacity(appeared ? 0.4 : 1.0)
+                .animation(
+                    .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
+                    value: appeared
+                )
+            TimelineView(.periodic(from: populationStartDate, by: 1.0)) { timeline in
+                let elapsed = timeline.date.timeIntervalSince(populationStartDate)
+                let growthPerSecond = Double(country.population) * 0.009 / 31_557_600
+                let estimate = country.population + Int(growthPerSecond * elapsed)
+                Text(estimate.formatPopulation())
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .contentTransition(.numericText(countsDown: false))
+                    .animation(.easeInOut(duration: 0.6), value: estimate)
+            }
         }
     }
 
