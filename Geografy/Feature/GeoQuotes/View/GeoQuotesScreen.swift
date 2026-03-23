@@ -25,11 +25,11 @@ struct GeoQuotesScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Geo Quotes")
+        .navigationTitle("Quotes")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
             }
         }
     }
@@ -152,41 +152,23 @@ private extension GeoQuotesScreen {
             quotesService.toggleFavorite(id: quote.id)
         } label: {
             Image(systemName: quote.isFavorited ? "heart.fill" : "heart")
-                .font(.system(size: 16))
+                .font(DesignSystem.Font.caption)
                 .foregroundStyle(
-                    quote.isFavorited ? DesignSystem.Color.purple : DesignSystem.Color.textSecondary
+                    quote.isFavorited ? DesignSystem.Color.error : DesignSystem.Color.textSecondary
                 )
+                .padding(DesignSystem.Spacing.xs)
         }
-        .buttonStyle(PressButtonStyle())
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 
     func shareButton(_ quote: GeoQuote) -> some View {
-        Button {
-            shareQuote(quote)
-        } label: {
+        ShareLink(item: "\"\(quote.text)\"\n— \(quote.author)") {
             Image(systemName: "square.and.arrow.up")
-                .font(.system(size: 14))
+                .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .padding(DesignSystem.Spacing.xs)
         }
-        .buttonStyle(PressButtonStyle())
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 }
 
-// MARK: - Actions
-
-private extension GeoQuotesScreen {
-    func shareQuote(_ quote: GeoQuote) {
-        let text = "\"\(quote.text)\"\n— \(quote.author)"
-        let activityViewController = UIActivityViewController(
-            activityItems: [text],
-            applicationActivities: nil
-        )
-        guard
-            let windowScene = UIApplication.shared.connectedScenes
-                .compactMap({ $0 as? UIWindowScene })
-                .first,
-            let rootViewController = windowScene.windows.first?.rootViewController
-        else { return }
-        rootViewController.present(activityViewController, animated: true)
-    }
-}
