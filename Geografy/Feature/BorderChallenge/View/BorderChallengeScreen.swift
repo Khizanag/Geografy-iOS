@@ -125,7 +125,7 @@ private extension BorderChallengeScreen {
             VStack(spacing: DesignSystem.Spacing.md) {
                 FlagView(countryCode: country.code, height: 60)
                     .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-                    .shadow(color: DesignSystem.Color.textPrimary.opacity(0.15), radius: 6, x: 0, y: 3)
+                    .geoShadow(.subtle)
                 VStack(spacing: DesignSystem.Spacing.xxs) {
                     Text(country.name)
                         .font(DesignSystem.Font.title2)
@@ -262,7 +262,7 @@ private extension BorderChallengeScreen {
     }
 
     var revealButton: some View {
-        GeoButton("Reveal Remaining Answers", style: .secondary) {
+        GlassButton("Reveal Remaining Answers", role: .secondary, fullWidth: true) {
             revealAnswers()
         }
     }
@@ -276,8 +276,8 @@ private extension BorderChallengeScreen {
                 scoreCard
                 xpEarnedBadge
                 Spacer(minLength: DesignSystem.Spacing.lg)
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    GeoButton("Play Again", style: .primary) { startNewChallenge() }
+                GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
+                    startNewChallenge()
                 }
                 .padding(.horizontal, DesignSystem.Spacing.xl)
                 Spacer(minLength: DesignSystem.Spacing.xxl)

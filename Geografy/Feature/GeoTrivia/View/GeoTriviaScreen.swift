@@ -29,7 +29,13 @@ struct GeoTriviaScreen: View {
                 gameContent
             }
         }
-        .navigationBarHidden(true)
+        .navigationTitle("Geo Trivia")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                CircleCloseButton()
+            }
+        }
         .onAppear {
             countryDataService.loadCountries()
             loadQuestions()
@@ -99,7 +105,7 @@ private extension GeoTriviaScreen {
 
     var gameContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            topBar
+            streakAndProgressBar
             Spacer()
             cardStack
             swipeLabels
@@ -110,25 +116,13 @@ private extension GeoTriviaScreen {
         .padding(.vertical, DesignSystem.Spacing.lg)
     }
 
-    var topBar: some View {
+    var streakAndProgressBar: some View {
         HStack {
-            dismissButton
             Spacer()
             streakBadge
             Spacer()
             progressLabel
         }
-    }
-
-    var dismissButton: some View {
-        Button { dismiss() } label: {
-            Image(systemName: "xmark")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .padding(DesignSystem.Spacing.xs)
-                .background(DesignSystem.Color.cardBackground, in: Circle())
-        }
-        .buttonStyle(.plain)
     }
 
     var streakBadge: some View {

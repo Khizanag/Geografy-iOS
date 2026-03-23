@@ -320,7 +320,7 @@ private extension LandmarkQuizScreen {
     }
 
     var restartButton: some View {
-        GeoButton("Play Again", style: .primary) {
+        GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
             restartQuiz()
         }
     }
