@@ -445,7 +445,10 @@ private extension HomeScreen {
             SectionHeaderView(title: "Discover")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             NavigationLink(value: country) {
-                HomeCountrySpotlightCard(country: country)
+                HomeCountrySpotlightCard(
+                    country: country,
+                    funFact: spotlightFunFact(for: country)
+                )
             }
             .buttonStyle(PressButtonStyle())
         }
@@ -458,6 +461,11 @@ private extension HomeScreen {
         let dayOfYear = (Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1) - 1
         let shuffled = sorted.seededShuffle(seed: UInt64(year) &* 2_654_435_761)
         return shuffled[dayOfYear % shuffled.count]
+    }
+
+    func spotlightFunFact(for country: Country) -> String? {
+        let facts = CountryFunFacts.data[country.code] ?? []
+        return facts.first
     }
 }
 

@@ -2,13 +2,17 @@ import SwiftUI
 
 struct HomeCountrySpotlightCard: View {
     let country: Country
+    let funFact: String?
 
     var body: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 headerRow
                 countryInfoRow
-                statsStrip
+                if let fact = funFact {
+                    funFactRow(fact)
+                }
+                learnMoreButton
             }
             .padding(DesignSystem.Spacing.md)
         }
@@ -31,9 +35,40 @@ private extension HomeCountrySpotlightCard {
                     .kerning(0.8)
             }
             Spacer()
-            Image(systemName: "arrow.right.circle.fill")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.accent)
+        }
+    }
+
+    func funFactRow(_ fact: String) -> some View {
+        HStack(alignment: .top, spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: "lightbulb.fill")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.warning)
+                .padding(.top, 2)
+            Text(fact)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(3)
+                .multilineTextAlignment(.leading)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.xs)
+        .padding(.vertical, DesignSystem.Spacing.xs)
+        .background(
+            DesignSystem.Color.cardBackgroundHighlighted,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
+    }
+
+    var learnMoreButton: some View {
+        HStack {
+            Spacer()
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Text("Learn More")
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+                Image(systemName: "arrow.right")
+                    .font(DesignSystem.Font.caption2)
+            }
+            .foregroundStyle(DesignSystem.Color.accent)
         }
     }
 
