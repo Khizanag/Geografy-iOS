@@ -286,10 +286,14 @@ final class WorldBankService {
 
     func fetch(_ indicator: StatIndicator, for countryCode: String) async {
         let key = cacheKey(indicator, countryCode: countryCode)
-        guard loadStates[key] == nil else { return }
+        switch loadStates[key] {
+        case .loading: return
+        case .loaded(let points) where !points.isEmpty: return
+        default: break
+        }
 
         // Check memory cache
-        if let cached = memoryCache[key], !isStale(cached.fetchedAt) {
+        if let cached = memoryCache[key], !isStale(cached.fetchedAt), !cached.data.isEmpty {
             loadStates[key] = .loaded(cached.data)
             return
         }
@@ -297,7 +301,7 @@ final class WorldBankService {
         loadStates[key] = .loading
 
         // Check disk cache
-        if let diskEntry = readDiskCache(key: key), !isStale(diskEntry.fetchedAt) {
+        if let diskEntry = readDiskCache(key: key), !isStale(diskEntry.fetchedAt), !diskEntry.data.isEmpty {
             memoryCache[key] = diskEntry
             loadStates[key] = .loaded(diskEntry.data)
             return
@@ -315,7 +319,9 @@ final class WorldBankService {
             let points = try parseResponse(data)
             let entry = CachedEntry(data: points, fetchedAt: Date())
             memoryCache[key] = entry
-            writeDiskCache(entry, key: key)
+            if !points.isEmpty {
+                writeDiskCache(entry, key: key)
+            }
             loadStates[key] = .loaded(points)
         } catch {
             // Fall back to stale disk cache if available
@@ -362,7 +368,7 @@ private extension WorldBankService {
     }
 
     func parseResponse(_ data: Data) throws -> [DataPoint] {
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [[Any]],
+        guard let json = try JSONSerialization.jsonObject(with: data) as? [Any],
               json.count >= 2,
               let records = json[1] as? [[String: Any]] else { return [] }
 
