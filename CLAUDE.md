@@ -4,10 +4,11 @@ Geography learning app — interactive maps, country facts, flags, capitals, qui
 
 ## App Identity
 - **Name**: Geografy
-- **Bundle ID**: `com.khizanag.geografy`
+- **Bundle ID**: `com.khizanag.geografy` (dev: `com.khizanag.geografy.dev`)
 - **Minimum iOS**: 26.0
 - **GitHub**: Khizanag/Geografy-iOS (SSH host: github-khizanag)
 - **Git author**: khizanag@gmail.com
+- **Signing team**: JSCB TBC Bank (SpaceInt) for development
 
 ## Shared Guidelines
 Follow all rules in `~/.claude/rules/personal-apps.md` (shared across all personal apps).
@@ -16,10 +17,11 @@ Follow all rules in `~/.claude/rules/personal-apps.md` (shared across all person
 - **UI**: SwiftUI only (UIKit only when SwiftUI can't achieve the goal)
 - **Design pattern**: Views with extracted subviews. MVVM only when views become large
 - **Design system**: `DesignSystem.Color`, `DesignSystem.Font`, `DesignSystem.Spacing`, `DesignSystem.Size`, `DesignSystem.CornerRadius`, `DesignSystem.IconSize`
-- **Components**: `CardView`, `GeoButton`, `InfoTile`, `IconButton`, `CircleCloseButton`, `GlassButton`, `FlagView`, `PulsingCirclesView`, `ZoomableFlagView`, `PremiumBadge`, `LevelBadgeView`, `ScoreRingView`, `ProfileAvatarView`, `CountryRowView`, `SectionHeaderView`
 - **Navigation**: Coordinator pattern — `AppCoordinator` owns per-tab `TabCoordinator`s. `Screen` (push), `Sheet` (modal), `Cover` (fullScreenCover) enums with factory views. `CoordinatedNavigationStack` wraps each tab.
-- **Data**: 197 countries in `countries.json`, 10m GeoJSON for map borders, 255 PDF flag assets
-- **Offline-first**: All data bundled, no network required
+- **Data**: 197 countries in `countries.json`, 10m GeoJSON for map borders, 255 PDF flag assets, 29 international organizations
+- **Offline-first**: All data bundled, no network required (World Bank API for live stats)
+- **StoreKit 2**: Full subscription flow (monthly/annual/lifetime), debug override for development
+- **Game Center**: Authentication, 13 leaderboards, 22 achievements, friends list, offline queue
 
 ## Folder Structure
 ```
@@ -28,29 +30,61 @@ Geografy/
     Navigation/           — AppCoordinator, TabCoordinator, Screen/Sheet/Cover enums, Factories
   Design/
     Theme/                — Colors, Font, Spacing, Size, CornerRadius, IconSize, Shadow
-    Component/            — Reusable UI components
+    Component/            — Reusable UI components (see Component Catalog below)
   Feature/
-    Home/View/            — Home screen, carousel cards, quiz card, streak, world records
-    Map/View/             — MapScreen, MapCanvasView, MapLoadingView, CountryBannerView
-    Map/Model/            — MapState, CountryShape, MapProjection, MapColorPalette
-    CountryDetail/View/   — Country detail, info popup, flag full screen
-    CountryList/View/     — Searchable country list with grouping/sorting/filtering
-    Quiz/Model/           — QuizType, QuizDifficulty, QuizRegion, QuizConfiguration, QuizQuestion, QuizResult
-    Quiz/Engine/          — QuizEngine, QuestionGenerator
-    Quiz/View/            — Setup, session, question, option button, results, score ring
-    Travel/View/          — Travel tracker, travel map, travel status picker
-    Auth/View/            — Sign in options
-    Profile/View/         — Profile screen, edit profile
-    Achievement/View/     — Achievements screen, cards, banners
-    Setting/View/         — Settings, territorial disputes
-    Organization/View/    — Organizations list and detail
-    Favorite/View/        — Favorites screen
-    Subscription/View/    — Paywall, subscription cards
-    AllMap/View/          — All maps grid
-    GameCenter/           — Game Center integration
+    Home/                 — Home feed with 38 configurable sections, curated order
+    Map/                  — Interactive world map, continent maps, canvas rendering
+    CountryDetail/        — Country detail with flag symbolism, UNESCO, phrasebook, deep dive
+    CountryList/          — Searchable, sortable, filterable country list
+    Quiz/                 — 6 quiz types, 3 difficulties, typing mode, speed run
+    Flashcard/            — Spaced repetition flashcards with swipe gestures
+    Travel/               — Travel tracker, travel map, bucket list
+    DailyChallenge/       — Daily mystery country, flag sequence, capital chain
+    ExploreGame/          — Mystery country with progressive clues
+    Multiplayer/          — PvP quiz matches
+    Auth/                 — Apple Sign In, Google Sign In, guest mode
+    Profile/              — Profile with stats, badges, weekly heatmap
+    Achievement/          — 21 achievements with unlock animations
+    Badge/                — 42 badges across 10 categories
+    GameCenter/           — Leaderboards, friends list
+    Setting/              — Theme, territorial disputes, notifications, sound
+    Organization/         — 29 international organizations
+    Compare/              — Side-by-side country comparison
+    Timeline/             — Historical events timeline
+    Tools/                — Distance calculator, currency converter, time zones
+    Search/               — Global search across countries and organizations
+    SpellingBee/          — Spell country names from flag clues
+    FlagGame/             — Match flags to countries
+    GeoTrivia/            — Geography trivia questions
+    BorderChallenge/      — Guess countries by outline shape
+    WordSearch/           — Geography word search puzzle
+    MapColoring/          — Interactive map coloring
+    ChallengeRoom/        — Multiplayer-style challenge flow
+    LearningPath/         — Guided geography curriculum
+    CountryNicknames/     — Informal country names + quiz
+    NationalSymbols/      — Animals, plants, emblems quiz
+    WorldRecords/         — Tallest, largest, deepest geography facts
+    OceanExplorer/        — World's oceans and seas
+    LanguageExplorer/     — Languages by region
+    EconomyExplorer/      — GDP, trade, development data
+    GeographyFeatures/    — Mountains, rivers, deserts
+    IndependenceTimeline/ — Country independence history
+    ContinentStats/       — Stats dashboard per continent
+    LandmarkQuiz/         — Identify famous landmarks
+    GeoFeed/              — Curated geography news and facts
+    Subscription/         — Paywall, subscription cards (StoreKit 2)
+    Favorite/             — Saved countries
+    AllMap/               — All maps grid, continent overview
+    TravelJournal/        — Travel notes and photos
+    SpeedRun/             — Name all countries against the clock
+    CapitalQuiz/          — Dedicated capital city quiz mode
+    CultureExplorer/      — Cultural facts by country
+    CountryProfile/       — Deep dive profile pages
+    Coin/                 — Coin system (planned)
+    Favorite/             — Favorites screen
   Data/
-    Model/                — Country, GeoJSONModels, UserLevel, Organization, etc.
-    Service/              — CountryDataService, GeoJSONParser, CountryBasicInfo, ISOCountryCodes, SubscriptionService, etc.
+    Model/                — Country, Organization, UserLevel, XPRecord, FlagAspectRatio, etc.
+    Service/              — CountryDataService, XPService, StreakService, SubscriptionService, GameCenterService, etc.
   Resource/
     Assets.xcassets/      — Colors, AppIcon, Flags (255 PDF imagesets)
     countries.json        — 197 countries with full data
@@ -58,45 +92,67 @@ Geografy/
   Utility/                — NumberFormatting, CGPath+Contains
 ```
 
-## Component Reuse Rules (CRITICAL)
+## Component Catalog (CRITICAL — always reuse)
 These components MUST be reused — NEVER create alternatives:
-- **Close button**: Always `CircleCloseButton()` — every sheet MUST have a close button in toolbar. NEVER create a custom X button
-- **Flags**: Always `FlagView(countryCode:height:)` — NEVER use emoji or custom flag views
-- **Cards**: Always `CardView { content }` — NEVER create custom card backgrounds
-- **Press style**: Always `PressButtonStyle()` for tappable cards — NEVER use plain with custom opacity
-- **Glass buttons**: Use `.buttonStyle(.glass)` or `.glassEffect(.regular.interactive(), in: .circle)` — NEVER use `.ultraThinMaterial` as a substitute
-- **Section headers**: Always `SectionHeaderView(title:icon:)` — accent bar (no icon) or icon style. NEVER create custom section headers
-- **Menu items**: ALWAYS use `Label("Title", systemImage: "icon")` — NEVER text-only menu items
-- **Profile avatar**: Always `ProfileAvatarView(name:size:)` — NEVER create custom initials/gradient circles
-- **Country rows**: Always `CountryRowView(country:isFavorite:...)` — NEVER create custom country list items
+
+### Navigation & Chrome
+- **Close button**: `CircleCloseButton()` — every sheet MUST have one in `.topBarTrailing` toolbar
+- **Section headers**: `SectionHeaderView(title:icon:isNew:)` — accent bar or icon style
+- **Glass buttons**: `GlassButton("Title", systemImage:, role:, fullWidth:)` for primary/secondary actions
+- **Press style**: `PressButtonStyle()` for tappable cards
+- **Toolbar buttons**: Always `.buttonStyle(.plain)` — no tinted toolbar buttons
+
+### Content Display
+- **Flags**: `FlagView(countryCode:height:)` — PDF vectors with correct aspect ratios
+- **Cards**: `CardView { content }` — standard card background
+- **Country rows**: `CountryRowView(country:isFavorite:...)` — standard country list item
+- **Profile avatar**: `ProfileAvatarView(name:size:)`
+- **Premium badge**: `PremiumBadge()`
+- **Level badge**: `LevelBadgeView`
+- **Score ring**: `ScoreRingView`
+- **New badge**: `NewBadge()` — "NEW" capsule for recent features
+
+### Selection Components (one solution per problem)
+- **Game type selection**: `TypeSelectionGrid` (horizontal card scroll) — for quiz types, flashcard types
+- **Region selection**: `RegionSelectionBar` (horizontal capsule chips) — for continent/region filtering
+- **Quiz answer options**: `QuizOptionButton` — for ALL quiz-like answer buttons (Quiz, DailyChallenge, Multiplayer, TimeZone, Trivia)
+- **Difficulty**: Segmented `Picker` — for Easy/Medium/Hard
+- **Compact values**: Menu `Picker` — for question count, theme, etc.
+
+### Session Components
+- **Ambient backgrounds**: `AmbientBlobsView(.preset)` — animated blob backgrounds
+- **Progress bars**: `SessionProgressBar(progress:)` — animated fill with glow
+- **Counter pills**: `QuestionCounterPill(current:total:)` — "X/Y" session counter
+- **Empty states**: `EmptyStateView(icon:title:subtitle:)` — centered empty content
+- **Result stats**: `ResultStatItem(icon:value:label:color:)` — stat grid items
 
 ## Key Conventions
-- **VStack spacing over padding**: Use `VStack(spacing:)` for consistent spacing between sections — NEVER repeat `.padding(.top, X)` on every item. Prefer default spacing (omit parameter) when Apple's automatic value is appropriate — `spacing: 0` is not always correct
-- **Full variable names**: Always use full names (e.g., `geometryReader` not `geo`, `index` not `idx`, `button` not `btn`)
-- **Decompose for readability**: Split code into well-named functions and computed properties — keep `body` and helper views concise
-- **Never disable SwiftLint**: Do NOT use `swiftlint:disable` comments. Fix the underlying issue instead — break long lines, extract methods, refactor code
-- **Screen size compatibility**: Every page must work on both smallest (iPhone 12 Mini, 375pt) and largest iPhones. Use `.adaptive(minimum:)` with safe values, `Spacer(minLength: 0)`, `.lineLimit(1)`, `.minimumScaleFactor()`. Move blobs to `.background {}` — NEVER put them in a ZStack with content (they expand layout width)
-- **Folder names**: Always singular (Feature, Model, View, Service — NOT plural)
-- **No hardcoded values**: Colors → `DesignSystem.Color.*`, fonts → `DesignSystem.Font.*`, spacing → `DesignSystem.Spacing.*`, sizes → `DesignSystem.Size.*`
-- **No SwiftUI colors directly**: No `.white`, `.black`, `.blue` — use `DesignSystem.Color.onAccent`, `.textPrimary`, `.blue` etc.
-- **Asset catalog colors**: Named without prefix (e.g., "Accent", "Background" — NOT "GeoAccent")
-- **Glass effects**: Use iOS 26 `.glassEffect()` and `.buttonStyle(.glass)` for interactive elements
-- **Flags**: PDF vector assets in `Assets.xcassets/Flags/`, loaded via `FlagView(countryCode:height:)`
-- **Map data**: Natural Earth 10m GeoJSON, parsed via `GeoJSONParser`, rendered via `MapCanvasView` Canvas
-- **Disputed territories**: Configurable per-territory merge/separate in Settings
+- **VStack spacing over padding**: Use `VStack(spacing:)` — NEVER repeat `.padding(.top, X)` on every item
+- **Full variable names**: `geometryReader` not `geo`, `index` not `idx`, `button` not `btn`
+- **Decompose for readability**: Split into well-named functions and computed properties
+- **Never disable SwiftLint**: Fix the underlying issue instead
+- **Screen size compatibility**: Every page must work on iPhone 12 Mini (375pt) and largest iPhones
+- **No hardcoded colors**: Colors → `DesignSystem.Color.*`, shadows → `.geoShadow(.subtle/.card/.elevated)`
+- **No SwiftUI colors directly**: No `.white`, `.black`, `.blue` — use DesignSystem tokens
+- **Glass effects**: Use iOS 26 `.glassEffect()` and `.buttonStyle(.glass)`
+- **Action buttons in footer**: Primary actions (Start, Submit, Find) go in `.safeAreaInset(edge: .bottom)`, not in scroll content
+- **Blobs in background**: Always `.background { AmbientBlobsView(.preset) }` — NEVER in a ZStack with content
 - **Trunk-based development**: Commit + push every valid increment immediately
-- **Build on iPhone before commit**: Always deploy to iPhone before committing
-- **Subagent auditing**: After any agent creates/modifies files, verify they use the components listed above before committing
+- **Sub-feature folders**: Features with sub-pages use nested folders (e.g., `ExploreGame/ExploreGameRules/View/`)
 
-## Current State
+## Current State (55+ features)
 - Interactive world map with 258 countries, zoom/pan, country selection, capital pins
-- Continent-filtered maps (Europe, Asia, Africa, etc.)
-- Country detail with hero flag, quick facts, people, economy, government, currency, organizations
-- Quiz mode with 6 types, 3 difficulties, region filter, timer, results with XP
-- Travel tracker with visited/want-to-visit status, travel map with highlighted countries
-- Countries list with search, grouping, sorting, filtering, favorites
-- Authentication (Google Sign In, Apple Sign In, guest mode)
-- Gamification: XP system, 10 levels, achievements, streaks
-- Subscription/premium system (debug override enabled for testing)
-- Settings: theme, orientation, territorial disputes, notifications, sound
-- Game Center integration
+- Country detail with flag symbolism, UNESCO heritage, phrasebook, fun facts, neighbors, deep dive
+- 6 quiz types with typing mode, 3 difficulties, region filter, timer, XP rewards
+- Flashcard spaced repetition with swipe gestures, thinking time tracking
+- 15+ game modes: Speed Run, Flag Game, Spelling Bee, GeoTrivia, Border Challenge, Word Search, etc.
+- Daily Challenge with mystery country, flag sequence, capital chain
+- Travel tracker with visited/want-to-visit, travel map, bucket list, journal
+- Coordinator pattern navigation with 5 tabs
+- Game Center: 13 leaderboards, 22 achievements, friends list with XP rankings
+- StoreKit 2 subscriptions (monthly/annual/lifetime)
+- Sign In with Apple + Google Sign In + Guest mode
+- XP system with 10 levels, 42 badges, 21 achievements, streaks with heatmap
+- Distance calculator, currency converter, time zone learning
+- 29 international organizations with member data
+- iOS widgets: Country of the Day, Daily Streak, World Progress
