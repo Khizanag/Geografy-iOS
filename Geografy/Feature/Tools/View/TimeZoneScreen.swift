@@ -449,75 +449,32 @@ private struct TimeZoneQuizView: View {
     }
 
     private var choicesGrid: some View {
-        LazyVGrid(
-            columns: [GridItem(.flexible()), GridItem(.flexible())],
-            spacing: DesignSystem.Spacing.sm
-        ) {
-            ForEach(choices, id: \.self) { choice in
-                choiceButton(hours: choice)
-            }
-        }
-    }
-
-    private func choiceButton(hours: Int) -> some View {
-        let isSelected = selectedAnswer == hours
-        let isCorrect = hours == correctAnswer
-        let backgroundColor: Color = {
-            guard let selected = selectedAnswer else { return DesignSystem.Color.cardBackground }
-            if hours == selected, isCorrect { return DesignSystem.Color.success.opacity(0.2) }
-            if hours == selected, !isCorrect { return DesignSystem.Color.error.opacity(0.2) }
-            if isCorrect, selected != nil { return DesignSystem.Color.success.opacity(0.1) }
-            return DesignSystem.Color.cardBackground
-        }()
-        let borderColor: Color = {
-            guard let selected = selectedAnswer else { return DesignSystem.Color.textTertiary.opacity(0.3) }
-            if hours == selected, isCorrect { return DesignSystem.Color.success }
-            if hours == selected, !isCorrect { return DesignSystem.Color.error }
-            if isCorrect, selected != nil { return DesignSystem.Color.success }
-            return DesignSystem.Color.textTertiary.opacity(0.3)
-        }()
-
-        let label = "\(hours == 0 ? "Same" : "\(abs(hours))h") \(hours == 0 ? "time" : (hours == 1 || hours == -1) ? "difference" : "difference")"
-
-        return Button {
-            guard selectedAnswer == nil else { return }
-            selectedAnswer = hours
-            if hours == correctAnswer {
-                answerState = .correct
-                score += 1
-            } else {
-                answerState = .wrong
-            }
-            totalAnswered += 1
-        } label: {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                if let selected = selectedAnswer, isCorrect || hours == selected {
-                    Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
-                        .foregroundStyle(isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error)
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(Array(choices.enumerated()), id: \.element) { index, choice in
+                QuizOptionButton(
+                    text: choiceLabel(for: choice),
+                    flagCode: nil,
+                    state: optionState(for: choice),
+                    index: index
+                ) {
+                    guard selectedAnswer == nil else { return }
+                    selectedAnswer = choice
+                    if choice == correctAnswer {
+                        answerState = .correct
+                        score += 1
+                    } else {
+                        answerState = .wrong
+                    }
+                    totalAnswered += 1
                 }
-                Text(label)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(isSelected ? .semibold : .regular)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.center)
             }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.sm)
-            .background(backgroundColor)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .strokeBorder(borderColor, lineWidth: 1)
-            )
         }
-        .buttonStyle(PressButtonStyle())
-        .disabled(selectedAnswer != nil)
     }
 
     private var nextButton: some View {
         Group {
             if selectedAnswer != nil {
-                GeoButton("Next Question", systemImage: "arrow.right", style: .primary) {
+                GlassButton("Next Question", systemImage: "arrow.right", fullWidth: true) {
                     generateQuestion()
                 }
             }
@@ -535,6 +492,22 @@ private struct TimeZoneQuizView: View {
                 .multilineTextAlignment(.center)
         }
         .padding(DesignSystem.Spacing.xl)
+    }
+
+    private func optionState(for choice: Int) -> QuizOptionButton.OptionState {
+        guard let selected = selectedAnswer else { return .default }
+        let isCorrect = choice == correctAnswer
+        if isCorrect { return .correct }
+        if choice == selected { return .incorrect }
+        return .disabled
+    }
+
+    private func choiceLabel(for hours: Int) -> String {
+        if hours == 0 {
+            "Same time"
+        } else {
+            "\(abs(hours))h difference"
+        }
     }
 
     private var correctAnswer: Int {
