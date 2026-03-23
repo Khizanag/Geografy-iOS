@@ -90,7 +90,7 @@ private extension QuizSetupScreen {
                 Image(systemName: selectedDifficulty.icon)
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.accent)
-                Text(selectedDifficulty.subtitle)
+                Text(selectedDifficulty.subtitle(for: answerMode))
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
