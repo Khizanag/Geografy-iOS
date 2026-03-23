@@ -227,6 +227,16 @@ private extension HomeScreen {
         }
     }
 
+    var searchButton: some View {
+        Button { coordinator.present(.search) } label: {
+            Image(systemName: "magnifyingglass")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.iconPrimary)
+                .accessibilityLabel("Search")
+        }
+        .buttonStyle(.plain)
+    }
+
     var friendsButton: some View {
         Button { coordinator.present(.friends) } label: {
             Image(systemName: "person.2")
@@ -533,6 +543,9 @@ private extension HomeScreen {
         }
         ToolbarItem(placement: .principal) {
             statsButton
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            searchButton
         }
         ToolbarItem(placement: .topBarTrailing) {
             friendsButton
