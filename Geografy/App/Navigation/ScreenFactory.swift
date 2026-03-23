@@ -27,6 +27,12 @@ enum ScreenFactory {
             NeighborExplorerScreen(country: country)
         case .capitalQuizSetup:
             CapitalQuizSetupScreen()
+        case .worldRecords:
+            WorldRecordsScreen()
+        case .learningPath:
+            LearningPathScreen()
+        case .mapPuzzle:
+            MapPuzzleSetupScreen()
         }
     }
 }
