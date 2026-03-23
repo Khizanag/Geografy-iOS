@@ -167,6 +167,7 @@ private extension CountryDetailScreen {
                     )
                     .symbolEffect(.bounce, value: favoritesService.isFavorite(code: country.code))
             }
+            .buttonStyle(.plain)
         }
     }
 
@@ -180,6 +181,7 @@ private extension CountryDetailScreen {
                 Image(systemName: "arrow.left.arrow.right")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .buttonStyle(.plain)
         }
     }
 }

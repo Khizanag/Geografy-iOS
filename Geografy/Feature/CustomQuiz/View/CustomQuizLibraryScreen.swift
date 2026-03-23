@@ -109,6 +109,7 @@ private extension CustomQuizLibraryScreen {
                 Image(systemName: "plus")
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .buttonStyle(.plain)
         }
     }
 }

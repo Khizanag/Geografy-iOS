@@ -311,6 +311,7 @@ private extension TimelineScreen {
             Button { showHistoricalMap = true } label: {
                 Label("Historical Map", systemImage: "map.fill")
             }
+            .buttonStyle(.plain)
         }
     }
 }

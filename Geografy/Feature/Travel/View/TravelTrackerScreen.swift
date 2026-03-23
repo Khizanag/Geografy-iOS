@@ -76,6 +76,7 @@ private extension TravelTrackerScreen {
                 Label("Bucket List", systemImage: "list.star")
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .buttonStyle(.plain)
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
@@ -86,6 +87,7 @@ private extension TravelTrackerScreen {
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .buttonStyle(.plain)
         }
         ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton()
