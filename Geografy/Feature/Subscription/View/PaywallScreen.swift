@@ -5,7 +5,7 @@ struct PaywallScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(SubscriptionService.self) private var subscriptionService
 
-    @State private var selectedProductID = SubscriptionService.ProductID.yearly
+    @State private var selectedProductID = SubscriptionService.ProductID.annual
     @State private var isProcessing = false
     @State private var appeared = false
     @State private var globePulse = false
@@ -242,14 +242,14 @@ private extension PaywallScreen {
                     onTap: { selectedProductID = SubscriptionService.ProductID.monthly }
                 )
                 SubscriptionCard(
-                    productID: SubscriptionService.ProductID.yearly,
+                    productID: SubscriptionService.ProductID.annual,
                     fallbackPrice: "$19.99",
                     period: "per year",
                     badge: "Best Value",
                     savingsNote: "$1.67 / mo",
-                    isSelected: selectedProductID == SubscriptionService.ProductID.yearly,
-                    product: product(for: SubscriptionService.ProductID.yearly),
-                    onTap: { selectedProductID = SubscriptionService.ProductID.yearly }
+                    isSelected: selectedProductID == SubscriptionService.ProductID.annual,
+                    product: product(for: SubscriptionService.ProductID.annual),
+                    onTap: { selectedProductID = SubscriptionService.ProductID.annual }
                 )
                 SubscriptionCard(
                     productID: SubscriptionService.ProductID.lifetime,
