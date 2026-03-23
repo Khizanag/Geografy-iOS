@@ -196,6 +196,7 @@ private extension MultiplayerLobbyScreen {
                 region: selectedRegion,
                 difficulty: .medium,
                 questionCount: .ten,
+                answerMode: .multipleChoice,
             )
             MultiplayerMatchScreen(
                 opponent: opponent,
