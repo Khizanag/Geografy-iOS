@@ -17,4 +17,6 @@ enum Screen: Hashable {
     case mapPuzzle
     case continentPicker
     case continentStats(String)
+    case oceanExplorer
+    case languageExplorer
 }

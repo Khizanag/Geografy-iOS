@@ -21,6 +21,9 @@ enum SheetFactory {
         case .badges, .leaderboards, .achievements, .themes, .settings,
              .sectionEditor, .friends, .search, .geoFeed:
             appView(for: sheet)
+
+        case .challengeRoom:
+            challengeView(for: sheet)
         }
     }
 }
@@ -242,6 +245,22 @@ private extension SheetFactory {
 
         case .geoFeed:
             NavigationStack { GeoFeedScreen() }
+                .presentationDetents([.large])
+
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Challenge
+
+private extension SheetFactory {
+    @ViewBuilder
+    static func challengeView(for sheet: Sheet) -> some View {
+        switch sheet {
+        case .challengeRoom:
+            NavigationStack { ChallengeSetupScreen() }
                 .presentationDetents([.large])
 
         default:
