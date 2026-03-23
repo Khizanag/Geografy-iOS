@@ -239,7 +239,7 @@ private extension WordSearchScreen {
     }
 
     var giveUpButton: some View {
-        GeoButton("Give Up — Reveal Answers", style: .secondary) {
+        GlassButton("Give Up — Reveal Answers", role: .secondary, fullWidth: true) {
             revealAllWords()
         }
     }

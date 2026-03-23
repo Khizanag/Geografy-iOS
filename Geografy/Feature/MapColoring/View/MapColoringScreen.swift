@@ -197,7 +197,7 @@ private extension MapColoringScreen {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 FlagView(countryCode: country.code, height: 80)
                     .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-                    .shadow(radius: 8)
+                    .geoShadow(.card)
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Text(country.name)
                         .font(DesignSystem.Font.title2)

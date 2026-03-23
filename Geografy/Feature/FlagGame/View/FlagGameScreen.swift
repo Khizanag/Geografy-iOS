@@ -26,7 +26,13 @@ struct FlagGameScreen: View {
                 gameContent
             }
         }
-        .navigationBarHidden(true)
+        .navigationTitle("Flag Game")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                CircleCloseButton()
+            }
+        }
         .onAppear {
             countryDataService.loadCountries()
             startGame()
@@ -76,7 +82,7 @@ private extension FlagGameScreen {
 
     var gameContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            topBar
+            scoreAndLivesBar
             countryNameCard
             flagGrid
             Spacer(minLength: 0)
@@ -85,25 +91,13 @@ private extension FlagGameScreen {
         .padding(.top, DesignSystem.Spacing.lg)
     }
 
-    var topBar: some View {
+    var scoreAndLivesBar: some View {
         HStack {
-            dismissButton
             Spacer()
             scoreLabel
             Spacer()
             livesView
         }
-    }
-
-    var dismissButton: some View {
-        Button { dismiss() } label: {
-            Image(systemName: "xmark")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .padding(DesignSystem.Spacing.xs)
-                .background(DesignSystem.Color.cardBackground, in: Circle())
-        }
-        .buttonStyle(.plain)
     }
 
     var scoreLabel: some View {
@@ -205,7 +199,7 @@ private extension FlagGameScreen {
         return CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: country.code, height: 56)
-                    .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                    .geoShadow(.subtle)
                 Text(country.name)
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
