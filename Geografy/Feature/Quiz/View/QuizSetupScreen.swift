@@ -8,6 +8,7 @@ struct QuizSetupScreen: View {
     @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
     @AppStorage("quiz_selectedDifficulty") private var selectedDifficulty: QuizDifficulty = .easy
     @AppStorage("quiz_selectedCount") private var selectedCount: QuestionCount = .ten
+    @AppStorage("quiz_answerMode") private var answerMode: QuizAnswerMode = .multipleChoice
 
     var body: some View {
         ScrollView {
@@ -15,6 +16,7 @@ struct QuizSetupScreen: View {
                 quizTypeSection
                 regionSection
                 difficultySection
+                answerModeSection
                 questionCountRow
             }
             .padding(.vertical, DesignSystem.Spacing.md)
@@ -98,6 +100,55 @@ private extension QuizSetupScreen {
     }
 }
 
+// MARK: - Answer Mode Section
+
+private extension QuizSetupScreen {
+    var answerModeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Answer Mode")
+
+            Picker("Answer Mode", selection: $answerMode) {
+                ForEach(QuizAnswerMode.allCases) { mode in
+                    Text(mode.displayName).tag(mode)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+
+            answerModeNote
+                .animation(.easeInOut(duration: 0.2), value: answerMode)
+                .animation(.easeInOut(duration: 0.2), value: selectedType)
+        }
+    }
+
+    @ViewBuilder
+    var answerModeNote: some View {
+        if answerMode == .typing, !selectedType.supportsTypingMode {
+            answerModeInfoRow(
+                icon: "info.circle",
+                text: "Typing isn't available for Reverse Flag — multiple choice will be used"
+            )
+        } else if answerMode == .typing {
+            answerModeInfoRow(
+                icon: "star.fill",
+                text: "1.5× XP bonus for typing answers correctly"
+            )
+        }
+    }
+
+    func answerModeInfoRow(icon: String, text: String) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: icon)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.accent)
+            Text(text)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+}
+
 // MARK: - Question Count Row
 
 private extension QuizSetupScreen {
@@ -156,12 +207,13 @@ private extension QuizSetupScreen {
     }
 
     func makeConfiguration() -> QuizConfiguration {
-        QuizConfiguration(
+        let effectiveAnswerMode = selectedType.supportsTypingMode ? answerMode : .multipleChoice
+        return QuizConfiguration(
             type: selectedType,
             region: selectedRegion,
             difficulty: selectedDifficulty,
             questionCount: selectedCount,
+            answerMode: effectiveAnswerMode,
         )
     }
 }
-

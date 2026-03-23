@@ -22,6 +22,9 @@ struct QuizSessionScreen: View {
     @State private var navigateToResult: QuizResult?
     @State private var countryDataService = CountryDataService()
     @State private var blobAnimating = false
+    @State private var typingInput: String = ""
+    @State private var showHint: Bool = false
+    @State private var typingIsCorrect: Bool = false
     @Namespace private var flagNamespace
 
     var body: some View {
@@ -306,21 +309,41 @@ private extension QuizSessionScreen {
     @ViewBuilder
     var questionContent: some View {
         if let question = currentQuestion {
-            QuizQuestionView(
-                question: question,
-                quizType: configuration.type,
-                selectedOptionID: selectedOptionID,
-                correctOptionID: question.correctOptionID,
-                showFeedback: showFeedback,
-                showFlagPreview: $showFlagPreview,
-                onSelectOption: { optionID in selectOption(optionID) }
-            )
-            .id(question.id)
-            .transition(.asymmetric(
-                insertion: .move(edge: .trailing).combined(with: .opacity),
-                removal: .move(edge: .leading).combined(with: .opacity)
-            ))
+            switch configuration.answerMode {
+            case .multipleChoice:
+                QuizQuestionView(
+                    question: question,
+                    quizType: configuration.type,
+                    selectedOptionID: selectedOptionID,
+                    correctOptionID: question.correctOptionID,
+                    showFeedback: showFeedback,
+                    showFlagPreview: $showFlagPreview,
+                    onSelectOption: { optionID in selectOption(optionID) }
+                )
+                .id(question.id)
+                .transition(questionTransition)
+            case .typing:
+                QuizTypingInputView(
+                    question: question,
+                    quizType: configuration.type,
+                    showFeedback: showFeedback,
+                    isCorrectAnswer: typingIsCorrect,
+                    typingInput: $typingInput,
+                    showHint: $showHint,
+                    showFlagPreview: $showFlagPreview,
+                    onSubmit: { submitTypingAnswer() }
+                )
+                .id(question.id)
+                .transition(questionTransition)
+            }
         }
+    }
+
+    var questionTransition: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: .trailing).combined(with: .opacity),
+            removal: .move(edge: .leading).combined(with: .opacity)
+        )
     }
 }
 
@@ -381,6 +404,9 @@ private extension QuizSessionScreen {
                 currentIndex += 1
                 selectedOptionID = nil
                 showFeedback = false
+                typingInput = ""
+                showHint = false
+                typingIsCorrect = false
                 questionStartTime = Date()
                 timerRemaining = configuration.difficulty.timerDuration
             }
@@ -388,6 +414,42 @@ private extension QuizSessionScreen {
         } else {
             timerCancellable?.cancel()
             finishQuiz()
+        }
+    }
+
+    func submitTypingAnswer() {
+        guard !showFeedback else { return }
+        let trimmedInput = typingInput.trimmingCharacters(in: .whitespaces)
+        guard !trimmedInput.isEmpty else { return }
+
+        timerCancellable?.cancel()
+
+        let question = questions[currentIndex]
+        let isCorrect = isTypingAnswerCorrect(input: trimmedInput, question: question)
+        let timeSpent = Date().timeIntervalSince(questionStartTime)
+
+        if isCorrect {
+            hapticsService.notification(.success)
+        } else {
+            hapticsService.impact(.light)
+        }
+
+        let answer = QuizAnswer(
+            id: UUID(),
+            question: question,
+            selectedOptionID: isCorrect ? question.correctOptionID : nil,
+            isCorrect: isCorrect,
+            timeSpent: timeSpent,
+        )
+        answers.append(answer)
+        typingIsCorrect = isCorrect
+
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showFeedback = true
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            advanceToNext()
         }
     }
 
@@ -416,6 +478,9 @@ private extension QuizSessionScreen {
         answers = []
         selectedOptionID = nil
         showFeedback = false
+        typingInput = ""
+        showHint = false
+        typingIsCorrect = false
         startTime = Date()
         questionStartTime = Date()
         timerRemaining = configuration.difficulty.timerDuration
@@ -461,6 +526,7 @@ private extension QuizSessionScreen {
             timeSpent: timeSpent
         )
         answers.append(answer)
+        typingIsCorrect = false
 
         withAnimation(.easeInOut(duration: 0.3)) {
             showFeedback = true
@@ -475,6 +541,36 @@ private extension QuizSessionScreen {
 // MARK: - Helpers
 
 private extension QuizSessionScreen {
+    func isTypingAnswerCorrect(input: String, question: QuizQuestion) -> Bool {
+        let normalizedInput = normalizeText(input)
+        return makeAcceptableAnswers(for: question).contains { normalizeText($0) == normalizedInput }
+    }
+
+    func normalizeText(_ string: String) -> String {
+        string
+            .trimmingCharacters(in: .whitespaces)
+            .lowercased()
+            .folding(options: .diacriticInsensitive, locale: .current)
+    }
+
+    func makeAcceptableAnswers(for question: QuizQuestion) -> [String] {
+        var answers: [String] = []
+
+        if let correctOption = question.options.first(where: { $0.id == question.correctOptionID }),
+           let text = correctOption.text {
+            answers.append(text)
+        }
+
+        if configuration.type == .capitalQuiz {
+            answers += question.correctCountry.allCapitals.map { $0.name }
+            answers.append(question.correctCountry.capital)
+        }
+
+        answers.append(question.correctCountry.name)
+
+        return answers.filter { !$0.isEmpty }
+    }
+
     var currentQuestion: QuizQuestion? {
         guard questions.indices.contains(currentIndex) else { return nil }
         return questions[currentIndex]

@@ -5,6 +5,7 @@ struct QuizConfiguration {
     let region: QuizRegion
     let difficulty: QuizDifficulty
     let questionCount: QuestionCount
+    let answerMode: QuizAnswerMode
 }
 
 // MARK: - QuestionCount

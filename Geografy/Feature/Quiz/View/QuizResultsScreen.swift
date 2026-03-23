@@ -203,7 +203,8 @@ private extension QuizResultsScreen {
         case .medium: base = 25; maxBonus = 15; source = .quizCompletedMedium
         case .hard: base = 40; maxBonus = 20; source = .quizCompletedHard
         }
-        let earnedXP = base + Int(result.accuracy * Double(maxBonus))
+        let typingMultiplier = result.configuration.answerMode == .typing ? 1.5 : 1.0
+        let earnedXP = Int(Double(base + Int(result.accuracy * Double(maxBonus))) * typingMultiplier)
 
         let record = QuizHistoryRecord(
             userID: xpService.currentUserID,
