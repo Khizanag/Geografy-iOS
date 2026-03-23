@@ -20,10 +20,15 @@ extension QuizDifficulty {
     }
 
     var subtitle: String {
-        switch self {
-        case .easy: "No timer · 4 options"
-        case .medium: "15s timer · 4 options"
-        case .hard: "8s timer · 4 options"
+        subtitle(for: .multipleChoice)
+    }
+
+    func subtitle(for answerMode: QuizAnswerMode) -> String {
+        let modeLabel = answerMode == .typing ? "Type answer" : "4 options"
+        return switch self {
+        case .easy: "No timer · \(modeLabel)"
+        case .medium: "15s timer · \(modeLabel)"
+        case .hard: "8s timer · \(modeLabel)"
         }
     }
 
