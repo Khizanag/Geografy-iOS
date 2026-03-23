@@ -9,6 +9,8 @@ struct MapCanvasView: View {
     let canvasSize: CGSize
     var capitalPoint: CGPoint?
     var travelStatuses: [String: TravelStatus] = [:]
+    var densityData: [String: Double] = [:]
+    var showDensityOverlay: Bool = false
 
     var body: some View {
         Canvas { context, size in
@@ -59,10 +61,14 @@ private extension MapCanvasView {
             var path = Path(cgPath)
             path = path.applying(transform)
 
-            let fillColor = isSelected ? shape.color.opacity(1) : shape.color.opacity(0.85)
-            context.fill(path, with: .color(fillColor))
+            if showDensityOverlay, let density = densityData[shape.id] {
+                context.fill(path, with: .color(densityHeatmapColor(for: density)))
+            } else {
+                let fillColor = isSelected ? shape.color.opacity(1) : shape.color.opacity(0.85)
+                context.fill(path, with: .color(fillColor))
+            }
 
-            if let travelStatus = travelStatuses[shape.id] {
+            if !showDensityOverlay, let travelStatus = travelStatuses[shape.id] {
                 context.fill(path, with: .color(travelStatus.color.opacity(0.35)))
             }
 
@@ -156,6 +162,38 @@ private extension MapCanvasView {
         )
         context.fill(Path(ellipseIn: innerRect), with: .color(.white))
         context.stroke(Path(ellipseIn: innerRect), with: .color(.black.opacity(0.3)), lineWidth: 1)
+    }
+}
+
+// MARK: - Density Heatmap
+
+private extension MapCanvasView {
+    /// Maps population density (people/km²) to a color on a yellow→orange→red→dark-red gradient.
+    /// Uses log10 scale since density spans 0.03 (Greenland) to 26000+ (Monaco).
+    func densityHeatmapColor(for density: Double) -> Color {
+        let logValue = log10(max(density, 0.01))
+        // Normalize: log range roughly -2 (sparse) to 4 (very dense) → 0…1
+        let normalized = min(max((logValue + 2.0) / 6.0, 0), 1)
+
+        let red: Double
+        let green: Double
+        let blue: Double
+
+        if normalized < 0.5 {
+            // light yellow (1, 1, 0.7) → orange-red (1, 0.3, 0)
+            let transition = normalized * 2
+            red = 1.0
+            green = 1.0 - transition * 0.7
+            blue = 0.7 - transition * 0.7
+        } else {
+            // orange-red (1, 0.3, 0) → dark red (0.45, 0, 0)
+            let transition = (normalized - 0.5) * 2
+            red = 1.0 - transition * 0.55
+            green = 0.3 - transition * 0.3
+            blue = 0.0
+        }
+
+        return Color(red: red, green: green, blue: blue, opacity: 0.92)
     }
 }
 

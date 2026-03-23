@@ -37,6 +37,9 @@ enum Sheet: Identifiable {
     case badges
     case leaderboards
 
+    // Study
+    case srsStudy
+
     // App
     case achievements
     case themes
@@ -71,6 +74,7 @@ enum Sheet: Identifiable {
         case .settings: "settings"
         case .sectionEditor: "sectionEditor"
         case .friends: "friends"
+        case .srsStudy: "srsStudy"
         }
     }
 }
