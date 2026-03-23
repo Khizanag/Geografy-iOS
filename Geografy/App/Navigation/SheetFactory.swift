@@ -59,6 +59,14 @@ enum SheetFactory {
             NavigationStack { DistanceCalculatorScreen() }
                 .presentationDetents([.large])
 
+        case .currencyConverter:
+            NavigationStack { CurrencyConverterScreen() }
+                .presentationDetents([.large])
+
+        case .timeZones:
+            NavigationStack { TimeZoneScreen() }
+                .presentationDetents([.large])
+
         case .dailyChallenge:
             NavigationStack { DailyChallengeScreen() }
                 .presentationDetents([.large])

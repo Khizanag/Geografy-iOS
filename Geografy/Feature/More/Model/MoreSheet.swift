@@ -8,6 +8,8 @@ enum MoreSheet: Identifiable {
     case achievements, leaderboards, themes, settings
     case search
     case distanceCalculator
+    case currencyConverter
+    case timeZones
 
     var id: Self { self }
 
@@ -27,6 +29,8 @@ enum MoreSheet: Identifiable {
         case .exploreGame: "Mystery Country"
         case .speedRun: "Speed Run"
         case .distanceCalculator: "Distance Calculator"
+        case .currencyConverter: "Currency Converter"
+        case .timeZones: "Time Zones"
         case .badges: "Badge Collection"
         case .timeline: "Historical Timeline"
         case .achievements: "Achievements"
@@ -53,6 +57,8 @@ enum MoreSheet: Identifiable {
         case .exploreGame: "magnifyingglass"
         case .speedRun: "timer"
         case .distanceCalculator: "ruler"
+        case .currencyConverter: "dollarsign.arrow.circlepath"
+        case .timeZones: "clock.badge.fill"
         case .badges: "medal.fill"
         case .timeline: "clock.arrow.circlepath"
         case .achievements: "trophy.fill"
@@ -79,6 +85,8 @@ enum MoreSheet: Identifiable {
         case .exploreGame: "Guess from clues"
         case .speedRun: "Name all countries, race the clock"
         case .distanceCalculator: "Great circle distance between capitals"
+        case .currencyConverter: "Live exchange rates, 160+ currencies"
+        case .timeZones: "World clock, quiz & UTC offsets"
         case .badges: "Collect and showcase"
         case .timeline: "Borders through history"
         case .achievements: "Unlock badges and rewards"
@@ -105,6 +113,8 @@ enum MoreSheet: Identifiable {
         case .exploreGame: DesignSystem.Color.warning
         case .speedRun: DesignSystem.Color.error
         case .distanceCalculator: DesignSystem.Color.blue
+        case .currencyConverter: DesignSystem.Color.success
+        case .timeZones: DesignSystem.Color.indigo
         case .badges: DesignSystem.Color.warning
         case .timeline: DesignSystem.Color.indigo
         case .achievements: DesignSystem.Color.warning
@@ -131,6 +141,8 @@ enum MoreSheet: Identifiable {
         case .exploreGame: .exploreGame
         case .speedRun: .speedRunSetup
         case .distanceCalculator: .distanceCalculator
+        case .currencyConverter: .currencyConverter
+        case .timeZones: .timeZones
         case .badges: .badges
         case .timeline: .timeline
         case .achievements: .achievements

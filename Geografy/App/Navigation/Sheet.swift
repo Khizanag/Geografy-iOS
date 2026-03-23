@@ -28,6 +28,8 @@ enum Sheet: Identifiable {
 
     // Tools
     case distanceCalculator
+    case currencyConverter
+    case timeZones
 
     // Explore
     case compare
@@ -67,6 +69,8 @@ enum Sheet: Identifiable {
         case .quizSetup: "quizSetup"
         case .speedRunSetup: "speedRunSetup"
         case .distanceCalculator: "distanceCalculator"
+        case .currencyConverter: "currencyConverter"
+        case .timeZones: "timeZones"
         case .dailyChallenge: "dailyChallenge"
         case .exploreGame: "exploreGame"
         case .multiplayer: "multiplayer"
