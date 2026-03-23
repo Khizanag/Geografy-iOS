@@ -22,11 +22,9 @@ struct SearchScreen: View {
             }
         }
         .animation(.easeInOut(duration: 0.2), value: query.isEmpty)
-        .safeAreaInset(edge: .bottom) {
-            searchBar
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(.ultraThinMaterial)
+        .searchable(text: $query, prompt: "Countries, capitals, organizations…")
+        .onChange(of: query) { _, newValue in
+            scheduleSearch(query: newValue)
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Search")
@@ -42,39 +40,6 @@ struct SearchScreen: View {
     }
 }
 
-// MARK: - Search Bar
-
-private extension SearchScreen {
-    var searchBar: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "magnifyingglass")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            TextField("Countries, capitals, organizations…", text: $query)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .autocorrectionDisabled()
-                .onChange(of: query) { _, newValue in
-                    scheduleSearch(query: newValue)
-                }
-            if !query.isEmpty {
-                Button {
-                    query = ""
-                    sections = []
-                    isSearching = false
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-    }
-}
 
 // MARK: - Empty State
 
