@@ -15,7 +15,7 @@ enum SheetFactory {
             playView(for: sheet)
 
         case .distanceCalculator, .currencyConverter, .timeZones,
-             .compare, .timeline, .travelTracker, .travelJournal:
+             .compare, .timeline, .travelTracker, .travelJournal, .travelBucketList:
             exploreView(for: sheet)
 
         case .badges, .leaderboards, .achievements, .themes, .settings,
@@ -182,6 +182,10 @@ private extension SheetFactory {
 
         case .travelJournal:
             NavigationStack { TravelJournalScreen() }
+                .presentationDetents([.large])
+
+        case .travelBucketList:
+            NavigationStack { TravelBucketListScreen() }
                 .presentationDetents([.large])
 
         default:

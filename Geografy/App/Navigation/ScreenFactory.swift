@@ -4,6 +4,19 @@ import SwiftUI
 enum ScreenFactory {
     @ViewBuilder
     static func view(for screen: Screen) -> some View {
+        Group {
+            coreView(for: screen)
+            exploreView(for: screen)
+        }
+    }
+}
+
+// MARK: - Core
+
+@MainActor
+private extension ScreenFactory {
+    @ViewBuilder
+    static func coreView(for screen: Screen) -> some View {
         switch screen {
         case .map(let continentFilter):
             MapScreen(continentFilter: continentFilter?.rawValue)
@@ -27,12 +40,31 @@ enum ScreenFactory {
             NeighborExplorerScreen(country: country)
         case .capitalQuizSetup:
             CapitalQuizSetupScreen()
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Explore
+
+@MainActor
+private extension ScreenFactory {
+    @ViewBuilder
+    static func exploreView(for screen: Screen) -> some View {
+        switch screen {
         case .worldRecords:
             WorldRecordsScreen()
         case .learningPath:
             LearningPathScreen()
         case .mapPuzzle:
             MapPuzzleSetupScreen()
+        case .continentPicker:
+            ContinentPickerScreen()
+        case .continentStats(let continentName):
+            ContinentStatsScreen(continentName: continentName)
+        default:
+            EmptyView()
         }
     }
 }

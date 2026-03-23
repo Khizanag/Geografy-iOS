@@ -39,6 +39,7 @@ enum Sheet: Identifiable {
     // Travel
     case travelTracker
     case travelJournal
+    case travelBucketList
 
     // Badges & achievements
     case badges
@@ -92,6 +93,7 @@ enum Sheet: Identifiable {
         case .timeline: "timeline"
         case .travelTracker: "travelTracker"
         case .travelJournal: "travelJournal"
+        case .travelBucketList: "travelBucketList"
         case .badges: "badges"
         case .leaderboards: "leaderboards"
         case .achievements: "achievements"

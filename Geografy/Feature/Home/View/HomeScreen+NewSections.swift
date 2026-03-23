@@ -159,3 +159,39 @@ extension HomeScreen {
         }
     }
 }
+
+// MARK: - Continent Stats Section
+
+extension HomeScreen {
+    var continentStatsSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Continent Statistics")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeContinentStatsCard { coordinator.push(.continentPicker) }
+        }
+    }
+}
+
+// MARK: - Country Compare Section
+
+extension HomeScreen {
+    var countryCompareSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Country Comparison")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeCountryCompareCard { coordinator.present(.compare) }
+        }
+    }
+}
+
+// MARK: - Travel Bucket List Section
+
+extension HomeScreen {
+    var travelBucketListSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Travel Bucket List")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeTravelBucketListCard { coordinator.present(.travelBucketList) }
+        }
+    }
+}
