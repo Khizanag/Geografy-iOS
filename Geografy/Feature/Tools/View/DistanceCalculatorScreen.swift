@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct DistanceCalculatorScreen: View {
-    @Environment(CountryDataService.self) private var countryDataService
     @Environment(HapticsService.self) private var hapticsService
+
+    @State private var countryDataService = CountryDataService()
     @Environment(TabCoordinator.self) private var coordinator
 
     @State private var originCountry: Country?
@@ -33,15 +34,22 @@ struct DistanceCalculatorScreen: View {
                 CircleCloseButton { coordinator.dismissSheet() }
             }
         }
+        .task { countryDataService.loadCountries() }
         .sheet(isPresented: $showOriginPicker) {
-            CountryPickerSheet(title: "From Country") { country in
+            CountryPickerSheet(
+                title: "From Country",
+                countries: countryDataService.countries
+            ) { country in
                 hapticsService.selection()
                 originCountry = country
                 animateLine()
             }
         }
         .sheet(isPresented: $showDestinationPicker) {
-            CountryPickerSheet(title: "To Country") { country in
+            CountryPickerSheet(
+                title: "To Country",
+                countries: countryDataService.countries
+            ) { country in
                 hapticsService.selection()
                 destinationCountry = country
                 animateLine()
@@ -482,10 +490,10 @@ private struct DistanceMapView: View {
 // MARK: - Country Picker Sheet
 
 private struct CountryPickerSheet: View {
-    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.dismiss) private var dismiss
 
     let title: String
+    let countries: [Country]
     let onSelect: (Country) -> Void
 
     @State private var searchText = ""
@@ -522,7 +530,7 @@ private struct CountryPickerSheet: View {
     }
 
     private var filteredCountries: [Country] {
-        let all = countryDataService.countries
+        let all = countries
         guard !searchText.isEmpty else { return all }
         let query = searchText.lowercased()
         return all.filter {
