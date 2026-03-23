@@ -76,6 +76,19 @@ private extension HomeCountrySpotlightCard {
         HStack(spacing: DesignSystem.Spacing.md) {
             FlagView(countryCode: country.code, height: 68)
                 .geoShadow(.subtle)
+                .background {
+                    Ellipse()
+                        .fill(
+                            RadialGradient(
+                                colors: [continentColor.opacity(0.3), .clear],
+                                center: .center,
+                                startRadius: 0,
+                                endRadius: 60
+                            )
+                        )
+                        .frame(width: 120, height: 100)
+                        .blur(radius: 16)
+                }
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 Text(country.name)
                     .font(DesignSystem.Font.title2)
@@ -113,6 +126,18 @@ private extension HomeCountrySpotlightCard {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .lineLimit(1)
+        }
+    }
+
+    var continentColor: Color {
+        switch country.continent {
+        case .europe: DesignSystem.Color.blue
+        case .asia: DesignSystem.Color.accent
+        case .africa: DesignSystem.Color.orange
+        case .northAmerica: DesignSystem.Color.indigo
+        case .southAmerica: DesignSystem.Color.success
+        case .oceania: DesignSystem.Color.purple
+        case .antarctica: DesignSystem.Color.blue
         }
     }
 
