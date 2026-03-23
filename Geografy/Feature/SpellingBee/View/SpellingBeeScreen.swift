@@ -32,11 +32,6 @@ struct SpellingBeeScreen: View {
                     .padding(.top, DesignSystem.Spacing.lg)
                     .padding(.bottom, DesignSystem.Spacing.xxl)
                 }
-                .safeAreaInset(edge: .bottom) {
-                    submitButton
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .padding(.bottom, DesignSystem.Spacing.md)
-                }
             }
             .navigationTitle("Spelling Bee")
             .navigationBarTitleDisplayMode(.inline)
@@ -148,6 +143,7 @@ private extension SpellingBeeScreen {
 
         return LazyVGrid(
             columns: [GridItem(.adaptive(minimum: 32), spacing: DesignSystem.Spacing.xs)],
+            alignment: .center,
             spacing: DesignSystem.Spacing.xs
         ) {
             ForEach(
@@ -265,16 +261,6 @@ private extension SpellingBeeScreen {
         .disabled(isUsed)
     }
 
-    var submitButton: some View {
-        GlassButton(
-            "Submit",
-            systemImage: "checkmark",
-            fullWidth: true
-        ) {
-            submitAnswer()
-        }
-        .disabled(typedText.trimmingCharacters(in: .whitespaces).isEmpty)
-    }
 }
 
 // MARK: - Helpers
