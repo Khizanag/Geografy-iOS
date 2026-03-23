@@ -400,7 +400,7 @@ private extension SearchScreen {
         }
 
         let capitalMatches: [(Country, String)] = countryService.countries.flatMap { country in
-            guard !countryMatches.contains(where: { $0.code == country.code }) else { return [] }
+            guard !countryMatches.contains(where: { $0.code == country.code }) else { return [(Country, String)]() }
             return country.allCapitals.compactMap { capital in
                 let normalizedCapital = capital.name.folding(
                     options: [.caseInsensitive, .diacriticInsensitive],
