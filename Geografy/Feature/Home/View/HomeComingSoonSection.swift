@@ -50,7 +50,7 @@ private extension HomeComingSoonSection {
         HStack {
             SectionHeaderView(title: "Coming Soon")
             Spacer()
-            Text("Tap to vote!")
+            Text("Vote for what's next")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
