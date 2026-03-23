@@ -295,7 +295,7 @@ private extension HomeScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
                     .textCase(.uppercase)
                     .kerning(1.2)
-                Text("Explorer")
+                Text(authService.currentProfile?.displayName ?? "Explorer")
                     .font(DesignSystem.Font.largeTitle)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)

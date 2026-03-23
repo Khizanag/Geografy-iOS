@@ -16,9 +16,32 @@ final class HomeSectionOrderService {
             }
             sections = result
         } else {
-            sections = HomeSection.allCases.map { $0 }
+            sections = Self.curatedDefault
         }
     }
+
+    static let curatedDefault: [HomeSection] = {
+        let featured: [HomeSection] = [
+            .guestBanner,
+            .carousel,
+            .spotlight,
+            .streak,
+            .dailyChallenge,
+            .progress,
+            .capitalQuiz,
+            .flagGame,
+            .worldRecords,
+            .geoTrivia,
+            .organizations,
+            .spellingBee,
+            .countryCompare,
+            .travelBucketList,
+            .landmarkQuiz,
+            .comingSoon,
+        ]
+        let remaining = HomeSection.allCases.filter { !featured.contains($0) }
+        return featured + remaining
+    }()
 
     func reorder(to newOrder: [HomeSection]) {
         sections = newOrder
@@ -26,7 +49,7 @@ final class HomeSectionOrderService {
     }
 
     func reset() {
-        sections = HomeSection.allCases.map { $0 }
+        sections = Self.curatedDefault
         persist()
     }
 }
