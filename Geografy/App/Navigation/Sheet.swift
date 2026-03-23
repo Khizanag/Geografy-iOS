@@ -19,11 +19,15 @@ enum Sheet: Identifiable {
 
     // Play modes
     case quizSetup
+    case speedRunSetup
     case dailyChallenge
     case exploreGame
     case multiplayer
     case quizPacks
     case customQuiz
+
+    // Tools
+    case distanceCalculator
 
     // Explore
     case compare
@@ -55,6 +59,8 @@ enum Sheet: Identifiable {
         case .coinStore: "coinStore"
         case .paywall: "paywall"
         case .quizSetup: "quizSetup"
+        case .speedRunSetup: "speedRunSetup"
+        case .distanceCalculator: "distanceCalculator"
         case .dailyChallenge: "dailyChallenge"
         case .exploreGame: "exploreGame"
         case .multiplayer: "multiplayer"

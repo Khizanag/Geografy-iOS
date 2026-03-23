@@ -32,6 +32,9 @@ enum CoverFactory {
 
         case .historicalMap(let initialYear):
             HistoricalMapScreen(initialYear: initialYear)
+
+        case .speedRunSession(let region):
+            SpeedRunSessionScreen(region: region)
         }
     }
 }

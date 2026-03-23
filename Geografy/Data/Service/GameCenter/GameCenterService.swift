@@ -76,6 +76,13 @@ extension GameCenterService {
         static let totalXP = "com.khizanag.geografy.leaderboard.totalxp"
         static let quizHighScore = "com.khizanag.geografy.leaderboard.quizhighscore"
         static let countriesVisited = "com.khizanag.geografy.leaderboard.countriesvisited"
+        static let speedRunWorld = "com.khizanag.geografy.leaderboard.speedrun.world"
+        static let speedRunAfrica = "com.khizanag.geografy.leaderboard.speedrun.africa"
+        static let speedRunAsia = "com.khizanag.geografy.leaderboard.speedrun.asia"
+        static let speedRunEurope = "com.khizanag.geografy.leaderboard.speedrun.europe"
+        static let speedRunNorthAmerica = "com.khizanag.geografy.leaderboard.speedrun.northamerica"
+        static let speedRunSouthAmerica = "com.khizanag.geografy.leaderboard.speedrun.southamerica"
+        static let speedRunOceania = "com.khizanag.geografy.leaderboard.speedrun.oceania"
     }
 }
 
