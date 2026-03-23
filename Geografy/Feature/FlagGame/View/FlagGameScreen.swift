@@ -153,31 +153,9 @@ private extension FlagGameScreen {
     }
 
     var timerBar: some View {
-        GeometryReader { geometryReader in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                Capsule()
-                    .fill(timerBarColor)
-                    .frame(width: geometryReader.size.width * timerFraction)
-                    .animation(.linear(duration: 0.1), value: gameState.timeRemaining)
-            }
-        }
-        .frame(height: 6)
-    }
-
-    var timerFraction: CGFloat {
-        CGFloat(max(0, gameState.timeRemaining) / 60.0)
-    }
-
-    var timerBarColor: Color {
-        if gameState.timeRemaining > 30 {
-            DesignSystem.Color.success
-        } else if gameState.timeRemaining > 10 {
-            DesignSystem.Color.warning
-        } else {
-            DesignSystem.Color.error
-        }
+        SessionProgressBar(
+            progress: CGFloat(max(0, gameState.timeRemaining) / 60.0)
+        )
     }
 
     var flagGrid: some View {

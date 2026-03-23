@@ -159,26 +159,22 @@ private extension SheetFactory {
         case .flagGame:
             NavigationStack { FlagGameScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         case .geoTrivia:
             NavigationStack { GeoTriviaScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         case .spellingBee:
             NavigationStack { SpellingBeeScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         case .landmarkQuiz:
             NavigationStack { LandmarkQuizScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         default:
             EmptyView()
@@ -247,20 +243,17 @@ private extension SheetFactory {
         case .nationalSymbolsQuiz:
             NavigationStack { NationalSymbolsQuizScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         case .wordSearch:
             NavigationStack { WordSearchScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         case .borderChallenge:
             NavigationStack { BorderChallengeScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         default:
             EmptyView()
@@ -350,8 +343,7 @@ private extension SheetFactory {
         case .challengeRoom:
             NavigationStack { ChallengeSetupScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
 
         default:
             EmptyView()
