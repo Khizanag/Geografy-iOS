@@ -12,6 +12,19 @@ extension HomeScreen {
         default: EmptyView()
         }
     }
+
+    @ViewBuilder
+    func newFeatureSectionView(for section: HomeSection) -> some View {
+        switch section {
+        case .cultureExplorer: cultureExplorerSection
+        case .landmarkGallery: landmarkGallerySection
+        case .geoQuotes: geoQuotesSection
+        case .nationalSymbolsQuiz: nationalSymbolsQuizSection
+        case .mapColoring: mapColoringSection
+        case .countryNicknames: countryNicknamesSection
+        default: discoverSectionView(for: section)
+        }
+    }
 }
 
 // MARK: - World Records Section
@@ -278,6 +291,78 @@ extension HomeScreen {
             SectionHeaderView(title: "Geography Features")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeGeographyFeaturesCard { coordinator.push(.geographyFeatures) }
+        }
+    }
+}
+
+// MARK: - Culture Explorer Section
+
+extension HomeScreen {
+    var cultureExplorerSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Culture Explorer")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeCultureExplorerCard { coordinator.push(.cultureExplorer) }
+        }
+    }
+}
+
+// MARK: - Landmark Gallery Section
+
+extension HomeScreen {
+    var landmarkGallerySection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Landmark Gallery")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeLandmarkGalleryCard { coordinator.push(.landmarkGallery) }
+        }
+    }
+}
+
+// MARK: - Geo Quotes Section
+
+extension HomeScreen {
+    var geoQuotesSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Geo Quotes")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeGeoQuotesCard { coordinator.present(.geoQuotes) }
+        }
+    }
+}
+
+// MARK: - National Symbols Quiz Section
+
+extension HomeScreen {
+    var nationalSymbolsQuizSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "National Symbols Quiz")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeNationalSymbolsCard { coordinator.present(.nationalSymbolsQuiz) }
+        }
+    }
+}
+
+// MARK: - Map Coloring Section
+
+extension HomeScreen {
+    var mapColoringSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Map Coloring Book")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeMapColoringCard { coordinator.push(.mapColoring) }
+        }
+    }
+}
+
+// MARK: - Country Nicknames Section
+
+extension HomeScreen {
+    var countryNicknamesSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Country Nicknames")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeCountryNicknamesCard { coordinator.present(.countryNicknames) }
         }
     }
 }

@@ -15,7 +15,8 @@ enum SheetFactory {
             playView(for: sheet)
 
         case .distanceCalculator, .currencyConverter, .timeZones,
-             .compare, .timeline, .travelTracker, .travelJournal, .travelBucketList:
+             .compare, .timeline, .travelTracker, .travelJournal, .travelBucketList,
+             .nationalSymbolsQuiz:
             exploreView(for: sheet)
 
         case .badges, .leaderboards, .achievements, .themes, .settings,
@@ -24,6 +25,9 @@ enum SheetFactory {
 
         case .challengeRoom:
             challengeView(for: sheet)
+
+        case .geoQuotes, .countryNicknames:
+            discoverView(for: sheet)
         }
     }
 }
@@ -191,6 +195,10 @@ private extension SheetFactory {
             NavigationStack { TravelBucketListScreen() }
                 .presentationDetents([.large])
 
+        case .nationalSymbolsQuiz:
+            NavigationStack { NationalSymbolsQuizScreen() }
+                .presentationDetents([.large])
+
         default:
             EmptyView()
         }
@@ -261,6 +269,26 @@ private extension SheetFactory {
         switch sheet {
         case .challengeRoom:
             NavigationStack { ChallengeSetupScreen() }
+                .presentationDetents([.large])
+
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Discover
+
+private extension SheetFactory {
+    @ViewBuilder
+    static func discoverView(for sheet: Sheet) -> some View {
+        switch sheet {
+        case .geoQuotes:
+            NavigationStack { GeoQuotesScreen() }
+                .presentationDetents([.large])
+
+        case .countryNicknames:
+            NavigationStack { CountryNicknamesScreen() }
                 .presentationDetents([.large])
 
         default:

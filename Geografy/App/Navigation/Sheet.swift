@@ -63,6 +63,13 @@ enum Sheet: Identifiable {
     // Challenge
     case challengeRoom
 
+    // Culture & Discovery
+    case geoQuotes
+    case countryNicknames
+
+    // Games & Quizzes
+    case nationalSymbolsQuiz
+
     // App
     case achievements
     case themes
@@ -111,6 +118,9 @@ enum Sheet: Identifiable {
         case .landmarkQuiz: "landmarkQuiz"
         case .geoFeed: "geoFeed"
         case .challengeRoom: "challengeRoom"
+        case .geoQuotes: "geoQuotes"
+        case .countryNicknames: "countryNicknames"
+        case .nationalSymbolsQuiz: "nationalSymbolsQuiz"
         }
     }
 }
