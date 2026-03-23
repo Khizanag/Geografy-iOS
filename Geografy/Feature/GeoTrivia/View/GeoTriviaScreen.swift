@@ -1,0 +1,338 @@
+import SwiftUI
+
+struct GeoTriviaScreen: View {
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var countryDataService = CountryDataService()
+    @State private var questions: [GeoTriviaQuestion] = []
+    @State private var currentIndex = 0
+    @State private var streak = 0
+    @State private var totalAnswered = 0
+    @State private var totalCorrect = 0
+    @State private var cardOffset: CGFloat = 0
+    @State private var cardRotation: Double = 0
+    @State private var swipeHint: SwipeHint = .none
+    @State private var showExplanation = false
+    @State private var lastAnswerWasCorrect: Bool?
+    @State private var isAnimating = false
+
+    private let service = GeoTriviaService()
+
+    var body: some View {
+        ZStack {
+            backgroundView
+            if questions.isEmpty {
+                loadingView
+            } else if currentIndex >= questions.count {
+                completionView
+            } else {
+                gameContent
+            }
+        }
+        .navigationBarHidden(true)
+        .onAppear {
+            countryDataService.loadCountries()
+            loadQuestions()
+        }
+    }
+}
+
+// MARK: - Subviews
+
+private extension GeoTriviaScreen {
+    var backgroundView: some View {
+        DesignSystem.Color.background
+            .ignoresSafeArea()
+    }
+
+    var loadingView: some View {
+        ProgressView()
+            .tint(DesignSystem.Color.accent)
+    }
+
+    var completionView: some View {
+        VStack(spacing: DesignSystem.Spacing.xl) {
+            Spacer()
+            Image(systemName: "checkmark.seal.fill")
+                .font(.system(size: 60))
+                .foregroundStyle(DesignSystem.Color.success)
+            Text("All Done!")
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.xl) {
+                    completionStat(value: "\(totalCorrect)/\(totalAnswered)", label: "Correct")
+                    Divider().frame(height: 40)
+                    completionStat(value: "\(streak)", label: "Best Streak")
+                }
+                .padding(DesignSystem.Spacing.lg)
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            Spacer()
+            Button { dismiss() } label: {
+                Text("Done")
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, DesignSystem.Spacing.md)
+            }
+            .buttonStyle(.glass)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xl)
+        }
+    }
+
+    func completionStat(value: String, label: String) -> some View {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
+            Text(value)
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text(label)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    var gameContent: some View {
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            topBar
+            Spacer()
+            cardStack
+            swipeLabels
+            Spacer()
+            instructionLabel
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.lg)
+    }
+
+    var topBar: some View {
+        HStack {
+            dismissButton
+            Spacer()
+            streakBadge
+            Spacer()
+            progressLabel
+        }
+    }
+
+    var dismissButton: some View {
+        Button { dismiss() } label: {
+            Image(systemName: "xmark")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .padding(DesignSystem.Spacing.xs)
+                .background(DesignSystem.Color.cardBackground, in: Circle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    var streakBadge: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: "flame.fill")
+                .foregroundStyle(DesignSystem.Color.orange)
+            Text("\(streak)")
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .contentTransition(.numericText())
+        }
+        .font(DesignSystem.Font.subheadline)
+        .padding(.horizontal, DesignSystem.Spacing.sm)
+        .padding(.vertical, DesignSystem.Spacing.xxs)
+        .background(DesignSystem.Color.cardBackground, in: Capsule())
+    }
+
+    var progressLabel: some View {
+        Text("\(currentIndex + 1)/\(questions.count)")
+            .font(DesignSystem.Font.caption)
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .frame(minWidth: 40, alignment: .trailing)
+    }
+
+    var cardStack: some View {
+        ZStack {
+            if currentIndex + 1 < questions.count {
+                triviaCard(for: questions[currentIndex + 1], isBack: true)
+                    .scaleEffect(0.92)
+                    .offset(y: 12)
+            }
+            triviaCard(for: questions[currentIndex], isBack: false)
+                .offset(x: cardOffset)
+                .rotationEffect(.degrees(cardRotation))
+                .gesture(dragGesture)
+        }
+    }
+
+    func triviaCard(for question: GeoTriviaQuestion, isBack: Bool) -> some View {
+        CardView {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                Text(question.statement)
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(6)
+                    .minimumScaleFactor(0.7)
+                    .padding(.horizontal, DesignSystem.Spacing.xs)
+
+                if showExplanation, !isBack, let correct = lastAnswerWasCorrect {
+                    Divider()
+                    explanationView(for: question, wasCorrect: correct)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(DesignSystem.Spacing.xl)
+        }
+        .overlay(swipeOverlay(isBack: isBack))
+        .frame(maxWidth: .infinity)
+        .frame(height: 260)
+    }
+
+    func swipeOverlay(isBack: Bool) -> some View {
+        Group {
+            if !isBack {
+                ZStack {
+                    if swipeHint == .trueSwipe {
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                            .stroke(DesignSystem.Color.success, lineWidth: 3)
+                    } else if swipeHint == .falseSwipe {
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                            .stroke(DesignSystem.Color.error, lineWidth: 3)
+                    }
+                }
+            }
+        }
+    }
+
+    func explanationView(for question: GeoTriviaQuestion, wasCorrect: Bool) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: wasCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .foregroundStyle(wasCorrect ? DesignSystem.Color.success : DesignSystem.Color.error)
+            Text(question.explanation)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(3)
+        }
+    }
+
+    var swipeLabels: some View {
+        HStack {
+            swipeLabel(text: "FALSE", color: DesignSystem.Color.error, opacity: falseOpacity)
+            Spacer()
+            swipeLabel(text: "TRUE", color: DesignSystem.Color.success, opacity: trueOpacity)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.xl)
+    }
+
+    func swipeLabel(text: String, color: Color, opacity: Double) -> some View {
+        Text(text)
+            .font(DesignSystem.Font.headline)
+            .fontWeight(.black)
+            .foregroundStyle(color)
+            .opacity(opacity)
+    }
+
+    var trueOpacity: Double {
+        guard cardOffset > 0 else { return 0 }
+        return min(1, cardOffset / 80)
+    }
+
+    var falseOpacity: Double {
+        guard cardOffset < 0 else { return 0 }
+        return min(1, -cardOffset / 80)
+    }
+
+    var instructionLabel: some View {
+        Text("Swipe right for TRUE · Swipe left for FALSE")
+            .font(DesignSystem.Font.caption)
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+    }
+}
+
+// MARK: - Drag Gesture
+
+private extension GeoTriviaScreen {
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                guard !isAnimating, !showExplanation else { return }
+                cardOffset = value.translation.width
+                cardRotation = value.translation.width / 20
+                let xOffset = value.translation.width
+                swipeHint = xOffset > 20 ? .trueSwipe : xOffset < -20 ? .falseSwipe : .none
+            }
+            .onEnded { value in
+                guard !isAnimating else { return }
+                let threshold: CGFloat = 80
+                if value.translation.width > threshold {
+                    commitAnswer(answeredTrue: true)
+                } else if value.translation.width < -threshold {
+                    commitAnswer(answeredTrue: false)
+                } else {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                        cardOffset = 0
+                        cardRotation = 0
+                        swipeHint = .none
+                    }
+                }
+            }
+    }
+}
+
+// MARK: - Actions
+
+private extension GeoTriviaScreen {
+    func loadQuestions() {
+        let generated = service.generateQuestions(from: countryDataService.countries)
+        questions = Array(generated.prefix(30))
+    }
+
+    func commitAnswer(answeredTrue: Bool) {
+        guard currentIndex < questions.count else { return }
+        isAnimating = true
+        let question = questions[currentIndex]
+        let isCorrect = answeredTrue == question.isTrue
+        lastAnswerWasCorrect = isCorrect
+        totalAnswered += 1
+
+        if isCorrect {
+            totalCorrect += 1
+            streak += 1
+        } else {
+            streak = 0
+        }
+
+        showExplanation = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            let direction: CGFloat = answeredTrue ? 500 : -500
+            withAnimation(.easeIn(duration: 0.25)) {
+                cardOffset = direction
+                cardRotation = answeredTrue ? 20 : -20
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                currentIndex += 1
+                cardOffset = 0
+                cardRotation = 0
+                swipeHint = .none
+                showExplanation = false
+                lastAnswerWasCorrect = nil
+                isAnimating = false
+            }
+        }
+    }
+}
+
+// MARK: - SwipeHint
+
+private extension GeoTriviaScreen {
+    enum SwipeHint: Equatable {
+        case none
+        case trueSwipe
+        case falseSwipe
+    }
+}

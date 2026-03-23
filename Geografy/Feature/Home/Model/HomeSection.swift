@@ -11,6 +11,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case worldRecords
     case organizations
     case progress
+    case flagGame
+    case geoTrivia
+    case spellingBee
     case comingSoon
 
     var id: String { rawValue }
@@ -27,6 +30,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .worldRecords: "World Records"
         case .organizations: "Organizations"
         case .progress: "Statistics"
+        case .flagGame: "Flag Matching"
+        case .geoTrivia: "Geo Trivia"
+        case .spellingBee: "Spelling Bee"
         case .comingSoon: "Coming Soon"
         }
     }
@@ -43,6 +49,9 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .worldRecords: "trophy.fill"
         case .organizations: "building.2.fill"
         case .progress: "chart.bar.fill"
+        case .flagGame: "flag.fill"
+        case .geoTrivia: "checkmark.circle.fill"
+        case .spellingBee: "pencil.and.list.clipboard"
         case .comingSoon: "sparkles"
         }
     }

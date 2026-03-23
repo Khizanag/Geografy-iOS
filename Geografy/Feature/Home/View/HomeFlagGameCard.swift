@@ -1,0 +1,69 @@
+import SwiftUI
+
+struct HomeFlagGameCard: View {
+    @Environment(HapticsService.self) private var hapticsService
+
+    let onTap: () -> Void
+
+    var body: some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                gameIcon
+                gameInfo
+                Spacer()
+                playButton
+            }
+            .padding(DesignSystem.Spacing.md)
+        }
+        .onTapGesture {
+            hapticsService.impact(.medium)
+            onTap()
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+}
+
+// MARK: - Subviews
+
+private extension HomeFlagGameCard {
+    var gameIcon: some View {
+        ZStack {
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.orange.opacity(0.25), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 32
+                    )
+                )
+                .frame(width: 56, height: 56)
+            Image(systemName: "flag.fill")
+                .font(.system(size: 24))
+                .foregroundStyle(DesignSystem.Color.orange)
+        }
+    }
+
+    var gameInfo: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Flag Matching")
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text("Match flags to countries in 60 seconds")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
+        }
+    }
+
+    var playButton: some View {
+        Text("Play")
+            .font(DesignSystem.Font.subheadline)
+            .fontWeight(.bold)
+            .foregroundStyle(DesignSystem.Color.onAccent)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.xs)
+            .background(DesignSystem.Color.orange, in: Capsule())
+    }
+}

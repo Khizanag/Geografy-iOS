@@ -50,6 +50,11 @@ enum Sheet: Identifiable {
     // Study
     case srsStudy
 
+    // Games
+    case flagGame
+    case geoTrivia
+    case spellingBee
+
     // App
     case achievements
     case themes
@@ -91,6 +96,9 @@ enum Sheet: Identifiable {
         case .sectionEditor: "sectionEditor"
         case .friends: "friends"
         case .srsStudy: "srsStudy"
+        case .flagGame: "flagGame"
+        case .geoTrivia: "geoTrivia"
+        case .spellingBee: "spellingBee"
         }
     }
 }

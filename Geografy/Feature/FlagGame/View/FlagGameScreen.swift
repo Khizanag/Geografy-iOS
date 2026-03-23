@@ -1,0 +1,347 @@
+import SwiftUI
+
+struct FlagGameScreen: View {
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var countryDataService = CountryDataService()
+    @State private var gameState = FlagGameState()
+    @State private var targetCountry: Country?
+    @State private var options: [Country] = []
+    @State private var selectedAnswer: Country?
+    @State private var feedbackState: FeedbackState = .none
+    @State private var timer: Timer?
+    @State private var blobAnimating = false
+
+    var body: some View {
+        ZStack {
+            backgroundView
+            if gameState.isFinished || (!gameState.isActive && gameState.roundNumber > 0) {
+                FlagGameResultScreen(
+                    score: gameState.score,
+                    answeredCountries: gameState.answeredCountries,
+                    onPlayAgain: restartGame,
+                    onDismiss: { dismiss() }
+                )
+            } else {
+                gameContent
+            }
+        }
+        .navigationBarHidden(true)
+        .onAppear {
+            countryDataService.loadCountries()
+            startGame()
+        }
+        .onDisappear { stopTimer() }
+    }
+}
+
+// MARK: - Subviews
+
+private extension FlagGameScreen {
+    var backgroundView: some View {
+        DesignSystem.Color.background
+            .ignoresSafeArea()
+            .overlay {
+                ZStack {
+                    Ellipse()
+                        .fill(
+                            RadialGradient(
+                                colors: [DesignSystem.Color.orange.opacity(0.20), .clear],
+                                center: .center,
+                                startRadius: 0,
+                                endRadius: 220
+                            )
+                        )
+                        .frame(width: 440, height: 340)
+                        .blur(radius: 44)
+                        .offset(x: -80, y: -200)
+                        .scaleEffect(blobAnimating ? 1.10 : 0.90)
+                    Ellipse()
+                        .fill(
+                            RadialGradient(
+                                colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                                center: .center,
+                                startRadius: 0,
+                                endRadius: 200
+                            )
+                        )
+                        .frame(width: 400, height: 320)
+                        .blur(radius: 48)
+                        .offset(x: 160, y: 300)
+                        .scaleEffect(blobAnimating ? 0.88 : 1.10)
+                }
+                .allowsHitTesting(false)
+            }
+    }
+
+    var gameContent: some View {
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            topBar
+            countryNameCard
+            flagGrid
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.top, DesignSystem.Spacing.lg)
+    }
+
+    var topBar: some View {
+        HStack {
+            dismissButton
+            Spacer()
+            scoreLabel
+            Spacer()
+            livesView
+        }
+    }
+
+    var dismissButton: some View {
+        Button { dismiss() } label: {
+            Image(systemName: "xmark")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .padding(DesignSystem.Spacing.xs)
+                .background(DesignSystem.Color.cardBackground, in: Circle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    var scoreLabel: some View {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
+            Text("\(gameState.score)")
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .contentTransition(.numericText())
+            Text("Score")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+        }
+    }
+
+    var livesView: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            ForEach(0..<3, id: \.self) { index in
+                Image(systemName: index < gameState.lives ? "heart.fill" : "heart")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(
+                        index < gameState.lives
+                            ? DesignSystem.Color.error
+                            : DesignSystem.Color.textTertiary
+                    )
+            }
+        }
+        .frame(minWidth: 60, alignment: .trailing)
+    }
+
+    var countryNameCard: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            timerBar
+            CardView {
+                VStack(spacing: DesignSystem.Spacing.xs) {
+                    Text("Which flag belongs to?")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                    Text(targetCountry?.name ?? " ")
+                        .font(DesignSystem.Font.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.6)
+                        .lineLimit(2)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.md)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+            }
+        }
+    }
+
+    var timerBar: some View {
+        GeometryReader { geometryReader in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                Capsule()
+                    .fill(timerBarColor)
+                    .frame(width: geometryReader.size.width * timerFraction)
+                    .animation(.linear(duration: 0.1), value: gameState.timeRemaining)
+            }
+        }
+        .frame(height: 6)
+    }
+
+    var timerFraction: CGFloat {
+        CGFloat(max(0, gameState.timeRemaining) / 60.0)
+    }
+
+    var timerBarColor: Color {
+        if gameState.timeRemaining > 30 {
+            DesignSystem.Color.success
+        } else if gameState.timeRemaining > 10 {
+            DesignSystem.Color.warning
+        } else {
+            DesignSystem.Color.error
+        }
+    }
+
+    var flagGrid: some View {
+        let columns = [
+            GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+            GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+        ]
+        return LazyVGrid(
+            columns: columns,
+            spacing: DesignSystem.Spacing.sm
+        ) {
+            ForEach(options) { country in
+                flagCard(for: country)
+            }
+        }
+    }
+
+    func flagCard(for country: Country) -> some View {
+        let state = cardFeedbackState(for: country)
+        return CardView {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                FlagView(countryCode: country.code, height: 56)
+                    .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                Text(country.name)
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(state == .none ? DesignSystem.Color.textSecondary : DesignSystem.Color.onAccent)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.7)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.md)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
+            .background(cardOverlayColor(for: state))
+        }
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .stroke(cardStrokeColor(for: state), lineWidth: state == .none ? 0 : 2)
+        )
+        .scaleEffect(state == .correct ? 1.04 : 1.0)
+        .animation(.spring(response: 0.25, dampingFraction: 0.6), value: state)
+        .onTapGesture {
+            guard feedbackState == .none else { return }
+            handleAnswer(country)
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    func cardFeedbackState(for country: Country) -> FeedbackState {
+        guard let selected = selectedAnswer else { return .none }
+        if country.id == targetCountry?.id { return .correct }
+        if country.id == selected.id { return .wrong }
+        return .none
+    }
+
+    func cardOverlayColor(for state: FeedbackState) -> Color {
+        switch state {
+        case .none: DesignSystem.Color.cardBackground
+        case .correct: DesignSystem.Color.success.opacity(0.85)
+        case .wrong: DesignSystem.Color.error.opacity(0.85)
+        }
+    }
+
+    func cardStrokeColor(for state: FeedbackState) -> Color {
+        switch state {
+        case .none: .clear
+        case .correct: DesignSystem.Color.success
+        case .wrong: DesignSystem.Color.error
+        }
+    }
+}
+
+// MARK: - Actions
+
+private extension FlagGameScreen {
+    func startGame() {
+        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+            blobAnimating = true
+        }
+        gameState = FlagGameState()
+        loadNextQuestion()
+        startTimer()
+    }
+
+    func restartGame() {
+        stopTimer()
+        startGame()
+    }
+
+    func loadNextQuestion() {
+        let countries = countryDataService.countries.filter { !$0.code.isEmpty }
+        guard countries.count >= 4 else { return }
+        let target = countries.randomElement()!
+        var pool = countries.filter { $0.id != target.id }.shuffled()
+        let distractors = Array(pool.prefix(3))
+        let shuffled = ([target] + distractors).shuffled()
+        targetCountry = target
+        options = shuffled
+        selectedAnswer = nil
+        feedbackState = .none
+        gameState.roundNumber += 1
+    }
+
+    func handleAnswer(_ country: Country) {
+        selectedAnswer = country
+        let isCorrect = country.id == targetCountry?.id
+        feedbackState = isCorrect ? .correct : .wrong
+
+        if isCorrect {
+            withAnimation(.spring()) {
+                gameState.score += 10
+            }
+            if let target = targetCountry {
+                gameState.answeredCountries.append(target)
+            }
+        } else {
+            withAnimation(.spring()) {
+                gameState.lives -= 1
+            }
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            if !gameState.isActive {
+                stopTimer()
+                gameState.isFinished = true
+            } else {
+                loadNextQuestion()
+            }
+        }
+    }
+
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            guard gameState.isActive else {
+                stopTimer()
+                gameState.isFinished = true
+                return
+            }
+            gameState.timeRemaining = max(0, gameState.timeRemaining - 0.1)
+            if gameState.timeRemaining <= 0 {
+                stopTimer()
+                gameState.isFinished = true
+            }
+        }
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+}
+
+// MARK: - Feedback State
+
+private extension FlagGameScreen {
+    enum FeedbackState: Equatable {
+        case none
+        case correct
+        case wrong
+    }
+}

@@ -157,6 +157,18 @@ enum SheetFactory {
         case .srsStudy:
             NavigationStack { SRSStudyScreen() }
                 .presentationDetents([.large])
+
+        case .flagGame:
+            NavigationStack { FlagGameScreen() }
+                .presentationDetents([.large])
+
+        case .geoTrivia:
+            NavigationStack { GeoTriviaScreen() }
+                .presentationDetents([.large])
+
+        case .spellingBee:
+            NavigationStack { SpellingBeeScreen() }
+                .presentationDetents([.large])
         }
     }
 }
