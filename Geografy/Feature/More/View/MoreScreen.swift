@@ -5,12 +5,14 @@ struct MoreScreen: View {
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var blobAnimating = false
+    @State private var searchText = ""
 
     var body: some View {
         itemList
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("More")
             .navigationBarTitleDisplayMode(.large)
+            .searchable(text: $searchText, prompt: "Find a feature…")
             .onAppear {
                 withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                     blobAnimating = true
@@ -113,17 +115,52 @@ private extension MoreScreen {
 
     var itemList: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                hubSection(title: "You", items: youItems)
-                hubSection(title: "Play", items: playItems)
-                hubSection(title: "Explore", items: exploreItems)
-                hubSection(title: "Travel", items: travelItems)
-                hubSection(title: "App", items: appItems)
+            if isSearching {
+                searchResults
+            } else {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                    hubSection(title: "You", items: youItems)
+                    hubSection(title: "Play", items: playItems)
+                    hubSection(title: "Explore", items: exploreItems)
+                    hubSection(title: "Travel", items: travelItems)
+                    hubSection(title: "App", items: appItems)
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                .background(alignment: .top) { scrollableBlobs }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(alignment: .top) { scrollableBlobs }
         }
+    }
+
+    var isSearching: Bool {
+        !searchText.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    var filteredItems: [MoreSheet] {
+        let query = searchText.lowercased()
+        let allItems = youItems + playItems + exploreItems + travelItems + appItems
+        return allItems.filter {
+            $0.label.lowercased().contains(query) ||
+            $0.subtitle.lowercased().contains(query)
+        }
+    }
+
+    var searchResults: some View {
+        LazyVGrid(
+            columns: [
+                GridItem(
+                    .adaptive(minimum: 120),
+                    spacing: DesignSystem.Spacing.sm
+                ),
+            ],
+            spacing: DesignSystem.Spacing.sm
+        ) {
+            ForEach(filteredItems, id: \.id) { sheet in
+                gridTile(for: sheet)
+            }
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 
     func hubSection(title: String, items: [MoreSheet]) -> some View {
