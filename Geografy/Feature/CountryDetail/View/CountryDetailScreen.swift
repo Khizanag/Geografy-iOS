@@ -31,6 +31,7 @@ struct CountryDetailScreen: View {
             .background(DesignSystem.Color.background)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { favoriteToolbarItem }
+            .toolbar { compareToolbarItem }
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
@@ -76,12 +77,14 @@ private extension CountryDetailScreen {
         case travelPicker
         case paywall
         case info(InfoItem)
+        case compare
 
         var id: String {
             switch self {
             case .travelPicker: "travelPicker"
             case .paywall: "paywall"
             case .info(let item): "info-\(item.id)"
+            case .compare: "compare"
             }
         }
     }
@@ -105,6 +108,9 @@ private extension CountryDetailScreen {
             PaywallScreen()
         case .info(let item):
             propertyDetailSheet(for: item)
+        case .compare:
+            NavigationStack { CompareScreen(preselectedCountry: country) }
+                .presentationDetents([.large])
         }
     }
 }
@@ -128,6 +134,19 @@ private extension CountryDetailScreen {
                             : DesignSystem.Color.iconPrimary
                     )
                     .symbolEffect(.bounce, value: favoritesService.isFavorite(code: country.code))
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    var compareToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                hapticsService.impact(.light)
+                activeSheet = .compare
+            } label: {
+                Image(systemName: "arrow.left.arrow.right")
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
         }
     }

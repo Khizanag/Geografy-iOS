@@ -6,14 +6,40 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3D4E5F6A7B8C9DAEBFC0D1E2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E5F60718293A4B5C6D7E8F90 /* Geografy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geografy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GeografyWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A1B2C3D4E5F60718293A4B5C /* Geografy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Geografy;
+			sourceTree = "<group>";
+		};
+		5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GeografyWidgets;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -24,6 +50,12 @@
 			files = (
 			);
 		};
+		8E9F0A1B2C3D4E5F6A7B8C9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */,
+			);
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -31,6 +63,9 @@
 			isa = PBXGroup;
 			children = (
 				A1B2C3D4E5F60718293A4B5C /* Geografy */,
+				5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */,
+				F10203040506070809101112 /* Frameworks */,
+				D4E5F60718293A4B5C6D7E8F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -38,8 +73,17 @@
 			isa = PBXGroup;
 			children = (
 				E5F60718293A4B5C6D7E8F90 /* Geografy.app */,
+				4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F10203040506070809101112 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -52,6 +96,7 @@
 				1829A3B4C5D6E7F8091A2B3C /* Sources */,
 				B2C3D4E5F60718293A4B5C6D /* Frameworks */,
 				29A3B4C5D6E7F8091A2B3C4D /* Resources */,
+				3D4E5F6A7B8C9DAEBFC0D1E2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -62,6 +107,24 @@
 			productName = Geografy;
 			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
 			productType = "com.apple.product-type.application";
+		};
+		AA5566778899001122334455 /* GeografyWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA8899001122334455667788 /* Build configuration list for PBXNativeTarget "GeografyWidgets" */;
+			buildPhases = (
+				AA2233445566778899001122 /* Sources */,
+				8E9F0A1B2C3D4E5F6A7B8C9D /* Frameworks */,
+				AA3344556677889900112233 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */,
+			);
+			name = GeografyWidgets;
+			productName = GeografyWidgets;
+			productReference = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -74,6 +137,9 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					F60718293A4B5C6D7E8F9001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					AA5566778899001122334455 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
@@ -93,6 +159,7 @@
 			projectRoot = "";
 			targets = (
 				F60718293A4B5C6D7E8F9001 /* Geografy */,
+				AA5566778899001122334455 /* GeografyWidgets */,
 			);
 		};
 /* End PBXProject section */
@@ -103,10 +170,20 @@
 			files = (
 			);
 		};
+		AA3344556677889900112233 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1829A3B4C5D6E7F8091A2B3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		AA2233445566778899001122 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
 			);
@@ -291,6 +368,58 @@
 			};
 			name = Release;
 		};
+		AA6677889900112233445566 /* Debug configuration for PBXNativeTarget "GeografyWidgets" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GeografyWidgets/GeografyWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 622JHLJRAK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Geografy Widgets";
+				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA7788990011223344556677 /* Release configuration for PBXNativeTarget "GeografyWidgets" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GeografyWidgets/GeografyWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 622JHLJRAK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Geografy Widgets";
+				INFOPLIST_KEY_NSExtensionPointIdentifier = "com.apple.widgetkit-extension";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -307,6 +436,14 @@
 			buildConfigurations = (
 				C5D6E7F8091A2B3C4D5E6F70 /* Debug configuration for PBXProject "Geografy" */,
 				D6E7F8091A2B3C4D5E6F7081 /* Release configuration for PBXProject "Geografy" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		AA8899001122334455667788 /* Build configuration list for PBXNativeTarget "GeografyWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA6677889900112233445566 /* Debug configuration for PBXNativeTarget "GeografyWidgets" */,
+				AA7788990011223344556677 /* Release configuration for PBXNativeTarget "GeografyWidgets" */,
 			);
 			defaultConfigurationName = Release;
 		};
