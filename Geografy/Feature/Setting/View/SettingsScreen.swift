@@ -7,6 +7,7 @@ struct SettingsScreen: View {
 
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
+    @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
     @AppStorage("showCorrectAnswer") private var showCorrectAnswer = true
     @AppStorage("hideDependentTerritories") private var hideDependentTerritories = false
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
@@ -290,6 +291,15 @@ private extension SettingsScreen {
                 iconColor: Color(hex: "00C9A7"),
                 title: "Haptic feedback",
                 isOn: $hapticFeedbackEnabled
+            )
+
+            settingsDivider
+
+            SettingsToggleRow(
+                icon: "speaker.wave.2.fill",
+                iconColor: DesignSystem.Color.blue,
+                title: "Pronunciation",
+                isOn: $pronunciationEnabled
             )
         }
     }

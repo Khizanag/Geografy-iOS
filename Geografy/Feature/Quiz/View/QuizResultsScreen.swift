@@ -6,6 +6,7 @@ struct QuizResultsScreen: View {
     @Environment(AchievementService.self) private var achievementService
     @Environment(DatabaseManager.self) private var database
     @Environment(GameCenterService.self) private var gameCenterService
+    @Environment(PronunciationService.self) private var pronunciationService
 
     let result: QuizResult
     let onPlayAgain: () -> Void
@@ -131,6 +132,12 @@ private extension QuizResultsScreen {
                     .font(DesignSystem.Font.body)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(1)
+
+                SpeakerButton(
+                    text: answer.question.correctCountry.name,
+                    countryCode: answer.question.correctCountry.code
+                )
+                .scaleEffect(0.85)
 
                 Spacer()
 

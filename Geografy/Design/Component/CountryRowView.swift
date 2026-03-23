@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CountryRowView: View {
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(PronunciationService.self) private var pronunciationService
 
     let country: Country
     let isFavorite: Bool
@@ -9,6 +10,7 @@ struct CountryRowView: View {
     var showCapital: Bool = true
     var showStats: Bool = true
     var showContinent: Bool = true
+    var showSpeaker: Bool = false
     var onFavoriteTap: (() -> Void)?
 
     var body: some View {
@@ -116,6 +118,10 @@ private extension CountryRowView {
         HStack(alignment: .center, spacing: DesignSystem.Spacing.sm) {
             if showContinent {
                 continentBadge
+            }
+            if showSpeaker {
+                SpeakerButton(text: country.name, countryCode: country.code)
+                    .scaleEffect(0.8)
             }
             favoriteIcon
         }

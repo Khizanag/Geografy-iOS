@@ -18,6 +18,7 @@ struct GeografyApp: App {
     @State private var flashcardService = FlashcardService()
     @State private var subscriptionService = SubscriptionService()
     @State private var worldBankService = WorldBankService()
+    @State private var pronunciationService = PronunciationService()
 
     init() {
         let db = DatabaseManager()
@@ -50,6 +51,7 @@ struct GeografyApp: App {
                 .environment(flashcardService)
                 .environment(subscriptionService)
                 .environment(worldBankService)
+                .environment(pronunciationService)
                 .task { await authService.validateOnLaunch() }
                 .task { await subscriptionService.checkEntitlements() }
                 .task { gameCenterService.authenticatePlayer() }

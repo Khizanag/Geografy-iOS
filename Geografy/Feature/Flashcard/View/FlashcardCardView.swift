@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct FlashcardCardView: View {
+    @Environment(PronunciationService.self) private var pronunciationService
+
     let card: FlashcardItem
     let isFlipped: Bool
     let onTap: () -> Void
@@ -44,6 +46,9 @@ private extension FlashcardCardView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 answerLabel
                 backContent
+                if !card.backText.isEmpty {
+                    SpeakerButton(text: card.backText, countryCode: card.countryCode)
+                }
                 swipeHint
             }
             .padding(DesignSystem.Spacing.lg)

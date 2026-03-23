@@ -8,6 +8,7 @@ struct CountryDetailScreen: View {
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) var hapticsService
     @Environment(WorldBankService.self) private var worldBankService
+    @Environment(PronunciationService.self) private var pronunciationService
 
     @Namespace private var flagNamespace
 
@@ -154,9 +155,12 @@ private extension CountryDetailScreen {
                 }
                 .buttonStyle(.plain)
 
-                Text(country.name)
-                    .font(DesignSystem.Font.title)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Text(country.name)
+                        .font(DesignSystem.Font.title)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    SpeakerButton(text: country.name, countryCode: country.code)
+                }
 
                 Button {
                     activeSheet = .info(
@@ -197,23 +201,29 @@ private extension CountryDetailScreen {
     var quickFactsCard: some View {
         CardView {
             HStack(spacing: 0) {
-                Button {
-                    activeSheet = .info(
-                        InfoItem(
-                            icon: "mappin.and.ellipse",
-                            title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
-                            value: capitalInfoValue,
-                            supportsMap: false
+                ZStack(alignment: .topTrailing) {
+                    Button {
+                        activeSheet = .info(
+                            InfoItem(
+                                icon: "mappin.and.ellipse",
+                                title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
+                                value: capitalInfoValue,
+                                supportsMap: false
+                            )
                         )
-                    )
-                } label: {
-                    factChip(
-                        icon: "mappin",
-                        label: country.allCapitals.count > 1 ? "Capitals (\(country.allCapitals.count))" : "Capital",
-                        value: country.capital
-                    )
+                    } label: {
+                        factChip(
+                            icon: "mappin",
+                            label: country.allCapitals.count > 1 ? "Capitals (\(country.allCapitals.count))" : "Capital",
+                            value: country.capital
+                        )
+                    }
+                    .buttonStyle(PressButtonStyle())
+
+                    SpeakerButton(text: country.capital, countryCode: country.code)
+                        .scaleEffect(0.75)
+                        .offset(x: 4, y: -4)
                 }
-                .buttonStyle(PressButtonStyle())
 
                 Divider().frame(height: 44)
 
