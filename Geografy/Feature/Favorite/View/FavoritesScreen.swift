@@ -2,6 +2,8 @@ import SwiftUI
 
 struct FavoritesScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
+    @Environment(HapticsService.self) private var hapticsService
+
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
@@ -16,7 +18,7 @@ struct FavoritesScreen: View {
                         }
                         .buttonStyle(PressButtonStyle())
                         .simultaneousGesture(TapGesture().onEnded {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            hapticsService.impact(.light)
                         })
                     }
                 }

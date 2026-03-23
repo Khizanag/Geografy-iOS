@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct LevelUpSheet: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let newLevel: UserLevel
     let onDismiss: () -> Void
 
@@ -19,7 +21,7 @@ struct LevelUpSheet: View {
                 .opacity(contentOpacity)
         }
         .onAppear {
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            hapticsService.notification(.success)
             withAnimation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.05)) {
                 contentScale = 1.0
                 contentOpacity = 1.0

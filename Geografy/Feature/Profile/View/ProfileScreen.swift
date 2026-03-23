@@ -10,6 +10,7 @@ struct ProfileScreen: View {
     @Environment(TravelService.self) private var travelService
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(DatabaseManager.self) private var database
+    @Environment(HapticsService.self) private var hapticsService
 
     @State private var recentQuizzes: [QuizHistoryRecord] = []
     @State private var totalQuizCount: Int = 0
@@ -125,7 +126,7 @@ private extension ProfileScreen {
 
     var editButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             activeSheet = .editProfile
         } label: {
             Image(systemName: "pencil")
@@ -409,7 +410,7 @@ private extension ProfileScreen {
 
     var signInRow: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            hapticsService.impact(.medium)
             activeSheet = .signIn
         } label: {
             accountRowLabel(
@@ -423,7 +424,7 @@ private extension ProfileScreen {
 
     var signOutRow: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            hapticsService.impact(.medium)
             authService.signOut()
         } label: {
             accountRowLabel(
@@ -437,7 +438,7 @@ private extension ProfileScreen {
 
     var deleteAccountRow: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+            hapticsService.impact(.heavy)
             showDeleteAlert = true
         } label: {
             accountRowLabel(

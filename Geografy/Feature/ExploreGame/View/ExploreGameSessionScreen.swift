@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ExploreGameSessionScreen: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     @State private var gameState: ExploreGameState
     @State private var suggestions: [Country] = []
     @State private var showWrongGuess = false
@@ -228,10 +230,10 @@ private extension ExploreGameSessionScreen {
     func handleGuess(_ country: Country) {
         let isCorrect = gameState.submitGuess(country.name)
         if isCorrect {
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            hapticsService.notification(.success)
             finishGame()
         } else {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             wrongGuessName = country.name
             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                 showWrongGuess = true

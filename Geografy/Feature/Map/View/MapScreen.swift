@@ -4,6 +4,7 @@ struct MapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(TravelService.self) private var travelService
+    @Environment(HapticsService.self) private var hapticsService
 
     var continentFilter: String?
 
@@ -126,7 +127,7 @@ private extension MapScreen {
     var labelsToggleButton: some View {
         Button {
             mapState.showLabels.toggle()
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         } label: {
             Text("Aa")
                 .font(DesignSystem.Font.headline)
@@ -349,10 +350,10 @@ private extension MapScreen {
             if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    hapticsService.impact(.light)
                 } else {
                     mapState.selectedCountryCode = shape.id
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    hapticsService.impact(.medium)
                 }
                 return
             }

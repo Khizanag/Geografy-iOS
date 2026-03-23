@@ -613,7 +613,8 @@ private extension CountryDetailScreen {
                 if !memberOrganizations.isEmpty, subscriptionService.isPremium {
                     organizationsSection(
                         appeared: appeared,
-                        countryDataService: countryDataService
+                        countryDataService: countryDataService,
+                        hapticsService: hapticsService
                     )
                 }
             }

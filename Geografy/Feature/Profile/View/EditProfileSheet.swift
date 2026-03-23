@@ -3,6 +3,7 @@ import SwiftUI
 struct EditProfileSheet: View {
     @Environment(AuthService.self) private var authService
     @Environment(DatabaseManager.self) private var database
+    @Environment(HapticsService.self) private var hapticsService
 
     @Environment(\.dismiss) private var dismiss
 
@@ -95,7 +96,7 @@ private extension EditProfileSheet {
         let trimmed = displayName.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }
         isSaving = true
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        hapticsService.impact(.medium)
         if let profile = authService.currentProfile {
             profile.displayName = trimmed
             try? database.mainContext.save()

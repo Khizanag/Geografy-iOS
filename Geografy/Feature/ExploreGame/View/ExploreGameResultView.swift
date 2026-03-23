@@ -2,6 +2,8 @@ import SwiftUI
 
 /// Shows the result after a game round — score, country reveal, stats.
 struct ExploreGameResultView: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let result: ExploreGameResult
     let onPlayAgain: () -> Void
     let onDone: () -> Void
@@ -202,8 +204,7 @@ private extension ExploreGameResultView {
 
         if !result.wasRevealed, result.score > 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                UINotificationFeedbackGenerator()
-                    .notificationOccurred(.success)
+                hapticsService.notification(.success)
             }
         }
     }

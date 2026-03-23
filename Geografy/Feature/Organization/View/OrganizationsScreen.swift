@@ -6,6 +6,8 @@ enum OrgSortOption: String, CaseIterable {
 }
 
 struct OrganizationsScreen: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     @State private var countryDataService = CountryDataService()
     @State private var sortOption: OrgSortOption = .alphabetical
 
@@ -26,7 +28,7 @@ struct OrganizationsScreen: View {
                     }
                     .buttonStyle(PressButtonStyle())
                     .simultaneousGesture(TapGesture().onEnded {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        hapticsService.impact(.light)
                     })
                 }
             }

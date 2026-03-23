@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct CapitalChainView: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let content: DailyChallenge.CapitalChainContent
 
     @Binding var score: Int
@@ -123,10 +125,10 @@ private extension CapitalChainView {
         let isCorrect = option.code == step.expectedCountry.code
         if isCorrect {
             correctCount += 1
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            hapticsService.notification(.success)
         } else {
             withAnimation { score = max(0, score - 250) }
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         }
 
         withAnimation(.easeInOut(duration: 0.3)) {

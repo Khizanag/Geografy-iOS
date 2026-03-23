@@ -6,6 +6,8 @@ protocol RegionSelectable: Identifiable, Hashable {
 }
 
 struct RegionSelectionBar<T: RegionSelectable>: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let items: [T]
     let selectedID: T.ID
     let onSelect: (T) -> Void
@@ -29,7 +31,7 @@ private extension RegionSelectionBar {
         let isSelected = selectedID == item.id
 
         return Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             onSelect(item)
         } label: {
             HStack(spacing: DesignSystem.Spacing.xxs) {

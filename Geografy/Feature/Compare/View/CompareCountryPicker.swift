@@ -3,6 +3,7 @@ import SwiftUI
 struct CompareCountryPicker: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(FavoritesService.self) private var favoritesService
+    @Environment(HapticsService.self) private var hapticsService
 
     @State private var searchText = ""
 
@@ -52,7 +53,7 @@ private extension CompareCountryPicker {
 
     func countryButton(_ country: Country) -> some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             onSelect(country)
             dismiss()
         } label: {

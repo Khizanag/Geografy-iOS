@@ -9,7 +9,8 @@ extension CountryDetailScreen {
 
     func organizationsSection(
         appeared: Bool,
-        countryDataService: CountryDataService
+        countryDataService: CountryDataService,
+        hapticsService: HapticsService
     ) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Member Of", premium: true)
@@ -24,7 +25,7 @@ extension CountryDetailScreen {
                         }
                         .buttonStyle(PressButtonStyle())
                         .simultaneousGesture(TapGesture().onEnded {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            hapticsService.impact(.light)
                         })
 
                         if index < memberOrganizations.count - 1 {

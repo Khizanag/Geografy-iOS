@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MultiplayerMatchScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(HapticsService.self) private var hapticsService
 
     let opponent: MockOpponent
     let configuration: QuizConfiguration
@@ -312,9 +313,9 @@ private extension MultiplayerMatchScreen {
         let timeSpent = Date().timeIntervalSince(questionStartTime)
 
         if isCorrect {
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            hapticsService.notification(.success)
         } else {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         }
 
         waitForOpponentThenShowFeedback(

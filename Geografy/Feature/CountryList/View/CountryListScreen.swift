@@ -20,6 +20,8 @@ enum SortOption: String, CaseIterable {
 
 struct CountryListScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
+    @Environment(HapticsService.self) private var hapticsService
+
     @State private var countryDataService = CountryDataService()
     @State private var searchText = ""
     @State private var groupBy: GroupOption = .firstLetter
@@ -318,11 +320,11 @@ private extension CountryListScreen {
         }
         .buttonStyle(PressButtonStyle())
         .simultaneousGesture(TapGesture().onEnded {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         })
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button {
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                hapticsService.impact(.medium)
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }

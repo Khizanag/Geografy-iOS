@@ -3,6 +3,7 @@ import SwiftUI
 struct HistoricalMapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(HapticsService.self) private var hapticsService
 
     let initialYear: Int
 
@@ -331,7 +332,7 @@ private extension HistoricalMapScreen {
                 } else {
                     mapState.selectedCountryCode = shape.id
                 }
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                hapticsService.impact(.medium)
                 return
             }
         }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct BadgeCard: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let definition: BadgeDefinition
     let isUnlocked: Bool
     let progress: BadgeProgress
@@ -8,7 +10,7 @@ struct BadgeCard: View {
 
     var body: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             onTap()
         } label: {
             cardContent

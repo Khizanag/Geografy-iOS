@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeProgressCard: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let favoriteCount: Int
     let exploredContinents: Int
     let currentLevel: Int
@@ -68,7 +70,7 @@ private extension HomeProgressCard {
 
     func statTile(value: String, label: String, icon: String, color: Color, action: @escaping () -> Void) -> some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             action()
         } label: {
             VStack(spacing: DesignSystem.Spacing.xs) {

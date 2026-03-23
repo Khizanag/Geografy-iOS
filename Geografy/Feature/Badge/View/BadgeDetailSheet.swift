@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BadgeDetailSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(HapticsService.self) private var hapticsService
 
     let definition: BadgeDefinition
     let isUnlocked: Bool
@@ -222,7 +223,7 @@ private extension BadgeDetailSheet {
 
     var pinSection: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             onTogglePin()
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {

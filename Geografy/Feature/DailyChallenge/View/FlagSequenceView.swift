@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct FlagSequenceView: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let content: DailyChallenge.FlagSequenceContent
     let seed: UInt64
 
@@ -125,10 +127,10 @@ private extension FlagSequenceView {
         let isCorrect = option.code == correct.code
         if isCorrect {
             correctCount += 1
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            hapticsService.notification(.success)
         } else {
             withAnimation { score = max(0, score - 200) }
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         }
 
         withAnimation(.easeInOut(duration: 0.3)) {

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TerritorialDisputesScreen: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     @State private var selections: [String: String] = [:]
     @State private var showingResetAlert = false
 
@@ -140,7 +142,7 @@ private extension TerritorialDisputesScreen {
         Binding(
             get: { selections[dispute.id] ?? dispute.defaultOptionKey },
             set: { newValue in
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                hapticsService.impact(.light)
                 selections[dispute.id] = newValue
                 UserDefaults.standard.set(newValue, forKey: dispute.userDefaultsKey)
             }
@@ -159,7 +161,7 @@ private extension TerritorialDisputesScreen {
     }
 
     func resetToDefaults() {
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        hapticsService.impact(.medium)
         for dispute in TerritorialDispute.all {
             UserDefaults.standard.set(dispute.defaultOptionKey, forKey: dispute.userDefaultsKey)
             selections[dispute.id] = dispute.defaultOptionKey

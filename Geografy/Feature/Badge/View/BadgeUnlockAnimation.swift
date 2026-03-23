@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct BadgeUnlockAnimation: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let badge: BadgeDefinition
     let onDismiss: () -> Void
 
@@ -188,7 +190,7 @@ private extension BadgeUnlockAnimation {
 
 private extension BadgeUnlockAnimation {
     func startAnimation() {
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        hapticsService.notification(.success)
         withAnimation(
             .spring(response: 0.5, dampingFraction: 0.65).delay(0.1)
         ) {

@@ -4,6 +4,7 @@ import SwiftUI
 struct GeografyApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
+    @State private var hapticsService = HapticsService()
     @State private var favoritesService = FavoritesService()
     @State private var travelService = TravelService()
     @State private var gameCenterService = GameCenterService()
@@ -34,6 +35,7 @@ struct GeografyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(hapticsService)
                 .environment(favoritesService)
                 .environment(travelService)
                 .environment(gameCenterService)

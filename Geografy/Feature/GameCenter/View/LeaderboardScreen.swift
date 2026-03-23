@@ -3,6 +3,7 @@ import SwiftUI
 
 struct LeaderboardScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
+    @Environment(HapticsService.self) private var hapticsService
 
     @State private var showLeaderboard = false
     @State private var showSignIn = false
@@ -77,7 +78,7 @@ private extension LeaderboardScreen {
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 } else {
                     Button {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        hapticsService.impact(.light)
                         showSignIn = true
                     } label: {
                         Text("Sign In")
@@ -122,7 +123,7 @@ private extension LeaderboardScreen {
                     Spacer()
                 }
                 Button {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    hapticsService.impact(.light)
                     selectedLeaderboardID = info.id
                     showLeaderboard = true
                 } label: {
@@ -150,7 +151,7 @@ private extension LeaderboardScreen {
 
     var openGameCenterButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            hapticsService.impact(.medium)
             selectedLeaderboardID = ""
             showLeaderboard = true
         } label: {

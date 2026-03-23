@@ -4,6 +4,7 @@ struct TravelStatusPickerSheet: View {
     @Environment(TravelService.self) private var travelService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
+    @Environment(HapticsService.self) private var hapticsService
 
     let country: Country
     @Binding var isPresented: Bool
@@ -58,7 +59,7 @@ private extension TravelStatusPickerSheet {
     func statusRow(_ status: TravelStatus) -> some View {
         let isSelected = travelService.status(for: country.code) == status
         return Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            hapticsService.impact(.medium)
             travelService.set(status: isSelected ? nil : status, for: country.code)
             if !isSelected {
                 awardTravelXP(for: status)
@@ -128,7 +129,7 @@ private extension TravelStatusPickerSheet {
         Group {
             if hasExistingStatus {
                 Button {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    hapticsService.impact(.light)
                     travelService.set(status: nil, for: country.code)
                     isPresented = false
                 } label: {

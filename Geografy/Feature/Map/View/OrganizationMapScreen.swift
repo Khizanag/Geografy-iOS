@@ -2,6 +2,7 @@ import SwiftUI
 
 struct OrganizationMapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(HapticsService.self) private var hapticsService
 
     let organization: Organization
 
@@ -210,7 +211,7 @@ private extension OrganizationMapScreen {
     var labelsToggleButton: some View {
         Button {
             mapState.showLabels.toggle()
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         } label: {
             Text("Aa")
                 .font(DesignSystem.Font.headline)
@@ -280,10 +281,10 @@ private extension OrganizationMapScreen {
             if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    hapticsService.impact(.light)
                 } else {
                     mapState.selectedCountryCode = shape.id
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                    hapticsService.impact(.medium)
                 }
                 return
             }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct AchievementUnlockedBanner: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let achievement: AchievementDefinition
     let onDismiss: () -> Void
 
@@ -10,7 +12,7 @@ struct AchievementUnlockedBanner: View {
         bannerContent
             .offset(y: slideOffset)
             .onAppear {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                hapticsService.impact(.light)
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
                     slideOffset = 0
                 }

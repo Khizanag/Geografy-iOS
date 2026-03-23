@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TravelCountryPickerSheet: View {
     @Environment(TravelService.self) private var travelService
+    @Environment(HapticsService.self) private var hapticsService
 
     let countries: [Country]
     @Binding var isPresented: Bool
@@ -56,7 +57,7 @@ private extension TravelCountryPickerSheet {
     func pickerRow(_ country: Country) -> some View {
         let status = travelService.status(for: country.code)
         return Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             selectedCountry = country
         } label: {
             CardView {

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct CountryRowView: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let country: Country
     let isFavorite: Bool
     var showFlag: Bool = true
@@ -132,7 +134,7 @@ private extension CountryRowView {
     var favoriteIcon: some View {
         if let onFavoriteTap {
             Button {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                hapticsService.impact(.light)
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                     onFavoriteTap()
                 }

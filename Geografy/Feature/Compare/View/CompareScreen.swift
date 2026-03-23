@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct CompareScreen: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     @State private var countryDataService = CountryDataService()
 
     @State private var leftCountry: Country?
@@ -116,7 +118,7 @@ private extension CompareScreen {
     var swapButton: some View {
         if leftCountry != nil, rightCountry != nil {
             Button {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                hapticsService.impact(.light)
                 withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                     let temp = leftCountry
                     leftCountry = rightCountry
@@ -260,7 +262,7 @@ private extension CompareScreen {
 
     func recentPairRow(_ pair: ComparisonPair) -> some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                 leftCountry = countryDataService.country(for: pair.leftCode)
                 rightCountry = countryDataService.country(for: pair.rightCode)

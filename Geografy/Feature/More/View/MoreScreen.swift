@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MoreScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
+    @Environment(HapticsService.self) private var hapticsService
 
     @State private var blobAnimating = false
 
@@ -122,7 +123,7 @@ private extension MoreScreen {
 
     func gridTile(for sheet: MoreSheet) -> some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             coordinator.present(sheet.toSheet)
         } label: {
             VStack(spacing: DesignSystem.Spacing.xs) {

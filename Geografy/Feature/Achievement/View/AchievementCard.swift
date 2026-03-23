@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct AchievementCard: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let definition: AchievementDefinition
     let isUnlocked: Bool
     let unlockedAt: Date?
@@ -8,7 +10,7 @@ struct AchievementCard: View {
 
     var body: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             onTap()
         } label: {
             cardContent

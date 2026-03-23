@@ -3,6 +3,7 @@ import SwiftUI
 
 struct QuizSessionScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(HapticsService.self) private var hapticsService
 
     let configuration: QuizConfiguration
 
@@ -351,9 +352,9 @@ private extension QuizSessionScreen {
         // - Answered in < 5s of timerDuration: "Quick" bonus XP
 
         if isCorrect {
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            hapticsService.notification(.success)
         } else {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         }
 
         let answer = QuizAnswer(
@@ -450,7 +451,7 @@ private extension QuizSessionScreen {
         let question = questions[currentIndex]
         let timeSpent = configuration.difficulty.timerDuration
 
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        hapticsService.impact(.light)
 
         let answer = QuizAnswer(
             id: UUID(),

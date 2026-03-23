@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeStreakCard: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let streak: Int
     let onStartQuiz: () -> Void
 
@@ -51,7 +53,7 @@ private extension HomeStreakCard {
 
     var quizButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            hapticsService.impact(.medium)
             onStartQuiz()
         } label: {
             Text("Play")

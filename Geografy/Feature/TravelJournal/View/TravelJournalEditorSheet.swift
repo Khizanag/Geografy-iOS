@@ -4,6 +4,7 @@ import SwiftUI
 struct TravelJournalEditorSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(TravelJournalService.self) private var journalService
+    @Environment(HapticsService.self) private var hapticsService
 
     @Binding var activeSheet: TravelJournalScreen.ActiveSheet?
     let countryDataService: CountryDataService
@@ -91,8 +92,7 @@ extension TravelJournalEditorSheet {
 private extension TravelJournalEditorSheet {
     var saveButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium)
-                .impactOccurred()
+            hapticsService.impact(.medium)
             saveEntry()
         } label: {
             Text("Save")

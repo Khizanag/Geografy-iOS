@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MysteryCountryView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(HapticsService.self) private var hapticsService
 
     let content: DailyChallenge.MysteryCountryContent
 
@@ -228,9 +229,7 @@ private extension MysteryCountryView {
         if !isCorrect {
             withAnimation { score = max(0, score - 200) }
         }
-        UINotificationFeedbackGenerator().notificationOccurred(
-            isCorrect ? .success : .error
-        )
+        hapticsService.notification(isCorrect ? .success : .error)
         onFinish()
     }
 

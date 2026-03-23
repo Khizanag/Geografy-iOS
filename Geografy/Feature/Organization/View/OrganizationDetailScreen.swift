@@ -3,6 +3,7 @@ import SwiftUI
 struct OrganizationDetailScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(AchievementService.self) private var achievementService
+    @Environment(HapticsService.self) private var hapticsService
 
     let organization: Organization
 
@@ -176,7 +177,7 @@ private extension OrganizationDetailScreen {
 
     var openMapButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            hapticsService.impact(.medium)
             showMap = true
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
@@ -242,7 +243,7 @@ private extension OrganizationDetailScreen {
                 }
                 .buttonStyle(PressButtonStyle())
                 .simultaneousGesture(TapGesture().onEnded {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    hapticsService.impact(.light)
                 })
             }
         }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeComingSoonSection: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     @AppStorage("comingSoonVotes") private var votesData: Data = Data()
     @State private var votes: [String: Int] = [:]
     @State private var votedFeature: String?
@@ -127,7 +129,7 @@ private extension HomeComingSoonSection {
 
 private extension HomeComingSoonSection {
     func castVote(for feature: String) {
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        hapticsService.impact(.light)
         withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
             if votedFeature == feature {
                 votes[feature, default: 0] = max(0, votes[feature, default: 0] - 1)

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TravelTrackerScreen: View {
     @Environment(TravelService.self) private var travelService
+    @Environment(HapticsService.self) private var hapticsService
 
     @State private var countryDataService = CountryDataService()
     @State private var selectedFilter: TravelStatus? = nil
@@ -63,7 +64,7 @@ private extension TravelTrackerScreen {
     var addButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                hapticsService.impact(.light)
                 showCountryPicker = true
             } label: {
                 Image(systemName: "plus")
@@ -357,7 +358,7 @@ private extension TravelTrackerScreen {
     func searchResultRow(_ country: Country) -> some View {
         let status = travelService.status(for: country.code)
         return Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             selectedCountry = country
         } label: {
             CardView {
@@ -421,7 +422,7 @@ private extension TravelTrackerScreen {
                     .multilineTextAlignment(.center)
             }
             Button {
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                hapticsService.impact(.medium)
                 showCountryPicker = true
             } label: {
                 HStack(spacing: DesignSystem.Spacing.xs) {

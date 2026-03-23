@@ -8,6 +8,8 @@ protocol SelectableType: Identifiable, Hashable {
 }
 
 struct TypeSelectionGrid<T: SelectableType>: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     let items: [T]
     let selectedIDs: Set<T.ID>
     let onSelect: (T) -> Void
@@ -34,7 +36,7 @@ private extension TypeSelectionGrid {
         let locked = isLocked(item)
 
         return Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
             onSelect(item)
         } label: {
             cardContent(item: item, isSelected: isSelected, isLocked: locked)

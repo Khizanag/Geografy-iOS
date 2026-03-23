@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TravelJournalScreen: View {
+    @Environment(HapticsService.self) private var hapticsService
+
     @State private var journalService = TravelJournalService()
     @State private var countryDataService = CountryDataService()
     @State private var activeSheet: ActiveSheet?
@@ -55,8 +57,7 @@ private extension TravelJournalScreen {
     var addEntryButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                UIImpactFeedbackGenerator(style: .light)
-                    .impactOccurred()
+                hapticsService.impact(.light)
                 activeSheet = .newEntry
             } label: {
                 Image(systemName: "plus")
@@ -202,8 +203,7 @@ private extension TravelJournalScreen {
                 "Add First Entry",
                 systemImage: "plus"
             ) {
-                UIImpactFeedbackGenerator(style: .medium)
-                    .impactOccurred()
+                hapticsService.impact(.medium)
                 activeSheet = .newEntry
             }
             .padding(.top, DesignSystem.Spacing.xs)

@@ -3,6 +3,7 @@ import SwiftUI
 struct TravelMapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(TravelService.self) private var travelService
+    @Environment(HapticsService.self) private var hapticsService
 
     let filter: TravelMapFilter
 
@@ -147,7 +148,7 @@ private extension TravelMapScreen {
     var labelsToggle: some View {
         Button {
             showLabels.toggle()
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticsService.impact(.light)
         } label: {
             Text("Aa")
                 .font(DesignSystem.Font.headline)
