@@ -85,6 +85,7 @@ extension CountryDetailScreen {
         case compare
         case currencyConverter(String)
         case deepDive
+        case neighborExplorer
 
         var id: String {
             switch self {
@@ -94,6 +95,7 @@ extension CountryDetailScreen {
             case .compare: "compare"
             case .currencyConverter(let code): "currencyConverter-\(code)"
             case .deepDive: "deepDive"
+            case .neighborExplorer: "neighborExplorer"
             }
         }
     }
@@ -134,6 +136,11 @@ private extension CountryDetailScreen {
                         CircleCloseButton()
                     }
                 }
+            }
+            .presentationDetents([.large])
+        case .neighborExplorer:
+            NavigationStack {
+                NeighborExplorerScreen(country: country)
             }
             .presentationDetents([.large])
         }

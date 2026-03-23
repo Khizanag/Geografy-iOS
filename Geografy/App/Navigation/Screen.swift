@@ -10,4 +10,6 @@ enum Screen: Hashable {
     case themes
     case settings
     case quizSetup
+    case neighborExplorer(Country)
+    case capitalQuizSetup
 }

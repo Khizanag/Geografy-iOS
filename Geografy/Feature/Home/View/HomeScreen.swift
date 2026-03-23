@@ -12,6 +12,7 @@ struct HomeScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
 
     @State private var countryDataService = CountryDataService()
+    @State private var dailyChallengeService: DailyChallengeService?
     @State private var selectedMapIndex = 0
     @State private var blobAnimating = false
     @State private var appeared = false
@@ -36,6 +37,7 @@ struct HomeScreen: View {
         .toolbar { toolbarContent }
         .task {
             countryDataService.loadCountries()
+            loadDailyChallenge()
             startAnimations()
         }
     }
@@ -534,6 +536,34 @@ private extension HomeScreen {
     }
 }
 
+// MARK: - Daily Challenge Section
+
+private extension HomeScreen {
+    var dailyChallengeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Daily Challenge")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeDailyChallengeCard(
+                streak: dailyChallengeService?.streak ?? 0,
+                hasCompletedToday: dailyChallengeService?.hasCompletedToday ?? false,
+                onTap: { coordinator.present(.dailyChallenge) }
+            )
+        }
+    }
+}
+
+// MARK: - Capital Quiz Section
+
+private extension HomeScreen {
+    var capitalQuizSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Capital City Quiz")
+                .padding(.bottom, DesignSystem.Spacing.xxs)
+            HomeCapitalQuizCard { coordinator.present(.capitalQuiz) }
+        }
+    }
+}
+
 // MARK: - SRS Review Section
 
 private extension HomeScreen {
@@ -597,6 +627,15 @@ private extension HomeScreen {
         coordinator.presentFullScreen(.map(continentFilter: name == "World map" ? nil : name))
     }
 
+    func loadDailyChallenge() {
+        let service = DailyChallengeService(
+            countryDataService: countryDataService,
+            userID: xpService.currentUserID
+        )
+        service.loadChallenge()
+        dailyChallengeService = service
+    }
+
     @ViewBuilder
     func sectionView(for section: HomeSection) -> some View {
         switch section {
@@ -612,6 +651,12 @@ private extension HomeScreen {
             }
         case .streak:
             streakSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .dailyChallenge:
+            dailyChallengeSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        case .capitalQuiz:
+            capitalQuizSection
                 .padding(.horizontal, DesignSystem.Spacing.md)
         case .srsReview:
             srsReviewSection
