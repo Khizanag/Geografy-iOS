@@ -3,6 +3,27 @@
 ## 2026-03-23
 
 1. Haptics service — centralized haptic feedback gating via settings toggle
+
+### Evening Session (component extraction & quality)
+59. AmbientBlobsView — shared animated blobs with 5 presets, replaced in 5 screens
+60. SessionProgressBar — reusable animated progress bar with glow
+61. QuestionCounterPill — "X/Y" counter pill with numeric transition
+62. EmptyStateView — centered empty state with optional action button, replaced in 5 screens
+63. ResultStatItem — stat grid item, replaced in 3 result screens
+64. Audit batch 1 — fix LandmarkQuiz, FlagGame, GeoTrivia, WordSearch, BorderChallenge, MapColoring
+65. Audit batch 2 — fix NicknameQuiz, NationalSymbols, ChallengeRoom, LearningPath
+66. SpellingBee refactor — remove private API FlowLayout, standard nav, GlassButton footer
+67. Learning Path → sheet presentation (was push)
+68. Timeline section alignment fix + CountryRowView in event detail
+69. Time Zone quiz — replace custom buttons with QuizOptionButton
+70. Distance Calculator — close button to trailing, disable swap when empty
+71. CLAUDE.md — full component catalog, 55+ features, updated conventions
+72. Game Center Friends — avatar list, XP rankings, rank badges
+73. Game Center leaderboards — wire streak, daily challenge, flashcard submissions
+74. Sign In with Apple — capability setup, TBC Bank team
+75. Widget NSExtension fix — Xcode 26 plist workaround
+
+### Morning Session (features & data)
 2. Religion & ethnicity data — percentage bar charts on country detail
 3. World Bank statistics — GDP/population charts with live API integration
 4. Typing quiz mode — fuzzy matching, hint system, 1.5× XP bonus
