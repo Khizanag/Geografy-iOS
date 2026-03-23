@@ -78,6 +78,7 @@ enum Sheet: Identifiable {
     case settings
     case sectionEditor
     case friends
+    case learningPath
 
     var id: String {
         switch self {
@@ -113,6 +114,7 @@ enum Sheet: Identifiable {
         case .settings: "settings"
         case .sectionEditor: "sectionEditor"
         case .friends: "friends"
+        case .learningPath: "learningPath"
         case .srsStudy: "srsStudy"
         case .flagGame: "flagGame"
         case .geoTrivia: "geoTrivia"
