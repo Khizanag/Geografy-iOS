@@ -145,7 +145,7 @@ extension HomeScreen {
             SectionHeaderView(title: "Learning Path")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeLearningPathCard {
-                coordinator.push(.learningPath)
+                coordinator.present(.learningPath)
             }
         }
     }

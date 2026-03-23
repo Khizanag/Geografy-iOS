@@ -20,7 +20,7 @@ enum SheetFactory {
             exploreView(for: sheet)
 
         case .badges, .leaderboards, .achievements, .themes, .settings,
-             .sectionEditor, .friends, .search, .geoFeed:
+             .sectionEditor, .friends, .search, .geoFeed, .learningPath:
             appView(for: sheet)
 
         case .challengeRoom:
@@ -324,6 +324,10 @@ private extension SheetFactory {
             NavigationStack { FriendsListScreen() }
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
+
+        case .learningPath:
+            NavigationStack { LearningPathScreen() }
+                .presentationDetents([.large])
 
         case .geoFeed:
             NavigationStack { GeoFeedScreen() }
