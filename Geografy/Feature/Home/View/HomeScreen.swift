@@ -444,7 +444,7 @@ private extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Discover")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            Button { coordinator.push(.countryDetail(country)) } label: {
+            Button { coordinator.present(.countryDetail(country)) } label: {
                 HomeCountrySpotlightCard(
                     country: country,
                     funFact: spotlightFunFact(for: country)
