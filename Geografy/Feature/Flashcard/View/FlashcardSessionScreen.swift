@@ -130,7 +130,9 @@ private extension FlashcardSessionScreen {
                 FlashcardCardView(
                     card: currentCard,
                     isFlipped: isFlipped,
-                    onTap: flipCard
+                    onTap: flipCard,
+                    swipeColor: swipeTintColor,
+                    swipeOpacity: swipeTintOpacity
                 )
                 .frame(
                     width: max(geometry.size.width - DesignSystem.Spacing.xl * 2, 0),
@@ -139,12 +141,6 @@ private extension FlashcardSessionScreen {
                 .offset(dragOffset)
                 .rotationEffect(.degrees(dragRotation))
                 .gesture(swipeGesture)
-                .overlay {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
-                        .fill(swipeTintColor.opacity(swipeTintOpacity))
-                        .allowsHitTesting(false)
-                        .animation(.interactiveSpring(response: 0.15), value: dragOffset)
-                }
                 .overlay(alignment: .bottomTrailing) { swipeHintRight }
                 .overlay(alignment: .bottomLeading) { swipeHintLeft }
             }

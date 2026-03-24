@@ -86,6 +86,7 @@ extension CountryDetailScreen {
         case currencyConverter(String)
         case deepDive
         case neighborExplorer
+        case organizationMap(Organization)
 
         var id: String {
             switch self {
@@ -96,6 +97,7 @@ extension CountryDetailScreen {
             case .currencyConverter(let code): "currencyConverter-\(code)"
             case .deepDive: "deepDive"
             case .neighborExplorer: "neighborExplorer"
+            case .organizationMap(let org): "orgMap-\(org.id)"
             }
         }
     }
@@ -143,6 +145,8 @@ private extension CountryDetailScreen {
                 NeighborExplorerScreen(country: country)
             }
             .presentationDetents([.large])
+        case .organizationMap(let organization):
+            OrganizationMapScreen(organization: organization)
         }
     }
 }
@@ -478,7 +482,7 @@ private extension CountryDetailScreen {
                     title: "Religion",
                     icon: "hands.sparkles",
                     items: religionItems.sorted { $0.percentage > $1.percentage },
-                    appeared: appeared
+                    appeared: true
                 )
             }
         } else {
@@ -495,7 +499,7 @@ private extension CountryDetailScreen {
                     title: "Ethnicity",
                     icon: "person.2",
                     items: ethnicityItems.sorted { $0.percentage > $1.percentage },
-                    appeared: appeared
+                    appeared: true
                 )
             }
         } else {

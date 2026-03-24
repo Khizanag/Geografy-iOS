@@ -81,7 +81,7 @@ private extension OrganizationMapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
     var topContent: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
+        VStack(spacing: DesignSystem.Spacing.sm) {
             orgHeader
             bannerOverlay
         }
@@ -115,23 +115,34 @@ private extension OrganizationMapScreen {
 
 private extension OrganizationMapScreen {
     var orgHeader: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: organization.icon)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(organization.highlightColor)
-                Text(organization.displayName)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer()
-                memberCountBadge
-            }
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
+                ZStack {
+                    Circle()
+                        .fill(organization.highlightColor.opacity(0.15))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: organization.icon)
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundStyle(organization.highlightColor)
+                }
 
-            if organization.fullName != organization.displayName {
-                Text(organization.fullName)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    Text(organization.displayName)
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                    if organization.fullName != organization.displayName {
+                        Text(organization.fullName)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                memberCountBadge
             }
 
             legend

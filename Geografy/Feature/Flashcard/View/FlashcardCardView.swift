@@ -6,6 +6,8 @@ struct FlashcardCardView: View {
     let card: FlashcardItem
     let isFlipped: Bool
     let onTap: () -> Void
+    var swipeColor: Color = .clear
+    var swipeOpacity: Double = 0
 
     var body: some View {
         ZStack {
@@ -112,16 +114,24 @@ private extension FlashcardCardView {
     ) -> some View {
         content()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(DesignSystem.Color.cardBackground)
+            .background(
+                ZStack {
+                    DesignSystem.Color.cardBackground
+                    swipeColor.opacity(swipeOpacity)
+                }
+            )
             .clipShape(
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
                     .strokeBorder(
-                        DesignSystem.Color.cardBackgroundHighlighted,
-                        lineWidth: 1
+                        swipeOpacity > 0
+                            ? swipeColor.opacity(swipeOpacity * 2)
+                            : DesignSystem.Color.cardBackgroundHighlighted,
+                        lineWidth: swipeOpacity > 0 ? 2 : 1
                     )
+                    .animation(.interactiveSpring(response: 0.15), value: swipeOpacity)
             )
             .geoShadow(.elevated)
     }
