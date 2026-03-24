@@ -12,7 +12,6 @@ struct ProfileScreen: View {
     @Environment(DatabaseManager.self) private var database
     @Environment(HapticsService.self) private var hapticsService
 
-    @State private var badgeService = BadgeService()
     @State private var recentQuizzes: [QuizHistoryRecord] = []
     @State private var statistics: UserStatistics?
     @State private var activeSheet: ProfileSheet?
@@ -684,8 +683,8 @@ private extension ProfileScreen {
     var badgesScrollRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(featuredBadges) { badge in
-                    miniBadgeCard(badge)
+                ForEach(featuredBadges) { achievement in
+                    miniBadgeCard(achievement)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -707,20 +706,23 @@ private extension ProfileScreen {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 
-    func miniBadgeCard(_ badge: BadgeDefinition) -> some View {
+    func miniBadgeCard(_ achievement: AchievementDefinition) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             ZStack {
                 Circle()
-                    .fill(badge.category.themeColor.opacity(0.18))
+                    .fill(achievement.category.themeColor.opacity(0.18))
                     .frame(width: 52, height: 52)
+
                 Circle()
-                    .strokeBorder(badge.rarity.borderGradient, lineWidth: badge.rarity.borderWidth)
+                    .strokeBorder(achievement.rarity.borderGradient, lineWidth: achievement.rarity.borderWidth)
                     .frame(width: 52, height: 52)
-                Image(systemName: badge.iconName)
+
+                Image(systemName: achievement.iconName)
                     .font(.system(size: 22))
-                    .foregroundStyle(badge.category.themeColor)
+                    .foregroundStyle(achievement.category.themeColor)
             }
-            Text(badge.title)
+
+            Text(achievement.title)
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -732,12 +734,12 @@ private extension ProfileScreen {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 
-    var featuredBadges: [BadgeDefinition] {
-        badgeService.unlockedBadges
+    var featuredBadges: [AchievementDefinition] {
+        achievementService.unlockedAchievements
             .sorted { $0.unlockedAt > $1.unlockedAt }
             .prefix(6)
             .compactMap { unlocked in
-                BadgeDefinition.all.first { $0.id == unlocked.id }
+                AchievementCatalog.all.first { $0.id == unlocked.id }
             }
     }
 }
