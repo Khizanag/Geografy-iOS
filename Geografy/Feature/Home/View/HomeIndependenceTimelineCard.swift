@@ -49,7 +49,7 @@ private extension HomeIndependenceTimelineCard {
             Text("When nations gained freedom")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

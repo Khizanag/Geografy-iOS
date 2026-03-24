@@ -49,7 +49,7 @@ private extension HomeTravelBucketListCard {
             Text("Plan your dream destinations")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

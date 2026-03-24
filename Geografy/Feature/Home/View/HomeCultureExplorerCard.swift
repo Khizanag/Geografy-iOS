@@ -49,7 +49,7 @@ private extension HomeCultureExplorerCard {
             Text("Dishes, music, traditions & more")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

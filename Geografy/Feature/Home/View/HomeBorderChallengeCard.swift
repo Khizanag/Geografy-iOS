@@ -49,7 +49,7 @@ private extension HomeBorderChallengeCard {
             Text("Name all neighbors before time runs out")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

@@ -49,7 +49,7 @@ private extension HomeCountryCompareCard {
             Text("Compare two countries side by side")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

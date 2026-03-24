@@ -49,7 +49,7 @@ private extension HomeEconomyExplorerCard {
             Text("Global GDP per capita rankings")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

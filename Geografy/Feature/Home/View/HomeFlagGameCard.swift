@@ -49,7 +49,7 @@ private extension HomeFlagGameCard {
             Text("Match flags to countries in 60 seconds")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

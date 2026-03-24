@@ -94,7 +94,7 @@ private extension HomeCountrySpotlightCard {
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
+                    .lineLimit(2)
                 infoChip(icon: "mappin.and.ellipse", text: country.capital)
                 infoChip(icon: "globe.americas.fill", text: country.continent.displayName)
             }
@@ -150,7 +150,7 @@ private extension HomeCountrySpotlightCard {
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
+                .lineLimit(2)
                 .minimumScaleFactor(0.7)
             Text(label)
                 .font(DesignSystem.Font.caption2)

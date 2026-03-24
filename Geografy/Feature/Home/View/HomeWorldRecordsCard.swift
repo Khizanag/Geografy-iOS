@@ -129,7 +129,7 @@ private extension HomeWorldRecordsCard {
                 Text(record.country)
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(.white.opacity(0.65))
-                    .lineLimit(1)
+                    .lineLimit(2)
             }
             .padding(DesignSystem.Spacing.sm)
         }

@@ -54,7 +54,7 @@ private extension HomeOrgsCard {
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
+                    .lineLimit(2)
             }
             .frame(width: 76)
             .padding(.vertical, DesignSystem.Spacing.sm)

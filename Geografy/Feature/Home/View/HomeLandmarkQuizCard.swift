@@ -49,7 +49,7 @@ private extension HomeLandmarkQuizCard {
             Text("Identify countries from famous clues")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 
