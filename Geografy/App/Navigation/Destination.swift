@@ -8,6 +8,7 @@ enum Destination: Hashable {
 
 // MARK: - Content
 
+@MainActor
 extension Destination {
     @ViewBuilder
     var content: some View {
