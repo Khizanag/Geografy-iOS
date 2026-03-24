@@ -70,11 +70,18 @@ private extension CountryRowView {
 
             Spacer(minLength: 0)
 
-            trailingContent
+            favoriteIcon
         }
         .padding(.vertical, DesignSystem.Spacing.sm)
         .padding(.trailing, DesignSystem.Spacing.sm)
         .padding(.leading, DesignSystem.Spacing.xs)
+        .overlay(alignment: .topTrailing) {
+            if showContinent {
+                continentBadge
+                    .padding(.top, DesignSystem.Spacing.xs)
+                    .padding(.trailing, DesignSystem.Spacing.xs)
+            }
+        }
     }
 
     var capitalLabel: some View {
@@ -112,19 +119,6 @@ private extension CountryRowView {
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
-        }
-    }
-
-    var trailingContent: some View {
-        HStack(alignment: .center, spacing: DesignSystem.Spacing.sm) {
-            if showContinent {
-                continentBadge
-            }
-            if showSpeaker {
-                SpeakerButton(text: country.name, countryCode: country.code)
-                    .scaleEffect(0.8)
-            }
-            favoriteIcon
         }
     }
 
