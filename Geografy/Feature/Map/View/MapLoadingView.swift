@@ -1,31 +1,22 @@
-import Combine
 import SwiftUI
 
 struct MapLoadingView: View {
     @State private var isAnimating = false
     @State private var dotPhase = 0
-    @State private var messageIndex = 0
-
-    private let messages = [
-        "Exploring the world",
-        "Charting the continents",
-        "Mapping every border",
-        "Plotting coordinates",
-    ]
+    @State private var blobAnimating = false
 
     var body: some View {
         ZStack {
-            DesignSystem.Color.background
-                .ignoresSafeArea()
-
-            VStack(spacing: DesignSystem.Spacing.lg) {
+            oceanBackground
+            VStack(spacing: 0) {
                 Spacer()
-                Spacer()
+                    .frame(maxHeight: 160)
                 globeSection
+                    .padding(.bottom, DesignSystem.Spacing.lg)
                 textSection
                 Spacer()
                 copyrightLabel
-                    .padding(.bottom, DesignSystem.Spacing.lg)
+                    .padding(.bottom, DesignSystem.Spacing.xl)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -33,14 +24,12 @@ struct MapLoadingView: View {
             withAnimation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true)) {
                 isAnimating = true
             }
+            withAnimation(.easeInOut(duration: 5).repeatForever(autoreverses: true)) {
+                blobAnimating = true
+            }
         }
         .onReceive(Timer.publish(every: 0.4, on: .main, in: .common).autoconnect()) { _ in
             dotPhase = (dotPhase + 1) % 3
-        }
-        .onReceive(Timer.publish(every: 2.0, on: .main, in: .common).autoconnect()) { _ in
-            withAnimation(.easeInOut(duration: 0.3)) {
-                messageIndex = (messageIndex + 1) % messages.count
-            }
         }
     }
 }
@@ -48,6 +37,41 @@ struct MapLoadingView: View {
 // MARK: - Subviews
 
 private extension MapLoadingView {
+    var oceanBackground: some View {
+        ZStack {
+            DesignSystem.Color.ocean
+                .ignoresSafeArea()
+
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.18), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
+                .frame(width: 400, height: 300)
+                .blur(radius: 40)
+                .offset(x: -80, y: -180)
+                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.blue.opacity(0.22), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
+                .frame(width: 360, height: 280)
+                .blur(radius: 36)
+                .offset(x: 120, y: 80)
+                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+        }
+    }
+
     var globeSection: some View {
         ZStack {
             pulseRings
@@ -57,36 +81,35 @@ private extension MapLoadingView {
 
     var pulseRings: some View {
         ZStack {
-            pulseRing(size: 200, opacity: 0.08, delay: 0.00)
-            pulseRing(size: 160, opacity: 0.13, delay: 0.15)
-            pulseRing(size: 120, opacity: 0.20, delay: 0.30)
-            pulseRing(size: 84, opacity: 0.28, delay: 0.45)
+            pulseRing(size: 200, opacity: 0.06, delay: 0.00)
+            pulseRing(size: 160, opacity: 0.10, delay: 0.15)
+            pulseRing(size: 120, opacity: 0.16, delay: 0.30)
+            pulseRing(size: 84, opacity: 0.22, delay: 0.45)
         }
     }
 
     var globeIcon: some View {
         ZStack {
             Circle()
-                .fill(DesignSystem.Color.accent.opacity(0.15))
+                .fill(DesignSystem.Color.accent.opacity(0.20))
                 .frame(width: 76, height: 76)
             Image(systemName: "globe.americas.fill")
                 .font(.system(size: 36))
                 .foregroundStyle(DesignSystem.Color.accent)
-                .rotationEffect(.degrees(isAnimating ? 10 : -10))
+                .rotationEffect(.degrees(isAnimating ? 12 : -12))
                 .animation(
-                    .easeInOut(duration: 1.5).repeatForever(autoreverses: true),
+                    .easeInOut(duration: 1.8).repeatForever(autoreverses: true),
                     value: isAnimating
                 )
         }
     }
 
     var textSection: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
+        VStack(spacing: DesignSystem.Spacing.xs) {
             HStack(spacing: 0) {
-                Text(messages[messageIndex])
+                Text("Loading map")
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .animation(.easeInOut(duration: 0.3), value: messageIndex)
+                    .foregroundStyle(.white.opacity(0.90))
 
                 Text(dotString)
                     .font(DesignSystem.Font.headline)
@@ -95,18 +118,16 @@ private extension MapLoadingView {
                     .animation(nil, value: dotPhase)
             }
 
-            Text("Parsing geographic boundaries and rendering country shapes from GeoJSON data")
+            Text("Parsing geographic data")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.xxl)
+                .foregroundStyle(.white.opacity(0.45))
         }
     }
 
     var copyrightLabel: some View {
         Text("Map data © OpenStreetMap contributors · Geografy")
             .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .foregroundStyle(.white.opacity(0.30))
             .multilineTextAlignment(.center)
     }
 
