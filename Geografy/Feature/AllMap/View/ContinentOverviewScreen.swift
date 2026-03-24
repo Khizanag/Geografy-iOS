@@ -38,10 +38,11 @@ struct ContinentOverviewScreen: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Picker(selection: $sortBy) {
                     ForEach(SortOption.allCases, id: \.self) { option in
-                        Text(option.rawValue).tag(option)
+                        Label(option.rawValue, systemImage: option.icon)
+                            .tag(option)
                     }
                 } label: {
-                    Label("Sort", systemImage: "arrow.up.arrow.down")
+                    Label("Sort by", systemImage: "arrow.up.arrow.down")
                 }
                 .pickerStyle(.menu)
             }
