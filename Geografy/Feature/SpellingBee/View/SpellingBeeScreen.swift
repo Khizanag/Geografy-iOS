@@ -131,10 +131,7 @@ private extension SpellingBeeScreen {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 if showCorrectAnswer, let country = currentCountry {
-                    Text(country.name)
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.success)
+                    revealedLetterCells(for: country.name)
                 } else {
                     letterCells
                 }
@@ -146,31 +143,67 @@ private extension SpellingBeeScreen {
 
     var letterCells: some View {
         let target = currentCountry?.name ?? ""
-        let letters = Array(typedText.lowercased())
-        let targetLetters = Array(target.lowercased())
+        let words = target.split(separator: " ", omittingEmptySubsequences: true)
+        let typedLower = Array(typedText.lowercased())
+        var globalIndex = 0
 
-        let columns = [GridItem(.adaptive(minimum: 32), spacing: DesignSystem.Spacing.xs)]
-        return LazyVGrid(
-            columns: columns,
-            alignment: .center,
-            spacing: DesignSystem.Spacing.xs
-        ) {
-            ForEach(
-                Array(targetLetters.enumerated()),
-                id: \.offset
-            ) { index, targetLetter in
-                let typedLetter: Character? = index < letters.count
-                    ? letters[index]
+        return VStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(Array(words.enumerated()), id: \.offset) { _, word in
+                let startIndex = globalIndex
+                let _ = { globalIndex += word.count + 1 }()
+                wordRow(
+                    word: String(word),
+                    startIndex: startIndex,
+                    typedLetters: typedLower
+                )
+            }
+        }
+    }
+
+    func wordRow(word: String, startIndex: Int, typedLetters: [Character]) -> some View {
+        let targetLetters = Array(word.lowercased())
+        return HStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(Array(targetLetters.enumerated()), id: \.offset) { index, targetLetter in
+                let globalIdx = startIndex + index
+                let typedLetter: Character? = globalIdx < typedLetters.count
+                    ? typedLetters[globalIdx]
                     : nil
                 letterCell(
                     typed: typedLetter.map { String($0) },
                     isCorrect: typedLetter == targetLetter,
-                    isSpace: targetLetter == " "
+                    isSpace: false
                 )
             }
         }
-        .fixedSize(horizontal: true, vertical: false)
-        .frame(maxWidth: .infinity)
+    }
+
+    func revealedLetterCells(for name: String) -> some View {
+        let words = name.split(separator: " ", omittingEmptySubsequences: true)
+        return VStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(Array(words.enumerated()), id: \.offset) { _, word in
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    ForEach(Array(word.enumerated()), id: \.offset) { _, letter in
+                        revealedCell(String(letter))
+                    }
+                }
+            }
+        }
+    }
+
+    func revealedCell(_ letter: String) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                .fill(DesignSystem.Color.success.opacity(0.2))
+                .frame(width: 32, height: 36)
+                .overlay(
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                        .stroke(DesignSystem.Color.success.opacity(0.5), lineWidth: 1.5)
+                )
+            Text(letter.uppercased())
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.success)
+        }
     }
 
     func letterCell(typed: String?, isCorrect: Bool, isSpace: Bool) -> some View {
