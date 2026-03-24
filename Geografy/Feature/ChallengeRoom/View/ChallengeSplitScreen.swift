@@ -14,16 +14,16 @@ struct ChallengeSplitScreen: View {
     private let challengeRoomService: ChallengeRoomService
 
     init(room: ChallengeRoom, challengeRoomService: ChallengeRoomService) {
-        _room = State(initialValue: room)
+        self._room = State(initialValue: room)
         self.challengeRoomService = challengeRoomService
     }
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-
-            if isFinished {
-                NavigationStack {
+        NavigationStack {
+            splitContent
+                .background(DesignSystem.Color.background.ignoresSafeArea())
+                .navigationBarHidden(true)
+                .navigationDestination(isPresented: $isFinished) {
                     ChallengeResultScreen(
                         room: room,
                         challengeRoomService: challengeRoomService
@@ -32,15 +32,13 @@ struct ChallengeSplitScreen: View {
                     }
                     .navigationTitle("Results")
                     .navigationBarTitleDisplayMode(.inline)
+                    .navigationBarBackButtonHidden()
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
                             CircleCloseButton { dismiss() }
                         }
                     }
                 }
-            } else {
-                splitContent
-            }
         }
     }
 }

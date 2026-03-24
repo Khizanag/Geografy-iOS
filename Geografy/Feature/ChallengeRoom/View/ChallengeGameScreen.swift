@@ -20,14 +20,7 @@ struct ChallengeGameScreen: View {
     var body: some View {
         NavigationStack {
             Group {
-                if room.isFinished {
-                    ChallengeResultScreen(
-                        room: room,
-                        challengeRoomService: challengeRoomService
-                    ) {
-                        dismiss()
-                    }
-                } else if showingPassScreen {
+                if showingPassScreen {
                     passScreen
                 } else {
                     questionScreen
@@ -40,6 +33,20 @@ struct ChallengeGameScreen: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     CircleCloseButton { dismiss() }
+                }
+            }
+            .navigationDestination(isPresented: .constant(room.isFinished)) {
+                ChallengeResultScreen(
+                    room: room,
+                    challengeRoomService: challengeRoomService
+                ) {
+                    dismiss()
+                }
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        CircleCloseButton { dismiss() }
+                    }
                 }
             }
         }
