@@ -6,10 +6,10 @@ struct SpeedRunSessionScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
-    @State private var countryDataService = CountryDataService()
 
     let region: QuizRegion
 
+    @State private var countryDataService = CountryDataService()
     @State private var elapsedTime: TimeInterval = 0
     @State private var timerCancellable: AnyCancellable?
     @State private var inputText = ""
@@ -19,109 +19,95 @@ struct SpeedRunSessionScreen: View {
     @State private var xpEarned = 0
     @State private var showXPBadge = false
     @State private var showQuitAlert = false
-    @State private var blobAnimating = false
 
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                content
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar { toolbarContent }
-                    .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
-                        quitAlertActions
-                    } message: {
-                        Text("Your progress will be lost.")
-                    }
-                    .task {
-                        countryDataService.loadCountries()
-                        startTimer()
-                    }
-                    .onAppear {
-                        withAnimation(.easeInOut(duration: 5).repeatForever(autoreverses: true)) {
-                            blobAnimating = true
-                        }
-                        isInputFocused = true
-                    }
-            }
-        }
-    }
-}
-
-// MARK: - Subviews
-
-private extension SpeedRunSessionScreen {
-    var content: some View {
-        VStack(spacing: 0) {
+        Group {
             if isFinished {
                 resultsView
             } else {
                 gameplayView
             }
         }
-        .background { ambientBlobs }
+        .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
-    }
-
-    var gameplayView: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            timerRow
-            progressBar
-            inputField
-            completedList
-            Spacer(minLength: 0)
+        .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
+            quitAlertActions
+        } message: {
+            Text("Your progress will be lost.")
         }
-        .padding(.top, DesignSystem.Spacing.sm)
+        .task {
+            countryDataService.loadCountries()
+            startTimer()
+        }
+        .onAppear { isInputFocused = true }
+        .onDisappear { timerCancellable?.cancel() }
+    }
+}
+
+// MARK: - Gameplay
+
+private extension SpeedRunSessionScreen {
+    var gameplayView: some View {
+        VStack(spacing: 0) {
+            gameToolbar
+            VStack(spacing: DesignSystem.Spacing.md) {
+                timerSection
+                progressSection
+                completedList
+            }
+            .padding(.top, DesignSystem.Spacing.sm)
+
+            inputField
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.md)
+        }
     }
 
-    var timerRow: some View {
+    var gameToolbar: some View {
         HStack {
-            Spacer()
-
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                Text(formattedTime)
-                    .font(.system(size: 48, weight: .bold, design: .monospaced))
-                    .foregroundStyle(timerColor)
-                    .contentTransition(.numericText())
-                    .animation(.easeInOut(duration: 0.1), value: elapsedTime)
-
-                Text("\(completedCodes.count) / \(targetCountries.count) countries")
+            Button { showQuitAlert = true } label: {
+                Image(systemName: "xmark")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .padding(DesignSystem.Spacing.sm)
             }
+            .buttonStyle(.plain)
 
             Spacer()
+
+            Text(region.displayName)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            Spacer()
+
+            Color.clear.frame(width: 44)
         }
-        .padding(.vertical, DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
     }
 
-    var progressBar: some View {
-        GeometryReader { geometryReader in
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                    .fill(DesignSystem.Color.cardBackground)
-                    .frame(height: 8)
-
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                    .fill(progressGradient)
-                    .frame(
-                        width: geometryReader.size.width * progressFraction,
-                        height: 8
-                    )
-                    .animation(.easeOut(duration: 0.3), value: completedCodes.count)
-            }
+    var timerSection: some View {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
+            Text(formattedTime)
+                .font(.system(size: 44, weight: .bold, design: .monospaced))
+                .foregroundStyle(timerColor)
+                .contentTransition(.numericText())
+                .animation(.easeInOut(duration: 0.1), value: elapsedTime)
+            Text("\(completedCodes.count) of \(targetCountries.count) countries")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
-        .frame(height: 8)
+        .frame(maxWidth: .infinity)
+    }
+
+    var progressSection: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SessionProgressBar(progress: progressFraction)
+            QuestionCounterPill(current: completedCodes.count, total: targetCountries.count)
+        }
         .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    var progressGradient: LinearGradient {
-        LinearGradient(
-            colors: [DesignSystem.Color.success, DesignSystem.Color.accent],
-            startPoint: .leading,
-            endPoint: .trailing
-        )
     }
 
     var inputField: some View {
@@ -142,22 +128,23 @@ private extension SpeedRunSessionScreen {
                 .submitLabel(.done)
 
             if !inputText.isEmpty {
-                Button {
-                    inputText = ""
-                } label: {
+                Button { inputText = "" } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
+                .buttonStyle(.plain)
             }
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
         )
-        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     var completedList: some View {
@@ -167,10 +154,12 @@ private extension SpeedRunSessionScreen {
                     ForEach(completedCountries) { country in
                         completedRow(country: country)
                             .id(country.code)
-                            .transition(.asymmetric(
-                                insertion: .scale(scale: 0.85).combined(with: .opacity),
-                                removal: .opacity
-                            ))
+                            .transition(
+                                .asymmetric(
+                                    insertion: .scale(scale: 0.85).combined(with: .opacity),
+                                    removal: .opacity
+                                )
+                            )
                     }
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
@@ -188,16 +177,12 @@ private extension SpeedRunSessionScreen {
 
     func completedRow(country: Country) -> some View {
         let isFlashing = flashingCode == country.code
-
         return HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: country.code, height: 24)
-
             Text(country.name)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-
             Spacer()
-
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.success)
@@ -212,157 +197,102 @@ private extension SpeedRunSessionScreen {
         )
         .animation(.easeInOut(duration: 0.3), value: isFlashing)
     }
+}
 
+// MARK: - Results
+
+private extension SpeedRunSessionScreen {
     var resultsView: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 resultsHeader
                 resultsStats
                 xpBadge
-                actionButtons
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
+        }
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                GlassButton("Try Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
+                    restart()
+                }
+                GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
+                    dismiss()
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
     var resultsHeader: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: "trophy.fill")
-                .font(.system(size: 56, weight: .bold))
-                .foregroundStyle(DesignSystem.Color.warning)
-                .symbolEffect(.bounce)
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.warning.opacity(0.12))
+                    .frame(width: 96, height: 96)
+                Image(systemName: "trophy.fill")
+                    .font(.system(size: 44))
+                    .foregroundStyle(DesignSystem.Color.warning)
+                    .symbolEffect(.bounce)
+            }
 
             Text(completionMessage)
-                .font(DesignSystem.Font.title)
+                .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
 
-            Text("Final Time")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-
             Text(formattedTime)
-                .font(.system(size: 52, weight: .bold, design: .monospaced))
+                .font(.system(size: 40, weight: .bold, design: .monospaced))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
+        .frame(maxWidth: .infinity)
+        .padding(.top, DesignSystem.Spacing.xl)
     }
 
     var resultsStats: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            statCard(
-                icon: "checkmark.circle.fill",
-                value: "\(completedCodes.count)",
-                label: "Named",
-                color: DesignSystem.Color.success
-            )
-            statCard(
-                icon: "globe",
-                value: "\(targetCountries.count - completedCodes.count)",
-                label: "Missed",
-                color: DesignSystem.Color.error
-            )
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    func statCard(icon: String, value: String, label: String, color: Color) -> some View {
         CardView {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(color)
-
-                Text(value)
-                    .font(DesignSystem.Font.title)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            HStack(spacing: 0) {
+                ResultStatItem(
+                    icon: "checkmark.circle.fill",
+                    value: "\(completedCodes.count)",
+                    label: "Named",
+                    color: DesignSystem.Color.success
+                )
+                ResultStatItem(
+                    icon: "globe",
+                    value: "\(targetCountries.count - completedCodes.count)",
+                    label: "Missed",
+                    color: DesignSystem.Color.error
+                )
+                ResultStatItem(
+                    icon: "chart.bar.fill",
+                    value: "\(Int(progressFraction * 100))%",
+                    label: "Accuracy",
+                    color: DesignSystem.Color.indigo
+                )
             }
-            .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
         }
-    }
-
-    var xpBadge: some View {
-        Group {
-            if showXPBadge, xpEarned > 0 {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "star.fill")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.accent)
-
-                    Text("+\(xpEarned) XP")
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.lg)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
-                .transition(.scale(scale: 0.7).combined(with: .opacity))
-            }
-        }
-    }
-
-    var actionButtons: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Button {
-                restart()
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "arrow.counterclockwise")
-                        .font(DesignSystem.Font.headline)
-                    Text("Try Again")
-                        .font(DesignSystem.Font.headline)
-                }
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
-            }
-            .buttonStyle(.glass)
-
-            Button {
-                dismiss()
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "checkmark")
-                        .font(DesignSystem.Font.headline)
-                    Text("Done")
-                        .font(DesignSystem.Font.headline)
-                }
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
-            }
-            .buttonStyle(.glass)
-        }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
-    var toolbarContent: some ToolbarContent {
-        Group {
-            ToolbarItem(placement: .navigationBarLeading) {
-                if !isFinished {
-                    Button {
-                        showQuitAlert = true
-                    } label: {
-                        Label("Quit", systemImage: "xmark")
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-
-            ToolbarItem(placement: .principal) {
-                Text(region.displayName)
+    @ViewBuilder
+    var xpBadge: some View {
+        if showXPBadge, xpEarned > 0 {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "star.fill")
+                    .foregroundStyle(DesignSystem.Color.warning)
+                Text("+\(xpEarned) XP")
                     .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
             }
+            .padding(.horizontal, DesignSystem.Spacing.lg)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(DesignSystem.Color.warning.opacity(0.12), in: Capsule())
+            .transition(.scale(scale: 0.7).combined(with: .opacity))
         }
     }
 
@@ -371,40 +301,6 @@ private extension SpeedRunSessionScreen {
             Button("Quit", role: .destructive) { dismiss() }
             Button("Continue", role: .cancel) {}
         }
-    }
-
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.error.opacity(0.20), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 30)
-                .offset(x: -80, y: -100)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.15), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 36)
-                .offset(x: 120, y: 300)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
     }
 }
 
@@ -422,7 +318,9 @@ private extension SpeedRunSessionScreen {
     }
 
     func checkInput(_ text: String) {
-        let normalized = text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let normalized = text
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
         guard normalized.count >= 2 else { return }
 
         guard let match = remainingCountries.first(where: { country in
@@ -455,6 +353,7 @@ private extension SpeedRunSessionScreen {
     func finishRun() {
         timerCancellable?.cancel()
         isFinished = true
+        isInputFocused = false
         hapticsService.notification(.success)
 
         let earned = calculateXP()
@@ -476,13 +375,12 @@ private extension SpeedRunSessionScreen {
         let completionRate = Double(completedCodes.count) / Double(targetCountries.count)
         let base = 50
         let completionBonus = Int(completionRate * 100)
-        let speedBonus: Int
-        switch elapsedTime {
-        case ..<60: speedBonus = 100
-        case ..<120: speedBonus = 60
-        case ..<300: speedBonus = 30
-        case ..<600: speedBonus = 15
-        default: speedBonus = 5
+        let speedBonus: Int = switch elapsedTime {
+        case ..<60: 100
+        case ..<120: 60
+        case ..<300: 30
+        case ..<600: 15
+        default: 5
         }
         return base + completionBonus + speedBonus
     }
@@ -527,7 +425,7 @@ private extension SpeedRunSessionScreen {
         let minutes = totalSeconds / 60
         let seconds = totalSeconds % 60
         let tenths = Int((elapsedTime.truncatingRemainder(dividingBy: 1)) * 10)
-        return String(format: "%02d:%02d.%01d", minutes, seconds, tenths)
+        return String(format: "%02d:%02d.%d", minutes, seconds, tenths)
     }
 
     var timerColor: Color {

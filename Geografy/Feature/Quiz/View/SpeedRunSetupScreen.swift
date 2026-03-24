@@ -12,18 +12,16 @@ struct SpeedRunSetupScreen: View {
                 regionSection
                 rulesSection
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) {
-            startButton
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
-        }
-        .background(DesignSystem.Color.background)
+        .safeAreaInset(edge: .bottom) { startButton }
+        .background { AmbientBlobsView(.quiz) }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Speed Run")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(placement: .topBarTrailing) {
                 CircleCloseButton { coordinator.dismissSheet() }
             }
         }
@@ -34,61 +32,48 @@ struct SpeedRunSetupScreen: View {
 
 private extension SpeedRunSetupScreen {
     var headerSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .fill(DesignSystem.Color.error.opacity(0.15))
-                        .frame(width: 48, height: 48)
-
-                    Image(systemName: "timer")
-                        .font(.system(size: 22, weight: .semibold))
-                        .foregroundStyle(DesignSystem.Color.error)
-                }
-
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text("Speed Run")
-                        .font(DesignSystem.Font.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                    Text("Name every country as fast as possible")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.error.opacity(0.15))
+                    .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
+                Image(systemName: "timer")
+                    .font(.system(size: 28))
+                    .foregroundStyle(DesignSystem.Color.error)
+            }
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Text("Speed Run")
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Name every country as fast as possible")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
             }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.md)
     }
 
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            Text("Region")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-
+            sectionTitle("Region")
             RegionSelectionBar(
                 items: QuizRegion.allCases.map { $0 },
                 selectedID: selectedRegion.id,
                 onSelect: { selectedRegion = $0 }
             )
-
             Text(regionDescription)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .padding(.horizontal, DesignSystem.Spacing.md)
                 .animation(.easeInOut(duration: 0.2), value: selectedRegion)
         }
     }
 
     var rulesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            Text("How it works")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-
+            sectionTitle("How It Works")
             CardView {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                     ruleRow(
@@ -114,7 +99,6 @@ private extension SpeedRunSetupScreen {
                 }
                 .padding(DesignSystem.Spacing.md)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
     }
 
@@ -124,7 +108,6 @@ private extension SpeedRunSetupScreen {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(color)
                 .frame(width: 24)
-
             Text(text)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -135,15 +118,26 @@ private extension SpeedRunSetupScreen {
         GlassButton("Start Speed Run", systemImage: "timer", fullWidth: true) {
             coordinator.dismissSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                coordinator.presentFullScreen(.speedRunSession(region: selectedRegion))
+                coordinator.presentFullScreen(
+                    .speedRunSession(region: selectedRegion)
+                )
             }
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 
 // MARK: - Helpers
 
 private extension SpeedRunSetupScreen {
+    func sectionTitle(_ text: String) -> some View {
+        Text(text)
+            .font(DesignSystem.Font.headline)
+            .fontWeight(.semibold)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+    }
+
     var regionDescription: String {
         switch selectedRegion {
         case .world: "Name all 195 countries in the world"
