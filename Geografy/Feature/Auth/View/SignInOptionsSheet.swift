@@ -7,42 +7,25 @@ struct SignInOptionsSheet: View {
 
     @State private var showError = false
     @State private var errorMessage = ""
-    @State private var blobAnimating = false
     @State private var appeared = false
-    @State private var iconRotating = false
 
     var body: some View {
         ZStack {
             DesignSystem.Color.background.ignoresSafeArea()
-            ambientBlobs
+            AmbientBlobsView(.standard)
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
+                VStack(spacing: DesignSystem.Spacing.xl) {
                     heroSection
-                        .padding(.top, DesignSystem.Spacing.lg)
                     statsRow
-                        .padding(.top, DesignSystem.Spacing.lg)
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 16)
-                        .animation(.easeOut(duration: 0.5).delay(0.2), value: appeared)
                     benefitsSection
-                        .padding(.top, DesignSystem.Spacing.lg)
-                    actionsSection
-                        .padding(.top, DesignSystem.Spacing.xl)
-                        .padding(.bottom, DesignSystem.Spacing.xxl)
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .frame(maxWidth: 500)
-                .frame(maxWidth: .infinity)
+                .padding(.top, DesignSystem.Spacing.xl)
+                .padding(.bottom, DesignSystem.Spacing.xxl)
             }
-            .safeAreaPadding(.horizontal, DesignSystem.Spacing.sm)
         }
+        .safeAreaInset(edge: .bottom) { actionsSection }
         .onAppear {
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
-            withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
-                iconRotating = true
-            }
             withAnimation(.easeOut(duration: 0.6)) {
                 appeared = true
             }
@@ -52,47 +35,6 @@ struct SignInOptionsSheet: View {
         } message: {
             Text(errorMessage)
         }
-    }
-}
-
-// MARK: - Background
-
-private extension SignInOptionsSheet {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.28), .clear],
-                        center: .center, startRadius: 0, endRadius: 240
-                    )
-                )
-                .frame(width: 480, height: 360).blur(radius: 40)
-                .offset(x: -90, y: 40)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.20), .clear],
-                        center: .center, startRadius: 0, endRadius: 200
-                    )
-                )
-                .frame(width: 380, height: 320).blur(radius: 48)
-                .offset(x: 150, y: 200)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
-                        center: .center, startRadius: 0, endRadius: 180
-                    )
-                )
-                .frame(width: 340, height: 280).blur(radius: 44)
-                .offset(x: -60, y: 750)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
     }
 }
 
@@ -115,16 +57,13 @@ private extension SignInOptionsSheet {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 12)
-                    .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
                 Text("Your world, explored.")
                     .font(DesignSystem.Font.callout)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 12)
-                    .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
             }
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 12)
+            .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
         }
     }
 
@@ -173,6 +112,9 @@ private extension SignInOptionsSheet {
             statPill(value: "7", label: "Continents", icon: "globe.americas", color: DesignSystem.Color.blue)
             statPill(value: "∞", label: "Adventures", icon: "star.fill", color: DesignSystem.Color.indigo)
         }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 16)
+        .animation(.easeOut(duration: 0.5).delay(0.2), value: appeared)
     }
 
     func statPill(value: String, label: String, icon: String, color: Color) -> some View {
@@ -190,68 +132,38 @@ private extension SignInOptionsSheet {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .strokeBorder(.white.opacity(0.06), lineWidth: 1)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
     }
 }
 
 // MARK: - Benefits
 
-private struct SignInBenefit {
-    let icon: String
-    let color: Color
-    let title: String
-    let subtitle: String
-}
-
 private extension SignInOptionsSheet {
-    var benefits: [SignInBenefit] {
-        [
-            SignInBenefit(
-                icon: "icloud.and.arrow.up.fill",
-                color: DesignSystem.Color.blue,
-                title: "Sync across devices",
-                subtitle: "Your progress follows you everywhere"
-            ),
-            SignInBenefit(
-                icon: "trophy.fill",
-                color: .yellow,
-                title: "Achievements & XP",
-                subtitle: "Earn rewards as you explore the world"
-            ),
-            SignInBenefit(
-                icon: "airplane.departure",
-                color: DesignSystem.Color.accent,
-                title: "Track your travels",
-                subtitle: "Pin countries you've visited or dream of"
-            ),
-            SignInBenefit(
-                icon: "chart.line.uptrend.xyaxis",
-                color: DesignSystem.Color.indigo,
-                title: "Quiz history & streaks",
-                subtitle: "See how much your knowledge grows"
-            ),
-            SignInBenefit(
-                icon: "person.2.fill",
-                color: DesignSystem.Color.purple,
-                title: "Global leaderboards",
-                subtitle: "Compete with explorers worldwide"
-            ),
-        ]
-    }
-
     var benefitsSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(Array(benefits.enumerated()), id: \.offset) { index, benefit in
-                benefitRow(benefit, delay: Double(index) * 0.07)
+                benefitRow(benefit, delay: Double(index) * 0.06)
             }
         }
     }
 
-    func benefitRow(_ benefit: SignInBenefit, delay: Double) -> some View {
+    var benefits: [(icon: String, color: Color, title: String, subtitle: String)] {
+        [
+            ("icloud.and.arrow.up.fill", DesignSystem.Color.blue, "Sync across devices", "Progress follows you everywhere"),
+            ("trophy.fill", DesignSystem.Color.warning, "Achievements & XP", "Earn rewards as you explore"),
+            ("airplane.departure", DesignSystem.Color.accent, "Track your travels", "Pin countries you've visited"),
+            ("chart.line.uptrend.xyaxis", DesignSystem.Color.indigo, "Quiz history & streaks", "Watch your knowledge grow"),
+            ("person.2.fill", DesignSystem.Color.purple, "Global leaderboards", "Compete with explorers worldwide"),
+        ]
+    }
+
+    func benefitRow(
+        _ benefit: (icon: String, color: Color, title: String, subtitle: String),
+        delay: Double
+    ) -> some View {
         HStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
@@ -273,10 +185,9 @@ private extension SignInOptionsSheet {
             Spacer(minLength: 0)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .strokeBorder(.white.opacity(0.05), lineWidth: 1)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)
@@ -290,22 +201,17 @@ private extension SignInOptionsSheet {
     var actionsSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             appleSignInButton
-                .opacity(appeared ? 1 : 0)
-                .offset(y: appeared ? 0 : 16)
-                .animation(.easeOut(duration: 0.5).delay(0.65), value: appeared)
             googleSignInButton
-                .opacity(appeared ? 1 : 0)
-                .offset(y: appeared ? 0 : 16)
-                .animation(.easeOut(duration: 0.5).delay(0.70), value: appeared)
 #if DEBUG
             debugSignInButton
-                .opacity(appeared ? 1 : 0)
-                .animation(.easeOut(duration: 0.5).delay(0.75), value: appeared)
 #endif
             continueAsGuestButton
-                .opacity(appeared ? 1 : 0)
-                .animation(.easeOut(duration: 0.5).delay(0.80), value: appeared)
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 16)
+        .animation(.easeOut(duration: 0.5).delay(0.6), value: appeared)
     }
 
     var appleSignInButton: some View {
@@ -364,14 +270,12 @@ private extension SignInOptionsSheet {
     }
 
     var continueAsGuestButton: some View {
-        Button {
-            dismiss()
-        } label: {
+        Button { dismiss() } label: {
             Text("Continue as Guest")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.sm)
+                .padding(.vertical, DesignSystem.Spacing.xs)
         }
     }
 
@@ -408,12 +312,11 @@ private extension SignInOptionsSheet {
 // MARK: - Google G Logo
 
 private struct GoogleGLogo: View {
-    // (startDeg, endDeg, red, green, blue) — going visually clockwise (clockwise: false in screen coords)
     private static let segments: [(CGFloat, CGFloat, Double, Double, Double)] = [
-        (30, 90, 0.918, 0.263, 0.208),   // Red: upper-right
-        (90, 150, 0.984, 0.737, 0.016),  // Yellow: lower-right
-        (150, 210, 0.204, 0.659, 0.325), // Green: bottom
-        (210, 330, 0.259, 0.522, 0.957), // Blue: left + top (dominant)
+        (30, 90, 0.918, 0.263, 0.208),
+        (90, 150, 0.984, 0.737, 0.016),
+        (150, 210, 0.204, 0.659, 0.325),
+        (210, 330, 0.259, 0.522, 0.957),
     ]
 
     var body: some View {
@@ -439,7 +342,6 @@ private struct GoogleGLogo: View {
                 context.stroke(arc, with: .color(Color(red: rVal, green: gVal, blue: bVal)), style: style)
             }
 
-            // Crossbar: horizontal bar from center to right edge (blue)
             var crossbar = Path()
             crossbar.move(to: CGPoint(x: cx, y: cy))
             crossbar.addLine(to: CGPoint(x: size.width - strokeW * 0.2, y: cy))
