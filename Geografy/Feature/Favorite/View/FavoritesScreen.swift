@@ -37,9 +37,6 @@ struct FavoritesScreen: View {
 private extension FavoritesScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            countLabel
-        }
         ToolbarItem(placement: .topBarTrailing) {
             optionsMenu
         }
