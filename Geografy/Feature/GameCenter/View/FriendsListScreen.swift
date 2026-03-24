@@ -10,11 +10,9 @@ struct FriendsListScreen: View {
     @State private var avatars: [String: Image] = [:]
     @State private var xpScores: [String: Int] = [:]
     @State private var isLoading = true
-    @State private var blobAnimating = false
-
     var body: some View {
         content
-            .background { ambientBlobs }
+            .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.large)
@@ -24,11 +22,6 @@ struct FriendsListScreen: View {
                 }
             }
             .task { await loadData() }
-            .onAppear {
-                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                    blobAnimating = true
-                }
-            }
     }
 }
 
@@ -89,13 +82,17 @@ private extension FriendsListScreen {
 
     var emptyStateView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
+            Spacer()
             EmptyStateView(
                 icon: "person.2",
                 title: "No Game Center Friends Yet",
                 subtitle: "Add friends through Game Center to see them here and compare your geography skills."
             )
             addFriendsButton
+                .padding(.horizontal, DesignSystem.Spacing.md)
+            Spacer()
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -234,59 +231,10 @@ private extension FriendsListScreen {
     }
 
     var addFriendsButton: some View {
-        Button {
+        GlassButton("Add Friends in Game Center", systemImage: "person.badge.plus", fullWidth: true) {
             hapticsService.impact(.medium)
             GKAccessPoint.shared.trigger(state: .localPlayerFriendsList) {}
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "person.badge.plus")
-                    .font(DesignSystem.Font.subheadline)
-                Text("Add Friends in Game Center")
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .buttonStyle(.glass)
-    }
-}
-
-// MARK: - Background
-
-private extension FriendsListScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 32)
-                .offset(x: -80, y: -60)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 280)
-                .blur(radius: 40)
-                .offset(x: 140, y: 120)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
     }
 }
 
