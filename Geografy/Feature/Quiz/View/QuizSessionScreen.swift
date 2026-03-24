@@ -278,6 +278,19 @@ private extension QuizSessionScreen {
                 )
                 .id(question.id)
                 .transition(questionTransition)
+
+            case .spellingBee:
+                QuizSpellingBeeView(
+                    question: question,
+                    quizType: configuration.type,
+                    showFeedback: showFeedback,
+                    isCorrectAnswer: typingIsCorrect,
+                    typingInput: $typingInput,
+                    showFlagPreview: $showFlagPreview,
+                    onSubmit: { submitTypingAnswer() }
+                )
+                .id(question.id)
+                .transition(questionTransition)
             }
         }
     }

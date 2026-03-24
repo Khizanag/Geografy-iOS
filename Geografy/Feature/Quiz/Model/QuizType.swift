@@ -77,11 +77,17 @@ extension QuizType: SelectableType {
         }
     }
 
-    var supportsTypingMode: Bool {
+    var supportedAnswerModes: [QuizAnswerMode] {
         switch self {
-        case .reverseFlag, .nationalSymbols, .worldRankings: false
-        default: true
+        case .flagQuiz, .capitalQuiz, .reverseCapital:
+            [.multipleChoice, .typing, .spellingBee]
+        case .reverseFlag, .nationalSymbols, .worldRankings:
+            [.multipleChoice]
         }
+    }
+
+    var supportsTypingMode: Bool {
+        supportedAnswerModes.contains(.typing)
     }
 
     var hasComparisonMetric: Bool {
