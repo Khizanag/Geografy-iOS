@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ChallengeSplitScreen: View {
-    @Environment(ChallengeCoordinator.self) private var coordinator
+    @Environment(Coordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var room: ChallengeRoom
@@ -208,7 +208,7 @@ private extension ChallengeSplitScreen {
 
     func advanceRound() {
         if currentRound >= room.totalRounds {
-            coordinator.push(.result(room))
+            coordinator.push(.challengeResult(room))
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 currentRound += 1
