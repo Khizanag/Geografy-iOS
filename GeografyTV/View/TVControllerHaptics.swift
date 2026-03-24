@@ -1,22 +1,29 @@
 import CoreHaptics
 import GameController
 
-enum TVControllerHaptics {
-    static func playTap(on controller: GCController? = nil) {
-        playPattern(on: controller) {
+@MainActor
+final class TVControllerHaptics {
+    static let shared = TVControllerHaptics()
+
+    private var engines: [ObjectIdentifier: CHHapticEngine] = [:]
+
+    private init() {}
+
+    func playTap(on controller: GCController? = nil) {
+        play(on: controller, events: [
             CHHapticEvent(
                 eventType: .hapticTransient,
                 parameters: [
-                    CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.4),
+                    CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.5),
                     CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5),
                 ],
                 relativeTime: 0
-            )
-        }
+            ),
+        ])
     }
 
-    static func playCorrect(on controller: GCController? = nil) {
-        playPattern(on: controller) {
+    func playCorrect(on controller: GCController? = nil) {
+        play(on: controller, events: [
             CHHapticEvent(
                 eventType: .hapticTransient,
                 parameters: [
@@ -24,47 +31,47 @@ enum TVControllerHaptics {
                     CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.6),
                 ],
                 relativeTime: 0
-            )
+            ),
             CHHapticEvent(
                 eventType: .hapticTransient,
                 parameters: [
                     CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
                     CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.8),
                 ],
-                relativeTime: 0.12
-            )
-        }
+                relativeTime: 0.15
+            ),
+        ])
     }
 
-    static func playWrong(on controller: GCController? = nil) {
-        playPattern(on: controller) {
+    func playWrong(on controller: GCController? = nil) {
+        play(on: controller, events: [
             CHHapticEvent(
                 eventType: .hapticContinuous,
                 parameters: [
-                    CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.8),
-                    CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.2),
+                    CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.9),
+                    CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.1),
                 ],
                 relativeTime: 0,
-                duration: 0.3
-            )
-        }
+                duration: 0.35
+            ),
+        ])
     }
 
-    static func playTimerWarning(on controller: GCController? = nil) {
-        playPattern(on: controller) {
+    func playTimerWarning(on controller: GCController? = nil) {
+        play(on: controller, events: [
             CHHapticEvent(
                 eventType: .hapticTransient,
                 parameters: [
-                    CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.3),
+                    CHHapticEventParameter(parameterID: .hapticIntensity, value: 0.35),
                     CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.9),
                 ],
                 relativeTime: 0
-            )
-        }
+            ),
+        ])
     }
 
-    static func playCelebration(on controller: GCController? = nil) {
-        playPattern(on: controller) {
+    func playCelebration(on controller: GCController? = nil) {
+        play(on: controller, events: [
             CHHapticEvent(
                 eventType: .hapticTransient,
                 parameters: [
@@ -72,7 +79,7 @@ enum TVControllerHaptics {
                     CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.7),
                 ],
                 relativeTime: 0
-            )
+            ),
             CHHapticEvent(
                 eventType: .hapticTransient,
                 parameters: [
@@ -80,7 +87,7 @@ enum TVControllerHaptics {
                     CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.8),
                 ],
                 relativeTime: 0.15
-            )
+            ),
             CHHapticEvent(
                 eventType: .hapticTransient,
                 parameters: [
@@ -88,41 +95,55 @@ enum TVControllerHaptics {
                     CHHapticEventParameter(parameterID: .hapticSharpness, value: 1.0),
                 ],
                 relativeTime: 0.30
-            )
-        }
+            ),
+        ])
     }
 }
 
-// MARK: - Engine
+// MARK: - Engine Management
 
 private extension TVControllerHaptics {
-    @resultBuilder
-    struct HapticEventBuilder {
-        static func buildBlock(_ events: CHHapticEvent...) -> [CHHapticEvent] { events }
-    }
-
-    static func playPattern(
-        on specificController: GCController?,
-        @HapticEventBuilder events: () -> [CHHapticEvent]
-    ) {
-        let controllers: [GCController]
+    func play(on specificController: GCController?, events: [CHHapticEvent]) {
+        let targets: [GCController]
         if let specificController {
-            controllers = [specificController]
+            targets = [specificController]
         } else {
-            controllers = GCController.controllers().filter { $0.haptics != nil }
+            targets = GCController.controllers().filter { $0.haptics != nil }
         }
 
-        let hapticEvents = events()
-
-        for controller in controllers {
-            guard let engine = controller.haptics?.createEngine(withLocality: .default) else { continue }
+        for controller in targets {
+            let engine = engine(for: controller)
+            guard let engine else { continue }
 
             do {
-                let pattern = try CHHapticPattern(events: hapticEvents, parameters: [])
                 try engine.start()
+                let pattern = try CHHapticPattern(events: events, parameters: [])
                 let player = try engine.makePlayer(with: pattern)
                 try player.start(atTime: CHHapticTimeImmediate)
             } catch {}
         }
+    }
+
+    func engine(for controller: GCController) -> CHHapticEngine? {
+        let key = ObjectIdentifier(controller)
+
+        if let cached = engines[key] {
+            return cached
+        }
+
+        let localities: [GCHapticsLocality] = [.handles, .default]
+        for locality in localities {
+            if let newEngine = controller.haptics?.createEngine(withLocality: locality) {
+                newEngine.resetHandler = { [weak self] in
+                    try? newEngine.start()
+                    self?.engines[key] = newEngine
+                }
+                newEngine.stoppedHandler = { _ in }
+                engines[key] = newEngine
+                return newEngine
+            }
+        }
+
+        return nil
     }
 }
