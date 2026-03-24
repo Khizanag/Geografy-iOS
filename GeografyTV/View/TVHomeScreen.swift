@@ -75,6 +75,7 @@ struct TVHomeFeedView: View {
             }
             .padding(80)
         }
+        .background { AmbientBlobsView(.tv) }
     }
 }
 

@@ -48,8 +48,6 @@
 				App/Navigation/SheetFactory.swift,
 				App/Navigation/TabCoordinator.swift,
 				Design/Component/AlphabetJumpIndex.swift,
-				Design/Component/AmbientBlobsView.swift,
-				Design/Component/CardView.swift,
 				Design/Component/CircleCloseButton.swift,
 				Design/Component/ComingSoonSheet.swift,
 				Design/Component/ComingSoonView.swift,

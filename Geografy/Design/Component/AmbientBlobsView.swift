@@ -46,6 +46,8 @@ extension AmbientBlobsView {
         case quiz
         case subtle
         case leaderboard
+        case tv
+        case tvQuiz
 
         var blobs: [BlobDescriptor] {
             switch self {
@@ -186,6 +188,64 @@ extension AmbientBlobsView {
                         endRadius: 160,
                         offset: CGSize(width: 140, height: 120),
                         scaleRange: ScaleRange(idle: 1.10, animating: 0.88)
+                    ),
+                ]
+
+            case .tv:
+                [
+                    BlobDescriptor(
+                        color: DesignSystem.Color.accent,
+                        opacity: 0.16,
+                        width: 900,
+                        height: 700,
+                        blur: 80,
+                        endRadius: 450,
+                        offset: CGSize(width: -300, height: -200),
+                        scaleRange: ScaleRange(idle: 0.90, animating: 1.10)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.indigo,
+                        opacity: 0.12,
+                        width: 800,
+                        height: 600,
+                        blur: 100,
+                        endRadius: 400,
+                        offset: CGSize(width: 400, height: 100),
+                        scaleRange: ScaleRange(idle: 1.10, animating: 0.88)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.purple,
+                        opacity: 0.08,
+                        width: 700,
+                        height: 500,
+                        blur: 90,
+                        endRadius: 350,
+                        offset: CGSize(width: -100, height: 300),
+                        scaleRange: ScaleRange(idle: 0.95, animating: 1.05)
+                    ),
+                ]
+
+            case .tvQuiz:
+                [
+                    BlobDescriptor(
+                        color: DesignSystem.Color.accent,
+                        opacity: 0.18,
+                        width: 1000,
+                        height: 700,
+                        blur: 80,
+                        endRadius: 500,
+                        offset: CGSize(width: -300, height: -200),
+                        scaleRange: ScaleRange(idle: 0.92, animating: 1.08)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.blue,
+                        opacity: 0.12,
+                        width: 800,
+                        height: 600,
+                        blur: 100,
+                        endRadius: 400,
+                        offset: CGSize(width: 500, height: 200),
+                        scaleRange: ScaleRange(idle: 1.08, animating: 0.92)
                     ),
                 ]
             }
