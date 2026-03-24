@@ -63,8 +63,8 @@ struct OrganizationMapScreen: View {
             }
             .overlay {
                 if showFlagPreview, let code = mapState.selectedCountryCode {
-                    ZoomableFlagView(countryCode: code, namespace: flagNamespace) {
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                    ZoomableFlagView(countryCode: code) {
+                        withAnimation(.easeInOut(duration: 0.25)) {
                             showFlagPreview = false
                         }
                     }
