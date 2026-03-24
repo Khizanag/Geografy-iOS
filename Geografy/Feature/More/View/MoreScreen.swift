@@ -254,7 +254,7 @@ private extension MoreScreen {
         [
             .dailyChallenge, .exploreGame, .speedRun,
             .multiplayer, .quizPacks, .customQuiz,
-            .flagGame, .geoTrivia,
+            .flagGame, .trivia,
             .spellingBee, .landmarkQuiz, .wordSearch,
             .borderChallenge, .challengeRoom,
             .countryNicknames, .nationalSymbolsQuiz,

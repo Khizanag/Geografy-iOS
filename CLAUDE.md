@@ -55,7 +55,7 @@ Geografy/
     Search/               — Global search across countries and organizations
     SpellingBee/          — Spell country names from flag clues
     FlagGame/             — Match flags to countries
-    GeoTrivia/            — Geography trivia questions
+    Trivia/               — Geography trivia questions
     BorderChallenge/      — Guess countries by outline shape
     WordSearch/           — Geography word search puzzle
     MapColoring/          — Interactive map coloring
@@ -145,7 +145,7 @@ These components MUST be reused — NEVER create alternatives:
 - Country detail with flag symbolism, UNESCO heritage, phrasebook, fun facts, neighbors, deep dive
 - 6 quiz types with typing mode, 3 difficulties, region filter, timer, XP rewards
 - Flashcard spaced repetition with swipe gestures, thinking time tracking
-- 15+ game modes: Speed Run, Flag Game, Spelling Bee, GeoTrivia, Border Challenge, Word Search, etc.
+- 15+ game modes: Speed Run, Flag Game, Spelling Bee, Trivia, Border Challenge, Word Search, etc.
 - Daily Challenge with mystery country, flag sequence, capital chain
 - Travel tracker with visited/want-to-visit, travel map, bucket list, journal
 - Coordinator pattern navigation with 5 tabs

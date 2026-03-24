@@ -11,7 +11,7 @@ enum SheetFactory {
 
         case .quizSetup, .speedRunSetup, .exploreGame,
              .multiplayer, .quizPacks, .customQuiz, .dailyChallenge,
-             .srsStudy, .flagGame, .geoTrivia, .spellingBee, .landmarkQuiz:
+             .srsStudy, .flagGame, .trivia, .spellingBee, .landmarkQuiz:
             playView(for: sheet)
 
         case .distanceCalculator, .currencyConverter, .timeZones,
@@ -155,8 +155,8 @@ private extension SheetFactory {
                 .presentationDetents([.large])
                 .interactiveDismissDisabled()
 
-        case .geoTrivia:
-            NavigationStack { GeoTriviaScreen() }
+        case .trivia:
+            NavigationStack { TriviaScreen() }
                 .presentationDetents([.large])
                 .interactiveDismissDisabled()
 

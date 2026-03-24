@@ -10,7 +10,7 @@
 61. QuestionCounterPill — "X/Y" counter pill with numeric transition
 62. EmptyStateView — centered empty state with optional action button, replaced in 5 screens
 63. ResultStatItem — stat grid item, replaced in 3 result screens
-64. Audit batch 1 — fix LandmarkQuiz, FlagGame, GeoTrivia, WordSearch, BorderChallenge, MapColoring
+64. Audit batch 1 — fix LandmarkQuiz, FlagGame, Trivia, WordSearch, BorderChallenge, MapColoring
 65. Audit batch 2 — fix NicknameQuiz, NationalSymbols, ChallengeRoom, LearningPath
 66. SpellingBee refactor — remove private API FlowLayout, standard nav, GlassButton footer
 67. Learning Path → sheet presentation (was push)

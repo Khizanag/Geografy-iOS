@@ -30,7 +30,7 @@ final class HomeSectionOrderService {
             .progress,
             .flagGame,
             .worldRecords,
-            .geoTrivia,
+            .trivia,
             .organizations,
             .spellingBee,
             .countryCompare,

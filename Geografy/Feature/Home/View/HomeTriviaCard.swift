@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct HomeGeoTriviaCard: View {
+struct HomeTriviaCard: View {
     let onTap: () -> Void
 
     var body: some View {
@@ -21,7 +21,7 @@ struct HomeGeoTriviaCard: View {
 
 // MARK: - Subviews
 
-private extension HomeGeoTriviaCard {
+private extension HomeTriviaCard {
     var gameIcon: some View {
         ZStack {
             Circle()

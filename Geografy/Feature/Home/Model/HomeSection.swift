@@ -11,7 +11,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case organizations
     case progress
     case flagGame
-    case geoTrivia
+    case trivia
     case spellingBee
     case learningPath
     case mapPuzzle
@@ -50,7 +50,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .organizations: "Organizations"
         case .progress: "Statistics"
         case .flagGame: "Flag Matching"
-        case .geoTrivia: "Trivia"
+        case .trivia: "Trivia"
         case .spellingBee: "Spelling Bee"
         case .learningPath: "Learning Path"
         case .mapPuzzle: "Map Puzzle"
@@ -89,7 +89,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .organizations: "building.2.fill"
         case .progress: "chart.bar.fill"
         case .flagGame: "flag.fill"
-        case .geoTrivia: "checkmark.circle.fill"
+        case .trivia: "checkmark.circle.fill"
         case .spellingBee: "pencil.and.list.clipboard"
         case .learningPath: "graduationcap.fill"
         case .mapPuzzle: "puzzlepiece.fill"
@@ -121,7 +121,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .borderChallenge,
              .countryNicknames,
              .economyExplorer,
-             .geoTrivia,
+             .trivia,
              .geographyFeatures,
              .mapColoring,
              .nationalSymbolsQuiz,
