@@ -105,14 +105,6 @@ private extension ChallengeSplitScreen {
                     )
 
                 Spacer()
-
-                if let question {
-                    Text(question.category.uppercased())
-                        .font(DesignSystem.Font.caption2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                        .kerning(0.6)
-                }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
 

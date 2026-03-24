@@ -20,7 +20,7 @@ extension Destination {
             OrganizationDetailScreen(organization: organization)
 
         case .challengeResult(let room):
-            ChallengeResultScreen(room: room)
+            ChallengeResultScreen(room: room, onPlayAgain: nil)
         }
     }
 }

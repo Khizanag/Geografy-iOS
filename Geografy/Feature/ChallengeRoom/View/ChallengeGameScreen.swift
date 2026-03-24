@@ -169,13 +169,6 @@ private extension ChallengeGameScreen {
     var questionPrompt: some View {
         if let question = room.currentQuestion {
             VStack(spacing: DesignSystem.Spacing.sm) {
-                Text(question.category)
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .textCase(.uppercase)
-                    .kerning(0.8)
-
                 Text(question.question)
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)

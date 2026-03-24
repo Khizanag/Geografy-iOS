@@ -4,6 +4,7 @@ struct ChallengeResultScreen: View {
     @Environment(Coordinator.self) private var coordinator
 
     let room: ChallengeRoom
+    var onPlayAgain: (() -> Void)?
 
     var body: some View {
         ScrollView {
@@ -18,12 +19,21 @@ struct ChallengeResultScreen: View {
             .padding(.vertical, DesignSystem.Spacing.lg)
         }
         .safeAreaInset(edge: .bottom) {
-            GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
-                coordinator.dismiss()
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                if let onPlayAgain {
+                    GlassButton("Play Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
+                        onPlayAgain()
+                    }
+                }
+
+                GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
+                    coordinator.dismiss()
+                }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.md)
         }
+        .navigationBarBackButtonHidden()
     }
 }
 

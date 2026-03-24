@@ -7,7 +7,8 @@ struct ChallengeSetupScreen: View {
     @State private var player2Name = ""
     @State private var selectedMode: ChallengeMode = .passAndPlay
     @State private var selectedRounds = 10
-    @State private var selectedCategory: ChallengeCategory = .mixed
+    @State private var selectedQuizType: QuizType = .capitalQuiz
+    @State private var selectedMetric: ComparisonMetric = .population
     @State private var showingGame = false
     @State private var challengeRoom: ChallengeRoom?
 
@@ -191,7 +192,7 @@ private extension ChallengeSetupScreen {
 
                     Divider()
 
-                    categoryPicker
+                    quizTypePicker
                 }
                 .padding(DesignSystem.Spacing.md)
             }
@@ -230,24 +231,33 @@ private extension ChallengeSetupScreen {
         .buttonStyle(PressButtonStyle())
     }
 
-    var categoryPicker: some View {
+    var quizTypePicker: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            Label("Category", systemImage: "tag.fill")
+            Label("Quiz Type", systemImage: "questionmark.circle.fill")
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            ForEach(ChallengeCategory.allCases, id: \.rawValue) { category in
-                categoryRow(category)
+            ForEach(QuizType.allCases) { quizType in
+                quizTypeRow(quizType)
+            }
+
+            if selectedQuizType.hasComparisonMetric {
+                metricPicker
             }
         }
     }
 
-    func categoryRow(_ category: ChallengeCategory) -> some View {
-        let isSelected = selectedCategory == category
-        return Button { selectedCategory = category } label: {
-            HStack {
-                Text(category.rawValue)
+    func quizTypeRow(_ quizType: QuizType) -> some View {
+        let isSelected = selectedQuizType == quizType
+        return Button { selectedQuizType = quizType } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: quizType.icon)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .frame(width: 20)
+
+                Text(quizType.displayName)
                     .font(DesignSystem.Font.body)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
@@ -262,6 +272,35 @@ private extension ChallengeSetupScreen {
             .padding(.vertical, DesignSystem.Spacing.xs)
         }
         .buttonStyle(.plain)
+    }
+
+    var metricPicker: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            ForEach(ComparisonMetric.allCases) { metric in
+                let isSelected = selectedMetric == metric
+                Button { selectedMetric = metric } label: {
+                    VStack(spacing: DesignSystem.Spacing.xxs) {
+                        Image(systemName: metric.icon)
+                            .font(DesignSystem.Font.caption)
+
+                        Text(metric.rawValue)
+                            .font(DesignSystem.Font.caption2)
+                            .fontWeight(.semibold)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                    }
+                    .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, DesignSystem.Spacing.xs)
+                    .background(
+                        isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    )
+                }
+                .buttonStyle(PressButtonStyle())
+            }
+        }
+        .padding(.top, DesignSystem.Spacing.xs)
     }
 
     var startButton: some View {
@@ -297,7 +336,8 @@ private extension ChallengeSetupScreen {
             player1Name: name1.isEmpty ? "Player 1" : name1,
             player2Name: name2.isEmpty ? "Player 2" : name2,
             totalRounds: selectedRounds,
-            category: selectedCategory,
+            quizType: selectedQuizType,
+            comparisonMetric: selectedMetric,
             countries: countryDataService.countries
         )
         challengeRoom = room

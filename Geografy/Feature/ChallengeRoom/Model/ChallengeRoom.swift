@@ -5,9 +5,9 @@ struct ChallengeRoom: Hashable {
     let player2Name: String
     var player1Score: Int
     var player2Score: Int
-    var currentPlayerIndex: Int // 0 or 1
+    var currentPlayerIndex: Int
     var roundNumber: Int
-    var totalRounds: Int // 5, 10, 15
+    var totalRounds: Int
     var questions: [ChallengeQuestion]
 
     var currentPlayerName: String {
@@ -34,13 +34,6 @@ struct ChallengeQuestion: Identifiable, Hashable {
     let question: String
     let options: [String]
     let correctIndex: Int
-    let category: String
-}
-
-enum ChallengeCategory: String, CaseIterable {
-    case flags = "Flags"
-    case capitals = "Capitals"
-    case mixed = "Mixed"
 }
 
 enum ChallengeMode: String, CaseIterable {
