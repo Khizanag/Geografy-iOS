@@ -2,6 +2,7 @@ import SwiftUI
 import UserNotifications
 
 struct SettingsScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
@@ -307,9 +308,7 @@ private extension SettingsScreen {
 
     var mapSection: some View {
         settingsGroup(header: "Map") {
-            NavigationLink {
-                TerritorialDisputesScreen()
-            } label: {
+            Button { coordinator.push(.territorialDisputes) } label: {
                 SettingsNavigationRow(
                     icon: "exclamationmark.triangle.fill",
                     iconColor: DesignSystem.Color.warning,

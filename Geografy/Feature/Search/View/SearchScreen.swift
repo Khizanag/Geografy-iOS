@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SearchScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
+
     @State private var query = ""
     @State private var sections: [SearchResultSection] = []
     @State private var isSearching = false
@@ -29,12 +31,6 @@ struct SearchScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Search")
         .toolbar { toolbarItems }
-        .navigationDestination(for: Country.self) { country in
-            CountryDetailScreen(country: country)
-        }
-        .navigationDestination(for: Organization.self) { organization in
-            OrganizationDetailScreen(organization: organization)
-        }
         .task { countryService.loadCountries() }
     }
 }
@@ -71,43 +67,46 @@ private extension SearchScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)
             }
-            VStack(spacing: 0) {
+            VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(recentService.queries, id: \.self) { recentQuery in
                     recentRow(recentQuery)
                 }
             }
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
         }
     }
 
     func recentRow(_ recentQuery: String) -> some View {
-        Button {
-            query = recentQuery
-            scheduleSearch(query: recentQuery)
-        } label: {
-            HStack {
-                Image(systemName: "clock.arrow.circlepath")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .frame(width: DesignSystem.Size.md)
-                Text(recentQuery)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer()
-                Button {
-                    recentService.remove(recentQuery)
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(DesignSystem.Font.caption2)
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Button {
+                query = recentQuery
+                scheduleSearch(query: recentQuery)
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
+                    Text(recentQuery)
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Spacer(minLength: 0)
                 }
-                .buttonStyle(.plain)
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .contentShape(Rectangle())
             }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
+            .buttonStyle(PressButtonStyle())
+
+            Button {
+                recentService.remove(recentQuery)
+            } label: {
+                Image(systemName: "xmark")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .padding(DesignSystem.Spacing.xs)
+            }
+            .glassEffect(.regular.interactive(), in: .circle)
         }
-        .buttonStyle(.plain)
     }
 
     var trendingSection: some View {
@@ -212,25 +211,31 @@ private extension SearchScreen {
     func resultRow(_ row: SearchRow) -> some View {
         switch row {
         case .country(let country):
-            NavigationLink(value: country) {
+            Button {
+                recentService.add(query)
+                coordinator.push(.countryDetail(country))
+            } label: {
                 countryRowContent(country)
             }
             .buttonStyle(PressButtonStyle())
-            .simultaneousGesture(TapGesture().onEnded { recentService.add(query) })
 
         case .capital(let country, let capitalName):
-            NavigationLink(value: country) {
+            Button {
+                recentService.add(query)
+                coordinator.push(.countryDetail(country))
+            } label: {
                 capitalRowContent(country: country, capitalName: capitalName)
             }
             .buttonStyle(PressButtonStyle())
-            .simultaneousGesture(TapGesture().onEnded { recentService.add(query) })
 
         case .organization(let organization):
-            NavigationLink(value: organization) {
+            Button {
+                recentService.add(query)
+                coordinator.push(.organizationDetail(organization))
+            } label: {
                 organizationRowContent(organization)
             }
             .buttonStyle(PressButtonStyle())
-            .simultaneousGesture(TapGesture().onEnded { recentService.add(query) })
         }
     }
 }
@@ -256,6 +261,7 @@ private extension SearchScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
+        .contentShape(Rectangle())
     }
 
     func capitalRowContent(country: Country, capitalName: String) -> some View {
@@ -283,6 +289,7 @@ private extension SearchScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
+        .contentShape(Rectangle())
     }
 
     func organizationRowContent(_ organization: Organization) -> some View {
@@ -310,6 +317,7 @@ private extension SearchScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
+        .contentShape(Rectangle())
     }
 }
 

@@ -13,6 +13,9 @@ struct CoordinatedNavigationStack<Root: View>: View {
                 .navigationDestination(for: Country.self) { country in
                     CountryDetailScreen(country: country)
                 }
+                .navigationDestination(for: Organization.self) { organization in
+                    OrganizationDetailScreen(organization: organization)
+                }
         }
         .sheet(item: $coordinator.activeSheet) { sheet in
             SheetFactory.view(for: sheet)

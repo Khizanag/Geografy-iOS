@@ -6,6 +6,7 @@ enum OrgSortOption: String, CaseIterable {
 }
 
 struct OrganizationsScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var countryDataService = CountryDataService()
@@ -15,7 +16,10 @@ struct OrganizationsScreen: View {
         ScrollView {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(sortedOrgs) { org in
-                    NavigationLink(value: org) {
+                    Button {
+                        hapticsService.impact(.light)
+                        coordinator.push(.organizationDetail(org))
+                    } label: {
                         CardView {
                             HStack(spacing: DesignSystem.Spacing.sm) {
                                 orgLogo(org)
@@ -27,9 +31,6 @@ struct OrganizationsScreen: View {
                         }
                     }
                     .buttonStyle(PressButtonStyle())
-                    .simultaneousGesture(TapGesture().onEnded {
-                        hapticsService.impact(.light)
-                    })
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -38,9 +39,6 @@ struct OrganizationsScreen: View {
         }
         .navigationTitle("Organizations")
         .toolbar { toolbarContent }
-        .navigationDestination(for: Organization.self) { org in
-            OrganizationDetailScreen(organization: org)
-        }
         .task { countryDataService.loadCountries() }
     }
 }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContinentOverviewScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
+
     let continent: Country.Continent
 
     @State private var countryDataService = CountryDataService()
@@ -21,9 +23,6 @@ struct ContinentOverviewScreen: View {
         .task { countryDataService.loadCountries() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) { appeared = true }
-        }
-        .navigationDestination(for: Country.self) { country in
-            CountryDetailScreen(country: country)
         }
     }
 }
@@ -123,7 +122,7 @@ private extension ContinentOverviewScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Countries", icon: "list.bullet")
             ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
-                NavigationLink(value: country) {
+                Button { coordinator.push(.countryDetail(country)) } label: {
                     CountryRowView(
                         country: country,
                         isFavorite: false

@@ -25,4 +25,6 @@ enum Screen: Hashable {
     case cultureExplorer
     case landmarkGallery
     case mapColoring
+    case territorialDisputes
+    case lesson(LearningModule, Lesson)
 }

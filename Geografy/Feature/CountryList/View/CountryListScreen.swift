@@ -19,6 +19,7 @@ enum SortOption: String, CaseIterable {
 // MARK: - CountryListScreen
 
 struct CountryListScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
 
@@ -325,7 +326,10 @@ private extension CountryListScreen {
 private extension CountryListScreen {
     func countryCard(for country: Country) -> some View {
         let isFavorite = favoritesService.isFavorite(code: country.code)
-        return NavigationLink(value: country) {
+        return Button {
+            coordinator.push(.countryDetail(country))
+            hapticsService.impact(.light)
+        } label: {
             CountryRowView(
                 country: country,
                 isFavorite: isFavorite,
