@@ -6,7 +6,7 @@ struct GeografyApp: App {
 
     @State private var hapticsService = HapticsService()
     @State private var testingModeService = TestingModeService()
-    @State private var favoritesService = FavoritesService()
+    @State private var favoritesService: FavoritesService
     @State private var travelService = TravelService()
     @State private var gameCenterService = GameCenterService()
     @State private var homeSectionOrderService = HomeSectionOrderService()
@@ -31,11 +31,13 @@ struct GeografyApp: App {
         let xp = XPService(db: db, userID: userID)
         let achievement = AchievementService(db: db, xpService: xp, userID: userID)
         let streak = StreakService(db: db, xpService: xp, achievementService: achievement, userID: userID)
+        let favorites = FavoritesService(container: db.container)
         _databaseManager = State(wrappedValue: db)
         _authService = State(wrappedValue: auth)
         _xpService = State(wrappedValue: xp)
         _achievementService = State(wrappedValue: achievement)
         _streakService = State(wrappedValue: streak)
+        _favoritesService = State(wrappedValue: favorites)
     }
 
     var body: some Scene {
