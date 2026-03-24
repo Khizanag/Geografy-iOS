@@ -72,12 +72,17 @@ struct TVHomeFeedView: View {
         ScrollView {
             VStack(spacing: 60) {
                 heroSection
+                    .focusSection()
 
                 statsRow
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Your stats")
 
                 spotlightSection
+                    .focusSection()
 
                 quickActionsSection
+                    .focusSection()
             }
             .padding(80)
         }

@@ -205,6 +205,7 @@ private extension TVQuizSessionScreen {
         }
         .buttonStyle(.card)
         .disabled(showFeedback)
+        .accessibilityLabel(option.text ?? "Option \(index + 1)")
     }
 
     func tvFlagOptionButton(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {

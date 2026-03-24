@@ -44,7 +44,11 @@ extension QuizDifficulty {
         switch self {
         case .easy: 4
         case .medium: 4
+        #if os(tvOS)
+        case .hard: 4
+        #else
         case .hard: 0
+        #endif
         }
     }
 
