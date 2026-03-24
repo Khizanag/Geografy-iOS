@@ -409,7 +409,6 @@ private extension HomeScreen {
                     .padding(.horizontal, sidePadding)
                     .padding(.bottom, DesignSystem.Spacing.xs)
                 }
-                .scrollClipDisabled()
                 .scrollTargetBehavior(.viewAligned)
                 .scrollPosition(
                     id: .init(
