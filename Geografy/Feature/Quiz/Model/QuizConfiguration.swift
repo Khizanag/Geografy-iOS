@@ -1,6 +1,7 @@
 import Foundation
 
-struct QuizConfiguration {
+struct QuizConfiguration: Identifiable {
+    let id = UUID()
     let type: QuizType
     let region: QuizRegion
     let difficulty: QuizDifficulty

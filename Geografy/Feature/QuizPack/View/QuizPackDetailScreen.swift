@@ -9,6 +9,9 @@ struct QuizPackDetailScreen: View {
     let packService: QuizPackService
 
     @State private var showingPaywall = false
+    @State private var activeQuizConfig: QuizConfiguration?
+    @State private var activeLevel: QuizPackLevel?
+    @State private var countryDataService = CountryDataService()
 
     var body: some View {
         NavigationStack {
@@ -20,6 +23,10 @@ struct QuizPackDetailScreen: View {
                 .sheet(isPresented: $showingPaywall) {
                     PaywallScreen()
                 }
+                .fullScreenCover(item: $activeQuizConfig) { configuration in
+                    QuizSessionScreen(configuration: configuration)
+                }
+                .task { countryDataService.loadCountries() }
         }
     }
 }
@@ -252,6 +259,17 @@ private extension QuizPackDetailScreen {
             return
         }
 
-        // Level tap will be wired to quiz session in future
+        activeLevel = level
+
+        let metric: ComparisonMetric = pack.category == .population ? .population : .area
+
+        activeQuizConfig = QuizConfiguration(
+            type: pack.category.quizType,
+            region: .world,
+            difficulty: .easy,
+            questionCount: QuestionCount(rawValue: level.questionCount) ?? .ten,
+            answerMode: .multipleChoice,
+            comparisonMetric: metric,
+        )
     }
 }
