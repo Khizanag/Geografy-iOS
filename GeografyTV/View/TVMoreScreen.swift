@@ -25,11 +25,49 @@ struct TVMoreScreen: View {
                 }
             }
 
+            Section("Learn") {
+                NavigationLink {
+                    TVLearningPathScreen()
+                } label: {
+                    Label("Learning Path", systemImage: "book.fill")
+                }
+
+                NavigationLink {
+                    TVCultureScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Culture Explorer", systemImage: "music.note")
+                }
+
+                NavigationLink {
+                    TVLanguageScreen()
+                } label: {
+                    Label("Languages", systemImage: "text.bubble.fill")
+                }
+            }
+
             Section("Discover") {
                 NavigationLink {
                     TVWorldRecordsScreen(countryDataService: countryDataService)
                 } label: {
                     Label("World Records", systemImage: "trophy.fill")
+                }
+
+                NavigationLink {
+                    TVGeographyFeaturesScreen()
+                } label: {
+                    Label("Geography Features", systemImage: "mountain.2.fill")
+                }
+
+                NavigationLink {
+                    TVOceanScreen()
+                } label: {
+                    Label("Oceans & Seas", systemImage: "water.waves")
+                }
+
+                NavigationLink {
+                    TVLandmarkScreen()
+                } label: {
+                    Label("Landmarks", systemImage: "building.columns.fill")
                 }
 
                 NavigationLink {
@@ -43,17 +81,27 @@ struct TVMoreScreen: View {
                 } label: {
                     Label("Organizations", systemImage: "building.2.fill")
                 }
+            }
 
+            Section("History") {
+                NavigationLink {
+                    TVTimelineScreen()
+                } label: {
+                    Label("Timeline", systemImage: "clock.fill")
+                }
+
+                NavigationLink {
+                    TVIndependenceScreen()
+                } label: {
+                    Label("Independence", systemImage: "flag.fill")
+                }
+            }
+
+            Section("Content") {
                 NavigationLink {
                     TVFeedScreen(countryDataService: countryDataService)
                 } label: {
                     Label("Feed", systemImage: "newspaper.fill")
-                }
-
-                NavigationLink {
-                    TVLandmarkScreen()
-                } label: {
-                    Label("Landmarks", systemImage: "building.columns.fill")
                 }
 
                 NavigationLink {
