@@ -34,7 +34,7 @@ private extension HomeBorderChallengeCard {
                     )
                 )
                 .frame(width: 56, height: 56)
-            Image(systemName: "map.fill")
+            Image(systemName: "square.dashed")
                 .font(.system(size: 24))
                 .foregroundStyle(DesignSystem.Color.error)
         }
