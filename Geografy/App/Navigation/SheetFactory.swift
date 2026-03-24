@@ -67,7 +67,6 @@ private extension SheetFactory {
 
         // App
         case .search: SearchScreen()
-        case .badges: BadgeCollectionScreen(badgeService: BadgeService())
         case .leaderboards: LeaderboardScreen()
         case .achievements:
             AchievementsScreen()
