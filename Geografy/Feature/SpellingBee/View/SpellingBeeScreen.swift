@@ -163,7 +163,7 @@ private extension SpellingBeeScreen {
         targetLetters: [Character],
         typedLetters: [Character]
     ) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
             if let separator = segment.leadingSeparator {
                 separatorCell(String(separator))
             }
@@ -177,6 +177,7 @@ private extension SpellingBeeScreen {
                     isCorrect: typedLetter == targetLetter,
                     isSpace: false
                 )
+                .frame(maxWidth: 36)
             }
         }
     }
@@ -193,12 +194,13 @@ private extension SpellingBeeScreen {
         let segments = splitIntoSegments(name)
         return VStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(Array(segments.enumerated()), id: \.offset) { _, segment in
-                HStack(spacing: DesignSystem.Spacing.xs) {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
                     if let separator = segment.leadingSeparator {
                         separatorCell(String(separator))
                     }
                     ForEach(Array(segment.letters.enumerated()), id: \.offset) { _, letter in
                         revealedCell(String(letter))
+                            .frame(maxWidth: 36)
                     }
                 }
             }
@@ -209,7 +211,7 @@ private extension SpellingBeeScreen {
         ZStack {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                 .fill(DesignSystem.Color.success.opacity(0.2))
-                .frame(width: 32, height: 36)
+                .aspectRatio(32.0 / 36.0, contentMode: .fit)
                 .overlay(
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                         .stroke(DesignSystem.Color.success.opacity(0.5), lineWidth: 1.5)
@@ -229,7 +231,7 @@ private extension SpellingBeeScreen {
                 ZStack {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                         .fill(cellBackground(typed: typed, isCorrect: isCorrect))
-                        .frame(width: 32, height: 36)
+                        .aspectRatio(32.0 / 36.0, contentMode: .fit)
                         .overlay(
                             RoundedRectangle(
                                 cornerRadius: DesignSystem.CornerRadius.small
