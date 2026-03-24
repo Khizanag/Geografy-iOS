@@ -548,6 +548,12 @@ private extension TVMultiplayerQuizScreen {
             Task { @MainActor in
                 if timeRemaining > 0 {
                     timeRemaining -= 0.1
+
+                    if Int(timeRemaining * 10) % 10 == 0, timeRemaining <= 5, timeRemaining > 0 {
+                        for player in players {
+                            TVControllerHaptics.playTimerWarning(on: player.controller)
+                        }
+                    }
                 } else {
                     revealRound()
                 }
@@ -564,6 +570,7 @@ private extension TVMultiplayerQuizScreen {
         else { return }
 
         players[playerIndex].currentAnswer = question.options[optionIndex].id
+        TVControllerHaptics.playTap(on: players[playerIndex].controller)
 
         if players.allSatisfy(\.hasAnswered) {
             revealRound()
@@ -576,8 +583,19 @@ private extension TVMultiplayerQuizScreen {
 
         guard let question = currentQuestion else { return }
         for index in players.indices {
-            if players[index].currentAnswer == question.correctOptionID {
+            let isCorrect = players[index].currentAnswer == question.correctOptionID
+            if isCorrect {
                 players[index].score += 1
+            }
+
+            if players[index].hasAnswered {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+                    if isCorrect {
+                        TVControllerHaptics.playCorrect(on: players[index].controller)
+                    } else {
+                        TVControllerHaptics.playWrong(on: players[index].controller)
+                    }
+                }
             }
         }
 
@@ -592,6 +610,9 @@ private extension TVMultiplayerQuizScreen {
             startRound()
         } else {
             phase = .results
+            if let winner = players.max(by: { $0.score < $1.score }) {
+                TVControllerHaptics.playCelebration(on: winner.controller)
+            }
         }
     }
 
