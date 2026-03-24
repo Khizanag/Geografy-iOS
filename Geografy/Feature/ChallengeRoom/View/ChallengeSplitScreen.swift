@@ -1,10 +1,9 @@
 import SwiftUI
 
 struct ChallengeSplitScreen: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(ChallengeCoordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
 
-    @State private var path: [ChallengeDestination] = []
     @State private var room: ChallengeRoom
     @State private var player1Answer: Int?
     @State private var player2Answer: Int?
@@ -19,25 +18,9 @@ struct ChallengeSplitScreen: View {
     }
 
     var body: some View {
-        NavigationStack(path: $path) {
-            splitContent
-                .background(DesignSystem.Color.background.ignoresSafeArea())
-                .navigationBarHidden(true)
-                .navigationDestination(for: ChallengeDestination.self) { destination in
-                    switch destination {
-                    case .result(let finishedRoom):
-                        ChallengeResultScreen(room: finishedRoom) { dismiss() }
-                            .navigationTitle("Results")
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationBarBackButtonHidden()
-                            .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    CircleCloseButton { dismiss() }
-                                }
-                            }
-                    }
-                }
-        }
+        splitContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationBarHidden(true)
     }
 }
 
@@ -99,7 +82,7 @@ private extension ChallengeSplitScreen {
                     .frame(width: 6, height: 6)
             }
 
-            CircleCloseButton { dismiss() }
+            CircleCloseButton { coordinator.dismiss() }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.xs)
@@ -225,7 +208,7 @@ private extension ChallengeSplitScreen {
 
     func advanceRound() {
         if currentRound >= room.totalRounds {
-            path.append(.result(room))
+            coordinator.push(.result(room))
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 currentRound += 1

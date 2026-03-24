@@ -1,10 +1,9 @@
 import SwiftUI
 
 struct ChallengeGameScreen: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(ChallengeCoordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
 
-    @State private var path: [ChallengeDestination] = []
     @State private var room: ChallengeRoom
     @State private var showingPassScreen = true
     @State private var selectedOptionIndex: Int?
@@ -19,45 +18,23 @@ struct ChallengeGameScreen: View {
     }
 
     var body: some View {
-        NavigationStack(path: $path) {
-            Group {
-                if showingPassScreen {
-                    passScreen
-                } else {
-                    questionScreen
-                }
+        Group {
+            if showingPassScreen {
+                passScreen
+            } else {
+                questionScreen
             }
-            .background { AmbientBlobsView(.quiz) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Challenge")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
-            .navigationDestination(for: ChallengeDestination.self) { destination in
-                switch destination {
-                case .result(let finishedRoom):
-                    ChallengeResultScreen(room: finishedRoom) { dismiss() }
-                        .navigationTitle("Results")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationBarBackButtonHidden()
-                        .toolbar {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                CircleCloseButton { dismiss() }
-                            }
-                        }
-                }
+        }
+        .background { AmbientBlobsView(.quiz) }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("Challenge")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton { coordinator.dismiss() }
             }
         }
     }
-}
-
-// MARK: - Destination
-
-enum ChallengeDestination: Hashable {
-    case result(ChallengeRoom)
 }
 
 // MARK: - Pass Screen
@@ -110,21 +87,13 @@ private extension ChallengeGameScreen {
 
     var scoreRow: some View {
         HStack(spacing: DesignSystem.Spacing.lg) {
-            scoreChip(
-                name: room.player1Name,
-                score: room.player1Score,
-                isActive: room.currentPlayerIndex == 0
-            )
+            scoreChip(name: room.player1Name, score: room.player1Score, isActive: room.currentPlayerIndex == 0)
 
             Text("vs")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
 
-            scoreChip(
-                name: room.player2Name,
-                score: room.player2Score,
-                isActive: room.currentPlayerIndex == 1
-            )
+            scoreChip(name: room.player2Name, score: room.player2Score, isActive: room.currentPlayerIndex == 1)
         }
         .padding(.top, DesignSystem.Spacing.sm)
     }
@@ -150,7 +119,11 @@ private extension ChallengeGameScreen {
 private extension ChallengeGameScreen {
     var questionScreen: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            progressSection
+            SessionProgressView(
+                progress: progressFraction,
+                current: (room.roundNumber - 1) * 2 + room.currentPlayerIndex + 1,
+                total: room.totalRounds * 2
+            )
 
             playerBadge
 
@@ -170,14 +143,6 @@ private extension ChallengeGameScreen {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
-    }
-
-    var progressSection: some View {
-        SessionProgressView(
-            progress: progressFraction,
-            current: (room.roundNumber - 1) * 2 + room.currentPlayerIndex + 1,
-            total: room.totalRounds * 2
-        )
     }
 
     var playerBadge: some View {
@@ -287,7 +252,7 @@ private extension ChallengeGameScreen {
     func advanceToNext() {
         challengeRoomService.advance(room: &room)
         if room.isFinished {
-            path.append(.result(room))
+            coordinator.push(.result(room))
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 showingPassScreen = true

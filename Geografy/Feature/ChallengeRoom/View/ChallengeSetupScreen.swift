@@ -42,16 +42,18 @@ struct ChallengeSetupScreen: View {
         }
         .task { countryDataService.loadCountries() }
         .fullScreenCover(item: $challengeRoom) { room in
-            if selectedMode == .splitScreen {
-                ChallengeSplitScreen(
-                    room: room,
-                    challengeRoomService: challengeRoomService
-                )
-            } else {
-                ChallengeGameScreen(
-                    room: room,
-                    challengeRoomService: challengeRoomService
-                )
+            ChallengeNavigatorView {
+                if selectedMode == .splitScreen {
+                    ChallengeSplitScreen(
+                        room: room,
+                        challengeRoomService: challengeRoomService
+                    )
+                } else {
+                    ChallengeGameScreen(
+                        room: room,
+                        challengeRoomService: challengeRoomService
+                    )
+                }
             }
         }
     }
