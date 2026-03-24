@@ -5,6 +5,8 @@ struct TVCountryDetailScreen: View {
 
     let country: Country
 
+    @State private var showFlagFocus = false
+
     var body: some View {
         ScrollView {
             VStack(spacing: 48) {
@@ -20,6 +22,9 @@ struct TVCountryDetailScreen: View {
             .padding(.vertical, 40)
         }
         .background { AmbientBlobsView(.tv) }
+        .fullScreenCover(isPresented: $showFlagFocus) {
+            TVFlagFocusView(countryCode: country.code, countryName: country.name)
+        }
     }
 }
 
@@ -28,7 +33,12 @@ struct TVCountryDetailScreen: View {
 private extension TVCountryDetailScreen {
     var heroSection: some View {
         HStack(spacing: 48) {
-            FlagView(countryCode: country.code, height: 180)
+            Button {
+                showFlagFocus = true
+            } label: {
+                FlagView(countryCode: country.code, height: 180)
+            }
+            .buttonStyle(.card)
 
             VStack(alignment: .leading, spacing: 16) {
                 Text(country.name)
