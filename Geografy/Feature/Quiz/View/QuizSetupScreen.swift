@@ -11,21 +11,32 @@ struct QuizSetupScreen: View {
     @AppStorage("quiz_answerMode") private var answerMode: QuizAnswerMode = .multipleChoice
     @AppStorage("quiz_comparisonMetric") private var comparisonMetric: ComparisonMetric = .population
     @AppStorage("quiz_showAutocomplete") private var showAutocomplete = false
+    @AppStorage("quiz_gameMode") private var selectedGameMode: QuizGameMode = .standard
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 headerSection
+
+                gameModeSection
+
                 quizTypeSection
+
                 if selectedType.hasComparisonMetric {
                     metricSection
                 }
+
                 if selectedType.supportedAnswerModes.count > 1 {
                     answerModeSection
                 }
+
                 regionSection
-                difficultySection
-                questionCountSection
+
+                if selectedGameMode == .standard {
+                    difficultySection
+
+                    questionCountSection
+                }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
@@ -41,6 +52,47 @@ struct QuizSetupScreen: View {
 // MARK: - Header
 
 private extension QuizSetupScreen {
+    var gameModeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Game Mode")
+
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(QuizGameMode.allCases) { mode in
+                    gameModeChip(mode)
+                }
+            }
+        }
+    }
+
+    func gameModeChip(_ mode: QuizGameMode) -> some View {
+        let isSelected = selectedGameMode == mode
+        return Button { selectedGameMode = mode } label: {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: mode.icon)
+                    .font(DesignSystem.Font.subheadline)
+
+                Text(mode.rawValue)
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+
+                Text(mode.description)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+            }
+            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
+            .background(
+                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
@@ -337,6 +389,7 @@ private extension QuizSetupScreen {
             questionCount: selectedCount,
             answerMode: effectiveAnswerMode,
             comparisonMetric: comparisonMetric,
+            gameMode: selectedGameMode,
         )
     }
 }

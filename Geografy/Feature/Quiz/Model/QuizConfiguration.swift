@@ -8,6 +8,7 @@ struct QuizConfiguration: Identifiable {
     let questionCount: QuestionCount
     let answerMode: QuizAnswerMode
     let comparisonMetric: ComparisonMetric
+    let gameMode: QuizGameMode
 }
 
 // MARK: - QuestionCount
@@ -60,6 +61,29 @@ enum ComparisonMetric: String, CaseIterable, Identifiable, Codable {
         case .area: country.area
         case .gdpPerCapita: country.gdpPerCapita ?? 0
         case .populationDensity: country.populationDensity
+        }
+    }
+}
+
+// MARK: - QuizGameMode
+
+enum QuizGameMode: String, CaseIterable, Identifiable, Codable {
+    case standard = "Standard"
+    case arcade = "Arcade"
+
+    var id: String { rawValue }
+
+    var icon: String {
+        switch self {
+        case .standard: "list.number"
+        case .arcade: "bolt.fill"
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .standard: "Fixed questions, your pace"
+        case .arcade: "60s timer, 3 lives, endless questions"
         }
     }
 }
