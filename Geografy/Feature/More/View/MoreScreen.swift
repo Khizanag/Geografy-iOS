@@ -23,7 +23,6 @@ struct MoreScreen: View {
                     checklist: testChecklistService.checklist(for: sheet.testKey)
                 )
                 .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
             }
             .onAppear {
                 withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {

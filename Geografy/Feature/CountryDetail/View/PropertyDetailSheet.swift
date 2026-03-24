@@ -43,7 +43,6 @@ struct PropertyDetailSheet: View {
         }
         .frame(maxWidth: .infinity)
         .presentationDetents([.height(supportsMap ? 360 : 300)])
-        .presentationDragIndicator(.visible)
     }
 }
 

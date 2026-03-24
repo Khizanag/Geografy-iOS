@@ -38,7 +38,6 @@ struct TravelCountryPickerSheet: View {
             )
         }
         .presentationDetents([.large])
-        .presentationDragIndicator(.visible)
     }
 }
 
