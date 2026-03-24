@@ -253,7 +253,7 @@ private extension CountryListScreen {
         } label: {
             sectionHeaderLabel(key: key, count: count)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressButtonStyle())
     }
 
     func sectionHeaderLabel(key: String, count: Int) -> some View {
