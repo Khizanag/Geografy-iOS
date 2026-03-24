@@ -76,7 +76,7 @@ private extension ChallengeSplitScreen {
                 Circle()
                     .fill(DesignSystem.Color.blue)
                     .frame(width: 6, height: 6)
-                Text("P1: \(room.player1Score)")
+                Text("\(room.player1Name): \(room.player1Score)")
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.blue)
@@ -95,7 +95,7 @@ private extension ChallengeSplitScreen {
             Spacer()
 
             HStack(spacing: DesignSystem.Spacing.xxs) {
-                Text("P2: \(room.player2Score)")
+                Text("\(room.player2Name): \(room.player2Score)")
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.orange)
@@ -104,12 +104,7 @@ private extension ChallengeSplitScreen {
                     .frame(width: 6, height: 6)
             }
 
-            Button { dismiss() } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .buttonStyle(.plain)
+            CircleCloseButton { dismiss() }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.xs)
@@ -123,8 +118,12 @@ private extension ChallengeSplitScreen {
         onSelect: @escaping (Int) -> Void
     ) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
+            if playerIndex == 0 {
+                Spacer(minLength: 0)
+            }
+
             HStack {
-                Text(playerIndex == 0 ? "Player 1" : "Player 2")
+                Text(playerIndex == 0 ? room.player1Name : room.player2Name)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -172,7 +171,9 @@ private extension ChallengeSplitScreen {
                 .padding(.horizontal, DesignSystem.Spacing.sm)
             }
 
-            Spacer(minLength: 0)
+            if playerIndex == 1 {
+                Spacer(minLength: 0)
+            }
         }
         .padding(.vertical, DesignSystem.Spacing.sm)
         .frame(maxHeight: .infinity)

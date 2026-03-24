@@ -3,6 +3,8 @@ import SwiftUI
 struct ChallengeSetupScreen: View {
     @Environment(\.dismiss) private var dismiss
 
+    @State private var player1Name = ""
+    @State private var player2Name = ""
     @State private var selectedMode: ChallengeMode = .passAndPlay
     @State private var selectedRounds = 10
     @State private var selectedCategory: ChallengeCategory = .mixed
@@ -18,6 +20,8 @@ struct ChallengeSetupScreen: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 headerSection
+
+                playersSection
 
                 modeSection
 
@@ -81,6 +85,45 @@ private extension ChallengeSetupScreen {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.md)
+    }
+
+    var playersSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Players")
+
+            CardView {
+                VStack(spacing: DesignSystem.Spacing.md) {
+                    playerField(
+                        placeholder: "Player 1 name",
+                        text: $player1Name,
+                        icon: "1.circle.fill",
+                        color: DesignSystem.Color.blue
+                    )
+
+                    Divider()
+
+                    playerField(
+                        placeholder: "Player 2 name",
+                        text: $player2Name,
+                        icon: "2.circle.fill",
+                        color: DesignSystem.Color.orange
+                    )
+                }
+                .padding(DesignSystem.Spacing.md)
+            }
+        }
+    }
+
+    func playerField(placeholder: String, text: Binding<String>, icon: String, color: Color) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: icon)
+                .font(.system(size: 20))
+                .foregroundStyle(color)
+
+            TextField(placeholder, text: text)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
     }
 
     var modeSection: some View {
@@ -223,6 +266,8 @@ private extension ChallengeSetupScreen {
         GlassButton("Start Challenge", systemImage: "play.fill", fullWidth: true) {
             startChallenge()
         }
+        .disabled(!isFormValid)
+        .opacity(isFormValid ? 1 : 0.5)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
     }
@@ -238,10 +283,17 @@ private extension ChallengeSetupScreen {
             .foregroundStyle(DesignSystem.Color.textPrimary)
     }
 
+    var isFormValid: Bool {
+        !player1Name.trimmingCharacters(in: .whitespaces).isEmpty &&
+        !player2Name.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
     func startChallenge() {
+        let name1 = player1Name.trimmingCharacters(in: .whitespaces)
+        let name2 = player2Name.trimmingCharacters(in: .whitespaces)
         let room = challengeRoomService.generateRoom(
-            player1Name: "Player 1",
-            player2Name: "Player 2",
+            player1Name: name1.isEmpty ? "Player 1" : name1,
+            player2Name: name2.isEmpty ? "Player 2" : name2,
             totalRounds: selectedRounds,
             category: selectedCategory,
             countries: countryDataService.countries
