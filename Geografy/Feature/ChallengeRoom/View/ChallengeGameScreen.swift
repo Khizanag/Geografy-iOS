@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ChallengeGameScreen: View {
-    @Environment(ChallengeCoordinator.self) private var coordinator
+    @Environment(Coordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var room: ChallengeRoom
@@ -252,7 +252,7 @@ private extension ChallengeGameScreen {
     func advanceToNext() {
         challengeRoomService.advance(room: &room)
         if room.isFinished {
-            coordinator.push(.result(room))
+            coordinator.push(.challengeResult(room))
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 showingPassScreen = true

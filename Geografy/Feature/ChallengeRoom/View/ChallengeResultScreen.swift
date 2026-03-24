@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct ChallengeResultScreen: View {
+    @Environment(Coordinator.self) private var coordinator
+
     let room: ChallengeRoom
-    let onDismiss: () -> Void
 
     var body: some View {
         ScrollView {
@@ -18,7 +19,7 @@ struct ChallengeResultScreen: View {
         }
         .safeAreaInset(edge: .bottom) {
             GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
-                onDismiss()
+                coordinator.dismiss()
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.md)
