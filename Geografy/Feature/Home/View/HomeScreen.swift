@@ -199,9 +199,8 @@ private extension HomeScreen {
                 name: authService.currentProfile?.displayName ?? "Explorer",
                 size: DesignSystem.Size.md
             )
-            .padding(DesignSystem.Spacing.xxs)
         }
-        .buttonStyle(.glass)
+        .buttonStyle(.plain)
     }
 
     var statsButton: some View {
