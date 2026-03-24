@@ -29,10 +29,10 @@ struct GeoTriviaScreen: View {
                 gameContent
             }
         }
-        .navigationTitle("Geo Trivia")
+        .navigationTitle("Trivia")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .topBarTrailing) {
                 CircleCloseButton()
             }
         }
@@ -117,34 +117,15 @@ private extension GeoTriviaScreen {
     }
 
     var streakAndProgressBar: some View {
-        HStack {
-            Spacer()
-            streakBadge
-            Spacer()
-            progressLabel
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SessionProgressBar(progress: progress)
+            QuestionCounterPill(current: currentIndex + 1, total: questions.count)
         }
     }
 
-    var streakBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "flame.fill")
-                .foregroundStyle(DesignSystem.Color.orange)
-            Text("\(streak)")
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .contentTransition(.numericText())
-        }
-        .font(DesignSystem.Font.subheadline)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.cardBackground, in: Capsule())
-    }
-
-    var progressLabel: some View {
-        Text("\(currentIndex + 1)/\(questions.count)")
-            .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .frame(minWidth: 40, alignment: .trailing)
+    var progress: CGFloat {
+        guard !questions.isEmpty else { return 0 }
+        return CGFloat(currentIndex) / CGFloat(questions.count)
     }
 
     var cardStack: some View {
