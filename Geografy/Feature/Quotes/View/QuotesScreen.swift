@@ -1,16 +1,16 @@
 import SwiftUI
 
-struct GeoQuotesScreen: View {
+struct QuotesScreen: View {
     @Environment(\.dismiss) private var dismiss
 
-    @State private var quotesService = GeoQuotesService()
+    @State private var quotesService = QuotesService()
     @State private var selectedCategory: QuoteCategory?
 
-    private var displayedQuotes: [GeoQuote] {
+    private var displayedQuotes: [Quote] {
         quotesService.quotes(for: selectedCategory)
     }
 
-    private var quotesOfTheDay: [GeoQuote] {
+    private var quotesOfTheDay: [Quote] {
         quotesService.quotesOfTheDay()
     }
 
@@ -37,7 +37,7 @@ struct GeoQuotesScreen: View {
 
 // MARK: - Subviews
 
-private extension GeoQuotesScreen {
+private extension QuotesScreen {
     var quotesOfTheDaySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Quotes of the Day", icon: "sun.max.fill")
@@ -94,7 +94,7 @@ private extension GeoQuotesScreen {
         }
     }
 
-    func quoteCard(_ quote: GeoQuote, isHighlighted: Bool) -> some View {
+    func quoteCard(_ quote: Quote, isHighlighted: Bool) -> some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 quoteTextSection(quote, isHighlighted: isHighlighted)
@@ -105,7 +105,7 @@ private extension GeoQuotesScreen {
         .buttonStyle(PressButtonStyle())
     }
 
-    func quoteTextSection(_ quote: GeoQuote, isHighlighted: Bool) -> some View {
+    func quoteTextSection(_ quote: Quote, isHighlighted: Bool) -> some View {
         HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "quote.opening")
                 .font(.system(size: 24))
@@ -122,7 +122,7 @@ private extension GeoQuotesScreen {
         }
     }
 
-    func quoteFooter(_ quote: GeoQuote) -> some View {
+    func quoteFooter(_ quote: Quote) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if let code = quote.countryCode {
                 FlagView(countryCode: code, height: 16)
@@ -147,7 +147,7 @@ private extension GeoQuotesScreen {
             .background(DesignSystem.Color.accent.opacity(0.12), in: Circle())
     }
 
-    func favoriteButton(_ quote: GeoQuote) -> some View {
+    func favoriteButton(_ quote: Quote) -> some View {
         Button {
             quotesService.toggleFavorite(id: quote.id)
         } label: {
@@ -161,7 +161,7 @@ private extension GeoQuotesScreen {
         .glassEffect(.regular.interactive(), in: .circle)
     }
 
-    func shareButton(_ quote: GeoQuote) -> some View {
+    func shareButton(_ quote: Quote) -> some View {
         ShareLink(item: "\"\(quote.text)\"\n— \(quote.author)") {
             Image(systemName: "square.and.arrow.up")
                 .font(DesignSystem.Font.caption)

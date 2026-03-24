@@ -18,7 +18,7 @@ extension HomeScreen {
         switch section {
         case .cultureExplorer: cultureExplorerSection
         case .landmarkGallery: landmarkGallerySection
-        case .geoQuotes: geoQuotesSection
+        case .quotes: quotesSection
         case .mapColoring: mapColoringSection
         case .countryNicknames: countryNicknamesSection
         case .wordSearch: wordSearchSection
@@ -310,14 +310,14 @@ extension HomeScreen {
     }
 }
 
-// MARK: - Geo Quotes Section
+// MARK: - Quotes Section
 
 extension HomeScreen {
-    var geoQuotesSection: some View {
+    var quotesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geo Quotes")
+            SectionHeaderView(title: "Quotes")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeGeoQuotesCard { coordinator.present(.geoQuotes) }
+            HomeQuotesCard { coordinator.present(.quotes) }
         }
     }
 }

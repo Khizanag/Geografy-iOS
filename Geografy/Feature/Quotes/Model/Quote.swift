@@ -1,6 +1,6 @@
 import Foundation
 
-struct GeoQuote: Identifiable {
+struct Quote: Identifiable {
     let id: String
     let text: String
     let author: String

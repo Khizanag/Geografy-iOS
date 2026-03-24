@@ -63,7 +63,7 @@ enum Sheet: Identifiable {
     case challengeRoom
 
     // Culture & Discovery
-    case geoQuotes
+    case quotes
     case countryNicknames
 
     // Games & Quizzes
@@ -119,7 +119,7 @@ enum Sheet: Identifiable {
         case .landmarkQuiz: "landmarkQuiz"
         case .feed: "feed"
         case .challengeRoom: "challengeRoom"
-        case .geoQuotes: "geoQuotes"
+        case .quotes: "quotes"
         case .countryNicknames: "countryNicknames"
 
         case .wordSearch: "wordSearch"
