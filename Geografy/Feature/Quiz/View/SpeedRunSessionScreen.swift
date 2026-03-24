@@ -189,6 +189,7 @@ private extension SpeedRunSessionScreen {
         let isFlashing = flashingCode == country.code
         return HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: country.code, height: 24)
+                .frame(width: 40, alignment: .center)
             Text(country.name)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -321,6 +322,7 @@ private extension SpeedRunSessionScreen {
                 ForEach(missedCountries) { country in
                     HStack(spacing: DesignSystem.Spacing.sm) {
                         FlagView(countryCode: country.code, height: 24)
+                            .frame(width: 40, alignment: .center)
 
                         Text(country.name)
                             .font(DesignSystem.Font.body)
