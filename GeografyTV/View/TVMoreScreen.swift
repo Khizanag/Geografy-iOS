@@ -7,6 +7,12 @@ struct TVMoreScreen: View {
         List {
             Section("Games") {
                 NavigationLink {
+                    TVTriviaScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("True or False", systemImage: "brain.fill")
+                }
+
+                NavigationLink {
                     TVCompareScreen(countryDataService: countryDataService)
                 } label: {
                     Label("Compare Countries", systemImage: "arrow.left.arrow.right")
@@ -42,6 +48,12 @@ struct TVMoreScreen: View {
                     TVFeedScreen(countryDataService: countryDataService)
                 } label: {
                     Label("Feed", systemImage: "newspaper.fill")
+                }
+
+                NavigationLink {
+                    TVLandmarkScreen()
+                } label: {
+                    Label("Landmarks", systemImage: "building.columns.fill")
                 }
 
                 NavigationLink {
