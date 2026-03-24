@@ -51,6 +51,18 @@ extension QuizPackCategory {
         }
     }
 
+    var quizType: QuizType {
+        switch self {
+        case .capitals: .capitalQuiz
+        case .flags: .flagQuiz
+        case .population: .worldRankings
+        case .geography: .worldRankings
+        case .currency: .capitalQuiz
+        case .government: .capitalQuiz
+        case .organizations: .capitalQuiz
+        }
+    }
+
     var gradientColors: (Color, Color) {
         switch self {
         case .capitals:
