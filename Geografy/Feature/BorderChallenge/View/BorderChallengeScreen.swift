@@ -21,14 +21,20 @@ struct BorderChallengeScreen: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            mainContent
+        Group {
+            if isGameOver {
+                resultContent
+            } else if challengeCountry != nil {
+                gameContent
+            } else {
+                ProgressView().tint(DesignSystem.Color.accent)
+            }
         }
+        .background(DesignSystem.Color.background)
         .navigationTitle("Border Challenge")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .topBarTrailing) {
                 CircleCloseButton { dismiss() }
             }
         }
@@ -47,120 +53,68 @@ struct BorderChallengeScreen: View {
     }
 }
 
-// MARK: - Subviews
+// MARK: - Game Content
 
 private extension BorderChallengeScreen {
-    @ViewBuilder
-    var mainContent: some View {
-        if isGameOver {
-            resultContent
-        } else if let country = challengeCountry {
-            gameContent(country)
-        } else {
-            ProgressView()
-                .tint(DesignSystem.Color.accent)
-        }
-    }
-
-    func gameContent(_ country: Country) -> some View {
+    var gameContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                difficultySelector
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                countryHeader(country)
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                progressRow
-                    .padding(.horizontal, DesignSystem.Spacing.md)
+                difficultyPicker
+                if let country = challengeCountry {
+                    countryHeader(country)
+                }
+                progressSection
                 timerSection
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                guessField
-                    .padding(.horizontal, DesignSystem.Spacing.md)
                 neighborsGrid
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                revealButton
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                Spacer(minLength: DesignSystem.Spacing.xxl)
             }
-            .padding(.top, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.md)
         }
-    }
-
-    var difficultySelector: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(BorderChallengeService.Difficulty.allCases, id: \.self) { difficulty in
-                difficultyChip(difficulty)
-            }
-        }
-    }
-
-    func difficultyChip(_ difficulty: BorderChallengeService.Difficulty) -> some View {
-        Button {
-            selectedDifficulty = difficulty
-            startNewChallenge()
-        } label: {
-            Text(difficulty.rawValue)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(
-                    selectedDifficulty == difficulty
-                        ? DesignSystem.Color.onAccent
-                        : DesignSystem.Color.textSecondary
-                )
+        .safeAreaInset(edge: .bottom) {
+            guessField
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(
-                    selectedDifficulty == difficulty
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.cardBackground,
-                    in: Capsule()
-                )
-                .frame(maxWidth: .infinity)
+                .padding(.bottom, DesignSystem.Spacing.md)
         }
-        .buttonStyle(.plain)
+    }
+
+    var difficultyPicker: some View {
+        Picker("Difficulty", selection: $selectedDifficulty) {
+            ForEach(BorderChallengeService.Difficulty.allCases, id: \.self) { difficulty in
+                Text(difficulty.rawValue).tag(difficulty)
+            }
+        }
+        .pickerStyle(.segmented)
+        .onChange(of: selectedDifficulty) { _, _ in
+            startNewChallenge()
+        }
     }
 
     func countryHeader(_ country: Country) -> some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 FlagView(countryCode: country.code, height: 60)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
                     .geoShadow(.subtle)
-                VStack(spacing: DesignSystem.Spacing.xxs) {
-                    Text(country.name)
-                        .font(DesignSystem.Font.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("Name all neighboring countries")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
+                Text(country.name)
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Name all neighboring countries")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .padding(DesignSystem.Spacing.lg)
             .frame(maxWidth: .infinity)
         }
     }
 
-    var progressRow: some View {
-        HStack {
-            Text("\(foundNeighbors.count) / \(neighbors.count) neighbors found")
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Spacer()
-            progressBadge
+    var progressSection: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SessionProgressBar(progress: progressFraction)
+            QuestionCounterPill(
+                current: foundNeighbors.count,
+                total: neighbors.count
+            )
         }
-    }
-
-    var progressBadge: some View {
-        let fraction = neighbors.isEmpty ? 0.0 : Double(foundNeighbors.count) / Double(neighbors.count)
-        return Text("\(Int(fraction * 100))%")
-            .font(DesignSystem.Font.caption)
-            .fontWeight(.bold)
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
-            .background(DesignSystem.Color.accent, in: Capsule())
     }
 
     var timerSection: some View {
@@ -169,53 +123,48 @@ private extension BorderChallengeScreen {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(timerColor)
             Text(formattedTime)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
+                .font(.system(size: 20, weight: .bold, design: .monospaced))
                 .foregroundStyle(timerColor)
-                .monospacedDigit()
-            timerBar
-        }
-        .padding(DesignSystem.Spacing.md)
-        .background(
-            timerColor.opacity(0.08),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-        )
-    }
-
-    var timerBar: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Capsule().fill(DesignSystem.Color.cardBackgroundHighlighted).frame(height: 4)
-                Capsule()
-                    .fill(timerColor)
-                    .frame(width: geometry.size.width * timerFraction, height: 4)
-                    .animation(.linear(duration: 1), value: secondsRemaining)
+                .contentTransition(.numericText())
+            Spacer()
+            if !isRevealed {
+                Button {
+                    revealAnswers()
+                } label: {
+                    Text("Reveal")
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .padding(.horizontal, DesignSystem.Spacing.sm)
+                        .padding(.vertical, DesignSystem.Spacing.xxs)
+                }
+                .glassEffect(.regular.interactive(), in: .capsule)
             }
         }
-        .frame(height: 4)
     }
 
     var guessField: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            TextField("Type a neighboring country...", text: $guessText)
+            TextField("Type a neighbor...", text: $guessText)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .autocorrectionDisabled()
+                .textInputAutocapitalization(.words)
                 .onSubmit { submitGuess() }
-            Button("Submit") { submitGuess() }
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(DesignSystem.Color.accent, in: Capsule())
-                .buttonStyle(.plain)
+            Button { submitGuess() } label: {
+                Image(systemName: "arrow.up.circle.fill")
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(
+                        guessText.isEmpty
+                            ? DesignSystem.Color.textTertiary
+                            : DesignSystem.Color.accent
+                    )
+            }
+            .buttonStyle(.plain)
+            .disabled(guessText.trimmingCharacters(in: .whitespaces).isEmpty)
         }
-        .padding(DesignSystem.Spacing.md)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-        )
+        .padding(DesignSystem.Spacing.sm)
+        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
     }
 
     var neighborsGrid: some View {
@@ -233,135 +182,103 @@ private extension BorderChallengeScreen {
         let isFound = foundNeighbors.contains(neighbor)
         let isRevealing = isRevealed && !isFound
 
-        return CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                if isFound || isRevealing {
-                    FlagView(countryCode: neighbor.code, height: 24)
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                } else {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                        .frame(width: 36, height: 24)
-                }
-                Text(isFound || isRevealing ? neighbor.name : "?")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(
-                        isFound
-                            ? DesignSystem.Color.success
-                            : (isRevealing
-                                ? DesignSystem.Color.warning
-                                : DesignSystem.Color.textTertiary)
-                    )
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                Spacer(minLength: 0)
+        return HStack(spacing: DesignSystem.Spacing.sm) {
+            if isFound || isRevealing {
+                FlagView(countryCode: neighbor.code, height: 24)
+            } else {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                    .frame(width: 36, height: 24)
             }
-            .padding(DesignSystem.Spacing.sm)
+            Text(isFound || isRevealing ? neighbor.name : "???")
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(
+                    isFound
+                        ? DesignSystem.Color.success
+                        : (isRevealing ? DesignSystem.Color.warning : DesignSystem.Color.textTertiary)
+                )
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Spacer(minLength: 0)
         }
+        .padding(DesignSystem.Spacing.sm)
+        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
+}
 
-    var revealButton: some View {
-        GlassButton("Reveal Remaining Answers", role: .secondary, fullWidth: true) {
-            revealAnswers()
-        }
-    }
+// MARK: - Result
 
+private extension BorderChallengeScreen {
     var resultContent: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                Spacer(minLength: DesignSystem.Spacing.lg)
-                resultIcon
-                resultTexts
-                scoreCard
-                xpEarnedBadge
-                Spacer(minLength: DesignSystem.Spacing.lg)
-                GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
-                    startNewChallenge()
-                }
-                .padding(.horizontal, DesignSystem.Spacing.xl)
-                Spacer(minLength: DesignSystem.Spacing.xxl)
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                resultHeader
+                statsCard
+                xpBadge
+            }
+            .padding(DesignSystem.Spacing.md)
+        }
+        .safeAreaInset(edge: .bottom) {
+            GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
+                startNewChallenge()
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
-    var resultIcon: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.3), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 60
-                    )
-                )
-                .frame(width: 120, height: 120)
-            Image(systemName: resultGradeIcon)
-                .font(.system(size: 52))
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
-    }
-
-    var resultTexts: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
+    var resultHeader: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.12))
+                    .frame(width: 96, height: 96)
+                Image(systemName: resultGradeIcon)
+                    .font(.system(size: 44))
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
             Text(resultGradeTitle)
-                .font(DesignSystem.Font.title)
-                .fontWeight(.bold)
+                .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
             if let country = challengeCountry {
-                Text("Neighbors of \(country.name): \(foundNeighbors.count) / \(neighbors.count) found")
+                Text("\(foundNeighbors.count) of \(neighbors.count) neighbors of \(country.name)")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, DesignSystem.Spacing.lg)
     }
 
-    var scoreCard: some View {
-        HStack(spacing: DesignSystem.Spacing.xl) {
-            resultStat(
-                value: "\(foundNeighbors.count)",
-                label: "Found",
-                icon: "checkmark.circle.fill",
-                color: DesignSystem.Color.success
-            )
-            resultStat(
-                value: "\(neighbors.count)",
-                label: "Total",
-                icon: "globe",
-                color: DesignSystem.Color.accent
-            )
-        }
-        .padding(DesignSystem.Spacing.lg)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-        )
-    }
-
-    func resultStat(value: String, label: String, icon: String, color: Color) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+    var statsCard: some View {
+        CardView {
+            HStack(spacing: 0) {
+                ResultStatItem(
+                    icon: "checkmark.circle.fill",
+                    value: "\(foundNeighbors.count)",
+                    label: "Found",
+                    color: DesignSystem.Color.success
+                )
+                ResultStatItem(
+                    icon: "globe",
+                    value: "\(neighbors.count)",
+                    label: "Total"
+                )
+                ResultStatItem(
+                    icon: "chart.bar.fill",
+                    value: "\(Int(progressFraction * 100))%",
+                    label: "Accuracy",
+                    color: DesignSystem.Color.indigo
+                )
+            }
+            .padding(DesignSystem.Spacing.md)
         }
     }
 
-    var xpEarnedBadge: some View {
-        let earned = service.xpEarned(
-            found: foundNeighbors.count,
-            total: neighbors.count,
-            difficulty: selectedDifficulty
-        )
+    var xpBadge: some View {
+        let earned = service.xpEarned(found: foundNeighbors.count, total: neighbors.count, difficulty: selectedDifficulty)
         return HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "star.fill")
                 .foregroundStyle(DesignSystem.Color.warning)
@@ -376,9 +293,14 @@ private extension BorderChallengeScreen {
     }
 }
 
-// MARK: - Actions
+// MARK: - Helpers
 
 private extension BorderChallengeScreen {
+    var progressFraction: CGFloat {
+        guard !neighbors.isEmpty else { return 0 }
+        return CGFloat(foundNeighbors.count) / CGFloat(neighbors.count)
+    }
+
     var formattedTime: String {
         let minutes = secondsRemaining / 60
         let seconds = secondsRemaining % 60
@@ -386,18 +308,13 @@ private extension BorderChallengeScreen {
     }
 
     var timerColor: Color {
-        if secondsRemaining > 30 { return DesignSystem.Color.success }
-        if secondsRemaining > 10 { return DesignSystem.Color.warning }
-        return DesignSystem.Color.error
-    }
-
-    var timerFraction: CGFloat {
-        let total = CGFloat(selectedDifficulty.timeLimit)
-        return CGFloat(secondsRemaining) / total
+        if secondsRemaining > 30 { DesignSystem.Color.success }
+        else if secondsRemaining > 10 { DesignSystem.Color.warning }
+        else { DesignSystem.Color.error }
     }
 
     var resultGradeIcon: String {
-        let fraction = neighbors.isEmpty ? 0.0 : Double(foundNeighbors.count) / Double(neighbors.count)
+        let fraction = progressFraction
         return switch fraction {
         case 1.0: "trophy.fill"
         case 0.6...: "star.fill"
@@ -407,7 +324,7 @@ private extension BorderChallengeScreen {
     }
 
     var resultGradeTitle: String {
-        let fraction = neighbors.isEmpty ? 0.0 : Double(foundNeighbors.count) / Double(neighbors.count)
+        let fraction = progressFraction
         return switch fraction {
         case 1.0: "Perfect Score!"
         case 0.6...: "Well Done!"
@@ -415,12 +332,14 @@ private extension BorderChallengeScreen {
         default: "Keep Exploring!"
         }
     }
+}
 
+// MARK: - Actions
+
+private extension BorderChallengeScreen {
     func startNewChallenge() {
         let countries = countryDataService.countries
-        guard let country = service.selectCountry(from: countries, difficulty: selectedDifficulty) else {
-            return
-        }
+        guard let country = service.selectCountry(from: countries, difficulty: selectedDifficulty) else { return }
         challengeCountry = country
         neighbors = service.neighbors(for: country, in: countries)
         foundNeighbors = []
@@ -442,10 +361,8 @@ private extension BorderChallengeScreen {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                 foundNeighbors.append(match)
             }
-            hapticsService.impact(.medium)
-            if foundNeighbors.count == neighbors.count {
-                endGame()
-            }
+            hapticsService.notification(.success)
+            if foundNeighbors.count == neighbors.count { endGame() }
         } else {
             wrongGuesses.insert(input.lowercased())
             hapticsService.notification(.error)
@@ -454,22 +371,14 @@ private extension BorderChallengeScreen {
 
     func revealAnswers() {
         timerActive = false
-        withAnimation(.easeInOut(duration: 0.4)) {
-            isRevealed = true
-        }
+        withAnimation(.easeInOut(duration: 0.4)) { isRevealed = true }
         hapticsService.impact(.light)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            endGame()
-        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { endGame() }
     }
 
     func endGame() {
         timerActive = false
-        let xp = service.xpEarned(
-            found: foundNeighbors.count,
-            total: neighbors.count,
-            difficulty: selectedDifficulty
-        )
+        let xp = service.xpEarned(found: foundNeighbors.count, total: neighbors.count, difficulty: selectedDifficulty)
         if xp > 0 {
             let source: XPSource = switch selectedDifficulty {
             case .easy: .quizCompletedEasy
