@@ -33,7 +33,7 @@ struct SpeedRunSessionScreen: View {
             }
             .background { AmbientBlobsView(.quiz) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Speed Run")
+            .navigationTitle("Speed Run · \(region.displayName)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
@@ -69,21 +69,20 @@ private extension SpeedRunSessionScreen {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.bottom, DesignSystem.Spacing.sm)
 
-            GlassButton("Give Up", systemImage: "flag.fill", role: .secondary, fullWidth: true) {
-                finishRun()
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Text(region.displayName)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+        if !isFinished {
+            ToolbarItem(placement: .topBarLeading) {
+                Button { finishRun() } label: {
+                    Image(systemName: "flag.fill")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.error)
+                }
+                .buttonStyle(.plain)
+            }
         }
 
         ToolbarItem(placement: .topBarTrailing) {
