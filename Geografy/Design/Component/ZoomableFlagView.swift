@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ZoomableFlagView: View {
     let countryCode: String
-    let namespace: Namespace.ID
     let onDismiss: () -> Void
 
     @State private var scale: CGFloat = 1.0
@@ -19,7 +18,7 @@ struct ZoomableFlagView: View {
         }
         .onAppear {
             Task {
-                try? await Task.sleep(for: .milliseconds(500))
+                try? await Task.sleep(for: .milliseconds(400))
                 isReady = true
             }
         }
@@ -34,7 +33,6 @@ private extension ZoomableFlagView {
             .fill(.ultraThinMaterial)
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
-            .transition(.opacity)
     }
 
     var flagContent: some View {
@@ -46,7 +44,6 @@ private extension ZoomableFlagView {
             let targetHeight = min(heightFromWidth, maxHeight)
 
             FlagView(countryCode: countryCode, height: targetHeight)
-                .matchedGeometryEffect(id: countryCode, in: namespace, isSource: false)
                 .geoShadow(.elevated)
                 .scaleEffect(scale)
                 .offset(offset)

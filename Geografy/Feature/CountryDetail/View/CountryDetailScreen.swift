@@ -11,8 +11,6 @@ struct CountryDetailScreen: View {
     @Environment(WorldBankService.self) private var worldBankService
     @Environment(PronunciationService.self) private var pronunciationService
 
-    @Namespace private var flagNamespace
-
     @State private var countryDataService = CountryDataService()
     @State var profileService = CountryProfileService()
     @State var appeared = false
@@ -189,13 +187,12 @@ private extension CountryDetailScreen {
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 Button {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                    withAnimation(.easeInOut(duration: 0.25)) {
                         showFlagFullScreen = true
                     }
                 } label: {
                     FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
-                        .matchedGeometryEffect(id: country.code, in: flagNamespace, isSource: true)
-                        .opacity(showFlagFullScreen || flagScrolledUp ? 0 : 1)
+                        .opacity(flagScrolledUp ? 0 : 1)
                         .geoShadow(.elevated)
                         .onGeometryChange(for: Bool.self) { proxy in
                             proxy.frame(in: .scrollView).maxY < 0
@@ -578,11 +575,12 @@ private extension CountryDetailScreen {
     @ViewBuilder
     var flagFullScreenOverlay: some View {
         if showFlagFullScreen {
-            ZoomableFlagView(countryCode: country.code, namespace: flagNamespace) {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+            ZoomableFlagView(countryCode: country.code) {
+                withAnimation(.easeInOut(duration: 0.25)) {
                     showFlagFullScreen = false
                 }
             }
+            .transition(.opacity)
         }
     }
 }

@@ -27,7 +27,6 @@ struct QuizSessionScreen: View {
     @State private var typingIsCorrect: Bool = false
     @State private var currentStreak: Int = 0
     @State private var showStreakBurst = false
-    @Namespace private var flagNamespace
 
     var body: some View {
         NavigationStack {
@@ -109,8 +108,8 @@ private extension QuizSessionScreen {
     @ViewBuilder
     var flagPreviewOverlay: some View {
         if showFlagPreview, let flagCode = currentQuestion?.promptFlag {
-            ZoomableFlagView(countryCode: flagCode, namespace: flagNamespace) {
-                withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+            ZoomableFlagView(countryCode: flagCode) {
+                withAnimation(.easeInOut(duration: 0.25)) {
                     showFlagPreview = false
                 }
             }
