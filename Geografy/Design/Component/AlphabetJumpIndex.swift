@@ -4,69 +4,65 @@ struct AlphabetJumpIndex: View {
     let letters: [String]
     let onSelect: (String) -> Void
 
-    @State private var isDragging = false
+    @GestureState private var isDragging = false
+    @State private var selectedLetter: String?
 
     var body: some View {
         GeometryReader { geometry in
-            letterColumn(in: geometry)
+            VStack(spacing: 0) {
+                ForEach(letters, id: \.self) { letter in
+                    Text(letter)
+                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                        .foregroundStyle(
+                            selectedLetter == letter
+                                ? DesignSystem.Color.textPrimary
+                                : DesignSystem.Color.accent
+                        )
+                        .frame(maxWidth: .infinity)
+                        .frame(height: letterHeight(in: geometry))
+                }
+            }
+            .padding(.vertical, 2)
+            .background(
+                Capsule()
+                    .fill(DesignSystem.Color.cardBackground.opacity(isDragging ? 0.9 : 0.0))
+                    .animation(.easeInOut(duration: 0.15), value: isDragging)
+            )
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .updating($isDragging) { _, state, _ in
+                        state = true
+                    }
+                    .onChanged { value in
+                        let letter = letterAt(y: value.location.y, height: geometry.size.height)
+                        guard letter != selectedLetter else { return }
+                        selectedLetter = letter
+                        onSelect(letter)
+                    }
+                    .onEnded { _ in
+                        selectedLetter = nil
+                    }
+            )
         }
-        .frame(width: 20)
+        .frame(width: 16)
     }
 }
 
-// MARK: - Subviews
+// MARK: - Helpers
 
 private extension AlphabetJumpIndex {
-    func letterColumn(in geometry: GeometryProxy) -> some View {
-        VStack(spacing: 0) {
-            ForEach(letters, id: \.self) { letter in
-                Text(letter)
-                    .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: letterHeight(in: geometry))
-            }
-        }
-        .padding(.vertical, 4)
-        .background(
-            Capsule()
-                .fill(DesignSystem.Color.cardBackground.opacity(isDragging ? 0.9 : 0.0))
-        )
-        .animation(.easeInOut(duration: 0.15), value: isDragging)
-        .gesture(indexDragGesture(in: geometry))
-        .simultaneousGesture(indexTapGesture(in: geometry))
-    }
-
     func letterHeight(in geometry: GeometryProxy) -> CGFloat {
-        guard !letters.isEmpty else { return 14 }
-        let available = geometry.size.height - 8
-        return max(available / CGFloat(letters.count), 14)
+        guard !letters.isEmpty else { return 10 }
+        let available = geometry.size.height - 4
+        return max(available / CGFloat(letters.count), 10)
     }
 
-    func indexDragGesture(in geometry: GeometryProxy) -> some Gesture {
-        DragGesture(minimumDistance: 4, coordinateSpace: .local)
-            .onChanged { value in
-                isDragging = true
-                let letter = letter(at: value.location.y, in: geometry)
-                onSelect(letter)
-            }
-            .onEnded { _ in
-                isDragging = false
-            }
-    }
-
-    func indexTapGesture(in geometry: GeometryProxy) -> some Gesture {
-        SpatialTapGesture(coordinateSpace: .local)
-            .onEnded { value in
-                let letter = letter(at: value.location.y, in: geometry)
-                onSelect(letter)
-            }
-    }
-
-    func letter(at yOffset: CGFloat, in geometry: GeometryProxy) -> String {
-        guard !letters.isEmpty else { return "" }
-        let height = geometry.size.height - 8
-        let index = Int(max(0, yOffset - 4) / height * CGFloat(letters.count))
+    func letterAt(y: CGFloat, height: CGFloat) -> String {
+        guard !letters.isEmpty, height > 0 else { return "" }
+        let adjustedY = y - 2
+        let fraction = max(0, min(1, adjustedY / (height - 4)))
+        let index = Int(fraction * CGFloat(letters.count))
         let clamped = max(0, min(letters.count - 1, index))
         return letters[clamped]
     }
