@@ -98,7 +98,7 @@ private extension SettingsScreen {
                     .padding(.horizontal, DesignSystem.Spacing.md)
                     .padding(.vertical, DesignSystem.Spacing.sm)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressButtonStyle())
             }
         } else {
             settingsGroup(header: "Premium") {
@@ -122,7 +122,7 @@ private extension SettingsScreen {
                     .padding(.horizontal, DesignSystem.Spacing.md)
                     .padding(.vertical, DesignSystem.Spacing.sm)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressButtonStyle())
             }
         }
     }
@@ -175,7 +175,7 @@ private extension SettingsScreen {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressButtonStyle())
         }
     }
 
@@ -230,7 +230,7 @@ private extension SettingsScreen {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressButtonStyle())
 
             settingsDivider
 
@@ -247,7 +247,7 @@ private extension SettingsScreen {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressButtonStyle())
         }
     }
 }
@@ -316,7 +316,7 @@ private extension SettingsScreen {
                     title: "Territorial disputes"
                 )
             }
-            .buttonStyle(.plain)
+            .buttonStyle(PressButtonStyle())
         }
     }
 
