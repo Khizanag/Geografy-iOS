@@ -143,30 +143,34 @@ private extension SpellingBeeScreen {
 
     var letterCells: some View {
         let target = currentCountry?.name ?? ""
-        let words = target.split(separator: " ", omittingEmptySubsequences: true)
-        let typedLower = Array(typedText.lowercased())
-        var globalIndex = 0
+        let segments = splitIntoSegments(target)
+        let targetLettersOnly = target.lowercased().filter { $0.isLetter }
+        let typedLettersOnly = Array(typedText.lowercased().filter { $0.isLetter })
 
         return VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(words.enumerated()), id: \.offset) { _, word in
-                let startIndex = globalIndex
-                let _ = { globalIndex += word.count + 1 }()
-                wordRow(
-                    word: String(word),
-                    startIndex: startIndex,
-                    typedLetters: typedLower
+            ForEach(Array(segments.enumerated()), id: \.offset) { _, segment in
+                wordRowFromSegment(
+                    segment: segment,
+                    targetLetters: targetLettersOnly,
+                    typedLetters: typedLettersOnly
                 )
             }
         }
     }
 
-    func wordRow(word: String, startIndex: Int, typedLetters: [Character]) -> some View {
-        let targetLetters = Array(word.lowercased())
-        return HStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(targetLetters.enumerated()), id: \.offset) { index, targetLetter in
-                let globalIdx = startIndex + index
-                let typedLetter: Character? = globalIdx < typedLetters.count
-                    ? typedLetters[globalIdx]
+    func wordRowFromSegment(
+        segment: WordSegment,
+        targetLetters: [Character],
+        typedLetters: [Character]
+    ) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            if let separator = segment.leadingSeparator {
+                separatorCell(String(separator))
+            }
+            ForEach(Array(segment.letterIndices.enumerated()), id: \.offset) { _, letterIndex in
+                let targetLetter = targetLetters[letterIndex]
+                let typedLetter: Character? = letterIndex < typedLetters.count
+                    ? typedLetters[letterIndex]
                     : nil
                 letterCell(
                     typed: typedLetter.map { String($0) },
@@ -177,12 +181,23 @@ private extension SpellingBeeScreen {
         }
     }
 
+    func separatorCell(_ separator: String) -> some View {
+        Text(separator)
+            .font(DesignSystem.Font.headline)
+            .fontWeight(.bold)
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .frame(width: 16, height: 36)
+    }
+
     func revealedLetterCells(for name: String) -> some View {
-        let words = name.split(separator: " ", omittingEmptySubsequences: true)
+        let segments = splitIntoSegments(name)
         return VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(words.enumerated()), id: \.offset) { _, word in
+            ForEach(Array(segments.enumerated()), id: \.offset) { _, segment in
                 HStack(spacing: DesignSystem.Spacing.xs) {
-                    ForEach(Array(word.enumerated()), id: \.offset) { _, letter in
+                    if let separator = segment.leadingSeparator {
+                        separatorCell(String(separator))
+                    }
+                    ForEach(Array(segment.letters.enumerated()), id: \.offset) { _, letter in
                         revealedCell(String(letter))
                     }
                 }
@@ -348,10 +363,9 @@ private extension SpellingBeeScreen {
 
     func submitAnswer() {
         guard let country = currentCountry else { return }
-        let normalized = typedText
-            .trimmingCharacters(in: .whitespaces)
-            .lowercased()
-        let isCorrect = normalized == country.name.lowercased()
+        let typedLettersOnly = typedText.lowercased().filter { $0.isLetter }
+        let targetLettersOnly = country.name.lowercased().filter { $0.isLetter }
+        let isCorrect = typedLettersOnly == targetLettersOnly
 
         if isCorrect {
             let pointsEarned = max(10, 30 - (usedHints.count * 10))
@@ -388,5 +402,53 @@ private extension SpellingBeeScreen {
         case none
         case correct
         case wrong
+    }
+
+    struct WordSegment {
+        let letters: [Character]
+        let letterIndices: [Int]
+        let leadingSeparator: Character?
+    }
+
+    func splitIntoSegments(_ name: String) -> [WordSegment] {
+        var segments: [WordSegment] = []
+        var currentLetters: [Character] = []
+        var currentIndices: [Int] = []
+        var letterIndex = 0
+        var pendingSeparator: Character?
+
+        for character in name {
+            if character.isLetter {
+                currentLetters.append(character)
+                currentIndices.append(letterIndex)
+                letterIndex += 1
+            } else {
+                if !currentLetters.isEmpty {
+                    segments.append(
+                        WordSegment(
+                            letters: currentLetters,
+                            letterIndices: currentIndices,
+                            leadingSeparator: pendingSeparator
+                        )
+                    )
+                    currentLetters = []
+                    currentIndices = []
+                    pendingSeparator = nil
+                }
+                pendingSeparator = character == " " ? nil : character
+            }
+        }
+
+        if !currentLetters.isEmpty {
+            segments.append(
+                WordSegment(
+                    letters: currentLetters,
+                    letterIndices: currentIndices,
+                    leadingSeparator: pendingSeparator
+                )
+            )
+        }
+
+        return segments
     }
 }
