@@ -52,7 +52,7 @@ private extension TVExploreGameScreen {
                 Label("Start Game", systemImage: "play.fill")
                     .font(.system(size: 28, weight: .bold))
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(.bordered)
         }
     }
 }
@@ -202,7 +202,7 @@ private extension TVExploreGameScreen {
                 Label("Play Again", systemImage: "arrow.counterclockwise")
                     .font(.system(size: 24, weight: .semibold))
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(.bordered)
         }
         .padding(80)
     }
