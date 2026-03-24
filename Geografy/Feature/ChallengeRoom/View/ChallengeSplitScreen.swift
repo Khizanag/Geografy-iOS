@@ -4,7 +4,7 @@ struct ChallengeSplitScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
 
-    @State private var coordinator = TabCoordinator()
+    @State private var path: [ChallengeDestination] = []
     @State private var room: ChallengeRoom
     @State private var player1Answer: Int?
     @State private var player2Answer: Int?
@@ -19,23 +19,25 @@ struct ChallengeSplitScreen: View {
     }
 
     var body: some View {
-        NavigationStack(path: $coordinator.path) {
+        NavigationStack(path: $path) {
             splitContent
                 .background(DesignSystem.Color.background.ignoresSafeArea())
                 .navigationBarHidden(true)
-                .navigationDestination(for: ChallengeRoom.self) { finishedRoom in
-                    ChallengeResultScreen(room: finishedRoom) { dismiss() }
-                        .navigationTitle("Results")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationBarBackButtonHidden()
-                        .toolbar {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                CircleCloseButton { dismiss() }
+                .navigationDestination(for: ChallengeDestination.self) { destination in
+                    switch destination {
+                    case .result(let finishedRoom):
+                        ChallengeResultScreen(room: finishedRoom) { dismiss() }
+                            .navigationTitle("Results")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationBarBackButtonHidden()
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    CircleCloseButton { dismiss() }
+                                }
                             }
-                        }
+                    }
                 }
         }
-        .environment(coordinator)
     }
 }
 
@@ -223,7 +225,7 @@ private extension ChallengeSplitScreen {
 
     func advanceRound() {
         if currentRound >= room.totalRounds {
-            coordinator.path.append(room)
+            path.append(.result(room))
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 currentRound += 1
