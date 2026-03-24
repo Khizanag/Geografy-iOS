@@ -133,11 +133,6 @@ private extension QuizResultsScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(1)
 
-                SpeakerButton(
-                    text: answer.question.correctCountry.name,
-                    countryCode: answer.question.correctCountry.code
-                )
-                .scaleEffect(0.85)
 
                 Spacer()
 
