@@ -1,11 +1,5 @@
 import SwiftUI
 
-enum ContinentSortOption: String, CaseIterable {
-    case name = "Name"
-    case population = "Population"
-    case area = "Area"
-}
-
 struct ContinentOverviewScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
@@ -13,7 +7,7 @@ struct ContinentOverviewScreen: View {
     let continent: Country.Continent
 
     @State private var countryDataService = CountryDataService()
-    @State private var sortBy: ContinentSortOption = .name
+    @State private var sortBy: SortOption = .name
     @State private var appeared = false
 
     var body: some View {
@@ -42,23 +36,14 @@ struct ContinentOverviewScreen: View {
             }
 
             ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    ForEach(ContinentSortOption.allCases, id: \.self) { option in
-                        Button {
-                            sortBy = option
-                        } label: {
-                            if sortBy == option {
-                                Label(option.rawValue, systemImage: "checkmark")
-                            } else {
-                                Text(option.rawValue)
-                            }
-                        }
+                Picker(selection: $sortBy) {
+                    ForEach(SortOption.allCases, id: \.self) { option in
+                        Text(option.rawValue).tag(option)
                     }
                 } label: {
-                    Image(systemName: "arrow.up.arrow.down")
-                        .foregroundStyle(DesignSystem.Color.iconPrimary)
+                    Label("Sort", systemImage: "arrow.up.arrow.down")
                 }
-                .buttonStyle(.plain)
+                .pickerStyle(.menu)
             }
         }
         .task { countryDataService.loadCountries() }
@@ -79,6 +64,7 @@ private extension ContinentOverviewScreen {
                 case .name: lhs.name < rhs.name
                 case .population: lhs.population > rhs.population
                 case .area: lhs.area > rhs.area
+                case .gdp: (lhs.gdpPerCapita ?? 0) > (rhs.gdpPerCapita ?? 0)
                 }
             }
     }
