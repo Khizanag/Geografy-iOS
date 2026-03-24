@@ -20,15 +20,15 @@ struct AllMapsScreen: View {
     var body: some View {
         scrollContent
             .background { ambientBackground }
-        .navigationTitle("All Maps")
-        .onAppear {
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
+            .navigationTitle("All Maps")
+            .onAppear {
+                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                    blobAnimating = true
+                }
+                withAnimation(.easeOut(duration: 0.7)) {
+                    appeared = true
+                }
             }
-            withAnimation(.easeOut(duration: 0.7)) {
-                appeared = true
-            }
-        }
     }
 }
 
@@ -42,58 +42,72 @@ private extension AllMapsScreen {
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.26), .clear],
+                        colors: [DesignSystem.Color.accent.opacity(0.30), .clear],
                         center: .center,
                         startRadius: 0,
-                        endRadius: 220
+                        endRadius: 240
                     )
                 )
-                .frame(width: 440, height: 320)
-                .blur(radius: 32)
-                .offset(x: -80, y: -200)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+                .frame(width: 480, height: 360)
+                .blur(radius: 36)
+                .offset(x: -100, y: -160)
+                .scaleEffect(blobAnimating ? 1.12 : 0.88)
 
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                        colors: [DesignSystem.Color.indigo.opacity(0.22), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 200
+                    )
+                )
+                .frame(width: 400, height: 320)
+                .blur(radius: 44)
+                .offset(x: 160, y: 60)
+                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 180
+                    )
+                )
+                .frame(width: 360, height: 280)
+                .blur(radius: 40)
+                .offset(x: -80, y: 420)
+                .scaleEffect(blobAnimating ? 1.08 : 0.92)
+
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.purple.opacity(0.14), .clear],
                         center: .center,
                         startRadius: 0,
                         endRadius: 180
                     )
                 )
                 .frame(width: 360, height: 300)
-                .blur(radius: 40)
-                .offset(x: 140, y: 100)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+                .blur(radius: 48)
+                .offset(x: 140, y: 700)
+                .scaleEffect(blobAnimating ? 0.90 : 1.10)
 
             Ellipse()
                 .fill(
                     RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.12), .clear],
+                        colors: [DesignSystem.Color.accent.opacity(0.12), .clear],
                         center: .center,
                         startRadius: 0,
                         endRadius: 160
                     )
                 )
                 .frame(width: 320, height: 260)
-                .blur(radius: 36)
-                .offset(x: -100, y: 400)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.purple.opacity(0.10), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 300, height: 280)
                 .blur(radius: 44)
-                .offset(x: 160, y: 650)
-                .scaleEffect(blobAnimating ? 0.92 : 1.08)
+                .offset(x: -60, y: 1000)
+                .scaleEffect(blobAnimating ? 1.06 : 0.94)
         }
         .ignoresSafeArea()
     }
@@ -124,9 +138,9 @@ private extension AllMapsScreen {
     }
 
     var headerSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Explore Maps")
-            Text("Choose a region to dive into")
+            Text("Tap a region to dive into an interactive map")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
@@ -183,7 +197,11 @@ private extension AllMapsScreen {
             }
             .frame(height: isLandscape ? 130 : 160)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-            .shadow(color: colors.0.opacity(0.45), radius: 14, y: 5)
+            .shadow(color: colors.0.opacity(0.50), radius: 16, y: 6)
+            .overlay(
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                    .strokeBorder(.white.opacity(0.08), lineWidth: 1)
+            )
         }
         .buttonStyle(PressButtonStyle())
     }
