@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CountryDetailScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(TabCoordinator.self) var coordinator
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) private var travelService
     @Environment(FavoritesService.self) private var favoritesService
