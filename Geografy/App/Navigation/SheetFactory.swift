@@ -120,9 +120,8 @@ private extension SheetFactory {
                 .presentationDragIndicator(.visible)
 
         case .capitalQuiz:
-            NavigationStack { CapitalQuizSetupScreen() }
+            NavigationStack { QuizSetupScreen(fixedType: .capitalQuiz) }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
                 .presentationDragIndicator(.visible)
 
         case .exploreGame:

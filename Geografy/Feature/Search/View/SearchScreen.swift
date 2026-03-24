@@ -28,7 +28,6 @@ struct SearchScreen: View {
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Search")
-        .navigationBarTitleDisplayMode(.large)
         .toolbar { toolbarItems }
         .navigationDestination(for: Country.self) { country in
             CountryDetailScreen(country: country)
