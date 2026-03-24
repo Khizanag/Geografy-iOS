@@ -111,7 +111,27 @@ struct TVMoreScreen: View {
                 }
             }
 
+            Section("Travel") {
+                NavigationLink {
+                    TVTravelScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Travel Tracker", systemImage: "airplane.departure")
+                }
+
+                NavigationLink {
+                    TVFavoritesScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Favorites", systemImage: "heart.fill")
+                }
+            }
+
             Section("Progress") {
+                NavigationLink {
+                    TVProfileScreen()
+                } label: {
+                    Label("Profile", systemImage: "person.fill")
+                }
+
                 NavigationLink {
                     TVAchievementsScreen()
                 } label: {
@@ -123,11 +143,13 @@ struct TVMoreScreen: View {
                 } label: {
                     Label("Leaderboard", systemImage: "list.number")
                 }
+            }
 
+            Section {
                 NavigationLink {
-                    TVFavoritesScreen(countryDataService: countryDataService)
+                    TVSettingsScreen()
                 } label: {
-                    Label("Favorites", systemImage: "heart.fill")
+                    Label("Settings", systemImage: "gearshape.fill")
                 }
             }
         }
