@@ -55,7 +55,7 @@ private extension AlphabetJumpIndex {
     func letterHeight(in geometry: GeometryProxy) -> CGFloat {
         guard !letters.isEmpty else { return 10 }
         let available = geometry.size.height - 4
-        return max(available / CGFloat(letters.count), 8)
+        return max(available / CGFloat(letters.count), 4)
     }
 
     func letterAt(y: CGFloat, height: CGFloat) -> String {
