@@ -1,35 +1,51 @@
 import Foundation
 import Observation
+import SwiftData
 
 @Observable
 final class FavoritesService {
-    private(set) var favoriteCodes: Set<String>
+    private(set) var entries: [FavoriteEntry] = []
+    private let modelContext: ModelContext
 
-    private let storageKey = "favorite_country_codes"
+    init(container: ModelContainer) {
+        self.modelContext = ModelContext(container)
+        fetchEntries()
+    }
 
-    init() {
-        let stored = UserDefaults.standard.stringArray(forKey: storageKey) ?? []
-        favoriteCodes = Set(stored)
+    var favoriteCodes: Set<String> {
+        Set(entries.map(\.countryCode))
     }
 
     func toggle(code: String) {
-        if favoriteCodes.contains(code) {
-            favoriteCodes.remove(code)
+        if let existing = entries.first(where: { $0.countryCode == code }) {
+            modelContext.delete(existing)
+            entries.removeAll { $0.countryCode == code }
         } else {
-            favoriteCodes.insert(code)
+            let entry = FavoriteEntry(countryCode: code)
+            modelContext.insert(entry)
+            entries.append(entry)
         }
-        persist()
+        save()
     }
 
     func isFavorite(code: String) -> Bool {
-        favoriteCodes.contains(code)
+        entries.contains { $0.countryCode == code }
+    }
+
+    func addedAt(code: String) -> Date? {
+        entries.first { $0.countryCode == code }?.addedAt
     }
 }
 
 // MARK: - Helpers
 
 private extension FavoritesService {
-    func persist() {
-        UserDefaults.standard.set(Array(favoriteCodes), forKey: storageKey)
+    func fetchEntries() {
+        let descriptor = FetchDescriptor<FavoriteEntry>()
+        entries = (try? modelContext.fetch(descriptor)) ?? []
+    }
+
+    func save() {
+        try? modelContext.save()
     }
 }

@@ -11,11 +11,12 @@ final class DatabaseManager {
 
     init(inMemory: Bool = false) {
         let schema = Schema([
+            FavoriteEntry.self,
+            QuizHistoryRecord.self,
+            StreakRecord.self,
+            UnlockedAchievement.self,
             UserProfile.self,
             XPRecord.self,
-            QuizHistoryRecord.self,
-            UnlockedAchievement.self,
-            StreakRecord.self,
         ])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
         do {
