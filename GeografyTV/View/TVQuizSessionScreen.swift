@@ -199,35 +199,35 @@ private extension TVQuizSessionScreen {
 // MARK: - Gamepad Button Mapping
 
 enum GamepadButton: CaseIterable, Hashable {
-    case triangle
-    case circle
-    case cross
-    case square
+    case l1
+    case r1
+    case l2
+    case r2
 
     var label: String {
         switch self {
-        case .triangle: "△ Triangle"
-        case .circle: "○ Circle"
-        case .cross: "✕ Cross"
-        case .square: "□ Square"
+        case .l1: "L1"
+        case .r1: "R1"
+        case .l2: "L2"
+        case .r2: "R2"
         }
     }
 
     var icon: String {
         switch self {
-        case .triangle: "triangle.fill"
-        case .circle: "circle.fill"
-        case .cross: "xmark"
-        case .square: "square.fill"
+        case .l1: "l1.button.roundedbottom.horizontal"
+        case .r1: "r1.button.roundedbottom.horizontal"
+        case .l2: "l2.button.roundedtop.horizontal"
+        case .r2: "r2.button.roundedtop.horizontal"
         }
     }
 
     var color: Color {
         switch self {
-        case .triangle: .green
-        case .circle: .red
-        case .cross: .blue
-        case .square: .pink
+        case .l1: .blue
+        case .r1: .orange
+        case .l2: .purple
+        case .r2: .green
         }
     }
 }
@@ -264,10 +264,10 @@ private extension TVQuizSessionScreen {
 
         for controller in GCController.controllers() {
             guard let gamepad = controller.extendedGamepad else { continue }
-            gamepad.buttonA.pressedChangedHandler = nil
-            gamepad.buttonB.pressedChangedHandler = nil
-            gamepad.buttonX.pressedChangedHandler = nil
-            gamepad.buttonY.pressedChangedHandler = nil
+            gamepad.leftShoulder.pressedChangedHandler = nil
+            gamepad.rightShoulder.pressedChangedHandler = nil
+            gamepad.leftTrigger.pressedChangedHandler = nil
+            gamepad.rightTrigger.pressedChangedHandler = nil
         }
     }
 
@@ -275,23 +275,23 @@ private extension TVQuizSessionScreen {
         for controller in GCController.controllers() {
             guard let gamepad = controller.extendedGamepad else { continue }
 
-            // △ Triangle (Y) → Option 0 (top-left)
-            gamepad.buttonY.pressedChangedHandler = { _, _, pressed in
+            // L1 → Option 1 (top-left)
+            gamepad.leftShoulder.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 0) }
             }
 
-            // ○ Circle (B) → Option 1 (top-right)
-            gamepad.buttonB.pressedChangedHandler = { _, _, pressed in
+            // R1 → Option 2 (top-right)
+            gamepad.rightShoulder.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 1) }
             }
 
-            // ✕ Cross (A) → Option 2 (bottom-left)
-            gamepad.buttonA.pressedChangedHandler = { _, _, pressed in
+            // L2 → Option 3 (bottom-left)
+            gamepad.leftTrigger.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 2) }
             }
 
-            // □ Square (X) → Option 3 (bottom-right)
-            gamepad.buttonX.pressedChangedHandler = { _, _, pressed in
+            // R2 → Option 4 (bottom-right)
+            gamepad.rightTrigger.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 3) }
             }
         }
