@@ -30,6 +30,18 @@ struct ContinentOverviewScreen: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    coordinator.presentFullScreen(
+                        .map(continentFilter: continent.displayName)
+                    )
+                } label: {
+                    Image(systemName: "map.fill")
+                        .foregroundStyle(DesignSystem.Color.iconPrimary)
+                }
+                .buttonStyle(.plain)
+            }
+
+            ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     ForEach(ContinentSortOption.allCases, id: \.self) { option in
                         Button {
