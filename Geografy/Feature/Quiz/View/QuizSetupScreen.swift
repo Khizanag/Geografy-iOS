@@ -19,7 +19,7 @@ struct QuizSetupScreen: View {
                 if selectedType.hasComparisonMetric {
                     metricSection
                 }
-                if selectedType.supportsTypingMode {
+                if selectedType.supportedAnswerModes.count > 1 {
                     answerModeSection
                 }
                 regionSection
@@ -95,7 +95,7 @@ private extension QuizSetupScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Answer Mode")
             HStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(QuizAnswerMode.allCases) { mode in
+                ForEach(selectedType.supportedAnswerModes) { mode in
                     modeChip(mode)
                 }
             }
@@ -128,15 +128,15 @@ private extension QuizSetupScreen {
 
     @ViewBuilder
     var answerModeNote: some View {
-        if answerMode == .typing, !selectedType.supportsTypingMode {
-            answerModeInfoRow(
-                icon: "info.circle",
-                text: "Typing isn't available for \(selectedType.displayName) — multiple choice will be used"
-            )
-        } else if answerMode == .typing {
+        if answerMode == .typing {
             answerModeInfoRow(
                 icon: "star.fill",
                 text: "1.5× XP bonus for typing answers correctly"
+            )
+        } else if answerMode == .spellingBee {
+            answerModeInfoRow(
+                icon: "textformat.abc",
+                text: "Spell the answer letter by letter — 2× XP bonus"
             )
         }
     }
@@ -315,7 +315,7 @@ private extension QuizSetupScreen {
     }
 
     func makeConfiguration() -> QuizConfiguration {
-        let effectiveAnswerMode = selectedType.supportsTypingMode ? answerMode : .multipleChoice
+        let effectiveAnswerMode = selectedType.supportedAnswerModes.contains(answerMode) ? answerMode : .multipleChoice
         return QuizConfiguration(
             type: selectedType,
             region: selectedRegion,
