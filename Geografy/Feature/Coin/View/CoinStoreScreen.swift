@@ -21,11 +21,6 @@ struct CoinStoreScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Coins")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
-            }
-        }
         .sheet(item: $selectedPack) { pack in
             CoinPackPreviewSheet(pack: pack)
         }

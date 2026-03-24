@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct CountryNicknamesScreen: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var nicknamesService = CountryNicknamesService()
@@ -32,11 +31,6 @@ struct CountryNicknamesScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Country Nicknames")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .task { countryDataService.loadCountries() }
         .sheet(isPresented: $isQuizMode) {
             NavigationStack {

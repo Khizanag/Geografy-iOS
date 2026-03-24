@@ -348,9 +348,6 @@ private extension SearchScreen {
             }
             .buttonStyle(.plain)
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 }
 

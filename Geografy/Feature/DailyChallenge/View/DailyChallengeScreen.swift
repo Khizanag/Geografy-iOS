@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct DailyChallengeScreen: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(XPService.self) private var xpService
 
     @State private var countryDataService = CountryDataService()
@@ -13,23 +12,11 @@ struct DailyChallengeScreen: View {
         contentView
             .navigationTitle("Daily Challenge")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
             .task { loadData() }
             .onAppear { startBlobAnimation() }
             .fullScreenCover(isPresented: $showSession) {
                 sessionCover
             }
-    }
-}
-
-// MARK: - Toolbar
-
-private extension DailyChallengeScreen {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 }
 

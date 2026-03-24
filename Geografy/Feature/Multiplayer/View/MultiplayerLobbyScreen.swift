@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct MultiplayerLobbyScreen: View {
-    @Environment(\.dismiss) private var dismiss
 
     let multiplayerService: MultiplayerService
 
@@ -33,11 +32,6 @@ struct MultiplayerLobbyScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Multiplayer")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .onAppear { startBlobAnimation() }
         .fullScreenCover(isPresented: $showMatch) {
             matchDestination

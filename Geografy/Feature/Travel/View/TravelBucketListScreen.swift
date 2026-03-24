@@ -168,9 +168,6 @@ private extension TravelBucketListScreen {
             }
             .buttonStyle(.plain)
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 }
 

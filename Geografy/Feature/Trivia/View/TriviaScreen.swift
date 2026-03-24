@@ -31,11 +31,6 @@ struct TriviaScreen: View {
         }
         .navigationTitle("Trivia")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
-            }
-        }
         .onAppear {
             countryDataService.loadCountries()
             loadQuestions()

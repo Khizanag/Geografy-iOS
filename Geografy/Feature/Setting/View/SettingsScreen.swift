@@ -34,11 +34,6 @@ struct SettingsScreen: View {
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
-            }
-        }
         .task { await syncNotificationStatus() }
         .sheet(isPresented: $showSignIn) {
             SignInOptionsSheet()
