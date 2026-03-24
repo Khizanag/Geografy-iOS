@@ -49,7 +49,7 @@ struct CountryListScreen: View {
                         }
                     }
                     .padding(.leading, DesignSystem.Spacing.md)
-                    .padding(.trailing, showJumpIndex ? DesignSystem.Spacing.md + 26 : DesignSystem.Spacing.md)
+                    .padding(.trailing, showJumpIndex ? DesignSystem.Spacing.md + 18 : DesignSystem.Spacing.md)
                     .padding(.bottom, DesignSystem.Spacing.xxl)
                     .padding(.top, DesignSystem.Spacing.xs)
                 }
