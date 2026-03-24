@@ -238,10 +238,18 @@ private extension TVMultiplayerQuizScreen {
         return DesignSystem.Color.error
     }
 
+    var isFlagOptionsLayout: Bool {
+        currentQuestion?.options.contains { $0.flagCode != nil && $0.text == nil } ?? false
+    }
+
+    var isFlagPromptLayout: Bool {
+        currentQuestion?.promptFlag != nil
+    }
+
     func promptSection(_ question: QuizQuestion) -> some View {
         VStack(spacing: 16) {
             if let flagCode = question.promptFlag {
-                FlagView(countryCode: flagCode, height: 120)
+                FlagView(countryCode: flagCode, height: isFlagPromptLayout && !isFlagOptionsLayout ? 180 : 120)
             }
 
             HStack(spacing: 8) {
@@ -266,10 +274,14 @@ private extension TVMultiplayerQuizScreen {
             spacing: 24
         ) {
             ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
-                optionCard(option, question: question, index: index)
+                if isFlagOptionsLayout {
+                    flagOptionCard(option, question: question, index: index)
+                } else {
+                    optionCard(option, question: question, index: index)
+                }
             }
         }
-        .frame(maxWidth: 900)
+        .frame(maxWidth: isFlagOptionsLayout ? 1100 : 900)
         .focusable(false)
     }
 
@@ -321,6 +333,52 @@ private extension TVMultiplayerQuizScreen {
         }
         .padding(20)
         .background(backgroundColor, in: RoundedRectangle(cornerRadius: 16))
+    }
+
+    func flagOptionCard(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
+        let isCorrect = option.id == question.correctOptionID
+        let gamepadButton = GamepadButton.allCases.indices.contains(index) ? GamepadButton.allCases[index] : nil
+        let playersWhoChose = players.filter { $0.currentAnswer == option.id }
+
+        let backgroundColor: Color = {
+            guard revealAnswers else { return DesignSystem.Color.cardBackground.opacity(0.6) }
+            if isCorrect { return DesignSystem.Color.success.opacity(0.4) }
+            if !playersWhoChose.isEmpty { return DesignSystem.Color.error.opacity(0.3) }
+            return DesignSystem.Color.cardBackground.opacity(0.4)
+        }()
+
+        return VStack(spacing: 12) {
+            if let flagCode = option.flagCode {
+                FlagView(countryCode: flagCode, height: 90)
+            }
+
+            if let gamepadButton {
+                Image(systemName: gamepadButton.icon)
+                    .font(.system(size: 18))
+                    .foregroundStyle(gamepadButton.color)
+            }
+
+            if revealAnswers {
+                HStack(spacing: 8) {
+                    if isCorrect {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 22))
+                            .foregroundStyle(DesignSystem.Color.success)
+                    }
+
+                    HStack(spacing: 4) {
+                        ForEach(playersWhoChose) { player in
+                            Circle()
+                                .fill(player.color)
+                                .frame(width: 14, height: 14)
+                        }
+                    }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 160)
+        .background(backgroundColor, in: RoundedRectangle(cornerRadius: 20))
     }
 
     var playerStatusBar: some View {
