@@ -23,11 +23,20 @@ struct ChallengeSplitScreen: View {
             DesignSystem.Color.background.ignoresSafeArea()
 
             if isFinished {
-                ChallengeResultScreen(
-                    room: room,
-                    challengeRoomService: challengeRoomService
-                ) {
-                    dismiss()
+                NavigationStack {
+                    ChallengeResultScreen(
+                        room: room,
+                        challengeRoomService: challengeRoomService
+                    ) {
+                        dismiss()
+                    }
+                    .navigationTitle("Results")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            CircleCloseButton { dismiss() }
+                        }
+                    }
                 }
             } else {
                 splitContent
@@ -49,13 +58,7 @@ private extension ChallengeSplitScreen {
             )
             .rotationEffect(.degrees(180))
 
-            Divider()
-                .background(DesignSystem.Color.accent)
-
             centerBar
-
-            Divider()
-                .background(DesignSystem.Color.accent)
 
             playerHalf(
                 playerIndex: 0,
@@ -68,31 +71,43 @@ private extension ChallengeSplitScreen {
     }
 
     var centerBar: some View {
-        HStack {
-            Text("P1: \(room.player1Score)")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.blue)
+        HStack(spacing: DesignSystem.Spacing.md) {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Circle()
+                    .fill(DesignSystem.Color.blue)
+                    .frame(width: 6, height: 6)
+                Text("P1: \(room.player1Score)")
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.blue)
+            }
 
             Spacer()
 
-            Text("Round \(String(currentRound))/\(String(room.totalRounds))")
+            SessionProgressBar(progress: progressFraction)
+                .frame(maxWidth: 120)
+
+            Text("\(String(currentRound))/\(String(room.totalRounds))")
                 .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
 
             Spacer()
 
-            Text("P2: \(room.player2Score)")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.orange)
-
-            Spacer()
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Text("P2: \(room.player2Score)")
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.orange)
+                Circle()
+                    .fill(DesignSystem.Color.orange)
+                    .frame(width: 6, height: 6)
+            }
 
             Button { dismiss() } label: {
-                Image(systemName: "xmark")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                Image(systemName: "xmark.circle.fill")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             .buttonStyle(.plain)
         }
@@ -107,19 +122,24 @@ private extension ChallengeSplitScreen {
         selectedAnswer: Int?,
         onSelect: @escaping (Int) -> Void
     ) -> some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
+        VStack(spacing: DesignSystem.Spacing.xs) {
             HStack {
                 Text(playerIndex == 0 ? "Player 1" : "Player 2")
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(playerIndex == 0 ? DesignSystem.Color.blue : DesignSystem.Color.orange)
+                    .foregroundStyle(
+                        playerIndex == 0 ? DesignSystem.Color.blue : DesignSystem.Color.orange
+                    )
 
                 Spacer()
 
-                Text("\(playerIndex == 0 ? room.player1Score : room.player2Score) pts")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                if let question {
+                    Text(question.category.uppercased())
+                        .font(DesignSystem.Font.caption2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                        .kerning(0.6)
+                }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
 
@@ -130,14 +150,26 @@ private extension ChallengeSplitScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
                     .lineLimit(3)
-                    .minimumScaleFactor(0.7)
+                    .minimumScaleFactor(0.6)
                     .padding(.horizontal, DesignSystem.Spacing.md)
 
-                splitOptions(
-                    question: question,
-                    selectedAnswer: selectedAnswer,
-                    onSelect: onSelect
-                )
+                VStack(spacing: DesignSystem.Spacing.xxs) {
+                    ForEach(question.options.indices, id: \.self) { index in
+                        QuizOptionButton(
+                            text: question.options[index],
+                            flagCode: nil,
+                            state: splitOptionState(
+                                index: index,
+                                correctIndex: question.correctIndex,
+                                selectedAnswer: selectedAnswer
+                            ),
+                            index: index
+                        ) {
+                            onSelect(index)
+                        }
+                    }
+                }
+                .padding(.horizontal, DesignSystem.Spacing.sm)
             }
 
             Spacer(minLength: 0)
@@ -146,73 +178,26 @@ private extension ChallengeSplitScreen {
         .frame(maxHeight: .infinity)
     }
 
-    func splitOptions(
-        question: ChallengeQuestion,
-        selectedAnswer: Int?,
-        onSelect: @escaping (Int) -> Void
-    ) -> some View {
-        LazyVGrid(
-            columns: [GridItem(.flexible()), GridItem(.flexible())],
-            spacing: DesignSystem.Spacing.xs
-        ) {
-            ForEach(question.options.indices, id: \.self) { index in
-                splitOptionButton(
-                    text: question.options[index],
-                    index: index,
-                    correctIndex: question.correctIndex,
-                    selectedAnswer: selectedAnswer,
-                    onSelect: onSelect
-                )
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-    }
-
-    func splitOptionButton(
-        text: String,
+    func splitOptionState(
         index: Int,
         correctIndex: Int,
-        selectedAnswer: Int?,
-        onSelect: @escaping (Int) -> Void
-    ) -> some View {
-        let isSelected = selectedAnswer == index
-        let isCorrect = index == correctIndex
-        let answered = selectedAnswer != nil
-
-        return Button { onSelect(index) } label: {
-            Text(text)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .padding(.horizontal, DesignSystem.Spacing.xxs)
-                .background(
-                    splitOptionBackground(
-                        isSelected: isSelected,
-                        isCorrect: isCorrect,
-                        answered: answered
-                    ),
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                )
-        }
-        .buttonStyle(PressButtonStyle())
-        .disabled(answered)
-    }
-
-    func splitOptionBackground(isSelected: Bool, isCorrect: Bool, answered: Bool) -> Color {
-        guard answered else { return DesignSystem.Color.cardBackground }
-        if isCorrect { return DesignSystem.Color.success.opacity(0.2) }
-        if isSelected { return DesignSystem.Color.error.opacity(0.2) }
-        return DesignSystem.Color.cardBackground
+        selectedAnswer: Int?
+    ) -> QuizOptionButton.OptionState {
+        guard let selected = selectedAnswer else { return .default }
+        if index == correctIndex { return .correct }
+        if index == selected { return .incorrect }
+        return .disabled
     }
 }
 
 // MARK: - Helpers
 
 private extension ChallengeSplitScreen {
+    var progressFraction: CGFloat {
+        guard room.totalRounds > 0 else { return 0 }
+        return CGFloat(currentRound - 1) / CGFloat(room.totalRounds)
+    }
+
     var player1Question: ChallengeQuestion? {
         let index = (currentRound - 1) * 2
         guard index < room.questions.count else { return nil }
