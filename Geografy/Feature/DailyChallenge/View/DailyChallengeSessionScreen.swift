@@ -106,12 +106,12 @@ private extension DailyChallengeSessionScreen {
 private extension DailyChallengeSessionScreen {
     func finishChallenge() {
         let timeSpent = Date().timeIntervalSince(startTime)
-        service.recordCompletion(score: score, timeSpent: timeSpent)
+        service.saveResult(score: score, timeSpent: timeSpent)
 
         Task {
             await gameCenterService.submitScore(
                 score,
-                to: GameCenterService.LeaderboardID.dailyChallenge
+                to: GameCenterService.LeaderboardID.dailyChallengesWon
             )
         }
 
