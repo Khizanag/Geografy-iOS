@@ -1,6 +1,6 @@
 import Foundation
 
-struct GeoTriviaQuestion: Identifiable {
+struct TriviaQuestion: Identifiable {
     let id = UUID()
     let statement: String
     let isTrue: Bool

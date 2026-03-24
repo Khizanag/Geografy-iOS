@@ -1,8 +1,8 @@
 import Foundation
 
-struct GeoTriviaService {
-    func generateQuestions(from countries: [Country]) -> [GeoTriviaQuestion] {
-        var questions: [GeoTriviaQuestion] = []
+struct TriviaService {
+    func generateQuestions(from countries: [Country]) -> [TriviaQuestion] {
+        var questions: [TriviaQuestion] = []
         questions += capitalQuestions(from: countries)
         questions += continentQuestions(from: countries)
         questions += borderQuestions(from: countries)
@@ -14,13 +14,13 @@ struct GeoTriviaService {
 
 // MARK: - Generators
 
-private extension GeoTriviaService {
-    func capitalQuestions(from countries: [Country]) -> [GeoTriviaQuestion] {
+private extension TriviaService {
+    func capitalQuestions(from countries: [Country]) -> [TriviaQuestion] {
         countries.compactMap { country in
             guard !country.capital.isEmpty else { return nil }
             let useCorrect = Bool.random()
             if useCorrect {
-                return GeoTriviaQuestion(
+                return TriviaQuestion(
                     statement: "The capital of \(country.name) is \(country.capital).",
                     isTrue: true,
                     explanation: "\(country.capital) is indeed the capital of \(country.name)."
@@ -28,7 +28,7 @@ private extension GeoTriviaService {
             } else {
                 let wrong = countries.filter { $0.id != country.id && !$0.capital.isEmpty }.randomElement()
                 guard let wrongCountry = wrong else { return nil }
-                return GeoTriviaQuestion(
+                return TriviaQuestion(
                     statement: "The capital of \(country.name) is \(wrongCountry.capital).",
                     isTrue: false,
                     explanation: "The capital of \(country.name) is \(country.capital), not \(wrongCountry.capital)."
@@ -37,11 +37,11 @@ private extension GeoTriviaService {
         }
     }
 
-    func continentQuestions(from countries: [Country]) -> [GeoTriviaQuestion] {
+    func continentQuestions(from countries: [Country]) -> [TriviaQuestion] {
         countries.compactMap { country in
             let useCorrect = Bool.random()
             if useCorrect {
-                return GeoTriviaQuestion(
+                return TriviaQuestion(
                     statement: "\(country.name) is located in \(country.continent.displayName).",
                     isTrue: true,
                     explanation: "\(country.name) is indeed in \(country.continent.displayName)."
@@ -49,7 +49,7 @@ private extension GeoTriviaService {
             } else {
                 let wrongContinents = Country.Continent.allCases.filter { $0 != country.continent && $0 != .antarctica }
                 guard let wrong = wrongContinents.randomElement() else { return nil }
-                return GeoTriviaQuestion(
+                return TriviaQuestion(
                     statement: "\(country.name) is located in \(wrong.displayName).",
                     isTrue: false,
                     explanation: "\(country.name) is in \(country.continent.displayName), not \(wrong.displayName)."
@@ -58,17 +58,17 @@ private extension GeoTriviaService {
         }
     }
 
-    func borderQuestions(from countries: [Country]) -> [GeoTriviaQuestion] {
+    func borderQuestions(from countries: [Country]) -> [TriviaQuestion] {
         []
     }
 
-    func sizeQuestions(from countries: [Country]) -> [GeoTriviaQuestion] {
+    func sizeQuestions(from countries: [Country]) -> [TriviaQuestion] {
         let sorted = countries.sorted { $0.area > $1.area }
-        var questions: [GeoTriviaQuestion] = []
+        var questions: [TriviaQuestion] = []
 
         if let largest = sorted.first {
             questions.append(
-                GeoTriviaQuestion(
+                TriviaQuestion(
                     statement: "\(largest.name) is the largest country in the world by land area.",
                     isTrue: true,
                     explanation: "\(largest.name) has an area of approximately \(Int(largest.area).formatted()) km²."
@@ -79,7 +79,7 @@ private extension GeoTriviaService {
         if sorted.count > 1 {
             let second = sorted[1]
             questions.append(
-                GeoTriviaQuestion(
+                TriviaQuestion(
                     statement: "\(second.name) is the largest country in the world by land area.",
                     isTrue: false,
                     explanation: "\(second.name) is actually the second largest. The largest is \(sorted[0].name)."
@@ -91,7 +91,7 @@ private extension GeoTriviaService {
         if let mostPopulous = popSorted.first {
             let pop = mostPopulous.population.formatted()
             questions.append(
-                GeoTriviaQuestion(
+                TriviaQuestion(
                     statement: "\(mostPopulous.name) is the most populous country in the world.",
                     isTrue: true,
                     explanation: "\(mostPopulous.name) has a population of over \(pop) people."
@@ -102,54 +102,54 @@ private extension GeoTriviaService {
         return questions
     }
 
-    func staticFacts() -> [GeoTriviaQuestion] {
+    func staticFacts() -> [TriviaQuestion] {
         [
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "The Pacific Ocean is the largest ocean on Earth.",
                 isTrue: true,
                 explanation: "The Pacific Ocean covers about 165 million km², making it the world's largest ocean."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "The Atlantic Ocean is the largest ocean on Earth.",
                 isTrue: false,
                 explanation: "The Pacific Ocean is the largest. The Atlantic is the second largest ocean."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "Africa is the second largest continent by area.",
                 isTrue: true,
                 explanation: "Africa covers about 30.3 million km², making it the second largest continent after Asia."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "Europe is the largest continent by area.",
                 isTrue: false,
                 explanation: "Asia is the largest continent by area, covering about 44.6 million km²."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "The Amazon River is the longest river in the world.",
                 isTrue: false,
                 explanation: "The Nile River is generally considered the longest river at about 6,650 km."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "The Nile is the longest river in the world.",
                 isTrue: true,
                 explanation: "The Nile River stretches approximately 6,650 km through northeastern Africa."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "Mount Everest is the tallest mountain on Earth.",
                 isTrue: true,
                 explanation: "Mount Everest stands at 8,849 meters above sea level, the highest point on Earth."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "The Sahara is the largest desert in the world.",
                 isTrue: false,
                 explanation: "Antarctica is actually the world's largest desert. The Sahara is the largest hot desert."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "Antarctica is the coldest continent.",
                 isTrue: true,
                 explanation: "Antarctica holds the record for the lowest natural temperature ever recorded on Earth."
             ),
-            GeoTriviaQuestion(
+            TriviaQuestion(
                 statement: "Australia is both a country and a continent.",
                 isTrue: true,
                 explanation: "Australia is unique in being both a sovereign country and a continental landmass."

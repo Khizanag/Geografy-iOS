@@ -82,7 +82,7 @@ private extension TestChecklistService {
             "Game ends after all rounds",
             "Close button dismisses game",
         ]),
-        "geoTrivia": TestChecklist(items: [
+        "trivia": TestChecklist(items: [
             "Questions load with 4 options",
             "Correct/incorrect feedback shown",
             "Score tracks correctly",

@@ -48,7 +48,7 @@ Status of all features as of 2026-03-23. Derived from the `Feature/` directory s
 | 18 | **Daily Challenge** | ✅ | `DailyChallenge/` | DailyChallengeScreen, DailyChallengeSessionScreen, DailyChallengeResultView, DailyChallengeShareCard; mystery country, flag sequence, capital chain challenge types |
 | 19 | **Custom Quiz** | ✅ | `CustomQuiz/` | CustomQuizBuilderScreen, CustomQuizLibraryScreen, CustomQuizPreviewScreen, CustomQuizCountryPicker, CustomQuizCard |
 | 20 | **Quiz Pack** | 🔧 | `QuizPack/` | Folder exists; contents TBD |
-| 21 | **Geo Trivia** | ✅ | `GeoTrivia/` | GeoTriviaScreen |
+| 21 | **Trivia** | ✅ | `Trivia/` | TriviaScreen |
 | 22 | **Country Nicknames Quiz** | ✅ | `CountryNicknames/` | CountryNicknamesScreen, NicknameQuizScreen, CountryNicknamesService, CountryNickname model |
 | 23 | **Landmark Quiz** | 🏗️ | `LandmarkQuiz/` | HomeLandmarkQuizCard exists; screen TBD |
 

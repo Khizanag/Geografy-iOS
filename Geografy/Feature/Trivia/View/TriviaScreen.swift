@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct GeoTriviaScreen: View {
+struct TriviaScreen: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var countryDataService = CountryDataService()
-    @State private var questions: [GeoTriviaQuestion] = []
+    @State private var questions: [TriviaQuestion] = []
     @State private var currentIndex = 0
     @State private var streak = 0
     @State private var totalAnswered = 0
@@ -16,7 +16,7 @@ struct GeoTriviaScreen: View {
     @State private var lastAnswerWasCorrect: Bool?
     @State private var isAnimating = false
 
-    private let service = GeoTriviaService()
+    private let service = TriviaService()
 
     var body: some View {
         ZStack {
@@ -45,7 +45,7 @@ struct GeoTriviaScreen: View {
 
 // MARK: - Subviews
 
-private extension GeoTriviaScreen {
+private extension TriviaScreen {
     var backgroundView: some View {
         DesignSystem.Color.background
             .ignoresSafeArea()
@@ -142,7 +142,7 @@ private extension GeoTriviaScreen {
         }
     }
 
-    func triviaCard(for question: GeoTriviaQuestion, isBack: Bool) -> some View {
+    func triviaCard(for question: TriviaQuestion, isBack: Bool) -> some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 Text(question.statement)
@@ -183,7 +183,7 @@ private extension GeoTriviaScreen {
         }
     }
 
-    func explanationView(for question: GeoTriviaQuestion, wasCorrect: Bool) -> some View {
+    func explanationView(for question: TriviaQuestion, wasCorrect: Bool) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: wasCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .foregroundStyle(wasCorrect ? DesignSystem.Color.success : DesignSystem.Color.error)
@@ -230,7 +230,7 @@ private extension GeoTriviaScreen {
 
 // MARK: - Drag Gesture
 
-private extension GeoTriviaScreen {
+private extension TriviaScreen {
     var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
@@ -260,7 +260,7 @@ private extension GeoTriviaScreen {
 
 // MARK: - Actions
 
-private extension GeoTriviaScreen {
+private extension TriviaScreen {
     func loadQuestions() {
         let generated = service.generateQuestions(from: countryDataService.countries)
         questions = Array(generated.prefix(30))
@@ -304,7 +304,7 @@ private extension GeoTriviaScreen {
 
 // MARK: - SwipeHint
 
-private extension GeoTriviaScreen {
+private extension TriviaScreen {
     enum SwipeHint: Equatable {
         case none
         case trueSwipe

@@ -606,7 +606,7 @@ private extension HomeScreen {
     func gameSectionView(for section: HomeSection) -> some View {
         switch section {
         case .flagGame: flagGameSection
-        case .geoTrivia: geoTriviaSection
+        case .trivia: triviaSection
         case .spellingBee: spellingBeeSection
         case .learningPath: learningPathSection
         case .mapPuzzle: mapPuzzleSection

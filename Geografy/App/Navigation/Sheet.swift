@@ -52,7 +52,7 @@ enum Sheet: Identifiable {
 
     // Games
     case flagGame
-    case geoTrivia
+    case trivia
     case spellingBee
     case landmarkQuiz
 
@@ -115,7 +115,7 @@ enum Sheet: Identifiable {
         case .learningPath: "learningPath"
         case .srsStudy: "srsStudy"
         case .flagGame: "flagGame"
-        case .geoTrivia: "geoTrivia"
+        case .trivia: "trivia"
         case .spellingBee: "spellingBee"
         case .landmarkQuiz: "landmarkQuiz"
         case .geoFeed: "geoFeed"
