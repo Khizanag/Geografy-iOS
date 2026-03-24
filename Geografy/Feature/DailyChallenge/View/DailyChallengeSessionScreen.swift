@@ -56,18 +56,14 @@ private extension DailyChallengeSessionScreen {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.accent)
-            Text("\(score)")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
+            Text("\(score) pts")
+                .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .contentTransition(.numericText())
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(
-            DesignSystem.Color.accent.opacity(0.15),
-            in: Capsule()
-        )
+        .padding(.vertical, DesignSystem.Spacing.xs)
+        .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
     }
 
     @ViewBuilder
