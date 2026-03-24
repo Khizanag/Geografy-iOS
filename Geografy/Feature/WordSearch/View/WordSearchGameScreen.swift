@@ -91,11 +91,15 @@ private extension WordSearchGameScreen {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 progressSection(puzzle)
+
                 if gameFinished {
                     resultBanner(puzzle)
                 }
+
                 gridSection(puzzle)
+
                 wordListSection(puzzle)
+
                 if !gameFinished {
                     VStack(spacing: DesignSystem.Spacing.sm) {
                         if let nextHintWord = nextUnrevealedWord(puzzle) {
