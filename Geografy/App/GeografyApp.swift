@@ -154,5 +154,54 @@ struct GeografyApp: App {
                 streakService.recordDailyLogin()
             }
         }
+        #if targetEnvironment(macCatalyst)
+        .commands {
+            CommandGroup(replacing: .newItem) {}
+
+            CommandMenu("Quiz") {
+                Button("Start Quick Quiz") {
+                    NotificationCenter.default.post(name: .macStartQuiz, object: nil)
+                }
+                .keyboardShortcut("q", modifiers: [.command, .shift])
+            }
+
+            CommandMenu("Navigate") {
+                Button("Home") {
+                    NotificationCenter.default.post(name: .macSwitchTab, object: 0)
+                }
+                .keyboardShortcut("1", modifiers: .command)
+
+                Button("Quiz") {
+                    NotificationCenter.default.post(name: .macSwitchTab, object: 1)
+                }
+                .keyboardShortcut("2", modifiers: .command)
+
+                Button("Countries") {
+                    NotificationCenter.default.post(name: .macSwitchTab, object: 2)
+                }
+                .keyboardShortcut("3", modifiers: .command)
+
+                Button("Maps") {
+                    NotificationCenter.default.post(name: .macSwitchTab, object: 3)
+                }
+                .keyboardShortcut("4", modifiers: .command)
+
+                Divider()
+
+                Button("Random Country") {
+                    NotificationCenter.default.post(name: .macRandomCountry, object: nil)
+                }
+                .keyboardShortcut("r", modifiers: .command)
+            }
+        }
+        #endif
     }
+}
+
+// MARK: - Mac Notification Names
+
+extension Notification.Name {
+    static let macSwitchTab = Notification.Name("macSwitchTab")
+    static let macStartQuiz = Notification.Name("macStartQuiz")
+    static let macRandomCountry = Notification.Name("macRandomCountry")
 }

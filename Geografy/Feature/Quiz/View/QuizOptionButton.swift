@@ -27,10 +27,25 @@ struct QuizOptionButton: View {
         .shadow(color: glowColor, radius: glowRadius, y: 3)
         .offset(x: shakeOffset)
         .animation(.easeInOut(duration: 0.2), value: state)
+        .keyboardShortcut(keyForIndex, modifiers: [])
         .onChange(of: state) { _, newState in
             if newState == .incorrect {
                 Task { await shake() }
             }
+        }
+    }
+}
+
+// MARK: - Keyboard Shortcut
+
+private extension QuizOptionButton {
+    var keyForIndex: KeyEquivalent {
+        switch index {
+        case 0: "1"
+        case 1: "2"
+        case 2: "3"
+        case 3: "4"
+        default: "1"
         }
     }
 }
