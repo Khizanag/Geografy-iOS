@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 enum CoverFactory {
     @ViewBuilder
     static func view(for cover: Cover) -> some View {
