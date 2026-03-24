@@ -11,7 +11,7 @@ extension CountryDetailScreen {
                 if subscriptionService.isPremium {
                     LanguageBarChart(
                         languages: country.languages.sorted { $0.percentage > $1.percentage },
-                        appeared: appeared
+                        appeared: true
                     )
                 } else {
                     lockedPlaceholder(height: 80)
