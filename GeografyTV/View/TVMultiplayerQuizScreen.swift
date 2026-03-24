@@ -649,15 +649,50 @@ private extension TVMultiplayerQuizScreen {
         else { return }
 
         let index = players.count
+        let color = controllerColor(for: controller, fallbackIndex: index)
+
         let player = Player(
             id: index,
             name: playerNames[index],
-            color: playerColors[index],
+            color: color,
             controller: controller
         )
         players.append(player)
 
+        setControllerLight(controller, color: color)
+        controller.playerIndex = GCControllerPlayerIndex(rawValue: index) ?? .indexUnset
+
         bindPlayerControls(playerIndex: index, controller: controller)
+    }
+
+    func controllerColor(for controller: GCController, fallbackIndex: Int) -> Color {
+        guard let light = controller.light else {
+            return playerColors[fallbackIndex]
+        }
+
+        let red = Double(light.color.red)
+        let green = Double(light.color.green)
+        let blue = Double(light.color.blue)
+
+        let isDefault = (red < 0.1 && green < 0.1 && blue < 0.1)
+            || (red > 0.9 && green > 0.9 && blue > 0.9)
+
+        if isDefault {
+            return playerColors[fallbackIndex]
+        }
+
+        return Color(red: red, green: green, blue: blue)
+    }
+
+    func setControllerLight(_ controller: GCController, color: Color) {
+        guard let light = controller.light else { return }
+
+        let resolved = color.resolve(in: EnvironmentValues())
+        light.color = GCColor(
+            red: resolved.red,
+            green: resolved.green,
+            blue: resolved.blue
+        )
     }
 
     func bindPlayerControls(playerIndex: Int, controller: GCController) {
