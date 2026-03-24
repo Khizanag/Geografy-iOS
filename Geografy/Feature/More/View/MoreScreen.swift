@@ -215,7 +215,8 @@ private extension MoreScreen {
                     .fontWeight(.medium)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                    .minimumScaleFactor(0.65)
+                    .padding(.horizontal, DesignSystem.Spacing.xxs)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
