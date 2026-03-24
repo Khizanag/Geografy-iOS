@@ -3,10 +3,9 @@ import SwiftUI
 struct ChallengeSetupScreen: View {
     @Environment(\.dismiss) private var dismiss
 
-    @State private var player1Name = ""
-    @State private var player2Name = ""
+    @State private var selectedMode: ChallengeMode = .passAndPlay
     @State private var selectedRounds = 10
-    @State private var selectedCategory = ChallengeCategory.mixed
+    @State private var selectedCategory: ChallengeCategory = .mixed
     @State private var showingGame = false
     @State private var challengeRoom: ChallengeRoom?
 
@@ -19,32 +18,37 @@ struct ChallengeSetupScreen: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 headerSection
-                playersSection
+
+                modeSection
+
                 settingsSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) {
-            startButton
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(.ultraThinMaterial)
-        }
+        .safeAreaInset(edge: .bottom) { startButton }
+        .background { AmbientBlobsView(.standard) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Challenge Room")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(placement: .topBarTrailing) {
                 CircleCloseButton { dismiss() }
             }
         }
         .task { countryDataService.loadCountries() }
         .fullScreenCover(item: $challengeRoom) { room in
-            ChallengeGameScreen(
-                room: room,
-                challengeRoomService: challengeRoomService
-            )
+            if selectedMode == .splitScreen {
+                ChallengeSplitScreen(
+                    room: room,
+                    challengeRoomService: challengeRoomService
+                )
+            } else {
+                ChallengeGameScreen(
+                    room: room,
+                    challengeRoomService: challengeRoomService
+                )
+            }
         }
     }
 }
@@ -56,73 +60,92 @@ private extension ChallengeSetupScreen {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()
-                    .fill(
-                        RadialGradient(
-                            colors: [DesignSystem.Color.orange.opacity(0.25), .clear],
-                            center: .center,
-                            startRadius: 0,
-                            endRadius: 50
-                        )
-                    )
-                    .frame(width: 88, height: 88)
+                    .fill(DesignSystem.Color.orange.opacity(0.15))
+                    .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
                 Image(systemName: "person.2.fill")
-                    .font(.system(size: 36))
+                    .font(.system(size: 28))
                     .foregroundStyle(DesignSystem.Color.orange)
             }
-            Text("Challenge a Friend")
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Pass the device between turns")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Text("Challenge a Friend")
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                Text("Compete head-to-head on geography")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
         }
         .frame(maxWidth: .infinity)
-        .padding(.top, DesignSystem.Spacing.lg)
+        .padding(.vertical, DesignSystem.Spacing.md)
     }
 
-    var playersSection: some View {
+    var modeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Players", icon: "person.fill")
-            CardView {
-                VStack(spacing: DesignSystem.Spacing.md) {
-                    playerField(
-                        placeholder: "Player 1 name",
-                        text: $player1Name,
-                        icon: "1.circle.fill",
-                        color: DesignSystem.Color.blue
-                    )
-                    Divider()
-                    playerField(
-                        placeholder: "Player 2 name",
-                        text: $player2Name,
-                        icon: "2.circle.fill",
-                        color: DesignSystem.Color.orange
-                    )
+            sectionTitle("Mode")
+
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(ChallengeMode.allCases, id: \.self) { mode in
+                    modeRow(mode)
                 }
-                .padding(DesignSystem.Spacing.md)
             }
         }
     }
 
-    func playerField(placeholder: String, text: Binding<String>, icon: String, color: Color) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: icon)
-                .font(.system(size: 20))
-                .foregroundStyle(color)
-            TextField(placeholder, text: text)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+    func modeRow(_ mode: ChallengeMode) -> some View {
+        let isSelected = selectedMode == mode
+        return Button { selectedMode = mode } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    ZStack {
+                        Circle()
+                            .fill(DesignSystem.Color.orange.opacity(isSelected ? 0.2 : 0.08))
+                            .frame(width: 40, height: 40)
+                        Image(systemName: mode.icon)
+                            .font(DesignSystem.Font.subheadline)
+                            .foregroundStyle(
+                                isSelected ? DesignSystem.Color.orange : DesignSystem.Color.textSecondary
+                            )
+                    }
+
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text(mode.rawValue)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                        Text(mode.description)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+
+                    Spacer()
+
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(DesignSystem.Font.subheadline)
+                            .foregroundStyle(DesignSystem.Color.orange)
+                    }
+                }
+                .padding(DesignSystem.Spacing.sm)
+            }
         }
+        .buttonStyle(PressButtonStyle())
     }
 
     var settingsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Settings", icon: "gearshape.fill")
+            sectionTitle("Settings")
+
             CardView {
                 VStack(spacing: DesignSystem.Spacing.md) {
                     roundsPicker
+
                     Divider()
+
                     categoryPicker
                 }
                 .padding(DesignSystem.Spacing.md)
@@ -136,6 +159,7 @@ private extension ChallengeSetupScreen {
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(roundOptions, id: \.self) { option in
                     roundButton(option)
@@ -146,9 +170,7 @@ private extension ChallengeSetupScreen {
 
     func roundButton(_ rounds: Int) -> some View {
         let isSelected = selectedRounds == rounds
-        return Button {
-            selectedRounds = rounds
-        } label: {
+        return Button { selectedRounds = rounds } label: {
             Text("\(rounds)")
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
@@ -156,7 +178,7 @@ private extension ChallengeSetupScreen {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, DesignSystem.Spacing.sm)
                 .background(
-                    isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                    isSelected ? DesignSystem.Color.orange : DesignSystem.Color.cardBackground,
                     in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
                 )
         }
@@ -169,6 +191,7 @@ private extension ChallengeSetupScreen {
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+
             ForEach(ChallengeCategory.allCases, id: \.rawValue) { category in
                 categoryRow(category)
             }
@@ -177,18 +200,18 @@ private extension ChallengeSetupScreen {
 
     func categoryRow(_ category: ChallengeCategory) -> some View {
         let isSelected = selectedCategory == category
-        return Button {
-            selectedCategory = category
-        } label: {
+        return Button { selectedCategory = category } label: {
             HStack {
                 Text(category.rawValue)
                     .font(DesignSystem.Font.body)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+
                 Spacer()
+
                 if isSelected {
                     Image(systemName: "checkmark")
                         .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.orange)
                 }
             }
             .padding(.vertical, DesignSystem.Spacing.xs)
@@ -197,26 +220,28 @@ private extension ChallengeSetupScreen {
     }
 
     var startButton: some View {
-        GlassButton("Start Challenge", fullWidth: true) {
+        GlassButton("Start Challenge", systemImage: "play.fill", fullWidth: true) {
             startChallenge()
         }
-        .disabled(!isFormValid)
-        .opacity(isFormValid ? 1 : 0.5)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 
-// MARK: - Actions
+// MARK: - Helpers
 
 private extension ChallengeSetupScreen {
-    var isFormValid: Bool {
-        !player1Name.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !player2Name.trimmingCharacters(in: .whitespaces).isEmpty
+    func sectionTitle(_ text: String) -> some View {
+        Text(text)
+            .font(DesignSystem.Font.headline)
+            .fontWeight(.semibold)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
     }
 
     func startChallenge() {
         let room = challengeRoomService.generateRoom(
-            player1Name: player1Name.trimmingCharacters(in: .whitespaces),
-            player2Name: player2Name.trimmingCharacters(in: .whitespaces),
+            player1Name: "Player 1",
+            player2Name: "Player 2",
             totalRounds: selectedRounds,
             category: selectedCategory,
             countries: countryDataService.countries
