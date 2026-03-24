@@ -86,10 +86,12 @@ struct GeografyApp: App {
                 }
                 .onReceive(achievementService.unlockPublisher) { definition in
                     Task {
-                        await gameCenterService.reportAchievement(
-                            id: definition.gameCenterID,
-                            percentComplete: 100.0
-                        )
+                        if let gameCenterID = definition.gameCenterID {
+                            await gameCenterService.reportAchievement(
+                                id: gameCenterID,
+                                percentComplete: 100.0
+                            )
+                        }
                     }
                 }
                 .onChange(of: authService.currentUserID) { _, newUserID in

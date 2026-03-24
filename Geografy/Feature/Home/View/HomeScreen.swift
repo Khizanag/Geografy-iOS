@@ -28,28 +28,21 @@ struct HomeScreen: View {
     ]
 
     var body: some View {
-        ZStack {
-            ambientBackground
-            mainFeed
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
-        .toolbar { toolbarContent }
-        .task {
-            countryDataService.loadCountries()
-            loadDailyChallenge()
-            startAnimations()
-        }
+        mainFeed
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .task {
+                countryDataService.loadCountries()
+                loadDailyChallenge()
+                startAnimations()
+            }
     }
 }
 
 // MARK: - Background
 
 private extension HomeScreen {
-    var ambientBackground: some View {
-        DesignSystem.Color.background.ignoresSafeArea()
-    }
-
     var scrollableBlobs: some View {
         ZStack(alignment: .top) {
             // Section 1 — top hero
@@ -245,7 +238,7 @@ private extension HomeScreen {
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .accessibilityLabel("Friends")
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.bordered)
     }
 
     var xpIndicator: some View {

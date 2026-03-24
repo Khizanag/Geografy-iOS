@@ -638,13 +638,7 @@ private extension ProfileScreen {
     }
 
     func achievementColor(for category: AchievementCategory) -> Color {
-        switch category {
-        case .explorer:      DesignSystem.Color.blue
-        case .quizMaster:    DesignSystem.Color.purple
-        case .travelTracker: DesignSystem.Color.orange
-        case .streak:        DesignSystem.Color.error
-        case .knowledge:     DesignSystem.Color.ocean
-        }
+        category.themeColor
     }
 }
 
