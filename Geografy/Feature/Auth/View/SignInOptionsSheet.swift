@@ -11,30 +11,34 @@ struct SignInOptionsSheet: View {
     @State private var appeared = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            AmbientBlobsView(.standard)
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    heroSection
-                    statsRow
-                    benefitsSection
+        NavigationStack {
+            ZStack {
+                DesignSystem.Color.background.ignoresSafeArea()
+
+                AmbientBlobsView(.standard)
+
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: DesignSystem.Spacing.xl) {
+                        heroSection
+                        statsRow
+                        benefitsSection
+
+                        actionsSection
+                    }
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.top, DesignSystem.Spacing.xl)
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.top, DesignSystem.Spacing.xl)
-                .padding(.bottom, DesignSystem.Spacing.xxl)
             }
-        }
-        .safeAreaInset(edge: .bottom) { actionsSection }
-        .onAppear {
-            withAnimation(.easeOut(duration: 0.6)) {
-                appeared = true
+            .onAppear {
+                withAnimation(.easeOut(duration: 0.6)) {
+                    appeared = true
+                }
             }
-        }
-        .alert("Sign In Failed", isPresented: $showError) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(errorMessage)
+            .alert("Sign In Failed", isPresented: $showError) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(errorMessage)
+            }
         }
     }
 }
@@ -288,7 +292,7 @@ private extension SignInOptionsSheet {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "hammer.fill")
                     .font(DesignSystem.Font.footnote)
-                Text("Debug Sign In (Giga)")
+                Text("Debug Sign In")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
             }

@@ -16,7 +16,7 @@ enum SheetFactory {
 
         case .distanceCalculator, .currencyConverter, .timeZones,
              .compare, .timeline, .travelTracker, .travelJournal, .travelBucketList,
-             .nationalSymbolsQuiz, .wordSearch, .borderChallenge:
+             .wordSearch, .borderChallenge:
             exploreView(for: sheet)
 
         case .badges, .leaderboards, .achievements, .themes, .settings,
@@ -233,11 +233,6 @@ private extension SheetFactory {
                 .presentationDetents([.large])
 
     
-
-        case .nationalSymbolsQuiz:
-            NavigationStack { NationalSymbolsQuizScreen() }
-                .presentationDetents([.large])
-                .interactiveDismissDisabled()
 
         case .wordSearch:
             NavigationStack { WordSearchScreen() }

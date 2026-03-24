@@ -1,6 +1,8 @@
 import Foundation
 
 enum QuestionGenerator {
+    private static let symbolsService = NationalSymbolsService()
+
     static func generate(
         type: QuizType,
         countries: [Country],
@@ -9,7 +11,14 @@ enum QuestionGenerator {
     ) -> [QuizQuestion] {
         guard !countries.isEmpty else { return [] }
 
-        let selectedCountries = Array(countries.shuffled().prefix(count))
+        let pool: [Country]
+        if type == .nationalSymbols {
+            pool = countries.filter { symbolsService.symbol(for: $0.code) != nil }
+        } else {
+            pool = countries
+        }
+
+        let selectedCountries = Array(pool.shuffled().prefix(count))
 
         return selectedCountries.compactMap { country in
             makeQuestion(type: type, country: country, allCountries: countries, optionCount: optionCount)
@@ -39,6 +48,8 @@ private extension QuestionGenerator {
             makePopulationOrderQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
         case .areaOrder:
             makeAreaOrderQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
+        case .nationalSymbols:
+            makeNationalSymbolsQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
         }
     }
 
@@ -174,6 +185,72 @@ private extension QuestionGenerator {
             correctOptionID: correctID,
             correctCountry: country,
         )
+    }
+}
+
+    static func makeNationalSymbolsQuestion(
+        country: Country,
+        allCountries: [Country],
+        optionCount: Int
+    ) -> QuizQuestion? {
+        guard let symbol = symbolsService.symbol(for: country.code) else { return nil }
+
+        let symbolTypes: [(String, String)] = [
+            ("animal", symbol.animal),
+            ("flower", symbol.flower),
+            ("sport", symbol.sport),
+        ]
+            .filter { !$0.1.isEmpty }
+
+        guard let (typeName, value) = symbolTypes.randomElement() else { return nil }
+
+        let countriesWithSymbols = allCountries.compactMap { c -> (Country, NationalSymbol)? in
+            guard c.code != country.code, let s = symbolsService.symbol(for: c.code) else { return nil }
+            return (c, s)
+        }
+
+        let askCountryFromSymbol = Bool.random()
+
+        if askCountryFromSymbol {
+            let correctID = UUID()
+            let correctOption = QuizOption(id: correctID, text: country.name, flagCode: country.code)
+            let distractors = Array(countriesWithSymbols.shuffled().prefix(optionCount - 1))
+                .map { QuizOption(id: UUID(), text: $0.0.name, flagCode: $0.0.code) }
+            let options = ([correctOption] + distractors).shuffled()
+
+            return QuizQuestion(
+                id: UUID(),
+                promptText: "Which country's national \(typeName) is",
+                promptSubject: value,
+                promptFlag: nil,
+                options: options,
+                correctOptionID: correctID,
+                correctCountry: country,
+            )
+        } else {
+            let correctID = UUID()
+            let correctOption = QuizOption(id: correctID, text: value, flagCode: nil)
+            let distractorValues = countriesWithSymbols.shuffled().prefix(optionCount - 1).map { _, s in
+                switch typeName {
+                case "animal": s.animal
+                case "flower": s.flower
+                case "sport": s.sport
+                default: s.animal
+                }
+            }
+            let distractorOptions = distractorValues.map { QuizOption(id: UUID(), text: $0, flagCode: nil) }
+            let options = ([correctOption] + distractorOptions).shuffled()
+
+            return QuizQuestion(
+                id: UUID(),
+                promptText: "What is \(country.name)'s national \(typeName)?",
+                promptSubject: nil,
+                promptFlag: country.code,
+                options: options,
+                correctOptionID: correctID,
+                correctCountry: country,
+            )
+        }
     }
 }
 

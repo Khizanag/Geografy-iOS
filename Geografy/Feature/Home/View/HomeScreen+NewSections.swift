@@ -19,7 +19,6 @@ extension HomeScreen {
         case .cultureExplorer: cultureExplorerSection
         case .landmarkGallery: landmarkGallerySection
         case .geoQuotes: geoQuotesSection
-        case .nationalSymbolsQuiz: nationalSymbolsQuizSection
         case .mapColoring: mapColoringSection
         case .countryNicknames: countryNicknamesSection
         case .wordSearch: wordSearchSection
@@ -319,18 +318,6 @@ extension HomeScreen {
             SectionHeaderView(title: "Geo Quotes")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeGeoQuotesCard { coordinator.present(.geoQuotes) }
-        }
-    }
-}
-
-// MARK: - National Symbols Quiz Section
-
-extension HomeScreen {
-    var nationalSymbolsQuizSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "National Symbols Quiz", isNew: true)
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeNationalSymbolsCard { coordinator.present(.nationalSymbolsQuiz) }
         }
     }
 }
