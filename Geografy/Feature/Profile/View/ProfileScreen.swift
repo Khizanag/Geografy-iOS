@@ -659,7 +659,7 @@ private extension ProfileScreen {
                 Spacer()
                 Button {
                     hapticsService.impact(.light)
-                    activeSheet = .badgeCollection
+                    activeSheet = .achievements
                 } label: {
                     HStack(spacing: 4) {
                         Text("See All")
@@ -990,7 +990,6 @@ private extension ProfileScreen {
         case signIn
         case paywall
         case achievements
-        case badgeCollection
 
         var id: Self { self }
     }
@@ -1009,10 +1008,6 @@ private extension ProfileScreen {
                 AchievementsScreen()
                     .navigationTitle("Achievements")
                     .navigationBarTitleDisplayMode(.large)
-            }
-        case .badgeCollection:
-            NavigatorView {
-                BadgeCollectionScreen(badgeService: badgeService)
             }
         }
     }

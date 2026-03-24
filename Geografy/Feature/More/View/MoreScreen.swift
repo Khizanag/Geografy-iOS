@@ -247,7 +247,7 @@ private extension MoreScreen {
     }
 
     var youItems: [MoreSheet] {
-        [.profile, .favorites, .badges]
+        [.profile, .favorites]
     }
 
     var playItems: [MoreSheet] {

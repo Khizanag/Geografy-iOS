@@ -8,7 +8,7 @@ enum MoreSheet: Identifiable {
     case wordSearch, borderChallenge, challengeRoom, countryNicknames
     case quotes, feed
     case srsStudy, learningPath
-    case badges, timeline
+    case timeline
     case achievements, leaderboards, themes, settings
     case search
     case distanceCalculator
@@ -35,7 +35,6 @@ enum MoreSheet: Identifiable {
         case .distanceCalculator: "Distance Calculator"
         case .currencyConverter: "Currency Converter"
         case .timeZones: "Time Zones"
-        case .badges: "Badge Collection"
         case .timeline: "Historical Timeline"
         case .achievements: "Achievements"
         case .leaderboards: "Leaderboards"
@@ -76,7 +75,6 @@ enum MoreSheet: Identifiable {
         case .distanceCalculator: "ruler"
         case .currencyConverter: "dollarsign.arrow.circlepath"
         case .timeZones: "clock.badge.fill"
-        case .badges: "medal.fill"
         case .timeline: "clock.arrow.circlepath"
         case .achievements: "trophy.fill"
         case .leaderboards: "list.number"
@@ -117,7 +115,6 @@ enum MoreSheet: Identifiable {
         case .distanceCalculator: "Great circle distance between capitals"
         case .currencyConverter: "Live exchange rates, 160+ currencies"
         case .timeZones: "World clock, quiz & UTC offsets"
-        case .badges: "Collect and showcase"
         case .timeline: "Borders through history"
         case .achievements: "Unlock badges and rewards"
         case .leaderboards: "Compete with others"
@@ -158,7 +155,6 @@ enum MoreSheet: Identifiable {
         case .distanceCalculator: DesignSystem.Color.blue
         case .currencyConverter: DesignSystem.Color.success
         case .timeZones: DesignSystem.Color.indigo
-        case .badges: DesignSystem.Color.warning
         case .timeline: DesignSystem.Color.indigo
         case .achievements: DesignSystem.Color.warning
         case .leaderboards: DesignSystem.Color.success
@@ -199,7 +195,6 @@ enum MoreSheet: Identifiable {
         case .distanceCalculator: "distanceCalculator"
         case .currencyConverter: "currencyConverter"
         case .timeZones: "timeZones"
-        case .badges: "badges"
         case .timeline: "timeline"
         case .achievements: "achievements"
         case .leaderboards: "leaderboards"
@@ -240,7 +235,6 @@ enum MoreSheet: Identifiable {
         case .distanceCalculator: .distanceCalculator
         case .currencyConverter: .currencyConverter
         case .timeZones: .timeZones
-        case .badges: .badges
         case .timeline: .timeline
         case .achievements: .achievements
         case .leaderboards: .leaderboards
