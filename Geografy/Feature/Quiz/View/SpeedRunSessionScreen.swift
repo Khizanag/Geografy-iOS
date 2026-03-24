@@ -19,6 +19,7 @@ struct SpeedRunSessionScreen: View {
     @State private var xpEarned = 0
     @State private var showXPBadge = false
     @State private var showQuitAlert = false
+    @State private var showGiveUpAlert = false
 
     @FocusState private var isInputFocused: Bool
 
@@ -36,6 +37,12 @@ struct SpeedRunSessionScreen: View {
             .navigationTitle("Speed Run · \(region.displayName)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
+            .alert("Give Up?", isPresented: $showGiveUpAlert) {
+                Button("Give Up", role: .destructive) { finishRun() }
+                Button("Continue", role: .cancel) {}
+            } message: {
+                Text("You'll see your results and missed countries.")
+            }
             .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
                 quitAlertActions
             } message: {
@@ -76,7 +83,7 @@ private extension SpeedRunSessionScreen {
     var toolbarContent: some ToolbarContent {
         if !isFinished {
             ToolbarItem(placement: .topBarLeading) {
-                Button { finishRun() } label: {
+                Button { showGiveUpAlert = true } label: {
                     Image(systemName: "flag.fill")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.error)
