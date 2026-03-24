@@ -53,7 +53,7 @@ private extension HomeDailyChallengeCard {
             Text(subtitleText)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

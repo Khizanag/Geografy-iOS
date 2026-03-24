@@ -49,7 +49,7 @@ private extension HomeSpellingBeeCard {
             Text("Type the country name from its flag")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

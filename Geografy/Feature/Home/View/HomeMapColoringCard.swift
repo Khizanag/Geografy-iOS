@@ -49,7 +49,7 @@ private extension HomeMapColoringCard {
             Text("Explore countries by continent & more")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

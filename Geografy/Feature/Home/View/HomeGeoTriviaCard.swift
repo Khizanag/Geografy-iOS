@@ -49,7 +49,7 @@ private extension HomeGeoTriviaCard {
             Text("Swipe true or false on geography facts")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 

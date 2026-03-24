@@ -34,7 +34,7 @@ private extension HomeWordSearchCard {
                     )
                 )
                 .frame(width: 56, height: 56)
-            Image(systemName: "textformat.abc")
+            Image(systemName: "character.magnify")
                 .font(.system(size: 24))
                 .foregroundStyle(DesignSystem.Color.indigo)
         }
@@ -49,7 +49,7 @@ private extension HomeWordSearchCard {
             Text("Capitals, countries, continents & more")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
+                .lineLimit(2)
         }
     }
 
