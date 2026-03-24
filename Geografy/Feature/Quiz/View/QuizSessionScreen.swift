@@ -38,6 +38,7 @@ struct QuizSessionScreen: View {
     var body: some View {
         NavigationStack {
             quizContent
+                .navigationTitle(configuration.type.displayName)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar { toolbarContent }
                 .alert("Quit Quiz?", isPresented: $showQuitAlert) {
