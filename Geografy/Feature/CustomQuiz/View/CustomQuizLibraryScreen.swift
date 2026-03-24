@@ -99,9 +99,6 @@ private extension CustomQuizLibraryScreen {
 private extension CustomQuizLibraryScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            CircleCloseButton()
-        }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
                 showBuilder = true

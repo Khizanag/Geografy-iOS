@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct LandmarkGalleryScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var selectedCategory: LandmarkCategory?
     @State private var selectedLandmark: Landmark?
 
@@ -29,11 +27,6 @@ struct LandmarkGalleryScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Landmark Gallery")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .sheet(item: $selectedLandmark) { landmark in
             NavigationStack {
                 LandmarkDetailView(landmark: landmark)

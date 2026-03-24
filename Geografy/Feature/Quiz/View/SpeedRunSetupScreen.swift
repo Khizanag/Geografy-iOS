@@ -20,11 +20,6 @@ struct SpeedRunSetupScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Speed Run")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton { coordinator.dismissSheet() }
-            }
-        }
     }
 }
 

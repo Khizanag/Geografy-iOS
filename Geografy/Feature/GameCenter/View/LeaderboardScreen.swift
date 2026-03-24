@@ -16,11 +16,6 @@ struct LeaderboardScreen: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Leaderboards")
         .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
-            }
-        }
         .sheet(isPresented: $showSignIn) {
             SignInOptionsSheet()
         }

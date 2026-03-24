@@ -2,7 +2,6 @@ import SwiftUI
 
 struct TimeZoneScreen: View {
     @Environment(HapticsService.self) private var hapticsService
-    @Environment(\.dismiss) private var dismiss
 
     @State private var countryDataService = CountryDataService()
 
@@ -18,11 +17,6 @@ struct TimeZoneScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Time Zones")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .task { countryDataService.loadCountries() }
         .onAppear {
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {

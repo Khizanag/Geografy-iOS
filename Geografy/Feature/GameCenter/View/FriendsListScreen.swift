@@ -4,7 +4,6 @@ import SwiftUI
 struct FriendsListScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
-    @Environment(\.dismiss) private var dismiss
 
     @State private var friends: [GKPlayer] = []
     @State private var avatars: [String: Image] = [:]
@@ -16,11 +15,6 @@ struct FriendsListScreen: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
-            }
             .task { await loadData() }
     }
 }

@@ -14,11 +14,6 @@ struct SRSStudyScreen: View {
         }
         .navigationTitle("Review")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                CircleCloseButton()
-            }
-        }
         .task { countryDataService.loadCountries() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.4)) { appeared = true }

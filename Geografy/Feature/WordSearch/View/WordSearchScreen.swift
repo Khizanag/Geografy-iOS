@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct WordSearchScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var selectedTheme: WordSearchTheme = .capitals
     @State private var showGame = false
     @State private var showGuide = false
@@ -33,9 +31,6 @@ struct WordSearchScreen: View {
                     Image(systemName: "info.circle")
                 }
                 .buttonStyle(.plain)
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
             }
         }
         .sheet(isPresented: $showGuide) { wordSearchGuide }

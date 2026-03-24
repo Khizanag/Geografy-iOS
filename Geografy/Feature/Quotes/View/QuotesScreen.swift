@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct QuotesScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var quotesService = QuotesService()
     @State private var selectedCategory: QuoteCategory?
 
@@ -27,11 +25,6 @@ struct QuotesScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Quotes")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
-            }
-        }
     }
 }
 

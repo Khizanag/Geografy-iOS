@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct BorderChallengeScreen: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(XPService.self) private var xpService
 
@@ -33,11 +32,6 @@ struct BorderChallengeScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Border Challenge")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .onReceive(timer) { _ in
             guard timerActive, !isGameOver else { return }
             if secondsRemaining > 0 {

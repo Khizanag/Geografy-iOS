@@ -37,11 +37,6 @@ struct CurrencyConverterScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Currency Converter")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .sheet(isPresented: $showFromPicker) {
             CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
                 hapticsService.selection()

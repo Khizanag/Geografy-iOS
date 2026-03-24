@@ -29,11 +29,6 @@ struct DistanceCalculatorScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Distance Calculator")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
-            }
-        }
         .task { countryDataService.loadCountries() }
         .sheet(isPresented: $showOriginPicker) {
             CountryPickerSheet(

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct LandmarkQuizScreen: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var quizService = LandmarkQuizService()
@@ -26,11 +25,6 @@ struct LandmarkQuizScreen: View {
         }
         .navigationTitle("Landmark Quiz")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                CircleCloseButton()
-            }
-        }
         .task { loadQuiz() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.5)) { appeared = true }
