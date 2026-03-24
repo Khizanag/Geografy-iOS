@@ -50,6 +50,7 @@ private extension CountryRowView {
             if showFlag {
                 FlagView(countryCode: country.code, height: 36)
                     .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                    .frame(width: 56, alignment: .center)
             }
 
             VStack(alignment: .leading, spacing: 3) {
