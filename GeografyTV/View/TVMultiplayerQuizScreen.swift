@@ -189,29 +189,50 @@ private extension TVMultiplayerQuizScreen {
     }
 
     var headerBar: some View {
-        HStack {
-            Text("Q\(currentIndex + 1) / \(questions.count)")
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            Spacer()
-
-            timerView
-
-            Spacer()
-
-            ForEach(players) { player in
-                HStack(spacing: 8) {
-                    Circle()
-                        .fill(player.color)
-                        .frame(width: 14, height: 14)
-                    Text("\(player.score)")
-                        .font(.system(size: 22, weight: .bold))
+        VStack(spacing: 16) {
+            ZStack {
+                HStack {
+                    Text("Q\(currentIndex + 1) / \(questions.count)")
+                        .font(.system(size: 24, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                    Spacer()
+
+                    HStack(spacing: 16) {
+                        ForEach(players) { player in
+                            HStack(spacing: 8) {
+                                Circle()
+                                    .fill(player.color)
+                                    .frame(width: 14, height: 14)
+                                Text("\(player.score)")
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                            }
+                        }
+                    }
                 }
+
+                timerView
             }
+
+            progressBar
         }
         .focusable(false)
+    }
+
+    var progressBar: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(DesignSystem.Color.cardBackground)
+
+                Capsule()
+                    .fill(DesignSystem.Color.accent)
+                    .frame(width: geometry.size.width * CGFloat(currentIndex) / CGFloat(max(questions.count, 1)))
+                    .animation(.easeInOut(duration: 0.3), value: currentIndex)
+            }
+        }
+        .frame(height: 6)
     }
 
     var timerView: some View {
