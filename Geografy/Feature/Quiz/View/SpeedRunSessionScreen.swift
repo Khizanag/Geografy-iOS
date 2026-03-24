@@ -13,7 +13,7 @@ struct SpeedRunSessionScreen: View {
     @State private var elapsedTime: TimeInterval = 0
     @State private var timerCancellable: AnyCancellable?
     @State private var inputText = ""
-    @State private var completedCodes: Set<String> = []
+    @State private var completedCodes: [String] = []
     @State private var flashingCode: String?
     @State private var isFinished = false
     @State private var xpEarned = 0
@@ -23,26 +23,31 @@ struct SpeedRunSessionScreen: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
-        Group {
-            if isFinished {
-                resultsView
-            } else {
-                gameplayView
+        NavigationStack {
+            Group {
+                if isFinished {
+                    resultsView
+                } else {
+                    gameplayView
+                }
             }
+            .background { AmbientBlobsView(.quiz) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Speed Run")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
+                quitAlertActions
+            } message: {
+                Text("Your progress will be lost.")
+            }
+            .task {
+                countryDataService.loadCountries()
+                startTimer()
+            }
+            .onAppear { isInputFocused = true }
+            .onDisappear { timerCancellable?.cancel() }
         }
-        .background { AmbientBlobsView(.quiz) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
-            quitAlertActions
-        } message: {
-            Text("Your progress will be lost.")
-        }
-        .task {
-            countryDataService.loadCountries()
-            startTimer()
-        }
-        .onAppear { isInputFocused = true }
-        .onDisappear { timerCancellable?.cancel() }
     }
 }
 
@@ -51,8 +56,6 @@ struct SpeedRunSessionScreen: View {
 private extension SpeedRunSessionScreen {
     var gameplayView: some View {
         VStack(spacing: 0) {
-            gameToolbar
-
             VStack(spacing: DesignSystem.Spacing.md) {
                 timerSection
 
@@ -64,31 +67,28 @@ private extension SpeedRunSessionScreen {
 
             inputField
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.sm)
+
+            GlassButton("Give Up", systemImage: "flag.fill", role: .secondary, fullWidth: true) {
+                finishRun()
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
-    var gameToolbar: some View {
-        HStack {
-            Button { showQuitAlert = true } label: {
-                Image(systemName: "xmark")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .padding(DesignSystem.Spacing.sm)
-            }
-            .buttonStyle(.plain)
-
-            Spacer()
-
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
             Text(region.displayName)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            Spacer()
-
-            Color.clear.frame(width: 44)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
-        .padding(.horizontal, DesignSystem.Spacing.xs)
+
+        ToolbarItem(placement: .topBarTrailing) {
+            CircleCloseButton { showQuitAlert = true }
+        }
     }
 
     var timerSection: some View {
@@ -213,7 +213,12 @@ private extension SpeedRunSessionScreen {
                 resultsStats
 
                 xpBadge
+
+                if !missedCountries.isEmpty {
+                    missedSection
+                }
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.lg)
         }
         .safeAreaInset(edge: .bottom) {
@@ -281,7 +286,6 @@ private extension SpeedRunSessionScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     @ViewBuilder
@@ -299,6 +303,32 @@ private extension SpeedRunSessionScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.warning.opacity(0.12), in: Capsule())
             .transition(.scale(scale: 0.7).combined(with: .opacity))
+        }
+    }
+
+    var missedSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Missed Countries", icon: "xmark.circle")
+
+            LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(missedCountries) { country in
+                    HStack(spacing: DesignSystem.Spacing.sm) {
+                        FlagView(countryCode: country.code, height: 24)
+
+                        Text(country.name)
+                            .font(DesignSystem.Font.body)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                        Spacer()
+                    }
+                    .padding(.horizontal, DesignSystem.Spacing.sm)
+                    .padding(.vertical, DesignSystem.Spacing.xs)
+                    .background(
+                        DesignSystem.Color.cardBackground,
+                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    )
+                }
+            }
         }
     }
 
@@ -335,7 +365,7 @@ private extension SpeedRunSessionScreen {
         }) else { return }
 
         withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-            completedCodes.insert(match.code)
+            completedCodes.append(match.code)
         }
         inputText = ""
         flashingCode = match.code
@@ -415,10 +445,16 @@ private extension SpeedRunSessionScreen {
         targetCountries.filter { !completedCodes.contains($0.code) }
     }
 
-    var completedCountries: [Country] {
+    var missedCountries: [Country] {
         targetCountries
-            .filter { completedCodes.contains($0.code) }
+            .filter { !completedCodes.contains($0.code) }
+            .sorted { $0.name < $1.name }
+    }
+
+    var completedCountries: [Country] {
+        completedCodes
             .reversed()
+            .compactMap { code in targetCountries.first { $0.code == code } }
     }
 
     var progressFraction: CGFloat {
