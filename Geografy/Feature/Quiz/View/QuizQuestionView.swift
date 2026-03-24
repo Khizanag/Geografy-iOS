@@ -54,7 +54,7 @@ private extension QuizQuestionView {
             flagPrompt
         case .reverseFlag:
             textPrompt(question.promptText, subject: question.promptSubject)
-        case .capitalQuiz, .reverseCapital, .populationOrder, .areaOrder, .nationalSymbols:
+        case .capitalQuiz, .reverseCapital, .worldRankings, .nationalSymbols:
             textPrompt(question.promptText, subject: question.promptSubject)
         }
     }

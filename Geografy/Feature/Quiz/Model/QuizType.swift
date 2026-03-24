@@ -5,8 +5,7 @@ enum QuizType: String, CaseIterable, Identifiable, Codable {
     case capitalQuiz
     case reverseFlag
     case reverseCapital
-    case populationOrder
-    case areaOrder
+    case worldRankings
     case nationalSymbols
 
     var id: String { rawValue }
@@ -20,8 +19,7 @@ private extension QuizType {
         .capitalQuiz: "Capital Quiz",
         .reverseFlag: "Reverse Flag",
         .reverseCapital: "Reverse Capital",
-        .populationOrder: "Population Order",
-        .areaOrder: "Area Order",
+        .worldRankings: "World Rankings",
         .nationalSymbols: "National Symbols",
     ]
 
@@ -30,8 +28,7 @@ private extension QuizType {
         .capitalQuiz: "building.columns.fill",
         .reverseFlag: "flag.2.crossed.fill",
         .reverseCapital: "building.2.fill",
-        .populationOrder: "person.3.fill",
-        .areaOrder: "map.fill",
+        .worldRankings: "chart.bar.fill",
         .nationalSymbols: "leaf.fill",
     ]
 
@@ -40,8 +37,7 @@ private extension QuizType {
         .capitalQuiz: "🏛️",
         .reverseFlag: "🏴",
         .reverseCapital: "🏙️",
-        .populationOrder: "👥",
-        .areaOrder: "🗺️",
+        .worldRankings: "📊",
         .nationalSymbols: "🦅",
     ]
 
@@ -50,8 +46,7 @@ private extension QuizType {
         .capitalQuiz: "Guess the capital of a given country",
         .reverseFlag: "Pick the correct flag for a country",
         .reverseCapital: "Identify the country by its capital",
-        .populationOrder: "Identify the country with the largest or smallest population",
-        .areaOrder: "Identify the country with the largest or smallest area",
+        .worldRankings: "Pick the biggest or smallest by metric",
         .nationalSymbols: "Animals, flowers, sports & mottos of nations",
     ]
 }
@@ -77,15 +72,19 @@ extension QuizType: SelectableType {
 
     var isPremium: Bool {
         switch self {
-        case .reverseFlag, .reverseCapital, .populationOrder: true
+        case .reverseFlag, .reverseCapital: true
         default: false
         }
     }
 
     var supportsTypingMode: Bool {
         switch self {
-        case .reverseFlag, .nationalSymbols: false
+        case .reverseFlag, .nationalSymbols, .worldRankings: false
         default: true
         }
+    }
+
+    var hasComparisonMetric: Bool {
+        self == .worldRankings
     }
 }

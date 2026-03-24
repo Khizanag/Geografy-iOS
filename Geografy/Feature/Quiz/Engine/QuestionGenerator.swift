@@ -7,13 +7,16 @@ enum QuestionGenerator {
         type: QuizType,
         countries: [Country],
         count: Int,
-        optionCount: Int
+        optionCount: Int,
+        comparisonMetric: ComparisonMetric = .population
     ) -> [QuizQuestion] {
         guard !countries.isEmpty else { return [] }
 
         let pool: [Country]
         if type == .nationalSymbols {
             pool = countries.filter { symbolsService.symbol(for: $0.code) != nil }
+        } else if type == .worldRankings {
+            pool = countries.filter { comparisonMetric.value(for: $0) > 0 }
         } else {
             pool = countries
         }
@@ -21,7 +24,13 @@ enum QuestionGenerator {
         let selectedCountries = Array(pool.shuffled().prefix(count))
 
         return selectedCountries.compactMap { country in
-            makeQuestion(type: type, country: country, allCountries: countries, optionCount: optionCount)
+            makeQuestion(
+                type: type,
+                country: country,
+                allCountries: countries,
+                optionCount: optionCount,
+                comparisonMetric: comparisonMetric
+            )
         }
     }
 }
@@ -33,7 +42,8 @@ private extension QuestionGenerator {
         type: QuizType,
         country: Country,
         allCountries: [Country],
-        optionCount: Int
+        optionCount: Int,
+        comparisonMetric: ComparisonMetric = .population
     ) -> QuizQuestion? {
         switch type {
         case .flagQuiz:
@@ -44,10 +54,8 @@ private extension QuestionGenerator {
             makeReverseFlagQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
         case .reverseCapital:
             makeReverseCapitalQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
-        case .populationOrder:
-            makePopulationOrderQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
-        case .areaOrder:
-            makeAreaOrderQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
+        case .worldRankings:
+            makeWorldRankingsQuestion(country: country, allCountries: allCountries, optionCount: optionCount, metric: comparisonMetric)
         case .nationalSymbols:
             makeNationalSymbolsQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
         }
@@ -141,44 +149,25 @@ private extension QuestionGenerator {
         )
     }
 
-    static func makePopulationOrderQuestion(
+    static func makeWorldRankingsQuestion(
         country: Country,
         allCountries: [Country],
-        optionCount: Int
+        optionCount: Int,
+        metric: ComparisonMetric
     ) -> QuizQuestion {
         let correctID = UUID()
         let correctOption = QuizOption(id: correctID, text: country.name, flagCode: nil)
-        let smallerCountries = allCountries.filter { $0.code != country.code && $0.population < country.population }
+        let correctValue = metric.value(for: country)
+        let smallerCountries = allCountries.filter {
+            $0.code != country.code && metric.value(for: $0) < correctValue && metric.value(for: $0) > 0
+        }
         let distractors = Array(smallerCountries.shuffled().prefix(optionCount - 1))
         let distractorOptions = distractors.map { QuizOption(id: UUID(), text: $0.name, flagCode: nil) }
         let options = ([correctOption] + distractorOptions).shuffled()
 
         return QuizQuestion(
             id: UUID(),
-            promptText: "Which country has the largest population?",
-            promptSubject: nil,
-            promptFlag: nil,
-            options: options,
-            correctOptionID: correctID,
-            correctCountry: country,
-        )
-    }
-
-    static func makeAreaOrderQuestion(
-        country: Country,
-        allCountries: [Country],
-        optionCount: Int
-    ) -> QuizQuestion {
-        let correctID = UUID()
-        let correctOption = QuizOption(id: correctID, text: country.name, flagCode: nil)
-        let smallerCountries = allCountries.filter { $0.code != country.code && $0.area < country.area }
-        let distractors = Array(smallerCountries.shuffled().prefix(optionCount - 1))
-        let distractorOptions = distractors.map { QuizOption(id: UUID(), text: $0.name, flagCode: nil) }
-        let options = ([correctOption] + distractorOptions).shuffled()
-
-        return QuizQuestion(
-            id: UUID(),
-            promptText: "Which country has the largest area?",
+            promptText: metric.questionText,
             promptSubject: nil,
             promptFlag: nil,
             options: options,
