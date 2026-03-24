@@ -509,8 +509,8 @@ private extension CountryDetailScreen {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 heroSection
-                flagSymbolismSection
                 quickFactsCard
+                flagSymbolismSection
                 phrasebookSection
                 funFactsSection
                 neighborsSection(countryDataService: countryDataService)
