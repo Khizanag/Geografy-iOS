@@ -168,7 +168,7 @@ private extension SpellingBeeScreen {
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .autocorrectionDisabled()
-                    .textInputAutocapitalization(.never)
+                    .textInputAutocapitalization(.characters)
                     .focused($isInputFocused)
                     .onChange(of: typedText) { _, newValue in
                         validateInput(newValue)

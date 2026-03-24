@@ -122,7 +122,7 @@ private extension QuizSpellingBeeView {
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
+                .textInputAutocapitalization(.characters)
                 .focused($isInputFocused)
                 .disabled(showFeedback)
                 .onSubmit { onSubmit() }
