@@ -4,31 +4,69 @@ struct QuizSetupScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
 
+    let fixedType: QuizType?
+
     @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz
     @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
     @AppStorage("quiz_selectedDifficulty") private var selectedDifficulty: QuizDifficulty = .easy
     @AppStorage("quiz_selectedCount") private var selectedCount: QuestionCount = .ten
     @AppStorage("quiz_answerMode") private var answerMode: QuizAnswerMode = .multipleChoice
 
+    init(fixedType: QuizType? = nil) {
+        self.fixedType = fixedType
+    }
+
+    private var activeType: QuizType { fixedType ?? selectedType }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-                quizTypeSection
+                headerSection
+                if fixedType == nil {
+                    quizTypeSection
+                }
+                answerModeSection
                 regionSection
                 difficultySection
-                answerModeSection
-                questionCountRow
+                questionCountSection
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) {
-            startButton
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Quiz")
+        .safeAreaInset(edge: .bottom) { startButton }
+        .background { AmbientBlobsView(.quiz) }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle(fixedType?.displayName ?? "Quiz")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// MARK: - Header
+
+private extension QuizSetupScreen {
+    var headerSection: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.15))
+                    .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
+                Image(systemName: activeType.icon)
+                    .font(.system(size: 28))
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Text(activeType.displayName)
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(activeType.description)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.md)
     }
 }
 
@@ -38,7 +76,6 @@ private extension QuizSetupScreen {
     var quizTypeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Quiz Type")
-
             TypeSelectionGrid(
                 items: QuizType.allCases.map { $0 },
                 selectedIDs: [selectedType.id],
@@ -55,78 +92,50 @@ private extension QuizSetupScreen {
     }
 }
 
-// MARK: - Region Section
-
-private extension QuizSetupScreen {
-    var regionSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Region")
-
-            RegionSelectionBar(
-                items: QuizRegion.allCases.map { $0 },
-                selectedID: selectedRegion.id,
-                onSelect: { selectedRegion = $0 }
-            )
-        }
-    }
-}
-
-// MARK: - Difficulty Section
-
-private extension QuizSetupScreen {
-    var difficultySection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Difficulty")
-
-            Picker("Difficulty", selection: $selectedDifficulty) {
-                ForEach(QuizDifficulty.allCases) { difficulty in
-                    Text(difficulty.displayName).tag(difficulty)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: selectedDifficulty.icon)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                Text(selectedDifficulty.subtitle(for: answerMode))
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .animation(.easeInOut(duration: 0.2), value: selectedDifficulty)
-        }
-    }
-}
-
 // MARK: - Answer Mode Section
 
 private extension QuizSetupScreen {
     var answerModeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Answer Mode")
-
-            Picker("Answer Mode", selection: $answerMode) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(QuizAnswerMode.allCases) { mode in
-                    Text(mode.displayName).tag(mode)
+                    modeChip(mode)
                 }
             }
-            .pickerStyle(.segmented)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-
             answerModeNote
                 .animation(.easeInOut(duration: 0.2), value: answerMode)
-                .animation(.easeInOut(duration: 0.2), value: selectedType)
+                .animation(.easeInOut(duration: 0.2), value: activeType)
         }
+    }
+
+    func modeChip(_ mode: QuizAnswerMode) -> some View {
+        let isSelected = answerMode == mode
+        return Button { answerMode = mode } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: mode.icon)
+                    .font(DesignSystem.Font.caption)
+                Text(mode.displayName)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+            }
+            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(
+                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
+        }
+        .buttonStyle(PressButtonStyle())
     }
 
     @ViewBuilder
     var answerModeNote: some View {
-        if answerMode == .typing, !selectedType.supportsTypingMode {
+        if answerMode == .typing, !activeType.supportsTypingMode {
             answerModeInfoRow(
                 icon: "info.circle",
-                text: "Typing isn't available for Reverse Flag — multiple choice will be used"
+                text: "Typing isn't available for \(activeType.displayName) — multiple choice will be used"
             )
         } else if answerMode == .typing {
             answerModeInfoRow(
@@ -145,17 +154,105 @@ private extension QuizSetupScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 }
 
-// MARK: - Question Count Row
+// MARK: - Region Section
 
 private extension QuizSetupScreen {
-    var questionCountRow: some View {
-        pickerRow("Questions", selection: $selectedCount) { count in
-            Text(count.displayName).tag(count)
+    var regionSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Region")
+            RegionSelectionBar(
+                items: QuizRegion.allCases.map { $0 },
+                selectedID: selectedRegion.id,
+                onSelect: { selectedRegion = $0 }
+            )
         }
+    }
+}
+
+// MARK: - Difficulty Section
+
+private extension QuizSetupScreen {
+    var difficultySection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Difficulty")
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(QuizDifficulty.allCases) { difficulty in
+                    difficultyRow(difficulty)
+                }
+            }
+        }
+    }
+
+    func difficultyRow(_ difficulty: QuizDifficulty) -> some View {
+        let isSelected = selectedDifficulty == difficulty
+        return Button { selectedDifficulty = difficulty } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    ZStack {
+                        Circle()
+                            .fill(DesignSystem.Color.accent.opacity(isSelected ? 0.2 : 0.08))
+                            .frame(width: 40, height: 40)
+                        Image(systemName: difficulty.icon)
+                            .font(DesignSystem.Font.subheadline)
+                            .foregroundStyle(
+                                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary
+                            )
+                    }
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text(difficulty.displayName)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(difficulty.subtitle(for: answerMode))
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                    Spacer()
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(DesignSystem.Font.subheadline)
+                            .foregroundStyle(DesignSystem.Color.accent)
+                    }
+                }
+                .padding(DesignSystem.Spacing.sm)
+            }
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+}
+
+// MARK: - Question Count Section
+
+private extension QuizSetupScreen {
+    var questionCountSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Questions")
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(QuestionCount.allCases) { count in
+                    countChip(count)
+                }
+            }
+        }
+    }
+
+    func countChip(_ count: QuestionCount) -> some View {
+        let isSelected = selectedCount == count
+        return Button { selectedCount = count } label: {
+            Text(count.displayName)
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(isSelected ? .bold : .regular)
+                .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+                .background(
+                    isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                )
+        }
+        .buttonStyle(PressButtonStyle())
     }
 }
 
@@ -163,53 +260,32 @@ private extension QuizSetupScreen {
 
 private extension QuizSetupScreen {
     var startButton: some View {
-        GlassButton("Start Quiz", systemImage: "play.fill", fullWidth: true) {
-            if selectedType.isPremium, !subscriptionService.isPremium {
+        GlassButton("Start \(activeType.displayName)", systemImage: "play.fill", fullWidth: true) {
+            if activeType.isPremium, !subscriptionService.isPremium {
                 coordinator.present(.paywall)
             } else {
                 coordinator.presentFullScreen(.quizSession(makeConfiguration()))
             }
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
 
 // MARK: - Helpers
 
 private extension QuizSetupScreen {
-    func sectionTitle(_ title: String) -> some View {
-        Text(title)
+    func sectionTitle(_ text: String) -> some View {
+        Text(text)
             .font(DesignSystem.Font.headline)
+            .fontWeight(.semibold)
             .foregroundStyle(DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    func pickerRow<T: Hashable, Content: View>(
-        _ title: String,
-        selection: Binding<T>,
-        @ViewBuilder content: @escaping (T) -> Content
-    ) -> some View where T: CaseIterable, T: Identifiable, T.AllCases: RandomAccessCollection {
-        HStack {
-            Text(title)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            Spacer()
-
-            Picker(title, selection: selection) {
-                ForEach(Array(T.allCases)) { item in
-                    content(item)
-                }
-            }
-            .pickerStyle(.menu)
-            .tint(DesignSystem.Color.accent)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     func makeConfiguration() -> QuizConfiguration {
-        let effectiveAnswerMode = selectedType.supportsTypingMode ? answerMode : .multipleChoice
+        let effectiveAnswerMode = activeType.supportsTypingMode ? answerMode : .multipleChoice
         return QuizConfiguration(
-            type: selectedType,
+            type: activeType,
             region: selectedRegion,
             difficulty: selectedDifficulty,
             questionCount: selectedCount,

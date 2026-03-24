@@ -12,7 +12,9 @@ struct WordSearchGameScreen: View {
     @State private var foundWordIDs: Set<UUID> = []
     @State private var elapsedSeconds = 0
     @State private var timerActive = false
+    @State private var isPaused = false
     @State private var isRevealed = false
+    @State private var hintRevealedIDs: Set<UUID> = []
 
     private let service = WordSearchService()
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -32,7 +34,7 @@ struct WordSearchGameScreen: View {
             .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
             .toolbar { toolbarContent }
             .onReceive(timer) { _ in
-                guard timerActive else { return }
+                guard timerActive, !isPaused else { return }
                 elapsedSeconds += 1
             }
             .task { startPuzzle() }
@@ -46,13 +48,28 @@ private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: "timer")
-                    .font(DesignSystem.Font.caption2)
-                Text(formattedTime)
-                    .font(.system(size: 13, weight: .bold, design: .monospaced))
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
+                    Image(systemName: "timer")
+                        .font(DesignSystem.Font.caption2)
+                    Text(formattedTime)
+                        .font(.system(size: 13, weight: .bold, design: .monospaced))
+                }
+                .foregroundStyle(isPaused ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
+                .padding(.horizontal, DesignSystem.Spacing.xxs)
+
+                if timerActive {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.2)) { isPaused.toggle() }
+                    } label: {
+                        Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.trailing, DesignSystem.Spacing.sm)
+                }
             }
-            .foregroundStyle(DesignSystem.Color.textSecondary)
             .fixedSize()
         }
         ToolbarItem(placement: .topBarTrailing) {
@@ -74,16 +91,83 @@ private extension WordSearchGameScreen {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 progressSection(puzzle)
+                if gameFinished {
+                    resultBanner(puzzle)
+                }
                 gridSection(puzzle)
                 wordListSection(puzzle)
-                if !isRevealed, !allFound(puzzle) {
-                    GlassButton("Give Up — Reveal", role: .secondary, fullWidth: true) {
-                        revealAllWords()
+                if !gameFinished {
+                    VStack(spacing: DesignSystem.Spacing.sm) {
+                        if let nextHintWord = nextUnrevealedWord(puzzle) {
+                            GlassButton(
+                                "Reveal \"\(nextHintWord.word)\"",
+                                systemImage: "eye",
+                                fullWidth: true
+                            ) {
+                                revealHint(nextHintWord)
+                            }
+                        }
+                        GlassButton("Reveal All", systemImage: "eye.slash", fullWidth: true) {
+                            revealAllWords()
+                        }
                     }
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .safeAreaInset(edge: .bottom) {
+            if gameFinished {
+                resultFooter
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.bottom, DesignSystem.Spacing.md)
+            }
+        }
+    }
+
+    func resultBanner(_ puzzle: WordSearchPuzzle) -> some View {
+        CardView {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: allFound(puzzle) ? "trophy.fill" : "flag.checkered")
+                    .font(.system(size: 36))
+                    .foregroundStyle(allFound(puzzle) ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
+                Text(allFound(puzzle) ? "All Words Found!" : "Puzzle Complete")
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    ResultStatItem(
+                        icon: "checkmark.circle.fill",
+                        value: "\(foundWordIDs.count)",
+                        label: "Found",
+                        color: DesignSystem.Color.success
+                    )
+                    ResultStatItem(
+                        icon: "eye.fill",
+                        value: "\(hintRevealedIDs.count + (isRevealed ? puzzle.words.count - foundWordIDs.count - hintRevealedIDs.count : 0))",
+                        label: "Revealed",
+                        color: DesignSystem.Color.warning
+                    )
+                    ResultStatItem(
+                        icon: "timer",
+                        value: formattedTime,
+                        label: "Time"
+                    )
+                }
+            }
+            .padding(DesignSystem.Spacing.lg)
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    var resultFooter: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            GlassButton("Close", systemImage: "xmark", fullWidth: true) {
+                dismiss()
+            }
+            GlassButton("Try Again", systemImage: "arrow.clockwise", fullWidth: true) {
+                startPuzzle()
+            }
         }
     }
 
@@ -98,25 +182,51 @@ private extension WordSearchGameScreen {
         GeometryReader { geometry in
             let computedCellSize = geometry.size.width / CGFloat(service.gridSize)
 
-            VStack(spacing: 0) {
-                ForEach(0..<service.gridSize, id: \.self) { row in
-                    HStack(spacing: 0) {
-                        ForEach(0..<service.gridSize, id: \.self) { col in
-                            gridCell(
-                                row: row,
-                                col: col,
-                                letter: puzzle.grid[row][col],
-                                cellSize: computedCellSize,
-                                puzzle: puzzle
-                            )
+            ZStack {
+                VStack(spacing: 0) {
+                    ForEach(0..<service.gridSize, id: \.self) { row in
+                        HStack(spacing: 0) {
+                            ForEach(0..<service.gridSize, id: \.self) { col in
+                                gridCell(
+                                    row: row,
+                                    col: col,
+                                    letter: puzzle.grid[row][col],
+                                    cellSize: computedCellSize,
+                                    puzzle: puzzle
+                                )
+                            }
                         }
                     }
                 }
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
+                .blur(radius: isPaused ? 8 : 0)
+
+                if isPaused {
+                    pauseOverlay
+                }
             }
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-            .gesture(dragGesture(cellSize: computedCellSize, puzzle: puzzle))
         }
         .aspectRatio(1, contentMode: .fit)
+    }
+
+    var pauseOverlay: some View {
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            .fill(DesignSystem.Color.background.opacity(0.6))
+            .overlay {
+                VStack(spacing: DesignSystem.Spacing.sm) {
+                    Image(systemName: "pause.circle.fill")
+                        .font(.system(size: 48))
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                    Text("Paused")
+                        .font(DesignSystem.Font.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    GlassButton("Continue", systemImage: "play.fill") {
+                        withAnimation(.easeInOut(duration: 0.2)) { isPaused = false }
+                    }
+                }
+            }
     }
 
     func gridCell(
@@ -171,7 +281,8 @@ private extension WordSearchGameScreen {
 
     func wordChip(_ wordItem: WordSearchWord) -> some View {
         let isUserFound = foundWordIDs.contains(wordItem.id)
-        let isRevealedOnly = isRevealed && !isUserFound
+        let isHintRevealed = hintRevealedIDs.contains(wordItem.id)
+        let isRevealedOnly = (isRevealed || isHintRevealed) && !isUserFound
 
         return HStack(spacing: DesignSystem.Spacing.xxs) {
             if isUserFound {
@@ -234,6 +345,11 @@ private extension WordSearchGameScreen {
 // MARK: - Helpers
 
 private extension WordSearchGameScreen {
+    var gameFinished: Bool {
+        guard let puzzle else { return false }
+        return allFound(puzzle) || isRevealed
+    }
+
     func progressFraction(_ puzzle: WordSearchPuzzle) -> CGFloat {
         guard !puzzle.words.isEmpty else { return 0 }
         return CGFloat(foundWordIDs.count) / CGFloat(puzzle.words.count)
@@ -245,7 +361,9 @@ private extension WordSearchGameScreen {
 
     func startPuzzle() {
         foundWordIDs = []
+        hintRevealedIDs = []
         elapsedSeconds = 0
+        isPaused = false
         isRevealed = false
         puzzle = service.makePuzzle(theme: theme)
         timerActive = true
@@ -259,7 +377,9 @@ private extension WordSearchGameScreen {
     func isCellFound(row: Int, col: Int, puzzle: WordSearchPuzzle) -> Bool {
         let coord = GridCoord(row: row, col: col)
         return puzzle.words.contains { wordItem in
-            guard foundWordIDs.contains(wordItem.id) || isRevealed else { return false }
+            guard foundWordIDs.contains(wordItem.id) || isRevealed || hintRevealedIDs.contains(wordItem.id) else {
+                return false
+            }
             return wordCoversCells(wordItem).contains(coord)
         }
     }
@@ -303,6 +423,19 @@ private extension WordSearchGameScreen {
             }
             return
         }
+    }
+
+    func nextUnrevealedWord(_ puzzle: WordSearchPuzzle) -> WordSearchWord? {
+        puzzle.words.first { wordItem in
+            !foundWordIDs.contains(wordItem.id) && !hintRevealedIDs.contains(wordItem.id)
+        }
+    }
+
+    func revealHint(_ wordItem: WordSearchWord) {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            hintRevealedIDs.insert(wordItem.id)
+        }
+        hapticsService.impact(.light)
     }
 
     func revealAllWords() {
