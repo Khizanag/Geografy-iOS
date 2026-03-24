@@ -142,7 +142,7 @@ private extension WorldBankIndicatorCard {
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("(\(latest.year))")
+                Text("(\(String(latest.year)))")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
@@ -239,7 +239,7 @@ private extension WorldBankIndicatorCard {
 
     func footerRow(points: [WorldBankService.DataPoint]) -> some View {
         HStack {
-            Text("\(points.first?.year ?? 1960) – \(points.last?.year ?? 2023)")
+            Text("\(String(points.first?.year ?? 1960)) – \(String(points.last?.year ?? 2023))")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             Spacer()

@@ -35,7 +35,7 @@ struct PropertyDetailSheet: View {
                 Spacer(minLength: DesignSystem.Spacing.sm)
 
                 if supportsMap {
-                    GeoButton(mapButtonTitle, systemImage: "map.fill", style: .primary) {
+                    GlassButton(mapButtonTitle, systemImage: "map.fill", fullWidth: true) {
                         onShowMap()
                     }
                     .padding(.horizontal, DesignSystem.Spacing.lg)
