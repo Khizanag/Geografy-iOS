@@ -14,6 +14,12 @@ struct TVHomeScreen: View {
                 }
             }
 
+            Tab("Map", systemImage: "map.fill") {
+                NavigationStack {
+                    TVMapScreen(countryDataService: countryDataService)
+                }
+            }
+
             Tab("Countries", systemImage: "globe") {
                 NavigationStack {
                     TVCountryBrowserScreen(countryDataService: countryDataService)

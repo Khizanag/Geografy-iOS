@@ -1,4 +1,3 @@
-#if !os(tvOS)
 import CoreGraphics
 import SwiftUI
 
@@ -311,4 +310,3 @@ private extension GeoJSONParser {
         return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }
-#endif
