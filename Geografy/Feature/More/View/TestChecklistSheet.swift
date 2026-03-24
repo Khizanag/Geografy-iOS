@@ -19,7 +19,6 @@ struct TestChecklistSheet: View {
                     )
                 }
             }
-            .background(DesignSystem.Color.background)
             .navigationTitle("Test: \(title)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
