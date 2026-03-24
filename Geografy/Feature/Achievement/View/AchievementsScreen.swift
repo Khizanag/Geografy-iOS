@@ -33,7 +33,7 @@ struct AchievementsScreen: View {
                 isUnlocked: achievementService.isUnlocked(achievement.id),
                 unlockedAt: achievementService.unlockedAchievements.first { $0.id == achievement.id }?.unlockedAt
             )
-            .presentationDetents([.medium, .large])
+            .presentationDetents([.fraction(0.65), .large])
         }
         .onAppear {
             withAnimation(.easeOut(duration: 0.4).delay(0.1)) {
