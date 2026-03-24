@@ -12,6 +12,7 @@ enum Sheet: Identifiable {
     case favorites
     case organizations
     case organizationDetail(Organization)
+    case countryDetail(Country)
 
     // Store
     case coinStore
@@ -86,6 +87,7 @@ enum Sheet: Identifiable {
         case .favorites: "favorites"
         case .organizations: "organizations"
         case .organizationDetail(let organization): "orgDetail-\(organization.id)"
+        case .countryDetail(let country): "countryDetail-\(country.code)"
         case .coinStore: "coinStore"
         case .paywall: "paywall"
         case .quizSetup: "quizSetup"

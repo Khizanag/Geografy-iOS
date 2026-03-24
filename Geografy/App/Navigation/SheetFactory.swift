@@ -36,6 +36,7 @@ private extension SheetFactory {
         case .favorites: FavoritesScreen()
         case .organizations: OrganizationsScreen()
         case .organizationDetail(let organization): OrganizationDetailScreen(organization: organization)
+        case .countryDetail(let country): CountryDetailScreen(country: country)
         case .coinStore: CoinStoreScreen()
 
         // Play
