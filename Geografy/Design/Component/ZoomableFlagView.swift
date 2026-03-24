@@ -14,6 +14,7 @@ struct ZoomableFlagView: View {
     var body: some View {
         ZStack {
             backdrop
+
             flagContent
         }
         .onAppear {
@@ -29,7 +30,8 @@ struct ZoomableFlagView: View {
 
 private extension ZoomableFlagView {
     var backdrop: some View {
-        Color.black.opacity(0.75)
+        Rectangle()
+            .fill(.ultraThinMaterial)
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
             .transition(.opacity)
@@ -38,23 +40,21 @@ private extension ZoomableFlagView {
     var flagContent: some View {
         GeometryReader { geometry in
             let aspectRatio = FlagAspectRatio.ratio(for: countryCode) ?? 1.5
-            let maxWidth = geometry.size.width * 0.9
-            let maxHeight = geometry.size.height * 0.65
+            let maxWidth = geometry.size.width - DesignSystem.Spacing.xl * 2
+            let maxHeight = geometry.size.height * 0.5
             let heightFromWidth = maxWidth / aspectRatio
             let targetHeight = min(heightFromWidth, maxHeight)
 
-            ZStack {
-                FlagView(countryCode: countryCode, height: targetHeight)
-                    .matchedGeometryEffect(id: countryCode, in: namespace, isSource: false)
-                    .shadow(radius: DesignSystem.Spacing.lg)
-                    .scaleEffect(scale)
-                    .offset(offset)
-                    .simultaneousGesture(magnifyGesture)
-                    .simultaneousGesture(dragGesture)
-                    .onTapGesture(count: 2) { if isReady { toggleZoom() } }
-                    .onTapGesture(count: 1) { dismiss() }
-            }
-            .frame(width: geometry.size.width, height: geometry.size.height)
+            FlagView(countryCode: countryCode, height: targetHeight)
+                .matchedGeometryEffect(id: countryCode, in: namespace, isSource: false)
+                .geoShadow(.elevated)
+                .scaleEffect(scale)
+                .offset(offset)
+                .simultaneousGesture(magnifyGesture)
+                .simultaneousGesture(dragGesture)
+                .onTapGesture(count: 2) { if isReady { toggleZoom() } }
+                .onTapGesture(count: 1) { dismiss() }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }
