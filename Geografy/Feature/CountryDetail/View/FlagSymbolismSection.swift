@@ -68,7 +68,7 @@ private extension FlagSymbolismCard {
                         .fontWeight(.semibold)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                     if let year = symbolism.adoptedYear {
-                        Text("Adopted \(year)")
+                        Text("Adopted \(String(year))")
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }

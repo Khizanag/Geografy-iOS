@@ -211,8 +211,10 @@ private extension CountryDetailScreen {
                     Text(country.name)
                         .font(DesignSystem.Font.title)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
+                        .multilineTextAlignment(.center)
                     SpeakerButton(text: country.name, countryCode: country.code)
                 }
+                .frame(maxWidth: .infinity)
 
                 Button {
                     activeSheet = .info(

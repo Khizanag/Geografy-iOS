@@ -337,7 +337,6 @@ private extension CountryListScreen {
                 showCapital: showCapital,
                 showStats: showArea || showPopulation,
                 showContinent: true,
-                showSpeaker: true,
                 onFavoriteTap: { favoritesService.toggle(code: country.code) }
             )
         }

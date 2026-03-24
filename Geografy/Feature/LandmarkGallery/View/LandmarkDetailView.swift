@@ -102,7 +102,7 @@ private extension LandmarkDetailView {
     }
 
     func yearBadge(_ year: Int) -> some View {
-        let displayYear = year < 0 ? "\(abs(year)) BC" : "\(year) AD"
+        let displayYear = year < 0 ? "\(String(abs(year))) BC" : "\(String(year)) AD"
         return Text(displayYear)
             .font(DesignSystem.Font.caption)
             .fontWeight(.semibold)

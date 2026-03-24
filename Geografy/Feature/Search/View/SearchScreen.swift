@@ -3,6 +3,8 @@ import SwiftUI
 struct SearchScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
 
+    @AppStorage("search_topAligned") private var topAligned = false
+
     @State private var query = ""
     @State private var sections: [SearchResultSection] = []
     @State private var isSearching = false
@@ -42,17 +44,22 @@ private extension SearchScreen {
     var emptyStateContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                Spacer(minLength: 0)
+                if !topAligned {
+                    Spacer(minLength: 0)
+                }
                 if !recentService.queries.isEmpty {
                     recentSearchesSection
                 }
                 trendingSection
+                if topAligned {
+                    Spacer(minLength: 0)
+                }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
-            .containerRelativeFrame(.vertical, alignment: .bottom)
+            .containerRelativeFrame(.vertical, alignment: topAligned ? .top : .bottom)
         }
-        .defaultScrollAnchor(.bottom)
+        .defaultScrollAnchor(topAligned ? .top : .bottom)
     }
 
     var recentSearchesSection: some View {
@@ -178,16 +185,21 @@ private extension SearchScreen {
     var resultsList: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                Spacer(minLength: 0)
+                if !topAligned {
+                    Spacer(minLength: 0)
+                }
                 ForEach(sections) { section in
                     resultSection(section)
+                }
+                if topAligned {
+                    Spacer(minLength: 0)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
-            .containerRelativeFrame(.vertical, alignment: .bottom)
+            .containerRelativeFrame(.vertical, alignment: topAligned ? .top : .bottom)
         }
-        .defaultScrollAnchor(.bottom)
+        .defaultScrollAnchor(topAligned ? .top : .bottom)
     }
 
     func resultSection(_ section: SearchResultSection) -> some View {
@@ -326,6 +338,16 @@ private extension SearchScreen {
 private extension SearchScreen {
     @ToolbarContentBuilder
     var toolbarItems: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.3)) { topAligned.toggle() }
+            } label: {
+                Image(systemName: topAligned ? "arrow.down.to.line" : "arrow.up.to.line")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .buttonStyle(.plain)
+        }
         ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton()
         }
@@ -411,12 +433,14 @@ private extension SearchScreen {
         }
 
         if !orgMatches.isEmpty {
-            result.append(SearchResultSection(
-                id: "organizations",
-                title: "Organizations",
-                icon: "building.columns.fill",
-                rows: orgMatches.prefix(5).map { .organization($0) }
-            ))
+            result.append(
+                SearchResultSection(
+                    id: "organizations",
+                    title: "Organizations",
+                    icon: "building.columns.fill",
+                    rows: orgMatches.prefix(5).map { .organization($0) }
+                )
+            )
         }
 
         return result

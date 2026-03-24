@@ -70,7 +70,7 @@ private extension WorldBankChartSheet {
                     .font(.system(size: 36, weight: .bold, design: .rounded))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                 HStack(spacing: DesignSystem.Spacing.xs) {
-                    Text("Latest: \(latest.year)")
+                    Text("Latest: \(String(latest.year))")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                     Text("·")
@@ -185,7 +185,7 @@ private extension WorldBankChartSheet {
                     statCard(
                         label: "Minimum",
                         value: indicator.format(minimum.value),
-                        detail: "\(minimum.year)",
+                        detail: String(minimum.year),
                         color: DesignSystem.Color.blue
                     )
                 }
@@ -193,7 +193,7 @@ private extension WorldBankChartSheet {
                     statCard(
                         label: "Maximum",
                         value: indicator.format(maximum.value),
-                        detail: "\(maximum.year)",
+                        detail: String(maximum.year),
                         color: DesignSystem.Color.success
                     )
                 }
@@ -202,7 +202,7 @@ private extension WorldBankChartSheet {
                     statCard(
                         label: "Change",
                         value: String(format: "%+.1f%%", change),
-                        detail: "\(first.year)–\(last.year)",
+                        detail: "\(String(first.year))–\(String(last.year))",
                         color: change >= 0 ? DesignSystem.Color.success : DesignSystem.Color.error
                     )
                 }
