@@ -1005,11 +1005,13 @@ private extension ProfileScreen {
         case .paywall:
             PaywallScreen()
         case .achievements:
-            NavigationStack {
+            NavigatorView {
                 AchievementsScreen()
+                    .navigationTitle("Achievements")
+                    .navigationBarTitleDisplayMode(.large)
             }
         case .badgeCollection:
-            NavigationStack {
+            NavigatorView {
                 BadgeCollectionScreen(badgeService: badgeService)
             }
         }
