@@ -32,6 +32,12 @@ struct TVHomeScreen: View {
                 }
             }
 
+            Tab("Search", systemImage: "magnifyingglass") {
+                NavigationStack {
+                    TVSearchScreen(countryDataService: countryDataService)
+                }
+            }
+
             Tab("More", systemImage: "ellipsis.circle") {
                 NavigationStack {
                     TVMoreScreen(countryDataService: countryDataService)
