@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CountryDetailScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) private var travelService
     @Environment(FavoritesService.self) private var favoritesService
@@ -53,15 +54,6 @@ struct CountryDetailScreen: View {
             .onAppear { appeared = true }
             .sheet(item: $activeSheet) { sheet in countryDetailSheetContent(for: sheet) }
             .fullScreenCover(isPresented: $showContinentMap) { continentMapCover }
-            .navigationDestination(for: Organization.self) { organization in
-                OrganizationDetailScreen(organization: organization)
-            }
-            .navigationDestination(for: Country.self) { destination in
-                CountryDetailScreen(country: destination)
-            }
-            .navigationDestination(for: Country.Continent.self) { continent in
-                ContinentOverviewScreen(continent: continent)
-            }
             .overlay { flagFullScreenOverlay }
     }
 }

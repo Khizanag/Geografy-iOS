@@ -7,6 +7,7 @@ enum FavoritesSortOption: String, CaseIterable {
 }
 
 struct FavoritesScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
 
@@ -127,7 +128,10 @@ private extension FavoritesScreen {
     var countryList: some View {
         LazyVStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(filteredCountries) { country in
-                NavigationLink(value: country) {
+                Button {
+                    coordinator.push(.countryDetail(country))
+                    hapticsService.impact(.light)
+                } label: {
                     CountryRowView(
                         country: country,
                         isFavorite: true,
@@ -138,9 +142,6 @@ private extension FavoritesScreen {
                     )
                 }
                 .buttonStyle(PressButtonStyle())
-                .simultaneousGesture(TapGesture().onEnded {
-                    hapticsService.impact(.light)
-                })
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     removeButton(for: country)
                 }

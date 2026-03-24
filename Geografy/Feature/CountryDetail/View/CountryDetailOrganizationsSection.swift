@@ -50,11 +50,13 @@ extension CountryDetailScreen {
                 Spacer()
 
                 VStack(spacing: DesignSystem.Spacing.xs) {
-                    NavigationLink(value: org) {
+                    Button {
+                        coordinator.push(.organizationDetail(org))
+                        hapticsService.impact(.light)
+                    } label: {
                         orgActionButton(icon: "info.circle", label: "Info", color: DesignSystem.Color.accent)
                     }
                     .buttonStyle(.plain)
-                    .simultaneousGesture(TapGesture().onEnded { hapticsService.impact(.light) })
 
                     Button {
                         hapticsService.impact(.light)

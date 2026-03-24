@@ -3,9 +3,13 @@ import SwiftUI
 struct MoreScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(TestingModeService.self) private var testingModeService
 
     @State private var blobAnimating = false
     @State private var searchText = ""
+    @State private var testChecklistSheet: MoreSheet?
+
+    private let testChecklistService = TestChecklistService()
 
     var body: some View {
         itemList
@@ -13,6 +17,14 @@ struct MoreScreen: View {
             .navigationTitle("More")
             .navigationBarTitleDisplayMode(.large)
             .searchable(text: $searchText, prompt: "Find a feature…")
+            .sheet(item: $testChecklistSheet) { sheet in
+                TestChecklistSheet(
+                    title: sheet.label,
+                    checklist: testChecklistService.checklist(for: sheet.testKey)
+                )
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+            }
             .onAppear {
                 withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                     blobAnimating = true
@@ -211,8 +223,27 @@ private extension MoreScreen {
                 .regular,
                 in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
             )
+            .overlay(alignment: .topTrailing) {
+                if testingModeService.isEnabled {
+                    testBadge(for: sheet)
+                }
+            }
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    func testBadge(for sheet: MoreSheet) -> some View {
+        Button {
+            testChecklistSheet = sheet
+        } label: {
+            Image(systemName: "ladybug.fill")
+                .font(.system(size: 10))
+                .foregroundStyle(DesignSystem.Color.onAccent)
+                .padding(4)
+                .background(DesignSystem.Color.orange, in: Circle())
+        }
+        .buttonStyle(.plain)
+        .offset(x: 4, y: -4)
     }
 
     var youItems: [MoreSheet] {

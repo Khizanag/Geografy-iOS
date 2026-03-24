@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ModuleLessonsScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(LearningPathService.self) private var learningPathService
 
     let module: LearningModule
@@ -62,9 +63,7 @@ private extension ModuleLessonsScreen {
     var lessonsList: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(Array(currentModule.lessons.enumerated()), id: \.element.id) { index, lesson in
-                NavigationLink {
-                    LessonScreen(module: currentModule, lesson: lesson)
-                } label: {
+                Button { coordinator.push(.lesson(currentModule, lesson)) } label: {
                     lessonRow(lesson: lesson, index: index)
                 }
                 .buttonStyle(PressButtonStyle())

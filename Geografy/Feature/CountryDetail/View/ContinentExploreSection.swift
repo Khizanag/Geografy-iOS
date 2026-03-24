@@ -15,7 +15,7 @@ extension CountryDetailScreen {
 
 private extension CountryDetailScreen {
     var continentCard: some View {
-        NavigationLink(value: country.continent) {
+        Button { coordinator.push(.continentOverview(country.continent)) } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     continentIcon

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct OrganizationDetailScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
@@ -34,9 +35,6 @@ struct OrganizationDetailScreen: View {
         }
         .fullScreenCover(isPresented: $showMap) {
             OrganizationMapScreen(organization: organization)
-        }
-        .navigationDestination(for: Country.self) { country in
-            CountryDetailScreen(country: country)
         }
         .task { countryDataService.loadCountries() }
         .task { trackOrgView() }
@@ -214,7 +212,7 @@ private extension OrganizationDetailScreen {
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
 
             ForEach(memberCountries) { country in
-                NavigationLink(value: country) {
+                Button { coordinator.push(.countryDetail(country)) } label: {
                     CardView {
                         HStack(spacing: DesignSystem.Spacing.sm) {
                             FlagView(countryCode: country.code, height: DesignSystem.Size.md)

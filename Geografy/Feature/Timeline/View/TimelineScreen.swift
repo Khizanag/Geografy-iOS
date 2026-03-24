@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TimelineScreen: View {
+    @Environment(TabCoordinator.self) private var coordinator
+
     @State private var countryDataService = CountryDataService()
 
     @State private var timelineService = TimelineService()
@@ -223,9 +225,6 @@ private extension TimelineScreen {
                         }
                     }
                 }
-                .navigationDestination(for: Country.self) { country in
-                    CountryDetailScreen(country: country)
-                }
         }
     }
 
@@ -290,7 +289,7 @@ private extension TimelineScreen {
     func detailCountryInfo(country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Country", icon: "globe")
-            NavigationLink(value: country) {
+            Button { coordinator.push(.countryDetail(country)) } label: {
                 CountryRowView(
                     country: country,
                     isFavorite: false,

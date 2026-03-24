@@ -76,7 +76,7 @@ private extension CountryDetailScreen {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(countries) { neighbor in
-                    NavigationLink(value: neighbor) {
+                    Button { coordinator.push(.countryDetail(neighbor)) } label: {
                         neighborChip(country: neighbor)
                     }
                     .buttonStyle(PressButtonStyle())

@@ -359,12 +359,13 @@ private extension HomeScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.trailing, DesignSystem.Spacing.xs)
-            NavigationLink(value: Screen.allMaps) {
+            Button { coordinator.push(.allMaps) } label: {
                 Text("See All")
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .buttonStyle(.plain)
         }
     }
 
@@ -444,7 +445,7 @@ private extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Discover")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            NavigationLink(value: country) {
+            Button { coordinator.push(.countryDetail(country)) } label: {
                 HomeCountrySpotlightCard(
                     country: country,
                     funFact: spotlightFunFact(for: country)

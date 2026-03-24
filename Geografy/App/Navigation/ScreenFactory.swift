@@ -79,6 +79,10 @@ private extension ScreenFactory {
             LandmarkGalleryScreen()
         case .mapColoring:
             MapColoringScreen()
+        case .territorialDisputes:
+            TerritorialDisputesScreen()
+        case .lesson(let module, let lesson):
+            LessonScreen(module: module, lesson: lesson)
         default:
             EmptyView()
         }

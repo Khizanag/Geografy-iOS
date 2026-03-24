@@ -189,6 +189,49 @@ enum MoreSheet: Identifiable {
         }
     }
 
+    var testKey: String {
+        switch self {
+        case .profile: "profile"
+        case .countries: "countries"
+        case .orgs: "orgs"
+        case .favorites: "favorites"
+        case .travel: "travel"
+        case .dailyChallenge: "dailyChallenge"
+        case .compare: "compare"
+        case .travelJournal: "travelJournal"
+        case .quizPacks: "quizPacks"
+        case .customQuiz: "customQuiz"
+        case .multiplayer: "multiplayer"
+        case .exploreGame: "exploreGame"
+        case .speedRun: "speedRun"
+        case .distanceCalculator: "distanceCalculator"
+        case .currencyConverter: "currencyConverter"
+        case .timeZones: "timeZones"
+        case .badges: "badges"
+        case .timeline: "timeline"
+        case .achievements: "achievements"
+        case .leaderboards: "leaderboards"
+        case .themes: "themes"
+        case .settings: "settings"
+        case .search: "search"
+        case .capitalQuiz: "capitalQuiz"
+        case .flagGame: "flagGame"
+        case .geoTrivia: "geoTrivia"
+        case .spellingBee: "spellingBee"
+        case .landmarkQuiz: "landmarkQuiz"
+        case .wordSearch: "wordSearch"
+        case .borderChallenge: "borderChallenge"
+        case .challengeRoom: "challengeRoom"
+        case .countryNicknames: "countryNicknames"
+        case .nationalSymbolsQuiz: "nationalSymbolsQuiz"
+        case .geoQuotes: "geoQuotes"
+        case .geoFeed: "geoFeed"
+        case .srsStudy: "srsStudy"
+        case .learningPath: "learningPath"
+        case .travelBucketList: "travelBucketList"
+        }
+    }
+
     var toSheet: Sheet {
         switch self {
         case .profile: .profile
