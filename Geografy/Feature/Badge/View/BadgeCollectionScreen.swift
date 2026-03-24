@@ -36,8 +36,6 @@ struct BadgeCollectionScreen: View {
                 canPin: badgeService.pinnedBadgeIDs.count < 3,
                 onTogglePin: { badgeService.togglePin(badge.id) }
             )
-            .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.automatic)
         }
         .onAppear {
             withAnimation(
