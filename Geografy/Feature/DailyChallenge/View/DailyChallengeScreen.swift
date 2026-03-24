@@ -42,7 +42,7 @@ private extension DailyChallengeScreen {
     }
 
     var sessionCover: some View {
-        Group {
+        NavigatorView {
             if let challenge = service?.todayChallenge, let service {
                 DailyChallengeSessionScreen(
                     challenge: challenge,
