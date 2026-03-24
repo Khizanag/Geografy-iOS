@@ -74,7 +74,7 @@ private extension CountryRowView {
         }
         .padding(.vertical, DesignSystem.Spacing.sm)
         .padding(.trailing, DesignSystem.Spacing.sm)
-        .padding(.leading, DesignSystem.Spacing.xs)
+        .padding(.leading, DesignSystem.Spacing.sm)
         .overlay(alignment: .topTrailing) {
             if showContinent {
                 continentBadge
