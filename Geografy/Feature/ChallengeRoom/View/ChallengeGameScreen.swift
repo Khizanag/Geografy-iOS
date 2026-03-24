@@ -158,14 +158,11 @@ private extension ChallengeGameScreen {
     }
 
     var progressSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SessionProgressBar(progress: progressFraction)
-
-            QuestionCounterPill(
-                current: (room.roundNumber - 1) * 2 + room.currentPlayerIndex + 1,
-                total: room.totalRounds * 2
-            )
-        }
+        SessionProgressView(
+            progress: progressFraction,
+            current: (room.roundNumber - 1) * 2 + room.currentPlayerIndex + 1,
+            total: room.totalRounds * 2
+        )
     }
 
     var playerBadge: some View {

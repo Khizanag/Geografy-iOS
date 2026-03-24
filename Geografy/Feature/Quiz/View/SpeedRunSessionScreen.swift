@@ -112,10 +112,11 @@ private extension SpeedRunSessionScreen {
     }
 
     var progressSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SessionProgressBar(progress: progressFraction)
-            QuestionCounterPill(current: completedCodes.count, total: targetCountries.count)
-        }
+        SessionProgressView(
+            progress: progressFraction,
+            current: completedCodes.count,
+            total: targetCountries.count
+        )
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 

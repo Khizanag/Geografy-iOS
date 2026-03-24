@@ -105,19 +105,8 @@ private extension FlashcardSessionScreen {
 
 private extension FlashcardSessionScreen {
     var progressSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            progressBar
-            counterPill
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    var progressBar: some View {
-        SessionProgressBar(progress: progressFraction)
-    }
-
-    var counterPill: some View {
-        QuestionCounterPill(current: currentIndex + 1, total: cards.count)
+        SessionProgressView(progress: progressFraction, current: currentIndex + 1, total: cards.count)
+            .padding(.horizontal, DesignSystem.Spacing.md)
     }
 }
 

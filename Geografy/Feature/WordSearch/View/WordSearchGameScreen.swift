@@ -176,10 +176,11 @@ private extension WordSearchGameScreen {
     }
 
     func progressSection(_ puzzle: WordSearchPuzzle) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SessionProgressBar(progress: progressFraction(puzzle))
-            QuestionCounterPill(current: foundWordIDs.count, total: puzzle.words.count)
-        }
+        SessionProgressView(
+            progress: progressFraction(puzzle),
+            current: foundWordIDs.count,
+            total: puzzle.words.count
+        )
     }
 
     func gridSection(_ puzzle: WordSearchPuzzle) -> some View {

@@ -122,10 +122,7 @@ private extension TriviaScreen {
     }
 
     var streakAndProgressBar: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SessionProgressBar(progress: progress)
-            QuestionCounterPill(current: currentIndex + 1, total: questions.count)
-        }
+        SessionProgressView(progress: progress, current: currentIndex + 1, total: questions.count)
     }
 
     var progress: CGFloat {

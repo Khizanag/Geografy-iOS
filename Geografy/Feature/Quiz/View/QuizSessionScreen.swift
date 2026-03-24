@@ -178,12 +178,12 @@ private extension QuizSessionScreen {
     var progressSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                progressBar
+                SessionProgressBar(progress: progress)
                 if currentStreak >= 2 {
                     streakBadge
                         .transition(.scale.combined(with: .opacity))
                 } else {
-                    questionCounterPill
+                    QuestionCounterPill(current: currentIndex + 1, total: questions.count)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -216,14 +216,6 @@ private extension QuizSessionScreen {
         .shadow(color: DesignSystem.Color.error.opacity(0.4), radius: 8, y: 2)
         .scaleEffect(showStreakBurst ? 1.25 : 1.0)
         .animation(.spring(response: 0.25, dampingFraction: 0.5), value: showStreakBurst)
-    }
-
-    var progressBar: some View {
-        SessionProgressBar(progress: progress)
-    }
-
-    var questionCounterPill: some View {
-        QuestionCounterPill(current: currentIndex + 1, total: questions.count)
     }
 
     var timerPill: some View {
