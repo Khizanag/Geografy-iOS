@@ -4,12 +4,12 @@ struct ChallengeSplitScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
 
+    @State private var path = NavigationPath()
     @State private var room: ChallengeRoom
     @State private var player1Answer: Int?
     @State private var player2Answer: Int?
     @State private var currentRound = 1
     @State private var showFeedback = false
-    @State private var isFinished = false
 
     private let challengeRoomService: ChallengeRoomService
 
@@ -19,23 +19,25 @@ struct ChallengeSplitScreen: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             splitContent
                 .background(DesignSystem.Color.background.ignoresSafeArea())
                 .navigationBarHidden(true)
-                .navigationDestination(isPresented: $isFinished) {
-                    ChallengeResultScreen(
-                        room: room,
-                        challengeRoomService: challengeRoomService
-                    ) {
-                        dismiss()
-                    }
-                    .navigationTitle("Results")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .navigationBarBackButtonHidden()
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            CircleCloseButton { dismiss() }
+                .navigationDestination(for: String.self) { destination in
+                    if destination == "result" {
+                        ChallengeResultScreen(
+                            room: room,
+                            challengeRoomService: challengeRoomService
+                        ) {
+                            dismiss()
+                        }
+                        .navigationTitle("Results")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationBarBackButtonHidden()
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                CircleCloseButton { dismiss() }
+                            }
                         }
                     }
                 }
@@ -227,7 +229,7 @@ private extension ChallengeSplitScreen {
 
     func advanceRound() {
         if currentRound >= room.totalRounds {
-            withAnimation { isFinished = true }
+            path.append("result")
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 currentRound += 1
