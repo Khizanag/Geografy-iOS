@@ -162,27 +162,15 @@ private extension SpellingBeeScreen {
     }
 
     var inputSection: some View {
-        CardView {
-            HStack {
-                TextField("Type country name...", text: $typedText)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.characters)
-                    .focused($isInputFocused)
-                    .onChange(of: typedText) { _, newValue in
-                        validateInput(newValue)
-                    }
-                if !typedText.isEmpty {
-                    Button { typedText = "" } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                    }
-                    .buttonStyle(.plain)
-                }
+        TextField("", text: $typedText)
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.characters)
+            .focused($isInputFocused)
+            .onChange(of: typedText) { _, newValue in
+                validateInput(newValue)
             }
-            .padding(DesignSystem.Spacing.md)
-        }
+            .frame(width: 1, height: 1)
+            .opacity(0)
     }
 
     var hintButtons: some View {

@@ -238,7 +238,7 @@ private extension HomeScreen {
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
                 .accessibilityLabel("Friends")
         }
-        .buttonStyle(.bordered)
+        .buttonStyle(.borderedProminent)
     }
 
     var xpIndicator: some View {
