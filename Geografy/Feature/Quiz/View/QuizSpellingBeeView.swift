@@ -21,7 +21,11 @@ struct QuizSpellingBeeView: View {
 
             letterGridSection
 
-            Spacer(minLength: DesignSystem.Spacing.md)
+            if !showFeedback {
+                skipButton
+            }
+
+            Spacer(minLength: DesignSystem.Spacing.sm)
 
             inputSection
         }
@@ -71,6 +75,29 @@ private extension QuizSpellingBeeView {
                     .multilineTextAlignment(.center)
             }
         }
+    }
+}
+
+// MARK: - Letter Grid
+
+    var skipButton: some View {
+        Button {
+            typingInput = correctAnswerText
+            onSubmit()
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: "forward.fill")
+                    .font(DesignSystem.Font.caption)
+
+                Text("Skip")
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+            }
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xxs)
+        }
+        .glassEffect(.regular.interactive(), in: .capsule)
     }
 }
 
