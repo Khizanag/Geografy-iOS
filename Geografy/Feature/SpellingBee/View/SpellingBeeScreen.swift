@@ -12,6 +12,7 @@ struct SpellingBeeScreen: View {
     @State private var roundNumber = 0
     @State private var showCorrectAnswer = false
     @State private var showGuide = false
+    @AppStorage("spellingBee_autoContinue") private var autoContinue = true
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
@@ -25,8 +26,12 @@ struct SpellingBeeScreen: View {
                             flagSection(for: country)
                             hintSection(for: country)
                             letterGrid
-                            inputSection
-                            hintButtons
+                            if showCorrectAnswer, !autoContinue {
+                                nextButton
+                            } else {
+                                inputSection
+                                hintButtons
+                            }
                         }
                     }
                     .padding(.horizontal, DesignSystem.Spacing.md)
@@ -40,6 +45,17 @@ struct SpellingBeeScreen: View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showGuide = true } label: {
                         Image(systemName: "info.circle")
+                    }
+                    .buttonStyle(.plain)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { autoContinue.toggle() } label: {
+                        Image(systemName: autoContinue ? "forward.fill" : "forward")
+                            .foregroundStyle(
+                                autoContinue
+                                    ? DesignSystem.Color.accent
+                                    : DesignSystem.Color.textTertiary
+                            )
                     }
                     .buttonStyle(.plain)
                 }
@@ -179,6 +195,12 @@ private extension SpellingBeeScreen {
                 )
                 .frame(maxWidth: 36)
             }
+        }
+    }
+
+    var nextButton: some View {
+        GlassButton("Next", systemImage: "arrow.right", fullWidth: true) {
+            loadNextCountry()
         }
     }
 
@@ -377,15 +399,19 @@ private extension SpellingBeeScreen {
             feedback = .correct
             showCorrectAnswer = true
             isInputFocused = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                loadNextCountry()
+            if autoContinue {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                    loadNextCountry()
+                }
             }
         } else {
             feedback = .wrong
             showCorrectAnswer = true
             isInputFocused = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
-                loadNextCountry()
+            if autoContinue {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+                    loadNextCountry()
+                }
             }
         }
     }
