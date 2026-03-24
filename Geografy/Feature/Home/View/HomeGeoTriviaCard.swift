@@ -42,7 +42,7 @@ private extension HomeGeoTriviaCard {
 
     var gameInfo: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text("Geo Trivia")
+            Text("Trivia")
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)

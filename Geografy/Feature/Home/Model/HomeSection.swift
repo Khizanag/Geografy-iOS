@@ -50,7 +50,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .organizations: "Organizations"
         case .progress: "Statistics"
         case .flagGame: "Flag Matching"
-        case .geoTrivia: "Geo Trivia"
+        case .geoTrivia: "Trivia"
         case .spellingBee: "Spelling Bee"
         case .learningPath: "Learning Path"
         case .mapPuzzle: "Map Puzzle"

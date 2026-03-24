@@ -103,12 +103,12 @@ extension HomeScreen {
     }
 }
 
-// MARK: - Geo Trivia Section
+// MARK: - Trivia Section
 
 extension HomeScreen {
     var geoTriviaSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geo Trivia", isNew: true)
+            SectionHeaderView(title: "Trivia", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeGeoTriviaCard { coordinator.present(.geoTrivia) }
         }
