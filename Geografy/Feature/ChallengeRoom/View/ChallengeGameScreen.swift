@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ChallengeGameScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(HapticsService.self) private var hapticsService
 
     @State private var room: ChallengeRoom
     @State private var showingPassScreen = true
@@ -17,78 +18,98 @@ struct ChallengeGameScreen: View {
     }
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            if room.isFinished {
-                ChallengeResultScreen(room: room, challengeRoomService: challengeRoomService) {
-                    dismiss()
+        NavigationStack {
+            Group {
+                if room.isFinished {
+                    ChallengeResultScreen(
+                        room: room,
+                        challengeRoomService: challengeRoomService
+                    ) {
+                        dismiss()
+                    }
+                } else if showingPassScreen {
+                    passScreen
+                } else {
+                    questionScreen
                 }
-            } else if showingPassScreen {
-                passScreen
-            } else {
-                questionScreen
+            }
+            .background { AmbientBlobsView(.quiz) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Challenge")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton { dismiss() }
+                }
             }
         }
     }
 }
 
-// MARK: - Subviews
+// MARK: - Pass Screen
 
 private extension ChallengeGameScreen {
     var passScreen: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             Spacer()
-            passIcon
-            passLabel
+
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.orange.opacity(0.15))
+                    .frame(width: 96, height: 96)
+                Image(systemName: "hand.point.right.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(DesignSystem.Color.orange)
+            }
+
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                Text("Pass to")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+
+                Text(room.currentPlayerName)
+                    .font(DesignSystem.Font.title)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                Text("Round \(String(room.roundNumber)) of \(String(room.totalRounds))")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+
+                scoreRow
+            }
+
             Spacer()
-            passButton
-        }
-        .padding(.horizontal, DesignSystem.Spacing.lg)
-        .padding(.vertical, DesignSystem.Spacing.xl)
-    }
 
-    var passIcon: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.orange.opacity(0.25), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 60
-                    )
-                )
-                .frame(width: 120, height: 120)
-            Image(systemName: "hand.point.right.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(DesignSystem.Color.orange)
-        }
-    }
-
-    var passLabel: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Text("Pass to")
-                .font(.title2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            Text(room.currentPlayerName)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Round \(room.roundNumber) of \(room.totalRounds)")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .padding(.top, DesignSystem.Spacing.xs)
-            scoreRow
+            GlassButton("I'm Ready", systemImage: "play.fill", fullWidth: true) {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    showingPassScreen = false
+                    selectedOptionIndex = nil
+                    showingResult = false
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.lg)
         }
     }
 
     var scoreRow: some View {
         HStack(spacing: DesignSystem.Spacing.lg) {
-            scoreChip(name: room.player1Name, score: room.player1Score, isActive: room.currentPlayerIndex == 0)
+            scoreChip(
+                name: room.player1Name,
+                score: room.player1Score,
+                isActive: room.currentPlayerIndex == 0
+            )
+
             Text("vs")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            scoreChip(name: room.player2Name, score: room.player2Score, isActive: room.currentPlayerIndex == 1)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+
+            scoreChip(
+                name: room.player2Name,
+                score: room.player2Score,
+                isActive: room.currentPlayerIndex == 1
+            )
         }
         .padding(.top, DesignSystem.Spacing.sm)
     }
@@ -96,173 +117,161 @@ private extension ChallengeGameScreen {
     func scoreChip(name: String, score: Int, isActive: Bool) -> some View {
         VStack(spacing: 2) {
             Text("\(score)")
-                .font(.title2)
+                .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(isActive ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary)
+                .contentTransition(.numericText())
+
             Text(name)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .lineLimit(1)
         }
     }
+}
 
-    var passButton: some View {
-        GlassButton("I'm Ready — Show Question", fullWidth: true) {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                showingPassScreen = false
-                selectedOptionIndex = nil
-                showingResult = false
-            }
-        }
-    }
+// MARK: - Question Screen
 
+private extension ChallengeGameScreen {
     var questionScreen: some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            progressBar
-            if let question = room.currentQuestion {
-                questionCard(question)
-                optionsGrid(question)
-            }
-            if showingResult {
-                nextButton
-            }
-            Spacer()
+        VStack(spacing: DesignSystem.Spacing.md) {
+            progressSection
+
+            playerBadge
+
+            questionPrompt
+
+            optionsList
+
+            Spacer(minLength: 0)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.top, DesignSystem.Spacing.xl)
-    }
-
-    var progressBar: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            HStack {
-                Text(room.currentPlayerName)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer()
-                Text("Round \(room.roundNumber)/\(room.totalRounds)")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+        .padding(.top, DesignSystem.Spacing.sm)
+        .safeAreaInset(edge: .bottom) {
+            if showingResult {
+                nextButton
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.bottom, DesignSystem.Spacing.md)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             }
-            GeometryReader { geometryReader in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(DesignSystem.Color.accent.opacity(0.15))
-                        .frame(height: 6)
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(DesignSystem.Color.accent)
-                        .frame(
-                            width: geometryReader.size.width * progressRatio,
-                            height: 6
-                        )
-                        .animation(.easeInOut(duration: 0.3), value: room.roundNumber)
-                }
-            }
-            .frame(height: 6)
         }
     }
 
-    func questionCard(_ question: ChallengeQuestion) -> some View {
-        CardView {
+    var progressSection: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SessionProgressBar(progress: progressFraction)
+
+            QuestionCounterPill(
+                current: (room.roundNumber - 1) * 2 + room.currentPlayerIndex + 1,
+                total: room.totalRounds * 2
+            )
+        }
+    }
+
+    var playerBadge: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            Circle()
+                .fill(room.currentPlayerIndex == 0 ? DesignSystem.Color.blue : DesignSystem.Color.orange)
+                .frame(width: 8, height: 8)
+
+            Text(room.currentPlayerName)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            Spacer()
+
+            Text("\(room.player1Score) – \(room.player2Score)")
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+    }
+
+    @ViewBuilder
+    var questionPrompt: some View {
+        if let question = room.currentQuestion {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Text(question.category)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.accent)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .textCase(.uppercase)
+                    .kerning(0.8)
+
                 Text(question.question)
-                    .font(.title3)
+                    .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(DesignSystem.Spacing.md)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.lg)
         }
     }
 
-    func optionsGrid(_ question: ChallengeQuestion) -> some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(question.options.indices, id: \.self) { index in
-                optionButton(
-                    text: question.options[index],
-                    index: index,
-                    correctIndex: question.correctIndex,
-                    question: question
-                )
-            }
-        }
-    }
-
-    func optionButton(text: String, index: Int, correctIndex: Int, question: ChallengeQuestion) -> some View {
-        let isSelected = selectedOptionIndex == index
-        let isCorrect = index == correctIndex
-        let backgroundColor = optionBackground(
-            isSelected: isSelected,
-            isCorrect: isCorrect,
-            showingResult: showingResult
-        )
-
-        return Button {
-            guard !showingResult else { return }
-            selectedOptionIndex = index
-            wasCorrect = index == correctIndex
-            challengeRoomService.score(room: &room, wasCorrect: wasCorrect)
-            withAnimation(.easeInOut(duration: 0.25)) {
-                showingResult = true
-            }
-        } label: {
-            HStack {
-                Text(text)
-                    .font(DesignSystem.Font.body)
-                    .fontWeight(.medium)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                if showingResult, isCorrect {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(DesignSystem.Color.success)
-                } else if showingResult, isSelected, !isCorrect {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(DesignSystem.Color.error)
+    @ViewBuilder
+    var optionsList: some View {
+        if let question = room.currentQuestion {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(question.options.indices, id: \.self) { index in
+                    QuizOptionButton(
+                        text: question.options[index],
+                        flagCode: nil,
+                        state: optionState(index: index, correctIndex: question.correctIndex),
+                        index: index
+                    ) {
+                        selectOption(index, correctIndex: question.correctIndex)
+                    }
                 }
             }
-            .padding(DesignSystem.Spacing.md)
-            .background(backgroundColor, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
         }
-        .buttonStyle(PressButtonStyle())
-        .disabled(showingResult)
     }
 
     var nextButton: some View {
-        GlassButton(isLastTurnInGame ? "See Results" : "Next", fullWidth: true) {
+        GlassButton(
+            isLastTurnInGame ? "See Results" : "Next",
+            systemImage: isLastTurnInGame ? "trophy.fill" : "arrow.right",
+            fullWidth: true
+        ) {
             advanceToNext()
         }
-        .transition(.move(edge: .bottom).combined(with: .opacity))
     }
 }
 
 // MARK: - Actions
 
 private extension ChallengeGameScreen {
-    var progressRatio: Double {
-        let totalQuestions = Double(room.totalRounds)
-        let currentRound = Double(room.roundNumber)
-        return min(currentRound / totalQuestions, 1.0)
+    var progressFraction: CGFloat {
+        guard room.totalRounds > 0 else { return 0 }
+        let totalTurns = CGFloat(room.totalRounds * 2)
+        let completedTurns = CGFloat((room.roundNumber - 1) * 2 + room.currentPlayerIndex)
+        return completedTurns / totalTurns
     }
 
     var isLastTurnInGame: Bool {
         room.roundNumber == room.totalRounds && room.currentPlayerIndex == 1
     }
 
-    func optionBackground(isSelected: Bool, isCorrect: Bool, showingResult: Bool) -> Color {
+    func optionState(index: Int, correctIndex: Int) -> QuizOptionButton.OptionState {
         guard showingResult else {
-            return isSelected ? DesignSystem.Color.accent.opacity(0.15) : DesignSystem.Color.cardBackground
+            return selectedOptionIndex == index ? .default : .default
         }
-        if isCorrect { return DesignSystem.Color.success.opacity(0.15) }
-        if isSelected { return DesignSystem.Color.error.opacity(0.15) }
-        return DesignSystem.Color.cardBackground
+        if index == correctIndex { return .correct }
+        if selectedOptionIndex == index { return .incorrect }
+        return .disabled
+    }
+
+    func selectOption(_ index: Int, correctIndex: Int) {
+        guard !showingResult else { return }
+        selectedOptionIndex = index
+        wasCorrect = index == correctIndex
+        challengeRoomService.score(room: &room, wasCorrect: wasCorrect)
+        hapticsService.notification(wasCorrect ? .success : .error)
+        withAnimation(.easeInOut(duration: 0.25)) {
+            showingResult = true
+        }
     }
 
     func advanceToNext() {
