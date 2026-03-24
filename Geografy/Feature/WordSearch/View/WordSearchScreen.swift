@@ -2,367 +2,142 @@ import SwiftUI
 
 struct WordSearchScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(HapticsService.self) private var hapticsService
 
     @State private var selectedTheme: WordSearchTheme = .capitals
-    @State private var puzzle: WordSearchPuzzle?
-    @State private var selectionStart: GridCoord?
-    @State private var selectionEnd: GridCoord?
-    @State private var foundWordIDs: Set<UUID> = []
-    @State private var elapsedSeconds = 0
-    @State private var timerActive = false
-    @State private var isRevealed = false
-
-    private let service = WordSearchService()
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var showGame = false
+    @State private var showGuide = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            mainContent
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                heroSection
+                themeSection
+                howItWorksSection
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.md)
         }
+        .safeAreaInset(edge: .bottom) {
+            GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
+                showGame = true
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
+        }
+        .background(DesignSystem.Color.background)
         .navigationTitle("Word Search")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                CircleCloseButton { dismiss() }
+                Button { showGuide = true } label: {
+                    Image(systemName: "info.circle")
+                }
+                .buttonStyle(.plain)
             }
             ToolbarItem(placement: .topBarTrailing) {
-                timerLabel
+                CircleCloseButton()
             }
         }
-        .onReceive(timer) { _ in
-            guard timerActive else { return }
-            elapsedSeconds += 1
+        .sheet(isPresented: $showGuide) { wordSearchGuide }
+        .fullScreenCover(isPresented: $showGame) {
+            WordSearchGameScreen(theme: selectedTheme)
         }
-        .task { startNewPuzzle() }
     }
 }
 
 // MARK: - Subviews
 
 private extension WordSearchScreen {
-    var mainContent: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                themeSelector
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                puzzleContent
+    var heroSection: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.12))
+                    .frame(width: 96, height: 96)
+                Image(systemName: "character.magnify")
+                    .font(.system(size: 44))
+                    .foregroundStyle(DesignSystem.Color.accent)
             }
-            .padding(.top, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
+            Text("Find hidden country names\nin a grid of letters")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, DesignSystem.Spacing.md)
     }
 
-    @ViewBuilder
-    var puzzleContent: some View {
-        if let puzzle {
-            gridSection(puzzle)
-            wordListSection(puzzle)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-            giveUpButton
-                .padding(.horizontal, DesignSystem.Spacing.md)
-            Spacer(minLength: DesignSystem.Spacing.xxl)
-        } else {
-            ProgressView()
-                .tint(DesignSystem.Color.accent)
-                .padding(.top, DesignSystem.Spacing.xxl)
-        }
-    }
-
-    var timerLabel: some View {
-        Text(formattedTime)
-            .font(DesignSystem.Font.caption)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .monospacedDigit()
-    }
-
-    var themeSelector: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
+    var themeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Theme")
+            Picker("Theme", selection: $selectedTheme) {
                 ForEach(WordSearchTheme.allCases, id: \.self) { theme in
-                    themeChip(theme)
+                    Label(theme.rawValue, systemImage: theme.icon).tag(theme)
                 }
             }
+            .pickerStyle(.segmented)
         }
     }
 
-    func themeChip(_ theme: WordSearchTheme) -> some View {
-        Button {
-            selectedTheme = theme
-            startNewPuzzle()
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: theme.icon)
-                    .font(DesignSystem.Font.caption2)
-                Text(theme.rawValue)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(
-                selectedTheme == theme
-                    ? DesignSystem.Color.onAccent
-                    : DesignSystem.Color.textSecondary
-            )
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                selectedTheme == theme
-                    ? DesignSystem.Color.accent
-                    : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
-        }
-        .buttonStyle(.plain)
-    }
-
-    func gridSection(_ puzzle: WordSearchPuzzle) -> some View {
-        GeometryReader { geometry in
-            let availableWidth = geometry.size.width - DesignSystem.Spacing.md * 2
-            let computedCellSize = availableWidth / CGFloat(service.gridSize)
-
-            VStack(spacing: 0) {
-                ForEach(0..<service.gridSize, id: \.self) { row in
-                    HStack(spacing: 0) {
-                        ForEach(0..<service.gridSize, id: \.self) { col in
-                            gridCell(
-                                row: row,
-                                col: col,
-                                letter: puzzle.grid[row][col],
-                                cellSize: computedCellSize,
-                                puzzle: puzzle
-                            )
-                        }
-                    }
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .gesture(dragGesture(cellSize: computedCellSize, puzzle: puzzle))
-        }
-        .frame(height: CGFloat(service.gridSize) * 28 + DesignSystem.Spacing.md * 2)
-    }
-
-    func gridCell(
-        row: Int,
-        col: Int,
-        letter: Character,
-        cellSize: CGFloat,
-        puzzle: WordSearchPuzzle
-    ) -> some View {
-        let isHighlighted = isCellHighlighted(row: row, col: col)
-        let isFound = isCellFound(row: row, col: col, puzzle: puzzle)
-
-        return ZStack {
-            RoundedRectangle(cornerRadius: 4)
-                .fill(cellBackground(isHighlighted: isHighlighted, isFound: isFound))
-            Text(String(letter))
-                .font(.system(size: cellSize * 0.52, weight: .semibold, design: .monospaced))
-                .foregroundStyle(
-                    isHighlighted || isFound
-                        ? DesignSystem.Color.onAccent
-                        : DesignSystem.Color.textPrimary
-                )
-        }
-        .frame(width: cellSize, height: cellSize)
-    }
-
-    func cellBackground(isHighlighted: Bool, isFound: Bool) -> Color {
-        if isFound { return DesignSystem.Color.success.opacity(0.7) }
-        if isHighlighted { return DesignSystem.Color.accent }
-        return .clear
-    }
-
-    func wordListSection(_ puzzle: WordSearchPuzzle) -> some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                SectionHeaderView(title: "Find These Words")
-                    .padding(.horizontal, DesignSystem.Spacing.sm)
-                    .padding(.top, DesignSystem.Spacing.sm)
-                LazyVGrid(
-                    columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible()),
-                    ],
-                    spacing: DesignSystem.Spacing.xs
-                ) {
-                    ForEach(puzzle.words) { wordItem in
-                        wordChip(wordItem)
-                    }
-                }
-                .padding(.horizontal, DesignSystem.Spacing.sm)
-                .padding(.bottom, DesignSystem.Spacing.sm)
+    var howItWorksSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "How It Works", icon: "lightbulb.fill")
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                tipRow(icon: "hand.draw.fill", text: "Drag across letters to select a word")
+                tipRow(icon: "checkmark.circle.fill", text: "Found words highlight in green")
+                tipRow(icon: "clock.fill", text: "Timer tracks how fast you finish")
+                tipRow(icon: "eye.fill", text: "Stuck? Reveal answers anytime")
             }
         }
     }
 
-    func wordChip(_ wordItem: WordSearchWord) -> some View {
-        let isUserFound = foundWordIDs.contains(wordItem.id)
-        let isRevealedOnly = isRevealed && !isUserFound
-        let isAnyFound = isUserFound || isRevealedOnly
-
-        return HStack(spacing: DesignSystem.Spacing.xxs) {
-            if isUserFound {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.success)
-            } else if isRevealedOnly {
-                Image(systemName: "eye.fill")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.warning)
-            }
-            Text(wordItem.word)
+    func tipRow(icon: String, text: String) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(chipTextColor(isUserFound: isUserFound, isRevealedOnly: isRevealedOnly))
-                .strikethrough(isAnyFound)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .frame(width: 24)
+            Text(text)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer(minLength: 0)
         }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            chipBackground(isUserFound: isUserFound, isRevealedOnly: isRevealedOnly),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-        )
+        .padding(DesignSystem.Spacing.sm)
+        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 
-    func chipTextColor(isUserFound: Bool, isRevealedOnly: Bool) -> Color {
-        if isUserFound { return DesignSystem.Color.success }
-        if isRevealedOnly { return DesignSystem.Color.warning }
-        return DesignSystem.Color.textPrimary
-    }
-
-    func chipBackground(isUserFound: Bool, isRevealedOnly: Bool) -> Color {
-        if isUserFound { return DesignSystem.Color.success.opacity(0.12) }
-        if isRevealedOnly { return DesignSystem.Color.warning.opacity(0.12) }
-        return DesignSystem.Color.cardBackground
-    }
-
-    var giveUpButton: some View {
-        GlassButton("Give Up — Reveal Answers", role: .secondary, fullWidth: true) {
-            revealAllWords()
-        }
-    }
-}
-
-// MARK: - Gesture
-
-private extension WordSearchScreen {
-    func dragGesture(cellSize: CGFloat, puzzle: WordSearchPuzzle) -> some Gesture {
-        DragGesture(minimumDistance: 0)
-            .onChanged { value in
-                let col = Int(value.location.x / cellSize)
-                let row = Int(value.location.y / cellSize)
-                let clampedRow = max(0, min(service.gridSize - 1, row))
-                let clampedCol = max(0, min(service.gridSize - 1, col))
-
-                if selectionStart == nil {
-                    selectionStart = GridCoord(row: clampedRow, col: clampedCol)
-                }
-                selectionEnd = GridCoord(row: clampedRow, col: clampedCol)
+    var wordSearchGuide: some View {
+        GuideSheet(
+            pages: [
+                GuidePage(
+                    title: "Find Hidden Words",
+                    subtitle: "Country names and capitals are hidden in a grid of letters. Drag to select them!",
+                    steps: [
+                        GuideStep(icon: "hand.draw.fill", title: "Drag to Select", description: "Drag across letters horizontally, vertically, or diagonally"),
+                        GuideStep(icon: "checkmark.circle.fill", title: "Words Highlight", description: "Correctly found words turn green in the grid"),
+                        GuideStep(icon: "clock.fill", title: "Race the Clock", description: "Your time is tracked — try to beat your best"),
+                    ]
+                ),
+                GuidePage(
+                    title: "Tips & Tricks",
+                    subtitle: "Master the word search with these strategies.",
+                    steps: [
+                        GuideStep(icon: "eye.fill", title: "Scan Systematically", description: "Check each row and column one at a time"),
+                        GuideStep(icon: "arrow.left.arrow.right", title: "Words Go Both Ways", description: "Words can be placed forward or backward"),
+                        GuideStep(icon: "arrow.up.left.and.arrow.down.right", title: "Try Diagonals", description: "Don't forget diagonal words — they're sneaky"),
+                    ]
+                ),
+            ]
+        ) { _ in
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.08))
+                    .frame(width: 140, height: 140)
+                Image(systemName: "character.magnify")
+                    .font(.system(size: 56))
+                    .foregroundStyle(DesignSystem.Color.accent)
             }
-            .onEnded { _ in
-                if let start = selectionStart, let end = selectionEnd {
-                    checkSelection(from: start, to: end, puzzle: puzzle)
-                }
-                selectionStart = nil
-                selectionEnd = nil
-            }
-    }
-}
-
-// MARK: - Actions
-
-private extension WordSearchScreen {
-    var formattedTime: String {
-        let minutes = elapsedSeconds / 60
-        let seconds = elapsedSeconds % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
-
-    func startNewPuzzle() {
-        foundWordIDs = []
-        elapsedSeconds = 0
-        isRevealed = false
-        puzzle = service.makePuzzle(theme: selectedTheme)
-        timerActive = true
-    }
-
-    func isCellHighlighted(row: Int, col: Int) -> Bool {
-        guard let start = selectionStart, let end = selectionEnd else { return false }
-        return selectedCells(from: start, to: end).contains(GridCoord(row: row, col: col))
-    }
-
-    func isCellFound(row: Int, col: Int, puzzle: WordSearchPuzzle) -> Bool {
-        let coord = GridCoord(row: row, col: col)
-        return puzzle.words.contains { wordItem in
-            guard foundWordIDs.contains(wordItem.id) || isRevealed else { return false }
-            return wordCoversCells(wordItem).contains(coord)
+            .frame(height: 180)
         }
-    }
-
-    func selectedCells(from start: GridCoord, to end: GridCoord) -> [GridCoord] {
-        let rowDelta = end.row - start.row
-        let colDelta = end.col - start.col
-        let steps = max(abs(rowDelta), abs(colDelta))
-        guard steps > 0 else { return [start] }
-
-        let rowStep = rowDelta == 0 ? 0 : rowDelta / abs(rowDelta)
-        let colStep = colDelta == 0 ? 0 : colDelta / abs(colDelta)
-
-        guard abs(rowDelta) == 0 || abs(colDelta) == 0 || abs(rowDelta) == abs(colDelta) else {
-            return [start]
-        }
-
-        return (0...steps).map { index in
-            GridCoord(row: start.row + rowStep * index, col: start.col + colStep * index)
-        }
-    }
-
-    func wordCoversCells(_ wordItem: WordSearchWord) -> [GridCoord] {
-        let (rowDelta, colDelta) = service.delta(for: wordItem.direction)
-        return (0..<wordItem.word.count).map { index in
-            GridCoord(
-                row: wordItem.startRow + rowDelta * index,
-                col: wordItem.startCol + colDelta * index
-            )
-        }
-    }
-
-    func checkSelection(from start: GridCoord, to end: GridCoord, puzzle: WordSearchPuzzle) {
-        let cells = selectedCells(from: start, to: end)
-
-        for wordItem in puzzle.words where !foundWordIDs.contains(wordItem.id) {
-            let wordCells = wordCoversCells(wordItem)
-            guard wordCells.count == cells.count else { continue }
-            guard zip(wordCells, cells).allSatisfy({ $0 == $1 }) else { continue }
-            foundWordIDs.insert(wordItem.id)
-            hapticsService.impact(.medium)
-            checkAllFound(puzzle: puzzle)
-            return
-        }
-    }
-
-    func checkAllFound(puzzle: WordSearchPuzzle) {
-        guard foundWordIDs.count == puzzle.words.count else { return }
-        timerActive = false
-        hapticsService.notification(.success)
-    }
-
-    func revealAllWords() {
-        timerActive = false
-        withAnimation(.easeInOut(duration: 0.4)) {
-            isRevealed = true
-        }
-        hapticsService.impact(.light)
-    }
-}
-
-// MARK: - Supporting Types
-
-private extension WordSearchScreen {
-    struct GridCoord: Hashable {
-        let row: Int
-        let col: Int
     }
 }
