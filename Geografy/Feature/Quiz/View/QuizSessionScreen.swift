@@ -22,6 +22,7 @@ struct QuizSessionScreen: View {
     @State private var navigateToResult: QuizResult?
     @State private var countryDataService = CountryDataService()
 
+    @AppStorage("quiz_showAutocomplete") private var showAutocomplete = false
     @State private var typingInput: String = ""
     @State private var showHint: Bool = false
     @State private var typingIsCorrect: Bool = false
@@ -271,6 +272,8 @@ private extension QuizSessionScreen {
                     quizType: configuration.type,
                     showFeedback: showFeedback,
                     isCorrectAnswer: typingIsCorrect,
+                    showAutocomplete: showAutocomplete,
+                    countries: countryDataService.countries,
                     typingInput: $typingInput,
                     showHint: $showHint,
                     showFlagPreview: $showFlagPreview,

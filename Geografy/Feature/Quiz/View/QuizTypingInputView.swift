@@ -7,6 +7,8 @@ struct QuizTypingInputView: View {
     let quizType: QuizType
     let showFeedback: Bool
     let isCorrectAnswer: Bool
+    let showAutocomplete: Bool
+    let countries: [Country]
     @Binding var typingInput: String
     @Binding var showHint: Bool
     @Binding var showFlagPreview: Bool
@@ -112,8 +114,56 @@ private extension QuizTypingInputView {
                     .transition(.scale(scale: 0.9).combined(with: .opacity))
             }
 
+            if showAutocomplete, !filteredSuggestions.isEmpty, isInputFocused, !showFeedback {
+                suggestionsList
+            }
+
             inputField
         }
+    }
+
+    var filteredSuggestions: [Country] {
+        guard showAutocomplete, !typingInput.isEmpty else { return [] }
+        let query = typingInput.lowercased()
+            .folding(options: .diacriticInsensitive, locale: .current)
+        return countries
+            .filter {
+                $0.name.lowercased()
+                    .folding(options: .diacriticInsensitive, locale: .current)
+                    .contains(query)
+            }
+            .prefix(5)
+            .map { $0 }
+    }
+
+    var suggestionsList: some View {
+        VStack(spacing: 0) {
+            ForEach(filteredSuggestions) { country in
+                Button {
+                    typingInput = country.name
+                    isInputFocused = false
+                    onSubmit()
+                } label: {
+                    HStack(spacing: DesignSystem.Spacing.sm) {
+                        FlagView(countryCode: country.code, height: 20)
+
+                        Text(country.name)
+                            .font(DesignSystem.Font.body)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                        Spacer()
+                    }
+                    .padding(.horizontal, DesignSystem.Spacing.sm)
+                    .padding(.vertical, DesignSystem.Spacing.xs)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
     }
 
     var inputField: some View {
