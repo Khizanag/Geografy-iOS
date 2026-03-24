@@ -1,10 +1,5 @@
 import SwiftUI
 
-protocol RegionSelectable: Identifiable, Hashable {
-    var displayName: String { get }
-    var regionIcon: String { get }
-}
-
 struct RegionSelectionBar<T: RegionSelectable>: View {
     @Environment(HapticsService.self) private var hapticsService
 

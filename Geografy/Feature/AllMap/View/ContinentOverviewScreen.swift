@@ -18,6 +18,7 @@ struct ContinentOverviewScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background)
         .navigationTitle(continent.displayName)

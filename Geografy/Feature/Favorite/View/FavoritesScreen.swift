@@ -19,11 +19,14 @@ struct FavoritesScreen: View {
 
     var body: some View {
         ScrollView {
-            if filteredCountries.isEmpty {
-                emptyState
-            } else {
-                countryList
+            Group {
+                if filteredCountries.isEmpty {
+                    emptyState
+                } else {
+                    countryList
+                }
             }
+            .readableContentWidth()
         }
         .navigationTitle("Favorites")
         .searchable(text: $searchText, prompt: "Search favorites")

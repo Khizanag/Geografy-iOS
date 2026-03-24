@@ -1,10 +1,5 @@
 import SwiftUI
 
-struct PercentageItem {
-    let name: String
-    let percentage: Double
-}
-
 struct PercentageBarChart: View {
     let title: String
     let icon: String

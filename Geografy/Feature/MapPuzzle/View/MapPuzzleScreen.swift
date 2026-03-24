@@ -65,6 +65,7 @@ private extension MapPuzzleScreen {
                 }
             }
             .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
     }
 

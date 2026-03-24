@@ -21,6 +21,7 @@ struct WorldRecordsScreen: View {
                 }
             }
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())

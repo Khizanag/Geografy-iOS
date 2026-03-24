@@ -49,6 +49,7 @@ private extension TimelineScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.xs)
+            .readableContentWidth()
         }
     }
 

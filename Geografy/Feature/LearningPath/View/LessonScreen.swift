@@ -16,6 +16,7 @@ struct LessonScreen: View {
                 lessonContent
             }
             .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .safeAreaInset(edge: .bottom) {
             completeButton

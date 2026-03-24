@@ -19,6 +19,7 @@ struct MapPuzzleSetupScreen: View {
                 }
             }
             .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())

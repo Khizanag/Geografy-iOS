@@ -56,6 +56,7 @@ private extension NeighborExplorerScreen {
                 }
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
+            .readableContentWidth()
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())

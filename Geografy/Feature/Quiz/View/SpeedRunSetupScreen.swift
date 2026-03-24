@@ -14,6 +14,7 @@ struct SpeedRunSetupScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .safeAreaInset(edge: .bottom) { startButton }
         .background { AmbientBlobsView(.quiz) }

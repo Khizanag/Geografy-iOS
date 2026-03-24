@@ -117,6 +117,7 @@ private extension CustomQuizBuilderScreen {
                 }
             }
             .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
     }
 }

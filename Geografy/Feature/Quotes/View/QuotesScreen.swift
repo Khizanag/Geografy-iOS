@@ -21,6 +21,7 @@ struct QuotesScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Quotes")

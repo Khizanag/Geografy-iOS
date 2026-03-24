@@ -219,6 +219,7 @@ private extension LandmarkQuizScreen {
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .safeAreaInset(edge: .bottom) {
             GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {

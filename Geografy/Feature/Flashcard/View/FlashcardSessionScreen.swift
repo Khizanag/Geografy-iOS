@@ -76,6 +76,7 @@ private extension FlashcardSessionScreen {
                 doneButton
             }
             .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .onAppear { submitFlashcardAccuracy() }

@@ -124,6 +124,7 @@ private extension SizeVisualizationScreen {
                 }
             }
             .padding(.vertical, DesignSystem.Spacing.sm)
+            .readableContentWidth()
         }
     }
 

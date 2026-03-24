@@ -1,12 +1,5 @@
 import SwiftUI
 
-protocol SelectableType: Identifiable, Hashable {
-    var displayName: String { get }
-    var icon: String { get }
-    var emoji: String { get }
-    var description: String { get }
-}
-
 struct TypeSelectionGrid<T: SelectableType>: View {
     @Environment(HapticsService.self) private var hapticsService
 

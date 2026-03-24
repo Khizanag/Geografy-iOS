@@ -174,6 +174,7 @@ private extension HomeScreen {
                         .feedSection(appeared: appeared, delay: 0.08 + Double(index) * 0.04)
                 }
             }
+            .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
             .padding(.top, DesignSystem.Spacing.lg)
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .background(alignment: .top) {

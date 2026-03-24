@@ -20,6 +20,7 @@ struct MultiplayerResultScreen: View {
                     roundByRoundSection
                 }
                 .padding(.vertical, DesignSystem.Spacing.lg)
+                .readableContentWidth()
                 .opacity(showContent ? 1 : 0)
                 .offset(y: showContent ? 0 : 20)
             }

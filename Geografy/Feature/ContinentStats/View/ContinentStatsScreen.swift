@@ -41,6 +41,7 @@ private extension ContinentStatsScreen {
                     .padding(.horizontal, DesignSystem.Spacing.md)
             }
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)

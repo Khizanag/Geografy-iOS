@@ -28,6 +28,7 @@ struct TerritorialDisputesScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Territorial Disputes")

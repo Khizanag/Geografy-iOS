@@ -40,6 +40,7 @@ struct SpellingBeeScreen: View {
                     .padding(.horizontal, DesignSystem.Spacing.md)
                     .padding(.top, DesignSystem.Spacing.lg)
                     .padding(.bottom, DesignSystem.Spacing.xxl)
+                    .readableContentWidth()
                 }
             }
             .navigationTitle("Spelling Bee")
