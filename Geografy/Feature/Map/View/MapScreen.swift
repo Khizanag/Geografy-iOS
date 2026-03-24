@@ -23,10 +23,22 @@ struct MapScreen: View {
                 mapContent(in: geometry.size)
                     .onAppear {
                         screenSize = geometry.size
+                        // Fallback: shapes may have loaded before onAppear fired
+                        if !isInitialized, !mapState.countryShapes.isEmpty {
+                            setInitialScale(for: geometry.size)
+                            isInitialized = true
+                        }
                     }
                     .onChange(of: geometry.size) { _, newSize in
                         screenSize = newSize
                         updateMinScale(for: newSize)
+                    }
+                    .onChange(of: mapState.countryShapes.isEmpty) { _, isEmpty in
+                        // Triggered when shapes first load; re-initialize if screen size is ready
+                        if !isEmpty, screenSize.width > 0, !isInitialized {
+                            setInitialScale(for: screenSize)
+                            isInitialized = true
+                        }
                     }
             }
 
