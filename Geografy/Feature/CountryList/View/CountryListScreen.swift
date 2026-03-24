@@ -35,22 +35,38 @@ struct CountryListScreen: View {
     @State private var showPopulation = true
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: DesignSystem.Spacing.xs, pinnedViews: .sectionHeaders) {
-                if groupBy == .none {
-                    Section {
-                        flatContent
+        ScrollViewReader { proxy in
+            ZStack(alignment: .trailing) {
+                ScrollView {
+                    LazyVStack(spacing: DesignSystem.Spacing.xs, pinnedViews: .sectionHeaders) {
+                        if groupBy == .none {
+                            Section {
+                                flatContent
+                            }
+                        } else {
+                            groupedContent
+                        }
                     }
-                } else {
-                    groupedContent
+                    .padding(.leading, DesignSystem.Spacing.md)
+                    .padding(.trailing, showJumpIndex ? DesignSystem.Spacing.md + 26 : DesignSystem.Spacing.md)
+                    .padding(.bottom, DesignSystem.Spacing.xxl)
+                    .padding(.top, DesignSystem.Spacing.xs)
+                }
+                .background(DesignSystem.Color.background)
+                .scrollDismissesKeyboard(.interactively)
+
+                if showJumpIndex {
+                    AlphabetJumpIndex(letters: sectionKeys) { letter in
+                        hapticsService.selection()
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            expandedSections.insert(letter)
+                            proxy.scrollTo(letter, anchor: .top)
+                        }
+                    }
+                    .padding(.trailing, 4)
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-            .padding(.top, DesignSystem.Spacing.xs)
         }
-        .background(DesignSystem.Color.background)
-        .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Countries")
         .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
         .toolbar { toolbarContent }
@@ -238,6 +254,7 @@ private extension CountryListScreen {
                 }
             } header: {
                 sectionHeader(key: section.key, count: section.countries.count)
+                    .id(section.key)
             }
         }
     }
@@ -344,6 +361,10 @@ private extension CountryListScreen {
 // MARK: - Helpers
 
 private extension CountryListScreen {
+    var showJumpIndex: Bool {
+        groupBy == .firstLetter && !sectionKeys.isEmpty && searchText.isEmpty
+    }
+
     var filteredCountries: [Country] {
         var countries = countryDataService.countries
 
