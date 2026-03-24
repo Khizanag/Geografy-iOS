@@ -22,7 +22,6 @@ struct TravelStatusPickerSheet: View {
         .padding(.top, DesignSystem.Spacing.sm)
         .padding(.bottom, DesignSystem.Spacing.md)
         .presentationDetents([.height(hasExistingStatus ? 240 : 200)])
-        .presentationDragIndicator(.visible)
         .presentationCornerRadius(DesignSystem.CornerRadius.extraLarge)
     }
 }

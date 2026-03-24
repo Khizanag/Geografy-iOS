@@ -44,8 +44,8 @@ private extension SheetFactory {
         case .profile:
             NavigationStack { ProfileScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .countries:
             NavigationStack {
@@ -55,7 +55,7 @@ private extension SheetFactory {
                     }
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .favorites:
             NavigationStack {
@@ -65,26 +65,26 @@ private extension SheetFactory {
                     }
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .organizations:
             NavigationStack { OrganizationsScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .organizationDetail(let organization):
             NavigationStack {
                 OrganizationDetailScreen(organization: organization)
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .coinStore:
             NavigationStack { CoinStoreScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .paywall:
             PaywallScreen()
@@ -104,51 +104,51 @@ private extension SheetFactory {
         case .quizSetup:
             NavigationStack { QuizSetupScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .speedRunSetup:
             NavigationStack { SpeedRunSetupScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .dailyChallenge:
             NavigationStack { DailyChallengeScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .exploreGame:
             NavigationStack { ExploreGameScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .multiplayer:
             NavigationStack {
                 MultiplayerLobbyScreen(multiplayerService: MultiplayerService())
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .quizPacks:
             NavigationStack { QuizPackBrowserScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .customQuiz:
             NavigationStack { CustomQuizLibraryScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .srsStudy:
             NavigationStack { SRSStudyScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .flagGame:
             NavigationStack { FlagGameScreen() }
@@ -185,32 +185,32 @@ private extension SheetFactory {
         case .distanceCalculator:
             NavigationStack { DistanceCalculatorScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .currencyConverter:
             NavigationStack { CurrencyConverterScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .timeZones:
             NavigationStack { TimeZoneScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .compare:
             NavigationStack { CompareScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .timeline:
             NavigationStack { TimelineScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .travelTracker:
             NavigationStack {
@@ -220,19 +220,19 @@ private extension SheetFactory {
                     }
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .travelJournal:
             NavigationStack { TravelJournalScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .travelBucketList:
             NavigationStack { TravelBucketListScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .nationalSymbolsQuiz:
             NavigationStack { NationalSymbolsQuizScreen() }
@@ -264,21 +264,21 @@ private extension SheetFactory {
         case .search:
             NavigationStack { SearchScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .badges:
             NavigationStack {
                 BadgeCollectionScreen(badgeService: BadgeService())
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .leaderboards:
             NavigationStack { LeaderboardScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .achievements:
             NavigationStack {
@@ -287,7 +287,7 @@ private extension SheetFactory {
                     .navigationBarTitleDisplayMode(.large)
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .themes:
             NavigationStack {
@@ -296,13 +296,13 @@ private extension SheetFactory {
                     .navigationBarTitleDisplayMode(.large)
             }
             .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
+
 
         case .settings:
             NavigationStack { SettingsScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .sectionEditor:
             HomeSectionEditorSheet(sections: HomeSection.allCases.map { $0 })
@@ -310,7 +310,7 @@ private extension SheetFactory {
         case .friends:
             NavigationStack { FriendsListScreen() }
                 .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
+    
 
         case .learningPath:
             NavigationStack { LearningPathScreen() }
@@ -319,8 +319,8 @@ private extension SheetFactory {
         case .feed:
             NavigationStack { FeedScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         default:
             EmptyView()
@@ -354,14 +354,14 @@ private extension SheetFactory {
         case .geoQuotes:
             NavigationStack { GeoQuotesScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         case .countryNicknames:
             NavigationStack { CountryNicknamesScreen() }
                 .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
+
+    
 
         default:
             EmptyView()
