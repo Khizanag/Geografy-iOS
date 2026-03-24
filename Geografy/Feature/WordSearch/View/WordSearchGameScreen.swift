@@ -19,18 +19,17 @@ struct WordSearchGameScreen: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
+            Group {
                 if let puzzle {
                     gameContent(puzzle)
                 } else {
-                    Spacer()
                     ProgressView().tint(DesignSystem.Color.accent)
-                    Spacer()
                 }
             }
             .background(DesignSystem.Color.background)
             .navigationTitle("Word Search")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
             .toolbar { toolbarContent }
             .onReceive(timer) { _ in
                 guard timerActive else { return }
@@ -47,9 +46,14 @@ private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            Text(formattedTime)
-                .font(.system(size: 13, weight: .bold, design: .monospaced))
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: "timer")
+                    .font(DesignSystem.Font.caption2)
+                Text(formattedTime)
+                    .font(.system(size: 13, weight: .bold, design: .monospaced))
+            }
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+            .fixedSize()
         }
         ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton { dismiss() }
@@ -67,22 +71,19 @@ private extension WordSearchGameScreen {
 
 private extension WordSearchGameScreen {
     func gameContent(_ puzzle: WordSearchPuzzle) -> some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            progressSection(puzzle)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.top, DesignSystem.Spacing.sm)
-            gridSection(puzzle)
-            wordListSection(puzzle)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        }
-        .safeAreaInset(edge: .bottom) {
-            if !isRevealed, !allFound(puzzle) {
-                GlassButton("Give Up — Reveal", role: .secondary, fullWidth: true) {
-                    revealAllWords()
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.md) {
+                progressSection(puzzle)
+                gridSection(puzzle)
+                wordListSection(puzzle)
+                if !isRevealed, !allFound(puzzle) {
+                    GlassButton("Give Up — Reveal", role: .secondary, fullWidth: true) {
+                        revealAllWords()
+                    }
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
     }
 
@@ -95,8 +96,7 @@ private extension WordSearchGameScreen {
 
     func gridSection(_ puzzle: WordSearchPuzzle) -> some View {
         GeometryReader { geometry in
-            let availableWidth = geometry.size.width - DesignSystem.Spacing.md * 2
-            let computedCellSize = availableWidth / CGFloat(service.gridSize)
+            let computedCellSize = geometry.size.width / CGFloat(service.gridSize)
 
             VStack(spacing: 0) {
                 ForEach(0..<service.gridSize, id: \.self) { row in
@@ -114,10 +114,9 @@ private extension WordSearchGameScreen {
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-            .padding(.horizontal, DesignSystem.Spacing.md)
             .gesture(dragGesture(cellSize: computedCellSize, puzzle: puzzle))
         }
-        .frame(height: CGFloat(service.gridSize) * 32)
+        .aspectRatio(1, contentMode: .fit)
     }
 
     func gridCell(
