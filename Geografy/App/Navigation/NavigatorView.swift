@@ -37,21 +37,26 @@ final class Coordinator {
 struct NavigatorView<Root: View>: View {
     @Environment(\.dismiss) private var dismiss
     @State private var coordinator = Coordinator()
+
+    private let canBeDismissed: Bool
     @ViewBuilder private var root: () -> Root
 
-    init(@ViewBuilder root: @escaping () -> Root) {
+    init(
+        canBeDismissed: Bool = true,
+        @ViewBuilder root: @escaping () -> Root
+    ) {
+        self.canBeDismissed = canBeDismissed
         self.root = root
     }
 
     var body: some View {
         NavigationStack(path: $coordinator.path) {
-            root()
+            rootContent
                 .navigationDestination(for: Destination.self) { destination in
                     destination.content
-                        .navigationBarBackButtonHidden()
                         .toolbar {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                CircleCloseButton { coordinator.dismiss() }
+                            if canBeDismissed {
+                                dismissToolbarItem
                             }
                         }
                 }
@@ -60,5 +65,28 @@ struct NavigatorView<Root: View>: View {
             dismiss()
         }
         .environment(coordinator)
+    }
+}
+
+// MARK: - Subviews
+
+private extension NavigatorView {
+    @ViewBuilder
+    var rootContent: some View {
+        if canBeDismissed {
+            root()
+                .toolbar {
+                    dismissToolbarItem
+                }
+        } else {
+            root()
+        }
+    }
+
+    @ToolbarContentBuilder
+    var dismissToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            CircleCloseButton { coordinator.dismiss() }
+        }
     }
 }

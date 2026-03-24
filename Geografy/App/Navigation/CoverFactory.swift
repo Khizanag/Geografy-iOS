@@ -5,11 +5,8 @@ enum CoverFactory {
     static func view(for cover: Cover) -> some View {
         switch cover {
         case .map(let continentFilter):
-            NavigationStack {
+            NavigatorView(canBeDismissed: false) {
                 MapScreen(continentFilter: continentFilter)
-                    .navigationDestination(for: Country.self) { country in
-                        CountryDetailScreen(country: country)
-                    }
             }
 
         case .quizSession(let configuration):
