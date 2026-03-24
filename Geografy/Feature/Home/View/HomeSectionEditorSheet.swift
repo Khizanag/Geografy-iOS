@@ -72,7 +72,9 @@ private extension HomeSectionEditorSheet {
             Text("Done")
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
+        .buttonStyle(.plain)
     }
 
     var resetButton: some View {
