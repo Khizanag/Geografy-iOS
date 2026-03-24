@@ -160,7 +160,7 @@ private extension SpellingBeeScreen {
     var letterCells: some View {
         let target = currentCountry?.name ?? ""
         let segments = splitIntoSegments(target)
-        let targetLettersOnly = target.lowercased().filter { $0.isLetter }
+        let targetLettersOnly = Array(target.lowercased().filter { $0.isLetter })
         let typedLettersOnly = Array(typedText.lowercased().filter { $0.isLetter })
 
         return VStack(spacing: DesignSystem.Spacing.xs) {
