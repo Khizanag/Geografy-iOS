@@ -9,6 +9,7 @@ struct ChallengeGameScreen: View {
     @State private var selectedOptionIndex: Int?
     @State private var showingResult = false
     @State private var wasCorrect = false
+    @State private var showResultScreen = false
 
     private let challengeRoomService: ChallengeRoomService
 
@@ -35,7 +36,7 @@ struct ChallengeGameScreen: View {
                     CircleCloseButton { dismiss() }
                 }
             }
-            .navigationDestination(isPresented: .constant(room.isFinished)) {
+            .navigationDestination(isPresented: $showResultScreen) {
                 ChallengeResultScreen(
                     room: room,
                     challengeRoomService: challengeRoomService
@@ -280,7 +281,9 @@ private extension ChallengeGameScreen {
 
     func advanceToNext() {
         challengeRoomService.advance(room: &room)
-        if !room.isFinished {
+        if room.isFinished {
+            showResultScreen = true
+        } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 showingPassScreen = true
                 showingResult = false
