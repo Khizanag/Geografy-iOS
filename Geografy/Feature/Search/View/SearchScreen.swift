@@ -415,21 +415,25 @@ private extension SearchScreen {
         var result: [SearchResultSection] = []
 
         if !countryMatches.isEmpty {
-            result.append(SearchResultSection(
-                id: "countries",
-                title: "Countries",
-                icon: "globe",
-                rows: countryMatches.prefix(8).map { .country($0) }
-            ))
+            result.append(
+                SearchResultSection(
+                    id: "countries",
+                    title: "Countries",
+                    icon: "globe",
+                    rows: countryMatches.prefix(8).map { .country($0) }
+                )
+            )
         }
 
         if !capitalMatches.isEmpty {
-            result.append(SearchResultSection(
-                id: "capitals",
-                title: "Capitals",
-                icon: "building.2.fill",
-                rows: capitalMatches.prefix(6).map { .capital(country: $0.0, capitalName: $0.1) }
-            ))
+            result.append(
+                SearchResultSection(
+                    id: "capitals",
+                    title: "Capitals",
+                    icon: "building.2.fill",
+                    rows: capitalMatches.prefix(6).map { .capital(country: $0.0, capitalName: $0.1) }
+                )
+            )
         }
 
         if !orgMatches.isEmpty {
