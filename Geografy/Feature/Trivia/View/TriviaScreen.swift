@@ -106,10 +106,15 @@ private extension TriviaScreen {
     var gameContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             streakAndProgressBar
+
             Spacer()
+
             cardStack
+
             swipeLabels
+
             Spacer()
+
             instructionLabel
         }
         .padding(.horizontal, DesignSystem.Spacing.md)

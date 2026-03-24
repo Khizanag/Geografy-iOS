@@ -22,14 +22,19 @@ struct SpellingBeeScreen: View {
                 ScrollView {
                     VStack(spacing: DesignSystem.Spacing.lg) {
                         scorePill
+
                         if let country = currentCountry {
                             flagSection(for: country)
+
                             hintSection(for: country)
+
                             letterGrid
+
                             if showCorrectAnswer, !autoContinue {
                                 nextButton
                             } else {
                                 inputSection
+
                                 hintButtons
                             }
                         }

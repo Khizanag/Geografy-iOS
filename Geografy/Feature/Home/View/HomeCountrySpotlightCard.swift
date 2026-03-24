@@ -8,9 +8,13 @@ struct HomeCountrySpotlightCard: View {
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 headerBadge
+
                 flagSection
+
                 nameSection
+
                 statsStrip
+
                 if let fact = funFact {
                     funFactRow(fact)
                 }

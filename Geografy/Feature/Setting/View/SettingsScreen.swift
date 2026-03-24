@@ -39,8 +39,6 @@ struct SettingsScreen: View {
                 CircleCloseButton()
             }
         }
-        .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
         .task { await syncNotificationStatus() }
         .sheet(isPresented: $showSignIn) {
             SignInOptionsSheet()
@@ -85,7 +83,9 @@ private extension SettingsScreen {
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
+
                 settingsDivider
+
                 Button {
                     Task { await subscriptionService.restorePurchases() }
                 } label: {

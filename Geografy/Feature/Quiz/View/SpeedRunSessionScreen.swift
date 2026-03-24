@@ -52,9 +52,12 @@ private extension SpeedRunSessionScreen {
     var gameplayView: some View {
         VStack(spacing: 0) {
             gameToolbar
+
             VStack(spacing: DesignSystem.Spacing.md) {
                 timerSection
+
                 progressSection
+
                 completedList
             }
             .padding(.top, DesignSystem.Spacing.sm)
@@ -206,7 +209,9 @@ private extension SpeedRunSessionScreen {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 resultsHeader
+
                 resultsStats
+
                 xpBadge
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
@@ -216,6 +221,7 @@ private extension SpeedRunSessionScreen {
                 GlassButton("Try Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
                     restart()
                 }
+
                 GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
                     dismiss()
                 }
