@@ -67,30 +67,36 @@ private extension GeoTriviaService {
         var questions: [GeoTriviaQuestion] = []
 
         if let largest = sorted.first {
-            questions.append(GeoTriviaQuestion(
-                statement: "\(largest.name) is the largest country in the world by land area.",
-                isTrue: true,
-                explanation: "\(largest.name) has an area of approximately \(Int(largest.area).formatted()) km²."
-            ))
+            questions.append(
+                GeoTriviaQuestion(
+                    statement: "\(largest.name) is the largest country in the world by land area.",
+                    isTrue: true,
+                    explanation: "\(largest.name) has an area of approximately \(Int(largest.area).formatted()) km²."
+                )
+            )
         }
 
         if sorted.count > 1 {
             let second = sorted[1]
-            questions.append(GeoTriviaQuestion(
-                statement: "\(second.name) is the largest country in the world by land area.",
-                isTrue: false,
-                explanation: "\(second.name) is actually the second largest. The largest is \(sorted[0].name)."
-            ))
+            questions.append(
+                GeoTriviaQuestion(
+                    statement: "\(second.name) is the largest country in the world by land area.",
+                    isTrue: false,
+                    explanation: "\(second.name) is actually the second largest. The largest is \(sorted[0].name)."
+                )
+            )
         }
 
         let popSorted = countries.sorted { $0.population > $1.population }
         if let mostPopulous = popSorted.first {
             let pop = mostPopulous.population.formatted()
-            questions.append(GeoTriviaQuestion(
-                statement: "\(mostPopulous.name) is the most populous country in the world.",
-                isTrue: true,
-                explanation: "\(mostPopulous.name) has a population of over \(pop) people."
-            ))
+            questions.append(
+                GeoTriviaQuestion(
+                    statement: "\(mostPopulous.name) is the most populous country in the world.",
+                    isTrue: true,
+                    explanation: "\(mostPopulous.name) has a population of over \(pop) people."
+                )
+            )
         }
 
         return questions
