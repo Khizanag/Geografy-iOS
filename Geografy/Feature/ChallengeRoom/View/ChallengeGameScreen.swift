@@ -4,7 +4,7 @@ struct ChallengeGameScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
 
-    @State private var path = NavigationPath()
+    @State private var coordinator = TabCoordinator()
     @State private var room: ChallengeRoom
     @State private var showingPassScreen = true
     @State private var selectedOptionIndex: Int?
@@ -19,7 +19,7 @@ struct ChallengeGameScreen: View {
     }
 
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $coordinator.path) {
             Group {
                 if showingPassScreen {
                     passScreen
@@ -36,14 +36,8 @@ struct ChallengeGameScreen: View {
                     CircleCloseButton { dismiss() }
                 }
             }
-            .navigationDestination(for: String.self) { destination in
-                if destination == "result" {
-                    ChallengeResultScreen(
-                        room: room,
-                        challengeRoomService: challengeRoomService
-                    ) {
-                        dismiss()
-                    }
+            .navigationDestination(for: ChallengeRoom.self) { finishedRoom in
+                ChallengeResultScreen(room: finishedRoom) { dismiss() }
                     .navigationTitle("Results")
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationBarBackButtonHidden()
@@ -52,9 +46,9 @@ struct ChallengeGameScreen: View {
                             CircleCloseButton { dismiss() }
                         }
                     }
-                }
             }
         }
+        .environment(coordinator)
     }
 }
 
@@ -69,6 +63,7 @@ private extension ChallengeGameScreen {
                 Circle()
                     .fill(DesignSystem.Color.orange.opacity(0.15))
                     .frame(width: 96, height: 96)
+
                 Image(systemName: "hand.point.right.fill")
                     .font(.system(size: 40))
                     .foregroundStyle(DesignSystem.Color.orange)
@@ -284,7 +279,7 @@ private extension ChallengeGameScreen {
     func advanceToNext() {
         challengeRoomService.advance(room: &room)
         if room.isFinished {
-            path.append("result")
+            coordinator.path.append(room)
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 showingPassScreen = true

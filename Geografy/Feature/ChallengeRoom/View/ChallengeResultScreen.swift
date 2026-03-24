@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ChallengeResultScreen: View {
     let room: ChallengeRoom
-    let challengeRoomService: ChallengeRoomService
     let onDismiss: () -> Void
 
     var body: some View {
@@ -139,7 +138,11 @@ private extension ChallengeResultScreen {
 private extension ChallengeResultScreen {
     var isTie: Bool { room.player1Score == room.player2Score }
 
-    var winnerName: String { challengeRoomService.winnerName(for: room) ?? "" }
+    var winnerName: String {
+        if room.player1Score > room.player2Score { room.player1Name }
+        else if room.player2Score > room.player1Score { room.player2Name }
+        else { "" }
+    }
 
     var accuracy: Int {
         let total = room.totalRounds * 2

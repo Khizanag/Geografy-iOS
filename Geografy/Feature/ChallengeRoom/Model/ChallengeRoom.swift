@@ -1,6 +1,6 @@
 import Foundation
 
-struct ChallengeRoom {
+struct ChallengeRoom: Hashable {
     let player1Name: String
     let player2Name: String
     var player1Score: Int
@@ -29,7 +29,7 @@ struct ChallengeRoom {
     }
 }
 
-struct ChallengeQuestion: Identifiable {
+struct ChallengeQuestion: Identifiable, Hashable {
     let id = UUID()
     let question: String
     let options: [String]
