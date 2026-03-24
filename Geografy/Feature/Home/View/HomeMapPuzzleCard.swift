@@ -1,23 +1,19 @@
 import SwiftUI
 
 struct HomeMapPuzzleCard: View {
-    @Environment(HapticsService.self) private var hapticsService
-
     let onTap: () -> Void
 
     var body: some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                puzzleIcon
-                puzzleInfo
-                Spacer()
-                actionButton
+        Button { onTap() } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    puzzleIcon
+                    puzzleInfo
+                    Spacer()
+                    actionButton
+                }
+                .padding(DesignSystem.Spacing.md)
             }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .onTapGesture {
-            hapticsService.impact(.medium)
-            onTap()
         }
         .buttonStyle(PressButtonStyle())
     }

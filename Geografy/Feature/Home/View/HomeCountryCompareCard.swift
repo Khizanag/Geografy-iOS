@@ -1,23 +1,19 @@
 import SwiftUI
 
 struct HomeCountryCompareCard: View {
-    @Environment(HapticsService.self) private var hapticsService
-
     let onTap: () -> Void
 
     var body: some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                cardIcon
-                cardInfo
-                Spacer()
-                compareButton
+        Button { onTap() } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    cardIcon
+                    cardInfo
+                    Spacer()
+                    compareButton
+                }
+                .padding(DesignSystem.Spacing.md)
             }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .onTapGesture {
-            hapticsService.impact(.medium)
-            onTap()
         }
         .buttonStyle(PressButtonStyle())
     }

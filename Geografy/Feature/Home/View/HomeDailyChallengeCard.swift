@@ -1,25 +1,21 @@
 import SwiftUI
 
 struct HomeDailyChallengeCard: View {
-    @Environment(HapticsService.self) private var hapticsService
-
     let streak: Int
     let hasCompletedToday: Bool
     let onTap: () -> Void
 
     var body: some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                challengeIcon
-                challengeInfo
-                Spacer()
-                actionButton
+        Button { onTap() } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    challengeIcon
+                    challengeInfo
+                    Spacer()
+                    actionButton
+                }
+                .padding(DesignSystem.Spacing.md)
             }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .onTapGesture {
-            hapticsService.impact(.medium)
-            onTap()
         }
         .buttonStyle(PressButtonStyle())
     }
