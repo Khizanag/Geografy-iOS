@@ -97,10 +97,18 @@ private extension TVQuizSessionScreen {
         .focusable(false)
     }
 
+    var isFlagOptionsLayout: Bool {
+        currentQuestion?.options.contains { $0.flagCode != nil && $0.text == nil } ?? false
+    }
+
+    var isFlagPromptLayout: Bool {
+        currentQuestion?.promptFlag != nil
+    }
+
     func promptSection(_ question: QuizQuestion) -> some View {
         VStack(spacing: 20) {
             if let flagCode = question.promptFlag {
-                FlagView(countryCode: flagCode, height: 140)
+                FlagView(countryCode: flagCode, height: isFlagPromptLayout && !isFlagOptionsLayout ? 220 : 140)
             }
 
             HStack(spacing: 8) {
@@ -124,10 +132,14 @@ private extension TVQuizSessionScreen {
             spacing: 24
         ) {
             ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
-                tvOptionButton(option, question: question, index: index)
+                if isFlagOptionsLayout {
+                    tvFlagOptionButton(option, question: question, index: index)
+                } else {
+                    tvOptionButton(option, question: question, index: index)
+                }
             }
         }
-        .frame(maxWidth: 900)
+        .frame(maxWidth: isFlagOptionsLayout ? 1100 : 900)
     }
 
     var controllerHint: some View {
@@ -190,6 +202,49 @@ private extension TVQuizSessionScreen {
             }
             .padding(24)
             .background(backgroundColor, in: RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.card)
+        .disabled(showFeedback)
+    }
+
+    func tvFlagOptionButton(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
+        let isCorrect = option.id == question.correctOptionID
+        let isSelected = selectedOptionID == option.id
+        let backgroundColor: Color = {
+            guard showFeedback else { return DesignSystem.Color.cardBackground }
+            if isCorrect { return DesignSystem.Color.success.opacity(0.3) }
+            if isSelected { return DesignSystem.Color.error.opacity(0.3) }
+            return DesignSystem.Color.cardBackground
+        }()
+        let gamepadButton = GamepadButton.allCases.indices.contains(index)
+            ? GamepadButton.allCases[index]
+            : nil
+
+        return Button {
+            guard !showFeedback else { return }
+            selectOption(option, question: question)
+        } label: {
+            VStack(spacing: 16) {
+                if let flagCode = option.flagCode {
+                    FlagView(countryCode: flagCode, height: 100)
+                }
+
+                if hasGameController, let gamepadButton {
+                    Image(systemName: gamepadButton.icon)
+                        .font(.system(size: 20))
+                        .foregroundStyle(gamepadButton.color)
+                }
+
+                if showFeedback {
+                    Image(systemName: isCorrect ? "checkmark.circle.fill" : (isSelected ? "xmark.circle.fill" : ""))
+                        .font(.system(size: 28))
+                        .foregroundStyle(isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error)
+                        .opacity(isCorrect || isSelected ? 1 : 0)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 180)
+            .background(backgroundColor, in: RoundedRectangle(cornerRadius: 20))
         }
         .buttonStyle(.card)
         .disabled(showFeedback)
