@@ -337,23 +337,16 @@ private extension TVQuizSessionScreen {
                 } label: {
                     Label("Play Again", systemImage: "arrow.counterclockwise")
                         .font(.system(size: 24, weight: .semibold))
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 16)
-                        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 12))
                 }
-                .buttonStyle(.card)
+                .buttonStyle(.bordered)
 
                 Button {
                     dismiss()
                 } label: {
                     Label("Done", systemImage: "checkmark")
                         .font(.system(size: 24, weight: .semibold))
-                        .foregroundStyle(DesignSystem.Color.onAccent)
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 16)
-                        .background(DesignSystem.Color.accent, in: RoundedRectangle(cornerRadius: 12))
                 }
-                .buttonStyle(.card)
+                .buttonStyle(.bordered)
             }
         }
     }

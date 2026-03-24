@@ -53,12 +53,8 @@ private extension TVTriviaScreen {
             } label: {
                 Label("Start", systemImage: "play.fill")
                     .font(.system(size: 28, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-                    .padding(.horizontal, 48)
-                    .padding(.vertical, 20)
-                    .background(DesignSystem.Color.accent, in: RoundedRectangle(cornerRadius: 16))
             }
-            .buttonStyle(.card)
+            .buttonStyle(.bordered)
         }
     }
 }
@@ -142,18 +138,13 @@ private extension TVTriviaScreen {
                 .font(.system(size: 32))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
 
-            HStack(spacing: 32) {
-                Button {
-                    startGame()
-                } label: {
-                    Label("Play Again", systemImage: "arrow.counterclockwise")
-                        .font(.system(size: 24, weight: .semibold))
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 16)
-                        .background(DesignSystem.Color.accent, in: RoundedRectangle(cornerRadius: 12))
-                }
-                .buttonStyle(.card)
+            Button {
+                startGame()
+            } label: {
+                Label("Play Again", systemImage: "arrow.counterclockwise")
+                    .font(.system(size: 24, weight: .semibold))
             }
+            .buttonStyle(.bordered)
         }
     }
 }
