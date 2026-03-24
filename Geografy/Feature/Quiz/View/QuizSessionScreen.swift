@@ -431,7 +431,8 @@ private extension QuizSessionScreen {
             type: configuration.type,
             countries: pool,
             count: min(configuration.questionCount.rawValue, pool.count),
-            optionCount: optionCount
+            optionCount: optionCount,
+            comparisonMetric: configuration.comparisonMetric
         )
         currentIndex = 0
         answers = []

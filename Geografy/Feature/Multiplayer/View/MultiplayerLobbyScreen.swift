@@ -197,6 +197,7 @@ private extension MultiplayerLobbyScreen {
                 difficulty: .medium,
                 questionCount: .ten,
                 answerMode: .multipleChoice,
+                comparisonMetric: .population,
             )
             MultiplayerMatchScreen(
                 opponent: opponent,

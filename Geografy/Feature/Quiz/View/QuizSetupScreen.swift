@@ -9,13 +9,19 @@ struct QuizSetupScreen: View {
     @AppStorage("quiz_selectedDifficulty") private var selectedDifficulty: QuizDifficulty = .easy
     @AppStorage("quiz_selectedCount") private var selectedCount: QuestionCount = .ten
     @AppStorage("quiz_answerMode") private var answerMode: QuizAnswerMode = .multipleChoice
+    @AppStorage("quiz_comparisonMetric") private var comparisonMetric: ComparisonMetric = .population
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 headerSection
                 quizTypeSection
-                answerModeSection
+                if selectedType.hasComparisonMetric {
+                    metricSection
+                }
+                if selectedType.supportsTypingMode {
+                    answerModeSection
+                }
                 regionSection
                 difficultySection
                 questionCountSection
@@ -150,6 +156,42 @@ private extension QuizSetupScreen {
 // MARK: - Region Section
 
 private extension QuizSetupScreen {
+    var metricSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Metric")
+
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(ComparisonMetric.allCases) { metric in
+                    metricChip(metric)
+                }
+            }
+        }
+    }
+
+    func metricChip(_ metric: ComparisonMetric) -> some View {
+        let isSelected = comparisonMetric == metric
+        return Button { comparisonMetric = metric } label: {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: metric.icon)
+                    .font(DesignSystem.Font.caption)
+
+                Text(metric.rawValue)
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
+            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(
+                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Region")
@@ -280,6 +322,7 @@ private extension QuizSetupScreen {
             difficulty: selectedDifficulty,
             questionCount: selectedCount,
             answerMode: effectiveAnswerMode,
+            comparisonMetric: comparisonMetric,
         )
     }
 }
