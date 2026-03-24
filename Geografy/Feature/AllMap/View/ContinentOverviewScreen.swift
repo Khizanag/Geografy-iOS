@@ -1,5 +1,11 @@
 import SwiftUI
 
+enum ContinentSortOption: String, CaseIterable {
+    case name = "Name"
+    case population = "Population"
+    case area = "Area"
+}
+
 struct ContinentOverviewScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
@@ -7,6 +13,7 @@ struct ContinentOverviewScreen: View {
     let continent: Country.Continent
 
     @State private var countryDataService = CountryDataService()
+    @State private var sortBy: ContinentSortOption = .name
     @State private var appeared = false
 
     var body: some View {
@@ -21,6 +28,27 @@ struct ContinentOverviewScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle(continent.displayName)
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    ForEach(ContinentSortOption.allCases, id: \.self) { option in
+                        Button {
+                            sortBy = option
+                        } label: {
+                            if sortBy == option {
+                                Label(option.rawValue, systemImage: "checkmark")
+                            } else {
+                                Text(option.rawValue)
+                            }
+                        }
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                        .foregroundStyle(DesignSystem.Color.iconPrimary)
+                }
+                .buttonStyle(.plain)
+            }
+        }
         .task { countryDataService.loadCountries() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) { appeared = true }
@@ -34,7 +62,13 @@ private extension ContinentOverviewScreen {
     var countries: [Country] {
         countryDataService.countries
             .filter { $0.continent == continent }
-            .sorted { $0.population > $1.population }
+            .sorted { lhs, rhs in
+                switch sortBy {
+                case .name: lhs.name < rhs.name
+                case .population: lhs.population > rhs.population
+                case .area: lhs.area > rhs.area
+                }
+            }
     }
 
     var totalPopulation: Int {
