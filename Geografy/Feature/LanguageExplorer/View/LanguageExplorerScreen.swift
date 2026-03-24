@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct LanguageExplorerScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var searchQuery = ""
     @State private var selectedLanguage: Language?
     @State private var showingDetail = false
@@ -21,11 +19,6 @@ struct LanguageExplorerScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Language Explorer")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .sheet(isPresented: $showingDetail) {
             if let language = selectedLanguage {
                 NavigationStack {

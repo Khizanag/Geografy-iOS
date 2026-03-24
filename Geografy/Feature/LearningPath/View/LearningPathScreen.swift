@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct LearningPathScreen: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(LearningPathService.self) private var learningPathService
 
     @State private var selectedModule: LearningModule?
@@ -19,11 +18,6 @@ struct LearningPathScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Learning Path")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .sheet(item: $selectedModule) { module in
             NavigationStack {
                 ModuleLessonsScreen(module: module)

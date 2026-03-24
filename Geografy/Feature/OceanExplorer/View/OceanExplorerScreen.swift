@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct OceanExplorerScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var selectedSegment = 0
     @State private var expandedOceanId: String?
     @State private var blobAnimating = false
@@ -23,11 +21,6 @@ struct OceanExplorerScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Ocean Explorer")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .onAppear { startBlobAnimation() }
     }
 }

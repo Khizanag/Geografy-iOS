@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct CultureExplorerScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var searchQuery = ""
     @State private var selectedProfile: CultureProfile?
 
@@ -28,11 +26,6 @@ struct CultureExplorerScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Culture Explorer")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .sheet(item: $selectedProfile) { profile in
             NavigationStack {
                 CultureDetailView(profile: profile)

@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct SpellingBeeScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var countryDataService = CountryDataService()
     @State private var currentCountry: Country?
     @State private var typedText = ""
@@ -63,9 +61,6 @@ struct SpellingBeeScreen: View {
                             )
                     }
                     .buttonStyle(.plain)
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { dismiss() }
                 }
             }
             .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }

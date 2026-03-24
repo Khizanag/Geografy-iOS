@@ -28,11 +28,6 @@ struct FlagGameScreen: View {
         }
         .navigationTitle("Flag Game")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton()
-            }
-        }
         .onAppear {
             countryDataService.loadCountries()
             startGame()
