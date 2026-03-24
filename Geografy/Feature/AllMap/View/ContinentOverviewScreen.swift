@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContinentOverviewScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
+    @Environment(FavoritesService.self) private var favoritesService
 
     let continent: Country.Continent
 
@@ -125,10 +126,12 @@ private extension ContinentOverviewScreen {
                 Button { coordinator.push(.countryDetail(country)) } label: {
                     CountryRowView(
                         country: country,
-                        isFavorite: false
+                        isFavorite: favoritesService.isFavorite(code: country.code),
+                        showContinent: false,
+                        onFavoriteTap: { favoritesService.toggle(code: country.code) }
                     )
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressButtonStyle())
                 .opacity(appeared ? 1 : 0)
                 .offset(y: appeared ? 0 : 16)
                 .animation(
