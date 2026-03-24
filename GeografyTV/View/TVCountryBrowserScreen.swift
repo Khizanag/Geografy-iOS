@@ -8,93 +8,48 @@ struct TVCountryBrowserScreen: View {
     @State private var searchText = ""
     @State private var selectedContinent: Country.Continent?
 
-    private let columns = [
-        GridItem(.adaptive(minimum: 220), spacing: 32),
-    ]
-
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 40) {
-                continentFilter
-
-                countryGrid
+        List {
+            Section {
+                Picker("Continent", selection: $selectedContinent) {
+                    Text("All").tag(nil as Country.Continent?)
+                    ForEach(Country.Continent.allCases, id: \.self) { continent in
+                        Text(continent.displayName)
+                            .tag(continent as Country.Continent?)
+                    }
+                }
             }
-            .padding(60)
+
+            Section("\(filteredCountries.count) countries") {
+                ForEach(filteredCountries) { country in
+                    NavigationLink(value: country) {
+                        HStack(spacing: 20) {
+                            FlagView(countryCode: country.code, height: 44)
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(country.name)
+                                    .font(.system(size: 22, weight: .semibold))
+
+                                Text(country.capital)
+                                    .font(.system(size: 18))
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            Spacer()
+
+                            Text(country.continent.displayName)
+                                .font(.system(size: 18))
+                                .foregroundStyle(.tertiary)
+                        }
+                    }
+                }
+            }
         }
         .navigationTitle("Countries")
         .searchable(text: $searchText, prompt: "Search countries")
         .navigationDestination(for: Country.self) { country in
             TVCountryDetailScreen(country: country)
         }
-    }
-}
-
-// MARK: - Continent Filter
-
-private extension TVCountryBrowserScreen {
-    var continentFilter: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
-                continentChip(nil, label: "All")
-
-                ForEach(Country.Continent.allCases, id: \.self) { continent in
-                    continentChip(continent, label: continent.displayName)
-                }
-            }
-        }
-    }
-
-    func continentChip(_ continent: Country.Continent?, label: String) -> some View {
-        let isSelected = selectedContinent == continent
-        return Button {
-            selectedContinent = continent
-        } label: {
-            Text(label)
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-                .padding(.horizontal, 28)
-                .padding(.vertical, 14)
-                .background(
-                    isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                    in: Capsule()
-                )
-        }
-        .buttonStyle(.card)
-    }
-}
-
-// MARK: - Country Grid
-
-private extension TVCountryBrowserScreen {
-    var countryGrid: some View {
-        LazyVGrid(columns: columns, spacing: 32) {
-            ForEach(filteredCountries) { country in
-                NavigationLink(value: country) {
-                    tvCountryCard(country)
-                }
-                .buttonStyle(.card)
-            }
-        }
-    }
-
-    func tvCountryCard(_ country: Country) -> some View {
-        VStack(spacing: 16) {
-            FlagView(countryCode: country.code, height: 80)
-
-            Text(country.name)
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-
-            Text(country.capital)
-                .font(.system(size: 18))
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(24)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 16))
     }
 }
 

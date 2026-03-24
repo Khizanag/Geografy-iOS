@@ -47,12 +47,8 @@ private extension TVExploreGameScreen {
             } label: {
                 Label("Start Game", systemImage: "play.fill")
                     .font(.system(size: 28, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-                    .padding(.horizontal, 48)
-                    .padding(.vertical, 20)
-                    .background(DesignSystem.Color.accent, in: RoundedRectangle(cornerRadius: 16))
             }
-            .buttonStyle(.card)
+            .buttonStyle(.borderedProminent)
         }
     }
 }
@@ -82,6 +78,7 @@ private extension TVExploreGameScreen {
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .focusable(false)
 
             ForEach(state.revealedClues) { clue in
                 HStack(spacing: 16) {
@@ -103,6 +100,7 @@ private extension TVExploreGameScreen {
                 .padding(16)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 12))
+                .focusable(false)
             }
 
             if state.hasMoreClues {
@@ -110,12 +108,9 @@ private extension TVExploreGameScreen {
                     gameState?.revealNextClue()
                 } label: {
                     Label("Reveal Next Clue", systemImage: "eye")
-                        .font(.system(size: 20, weight: .semibold))
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 12))
                 }
-                .buttonStyle(.card)
+                .buttonStyle(.bordered)
             }
         }
         .frame(maxWidth: .infinity)
@@ -126,6 +121,7 @@ private extension TVExploreGameScreen {
             Text("Your Guess")
                 .font(.system(size: 32, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .focusable(false)
 
             TextField("Type country name…", text: $guessText)
                 .font(.system(size: 22))
@@ -134,50 +130,38 @@ private extension TVExploreGameScreen {
                 }
 
             if !suggestions.isEmpty {
-                VStack(spacing: 8) {
-                    ForEach(suggestions.prefix(6)) { country in
-                        Button {
-                            submitGuess(country.name)
-                        } label: {
-                            HStack(spacing: 16) {
-                                FlagView(countryCode: country.code, height: 30)
+                List(suggestions.prefix(6)) { country in
+                    Button {
+                        submitGuess(country.name)
+                    } label: {
+                        HStack(spacing: 16) {
+                            FlagView(countryCode: country.code, height: 30)
 
-                                Text(country.name)
-                                    .font(.system(size: 22, weight: .semibold))
-                                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                                Spacer()
-                            }
-                            .padding(16)
-                            .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 12))
+                            Text(country.name)
+                                .font(.system(size: 22, weight: .semibold))
                         }
-                        .buttonStyle(.card)
                     }
                 }
+                .frame(height: min(CGFloat(suggestions.prefix(6).count) * 66, 400))
             }
 
             if !state.guessHistory.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Wrong guesses: \(state.wrongGuessCount)")
-                        .font(.system(size: 18))
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
+                Text("Wrong guesses: \(state.wrongGuessCount)")
+                    .font(.system(size: 18))
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .focusable(false)
             }
 
             Spacer()
 
-            Button {
+            Button(role: .destructive) {
                 gameState?.revealAnswer()
                 showResult = true
             } label: {
                 Label("Give Up", systemImage: "flag.fill")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(DesignSystem.Color.error)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 12))
             }
-            .buttonStyle(.card)
+            .buttonStyle(.bordered)
         }
         .frame(maxWidth: .infinity)
     }
@@ -208,18 +192,13 @@ private extension TVExploreGameScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
 
-            HStack(spacing: 32) {
-                Button {
-                    startNewGame()
-                } label: {
-                    Label("Play Again", systemImage: "arrow.counterclockwise")
-                        .font(.system(size: 24, weight: .semibold))
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 16)
-                        .background(DesignSystem.Color.accent, in: RoundedRectangle(cornerRadius: 12))
-                }
-                .buttonStyle(.card)
+            Button {
+                startNewGame()
+            } label: {
+                Label("Play Again", systemImage: "arrow.counterclockwise")
+                    .font(.system(size: 24, weight: .semibold))
             }
+            .buttonStyle(.borderedProminent)
         }
         .padding(80)
     }

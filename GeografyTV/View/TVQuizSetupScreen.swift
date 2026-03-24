@@ -11,25 +11,75 @@ struct TVQuizSetupScreen: View {
 
     var body: some View {
         Form {
-            Section {
-                Picker("Quiz Type", selection: $selectedType) {
-                    ForEach(QuizType.allCases) { type in
-                        Label(type.displayName, systemImage: type.icon)
-                            .tag(type)
+            Section("Choose Your Quiz") {
+                ForEach(QuizType.allCases) { type in
+                    Button {
+                        selectedType = type
+                    } label: {
+                        HStack(spacing: 20) {
+                            Image(systemName: type.icon)
+                                .font(.system(size: 28))
+                                .foregroundStyle(DesignSystem.Color.accent)
+                                .frame(width: 44)
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(type.displayName)
+                                    .font(.system(size: 22, weight: .semibold))
+
+                                Text(type.description)
+                                    .font(.system(size: 18))
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            Spacer()
+
+                            if selectedType == type {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundStyle(DesignSystem.Color.accent)
+                            }
+                        }
                     }
                 }
+            }
 
+            Section("Difficulty") {
+                ForEach(QuizDifficulty.allCases) { difficulty in
+                    Button {
+                        selectedDifficulty = difficulty
+                    } label: {
+                        HStack(spacing: 20) {
+                            Image(systemName: difficulty.icon)
+                                .font(.system(size: 24))
+                                .foregroundStyle(DesignSystem.Color.accent)
+                                .frame(width: 36)
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(difficulty.displayName)
+                                    .font(.system(size: 22, weight: .semibold))
+
+                                Text(difficulty.subtitle)
+                                    .font(.system(size: 18))
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            Spacer()
+
+                            if selectedDifficulty == difficulty {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundStyle(DesignSystem.Color.accent)
+                            }
+                        }
+                    }
+                }
+            }
+
+            Section("Settings") {
                 Picker("Region", selection: $selectedRegion) {
                     ForEach(QuizRegion.allCases) { region in
                         Text(region.displayName)
                             .tag(region)
-                    }
-                }
-
-                Picker("Difficulty", selection: $selectedDifficulty) {
-                    ForEach(QuizDifficulty.allCases) { difficulty in
-                        Text(difficulty.displayName)
-                            .tag(difficulty)
                     }
                 }
 
@@ -45,7 +95,12 @@ struct TVQuizSetupScreen: View {
                 Button {
                     showQuiz = true
                 } label: {
-                    Label("Start Quiz", systemImage: "play.fill")
+                    HStack {
+                        Spacer()
+                        Label("Start \(selectedType.displayName)", systemImage: "play.fill")
+                            .font(.system(size: 24, weight: .bold))
+                        Spacer()
+                    }
                 }
             }
         }
