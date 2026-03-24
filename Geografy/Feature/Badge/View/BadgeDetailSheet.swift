@@ -13,19 +13,16 @@ struct BadgeDetailSheet: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: DesignSystem.Spacing.xl) {
-                        badgeHeroSection
-                        infoSection
-                        statusSection
-                        if isUnlocked {
-                            pinSection
-                        }
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: DesignSystem.Spacing.xl) {
+                    badgeHeroSection
+                    infoSection
+                    statusSection
+                    if isUnlocked {
+                        pinSection
                     }
-                    .padding(DesignSystem.Spacing.lg)
                 }
+                .padding(DesignSystem.Spacing.lg)
             }
             .navigationTitle(definition.title)
             .navigationBarTitleDisplayMode(.inline)
@@ -34,6 +31,7 @@ struct BadgeDetailSheet: View {
                     CircleCloseButton { dismiss() }
                 }
             }
+            .presentationDetents([.fraction(0.65), .large])
         }
     }
 }
@@ -51,41 +49,42 @@ private extension BadgeDetailSheet {
 
     var badgeIconLarge: some View {
         ZStack {
-            Circle()
-                .fill(
-                    definition.category.themeColor
-                        .opacity(isUnlocked ? 0.2 : 0.08)
-                )
-                .frame(width: 100, height: 100)
-            Circle()
-                .strokeBorder(
-                    isUnlocked
-                        ? definition.rarity.borderGradient
-                        : LinearGradient(
-                            colors: [
-                                DesignSystem.Color.textTertiary
-                                    .opacity(0.2),
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                    lineWidth: isUnlocked
-                        ? definition.rarity.borderWidth * 1.5
-                        : 1.5
-                )
-                .frame(width: 100, height: 100)
-            Image(
-                systemName: isUnlocked
-                    ? definition.iconName
-                    : "lock.fill"
-            )
-            .font(.system(size: 44))
-            .foregroundStyle(
-                isUnlocked
-                    ? definition.category.themeColor
-                    : DesignSystem.Color.textTertiary
+            iconBackground
+
+            iconBorder
+
+            iconImage
+        }
+    }
+
+    var iconBackground: some View {
+        Circle()
+            .fill(definition.category.themeColor.opacity(isUnlocked ? 0.2 : 0.08))
+            .frame(width: 100, height: 100)
+    }
+
+    var iconBorder: some View {
+        Circle()
+            .strokeBorder(iconBorderGradient, lineWidth: isUnlocked ? definition.rarity.borderWidth * 1.5 : 1.5)
+            .frame(width: 100, height: 100)
+    }
+
+    var iconBorderGradient: LinearGradient {
+        if isUnlocked {
+            definition.rarity.borderGradient
+        } else {
+            LinearGradient(
+                colors: [DesignSystem.Color.textTertiary.opacity(0.2)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
             )
         }
+    }
+
+    var iconImage: some View {
+        Image(systemName: isUnlocked ? definition.iconName : "lock.fill")
+            .font(.system(size: 44))
+            .foregroundStyle(isUnlocked ? definition.category.themeColor : DesignSystem.Color.textTertiary)
     }
 
     var rarityBadge: some View {
@@ -229,8 +228,8 @@ private extension BadgeDetailSheet {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(
                     systemName: isPinned
-                        ? "pin.slash.fill"
-                        : "pin.fill"
+                    ? "pin.slash.fill"
+                    : "pin.fill"
                 )
                 Text(isPinned ? "Unpin from Showcase" : "Pin to Showcase")
                     .fontWeight(.semibold)
@@ -238,15 +237,15 @@ private extension BadgeDetailSheet {
             .font(DesignSystem.Font.subheadline)
             .foregroundStyle(
                 isPinned
-                    ? DesignSystem.Color.error
-                    : DesignSystem.Color.accent
+                ? DesignSystem.Color.error
+                : DesignSystem.Color.accent
             )
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
                 (isPinned
-                    ? DesignSystem.Color.error
-                    : DesignSystem.Color.accent
+                 ? DesignSystem.Color.error
+                 : DesignSystem.Color.accent
                 ).opacity(0.12)
             )
             .clipShape(

@@ -34,7 +34,6 @@ struct AchievementsScreen: View {
                 unlockedAt: achievementService.unlockedAchievements.first { $0.id == achievement.id }?.unlockedAt
             )
             .presentationDetents([.medium, .large])
-            .presentationDragIndicator(.automatic)
         }
         .onAppear {
             withAnimation(.easeOut(duration: 0.4).delay(0.1)) {
