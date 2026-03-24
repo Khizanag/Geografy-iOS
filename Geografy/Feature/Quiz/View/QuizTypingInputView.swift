@@ -105,14 +105,14 @@ private extension QuizTypingInputView {
 private extension QuizTypingInputView {
     var typingSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            inputField
+            controlsRow
 
             if showFeedback, !isCorrectAnswer {
                 correctAnswerLabel
                     .transition(.scale(scale: 0.9).combined(with: .opacity))
             }
 
-            controlsRow
+            inputField
         }
     }
 
