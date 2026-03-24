@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct AmbientBlobsView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     private let preset: Preset
 
     @State private var isAnimating = false
@@ -28,8 +30,10 @@ struct AmbientBlobsView: View {
             }
         }
         .allowsHitTesting(false)
+        .accessibilityHidden(true)
         .ignoresSafeArea()
         .onAppear {
+            guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 isAnimating = true
             }

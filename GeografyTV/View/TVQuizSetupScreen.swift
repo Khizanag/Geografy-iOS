@@ -115,6 +115,8 @@ private extension TVQuizSetupScreen {
             )
         }
         .buttonStyle(.card)
+        .accessibilityLabel("\(type.displayName). \(type.description)")
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     func quizTypeColor(_ type: QuizType) -> Color {
@@ -182,6 +184,8 @@ private extension TVQuizSetupScreen {
             )
         }
         .buttonStyle(.card)
+        .accessibilityLabel("\(difficulty.displayName). \(difficulty.subtitle)")
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     func difficultyColor(_ difficulty: QuizDifficulty) -> Color {

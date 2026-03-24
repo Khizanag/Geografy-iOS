@@ -76,6 +76,7 @@ private extension TVCountryDetailScreen {
                         .foregroundStyle(.tertiary)
                 }
             }
+            .accessibilityLabel("View flag of \(country.name) fullscreen")
         }
     }
 }
@@ -271,6 +272,8 @@ private extension TVCountryDetailScreen {
                 .font(.system(size: 22, weight: .semibold))
         }
         .focusable()
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(label): \(value)")
     }
 
     func formatLargeNumber(_ value: Double) -> String {
