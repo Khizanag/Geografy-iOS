@@ -203,29 +203,29 @@ private extension QuizTypingInputView {
                     .fontWeight(.medium)
                     .contentTransition(.opacity)
             }
-            .foregroundStyle(DesignSystem.Color.accent)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
         }
-        .buttonStyle(.plain)
+        .glassEffect(.regular.interactive(), in: .capsule)
         .disabled(showFeedback)
         .opacity(showFeedback ? 0.4 : 1)
     }
 
     var submitButton: some View {
         Button { onSubmit() } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
                 Text("Submit")
-                    .font(DesignSystem.Font.headline)
-                Image(systemName: "arrow.right")
                     .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.bold)
+                Image(systemName: "arrow.right")
+                    .font(DesignSystem.Font.caption)
             }
             .foregroundStyle(DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.lg)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.xs)
         }
-        .buttonStyle(.glass)
+        .glassEffect(.regular.interactive(), in: .capsule)
         .disabled(showFeedback || typingInput.trimmingCharacters(in: .whitespaces).isEmpty)
     }
 }

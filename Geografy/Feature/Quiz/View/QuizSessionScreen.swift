@@ -60,6 +60,8 @@ private extension QuizSessionScreen {
             Spacer(minLength: 0)
         }
         .padding(.top, DesignSystem.Spacing.sm)
+        .blur(radius: isPaused ? 12 : 0)
+        .allowsHitTesting(!isPaused)
         .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
@@ -118,16 +120,13 @@ private extension QuizSessionScreen {
     @ViewBuilder
     var pauseOverlay: some View {
         if isPaused {
-            ZStack {
-                DesignSystem.Color.background.opacity(0.95)
-                    .ignoresSafeArea()
-
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    pauseIcon
-                    pauseInfo
-                    resumeButton
-                }
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                pauseIcon
+                pauseInfo
+                resumeButton
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(DesignSystem.Color.background.opacity(0.5).ignoresSafeArea())
             .transition(.opacity)
         }
     }
