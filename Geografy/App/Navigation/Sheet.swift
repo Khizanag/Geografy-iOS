@@ -21,7 +21,6 @@ enum Sheet: Identifiable {
     case quizSetup
     case speedRunSetup
     case dailyChallenge
-    case capitalQuiz
     case exploreGame
     case multiplayer
     case quizPacks
@@ -96,7 +95,6 @@ enum Sheet: Identifiable {
         case .currencyConverter: "currencyConverter"
         case .timeZones: "timeZones"
         case .dailyChallenge: "dailyChallenge"
-        case .capitalQuiz: "capitalQuiz"
         case .exploreGame: "exploreGame"
         case .multiplayer: "multiplayer"
         case .quizPacks: "quizPacks"

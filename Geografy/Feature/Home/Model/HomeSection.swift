@@ -6,7 +6,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case spotlight
     case streak
     case dailyChallenge
-    case capitalQuiz
     case srsReview
     case worldRecords
     case organizations
@@ -46,7 +45,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .spotlight: "Country Spotlight"
         case .streak: "Daily Streak"
         case .dailyChallenge: "Daily Challenge"
-        case .capitalQuiz: "Capital City Quiz"
         case .srsReview: "Due for Review"
         case .worldRecords: "World Records"
         case .organizations: "Organizations"
@@ -86,7 +84,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .spotlight: "star.fill"
         case .streak: "flame.fill"
         case .dailyChallenge: "calendar.badge.clock"
-        case .capitalQuiz: "building.columns.fill"
         case .srsReview: "clock.arrow.circlepath"
         case .worldRecords: "trophy.fill"
         case .organizations: "building.2.fill"

@@ -4,27 +4,17 @@ struct QuizSetupScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
 
-    let fixedType: QuizType?
-
     @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz
     @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
     @AppStorage("quiz_selectedDifficulty") private var selectedDifficulty: QuizDifficulty = .easy
     @AppStorage("quiz_selectedCount") private var selectedCount: QuestionCount = .ten
     @AppStorage("quiz_answerMode") private var answerMode: QuizAnswerMode = .multipleChoice
 
-    init(fixedType: QuizType? = nil) {
-        self.fixedType = fixedType
-    }
-
-    private var activeType: QuizType { fixedType ?? selectedType }
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 headerSection
-                if fixedType == nil {
-                    quizTypeSection
-                }
+                quizTypeSection
                 answerModeSection
                 regionSection
                 difficultySection
@@ -36,7 +26,7 @@ struct QuizSetupScreen: View {
         .safeAreaInset(edge: .bottom) { startButton }
         .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(fixedType?.displayName ?? "Quiz")
+        .navigationTitle("Quiz")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -50,16 +40,16 @@ private extension QuizSetupScreen {
                 Circle()
                     .fill(DesignSystem.Color.accent.opacity(0.15))
                     .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
-                Image(systemName: activeType.icon)
+                Image(systemName: selectedType.icon)
                     .font(.system(size: 28))
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             VStack(spacing: DesignSystem.Spacing.xxs) {
-                Text(activeType.displayName)
+                Text(selectedType.displayName)
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(activeType.description)
+                Text(selectedType.description)
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)
@@ -105,7 +95,7 @@ private extension QuizSetupScreen {
             }
             answerModeNote
                 .animation(.easeInOut(duration: 0.2), value: answerMode)
-                .animation(.easeInOut(duration: 0.2), value: activeType)
+                .animation(.easeInOut(duration: 0.2), value: selectedType)
         }
     }
 
@@ -132,10 +122,10 @@ private extension QuizSetupScreen {
 
     @ViewBuilder
     var answerModeNote: some View {
-        if answerMode == .typing, !activeType.supportsTypingMode {
+        if answerMode == .typing, !selectedType.supportsTypingMode {
             answerModeInfoRow(
                 icon: "info.circle",
-                text: "Typing isn't available for \(activeType.displayName) — multiple choice will be used"
+                text: "Typing isn't available for \(selectedType.displayName) — multiple choice will be used"
             )
         } else if answerMode == .typing {
             answerModeInfoRow(
@@ -260,8 +250,8 @@ private extension QuizSetupScreen {
 
 private extension QuizSetupScreen {
     var startButton: some View {
-        GlassButton("Start \(activeType.displayName)", systemImage: "play.fill", fullWidth: true) {
-            if activeType.isPremium, !subscriptionService.isPremium {
+        GlassButton("Start \(selectedType.displayName)", systemImage: "play.fill", fullWidth: true) {
+            if selectedType.isPremium, !subscriptionService.isPremium {
                 coordinator.present(.paywall)
             } else {
                 coordinator.presentFullScreen(.quizSession(makeConfiguration()))
@@ -283,9 +273,9 @@ private extension QuizSetupScreen {
     }
 
     func makeConfiguration() -> QuizConfiguration {
-        let effectiveAnswerMode = activeType.supportsTypingMode ? answerMode : .multipleChoice
+        let effectiveAnswerMode = selectedType.supportsTypingMode ? answerMode : .multipleChoice
         return QuizConfiguration(
-            type: activeType,
+            type: selectedType,
             region: selectedRegion,
             difficulty: selectedDifficulty,
             questionCount: selectedCount,
