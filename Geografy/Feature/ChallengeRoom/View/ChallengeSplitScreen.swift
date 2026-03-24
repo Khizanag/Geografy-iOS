@@ -67,7 +67,6 @@ private extension ChallengeSplitScreen {
                 onSelect: { selectAnswer(playerIndex: 0, optionIndex: $0) }
             )
         }
-        .ignoresSafeArea(edges: .vertical)
     }
 
     var centerBar: some View {
