@@ -45,25 +45,9 @@ struct DailyChallengeSessionScreen: View {
 private extension DailyChallengeSessionScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) { scorePill }
         ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton { showQuitAlert = true }
         }
-    }
-
-    var scorePill: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "star.fill")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text("\(score) pts")
-                .font(.system(size: 13, weight: .bold, design: .rounded))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .contentTransition(.numericText())
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
     }
 
     @ViewBuilder
@@ -77,6 +61,33 @@ private extension DailyChallengeSessionScreen {
 
 private extension DailyChallengeSessionScreen {
     var challengeContent: some View {
+        VStack(spacing: 0) {
+            scoreBanner
+            challengeRouter
+        }
+    }
+
+    var scoreBanner: some View {
+        HStack {
+            Spacer()
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: "star.fill")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                Text("\(score) pts")
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .contentTransition(.numericText())
+            }
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xs)
+            .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
+            Spacer()
+        }
+        .padding(.top, DesignSystem.Spacing.xs)
+    }
+
+    var challengeRouter: some View {
         Group {
             switch challenge.content {
             case .mysteryCountry(let content):
