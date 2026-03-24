@@ -24,6 +24,7 @@ struct CountryRowView: View {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 .strokeBorder(Color.white.opacity(0.06), lineWidth: 1)
         )
+        .countryContextMenu(country)
     }
 }
 

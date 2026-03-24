@@ -51,6 +51,13 @@ struct ContentView: View {
         .tint(DesignSystem.Color.accent)
         .preferredColorScheme(colorScheme)
         .toolbarBackgroundVisibility(.hidden, for: .tabBar)
+        #if targetEnvironment(macCatalyst)
+        .onReceive(NotificationCenter.default.publisher(for: .macSwitchTab)) { notification in
+            if let tab = notification.object as? Int {
+                appCoordinator.selectedTab = tab
+            }
+        }
+        #endif
     }
 }
 
