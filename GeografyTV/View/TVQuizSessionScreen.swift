@@ -23,6 +23,7 @@ struct TVQuizSessionScreen: View {
     var body: some View {
         ZStack {
             DesignSystem.Color.background.ignoresSafeArea()
+            AmbientBlobsView(.tvQuiz)
 
             if showResult {
                 resultView

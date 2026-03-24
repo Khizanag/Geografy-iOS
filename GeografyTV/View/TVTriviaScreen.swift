@@ -11,13 +11,17 @@ struct TVTriviaScreen: View {
     @State private var showResult = false
 
     var body: some View {
-        Group {
-            if showResult {
-                resultView
-            } else if let question = currentQuestion {
-                questionView(question)
-            } else {
-                startView
+        ZStack {
+            AmbientBlobsView(.tv)
+
+            Group {
+                if showResult {
+                    resultView
+                } else if let question = currentQuestion {
+                    questionView(question)
+                } else {
+                    startView
+                }
             }
         }
         .navigationTitle("True or False")

@@ -9,15 +9,19 @@ struct TVExploreGameScreen: View {
     @State private var suggestions: [Country] = []
 
     var body: some View {
-        Group {
-            if let gameState {
-                if showResult {
-                    resultView(gameState)
+        ZStack {
+            AmbientBlobsView(.tv)
+
+            Group {
+                if let gameState {
+                    if showResult {
+                        resultView(gameState)
+                    } else {
+                        gameView(gameState)
+                    }
                 } else {
-                    gameView(gameState)
+                    startView
                 }
-            } else {
-                startView
             }
         }
         .navigationTitle("Mystery Country")
