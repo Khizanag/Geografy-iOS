@@ -10,8 +10,6 @@ struct PropertyDetailSheet: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            dragIndicator
-
             VStack(spacing: DesignSystem.Spacing.lg) {
                 iconHeader
                     .padding(.top, DesignSystem.Spacing.lg)
@@ -44,24 +42,14 @@ struct PropertyDetailSheet: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .background(background)
         .presentationDetents([.height(supportsMap ? 360 : 300)])
-        .presentationDragIndicator(.hidden)
-        .presentationCornerRadius(32)
-        .presentationBackground(.clear)
+        .presentationDragIndicator(.visible)
     }
 }
 
 // MARK: - Subviews
 
 private extension PropertyDetailSheet {
-    var dragIndicator: some View {
-        Capsule()
-            .fill(DesignSystem.Color.textTertiary.opacity(0.4))
-            .frame(width: 36, height: 4)
-            .padding(.top, DesignSystem.Spacing.sm)
-    }
-
     var iconHeader: some View {
         ZStack {
             Circle()
@@ -89,15 +77,4 @@ private extension PropertyDetailSheet {
         }
     }
 
-    var background: some View {
-        RoundedRectangle(cornerRadius: 32)
-            .fill(.ultraThinMaterial)
-            .overlay(
-                RoundedRectangle(cornerRadius: 32)
-                    .strokeBorder(
-                        DesignSystem.Color.accent.opacity(0.08),
-                        lineWidth: 1
-                    )
-            )
-    }
 }
