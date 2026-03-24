@@ -47,6 +47,18 @@ struct TVMoreScreen: View {
 
             Section("Discover") {
                 NavigationLink {
+                    TVEconomyScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Economy Rankings", systemImage: "chart.bar.fill")
+                }
+
+                NavigationLink {
+                    TVNeighborScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Neighbor Explorer", systemImage: "point.3.connected.trianglepath.dotted")
+                }
+
+                NavigationLink {
                     TVWorldRecordsScreen(countryDataService: countryDataService)
                 } label: {
                     Label("World Records", systemImage: "trophy.fill")
