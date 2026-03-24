@@ -6,20 +6,20 @@ struct TVCountryDetailScreen: View {
     let country: Country
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 60) {
-                heroSection
+        List {
+            heroSection
 
-                actionsRow
+            quickFactsSection
 
-                factsGrid
+            demographicsSection
 
-                languagesSection
+            economySection
 
+            languagesSection
 
-                organizationsSection
-            }
-            .padding(80)
+            governmentSection
+
+            organizationsSection
         }
         .navigationTitle(country.name)
     }
@@ -29,125 +29,153 @@ struct TVCountryDetailScreen: View {
 
 private extension TVCountryDetailScreen {
     var heroSection: some View {
-        HStack(spacing: 48) {
-            FlagView(countryCode: country.code, height: 160)
+        Section {
+            HStack(spacing: 48) {
+                FlagView(countryCode: country.code, height: 140)
 
-            VStack(alignment: .leading, spacing: 16) {
-                Text(country.name)
-                    .font(.system(size: 52, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(country.name)
+                        .font(.system(size: 48, weight: .bold))
 
-                Text(country.continent.displayName)
-                    .font(.system(size: 28))
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    HStack(spacing: 16) {
+                        Text(country.flagEmoji)
+                            .font(.system(size: 36))
 
-                Text(country.flagEmoji)
-                    .font(.system(size: 40))
+                        Text(country.continent.displayName)
+                            .font(.system(size: 26))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
+                Spacer()
+
+                Button {
+                    favoritesService.toggle(code: country.code)
+                } label: {
+                    Image(
+                        systemName: favoritesService.isFavorite(code: country.code)
+                            ? "heart.fill"
+                            : "heart"
+                    )
+                    .font(.system(size: 32))
+                    .foregroundStyle(
+                        favoritesService.isFavorite(code: country.code)
+                            ? DesignSystem.Color.error
+                            : .secondary
+                    )
+                }
+                .buttonStyle(.bordered)
             }
-
-            Spacer()
         }
     }
 }
 
-// MARK: - Actions
+// MARK: - Quick Facts
 
 private extension TVCountryDetailScreen {
-    var actionsRow: some View {
-        HStack(spacing: 24) {
-            Button {
-                favoritesService.toggle(code: country.code)
-            } label: {
-                Label(
-                    favoritesService.isFavorite(code: country.code) ? "Remove Favorite" : "Add to Favorites",
-                    systemImage: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart"
-                )
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(
-                    favoritesService.isFavorite(code: country.code)
-                        ? DesignSystem.Color.error
-                        : DesignSystem.Color.textPrimary
-                )
-                .padding(.horizontal, 32)
-                .padding(.vertical, 16)
-                .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 14))
+    var quickFactsSection: some View {
+        Section("Quick Facts") {
+            detailRow(icon: "building.columns.fill", label: "Capital", value: country.capital)
+
+            if country.allCapitals.count > 1 {
+                ForEach(country.allCapitals, id: \.name) { capital in
+                    if let role = capital.role {
+                        detailRow(icon: "mappin", label: role, value: capital.name)
+                    }
+                }
             }
-            .buttonStyle(.card)
+
+            detailRow(icon: "globe", label: "Country Code", value: country.code.uppercased())
+            detailRow(icon: "map.fill", label: "Continent", value: country.continent.displayName)
         }
     }
 }
 
-// MARK: - Facts Grid
+// MARK: - Demographics
 
 private extension TVCountryDetailScreen {
-    var factsGrid: some View {
-        LazyVGrid(
-            columns: [GridItem(.adaptive(minimum: 280), spacing: 32)],
-            spacing: 32
-        ) {
-            factCard(icon: "building.columns", title: "Capital", value: country.capital)
-            factCard(icon: "person.3", title: "Population", value: country.population.formatted())
-            factCard(icon: "map", title: "Area", value: "\(country.area.formatted()) km²")
-            factCard(icon: "dollarsign.circle", title: "Currency", value: country.currency.name)
-            factCard(icon: "text.bubble", title: "Language", value: country.languages.first?.name ?? "—")
+    var demographicsSection: some View {
+        Section("Demographics") {
+            detailRow(icon: "person.3.fill", label: "Population", value: country.population.formatted())
+            detailRow(icon: "square.grid.3x3.fill", label: "Area", value: "\(country.area.formatted()) km²")
+            detailRow(
+                icon: "person.2.fill",
+                label: "Population Density",
+                value: String(format: "%.1f/km²", country.populationDensity)
+            )
+        }
+    }
+}
 
-            if let gdpPerCapita = country.gdpPerCapita, gdpPerCapita > 0 {
-                factCard(
-                    icon: "chart.bar",
-                    title: "GDP per Capita",
-                    value: "$\(Int(gdpPerCapita).formatted())"
+// MARK: - Economy
+
+private extension TVCountryDetailScreen {
+    @ViewBuilder
+    var economySection: some View {
+        let hasEconomyData = country.gdp != nil || country.gdpPerCapita != nil
+
+        if hasEconomyData {
+            Section("Economy") {
+                detailRow(
+                    icon: "dollarsign.circle.fill",
+                    label: "Currency",
+                    value: "\(country.currency.name) (\(country.currency.code))"
+                )
+
+                if let gdp = country.gdp, gdp > 0 {
+                    detailRow(icon: "chart.bar.fill", label: "GDP", value: formatLargeNumber(gdp))
+                }
+
+                if let gdpPerCapita = country.gdpPerCapita, gdpPerCapita > 0 {
+                    detailRow(
+                        icon: "person.fill",
+                        label: "GDP per Capita",
+                        value: "$\(Int(gdpPerCapita).formatted())"
+                    )
+                }
+
+                if let gdpPPP = country.gdpPPP, gdpPPP > 0 {
+                    detailRow(icon: "equal.circle.fill", label: "GDP (PPP)", value: formatLargeNumber(gdpPPP))
+                }
+            }
+        } else {
+            Section("Economy") {
+                detailRow(
+                    icon: "dollarsign.circle.fill",
+                    label: "Currency",
+                    value: "\(country.currency.name) (\(country.currency.code))"
                 )
             }
         }
-    }
-
-    func factCard(icon: String, title: String, value: String) -> some View {
-        HStack(spacing: 20) {
-            Image(systemName: icon)
-                .font(.system(size: 28))
-                .foregroundStyle(DesignSystem.Color.accent)
-                .frame(width: 48)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.system(size: 18))
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-
-                Text(value)
-                    .font(.system(size: 24, weight: .semibold))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
-            }
-
-            Spacer()
-        }
-        .padding(24)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 16))
     }
 }
 
 // MARK: - Languages
 
 private extension TVCountryDetailScreen {
-    @ViewBuilder
     var languagesSection: some View {
-        if country.languages.count > 1 {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Languages")
-                    .font(.system(size: 32, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+        Section("Languages") {
+            ForEach(country.languages, id: \.name) { language in
+                HStack {
+                    Image(systemName: "text.bubble.fill")
+                        .font(.system(size: 20))
+                        .foregroundStyle(DesignSystem.Color.accent)
+                        .frame(width: 36)
 
-                FlowLayout(spacing: 16) {
-                    ForEach(country.languages, id: \.name) { language in
-                        Text(language.name)
-                            .font(.system(size: 20))
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .background(DesignSystem.Color.cardBackground, in: Capsule())
-                    }
+                    Text(language.name)
+                        .font(.system(size: 22))
                 }
             }
+        }
+    }
+}
+
+// MARK: - Government
+
+private extension TVCountryDetailScreen {
+    var governmentSection: some View {
+        Section("Government") {
+            detailRow(icon: "building.fill", label: "Form of Government", value: country.formOfGovernment)
         }
     }
 }
@@ -158,19 +186,27 @@ private extension TVCountryDetailScreen {
     @ViewBuilder
     var organizationsSection: some View {
         if !country.organizations.isEmpty {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Organizations")
-                    .font(.system(size: 32, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+            Section("International Organizations (\(country.organizations.count))") {
+                ForEach(country.organizations, id: \.self) { organizationID in
+                    if let organization = Organization.all.first(where: { $0.id == organizationID }) {
+                        HStack(spacing: 16) {
+                            Image(systemName: organization.icon)
+                                .font(.system(size: 22))
+                                .foregroundStyle(organization.highlightColor)
+                                .frame(width: 36)
 
-                FlowLayout(spacing: 16) {
-                    ForEach(country.organizations, id: \.self) { organization in
-                        Text(organization)
-                            .font(.system(size: 20))
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .background(DesignSystem.Color.cardBackground, in: Capsule())
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(organization.displayName)
+                                    .font(.system(size: 22, weight: .semibold))
+
+                                Text(organization.fullName)
+                                    .font(.system(size: 18))
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(1)
+                            }
+                        }
+                    } else {
+                        Label(organizationID, systemImage: "building.2")
                     }
                 }
             }
@@ -178,47 +214,37 @@ private extension TVCountryDetailScreen {
     }
 }
 
-// MARK: - Flow Layout
+// MARK: - Helpers
 
-private struct FlowLayout: Layout {
-    var spacing: CGFloat
+private extension TVCountryDetailScreen {
+    func detailRow(icon: String, label: String, value: String) -> some View {
+        HStack(spacing: 16) {
+            Image(systemName: icon)
+                .font(.system(size: 20))
+                .foregroundStyle(DesignSystem.Color.accent)
+                .frame(width: 36)
 
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let result = layout(proposal: proposal, subviews: subviews)
-        return result.size
-    }
+            Text(label)
+                .font(.system(size: 22))
+                .foregroundStyle(.secondary)
 
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        let result = layout(proposal: proposal, subviews: subviews)
-        for (index, position) in result.positions.enumerated() {
-            subviews[index].place(
-                at: CGPoint(x: bounds.minX + position.x, y: bounds.minY + position.y),
-                proposal: .unspecified
-            )
+            Spacer()
+
+            Text(value)
+                .font(.system(size: 22, weight: .semibold))
         }
     }
 
-    private func layout(proposal: ProposedViewSize, subviews: Subviews) -> (size: CGSize, positions: [CGPoint]) {
-        let maxWidth = proposal.width ?? .infinity
-        var positions: [CGPoint] = []
-        var currentX: CGFloat = 0
-        var currentY: CGFloat = 0
-        var rowHeight: CGFloat = 0
-        var maxX: CGFloat = 0
-
-        for subview in subviews {
-            let size = subview.sizeThatFits(.unspecified)
-            if currentX + size.width > maxWidth, currentX > 0 {
-                currentX = 0
-                currentY += rowHeight + spacing
-                rowHeight = 0
-            }
-            positions.append(CGPoint(x: currentX, y: currentY))
-            rowHeight = max(rowHeight, size.height)
-            currentX += size.width + spacing
-            maxX = max(maxX, currentX)
+    func formatLargeNumber(_ value: Double) -> String {
+        if value >= 1_000_000_000_000 {
+            return String(format: "$%.2fT", value / 1_000_000_000_000)
         }
-
-        return (CGSize(width: maxX, height: currentY + rowHeight), positions)
+        if value >= 1_000_000_000 {
+            return String(format: "$%.1fB", value / 1_000_000_000)
+        }
+        if value >= 1_000_000 {
+            return String(format: "$%.1fM", value / 1_000_000)
+        }
+        return "$\(Int(value).formatted())"
     }
 }
