@@ -91,7 +91,7 @@ private extension PropertyDetailSheet {
 
     var background: some View {
         RoundedRectangle(cornerRadius: 32)
-            .fill(DesignSystem.Color.background)
+            .fill(.ultraThinMaterial)
             .overlay(
                 RoundedRectangle(cornerRadius: 32)
                     .strokeBorder(
