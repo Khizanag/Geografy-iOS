@@ -14,6 +14,15 @@ enum SortOption: String, CaseIterable {
     case population = "Population"
     case area = "Area"
     case gdp = "GDP"
+
+    var icon: String {
+        switch self {
+        case .name: "textformat"
+        case .population: "person.3"
+        case .area: "map"
+        case .gdp: "chart.bar"
+        }
+    }
 }
 
 // MARK: - CountryListScreen
@@ -179,7 +188,7 @@ private extension CountryListScreen {
     var sortBySubmenu: some View {
         Picker(selection: $sortBy) {
             ForEach(SortOption.allCases, id: \.self) { option in
-                Label(option.rawValue, systemImage: sortIcon(for: option))
+                Label(option.rawValue, systemImage: option.icon)
                     .tag(option)
             }
         } label: {
@@ -211,15 +220,6 @@ private extension CountryListScreen {
         case .firstLetter: "textformat.abc"
         case .continent: "globe.americas"
         case .government: "building.columns"
-        }
-    }
-
-    func sortIcon(for option: SortOption) -> String {
-        switch option {
-        case .name: "textformat"
-        case .population: "person.3"
-        case .area: "map"
-        case .gdp: "chart.bar"
         }
     }
 
