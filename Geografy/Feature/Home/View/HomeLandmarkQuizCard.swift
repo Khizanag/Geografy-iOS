@@ -34,7 +34,7 @@ private extension HomeLandmarkQuizCard {
                     )
                 )
                 .frame(width: 56, height: 56)
-            Image(systemName: "building.columns.fill")
+            Image(systemName: "photo.fill")
                 .font(.system(size: 24))
                 .foregroundStyle(DesignSystem.Color.indigo)
         }

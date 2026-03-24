@@ -34,7 +34,7 @@ private extension HomeTriviaCard {
                     )
                 )
                 .frame(width: 56, height: 56)
-            Image(systemName: "checkmark.circle.fill")
+            Image(systemName: "questionmark.bubble.fill")
                 .font(.system(size: 24))
                 .foregroundStyle(DesignSystem.Color.blue)
         }

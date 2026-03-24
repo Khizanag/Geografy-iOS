@@ -34,7 +34,7 @@ private extension HomeSpellingBeeCard {
                     )
                 )
                 .frame(width: 56, height: 56)
-            Image(systemName: "pencil.and.list.clipboard")
+            Image(systemName: "textformat.abc")
                 .font(.system(size: 22))
                 .foregroundStyle(DesignSystem.Color.purple)
         }
