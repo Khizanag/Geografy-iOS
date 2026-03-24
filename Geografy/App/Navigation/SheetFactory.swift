@@ -9,7 +9,7 @@ enum SheetFactory {
              .organizationDetail, .coinStore, .paywall:
             coreView(for: sheet)
 
-        case .quizSetup, .speedRunSetup, .capitalQuiz, .exploreGame,
+        case .quizSetup, .speedRunSetup, .exploreGame,
              .multiplayer, .quizPacks, .customQuiz, .dailyChallenge,
              .srsStudy, .flagGame, .geoTrivia, .spellingBee, .landmarkQuiz:
             playView(for: sheet)
@@ -117,11 +117,6 @@ private extension SheetFactory {
             NavigationStack { DailyChallengeScreen() }
                 .presentationDetents([.large])
             .presentationDragIndicator(.visible)
-                .presentationDragIndicator(.visible)
-
-        case .capitalQuiz:
-            NavigationStack { QuizSetupScreen(fixedType: .capitalQuiz) }
-                .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
 
         case .exploreGame:

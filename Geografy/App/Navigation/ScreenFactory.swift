@@ -38,8 +38,6 @@ private extension ScreenFactory {
             QuizSetupScreen()
         case .neighborExplorer(let country):
             NeighborExplorerScreen(country: country)
-        case .capitalQuizSetup:
-            QuizSetupScreen(fixedType: .capitalQuiz)
         default:
             EmptyView()
         }

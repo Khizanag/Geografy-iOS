@@ -11,7 +11,6 @@ enum Screen: Hashable {
     case settings
     case quizSetup
     case neighborExplorer(Country)
-    case capitalQuizSetup
     case worldRecords
     case learningPath
     case mapPuzzle

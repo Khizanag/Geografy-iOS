@@ -70,16 +70,6 @@ extension HomeScreen {
 
 // MARK: - Capital Quiz Section
 
-extension HomeScreen {
-    var capitalQuizSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Capital City Quiz")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeCapitalQuizCard { coordinator.present(.capitalQuiz) }
-        }
-    }
-}
-
 // MARK: - SRS Review Section
 
 extension HomeScreen {

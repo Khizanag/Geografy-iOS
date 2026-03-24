@@ -4,7 +4,7 @@ enum MoreSheet: Identifiable {
     case profile, countries, orgs, favorites, travel
     case dailyChallenge, compare, travelJournal, travelBucketList
     case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
-    case capitalQuiz, flagGame, geoTrivia, spellingBee, landmarkQuiz
+    case flagGame, geoTrivia, spellingBee, landmarkQuiz
     case wordSearch, borderChallenge, challengeRoom, countryNicknames
     case nationalSymbolsQuiz, geoQuotes, geoFeed
     case srsStudy, learningPath
@@ -42,7 +42,6 @@ enum MoreSheet: Identifiable {
         case .themes: "Themes"
         case .settings: "Settings"
         case .search: "Global Search"
-        case .capitalQuiz: "Capital Quiz"
         case .flagGame: "Flag Game"
         case .geoTrivia: "Geo Trivia"
         case .spellingBee: "Spelling Bee"
@@ -85,7 +84,6 @@ enum MoreSheet: Identifiable {
         case .themes: "paintbrush.fill"
         case .settings: "gearshape.fill"
         case .search: "magnifyingglass"
-        case .capitalQuiz: "building.columns.fill"
         case .flagGame: "flag.fill"
         case .geoTrivia: "questionmark.bubble.fill"
         case .spellingBee: "textformat.abc"
@@ -128,7 +126,6 @@ enum MoreSheet: Identifiable {
         case .themes: "Customize your experience"
         case .settings: "App preferences"
         case .search: "Search all countries & orgs"
-        case .capitalQuiz: "Name every capital city"
         case .flagGame: "Match flags to countries"
         case .geoTrivia: "Geography trivia questions"
         case .spellingBee: "Spell country names"
@@ -171,7 +168,6 @@ enum MoreSheet: Identifiable {
         case .themes: DesignSystem.Color.indigo
         case .settings: DesignSystem.Color.textSecondary
         case .search: DesignSystem.Color.accent
-        case .capitalQuiz: DesignSystem.Color.blue
         case .flagGame: DesignSystem.Color.error
         case .geoTrivia: DesignSystem.Color.purple
         case .spellingBee: DesignSystem.Color.orange
@@ -214,7 +210,6 @@ enum MoreSheet: Identifiable {
         case .themes: "themes"
         case .settings: "settings"
         case .search: "search"
-        case .capitalQuiz: "capitalQuiz"
         case .flagGame: "flagGame"
         case .geoTrivia: "geoTrivia"
         case .spellingBee: "spellingBee"
@@ -257,7 +252,6 @@ enum MoreSheet: Identifiable {
         case .themes: .themes
         case .settings: .settings
         case .search: .search
-        case .capitalQuiz: .capitalQuiz
         case .flagGame: .flagGame
         case .geoTrivia: .geoTrivia
         case .spellingBee: .spellingBee

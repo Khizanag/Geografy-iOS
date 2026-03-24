@@ -596,7 +596,6 @@ private extension HomeScreen {
             if let country = spotlightCountry { spotlightSection(country) }
         case .streak: streakSection
         case .dailyChallenge: dailyChallengeSection
-        case .capitalQuiz: capitalQuizSection
         case .srsReview: srsReviewSection
         case .progress: progressSection
         default: gameSectionView(for: section)

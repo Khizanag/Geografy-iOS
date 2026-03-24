@@ -76,13 +76,6 @@ private extension TestChecklistService {
             "Starting custom quiz works",
             "Delete custom quiz",
         ]),
-        "capitalQuiz": TestChecklist(items: [
-            "Setup screen shows all options",
-            "Quiz type is locked to Capital Quiz",
-            "Multiple choice and typing modes work",
-            "Region filter applies correctly",
-            "All difficulty levels work with timer",
-        ]),
         "flagGame": TestChecklist(items: [
             "Flag options display correctly",
             "Score increments on correct answer",

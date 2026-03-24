@@ -28,7 +28,6 @@ final class HomeSectionOrderService {
             .streak,
             .dailyChallenge,
             .progress,
-            .capitalQuiz,
             .flagGame,
             .worldRecords,
             .geoTrivia,
