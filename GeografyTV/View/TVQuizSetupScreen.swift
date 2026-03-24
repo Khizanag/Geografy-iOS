@@ -8,6 +8,7 @@ struct TVQuizSetupScreen: View {
     @State private var selectedDifficulty: QuizDifficulty = .easy
     @State private var selectedCount = 10
     @State private var showQuiz = false
+    @State private var showMultiplayer = false
 
     var body: some View {
         ScrollView {
@@ -27,6 +28,15 @@ struct TVQuizSetupScreen: View {
         .navigationTitle("Quiz")
         .fullScreenCover(isPresented: $showQuiz) {
             TVQuizSessionScreen(
+                countryDataService: countryDataService,
+                quizType: selectedType,
+                region: selectedRegion,
+                difficulty: selectedDifficulty,
+                questionCount: selectedCount,
+            )
+        }
+        .fullScreenCover(isPresented: $showMultiplayer) {
+            TVMultiplayerQuizScreen(
                 countryDataService: countryDataService,
                 quizType: selectedType,
                 region: selectedRegion,
@@ -231,23 +241,40 @@ private extension TVQuizSetupScreen {
     }
 }
 
-// MARK: - Start Button
+// MARK: - Start Buttons
 
 private extension TVQuizSetupScreen {
     var startButton: some View {
-        Button {
-            showQuiz = true
-        } label: {
-            HStack(spacing: 16) {
-                Image(systemName: "play.fill")
-                    .font(.system(size: 28))
+        HStack(spacing: 32) {
+            Button {
+                showQuiz = true
+            } label: {
+                HStack(spacing: 16) {
+                    Image(systemName: "play.fill")
+                        .font(.system(size: 28))
 
-                Text("Start \(selectedType.displayName)")
-                    .font(.system(size: 28, weight: .bold))
+                    Text("Solo")
+                        .font(.system(size: 28, weight: .bold))
+                }
+                .frame(maxWidth: 300)
+                .padding(.vertical, 20)
             }
-            .frame(maxWidth: 500)
-            .padding(.vertical, 20)
+            .buttonStyle(.bordered)
+
+            Button {
+                showMultiplayer = true
+            } label: {
+                HStack(spacing: 16) {
+                    Image(systemName: "person.2.fill")
+                        .font(.system(size: 28))
+
+                    Text("Multiplayer")
+                        .font(.system(size: 28, weight: .bold))
+                }
+                .frame(maxWidth: 300)
+                .padding(.vertical, 20)
+            }
+            .buttonStyle(.bordered)
         }
-        .buttonStyle(.bordered)
     }
 }
