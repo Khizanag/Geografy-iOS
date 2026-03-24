@@ -117,10 +117,6 @@ private extension ChallengeSplitScreen {
         onSelect: @escaping (Int) -> Void
     ) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            if playerIndex == 0 {
-                Spacer(minLength: 0)
-            }
-
             HStack {
                 Text(playerIndex == 0 ? room.player1Name : room.player2Name)
                     .font(DesignSystem.Font.caption)
@@ -151,6 +147,8 @@ private extension ChallengeSplitScreen {
                     .minimumScaleFactor(0.6)
                     .padding(.horizontal, DesignSystem.Spacing.md)
 
+                Spacer()
+
                 VStack(spacing: DesignSystem.Spacing.xxs) {
                     ForEach(question.options.indices, id: \.self) { index in
                         QuizOptionButton(
@@ -168,10 +166,6 @@ private extension ChallengeSplitScreen {
                     }
                 }
                 .padding(.horizontal, DesignSystem.Spacing.sm)
-            }
-
-            if playerIndex == 1 {
-                Spacer(minLength: 0)
             }
         }
         .padding(.vertical, DesignSystem.Spacing.sm)

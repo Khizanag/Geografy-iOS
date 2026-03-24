@@ -57,10 +57,7 @@ private extension NicknameQuizScreen {
     }
 
     var progressSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SessionProgressBar(progress: progressFraction)
-            QuestionCounterPill(current: currentIndex + 1, total: questions.count)
-        }
+        SessionProgressView(progress: progressFraction, current: currentIndex + 1, total: questions.count)
     }
 
     var progressFraction: CGFloat {

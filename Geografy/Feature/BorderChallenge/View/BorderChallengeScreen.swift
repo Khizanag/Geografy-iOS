@@ -108,13 +108,11 @@ private extension BorderChallengeScreen {
     }
 
     var progressSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SessionProgressBar(progress: progressFraction)
-            QuestionCounterPill(
-                current: foundNeighbors.count,
-                total: neighbors.count
-            )
-        }
+        SessionProgressView(
+            progress: progressFraction,
+            current: foundNeighbors.count,
+            total: neighbors.count
+        )
     }
 
     var timerSection: some View {
