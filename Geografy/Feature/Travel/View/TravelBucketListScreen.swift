@@ -164,7 +164,7 @@ private extension TravelBucketListScreen {
                 showShareSheet = true
             } label: {
                 Image(systemName: "square.and.arrow.up")
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
         }
