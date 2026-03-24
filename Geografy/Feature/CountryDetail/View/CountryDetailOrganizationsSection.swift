@@ -10,67 +10,81 @@ extension CountryDetailScreen {
     func organizationsSection(countryDataService: CountryDataService, hapticsService: HapticsService) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Member Of")
-            CardView {
-                VStack(spacing: 0) {
-                    ForEach(
-                        Array(memberOrganizations.enumerated()),
-                        id: \.element.id
-                    ) { index, org in
-                        NavigationLink(value: org) {
-                            orgRow(org, countryDataService: countryDataService)
-                        }
-                        .buttonStyle(PressButtonStyle())
-                        .simultaneousGesture(TapGesture().onEnded {
-                            hapticsService.impact(.light)
-                        })
-
-                        if index < memberOrganizations.count - 1 {
-                            Divider()
-                                .padding(.leading, 60)
-                        }
-                    }
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(memberOrganizations) { org in
+                    orgCard(org, countryDataService: countryDataService, hapticsService: hapticsService)
                 }
             }
         }
     }
 
-    func orgRow(
+    func orgCard(
         _ org: Organization,
-        countryDataService: CountryDataService
+        countryDataService: CountryDataService,
+        hapticsService: HapticsService
     ) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            orgRowIcon(org)
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                orgRowIcon(org)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(org.displayName)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                if org.fullName != org.displayName {
-                    Text(org.fullName)
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .lineLimit(1)
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    Text(org.displayName)
+                        .font(DesignSystem.Font.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    if org.fullName != org.displayName {
+                        Text(org.fullName)
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    let memberCount = countryDataService.countries
+                        .filter { $0.organizations.contains(org.id) }.count
+                    if memberCount > 0 {
+                        Text("\(memberCount) members")
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(org.highlightColor.opacity(0.8))
+                    }
+                }
+
+                Spacer()
+
+                VStack(spacing: DesignSystem.Spacing.xs) {
+                    NavigationLink(value: org) {
+                        orgActionButton(icon: "info.circle", label: "Info", color: DesignSystem.Color.accent)
+                    }
+                    .buttonStyle(.plain)
+                    .simultaneousGesture(TapGesture().onEnded { hapticsService.impact(.light) })
+
+                    Button {
+                        hapticsService.impact(.light)
+                        activeSheet = .organizationMap(org)
+                    } label: {
+                        orgActionButton(icon: "map", label: "Map", color: org.highlightColor)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
-
-            Spacer()
-
-            let memberCount = countryDataService.countries
-                .filter { $0.organizations.contains(org.id) }.count
-            if memberCount > 0 {
-                Text("\(memberCount) members")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-
-            Image(systemName: "chevron.right")
-                .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+            .padding(DesignSystem.Spacing.md)
+            .contentShape(Rectangle())
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .contentShape(Rectangle())
+    }
+}
+
+// MARK: - Org Action Button
+
+private extension CountryDetailScreen {
+    func orgActionButton(icon: String, label: String, color: Color) -> some View {
+        VStack(spacing: 2) {
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(color)
+            Text(label)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(color.opacity(0.8))
+        }
+        .frame(width: 44, height: 40)
+        .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
     }
 }
 
