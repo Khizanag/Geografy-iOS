@@ -145,6 +145,14 @@ struct TVMoreScreen: View {
                 }
             }
 
+            Section("Tools") {
+                NavigationLink {
+                    TVToolsScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Tools", systemImage: "wrench.and.screwdriver.fill")
+                }
+            }
+
             Section {
                 NavigationLink {
                     TVSettingsScreen()
