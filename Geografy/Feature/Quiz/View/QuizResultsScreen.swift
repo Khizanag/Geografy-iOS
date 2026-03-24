@@ -126,6 +126,7 @@ private extension QuizResultsScreen {
 
                 if let flagCode = answer.question.promptFlag {
                     FlagView(countryCode: flagCode, height: DesignSystem.Spacing.lg)
+                        .frame(width: 40, alignment: .center)
                 }
 
                 Text(answer.question.correctCountry.name)
