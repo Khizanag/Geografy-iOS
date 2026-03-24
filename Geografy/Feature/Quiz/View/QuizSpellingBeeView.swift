@@ -117,50 +117,22 @@ private extension QuizSpellingBeeView {
 
 private extension QuizSpellingBeeView {
     var inputSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            TextField("Type answer...", text: $typingInput)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.characters)
-                .focused($isInputFocused)
-                .disabled(showFeedback)
-                .onSubmit { onSubmit() }
-
-            if !typingInput.isEmpty, !showFeedback {
-                Button { typingInput = "" } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(DesignSystem.Font.callout)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                .buttonStyle(.plain)
-            }
-
+        VStack(spacing: 0) {
             if showFeedback {
                 Image(systemName: isCorrectAnswer ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(isCorrectAnswer ? DesignSystem.Color.success : DesignSystem.Color.error)
             }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                .strokeBorder(inputBorderColor, lineWidth: 2)
-        )
-    }
 
-    var inputBorderColor: Color {
-        guard showFeedback else {
-            return isInputFocused
-                ? DesignSystem.Color.accent.opacity(0.5)
-                : DesignSystem.Color.accent.opacity(0.2)
+            TextField("", text: $typingInput)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.characters)
+                .focused($isInputFocused)
+                .disabled(showFeedback)
+                .onSubmit { onSubmit() }
+                .frame(width: 1, height: 1)
+                .opacity(0)
         }
-        return isCorrectAnswer ? DesignSystem.Color.success : DesignSystem.Color.error
     }
 }
 
