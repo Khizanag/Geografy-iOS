@@ -15,15 +15,6 @@ enum CoverFactory {
         case .flashcardSession(let deck, let cards):
             FlashcardSessionScreen(deck: deck, cards: cards)
 
-        case .dailyChallengeSession:
-            EmptyView()
-
-        case .multiplayerMatch:
-            EmptyView()
-
-        case .exploreGameSession:
-            EmptyView()
-
         case .travelMap(let filter):
             TravelMapScreen(filter: filter)
 
