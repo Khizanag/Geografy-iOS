@@ -195,16 +195,13 @@ private extension HomeScreen {
 private extension HomeScreen {
     var profileButton: some View {
         Button { coordinator.present(.profile) } label: {
-            profileAvatar
+            ProfileAvatarView(
+                name: authService.currentProfile?.displayName ?? "Explorer",
+                size: DesignSystem.Size.md
+            )
+            .padding(DesignSystem.Spacing.xxs)
         }
-        .buttonStyle(.plain)
-    }
-
-    var profileAvatar: some View {
-        ProfileAvatarView(
-            name: authService.currentProfile?.displayName ?? "Explorer",
-            size: DesignSystem.Size.md
-        )
+        .buttonStyle(.glass)
     }
 
     var statsButton: some View {
