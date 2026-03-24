@@ -82,13 +82,7 @@ private extension AchievementUnlockedBanner {
     }
 
     var categoryColor: Color {
-        switch achievement.category {
-        case .explorer:      DesignSystem.Color.blue
-        case .quizMaster:    DesignSystem.Color.purple
-        case .travelTracker: DesignSystem.Color.orange
-        case .streak:        DesignSystem.Color.error
-        case .knowledge:     DesignSystem.Color.ocean
-        }
+        achievement.category.themeColor
     }
 }
 
