@@ -1,24 +1,29 @@
 import SwiftUI
 
 struct ChallengeResultScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     let room: ChallengeRoom
     let challengeRoomService: ChallengeRoomService
     let onDismiss: () -> Void
 
     var body: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-            winnerSection
-            scoresSection
-            Spacer()
-            actionButtons
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                winnerSection
+
+                scoresSection
+
+                statsSection
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.lg)
         }
-        .padding(.horizontal, DesignSystem.Spacing.lg)
-        .padding(.vertical, DesignSystem.Spacing.xl)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .safeAreaInset(edge: .bottom) {
+            GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
+                onDismiss()
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
+        }
     }
 }
 
@@ -27,98 +32,104 @@ struct ChallengeResultScreen: View {
 private extension ChallengeResultScreen {
     var winnerSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            trophyIcon
-            winnerLabel
-        }
-    }
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.warning.opacity(0.12))
+                    .frame(width: 96, height: 96)
+                Image(systemName: isTie ? "equal.circle.fill" : "trophy.fill")
+                    .font(.system(size: 44))
+                    .foregroundStyle(DesignSystem.Color.warning)
+                    .symbolEffect(.bounce)
+            }
 
-    var trophyIcon: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.warning.opacity(0.3), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 70
-                    )
-                )
-                .frame(width: 140, height: 140)
-            Image(systemName: isTie ? "equal.circle.fill" : "trophy.fill")
-                .font(.system(size: 60))
-                .foregroundStyle(DesignSystem.Color.warning)
-        }
-    }
-
-    var winnerLabel: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            if isTie {
-                Text("It's a Tie!")
-                    .font(.largeTitle)
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Text(isTie ? "It's a Tie!" : "\(winnerName) Wins!")
+                    .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Both players scored equally")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            } else {
-                Text("\(winnerName) wins!")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Congratulations!")
+
+                Text(isTie ? "Both players scored equally" : "Congratulations!")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
+            .multilineTextAlignment(.center)
         }
-        .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity)
+        .padding(.top, DesignSystem.Spacing.xl)
     }
 
     var scoresSection: some View {
-        HStack(spacing: DesignSystem.Spacing.lg) {
+        HStack(spacing: DesignSystem.Spacing.md) {
             scoreCard(
                 name: room.player1Name,
                 score: room.player1Score,
-                isWinner: !isTie, winnerScore: room.player1Score > room.player2Score
+                isWinner: room.player1Score > room.player2Score
             )
+
             Text("vs")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+
             scoreCard(
                 name: room.player2Name,
                 score: room.player2Score,
-                isWinner: !isTie, winnerScore: room.player2Score > room.player1Score
+                isWinner: room.player2Score > room.player1Score
             )
         }
     }
 
-    func scoreCard(name: String, score: Int, isWinner: Bool, winnerScore: Bool) -> some View {
-        let isThisWinner = isWinner && winnerScore
-        return CardView {
+    func scoreCard(name: String, score: Int, isWinner: Bool) -> some View {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
+                if isWinner {
+                    Image(systemName: "crown.fill")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.warning)
+                }
+
                 Text("\(score)")
-                    .font(.system(size: 44, weight: .bold))
-                    .foregroundStyle(isThisWinner ? DesignSystem.Color.warning : DesignSystem.Color.textPrimary)
+                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .foregroundStyle(isWinner ? DesignSystem.Color.warning : DesignSystem.Color.textPrimary)
+
                 Text(name)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(1)
-                Text("out of \(room.totalRounds)")
+
+                Text("out of \(String(room.totalRounds))")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
-                if isThisWinner {
-                    Image(systemName: "crown.fill")
-                        .foregroundStyle(DesignSystem.Color.warning)
-                }
             }
             .padding(DesignSystem.Spacing.md)
         }
         .frame(maxWidth: .infinity)
     }
 
-    var actionButtons: some View {
-        GlassButton("Done", fullWidth: true) {
-            onDismiss()
+    var statsSection: some View {
+        CardView {
+            HStack(spacing: 0) {
+                ResultStatItem(
+                    icon: "questionmark.circle.fill",
+                    value: "\(String(room.totalRounds * 2))",
+                    label: "Questions"
+                )
+
+                ResultStatItem(
+                    icon: "checkmark.circle.fill",
+                    value: "\(String(room.player1Score + room.player2Score))",
+                    label: "Total Correct",
+                    color: DesignSystem.Color.success
+                )
+
+                ResultStatItem(
+                    icon: "chart.bar.fill",
+                    value: "\(String(accuracy))%",
+                    label: "Accuracy",
+                    color: DesignSystem.Color.indigo
+                )
+            }
+            .padding(DesignSystem.Spacing.md)
         }
     }
 }
@@ -127,5 +138,12 @@ private extension ChallengeResultScreen {
 
 private extension ChallengeResultScreen {
     var isTie: Bool { room.player1Score == room.player2Score }
+
     var winnerName: String { challengeRoomService.winnerName(for: room) ?? "" }
+
+    var accuracy: Int {
+        let total = room.totalRounds * 2
+        guard total > 0 else { return 0 }
+        return Int(Double(room.player1Score + room.player2Score) / Double(total) * 100)
+    }
 }
