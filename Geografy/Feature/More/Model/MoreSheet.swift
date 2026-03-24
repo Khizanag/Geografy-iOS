@@ -6,7 +6,7 @@ enum MoreSheet: Identifiable {
     case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
     case flagGame, trivia, spellingBee, landmarkQuiz
     case wordSearch, borderChallenge, challengeRoom, countryNicknames
-    case geoQuotes, feed
+    case quotes, feed
     case srsStudy, learningPath
     case badges, timeline
     case achievements, leaderboards, themes, settings
@@ -50,7 +50,7 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "Border Challenge"
         case .challengeRoom: "Challenge Room"
         case .countryNicknames: "Country Nicknames"
-        case .geoQuotes: "Quotes"
+        case .quotes: "Quotes"
         case .feed: "Feed"
         case .srsStudy: "SRS Review"
         case .learningPath: "Learning Path"
@@ -91,7 +91,7 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "square.dashed"
         case .challengeRoom: "bolt.fill"
         case .countryNicknames: "tag.fill"
-        case .geoQuotes: "quote.bubble.fill"
+        case .quotes: "quote.bubble.fill"
         case .feed: "newspaper.fill"
         case .srsStudy: "brain.fill"
         case .learningPath: "graduationcap.fill"
@@ -132,7 +132,7 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "Guess by outline shape"
         case .challengeRoom: "Timed multi-round challenge"
         case .countryNicknames: "Informal country names"
-        case .geoQuotes: "Geography quotes & facts"
+        case .quotes: "Geography quotes & facts"
         case .feed: "Curated geography news"
         case .srsStudy: "Spaced repetition review"
         case .learningPath: "Guided geography curriculum"
@@ -173,7 +173,7 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: DesignSystem.Color.warning
         case .challengeRoom: DesignSystem.Color.error
         case .countryNicknames: DesignSystem.Color.purple
-        case .geoQuotes: DesignSystem.Color.indigo
+        case .quotes: DesignSystem.Color.indigo
         case .feed: DesignSystem.Color.blue
         case .srsStudy: DesignSystem.Color.accent
         case .learningPath: DesignSystem.Color.success
@@ -214,7 +214,7 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "borderChallenge"
         case .challengeRoom: "challengeRoom"
         case .countryNicknames: "countryNicknames"
-        case .geoQuotes: "geoQuotes"
+        case .quotes: "quotes"
         case .feed: "feed"
         case .srsStudy: "srsStudy"
         case .learningPath: "learningPath"
@@ -255,7 +255,7 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: .borderChallenge
         case .challengeRoom: .challengeRoom
         case .countryNicknames: .countryNicknames
-        case .geoQuotes: .geoQuotes
+        case .quotes: .quotes
         case .feed: .feed
         case .srsStudy: .srsStudy
         case .learningPath: .learningPath

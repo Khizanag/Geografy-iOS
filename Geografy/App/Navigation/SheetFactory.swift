@@ -26,7 +26,7 @@ enum SheetFactory {
         case .challengeRoom:
             challengeView(for: sheet)
 
-        case .geoQuotes, .countryNicknames:
+        case .quotes, .countryNicknames:
             discoverView(for: sheet)
         }
     }
@@ -346,8 +346,8 @@ private extension SheetFactory {
     @ViewBuilder
     static func discoverView(for sheet: Sheet) -> some View {
         switch sheet {
-        case .geoQuotes:
-            NavigationStack { GeoQuotesScreen() }
+        case .quotes:
+            NavigationStack { QuotesScreen() }
                 .presentationDetents([.large])
 
     

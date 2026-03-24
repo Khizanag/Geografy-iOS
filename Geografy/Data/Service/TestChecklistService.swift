@@ -169,7 +169,7 @@ private extension TestChecklistService {
             "Tapping opens detail with member list",
             "Map view shows member countries",
         ]),
-        "geoQuotes": TestChecklist(items: [
+        "quotes": TestChecklist(items: [
             "Quotes load and display",
             "Love button toggles favorite",
             "Share button works",
