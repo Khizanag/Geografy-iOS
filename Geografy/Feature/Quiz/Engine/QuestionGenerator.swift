@@ -1,7 +1,7 @@
 import Foundation
 
 enum QuestionGenerator {
-    private static let symbolsService = NationalSymbolsService()
+    nonisolated(unsafe) private static let symbolsService = NationalSymbolsService()
 
     static func generate(
         type: QuizType,
@@ -186,7 +186,6 @@ private extension QuestionGenerator {
             correctCountry: country,
         )
     }
-}
 
     static func makeNationalSymbolsQuestion(
         country: Country,
