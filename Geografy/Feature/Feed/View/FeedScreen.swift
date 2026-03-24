@@ -14,11 +14,6 @@ struct FeedScreen: View {
             .background { backgroundGradient }
             .navigationTitle("Feed")
             .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
-            }
             .task {
                 countryDataService.loadCountries()
                 feedService.loadFeed()

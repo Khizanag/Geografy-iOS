@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ChallengeSetupScreen: View {
-    @Environment(\.dismiss) private var dismiss
 
     @State private var player1Name = ""
     @State private var player2Name = ""
@@ -36,11 +35,6 @@ struct ChallengeSetupScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Challenge Room")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .task { countryDataService.loadCountries() }
         .fullScreenCover(item: $challengeRoom) { room in
             NavigatorView {

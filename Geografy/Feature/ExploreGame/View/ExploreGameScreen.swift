@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct ExploreGameScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     @State private var gameService = ExploreGameService()
     @State private var activeSession: ExploreGameState?
 
@@ -18,7 +16,6 @@ struct ExploreGameScreen: View {
             mainContent
                 .navigationTitle("Mystery Country")
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
         }
     }
 }
@@ -39,12 +36,6 @@ private extension ExploreGameScreen {
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
-    }
 }
 
 // MARK: - Hero Section

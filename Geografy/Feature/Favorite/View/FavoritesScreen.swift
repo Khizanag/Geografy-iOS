@@ -41,9 +41,6 @@ private extension FavoritesScreen {
             countLabel
         }
         ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
-        ToolbarItem(placement: .topBarTrailing) {
             optionsMenu
         }
     }

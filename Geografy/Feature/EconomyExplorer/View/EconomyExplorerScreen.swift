@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct EconomyExplorerScreen: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(TabCoordinator.self) private var coordinator
 
     @State private var countryDataService = CountryDataService()
@@ -35,11 +34,6 @@ struct EconomyExplorerScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Economy Explorer")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
         .task { countryDataService.loadCountries() }
         .onAppear { blobAnimating = true }
     }

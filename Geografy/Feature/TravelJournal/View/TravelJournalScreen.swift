@@ -66,9 +66,6 @@ private extension TravelJournalScreen {
             }
             .buttonStyle(.plain)
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 }
 

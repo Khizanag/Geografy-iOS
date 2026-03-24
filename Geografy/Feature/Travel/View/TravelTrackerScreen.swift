@@ -89,9 +89,6 @@ private extension TravelTrackerScreen {
             }
             .buttonStyle(.plain)
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 }
 
