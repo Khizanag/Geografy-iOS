@@ -99,9 +99,6 @@ struct CountryListScreen: View {
 private extension CountryListScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            CircleCloseButton()
-        }
         ToolbarItem(placement: .topBarTrailing) {
             sortOrderButton
         }
