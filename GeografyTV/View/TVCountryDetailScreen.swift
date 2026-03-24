@@ -1,29 +1,38 @@
+import AVFoundation
 import SwiftUI
 
 struct TVCountryDetailScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
+    @Environment(PronunciationService.self) private var pronunciationService
 
     let country: Country
 
     @State private var showFlagFocus = false
+    @State private var showOrganizationDetail: Organization?
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 48) {
-                heroSection
+        List {
+            heroSection
 
-                statsStrip
+            actionsSection
 
-                infoSections
+            statsSection
 
-                organizationsSection
-            }
-            .padding(.horizontal, 80)
-            .padding(.vertical, 40)
+            economySection
+
+            languagesSection
+
+            governmentSection
+
+            organizationsSection
         }
-        .background { AmbientBlobsView(.tv) }
+        .listStyle(.grouped)
+        .navigationTitle(country.name)
         .fullScreenCover(isPresented: $showFlagFocus) {
             TVFlagFocusView(countryCode: country.code, countryName: country.name)
+        }
+        .sheet(item: $showOrganizationDetail) { organization in
+            TVOrganizationSheetView(organization: organization)
         }
     }
 }
@@ -32,226 +41,167 @@ struct TVCountryDetailScreen: View {
 
 private extension TVCountryDetailScreen {
     var heroSection: some View {
-        HStack(spacing: 48) {
+        Section {
             Button {
                 showFlagFocus = true
             } label: {
-                FlagView(countryCode: country.code, height: 180)
-            }
-            .buttonStyle(.card)
+                HStack(spacing: 40) {
+                    FlagView(countryCode: country.code, height: 140)
 
-            VStack(alignment: .leading, spacing: 16) {
-                Text(country.name)
-                    .font(.system(size: 56, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(country.name)
+                            .font(.system(size: 48, weight: .bold))
 
-                HStack(spacing: 12) {
-                    Text(country.flagEmoji)
-                        .font(.system(size: 40))
+                        HStack(spacing: 12) {
+                            Text(country.flagEmoji)
+                                .font(.system(size: 36))
 
-                    Text(country.continent.displayName)
-                        .font(.system(size: 28))
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                            Text(country.continent.displayName)
+                                .font(.system(size: 26))
+                                .foregroundStyle(.secondary)
 
-                    Text("·")
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                            Text("·")
+                                .foregroundStyle(.tertiary)
 
-                    Text(country.code.uppercased())
-                        .font(.system(size: 28, weight: .semibold))
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                            Text(country.code.uppercased())
+                                .font(.system(size: 26, weight: .semibold))
+                                .foregroundStyle(.tertiary)
+                        }
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                        .font(.system(size: 24))
+                        .foregroundStyle(.tertiary)
                 }
-
-                Text(country.formOfGovernment)
-                    .font(.system(size: 22))
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
             }
+        }
+    }
+}
 
-            Spacer()
+// MARK: - Actions
 
+private extension TVCountryDetailScreen {
+    var actionsSection: some View {
+        Section {
             Button {
                 favoritesService.toggle(code: country.code)
             } label: {
-                VStack(spacing: 8) {
-                    Image(
-                        systemName: favoritesService.isFavorite(code: country.code)
-                            ? "heart.fill"
-                            : "heart"
-                    )
-                    .font(.system(size: 36))
-
-                    Text(
-                        favoritesService.isFavorite(code: country.code)
-                            ? "Favorited"
-                            : "Favorite"
-                    )
-                    .font(.system(size: 16))
-                }
+                Label(
+                    favoritesService.isFavorite(code: country.code) ? "Remove from Favorites" : "Add to Favorites",
+                    systemImage: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart"
+                )
                 .foregroundStyle(
-                    favoritesService.isFavorite(code: country.code)
-                        ? DesignSystem.Color.error
-                        : DesignSystem.Color.textSecondary
+                    favoritesService.isFavorite(code: country.code) ? DesignSystem.Color.error : .primary
                 )
             }
-            .buttonStyle(.bordered)
+
+            Button {
+                pronunciationService.speak(
+                    text: "\(country.name). Capital: \(country.capital).",
+                    countryCode: country.code
+                )
+            } label: {
+                Label("Pronounce Country & Capital", systemImage: "speaker.wave.2.fill")
+            }
         }
-        .focusable(false)
     }
 }
 
-// MARK: - Stats Strip
+// MARK: - Stats
 
 private extension TVCountryDetailScreen {
-    var statsStrip: some View {
-        HStack(spacing: 0) {
-            statTile(
-                icon: "building.columns.fill",
-                value: country.capital,
-                label: "Capital",
-            )
-
-            Divider().frame(height: 60)
-
-            statTile(
-                icon: "person.3.fill",
-                value: country.population.formatted(),
-                label: "Population",
-            )
-
-            Divider().frame(height: 60)
-
-            statTile(
-                icon: "map.fill",
-                value: "\(country.area.formatted()) km²",
-                label: "Area",
-            )
-
-            Divider().frame(height: 60)
-
-            statTile(
-                icon: "person.2.fill",
-                value: String(format: "%.1f/km²", country.populationDensity),
-                label: "Density",
-            )
-
-            if let gdpPerCapita = country.gdpPerCapita, gdpPerCapita > 0 {
-                Divider().frame(height: 60)
-
-                statTile(
-                    icon: "dollarsign.circle.fill",
-                    value: "$\(Int(gdpPerCapita).formatted())",
-                    label: "GDP/Capita",
-                )
-            }
-        }
-        .padding(.vertical, 24)
-        .padding(.horizontal, 16)
-        .background(DesignSystem.Color.cardBackground.opacity(0.6), in: RoundedRectangle(cornerRadius: 20))
-        .focusable()
-    }
-
-    func statTile(icon: String, value: String, label: String) -> some View {
-        VStack(spacing: 8) {
-            Image(systemName: icon)
-                .font(.system(size: 22))
-                .foregroundStyle(DesignSystem.Color.accent)
-
-            Text(value)
-                .font(.system(size: 22, weight: .bold))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-
-            Text(label)
-                .font(.system(size: 16))
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-        .frame(maxWidth: .infinity)
-    }
-}
-
-// MARK: - Info Sections
-
-private extension TVCountryDetailScreen {
-    var infoSections: some View {
-        HStack(alignment: .top, spacing: 32) {
-            leftColumn
-            rightColumn
-        }
-    }
-
-    var leftColumn: some View {
-        VStack(spacing: 24) {
-            infoCard(title: "Economy") {
-                VStack(alignment: .leading, spacing: 16) {
-                    infoRow(
-                        label: "Currency",
-                        value: "\(country.currency.name) (\(country.currency.code))"
-                    )
-
-                    if let gdp = country.gdp, gdp > 0 {
-                        infoRow(label: "GDP", value: formatLargeNumber(gdp))
-                    }
-
-                    if let gdpPerCapita = country.gdpPerCapita, gdpPerCapita > 0 {
-                        infoRow(label: "GDP per Capita", value: "$\(Int(gdpPerCapita).formatted())")
-                    }
-
-                    if let gdpPPP = country.gdpPPP, gdpPPP > 0 {
-                        infoRow(label: "GDP (PPP)", value: formatLargeNumber(gdpPPP))
-                    }
-                }
-            }
+    var statsSection: some View {
+        Section("Overview") {
+            detailRow(icon: "building.columns.fill", label: "Capital", value: country.capital)
 
             if country.allCapitals.count > 1 {
-                infoCard(title: "Capitals") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        ForEach(country.allCapitals, id: \.name) { capital in
-                            HStack {
-                                Text(capital.name)
-                                    .font(.system(size: 22, weight: .semibold))
-                                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                                Spacer()
-
-                                if let role = capital.role {
-                                    Text(role)
-                                        .font(.system(size: 18))
-                                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                                }
-                            }
-                        }
+                ForEach(country.allCapitals, id: \.name) { capital in
+                    if let role = capital.role {
+                        detailRow(icon: "mappin.circle.fill", label: role, value: capital.name)
                     }
                 }
             }
+
+            detailRow(icon: "person.3.fill", label: "Population", value: country.population.formatted())
+            detailRow(icon: "map.fill", label: "Area", value: "\(country.area.formatted()) km²")
+            detailRow(
+                icon: "person.2.fill",
+                label: "Density",
+                value: String(format: "%.1f per km²", country.populationDensity)
+            )
         }
-        .frame(maxWidth: .infinity)
     }
+}
 
-    var rightColumn: some View {
-        VStack(spacing: 24) {
-            infoCard(title: "Languages") {
-                VStack(alignment: .leading, spacing: 12) {
-                    ForEach(country.languages, id: \.name) { language in
-                        HStack(spacing: 12) {
-                            Image(systemName: "text.bubble.fill")
-                                .font(.system(size: 18))
-                                .foregroundStyle(DesignSystem.Color.accent)
+// MARK: - Economy
 
-                            Text(language.name)
-                                .font(.system(size: 22))
-                                .foregroundStyle(DesignSystem.Color.textPrimary)
-                        }
+private extension TVCountryDetailScreen {
+    var economySection: some View {
+        Section("Economy") {
+            detailRow(
+                icon: "dollarsign.circle.fill",
+                label: "Currency",
+                value: "\(country.currency.name) (\(country.currency.code))"
+            )
+
+            if let gdp = country.gdp, gdp > 0 {
+                detailRow(icon: "chart.bar.fill", label: "GDP", value: formatLargeNumber(gdp))
+            }
+
+            if let gdpPerCapita = country.gdpPerCapita, gdpPerCapita > 0 {
+                detailRow(
+                    icon: "person.fill",
+                    label: "GDP per Capita",
+                    value: "$\(Int(gdpPerCapita).formatted())"
+                )
+            }
+
+            if let gdpPPP = country.gdpPPP, gdpPPP > 0 {
+                detailRow(icon: "equal.circle.fill", label: "GDP (PPP)", value: formatLargeNumber(gdpPPP))
+            }
+        }
+    }
+}
+
+// MARK: - Languages
+
+private extension TVCountryDetailScreen {
+    var languagesSection: some View {
+        Section("Languages (\(country.languages.count))") {
+            ForEach(country.languages, id: \.name) { language in
+                Button {
+                    pronunciationService.speak(text: language.name, countryCode: country.code)
+                } label: {
+                    HStack(spacing: 16) {
+                        Image(systemName: "text.bubble.fill")
+                            .font(.system(size: 20))
+                            .foregroundStyle(DesignSystem.Color.accent)
+                            .frame(width: 36)
+
+                        Text(language.name)
+                            .font(.system(size: 22))
+
+                        Spacer()
+
+                        Image(systemName: "speaker.wave.2")
+                            .font(.system(size: 18))
+                            .foregroundStyle(.tertiary)
                     }
                 }
             }
-
-            infoCard(title: "Government") {
-                Text(country.formOfGovernment)
-                    .font(.system(size: 22))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
         }
-        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Government
+
+private extension TVCountryDetailScreen {
+    var governmentSection: some View {
+        Section("Government") {
+            detailRow(icon: "building.fill", label: "Form", value: country.formOfGovernment)
+        }
     }
 }
 
@@ -261,74 +211,66 @@ private extension TVCountryDetailScreen {
     @ViewBuilder
     var organizationsSection: some View {
         if !country.organizations.isEmpty {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("International Organizations")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .focusable(false)
+            Section("Organizations (\(country.organizations.count))") {
+                ForEach(country.organizations, id: \.self) { organizationID in
+                    let organization = Organization.all.first { $0.id == organizationID }
 
-                LazyVGrid(
-                    columns: [GridItem(.adaptive(minimum: 280), spacing: 16)],
-                    spacing: 16
-                ) {
-                    ForEach(country.organizations, id: \.self) { organizationID in
-                        organizationTile(organizationID)
+                    Button {
+                        if let organization {
+                            showOrganizationDetail = organization
+                        }
+                    } label: {
+                        HStack(spacing: 16) {
+                            Image(systemName: organization?.icon ?? "building.2")
+                                .font(.system(size: 24))
+                                .foregroundStyle(organization?.highlightColor ?? DesignSystem.Color.accent)
+                                .frame(width: 40)
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(organization?.displayName ?? organizationID)
+                                    .font(.system(size: 22, weight: .semibold))
+
+                                if let fullName = organization?.fullName {
+                                    Text(fullName)
+                                        .font(.system(size: 18))
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(1)
+                                }
+                            }
+
+                            Spacer()
+
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 18))
+                                .foregroundStyle(.tertiary)
+                        }
                     }
                 }
             }
         }
     }
-
-    func organizationTile(_ organizationID: String) -> some View {
-        let organization = Organization.all.first { $0.id == organizationID }
-        return HStack(spacing: 14) {
-            Image(systemName: organization?.icon ?? "building.2")
-                .font(.system(size: 22))
-                .foregroundStyle(organization?.highlightColor ?? DesignSystem.Color.accent)
-                .frame(width: 32)
-
-            Text(organization?.displayName ?? organizationID)
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-
-            Spacer()
-        }
-        .padding(16)
-        .background(DesignSystem.Color.cardBackground.opacity(0.6), in: RoundedRectangle(cornerRadius: 14))
-        .focusable()
-    }
 }
 
-// MARK: - Reusable Components
+// MARK: - Helpers
 
 private extension TVCountryDetailScreen {
-    func infoCard<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(title)
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            content()
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(28)
-        .background(DesignSystem.Color.cardBackground.opacity(0.6), in: RoundedRectangle(cornerRadius: 20))
-        .focusable()
-    }
-
-    func infoRow(label: String, value: String) -> some View {
-        HStack {
-            Text(label)
+    func detailRow(icon: String, label: String, value: String) -> some View {
+        HStack(spacing: 16) {
+            Image(systemName: icon)
                 .font(.system(size: 20))
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .frame(width: 36)
+
+            Text(label)
+                .font(.system(size: 22))
+                .foregroundStyle(.secondary)
 
             Spacer()
 
             Text(value)
-                .font(.system(size: 20, weight: .semibold))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .font(.system(size: 22, weight: .semibold))
         }
+        .focusable()
     }
 
     func formatLargeNumber(_ value: Double) -> String {
@@ -342,5 +284,48 @@ private extension TVCountryDetailScreen {
             return String(format: "$%.1fM", value / 1_000_000)
         }
         return "$\(Int(value).formatted())"
+    }
+}
+
+// MARK: - Organization Sheet
+
+struct TVOrganizationSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let organization: Organization
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    VStack(alignment: .leading, spacing: 16) {
+                        HStack(spacing: 20) {
+                            Image(systemName: organization.icon)
+                                .font(.system(size: 40))
+                                .foregroundStyle(organization.highlightColor)
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(organization.displayName)
+                                    .font(.system(size: 32, weight: .bold))
+
+                                Text(organization.fullName)
+                                    .font(.system(size: 22))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+
+                        Text(organization.description)
+                            .font(.system(size: 20))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+            .navigationTitle(organization.displayName)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+        }
     }
 }
