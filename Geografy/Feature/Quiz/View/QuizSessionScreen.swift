@@ -29,6 +29,12 @@ struct QuizSessionScreen: View {
     @State private var currentStreak: Int = 0
     @State private var showStreakBurst = false
 
+    // Arcade mode
+    @State private var arcadeLives = 3
+    @State private var arcadeScore = 0
+    @State private var arcadeTimeRemaining: TimeInterval = 60
+    @State private var arcadeTimerCancellable: AnyCancellable?
+
     var body: some View {
         NavigationStack {
             quizContent
@@ -40,7 +46,10 @@ struct QuizSessionScreen: View {
                     Text("Your progress will be lost.")
                 }
                 .task { loadQuiz() }
-                .onDisappear { timerCancellable?.cancel() }
+                .onDisappear {
+                    timerCancellable?.cancel()
+                    arcadeTimerCancellable?.cancel()
+                }
                 .navigationDestination(item: $navigateToResult) { result in
                     resultsDestination(for: result)
                 }
@@ -178,22 +187,68 @@ private extension QuizSessionScreen {
 private extension QuizSessionScreen {
     var progressSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                SessionProgressBar(progress: progress)
-                if currentStreak >= 2 {
-                    streakBadge
-                        .transition(.scale.combined(with: .opacity))
-                } else {
-                    QuestionCounterPill(current: currentIndex + 1, total: questions.count)
+            if isArcadeMode {
+                arcadeHeader
+            } else {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    SessionProgressBar(progress: progress)
+                    if currentStreak >= 2 {
+                        streakBadge
+                            .transition(.scale.combined(with: .opacity))
+                    } else {
+                        QuestionCounterPill(current: currentIndex + 1, total: questions.count)
+                    }
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .animation(.spring(response: 0.35, dampingFraction: 0.7), value: currentStreak)
+
+                if configuration.difficulty.hasTimer {
+                    timerPill
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: currentStreak)
-
-            if configuration.difficulty.hasTimer {
-                timerPill
-            }
         }
+    }
+
+    var arcadeHeader: some View {
+        HStack {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                ForEach(0..<3, id: \.self) { index in
+                    Image(systemName: index < arcadeLives ? "heart.fill" : "heart")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(
+                            index < arcadeLives
+                                ? DesignSystem.Color.error
+                                : DesignSystem.Color.textTertiary
+                        )
+                }
+            }
+
+            Spacer()
+
+            Text("\(arcadeScore)")
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .contentTransition(.numericText())
+
+            Spacer()
+
+            HStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: "timer")
+                    .font(DesignSystem.Font.caption)
+
+                Text("\(String(Int(arcadeTimeRemaining)))s")
+                    .font(.system(size: 13, weight: .bold, design: .monospaced))
+            }
+            .foregroundStyle(arcadeTimerColor)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
+    var arcadeTimerColor: Color {
+        if arcadeTimeRemaining > 20 { DesignSystem.Color.success }
+        else if arcadeTimeRemaining > 10 { DesignSystem.Color.warning }
+        else { DesignSystem.Color.error }
     }
 
     var streakBadge: some View {
@@ -329,23 +384,7 @@ private extension QuizSessionScreen {
         let isCorrect = optionID == question.correctOptionID
         let timeSpent = Date().timeIntervalSince(questionStartTime)
 
-        // TODO: Speed bonus for future implementation
-        // - Answered in < 3s of timerDuration: "Lightning Fast" bonus XP
-        // - Answered in < 5s of timerDuration: "Quick" bonus XP
-
-        if isCorrect {
-            hapticsService.notification(.success)
-            currentStreak += 1
-            if currentStreak >= 2 {
-                showStreakBurst = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    showStreakBurst = false
-                }
-            }
-        } else {
-            hapticsService.impact(.light)
-            currentStreak = 0
-        }
+        handleAnswerFeedback(isCorrect: isCorrect)
 
         let answer = QuizAnswer(
             id: UUID(),
@@ -360,8 +399,37 @@ private extension QuizSessionScreen {
             showFeedback = true
         }
 
+        if isArcadeMode, arcadeLives <= 0 { return }
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
             advanceToNext()
+        }
+    }
+
+    func handleAnswerFeedback(isCorrect: Bool) {
+        if isCorrect {
+            hapticsService.notification(.success)
+            currentStreak += 1
+            if isArcadeMode {
+                withAnimation { arcadeScore += 10 }
+            }
+            if currentStreak >= 2 {
+                showStreakBurst = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    showStreakBurst = false
+                }
+            }
+        } else {
+            hapticsService.impact(.light)
+            currentStreak = 0
+            if isArcadeMode {
+                withAnimation { arcadeLives -= 1 }
+                if arcadeLives <= 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        finishArcade()
+                    }
+                }
+            }
         }
     }
 
@@ -377,7 +445,11 @@ private extension QuizSessionScreen {
                 questionStartTime = Date()
                 timerRemaining = configuration.difficulty.timerDuration
             }
-            startTimer()
+            if !isArcadeMode {
+                startTimer()
+            }
+        } else if isArcadeMode {
+            finishArcade()
         } else {
             timerCancellable?.cancel()
             finishQuiz()
@@ -395,19 +467,7 @@ private extension QuizSessionScreen {
         let isCorrect = isTypingAnswerCorrect(input: trimmedInput, question: question)
         let timeSpent = Date().timeIntervalSince(questionStartTime)
 
-        if isCorrect {
-            hapticsService.notification(.success)
-            currentStreak += 1
-            if currentStreak >= 2 {
-                showStreakBurst = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    showStreakBurst = false
-                }
-            }
-        } else {
-            hapticsService.impact(.light)
-            currentStreak = 0
-        }
+        handleAnswerFeedback(isCorrect: isCorrect)
 
         let answer = QuizAnswer(
             id: UUID(),
@@ -422,6 +482,8 @@ private extension QuizSessionScreen {
         withAnimation(.easeInOut(duration: 0.3)) {
             showFeedback = true
         }
+
+        if isArcadeMode, arcadeLives <= 0 { return }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             advanceToNext()
@@ -443,10 +505,14 @@ private extension QuizSessionScreen {
         let optionCount = max(configuration.difficulty.optionCount, 4)
         guard pool.count >= optionCount else { return }
 
+        let questionCount = isArcadeMode
+            ? min(100, pool.count)
+            : min(configuration.questionCount.rawValue, pool.count)
+
         questions = QuestionGenerator.generate(
             type: configuration.type,
             countries: pool,
-            count: min(configuration.questionCount.rawValue, pool.count),
+            count: questionCount,
             optionCount: optionCount,
             comparisonMetric: configuration.comparisonMetric
         )
@@ -461,8 +527,20 @@ private extension QuizSessionScreen {
         showStreakBurst = false
         startTime = Date()
         questionStartTime = Date()
-        timerRemaining = configuration.difficulty.timerDuration
-        startTimer()
+
+        if isArcadeMode {
+            arcadeLives = 3
+            arcadeScore = 0
+            arcadeTimeRemaining = 60
+            startArcadeTimer()
+        } else {
+            timerRemaining = configuration.difficulty.timerDuration
+            startTimer()
+        }
+    }
+
+    var isArcadeMode: Bool {
+        configuration.gameMode == .arcade
     }
 }
 
@@ -514,6 +592,31 @@ private extension QuizSessionScreen {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
             advanceToNext()
         }
+    }
+
+    func startArcadeTimer() {
+        arcadeTimerCancellable?.cancel()
+        arcadeTimerCancellable = Timer.publish(every: 0.1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                guard !isPaused else { return }
+                arcadeTimeRemaining = max(0, arcadeTimeRemaining - 0.1)
+                if arcadeTimeRemaining <= 0 {
+                    arcadeTimerCancellable?.cancel()
+                    finishArcade()
+                }
+            }
+    }
+
+    func finishArcade() {
+        arcadeTimerCancellable?.cancel()
+        timerCancellable?.cancel()
+        let result = QuizResult(
+            configuration: configuration,
+            answers: answers,
+            totalTime: 60 - arcadeTimeRemaining,
+        )
+        navigateToResult = result
     }
 }
 

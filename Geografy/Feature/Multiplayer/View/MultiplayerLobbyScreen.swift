@@ -192,6 +192,7 @@ private extension MultiplayerLobbyScreen {
                 questionCount: .ten,
                 answerMode: .multipleChoice,
                 comparisonMetric: .population,
+                gameMode: .standard,
             )
             MultiplayerMatchScreen(
                 opponent: opponent,

@@ -270,6 +270,7 @@ private extension QuizPackDetailScreen {
             questionCount: QuestionCount(rawValue: level.questionCount) ?? .ten,
             answerMode: .multipleChoice,
             comparisonMetric: metric,
+            gameMode: .standard,
         )
     }
 }
