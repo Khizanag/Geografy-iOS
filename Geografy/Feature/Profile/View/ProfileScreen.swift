@@ -1057,9 +1057,6 @@ private extension ProfileScreen {
                 editButton
             }
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 
     @ViewBuilder
