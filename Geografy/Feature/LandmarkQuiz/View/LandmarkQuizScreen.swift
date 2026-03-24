@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 
 struct LandmarkQuizScreen: View {
@@ -10,26 +11,23 @@ struct LandmarkQuizScreen: View {
     @State private var selectedAnswer: String?
     @State private var timeRemaining: Int = 20
     @State private var isGameOver = false
-    @State private var appeared = false
     @State private var answerOptions: [String] = []
-    @State private var timer: Timer?
+    @State private var timerCancellable: AnyCancellable?
 
     var body: some View {
         ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
             if isGameOver {
                 gameOverContent
             } else {
                 quizContent
             }
         }
+        .background { AmbientBlobsView(.quiz) }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Landmark Quiz")
         .navigationBarTitleDisplayMode(.inline)
         .task { loadQuiz() }
-        .onAppear {
-            withAnimation(.easeOut(duration: 0.5)) { appeared = true }
-        }
-        .onDisappear { stopTimer() }
+        .onDisappear { timerCancellable?.cancel() }
     }
 }
 
@@ -42,25 +40,45 @@ private extension LandmarkQuizScreen {
             ProgressView()
                 .tint(DesignSystem.Color.accent)
         } else {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: DesignSystem.Spacing.lg) {
-                    headerBar
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                    questionCard
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                    answersGrid
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                    Spacer(minLength: DesignSystem.Spacing.xxl)
-                }
-                .padding(.top, DesignSystem.Spacing.md)
+            VStack(spacing: DesignSystem.Spacing.md) {
+                SessionProgressView(
+                    progress: progressFraction,
+                    current: currentQuestionIndex + 1,
+                    total: quizService.questions.count
+                )
+
+                headerBar
+
+                questionText
+
+                answersGrid
+
+                Spacer(minLength: 0)
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.top, DesignSystem.Spacing.sm)
         }
     }
 
     var headerBar: some View {
         HStack {
             timerBadge
+
             Spacer()
+
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: currentQuestion.category.icon)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.accent)
+
+                Text(currentQuestion.category.displayName)
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+
+            Spacer()
+
             scoreBadge
         }
     }
@@ -69,25 +87,16 @@ private extension LandmarkQuizScreen {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "timer")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(timerColor)
-            Text("\(timeRemaining)s")
+
+            Text("\(String(timeRemaining))s")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.bold)
-                .foregroundStyle(timerColor)
                 .contentTransition(.numericText())
-                .animation(.easeInOut(duration: 0.2), value: timeRemaining)
         }
+        .foregroundStyle(timerColor)
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(timerColor.opacity(0.15), in: Capsule())
-    }
-
-    var timerColor: Color {
-        switch timeRemaining {
-        case 11...: DesignSystem.Color.success
-        case 6...10: DesignSystem.Color.warning
-        default: DesignSystem.Color.error
-        }
     }
 
     var scoreBadge: some View {
@@ -95,6 +104,7 @@ private extension LandmarkQuizScreen {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.warning)
+
             Text("\(score)")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.bold)
@@ -105,67 +115,15 @@ private extension LandmarkQuizScreen {
         .background(DesignSystem.Color.cardBackground, in: Capsule())
     }
 
-    var questionCard: some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                categoryHeader
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.top, DesignSystem.Spacing.md)
-                progressIndicator
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                questionText
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.bottom, DesignSystem.Spacing.md)
-            }
-        }
-    }
-
-    var categoryHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: currentQuestion.category.icon)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text(currentQuestion.category.displayName)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Spacer()
-            Text("\(currentQuestionIndex + 1) / \(quizService.questions.count)")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-    }
-
-    var progressIndicator: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    .frame(height: 4)
-                Capsule()
-                    .fill(DesignSystem.Color.accent)
-                    .frame(
-                        width: geometry.size.width * progressFraction,
-                        height: 4
-                    )
-                    .animation(.easeInOut(duration: 0.3), value: currentQuestionIndex)
-            }
-        }
-        .frame(height: 4)
-    }
-
-    var progressFraction: CGFloat {
-        guard !quizService.questions.isEmpty else { return 0 }
-        return CGFloat(currentQuestionIndex + 1) / CGFloat(quizService.questions.count)
-    }
-
     var questionText: some View {
         Text(currentQuestion.hint)
             .font(DesignSystem.Font.title2)
-            .fontWeight(.semibold)
+            .fontWeight(.bold)
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.md)
     }
 
     var answersGrid: some View {
@@ -176,61 +134,37 @@ private extension LandmarkQuizScreen {
             ],
             spacing: DesignSystem.Spacing.sm
         ) {
-            ForEach(answerOptions, id: \.self) { countryCode in
-                answerButton(for: countryCode)
+            ForEach(Array(answerOptions.enumerated()), id: \.element) { index, countryCode in
+                QuizOptionButton(
+                    text: countryDataService.countries.first { $0.code == countryCode }?.name,
+                    flagCode: countryCode,
+                    state: optionState(for: countryCode),
+                    index: index
+                ) {
+                    selectAnswer(countryCode)
+                }
             }
         }
     }
 
-    func answerButton(for countryCode: String) -> some View {
-        let country = countryDataService.countries.first { $0.code == countryCode }
-        let isSelected = selectedAnswer == countryCode
-        let isCorrect = countryCode == currentQuestion.answerCountryCode
-        let showResult = selectedAnswer != nil
-
-        return Button { selectAnswer(countryCode) } label: {
-            CardView {
-                VStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: countryCode, height: 48)
-                        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-                    Text(country?.name ?? countryCode)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                }
-                .padding(DesignSystem.Spacing.sm)
-                .frame(maxWidth: .infinity)
-                .overlay {
-                    if showResult {
-                        resultOverlay(isCorrect: isCorrect, isSelected: isSelected)
-                    }
-                }
-            }
+    var timerColor: Color {
+        switch timeRemaining {
+        case 11...: DesignSystem.Color.success
+        case 6...10: DesignSystem.Color.warning
+        default: DesignSystem.Color.error
         }
-        .buttonStyle(PressButtonStyle())
-        .disabled(selectedAnswer != nil)
     }
 
-    func resultOverlay(isCorrect: Bool, isSelected: Bool) -> some View {
-        ZStack {
-            let fillColor: Color = isCorrect
-                ? DesignSystem.Color.success.opacity(0.25)
-                : (isSelected ? DesignSystem.Color.error.opacity(0.25) : .clear)
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .fill(fillColor)
-            if isCorrect {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.success)
-            } else if isSelected {
-                Image(systemName: "xmark.circle.fill")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.error)
-            }
-        }
+    var progressFraction: CGFloat {
+        guard !quizService.questions.isEmpty else { return 0 }
+        return CGFloat(currentQuestionIndex) / CGFloat(quizService.questions.count)
+    }
+
+    func optionState(for countryCode: String) -> QuizOptionButton.OptionState {
+        guard selectedAnswer != nil else { return .default }
+        if countryCode == currentQuestion.answerCountryCode { return .correct }
+        if countryCode == selectedAnswer { return .incorrect }
+        return .disabled
     }
 }
 
@@ -238,105 +172,71 @@ private extension LandmarkQuizScreen {
 
 private extension LandmarkQuizScreen {
     var gameOverContent: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-            resultIcon
-            resultTitle
-            scoreDisplay
-            Spacer()
-            restartButton
-                .padding(.horizontal, DesignSystem.Spacing.xl)
-            Spacer(minLength: DesignSystem.Spacing.xxl)
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                Spacer(minLength: DesignSystem.Spacing.xl)
+
+                ZStack {
+                    Circle()
+                        .fill(DesignSystem.Color.accent.opacity(0.12))
+                        .frame(width: 96, height: 96)
+
+                    Image(systemName: scoreGrade.icon)
+                        .font(.system(size: 44))
+                        .foregroundStyle(DesignSystem.Color.accent)
+                        .symbolEffect(.bounce)
+                }
+
+                VStack(spacing: DesignSystem.Spacing.xs) {
+                    Text(scoreGrade.title)
+                        .font(DesignSystem.Font.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                    Text(scoreGrade.subtitle)
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .multilineTextAlignment(.center)
+                }
+
+                CardView {
+                    HStack(spacing: 0) {
+                        ResultStatItem(
+                            icon: "star.fill",
+                            value: "\(score)",
+                            label: "Score",
+                            color: DesignSystem.Color.warning
+                        )
+
+                        ResultStatItem(
+                            icon: "checkmark.circle.fill",
+                            value: "\(score)/\(String(quizService.questions.count))",
+                            label: "Correct",
+                            color: DesignSystem.Color.success
+                        )
+                    }
+                    .padding(DesignSystem.Spacing.md)
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+        .safeAreaInset(edge: .bottom) {
+            GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
+                restartQuiz()
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
 
-    var resultIcon: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.3), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 60
-                    )
-                )
-                .frame(width: 120, height: 120)
-            Image(systemName: scoreGrade.icon)
-                .font(.system(size: 52))
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
-    }
-
-    var resultTitle: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            Text(scoreGrade.title)
-                .font(DesignSystem.Font.title)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(scoreGrade.subtitle)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-    }
-
-    var scoreDisplay: some View {
-        HStack(spacing: DesignSystem.Spacing.xl) {
-            scoreTile(value: "\(score)", label: "Score", icon: "star.fill", color: DesignSystem.Color.warning)
-            scoreTile(
-                value: "\(score)/\(quizService.questions.count)",
-                label: "Correct",
-                icon: "checkmark.circle.fill",
-                color: DesignSystem.Color.success
-            )
-        }
-        .padding(DesignSystem.Spacing.lg)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-        )
-    }
-
-    func scoreTile(value: String, label: String, icon: String, color: Color) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-    }
-
-    var restartButton: some View {
-        GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
-            restartQuiz()
-        }
-    }
-
-    struct ScoreGrade {
-        let title: String
-        let subtitle: String
-        let icon: String
-    }
-
-    var scoreGrade: ScoreGrade {
+    var scoreGrade: (title: String, subtitle: String, icon: String) {
         let total = quizService.questions.count
         let fraction = total > 0 ? Double(score) / Double(total) : 0
         return switch fraction {
-        case 0.8...:
-            ScoreGrade(title: "Geo Expert!", subtitle: "Outstanding knowledge of world landmarks", icon: "trophy.fill")
-        case 0.6..<0.8:
-            ScoreGrade(title: "Well Done!", subtitle: "Great understanding of world geography", icon: "star.fill")
-        case 0.4..<0.6:
-            ScoreGrade(title: "Getting There!", subtitle: "Keep exploring the world", icon: "globe")
-        default:
-            ScoreGrade(title: "Keep Learning!", subtitle: "Every expert was once a beginner", icon: "book.fill")
+        case 0.8...: ("Geo Expert!", "Outstanding knowledge of world landmarks", "trophy.fill")
+        case 0.6..<0.8: ("Well Done!", "Great understanding of world geography", "star.fill")
+        case 0.4..<0.6: ("Getting There!", "Keep exploring the world", "globe")
+        default: ("Keep Learning!", "Every expert was once a beginner", "book.fill")
         }
     }
 }
@@ -369,16 +269,18 @@ private extension LandmarkQuizScreen {
 
     func selectAnswer(_ countryCode: String) {
         guard selectedAnswer == nil else { return }
-        stopTimer()
+        timerCancellable?.cancel()
         selectedAnswer = countryCode
         let isCorrect = countryCode == currentQuestion.answerCountryCode
+
         if isCorrect {
             score += 1
-            hapticsService.impact(.medium)
+            hapticsService.notification(.success)
         } else {
             hapticsService.notification(.error)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
             advanceQuestion()
         }
     }
@@ -399,21 +301,16 @@ private extension LandmarkQuizScreen {
     }
 
     func startTimer() {
-        stopTimer()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            Task { @MainActor in
+        timerCancellable?.cancel()
+        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
                 if timeRemaining > 0 {
                     timeRemaining -= 1
                 } else {
                     selectAnswer("")
                 }
             }
-        }
-    }
-
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 
     func restartQuiz() {
