@@ -94,7 +94,7 @@ private extension ChallengeSetupScreen {
             CardView {
                 VStack(spacing: DesignSystem.Spacing.md) {
                     playerField(
-                        placeholder: "Player 1 name",
+                        placeholder: "Player 1",
                         text: $player1Name,
                         icon: "1.circle.fill",
                         color: DesignSystem.Color.blue
@@ -103,7 +103,7 @@ private extension ChallengeSetupScreen {
                     Divider()
 
                     playerField(
-                        placeholder: "Player 2 name",
+                        placeholder: "Player 2",
                         text: $player2Name,
                         icon: "2.circle.fill",
                         color: DesignSystem.Color.orange
