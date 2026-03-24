@@ -24,11 +24,8 @@ struct QuizSpellingBeeView: View {
             Spacer(minLength: DesignSystem.Spacing.md)
 
             inputSection
-
-            Spacer(minLength: DesignSystem.Spacing.sm)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
         .onAppear { isInputFocused = true }
         .onChange(of: showFeedback) { _, newValue in
             if newValue { isInputFocused = false }
