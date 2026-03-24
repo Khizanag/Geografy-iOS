@@ -31,6 +31,24 @@ struct TVMoreScreen: View {
                 } label: {
                     Label("Continent Stats", systemImage: "chart.pie.fill")
                 }
+
+                NavigationLink {
+                    TVOrganizationsScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Organizations", systemImage: "building.2.fill")
+                }
+
+                NavigationLink {
+                    TVFeedScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Feed", systemImage: "newspaper.fill")
+                }
+
+                NavigationLink {
+                    TVQuotesScreen()
+                } label: {
+                    Label("Quotes", systemImage: "quote.opening")
+                }
             }
 
             Section("Progress") {
@@ -44,6 +62,12 @@ struct TVMoreScreen: View {
                     TVLeaderboardScreen()
                 } label: {
                     Label("Leaderboard", systemImage: "list.number")
+                }
+
+                NavigationLink {
+                    TVFavoritesScreen(countryDataService: countryDataService)
+                } label: {
+                    Label("Favorites", systemImage: "heart.fill")
                 }
             }
         }
