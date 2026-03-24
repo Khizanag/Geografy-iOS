@@ -4,12 +4,12 @@ struct ChallengeGameScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
 
+    @State private var path = NavigationPath()
     @State private var room: ChallengeRoom
     @State private var showingPassScreen = true
     @State private var selectedOptionIndex: Int?
     @State private var showingResult = false
     @State private var wasCorrect = false
-    @State private var showResultScreen = false
 
     private let challengeRoomService: ChallengeRoomService
 
@@ -19,7 +19,7 @@ struct ChallengeGameScreen: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             Group {
                 if showingPassScreen {
                     passScreen
@@ -36,17 +36,21 @@ struct ChallengeGameScreen: View {
                     CircleCloseButton { dismiss() }
                 }
             }
-            .navigationDestination(isPresented: $showResultScreen) {
-                ChallengeResultScreen(
-                    room: room,
-                    challengeRoomService: challengeRoomService
-                ) {
-                    dismiss()
-                }
-                .navigationBarBackButtonHidden()
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        CircleCloseButton { dismiss() }
+            .navigationDestination(for: String.self) { destination in
+                if destination == "result" {
+                    ChallengeResultScreen(
+                        room: room,
+                        challengeRoomService: challengeRoomService
+                    ) {
+                        dismiss()
+                    }
+                    .navigationTitle("Results")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationBarBackButtonHidden()
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            CircleCloseButton { dismiss() }
+                        }
                     }
                 }
             }
@@ -260,9 +264,7 @@ private extension ChallengeGameScreen {
     }
 
     func optionState(index: Int, correctIndex: Int) -> QuizOptionButton.OptionState {
-        guard showingResult else {
-            return selectedOptionIndex == index ? .default : .default
-        }
+        guard showingResult else { return .default }
         if index == correctIndex { return .correct }
         if selectedOptionIndex == index { return .incorrect }
         return .disabled
@@ -282,7 +284,7 @@ private extension ChallengeGameScreen {
     func advanceToNext() {
         challengeRoomService.advance(room: &room)
         if room.isFinished {
-            showResultScreen = true
+            path.append("result")
         } else {
             withAnimation(.easeInOut(duration: 0.3)) {
                 showingPassScreen = true
