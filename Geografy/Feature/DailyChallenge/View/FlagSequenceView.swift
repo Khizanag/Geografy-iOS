@@ -17,34 +17,31 @@ struct FlagSequenceView: View {
     @State private var correctCount = 0
 
     var body: some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            progressRow
+        VStack(spacing: DesignSystem.Spacing.md) {
+            SessionProgressView(
+                progress: progressFraction,
+                current: currentIndex + 1,
+                total: content.countries.count
+            )
+
             if currentIndex < content.countries.count {
                 questionView
             }
+
             Spacer(minLength: 0)
         }
-        .padding(.vertical, DesignSystem.Spacing.lg)
         .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.top, DesignSystem.Spacing.sm)
         .task { prepareOptions() }
     }
 }
 
-// MARK: - Progress
+// MARK: - Helpers
 
 private extension FlagSequenceView {
-    var progressRow: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(0..<content.countries.count, id: \.self) { index in
-                Capsule()
-                    .fill(
-                        index < currentIndex
-                            ? DesignSystem.Color.accent
-                            : DesignSystem.Color.cardBackgroundHighlighted
-                    )
-                    .frame(height: 6)
-            }
-        }
+    var progressFraction: CGFloat {
+        guard !content.countries.isEmpty else { return 0 }
+        return CGFloat(currentIndex) / CGFloat(content.countries.count)
     }
 }
 
@@ -54,30 +51,23 @@ private extension FlagSequenceView {
     @ViewBuilder
     var questionView: some View {
         let country = content.countries[currentIndex]
+
         VStack(spacing: DesignSystem.Spacing.lg) {
             Text("Which country does this flag belong to?")
-                .font(DesignSystem.Font.headline)
+                .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
-            FlagView(
-                countryCode: country.code,
-                height: DesignSystem.Size.hero
-            )
+            FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
+                .geoShadow(.elevated)
 
             if currentIndex < options.count {
-                optionsGrid(
-                    options: options[currentIndex],
-                    correct: country
-                )
+                optionsGrid(options: options[currentIndex], correct: country)
             }
         }
     }
 
-    func optionsGrid(
-        options: [Country],
-        correct: Country
-    ) -> some View {
+    func optionsGrid(options: [Country], correct: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(
                 Array(options.enumerated()),
@@ -86,10 +76,7 @@ private extension FlagSequenceView {
                 QuizOptionButton(
                     text: option.name,
                     flagCode: nil,
-                    state: optionState(
-                        option: option,
-                        correct: correct
-                    ),
+                    state: optionState(option: option, correct: correct),
                     index: index
                 ) {
                     selectOption(option, correct: correct)
@@ -153,15 +140,8 @@ private extension FlagSequenceView {
             onFinish()
         }
     }
-}
 
-// MARK: - Helpers
-
-private extension FlagSequenceView {
-    func optionState(
-        option: Country,
-        correct: Country
-    ) -> QuizOptionButton.OptionState {
+    func optionState(option: Country, correct: Country) -> QuizOptionButton.OptionState {
         guard showFeedback else { return .default }
         if option.code == correct.code { return .correct }
         if selectedOption?.code == option.code { return .incorrect }

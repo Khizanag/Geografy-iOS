@@ -1,14 +1,13 @@
 import SwiftUI
 
 struct DailyChallengeResultView: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Coordinator.self) private var coordinator
 
     let score: Int
     let maxScore: Int
     let challengeType: DailyChallengeType
     let timeSpent: Double
     let streak: Int
-    let onDismiss: () -> Void
 
     @State private var animatedScore: Int = 0
     @State private var showShareCard = false
@@ -19,7 +18,7 @@ struct DailyChallengeResultView: View {
             resultContent
                 .navigationTitle("Results")
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
+                .navigationBarBackButtonHidden()
                 .onAppear { animateScore() }
                 .sheet(isPresented: $showShareCard) {
                     shareCardSheet
@@ -28,16 +27,7 @@ struct DailyChallengeResultView: View {
     }
 }
 
-// MARK: - Toolbar
 
-private extension DailyChallengeResultView {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { onDismiss() }
-        }
-    }
-}
 
 // MARK: - Content
 
@@ -171,7 +161,7 @@ private extension DailyChallengeResultView {
     }
 
     var doneButton: some View {
-        Button { onDismiss() } label: {
+        Button { coordinator.dismiss() } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "checkmark")
                     .font(DesignSystem.Font.headline)
