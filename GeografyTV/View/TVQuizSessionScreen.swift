@@ -461,6 +461,15 @@ private extension TVQuizSessionScreen {
         if isCorrect { correctCount += 1 }
         showFeedback = true
 
+        TVControllerHaptics.playTap()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            if isCorrect {
+                TVControllerHaptics.playCorrect()
+            } else {
+                TVControllerHaptics.playWrong()
+            }
+        }
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             advanceToNext()
         }
@@ -473,6 +482,9 @@ private extension TVQuizSessionScreen {
             currentIndex += 1
         } else {
             showResult = true
+            if accuracy >= 0.7 {
+                TVControllerHaptics.playCelebration()
+            }
         }
     }
 
