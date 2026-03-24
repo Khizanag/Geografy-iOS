@@ -145,136 +145,19 @@ private extension SpellingBeeScreen {
 
     var letterGrid: some View {
         CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                if showCorrectAnswer, let country = currentCountry {
-                    revealedLetterCells(for: country.name)
-                } else {
-                    letterCells
-                }
-            }
+            LetterGridView(
+                targetText: currentCountry?.name ?? "",
+                typedText: typedText,
+                isRevealed: showCorrectAnswer
+            )
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    var letterCells: some View {
-        let target = currentCountry?.name ?? ""
-        let segments = splitIntoSegments(target)
-        let targetLettersOnly = Array(target.lowercased().filter { $0.isLetter })
-        let typedLettersOnly = Array(typedText.lowercased().filter { $0.isLetter })
-
-        return VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(segments.enumerated()), id: \.offset) { _, segment in
-                wordRowFromSegment(
-                    segment: segment,
-                    targetLetters: targetLettersOnly,
-                    typedLetters: typedLettersOnly
-                )
-            }
-        }
-    }
-
-    func wordRowFromSegment(
-        segment: WordSegment,
-        targetLetters: [Character],
-        typedLetters: [Character]
-    ) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            if let separator = segment.leadingSeparator {
-                separatorCell(String(separator))
-            }
-            ForEach(Array(segment.letterIndices.enumerated()), id: \.offset) { _, letterIndex in
-                let targetLetter = targetLetters[letterIndex]
-                let typedLetter: Character? = letterIndex < typedLetters.count
-                    ? typedLetters[letterIndex]
-                    : nil
-                letterCell(
-                    typed: typedLetter.map { String($0) },
-                    isCorrect: typedLetter == targetLetter,
-                    isSpace: false
-                )
-                .frame(maxWidth: 36)
-            }
         }
     }
 
     var nextButton: some View {
         GlassButton("Next", systemImage: "arrow.right", fullWidth: true) {
             loadNextCountry()
-        }
-    }
-
-    func separatorCell(_ separator: String) -> some View {
-        Text(separator)
-            .font(DesignSystem.Font.headline)
-            .fontWeight(.bold)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .frame(width: 16, height: 36)
-    }
-
-    func revealedLetterCells(for name: String) -> some View {
-        let segments = splitIntoSegments(name)
-        return VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(segments.enumerated()), id: \.offset) { _, segment in
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    if let separator = segment.leadingSeparator {
-                        separatorCell(String(separator))
-                    }
-                    ForEach(Array(segment.letters.enumerated()), id: \.offset) { _, letter in
-                        revealedCell(String(letter))
-                            .frame(maxWidth: 36)
-                    }
-                }
-            }
-        }
-    }
-
-    func revealedCell(_ letter: String) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                .fill(DesignSystem.Color.success.opacity(0.2))
-                .aspectRatio(32.0 / 36.0, contentMode: .fit)
-                .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .stroke(DesignSystem.Color.success.opacity(0.5), lineWidth: 1.5)
-                )
-            Text(letter.uppercased())
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.success)
-        }
-    }
-
-    func letterCell(typed: String?, isCorrect: Bool, isSpace: Bool) -> some View {
-        Group {
-            if isSpace {
-                Color.clear.frame(width: DesignSystem.Spacing.sm, height: 36)
-            } else {
-                ZStack {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .fill(cellBackground(typed: typed, isCorrect: isCorrect))
-                        .aspectRatio(32.0 / 36.0, contentMode: .fit)
-                        .overlay(
-                            RoundedRectangle(
-                                cornerRadius: DesignSystem.CornerRadius.small
-                            )
-                            .stroke(
-                                cellBorderColor(typed: typed, isCorrect: isCorrect),
-                                lineWidth: 1.5
-                            )
-                        )
-                    if let letter = typed {
-                        Text(letter.uppercased())
-                            .font(DesignSystem.Font.headline)
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                typed != nil
-                                    ? DesignSystem.Color.onAccent
-                                    : DesignSystem.Color.textTertiary
-                            )
-                    }
-                }
-            }
         }
     }
 
@@ -348,19 +231,7 @@ private extension SpellingBeeScreen {
 
 // MARK: - Helpers
 
-private extension SpellingBeeScreen {
-    func cellBackground(typed: String?, isCorrect: Bool) -> Color {
-        guard typed != nil else { return DesignSystem.Color.cardBackgroundHighlighted }
-        return isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error
-    }
 
-    func cellBorderColor(typed: String?, isCorrect: Bool) -> Color {
-        guard typed != nil else {
-            return DesignSystem.Color.textTertiary.opacity(0.4)
-        }
-        return isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error
-    }
-}
 
 // MARK: - Actions
 
@@ -380,16 +251,14 @@ private extension SpellingBeeScreen {
 
     func validateInput(_ text: String) {
         guard let country = currentCountry else { return }
-        if text.lowercased() == country.name.lowercased() {
+        if LetterGridHelper.lettersMatch(typed: text, target: country.name) {
             submitAnswer()
         }
     }
 
     func submitAnswer() {
         guard let country = currentCountry else { return }
-        let typedLettersOnly = typedText.lowercased().filter { $0.isLetter }
-        let targetLettersOnly = country.name.lowercased().filter { $0.isLetter }
-        let isCorrect = typedLettersOnly == targetLettersOnly
+        let isCorrect = LetterGridHelper.lettersMatch(typed: typedText, target: country.name)
 
         if isCorrect {
             let pointsEarned = max(10, 30 - (usedHints.count * 10))
@@ -432,51 +301,4 @@ private extension SpellingBeeScreen {
         case wrong
     }
 
-    struct WordSegment {
-        let letters: [Character]
-        let letterIndices: [Int]
-        let leadingSeparator: Character?
-    }
-
-    func splitIntoSegments(_ name: String) -> [WordSegment] {
-        var segments: [WordSegment] = []
-        var currentLetters: [Character] = []
-        var currentIndices: [Int] = []
-        var letterIndex = 0
-        var pendingSeparator: Character?
-
-        for character in name {
-            if character.isLetter {
-                currentLetters.append(character)
-                currentIndices.append(letterIndex)
-                letterIndex += 1
-            } else {
-                if !currentLetters.isEmpty {
-                    segments.append(
-                        WordSegment(
-                            letters: currentLetters,
-                            letterIndices: currentIndices,
-                            leadingSeparator: pendingSeparator
-                        )
-                    )
-                    currentLetters = []
-                    currentIndices = []
-                    pendingSeparator = nil
-                }
-                pendingSeparator = character == " " ? nil : character
-            }
-        }
-
-        if !currentLetters.isEmpty {
-            segments.append(
-                WordSegment(
-                    letters: currentLetters,
-                    letterIndices: currentIndices,
-                    leadingSeparator: pendingSeparator
-                )
-            )
-        }
-
-        return segments
-    }
 }
