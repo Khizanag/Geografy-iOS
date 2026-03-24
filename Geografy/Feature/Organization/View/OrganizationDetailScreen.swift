@@ -92,6 +92,7 @@ private extension OrganizationDetailScreen {
             }
             .padding(DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
     }
 

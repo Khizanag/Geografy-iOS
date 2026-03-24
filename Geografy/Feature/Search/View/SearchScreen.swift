@@ -57,6 +57,7 @@ private extension SearchScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
             .containerRelativeFrame(.vertical, alignment: topAligned ? .top : .bottom)
         }
         .defaultScrollAnchor(topAligned ? .top : .bottom)

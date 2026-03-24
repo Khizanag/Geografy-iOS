@@ -21,6 +21,7 @@ struct IndependenceTimelineScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())

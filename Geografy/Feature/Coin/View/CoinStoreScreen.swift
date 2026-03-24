@@ -17,6 +17,7 @@ struct CoinStoreScreen: View {
                 earnInfoSection
             }
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Coins")

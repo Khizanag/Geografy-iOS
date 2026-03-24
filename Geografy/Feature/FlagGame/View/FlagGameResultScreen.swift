@@ -89,6 +89,7 @@ private extension FlagGameResultScreen {
                         }
                     }
                     .padding(.vertical, DesignSystem.Spacing.xs)
+                    .readableContentWidth()
                 }
                 .scrollClipDisabled()
             }

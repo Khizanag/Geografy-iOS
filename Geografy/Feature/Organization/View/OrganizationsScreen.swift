@@ -36,6 +36,7 @@ struct OrganizationsScreen: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.sm)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
         .navigationTitle("Organizations")
         .toolbar { toolbarContent }

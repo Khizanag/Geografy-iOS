@@ -72,6 +72,7 @@ private extension ProfileScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
     }
 }

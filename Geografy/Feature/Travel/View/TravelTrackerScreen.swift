@@ -134,6 +134,7 @@ private extension TravelTrackerScreen {
                         .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
             }
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
         .background { ambientBlobs }
     }

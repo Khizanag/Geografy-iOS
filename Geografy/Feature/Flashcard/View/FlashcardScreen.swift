@@ -47,6 +47,7 @@ private extension FlashcardScreen {
                 deckGridSection
                     .feedSection(appeared: appeared, delay: 0.20)
             }
+            .readableContentWidth()
             .padding(.bottom, DesignSystem.Spacing.xxl)
         }
     }

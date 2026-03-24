@@ -14,6 +14,7 @@
 //    • Identifier: Google Sign In
 //    • URL Schemes: the REVERSED client ID, e.g. com.googleusercontent.apps.XXXXXXXXXX
 
+#if !os(tvOS)
 import AuthenticationServices
 import CryptoKit
 import Foundation
@@ -266,3 +267,4 @@ private extension Data {
             .replacingOccurrences(of: "=", with: "")
     }
 }
+#endif

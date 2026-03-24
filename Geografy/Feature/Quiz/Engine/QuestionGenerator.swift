@@ -1,7 +1,9 @@
 import Foundation
 
 enum QuestionGenerator {
+    #if !os(tvOS)
     nonisolated(unsafe) private static let symbolsService = NationalSymbolsService()
+    #endif
 
     static func generate(
         type: QuizType,
@@ -12,14 +14,7 @@ enum QuestionGenerator {
     ) -> [QuizQuestion] {
         guard !countries.isEmpty else { return [] }
 
-        let pool: [Country]
-        if type == .nationalSymbols {
-            pool = countries.filter { symbolsService.symbol(for: $0.code) != nil }
-        } else if type == .worldRankings {
-            pool = countries.filter { comparisonMetric.value(for: $0) > 0 }
-        } else {
-            pool = countries
-        }
+        let pool = filteredPool(type: type, countries: countries, comparisonMetric: comparisonMetric)
 
         let selectedCountries = Array(pool.shuffled().prefix(count))
 
@@ -32,6 +27,26 @@ enum QuestionGenerator {
                 comparisonMetric: comparisonMetric
             )
         }
+    }
+}
+
+// MARK: - Pool Filtering
+
+private extension QuestionGenerator {
+    static func filteredPool(
+        type: QuizType,
+        countries: [Country],
+        comparisonMetric: ComparisonMetric
+    ) -> [Country] {
+        #if !os(tvOS)
+        if type == .nationalSymbols {
+            return countries.filter { symbolsService.symbol(for: $0.code) != nil }
+        }
+        #endif
+        if type == .worldRankings {
+            return countries.filter { comparisonMetric.value(for: $0) > 0 }
+        }
+        return countries
     }
 }
 
@@ -57,7 +72,11 @@ private extension QuestionGenerator {
         case .worldRankings:
             makeWorldRankingsQuestion(country: country, allCountries: allCountries, optionCount: optionCount, metric: comparisonMetric)
         case .nationalSymbols:
+            #if os(tvOS)
+            nil
+            #else
             makeNationalSymbolsQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
+            #endif
         }
     }
 
@@ -176,6 +195,7 @@ private extension QuestionGenerator {
         )
     }
 
+    #if !os(tvOS)
     static func makeNationalSymbolsQuestion(
         country: Country,
         allCountries: [Country],
@@ -240,6 +260,7 @@ private extension QuestionGenerator {
             )
         }
     }
+    #endif
 }
 
 // MARK: - Distractor Selection

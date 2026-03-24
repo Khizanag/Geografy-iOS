@@ -91,6 +91,7 @@ private extension TravelJournalScreen {
             }
             .padding(.top, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
     }
 

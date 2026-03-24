@@ -14,6 +14,7 @@ struct ModuleLessonsScreen: View {
                 lessonsList
             }
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle(module.title)

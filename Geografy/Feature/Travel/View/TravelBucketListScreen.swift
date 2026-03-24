@@ -52,6 +52,7 @@ private extension TravelBucketListScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
     }
 

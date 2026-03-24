@@ -174,6 +174,7 @@ private extension SpeedRunSessionScreen {
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.xs)
+                .readableContentWidth()
             }
             .onChange(of: completedCodes.count) { _, _ in
                 if let last = completedCountries.first {

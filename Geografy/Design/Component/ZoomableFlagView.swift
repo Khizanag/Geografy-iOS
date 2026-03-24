@@ -47,9 +47,11 @@ private extension ZoomableFlagView {
                 .geoShadow(.elevated)
                 .scaleEffect(scale)
                 .offset(offset)
+                #if !os(tvOS)
                 .simultaneousGesture(magnifyGesture)
                 .simultaneousGesture(dragGesture)
                 .onTapGesture(count: 2) { if isReady { toggleZoom() } }
+                #endif
                 .onTapGesture(count: 1) { dismiss() }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
@@ -58,6 +60,7 @@ private extension ZoomableFlagView {
 
 // MARK: - Gestures
 
+#if !os(tvOS)
 private extension ZoomableFlagView {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
@@ -87,6 +90,7 @@ private extension ZoomableFlagView {
             }
     }
 }
+#endif
 
 // MARK: - Actions
 

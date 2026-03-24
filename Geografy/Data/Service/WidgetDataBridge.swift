@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Foundation
 import Observation
 import WidgetKit
@@ -97,3 +98,4 @@ struct WidgetCountryData: Codable {
     let flagEmoji: String
     let funFact: String
 }
+#endif

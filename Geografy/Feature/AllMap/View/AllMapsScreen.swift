@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AllMapsScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     @State private var blobAnimating = false
@@ -117,10 +118,11 @@ private extension AllMapsScreen {
 
 private extension AllMapsScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
+    var isWideLayout: Bool { horizontalSizeClass == .regular }
 
     var columns: [GridItem] {
-        let minSize: CGFloat = isLandscape ? 180 : 140
-        let spacing = isLandscape ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm
+        let minSize: CGFloat = isWideLayout ? 220 : (isLandscape ? 180 : 140)
+        let spacing = isLandscape || isWideLayout ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm
         return [GridItem(.adaptive(minimum: minSize), spacing: spacing)]
     }
 
@@ -133,6 +135,7 @@ private extension AllMapsScreen {
 
                 mapGrid
             }
+            .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
             .padding(.bottom, DesignSystem.Spacing.xxl)
         }
     }
@@ -195,7 +198,7 @@ private extension AllMapsScreen {
                 }
                 .padding(DesignSystem.Spacing.sm)
             }
-            .frame(height: isLandscape ? 130 : 160)
+            .frame(height: isWideLayout ? 180 : (isLandscape ? 130 : 160))
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
             .shadow(color: colors.0.opacity(0.50), radius: 16, y: 6)
             .overlay(

@@ -31,6 +31,7 @@ struct SettingsScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
+            .readableContentWidth()
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)

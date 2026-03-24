@@ -40,9 +40,11 @@ private extension ZoomableOrgLogoView {
                     .frame(maxWidth: 280, maxHeight: 280)
                     .scaleEffect(scale)
                     .offset(offset)
+                    #if !os(tvOS)
                     .simultaneousGesture(magnifyGesture)
                     .simultaneousGesture(dragGesture)
                     .onTapGesture(count: 2) { toggleZoom() }
+                    #endif
                     .onTapGesture(count: 1) { dismiss() }
                     .shadow(radius: DesignSystem.Spacing.lg)
             default:
@@ -77,6 +79,7 @@ private extension ZoomableOrgLogoView {
 
 // MARK: - Gestures
 
+#if !os(tvOS)
 private extension ZoomableOrgLogoView {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
@@ -103,6 +106,7 @@ private extension ZoomableOrgLogoView {
             }
     }
 }
+#endif
 
 // MARK: - Actions
 

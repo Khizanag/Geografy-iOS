@@ -156,6 +156,7 @@ private extension ExploreGameSessionScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.xs)
+            .readableContentWidth()
         }
     }
 

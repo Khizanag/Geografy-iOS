@@ -1,8 +1,13 @@
+#if os(iOS)
 import UIKit
+#endif
+import Foundation
+import Observation
 
 @Observable
 @MainActor
 final class HapticsService {
+    #if os(iOS)
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
         guard isEnabled else { return }
         UIImpactFeedbackGenerator(style: style).impactOccurred()
@@ -17,6 +22,11 @@ final class HapticsService {
         guard isEnabled else { return }
         UISelectionFeedbackGenerator().selectionChanged()
     }
+    #else
+    func impact(_ style: Any) {}
+    func notification(_ type: Any) {}
+    func selection() {}
+    #endif
 }
 
 // MARK: - Helpers

@@ -91,6 +91,7 @@ private extension TimeZoneScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
+            .readableContentWidth()
         }
     }
 

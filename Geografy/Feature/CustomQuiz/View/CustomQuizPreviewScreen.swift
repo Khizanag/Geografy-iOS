@@ -18,6 +18,7 @@ struct CustomQuizPreviewScreen: View {
                     difficultySection
                 }
                 .padding(DesignSystem.Spacing.md)
+                .readableContentWidth()
             }
             .safeAreaInset(edge: .bottom) { saveButton }
             .background(DesignSystem.Color.background)

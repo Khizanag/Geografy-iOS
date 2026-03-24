@@ -52,6 +52,7 @@ private extension NicknameQuizScreen {
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
             }
         }
     }

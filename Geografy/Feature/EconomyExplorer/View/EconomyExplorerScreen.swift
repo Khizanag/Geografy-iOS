@@ -28,6 +28,7 @@ struct EconomyExplorerScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .searchable(text: $searchText, prompt: "Search countries")
         .background { ambientBlobs }

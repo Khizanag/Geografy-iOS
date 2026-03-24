@@ -50,6 +50,7 @@ private extension QuizPackBrowserScreen {
                     .feedSection(appeared: appeared, delay: 0.16)
             }
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
     }
 }

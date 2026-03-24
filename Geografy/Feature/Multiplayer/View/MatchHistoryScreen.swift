@@ -56,6 +56,7 @@ private extension MatchHistoryScreen {
                 }
             }
             .padding(.vertical, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
     }
 

@@ -22,6 +22,7 @@ struct MultiplayerLobbyScreen: View {
                 }
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
+            .readableContentWidth()
         }
         .safeAreaInset(edge: .bottom) {
             if !isSearching {

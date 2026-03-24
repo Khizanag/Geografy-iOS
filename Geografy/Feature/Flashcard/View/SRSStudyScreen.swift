@@ -45,6 +45,7 @@ private extension SRSStudyScreen {
             .padding(DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.lg)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
     }
 

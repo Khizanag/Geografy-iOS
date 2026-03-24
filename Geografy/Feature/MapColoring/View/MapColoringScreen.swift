@@ -21,6 +21,7 @@ struct MapColoringScreen: View {
                 Spacer(minLength: DesignSystem.Spacing.xxl)
             }
             .padding(.top, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Map Coloring Book")

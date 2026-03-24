@@ -92,6 +92,7 @@ private extension ContentView {
                 }
             }
         }
+        .tabViewStyle(.sidebarAdaptable)
     }
 
     var colorScheme: ColorScheme? {

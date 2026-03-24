@@ -17,6 +17,7 @@ struct ChallengeResultScreen: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.lg)
+            .readableContentWidth()
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: DesignSystem.Spacing.sm) {

@@ -25,6 +25,7 @@ struct TravelJournalDetailScreen: View {
             }
             .padding(DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
         .navigationTitle(entry.title)
         .navigationBarTitleDisplayMode(.inline)

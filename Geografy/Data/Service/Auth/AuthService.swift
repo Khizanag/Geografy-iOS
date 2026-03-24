@@ -17,7 +17,9 @@ final class AuthService {
     private(set) var currentUserID: String
 
     private let db: DatabaseManager
+    #if !os(tvOS)
     private let googleSignInHandler = GoogleSignInHandler()
+    #endif
 
     init(db: DatabaseManager) {
         self.db = db
@@ -65,6 +67,7 @@ extension AuthService {
 
 // MARK: - Sign In with Google
 
+#if !os(tvOS)
 extension AuthService {
     func signInWithGoogle() async {
         let previousState = state
@@ -83,6 +86,7 @@ extension AuthService {
         }
     }
 }
+#endif
 
 // MARK: - Sign In
 
@@ -233,6 +237,7 @@ private extension AuthService {
         }
     }
 
+    #if !os(tvOS)
     func handleGoogleUserInfo(_ userInfo: GoogleUserInfo) {
         let googleUserID = "google:\(userInfo.sub)"
         KeychainService.save(googleUserID, for: .googleUserID)
@@ -276,6 +281,7 @@ private extension AuthService {
             state = .authenticated(profile)
         }
     }
+    #endif
 
     func clearAuthTokens() {
         KeychainService.delete(for: .appleUserID)

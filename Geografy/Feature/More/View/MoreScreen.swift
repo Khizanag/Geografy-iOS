@@ -128,6 +128,7 @@ private extension MoreScreen {
         ScrollView(showsIndicators: false) {
             if isSearching {
                 searchResults
+                    .readableContentWidth()
             } else {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                     hubSection(title: "You", items: youItems)
@@ -138,6 +139,7 @@ private extension MoreScreen {
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
+                .readableContentWidth()
                 .background(alignment: .top) { scrollableBlobs }
             }
         }

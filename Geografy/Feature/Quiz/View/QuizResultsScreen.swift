@@ -23,11 +23,11 @@ struct QuizResultsScreen: View {
                 answersSection
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
+            .readableContentWidth()
         }
         .safeAreaInset(edge: .bottom) {
             actionButtons
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Results")
@@ -164,7 +164,7 @@ private extension QuizResultsScreen {
             }
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
         .buttonStyle(.glass)
     }
@@ -180,7 +180,7 @@ private extension QuizResultsScreen {
             }
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
         .buttonStyle(.glass)
     }

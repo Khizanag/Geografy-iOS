@@ -61,6 +61,7 @@ struct CountryListScreen: View {
                     .padding(.trailing, showJumpIndex ? DesignSystem.Spacing.md + 18 : DesignSystem.Spacing.md)
                     .padding(.bottom, DesignSystem.Spacing.xxl)
                     .padding(.top, DesignSystem.Spacing.xs)
+                    .readableContentWidth()
                 }
                 .background(DesignSystem.Color.background)
                 .scrollDismissesKeyboard(.interactively)

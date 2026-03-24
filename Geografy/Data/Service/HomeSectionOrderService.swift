@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Foundation
 import Observation
 
@@ -61,3 +62,4 @@ private extension HomeSectionOrderService {
         UserDefaults.standard.set(data, forKey: storageKey)
     }
 }
+#endif

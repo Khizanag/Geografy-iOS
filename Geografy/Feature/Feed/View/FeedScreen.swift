@@ -41,6 +41,7 @@ private extension FeedScreen {
             }
             .padding(.top, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
         .refreshable {
             feedService.refresh()

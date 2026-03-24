@@ -232,6 +232,7 @@ private extension HistoricalMapScreen {
                 eventDescription(for: event)
             }
             .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background(DesignSystem.Color.background)
     }

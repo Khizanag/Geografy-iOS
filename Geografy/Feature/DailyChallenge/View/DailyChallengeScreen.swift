@@ -36,6 +36,7 @@ private extension DailyChallengeScreen {
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
             .padding(.horizontal, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())

@@ -31,6 +31,7 @@ private extension ExploreGameScreen {
                 statisticsSection
             }
             .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
         .background { AmbientBlobsView(.standard) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
