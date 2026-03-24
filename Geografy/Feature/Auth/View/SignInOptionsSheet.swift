@@ -3,6 +3,7 @@ import SwiftUI
 
 struct SignInOptionsSheet: View {
     @Environment(AuthService.self) private var authService
+    @Environment(TestingModeService.self) private var testingModeService
     @Environment(\.dismiss) private var dismiss
 
     @State private var showError = false
@@ -202,9 +203,9 @@ private extension SignInOptionsSheet {
         VStack(spacing: DesignSystem.Spacing.sm) {
             appleSignInButton
             googleSignInButton
-#if DEBUG
-            debugSignInButton
-#endif
+            if testingModeService.isEnabled {
+                debugSignInButton
+            }
             continueAsGuestButton
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -279,7 +280,6 @@ private extension SignInOptionsSheet {
         }
     }
 
-#if DEBUG
     var debugSignInButton: some View {
         Button {
             authService.debugSignIn()
@@ -306,7 +306,6 @@ private extension SignInOptionsSheet {
         }
         .buttonStyle(PressButtonStyle())
     }
-#endif
 }
 
 // MARK: - Google G Logo
