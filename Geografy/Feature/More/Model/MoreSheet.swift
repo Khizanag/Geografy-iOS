@@ -6,7 +6,7 @@ enum MoreSheet: Identifiable {
     case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
     case flagGame, trivia, spellingBee, landmarkQuiz
     case wordSearch, borderChallenge, challengeRoom, countryNicknames
-    case nationalSymbolsQuiz, geoQuotes, geoFeed
+    case nationalSymbolsQuiz, geoQuotes, feed
     case srsStudy, learningPath
     case badges, timeline
     case achievements, leaderboards, themes, settings
@@ -52,7 +52,7 @@ enum MoreSheet: Identifiable {
         case .countryNicknames: "Country Nicknames"
         case .nationalSymbolsQuiz: "National Symbols"
         case .geoQuotes: "Quotes"
-        case .geoFeed: "Feed"
+        case .feed: "Feed"
         case .srsStudy: "SRS Review"
         case .learningPath: "Learning Path"
         case .travelBucketList: "Bucket List"
@@ -94,7 +94,7 @@ enum MoreSheet: Identifiable {
         case .countryNicknames: "tag.fill"
         case .nationalSymbolsQuiz: "leaf.fill"
         case .geoQuotes: "quote.bubble.fill"
-        case .geoFeed: "newspaper.fill"
+        case .feed: "newspaper.fill"
         case .srsStudy: "brain.fill"
         case .learningPath: "graduationcap.fill"
         case .travelBucketList: "checklist"
@@ -136,7 +136,7 @@ enum MoreSheet: Identifiable {
         case .countryNicknames: "Informal country names"
         case .nationalSymbolsQuiz: "Animals, plants, emblems"
         case .geoQuotes: "Geography quotes & facts"
-        case .geoFeed: "Curated geography news"
+        case .feed: "Curated geography news"
         case .srsStudy: "Spaced repetition review"
         case .learningPath: "Guided geography curriculum"
         case .travelBucketList: "Countries you dream of visiting"
@@ -178,7 +178,7 @@ enum MoreSheet: Identifiable {
         case .countryNicknames: DesignSystem.Color.purple
         case .nationalSymbolsQuiz: DesignSystem.Color.success
         case .geoQuotes: DesignSystem.Color.indigo
-        case .geoFeed: DesignSystem.Color.blue
+        case .feed: DesignSystem.Color.blue
         case .srsStudy: DesignSystem.Color.accent
         case .learningPath: DesignSystem.Color.success
         case .travelBucketList: Color(hex: "00C9A7")
@@ -220,7 +220,7 @@ enum MoreSheet: Identifiable {
         case .countryNicknames: "countryNicknames"
         case .nationalSymbolsQuiz: "nationalSymbolsQuiz"
         case .geoQuotes: "geoQuotes"
-        case .geoFeed: "geoFeed"
+        case .feed: "feed"
         case .srsStudy: "srsStudy"
         case .learningPath: "learningPath"
         case .travelBucketList: "travelBucketList"
@@ -262,7 +262,7 @@ enum MoreSheet: Identifiable {
         case .countryNicknames: .countryNicknames
         case .nationalSymbolsQuiz: .nationalSymbolsQuiz
         case .geoQuotes: .geoQuotes
-        case .geoFeed: .geoFeed
+        case .feed: .feed
         case .srsStudy: .srsStudy
         case .learningPath: .learningPath
         case .travelBucketList: .travelBucketList

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct HomeGeoFeedCard: View {
+struct HomeFeedCard: View {
     let onTap: () -> Void
 
     var body: some View {
@@ -21,7 +21,7 @@ struct HomeGeoFeedCard: View {
 
 // MARK: - Subviews
 
-private extension HomeGeoFeedCard {
+private extension HomeFeedCard {
     var feedIcon: some View {
         ZStack {
             Circle()
@@ -42,7 +42,7 @@ private extension HomeGeoFeedCard {
 
     var feedInfo: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text("Geo Feed")
+            Text("Feed")
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)

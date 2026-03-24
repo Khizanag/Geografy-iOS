@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct GeoFeedScreen: View {
+struct FeedScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(TabCoordinator.self) private var coordinator
 
-    @State private var feedService = GeoFeedService()
+    @State private var feedService = FeedService()
     @State private var countryDataService = CountryDataService()
     @State private var appeared = false
     @State private var isRefreshing = false
@@ -29,7 +29,7 @@ struct GeoFeedScreen: View {
 
 // MARK: - Content
 
-private extension GeoFeedScreen {
+private extension FeedScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: DesignSystem.Spacing.md) {
@@ -56,8 +56,8 @@ private extension GeoFeedScreen {
         DesignSystem.Color.background.ignoresSafeArea()
     }
 
-    func feedCard(for item: GeoFeedItem) -> some View {
-        GeoFeedCard(
+    func feedCard(for item: FeedItem) -> some View {
+        FeedCard(
             item: item,
             isSaved: feedService.isSaved(item.id),
             country: country(for: item.countryCode),

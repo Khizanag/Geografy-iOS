@@ -16,7 +16,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case learningPath
     case mapPuzzle
     case landmarkQuiz
-    case geoFeed
+    case feed
     case continentStats
     case countryCompare
     case travelBucketList
@@ -55,7 +55,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .learningPath: "Learning Path"
         case .mapPuzzle: "Map Puzzle"
         case .landmarkQuiz: "Landmark Quiz"
-        case .geoFeed: "Geo Feed"
+        case .feed: "Feed"
         case .continentStats: "Continent Statistics"
         case .countryCompare: "Country Comparison"
         case .travelBucketList: "Travel Bucket List"
@@ -94,7 +94,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .learningPath: "graduationcap.fill"
         case .mapPuzzle: "puzzlepiece.fill"
         case .landmarkQuiz: "building.columns.fill"
-        case .geoFeed: "newspaper.fill"
+        case .feed: "newspaper.fill"
         case .continentStats: "chart.bar.xaxis.ascending"
         case .countryCompare: "arrow.left.arrow.right"
         case .travelBucketList: "list.star"

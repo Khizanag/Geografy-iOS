@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GeoFeedItem: Identifiable {
+struct FeedItem: Identifiable {
     let id: String
     let type: ItemType
     let title: String

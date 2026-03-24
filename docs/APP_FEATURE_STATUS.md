@@ -97,7 +97,7 @@ Status of all features as of 2026-03-23. Derived from the `Feature/` directory s
 | # | Feature | Status | Folder | Notes |
 |---|---------|--------|--------|-------|
 | 48 | **Multiplayer** | 🏗️ | `Multiplayer/` | Folder exists; no view files yet — planned feature |
-| 49 | **Geo Feed** | ✅ | `GeoFeed/` | GeoFeedScreen, GeoFeedCard — curated geography news/facts feed |
+| 49 | **Feed** | ✅ | `Feed/` | FeedScreen, FeedCard — curated geography news/facts feed |
 
 ---
 

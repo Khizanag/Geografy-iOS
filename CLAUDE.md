@@ -71,7 +71,7 @@ Geografy/
     IndependenceTimeline/ — Country independence history
     ContinentStats/       — Stats dashboard per continent
     LandmarkQuiz/         — Identify famous landmarks
-    GeoFeed/              — Curated geography news and facts
+    Feed/                 — Curated geography news and facts
     Subscription/         — Paywall, subscription cards (StoreKit 2)
     Favorite/             — Saved countries
     AllMap/               — All maps grid, continent overview
