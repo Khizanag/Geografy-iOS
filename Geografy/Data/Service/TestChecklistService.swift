@@ -128,11 +128,6 @@ private extension TestChecklistService {
             "Quiz mode works",
             "Correct/incorrect feedback",
         ]),
-        "nationalSymbolsQuiz": TestChecklist(items: [
-            "Symbols quiz loads with options",
-            "Answer validation works",
-            "Progress and result tracking",
-        ]),
         "search": TestChecklist(items: [
             "Search finds countries by name",
             "Search finds capitals",

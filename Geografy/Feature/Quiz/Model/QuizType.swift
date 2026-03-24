@@ -7,6 +7,7 @@ enum QuizType: String, CaseIterable, Identifiable, Codable {
     case reverseCapital
     case populationOrder
     case areaOrder
+    case nationalSymbols
 
     var id: String { rawValue }
 }
@@ -21,6 +22,7 @@ private extension QuizType {
         .reverseCapital: "Reverse Capital",
         .populationOrder: "Population Order",
         .areaOrder: "Area Order",
+        .nationalSymbols: "National Symbols",
     ]
 
     static let icons: [QuizType: String] = [
@@ -30,6 +32,7 @@ private extension QuizType {
         .reverseCapital: "building.2.fill",
         .populationOrder: "person.3.fill",
         .areaOrder: "map.fill",
+        .nationalSymbols: "leaf.fill",
     ]
 
     static let emojis: [QuizType: String] = [
@@ -39,6 +42,7 @@ private extension QuizType {
         .reverseCapital: "🏙️",
         .populationOrder: "👥",
         .areaOrder: "🗺️",
+        .nationalSymbols: "🦅",
     ]
 
     static let descriptions: [QuizType: String] = [
@@ -48,6 +52,7 @@ private extension QuizType {
         .reverseCapital: "Identify the country by its capital",
         .populationOrder: "Identify the country with the largest or smallest population",
         .areaOrder: "Identify the country with the largest or smallest area",
+        .nationalSymbols: "Animals, flowers, sports & mottos of nations",
     ]
 }
 
@@ -78,6 +83,9 @@ extension QuizType: SelectableType {
     }
 
     var supportsTypingMode: Bool {
-        self != .reverseFlag
+        switch self {
+        case .reverseFlag, .nationalSymbols: false
+        default: true
+        }
     }
 }

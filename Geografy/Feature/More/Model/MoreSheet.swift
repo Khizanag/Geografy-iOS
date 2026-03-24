@@ -6,7 +6,7 @@ enum MoreSheet: Identifiable {
     case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
     case flagGame, trivia, spellingBee, landmarkQuiz
     case wordSearch, borderChallenge, challengeRoom, countryNicknames
-    case nationalSymbolsQuiz, geoQuotes, feed
+    case geoQuotes, feed
     case srsStudy, learningPath
     case badges, timeline
     case achievements, leaderboards, themes, settings
@@ -50,7 +50,6 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "Border Challenge"
         case .challengeRoom: "Challenge Room"
         case .countryNicknames: "Country Nicknames"
-        case .nationalSymbolsQuiz: "National Symbols"
         case .geoQuotes: "Quotes"
         case .feed: "Feed"
         case .srsStudy: "SRS Review"
@@ -92,7 +91,6 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "square.dashed"
         case .challengeRoom: "bolt.fill"
         case .countryNicknames: "tag.fill"
-        case .nationalSymbolsQuiz: "leaf.fill"
         case .geoQuotes: "quote.bubble.fill"
         case .feed: "newspaper.fill"
         case .srsStudy: "brain.fill"
@@ -134,7 +132,6 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "Guess by outline shape"
         case .challengeRoom: "Timed multi-round challenge"
         case .countryNicknames: "Informal country names"
-        case .nationalSymbolsQuiz: "Animals, plants, emblems"
         case .geoQuotes: "Geography quotes & facts"
         case .feed: "Curated geography news"
         case .srsStudy: "Spaced repetition review"
@@ -176,7 +173,6 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: DesignSystem.Color.warning
         case .challengeRoom: DesignSystem.Color.error
         case .countryNicknames: DesignSystem.Color.purple
-        case .nationalSymbolsQuiz: DesignSystem.Color.success
         case .geoQuotes: DesignSystem.Color.indigo
         case .feed: DesignSystem.Color.blue
         case .srsStudy: DesignSystem.Color.accent
@@ -218,7 +214,6 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: "borderChallenge"
         case .challengeRoom: "challengeRoom"
         case .countryNicknames: "countryNicknames"
-        case .nationalSymbolsQuiz: "nationalSymbolsQuiz"
         case .geoQuotes: "geoQuotes"
         case .feed: "feed"
         case .srsStudy: "srsStudy"
@@ -260,7 +255,6 @@ enum MoreSheet: Identifiable {
         case .borderChallenge: .borderChallenge
         case .challengeRoom: .challengeRoom
         case .countryNicknames: .countryNicknames
-        case .nationalSymbolsQuiz: .nationalSymbolsQuiz
         case .geoQuotes: .geoQuotes
         case .feed: .feed
         case .srsStudy: .srsStudy
