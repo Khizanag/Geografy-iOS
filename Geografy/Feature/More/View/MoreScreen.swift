@@ -161,7 +161,7 @@ private extension MoreScreen {
         LazyVGrid(
             columns: [
                 GridItem(
-                    .adaptive(minimum: 120),
+                    .adaptive(minimum: 100),
                     spacing: DesignSystem.Spacing.sm
                 ),
             ],
@@ -181,7 +181,7 @@ private extension MoreScreen {
             LazyVGrid(
                 columns: [
                     GridItem(
-                        .adaptive(minimum: 120),
+                        .adaptive(minimum: 100),
                         spacing: DesignSystem.Spacing.sm
                     ),
                 ],
