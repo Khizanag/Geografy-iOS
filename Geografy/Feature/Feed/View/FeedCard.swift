@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct GeoFeedCard: View {
-    let item: GeoFeedItem
+struct FeedCard: View {
+    let item: FeedItem
     let isSaved: Bool
     let country: Country?
     let onSave: () -> Void
@@ -23,7 +23,7 @@ struct GeoFeedCard: View {
 
 // MARK: - Subviews
 
-private extension GeoFeedCard {
+private extension FeedCard {
     var cardHeader: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             categoryChip

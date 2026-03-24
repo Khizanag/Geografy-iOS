@@ -180,7 +180,7 @@ private extension TestChecklistService {
             "Share button works",
             "Swipe to next quote",
         ]),
-        "geoFeed": TestChecklist(items: [
+        "feed": TestChecklist(items: [
             "Feed items load",
             "Tapping opens detail",
             "Refresh works",

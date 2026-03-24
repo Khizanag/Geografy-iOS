@@ -610,7 +610,7 @@ private extension HomeScreen {
         case .learningPath: learningPathSection
         case .mapPuzzle: mapPuzzleSection
         case .landmarkQuiz: landmarkQuizSection
-        case .geoFeed: geoFeedSection
+        case .feed: feedSection
         case .continentStats: continentStatsSection
         case .countryCompare: countryCompareSection
         case .travelBucketList: travelBucketListSection

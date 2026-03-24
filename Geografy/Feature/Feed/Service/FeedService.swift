@@ -1,8 +1,8 @@
 import SwiftUI
 
 @Observable
-final class GeoFeedService {
-    private(set) var items: [GeoFeedItem] = []
+final class FeedService {
+    private(set) var items: [FeedItem] = []
     private(set) var savedItemIDs: Set<String> = []
 
     func loadFeed() {
@@ -29,8 +29,8 @@ final class GeoFeedService {
 // MARK: - Feed Data
 
 // swiftlint:disable closure_body_length
-private extension GeoFeedService {
-    static let allItems: [GeoFeedItem] = [
+private extension FeedService {
+    static let allItems: [FeedItem] = [
         // MARK: Did You Know
         .init(
             id: "dyk01",

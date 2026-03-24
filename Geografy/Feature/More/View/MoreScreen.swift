@@ -265,7 +265,7 @@ private extension MoreScreen {
         [
             .search, .compare, .distanceCalculator,
             .currencyConverter, .timeZones, .timeline,
-            .orgs, .geoQuotes, .geoFeed, .learningPath,
+            .orgs, .geoQuotes, .feed, .learningPath,
         ]
     }
 

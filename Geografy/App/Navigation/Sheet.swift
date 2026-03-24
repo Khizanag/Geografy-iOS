@@ -57,7 +57,7 @@ enum Sheet: Identifiable {
     case landmarkQuiz
 
     // Discover
-    case geoFeed
+    case feed
 
     // Challenge
     case challengeRoom
@@ -118,7 +118,7 @@ enum Sheet: Identifiable {
         case .trivia: "trivia"
         case .spellingBee: "spellingBee"
         case .landmarkQuiz: "landmarkQuiz"
-        case .geoFeed: "geoFeed"
+        case .feed: "feed"
         case .challengeRoom: "challengeRoom"
         case .geoQuotes: "geoQuotes"
         case .countryNicknames: "countryNicknames"

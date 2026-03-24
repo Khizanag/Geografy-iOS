@@ -167,14 +167,14 @@ extension HomeScreen {
     }
 }
 
-// MARK: - Geo Feed Section
+// MARK: - Feed Section
 
 extension HomeScreen {
-    var geoFeedSection: some View {
+    var feedSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geo Feed")
+            SectionHeaderView(title: "Feed")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeGeoFeedCard { coordinator.present(.geoFeed) }
+            HomeFeedCard { coordinator.present(.feed) }
         }
     }
 }
