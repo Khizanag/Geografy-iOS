@@ -149,8 +149,9 @@ private extension SpellingBeeScreen {
         let letters = Array(typedText.lowercased())
         let targetLetters = Array(target.lowercased())
 
+        let columns = [GridItem(.adaptive(minimum: 32), spacing: DesignSystem.Spacing.xs)]
         return LazyVGrid(
-            columns: [GridItem(.adaptive(minimum: 32), spacing: DesignSystem.Spacing.xs)],
+            columns: columns,
             alignment: .center,
             spacing: DesignSystem.Spacing.xs
         ) {
@@ -168,6 +169,8 @@ private extension SpellingBeeScreen {
                 )
             }
         }
+        .fixedSize(horizontal: true, vertical: false)
+        .frame(maxWidth: .infinity)
     }
 
     func letterCell(typed: String?, isCorrect: Bool, isSpace: Bool) -> some View {
