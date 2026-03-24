@@ -10,6 +10,7 @@ struct QuizSetupScreen: View {
     @AppStorage("quiz_selectedCount") private var selectedCount: QuestionCount = .ten
     @AppStorage("quiz_answerMode") private var answerMode: QuizAnswerMode = .multipleChoice
     @AppStorage("quiz_comparisonMetric") private var comparisonMetric: ComparisonMetric = .population
+    @AppStorage("quiz_showAutocomplete") private var showAutocomplete = false
 
     var body: some View {
         ScrollView {
@@ -133,6 +134,19 @@ private extension QuizSetupScreen {
                 icon: "star.fill",
                 text: "1.5× XP bonus for typing answers correctly"
             )
+
+            Toggle(isOn: $showAutocomplete) {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Image(systemName: "text.magnifyingglass")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.accent)
+
+                    Text("Show suggestions")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                }
+            }
+            .tint(DesignSystem.Color.accent)
         } else if answerMode == .spellingBee {
             answerModeInfoRow(
                 icon: "textformat.abc",
