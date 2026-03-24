@@ -76,9 +76,6 @@ private extension QuizSpellingBeeView {
             }
         }
     }
-}
-
-// MARK: - Letter Grid
 
     var skipButton: some View {
         Button {
