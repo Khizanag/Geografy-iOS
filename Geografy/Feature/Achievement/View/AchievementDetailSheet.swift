@@ -9,20 +9,17 @@ struct AchievementDetailSheet: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: DesignSystem.Spacing.xl) {
-                        iconSection
-                        infoSection
-                        if isUnlocked {
-                            unlockedSection
-                        } else {
-                            howToUnlockSection
-                        }
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: DesignSystem.Spacing.xl) {
+                    iconSection
+                    infoSection
+                    if isUnlocked {
+                        unlockedSection
+                    } else {
+                        howToUnlockSection
                     }
-                    .padding(DesignSystem.Spacing.lg)
                 }
+                .padding(DesignSystem.Spacing.lg)
             }
             .navigationTitle(definition.title)
             .navigationBarTitleDisplayMode(.inline)
