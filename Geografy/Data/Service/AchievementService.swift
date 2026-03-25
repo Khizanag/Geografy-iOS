@@ -107,7 +107,7 @@ final class AchievementService {
             (100, "explorer_100"),
             (195, "explorer_195"),
         ]
-        for (threshold, id) in milestones {
+        for (_, id) in milestones {
             updateProgress(id, value: totalExplored)
         }
     }

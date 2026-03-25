@@ -330,7 +330,7 @@ private extension HomeScreen {
 
 private extension HomeScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
-    var isCompactHeight: Bool { UIScreen.main.bounds.height <= 812 }
+    var isCompactHeight: Bool { verticalSizeClass == .compact }
     var carouselHeight: CGFloat {
         if isLandscape { 200 } else if isCompactHeight { 240 } else { 300 }
     }

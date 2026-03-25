@@ -274,9 +274,9 @@ private extension PronunciationService {
 
 // MARK: - SpeechDelegate
 
-private final class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate {
-    var onDidFinish: (() -> Void)?
-    var onDidCancel: (() -> Void)?
+private final class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
+    nonisolated(unsafe) var onDidFinish: (() -> Void)?
+    nonisolated(unsafe) var onDidCancel: (() -> Void)?
 
     func speechSynthesizer(
         _ synthesizer: AVSpeechSynthesizer,

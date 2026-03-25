@@ -24,10 +24,10 @@ extension DesignSystem {
         static let warning = SwiftUI.Color("Warning")
         static let error = SwiftUI.Color("Error")
 
-        static let indigo = SwiftUI.Color("Indigo")
-        static let blue = SwiftUI.Color("Blue")
-        static let purple = SwiftUI.Color("Purple")
-        static let orange = SwiftUI.Color("Orange")
+        static let indigo = SwiftUI.Color("GeoIndigo")
+        static let blue = SwiftUI.Color("GeoBlue")
+        static let purple = SwiftUI.Color("GeoPurple")
+        static let orange = SwiftUI.Color("GeoOrange")
 
         // 8 perceptually distinct hues, each ~45° apart on the color wheel,
         // tuned for vibrant appearance on a dark background.

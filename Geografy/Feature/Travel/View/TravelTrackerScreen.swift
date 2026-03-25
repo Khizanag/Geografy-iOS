@@ -221,7 +221,6 @@ private extension TravelTrackerScreen {
             switch filter {
             case .visited: .visited
             case .wantToVisit: .wantToVisit
-            default: .all
             }
         } else {
             .all

@@ -1,6 +1,7 @@
 import GameKit
 import SwiftUI
 
+@available(iOS, deprecated: 26.0, message: "Migrate to native GameCenter UI when available")
 struct GameCenterViewControllerRepresentable: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
     var leaderboardID: String? = nil
