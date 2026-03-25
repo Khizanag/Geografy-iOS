@@ -124,7 +124,7 @@ private extension CountryDetailScreen {
                     profile: profileService.profile(for: country.code)
                 )
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
+                    ToolbarItem(placement: .topBarLeading) {
                         CircleCloseButton()
                     }
                 }

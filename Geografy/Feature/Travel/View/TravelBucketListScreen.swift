@@ -324,7 +324,7 @@ struct BucketListCountryDetailView: View {
         .navigationTitle(country.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .topBarLeading) {
                 CircleCloseButton()
             }
         }
