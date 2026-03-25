@@ -6,7 +6,7 @@ struct LandmarkDetailView: View {
     let landmark: Landmark
 
     private var accentSwiftUIColor: Color {
-        Color(hex: landmark.accentColor) ?? DesignSystem.Color.accent
+        Color(hex: landmark.accentColor)
     }
 
     var body: some View {

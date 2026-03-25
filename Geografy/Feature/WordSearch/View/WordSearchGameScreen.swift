@@ -438,7 +438,7 @@ private extension WordSearchGameScreen {
     }
 
     func revealHint(_ wordItem: WordSearchWord) {
-        withAnimation(.easeInOut(duration: 0.3)) {
+        _ = withAnimation(.easeInOut(duration: 0.3)) {
             hintRevealedIDs.insert(wordItem.id)
         }
         hapticsService.impact(.light)

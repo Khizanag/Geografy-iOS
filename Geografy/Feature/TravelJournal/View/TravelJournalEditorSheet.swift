@@ -320,7 +320,7 @@ private extension TravelJournalEditorSheet {
             selection: $selectedPhotos,
             maxSelectionCount: 20,
             matching: .images
-        ) {
+        ) { @MainActor in
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "photo.badge.plus.fill")

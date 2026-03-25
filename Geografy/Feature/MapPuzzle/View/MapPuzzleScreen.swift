@@ -302,7 +302,7 @@ private extension MapPuzzleScreen {
 
         questions = questionCountries.map { country in
             var options = [country]
-            var pool = continentCountries.filter { $0.code != country.code }.shuffled()
+            let pool = continentCountries.filter { $0.code != country.code }.shuffled()
             options += Array(pool.prefix(3))
             options.shuffle()
             return PuzzleQuestion(country: country, options: options)

@@ -88,7 +88,7 @@ private extension LandmarkGalleryScreen {
     }
 
     func landmarkCard(_ landmark: Landmark) -> some View {
-        let accentColor = Color(hex: landmark.accentColor) ?? DesignSystem.Color.accent
+        let accentColor = Color(hex: landmark.accentColor)
         return CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 ZStack {
