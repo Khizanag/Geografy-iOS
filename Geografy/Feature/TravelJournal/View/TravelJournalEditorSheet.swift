@@ -320,30 +320,28 @@ private extension TravelJournalEditorSheet {
             selection: $selectedPhotos,
             maxSelectionCount: 20,
             matching: .images
-        ) { @MainActor in
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "photo.badge.plus.fill")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(
-                            DesignSystem.Color.accent
-                        )
-                    Text("Add Photos")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(
-                            DesignSystem.Color.textPrimary
-                        )
-                    Spacer(minLength: 0)
-                    Text(photosCountText)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(
-                            DesignSystem.Color.textTertiary
-                        )
-                }
-                .padding(DesignSystem.Spacing.sm)
-            }
+        ) {
+            photosPickerLabel
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    var photosPickerLabel: some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: "photo.badge.plus.fill")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                Text("Add Photos")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Spacer(minLength: 0)
+                Text(photosCountText)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .padding(DesignSystem.Spacing.sm)
+        }
     }
 
     var photosGrid: some View {
