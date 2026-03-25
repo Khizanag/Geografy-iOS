@@ -3,7 +3,11 @@ import SwiftUI
 extension DesignSystem {
     enum AdaptiveLayout {
         /// Max content width for readable layouts on wide screens
+        #if targetEnvironment(macCatalyst)
+        static let maxContentWidth: CGFloat = 900
+        #else
         static let maxContentWidth: CGFloat = 700
+        #endif
 
         /// Max content width for full-width cards/sections
         static let maxWideContentWidth: CGFloat = 960

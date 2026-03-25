@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MoreScreen: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TestingModeService.self) private var testingModeService
@@ -159,15 +160,7 @@ private extension MoreScreen {
     }
 
     var searchResults: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(
-                    .adaptive(minimum: 100),
-                    spacing: DesignSystem.Spacing.sm
-                ),
-            ],
-            spacing: DesignSystem.Spacing.sm
-        ) {
+        AdaptiveGrid(compactMinimum: 100, regularMinimum: 150) {
             ForEach(filteredItems, id: \.id) { sheet in
                 gridTile(for: sheet)
             }
@@ -179,15 +172,7 @@ private extension MoreScreen {
     func hubSection(title: String, items: [MoreSheet]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title)
-            LazyVGrid(
-                columns: [
-                    GridItem(
-                        .adaptive(minimum: 100),
-                        spacing: DesignSystem.Spacing.sm
-                    ),
-                ],
-                spacing: DesignSystem.Spacing.sm
-            ) {
+            AdaptiveGrid(compactMinimum: 100, regularMinimum: 150) {
                 ForEach(items, id: \.id) { sheet in
                     gridTile(for: sheet)
                 }
@@ -200,27 +185,35 @@ private extension MoreScreen {
             hapticsService.impact(.light)
             coordinator.present(sheet.toSheet)
         } label: {
-            VStack(spacing: DesignSystem.Spacing.xs) {
+            VStack(spacing: tileSpacing) {
                 ZStack {
                     RoundedRectangle(
                         cornerRadius: DesignSystem.CornerRadius.small
                     )
                     .fill(sheet.color.opacity(0.15))
-                    .frame(width: 36, height: 36)
+                    .frame(width: tileIconSize, height: tileIconSize)
                     Image(systemName: sheet.icon)
-                        .font(DesignSystem.Font.subheadline)
+                        .font(.system(size: tileIconFontSize))
                         .foregroundStyle(sheet.color)
                 }
                 Text(sheet.label)
-                    .font(DesignSystem.Font.caption)
+                    .font(tileLabelFont)
                     .fontWeight(.medium)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .minimumScaleFactor(0.65)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, DesignSystem.Spacing.xxs)
+
+                Text(sheet.subtitle)
+                    .font(tileSubtitleFont)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
                     .padding(.horizontal, DesignSystem.Spacing.xxs)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+            .padding(.vertical, tilePadding)
             .glassEffect(
                 .regular,
                 in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
@@ -278,5 +271,22 @@ private extension MoreScreen {
     var appItems: [MoreSheet] {
         [.achievements, .leaderboards, .srsStudy, .themes, .settings]
     }
+}
 
+// MARK: - Adaptive Tile Sizing
+
+private extension MoreScreen {
+    var isWide: Bool { sizeClass == .regular }
+
+    var tileIconSize: CGFloat { isWide ? 52 : 36 }
+
+    var tileIconFontSize: CGFloat { isWide ? 22 : 14 }
+
+    var tileLabelFont: Font { isWide ? DesignSystem.Font.subheadline : DesignSystem.Font.caption }
+
+    var tileSubtitleFont: Font { isWide ? DesignSystem.Font.caption : .system(size: 10) }
+
+    var tileSpacing: CGFloat { isWide ? DesignSystem.Spacing.sm : DesignSystem.Spacing.xs }
+
+    var tilePadding: CGFloat { isWide ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm }
 }
