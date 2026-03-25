@@ -220,7 +220,7 @@ private extension TimelineScreen {
                 .navigationTitle("Event Details")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
+                    ToolbarItem(placement: .topBarLeading) {
                         CircleCloseButton {
                             selectedEvent = nil
                         }
