@@ -85,7 +85,7 @@ private extension NavigatorView {
 
     @ToolbarContentBuilder
     var dismissToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .topBarLeading) {
             CircleCloseButton { coordinator.dismiss() }
         }
     }
