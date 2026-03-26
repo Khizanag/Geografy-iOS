@@ -400,9 +400,9 @@ private extension MapScreen {
     func continentViewportBounds(for filter: String) -> CGRect? {
         typealias Bounds = (minLng: Double, maxLng: Double, minLat: Double, maxLat: Double)
         let lookup: [String: Bounds] = [
-            "Europe": (-10, 40, 34, 72),
-            "North America": (-140, -52, 7, 84),
-            "Oceania": (112, 178, -50, 22),
+            "Europe": (-25, 40, 34, 72),
+            "North America": (-140, -52, 7, 72),
+            "Oceania": (112, 178, -50, 10),
             "Asia": (26, 145, -11, 78),
             "Africa": (-20, 55, -35, 38),
             "South America": (-82, -34, -56, 13),
