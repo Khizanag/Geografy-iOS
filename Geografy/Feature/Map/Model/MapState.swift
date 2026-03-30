@@ -7,9 +7,9 @@ final class MapState {
     var lastScale: CGFloat = 1.0
     var lastOffset: CGSize = .zero
     var minScale: CGFloat = 0.15
+    static let maxScale: CGFloat = 100.0
     var selectedCountryCode: String?
     var showLabels = false
-    var showDensityOverlay = false
     var countryShapes: [CountryShape] = []
     var contentBounds: CGRect = .zero
 
@@ -19,7 +19,6 @@ final class MapState {
 }
 
 // MARK: - Actions
-
 extension MapState {
     func reset() {
         scale = 1.0

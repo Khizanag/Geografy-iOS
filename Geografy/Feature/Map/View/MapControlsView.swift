@@ -20,7 +20,6 @@ struct MapControlsView: View {
 }
 
 // MARK: - Subviews
-
 private extension MapControlsView {
     var backButton: some View {
         IconButton(systemImage: "chevron.left", action: onBack)

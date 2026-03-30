@@ -76,7 +76,6 @@ struct OrganizationMapScreen: View {
 }
 
 // MARK: - Content
-
 private extension OrganizationMapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
@@ -112,7 +111,6 @@ private extension OrganizationMapScreen {
 }
 
 // MARK: - Org Header
-
 private extension OrganizationMapScreen {
     var orgHeader: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -122,7 +120,7 @@ private extension OrganizationMapScreen {
                         .fill(organization.highlightColor.opacity(0.15))
                         .frame(width: 40, height: 40)
                     Image(systemName: organization.icon)
-                        .font(.system(size: 18, weight: .medium))
+                        .font(DesignSystem.Font.iconSmall.weight(.medium))
                         .foregroundStyle(organization.highlightColor)
                 }
 
@@ -188,7 +186,6 @@ private extension OrganizationMapScreen {
 }
 
 // MARK: - Banner
-
 private extension OrganizationMapScreen {
     @ViewBuilder
     var bannerOverlay: some View {
@@ -217,7 +214,6 @@ private extension OrganizationMapScreen {
 }
 
 // MARK: - Controls
-
 private extension OrganizationMapScreen {
     var labelsToggleButton: some View {
         Button {
@@ -239,21 +235,32 @@ private extension OrganizationMapScreen {
 }
 
 // MARK: - Gestures
-
 private extension OrganizationMapScreen {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
             .onChanged { value in
-                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
+                let newScale = min(
+                    max(mapState.lastScale * value.magnification, mapState.minScale),
+                    MapState.maxScale
+                )
                 let scaleRatio = newScale / mapState.scale
+
+                let anchor = value.startLocation
+                let screenCenter = CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
+                let anchorOffset = CGSize(
+                    width: anchor.x - screenCenter.x,
+                    height: anchor.y - screenCenter.y
+                )
+
                 mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio,
-                    height: mapState.offset.height * scaleRatio
+                    width: mapState.offset.width * scaleRatio - anchorOffset.width * (scaleRatio - 1),
+                    height: mapState.offset.height * scaleRatio - anchorOffset.height * (scaleRatio - 1)
                 )
                 mapState.scale = newScale
                 clampVerticalOffset()
             }
             .onEnded { _ in
+                wrapHorizontalOffset()
                 mapState.lastScale = mapState.scale
                 mapState.lastOffset = mapState.offset
             }
@@ -276,7 +283,6 @@ private extension OrganizationMapScreen {
 }
 
 // MARK: - Actions
-
 private extension OrganizationMapScreen {
     func handleTap(at point: CGPoint, in size: CGSize) {
         let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width

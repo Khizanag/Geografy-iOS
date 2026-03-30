@@ -71,18 +71,7 @@ struct MapScreen: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    densityToggleButton
-                    labelsToggleButton
-                }
-            }
-        }
-        .safeAreaInset(edge: .bottom) {
-            if mapState.showDensityOverlay {
-                densityLegend
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.bottom, DesignSystem.Spacing.sm)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                labelsToggleButton
             }
         }
         .navigationDestination(item: $navigateToCountry) { country in
@@ -100,7 +89,6 @@ struct MapScreen: View {
 }
 
 // MARK: - Content
-
 private extension MapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
@@ -131,9 +119,7 @@ private extension MapScreen {
             showLabels: mapState.showLabels,
             canvasSize: size,
             capitalPoint: selectedCapitalPoint,
-            travelStatuses: travelService.entries,
-            densityData: densityData,
-            showDensityOverlay: mapState.showDensityOverlay
+            travelStatuses: travelService.entries
         )
         .gesture(dragGesture)
         .gesture(magnifyGesture)
@@ -142,13 +128,9 @@ private extension MapScreen {
         }
     }
 
-    var densityData: [String: Double] {
-        Dictionary(uniqueKeysWithValues: countryDataService.countries.map { ($0.code, $0.populationDensity) })
-    }
 }
 
 // MARK: - Controls
-
 private extension MapScreen {
     var closeButton: some View {
         CircleCloseButton()
@@ -172,71 +154,9 @@ private extension MapScreen {
         .buttonStyle(.plain)
     }
 
-    var densityToggleButton: some View {
-        Button {
-            withAnimation(.easeInOut(duration: 0.25)) {
-                mapState.showDensityOverlay.toggle()
-            }
-            hapticsService.impact(.light)
-        } label: {
-            Image(systemName: "flame.fill")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(mapState.showDensityOverlay ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
-                .padding(DesignSystem.Spacing.xs)
-                .background {
-                    if mapState.showDensityOverlay {
-                        Circle().fill(DesignSystem.Color.orange)
-                    }
-                }
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-// MARK: - Density Legend
-
-private extension MapScreen {
-    var densityLegend: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            Text("Population Density (people/km²)")
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            LinearGradient(
-                colors: [
-                    Color(red: 1, green: 1, blue: 0.7),
-                    Color(red: 1, green: 0.65, blue: 0.2),
-                    Color(red: 1, green: 0.3, blue: 0),
-                    Color(red: 0.7, green: 0, blue: 0),
-                    Color(red: 0.45, green: 0, blue: 0),
-                ],
-                startPoint: .leading,
-                endPoint: .trailing
-            )
-            .frame(height: 10)
-            .clipShape(Capsule())
-            HStack {
-                Text("< 1")
-                Spacer()
-                Text("10")
-                Spacer()
-                Text("100")
-                Spacer()
-                Text("1k")
-                Spacer()
-                Text("> 10k")
-            }
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.background.opacity(0.92))
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-    }
 }
 
 // MARK: - Banner
-
 private extension MapScreen {
     @ViewBuilder
     var bannerOverlay: some View {
@@ -265,22 +185,32 @@ private extension MapScreen {
 }
 
 // MARK: - Gestures
-
 private extension MapScreen {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
             .onChanged { value in
-                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
+                let newScale = min(
+                    max(mapState.lastScale * value.magnification, mapState.minScale),
+                    MapState.maxScale
+                )
                 let scaleRatio = newScale / mapState.scale
 
+                let anchor = value.startLocation
+                let screenCenter = CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
+                let anchorOffset = CGSize(
+                    width: anchor.x - screenCenter.x,
+                    height: anchor.y - screenCenter.y
+                )
+
                 mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio,
-                    height: mapState.offset.height * scaleRatio
+                    width: mapState.offset.width * scaleRatio - anchorOffset.width * (scaleRatio - 1),
+                    height: mapState.offset.height * scaleRatio - anchorOffset.height * (scaleRatio - 1)
                 )
                 mapState.scale = newScale
                 clampVerticalOffset()
             }
             .onEnded { _ in
+                wrapHorizontalOffset()
                 mapState.lastScale = mapState.scale
                 mapState.lastOffset = mapState.offset
             }
@@ -303,7 +233,6 @@ private extension MapScreen {
 }
 
 // MARK: - Actions
-
 private extension MapScreen {
     func clampVerticalOffset() {
         let bounds = mapState.contentBounds
