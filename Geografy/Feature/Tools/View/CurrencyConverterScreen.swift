@@ -38,6 +38,11 @@ struct CurrencyConverterScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Currency Converter")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
+            }
+        }
         .sheet(isPresented: $showFromPicker) {
             CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
                 hapticsService.selection()
@@ -67,7 +72,6 @@ struct CurrencyConverterScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension CurrencyConverterScreen {
     var quickChipsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
@@ -171,7 +175,7 @@ private extension CurrencyConverterScreen {
                 Text(label)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .frame(width: 30, alignment: .leading)
+                    .frame(width: 50, alignment: .leading)
 
                 if let entry {
                     HStack(spacing: DesignSystem.Spacing.xs) {
@@ -199,6 +203,11 @@ private extension CurrencyConverterScreen {
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(color.opacity(0.6))
             }
+            .padding(DesignSystem.Spacing.sm)
+            .background(
+                DesignSystem.Color.cardBackgroundHighlighted,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -208,11 +217,11 @@ private extension CurrencyConverterScreen {
             Text("Amount")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: 30 + DesignSystem.Spacing.sm, alignment: .leading)
+                .frame(width: 50, alignment: .leading)
 
             TextField("0", text: $amountText)
                 .keyboardType(.decimalPad)
-                .font(.system(size: 22, weight: .semibold, design: .rounded))
+                .font(DesignSystem.Font.roundedSubheadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.leading)
 
@@ -260,7 +269,7 @@ private extension CurrencyConverterScreen {
 
                         HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                             Text(formatAmount(converted))
-                                .font(.system(size: 44, weight: .bold, design: .rounded))
+                                .font(DesignSystem.Font.roundedXL)
                                 .foregroundStyle(DesignSystem.Color.accent)
                                 .contentTransition(.numericText())
                                 .animation(.spring(response: 0.4), value: converted)
@@ -329,7 +338,6 @@ private extension CurrencyConverterScreen {
 }
 
 // MARK: - Helpers
-
 private extension CurrencyConverterScreen {
     var allCurrencies: [CurrencyEntry] {
         var seen = Set<String>()
@@ -388,7 +396,6 @@ private extension CurrencyConverterScreen {
 }
 
 // MARK: - Currency Entry
-
 struct CurrencyEntry: Identifiable, Hashable {
     let code: String
     let name: String
@@ -398,7 +405,6 @@ struct CurrencyEntry: Identifiable, Hashable {
 }
 
 // MARK: - Currency Picker Sheet
-
 private struct CurrencyPickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -417,6 +423,7 @@ private struct CurrencyPickerSheet: View {
                 } label: {
                     HStack(spacing: DesignSystem.Spacing.sm) {
                         FlagView(countryCode: entry.countryCode, height: 24)
+                            .frame(width: 36, alignment: .center)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(entry.code)
                                 .font(DesignSystem.Font.subheadline)
@@ -435,6 +442,7 @@ private struct CurrencyPickerSheet: View {
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
+                        .tint(DesignSystem.Color.textPrimary)
                 }
             }
         }
