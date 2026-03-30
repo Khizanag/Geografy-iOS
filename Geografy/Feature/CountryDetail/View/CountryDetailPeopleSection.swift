@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - People
-
 extension CountryDetailScreen {
     var peopleSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -22,7 +21,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Helpers
-
 extension CountryDetailScreen {
     func densityColor(for fraction: Double) -> Color {
         if fraction > 0.7 {
@@ -36,9 +34,18 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Subviews
-
 private extension CountryDetailScreen {
     var populationCard: some View {
+        Button {
+            activeSheet = .info(
+                InfoItem(
+                    icon: "person.3.fill",
+                    title: "Population",
+                    value: "\(country.population.formatPopulation()) people\n\(String(format: "%.1f", country.populationDensity))/km² density",
+                    supportsMap: false
+                )
+            )
+        } label: {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 HStack(alignment: .top) {
@@ -62,6 +69,8 @@ private extension CountryDetailScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        }
+        .buttonStyle(PressButtonStyle())
     }
 
     var livePopulationTicker: some View {

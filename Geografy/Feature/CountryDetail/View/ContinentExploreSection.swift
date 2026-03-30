@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Continent Explore Section
-
 extension CountryDetailScreen {
     var continentExploreSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -12,10 +11,9 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Subviews
-
 private extension CountryDetailScreen {
     var continentCard: some View {
-        Button { coordinator.push(.continentOverview(country.continent)) } label: {
+        Button { navigateToContinent(country.continent) } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     continentIcon
@@ -37,7 +35,7 @@ private extension CountryDetailScreen {
                 .fill(DesignSystem.Color.blue.opacity(0.12))
                 .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
             Image(systemName: "globe")
-                .font(.system(size: 18, weight: .medium))
+                .font(DesignSystem.Font.iconSmall.weight(.medium))
                 .foregroundStyle(DesignSystem.Color.blue)
         }
     }

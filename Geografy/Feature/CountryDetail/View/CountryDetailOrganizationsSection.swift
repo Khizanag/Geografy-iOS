@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Organizations
-
 extension CountryDetailScreen {
     var memberOrganizations: [Organization] {
         country.organizations.compactMap { Organization.find($0) }
@@ -51,7 +50,7 @@ extension CountryDetailScreen {
 
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Button {
-                        coordinator.push(.organizationDetail(org))
+                        navigateToOrganization(org)
                         hapticsService.impact(.light)
                     } label: {
                         orgActionButton(icon: "info.circle", label: "Info", color: DesignSystem.Color.accent)
@@ -74,12 +73,11 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Org Action Button
-
 private extension CountryDetailScreen {
     func orgActionButton(icon: String, label: String, color: Color) -> some View {
         VStack(spacing: 2) {
             Image(systemName: icon)
-                .font(.system(size: 14, weight: .medium))
+                .font(DesignSystem.Font.iconXS.weight(.medium))
                 .foregroundStyle(color)
             Text(label)
                 .font(DesignSystem.Font.caption2)
@@ -91,7 +89,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Org Icon
-
 private extension CountryDetailScreen {
     @ViewBuilder
     func orgRowIcon(_ org: Organization) -> some View {
@@ -120,7 +117,7 @@ private extension CountryDetailScreen {
                 .fill(org.highlightColor.opacity(0.15))
                 .frame(width: 38, height: 38)
             Image(systemName: org.icon)
-                .font(.system(size: 16, weight: .medium))
+                .font(DesignSystem.Font.callout.weight(.medium))
                 .foregroundStyle(org.highlightColor)
         }
     }

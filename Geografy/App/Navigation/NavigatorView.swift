@@ -2,7 +2,6 @@ import Combine
 import SwiftUI
 
 // MARK: - Coordinator
-
 @MainActor
 @Observable
 final class Coordinator {
@@ -33,7 +32,6 @@ final class Coordinator {
 }
 
 // MARK: - NavigatorView
-
 struct NavigatorView<Root: View>: View {
     @Environment(\.dismiss) private var dismiss
     @State private var coordinator = Coordinator()
@@ -69,7 +67,6 @@ struct NavigatorView<Root: View>: View {
 }
 
 // MARK: - Subviews
-
 private extension NavigatorView {
     @ViewBuilder
     var rootContent: some View {
