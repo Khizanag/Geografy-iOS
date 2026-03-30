@@ -22,7 +22,7 @@ struct CountryRowView: View {
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .strokeBorder(Color.white.opacity(0.06), lineWidth: 1)
+                .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
         )
         .countryContextMenu(country)
         .accessibilityElement(children: .combine)
@@ -52,7 +52,7 @@ private extension CountryRowView {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if showFlag {
                 FlagView(countryCode: country.code, height: 36)
-                    .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                    .geoShadow(.subtle)
                     .frame(width: 56, alignment: .center)
             }
 

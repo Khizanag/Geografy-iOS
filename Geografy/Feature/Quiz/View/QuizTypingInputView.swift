@@ -57,7 +57,7 @@ private extension QuizTypingInputView {
 
                         FlagView(countryCode: flagCode, height: 200)
                             .clipShape(RoundedRectangle(cornerRadius: 14))
-                            .shadow(color: .black.opacity(0.45), radius: 22, y: 10)
+                            .geoShadow(.elevated)
                             .shadow(color: DesignSystem.Color.accent.opacity(0.15), radius: 12, y: 4)
                     }
                 }

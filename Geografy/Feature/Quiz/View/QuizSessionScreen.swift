@@ -257,7 +257,7 @@ private extension QuizSessionScreen {
             Text("\(currentStreak)×")
                 .font(DesignSystem.Font.roundedMicro)
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(DesignSystem.Color.onAccent)
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
         .background(

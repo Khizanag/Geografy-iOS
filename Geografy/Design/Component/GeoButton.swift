@@ -62,7 +62,7 @@ private extension GeoButton {
 private extension GeoButton {
     var foregroundColor: Color {
         switch style {
-        case .primary: .white
+        case .primary: DesignSystem.Color.onAccent
         case .secondary: DesignSystem.Color.accent
         case .text: DesignSystem.Color.accent
         }

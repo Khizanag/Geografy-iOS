@@ -96,7 +96,7 @@ private extension FlagSymbolismCard {
                     .frame(width: 14, height: 20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 3)
-                            .stroke(Color.black.opacity(0.1), lineWidth: 0.5)
+                            .stroke(.primary.opacity(0.15), lineWidth: 0.5)
                     )
             }
         }
@@ -171,7 +171,7 @@ private extension FlagSymbolismCard {
                 .frame(width: 32, height: 32)
                 .overlay(
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .stroke(Color.black.opacity(0.08), lineWidth: 0.5)
+                        .stroke(.primary.opacity(0.15), lineWidth: 0.5)
                 )
 
             VStack(alignment: .leading, spacing: 2) {

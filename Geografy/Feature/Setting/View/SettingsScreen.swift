@@ -283,7 +283,7 @@ private extension SettingsScreen {
 
             SettingsToggleRow(
                 icon: "iphone.radiowaves.left.and.right",
-                iconColor: Color(hex: "00C9A7"),
+                iconColor: DesignSystem.Color.success,
                 title: "Haptic feedback",
                 isOn: $hapticFeedbackEnabled
             )

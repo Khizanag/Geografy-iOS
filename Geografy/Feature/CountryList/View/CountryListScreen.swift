@@ -291,7 +291,7 @@ private extension CountryListScreen {
             }
 
             Rectangle()
-                .fill(Color.white.opacity(0.07))
+                .fill(DesignSystem.Color.dividerSubtle)
                 .frame(height: 1)
 
             HStack(spacing: 4) {

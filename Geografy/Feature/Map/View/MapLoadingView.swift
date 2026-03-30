@@ -111,7 +111,7 @@ private extension MapLoadingView {
             HStack(spacing: 0) {
                 Text("Loading map")
                     .font(DesignSystem.Font.headline)
-                    .foregroundStyle(.white.opacity(0.90))
+                    .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.90))
 
                 Text(dotString)
                     .font(DesignSystem.Font.headline)
@@ -122,14 +122,14 @@ private extension MapLoadingView {
 
             Text("Parsing geographic data")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(.white.opacity(0.45))
+                .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.45))
         }
     }
 
     var copyrightLabel: some View {
         Text("Map data © OpenStreetMap contributors · Geografy")
             .font(DesignSystem.Font.caption2)
-            .foregroundStyle(.white.opacity(0.30))
+            .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.30))
             .multilineTextAlignment(.center)
     }
 

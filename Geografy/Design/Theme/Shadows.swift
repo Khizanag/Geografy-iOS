@@ -35,14 +35,26 @@ extension DesignSystem.Shadow {
     }
 }
 
-// MARK: - View Extension
-extension View {
-    func geoShadow(_ style: DesignSystem.Shadow = .card) -> some View {
-        shadow(
-            color: .black.opacity(style.opacity),
+// MARK: - ViewModifier
+struct GeoShadowModifier: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+
+    let style: DesignSystem.Shadow
+
+    func body(content: Content) -> some View {
+        let adjustedOpacity = colorScheme == .dark ? style.opacity * 0.4 : style.opacity
+        content.shadow(
+            color: .black.opacity(adjustedOpacity),
             radius: style.radius,
             x: 0,
             y: style.y
         )
+    }
+}
+
+// MARK: - View Extension
+extension View {
+    func geoShadow(_ style: DesignSystem.Shadow = .card) -> some View {
+        modifier(GeoShadowModifier(style: style))
     }
 }

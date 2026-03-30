@@ -72,7 +72,7 @@ private extension MapCanvasView {
             }
 
             if isSelected {
-                context.stroke(path, with: .color(.white), lineWidth: 2)
+                context.stroke(path, with: .color(DesignSystem.Color.onAccent), lineWidth: 2)
             }
         }
     }
@@ -109,7 +109,7 @@ private extension MapCanvasView {
                 shadowContext.resolve(
                     Text(shape.name)
                         .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
-                        .foregroundStyle(.black)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
                 ),
                 at: CGPoint(x: point.x + 0.5, y: point.y + 0.5),
                 anchor: .center
@@ -119,7 +119,7 @@ private extension MapCanvasView {
                 context.resolve(
                     Text(shape.name)
                         .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Color.onAccent)
                 ),
                 at: point,
                 anchor: .center
@@ -149,7 +149,7 @@ private extension MapCanvasView {
             width: outerSize,
             height: outerSize
         )
-        context.fill(Path(ellipseIn: outerRect), with: .color(.white.opacity(0.4)))
+        context.fill(Path(ellipseIn: outerRect), with: .color(DesignSystem.Color.onAccent.opacity(0.4)))
 
         // Inner dot
         let innerRect = CGRect(
@@ -158,8 +158,8 @@ private extension MapCanvasView {
             width: pinSize,
             height: pinSize
         )
-        context.fill(Path(ellipseIn: innerRect), with: .color(.white))
-        context.stroke(Path(ellipseIn: innerRect), with: .color(.black.opacity(0.3)), lineWidth: 1)
+        context.fill(Path(ellipseIn: innerRect), with: .color(DesignSystem.Color.onAccent))
+        context.stroke(Path(ellipseIn: innerRect), with: .color(DesignSystem.Color.textPrimary.opacity(0.3)), lineWidth: 1)
     }
 }
 

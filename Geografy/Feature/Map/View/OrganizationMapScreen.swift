@@ -16,7 +16,7 @@ struct OrganizationMapScreen: View {
     @State private var isInitialized = false
     @State private var memberCount = 0
 
-    private let nonMemberColor = Color(hex: "23232E")
+    private let nonMemberColor = DesignSystem.Color.cardBackground
 
     var body: some View {
         NavigationStack {

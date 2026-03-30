@@ -135,12 +135,12 @@ private extension TypeSelectionGrid {
                 .strokeBorder(
                     isSelected
                         ? DesignSystem.Color.accent.opacity(0.5)
-                        : .white.opacity(0.07),
+                        : DesignSystem.Color.dividerSubtle,
                     lineWidth: 1
                 )
         )
         .shadow(
-            color: isSelected ? DesignSystem.Color.accent.opacity(0.40) : .black.opacity(0.12),
+            color: isSelected ? DesignSystem.Color.accent.opacity(0.40) : .primary.opacity(0.08),
             radius: isSelected ? 16 : 4,
             y: isSelected ? 6 : 2
         )

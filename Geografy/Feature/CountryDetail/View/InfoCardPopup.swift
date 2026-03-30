@@ -45,7 +45,7 @@ struct InfoCardPopup: View {
 private extension InfoCardPopup {
     var backdrop: some View {
         ZStack {
-            Color.black.opacity(0.5)
+            DesignSystem.Color.overlayScrim
             Rectangle().fill(.ultraThinMaterial)
         }
         .ignoresSafeArea()
@@ -90,7 +90,7 @@ private extension InfoCardPopup {
                         .fill(DesignSystem.Color.cardBackground.opacity(0.85))
                 }
         }
-        .shadow(color: .black.opacity(0.4), radius: 24, y: 8)
+        .geoShadow(.elevated)
         .padding(.horizontal, DesignSystem.Spacing.xl)
         .frame(maxWidth: 380)
     }

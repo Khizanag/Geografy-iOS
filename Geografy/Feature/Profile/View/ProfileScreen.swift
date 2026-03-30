@@ -340,7 +340,7 @@ private extension ProfileScreen {
                 )
                 statCard(
                     icon: "airplane.departure",
-                    color: Color(hex: "00C9A7"),
+                    color: DesignSystem.Color.success,
                     value: "\(statistics?.countriesVisited ?? 0)",
                     label: "Visited"
                 )
