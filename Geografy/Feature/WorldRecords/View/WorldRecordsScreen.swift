@@ -3,6 +3,7 @@ import SwiftUI
 struct WorldRecordsScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(TabCoordinator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var countryDataService = CountryDataService()
     @State private var records: [WorldRecord] = []
@@ -140,6 +141,7 @@ private extension WorldRecordsScreen {
 // MARK: - Actions
 private extension WorldRecordsScreen {
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
             blobAnimating = true
         }

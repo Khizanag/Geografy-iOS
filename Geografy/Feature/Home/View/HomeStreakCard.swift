@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeStreakCard: View {
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let streak: Int
     let isAtRisk: Bool
@@ -51,7 +52,7 @@ private extension HomeStreakCard {
                 .frame(width: 56, height: 56)
                 .scaleEffect(isPulsing ? 1.3 : 1.0)
                 .animation(
-                    isPulsing
+                    isPulsing && !reduceMotion
                         ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
                         : .default,
                     value: isPulsing
@@ -61,7 +62,7 @@ private extension HomeStreakCard {
                 .font(DesignSystem.Font.iconLarge)
                 .scaleEffect(isPulsing ? 1.2 : 1.0)
                 .animation(
-                    isPulsing
+                    isPulsing && !reduceMotion
                         ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
                         : .default,
                     value: isPulsing

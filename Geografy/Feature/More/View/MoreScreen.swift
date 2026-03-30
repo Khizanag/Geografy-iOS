@@ -5,6 +5,7 @@ struct MoreScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TestingModeService.self) private var testingModeService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var blobAnimating = false
     @State private var searchText = ""
@@ -26,6 +27,7 @@ struct MoreScreen: View {
                 .presentationDetents([.medium])
             }
             .onAppear {
+                guard !reduceMotion else { blobAnimating = true; return }
                 withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                     blobAnimating = true
                 }

@@ -11,6 +11,7 @@ struct CountryDetailScreen: View {
     @Environment(HapticsService.self) var hapticsService
     @Environment(WorldBankService.self) private var worldBankService
     @Environment(PronunciationService.self) private var pronunciationService
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     @State private var countryDataService = CountryDataService()
     @State var profileService = CountryProfileService()

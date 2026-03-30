@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct OceanExplorerScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var selectedSegment = 0
     @State private var expandedOceanId: String?
     @State private var blobAnimating = false
@@ -219,7 +221,7 @@ private extension OceanExplorerScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(.easeInOut(duration: 4).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(reduceMotion ? .default : .easeInOut(duration: 4).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 

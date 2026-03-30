@@ -3,6 +3,7 @@ import SwiftUI
 struct MultiplayerMatchScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let opponent: MockOpponent
     let configuration: QuizConfiguration
@@ -252,6 +253,7 @@ private extension MultiplayerMatchScreen {
     }
 
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(
             .easeInOut(duration: 6).repeatForever(autoreverses: true)
         ) {

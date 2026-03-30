@@ -3,6 +3,7 @@ import SwiftUI
 struct CoinPackPreviewSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(CoinService.self) private var coinService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let pack: CoinPack
 
@@ -26,8 +27,12 @@ struct CoinPackPreviewSheet: View {
                 .padding(DesignSystem.Spacing.md)
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
+            if reduceMotion {
                 coinAnimating = true
+            } else {
+                withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
+                    coinAnimating = true
+                }
             }
             withAnimation(.easeIn(duration: 0.6).delay(0.3)) {
                 sparkleVisible = true

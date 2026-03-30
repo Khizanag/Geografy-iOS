@@ -2,6 +2,8 @@ import Charts
 import SwiftUI
 
 struct WorldBankIndicatorCard: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     let indicator: StatIndicator
     let state: WorldBankService.LoadState?
     let cacheAge: Date?
@@ -78,6 +80,7 @@ private extension WorldBankIndicatorCard {
         }
         .opacity(pulseOpacity)
         .onAppear {
+            guard !reduceMotion else { pulseOpacity = 1.0; return }
             withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) {
                 pulseOpacity = 1.0
             }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MapPuzzleSetupScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedContinent: Country.Continent?
     @State private var showPuzzle = false
@@ -150,6 +151,7 @@ private extension MapPuzzleSetupScreen {
 // MARK: - Actions
 private extension MapPuzzleSetupScreen {
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
             blobAnimating = true
         }

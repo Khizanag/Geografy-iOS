@@ -4,18 +4,33 @@ import SwiftUI
 struct FriendsListScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var friends: [GKPlayer] = []
     @State private var avatars: [String: Image] = [:]
     @State private var xpScores: [String: Int] = [:]
     @State private var isLoading = true
+    @State private var animating = false
+
     var body: some View {
         content
             .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton { dismiss() }
+                }
+            }
             .task { await loadData() }
+            .onAppear {
+                guard !reduceMotion else { animating = true; return }
+                withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
+                    animating = true
+                }
+            }
     }
 }
 
@@ -37,55 +52,71 @@ private extension FriendsListScreen {
     var loadingView: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             Spacer()
-            ProgressView()
-                .controlSize(.large)
-                .tint(DesignSystem.Color.accent)
-            Text("Loading friends...")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+
+            PulsingCirclesView(icon: "person.2.fill", isAnimating: animating)
+
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Text("Finding your friends")
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Connecting to Game Center...")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+
             Spacer()
         }
         .frame(maxWidth: .infinity)
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     var notAuthenticatedView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             Spacer()
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.textTertiary.opacity(0.1))
-                    .frame(width: 100, height: 100)
-                Image(systemName: "gamecontroller")
-                    .font(DesignSystem.Font.displayXXS)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+
+            PulsingCirclesView(icon: "gamecontroller.fill", isAnimating: animating)
+
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Text("Sign in to Game Center")
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Connect your Game Center account to see your friends and compare scores.")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
             }
-            Text("Sign in to Game Center")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Connect your Game Center account to see your friends and compare scores.")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.xl)
+
             Spacer()
         }
         .frame(maxWidth: .infinity)
+        .padding(.horizontal, DesignSystem.Spacing.xl)
     }
 
     var emptyStateView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             Spacer()
-            EmptyStateView(
-                icon: "person.2",
-                title: "No Game Center Friends Yet",
-                subtitle: "Add friends through Game Center to see them here and compare your geography skills."
-            )
+
+            PulsingCirclesView(icon: "person.2", isAnimating: animating)
+
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Text("No Friends Yet")
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Add friends through Game Center to see them here and compare your geography skills.")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+
             addFriendsButton
-                .padding(.horizontal, DesignSystem.Spacing.md)
+
             Spacer()
         }
         .frame(maxWidth: .infinity)
+        .padding(.horizontal, DesignSystem.Spacing.xl)
     }
 }
 
@@ -95,10 +126,11 @@ private extension FriendsListScreen {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 friendsHeader
-                    .padding(.top, DesignSystem.Spacing.sm)
+
                 ForEach(Array(sortedFriends.enumerated()), id: \.element.gamePlayerID) { index, friend in
                     friendRow(friend, rank: index + 1)
                 }
+
                 addFriendsButton
                     .padding(.top, DesignSystem.Spacing.sm)
             }

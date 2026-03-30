@@ -4,6 +4,7 @@ struct CurrencyConverterScreen: View {
     @Environment(CurrencyService.self) private var currencyService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var countryDataService = CountryDataService()
     @State private var fromCurrency: CurrencyEntry?
@@ -64,6 +65,7 @@ struct CurrencyConverterScreen: View {
             }
         }
         .onAppear {
+            guard !reduceMotion else { blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }

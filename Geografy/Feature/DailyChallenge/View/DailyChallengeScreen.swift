@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DailyChallengeScreen: View {
     @Environment(XPService.self) private var xpService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var countryDataService = CountryDataService()
     @State private var service: DailyChallengeService?
@@ -388,6 +389,7 @@ private extension DailyChallengeScreen {
     }
 
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(
             .easeInOut(duration: 6).repeatForever(autoreverses: true)
         ) {

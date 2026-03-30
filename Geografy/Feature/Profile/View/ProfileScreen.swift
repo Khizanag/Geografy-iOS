@@ -11,6 +11,7 @@ struct ProfileScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(DatabaseManager.self) private var database
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var recentQuizzes: [QuizHistoryRecord] = []
     @State private var statistics: UserStatistics?
@@ -1056,6 +1057,7 @@ private extension ProfileScreen {
 
     func handleAppear() {
         fetchQuizData()
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
             blobAnimating = true
         }

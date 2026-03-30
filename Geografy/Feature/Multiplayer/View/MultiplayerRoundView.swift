@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MultiplayerRoundView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     let question: QuizQuestion
     let quizType: QuizType
     let opponentIsThinking: Bool
@@ -80,9 +82,11 @@ private extension MultiplayerRoundView {
                     .frame(width: 4, height: 4)
                     .opacity(opponentIsThinking ? 1 : 0.3)
                     .animation(
-                        .easeInOut(duration: 0.5)
-                            .repeatForever(autoreverses: true)
-                            .delay(Double(index) * 0.2),
+                        reduceMotion
+                            ? .default
+                            : .easeInOut(duration: 0.5)
+                                .repeatForever(autoreverses: true)
+                                .delay(Double(index) * 0.2),
                         value: opponentIsThinking
                     )
             }

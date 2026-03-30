@@ -2,6 +2,7 @@ import SwiftUI
 
 struct GeographyFeaturesScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedType: GeographyFeatureType = .mountain
     @State private var expandedFeatureId: String?
@@ -189,6 +190,6 @@ private extension GeographyFeaturesScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(.easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(reduceMotion ? .default : .easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }

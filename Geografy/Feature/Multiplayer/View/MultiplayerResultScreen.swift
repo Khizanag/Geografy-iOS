@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MultiplayerResultScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let match: MultiplayerMatch
     let onRematch: () -> Void
@@ -303,6 +304,7 @@ private extension MultiplayerResultScreen {
     }
 
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(
             .easeInOut(duration: 6).repeatForever(autoreverses: true)
         ) {

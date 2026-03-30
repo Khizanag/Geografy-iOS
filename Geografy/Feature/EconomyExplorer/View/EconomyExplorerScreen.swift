@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EconomyExplorerScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var countryDataService = CountryDataService()
     @State private var searchText = ""
@@ -181,6 +182,6 @@ private extension EconomyExplorerScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(.easeInOut(duration: 4.5).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(reduceMotion ? .default : .easeInOut(duration: 4.5).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }

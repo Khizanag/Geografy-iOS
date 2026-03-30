@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ComingSoonView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     let icon: String
@@ -28,6 +29,10 @@ struct ComingSoonView: View {
             }
         }
         .onAppear {
+            guard !reduceMotion else {
+                isAnimating = true
+                return
+            }
             withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
                 isAnimating = true
             }

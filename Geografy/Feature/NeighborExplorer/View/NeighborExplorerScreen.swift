@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NeighborExplorerScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let country: Country
 
@@ -275,6 +276,7 @@ private extension NeighborExplorerScreen {
     }
 
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
             blobAnimating = true
         }

@@ -5,6 +5,7 @@ struct DistanceCalculatorScreen: View {
 
     @State private var countryDataService = CountryDataService()
     @Environment(TabCoordinator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var originCountry: Country?
     @State private var destinationCountry: Country?
@@ -52,6 +53,7 @@ struct DistanceCalculatorScreen: View {
             }
         }
         .onAppear {
+            guard !reduceMotion else { blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }

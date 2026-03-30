@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MapLoadingView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var isAnimating = false
     @State private var dotPhase = 0
     @State private var blobAnimating = false
@@ -21,6 +23,7 @@ struct MapLoadingView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
+            guard !reduceMotion else { isAnimating = true; blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true)) {
                 isAnimating = true
             }
@@ -97,7 +100,7 @@ private extension MapLoadingView {
                 .foregroundStyle(DesignSystem.Color.accent)
                 .rotationEffect(.degrees(isAnimating ? 12 : -12))
                 .animation(
-                    .easeInOut(duration: 1.8).repeatForever(autoreverses: true),
+                    reduceMotion ? .default : .easeInOut(duration: 1.8).repeatForever(autoreverses: true),
                     value: isAnimating
                 )
         }
@@ -141,9 +144,11 @@ private extension MapLoadingView {
             .scaleEffect(isAnimating ? 1.14 : 0.86)
             .opacity(isAnimating ? 1.0 : 0.4)
             .animation(
-                .easeInOut(duration: 0.7)
-                    .repeatForever(autoreverses: true)
-                    .delay(delay),
+                reduceMotion
+                    ? .default
+                    : .easeInOut(duration: 0.7)
+                        .repeatForever(autoreverses: true)
+                        .delay(delay),
                 value: isAnimating
             )
     }

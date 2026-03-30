@@ -3,6 +3,7 @@ import SwiftUI
 struct FlashcardScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedCardType: FlashcardType = .countryToCapital
     @State private var countryDataService = CountryDataService()
@@ -312,10 +313,14 @@ private extension FlashcardScreen {
     }
 
     func startAnimations() {
-        withAnimation(
-            .easeInOut(duration: 6).repeatForever(autoreverses: true)
-        ) {
+        if reduceMotion {
             blobAnimating = true
+        } else {
+            withAnimation(
+                .easeInOut(duration: 6).repeatForever(autoreverses: true)
+            ) {
+                blobAnimating = true
+            }
         }
         withAnimation(.easeOut(duration: 0.7)) {
             appeared = true

@@ -9,6 +9,7 @@ struct HomeScreen: View {
     @Environment(CoinService.self) private var coinService
     @Environment(HomeSectionOrderService.self) private var sectionOrderService
     @Environment(FlashcardService.self) var flashcardService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(TabCoordinator.self) var coordinator
 
     @State var countryDataService = CountryDataService()
@@ -443,12 +444,7 @@ private extension HomeScreen {
     }
 
     var spotlightCountry: Country? {
-        guard !countryDataService.countries.isEmpty else { return nil }
-        let sorted = countryDataService.countries.sorted { $0.code < $1.code }
-        let year = Calendar.current.component(.year, from: Date())
-        let dayOfYear = (Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1) - 1
-        let shuffled = sorted.seededShuffle(seed: UInt64(year) &* 2_654_435_761)
-        return shuffled[dayOfYear % shuffled.count]
+        countryDataService.countryOfTheDay()
     }
 
     func spotlightFunFact(for country: Country) -> String? {
@@ -542,6 +538,7 @@ private extension HomeScreen {
             appeared = true
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            guard !reduceMotion else { blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }

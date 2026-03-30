@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SpellingBeeGuideSheet: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var animating = false
 
     private let illustrations = SpellingBeeIllustration.allCases
@@ -10,6 +12,7 @@ struct SpellingBeeGuideSheet: View {
             illustrationView(for: illustrations[index])
         }
         .onAppear {
+            guard !reduceMotion else { animating = true; return }
             withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
                 animating = true
             }

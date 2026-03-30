@@ -2,6 +2,7 @@ import SwiftUI
 
 struct QuizPackBrowserScreen: View {
     @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var packService = QuizPackService()
 
@@ -307,10 +308,14 @@ private extension QuizPackBrowserScreen {
     }
 
     func startAnimations() {
-        withAnimation(
-            .easeInOut(duration: 6)
-                .repeatForever(autoreverses: true)
-        ) {
+        if !reduceMotion {
+            withAnimation(
+                .easeInOut(duration: 6)
+                    .repeatForever(autoreverses: true)
+            ) {
+                blobAnimating = true
+            }
+        } else {
             blobAnimating = true
         }
         withAnimation(.easeOut(duration: 0.7)) {

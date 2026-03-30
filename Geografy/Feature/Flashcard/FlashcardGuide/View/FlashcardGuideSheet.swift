@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct FlashcardGuideSheet: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var animating = false
 
     private let illustrations = FlashcardIllustration.allCases
@@ -10,6 +12,7 @@ struct FlashcardGuideSheet: View {
             illustrationView(for: illustrations[index])
         }
         .onAppear {
+            guard !reduceMotion else { animating = true; return }
             withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
                 animating = true
             }
@@ -77,7 +80,7 @@ private extension FlashcardGuideSheet {
                 }
                 .scaleEffect(animating ? 1.0 : 0.9)
                 .animation(
-                    .easeInOut(duration: 2).repeatForever(autoreverses: true).delay(Double(index) * 0.2),
+                    reduceMotion ? .default : .easeInOut(duration: 2).repeatForever(autoreverses: true).delay(Double(index) * 0.2),
                     value: animating
                 )
             }

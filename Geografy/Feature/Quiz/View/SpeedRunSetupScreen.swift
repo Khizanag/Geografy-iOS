@@ -3,6 +3,7 @@ import SwiftUI
 struct SpeedRunSetupScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @AppStorage("speedrun_selectedRegion") private var selectedRegion: QuizRegion = .world
 
@@ -35,6 +36,7 @@ struct SpeedRunSetupScreen: View {
         .task { countryDataService.loadCountries() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.8)) { appeared = true }
+            guard !reduceMotion else { pulseTimer = true; return }
             withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                 pulseTimer = true
             }
