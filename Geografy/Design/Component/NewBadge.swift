@@ -9,5 +9,6 @@ struct NewBadge: View {
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, 2)
             .background(DesignSystem.Color.accent, in: Capsule())
+        .accessibilityLabel("New")
     }
 }

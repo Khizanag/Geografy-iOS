@@ -40,6 +40,8 @@ struct LevelBadgeView: View {
                 levelTitle
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Level \(level.level), \(level.title)")
     }
 }
 

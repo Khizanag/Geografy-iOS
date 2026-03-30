@@ -18,7 +18,7 @@ struct AlphabetJumpIndex: View {
                             ? DesignSystem.Color.textPrimary
                             : DesignSystem.Color.accent
                     )
-                    .frame(width: 16, height: 12)
+                    .frame(width: 20, height: 14)
             }
         }
         .padding(.vertical, 4)
@@ -48,7 +48,10 @@ struct AlphabetJumpIndex: View {
                     selectedLetter = nil
                 }
         )
-        .frame(width: 16)
+        .frame(width: 44)
+        .contentShape(Rectangle())
+        .accessibilityLabel("Alphabet index")
+        .accessibilityHint("Drag to jump to a letter")
     }
 }
 

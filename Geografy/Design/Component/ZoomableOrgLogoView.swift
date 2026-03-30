@@ -27,6 +27,7 @@ private extension ZoomableOrgLogoView {
             .fill(.ultraThinMaterial)
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
+            .accessibilityHidden(true)
     }
 
     var logoContent: some View {
@@ -70,6 +71,7 @@ private extension ZoomableOrgLogoView {
                         .foregroundStyle(.secondary)
                         .padding(DesignSystem.Spacing.md)
                 }
+                .accessibilityLabel("Close")
             }
             Spacer()
         }

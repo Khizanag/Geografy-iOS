@@ -17,6 +17,7 @@ struct EmptyStateView: View {
         .padding(.horizontal, DesignSystem.Spacing.xxl)
         .frame(maxWidth: .infinity)
         .containerRelativeFrame(.vertical)
+        .accessibilityElement(children: .combine)
     }
 }
 

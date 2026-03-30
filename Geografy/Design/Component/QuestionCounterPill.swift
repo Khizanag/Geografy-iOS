@@ -15,5 +15,6 @@ struct QuestionCounterPill: View {
                 DesignSystem.Color.cardBackgroundHighlighted,
                 in: Capsule()
             )
+            .accessibilityLabel("Question \(current) of \(total)")
     }
 }

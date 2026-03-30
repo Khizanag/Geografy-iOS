@@ -13,5 +13,6 @@ struct PremiumBadge: View {
         .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(DesignSystem.Color.warning.opacity(0.15), in: Capsule())
+        .accessibilityLabel("Premium")
     }
 }

@@ -19,12 +19,16 @@ struct InfoTile: View {
     }
 
     var body: some View {
-        CardView {
-            tileContent
-                .padding(DesignSystem.Spacing.sm)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        Button(action: onTap) {
+            CardView {
+                tileContent
+                    .padding(DesignSystem.Spacing.sm)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
-        .onTapGesture(perform: onTap)
+        .buttonStyle(PressButtonStyle())
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Double tap for more details")
     }
 }
 

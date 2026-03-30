@@ -20,5 +20,6 @@ struct ResultStatItem: View {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
     }
 }

@@ -25,5 +25,6 @@ struct FavoriteToggleButton: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(isFavorite ? "Remove from favorites" : "Add to favorites")
     }
 }

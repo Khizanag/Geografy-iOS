@@ -7,6 +7,7 @@ struct FlagView: View {
     var body: some View {
         flagImage
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2))
+            .accessibilityLabel("Flag of \(countryCode.uppercased())")
     }
 }
 

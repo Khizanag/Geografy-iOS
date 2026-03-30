@@ -13,9 +13,10 @@ struct ZoomableFlagView: View {
     var body: some View {
         ZStack {
             backdrop
-
             flagContent
+            closeButton
         }
+        .accessibilityElement(children: .contain)
         .onAppear {
             Task {
                 try? await Task.sleep(for: .milliseconds(400))
@@ -32,6 +33,23 @@ private extension ZoomableFlagView {
             .fill(.ultraThinMaterial)
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
+            .accessibilityHidden(true)
+    }
+
+    var closeButton: some View {
+        VStack {
+            HStack {
+                Spacer()
+                Button { onDismiss() } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(DesignSystem.Font.title)
+                        .foregroundStyle(.secondary)
+                        .padding(DesignSystem.Spacing.md)
+                }
+                .accessibilityLabel("Close")
+            }
+            Spacer()
+        }
     }
 
     var flagContent: some View {
@@ -44,6 +62,8 @@ private extension ZoomableFlagView {
 
             FlagView(countryCode: countryCode, height: targetHeight)
                 .geoShadow(.elevated)
+                .accessibilityLabel("Flag of \(countryCode.uppercased())")
+                .accessibilityHint("Double tap to close, pinch to zoom")
                 .scaleEffect(scale)
                 .offset(offset)
                 #if !os(tvOS)

@@ -34,6 +34,9 @@ private extension TypeSelectionGrid {
             cardContent(item: item, isSelected: isSelected, isLocked: locked)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("\(item.displayName), \(item.description)")
+        .accessibilityAddTraits(isSelected ? [.isSelected] : [])
+        .accessibilityHint(locked ? "Premium feature, locked" : "Double tap to select")
     }
 
     func cardContent(item: T, isSelected: Bool, isLocked: Bool) -> some View {
