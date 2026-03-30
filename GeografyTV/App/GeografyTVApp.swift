@@ -39,7 +39,7 @@ struct GeografyTVApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TVHomeScreen()
+            HomeScreen()
                 .environment(databaseManager)
                 .environment(authService)
                 .environment(xpService)

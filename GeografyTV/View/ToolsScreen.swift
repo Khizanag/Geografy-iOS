@@ -1,0 +1,163 @@
+import SwiftUI
+
+struct ToolsScreen: View {
+    let countryDataService: CountryDataService
+
+    var body: some View {
+        List {
+            NavigationLink {
+                TVDistanceCalculatorScreen(countryDataService: countryDataService)
+            } label: {
+                Label("Distance Calculator", systemImage: "ruler.fill")
+            }
+
+            NavigationLink {
+                TVCurrencyInfoScreen(countryDataService: countryDataService)
+            } label: {
+                Label("Currency Info", systemImage: "dollarsign.circle.fill")
+            }
+
+            NavigationLink {
+                TVTimeZoneScreen(countryDataService: countryDataService)
+            } label: {
+                Label("Time Zones", systemImage: "clock.fill")
+            }
+        }
+        .navigationTitle("Tools")
+    }
+}
+
+// MARK: - Distance Calculator
+struct TVDistanceCalculatorScreen: View {
+    let countryDataService: CountryDataService
+
+    @State private var countryA: Country?
+    @State private var countryB: Country?
+    @State private var showPickerA = false
+    @State private var showPickerB = false
+
+    private var selectedPair: (Country, Country)? {
+        guard let countryA, let countryB else { return nil }
+        return (countryA, countryB)
+    }
+
+    var body: some View {
+        Form {
+            Section("From") {
+                Button {
+                    showPickerA = true
+                } label: {
+                    HStack {
+                        if let countryA {
+                            FlagView(countryCode: countryA.code, height: 30)
+                            Text(countryA.name)
+                        } else {
+                            Text("Select country")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+
+            Section("To") {
+                Button {
+                    showPickerB = true
+                } label: {
+                    HStack {
+                        if let countryB {
+                            FlagView(countryCode: countryB.code, height: 30)
+                            Text(countryB.name)
+                        } else {
+                            Text("Select country")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+
+            if let pair = selectedPair {
+                Section("Comparison") {
+                    HStack {
+                        Text(pair.0.name)
+                            .font(.system(size: 22, weight: .semibold))
+                        Image(systemName: "arrow.left.arrow.right")
+                            .foregroundStyle(DesignSystem.Color.accent)
+                        Text(pair.1.name)
+                            .font(.system(size: 22, weight: .semibold))
+                    }
+
+                    HStack {
+                        Text("Same continent?")
+                        Spacer()
+                        Text(pair.0.continent == pair.1.continent ? "Yes" : "No")
+                            .foregroundStyle(
+                                pair.0.continent == pair.1.continent
+                                    ? DesignSystem.Color.success
+                                    : DesignSystem.Color.textSecondary
+                            )
+                    }
+                }
+            }
+        }
+        .navigationTitle("Distance Calculator")
+        .sheet(isPresented: $showPickerA) {
+            TVCountryPickerSheet(countries: countryDataService.countries) { countryA = $0 }
+        }
+        .sheet(isPresented: $showPickerB) {
+            TVCountryPickerSheet(countries: countryDataService.countries) { countryB = $0 }
+        }
+    }
+
+}
+
+// MARK: - Currency Info
+struct TVCurrencyInfoScreen: View {
+    let countryDataService: CountryDataService
+
+    var body: some View {
+        List(countryDataService.countries.sorted { $0.currency.code < $1.currency.code }) { country in
+            HStack(spacing: 20) {
+                FlagView(countryCode: country.code, height: 32)
+
+                Text(country.name)
+                    .font(.system(size: 20))
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(country.currency.code)
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundStyle(DesignSystem.Color.accent)
+
+                    Text(country.currency.name)
+                        .font(.system(size: 16))
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .navigationTitle("Currencies")
+    }
+}
+
+// MARK: - Time Zones
+struct TVTimeZoneScreen: View {
+    let countryDataService: CountryDataService
+
+    var body: some View {
+        List(countryDataService.countries.sorted { $0.name < $1.name }) { country in
+            HStack(spacing: 20) {
+                FlagView(countryCode: country.code, height: 32)
+
+                Text(country.name)
+                    .font(.system(size: 20))
+
+                Spacer()
+
+                Text(country.capital)
+                    .font(.system(size: 18))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .navigationTitle("Time Zones")
+    }
+}

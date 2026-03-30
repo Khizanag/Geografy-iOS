@@ -39,12 +39,14 @@ struct WikipediaSection: View {
             }
         }
         .buttonStyle(PressButtonStyle())
+        #if canImport(SafariServices)
         .sheet(isPresented: $showSafari) {
             if let url = wikipediaURL {
                 SafariView(url: url)
                     .ignoresSafeArea()
             }
         }
+        #endif
     }
 }
 
