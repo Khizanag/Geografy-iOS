@@ -80,9 +80,6 @@ private extension ContentView {
             Tab("Countries", systemImage: "globe", value: 2) {
                 CoordinatedNavigationStack(coordinator: appCoordinator.countriesCoordinator) {
                     CountryListScreen()
-                        .navigationDestination(for: Country.self) { country in
-                            CountryDetailScreen(country: country)
-                        }
                 }
             }
 
