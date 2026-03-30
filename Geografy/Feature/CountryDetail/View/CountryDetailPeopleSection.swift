@@ -81,7 +81,7 @@ private extension CountryDetailScreen {
                 .scaleEffect(appeared ? 1.5 : 1.0)
                 .opacity(appeared ? 0.4 : 1.0)
                 .animation(
-                    .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
+                    reduceMotion ? .default : .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
                     value: appeared
                 )
             TimelineView(.periodic(from: populationStartDate, by: 1.0)) { timeline in

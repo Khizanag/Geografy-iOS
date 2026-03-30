@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct PulsingCirclesView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     let icon: String
     let isAnimating: Bool
 
@@ -37,12 +39,12 @@ private extension PulsingCirclesView {
         Circle()
             .fill(DesignSystem.Color.accent.opacity(opacity))
             .frame(width: size, height: size)
-            .scaleEffect(isAnimating ? 1.06 : 0.94)
+            .scaleEffect(isAnimating ? (reduceMotion ? 1.0 : 1.06) : 0.94)
             .opacity(isAnimating ? 1 : 0.4)
             .animation(
-                .easeInOut(duration: 1.8)
-                .repeatForever(autoreverses: true)
-                .delay(delay),
+                reduceMotion
+                    ? .easeInOut(duration: 0.3)
+                    : .easeInOut(duration: 1.8).repeatForever(autoreverses: true).delay(delay),
                 value: isAnimating
             )
     }

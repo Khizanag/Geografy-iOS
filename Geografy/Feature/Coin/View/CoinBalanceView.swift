@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CoinBalanceView: View {
     @Environment(CoinService.self) private var coinService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var displayedBalance = 0
     @State private var glowScale: CGFloat = 1.0
@@ -88,6 +89,7 @@ private extension CoinBalanceView {
     }
 
     func startGlowAnimation() {
+        guard !reduceMotion else { glowScale = 1.15; return }
         withAnimation(
             .easeInOut(duration: 2.0)
             .repeatForever(autoreverses: true)

@@ -4,6 +4,7 @@ import SwiftUI
 struct PaywallScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedProductID = SubscriptionService.ProductID.annual
     @State private var isProcessing = false
@@ -32,6 +33,7 @@ struct PaywallScreen: View {
         }
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) { appeared = true }
+            guard !reduceMotion else { globePulse = true; blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 2.4).repeatForever(autoreverses: true)) {
                 globePulse = true
             }

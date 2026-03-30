@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MultiplayerLobbyScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let multiplayerService: MultiplayerService
 
@@ -10,6 +11,7 @@ struct MultiplayerLobbyScreen: View {
     @State private var searchProgress: CGFloat = 0
     @State private var opponent: MockOpponent?
     @State private var showMatch = false
+    @State private var showLocalPlay = false
     @State private var blobAnimating = false
 
     var body: some View {
@@ -36,6 +38,11 @@ struct MultiplayerLobbyScreen: View {
         .onAppear { startBlobAnimation() }
         .fullScreenCover(isPresented: $showMatch) {
             matchDestination
+        }
+        .fullScreenCover(isPresented: $showLocalPlay) {
+            NavigatorView {
+                LocalMultiplayerEntryScreen()
+            }
         }
     }
 }
@@ -123,8 +130,25 @@ private extension MultiplayerLobbyScreen {
     }
 
     var footerButton: some View {
-        GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
-            startSearching()
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
+                startSearching()
+            }
+            Button {
+                showLocalPlay = true
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Image(systemName: "antenna.radiowaves.left.and.right")
+                        .font(DesignSystem.Font.caption)
+                    Text("Play Nearby")
+                        .font(DesignSystem.Font.subheadline)
+                        .fontWeight(.semibold)
+                }
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+            }
+            .buttonStyle(.glass)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
@@ -246,6 +270,7 @@ private extension MultiplayerLobbyScreen {
     }
 
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(
             .easeInOut(duration: 6).repeatForever(autoreverses: true)
         ) {

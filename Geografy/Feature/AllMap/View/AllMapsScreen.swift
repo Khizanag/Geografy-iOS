@@ -4,6 +4,7 @@ struct AllMapsScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var blobAnimating = false
     @State private var appeared = false
@@ -23,8 +24,12 @@ struct AllMapsScreen: View {
             .background { ambientBackground }
             .navigationTitle("All Maps")
             .onAppear {
-                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                if reduceMotion {
                     blobAnimating = true
+                } else {
+                    withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                        blobAnimating = true
+                    }
                 }
                 withAnimation(.easeOut(duration: 0.7)) {
                     appeared = true

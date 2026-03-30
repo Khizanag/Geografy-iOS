@@ -27,6 +27,8 @@ enum LevelBadgeSize {
 }
 
 struct LevelBadgeView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     let level: UserLevel
     var size: LevelBadgeSize = .small
     var animated: Bool = false
@@ -64,7 +66,7 @@ private extension LevelBadgeView {
                 .foregroundStyle(DesignSystem.Color.onAccent)
         }
         .onAppear {
-            guard animated else { return }
+            guard animated, !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.6).repeatForever(autoreverses: true)) {
                 glowPulse = true
             }

@@ -5,6 +5,7 @@ struct OrganizationDetailScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let organization: Organization
 
@@ -34,6 +35,7 @@ struct OrganizationDetailScreen: View {
         .task { countryDataService.loadCountries() }
         .task { trackOrgView() }
         .onAppear {
+            guard !reduceMotion else { blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 5).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }

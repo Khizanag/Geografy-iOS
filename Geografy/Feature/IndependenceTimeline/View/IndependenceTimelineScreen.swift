@@ -2,6 +2,7 @@ import SwiftUI
 
 struct IndependenceTimelineScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(TabCoordinator.self) private var coordinator
 
     @State private var selectedEra: IndependenceEra = .lateTwentieth
@@ -202,7 +203,7 @@ private extension IndependenceTimelineScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(.easeInOut(duration: 4).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(reduceMotion ? .default : .easeInOut(duration: 4).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 

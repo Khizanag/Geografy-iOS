@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ZoomableFlagView: View {
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
     let countryCode: String
     let onDismiss: () -> Void
 
@@ -30,7 +32,7 @@ struct ZoomableFlagView: View {
 private extension ZoomableFlagView {
     var backdrop: some View {
         Rectangle()
-            .fill(.ultraThinMaterial)
+            .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.background) : AnyShapeStyle(.ultraThinMaterial))
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
             .accessibilityHidden(true)

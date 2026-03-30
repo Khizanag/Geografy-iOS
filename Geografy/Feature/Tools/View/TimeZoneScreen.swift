@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TimeZoneScreen: View {
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var countryDataService = CountryDataService()
 
@@ -19,6 +20,7 @@ struct TimeZoneScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { countryDataService.loadCountries() }
         .onAppear {
+            guard !reduceMotion else { blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
                 blobAnimating = true
             }

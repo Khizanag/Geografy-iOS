@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TypeSelectionGrid<T: SelectableType>: View {
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @Environment(HapticsService.self) private var hapticsService
 
     let items: [T]
@@ -122,7 +123,7 @@ private extension TypeSelectionGrid {
                     )
             } else {
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                    .fill(.ultraThinMaterial)
+                    .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.cardBackground) : AnyShapeStyle(.ultraThinMaterial))
                     .overlay(
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
                             .fill(DesignSystem.Color.cardBackground.opacity(0.6))

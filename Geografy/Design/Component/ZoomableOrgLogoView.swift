@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ZoomableOrgLogoView: View {
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
     let url: URL
     let organization: Organization
     let onDismiss: () -> Void
@@ -24,7 +26,7 @@ struct ZoomableOrgLogoView: View {
 private extension ZoomableOrgLogoView {
     var backdrop: some View {
         Rectangle()
-            .fill(.ultraThinMaterial)
+            .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.background) : AnyShapeStyle(.ultraThinMaterial))
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
             .accessibilityHidden(true)

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LearningPathScreen: View {
     @Environment(LearningPathService.self) private var learningPathService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedModule: LearningModule?
     @State private var blobAnimating = false
@@ -218,6 +219,7 @@ private extension LearningPathScreen {
     }
 
     func startBlobAnimation() {
+        guard !reduceMotion else { blobAnimating = true; return }
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
             blobAnimating = true
         }

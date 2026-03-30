@@ -1,12 +1,14 @@
 import SwiftUI
 
 struct PremiumLockedOverlay: View {
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
     let onUnlock: () -> Void
 
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(.ultraThinMaterial)
+                .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.cardBackground) : AnyShapeStyle(.ultraThinMaterial))
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "lock.fill")
                     .font(DesignSystem.Font.title)
@@ -27,5 +29,8 @@ struct PremiumLockedOverlay: View {
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Premium feature, locked")
+        .accessibilityHint("Double tap to unlock with Premium")
     }
 }
