@@ -44,7 +44,6 @@ struct TVNeighborScreen: View {
 }
 
 // MARK: - Selected Country
-
 private extension TVNeighborScreen {
     func selectedCountrySection(_ country: Country) -> some View {
         let neighborCodes = CountryNeighbors.data[country.code] ?? []

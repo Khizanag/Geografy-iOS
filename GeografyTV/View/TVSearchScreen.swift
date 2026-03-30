@@ -85,7 +85,6 @@ struct TVSearchScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVSearchScreen {
     @ViewBuilder
     func searchRow(_ row: SearchRow) -> some View {

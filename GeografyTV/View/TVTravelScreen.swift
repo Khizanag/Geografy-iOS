@@ -45,7 +45,6 @@ struct TVTravelScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVTravelScreen {
     var statsRow: some View {
         HStack(spacing: 40) {
@@ -132,7 +131,6 @@ private extension TVTravelScreen {
 }
 
 // MARK: - Filter
-
 enum TravelFilter: String, CaseIterable, Identifiable {
     case all
     case visited

@@ -22,7 +22,6 @@ struct TVOceanScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVOceanScreen {
     func oceanRow(_ ocean: Ocean) -> some View {
         VStack(alignment: .leading, spacing: 12) {

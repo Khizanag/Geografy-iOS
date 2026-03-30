@@ -2,7 +2,6 @@ import WidgetKit
 import SwiftUI
 
 // MARK: - Timeline Entry
-
 struct DailyStreakEntry: TimelineEntry {
     let date: Date
     let streak: Int
@@ -22,7 +21,6 @@ struct DailyStreakEntry: TimelineEntry {
 }
 
 // MARK: - Timeline Provider
-
 struct DailyStreakProvider: TimelineProvider {
     func placeholder(in context: Context) -> DailyStreakEntry {
         .placeholder
@@ -51,7 +49,6 @@ struct DailyStreakProvider: TimelineProvider {
 }
 
 // MARK: - Widget View
-
 struct DailyStreakWidgetView: View {
     @Environment(\.widgetFamily) private var widgetFamily
 
@@ -72,7 +69,6 @@ struct DailyStreakWidgetView: View {
 }
 
 // MARK: - Subviews
-
 private extension DailyStreakWidgetView {
     var mediumView: some View {
         HStack(spacing: 16) {
@@ -197,7 +193,6 @@ private extension DailyStreakWidgetView {
 }
 
 // MARK: - Helpers
-
 private extension DailyStreakWidgetView {
     var streakEncouragement: String {
         switch entry.streak {
@@ -212,7 +207,6 @@ private extension DailyStreakWidgetView {
 }
 
 // MARK: - Widget
-
 struct DailyStreakWidget: Widget {
     let kind = "DailyStreakWidget"
 
@@ -232,7 +226,6 @@ struct DailyStreakWidget: Widget {
 }
 
 // MARK: - Preview
-
 #Preview(as: .systemMedium) {
     DailyStreakWidget()
 } timeline: {

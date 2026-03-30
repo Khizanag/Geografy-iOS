@@ -29,7 +29,6 @@ struct TVProfileScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVProfileScreen {
     var levelRow: some View {
         HStack(spacing: 24) {

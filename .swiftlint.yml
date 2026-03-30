@@ -1,5 +1,7 @@
 included:
   - Geografy
+  - GeografyTV
+  - GeografyWidgets
 
 excluded:
   - Geografy/Resource
@@ -84,13 +86,16 @@ custom_rules:
         regex: 'NavigationLink\s*[\({]'
         message: "Use coordinator.push() / coordinator.present() instead of NavigationLink"
         severity: error
+        included: "Geografy/"
+        excluded: "GeografyTV/"
 
     no_inline_font:
         name: "No Inline Font System Size"
         regex: '\.font\(\.system\(size:'
         message: "Use DesignSystem.Font.* tokens instead of inline .font(.system(size:))"
         severity: error
-        excluded: "Typography\\.swift"
+        included: "Geografy/"
+        excluded: "Typography\\.swift|GeografyTV/"
 
     no_on_tap_gesture_navigation:
         name: "No onTapGesture for Navigation"

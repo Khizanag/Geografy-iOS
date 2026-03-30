@@ -49,7 +49,6 @@ struct TVFeedScreen: View {
 }
 
 // MARK: - Detail
-
 struct TVFeedDetailView: View {
     @Environment(\.dismiss) private var dismiss
 

@@ -34,7 +34,6 @@ struct TVCompareScreen: View {
 }
 
 // MARK: - Slots
-
 private extension TVCompareScreen {
     var slotsRow: some View {
         HStack(spacing: 40) {
@@ -87,7 +86,6 @@ private extension TVCompareScreen {
 }
 
 // MARK: - Comparison Grid
-
 private extension TVCompareScreen {
     func comparisonGrid(_ a: Country, _ b: Country) -> some View {
         ScrollView {
@@ -182,7 +180,6 @@ private extension TVCompareScreen {
 }
 
 // MARK: - Country Picker Sheet
-
 struct TVCountryPickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 

@@ -29,7 +29,6 @@ struct TVExploreGameScreen: View {
 }
 
 // MARK: - Start
-
 private extension TVExploreGameScreen {
     var startView: some View {
         VStack(spacing: 40) {
@@ -58,7 +57,6 @@ private extension TVExploreGameScreen {
 }
 
 // MARK: - Game View
-
 private extension TVExploreGameScreen {
     func gameView(_ state: ExploreGameState) -> some View {
         HStack(alignment: .top, spacing: 60) {
@@ -172,7 +170,6 @@ private extension TVExploreGameScreen {
 }
 
 // MARK: - Result
-
 private extension TVExploreGameScreen {
     func resultView(_ state: ExploreGameState) -> some View {
         VStack(spacing: 40) {
@@ -209,7 +206,6 @@ private extension TVExploreGameScreen {
 }
 
 // MARK: - Actions
-
 private extension TVExploreGameScreen {
     func startNewGame() {
         guard let country = countryDataService.countries.randomElement() else { return }

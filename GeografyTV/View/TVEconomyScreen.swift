@@ -58,7 +58,6 @@ struct TVEconomyScreen: View {
 }
 
 // MARK: - Helpers
-
 private extension TVEconomyScreen {
     enum EconomySortMetric: CaseIterable {
         case gdpPerCapita

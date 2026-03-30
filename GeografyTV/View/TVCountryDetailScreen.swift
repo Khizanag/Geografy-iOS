@@ -38,7 +38,6 @@ struct TVCountryDetailScreen: View {
 }
 
 // MARK: - Hero
-
 private extension TVCountryDetailScreen {
     var heroSection: some View {
         Section {
@@ -82,7 +81,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Actions
-
 private extension TVCountryDetailScreen {
     var actionsSection: some View {
         Section {
@@ -111,7 +109,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Stats
-
 private extension TVCountryDetailScreen {
     var statsSection: some View {
         Section("Overview") {
@@ -137,7 +134,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Economy
-
 private extension TVCountryDetailScreen {
     var economySection: some View {
         Section("Economy") {
@@ -167,7 +163,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Languages
-
 private extension TVCountryDetailScreen {
     var languagesSection: some View {
         Section("Languages (\(country.languages.count))") {
@@ -197,7 +192,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Government
-
 private extension TVCountryDetailScreen {
     var governmentSection: some View {
         Section("Government") {
@@ -207,7 +201,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Organizations
-
 private extension TVCountryDetailScreen {
     @ViewBuilder
     var organizationsSection: some View {
@@ -253,7 +246,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Helpers
-
 private extension TVCountryDetailScreen {
     func detailRow(icon: String, label: String, value: String) -> some View {
         HStack(spacing: 16) {
@@ -291,7 +283,6 @@ private extension TVCountryDetailScreen {
 }
 
 // MARK: - Organization Sheet
-
 struct TVOrganizationSheetView: View {
     @Environment(\.dismiss) private var dismiss
 

@@ -32,7 +32,6 @@ struct TVTriviaScreen: View {
 }
 
 // MARK: - Start
-
 private extension TVTriviaScreen {
     var startView: some View {
         VStack(spacing: 40) {
@@ -60,7 +59,6 @@ private extension TVTriviaScreen {
 }
 
 // MARK: - Question
-
 private extension TVTriviaScreen {
     var currentQuestion: TriviaQuestion? {
         guard currentIndex < questions.count else { return nil }
@@ -126,7 +124,6 @@ private extension TVTriviaScreen {
 }
 
 // MARK: - Result
-
 private extension TVTriviaScreen {
     var resultView: some View {
         VStack(spacing: 40) {
@@ -150,7 +147,6 @@ private extension TVTriviaScreen {
 }
 
 // MARK: - Actions
-
 private extension TVTriviaScreen {
     func startGame() {
         questions = TriviaService().generateQuestions(from: countryDataService.countries).shuffled().prefix(15).map { $0 }

@@ -35,7 +35,6 @@ struct TVCountryBrowserScreen: View {
 }
 
 // MARK: - Grid Layout
-
 private extension TVCountryBrowserScreen {
     var gridLayout: some View {
         ScrollView {
@@ -80,7 +79,6 @@ private extension TVCountryBrowserScreen {
 }
 
 // MARK: - List Layout
-
 private extension TVCountryBrowserScreen {
     var listLayout: some View {
         List {
@@ -117,7 +115,6 @@ private extension TVCountryBrowserScreen {
 }
 
 // MARK: - Shared
-
 private extension TVCountryBrowserScreen {
     var continentPicker: some View {
         Picker("Continent", selection: $selectedContinent) {

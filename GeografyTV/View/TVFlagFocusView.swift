@@ -36,7 +36,6 @@ struct TVFlagFocusView: View {
 }
 
 // MARK: - Subviews
-
 private extension TVFlagFocusView {
     var flagContent: some View {
         GeometryReader { geometry in

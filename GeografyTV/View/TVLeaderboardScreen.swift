@@ -27,7 +27,7 @@ struct TVLeaderboardScreen: View {
                 }
 
                 Section("Top Players") {
-                    ForEach(Array(players.enumerated()), id: \.element.player.gamePlayerID) { index, entry in
+                    ForEach(Array(players.enumerated()), id: \.element.player.gamePlayerID) { _, entry in
                         HStack(spacing: 20) {
                             Text("#\(entry.rank)")
                                 .font(.system(size: 22, weight: .bold))
@@ -53,7 +53,6 @@ struct TVLeaderboardScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVLeaderboardScreen {
     func playerRow(_ entry: GKLeaderboard.Entry) -> some View {
         HStack(spacing: 20) {
@@ -83,7 +82,6 @@ private extension TVLeaderboardScreen {
 }
 
 // MARK: - Data Loading
-
 private extension TVLeaderboardScreen {
     func loadLeaderboard() async {
         defer { isLoading = false }

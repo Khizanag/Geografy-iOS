@@ -41,7 +41,6 @@ struct TVMapScreen: View {
 }
 
 // MARK: - Map Content
-
 private extension TVMapScreen {
     var mapContent: some View {
         GeometryReader { geometry in
@@ -84,7 +83,6 @@ private extension TVMapScreen {
 }
 
 // MARK: - Controls Overlay
-
 private extension TVMapScreen {
     var controlsOverlay: some View {
         VStack {
@@ -144,7 +142,6 @@ private extension TVMapScreen {
 }
 
 // MARK: - Country Banner
-
 private extension TVMapScreen {
     func countryBanner(_ country: Country) -> some View {
         VStack {
@@ -182,7 +179,6 @@ private extension TVMapScreen {
 }
 
 // MARK: - Loading
-
 private extension TVMapScreen {
     var loadingView: some View {
         VStack(spacing: 24) {
@@ -199,7 +195,6 @@ private extension TVMapScreen {
 }
 
 // MARK: - Input Handling
-
 private extension TVMapScreen {
     func handlePan(_ direction: MoveCommandDirection) {
         withAnimation(.easeOut(duration: 0.15)) {
@@ -254,7 +249,6 @@ private extension TVMapScreen {
 }
 
 // MARK: - Data Loading
-
 private extension TVMapScreen {
     func loadMap() async {
         let shapes = await Task.detached(priority: .userInitiated) {

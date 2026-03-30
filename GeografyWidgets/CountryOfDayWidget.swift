@@ -2,7 +2,6 @@ import WidgetKit
 import SwiftUI
 
 // MARK: - Timeline Entry
-
 struct CountryOfDayEntry: TimelineEntry {
     let date: Date
     let countryName: String
@@ -24,7 +23,6 @@ struct CountryOfDayEntry: TimelineEntry {
 }
 
 // MARK: - Timeline Provider
-
 struct CountryOfDayProvider: TimelineProvider {
     func placeholder(in context: Context) -> CountryOfDayEntry {
         .placeholder
@@ -57,7 +55,6 @@ struct CountryOfDayProvider: TimelineProvider {
 }
 
 // MARK: - Widget View
-
 struct CountryOfDayWidgetView: View {
     @Environment(\.widgetFamily) private var widgetFamily
 
@@ -78,7 +75,6 @@ struct CountryOfDayWidgetView: View {
 }
 
 // MARK: - Subviews
-
 private extension CountryOfDayWidgetView {
     var smallView: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -183,7 +179,6 @@ private extension CountryOfDayWidgetView {
 }
 
 // MARK: - Widget
-
 struct CountryOfDayWidget: Widget {
     let kind = "CountryOfDayWidget"
 
@@ -203,7 +198,6 @@ struct CountryOfDayWidget: Widget {
 }
 
 // MARK: - Preview
-
 #Preview(as: .systemSmall) {
     CountryOfDayWidget()
 } timeline: {

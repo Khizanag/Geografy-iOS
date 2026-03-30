@@ -31,7 +31,6 @@ struct TVNicknamesScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVNicknamesScreen {
     func nicknameRow(_ nickname: CountryNickname) -> some View {
         HStack(spacing: 24) {
