@@ -225,8 +225,6 @@ private extension SpellingBeeScreen {
 
 }
 
-// MARK: - Helpers
-
 // MARK: - Actions
 private extension SpellingBeeScreen {
     func loadNextCountry() {
