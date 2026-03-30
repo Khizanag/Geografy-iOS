@@ -10,10 +10,10 @@ struct MapLoadingView: View {
             oceanBackground
             VStack(spacing: 0) {
                 Spacer()
-                    .frame(maxHeight: 160)
                 globeSection
                     .padding(.bottom, DesignSystem.Spacing.lg)
                 textSection
+                    .padding(.bottom, 40)
                 Spacer()
                 copyrightLabel
                     .padding(.bottom, DesignSystem.Spacing.xl)
@@ -35,7 +35,6 @@ struct MapLoadingView: View {
 }
 
 // MARK: - Subviews
-
 private extension MapLoadingView {
     var oceanBackground: some View {
         ZStack {
@@ -94,7 +93,7 @@ private extension MapLoadingView {
                 .fill(DesignSystem.Color.accent.opacity(0.20))
                 .frame(width: 76, height: 76)
             Image(systemName: "globe.americas.fill")
-                .font(.system(size: 36))
+                .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .rotationEffect(.degrees(isAnimating ? 12 : -12))
                 .animation(
