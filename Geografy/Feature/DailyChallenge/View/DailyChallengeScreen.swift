@@ -59,10 +59,12 @@ private extension DailyChallengeScreen {
     var challengeHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             headerIcon
+                .accessibilityHidden(true)
             Text("Daily Challenge")
                 .font(DesignSystem.Font.title)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text(formattedDate)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -91,6 +93,7 @@ private extension DailyChallengeScreen {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
                 streakIcon(streak: service.streak)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Challenge Streak")
                         .font(DesignSystem.Font.headline)
@@ -103,6 +106,8 @@ private extension DailyChallengeScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Challenge Streak: \(service.streak) day\(service.streak == 1 ? "" : "s")")
     }
 
     func streakIcon(streak: Int) -> some View {
@@ -213,12 +218,15 @@ private extension DailyChallengeScreen {
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(label): \(value)")
     }
 
     var completedBadge: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.caption)
+                .accessibilityHidden(true)
             Text("Done")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
@@ -230,6 +238,8 @@ private extension DailyChallengeScreen {
             DesignSystem.Color.success.opacity(0.15),
             in: Capsule()
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Challenge completed")
     }
 
     var startChallengeButton: some View {
@@ -256,6 +266,7 @@ private extension DailyChallengeScreen {
                 Image(systemName: "clock")
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Next Challenge")
                         .font(DesignSystem.Font.headline)
@@ -268,6 +279,8 @@ private extension DailyChallengeScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Next Challenge: \(timeUntilMidnight)")
     }
 }
 
@@ -292,6 +305,7 @@ private extension DailyChallengeScreen {
                 Image(systemName: "calendar")
                     .font(DesignSystem.Font.iconXL)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .accessibilityHidden(true)
                 Text("No challenges completed yet")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)

@@ -81,6 +81,7 @@ private extension CurrencyConverterScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .padding(.horizontal, DesignSystem.Spacing.md)
+                .accessibilityAddTraits(.isHeader)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DesignSystem.Spacing.xs) {
@@ -204,6 +205,7 @@ private extension CurrencyConverterScreen {
                 Image(systemName: "chevron.right")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(color.opacity(0.6))
+                    .accessibilityHidden(true)
             }
             .padding(DesignSystem.Spacing.sm)
             .background(
@@ -268,6 +270,7 @@ private extension CurrencyConverterScreen {
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                             .textCase(.uppercase)
+                            .accessibilityAddTraits(.isHeader)
 
                         HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                             Text(formatAmount(converted))
@@ -282,6 +285,8 @@ private extension CurrencyConverterScreen {
                                 .font(DesignSystem.Font.title2)
                                 .foregroundStyle(DesignSystem.Color.textSecondary)
                         }
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel("\(formatAmount(converted)) \(toEntry.code)")
 
                         if let amount = Double(amountText), let fromEntry = fromCurrency {
                             Text("\(formatAmount(amount)) \(fromEntry.code) = \(formatAmount(converted)) \(toEntry.code)")
@@ -302,10 +307,12 @@ private extension CurrencyConverterScreen {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "clock")
                 .font(DesignSystem.Font.caption2)
+                .accessibilityHidden(true)
             Text("Rates updated \(date.formatted(.relative(presentation: .named)))")
                 .font(DesignSystem.Font.caption2)
         }
         .foregroundStyle(DesignSystem.Color.textTertiary)
+        .accessibilityElement(children: .combine)
     }
 
     var ambientBlobs: some View {

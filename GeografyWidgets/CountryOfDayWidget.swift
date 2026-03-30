@@ -30,7 +30,7 @@ struct CountryOfDayProvider: TimelineProvider {
         .placeholder
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (CountryOfDayEntry) -> Void) {
+    func getSnapshot(in coNowntext: Context, completion: @escaping (CountryOfDayEntry) -> Void) {
         completion(entry())
     }
 

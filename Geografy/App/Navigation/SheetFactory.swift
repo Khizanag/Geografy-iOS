@@ -14,6 +14,12 @@ enum SheetFactory {
         case .sectionEditor:
             HomeSectionEditorSheet(sections: HomeSection.allCases.map { $0 })
 
+        case .friends:
+            NavigatorView(canBeDismissed: false) {
+                FriendsListScreen()
+            }
+            .presentationDetents([.large])
+
         default:
             NavigatorView {
                 sheetContent(for: sheet)
@@ -29,7 +35,35 @@ private extension SheetFactory {
     @ViewBuilder
     static func sheetContent(for sheet: Sheet) -> some View {
         switch sheet {
-        // Core
+        case .profile, .countries, .favorites, .organizations,
+             .organizationDetail, .countryDetail, .coinStore:
+            coreContent(for: sheet)
+
+        case .quizSetup, .speedRunSetup, .dailyChallenge, .exploreGame,
+             .multiplayer, .quizPacks, .customQuiz, .srsStudy,
+             .flagGame, .trivia, .spellingBee, .landmarkQuiz:
+            playContent(for: sheet)
+
+        case .distanceCalculator, .currencyConverter, .timeZones, .compare,
+             .timeline, .travelTracker, .travelJournal, .travelBucketList,
+             .wordSearch, .borderChallenge:
+            exploreContent(for: sheet)
+
+        case .search, .leaderboards, .achievements, .themes,
+             .settings, .learningPath, .feed,
+             .challengeRoom, .quotes, .countryNicknames, .localMultiplayer:
+            appContent(for: sheet)
+
+        default: EmptyView()
+        }
+    }
+}
+
+// MARK: - Core Content
+private extension SheetFactory {
+    @ViewBuilder
+    static func coreContent(for sheet: Sheet) -> some View {
+        switch sheet {
         case .profile: ProfileScreen()
         case .countries: CountryListScreen()
         case .favorites: FavoritesScreen()
@@ -37,8 +71,16 @@ private extension SheetFactory {
         case .organizationDetail(let organization): OrganizationDetailScreen(organization: organization)
         case .countryDetail(let country): CountryDetailScreen(country: country)
         case .coinStore: CoinStoreScreen()
+        default: EmptyView()
+        }
+    }
+}
 
-        // Play
+// MARK: - Play Content
+private extension SheetFactory {
+    @ViewBuilder
+    static func playContent(for sheet: Sheet) -> some View {
+        switch sheet {
         case .quizSetup: QuizSetupScreen()
         case .speedRunSetup: SpeedRunSetupScreen()
         case .dailyChallenge: DailyChallengeScreen()
@@ -51,8 +93,16 @@ private extension SheetFactory {
         case .trivia: TriviaScreen()
         case .spellingBee: SpellingBeeScreen()
         case .landmarkQuiz: LandmarkQuizScreen()
+        default: EmptyView()
+        }
+    }
+}
 
-        // Explore
+// MARK: - Explore Content
+private extension SheetFactory {
+    @ViewBuilder
+    static func exploreContent(for sheet: Sheet) -> some View {
+        switch sheet {
         case .distanceCalculator: DistanceCalculatorScreen()
         case .currencyConverter: CurrencyConverterScreen()
         case .timeZones: TimeZoneScreen()
@@ -63,8 +113,16 @@ private extension SheetFactory {
         case .travelBucketList: TravelBucketListScreen()
         case .wordSearch: WordSearchScreen()
         case .borderChallenge: BorderChallengeScreen()
+        default: EmptyView()
+        }
+    }
+}
 
-        // App
+// MARK: - App Content
+private extension SheetFactory {
+    @ViewBuilder
+    static func appContent(for sheet: Sheet) -> some View {
+        switch sheet {
         case .search: SearchScreen()
         case .leaderboards: LeaderboardScreen()
         case .achievements:
@@ -76,17 +134,12 @@ private extension SheetFactory {
                 .navigationTitle("Themes")
                 .navigationBarTitleDisplayMode(.large)
         case .settings: SettingsScreen()
-        case .friends: FriendsListScreen()
         case .learningPath: LearningPathScreen()
         case .feed: FeedScreen()
-
-        // Challenge
         case .challengeRoom: ChallengeSetupScreen()
-
-        // Discover
         case .quotes: QuotesScreen()
         case .countryNicknames: CountryNicknamesScreen()
-
+        case .localMultiplayer: LocalMultiplayerEntryScreen()
         default: EmptyView()
         }
     }
@@ -97,7 +150,8 @@ extension Sheet {
     var disableInteractiveDismiss: Bool {
         switch self {
         case .flagGame, .trivia, .spellingBee, .landmarkQuiz,
-             .wordSearch, .borderChallenge, .challengeRoom:
+             .wordSearch, .borderChallenge, .challengeRoom,
+             .localMultiplayer:
             true
         default:
             false

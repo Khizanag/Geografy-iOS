@@ -37,7 +37,6 @@ struct SearchScreen: View {
     }
 }
 
-
 // MARK: - Empty State
 private extension SearchScreen {
     var emptyStateContent: some View {

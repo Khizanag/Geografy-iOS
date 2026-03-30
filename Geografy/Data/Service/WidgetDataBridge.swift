@@ -6,7 +6,7 @@ import WidgetKit
 @Observable
 @MainActor
 final class WidgetDataBridge {
-    static let appGroupID = "group.com.khizanag.geografy"
+    private static let defaults = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
 
     private var countryDataService = CountryDataService()
 
@@ -17,7 +17,7 @@ final class WidgetDataBridge {
         progressFraction: Double,
         visitedCount: Int
     ) {
-        guard let defaults = UserDefaults(suiteName: Self.appGroupID) else { return }
+        guard let defaults = Self.defaults else { return }
 
         defaults.set(streak, forKey: "widget_streak")
         defaults.set(totalXP, forKey: "widget_xp")
@@ -55,9 +55,7 @@ private extension WidgetDataBridge {
             return
         }
 
-        let sorted = countryDataService.countries.sorted { $0.code < $1.code }
-        let dayIndex = Calendar.current.ordinality(of: .day, in: .year, for: .now) ?? 1
-        let country = sorted[(dayIndex - 1) % sorted.count]
+        guard let country = countryDataService.countryOfTheDay() else { return }
 
         let data = WidgetCountryData(
             code: country.code,

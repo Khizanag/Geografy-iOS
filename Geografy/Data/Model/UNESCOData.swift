@@ -14,8 +14,8 @@ struct UNESCOSite {
 }
 
 // MARK: - Data
+// swiftlint:disable:next type_body_length
 enum UNESCOData {
-    // swiftlint:disable:next function_body_length
     static let data: [String: [UNESCOSite]] = [
 
         // MARK: Asia

@@ -210,9 +210,10 @@ private extension QuestionGenerator {
 
         guard let (typeName, value) = symbolTypes.randomElement() else { return nil }
 
-        let countriesWithSymbols = allCountries.compactMap { c -> (Country, NationalSymbol)? in
-            guard c.code != country.code, let s = symbolsService.symbol(for: c.code) else { return nil }
-            return (c, s)
+        let countriesWithSymbols = allCountries.compactMap { candidate -> (Country, NationalSymbol)? in
+            guard candidate.code != country.code,
+                  let symbol = symbolsService.symbol(for: candidate.code) else { return nil }
+            return (candidate, symbol)
         }
 
         let askCountryFromSymbol = Bool.random()
@@ -236,12 +237,12 @@ private extension QuestionGenerator {
         } else {
             let correctID = UUID()
             let correctOption = QuizOption(id: correctID, text: value, flagCode: nil)
-            let distractorValues = countriesWithSymbols.shuffled().prefix(optionCount - 1).map { _, s in
+            let distractorValues = countriesWithSymbols.shuffled().prefix(optionCount - 1).map { _, symbol in
                 switch typeName {
-                case "animal": s.animal
-                case "flower": s.flower
-                case "sport": s.sport
-                default: s.animal
+                case "animal": symbol.animal
+                case "flower": symbol.flower
+                case "sport": symbol.sport
+                default: symbol.animal
                 }
             }
             let distractorOptions = distractorValues.map { QuizOption(id: UUID(), text: $0, flagCode: nil) }

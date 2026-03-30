@@ -325,7 +325,7 @@ private extension ChallengeSetupScreen {
     func startChallenge() {
         let name1 = player1Name.trimmingCharacters(in: .whitespaces)
         let name2 = player2Name.trimmingCharacters(in: .whitespaces)
-        let room = challengeRoomService.generateRoom(
+        let configuration = ChallengeRoomService.RoomConfiguration(
             player1Name: name1.isEmpty ? "Player 1" : name1,
             player2Name: name2.isEmpty ? "Player 2" : name2,
             totalRounds: selectedRounds,
@@ -333,6 +333,7 @@ private extension ChallengeSetupScreen {
             comparisonMetric: selectedMetric,
             countries: countryDataService.countries
         )
+        let room = challengeRoomService.generateRoom(configuration: configuration)
         challengeRoom = room
     }
 }

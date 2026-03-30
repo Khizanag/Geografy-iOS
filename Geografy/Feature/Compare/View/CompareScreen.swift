@@ -146,6 +146,7 @@ private extension CompareScreen {
                 Image(systemName: "arrow.triangle.swap")
                     .font(DesignSystem.Font.title)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
                 Text("Select two countries to compare")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -162,7 +163,16 @@ private extension CompareScreen {
     func metricsSection(left: Country, right: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Comparison")
+                .accessibilityAddTraits(.isHeader)
 
+            numericCharts(left: left, right: right)
+            textMetrics(left: left, right: right)
+            commonOrganizationsRow(left: left, right: right)
+        }
+    }
+
+    func numericCharts(left: Country, right: Country) -> some View {
+        Group {
             CompareBarChart(
                 title: "Population",
                 icon: "person.2.fill",
@@ -200,7 +210,11 @@ private extension CompareScreen {
                 leftLabel: densityLabel(left.populationDensity),
                 rightLabel: densityLabel(right.populationDensity)
             )
+        }
+    }
 
+    func textMetrics(left: Country, right: Country) -> some View {
+        Group {
             CompareMetricRow(
                 title: "Capital",
                 icon: "mappin.and.ellipse",
@@ -230,8 +244,6 @@ private extension CompareScreen {
                 leftValue: languagesSummary(left.languages),
                 rightValue: languagesSummary(right.languages)
             )
-
-            commonOrganizationsRow(left: left, right: right)
         }
     }
 
@@ -255,6 +267,7 @@ private extension CompareScreen {
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Recent", icon: "clock")
+                .accessibilityAddTraits(.isHeader)
 
             ForEach(recentPairs) { pair in
                 recentPairRow(pair)
@@ -298,6 +311,8 @@ private extension CompareScreen {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(DesignSystem.Spacing.sm)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(pair.leftName) versus \(pair.rightName)")
             }
         }
         .buttonStyle(PressButtonStyle())

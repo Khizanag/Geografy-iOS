@@ -106,6 +106,8 @@ private extension FlashcardSessionScreen {
     var progressSection: some View {
         SessionProgressView(progress: progressFraction, current: currentIndex + 1, total: cards.count)
             .padding(.horizontal, DesignSystem.Spacing.md)
+            .accessibilityLabel("Card \(currentIndex + 1) of \(cards.count)")
+            .accessibilityValue("\(Int(progressFraction * 100)) percent complete")
     }
 }
 

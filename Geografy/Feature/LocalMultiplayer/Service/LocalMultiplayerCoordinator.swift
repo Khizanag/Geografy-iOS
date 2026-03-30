@@ -158,67 +158,71 @@ extension LocalMultiplayerCoordinator {
 private extension LocalMultiplayerCoordinator {
     func handleMessage(_ message: PeerMessage) {
         switch message {
-        case .playerInfo(let name):
-            guard state == .lobby || state == .advertising || state == .browsing else { return }
-            opponent?.displayName = name
-
-        case .lobbyReady:
-            guard state == .lobby else { return }
-            opponent?.isReady = true
-
-        case .startMatch(let config, let serialized):
-            guard state == .lobby else { return }
-            matchConfig = config
-            questions = serialized.compactMap { $0.toQuizQuestion(using: countryDataService) }
-            guard questions.count == serialized.count else {
-                state = .disconnected
-                return
-            }
-            beginCountdown()
-
-        case .answerSubmitted(let questionIndex, let optionID, _):
-            guard state == .playing, questionIndex == currentIndex else { return }
-            opponentHasAnswered = true
-            opponentAnswers[questionIndex] = (optionID, 0)
-
-            if currentIndex < questions.count,
-               questions[questionIndex].correctOptionID == optionID {
-                opponentScore += 1
-            }
-
-            if isHost, playerAnsweredCurrent {
-                advanceAfterDelay()
-            }
-
-        case .timedOut(let questionIndex):
-            guard state == .playing, questionIndex == currentIndex else { return }
-            opponentHasAnswered = true
-
-            if isHost, playerAnsweredCurrent {
-                advanceAfterDelay()
-            }
-
-        case .advanceToNext(let questionIndex):
-            guard state == .playing else { return }
-            advanceTo(questionIndex)
-
-        case .matchFinished(let hostScore, let guestScore):
-            guard state == .playing else { return }
-            if !isHost {
-                opponentScore = hostScore
-                playerScore = guestScore
-            }
-            state = .finished
-
-        case .rematchRequest:
-            rematchRequested = true
-
-        case .rematchAccepted:
-            resetForRematch()
-
-        case .disconnecting:
-            handleDisconnect()
+        case .playerInfo(let name): handlePlayerInfo(name)
+        case .lobbyReady: handleLobbyReady()
+        case .startMatch(let config, let serialized): handleStartMatch(config, serialized)
+        case .answerSubmitted(let index, let optionID, _): handleOpponentAnswer(index, optionID: optionID)
+        case .timedOut(let index): handleOpponentTimeout(index)
+        case .advanceToNext(let index): handleAdvance(index)
+        case .matchFinished(let hostScore, let guestScore): handleMatchFinished(hostScore, guestScore)
+        case .rematchRequest: rematchRequested = true
+        case .rematchAccepted: resetForRematch()
+        case .disconnecting: handleDisconnect()
         }
+    }
+
+    func handlePlayerInfo(_ name: String) {
+        guard state == .lobby || state == .advertising || state == .browsing else { return }
+        opponent?.displayName = name
+    }
+
+    func handleLobbyReady() {
+        guard state == .lobby else { return }
+        opponent?.isReady = true
+    }
+
+    func handleStartMatch(_ config: PeerMessage.MatchConfig, _ serialized: [SerializableQuestion]) {
+        guard state == .lobby else { return }
+        matchConfig = config
+        questions = serialized.compactMap { $0.toQuizQuestion(using: countryDataService) }
+        guard questions.count == serialized.count else {
+            state = .disconnected
+            return
+        }
+        beginCountdown()
+    }
+
+    func handleOpponentAnswer(_ questionIndex: Int, optionID: UUID) {
+        guard state == .playing, questionIndex == currentIndex else { return }
+        opponentHasAnswered = true
+        opponentAnswers[questionIndex] = (optionID, 0)
+
+        if currentIndex < questions.count,
+           questions[questionIndex].correctOptionID == optionID {
+            opponentScore += 1
+        }
+
+        if isHost, playerAnsweredCurrent { advanceAfterDelay() }
+    }
+
+    func handleOpponentTimeout(_ questionIndex: Int) {
+        guard state == .playing, questionIndex == currentIndex else { return }
+        opponentHasAnswered = true
+        if isHost, playerAnsweredCurrent { advanceAfterDelay() }
+    }
+
+    func handleAdvance(_ questionIndex: Int) {
+        guard state == .playing else { return }
+        advanceTo(questionIndex)
+    }
+
+    func handleMatchFinished(_ hostScore: Int, _ guestScore: Int) {
+        guard state == .playing else { return }
+        if !isHost {
+            opponentScore = hostScore
+            playerScore = guestScore
+        }
+        state = .finished
     }
 
     func handlePeerStateChange(_ peerID: MCPeerID, state peerState: MCSessionState) {

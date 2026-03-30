@@ -176,6 +176,7 @@ private extension TravelJournalScreen {
                 .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .padding(.top, DesignSystem.Spacing.xxl)
+                .accessibilityHidden(true)
 
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Start Your Travel Journal")

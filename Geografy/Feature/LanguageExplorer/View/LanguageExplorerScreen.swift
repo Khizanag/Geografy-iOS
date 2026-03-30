@@ -10,7 +10,6 @@ struct LanguageExplorerScreen: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                searchBar
                 languageContent
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -20,6 +19,7 @@ struct LanguageExplorerScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Language Explorer")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $searchQuery, prompt: "Search languages...")
         .sheet(isPresented: $showingDetail) {
             if let language = selectedLanguage {
                 NavigationStack {
@@ -33,20 +33,6 @@ struct LanguageExplorerScreen: View {
 
 // MARK: - Subviews
 private extension LanguageExplorerScreen {
-    var searchBar: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            TextField("Search languages...", text: $searchQuery)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-        )
-    }
 
     @ViewBuilder
     var languageContent: some View {
@@ -79,6 +65,7 @@ private extension LanguageExplorerScreen {
     func familySection(family: String, languages: [Language]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: family, icon: "character.book.closed.fill")
+                .accessibilityAddTraits(.isHeader)
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(languages) { language in
                     languageRow(language)
@@ -101,6 +88,7 @@ private extension LanguageExplorerScreen {
                     Image(systemName: "chevron.right")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .accessibilityHidden(true)
                 }
                 .padding(DesignSystem.Spacing.md)
             }
@@ -117,6 +105,7 @@ private extension LanguageExplorerScreen {
                 .font(DesignSystem.Font.title3.bold())
                 .foregroundStyle(DesignSystem.Color.purple)
         }
+        .accessibilityHidden(true)
     }
 
     func languageRowInfo(_ language: Language) -> some View {
@@ -139,5 +128,6 @@ private extension LanguageExplorerScreen {
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, 3)
             .background(DesignSystem.Color.purple.opacity(0.12), in: Capsule())
+            .accessibilityLabel("\(language.speakerCount) million speakers")
     }
 }

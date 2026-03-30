@@ -6,6 +6,7 @@ extension CountryDetailScreen {
     var deepDiveSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Deep Dive", icon: "book.pages")
+                .accessibilityAddTraits(.isHeader)
             deepDiveCard
         }
     }
@@ -39,6 +40,7 @@ private extension CountryDetailScreen {
                 .font(DesignSystem.Font.iconSmall.weight(.medium))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
+        .accessibilityHidden(true)
     }
 
     var deepDiveText: some View {
@@ -61,5 +63,6 @@ private extension CountryDetailScreen {
         Image(systemName: "chevron.right")
             .font(DesignSystem.Font.caption)
             .foregroundStyle(DesignSystem.Color.textTertiary)
+            .accessibilityHidden(true)
     }
 }

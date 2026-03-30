@@ -9,7 +9,6 @@ struct LeaderboardScreen: View {
     @State private var showSignIn = false
     @State private var selectedLeaderboardID = ""
 
-
     var body: some View {
         scrollContent
             .background { AmbientBlobsView(.leaderboard) }
@@ -241,4 +240,3 @@ private extension LeaderboardScreen {
             : "Sign in to Game Center in iOS Settings"
     }
 }
-

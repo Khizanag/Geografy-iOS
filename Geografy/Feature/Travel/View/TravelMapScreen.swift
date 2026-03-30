@@ -74,6 +74,8 @@ private extension TravelMapScreen {
             capitalPoint: nil,
             travelStatuses: highlightedStatuses
         )
+        .accessibilityLabel("Travel map showing \(travelCodes.count) countries")
+        .accessibilityHint("Pinch to zoom, drag to pan")
         .gesture(dragGesture)
         .gesture(magnifyGesture)
     }
@@ -187,6 +189,7 @@ private extension TravelMapScreen {
             Image(systemName: filterIcon)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(filterColor)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(selectedFilter.displayName)
@@ -205,6 +208,8 @@ private extension TravelMapScreen {
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
         .animation(.easeInOut(duration: 0.3), value: selectedFilter)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(selectedFilter.displayName), \(travelCodes.count) countries")
     }
 
     var filterIcon: String {

@@ -51,6 +51,7 @@ private extension QuotesService {
 
 // MARK: - Data
 private extension QuotesService {
+    // swiftlint:disable:next function_body_length
     func makeQuotes() -> [Quote] {
         [
             Quote(

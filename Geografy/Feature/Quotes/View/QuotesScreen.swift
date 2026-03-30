@@ -164,4 +164,3 @@ private extension QuotesScreen {
         .glassEffect(.regular.interactive(), in: .circle)
     }
 }
-

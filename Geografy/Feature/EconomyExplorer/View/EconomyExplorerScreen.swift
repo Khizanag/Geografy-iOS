@@ -66,6 +66,7 @@ private extension EconomyExplorerScreen {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.title3)
                     .foregroundStyle(color)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(label)
                         .font(DesignSystem.Font.caption)
@@ -78,6 +79,8 @@ private extension EconomyExplorerScreen {
                 Spacer(minLength: 0)
             }
             .padding(DesignSystem.Spacing.sm)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(label): \(value)")
         }
     }
 
@@ -110,8 +113,10 @@ private extension EconomyExplorerScreen {
                     Image(systemName: "chevron.right")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
                 }
                 gdpBar(ratio: ratio, rank: rank)
+                    .accessibilityHidden(true)
             }
             .padding(DesignSystem.Spacing.sm)
         }

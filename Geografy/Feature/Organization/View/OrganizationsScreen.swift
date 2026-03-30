@@ -129,9 +129,11 @@ private extension OrganizationsScreen {
                 .padding(.horizontal, DesignSystem.Spacing.xs)
                 .padding(.vertical, DesignSystem.Spacing.xxs)
                 .background(org.highlightColor.opacity(0.12), in: Capsule())
+                .accessibilityLabel("\(memberCount(for: org)) members")
             Image(systemName: "chevron.right")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
+                .accessibilityHidden(true)
         }
     }
 }

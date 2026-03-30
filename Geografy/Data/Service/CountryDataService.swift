@@ -24,6 +24,15 @@ final class CountryDataService {
     func country(for code: String) -> Country? {
         countriesByCode[code]
     }
+
+    func countryOfTheDay(for date: Date = .now) -> Country? {
+        guard !countries.isEmpty else { return nil }
+        let sorted = countries.sorted { $0.code < $1.code }
+        let year = Calendar.current.component(.year, from: date)
+        let dayOfYear = (Calendar.current.ordinality(of: .day, in: .year, for: date) ?? 1) - 1
+        let shuffled = sorted.seededShuffle(seed: UInt64(year) &* 2_654_435_761)
+        return shuffled[dayOfYear % shuffled.count]
+    }
 }
 
 // MARK: - Helpers

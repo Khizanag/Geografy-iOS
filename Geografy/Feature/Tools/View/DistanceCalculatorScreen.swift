@@ -167,6 +167,7 @@ private extension DistanceCalculatorScreen {
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .textCase(.uppercase)
+                    .accessibilityAddTraits(.isHeader)
 
                 HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                     Text(formatDistance(distance, inKm: true))
@@ -179,6 +180,8 @@ private extension DistanceCalculatorScreen {
                         .font(DesignSystem.Font.title2)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(formatDistance(distance, inKm: true)) kilometers")
 
                 Text("\(formatDistance(distance * 0.621371, inKm: false)) miles")
                     .font(DesignSystem.Font.subheadline)
@@ -203,6 +206,7 @@ private extension DistanceCalculatorScreen {
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
+        .accessibilityLabel("Map showing route between selected countries")
     }
 
     func comparisonsSection(distance: Double) -> some View {
@@ -211,6 +215,7 @@ private extension DistanceCalculatorScreen {
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .padding(.horizontal, DesignSystem.Spacing.md)
+                .accessibilityAddTraits(.isHeader)
 
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(comparisons(for: distance), id: \.label) { item in
@@ -227,6 +232,7 @@ private extension DistanceCalculatorScreen {
                 Text(icon)
                     .font(DesignSystem.Font.iconDefault)
                     .frame(width: 32)
+                    .accessibilityHidden(true)
 
                 Text(label)
                     .font(DesignSystem.Font.subheadline)
@@ -241,6 +247,8 @@ private extension DistanceCalculatorScreen {
                     .multilineTextAlignment(.trailing)
             }
             .padding(DesignSystem.Spacing.sm)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(label): \(value)")
         }
     }
 

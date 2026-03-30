@@ -1,3 +1,4 @@
+import Accessibility
 import SwiftUI
 
 struct DailyChallengeResultView: View {
@@ -28,8 +29,6 @@ struct DailyChallengeResultView: View {
     }
 }
 
-
-
 // MARK: - Content
 private extension DailyChallengeResultView {
     var resultContent: some View {
@@ -53,9 +52,11 @@ private extension DailyChallengeResultView {
     var scoreSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ScoreRingView(progress: Double(score) / Double(maxScore))
+                .accessibilityLabel("Score: \(score) out of \(maxScore) points")
             Text(scoreMessage)
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text("\(animatedScore) / \(maxScore) points")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.accent)
@@ -115,6 +116,7 @@ private extension DailyChallengeResultView {
                         .font(DesignSystem.Font.title2)
                         .foregroundStyle(DesignSystem.Color.orange)
                 }
+                .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Challenge Streak")
                         .font(DesignSystem.Font.headline)
@@ -127,6 +129,8 @@ private extension DailyChallengeResultView {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Challenge Streak: \(streak) day\(streak == 1 ? "" : "s") in a row")
     }
 }
 
@@ -252,5 +256,6 @@ private extension DailyChallengeResultView {
         withAnimation(.easeOut(duration: 1.2)) {
             animatedScore = score
         }
+        AccessibilityNotification.Announcement("\(scoreMessage) \(score) out of \(maxScore) points").post()
     }
 }

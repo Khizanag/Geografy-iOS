@@ -12,10 +12,10 @@ struct TestChecklistSheet: View {
                 if let checklist {
                     checklistContent(checklist)
                 } else {
-                    EmptyStateView(
-                        icon: "checkmark.circle",
-                        title: "No Checklist",
-                        subtitle: "No test items defined for this feature yet."
+                    ContentUnavailableView(
+                        "No Checklist",
+                        systemImage: "checkmark.circle",
+                        description: Text("No test items defined for this feature yet.")
                     )
                 }
             }

@@ -74,6 +74,7 @@ private extension AchievementsScreen {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(color)
+                .accessibilityHidden(true)
 
             Text(value)
                 .font(DesignSystem.Font.headline)
@@ -90,6 +91,8 @@ private extension AchievementsScreen {
             DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(value) \(label)")
     }
 }
 
@@ -211,6 +214,7 @@ private extension AchievementsScreen {
 
                 if !isUnlocked {
                     SessionProgressBar(progress: progress.fraction, height: 4)
+                        .accessibilityValue("\(Int(progress.fraction * 100)) percent complete")
                 }
             }
 
@@ -226,6 +230,9 @@ private extension AchievementsScreen {
             DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(definition.title), \(isUnlocked ? "unlocked" : "locked"), \(definition.rarity.displayName)")
+        .accessibilityHint(definition.requirement)
     }
 }
 

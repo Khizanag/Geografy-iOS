@@ -303,6 +303,7 @@ private extension CountryDetailScreen {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(label)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -315,6 +316,7 @@ private extension CountryDetailScreen {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xs)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -353,11 +355,13 @@ private extension CountryDetailScreen {
                     Image(systemName: "chevron.right")
                         .font(DesignSystem.Font.caption2)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
                 }
                 .padding(DesignSystem.Spacing.sm)
             }
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityLabel("Travel Status: \(currentStatus?.label ?? "Not set")")
     }
 }
 
@@ -383,6 +387,7 @@ extension CountryDetailScreen {
                 PremiumBadge()
             }
         }
+        .accessibilityAddTraits(.isHeader)
     }
 }
 

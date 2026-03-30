@@ -1,3 +1,4 @@
+import Accessibility
 import Combine
 import SwiftUI
 
@@ -67,6 +68,8 @@ private extension FlagGameScreen {
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Score: \(gameState.score)")
 
             HStack {
                 Spacer()
@@ -82,6 +85,8 @@ private extension FlagGameScreen {
                             )
                     }
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(gameState.lives) lives remaining")
             }
         }
     }
@@ -96,6 +101,7 @@ private extension FlagGameScreen {
                 Text("Which flag belongs to?")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .accessibilityAddTraits(.isHeader)
 
                 Text(targetCountry?.name ?? " ")
                     .font(DesignSystem.Font.title2)
@@ -186,9 +192,11 @@ private extension FlagGameScreen {
                 gameState.answeredCountries.append(target)
             }
             hapticsService.notification(.success)
+            AccessibilityNotification.Announcement("Correct!").post()
         } else {
             withAnimation(.spring()) { gameState.lives -= 1 }
             hapticsService.notification(.error)
+            AccessibilityNotification.Announcement("Incorrect. \(gameState.lives) lives remaining").post()
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {

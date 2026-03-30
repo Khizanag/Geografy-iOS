@@ -7,6 +7,7 @@ enum ScreenFactory {
         Group {
             coreView(for: screen)
             exploreView(for: screen)
+            discoverView(for: screen)
         }
     }
 }
@@ -65,6 +66,18 @@ private extension ScreenFactory {
             LanguageExplorerScreen()
         case .independenceTimeline:
             IndependenceTimelineScreen()
+        default:
+            EmptyView()
+        }
+    }
+}
+
+// MARK: - Discover
+@MainActor
+private extension ScreenFactory {
+    @ViewBuilder
+    static func discoverView(for screen: Screen) -> some View {
+        switch screen {
         case .economyExplorer:
             EconomyExplorerScreen()
         case .geographyFeatures:

@@ -50,11 +50,13 @@ private extension ContinentStatsScreen {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Text(continentEmoji)
                 .font(DesignSystem.Font.display)
+                .accessibilityHidden(true)
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text(continentName)
                     .font(DesignSystem.Font.largeTitle)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
                 Text("\(continentCountries.count) countries")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -67,6 +69,7 @@ private extension ContinentStatsScreen {
     var statsGridSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Statistics")
+                .accessibilityAddTraits(.isHeader)
             LazyVGrid(
                 columns: [GridItem(.flexible()), GridItem(.flexible())],
                 spacing: DesignSystem.Spacing.sm
@@ -118,6 +121,7 @@ private extension ContinentStatsScreen {
                     Image(systemName: icon)
                         .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(color)
+                        .accessibilityHidden(true)
                     Spacer()
                 }
                 Spacer(minLength: DesignSystem.Spacing.xs)
@@ -133,12 +137,15 @@ private extension ContinentStatsScreen {
                     .lineLimit(1)
             }
             .padding(DesignSystem.Spacing.sm)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(title): \(value)")
         }
     }
 
     var countriesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Countries by Population")
+                .accessibilityAddTraits(.isHeader)
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(sortedByPopulation) { country in
                     Button {

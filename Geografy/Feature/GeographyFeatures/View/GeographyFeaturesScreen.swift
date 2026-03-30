@@ -106,8 +106,12 @@ private extension GeographyFeaturesScreen {
             Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
         }
         .padding(DesignSystem.Spacing.sm)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Rank \(rank), \(feature.name), \(feature.measurementLabel): \(feature.formattedMeasurement)")
+        .accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
     }
 
     func rankLabel(rank: Int) -> some View {
@@ -156,6 +160,7 @@ private extension GeographyFeaturesScreen {
                     Image(systemName: "lightbulb.fill")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.warning)
+                        .accessibilityHidden(true)
                     Text(feature.funFact)
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
