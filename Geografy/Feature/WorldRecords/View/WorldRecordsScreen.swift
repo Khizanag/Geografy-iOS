@@ -47,6 +47,7 @@ private extension WorldRecordsScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: category.displayName, icon: category.icon)
                 .padding(.horizontal, DesignSystem.Spacing.md)
+                .accessibilityAddTraits(.isHeader)
 
             VStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(records) { record in
@@ -82,6 +83,8 @@ private extension WorldRecordsScreen {
             }
         }
         .padding(DesignSystem.Spacing.md)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(record.title): \(record.countryName), \(record.value)")
     }
 
     func trophyIcon(for category: WorldRecordCategory) -> some View {
@@ -93,6 +96,7 @@ private extension WorldRecordsScreen {
                 .font(DesignSystem.Font.iconSmall)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
+        .accessibilityHidden(true)
     }
 
     func recordInfo(record: WorldRecord) -> some View {

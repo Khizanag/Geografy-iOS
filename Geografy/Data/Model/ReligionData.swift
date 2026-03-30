@@ -1,7 +1,6 @@
 import Foundation
 
 enum ReligionData {
-    // swiftlint:disable:next function_body_length
     static let data: [String: [PercentageItem]] = [
         // Africa
         "DZ": [.init(name: "Sunni Islam", percentage: 99), .init(name: "Other", percentage: 1)],
@@ -47,7 +46,12 @@ enum ReligionData {
         "SN": [.init(name: "Islam", percentage: 96.1), .init(name: "Christianity", percentage: 3.6), .init(name: "Other", percentage: 0.3)],
         "SL": [.init(name: "Islam", percentage: 77.1), .init(name: "Christianity", percentage: 22.9)],
         "SO": [.init(name: "Sunni Islam", percentage: 99.8), .init(name: "Other", percentage: 0.2)],
-        "ZA": [.init(name: "Protestant", percentage: 36.6), .init(name: "Pentecostal", percentage: 8.2), .init(name: "Roman Catholic", percentage: 7.1), .init(name: "Methodist", percentage: 6.8), .init(name: "Other Christian", percentage: 28.3), .init(name: "None", percentage: 6.1), .init(name: "Other", percentage: 6.9)],
+        "ZA": [
+            .init(name: "Protestant", percentage: 36.6), .init(name: "Pentecostal", percentage: 8.2),
+            .init(name: "Roman Catholic", percentage: 7.1), .init(name: "Methodist", percentage: 6.8),
+            .init(name: "Other Christian", percentage: 28.3), .init(name: "None", percentage: 6.1),
+            .init(name: "Other", percentage: 6.9),
+        ],
         "SS": [.init(name: "Christianity", percentage: 60.5), .init(name: "Traditional", percentage: 32.9), .init(name: "Islam", percentage: 6.2), .init(name: "Other", percentage: 0.4)],
         "SD": [.init(name: "Sunni Islam", percentage: 90.7), .init(name: "Christianity", percentage: 5.4), .init(name: "Traditional", percentage: 4)],
         "TZ": [.init(name: "Christianity", percentage: 61.4), .init(name: "Islam", percentage: 35.2), .init(name: "Traditional", percentage: 1.8), .init(name: "Other", percentage: 1.6)],
@@ -104,7 +108,12 @@ enum ReligionData {
         "TM": [.init(name: "Sunni Islam", percentage: 89), .init(name: "Orthodox Christianity", percentage: 9), .init(name: "Other", percentage: 2)],
         "AE": [.init(name: "Islam", percentage: 76), .init(name: "Christianity", percentage: 9), .init(name: "Hinduism", percentage: 6.5), .init(name: "Other", percentage: 8.5)],
         "UZ": [.init(name: "Sunni Islam", percentage: 88), .init(name: "Orthodox Christianity", percentage: 9), .init(name: "Other", percentage: 3)],
-        "VN": [.init(name: "None/Folk Religion", percentage: 45.3), .init(name: "Buddhism", percentage: 16.4), .init(name: "Roman Catholic", percentage: 6.6), .init(name: "Hoa Hao", percentage: 1.7), .init(name: "Cao Dai", percentage: 0.9), .init(name: "Protestant", percentage: 1), .init(name: "Other", percentage: 28.1)],
+        "VN": [
+            .init(name: "None/Folk Religion", percentage: 45.3), .init(name: "Buddhism", percentage: 16.4),
+            .init(name: "Roman Catholic", percentage: 6.6), .init(name: "Hoa Hao", percentage: 1.7),
+            .init(name: "Cao Dai", percentage: 0.9), .init(name: "Protestant", percentage: 1),
+            .init(name: "Other", percentage: 28.1),
+        ],
         "YE": [.init(name: "Sunni Islam", percentage: 65), .init(name: "Shia Islam (Zaydi)", percentage: 35)],
 
         // Europe

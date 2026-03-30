@@ -149,9 +149,7 @@ private extension ChallengeResultScreen {
     var isTie: Bool { room.player1Score == room.player2Score }
 
     var winnerName: String {
-        if room.player1Score > room.player2Score { room.player1Name }
-        else if room.player2Score > room.player1Score { room.player2Name }
-        else { "" }
+        if room.player1Score > room.player2Score { room.player1Name } else if room.player2Score > room.player1Score { room.player2Name } else { "" }
     }
 
     var accuracy: Int {

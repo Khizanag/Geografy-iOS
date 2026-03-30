@@ -1,7 +1,6 @@
 import Foundation
 
 enum EthnicityData {
-    // swiftlint:disable:next function_body_length
     static let data: [String: [PercentageItem]] = [
         // Africa
         "DZ": [.init(name: "Arab-Berber", percentage: 99), .init(name: "European", percentage: 1)],

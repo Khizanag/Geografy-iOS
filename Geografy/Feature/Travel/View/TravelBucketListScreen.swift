@@ -61,6 +61,7 @@ private extension TravelBucketListScreen {
                 Image(systemName: "list.star")
                     .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("\(bucketListCountries.count) countries on your bucket list")
                         .font(DesignSystem.Font.headline)
@@ -75,6 +76,7 @@ private extension TravelBucketListScreen {
             .padding(DesignSystem.Spacing.md)
         }
         .padding(.top, DesignSystem.Spacing.sm)
+        .accessibilityElement(children: .combine)
     }
 
     var sortPicker: some View {
@@ -115,6 +117,7 @@ private extension TravelBucketListScreen {
         Text(priority.emoji)
             .font(DesignSystem.Font.title3)
             .frame(width: 32, height: 32)
+            .accessibilityLabel(priority.label)
     }
 
     var emptyState: some View {

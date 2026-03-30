@@ -69,6 +69,7 @@ enum Sheet: Identifiable {
     // Games & Quizzes
     case wordSearch
     case borderChallenge
+    case localMultiplayer
 
     // App
     case achievements
@@ -124,6 +125,7 @@ enum Sheet: Identifiable {
 
         case .wordSearch: "wordSearch"
         case .borderChallenge: "borderChallenge"
+        case .localMultiplayer: "localMultiplayer"
         }
     }
 }

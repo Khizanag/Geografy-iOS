@@ -74,8 +74,12 @@ private extension OceanExplorerScreen {
             Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
         }
         .padding(DesignSystem.Spacing.md)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(ocean.name), area: \(formatArea(ocean.area)), average depth: \(formatDepth(ocean.averageDepth))")
+        .accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
     }
 
     func oceanIcon(icon: String) -> some View {

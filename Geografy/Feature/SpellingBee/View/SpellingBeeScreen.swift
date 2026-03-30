@@ -1,3 +1,4 @@
+import Accessibility
 import SwiftUI
 
 struct SpellingBeeScreen: View {
@@ -51,6 +52,7 @@ struct SpellingBeeScreen: View {
                         Image(systemName: "info.circle")
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel("Show guide")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { autoContinue.toggle() } label: {
@@ -62,6 +64,7 @@ struct SpellingBeeScreen: View {
                             )
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel("Auto continue: \(autoContinue ? "on" : "off")")
                 }
             }
             .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
@@ -84,12 +87,15 @@ private extension SpellingBeeScreen {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "star.fill")
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
                 Text("\(score)")
                     .fontWeight(.bold)
                     .contentTransition(.numericText())
             }
             .font(DesignSystem.Font.subheadline)
             .foregroundStyle(DesignSystem.Color.textPrimary)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Score: \(score)")
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
@@ -134,6 +140,7 @@ private extension SpellingBeeScreen {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(text)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -141,6 +148,7 @@ private extension SpellingBeeScreen {
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(DesignSystem.Color.cardBackground, in: Capsule())
+        .accessibilityElement(children: .combine)
     }
 
     var letterGrid: some View {
@@ -219,7 +227,6 @@ private extension SpellingBeeScreen {
 
 // MARK: - Helpers
 
-
 // MARK: - Actions
 private extension SpellingBeeScreen {
     func loadNextCountry() {
@@ -254,6 +261,7 @@ private extension SpellingBeeScreen {
             feedback = .correct
             showCorrectAnswer = true
             isInputFocused = false
+            AccessibilityNotification.Announcement("Correct! Plus \(pointsEarned) points").post()
             if autoContinue {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
                     loadNextCountry()
@@ -263,6 +271,7 @@ private extension SpellingBeeScreen {
             feedback = .wrong
             showCorrectAnswer = true
             isInputFocused = false
+            AccessibilityNotification.Announcement("Incorrect. The answer was \(country.name)").post()
             if autoContinue {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
                     loadNextCountry()

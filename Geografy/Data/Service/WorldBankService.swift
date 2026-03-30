@@ -181,35 +181,37 @@ enum StatIndicator: String, CaseIterable, Identifiable {
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func format(_ value: Double) -> String {
         switch self {
-        case .gdp:
-            if value >= 1e12 { return String(format: "$%.2fT", value / 1e12) }
-            if value >= 1e9 { return String(format: "$%.1fB", value / 1e9) }
-            if value >= 1e6 { return String(format: "$%.1fM", value / 1e6) }
-            return String(format: "$%.0f", value)
-        case .gdpPerCapita:
-            if value >= 1000 { return String(format: "$%.0fK", value / 1000) }
-            return String(format: "$%.0f", value)
-        case .population:
-            if value >= 1e9 { return String(format: "%.2fB", value / 1e9) }
-            if value >= 1e6 { return String(format: "%.1fM", value / 1e6) }
-            if value >= 1e3 { return String(format: "%.0fK", value / 1e3) }
-            return String(format: "%.0f", value)
-        case .lifeExpectancy:
-            return String(format: "%.1f yrs", value)
-        case .fertilityRate:
-            return String(format: "%.2f", value)
-        case .infantMortality:
-            return String(format: "%.1f‰", value)
-        case .mobileSubscriptions:
-            return String(format: "%.0f/100", value)
-        case .co2Emissions:
-            return String(format: "%.2f t", value)
-        default:
-            return String(format: "%.1f%%", value)
+        case .gdp: formatLargeCurrency(value)
+        case .gdpPerCapita: formatSmallCurrency(value)
+        case .population: formatPopulationValue(value)
+        case .lifeExpectancy: String(format: "%.1f yrs", value)
+        case .fertilityRate: String(format: "%.2f", value)
+        case .infantMortality: String(format: "%.1f‰", value)
+        case .mobileSubscriptions: String(format: "%.0f/100", value)
+        case .co2Emissions: String(format: "%.2f t", value)
+        default: String(format: "%.1f%%", value)
         }
+    }
+
+    private func formatLargeCurrency(_ value: Double) -> String {
+        if value >= 1e12 { return String(format: "$%.2fT", value / 1e12) }
+        if value >= 1e9 { return String(format: "$%.1fB", value / 1e9) }
+        if value >= 1e6 { return String(format: "$%.1fM", value / 1e6) }
+        return String(format: "$%.0f", value)
+    }
+
+    private func formatSmallCurrency(_ value: Double) -> String {
+        if value >= 1000 { return String(format: "$%.0fK", value / 1000) }
+        return String(format: "$%.0f", value)
+    }
+
+    private func formatPopulationValue(_ value: Double) -> String {
+        if value >= 1e9 { return String(format: "%.2fB", value / 1e9) }
+        if value >= 1e6 { return String(format: "%.1fM", value / 1e6) }
+        if value >= 1e3 { return String(format: "%.0fK", value / 1e3) }
+        return String(format: "%.0f", value)
     }
 
     func formatAxisValue(_ value: Double) -> String {

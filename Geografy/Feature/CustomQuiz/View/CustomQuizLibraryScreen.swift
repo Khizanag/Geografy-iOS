@@ -36,13 +36,13 @@ private extension CustomQuizLibraryScreen {
     }
 
     var emptyState: some View {
-        EmptyStateView(
-            icon: "plus.square.dashed",
-            title: "No Custom Quizzes",
-            subtitle: "Create your own geography quiz by selecting countries and question types.",
-            actionTitle: "Create Quiz"
-        ) {
-            showBuilder = true
+        ContentUnavailableView {
+            Label("No Custom Quizzes", systemImage: "plus.square.dashed")
+        } description: {
+            Text("Create your own geography quiz by selecting countries and question types.")
+        } actions: {
+            Button("Create Quiz") { showBuilder = true }
+                .buttonStyle(.borderedProminent)
         }
     }
 

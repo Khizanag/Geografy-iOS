@@ -34,6 +34,7 @@ private extension CountryDetailScreen {
                         .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(DesignSystem.Color.blue)
                 }
+                .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Island Nation")
                         .font(DesignSystem.Font.subheadline)
@@ -47,6 +48,7 @@ private extension CountryDetailScreen {
                 Spacer(minLength: 0)
             }
             .padding(DesignSystem.Spacing.md)
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -61,12 +63,14 @@ private extension CountryDetailScreen {
                         .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
+                .accessibilityHidden(true)
                 Text("Neighbor data not available.")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                 Spacer(minLength: 0)
             }
             .padding(DesignSystem.Spacing.md)
+            .accessibilityElement(children: .combine)
         }
     }
 

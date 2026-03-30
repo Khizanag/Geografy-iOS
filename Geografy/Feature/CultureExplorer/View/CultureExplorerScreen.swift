@@ -17,16 +17,21 @@ struct CultureExplorerScreen: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                searchBar
                 profileList
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
+        .overlay {
+            if filteredProfiles.isEmpty, !searchQuery.isEmpty {
+                ContentUnavailableView.search(text: searchQuery)
+            }
+        }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Culture Explorer")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $searchQuery, prompt: "Search countries or dishes...")
         .sheet(item: $selectedProfile) { profile in
             NavigationStack {
                 CultureDetailView(profile: profile)
@@ -38,21 +43,6 @@ struct CultureExplorerScreen: View {
 
 // MARK: - Subviews
 private extension CultureExplorerScreen {
-    var searchBar: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            TextField("Search countries or dishes...", text: $searchQuery)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-        )
-    }
-
     var profileList: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(filteredProfiles) { profile in

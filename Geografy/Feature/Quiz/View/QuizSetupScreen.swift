@@ -103,6 +103,7 @@ private extension QuizSetupScreen {
                     .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .accessibilityHidden(true)
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text(selectedType.displayName)
                     .font(DesignSystem.Font.title2)
@@ -116,6 +117,7 @@ private extension QuizSetupScreen {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.md)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -210,10 +212,12 @@ private extension QuizSetupScreen {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(text)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -371,6 +375,7 @@ private extension QuizSetupScreen {
             .font(DesignSystem.Font.headline)
             .fontWeight(.semibold)
             .foregroundStyle(DesignSystem.Color.textPrimary)
+            .accessibilityAddTraits(.isHeader)
     }
 
     func makeConfiguration() -> QuizConfiguration {

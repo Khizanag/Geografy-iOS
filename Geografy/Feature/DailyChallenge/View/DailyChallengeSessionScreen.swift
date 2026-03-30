@@ -51,6 +51,7 @@ private extension DailyChallengeSessionScreen {
                 Image(systemName: "star.fill")
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
 
                 Text("\(String(score)) pts")
                     .font(DesignSystem.Font.roundedMicro2)
@@ -60,6 +61,8 @@ private extension DailyChallengeSessionScreen {
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
             .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Score: \(score) points")
 
             Spacer()
         }

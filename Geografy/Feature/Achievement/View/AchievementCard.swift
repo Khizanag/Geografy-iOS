@@ -16,6 +16,8 @@ struct AchievementCard: View {
             cardContent
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityLabel("\(definition.title), \(isUnlocked ? "unlocked" : "locked")")
+        .accessibilityHint(definition.description)
     }
 }
 

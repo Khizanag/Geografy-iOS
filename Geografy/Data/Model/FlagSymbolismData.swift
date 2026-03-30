@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 import Foundation
 
 struct FlagColorEntry {
@@ -20,8 +21,8 @@ struct FlagSymbolism {
 }
 
 // MARK: - Data
+// swiftlint:disable:next type_body_length
 enum FlagSymbolismData {
-    // swiftlint:disable:next function_body_length
     static let data: [String: FlagSymbolism] = [
 
         // MARK: Americas

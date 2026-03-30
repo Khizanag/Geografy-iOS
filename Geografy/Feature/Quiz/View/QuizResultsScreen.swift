@@ -1,3 +1,4 @@
+import Accessibility
 import SwiftData
 import SwiftUI
 
@@ -41,16 +42,19 @@ private extension QuizResultsScreen {
     var scoreSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ScoreRingView(progress: result.accuracy)
+                .accessibilityLabel("Score: \(Int(result.accuracy * 100)) percent")
 
             Text(scoreMessage)
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
 
             if showXPBadge, xpEarned > 0 {
                 HStack(spacing: DesignSystem.Spacing.xxs) {
                     Image(systemName: "star.fill")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.accent)
+                        .accessibilityHidden(true)
                     Text("+\(xpEarned) XP")
                         .font(DesignSystem.Font.headline)
                         .fontWeight(.bold)
@@ -60,6 +64,8 @@ private extension QuizResultsScreen {
                 .padding(.vertical, DesignSystem.Spacing.xs)
                 .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
                 .transition(.scale(scale: 0.7).combined(with: .opacity))
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Earned \(xpEarned) XP")
             }
         }
         .padding(.top, DesignSystem.Spacing.lg)
@@ -92,6 +98,7 @@ private extension QuizResultsScreen {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(color)
+                    .accessibilityHidden(true)
 
                 Text(value)
                     .font(DesignSystem.Font.headline)
@@ -100,6 +107,7 @@ private extension QuizResultsScreen {
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
     }
 
     var answersSection: some View {
@@ -108,6 +116,7 @@ private extension QuizResultsScreen {
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .padding(.horizontal, DesignSystem.Spacing.md)
+                .accessibilityAddTraits(.isHeader)
 
             ForEach(Array(result.answers.enumerated()), id: \.element.id) { index, answer in
                 answerRow(index: index + 1, answer: answer)
@@ -133,16 +142,18 @@ private extension QuizResultsScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(1)
 
-
                 Spacer()
 
                 Image(systemName: answer.isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(answer.isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error)
+                    .accessibilityHidden(true)
             }
             .padding(DesignSystem.Spacing.sm)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(index). \(answer.question.correctCountry.name), \(answer.isCorrect ? "correct" : "incorrect")")
     }
 
     var actionButtons: some View {
@@ -235,6 +246,8 @@ private extension QuizResultsScreen {
         withAnimation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.5)) {
             showXPBadge = true
         }
+
+        AccessibilityNotification.Announcement("\(scoreMessage) \(result.correctCount) correct out of \(result.answers.count)").post()
     }
 }
 

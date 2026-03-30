@@ -10,7 +10,6 @@ enum CapitalCoordinateService {
         coordinates[countryCode]
     }
 
-    // swiftlint:disable:next function_body_length
     private static let coordinates: [String: Coordinate] = [
         "AF": Coordinate(latitude: 34.52, longitude: 69.18),
         "AL": Coordinate(latitude: 41.33, longitude: 19.82),

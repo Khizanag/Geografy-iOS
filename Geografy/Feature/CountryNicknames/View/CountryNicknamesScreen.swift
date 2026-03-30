@@ -17,13 +17,15 @@ struct CountryNicknamesScreen: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                searchBar
-                    .padding(.horizontal, DesignSystem.Spacing.md)
                 categoryFilter
                 quizBanner
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                nicknamesList
-                    .padding(.horizontal, DesignSystem.Spacing.md)
+                if filteredNicknames.isEmpty, !searchQuery.isEmpty {
+                    ContentUnavailableView.search(text: searchQuery)
+                } else {
+                    nicknamesList
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                }
                 Spacer(minLength: DesignSystem.Spacing.xxl)
             }
             .padding(.top, DesignSystem.Spacing.md)
@@ -32,6 +34,7 @@ struct CountryNicknamesScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Country Nicknames")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $searchQuery, prompt: "Search nicknames…")
         .task { countryDataService.loadCountries() }
         .sheet(isPresented: $isQuizMode) {
             NavigationStack {
@@ -43,29 +46,6 @@ struct CountryNicknamesScreen: View {
 
 // MARK: - Subviews
 private extension CountryNicknamesScreen {
-    var searchBar: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            TextField("Search nicknames…", text: $searchQuery)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            if !searchQuery.isEmpty {
-                Button { searchQuery = "" } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-        )
-    }
 
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -219,10 +199,10 @@ private extension CountryNicknamesScreen {
     }
 
     var emptyState: some View {
-        EmptyStateView(
-            icon: "magnifyingglass",
-            title: "No nicknames found",
-            subtitle: "Try a different search term or category filter."
+        ContentUnavailableView(
+            "No nicknames found",
+            systemImage: "magnifyingglass",
+            description: Text("Try a different search term or category filter.")
         )
     }
 }

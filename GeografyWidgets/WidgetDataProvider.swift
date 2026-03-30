@@ -1,7 +1,7 @@
 import Foundation
 
 enum WidgetDataProvider {
-    private static let defaults = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
+    nonisolated(unsafe) private static let defaults = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
 
     static var countryOfDay: WidgetCountryEntry? {
         guard let data = defaults?.data(forKey: "widget_country_of_day"),

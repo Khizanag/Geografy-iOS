@@ -172,6 +172,7 @@ private extension TimelineScreen {
             emptyStateView
         } else {
             SectionHeaderView(title: "\(String(selectedYear)) Events")
+                .accessibilityAddTraits(.isHeader)
             ForEach(yearEvents) { event in
                 Button {
                     selectedEvent = event
@@ -187,10 +188,10 @@ private extension TimelineScreen {
     }
 
     var emptyStateView: some View {
-        EmptyStateView(
-            icon: "clock.arrow.trianglehead.counterclockwise.rotate.90",
-            title: "No events in \(String(selectedYear))",
-            subtitle: "Try adjusting filters or selecting a different year"
+        ContentUnavailableView(
+            "No events in \(String(selectedYear))",
+            systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+            description: Text("Try adjusting filters or selecting a different year")
         )
     }
 
@@ -267,6 +268,7 @@ private extension TimelineScreen {
     func detailEventTypePill(for event: HistoricalEvent) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: event.type.icon)
+                .accessibilityHidden(true)
             Text(event.type.displayName)
         }
         .font(DesignSystem.Font.caption)
@@ -275,11 +277,14 @@ private extension TimelineScreen {
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(DesignSystem.Color.accent)
         .clipShape(Capsule())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Event type: \(event.type.displayName)")
     }
 
     func detailDescription(for event: HistoricalEvent) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "About")
+                .accessibilityAddTraits(.isHeader)
             Text(event.description)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -289,6 +294,7 @@ private extension TimelineScreen {
     func detailCountryInfo(country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Country", icon: "globe")
+                .accessibilityAddTraits(.isHeader)
             Button { coordinator.push(.countryDetail(country)) } label: {
                 CountryRowView(
                     country: country,

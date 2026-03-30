@@ -229,6 +229,8 @@ private struct WorldClockView: View {
             }
         }
         .padding(.vertical, DesignSystem.Spacing.xxs)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(item.country.name), \(item.utcOffsetLabel), \(currentTimeString(for: item.timeZone))")
     }
 
     private func currentTimeString(for zone: TimeZone) -> String {
@@ -310,11 +312,13 @@ private struct AllZonesView: View {
             RoundedRectangle(cornerRadius: 2)
                 .fill(zoneColor(for: offset))
                 .frame(width: 3, height: 18)
+                .accessibilityHidden(true)
             Text(label)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
         }
+        .accessibilityAddTraits(.isHeader)
     }
 
     private func zoneCountryRow(for item: CountryWithZone) -> some View {
@@ -331,6 +335,7 @@ private struct AllZonesView: View {
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
+        .accessibilityElement(children: .combine)
     }
 
     private func currentTimeString(for zone: TimeZone) -> String {
@@ -394,10 +399,12 @@ private struct TimeZoneQuizView: View {
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.success)
+                .accessibilityLabel("Score: \(score) out of \(totalAnswered)")
             Spacer()
             Text("Time Difference Quiz")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityAddTraits(.isHeader)
         }
     }
 
@@ -413,6 +420,7 @@ private struct TimeZoneQuizView: View {
                     Image(systemName: "arrow.left.arrow.right")
                         .font(DesignSystem.Font.title2)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
                     countryTimeCard(for: countryB, color: DesignSystem.Color.blue)
                 }
             }

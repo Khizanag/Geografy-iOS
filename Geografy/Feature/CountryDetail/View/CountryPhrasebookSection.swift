@@ -8,6 +8,7 @@ extension CountryDetailScreen {
         if !phrases.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 SectionHeaderView(title: "Language Corner", icon: "character.bubble")
+                    .accessibilityAddTraits(.isHeader)
                 phrasesScrollRow(phrases: phrases)
                 learnMoreButton
             }
@@ -94,6 +95,8 @@ private extension PhraseChip {
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .italic()
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Double tap to see translation")
     }
 
     var localSide: some View {
@@ -110,5 +113,7 @@ private extension PhraseChip {
                 .italic()
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(phrase.local), pronounced \(phrase.pronunciation)")
     }
 }

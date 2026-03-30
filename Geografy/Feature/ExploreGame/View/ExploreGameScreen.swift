@@ -4,7 +4,6 @@ struct ExploreGameScreen: View {
     @State private var gameService = ExploreGameService()
     @State private var activeSession: ExploreGameState?
 
-
     var body: some View {
         if let activeSession {
             ExploreGameSessionScreen(
@@ -43,9 +42,11 @@ private extension ExploreGameScreen {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             heroIcon
+                .accessibilityHidden(true)
             Text("Mystery Country")
                 .font(DesignSystem.Font.title)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text("Identify countries from progressive clues. Fewer clues = higher score!")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -179,6 +180,7 @@ private extension ExploreGameScreen {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(value)
                     .font(DesignSystem.Font.headline)
@@ -195,6 +197,8 @@ private extension ExploreGameScreen {
             DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title): \(value)")
     }
 }
 

@@ -199,12 +199,7 @@ private extension TVHomeFeedView {
     }
 
     var spotlightCountry: Country? {
-        guard !countryDataService.countries.isEmpty else { return nil }
-        let sorted = countryDataService.countries.sorted { $0.code < $1.code }
-        let year = Calendar.current.component(.year, from: Date())
-        let dayOfYear = (Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1) - 1
-        let shuffled = sorted.seededShuffle(seed: UInt64(year) &* 2_654_435_761)
-        return shuffled[dayOfYear % shuffled.count]
+        countryDataService.countryOfTheDay()
     }
 }
 

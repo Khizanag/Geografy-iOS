@@ -26,6 +26,7 @@ struct TravelTrackerScreen: View {
         }
         .navigationTitle("Travel Tracker")
         .navigationBarTitleDisplayMode(.large)
+        .searchable(text: $searchText, prompt: "Search countries…")
         .toolbar { addButton }
         .task { countryDataService.loadCountries() }
         .fullScreenCover(isPresented: $showTravelMap) {
@@ -125,11 +126,6 @@ private extension TravelTrackerScreen {
                         .opacity(appeared ? 1 : 0)
                         .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
 
-                    searchBar
-                        .padding(.top, DesignSystem.Spacing.sm)
-                        .opacity(appeared ? 1 : 0)
-                        .animation(.easeOut(duration: 0.5).delay(0.12), value: appeared)
-
                     countryList
                         .padding(.top, DesignSystem.Spacing.sm)
                         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -197,6 +193,7 @@ private extension TravelTrackerScreen {
                     Image(systemName: "map.fill")
                         .font(DesignSystem.Font.title2)
                         .foregroundStyle(DesignSystem.Color.accent)
+                        .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text("View on Map")
@@ -212,11 +209,14 @@ private extension TravelTrackerScreen {
                     Image(systemName: "chevron.right")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
                 }
                 .padding(DesignSystem.Spacing.md)
             }
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityLabel("View on Map")
+        .accessibilityHint(currentFilterLabel)
     }
 
     var currentTravelMapFilter: TravelMapFilter {
@@ -281,37 +281,6 @@ private extension TravelTrackerScreen {
             )
         }
         .buttonStyle(PressButtonStyle())
-    }
-
-    var searchBar: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .font(DesignSystem.Font.subheadline)
-            TextField("Search countries…", text: $searchText)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .tint(DesignSystem.Color.accent)
-                .autocorrectionDisabled()
-            if !searchText.isEmpty {
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                        searchText = ""
-                    }
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs + 2)
-        .background(
-            DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-        )
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: searchText.isEmpty)
     }
 
     var countryList: some View {

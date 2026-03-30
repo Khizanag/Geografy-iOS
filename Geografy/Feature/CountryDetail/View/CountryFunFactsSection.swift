@@ -57,6 +57,9 @@ private extension FunFactRow {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Fun fact: \(fact)")
+        .accessibilityHint(expanded ? "Double tap to collapse" : "Double tap to expand")
     }
 
     var iconCircle: some View {
@@ -68,6 +71,7 @@ private extension FunFactRow {
                 .font(DesignSystem.Font.footnote)
                 .foregroundStyle(DesignSystem.Color.warning)
         }
+        .accessibilityHidden(true)
     }
 
     var factText: some View {
@@ -85,5 +89,6 @@ private extension FunFactRow {
             .foregroundStyle(DesignSystem.Color.textTertiary)
             .rotationEffect(.degrees(expanded ? 180 : 0))
             .animation(.spring(response: 0.3, dampingFraction: 0.75), value: expanded)
+            .accessibilityHidden(true)
     }
 }

@@ -42,49 +42,70 @@ private extension TypeSelectionGrid {
 
     func cardContent(item: T, isSelected: Bool, isLocked: Bool) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            HStack {
-                ZStack {
-                    Circle()
-                        .fill(
-                            isSelected
-                                ? DesignSystem.Color.onAccent.opacity(0.20)
-                                : DesignSystem.Color.accent.opacity(0.15)
-                        )
-                        .frame(width: 36, height: 36)
-                    Image(systemName: item.icon)
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(
-                            isSelected
-                                ? DesignSystem.Color.onAccent
-                                : DesignSystem.Color.accent
-                        )
-                }
-                Spacer()
-                if isLocked {
-                    Image(systemName: "lock.fill")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(
-                            isSelected
-                                ? DesignSystem.Color.onAccent.opacity(0.6)
-                                : DesignSystem.Color.textTertiary
-                        )
-                        .padding(6)
-                        .background(
-                            isSelected
-                                ? DesignSystem.Color.onAccent.opacity(0.12)
-                                : DesignSystem.Color.cardBackgroundHighlighted,
-                            in: Circle()
-                        )
-                } else if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.onAccent)
-                        .transition(.scale.combined(with: .opacity))
-                }
-            }
+            cardHeader(item: item, isSelected: isSelected, isLocked: isLocked)
 
             Spacer(minLength: 0)
 
+            cardLabels(item: item, isSelected: isSelected)
+        }
+        .padding(DesignSystem.Spacing.sm)
+        .frame(width: 158, height: 148)
+        .background { cardBackground(isSelected: isSelected) }
+        .overlay(cardBorder(isSelected: isSelected))
+        .shadow(
+            color: isSelected ? DesignSystem.Color.accent.opacity(0.40) : .primary.opacity(0.08),
+            radius: isSelected ? 16 : 4,
+            y: isSelected ? 6 : 2
+        )
+        .scaleEffect(isSelected ? 1.03 : 1.0)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+    }
+
+    func cardHeader(item: T, isSelected: Bool, isLocked: Bool) -> some View {
+        HStack {
+            ZStack {
+                Circle()
+                    .fill(
+                        isSelected
+                            ? DesignSystem.Color.onAccent.opacity(0.20)
+                            : DesignSystem.Color.accent.opacity(0.15)
+                    )
+                    .frame(width: 36, height: 36)
+                Image(systemName: item.icon)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(
+                        isSelected
+                            ? DesignSystem.Color.onAccent
+                            : DesignSystem.Color.accent
+                    )
+            }
+            Spacer()
+            if isLocked {
+                Image(systemName: "lock.fill")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(
+                        isSelected
+                            ? DesignSystem.Color.onAccent.opacity(0.6)
+                            : DesignSystem.Color.textTertiary
+                    )
+                    .padding(6)
+                    .background(
+                        isSelected
+                            ? DesignSystem.Color.onAccent.opacity(0.12)
+                            : DesignSystem.Color.cardBackgroundHighlighted,
+                        in: Circle()
+                    )
+            } else if isSelected {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.onAccent)
+                    .transition(.scale.combined(with: .opacity))
+            }
+        }
+    }
+
+    func cardLabels(item: T, isSelected: Bool) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text(item.emoji)
                 .font(DesignSystem.Font.iconDefault)
 
@@ -109,42 +130,36 @@ private extension TypeSelectionGrid {
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .frame(width: 158, height: 148)
-        .background {
-            if isSelected {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                    .fill(
-                        LinearGradient(
-                            colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-            } else {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                    .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.cardBackground) : AnyShapeStyle(.ultraThinMaterial))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                            .fill(DesignSystem.Color.cardBackground.opacity(0.6))
-                    )
-            }
-        }
-        .overlay(
+    }
+
+    @ViewBuilder
+    func cardBackground(isSelected: Bool) -> some View {
+        if isSelected {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                .strokeBorder(
-                    isSelected
-                        ? DesignSystem.Color.accent.opacity(0.5)
-                        : DesignSystem.Color.dividerSubtle,
-                    lineWidth: 1
+                .fill(
+                    LinearGradient(
+                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
                 )
-        )
-        .shadow(
-            color: isSelected ? DesignSystem.Color.accent.opacity(0.40) : .primary.opacity(0.08),
-            radius: isSelected ? 16 : 4,
-            y: isSelected ? 6 : 2
-        )
-        .scaleEffect(isSelected ? 1.03 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+        } else {
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.cardBackground) : AnyShapeStyle(.ultraThinMaterial))
+                .overlay(
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                        .fill(DesignSystem.Color.cardBackground.opacity(0.6))
+                )
+        }
+    }
+
+    func cardBorder(isSelected: Bool) -> some View {
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            .strokeBorder(
+                isSelected
+                    ? DesignSystem.Color.accent.opacity(0.5)
+                    : DesignSystem.Color.dividerSubtle,
+                lineWidth: 1
+            )
     }
 }

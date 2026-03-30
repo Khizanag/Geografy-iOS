@@ -39,6 +39,7 @@ private extension CountryStatisticsView {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: category.icon)
                     .font(DesignSystem.Font.caption2)
+                    .accessibilityHidden(true)
                 Text(category.title)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(selectedCategory == category ? .semibold : .regular)

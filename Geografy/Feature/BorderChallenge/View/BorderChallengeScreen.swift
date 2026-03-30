@@ -1,3 +1,4 @@
+import Accessibility
 import SwiftUI
 
 struct BorderChallengeScreen: View {
@@ -92,6 +93,7 @@ private extension BorderChallengeScreen {
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
                 Text("Name all neighboring countries")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -114,10 +116,12 @@ private extension BorderChallengeScreen {
             Image(systemName: "timer")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(timerColor)
+                .accessibilityHidden(true)
             Text(formattedTime)
                 .font(DesignSystem.Font.monoBody)
                 .foregroundStyle(timerColor)
                 .contentTransition(.numericText())
+                .accessibilityLabel("Time remaining: \(secondsRemaining) seconds")
             Spacer()
             if !isRevealed {
                 Button {
@@ -229,9 +233,11 @@ private extension BorderChallengeScreen {
                     .font(DesignSystem.Font.displayXS)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
+            .accessibilityHidden(true)
             Text(resultGradeTitle)
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             if let country = challengeCountry {
                 Text("\(foundNeighbors.count) of \(neighbors.count) neighbors of \(country.name)")
                     .font(DesignSystem.Font.subheadline)
@@ -273,6 +279,7 @@ private extension BorderChallengeScreen {
         return HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "star.fill")
                 .foregroundStyle(DesignSystem.Color.warning)
+                .accessibilityHidden(true)
             Text("+\(earned) XP")
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
@@ -281,6 +288,8 @@ private extension BorderChallengeScreen {
         .padding(.horizontal, DesignSystem.Spacing.lg)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(DesignSystem.Color.warning.opacity(0.12), in: Capsule())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Earned \(earned) XP")
     }
 }
 
@@ -298,9 +307,7 @@ private extension BorderChallengeScreen {
     }
 
     var timerColor: Color {
-        if secondsRemaining > 30 { DesignSystem.Color.success }
-        else if secondsRemaining > 10 { DesignSystem.Color.warning }
-        else { DesignSystem.Color.error }
+        if secondsRemaining > 30 { DesignSystem.Color.success } else if secondsRemaining > 10 { DesignSystem.Color.warning } else { DesignSystem.Color.error }
     }
 
     var resultGradeIcon: String {
@@ -351,10 +358,12 @@ private extension BorderChallengeScreen {
                 foundNeighbors.append(match)
             }
             hapticsService.notification(.success)
+            AccessibilityNotification.Announcement("Correct! \(match.name). \(foundNeighbors.count) of \(neighbors.count) found").post()
             if foundNeighbors.count == neighbors.count { endGame() }
         } else {
             wrongGuesses.insert(input.lowercased())
             hapticsService.notification(.error)
+            AccessibilityNotification.Announcement("Incorrect guess").post()
         }
     }
 

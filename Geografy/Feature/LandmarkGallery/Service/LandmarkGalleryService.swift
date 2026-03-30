@@ -1,5 +1,6 @@
 import Foundation
 
+// swiftlint:disable:next type_body_length
 final class LandmarkGalleryService {
     let landmarks: [Landmark] = [
         Landmark(

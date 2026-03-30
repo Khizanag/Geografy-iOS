@@ -1,3 +1,4 @@
+import Accessibility
 import SwiftUI
 
 struct ExploreGameSessionScreen: View {
@@ -72,6 +73,7 @@ private extension ExploreGameSessionScreen {
                 Image(systemName: "questionmark.circle")
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Show rules")
         }
         ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton { showQuitAlert = true }
@@ -112,12 +114,15 @@ private extension ExploreGameSessionScreen {
                     )
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Clue \(gameState.revealedClueCount) of 5 revealed")
     }
 
     var availablePointsBadge: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.caption2)
+                .accessibilityHidden(true)
             Text("\(gameState.currentPointsAvailable) pts")
                 .font(DesignSystem.Font.roundedMicro2)
                 .contentTransition(.numericText())
@@ -126,6 +131,8 @@ private extension ExploreGameSessionScreen {
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(gameState.currentPointsAvailable) points available")
     }
 }
 
@@ -227,10 +234,12 @@ private extension ExploreGameSessionScreen {
         let isCorrect = gameState.submitGuess(country.name)
         if isCorrect {
             hapticsService.notification(.success)
+            AccessibilityNotification.Announcement("Correct! The country was \(country.name)").post()
             finishGame()
         } else {
             hapticsService.impact(.light)
             wrongGuessName = country.name
+            AccessibilityNotification.Announcement("\(country.name) is not correct. Minus 100 points").post()
             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                 showWrongGuess = true
             }

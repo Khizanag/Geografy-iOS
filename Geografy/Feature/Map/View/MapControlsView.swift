@@ -23,6 +23,7 @@ struct MapControlsView: View {
 private extension MapControlsView {
     var backButton: some View {
         IconButton(systemImage: "chevron.left", action: onBack)
+            .accessibilityLabel("Back")
     }
 
     var labelsToggleButton: some View {
@@ -32,5 +33,7 @@ private extension MapControlsView {
         ) {
             showLabels.toggle()
         }
+        .accessibilityLabel("Country labels")
+        .accessibilityValue(showLabels ? "Shown" : "Hidden")
     }
 }

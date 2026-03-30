@@ -1,6 +1,6 @@
 import Foundation
 
-enum QuizRegion: String, CaseIterable, Identifiable {
+enum QuizRegion: String, CaseIterable, Identifiable, Codable {
     case world
     case africa
     case asia

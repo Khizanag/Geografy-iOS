@@ -59,12 +59,15 @@ private extension CountryBannerView {
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.accent)
                     .padding(.top, 2)
+                    .accessibilityHidden(true)
 
                 Text(capital)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(name), capital \(capital)")
     }
 
     func moreInfoButton(action: @escaping () -> Void) -> some View {
@@ -92,6 +95,7 @@ private extension CountryBannerView {
                 .padding(DesignSystem.Spacing.xs)
         }
         .glassEffect(.regular.interactive(), in: .circle)
+        .accessibilityLabel("Dismiss banner")
     }
 }
 

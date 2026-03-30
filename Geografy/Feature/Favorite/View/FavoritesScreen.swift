@@ -160,13 +160,18 @@ private extension FavoritesScreen {
 
     var emptyState: some View {
         let hasSearch = !searchText.isEmpty || continentFilter != nil
-        return EmptyStateView(
-            icon: hasSearch ? "magnifyingglass" : "heart.slash",
-            title: hasSearch ? "No Results" : "No Favorites Yet",
-            subtitle: hasSearch
-                ? "Try a different search or filter."
-                : "Tap the heart icon on any country to save it here."
-        )
+        return ContentUnavailableView {
+            Label(
+                hasSearch ? "No Results" : "No Favorites Yet",
+                systemImage: hasSearch ? "magnifyingglass" : "heart.slash"
+            )
+        } description: {
+            Text(
+                hasSearch
+                    ? "Try a different search or filter."
+                    : "Tap the heart icon on any country to save it here."
+            )
+        }
     }
 }
 

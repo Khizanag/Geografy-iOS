@@ -118,6 +118,7 @@ private extension OrganizationDetailScreen {
                             .padding(.horizontal, DesignSystem.Spacing.xs)
                             .padding(.vertical, 3)
                             .background(organization.highlightColor.opacity(0.12), in: Capsule())
+                            .accessibilityLabel("\(memberCountries.count) member countries")
                     }
                     Spacer(minLength: 0)
                 }
@@ -206,6 +207,7 @@ private extension OrganizationDetailScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
+                .accessibilityAddTraits(.isHeader)
 
             ForEach(memberCountries) { country in
                 Button { coordinator.push(.countryDetail(country)) } label: {
@@ -227,10 +229,12 @@ private extension OrganizationDetailScreen {
                                 Image(systemName: "heart.fill")
                                     .font(DesignSystem.Font.caption2)
                                     .foregroundStyle(DesignSystem.Color.error)
+                                    .accessibilityLabel("Favorite")
                             }
                             Image(systemName: "chevron.right")
                                 .font(DesignSystem.Font.caption2)
                                 .foregroundStyle(DesignSystem.Color.textTertiary)
+                                .accessibilityHidden(true)
                         }
                         .padding(DesignSystem.Spacing.sm)
                     }

@@ -378,6 +378,7 @@ private extension SettingsScreen {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
+                .accessibilityAddTraits(.isHeader)
             CardView {
                 VStack(spacing: 0) {
                     content()
@@ -469,6 +470,7 @@ private struct SettingsIconBadge: View {
             .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
             .background(color)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+            .accessibilityHidden(true)
     }
 }
 

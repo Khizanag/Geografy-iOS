@@ -18,6 +18,7 @@ struct SizeVisualizationScreen: View {
         }
         .navigationTitle("Size Visualization")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $searchQuery, prompt: "Search countries...")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 CircleCloseButton { dismiss() }
@@ -46,7 +47,6 @@ private extension SizeVisualizationScreen {
 
     var searchAndSortHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            searchField
             sortPicker
             if let reference = referenceCountry {
                 referenceRow(reference)
@@ -55,18 +55,6 @@ private extension SizeVisualizationScreen {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.top, DesignSystem.Spacing.sm)
         .padding(.bottom, DesignSystem.Spacing.sm)
-    }
-
-    var searchField: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            TextField("Search countries...", text: $searchQuery)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 
     var sortPicker: some View {

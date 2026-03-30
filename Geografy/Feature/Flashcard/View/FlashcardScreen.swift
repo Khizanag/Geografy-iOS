@@ -88,6 +88,7 @@ private extension FlashcardScreen {
             Image(systemName: icon)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(color)
+                .accessibilityHidden(true)
             Text(value)
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
@@ -106,6 +107,8 @@ private extension FlashcardScreen {
         .clipShape(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(label): \(value)")
     }
 }
 
@@ -375,4 +378,3 @@ private extension View {
             )
     }
 }
-

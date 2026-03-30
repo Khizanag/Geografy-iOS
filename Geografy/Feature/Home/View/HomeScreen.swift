@@ -212,12 +212,15 @@ private extension HomeScreen {
             Image(systemName: "dollarsign.circle.fill")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.warning)
+                .accessibilityHidden(true)
             Text(coinService.formattedBalance)
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .contentTransition(.numericText())
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(coinService.formattedBalance) coins")
     }
 
     var searchButton: some View {
@@ -248,6 +251,9 @@ private extension HomeScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Level \(xpService.currentLevel.level)")
+        .accessibilityValue("\(Int(xpService.progressFraction * 100)) percent to next level")
     }
 
     var xpProgressBar: some View {
@@ -282,6 +288,7 @@ private extension HomeScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
                     .textCase(.uppercase)
                     .kerning(1.2)
+                    .accessibilityAddTraits(.isHeader)
                 Text(authService.currentProfile?.displayName ?? "Explorer")
                     .font(DesignSystem.Font.largeTitle)
                     .fontWeight(.bold)
@@ -290,6 +297,7 @@ private extension HomeScreen {
             Spacer()
             editSectionsButton
             globeBadge
+                .accessibilityHidden(true)
         }
     }
 
@@ -424,6 +432,9 @@ private extension HomeScreen {
             Spacer()
         }
         .padding(.top, DesignSystem.Spacing.md)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Map carousel page \(selectedMapIndex + 1) of \(maps.count)")
+        .accessibilityValue(maps[selectedMapIndex].name)
     }
 }
 
@@ -601,7 +612,6 @@ private extension HomeScreen {
         default: newFeatureSectionView(for: section)
         }
     }
-
 
     @ViewBuilder
     func fullWidthSectionView(for section: HomeSection) -> some View {

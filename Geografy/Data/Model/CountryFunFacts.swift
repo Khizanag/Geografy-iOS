@@ -1,5 +1,7 @@
+// swiftlint:disable file_length
 import Foundation
 
+// swiftlint:disable:next type_body_length
 struct CountryFunFacts {
     static let data: [String: [String]] = [
         "AF": [

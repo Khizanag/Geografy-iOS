@@ -1,29 +1,31 @@
 import Foundation
 
 final class ChallengeRoomService {
-    func generateRoom(
-        player1Name: String,
-        player2Name: String,
-        totalRounds: Int,
-        quizType: QuizType,
-        comparisonMetric: ComparisonMetric,
-        countries: [Country]
-    ) -> ChallengeRoom {
-        let questionCount = totalRounds * 2
+    struct RoomConfiguration {
+        let player1Name: String
+        let player2Name: String
+        let totalRounds: Int
+        let quizType: QuizType
+        let comparisonMetric: ComparisonMetric
+        let countries: [Country]
+    }
+
+    func generateRoom(configuration: RoomConfiguration) -> ChallengeRoom {
+        let questionCount = configuration.totalRounds * 2
         let questions = generateQuestions(
             count: questionCount,
-            quizType: quizType,
-            comparisonMetric: comparisonMetric,
-            countries: countries
+            quizType: configuration.quizType,
+            comparisonMetric: configuration.comparisonMetric,
+            countries: configuration.countries
         )
         return ChallengeRoom(
-            player1Name: player1Name,
-            player2Name: player2Name,
+            player1Name: configuration.player1Name,
+            player2Name: configuration.player2Name,
             player1Score: 0,
             player2Score: 0,
             currentPlayerIndex: 0,
             roundNumber: 1,
-            totalRounds: totalRounds,
+            totalRounds: configuration.totalRounds,
             questions: questions
         )
     }

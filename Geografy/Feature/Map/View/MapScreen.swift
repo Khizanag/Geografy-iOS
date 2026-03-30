@@ -121,6 +121,8 @@ private extension MapScreen {
             capitalPoint: selectedCapitalPoint,
             travelStatuses: travelService.entries
         )
+        .accessibilityLabel("Interactive world map")
+        .accessibilityHint("Double tap to select a country")
         .gesture(dragGesture)
         .gesture(magnifyGesture)
         .onTapGesture(count: 1) { location in
@@ -152,6 +154,9 @@ private extension MapScreen {
                 }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Country labels")
+        .accessibilityValue(mapState.showLabels ? "Shown" : "Hidden")
+        .accessibilityHint("Double tap to toggle country name labels")
     }
 
 }
