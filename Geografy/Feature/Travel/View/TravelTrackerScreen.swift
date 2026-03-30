@@ -270,10 +270,10 @@ private extension TravelTrackerScreen {
                         .fontWeight(.bold)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 1)
-                        .background(.white.opacity(0.25), in: Capsule())
+                        .background(.primary.opacity(0.15), in: Capsule())
                 }
             }
-            .foregroundStyle(isActive ? .white : DesignSystem.Color.textSecondary)
+            .foregroundStyle(isActive ? DesignSystem.Color.onAccent : DesignSystem.Color.textSecondary)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
             .background(
@@ -470,7 +470,7 @@ private extension TravelTrackerScreen {
                         .fontWeight(.semibold)
                 }
                 .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .padding(.horizontal, DesignSystem.Spacing.lg)
                 .padding(.vertical, DesignSystem.Spacing.sm)
                 .background(DesignSystem.Color.accent, in: Capsule())

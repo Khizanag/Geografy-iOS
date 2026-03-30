@@ -19,7 +19,7 @@ struct IconButton: View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(DesignSystem.Font.headline)
-                .foregroundStyle(isActive ? .white : DesignSystem.Color.textPrimary)
+                .foregroundStyle(isActive ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
                 .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 .background(backgroundColor)
                 .clipShape(Circle())
@@ -34,7 +34,7 @@ private extension IconButton {
         if isActive {
             DesignSystem.Color.accent
         } else {
-            Color.black.opacity(0.5)
+            DesignSystem.Color.overlayScrim
         }
     }
 }

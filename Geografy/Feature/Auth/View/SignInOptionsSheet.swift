@@ -265,7 +265,7 @@ private extension SignInOptionsSheet {
             .frame(height: 50)
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-            .shadow(color: .black.opacity(0.14), radius: 12, y: 4)
+            .geoShadow(.subtle)
         }
         .buttonStyle(.plain)
     }

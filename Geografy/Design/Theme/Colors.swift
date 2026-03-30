@@ -29,6 +29,10 @@ extension DesignSystem {
         static let purple = SwiftUI.Color("GeoPurple")
         static let orange = SwiftUI.Color("GeoOrange")
 
+        // Semantic tokens for adaptive borders, overlays, and scrim
+        static let dividerSubtle = SwiftUI.Color.primary.opacity(0.06)
+        static let overlayScrim = SwiftUI.Color.primary.opacity(0.4)
+
         // 8 perceptually distinct hues, each ~45° apart on the color wheel,
         // tuned for vibrant appearance on a dark background.
         static let mapColors: [SwiftUI.Color] = [

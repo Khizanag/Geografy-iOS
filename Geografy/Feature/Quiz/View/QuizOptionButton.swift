@@ -158,13 +158,13 @@ private extension QuizOptionButton {
         case .default:      .clear
         case .correct:      DesignSystem.Color.success.opacity(0.30)
         case .incorrect:    DesignSystem.Color.error.opacity(0.28)
-        case .disabled:     .black.opacity(0.08)
+        case .disabled:     .primary.opacity(0.08)
         }
     }
 
     var borderColor: Color {
         switch state {
-        case .default:      .white.opacity(0.08)
+        case .default:      .primary.opacity(0.08)
         case .correct:      DesignSystem.Color.success.opacity(0.70)
         case .incorrect:    DesignSystem.Color.error.opacity(0.60)
         case .disabled:     .clear
