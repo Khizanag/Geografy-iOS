@@ -2,9 +2,11 @@ import SwiftUI
 
 extension DesignSystem {
     enum IconSize {
-        static let small: SwiftUI.Font = .system(size: 12, weight: .bold)
-        static let medium: SwiftUI.Font = .system(size: 14, weight: .semibold)
-        static let large: SwiftUI.Font = .system(size: 28)
+        // Dynamic Type — scales with text when icons appear alongside labels
+        static let small: SwiftUI.Font = .caption2.weight(.bold)
+        static let medium: SwiftUI.Font = .footnote.weight(.semibold)
+        static let large: SwiftUI.Font = .title.weight(.regular)
+        // Intentionally fixed — decorative/hero icons that should not scale
         static let xLarge: SwiftUI.Font = .system(size: 40, weight: .thin)
         static let xxLarge: SwiftUI.Font = .system(size: 60)
         static let hero: SwiftUI.Font = .system(size: 80, weight: .thin)
