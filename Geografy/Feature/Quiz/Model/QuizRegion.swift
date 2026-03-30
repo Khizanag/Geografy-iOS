@@ -13,7 +13,6 @@ enum QuizRegion: String, CaseIterable, Identifiable {
 }
 
 // MARK: - Properties
-
 extension QuizRegion: RegionSelectable {
     var displayName: String {
         switch self {
@@ -41,7 +40,6 @@ extension QuizRegion: RegionSelectable {
 }
 
 // MARK: - Filtering
-
 extension QuizRegion {
     func filter(_ countries: [Country]) -> [Country] {
         switch self {

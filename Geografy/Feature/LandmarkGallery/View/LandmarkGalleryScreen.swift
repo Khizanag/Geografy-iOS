@@ -38,7 +38,6 @@ struct LandmarkGalleryScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension LandmarkGalleryScreen {
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -63,7 +62,7 @@ private extension LandmarkGalleryScreen {
         Button(action: action) {
             HStack(spacing: 4) {
                 Image(systemName: icon)
-                    .font(.system(size: 12))
+                    .font(DesignSystem.Font.caption)
                 Text(label)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -89,42 +88,43 @@ private extension LandmarkGalleryScreen {
 
     func landmarkCard(_ landmark: Landmark) -> some View {
         let accentColor = Color(hex: landmark.accentColor)
-        return CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    LinearGradient(
-                        colors: [accentColor.opacity(0.4), accentColor.opacity(0.1)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    Image(systemName: landmark.symbolName)
-                        .font(.system(size: 40))
-                        .foregroundStyle(accentColor)
-                }
-                .frame(height: 100)
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-                VStack(spacing: 4) {
-                    Text(landmark.name)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                    HStack(spacing: 4) {
-                        FlagView(countryCode: landmark.countryCode, height: 14)
-                            .clipShape(RoundedRectangle(cornerRadius: 2))
-                        Text(landmark.city)
-                            .font(.system(size: 11))
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                            .lineLimit(1)
-                    }
-                }
-                .padding(.horizontal, DesignSystem.Spacing.xs)
-                .padding(.bottom, DesignSystem.Spacing.xs)
-            }
-        }
-        .onTapGesture {
+        return Button {
             selectedLandmark = landmark
+        } label: {
+            CardView {
+                VStack(spacing: DesignSystem.Spacing.sm) {
+                    ZStack {
+                        LinearGradient(
+                            colors: [accentColor.opacity(0.4), accentColor.opacity(0.1)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        Image(systemName: landmark.symbolName)
+                            .font(DesignSystem.Font.displayXXS)
+                            .foregroundStyle(accentColor)
+                    }
+                    .frame(height: 100)
+                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+                    VStack(spacing: 4) {
+                        Text(landmark.name)
+                            .font(DesignSystem.Font.caption)
+                            .fontWeight(.bold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                        HStack(spacing: 4) {
+                            FlagView(countryCode: landmark.countryCode, height: 14)
+                                .clipShape(RoundedRectangle(cornerRadius: 2))
+                            Text(landmark.city)
+                                .font(DesignSystem.Font.caption2)
+                                .foregroundStyle(DesignSystem.Color.textSecondary)
+                                .lineLimit(1)
+                        }
+                    }
+                    .padding(.horizontal, DesignSystem.Spacing.xs)
+                    .padding(.bottom, DesignSystem.Spacing.xs)
+                }
+            }
         }
         .buttonStyle(PressButtonStyle())
     }

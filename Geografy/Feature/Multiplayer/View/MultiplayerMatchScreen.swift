@@ -47,7 +47,6 @@ struct MultiplayerMatchScreen: View {
 }
 
 // MARK: - Body Subviews
-
 private extension MultiplayerMatchScreen {
     var matchContent: some View {
         VStack(spacing: 0) {
@@ -75,7 +74,6 @@ private extension MultiplayerMatchScreen {
 }
 
 // MARK: - Score Bar
-
 private extension MultiplayerMatchScreen {
     var scoreBar: some View {
         HStack(spacing: 0) {
@@ -99,7 +97,7 @@ private extension MultiplayerMatchScreen {
             Spacer(minLength: 0)
 
             Text("\(playerScore)")
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(DesignSystem.Font.roundedBody)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .contentTransition(.numericText())
         }
@@ -108,7 +106,7 @@ private extension MultiplayerMatchScreen {
 
     var scoreDivider: some View {
         Text(":")
-            .font(.system(size: 24, weight: .bold, design: .rounded))
+            .font(DesignSystem.Font.roundedCallout)
             .foregroundStyle(DesignSystem.Color.textTertiary)
             .padding(.horizontal, DesignSystem.Spacing.sm)
     }
@@ -116,7 +114,7 @@ private extension MultiplayerMatchScreen {
     var opponentSide: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Text("\(opponentScore)")
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(DesignSystem.Font.roundedBody)
                 .foregroundStyle(DesignSystem.Color.purple)
                 .contentTransition(.numericText())
 
@@ -135,7 +133,6 @@ private extension MultiplayerMatchScreen {
 }
 
 // MARK: - Progress
-
 private extension MultiplayerMatchScreen {
     var progressSection: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -175,7 +172,7 @@ private extension MultiplayerMatchScreen {
 
     var questionCounterPill: some View {
         Text("\(currentIndex + 1)/\(questions.count)")
-            .font(.system(size: 13, weight: .black, design: .rounded))
+            .font(DesignSystem.Font.roundedMicro)
             .foregroundStyle(DesignSystem.Color.textSecondary)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
@@ -187,7 +184,6 @@ private extension MultiplayerMatchScreen {
 }
 
 // MARK: - Question Content
-
 private extension MultiplayerMatchScreen {
     @ViewBuilder
     var questionContent: some View {
@@ -214,7 +210,6 @@ private extension MultiplayerMatchScreen {
 }
 
 // MARK: - Background
-
 private extension MultiplayerMatchScreen {
     var ambientBlobs: some View {
         ZStack {
@@ -266,7 +261,6 @@ private extension MultiplayerMatchScreen {
 }
 
 // MARK: - Actions
-
 private extension MultiplayerMatchScreen {
     func loadMatch() {
         countryDataService.loadCountries()
@@ -412,7 +406,6 @@ private extension MultiplayerMatchScreen {
 }
 
 // MARK: - Helpers
-
 private extension MultiplayerMatchScreen {
     var currentQuestion: QuizQuestion? {
         guard questions.indices.contains(currentIndex) else { return nil }

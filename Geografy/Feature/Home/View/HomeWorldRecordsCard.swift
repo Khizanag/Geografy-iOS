@@ -70,7 +70,6 @@ struct HomeWorldRecordsCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeWorldRecordsCard {
     var sectionHeader: some View {
         HStack {
@@ -110,14 +109,14 @@ private extension HomeWorldRecordsCard {
                 endPoint: .bottomTrailing
             )
             Text(record.emoji)
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .opacity(0.18)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                 .offset(x: 6, y: -6)
                 .clipped()
             VStack(alignment: .leading, spacing: 3) {
                 Text(record.emoji)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.iconDefault)
                 Text(record.title)
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)

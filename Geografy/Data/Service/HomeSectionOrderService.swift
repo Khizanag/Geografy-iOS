@@ -55,7 +55,6 @@ final class HomeSectionOrderService {
 }
 
 // MARK: - Helpers
-
 private extension HomeSectionOrderService {
     func persist() {
         guard let data = try? JSONEncoder().encode(sections) else { return }

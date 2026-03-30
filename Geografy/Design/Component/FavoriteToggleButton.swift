@@ -19,7 +19,7 @@ struct FavoriteToggleButton: View {
             }
         } label: {
             Image(systemName: isFavorite ? "heart.fill" : "heart")
-                .font(.system(size: iconSize))
+                .font(DesignSystem.Font.system(size: iconSize))
                 .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
                 .symbolEffect(.bounce, value: isFavorite)
                 .contentShape(Rectangle())

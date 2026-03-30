@@ -21,7 +21,6 @@ struct TravelStatsCard: View {
 }
 
 // MARK: - Subviews
-
 private extension TravelStatsCard {
     var visitedFraction: Double {
         guard totalCountries > 0 else { return 0 }
@@ -78,7 +77,7 @@ private extension TravelStatsCard {
     func statLine(icon: String, color: Color, label: String, value: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
-                .font(.system(size: 12))
+                .font(DesignSystem.Font.caption)
                 .foregroundStyle(color)
                 .frame(width: 16)
             Text(label)

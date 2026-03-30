@@ -10,14 +10,13 @@ struct ProfileAvatarView: View {
                 .fill(gradient)
                 .frame(width: size, height: size)
             Text(initials)
-                .font(.system(size: size * 0.36, weight: .bold))
+                .font(DesignSystem.Font.system(size: size * 0.36, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.onAccent)
         }
     }
 }
 
 // MARK: - Helpers
-
 private extension ProfileAvatarView {
     var initials: String {
         let words = name.split(separator: " ")

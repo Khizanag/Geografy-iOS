@@ -10,7 +10,6 @@ final class NationalSymbolsService {
 }
 
 // MARK: - Data
-
 private extension NationalSymbolsService {
     // swiftlint:disable:next closure_body_length
     static let allSymbols: [NationalSymbol] = [

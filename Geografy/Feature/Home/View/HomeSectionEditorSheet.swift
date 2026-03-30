@@ -31,7 +31,6 @@ struct HomeSectionEditorSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeSectionEditorSheet {
     var sectionList: some View {
         List {

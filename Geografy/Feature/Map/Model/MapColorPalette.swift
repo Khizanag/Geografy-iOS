@@ -45,7 +45,6 @@ enum MapColorPalette {
 }
 
 // MARK: - Adjacency Detection
-
 private extension MapColorPalette {
     static func buildAdjacencyMap(from shapes: [CountryShape]) -> [String: Set<String>] {
         var adjacency: [String: Set<String>] = [:]
@@ -129,7 +128,6 @@ private extension MapColorPalette {
 }
 
 // MARK: - Color Assignment
-
 private extension MapColorPalette {
     static func neighborColors(
         for code: String,

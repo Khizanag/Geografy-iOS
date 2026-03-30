@@ -43,7 +43,6 @@ struct WordSearchGameScreen: View {
 }
 
 // MARK: - Toolbar
-
 private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -53,7 +52,7 @@ private extension WordSearchGameScreen {
                     Image(systemName: "timer")
                         .font(DesignSystem.Font.caption2)
                     Text(formattedTime)
-                        .font(.system(size: 13, weight: .bold, design: .monospaced))
+                        .font(DesignSystem.Font.monoCaption2)
                 }
                 .foregroundStyle(isPaused ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
@@ -85,7 +84,6 @@ private extension WordSearchGameScreen {
 }
 
 // MARK: - Game Content
-
 private extension WordSearchGameScreen {
     func gameContent(_ puzzle: WordSearchPuzzle) -> some View {
         ScrollView(showsIndicators: false) {
@@ -134,7 +132,7 @@ private extension WordSearchGameScreen {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: allFound(puzzle) ? "trophy.fill" : "flag.checkered")
-                    .font(.system(size: 36))
+                    .font(DesignSystem.Font.iconXL)
                     .foregroundStyle(allFound(puzzle) ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
                 Text(allFound(puzzle) ? "All Words Found!" : "Puzzle Complete")
                     .font(DesignSystem.Font.title2)
@@ -222,7 +220,7 @@ private extension WordSearchGameScreen {
             .overlay {
                 VStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "pause.circle.fill")
-                        .font(.system(size: 48))
+                        .font(DesignSystem.Font.displaySmall)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                     Text("Paused")
                         .font(DesignSystem.Font.title2)
@@ -249,7 +247,7 @@ private extension WordSearchGameScreen {
             Rectangle()
                 .fill(cellBackground(isHighlighted: isHighlighted, isFound: isFound))
             Text(String(letter))
-                .font(.system(size: max(cellSize * 0.48, 12), weight: .semibold, design: .monospaced))
+                .font(DesignSystem.Font.system(size: max(cellSize * 0.48, 12), weight: .semibold, design: .monospaced))
                 .foregroundStyle(
                     isHighlighted || isFound
                         ? DesignSystem.Color.onAccent
@@ -323,7 +321,6 @@ private extension WordSearchGameScreen {
 }
 
 // MARK: - Gesture
-
 private extension WordSearchGameScreen {
     func dragGesture(cellSize: CGFloat, puzzle: WordSearchPuzzle) -> some Gesture {
         DragGesture(minimumDistance: 0)
@@ -349,7 +346,6 @@ private extension WordSearchGameScreen {
 }
 
 // MARK: - Helpers
-
 private extension WordSearchGameScreen {
     var gameFinished: Bool {
         guard let puzzle else { return false }
@@ -452,7 +448,6 @@ private extension WordSearchGameScreen {
 }
 
 // MARK: - Supporting Types
-
 private struct GridCoord: Hashable {
     let row: Int
     let col: Int

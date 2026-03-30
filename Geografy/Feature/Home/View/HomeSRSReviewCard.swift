@@ -15,7 +15,6 @@ struct HomeSRSReviewCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeSRSReviewCard {
     var cardContent: some View {
         HStack(spacing: DesignSystem.Spacing.md) {

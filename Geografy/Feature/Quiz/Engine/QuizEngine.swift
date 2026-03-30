@@ -16,7 +16,6 @@ final class QuizEngine {
 }
 
 // MARK: - QuizState
-
 enum QuizState {
     case setup
     case answering
@@ -25,7 +24,6 @@ enum QuizState {
 }
 
 // MARK: - Computed Properties
-
 extension QuizEngine {
     var currentQuestion: QuizQuestion? {
         guard currentIndex >= 0, currentIndex < questions.count else { return nil }
@@ -43,7 +41,6 @@ extension QuizEngine {
 }
 
 // MARK: - Actions
-
 extension QuizEngine {
     func start(config: QuizConfiguration, countries: [Country]) {
         let filtered = config.region.filter(countries)
@@ -111,7 +108,6 @@ extension QuizEngine {
 }
 
 // MARK: - Timer
-
 private extension QuizEngine {
     func startTimer(duration: TimeInterval) {
         timerRemaining = duration

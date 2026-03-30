@@ -18,7 +18,6 @@ struct SpellingBeeGuideSheet: View {
 }
 
 // MARK: - Illustrations
-
 private extension SpellingBeeGuideSheet {
     @ViewBuilder
     func illustrationView(for type: SpellingBeeIllustration) -> some View {
@@ -33,7 +32,7 @@ private extension SpellingBeeGuideSheet {
     var flagAndTypeIllustration: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Text("🇫🇷")
-                .font(.system(size: 60))
+                .font(DesignSystem.Font.display)
                 .scaleEffect(animating ? 1.05 : 0.95)
             HStack(spacing: 4) {
                 ForEach(Array("FRANCE".enumerated()), id: \.offset) { index, letter in
@@ -86,7 +85,6 @@ private extension SpellingBeeGuideSheet {
 }
 
 // MARK: - Illustration Helpers
-
 private extension SpellingBeeGuideSheet {
     func letterMock(_ letter: String, correct: Bool, empty: Bool = false) -> some View {
         Text(empty ? "" : letter)

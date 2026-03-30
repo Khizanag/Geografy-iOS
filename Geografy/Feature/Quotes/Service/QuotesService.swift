@@ -35,7 +35,6 @@ final class QuotesService {
 }
 
 // MARK: - Persistence
-
 private extension QuotesService {
     func loadFavorites() {
         let favoriteIds = Set(UserDefaults.standard.stringArray(forKey: favoritesKey) ?? [])
@@ -51,7 +50,6 @@ private extension QuotesService {
 }
 
 // MARK: - Data
-
 private extension QuotesService {
     func makeQuotes() -> [Quote] {
         [

@@ -20,7 +20,6 @@ struct HomeSizeVisualizationCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeSizeVisualizationCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeSizeVisualizationCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "arrow.up.left.and.arrow.down.right")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.orange)
         }
     }

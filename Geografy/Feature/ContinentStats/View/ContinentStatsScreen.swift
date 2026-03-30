@@ -28,7 +28,6 @@ struct ContinentStatsScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension ContinentStatsScreen {
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
@@ -50,7 +49,7 @@ private extension ContinentStatsScreen {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Text(continentEmoji)
-                .font(.system(size: 64))
+                .font(DesignSystem.Font.display)
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text(continentName)
                     .font(DesignSystem.Font.largeTitle)
@@ -117,7 +116,7 @@ private extension ContinentStatsScreen {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 HStack {
                     Image(systemName: icon)
-                        .font(.system(size: 18))
+                        .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(color)
                     Spacer()
                 }
@@ -142,11 +141,13 @@ private extension ContinentStatsScreen {
             SectionHeaderView(title: "Countries by Population")
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(sortedByPopulation) { country in
-                    CountryRowView(country: country, isFavorite: false)
-                        .onTapGesture {
-                            hapticsService.impact(.light)
-                            coordinator.push(.countryDetail(country))
-                        }
+                    Button {
+                        hapticsService.impact(.light)
+                        coordinator.push(.countryDetail(country))
+                    } label: {
+                        CountryRowView(country: country, isFavorite: false)
+                    }
+                    .buttonStyle(PressButtonStyle())
                 }
             }
         }
@@ -154,7 +155,6 @@ private extension ContinentStatsScreen {
 }
 
 // MARK: - Data
-
 private extension ContinentStatsScreen {
     var continentCountries: [Country] {
         countryDataService.countries.filter { $0.continent.displayName == continentName }

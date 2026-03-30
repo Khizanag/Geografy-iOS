@@ -32,7 +32,6 @@ struct CultureDetailView: View {
 }
 
 // MARK: - Subviews
-
 private extension CultureDetailView {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -109,7 +108,7 @@ private extension CultureDetailView {
                         .fill(DesignSystem.Color.accent.opacity(0.12))
                         .frame(width: 42, height: 42)
                     Image(systemName: icon)
-                        .font(.system(size: 18))
+                        .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -133,7 +132,7 @@ private extension CultureDetailView {
             CardView {
                 HStack(alignment: .top, spacing: DesignSystem.Spacing.md) {
                     Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.iconDefault)
                         .foregroundStyle(DesignSystem.Color.warning)
                         .padding(.top, 2)
                     Text(profile.funCultureFact)

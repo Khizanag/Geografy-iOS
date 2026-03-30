@@ -36,7 +36,6 @@ struct TimelineScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TimelineScreen {
     var filterBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -303,7 +302,6 @@ private extension TimelineScreen {
 }
 
 // MARK: - Toolbar
-
 private extension TimelineScreen {
     @ToolbarContentBuilder
     var historicalMapToolbarItem: some ToolbarContent {
@@ -317,7 +315,6 @@ private extension TimelineScreen {
 }
 
 // MARK: - Computed Properties
-
 private extension TimelineScreen {
     var selectableContinents: [Country.Continent] {
         Country.Continent.allCases.filter { $0 != .antarctica }

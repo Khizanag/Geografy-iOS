@@ -40,7 +40,6 @@ struct HomeProgressCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeProgressCard {
     var cardHeader: some View {
         HStack {
@@ -183,7 +182,6 @@ private extension HomeProgressCard {
 }
 
 // MARK: - Helpers
-
 private extension HomeProgressCard {
     var xpProgressGradient: LinearGradient {
         LinearGradient(

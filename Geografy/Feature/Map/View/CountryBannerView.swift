@@ -35,7 +35,6 @@ struct CountryBannerView: View {
 }
 
 // MARK: - Subviews
-
 private extension CountryBannerView {
     var flagView: some View {
         Button { onFlagTap?() } label: {
@@ -97,7 +96,6 @@ private extension CountryBannerView {
 }
 
 // MARK: - Gestures
-
 private extension CountryBannerView {
     var swipeToDismiss: some Gesture {
         DragGesture(minimumDistance: 10)

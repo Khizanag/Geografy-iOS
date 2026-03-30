@@ -27,7 +27,6 @@ struct TerritorialDispute: Identifiable {
 }
 
 // MARK: - All Disputes
-
 extension TerritorialDispute {
     static let all: [TerritorialDispute] = [
         // Europe

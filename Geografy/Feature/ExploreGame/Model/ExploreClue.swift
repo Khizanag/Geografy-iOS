@@ -10,7 +10,6 @@ struct ExploreClue: Identifiable {
 }
 
 // MARK: - Scoring
-
 extension ExploreClue {
     /// Points awarded for a correct guess after revealing this clue.
     var pointsAvailable: Int {

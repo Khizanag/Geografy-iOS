@@ -21,7 +21,6 @@ struct FlagGameResultScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension FlagGameResultScreen {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -30,7 +29,7 @@ private extension FlagGameResultScreen {
                     .fill(DesignSystem.Color.orange.opacity(0.15))
                     .frame(width: 80, height: 80)
                 Image(systemName: "flag.fill")
-                    .font(.system(size: 32))
+                    .font(DesignSystem.Font.iconXL)
                     .foregroundStyle(DesignSystem.Color.orange)
             }
             Text("Round Complete!")

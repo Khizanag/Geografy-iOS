@@ -37,7 +37,6 @@ struct QuizOptionButton: View {
 }
 
 // MARK: - Keyboard Shortcut
-
 private extension QuizOptionButton {
     var keyForIndex: KeyEquivalent {
         switch index {
@@ -51,7 +50,6 @@ private extension QuizOptionButton {
 }
 
 // MARK: - OptionState
-
 extension QuizOptionButton {
     enum OptionState: Equatable {
         case `default`
@@ -62,7 +60,6 @@ extension QuizOptionButton {
 }
 
 // MARK: - Subviews
-
 private extension QuizOptionButton {
     @ViewBuilder
     var content: some View {
@@ -155,7 +152,6 @@ private extension QuizOptionButton {
 }
 
 // MARK: - Helpers
-
 private extension QuizOptionButton {
     var overlayColor: Color {
         switch state {

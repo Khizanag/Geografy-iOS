@@ -37,7 +37,6 @@ struct NicknameQuizScreen: View {
 }
 
 // MARK: - Quiz Content
-
 private extension NicknameQuizScreen {
     var quizContent: some View {
         VStack(spacing: 0) {
@@ -110,7 +109,6 @@ private extension NicknameQuizScreen {
 }
 
 // MARK: - Game Over
-
 private extension NicknameQuizScreen {
     var gameOverContent: some View {
         ScrollView {
@@ -136,7 +134,7 @@ private extension NicknameQuizScreen {
                     .fill(DesignSystem.Color.accent.opacity(0.12))
                     .frame(width: 96, height: 96)
                 Image(systemName: gradeFraction >= 0.8 ? "trophy.fill" : "star.fill")
-                    .font(.system(size: 44))
+                    .font(DesignSystem.Font.displayXS)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             Text(gradeFraction >= 0.8 ? "Nickname Expert!" : "Well Played!")
@@ -189,7 +187,6 @@ private extension NicknameQuizScreen {
 }
 
 // MARK: - Actions
-
 private extension NicknameQuizScreen {
     var currentQuestion: NicknameQuestion {
         questions[currentIndex]
@@ -256,7 +253,6 @@ private extension NicknameQuizScreen {
 }
 
 // MARK: - Supporting Types
-
 private extension NicknameQuizScreen {
     struct NicknameQuestion {
         let nickname: String

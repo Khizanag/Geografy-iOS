@@ -60,7 +60,6 @@ struct DistanceCalculatorScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension DistanceCalculatorScreen {
     var pickerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -150,7 +149,7 @@ private extension DistanceCalculatorScreen {
                 animateLine()
             } label: {
                 Image(systemName: "arrow.up.arrow.down.circle.fill")
-                    .font(.system(size: 28))
+                    .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(hasCountry ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary)
                     .background(DesignSystem.Color.background, in: Circle())
             }
@@ -169,7 +168,7 @@ private extension DistanceCalculatorScreen {
 
                 HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                     Text(formatDistance(distance, inKm: true))
-                        .font(.system(size: 40, weight: .bold, design: .rounded))
+                        .font(DesignSystem.Font.roundedLarge)
                         .foregroundStyle(DesignSystem.Color.accent)
                         .contentTransition(.numericText())
                         .animation(.spring(response: 0.4), value: distance)
@@ -224,7 +223,7 @@ private extension DistanceCalculatorScreen {
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Text(icon)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.iconDefault)
                     .frame(width: 32)
 
                 Text(label)
@@ -279,7 +278,6 @@ private extension DistanceCalculatorScreen {
 }
 
 // MARK: - Actions
-
 private extension DistanceCalculatorScreen {
     func animateLine() {
         guard originCountry != nil, destinationCountry != nil else { return }
@@ -291,7 +289,6 @@ private extension DistanceCalculatorScreen {
 }
 
 // MARK: - Helpers
-
 private extension DistanceCalculatorScreen {
     var calculatedDistance: Double? {
         guard
@@ -365,7 +362,6 @@ private extension DistanceCalculatorScreen {
 }
 
 // MARK: - Distance Map View
-
 private struct DistanceMapView: View {
     let originCode: String?
     let destinationCode: String?
@@ -486,7 +482,6 @@ private struct DistanceMapView: View {
 }
 
 // MARK: - Country Picker Sheet
-
 private struct CountryPickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 

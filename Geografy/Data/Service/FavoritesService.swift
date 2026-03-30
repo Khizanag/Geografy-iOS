@@ -38,7 +38,6 @@ final class FavoritesService {
 }
 
 // MARK: - Helpers
-
 private extension FavoritesService {
     func fetchEntries() {
         let descriptor = FetchDescriptor<FavoriteEntry>()

@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Flag Symbolism Section
-
 extension CountryDetailScreen {
     var flagSymbolism: FlagSymbolism? {
         FlagSymbolismData.data[country.code]
@@ -19,7 +18,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Flag Symbolism Card
-
 private struct FlagSymbolismCard: View {
     let symbolism: FlagSymbolism
 
@@ -44,7 +42,6 @@ private struct FlagSymbolismCard: View {
 }
 
 // MARK: - Subviews
-
 private extension FlagSymbolismCard {
     var headerRow: some View {
         Button {
@@ -58,7 +55,7 @@ private extension FlagSymbolismCard {
                         .fill(DesignSystem.Color.accent.opacity(0.12))
                         .frame(width: 36, height: 36)
                     Image(systemName: "flag.fill")
-                        .font(.system(size: 14))
+                        .font(DesignSystem.Font.iconXS)
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
 
@@ -152,7 +149,7 @@ private extension FlagSymbolismCard {
 
             HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "clock.arrow.circlepath")
-                    .font(.system(size: 13))
+                    .font(DesignSystem.Font.footnote)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
                     .frame(width: 20)
                     .padding(.top, 1)
@@ -199,7 +196,7 @@ private extension FlagSymbolismCard {
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)
                     .frame(width: 32, height: 32)
                 Image(systemName: emblem.symbol)
-                    .font(.system(size: 14))
+                    .font(DesignSystem.Font.iconXS)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
 

@@ -9,7 +9,6 @@ extension DesignSystem {
 }
 
 // MARK: - ViewModifier
-
 extension DesignSystem.Shadow {
     var radius: CGFloat {
         switch self {
@@ -37,7 +36,6 @@ extension DesignSystem.Shadow {
 }
 
 // MARK: - View Extension
-
 extension View {
     func geoShadow(_ style: DesignSystem.Shadow = .card) -> some View {
         shadow(

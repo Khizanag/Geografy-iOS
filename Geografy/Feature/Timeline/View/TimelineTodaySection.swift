@@ -16,7 +16,6 @@ struct TimelineTodaySection: View {
 }
 
 // MARK: - Subviews
-
 private extension TimelineTodaySection {
     var todayDateLabel: some View {
         Text(formattedToday)
@@ -35,7 +34,6 @@ private extension TimelineTodaySection {
 }
 
 // MARK: - Helpers
-
 private extension TimelineTodaySection {
     var formattedToday: String {
         let formatter = DateFormatter()

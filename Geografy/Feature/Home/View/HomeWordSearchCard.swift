@@ -20,7 +20,6 @@ struct HomeWordSearchCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeWordSearchCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeWordSearchCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "character.magnify")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.indigo)
         }
     }

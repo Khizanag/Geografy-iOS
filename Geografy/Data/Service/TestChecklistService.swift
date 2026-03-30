@@ -10,13 +10,11 @@ final class TestChecklistService {
 }
 
 // MARK: - Model
-
 struct TestChecklist {
     let items: [String]
 }
 
 // MARK: - Default Checklists
-
 private extension TestChecklistService {
     static let defaultChecklists: [String: TestChecklist] = [
         "profile": TestChecklist(items: [
@@ -230,7 +228,6 @@ private extension TestChecklistService {
 }
 
 // MARK: - Lookup
-
 extension TestChecklistService {
     func checklist(for sheet: String) -> TestChecklist? {
         checklists[sheet]

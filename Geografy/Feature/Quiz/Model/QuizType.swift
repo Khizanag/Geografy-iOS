@@ -12,7 +12,6 @@ enum QuizType: String, CaseIterable, Identifiable, Codable {
 }
 
 // MARK: - Display
-
 private extension QuizType {
     static let displayNames: [QuizType: String] = [
         .flagQuiz: "Flag Quiz",
@@ -52,7 +51,6 @@ private extension QuizType {
 }
 
 // MARK: - Computed Properties
-
 extension QuizType: SelectableType {
     var displayName: String {
         Self.displayNames[self] ?? rawValue

@@ -30,7 +30,6 @@ final class HapticsService {
 }
 
 // MARK: - Helpers
-
 private extension HapticsService {
     var isEnabled: Bool {
         UserDefaults.standard.object(forKey: "hapticFeedbackEnabled") as? Bool ?? true

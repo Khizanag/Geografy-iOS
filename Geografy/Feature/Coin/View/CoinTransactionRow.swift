@@ -15,7 +15,6 @@ struct CoinTransactionRow: View {
 }
 
 // MARK: - Subviews
-
 private extension CoinTransactionRow {
     var iconCircle: some View {
         ZStack {
@@ -52,7 +51,6 @@ private extension CoinTransactionRow {
 }
 
 // MARK: - Helpers
-
 private extension CoinTransactionRow {
     var isEarning: Bool { transaction.amount > 0 }
 

@@ -37,14 +37,13 @@ struct CoinPackPreviewSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension CoinPackPreviewSheet {
     var coinHero: some View {
         ZStack {
             glowCircle
 
             Image(systemName: "dollarsign.circle.fill")
-                .font(.system(size: 80))
+                .font(DesignSystem.Font.displayXL)
                 .foregroundStyle(coinGradient)
                 .scaleEffect(coinAnimating ? 1.08 : 0.95)
                 .shadow(color: DesignSystem.Color.warning.opacity(0.4), radius: 20)
@@ -75,7 +74,7 @@ private extension CoinPackPreviewSheet {
     var sparkles: some View {
         ForEach(0..<6, id: \.self) { index in
             Image(systemName: "sparkle")
-                .font(.system(size: CGFloat.random(in: 8...14), weight: .bold))
+                .font(DesignSystem.Font.system(size: CGFloat.random(in: 8...14), weight: .bold))
                 .foregroundStyle(DesignSystem.Color.warning)
                 .offset(
                     x: sparkleOffset(for: index).x,
@@ -96,7 +95,7 @@ private extension CoinPackPreviewSheet {
             tagBadge
 
             Text(pack.formattedCoins)
-                .font(.system(size: 44, weight: .bold, design: .rounded))
+                .font(DesignSystem.Font.roundedXL)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text("coins")
@@ -127,7 +126,7 @@ private extension CoinPackPreviewSheet {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 if !pack.badgeIcon.isEmpty {
                     Image(systemName: pack.badgeIcon)
-                        .font(.system(size: 11, weight: .bold))
+                        .font(DesignSystem.Font.caption2.bold())
                 }
                 Text(tagText)
             }
@@ -174,7 +173,6 @@ private extension CoinPackPreviewSheet {
 }
 
 // MARK: - Helpers
-
 private extension CoinPackPreviewSheet {
     var tagColor: Color {
         if pack.isPopular {

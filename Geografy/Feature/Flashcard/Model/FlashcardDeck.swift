@@ -10,7 +10,6 @@ struct FlashcardDeck: Identifiable {
 }
 
 // MARK: - Predefined Decks
-
 extension FlashcardDeck {
     static func makeContinentDecks(cardType: FlashcardType) -> [FlashcardDeck] {
         [

@@ -32,7 +32,6 @@ struct DailyChallengeSessionScreen: View {
 }
 
 // MARK: - Content
-
 private extension DailyChallengeSessionScreen {
     var challengeContent: some View {
         VStack(spacing: 0) {
@@ -54,7 +53,7 @@ private extension DailyChallengeSessionScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
 
                 Text("\(String(score)) pts")
-                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.roundedMicro2)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .contentTransition(.numericText())
             }
@@ -102,7 +101,6 @@ private extension DailyChallengeSessionScreen {
 }
 
 // MARK: - Actions
-
 private extension DailyChallengeSessionScreen {
     func finishChallenge() {
         let timeSpent = Date().timeIntervalSince(startTime)

@@ -42,7 +42,6 @@ struct FlashcardSessionScreen: View {
 }
 
 // MARK: - Body Subviews
-
 private extension FlashcardSessionScreen {
     @ViewBuilder
     var sessionContent: some View {
@@ -103,7 +102,6 @@ private extension FlashcardSessionScreen {
 }
 
 // MARK: - Progress
-
 private extension FlashcardSessionScreen {
     var progressSection: some View {
         SessionProgressView(progress: progressFraction, current: currentIndex + 1, total: cards.count)
@@ -112,7 +110,6 @@ private extension FlashcardSessionScreen {
 }
 
 // MARK: - Card
-
 private extension FlashcardSessionScreen {
     var cardSection: some View {
         GeometryReader { geometry in
@@ -197,7 +194,6 @@ private extension FlashcardSessionScreen {
 }
 
 // MARK: - Rating
-
 private extension FlashcardSessionScreen {
     @ViewBuilder
     var ratingSection: some View {
@@ -269,7 +265,6 @@ private extension FlashcardSessionScreen {
 }
 
 // MARK: - Actions
-
 private extension FlashcardSessionScreen {
     func showCountryDetail() {
         let code = currentCard.countryCode
@@ -395,7 +390,6 @@ private extension FlashcardSessionScreen {
 }
 
 // MARK: - Helpers
-
 private extension FlashcardSessionScreen {
     var currentCard: FlashcardItem {
         cards[min(currentIndex, cards.count - 1)]
@@ -431,7 +425,6 @@ private extension FlashcardSessionScreen {
 }
 
 // MARK: - Swipe Feedback
-
 enum SwipeFeedback {
     case correct
     case wrong

@@ -20,7 +20,6 @@ struct HomeGeographyFeaturesCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeGeographyFeaturesCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeGeographyFeaturesCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "mountain.2.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.blue)
         }
     }

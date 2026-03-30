@@ -51,7 +51,6 @@ struct WorldBankChartSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension WorldBankChartSheet {
     var filteredPoints: [WorldBankService.DataPoint] {
         guard let years = selectedRange.years,
@@ -67,7 +66,7 @@ private extension WorldBankChartSheet {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             if let latest = allPoints.last {
                 Text(indicator.format(latest.value))
-                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.roundedTitle)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                 HStack(spacing: DesignSystem.Spacing.xs) {
                     Text("Latest: \(String(latest.year))")

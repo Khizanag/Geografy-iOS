@@ -11,7 +11,6 @@ final class MockOpponentEngine {
 }
 
 // MARK: - Actions
-
 extension MockOpponentEngine {
     func simulateAnswer(
         for question: QuizQuestion,
@@ -60,7 +59,6 @@ extension MockOpponentEngine {
 }
 
 // MARK: - Helpers
-
 private extension MockOpponentEngine {
     func makeAnswerDelay(isCorrect: Bool) -> TimeInterval {
         if isCorrect {

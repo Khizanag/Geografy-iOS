@@ -33,7 +33,6 @@ struct TravelJournalScreen: View {
 }
 
 // MARK: - ActiveSheet
-
 extension TravelJournalScreen {
     enum ActiveSheet: Identifiable {
         case newEntry
@@ -51,7 +50,6 @@ extension TravelJournalScreen {
 }
 
 // MARK: - Toolbar
-
 private extension TravelJournalScreen {
     @ToolbarContentBuilder
     var addEntryButton: some ToolbarContent {
@@ -70,7 +68,6 @@ private extension TravelJournalScreen {
 }
 
 // MARK: - Subviews
-
 private extension TravelJournalScreen {
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
@@ -176,7 +173,7 @@ private extension TravelJournalScreen {
     var emptyState: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: "book.closed.fill")
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .padding(.top, DesignSystem.Spacing.xxl)
 
@@ -213,7 +210,7 @@ private extension TravelJournalScreen {
     var noResultsState: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 36))
+                .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.top, DesignSystem.Spacing.xl)
             Text("No entries found")
@@ -265,7 +262,6 @@ private extension TravelJournalScreen {
 }
 
 // MARK: - Data
-
 private extension TravelJournalScreen {
     var isSearching: Bool { !searchText.isEmpty }
 

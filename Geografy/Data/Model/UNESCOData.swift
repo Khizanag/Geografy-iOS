@@ -14,13 +14,11 @@ struct UNESCOSite {
 }
 
 // MARK: - Data
-
 enum UNESCOData {
     // swiftlint:disable:next function_body_length
     static let data: [String: [UNESCOSite]] = [
 
         // MARK: Asia
-
         "CN": [
             UNESCOSite(name: "The Great Wall", type: .cultural, yearInscribed: 1987, description: "Stretching over 21,000 km, it is the largest military structure ever built, constructed across centuries of Chinese history."),
             UNESCOSite(name: "Imperial Palace of the Ming and Qing Dynasties (Forbidden City)", type: .cultural, yearInscribed: 1987, description: "The world's largest palace complex, home to 24 Chinese emperors over nearly 500 years."),
@@ -137,7 +135,6 @@ enum UNESCOData {
         ],
 
         // MARK: Europe
-
         "IT": [
             UNESCOSite(name: "Historic Centre of Rome", type: .cultural, yearInscribed: 1980, description: "The Eternal City encompasses the Colosseum, the Roman Forum, the Pantheon, and 2,700 years of architectural history."),
             UNESCOSite(name: "Venice and its Lagoon", type: .cultural, yearInscribed: 1987, description: "Built on 118 islands separated by canals, Venice is a unique masterpiece of art, architecture, and an extraordinary relationship with the sea."),
@@ -249,7 +246,6 @@ enum UNESCOData {
         ],
 
         // MARK: Americas
-
         "US": [
             UNESCOSite(name: "Grand Canyon National Park", type: .natural, yearInscribed: 1979, description: "The Colorado River carved this 446-km gorge reaching 1.6 km deep over 5-6 million years, exposing 2 billion years of geological history."),
             UNESCOSite(name: "Yellowstone National Park", type: .natural, yearInscribed: 1978, description: "The world's first national park contains half the world's geysers, including Old Faithful, above one of Earth's largest supervolcanoes."),
@@ -301,7 +297,6 @@ enum UNESCOData {
         ],
 
         // MARK: Africa
-
         "EG": [
             UNESCOSite(name: "Memphis and its Necropolis – the Pyramid Fields", type: .cultural, yearInscribed: 1979, description: "The Great Pyramid of Giza — the only surviving Wonder of the Ancient World — along with the Great Sphinx and Step Pyramid."),
             UNESCOSite(name: "Nubian Monuments from Abu Simbel to Philae", type: .cultural, yearInscribed: 1979, description: "Ramesses II's twin temples, relocated block-by-block in the 1960s to save them from the rising waters of Lake Nasser."),
@@ -371,7 +366,6 @@ enum UNESCOData {
         ],
 
         // MARK: Oceania
-
         "AU": [
             UNESCOSite(name: "Great Barrier Reef", type: .natural, yearInscribed: 1981, description: "The world's largest coral reef system (2,300 km), visible from space — home to 1,500 species of fish and 4,000 types of mollusk."),
             UNESCOSite(name: "Sydney Opera House", type: .cultural, yearInscribed: 2007, description: "Jørn Utzon's 1973 masterpiece with its distinctive sail-shaped shells is one of the 20th century's greatest architectural works."),
@@ -385,7 +379,6 @@ enum UNESCOData {
         ],
 
         // MARK: Russia
-
         "RU": [
             UNESCOSite(name: "Historic Centre of Saint Petersburg and Related Groups of Monuments", type: .cultural, yearInscribed: 1990, description: "Peter the Great's window to Europe, with the Hermitage, Winter Palace, Peterhof fountains, and 18th-century architectural masterpieces."),
             UNESCOSite(name: "Moscow Kremlin and Red Square", type: .cultural, yearInscribed: 1990, description: "The Kremlin's cathedrals and palaces sit beside Red Square's St. Basil's Cathedral — the symbol of Russia's power and history."),
@@ -395,7 +388,6 @@ enum UNESCOData {
         ],
 
         // MARK: Turkey
-
         "TR": [
             UNESCOSite(name: "Historic Areas of Istanbul", type: .cultural, yearInscribed: 1985, description: "The Hagia Sophia, Topkapi Palace, and the Blue Mosque at the crossroads of Europe and Asia — 2,600 years of layered civilizations."),
             UNESCOSite(name: "Göreme National Park and the Rock Sites of Cappadocia", type: .mixed, yearInscribed: 1985, description: "A surreal volcanic landscape with fairy chimneys, underground cities housing up to 20,000 people, and rock-cut churches with Byzantine frescoes."),

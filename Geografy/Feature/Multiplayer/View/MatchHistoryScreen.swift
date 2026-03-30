@@ -27,7 +27,6 @@ struct MatchHistoryScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension MatchHistoryScreen {
     var emptyState: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -126,7 +125,6 @@ private extension MatchHistoryScreen {
 }
 
 // MARK: - Helpers
-
 private extension MatchHistoryScreen {
     func matchResultColor(_ match: MultiplayerMatch) -> Color {
         if match.playerWon {

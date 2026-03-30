@@ -44,7 +44,6 @@ struct LevelBadgeView: View {
 }
 
 // MARK: - Subviews
-
 private extension LevelBadgeView {
     var badgeCircle: some View {
         ZStack {
@@ -79,7 +78,6 @@ private extension LevelBadgeView {
 }
 
 // MARK: - Helpers
-
 private extension LevelBadgeView {
     var levelGradient: LinearGradient {
         LinearGradient(colors: levelColors, startPoint: .topLeading, endPoint: .bottomTrailing)

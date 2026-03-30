@@ -21,7 +21,6 @@ struct FlashcardStatsView: View {
 }
 
 // MARK: - Subviews
-
 private extension FlashcardStatsView {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
@@ -91,7 +90,6 @@ private extension FlashcardStatsView {
 }
 
 // MARK: - Helpers
-
 private extension FlashcardStatsView {
     var accuracyPercentage: Int {
         guard cardsReviewed > 0 else { return 0 }

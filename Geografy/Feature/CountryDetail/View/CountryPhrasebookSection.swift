@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Phrasebook Section
-
 extension CountryDetailScreen {
     @ViewBuilder
     var phrasebookSection: some View {
@@ -17,7 +16,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Subviews
-
 private extension CountryDetailScreen {
     func phrasesScrollRow(phrases: [CountryPhrase]) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -50,7 +48,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Phrase Chip
-
 private struct PhraseChip: View {
     let phrase: CountryPhrase
 
@@ -84,7 +81,6 @@ private struct PhraseChip: View {
 }
 
 // MARK: - PhraseChip Subviews
-
 private extension PhraseChip {
     var englishSide: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {

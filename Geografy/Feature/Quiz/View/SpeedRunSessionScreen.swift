@@ -59,7 +59,6 @@ struct SpeedRunSessionScreen: View {
 }
 
 // MARK: - Gameplay
-
 private extension SpeedRunSessionScreen {
     var gameplayView: some View {
         VStack(spacing: 0) {
@@ -100,7 +99,7 @@ private extension SpeedRunSessionScreen {
     var timerSection: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             Text(formattedTime)
-                .font(.system(size: 44, weight: .bold, design: .monospaced))
+                .font(DesignSystem.Font.monoLarge)
                 .foregroundStyle(timerColor)
                 .contentTransition(.numericText())
                 .animation(.easeInOut(duration: 0.1), value: elapsedTime)
@@ -212,7 +211,6 @@ private extension SpeedRunSessionScreen {
 }
 
 // MARK: - Results
-
 private extension SpeedRunSessionScreen {
     var resultsView: some View {
         ScrollView {
@@ -252,7 +250,7 @@ private extension SpeedRunSessionScreen {
                     .fill(DesignSystem.Color.warning.opacity(0.12))
                     .frame(width: 96, height: 96)
                 Image(systemName: "trophy.fill")
-                    .font(.system(size: 44))
+                    .font(DesignSystem.Font.displayXS)
                     .foregroundStyle(DesignSystem.Color.warning)
                     .symbolEffect(.bounce)
             }
@@ -264,7 +262,7 @@ private extension SpeedRunSessionScreen {
                 .multilineTextAlignment(.center)
 
             Text(formattedTime)
-                .font(.system(size: 40, weight: .bold, design: .monospaced))
+                .font(DesignSystem.Font.monoMedium)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
         .frame(maxWidth: .infinity)
@@ -351,7 +349,6 @@ private extension SpeedRunSessionScreen {
 }
 
 // MARK: - Actions
-
 private extension SpeedRunSessionScreen {
     func startTimer() {
         timerCancellable = Timer.publish(every: 0.1, on: .main, in: .common)
@@ -445,7 +442,6 @@ private extension SpeedRunSessionScreen {
 }
 
 // MARK: - Helpers
-
 private extension SpeedRunSessionScreen {
     var targetCountries: [Country] {
         region.filter(countryDataService.countries)

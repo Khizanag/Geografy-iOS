@@ -25,12 +25,11 @@ struct HomeCountrySpotlightCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeCountrySpotlightCard {
     var headerBadge: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "star.fill")
-                .font(.system(size: 10))
+                .font(DesignSystem.Font.micro)
                 .foregroundStyle(DesignSystem.Color.warning)
             Text("COUNTRY OF THE DAY")
                 .font(DesignSystem.Font.caption2)
@@ -131,7 +130,6 @@ private extension HomeCountrySpotlightCard {
 }
 
 // MARK: - Helpers
-
 private extension HomeCountrySpotlightCard {
     func statCell(icon: String, value: String, label: String) -> some View {
         VStack(spacing: 3) {
@@ -145,7 +143,7 @@ private extension HomeCountrySpotlightCard {
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
             Text(label)
-                .font(.system(size: 9))
+                .font(DesignSystem.Font.nano)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
         .frame(maxWidth: .infinity)

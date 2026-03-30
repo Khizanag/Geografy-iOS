@@ -30,7 +30,6 @@ struct LanguageDetailView: View {
 }
 
 // MARK: - Subviews
-
 private extension LanguageDetailView {
     var headerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
@@ -146,7 +145,7 @@ private extension LanguageDetailView {
             CardView {
                 HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 16))
+                        .font(DesignSystem.Font.callout)
                         .foregroundStyle(DesignSystem.Color.warning)
                         .padding(.top, 2)
                     Text(language.funFact)
@@ -161,7 +160,6 @@ private extension LanguageDetailView {
 }
 
 // MARK: - Helpers
-
 private extension LanguageDetailView {
     var speakerRatio: Double {
         guard maxSpeakers > 0 else { return 0 }

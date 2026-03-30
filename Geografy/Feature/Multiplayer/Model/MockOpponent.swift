@@ -11,7 +11,6 @@ struct MockOpponent: Identifiable, Hashable {
 }
 
 // MARK: - Factory
-
 extension MockOpponent {
     static func makeRandom() -> MockOpponent {
         let name = opponentNames.randomElement() ?? "Unknown"
@@ -28,7 +27,6 @@ extension MockOpponent {
 }
 
 // MARK: - Name Pool
-
 private extension MockOpponent {
     static let opponentNames: [String] = [
         "Alex Chen", "Sofia Rodriguez", "Yuki Tanaka", "Lars Eriksson",

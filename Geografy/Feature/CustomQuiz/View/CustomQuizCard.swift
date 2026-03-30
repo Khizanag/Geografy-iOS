@@ -16,7 +16,6 @@ struct CustomQuizCard: View {
 }
 
 // MARK: - Subviews
-
 private extension CustomQuizCard {
     var gradient: some View {
         LinearGradient(
@@ -67,7 +66,6 @@ private extension CustomQuizCard {
 }
 
 // MARK: - Helpers
-
 private extension CustomQuizCard {
     var accentColor: Color {
         let codeValue = quiz.name.unicodeScalars.reduce(0) { $0 + Int($1.value) }

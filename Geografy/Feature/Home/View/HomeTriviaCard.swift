@@ -20,7 +20,6 @@ struct HomeTriviaCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeTriviaCard {
     var gameIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeTriviaCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "questionmark.bubble.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.blue)
         }
     }

@@ -44,7 +44,6 @@ struct HomeComingSoonSection: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeComingSoonSection {
     var sectionHeader: some View {
         HStack {
@@ -112,7 +111,7 @@ private extension HomeComingSoonSection {
     func voteBadge(count: Int, hasVoted: Bool) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: hasVoted ? "hand.thumbsup.fill" : "hand.thumbsup")
-                .font(.system(size: 10, weight: .bold))
+                .font(DesignSystem.Font.micro.bold())
             Text("\(count)")
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.bold)
@@ -126,7 +125,6 @@ private extension HomeComingSoonSection {
 }
 
 // MARK: - Actions
-
 private extension HomeComingSoonSection {
     func castVote(for feature: String) {
         hapticsService.impact(.light)

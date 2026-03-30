@@ -28,7 +28,6 @@ struct ModuleLessonsScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension ModuleLessonsScreen {
     var currentModule: LearningModule {
         learningPathService.modules.first { $0.id == module.id } ?? module
@@ -42,7 +41,7 @@ private extension ModuleLessonsScreen {
                         .fill(DesignSystem.Color.accent.opacity(0.15))
                         .frame(width: 52, height: 52)
                     Image(systemName: module.icon)
-                        .font(.system(size: 24))
+                        .font(DesignSystem.Font.iconMedium)
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
                 VStack(alignment: .leading, spacing: 4) {
@@ -98,7 +97,7 @@ private extension ModuleLessonsScreen {
                 .frame(width: 36, height: 36)
             if isCompleted {
                 Image(systemName: "checkmark")
-                    .font(.system(size: 14, weight: .bold))
+                    .font(DesignSystem.Font.iconXS.bold())
                     .foregroundStyle(DesignSystem.Color.success)
             } else {
                 Text("\(index + 1)")

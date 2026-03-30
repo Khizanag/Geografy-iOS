@@ -22,7 +22,6 @@ struct TypeSelectionGrid<T: SelectableType>: View {
 }
 
 // MARK: - Subviews
-
 private extension TypeSelectionGrid {
     func typeCard(_ item: T) -> some View {
         let isSelected = selectedIDs.contains(item.id)
@@ -83,7 +82,7 @@ private extension TypeSelectionGrid {
             Spacer(minLength: 0)
 
             Text(item.emoji)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.iconDefault)
 
             Text(item.displayName)
                 .font(DesignSystem.Font.subheadline)

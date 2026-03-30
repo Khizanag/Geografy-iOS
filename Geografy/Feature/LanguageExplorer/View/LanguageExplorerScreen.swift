@@ -32,7 +32,6 @@ struct LanguageExplorerScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension LanguageExplorerScreen {
     var searchBar: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -89,21 +88,22 @@ private extension LanguageExplorerScreen {
     }
 
     func languageRow(_ language: Language) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                languageRowIcon(language)
-                languageRowInfo(language)
-                Spacer()
-                speakerBadge(language)
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .onTapGesture {
+        Button {
             selectedLanguage = language
             showingDetail = true
+        } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    languageRowIcon(language)
+                    languageRowInfo(language)
+                    Spacer()
+                    speakerBadge(language)
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
+                .padding(DesignSystem.Spacing.md)
+            }
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -114,7 +114,7 @@ private extension LanguageExplorerScreen {
                 .fill(DesignSystem.Color.purple.opacity(0.15))
                 .frame(width: 44, height: 44)
             Text(String(language.nativeName.prefix(1)))
-                .font(.system(size: 20, weight: .bold))
+                .font(DesignSystem.Font.title3.bold())
                 .foregroundStyle(DesignSystem.Color.purple)
         }
     }

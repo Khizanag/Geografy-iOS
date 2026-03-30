@@ -20,7 +20,6 @@ struct NeighborChainView: View {
 }
 
 // MARK: - Subviews
-
 private extension NeighborChainView {
     func chainItem(country: Country, index: Int) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {

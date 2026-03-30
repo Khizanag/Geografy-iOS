@@ -14,7 +14,6 @@ enum ClueGenerator {
 }
 
 // MARK: - Clue Builders
-
 private extension ClueGenerator {
     static func continentClue(for country: Country) -> ExploreClue {
         ExploreClue(
@@ -82,7 +81,6 @@ private extension ClueGenerator {
 }
 
 // MARK: - Population Formatting
-
 private extension ClueGenerator {
     static func populationRange(_ population: Int) -> String {
         switch population {
@@ -109,7 +107,6 @@ private extension ClueGenerator {
 }
 
 // MARK: - Flag Colors
-
 private extension ClueGenerator {
     static func flagColors(for countryCode: String) -> String {
         flagColorData[countryCode] ?? "multiple colors"
@@ -117,7 +114,6 @@ private extension ClueGenerator {
 }
 
 // MARK: - Flag Color Data
-
 private extension ClueGenerator {
     static let flagColorData: [String: String] = [
         // Major countries — enough for a fun game
@@ -324,7 +320,6 @@ private extension ClueGenerator {
 }
 
 // MARK: - Border Data
-
 extension ClueGenerator {
     static func borderCountryNames(
         for countryCode: String

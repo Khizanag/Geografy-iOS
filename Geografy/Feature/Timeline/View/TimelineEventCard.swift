@@ -18,7 +18,6 @@ struct TimelineEventCard: View {
 }
 
 // MARK: - Subviews
-
 private extension TimelineEventCard {
     var flagSection: some View {
         FlagView(countryCode: event.countryCode, height: DesignSystem.Size.lg)

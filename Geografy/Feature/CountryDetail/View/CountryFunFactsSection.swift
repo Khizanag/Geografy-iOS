@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Fun Facts Section
-
 extension CountryDetailScreen {
     var funFacts: [String] {
         CountryFunFacts.data[country.code] ?? []
@@ -29,7 +28,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Fun Fact Row
-
 private struct FunFactRow: View {
     let fact: String
 
@@ -48,7 +46,6 @@ private struct FunFactRow: View {
 }
 
 // MARK: - Subviews
-
 private extension FunFactRow {
     var rowContent: some View {
         HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
@@ -68,7 +65,7 @@ private extension FunFactRow {
                 .fill(DesignSystem.Color.warning.opacity(0.15))
                 .frame(width: 32, height: 32)
             Image(systemName: "lightbulb.fill")
-                .font(.system(size: 13))
+                .font(DesignSystem.Font.footnote)
                 .foregroundStyle(DesignSystem.Color.warning)
         }
     }

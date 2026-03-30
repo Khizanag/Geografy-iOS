@@ -25,7 +25,6 @@ struct ChallengeSplitScreen: View {
 }
 
 // MARK: - Split Content
-
 private extension ChallengeSplitScreen {
     var splitContent: some View {
         VStack(spacing: 0) {
@@ -156,7 +155,6 @@ private extension ChallengeSplitScreen {
 }
 
 // MARK: - Helpers
-
 private extension ChallengeSplitScreen {
     var progressFraction: CGFloat {
         guard room.totalRounds > 0 else { return 0 }

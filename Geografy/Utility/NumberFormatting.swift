@@ -1,7 +1,6 @@
 import Foundation
 
 // MARK: - Population Formatting
-
 extension Int {
     func formatPopulation() -> String {
         let value = Double(self)
@@ -16,7 +15,6 @@ extension Int {
 }
 
 // MARK: - Area, GDP & Currency Formatting
-
 extension Double {
     func formatArea() -> String {
         if self >= 1_000_000 {
@@ -46,7 +44,6 @@ extension Double {
 }
 
 // MARK: - Number Formatters
-
 private extension NumberFormatter {
     static let decimal: NumberFormatter = {
         let formatter = NumberFormatter()

@@ -21,7 +21,6 @@ struct HistoricalEvent: Identifiable, Codable {
 }
 
 // MARK: - Display Helpers
-
 extension HistoricalEvent {
     var dateComponents: DateComponents {
         DateComponents(year: year, month: month, day: day)
@@ -60,7 +59,6 @@ extension HistoricalEvent {
 }
 
 // MARK: - Event Type Display
-
 extension HistoricalEvent.EventType {
     var displayName: String {
         switch self {

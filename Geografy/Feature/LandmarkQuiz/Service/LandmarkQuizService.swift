@@ -22,7 +22,6 @@ final class LandmarkQuizService {
 }
 
 // MARK: - Questions Data
-
 private extension LandmarkQuizService {
     // swiftlint:disable closure_body_length
     static let allQuestions: [LandmarkQuestion] = [

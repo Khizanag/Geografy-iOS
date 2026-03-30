@@ -12,7 +12,7 @@ struct AlphabetJumpIndex: View {
         VStack(spacing: 1) {
             ForEach(letters, id: \.self) { letter in
                 Text(letter)
-                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.roundedPico)
                     .foregroundStyle(
                         selectedLetter == letter
                             ? DesignSystem.Color.textPrimary
@@ -53,7 +53,6 @@ struct AlphabetJumpIndex: View {
 }
 
 // MARK: - Helpers
-
 private extension AlphabetJumpIndex {
     func letterAt(y: CGFloat) -> String {
         guard !letters.isEmpty, totalHeight > 0 else { return "" }

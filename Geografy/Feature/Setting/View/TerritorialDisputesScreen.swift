@@ -49,7 +49,6 @@ struct TerritorialDisputesScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TerritorialDisputesScreen {
     var introCard: some View {
         CardView {
@@ -175,7 +174,7 @@ private extension TerritorialDisputesScreen {
 
     func flagBadge(_ flag: String) -> some View {
         Text(flag)
-            .font(.system(size: 26))
+            .font(DesignSystem.Font.iconMedium)
             .frame(width: 36, height: 36)
     }
 
@@ -196,7 +195,6 @@ private extension TerritorialDisputesScreen {
 }
 
 // MARK: - Actions
-
 private extension TerritorialDisputesScreen {
     func currentSelectionLabel(for dispute: TerritorialDispute) -> String {
         let key = selections[dispute.id] ?? dispute.defaultOptionKey
@@ -224,7 +222,6 @@ private extension TerritorialDisputesScreen {
 }
 
 // MARK: - Preview
-
 #Preview {
     NavigationStack {
         TerritorialDisputesScreen()

@@ -8,7 +8,6 @@ struct UserLevel: Equatable {
 }
 
 // MARK: - Thresholds
-
 extension UserLevel {
     static let thresholds: [UserLevel] = [
         UserLevel(level: 1, title: "Explorer", minXP: 0, maxXP: 100),

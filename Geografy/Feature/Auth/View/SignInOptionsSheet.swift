@@ -44,7 +44,6 @@ struct SignInOptionsSheet: View {
 }
 
 // MARK: - Hero
-
 private extension SignInOptionsSheet {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -54,7 +53,7 @@ private extension SignInOptionsSheet {
                 .animation(.spring(response: 0.6, dampingFraction: 0.68), value: appeared)
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Geografy")
-                    .font(.system(size: 30, weight: .black, design: .rounded))
+                    .font(DesignSystem.Font.roundedBrand)
                     .foregroundStyle(
                         LinearGradient(
                             colors: [DesignSystem.Color.textPrimary, DesignSystem.Color.accent],
@@ -95,7 +94,7 @@ private extension SignInOptionsSheet {
                 )
 
             Image(systemName: "globe.americas.fill")
-                .font(.system(size: 36))
+                .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(
                     LinearGradient(
                         colors: [.white, .white.opacity(0.82)],
@@ -109,7 +108,6 @@ private extension SignInOptionsSheet {
 }
 
 // MARK: - Stats Row
-
 private extension SignInOptionsSheet {
     var statsRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -125,10 +123,10 @@ private extension SignInOptionsSheet {
     func statPill(value: String, label: String, icon: String, color: Color) -> some View {
         VStack(spacing: 5) {
             Image(systemName: icon)
-                .font(.system(size: 13))
+                .font(DesignSystem.Font.footnote)
                 .foregroundStyle(color)
             Text(value)
-                .font(.system(size: 16, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.roundedCaption)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .minimumScaleFactor(0.8)
             Text(label)
@@ -145,7 +143,6 @@ private extension SignInOptionsSheet {
 }
 
 // MARK: - Benefits
-
 private extension SignInOptionsSheet {
     var benefitsSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
@@ -201,7 +198,6 @@ private extension SignInOptionsSheet {
 }
 
 // MARK: - Actions
-
 private extension SignInOptionsSheet {
     var actionsSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -313,7 +309,6 @@ private extension SignInOptionsSheet {
 }
 
 // MARK: - Google G Logo
-
 private struct GoogleGLogo: View {
     private static let segments: [(CGFloat, CGFloat, Double, Double, Double)] = [
         (30, 90, 0.918, 0.263, 0.208),

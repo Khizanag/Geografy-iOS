@@ -21,7 +21,6 @@ struct DailyChallengeScreen: View {
 }
 
 // MARK: - Content
-
 private extension DailyChallengeScreen {
     var contentView: some View {
         ScrollView {
@@ -55,7 +54,6 @@ private extension DailyChallengeScreen {
 }
 
 // MARK: - Header
-
 private extension DailyChallengeScreen {
     var challengeHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -80,14 +78,13 @@ private extension DailyChallengeScreen {
                     height: DesignSystem.Size.xxxl
                 )
             Image(systemName: "calendar.badge.clock")
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.iconLarge)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
 }
 
 // MARK: - Streak Section
-
 private extension DailyChallengeScreen {
     func streakSection(service: DailyChallengeService) -> some View {
         CardView {
@@ -123,7 +120,6 @@ private extension DailyChallengeScreen {
 }
 
 // MARK: - Today's Challenge Card
-
 private extension DailyChallengeScreen {
     func todayChallengeCard(service: DailyChallengeService) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -252,7 +248,6 @@ private extension DailyChallengeScreen {
 }
 
 // MARK: - Countdown
-
 private extension DailyChallengeScreen {
     var countdownSection: some View {
         CardView {
@@ -276,7 +271,6 @@ private extension DailyChallengeScreen {
 }
 
 // MARK: - History Section
-
 private extension DailyChallengeScreen {
     func historySection(service: DailyChallengeService) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -295,7 +289,7 @@ private extension DailyChallengeScreen {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "calendar")
-                    .font(.system(size: 32))
+                    .font(DesignSystem.Font.iconXL)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
                 Text("No challenges completed yet")
                     .font(DesignSystem.Font.subheadline)
@@ -353,7 +347,6 @@ private extension DailyChallengeScreen {
 }
 
 // MARK: - Background
-
 private extension DailyChallengeScreen {
     var ambientBlobs: some View {
         ZStack {
@@ -404,7 +397,6 @@ private extension DailyChallengeScreen {
 }
 
 // MARK: - Actions
-
 private extension DailyChallengeScreen {
     func loadData() {
         countryDataService.loadCountries()
@@ -418,7 +410,6 @@ private extension DailyChallengeScreen {
 }
 
 // MARK: - Helpers
-
 private extension DailyChallengeScreen {
     var formattedDate: String {
         Date.now.formatted(date: .abbreviated, time: .omitted)

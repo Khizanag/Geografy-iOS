@@ -94,7 +94,6 @@ final class TravelJournalService {
 }
 
 // MARK: - Statistics
-
 extension TravelJournalService {
     var totalEntries: Int { entries.count }
 
@@ -127,7 +126,6 @@ extension TravelJournalService {
 }
 
 // MARK: - Helpers
-
 private extension TravelJournalService {
     var photosDirectory: URL {
         let directory = FileManager.default

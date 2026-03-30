@@ -41,7 +41,6 @@ struct QuizSpellingBeeView: View {
 }
 
 // MARK: - Prompt
-
 private extension QuizSpellingBeeView {
     @ViewBuilder
     var promptSection: some View {
@@ -62,7 +61,7 @@ private extension QuizSpellingBeeView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 if let subject = question.promptSubject {
                     Text(subject)
-                        .font(.system(size: 28, weight: .black, design: .rounded))
+                        .font(DesignSystem.Font.roundedBody)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                         .multilineTextAlignment(.center)
                         .minimumScaleFactor(0.5)
@@ -99,7 +98,6 @@ private extension QuizSpellingBeeView {
 }
 
 // MARK: - Letter Grid
-
 private extension QuizSpellingBeeView {
     var letterGridSection: some View {
         CardView {
@@ -114,7 +112,6 @@ private extension QuizSpellingBeeView {
 }
 
 // MARK: - Input
-
 private extension QuizSpellingBeeView {
     var inputSection: some View {
         VStack(spacing: 0) {
@@ -137,7 +134,6 @@ private extension QuizSpellingBeeView {
 }
 
 // MARK: - Helpers
-
 private extension QuizSpellingBeeView {
     var correctAnswerText: String {
         if let correctOption = question.options.first(where: { $0.id == question.correctOptionID }),

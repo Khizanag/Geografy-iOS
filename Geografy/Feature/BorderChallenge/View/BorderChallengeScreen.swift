@@ -48,7 +48,6 @@ struct BorderChallengeScreen: View {
 }
 
 // MARK: - Game Content
-
 private extension BorderChallengeScreen {
     var gameContent: some View {
         ScrollView(showsIndicators: false) {
@@ -116,7 +115,7 @@ private extension BorderChallengeScreen {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(timerColor)
             Text(formattedTime)
-                .font(.system(size: 20, weight: .bold, design: .monospaced))
+                .font(DesignSystem.Font.monoBody)
                 .foregroundStyle(timerColor)
                 .contentTransition(.numericText())
             Spacer()
@@ -201,7 +200,6 @@ private extension BorderChallengeScreen {
 }
 
 // MARK: - Result
-
 private extension BorderChallengeScreen {
     var resultContent: some View {
         ScrollView {
@@ -228,7 +226,7 @@ private extension BorderChallengeScreen {
                     .fill(DesignSystem.Color.accent.opacity(0.12))
                     .frame(width: 96, height: 96)
                 Image(systemName: resultGradeIcon)
-                    .font(.system(size: 44))
+                    .font(DesignSystem.Font.displayXS)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             Text(resultGradeTitle)
@@ -287,7 +285,6 @@ private extension BorderChallengeScreen {
 }
 
 // MARK: - Helpers
-
 private extension BorderChallengeScreen {
     var progressFraction: CGFloat {
         guard !neighbors.isEmpty else { return 0 }
@@ -328,7 +325,6 @@ private extension BorderChallengeScreen {
 }
 
 // MARK: - Actions
-
 private extension BorderChallengeScreen {
     func startNewChallenge() {
         let countries = countryDataService.countries

@@ -16,7 +16,6 @@ struct DailyChallenge: Identifiable {
 }
 
 // MARK: - Challenge Content
-
 extension DailyChallenge {
     enum ChallengeContent {
         case mysteryCountry(MysteryCountryContent)
@@ -41,7 +40,6 @@ extension DailyChallenge {
 }
 
 // MARK: - Mystery Clue
-
 extension DailyChallenge {
     struct MysteryClue: Identifiable {
         let id: Int
@@ -53,7 +51,6 @@ extension DailyChallenge {
 }
 
 // MARK: - Chain Step
-
 extension DailyChallenge {
     struct ChainStep: Identifiable {
         let id: Int

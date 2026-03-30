@@ -14,7 +14,6 @@ final class MultiplayerService {
 }
 
 // MARK: - Match Management
-
 extension MultiplayerService {
     func recordMatch(
         opponent: MockOpponent,
@@ -60,7 +59,6 @@ extension MultiplayerService {
 }
 
 // MARK: - Helpers
-
 private extension MultiplayerService {
     func makeOpponentRating(skillLevel: Double) -> Int {
         let baseRating = 1000 + Int(skillLevel * 1200)

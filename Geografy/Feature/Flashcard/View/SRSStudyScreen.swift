@@ -28,7 +28,6 @@ struct SRSStudyScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension SRSStudyScreen {
     var contentView: some View {
         ScrollView(showsIndicators: false) {
@@ -56,7 +55,7 @@ private extension SRSStudyScreen {
                     .fill(DesignSystem.Color.purple.opacity(0.12))
                     .frame(width: 80, height: 80)
                 Image(systemName: "clock.arrow.circlepath")
-                    .font(.system(size: 34))
+                    .font(DesignSystem.Font.largeTitle)
                     .foregroundStyle(DesignSystem.Color.purple)
             }
             Text("Spaced Repetition")
@@ -184,7 +183,7 @@ private extension SRSStudyScreen {
     var allCaughtUpSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.success)
             Text("All caught up!")
                 .font(DesignSystem.Font.title2)
@@ -200,7 +199,6 @@ private extension SRSStudyScreen {
 }
 
 // MARK: - Helpers
-
 private extension SRSStudyScreen {
     var allCards: [FlashcardItem] {
         countryDataService.countries.map { FlashcardItem.make(from: $0, type: .countryToCapital) }
@@ -212,7 +210,6 @@ private extension SRSStudyScreen {
 }
 
 // MARK: - MasteryLevel Badge Color
-
 private extension SpacedRepetitionData.MasteryLevel {
     var badgeColor: Color {
         switch self {

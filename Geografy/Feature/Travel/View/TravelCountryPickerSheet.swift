@@ -42,7 +42,6 @@ struct TravelCountryPickerSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension TravelCountryPickerSheet {
     var navigationTitle: String {
         if let status = preferredStatus {
@@ -122,7 +121,7 @@ private extension TravelCountryPickerSheet {
     func statusBadge(_ status: TravelStatus) -> some View {
         HStack(spacing: 4) {
             Image(systemName: status.icon)
-                .font(.system(size: 9))
+                .font(DesignSystem.Font.nano)
             Text(status.shortLabel)
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
@@ -144,7 +143,6 @@ private extension TravelCountryPickerSheet {
 }
 
 // MARK: - Data
-
 private extension TravelCountryPickerSheet {
     var filteredCountries: [Country] {
         let sorted = countries.sorted { $0.name < $1.name }
@@ -154,7 +152,6 @@ private extension TravelCountryPickerSheet {
 }
 
 // MARK: - Gamification
-
 private extension TravelCountryPickerSheet {
     func awardTravelXP(for status: TravelStatus, countryCode: String) {
         let key = "travel_xp_awarded"

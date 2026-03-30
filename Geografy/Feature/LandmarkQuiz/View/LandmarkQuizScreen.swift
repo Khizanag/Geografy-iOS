@@ -32,7 +32,6 @@ struct LandmarkQuizScreen: View {
 }
 
 // MARK: - Quiz Content
-
 private extension LandmarkQuizScreen {
     @ViewBuilder
     var quizContent: some View {
@@ -169,7 +168,6 @@ private extension LandmarkQuizScreen {
 }
 
 // MARK: - Game Over
-
 private extension LandmarkQuizScreen {
     var gameOverContent: some View {
         ScrollView {
@@ -182,7 +180,7 @@ private extension LandmarkQuizScreen {
                         .frame(width: 96, height: 96)
 
                     Image(systemName: scoreGrade.icon)
-                        .font(.system(size: 44))
+                        .font(DesignSystem.Font.displayXS)
                         .foregroundStyle(DesignSystem.Color.accent)
                         .symbolEffect(.bounce)
                 }
@@ -243,7 +241,6 @@ private extension LandmarkQuizScreen {
 }
 
 // MARK: - Actions
-
 private extension LandmarkQuizScreen {
     var currentQuestion: LandmarkQuestion {
         quizService.questions[currentQuestionIndex]

@@ -22,7 +22,6 @@ struct HomeDailyChallengeCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeDailyChallengeCard {
     var challengeIcon: some View {
         ZStack {
@@ -37,7 +36,7 @@ private extension HomeDailyChallengeCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: hasCompletedToday ? "checkmark.seal.fill" : "calendar.badge.clock")
-                .font(.system(size: 26))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(
                     hasCompletedToday ? DesignSystem.Color.success : DesignSystem.Color.indigo
                 )

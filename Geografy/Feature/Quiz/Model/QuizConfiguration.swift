@@ -12,7 +12,6 @@ struct QuizConfiguration: Identifiable {
 }
 
 // MARK: - QuestionCount
-
 enum QuestionCount: Int, CaseIterable, Identifiable {
     case five = 5
     case ten = 10
@@ -28,7 +27,6 @@ enum QuestionCount: Int, CaseIterable, Identifiable {
 }
 
 // MARK: - ComparisonMetric
-
 enum ComparisonMetric: String, CaseIterable, Identifiable, Codable {
     case population = "Population"
     case area = "Area"
@@ -66,7 +64,6 @@ enum ComparisonMetric: String, CaseIterable, Identifiable, Codable {
 }
 
 // MARK: - QuizGameMode
-
 enum QuizGameMode: String, CaseIterable, Identifiable, Codable {
     case standard = "Standard"
     case arcade = "Arcade"

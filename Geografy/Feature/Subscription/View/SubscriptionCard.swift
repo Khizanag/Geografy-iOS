@@ -20,7 +20,6 @@ struct SubscriptionCard: View {
 }
 
 // MARK: - Subviews
-
 private extension SubscriptionCard {
     var cardContent: some View {
         ZStack(alignment: .top) {
@@ -70,7 +69,7 @@ private extension SubscriptionCard {
     var badgeRow: some View {
         if let badge {
             Text(badge)
-                .font(.system(size: 10, weight: .bold))
+                .font(DesignSystem.Font.micro.bold())
                 .foregroundStyle(.white)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
                 .padding(.vertical, 3)
@@ -80,7 +79,7 @@ private extension SubscriptionCard {
 
     var priceLabel: some View {
         Text(product?.displayPrice ?? fallbackPrice)
-            .font(.system(size: 20, weight: .bold))
+            .font(DesignSystem.Font.title3.bold())
             .foregroundStyle(DesignSystem.Color.textPrimary)
     }
 

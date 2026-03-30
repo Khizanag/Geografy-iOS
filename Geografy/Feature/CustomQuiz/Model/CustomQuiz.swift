@@ -29,7 +29,6 @@ struct CustomQuiz: Identifiable, Codable, Equatable, Hashable {
 }
 
 // MARK: - Shareable
-
 extension CustomQuiz {
     var shareableJSON: String {
         let encoder = JSONEncoder()
@@ -44,7 +43,6 @@ extension CustomQuiz {
 }
 
 // MARK: - Available Icons
-
 extension CustomQuiz {
     static let availableIcons: [String] = [
         "globe.americas.fill",

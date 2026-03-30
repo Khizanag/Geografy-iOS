@@ -41,7 +41,6 @@ struct MultiplayerLobbyScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension MultiplayerLobbyScreen {
     var ratingHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -205,7 +204,6 @@ private extension MultiplayerLobbyScreen {
 }
 
 // MARK: - Background
-
 private extension MultiplayerLobbyScreen {
     var ambientBlobs: some View {
         ZStack {
@@ -257,7 +255,6 @@ private extension MultiplayerLobbyScreen {
 }
 
 // MARK: - Actions
-
 private extension MultiplayerLobbyScreen {
     func startSearching() {
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
@@ -296,7 +293,6 @@ private extension MultiplayerLobbyScreen {
 }
 
 // MARK: - Helpers
-
 private extension MultiplayerLobbyScreen {
     func skillLabel(for skillLevel: Double) -> String {
         if skillLevel >= 0.85 {

@@ -30,7 +30,6 @@ struct FlashcardCardView: View {
 }
 
 // MARK: - Subviews
-
 private extension FlashcardCardView {
     var frontSide: some View {
         cardFace {

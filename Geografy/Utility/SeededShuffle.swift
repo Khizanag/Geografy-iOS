@@ -17,7 +17,6 @@ extension Array {
 }
 
 // MARK: - Seeded PRNG
-
 private struct SeededRandomGenerator: RandomNumberGenerator {
     private var state: UInt64
 

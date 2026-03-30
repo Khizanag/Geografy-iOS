@@ -40,12 +40,11 @@ struct MapPuzzleSetupScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension MapPuzzleSetupScreen {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "puzzlepiece.fill")
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .padding(.bottom, DesignSystem.Spacing.xs)
             Text("Choose a Region")
@@ -75,7 +74,7 @@ private extension MapPuzzleSetupScreen {
             CardView {
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Image(systemName: continentIcon(continent))
-                        .font(.system(size: 28))
+                        .font(DesignSystem.Font.iconLarge)
                         .foregroundStyle(
                             selectedContinent == continent
                                 ? DesignSystem.Color.onAccent
@@ -149,7 +148,6 @@ private extension MapPuzzleSetupScreen {
 }
 
 // MARK: - Actions
-
 private extension MapPuzzleSetupScreen {
     func startBlobAnimation() {
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {

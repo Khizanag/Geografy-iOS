@@ -23,7 +23,6 @@ struct CountryProfileScreen: View {
 }
 
 // MARK: - Profile Content
-
 private extension CountryProfileScreen {
     @ViewBuilder
     func profileContent(_ profile: CountryProfile) -> some View {
@@ -60,7 +59,6 @@ private extension CountryProfileScreen {
 }
 
 // MARK: - Hero Header
-
 private extension CountryProfileScreen {
     var heroHeader: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
@@ -84,7 +82,6 @@ private extension CountryProfileScreen {
 }
 
 // MARK: - Locked State
-
 private extension CountryProfileScreen {
     var lockedIcon: some View {
         Image(systemName: "lock.fill")
@@ -119,7 +116,6 @@ private extension CountryProfileScreen {
 }
 
 // MARK: - Coming Soon
-
 private extension CountryProfileScreen {
     var comingSoonPlaceholder: some View {
         ComingSoonView(

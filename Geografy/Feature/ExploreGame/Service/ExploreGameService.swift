@@ -15,7 +15,6 @@ final class ExploreGameService {
 }
 
 // MARK: - Statistics
-
 extension ExploreGameService {
     struct Statistics: Codable {
         var gamesPlayed: Int = 0
@@ -31,7 +30,6 @@ extension ExploreGameService {
 }
 
 // MARK: - Game Creation
-
 extension ExploreGameService {
     func makeDailyGame() -> ExploreGameState? {
         let countries = countryDataService.countries
@@ -65,7 +63,6 @@ extension ExploreGameService {
 }
 
 // MARK: - Country Search
-
 extension ExploreGameService {
     func searchCountries(query: String) -> [Country] {
         guard !query.isEmpty else { return [] }
@@ -87,7 +84,6 @@ extension ExploreGameService {
 }
 
 // MARK: - Statistics Management
-
 extension ExploreGameService {
     func recordResult(_ result: ExploreGameResult) {
         statistics.gamesPlayed += 1
@@ -108,7 +104,6 @@ extension ExploreGameService {
 }
 
 // MARK: - Persistence
-
 private extension ExploreGameService {
     static let statisticsKey = "ExploreGameStatistics"
 

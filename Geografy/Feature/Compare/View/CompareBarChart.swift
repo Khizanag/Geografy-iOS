@@ -24,7 +24,6 @@ struct CompareBarChart: View {
 }
 
 // MARK: - Subviews
-
 private extension CompareBarChart {
     var headerRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -81,7 +80,6 @@ private extension CompareBarChart {
 }
 
 // MARK: - Bar Views
-
 private extension CompareBarChart {
     func leftBar(totalWidth: CGFloat) -> some View {
         let fraction = barFraction(value: leftValue)
@@ -123,7 +121,6 @@ private extension CompareBarChart {
 }
 
 // MARK: - Helpers
-
 private extension CompareBarChart {
     func barFraction(value: Double) -> Double {
         let maxValue = max(leftValue, rightValue)

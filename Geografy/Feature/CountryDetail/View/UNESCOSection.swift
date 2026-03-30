@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - UNESCO Section
-
 extension CountryDetailScreen {
     var unescoSites: [UNESCOSite] {
         UNESCOData.data[country.code] ?? []
@@ -37,7 +36,7 @@ extension CountryDetailScreen {
         let count = unescoSites.count
         return HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "building.columns.fill")
-                .font(.system(size: 11))
+                .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.indigo)
             Text("\(count) World Heritage \(count == 1 ? "Site" : "Sites")")
                 .font(DesignSystem.Font.caption)
@@ -52,7 +51,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - UNESCO Site Row
-
 private struct UNESCOSiteRow: View {
     let site: UNESCOSite
 
@@ -71,7 +69,6 @@ private struct UNESCOSiteRow: View {
 }
 
 // MARK: - Subviews
-
 private extension UNESCOSiteRow {
     var rowContent: some View {
         HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
@@ -105,7 +102,7 @@ private extension UNESCOSiteRow {
                 .fill(siteTypeColor.opacity(0.15))
                 .frame(width: 38, height: 38)
             Image(systemName: siteTypeIcon)
-                .font(.system(size: 15, weight: .medium))
+                .font(DesignSystem.Font.subheadline.weight(.medium))
                 .foregroundStyle(siteTypeColor)
         }
     }

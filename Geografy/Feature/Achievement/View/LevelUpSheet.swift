@@ -34,7 +34,6 @@ struct LevelUpSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension LevelUpSheet {
     var mainContent: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
@@ -110,7 +109,6 @@ private extension LevelUpSheet {
 }
 
 // MARK: - Particle View
-
 private struct SparkleParticle: View {
     let angle: Double
     let distance: CGFloat

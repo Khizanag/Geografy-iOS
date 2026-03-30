@@ -42,7 +42,6 @@ struct MapColoringScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension MapColoringScreen {
     var schemePicker: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -65,7 +64,7 @@ private extension MapColoringScreen {
         } label: {
             HStack(spacing: 4) {
                 Image(systemName: scheme.icon)
-                    .font(.system(size: 12))
+                    .font(DesignSystem.Font.caption)
                 Text(scheme.displayName)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -184,7 +183,7 @@ private extension MapColoringScreen {
                     .lineLimit(1)
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 10))
+                    .font(DesignSystem.Font.micro)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)
@@ -225,7 +224,6 @@ private extension MapColoringScreen {
 }
 
 // MARK: - Helpers
-
 private extension MapColoringScreen {
     var groupedCountries: [String: [Country]] {
         var groups: [String: [Country]] = [:]
@@ -302,7 +300,6 @@ private extension MapColoringScreen {
 }
 
 // MARK: - Supporting Types
-
 extension MapColoringScreen {
     enum ColoringScheme: String, CaseIterable {
         case continent

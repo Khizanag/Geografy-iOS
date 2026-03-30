@@ -20,7 +20,6 @@ struct HomeMapPuzzleCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeMapPuzzleCard {
     var puzzleIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeMapPuzzleCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "puzzlepiece.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.purple)
         }
     }

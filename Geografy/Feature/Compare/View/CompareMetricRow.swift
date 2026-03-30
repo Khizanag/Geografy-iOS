@@ -21,7 +21,6 @@ struct CompareMetricRow: View {
 }
 
 // MARK: - Subviews
-
 private extension CompareMetricRow {
     var headerRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -61,7 +60,7 @@ private extension CompareMetricRow {
         if let match {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: match ? "checkmark" : "xmark")
-                    .font(.system(size: 9, weight: .bold))
+                    .font(DesignSystem.Font.nano.bold())
                 Text(match ? "Match" : "Different")
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)

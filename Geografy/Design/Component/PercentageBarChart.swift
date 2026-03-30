@@ -20,7 +20,6 @@ struct PercentageBarChart: View {
 }
 
 // MARK: - Subviews
-
 private extension PercentageBarChart {
     var headerRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -67,7 +66,6 @@ private extension PercentageBarChart {
 }
 
 // MARK: - Helpers
-
 private extension PercentageBarChart {
     func barColor(for index: Int) -> Color {
         let opacity = max(1.0 - Double(index) * 0.15, 0.3)

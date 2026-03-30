@@ -62,7 +62,6 @@ struct ContentView: View {
 }
 
 // MARK: - Helpers
-
 private extension ContentView {
     var tabContent: some View {
         TabView(selection: $appCoordinator.selectedTab) {

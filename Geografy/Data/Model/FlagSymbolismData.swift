@@ -20,13 +20,11 @@ struct FlagSymbolism {
 }
 
 // MARK: - Data
-
 enum FlagSymbolismData {
     // swiftlint:disable:next function_body_length
     static let data: [String: FlagSymbolism] = [
 
         // MARK: Americas
-
         "US": FlagSymbolism(
             adoptedYear: 1960,
             colors: [
@@ -329,7 +327,6 @@ enum FlagSymbolismData {
         ),
 
         // MARK: Europe
-
         "GB": FlagSymbolism(
             adoptedYear: 1801,
             colors: [
@@ -605,7 +602,6 @@ enum FlagSymbolismData {
         ),
 
         // MARK: Asia
-
         "JP": FlagSymbolism(
             adoptedYear: 1870,
             colors: [
@@ -927,7 +923,6 @@ enum FlagSymbolismData {
         ),
 
         // MARK: Africa
-
         "ZA": FlagSymbolism(
             adoptedYear: 1994,
             colors: [
@@ -1163,7 +1158,6 @@ enum FlagSymbolismData {
         ),
 
         // MARK: Oceania
-
         "AU": FlagSymbolism(
             adoptedYear: 1901,
             colors: [

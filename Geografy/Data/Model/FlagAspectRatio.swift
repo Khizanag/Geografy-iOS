@@ -11,13 +11,11 @@ import Foundation
 enum FlagAspectRatio {
 
     // MARK: - Lookup
-
     static func ratio(for countryCode: String) -> CGFloat? {
         ratios[countryCode.uppercased()]
     }
 
     // MARK: - Data
-
     static let ratios: [String: CGFloat] = {
         var map = [String: CGFloat]()
 

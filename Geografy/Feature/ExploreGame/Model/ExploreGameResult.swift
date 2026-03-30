@@ -11,7 +11,6 @@ struct ExploreGameResult: Identifiable, Hashable {
 }
 
 // MARK: - Factory
-
 extension ExploreGameResult {
     init(from state: ExploreGameState) {
         self.country = state.targetCountry

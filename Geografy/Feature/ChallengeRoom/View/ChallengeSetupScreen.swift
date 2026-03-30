@@ -56,7 +56,6 @@ struct ChallengeSetupScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension ChallengeSetupScreen {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -65,7 +64,7 @@ private extension ChallengeSetupScreen {
                     .fill(DesignSystem.Color.orange.opacity(0.15))
                     .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
                 Image(systemName: "person.2.fill")
-                    .font(.system(size: 28))
+                    .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(DesignSystem.Color.orange)
             }
 
@@ -115,7 +114,7 @@ private extension ChallengeSetupScreen {
     func playerField(placeholder: String, text: Binding<String>, icon: String, color: Color) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.title3)
                 .foregroundStyle(color)
 
             TextField(placeholder, text: text)
@@ -310,7 +309,6 @@ private extension ChallengeSetupScreen {
 }
 
 // MARK: - Helpers
-
 private extension ChallengeSetupScreen {
     func sectionTitle(_ text: String) -> some View {
         Text(text)

@@ -9,7 +9,6 @@ struct MultiplayerRound: Identifiable {
 }
 
 // MARK: - PlayerAnswer
-
 struct PlayerAnswer: Identifiable {
     let id: UUID
     let selectedOptionID: UUID?
@@ -18,7 +17,6 @@ struct PlayerAnswer: Identifiable {
 }
 
 // MARK: - Computed Properties
-
 extension MultiplayerRound {
     var playerWonRound: Bool {
         guard let player = playerAnswer else { return false }

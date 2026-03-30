@@ -13,7 +13,6 @@ struct TriviaService {
 }
 
 // MARK: - Generators
-
 private extension TriviaService {
     func capitalQuestions(from countries: [Country]) -> [TriviaQuestion] {
         countries.compactMap { country in

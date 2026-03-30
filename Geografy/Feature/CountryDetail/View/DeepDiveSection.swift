@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Deep Dive Section
-
 extension CountryDetailScreen {
     @ViewBuilder
     var deepDiveSection: some View {
@@ -13,7 +12,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Subviews
-
 private extension CountryDetailScreen {
     var deepDiveCard: some View {
         Button {
@@ -38,7 +36,7 @@ private extension CountryDetailScreen {
                 .fill(DesignSystem.Color.accent.opacity(0.12))
                 .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
             Image(systemName: "book.pages.fill")
-                .font(.system(size: 18, weight: .medium))
+                .font(DesignSystem.Font.iconSmall.weight(.medium))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }

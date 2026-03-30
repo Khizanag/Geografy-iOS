@@ -13,7 +13,6 @@ enum QuizPackCategory: String, CaseIterable, Identifiable {
 }
 
 // MARK: - Display
-
 extension QuizPackCategory {
     var displayName: String {
         switch self {

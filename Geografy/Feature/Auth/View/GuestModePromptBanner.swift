@@ -18,7 +18,6 @@ struct GuestModePromptBanner: View {
 }
 
 // MARK: - Subviews
-
 private extension GuestModePromptBanner {
     var bannerContent: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {

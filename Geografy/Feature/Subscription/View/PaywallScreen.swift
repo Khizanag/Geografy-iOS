@@ -43,7 +43,6 @@ struct PaywallScreen: View {
 }
 
 // MARK: - Scroll Content
-
 private extension PaywallScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
@@ -81,7 +80,6 @@ private extension PaywallScreen {
 }
 
 // MARK: - Hero
-
 private extension PaywallScreen {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -92,12 +90,12 @@ private extension PaywallScreen {
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.accent)
                     Text("GEOGRAFY PREMIUM")
-                        .font(.system(size: 11, weight: .black))
+                        .font(DesignSystem.Font.roundedNano)
                         .tracking(1.5)
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
                 Text("Master the world")
-                    .font(.system(size: 30, weight: .black, design: .rounded))
+                    .font(DesignSystem.Font.roundedBrand)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
                 Text("Unlock every feature and explore geography like never before.")
@@ -136,7 +134,7 @@ private extension PaywallScreen {
                     )
                     .frame(width: 86, height: 86)
                 Image(systemName: "globe.europe.africa.fill")
-                    .font(.system(size: 54))
+                    .font(DesignSystem.Font.displayMedium)
                     .foregroundStyle(
                         LinearGradient(
                             colors: [DesignSystem.Color.accent, DesignSystem.Color.blue],
@@ -153,7 +151,6 @@ private extension PaywallScreen {
 }
 
 // MARK: - Highlights Grid
-
 private extension PaywallScreen {
     struct Highlight {
         let icon: String
@@ -199,7 +196,7 @@ private extension PaywallScreen {
                     .fill(highlight.color.opacity(0.15))
                     .frame(width: 36, height: 36)
                 Image(systemName: highlight.icon)
-                    .font(.system(size: 14))
+                    .font(DesignSystem.Font.iconXS)
                     .foregroundStyle(highlight.color)
             }
             VStack(alignment: .leading, spacing: 2) {
@@ -224,7 +221,6 @@ private extension PaywallScreen {
 }
 
 // MARK: - Pricing
-
 private extension PaywallScreen {
     var pricingSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -272,7 +268,6 @@ private extension PaywallScreen {
 }
 
 // MARK: - CTA
-
 private extension PaywallScreen {
     var ctaSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -350,7 +345,6 @@ private extension PaywallScreen {
 }
 
 // MARK: - Footer
-
 private extension PaywallScreen {
     var footerSection: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
@@ -373,7 +367,6 @@ private extension PaywallScreen {
 }
 
 // MARK: - Background
-
 private extension PaywallScreen {
     var backgroundGradient: some View {
         LinearGradient(

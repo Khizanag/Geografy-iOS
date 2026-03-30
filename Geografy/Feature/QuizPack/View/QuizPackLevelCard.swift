@@ -24,7 +24,6 @@ struct QuizPackLevelCard: View {
 }
 
 // MARK: - Subviews
-
 private extension QuizPackLevelCard {
     var levelNumber: some View {
         ZStack {
@@ -73,7 +72,6 @@ private extension QuizPackLevelCard {
 }
 
 // MARK: - Helpers
-
 private extension QuizPackLevelCard {
     var circleColor: Color {
         if isLocked {

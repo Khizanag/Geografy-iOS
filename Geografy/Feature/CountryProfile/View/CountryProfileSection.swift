@@ -16,7 +16,6 @@ struct CountryProfileSection: View {
 }
 
 // MARK: - Fun Facts
-
 private extension CountryProfileSection {
     var funFactsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -32,7 +31,6 @@ private extension CountryProfileSection {
 }
 
 // MARK: - Culture
-
 private extension CountryProfileSection {
     var cultureSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -117,7 +115,6 @@ private extension CountryProfileSection {
 }
 
 // MARK: - Language Corner
-
 private extension CountryProfileSection {
     var languageCornerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -133,7 +130,6 @@ private extension CountryProfileSection {
 }
 
 // MARK: - Geography Deep Dive
-
 private extension CountryProfileSection {
     var geographySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -277,7 +273,6 @@ private extension CountryProfileSection {
 }
 
 // MARK: - Timeline
-
 private extension CountryProfileSection {
     var timelineSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -291,7 +286,6 @@ private extension CountryProfileSection {
 }
 
 // MARK: - Economy Snapshot
-
 private extension CountryProfileSection {
     var economySnapshotSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -375,7 +369,6 @@ private extension CountryProfileSection {
 }
 
 // MARK: - FlowLayout
-
 private struct FlowLayout: Layout {
     var spacing: CGFloat
 
@@ -414,7 +407,6 @@ private struct FlowLayout: Layout {
 }
 
 // MARK: - FlowLayout Helpers
-
 private extension FlowLayout {
     struct LayoutResult {
         var positions: [CGPoint]

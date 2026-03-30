@@ -45,7 +45,6 @@ struct CustomQuizBuilderScreen: View {
 }
 
 // MARK: - Builder Step
-
 private extension CustomQuizBuilderScreen {
     enum BuilderStep: Int, CaseIterable {
         case name
@@ -74,7 +73,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Step Indicator
-
 private extension CustomQuizBuilderScreen {
     var stepIndicator: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -103,7 +101,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Step Content
-
 private extension CustomQuizBuilderScreen {
     @ViewBuilder
     var stepContent: some View {
@@ -123,7 +120,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Name Step
-
 private extension CustomQuizBuilderScreen {
     var nameStep: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
@@ -205,7 +201,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Countries Step
-
 private extension CustomQuizBuilderScreen {
     var countriesStep: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
@@ -261,7 +256,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Question Types Step
-
 private extension CustomQuizBuilderScreen {
     var questionTypesStep: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
@@ -280,7 +274,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Difficulty Step
-
 private extension CustomQuizBuilderScreen {
     var difficultyStep: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
@@ -311,7 +304,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Navigation Buttons
-
 private extension CustomQuizBuilderScreen {
     var navigationButtons: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -343,7 +335,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Toolbar
-
 private extension CustomQuizBuilderScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -354,7 +345,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Sheets
-
 private extension CustomQuizBuilderScreen {
     var countryPickerSheet: some View {
         CustomQuizCountryPicker(
@@ -376,7 +366,6 @@ private extension CustomQuizBuilderScreen {
 }
 
 // MARK: - Helpers
-
 private extension CustomQuizBuilderScreen {
     func stepHeader(title: String, subtitle: String) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {

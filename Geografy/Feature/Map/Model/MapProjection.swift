@@ -7,7 +7,6 @@ enum MapProjection {
 }
 
 // MARK: - Projection
-
 extension MapProjection {
     static func project(longitude: Double, latitude: Double) -> CGPoint {
         let clampedLatitude = min(max(latitude, -85), 85)

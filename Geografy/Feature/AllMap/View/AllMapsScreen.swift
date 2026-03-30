@@ -34,7 +34,6 @@ struct AllMapsScreen: View {
 }
 
 // MARK: - Background
-
 private extension AllMapsScreen {
     var ambientBackground: some View {
         ZStack {
@@ -115,7 +114,6 @@ private extension AllMapsScreen {
 }
 
 // MARK: - Content
-
 private extension AllMapsScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
     var isWideLayout: Bool { horizontalSizeClass == .regular }
@@ -211,7 +209,6 @@ private extension AllMapsScreen {
 }
 
 // MARK: - Helpers
-
 private extension AllMapsScreen {
     func openMap(named name: String) {
         coordinator.presentFullScreen(
@@ -242,7 +239,6 @@ private extension AllMapsScreen {
 }
 
 // MARK: - Feed Section Modifier
-
 private extension View {
     func feedSection(appeared: Bool, delay: Double) -> some View {
         self

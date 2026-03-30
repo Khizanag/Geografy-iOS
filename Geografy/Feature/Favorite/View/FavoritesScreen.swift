@@ -36,7 +36,6 @@ struct FavoritesScreen: View {
 }
 
 // MARK: - Toolbar
-
 private extension FavoritesScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -120,7 +119,6 @@ private extension FavoritesScreen {
 }
 
 // MARK: - Content
-
 private extension FavoritesScreen {
     var countryList: some View {
         LazyVStack(spacing: DesignSystem.Spacing.xs) {
@@ -173,7 +171,6 @@ private extension FavoritesScreen {
 }
 
 // MARK: - Helpers
-
 private extension FavoritesScreen {
     var filteredCountries: [Country] {
         var countries = countryDataService.countries.filter {

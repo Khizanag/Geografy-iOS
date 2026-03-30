@@ -36,7 +36,6 @@ struct SizeVisualizationScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension SizeVisualizationScreen {
     var mainContent: some View {
         VStack(spacing: 0) {
@@ -151,7 +150,6 @@ private extension SizeVisualizationScreen {
 }
 
 // MARK: - Helpers
-
 private extension SizeVisualizationScreen {
     enum SortMode: String, CaseIterable, Identifiable {
         case area
@@ -196,7 +194,6 @@ private extension SizeVisualizationScreen {
 }
 
 // MARK: - CountryRowContent
-
 private struct CountryRowContent: View {
     let country: Country
     let rank: Int
@@ -315,7 +312,6 @@ private struct CountryRowContent: View {
 }
 
 // MARK: - Preview
-
 #Preview {
     SizeVisualizationScreen()
         .environment(HapticsService())

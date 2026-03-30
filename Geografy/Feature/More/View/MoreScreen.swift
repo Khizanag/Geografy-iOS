@@ -34,7 +34,6 @@ struct MoreScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension MoreScreen {
     var scrollableBlobs: some View {
         ZStack {
@@ -193,7 +192,7 @@ private extension MoreScreen {
                     .fill(sheet.color.opacity(0.15))
                     .frame(width: tileIconSize, height: tileIconSize)
                     Image(systemName: sheet.icon)
-                        .font(.system(size: tileIconFontSize))
+                        .font(DesignSystem.Font.system(size: tileIconFontSize))
                         .foregroundStyle(sheet.color)
                 }
                 Text(sheet.label)
@@ -232,7 +231,7 @@ private extension MoreScreen {
             testChecklistSheet = sheet
         } label: {
             Image(systemName: "ladybug.fill")
-                .font(.system(size: 10))
+                .font(DesignSystem.Font.micro)
                 .foregroundStyle(DesignSystem.Color.onAccent)
                 .padding(4)
                 .background(DesignSystem.Color.orange, in: Circle())
@@ -274,7 +273,6 @@ private extension MoreScreen {
 }
 
 // MARK: - Adaptive Tile Sizing
-
 private extension MoreScreen {
     var isWide: Bool { sizeClass == .regular }
 

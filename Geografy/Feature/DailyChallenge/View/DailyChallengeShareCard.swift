@@ -22,7 +22,6 @@ struct DailyChallengeShareCard: View {
 }
 
 // MARK: - Share Card Preview
-
 private extension DailyChallengeShareCard {
     @MainActor
     var shareCardPreview: some View {
@@ -66,7 +65,7 @@ private extension DailyChallengeShareCard {
     var scoreDisplay: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             Text("\(score)")
-                .font(.system(size: 56, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.roundedHero)
                 .foregroundStyle(DesignSystem.Color.onAccent)
             Text("out of \(maxScore)")
                 .font(DesignSystem.Font.subheadline)
@@ -119,7 +118,6 @@ private extension DailyChallengeShareCard {
 }
 
 // MARK: - Share Actions
-
 private extension DailyChallengeShareCard {
     var shareActions: some View {
         ShareLink(

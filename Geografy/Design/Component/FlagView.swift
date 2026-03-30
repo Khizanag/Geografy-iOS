@@ -11,7 +11,6 @@ struct FlagView: View {
 }
 
 // MARK: - Subviews
-
 private extension FlagView {
     @ViewBuilder
     var flagImage: some View {

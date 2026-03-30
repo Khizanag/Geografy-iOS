@@ -21,7 +21,6 @@ struct TimelineSlider: View {
 }
 
 // MARK: - Subviews
-
 private extension TimelineSlider {
     var yearLabel: some View {
         Button { showYearPicker = true } label: {
@@ -98,7 +97,6 @@ private extension TimelineSlider {
 }
 
 // MARK: - Helpers
-
 private extension TimelineSlider {
     var yearBinding: Binding<Double> {
         Binding(

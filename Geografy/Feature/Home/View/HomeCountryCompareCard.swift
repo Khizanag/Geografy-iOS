@@ -20,7 +20,6 @@ struct HomeCountryCompareCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeCountryCompareCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeCountryCompareCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "arrow.left.arrow.right")
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.iconDefault)
                 .foregroundStyle(DesignSystem.Color.indigo)
         }
     }

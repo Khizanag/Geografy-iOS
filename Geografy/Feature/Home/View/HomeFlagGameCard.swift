@@ -20,7 +20,6 @@ struct HomeFlagGameCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeFlagGameCard {
     var gameIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeFlagGameCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "flag.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.orange)
         }
     }

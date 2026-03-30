@@ -42,7 +42,6 @@ struct CountryNicknamesScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension CountryNicknamesScreen {
     var searchBar: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -92,7 +91,7 @@ private extension CountryNicknamesScreen {
         Button(action: action) {
             HStack(spacing: 4) {
                 Image(systemName: icon)
-                    .font(.system(size: 12))
+                    .font(DesignSystem.Font.caption)
                 Text(label)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -190,7 +189,7 @@ private extension CountryNicknamesScreen {
             VStack(alignment: .trailing, spacing: 4) {
                 categoryBadge(nickname.category)
                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                    .font(.system(size: 10))
+                    .font(DesignSystem.Font.micro)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
         }
@@ -209,9 +208,9 @@ private extension CountryNicknamesScreen {
     func categoryBadge(_ category: NicknameCategory) -> some View {
         HStack(spacing: 3) {
             Image(systemName: category.icon)
-                .font(.system(size: 9))
+                .font(DesignSystem.Font.nano)
             Text(category.rawValue)
-                .font(.system(size: 9, weight: .semibold))
+                .font(DesignSystem.Font.nano.weight(.semibold))
         }
         .foregroundStyle(DesignSystem.Color.accent)
         .padding(.horizontal, 6)

@@ -16,7 +16,6 @@ struct ExploreClueCard: View {
 }
 
 // MARK: - Subviews
-
 private extension ExploreClueCard {
     var cardContent: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {

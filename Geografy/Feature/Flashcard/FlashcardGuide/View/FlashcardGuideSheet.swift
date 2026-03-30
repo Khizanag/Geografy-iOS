@@ -18,7 +18,6 @@ struct FlashcardGuideSheet: View {
 }
 
 // MARK: - Illustrations
-
 private extension FlashcardGuideSheet {
     @ViewBuilder
     func illustrationView(for type: FlashcardIllustration) -> some View {
@@ -93,7 +92,7 @@ private extension FlashcardGuideSheet {
                 .frame(width: 160, height: 160)
                 .scaleEffect(animating ? 1.1 : 0.9)
             Image(systemName: "lightbulb.fill")
-                .font(.system(size: 60))
+                .font(DesignSystem.Font.display)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .scaleEffect(animating ? 1.05 : 0.95)
         }
@@ -102,7 +101,6 @@ private extension FlashcardGuideSheet {
 }
 
 // MARK: - Illustration Helpers
-
 private extension FlashcardGuideSheet {
     func cardMock(front: Bool) -> some View {
         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
@@ -125,7 +123,7 @@ private extension FlashcardGuideSheet {
 
     var handIcon: some View {
         Image(systemName: "hand.tap.fill")
-            .font(.system(size: 28))
+            .font(DesignSystem.Font.iconLarge)
             .foregroundStyle(DesignSystem.Color.accent.opacity(0.6))
             .offset(x: 50, y: 40)
     }
@@ -134,7 +132,7 @@ private extension FlashcardGuideSheet {
 
     func swipeArrow(direction: SwipeDirection, color: Color) -> some View {
         Image(systemName: direction == .left ? "arrow.left.circle.fill" : "arrow.right.circle.fill")
-            .font(.system(size: 32))
+            .font(DesignSystem.Font.iconXL)
             .foregroundStyle(color.opacity(animating ? 0.8 : 0.3))
     }
 

@@ -19,7 +19,6 @@ struct CountryStatisticsView: View {
 }
 
 // MARK: - Subviews
-
 private extension CountryStatisticsView {
     var categoryPicker: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -39,7 +38,7 @@ private extension CountryStatisticsView {
         } label: {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: category.icon)
-                    .font(.system(size: 11))
+                    .font(DesignSystem.Font.caption2)
                 Text(category.title)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(selectedCategory == category ? .semibold : .regular)

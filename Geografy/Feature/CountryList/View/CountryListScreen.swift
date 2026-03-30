@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Enums
-
 enum GroupOption: String, CaseIterable {
     case none = "None"
     case firstLetter = "A–Z"
@@ -26,7 +25,6 @@ enum SortOption: String, CaseIterable {
 }
 
 // MARK: - CountryListScreen
-
 struct CountryListScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
@@ -96,7 +94,6 @@ struct CountryListScreen: View {
 }
 
 // MARK: - Toolbar
-
 private extension CountryListScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -235,7 +232,6 @@ private extension CountryListScreen {
 }
 
 // MARK: - List Content
-
 private extension CountryListScreen {
     var flatContent: some View {
         ForEach(sortedCountries) { country in
@@ -281,7 +277,7 @@ private extension CountryListScreen {
                 Circle()
                     .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
                 Text(String(key.prefix(1)).uppercased())
-                    .font(.system(size: groupBy == .firstLetter ? 16 : 13, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.system(size: groupBy == .firstLetter ? 16 : 13, weight: .bold, design: .rounded))
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             .frame(width: groupBy == .firstLetter ? 36 : 30, height: groupBy == .firstLetter ? 36 : 30)
@@ -300,13 +296,13 @@ private extension CountryListScreen {
 
             HStack(spacing: 4) {
                 Text("\(count)")
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(DesignSystem.Font.micro.weight(.semibold))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
                     .monospacedDigit()
                 Image(
                     systemName: expandedSections.contains(key) ? "chevron.up" : "chevron.down"
                 )
-                .font(.system(size: 9, weight: .bold))
+                .font(DesignSystem.Font.nano.bold())
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             .padding(.horizontal, 8)
@@ -320,7 +316,6 @@ private extension CountryListScreen {
 }
 
 // MARK: - Country Card
-
 private extension CountryListScreen {
     func countryCard(for country: Country) -> some View {
         let isFavorite = favoritesService.isFavorite(code: country.code)
@@ -360,7 +355,6 @@ private extension CountryListScreen {
 }
 
 // MARK: - Helpers
-
 private extension CountryListScreen {
     var showJumpIndex: Bool {
         groupBy == .firstLetter && !sectionKeys.isEmpty && searchText.isEmpty

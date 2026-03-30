@@ -24,7 +24,6 @@ struct CardView<Content: View>: View {
 }
 
 // MARK: - Optional Shadow
-
 private extension View {
     @ViewBuilder
     func optionalShadow(_ shadow: DesignSystem.Shadow?) -> some View {

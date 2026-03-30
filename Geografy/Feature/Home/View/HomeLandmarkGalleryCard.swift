@@ -20,7 +20,6 @@ struct HomeLandmarkGalleryCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeLandmarkGalleryCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeLandmarkGalleryCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "photo.on.rectangle.angled")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.orange)
         }
     }

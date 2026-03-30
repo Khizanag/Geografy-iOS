@@ -18,7 +18,6 @@ struct ContinentPickerScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension ContinentPickerScreen {
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
@@ -53,37 +52,37 @@ private extension ContinentPickerScreen {
 
     func continentCard(_ continent: Country.Continent) -> some View {
         let countryCount = countryDataService.countries.filter { $0.continent == continent }.count
-        return CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                Text(continentEmoji(for: continent))
-                    .font(.system(size: 44))
-                VStack(spacing: DesignSystem.Spacing.xxs) {
-                    Text(continent.displayName)
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                    Text("\(countryCount) countries")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.lg)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-        }
-        .onTapGesture {
+        return Button {
             hapticsService.impact(.medium)
             coordinator.push(.continentStats(continent.displayName))
+        } label: {
+            CardView {
+                VStack(spacing: DesignSystem.Spacing.sm) {
+                    Text(continentEmoji(for: continent))
+                        .font(DesignSystem.Font.displayXS)
+                    VStack(spacing: DesignSystem.Spacing.xxs) {
+                        Text(continent.displayName)
+                            .font(DesignSystem.Font.headline)
+                            .fontWeight(.bold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                        Text("\(countryCount) countries")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.lg)
+                .padding(.horizontal, DesignSystem.Spacing.sm)
+            }
         }
         .buttonStyle(PressButtonStyle())
     }
 }
 
 // MARK: - Helpers
-
 private extension ContinentPickerScreen {
     var visibleContinents: [Country.Continent] {
         Country.Continent.allCases.filter { $0 != .antarctica }

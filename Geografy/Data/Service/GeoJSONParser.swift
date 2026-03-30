@@ -69,7 +69,6 @@ enum GeoJSONParser {
 }
 
 // MARK: - Parsing
-
 private extension GeoJSONParser {
     static func parseFeature(_ feature: GeoJSONFeature, at index: Int) -> CountryShape? {
         let rawCode = feature.id ?? extractISOCode(from: feature)
@@ -204,7 +203,6 @@ private extension GeoJSONParser {
 }
 
 // MARK: - Territory Consolidation
-
 private extension GeoJSONParser {
     // When a disputed territory (e.g. W. Sahara) merges into another country (e.g. Morocco),
     // both shapes end up with the same country code. This function merges their polygon lists
@@ -254,7 +252,6 @@ private extension GeoJSONParser {
 }
 
 // MARK: - Geometry Calculations
-
 private extension GeoJSONParser {
     /// Computes the geometric centroid of a polygon using the signed-area formula.
     /// Unlike simple vertex averaging, this is not biased by vertex density

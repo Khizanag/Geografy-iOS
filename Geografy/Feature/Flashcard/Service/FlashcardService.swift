@@ -75,7 +75,6 @@ final class FlashcardService {
 }
 
 // MARK: - Persistence
-
 private extension FlashcardService {
     func saveData() {
         guard let encoded = try? JSONEncoder().encode(spacedRepetitionStore) else {

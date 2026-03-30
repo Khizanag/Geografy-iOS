@@ -38,7 +38,6 @@ struct ChallengeGameScreen: View {
 }
 
 // MARK: - Pass Screen
-
 private extension ChallengeGameScreen {
     var passScreen: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
@@ -50,7 +49,7 @@ private extension ChallengeGameScreen {
                     .frame(width: 96, height: 96)
 
                 Image(systemName: "hand.point.right.fill")
-                    .font(.system(size: 40))
+                    .font(DesignSystem.Font.displayXXS)
                     .foregroundStyle(DesignSystem.Color.orange)
             }
 
@@ -115,7 +114,6 @@ private extension ChallengeGameScreen {
 }
 
 // MARK: - Question Screen
-
 private extension ChallengeGameScreen {
     var questionScreen: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -211,7 +209,6 @@ private extension ChallengeGameScreen {
 }
 
 // MARK: - Actions
-
 private extension ChallengeGameScreen {
     var progressFraction: CGFloat {
         guard room.totalRounds > 0 else { return 0 }

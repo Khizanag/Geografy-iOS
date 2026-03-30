@@ -19,7 +19,7 @@ struct SpeakerButton: View {
             }
         } label: {
             Image(systemName: isActivelySpeaking ? "speaker.wave.3.fill" : "speaker.wave.2")
-                .font(.system(size: 13, weight: .medium))
+                .font(DesignSystem.Font.footnote.weight(.medium))
                 .foregroundStyle(
                     isActivelySpeaking
                         ? DesignSystem.Color.accent

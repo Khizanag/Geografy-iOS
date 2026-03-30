@@ -41,7 +41,6 @@ struct HomeScreen: View {
 }
 
 // MARK: - Background
-
 private extension HomeScreen {
     var scrollableBlobs: some View {
         ZStack(alignment: .top) {
@@ -160,7 +159,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Main Feed
-
 private extension HomeScreen {
     var mainFeed: some View {
         ScrollView(showsIndicators: false) {
@@ -185,7 +183,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Top Bar
-
 private extension HomeScreen {
     var profileButton: some View {
         Button { coordinator.present(.profile) } label: {
@@ -274,7 +271,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Greeting
-
 private extension HomeScreen {
     var greetingSection: some View {
         HStack {
@@ -327,7 +323,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Carousel
-
 private extension HomeScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
     var isCompactHeight: Bool { verticalSizeClass == .compact }
@@ -432,7 +427,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Country Spotlight Section
-
 private extension HomeScreen {
     func spotlightSection(_ country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -464,7 +458,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Streak Section
-
 private extension HomeScreen {
     var streakSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -481,7 +474,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Progress Section
-
 private extension HomeScreen {
     var progressSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -521,7 +513,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Coming Soon Section
-
 private extension HomeScreen {
     var comingSoonSection: some View {
         HomeComingSoonSection()
@@ -529,7 +520,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Helpers
-
 private extension HomeScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -636,7 +626,6 @@ private extension HomeScreen {
 }
 
 // MARK: - Feed Section Modifier
-
 private extension View {
     func feedSection(appeared: Bool, delay: Double) -> some View {
         self

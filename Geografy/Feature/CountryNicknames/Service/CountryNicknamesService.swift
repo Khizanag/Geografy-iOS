@@ -26,7 +26,6 @@ final class CountryNicknamesService {
 }
 
 // MARK: - Data
-
 private extension CountryNicknamesService {
     // swiftlint:disable:next closure_body_length
     static let allNicknames: [CountryNickname] = [

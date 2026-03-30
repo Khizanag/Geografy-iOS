@@ -30,7 +30,6 @@ struct LeaderboardScreen: View {
 }
 
 // MARK: - Scroll Content
-
 private extension LeaderboardScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
@@ -165,7 +164,6 @@ private extension LeaderboardScreen {
 }
 
 // MARK: - Leaderboard Data
-
 private extension LeaderboardScreen {
     struct LeaderboardInfo {
         let id: String
@@ -224,7 +222,6 @@ private extension LeaderboardScreen {
 }
 
 // MARK: - Status
-
 private extension LeaderboardScreen {
     var statusColor: Color {
         gameCenterService.isAuthenticated ? DesignSystem.Color.success : DesignSystem.Color.textTertiary

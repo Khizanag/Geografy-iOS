@@ -9,7 +9,6 @@ enum QuizDifficulty: String, CaseIterable, Identifiable, Codable {
 }
 
 // MARK: - Properties
-
 extension QuizDifficulty {
     var displayName: String {
         switch self {

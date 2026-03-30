@@ -32,7 +32,6 @@ struct QuizPackDetailScreen: View {
 }
 
 // MARK: - Content
-
 private extension QuizPackDetailScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
@@ -49,7 +48,6 @@ private extension QuizPackDetailScreen {
 }
 
 // MARK: - Header
-
 private extension QuizPackDetailScreen {
     var packHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -111,7 +109,6 @@ private extension QuizPackDetailScreen {
 }
 
 // MARK: - Progress Overview
-
 private extension QuizPackDetailScreen {
     var progressOverview: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -159,7 +156,6 @@ private extension QuizPackDetailScreen {
 }
 
 // MARK: - Levels Section
-
 private extension QuizPackDetailScreen {
     var levelsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -199,7 +195,6 @@ private extension QuizPackDetailScreen {
 }
 
 // MARK: - Toolbar
-
 private extension QuizPackDetailScreen {
     var closeToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
@@ -209,7 +204,6 @@ private extension QuizPackDetailScreen {
 }
 
 // MARK: - Helpers
-
 private extension QuizPackDetailScreen {
     func infoPill(text: String, icon: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
@@ -247,7 +241,6 @@ private extension QuizPackDetailScreen {
 }
 
 // MARK: - Actions
-
 private extension QuizPackDetailScreen {
     func handleLevelTap(
         _ level: QuizPackLevel,

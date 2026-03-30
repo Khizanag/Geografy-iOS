@@ -58,7 +58,6 @@ final class XPService {
 }
 
 // MARK: - Helpers
-
 private extension XPService {
     func refreshXP() {
         let userID = currentUserID

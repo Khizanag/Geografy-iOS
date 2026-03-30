@@ -29,7 +29,6 @@ struct InfoTile: View {
 }
 
 // MARK: - Subviews
-
 private extension InfoTile {
     var tileContent: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {

@@ -20,7 +20,6 @@ struct HomeFeedCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeFeedCard {
     var feedIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeFeedCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "newspaper.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.purple)
         }
     }

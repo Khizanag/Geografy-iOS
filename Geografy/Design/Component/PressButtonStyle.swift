@@ -14,7 +14,6 @@ struct PressButtonStyle: ButtonStyle {
 }
 
 // MARK: - Body
-
 private struct PressButtonBody: View {
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService

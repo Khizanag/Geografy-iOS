@@ -41,7 +41,6 @@ struct ExploreGameSessionScreen: View {
 }
 
 // MARK: - Body Subviews
-
 private extension ExploreGameSessionScreen {
     @ViewBuilder
     var sessionContent: some View {
@@ -87,7 +86,6 @@ private extension ExploreGameSessionScreen {
 }
 
 // MARK: - Score Header
-
 private extension ExploreGameSessionScreen {
     var scoreHeader: some View {
         HStack {
@@ -121,7 +119,7 @@ private extension ExploreGameSessionScreen {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.caption2)
             Text("\(gameState.currentPointsAvailable) pts")
-                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .font(DesignSystem.Font.roundedMicro2)
                 .contentTransition(.numericText())
         }
         .foregroundStyle(DesignSystem.Color.accent)
@@ -132,7 +130,6 @@ private extension ExploreGameSessionScreen {
 }
 
 // MARK: - Clue List
-
 private extension ExploreGameSessionScreen {
     var clueList: some View {
         ScrollView {
@@ -182,7 +179,6 @@ private extension ExploreGameSessionScreen {
 }
 
 // MARK: - Bottom Controls
-
 private extension ExploreGameSessionScreen {
     var bottomControls: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -226,7 +222,6 @@ private extension ExploreGameSessionScreen {
 }
 
 // MARK: - Actions
-
 private extension ExploreGameSessionScreen {
     func handleGuess(_ country: Country) {
         let isCorrect = gameState.submitGuess(country.name)

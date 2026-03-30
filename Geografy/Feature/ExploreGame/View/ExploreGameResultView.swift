@@ -27,7 +27,6 @@ struct ExploreGameResultView: View {
 }
 
 // MARK: - Subviews
-
 private extension ExploreGameResultView {
     var resultHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -46,7 +45,7 @@ private extension ExploreGameResultView {
                 .frame(width: 80, height: 80)
 
             Image(systemName: result.wasRevealed ? "eye.fill" : "checkmark.circle.fill")
-                .font(.system(size: 40))
+                .font(DesignSystem.Font.displayXXS)
                 .foregroundStyle(resultColor)
                 .scaleEffect(scoreAnimated ? 1.0 : 0.5)
         }
@@ -54,7 +53,7 @@ private extension ExploreGameResultView {
 
     var scoreDisplay: some View {
         Text("\(scoreAnimated ? result.score : 0)")
-            .font(.system(size: 56, weight: .black, design: .rounded))
+            .font(DesignSystem.Font.roundedHero)
             .foregroundStyle(resultColor)
             .contentTransition(.numericText())
     }
@@ -132,7 +131,6 @@ private extension ExploreGameResultView {
 }
 
 // MARK: - Helper Subviews
-
 private extension ExploreGameResultView {
     func statPill(icon: String, value: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
@@ -164,7 +162,6 @@ private extension ExploreGameResultView {
 }
 
 // MARK: - Helpers
-
 private extension ExploreGameResultView {
     var resultColor: Color {
         if result.wasRevealed {
@@ -192,7 +189,6 @@ private extension ExploreGameResultView {
 }
 
 // MARK: - Animations
-
 private extension ExploreGameResultView {
     func animateIn() {
         withAnimation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.1)) {

@@ -8,7 +8,6 @@ enum AchievementRarity: String, CaseIterable, Codable {
 }
 
 // MARK: - Display
-
 extension AchievementRarity {
     var displayName: String {
         switch self {

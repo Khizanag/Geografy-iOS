@@ -20,7 +20,6 @@ struct HomeCultureExplorerCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeCultureExplorerCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeCultureExplorerCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "music.note.house.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.purple)
         }
     }

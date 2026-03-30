@@ -21,7 +21,6 @@ import Foundation
 import UIKit
 
 // MARK: - GoogleUserInfo
-
 struct GoogleUserInfo {
     let sub: String
     let email: String?
@@ -31,7 +30,6 @@ struct GoogleUserInfo {
 }
 
 // MARK: - GoogleSignInHandler
-
 @MainActor
 final class GoogleSignInHandler: NSObject {
     /// Replace with your Google OAuth 2.0 Client ID from Google Cloud Console.
@@ -110,7 +108,6 @@ final class GoogleSignInHandler: NSObject {
 }
 
 // MARK: - Error
-
 extension GoogleSignInHandler {
     enum GoogleSignInError: LocalizedError {
         case invalidCallback
@@ -134,7 +131,6 @@ extension GoogleSignInHandler {
 }
 
 // MARK: - PKCE
-
 private extension GoogleSignInHandler {
     func makePKCEPair() -> (verifier: String, challenge: String) {
         var bytes = [UInt8](repeating: 0, count: 32)
@@ -147,7 +143,6 @@ private extension GoogleSignInHandler {
 }
 
 // MARK: - Auth URL
-
 private extension GoogleSignInHandler {
     var callbackScheme: String {
         Self.clientID
@@ -180,7 +175,6 @@ private extension GoogleSignInHandler {
 }
 
 // MARK: - Token Exchange
-
 private extension GoogleSignInHandler {
     struct TokenResponse: Decodable {
         let accessToken: String
@@ -214,7 +208,6 @@ private extension GoogleSignInHandler {
 }
 
 // MARK: - User Info
-
 private extension GoogleSignInHandler {
     struct RawUserInfo: Decodable {
         let sub: String?
@@ -247,7 +240,6 @@ private extension GoogleSignInHandler {
 }
 
 // MARK: - Presentation Context
-
 private final class PresentationContextProvider: NSObject, ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         let windowScene = UIApplication.shared.connectedScenes
@@ -264,7 +256,6 @@ private final class PresentationContextProvider: NSObject, ASWebAuthenticationPr
 }
 
 // MARK: - Data+Base64URL
-
 private extension Data {
     func base64URLEncoded() -> String {
         base64EncodedString()

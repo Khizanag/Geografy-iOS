@@ -37,7 +37,6 @@ struct FlagSequenceView: View {
 }
 
 // MARK: - Helpers
-
 private extension FlagSequenceView {
     var progressFraction: CGFloat {
         guard !content.countries.isEmpty else { return 0 }
@@ -46,7 +45,6 @@ private extension FlagSequenceView {
 }
 
 // MARK: - Question
-
 private extension FlagSequenceView {
     @ViewBuilder
     var questionView: some View {
@@ -87,7 +85,6 @@ private extension FlagSequenceView {
 }
 
 // MARK: - Actions
-
 private extension FlagSequenceView {
     func prepareOptions() {
         let allCountries = content.countries

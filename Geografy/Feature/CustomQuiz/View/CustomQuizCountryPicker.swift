@@ -26,7 +26,6 @@ struct CustomQuizCountryPicker: View {
 }
 
 // MARK: - Continent Filter
-
 private extension CustomQuizCountryPicker {
     var continentFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -70,7 +69,6 @@ private extension CustomQuizCountryPicker {
 }
 
 // MARK: - Selection Bar
-
 private extension CustomQuizCountryPicker {
     var selectionBar: some View {
         HStack {
@@ -98,7 +96,6 @@ private extension CustomQuizCountryPicker {
 }
 
 // MARK: - Country List
-
 private extension CustomQuizCountryPicker {
     var countryList: some View {
         List {
@@ -144,7 +141,6 @@ private extension CustomQuizCountryPicker {
 }
 
 // MARK: - Toolbar
-
 private extension CustomQuizCountryPicker {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -160,7 +156,6 @@ private extension CustomQuizCountryPicker {
 }
 
 // MARK: - Helpers
-
 private extension CustomQuizCountryPicker {
     var filteredCountries: [Country] {
         var result = countries.filter { $0.continent != .antarctica }

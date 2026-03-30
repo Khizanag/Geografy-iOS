@@ -41,7 +41,6 @@ struct TravelBucketListScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TravelBucketListScreen {
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
@@ -60,7 +59,7 @@ private extension TravelBucketListScreen {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: "list.star")
-                    .font(.system(size: 28))
+                    .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(DesignSystem.Color.accent)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("\(bucketListCountries.count) countries on your bucket list")
@@ -101,25 +100,27 @@ private extension TravelBucketListScreen {
     func bucketListRow(for country: Country) -> some View {
         let priority = priorities[country.code] ?? .someday
         return HStack(spacing: DesignSystem.Spacing.sm) {
-            CountryRowView(country: country, isFavorite: false)
-                .onTapGesture {
-                    hapticsService.impact(.light)
-                    selectedCountry = country
-                }
+            Button {
+                hapticsService.impact(.light)
+                selectedCountry = country
+            } label: {
+                CountryRowView(country: country, isFavorite: false)
+            }
+            .buttonStyle(PressButtonStyle())
             priorityBadge(priority)
         }
     }
 
     func priorityBadge(_ priority: BucketListPriority) -> some View {
         Text(priority.emoji)
-            .font(.system(size: 20))
+            .font(DesignSystem.Font.title3)
             .frame(width: 32, height: 32)
     }
 
     var emptyState: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: "heart.slash")
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             Text("No bucket list yet")
                 .font(DesignSystem.Font.title2)
@@ -154,7 +155,6 @@ private extension TravelBucketListScreen {
 }
 
 // MARK: - Toolbar
-
 private extension TravelBucketListScreen {
     @ToolbarContentBuilder
     var toolbarItems: some ToolbarContent {
@@ -173,7 +173,6 @@ private extension TravelBucketListScreen {
 }
 
 // MARK: - Data
-
 private extension TravelBucketListScreen {
     var bucketListCountries: [Country] {
         let codes = travelService.wantToVisitCodes
@@ -263,7 +262,6 @@ private extension TravelBucketListScreen {
 }
 
 // MARK: - Supporting Types
-
 private enum BucketListSort: String, CaseIterable, Identifiable {
     case continent
     case priority
@@ -303,7 +301,6 @@ enum BucketListPriority: String, CaseIterable, Codable {
 }
 
 // MARK: - Bucket List Country Detail View
-
 struct BucketListCountryDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -332,7 +329,6 @@ struct BucketListCountryDetailView: View {
 }
 
 // MARK: - Subviews
-
 private extension BucketListCountryDetailView {
     var countryHeader: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
@@ -365,7 +361,7 @@ private extension BucketListCountryDetailView {
         return CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Text(option.emoji)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.iconDefault)
                 Text(option.label)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.medium)
@@ -406,7 +402,6 @@ private extension BucketListCountryDetailView {
 }
 
 // MARK: - Share Sheet
-
 private struct ShareSheet: UIViewControllerRepresentable {
     let text: String
 

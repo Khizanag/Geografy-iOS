@@ -456,7 +456,6 @@ final class CultureProfileService {
 }
 
 // MARK: - Helpers
-
 private extension CultureProfileService {
     func countryName(for code: String) -> String {
         Locale.current.localizedString(forRegionCode: code) ?? code

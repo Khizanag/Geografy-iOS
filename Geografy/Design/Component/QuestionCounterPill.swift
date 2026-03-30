@@ -7,7 +7,7 @@ struct QuestionCounterPill: View {
     var body: some View {
         Text("\(current)/\(total)")
             .contentTransition(.numericText())
-            .font(.system(size: 13, weight: .black, design: .rounded))
+            .font(DesignSystem.Font.roundedMicro)
             .foregroundStyle(DesignSystem.Color.textSecondary)
             .padding(.horizontal, 10)
             .padding(.vertical, 5)

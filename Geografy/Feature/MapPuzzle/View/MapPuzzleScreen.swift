@@ -40,7 +40,6 @@ struct MapPuzzleScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension MapPuzzleScreen {
     var loadingView: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -177,7 +176,7 @@ private extension MapPuzzleScreen {
                     .foregroundStyle(DesignSystem.Color.error)
             }
         }
-        .font(.system(size: 16))
+        .font(DesignSystem.Font.callout)
     }
 
     var nextButton: some View {
@@ -206,7 +205,7 @@ private extension MapPuzzleScreen {
     var summaryIcon: some View {
         let isPassing = correctCount >= questions.count / 2
         return Image(systemName: isPassing ? "star.fill" : "arrow.clockwise.circle.fill")
-            .font(.system(size: 64))
+            .font(DesignSystem.Font.display)
             .foregroundStyle(isPassing ? DesignSystem.Color.warning : DesignSystem.Color.accent)
     }
 
@@ -262,7 +261,6 @@ private extension MapPuzzleScreen {
 }
 
 // MARK: - Helpers
-
 private extension MapPuzzleScreen {
     struct PuzzleQuestion {
         let country: Country

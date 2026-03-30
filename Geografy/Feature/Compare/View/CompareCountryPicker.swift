@@ -24,7 +24,6 @@ struct CompareCountryPicker: View {
 }
 
 // MARK: - Toolbar
-
 private extension CompareCountryPicker {
     @ToolbarContentBuilder
     var closeToolbarItem: some ToolbarContent {
@@ -35,7 +34,6 @@ private extension CompareCountryPicker {
 }
 
 // MARK: - Subviews
-
 private extension CompareCountryPicker {
     var countryList: some View {
         ScrollView {
@@ -69,7 +67,6 @@ private extension CompareCountryPicker {
 }
 
 // MARK: - Helpers
-
 private extension CompareCountryPicker {
     var filteredCountries: [Country] {
         var result = countries

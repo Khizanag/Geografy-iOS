@@ -25,7 +25,6 @@ struct CustomQuizLibraryScreen: View {
 }
 
 // MARK: - Content
-
 private extension CustomQuizLibraryScreen {
     @ViewBuilder
     var content: some View {
@@ -62,7 +61,6 @@ private extension CustomQuizLibraryScreen {
 }
 
 // MARK: - Quiz Row
-
 private extension CustomQuizLibraryScreen {
     func quizRow(_ quiz: CustomQuiz) -> some View {
         CustomQuizCard(quiz: quiz)
@@ -96,7 +94,6 @@ private extension CustomQuizLibraryScreen {
 }
 
 // MARK: - Toolbar
-
 private extension CustomQuizLibraryScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -113,7 +110,6 @@ private extension CustomQuizLibraryScreen {
 }
 
 // MARK: - Sheets
-
 private extension CustomQuizLibraryScreen {
     var builderSheet: some View {
         CustomQuizBuilderScreen(
@@ -164,7 +160,6 @@ private extension CustomQuizLibraryScreen {
 }
 
 // MARK: - Delete Alert
-
 private extension CustomQuizLibraryScreen {
     var deleteAlertBinding: Binding<Bool> {
         Binding(

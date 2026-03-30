@@ -32,7 +32,6 @@ struct SizeCompareView: View {
 }
 
 // MARK: - Subviews
-
 private extension SizeCompareView {
     var mainContent: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
@@ -138,7 +137,6 @@ private extension SizeCompareView {
 }
 
 // MARK: - Helpers
-
 private extension SizeCompareView {
     var multiplier: Double {
         let larger = max(referenceCountry.area, comparisonCountry.area)
@@ -181,7 +179,6 @@ private extension SizeCompareView {
 }
 
 // MARK: - Preview
-
 #Preview {
     SizeCompareView(
         referenceCountry: Country(

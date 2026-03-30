@@ -27,7 +27,6 @@ struct TimeZoneScreen: View {
 }
 
 // MARK: - Tab Enum
-
 private extension TimeZoneScreen {
     enum TimeZoneTab: CaseIterable {
         case worldClock
@@ -53,7 +52,6 @@ private extension TimeZoneScreen {
 }
 
 // MARK: - Subviews
-
 private extension TimeZoneScreen {
     var tabPicker: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -139,7 +137,6 @@ private extension TimeZoneScreen {
 }
 
 // MARK: - Helpers
-
 private extension TimeZoneScreen {
     var countriesWithZones: [CountryWithZone] {
         countryDataService.countries.compactMap { country in
@@ -151,7 +148,6 @@ private extension TimeZoneScreen {
 }
 
 // MARK: - CountryWithZone
-
 struct CountryWithZone: Identifiable {
     let country: Country
     let timeZone: TimeZone
@@ -178,7 +174,6 @@ struct CountryWithZone: Identifiable {
 }
 
 // MARK: - World Clock View
-
 private struct WorldClockView: View {
     let countries: [CountryWithZone]
     @State private var searchText = ""
@@ -222,7 +217,7 @@ private struct WorldClockView: View {
 
             VStack(alignment: .trailing, spacing: 2) {
                 Text(currentTimeString(for: item.timeZone))
-                    .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                    .font(DesignSystem.Font.monoSmall)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .contentTransition(.numericText())
                     .animation(.default, value: now)
@@ -251,7 +246,6 @@ private struct WorldClockView: View {
 }
 
 // MARK: - All Zones View
-
 private struct AllZonesView: View {
     let countries: [CountryWithZone]
 
@@ -330,7 +324,7 @@ private struct AllZonesView: View {
                 .lineLimit(1)
             Spacer()
             Text(currentTimeString(for: item.timeZone))
-                .font(.system(size: 14, weight: .medium, design: .monospaced))
+                .font(DesignSystem.Font.monoCaption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
@@ -361,7 +355,6 @@ private struct AllZonesView: View {
 }
 
 // MARK: - Time Zone Quiz View
-
 private struct TimeZoneQuizView: View {
     let countries: [CountryWithZone]
 
@@ -479,7 +472,7 @@ private struct TimeZoneQuizView: View {
     private var emptyState: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "clock.badge.questionmark")
-                .font(.system(size: 44))
+                .font(DesignSystem.Font.displayXS)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             Text("Not enough countries with time zone data")
                 .font(DesignSystem.Font.body)

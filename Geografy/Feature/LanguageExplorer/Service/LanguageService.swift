@@ -23,7 +23,6 @@ final class LanguageService {
 }
 
 // MARK: - Data
-
 extension LanguageService {
     var languages: [Language] {
         topLanguages + regionalLanguages
@@ -31,7 +30,6 @@ extension LanguageService {
 }
 
 // MARK: - Top Languages
-
 private extension LanguageService {
     var topLanguages: [Language] {
         [
@@ -146,7 +144,6 @@ private extension LanguageService {
 }
 
 // MARK: - Regional Languages
-
 private extension LanguageService {
     var regionalLanguages: [Language] {
         [

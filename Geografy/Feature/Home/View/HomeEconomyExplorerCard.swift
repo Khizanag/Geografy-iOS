@@ -20,7 +20,6 @@ struct HomeEconomyExplorerCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeEconomyExplorerCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeEconomyExplorerCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "chart.line.uptrend.xyaxis")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.success)
         }
     }

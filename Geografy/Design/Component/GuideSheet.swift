@@ -49,7 +49,6 @@ struct GuideSheet<Illustration: View>: View {
 }
 
 // MARK: - Page Content
-
 private extension GuideSheet {
     func pageContent(_ page: GuidePage, index: Int) -> some View {
         ScrollView(showsIndicators: false) {
@@ -117,7 +116,6 @@ private extension GuideSheet {
 }
 
 // MARK: - Page Indicator
-
 private extension GuideSheet {
     var pageIndicatorAndButton: some View {
         VStack(spacing: DesignSystem.Spacing.md) {

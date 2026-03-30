@@ -21,7 +21,6 @@ struct EmptyStateView: View {
 }
 
 // MARK: - Subviews
-
 private extension EmptyStateView {
     var iconCircle: some View {
         ZStack {
@@ -29,7 +28,7 @@ private extension EmptyStateView {
                 .fill(DesignSystem.Color.accent.opacity(0.1))
                 .frame(width: 100, height: 100)
             Image(systemName: icon)
-                .font(.system(size: 40))
+                .font(DesignSystem.Font.displayXXS)
                 .foregroundStyle(DesignSystem.Color.accent.opacity(0.6))
         }
     }

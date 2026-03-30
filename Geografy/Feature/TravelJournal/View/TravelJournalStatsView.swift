@@ -22,7 +22,6 @@ struct TravelJournalStatsView: View {
 }
 
 // MARK: - Subviews
-
 private extension TravelJournalStatsView {
     var headerRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -46,7 +45,7 @@ private extension TravelJournalStatsView {
         HStack(spacing: 2) {
             ForEach(1...5, id: \.self) { star in
                 Image(systemName: starImageName(for: star))
-                    .font(.system(size: 10))
+                    .font(DesignSystem.Font.micro)
                     .foregroundStyle(
                         DesignSystem.Color.warning
                     )
@@ -81,7 +80,7 @@ private extension TravelJournalStatsView {
     ) -> some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: icon)
-                .font(.system(size: 14))
+                .font(DesignSystem.Font.iconXS)
                 .foregroundStyle(DesignSystem.Color.accent)
             Text(value)
                 .font(DesignSystem.Font.headline)
@@ -104,7 +103,7 @@ private extension TravelJournalStatsView {
     func favoriteRow(countryCode: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "heart.fill")
-                .font(.system(size: 12))
+                .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.error)
             Text("Favorite Destination")
                 .font(DesignSystem.Font.caption)
@@ -119,7 +118,6 @@ private extension TravelJournalStatsView {
 }
 
 // MARK: - Helpers
-
 private extension TravelJournalStatsView {
     var formattedRating: String {
         guard averageRating > 0 else { return "-" }

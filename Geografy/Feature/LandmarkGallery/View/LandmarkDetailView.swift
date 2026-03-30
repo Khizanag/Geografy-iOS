@@ -31,7 +31,6 @@ struct LandmarkDetailView: View {
 }
 
 // MARK: - Subviews
-
 private extension LandmarkDetailView {
     var heroSection: some View {
         ZStack {
@@ -42,7 +41,7 @@ private extension LandmarkDetailView {
             )
             VStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: landmark.symbolName)
-                    .font(.system(size: 72))
+                    .font(DesignSystem.Font.displayLarge)
                     .foregroundStyle(accentSwiftUIColor)
                     .shadow(color: accentSwiftUIColor.opacity(0.5), radius: 20, x: 0, y: 10)
                 HStack(spacing: DesignSystem.Spacing.sm) {
@@ -132,7 +131,7 @@ private extension LandmarkDetailView {
             CardView {
                 HStack(alignment: .top, spacing: DesignSystem.Spacing.md) {
                     Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.iconDefault)
                         .foregroundStyle(DesignSystem.Color.warning)
                         .padding(.top, 2)
                     Text(landmark.funFact)

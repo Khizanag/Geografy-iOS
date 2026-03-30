@@ -38,7 +38,6 @@ struct DailyChallengeResult: Identifiable, Codable {
 }
 
 // MARK: - Date Key
-
 extension DailyChallengeResult {
     static func dateKey(for date: Date = .now) -> String {
         let components = Calendar.current.dateComponents(

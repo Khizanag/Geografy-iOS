@@ -50,7 +50,6 @@ final class DailyChallengeService {
 }
 
 // MARK: - Challenge Generation
-
 private extension DailyChallengeService {
     func generateChallenge(for date: Date) -> DailyChallenge {
         let type = DailyChallengeType.forDate(date)
@@ -225,7 +224,6 @@ private extension DailyChallengeService {
 }
 
 // MARK: - File-Based Persistence
-
 private extension DailyChallengeService {
     var storageURL: URL {
         let directory = FileManager.default.urls(

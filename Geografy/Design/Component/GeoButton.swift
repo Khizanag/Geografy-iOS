@@ -33,7 +33,6 @@ struct GeoButton: View {
 }
 
 // MARK: - Subviews
-
 private extension GeoButton {
     var label: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -60,7 +59,6 @@ private extension GeoButton {
 }
 
 // MARK: - Helpers
-
 private extension GeoButton {
     var foregroundColor: Color {
         switch style {

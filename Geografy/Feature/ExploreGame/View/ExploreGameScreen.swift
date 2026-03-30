@@ -21,7 +21,6 @@ struct ExploreGameScreen: View {
 }
 
 // MARK: - Body Subviews
-
 private extension ExploreGameScreen {
     var mainContent: some View {
         ScrollView {
@@ -40,7 +39,6 @@ private extension ExploreGameScreen {
 }
 
 // MARK: - Hero Section
-
 private extension ExploreGameScreen {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -63,14 +61,13 @@ private extension ExploreGameScreen {
                 .fill(DesignSystem.Color.accent.opacity(0.12))
                 .frame(width: 96, height: 96)
             Image(systemName: "globe.desk.fill")
-                .font(.system(size: 44))
+                .font(DesignSystem.Font.displayXS)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
 }
 
 // MARK: - Game Mode Section
-
 private extension ExploreGameScreen {
     var gameModeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -123,7 +120,7 @@ private extension ExploreGameScreen {
                         height: DesignSystem.Size.xxl
                     )
                 Image(systemName: icon)
-                    .font(.system(size: 24))
+                    .font(DesignSystem.Font.iconMedium)
                     .foregroundStyle(color)
             }
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
@@ -142,7 +139,6 @@ private extension ExploreGameScreen {
 }
 
 // MARK: - Statistics Section
-
 private extension ExploreGameScreen {
     var statisticsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -203,7 +199,6 @@ private extension ExploreGameScreen {
 }
 
 // MARK: - Actions
-
 private extension ExploreGameScreen {
     func startDailyGame() {
         guard let state = gameService.makeDailyGame() else { return }
@@ -222,7 +217,6 @@ private extension ExploreGameScreen {
 }
 
 // MARK: - ExploreGameState + Identifiable
-
 extension ExploreGameState: Identifiable {
     var id: String { targetCountry.id }
 }

@@ -30,7 +30,6 @@ struct QuizQuestionView: View {
 }
 
 // MARK: - Entrance
-
 private extension QuizQuestionView {
     func triggerEntrance() {
         optionsVisible = false
@@ -45,7 +44,6 @@ private extension QuizQuestionView {
 }
 
 // MARK: - Prompt
-
 private extension QuizQuestionView {
     @ViewBuilder
     var promptSection: some View {
@@ -80,7 +78,7 @@ private extension QuizQuestionView {
 
                 HStack(spacing: 4) {
                     Image(systemName: "arrow.up.left.and.arrow.down.right")
-                        .font(.system(size: 9))
+                        .font(DesignSystem.Font.nano)
                     Text("Tap to zoom")
                         .font(DesignSystem.Font.caption2)
                 }
@@ -104,7 +102,7 @@ private extension QuizQuestionView {
 
             if let subject {
                 Text(subject)
-                    .font(.system(size: 34, weight: .black, design: .rounded))
+                    .font(DesignSystem.Font.roundedHeadline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
@@ -117,7 +115,6 @@ private extension QuizQuestionView {
 }
 
 // MARK: - Options
-
 private extension QuizQuestionView {
     @ViewBuilder
     var optionsSection: some View {
@@ -178,7 +175,6 @@ private extension QuizQuestionView {
 }
 
 // MARK: - Helpers
-
 private extension QuizQuestionView {
     func optionState(for option: QuizOption) -> QuizOptionButton.OptionState {
         guard showFeedback else {

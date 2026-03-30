@@ -45,7 +45,6 @@ struct OrganizationsScreen: View {
 }
 
 // MARK: - Toolbar
-
 private extension OrganizationsScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -72,7 +71,6 @@ private extension OrganizationsScreen {
 }
 
 // MARK: - Subviews
-
 private extension OrganizationsScreen {
     func orgLogo(_ org: Organization) -> some View {
         Group {
@@ -139,7 +137,6 @@ private extension OrganizationsScreen {
 }
 
 // MARK: - Helpers
-
 private extension OrganizationsScreen {
     func memberCount(for org: Organization) -> Int {
         countryDataService.countries.filter { $0.organizations.contains(org.id) }.count

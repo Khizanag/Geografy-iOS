@@ -35,7 +35,6 @@ final class CoinService {
 }
 
 // MARK: - Formatted Balance
-
 extension CoinService {
     var formattedBalance: String {
         let formatter = NumberFormatter()
@@ -49,7 +48,6 @@ extension CoinService {
 }
 
 // MARK: - Persistence
-
 private extension CoinService {
     func appendTransaction(amount: Int, reason: CoinReason) {
         let transaction = CoinTransaction(
