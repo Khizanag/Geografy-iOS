@@ -26,9 +26,10 @@ struct SpeakerButton: View {
                         : DesignSystem.Color.textSecondary
                 )
                 .symbolEffect(.variableColor.iterative.reversing, isActive: isActivelySpeaking)
-                .frame(width: 28, height: 28)
+                .frame(width: 44, height: 44)
         }
         .glassEffect(.regular.interactive(), in: .circle)
         .buttonStyle(.plain)
+        .accessibilityLabel(isActivelySpeaking ? "Stop pronunciation" : "Pronounce \(text)")
     }
 }

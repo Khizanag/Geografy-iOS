@@ -25,6 +25,9 @@ struct CountryRowView: View {
                 .strokeBorder(Color.white.opacity(0.06), lineWidth: 1)
         )
         .countryContextMenu(country)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(country.name), \(country.continent.displayName)")
+        .accessibilityHint("Double tap to view details")
     }
 }
 

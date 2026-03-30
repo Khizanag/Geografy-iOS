@@ -31,6 +31,9 @@ struct SessionProgressBar: View {
             }
         }
         .frame(height: height)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Progress")
+        .accessibilityValue("\(Int(progress * 100)) percent")
         .onChange(of: progress) {
             withAnimation(.spring(response: 0.6, dampingFraction: 0.6)) {
                 animatedProgress = progress

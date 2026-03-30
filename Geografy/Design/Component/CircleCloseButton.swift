@@ -20,5 +20,6 @@ struct CircleCloseButton: View {
             Image(systemName: "xmark")
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
+        .accessibilityLabel("Close")
     }
 }

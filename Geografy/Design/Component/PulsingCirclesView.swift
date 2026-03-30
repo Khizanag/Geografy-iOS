@@ -10,6 +10,7 @@ struct PulsingCirclesView: View {
             iconView
         }
         .frame(width: DesignSystem.Size.feature, height: DesignSystem.Size.feature)
+        .accessibilityHidden(true)
     }
 }
 

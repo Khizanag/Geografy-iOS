@@ -11,8 +11,10 @@ struct SectionHeaderView: View {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
             } else {
                 accentBar
+                    .accessibilityHidden(true)
             }
             Text(title)
                 .font(DesignSystem.Font.title2)
@@ -22,6 +24,8 @@ struct SectionHeaderView: View {
                 NewBadge()
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 }
 

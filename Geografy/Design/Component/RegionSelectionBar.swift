@@ -60,5 +60,7 @@ private extension RegionSelectionBar {
         }
         .buttonStyle(.plain)
         .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .accessibilityLabel(item.displayName)
+        .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 }
