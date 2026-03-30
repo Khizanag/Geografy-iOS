@@ -48,7 +48,6 @@ struct TVQuizSetupScreen: View {
 }
 
 // MARK: - Quiz Type
-
 private extension TVQuizSetupScreen {
     var quizTypeSection: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -132,7 +131,6 @@ private extension TVQuizSetupScreen {
 }
 
 // MARK: - Difficulty
-
 private extension TVQuizSetupScreen {
     var difficultySection: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -198,7 +196,6 @@ private extension TVQuizSetupScreen {
 }
 
 // MARK: - Settings
-
 private extension TVQuizSetupScreen {
     var settingsSection: some View {
         HStack(spacing: 24) {
@@ -246,7 +243,6 @@ private extension TVQuizSetupScreen {
 }
 
 // MARK: - Start Buttons
-
 private extension TVQuizSetupScreen {
     var startButton: some View {
         HStack(spacing: 32) {

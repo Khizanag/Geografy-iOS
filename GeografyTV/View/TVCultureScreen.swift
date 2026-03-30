@@ -33,7 +33,6 @@ struct TVCultureScreen: View {
 }
 
 // MARK: - Detail
-
 struct TVCultureDetailView: View {
     let country: Country?
     let fact: CultureFact

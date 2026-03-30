@@ -31,7 +31,6 @@ struct TVContinentStatsScreen: View {
 }
 
 // MARK: - Stats
-
 private extension TVContinentStatsScreen {
     var continentCountries: [Country] {
         countryDataService.countries
@@ -79,7 +78,6 @@ private extension TVContinentStatsScreen {
 }
 
 // MARK: - Country Row
-
 private extension TVContinentStatsScreen {
     func countryRow(_ country: Country) -> some View {
         HStack(spacing: 20) {

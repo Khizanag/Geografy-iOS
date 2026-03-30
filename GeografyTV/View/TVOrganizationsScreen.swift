@@ -34,7 +34,6 @@ struct TVOrganizationsScreen: View {
 }
 
 // MARK: - Detail
-
 struct TVOrganizationDetailScreen: View {
     let organization: Organization
     let countryDataService: CountryDataService

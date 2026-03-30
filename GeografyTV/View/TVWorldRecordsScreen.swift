@@ -37,7 +37,6 @@ struct TVWorldRecordsScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVWorldRecordsScreen {
     func recordRow(_ record: WorldRecord) -> some View {
         HStack(spacing: 24) {

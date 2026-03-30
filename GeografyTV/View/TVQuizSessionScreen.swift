@@ -54,7 +54,6 @@ struct TVQuizSessionScreen: View {
 }
 
 // MARK: - Question View
-
 private extension TVQuizSessionScreen {
     func questionView(_ question: QuizQuestion) -> some View {
         VStack(spacing: 48) {
@@ -253,7 +252,6 @@ private extension TVQuizSessionScreen {
 }
 
 // MARK: - Gamepad Button Mapping
-
 enum GamepadButton: CaseIterable, Hashable {
     case l1
     case r1
@@ -289,7 +287,6 @@ enum GamepadButton: CaseIterable, Hashable {
 }
 
 // MARK: - Game Controller
-
 private extension TVQuizSessionScreen {
     func setupGameController() {
         hasGameController = GCController.controllers().contains { $0.extendedGamepad != nil }
@@ -367,7 +364,6 @@ private extension TVQuizSessionScreen {
 }
 
 // MARK: - Result
-
 private extension TVQuizSessionScreen {
     var resultView: some View {
         VStack(spacing: 40) {
@@ -434,7 +430,6 @@ private extension TVQuizSessionScreen {
 }
 
 // MARK: - Actions
-
 private extension TVQuizSessionScreen {
     var currentQuestion: QuizQuestion? {
         guard currentIndex < questions.count else { return nil }

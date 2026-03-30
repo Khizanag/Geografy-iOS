@@ -101,7 +101,6 @@ final class TVControllerHaptics {
 }
 
 // MARK: - Engine Management
-
 private extension TVControllerHaptics {
     func play(on specificController: GCController?, events: [CHHapticEvent]) {
         let targets: [GCController]

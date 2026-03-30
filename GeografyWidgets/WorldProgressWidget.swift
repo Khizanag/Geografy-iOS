@@ -2,7 +2,6 @@ import WidgetKit
 import SwiftUI
 
 // MARK: - Timeline Entry
-
 struct WorldProgressEntry: TimelineEntry {
     let date: Date
     let visitedCount: Int
@@ -33,7 +32,6 @@ struct WorldProgressEntry: TimelineEntry {
 }
 
 // MARK: - Timeline Provider
-
 struct WorldProgressProvider: TimelineProvider {
     func placeholder(in context: Context) -> WorldProgressEntry {
         .placeholder
@@ -63,7 +61,6 @@ struct WorldProgressProvider: TimelineProvider {
 }
 
 // MARK: - Widget View
-
 struct WorldProgressWidgetView: View {
     @Environment(\.widgetFamily) private var widgetFamily
 
@@ -82,7 +79,6 @@ struct WorldProgressWidgetView: View {
 }
 
 // MARK: - Large View
-
 private extension WorldProgressWidgetView {
     var largeView: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -214,7 +210,6 @@ private extension WorldProgressWidgetView {
 }
 
 // MARK: - Medium View
-
 private extension WorldProgressWidgetView {
     var mediumView: some View {
         HStack(spacing: 16) {
@@ -299,7 +294,6 @@ private extension WorldProgressWidgetView {
 }
 
 // MARK: - Accessory View
-
 private extension WorldProgressWidgetView {
     var rectangularView: some View {
         VStack(alignment: .leading, spacing: 2) {
@@ -334,7 +328,6 @@ private extension WorldProgressWidgetView {
 }
 
 // MARK: - Widget
-
 struct WorldProgressWidget: Widget {
     let kind = "WorldProgressWidget"
 
@@ -353,7 +346,6 @@ struct WorldProgressWidget: Widget {
 }
 
 // MARK: - Preview
-
 #Preview(as: .systemLarge) {
     WorldProgressWidget()
 } timeline: {

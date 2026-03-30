@@ -36,7 +36,6 @@ struct TVLandmarkScreen: View {
 }
 
 // MARK: - Row
-
 private extension TVLandmarkScreen {
     func landmarkRow(_ landmark: Landmark) -> some View {
         HStack(spacing: 20) {
@@ -70,7 +69,6 @@ private extension TVLandmarkScreen {
 }
 
 // MARK: - Detail
-
 struct TVLandmarkDetailScreen: View {
     let landmark: Landmark
 

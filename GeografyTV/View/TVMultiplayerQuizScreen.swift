@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 import GameController
 import SwiftUI
 
@@ -58,7 +59,6 @@ struct TVMultiplayerQuizScreen: View {
 }
 
 // MARK: - Game Phase
-
 extension TVMultiplayerQuizScreen {
     enum GamePhase {
         case lobby
@@ -68,7 +68,6 @@ extension TVMultiplayerQuizScreen {
 }
 
 // MARK: - Player
-
 extension TVMultiplayerQuizScreen {
     struct Player: Identifiable {
         let id: Int
@@ -82,7 +81,6 @@ extension TVMultiplayerQuizScreen {
 }
 
 // MARK: - Lobby
-
 private extension TVMultiplayerQuizScreen {
     var lobbyView: some View {
         VStack(spacing: 48) {
@@ -167,7 +165,6 @@ private extension TVMultiplayerQuizScreen {
 }
 
 // MARK: - Game View
-
 private extension TVMultiplayerQuizScreen {
     var currentQuestion: QuizQuestion? {
         guard currentIndex < questions.count else { return nil }
@@ -446,7 +443,6 @@ private extension TVMultiplayerQuizScreen {
 }
 
 // MARK: - Results
-
 private extension TVMultiplayerQuizScreen {
     var resultsView: some View {
         VStack(spacing: 48) {
@@ -518,7 +514,6 @@ private extension TVMultiplayerQuizScreen {
 }
 
 // MARK: - Game Logic
-
 private extension TVMultiplayerQuizScreen {
     func startGame() {
         let filteredCountries = region.filter(countryDataService.countries)
@@ -625,7 +620,6 @@ private extension TVMultiplayerQuizScreen {
 }
 
 // MARK: - Controller Management
-
 private extension TVMultiplayerQuizScreen {
     func startControllerDiscovery() {
         scanAndRegisterControllers()

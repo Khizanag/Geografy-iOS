@@ -41,7 +41,6 @@ enum WidgetDataProvider {
 }
 
 // MARK: - Shared Data Models
-
 struct WidgetCountryEntry: Codable {
     let code: String
     let name: String

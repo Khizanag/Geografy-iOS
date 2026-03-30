@@ -24,7 +24,6 @@ struct TVFavoritesScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVFavoritesScreen {
     var emptyState: some View {
         VStack(spacing: 20) {

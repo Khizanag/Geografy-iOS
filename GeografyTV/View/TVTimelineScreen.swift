@@ -46,7 +46,6 @@ struct TVTimelineScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVTimelineScreen {
     func eventRow(_ event: HistoricalEvent) -> some View {
         HStack(spacing: 20) {

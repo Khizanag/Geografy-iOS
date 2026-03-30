@@ -39,7 +39,6 @@ struct TVAchievementsScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TVAchievementsScreen {
     var levelCard: some View {
         HStack(spacing: 24) {

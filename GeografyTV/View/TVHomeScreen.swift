@@ -58,7 +58,6 @@ struct TVHomeScreen: View {
 }
 
 // MARK: - Home Feed
-
 struct TVHomeFeedView: View {
     @Environment(XPService.self) private var xpService
     @Environment(StreakService.self) private var streakService
@@ -91,7 +90,6 @@ struct TVHomeFeedView: View {
 }
 
 // MARK: - Hero
-
 private extension TVHomeFeedView {
     var heroSection: some View {
         VStack(spacing: 20) {
@@ -112,7 +110,6 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Stats
-
 private extension TVHomeFeedView {
     var statsRow: some View {
         HStack(spacing: 40) {
@@ -160,7 +157,6 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Spotlight
-
 private extension TVHomeFeedView {
     @ViewBuilder
     var spotlightSection: some View {
@@ -204,7 +200,6 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Quick Actions
-
 private extension TVHomeFeedView {
     var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -279,7 +274,6 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Quick Action
-
 enum TVQuickAction: Hashable {
     case quiz
     case countries

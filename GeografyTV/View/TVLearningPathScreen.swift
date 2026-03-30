@@ -53,7 +53,6 @@ struct TVLearningPathScreen: View {
 }
 
 // MARK: - Module Lessons
-
 struct TVModuleLessonsScreen: View {
     let module: LearningModule
     let service: LearningPathService

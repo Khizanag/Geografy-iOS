@@ -28,7 +28,6 @@ struct TVToolsScreen: View {
 }
 
 // MARK: - Distance Calculator
-
 struct TVDistanceCalculatorScreen: View {
     let countryDataService: CountryDataService
 
@@ -112,7 +111,6 @@ struct TVDistanceCalculatorScreen: View {
 }
 
 // MARK: - Currency Info
-
 struct TVCurrencyInfoScreen: View {
     let countryDataService: CountryDataService
 
@@ -142,7 +140,6 @@ struct TVCurrencyInfoScreen: View {
 }
 
 // MARK: - Time Zones
-
 struct TVTimeZoneScreen: View {
     let countryDataService: CountryDataService
 
