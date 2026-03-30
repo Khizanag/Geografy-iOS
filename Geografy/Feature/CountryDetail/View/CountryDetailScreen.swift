@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CountryDetailScreen: View {
     @Environment(TabCoordinator.self) var coordinator
+    @Environment(Coordinator.self) private var sheetCoordinator: Coordinator?
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) private var travelService
     @Environment(FavoritesService.self) private var favoritesService
@@ -57,7 +58,6 @@ struct CountryDetailScreen: View {
 }
 
 // MARK: - Info Item
-
 extension CountryDetailScreen {
     struct InfoItem: Identifiable {
         let id = UUID()
@@ -66,6 +66,9 @@ extension CountryDetailScreen {
         let value: String
         let supportsMap: Bool
         var mapButtonTitle: String = "Show on the map"
+        var actionButtonTitle: String?
+        var actionButtonIcon: String?
+        var onAction: (() -> Void)?
     }
 
     enum CountryDetailSheet: Identifiable {
@@ -94,7 +97,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Sheet Content
-
 private extension CountryDetailScreen {
     @ViewBuilder
     func countryDetailSheetContent(for sheet: CountryDetailSheet) -> some View {
@@ -142,7 +144,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Toolbar
-
 private extension CountryDetailScreen {
     @ToolbarContentBuilder
     var favoriteToolbarItem: some ToolbarContent {
@@ -181,7 +182,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Hero
-
 private extension CountryDetailScreen {
     var heroSection: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
@@ -212,33 +212,6 @@ private extension CountryDetailScreen {
                     SpeakerButton(text: country.name, countryCode: country.code)
                 }
                 .frame(maxWidth: .infinity)
-
-                Button {
-                    activeSheet = .info(
-                        InfoItem(
-                            icon: "globe.americas.fill",
-                            title: "Continent",
-                            value: country.continent.displayName,
-                            supportsMap: true,
-                            mapButtonTitle: "Open \(country.continent.displayName) Map"
-                        )
-                    )
-                } label: {
-                    HStack(spacing: DesignSystem.Spacing.xxs) {
-                        Text(country.continent.displayName)
-                        Image(systemName: "map.fill")
-                            .font(DesignSystem.Font.caption2)
-                            .opacity(0.7)
-                    }
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-                    .padding(.horizontal, DesignSystem.Spacing.sm)
-                    .padding(.vertical, DesignSystem.Spacing.xxs)
-                    .background(DesignSystem.Color.accent)
-                    .clipShape(Capsule())
-                }
-                .buttonStyle(.plain)
             }
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.xl)
@@ -247,7 +220,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Quick Facts
-
 private extension CountryDetailScreen {
     var quickFactsCard: some View {
         CardView {
@@ -346,7 +318,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Travel
-
 private extension CountryDetailScreen {
     var travelSection: some View {
         let currentStatus = travelService.status(for: country.code)
@@ -361,7 +332,7 @@ private extension CountryDetailScreen {
                             .fill((currentStatus?.color ?? DesignSystem.Color.accent).opacity(0.15))
                             .frame(width: 40, height: 40)
                         Image(systemName: currentStatus?.icon ?? "airplane.departure")
-                            .font(.system(size: 16))
+                            .font(DesignSystem.Font.callout)
                             .foregroundStyle(currentStatus?.color ?? DesignSystem.Color.accent)
                     }
                     VStack(alignment: .leading, spacing: 2) {
@@ -390,7 +361,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Gamification
-
 private extension CountryDetailScreen {
     func trackExploration() {
         let key = "explored_countries_\(xpService.currentUserID)"
@@ -404,7 +374,6 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Section Header
-
 extension CountryDetailScreen {
     func sectionHeader(_ title: String, premium: Bool = false) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -417,7 +386,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Locked Content
-
 extension CountryDetailScreen {
     func lockedSection(title: String) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -441,8 +409,34 @@ extension CountryDetailScreen {
     }
 }
 
-// MARK: - Helpers
+// MARK: - Navigation
+extension CountryDetailScreen {
+    func navigateToCountry(_ country: Country) {
+        if let sheetCoordinator {
+            sheetCoordinator.push(.countryDetail(country))
+        } else {
+            coordinator.push(.countryDetail(country))
+        }
+    }
 
+    func navigateToOrganization(_ organization: Organization) {
+        if let sheetCoordinator {
+            sheetCoordinator.push(.organizationDetail(organization))
+        } else {
+            coordinator.push(.organizationDetail(organization))
+        }
+    }
+
+    func navigateToContinent(_ continent: Country.Continent) {
+        if let sheetCoordinator {
+            sheetCoordinator.push(.continentOverview(continent))
+        } else {
+            coordinator.push(.continentOverview(continent))
+        }
+    }
+}
+
+// MARK: - Helpers
 private extension CountryDetailScreen {
     var capitalInfoValue: String {
         country.allCapitals
@@ -542,6 +536,7 @@ private extension CountryDetailScreen {
                 }
                 unescoSection
                 deepDiveSection
+                WikipediaSection(countryName: country.name)
                 continentExploreSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -560,7 +555,10 @@ private extension CountryDetailScreen {
             onShowMap: {
                 activeSheet = nil
                 showContinentMap = true
-            }
+            },
+            actionButtonTitle: item.actionButtonTitle,
+            actionButtonIcon: item.actionButtonIcon,
+            onAction: item.onAction
         )
     }
 

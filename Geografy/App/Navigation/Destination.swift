@@ -3,12 +3,12 @@ import SwiftUI
 enum Destination: Hashable {
     case countryDetail(Country)
     case organizationDetail(Organization)
+    case continentOverview(Country.Continent)
     case challengeResult(ChallengeRoom)
     case dailyChallengeResult(score: Int, maxScore: Int, challengeType: DailyChallengeType, timeSpent: TimeInterval, streak: Int)
 }
 
 // MARK: - Content
-
 @MainActor
 extension Destination {
     @ViewBuilder
@@ -19,6 +19,9 @@ extension Destination {
 
         case .organizationDetail(let organization):
             OrganizationDetailScreen(organization: organization)
+
+        case .continentOverview(let continent):
+            ContinentOverviewScreen(continent: continent)
 
         case .challengeResult(let room):
             ChallengeResultScreen(room: room, onPlayAgain: nil)

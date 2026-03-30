@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContinentOverviewScreen: View {
     @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Coordinator.self) private var sheetCoordinator: Coordinator?
     @Environment(FavoritesService.self) private var favoritesService
 
     let continent: Country.Continent
@@ -9,6 +10,7 @@ struct ContinentOverviewScreen: View {
     @State private var countryDataService = CountryDataService()
     @State private var sortBy: SortOption = .name
     @State private var appeared = false
+    @State private var showMap = false
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -26,26 +28,17 @@ struct ContinentOverviewScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    coordinator.presentFullScreen(
-                        .map(continentFilter: continent.displayName)
-                    )
+                    showMap = true
                 } label: {
                     Image(systemName: "map.fill")
                         .foregroundStyle(DesignSystem.Color.iconPrimary)
                 }
                 .buttonStyle(.plain)
             }
-
-            ToolbarItem(placement: .topBarTrailing) {
-                Picker(selection: $sortBy) {
-                    ForEach(SortOption.allCases, id: \.self) { option in
-                        Label(option.rawValue, systemImage: option.icon)
-                            .tag(option)
-                    }
-                } label: {
-                    Label("Sort by", systemImage: "arrow.up.arrow.down")
-                }
-                .pickerStyle(.menu)
+        }
+        .fullScreenCover(isPresented: $showMap) {
+            NavigationStack {
+                MapScreen(continentFilter: continent.displayName)
             }
         }
         .task { countryDataService.loadCountries() }
@@ -55,8 +48,18 @@ struct ContinentOverviewScreen: View {
     }
 }
 
-// MARK: - Computed Properties
+// MARK: - Navigation
+private extension ContinentOverviewScreen {
+    func navigateToCountry(_ country: Country) {
+        if let sheetCoordinator {
+            sheetCoordinator.push(.countryDetail(country))
+        } else {
+            coordinator.push(.countryDetail(country))
+        }
+    }
+}
 
+// MARK: - Computed Properties
 private extension ContinentOverviewScreen {
     var countries: [Country] {
         countryDataService.countries
@@ -89,7 +92,6 @@ private extension ContinentOverviewScreen {
 }
 
 // MARK: - Stats Grid
-
 private extension ContinentOverviewScreen {
     var statsGrid: some View {
         LazyVGrid(
@@ -151,13 +153,25 @@ private extension ContinentOverviewScreen {
 }
 
 // MARK: - Country List
-
 private extension ContinentOverviewScreen {
     var countryListSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Countries", icon: "list.bullet")
+            HStack {
+                SectionHeaderView(title: "Countries", icon: "list.bullet")
+                Spacer()
+                Picker(selection: $sortBy) {
+                    ForEach(SortOption.allCases, id: \.self) { option in
+                        Label(option.rawValue, systemImage: option.icon)
+                            .tag(option)
+                    }
+                } label: {
+                    Label("Sort by", systemImage: "arrow.up.arrow.down")
+                }
+                .pickerStyle(.menu)
+                .tint(DesignSystem.Color.iconPrimary)
+            }
             ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
-                Button { coordinator.push(.countryDetail(country)) } label: {
+                Button { navigateToCountry(country) } label: {
                     CountryRowView(
                         country: country,
                         isFavorite: favoritesService.isFavorite(code: country.code),

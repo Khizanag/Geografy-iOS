@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Neighbors Section
-
 extension CountryDetailScreen {
     func neighborsSection(countryDataService: CountryDataService) -> some View {
         let neighborCodes = CountryNeighbors.neighbors(for: country.code)
@@ -23,7 +22,6 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Subviews
-
 private extension CountryDetailScreen {
     var islandNationCard: some View {
         CardView {
@@ -33,7 +31,7 @@ private extension CountryDetailScreen {
                         .fill(DesignSystem.Color.blue.opacity(0.15))
                         .frame(width: 44, height: 44)
                     Image(systemName: "water.waves")
-                        .font(.system(size: 18))
+                        .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(DesignSystem.Color.blue)
                 }
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
@@ -60,7 +58,7 @@ private extension CountryDetailScreen {
                         .fill(DesignSystem.Color.accent.opacity(0.12))
                         .frame(width: 44, height: 44)
                     Image(systemName: "map")
-                        .font(.system(size: 18))
+                        .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
                 Text("Neighbor data not available.")
@@ -76,15 +74,15 @@ private extension CountryDetailScreen {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(countries) { neighbor in
-                    Button { coordinator.push(.countryDetail(neighbor)) } label: {
+                    Button { navigateToCountry(neighbor) } label: {
                         neighborChip(country: neighbor)
                     }
                     .buttonStyle(PressButtonStyle())
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.xs)
         }
+        .contentMargins(.horizontal, DesignSystem.Spacing.md)
         .scrollClipDisabled()
     }
 
@@ -99,7 +97,7 @@ private extension CountryDetailScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
-                    .frame(width: 72)
+                    .frame(width: 72, height: 32, alignment: .top)
             }
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, DesignSystem.Spacing.sm)
