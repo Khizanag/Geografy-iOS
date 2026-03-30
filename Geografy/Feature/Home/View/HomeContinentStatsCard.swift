@@ -20,7 +20,6 @@ struct HomeContinentStatsCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeContinentStatsCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeContinentStatsCard {
                 )
                 .frame(width: 56, height: 56)
             Text("🗺️")
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.iconLarge)
         }
     }
 

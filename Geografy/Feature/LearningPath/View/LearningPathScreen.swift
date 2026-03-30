@@ -30,7 +30,6 @@ struct LearningPathScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension LearningPathScreen {
     var progressHeader: some View {
         CardView {
@@ -123,7 +122,7 @@ private extension LearningPathScreen {
                 )
                 .frame(width: 44, height: 44)
             Image(systemName: module.isUnlocked ? module.icon : "lock.fill")
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.title3)
                 .foregroundStyle(
                     module.isUnlocked
                         ? DesignSystem.Color.accent
@@ -150,7 +149,7 @@ private extension LearningPathScreen {
         VStack(alignment: .trailing, spacing: 2) {
             if module.isCompleted {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.iconDefault)
                     .foregroundStyle(DesignSystem.Color.success)
             } else if module.isUnlocked {
                 progressRingView(fraction: module.progressFraction)
@@ -201,7 +200,6 @@ private extension LearningPathScreen {
 }
 
 // MARK: - Helpers
-
 private extension LearningPathScreen {
     var completedModulesCount: Int {
         learningPathService.modules.filter { $0.isCompleted }.count

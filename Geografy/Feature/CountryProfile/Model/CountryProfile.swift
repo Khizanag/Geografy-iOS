@@ -13,7 +13,6 @@ struct CountryProfile: Codable, Identifiable {
 }
 
 // MARK: - Culture Highlights
-
 extension CountryProfile {
     struct CultureHighlights: Codable {
         let traditionalFood: [String]
@@ -24,7 +23,6 @@ extension CountryProfile {
 }
 
 // MARK: - Geography Deep Dive
-
 extension CountryProfile {
     struct GeographyDeepDive: Codable {
         let climate: String
@@ -35,7 +33,6 @@ extension CountryProfile {
 }
 
 // MARK: - Economy Snapshot
-
 extension CountryProfile {
     struct EconomySnapshot: Codable {
         let majorIndustries: [String]

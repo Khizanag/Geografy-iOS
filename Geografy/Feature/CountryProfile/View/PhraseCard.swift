@@ -17,7 +17,6 @@ struct PhraseCard: View {
 }
 
 // MARK: - Subviews
-
 private extension PhraseCard {
     var englishLabel: some View {
         Text(phrase.english)

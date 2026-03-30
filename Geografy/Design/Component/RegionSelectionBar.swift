@@ -20,7 +20,6 @@ struct RegionSelectionBar<T: RegionSelectable>: View {
 }
 
 // MARK: - Subviews
-
 private extension RegionSelectionBar {
     func regionChip(_ item: T) -> some View {
         let isSelected = selectedID == item.id

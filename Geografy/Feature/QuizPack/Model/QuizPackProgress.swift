@@ -8,7 +8,6 @@ struct QuizPackProgress: Codable {
 }
 
 // MARK: - Star Rating
-
 extension QuizPackProgress {
     static func starRating(for accuracy: Double) -> Int {
         switch accuracy {

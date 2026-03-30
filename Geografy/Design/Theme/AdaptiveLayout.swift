@@ -21,7 +21,6 @@ extension DesignSystem {
 }
 
 // MARK: - Adaptive Environment
-
 struct AdaptiveLayoutInfo {
     let horizontalSizeClass: UserInterfaceSizeClass?
 
@@ -43,7 +42,6 @@ struct AdaptiveLayoutInfo {
 }
 
 // MARK: - View Modifiers
-
 struct ReadableContentWidth: ViewModifier {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
@@ -66,7 +64,6 @@ extension View {
 }
 
 // MARK: - Adaptive Grid Helper
-
 extension View {
     /// Returns adaptive grid columns based on horizontal size class
     func adaptiveGridColumns(

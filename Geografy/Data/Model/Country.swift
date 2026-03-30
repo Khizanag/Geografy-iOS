@@ -27,7 +27,6 @@ struct Country: Identifiable, Hashable, Codable {
 }
 
 // MARK: - Capital
-
 extension Country {
     struct Capital: Codable, Hashable {
         let name: String
@@ -36,7 +35,6 @@ extension Country {
 }
 
 // MARK: - Continent
-
 extension Country {
     enum Continent: String, Codable, CaseIterable {
         case africa
@@ -62,7 +60,6 @@ extension Country {
 }
 
 // MARK: - Currency
-
 extension Country {
     struct Currency: Codable, Hashable {
         let name: String
@@ -71,7 +68,6 @@ extension Country {
 }
 
 // MARK: - Language
-
 extension Country {
     struct Language: Codable, Hashable {
         let name: String

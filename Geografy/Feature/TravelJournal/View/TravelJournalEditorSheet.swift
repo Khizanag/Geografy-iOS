@@ -78,7 +78,6 @@ struct TravelJournalEditorSheet: View {
 }
 
 // MARK: - LoadedImage
-
 extension TravelJournalEditorSheet {
     struct LoadedImage: Identifiable {
         let id = UUID()
@@ -88,7 +87,6 @@ extension TravelJournalEditorSheet {
 }
 
 // MARK: - Toolbar
-
 private extension TravelJournalEditorSheet {
     var saveButton: some View {
         Button {
@@ -108,7 +106,6 @@ private extension TravelJournalEditorSheet {
 }
 
 // MARK: - Subviews
-
 private extension TravelJournalEditorSheet {
     var countrySection: some View {
         VStack(
@@ -254,7 +251,7 @@ private extension TravelJournalEditorSheet {
                             ? "star.fill"
                             : "star"
                     )
-                    .font(.system(size: 28))
+                    .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(DesignSystem.Color.warning)
                     .scaleEffect(star <= rating ? 1.1 : 1.0)
                 }
@@ -408,7 +405,6 @@ private extension TravelJournalEditorSheet {
 }
 
 // MARK: - Actions
-
 private extension TravelJournalEditorSheet {
     func saveEntry() {
         let photoFileNames = saveNewPhotos()
@@ -490,7 +486,6 @@ private extension TravelJournalEditorSheet {
 }
 
 // MARK: - Data
-
 private extension TravelJournalEditorSheet {
     var isEditing: Bool { existingEntry != nil }
 

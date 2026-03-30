@@ -29,7 +29,6 @@ struct CountryRowView: View {
 }
 
 // MARK: - Subviews
-
 private extension CountryRowView {
     var accentStripe: some View {
         let codeValue = country.code.unicodeScalars.reduce(0) { $0 + Int($1.value) }
@@ -88,7 +87,7 @@ private extension CountryRowView {
     var capitalLabel: some View {
         HStack(spacing: 3) {
             Image(systemName: "mappin.and.ellipse")
-                .font(.system(size: 8, weight: .bold))
+                .font(DesignSystem.Font.pico.bold())
                 .foregroundStyle(DesignSystem.Color.accent)
             Text(country.allCapitals.map(\.name).joined(separator: " · "))
                 .font(DesignSystem.Font.caption)
@@ -125,7 +124,7 @@ private extension CountryRowView {
 
     var continentBadge: some View {
         Text(country.continent.displayName)
-            .font(.system(size: 9, weight: .semibold))
+            .font(DesignSystem.Font.nano.weight(.semibold))
             .foregroundStyle(DesignSystem.Color.textTertiary)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)

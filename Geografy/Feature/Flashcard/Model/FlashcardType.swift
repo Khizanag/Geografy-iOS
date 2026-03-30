@@ -10,7 +10,6 @@ enum FlashcardType: String, CaseIterable, Identifiable, Codable {
 }
 
 // MARK: - Display
-
 extension FlashcardType: SelectableType {
     var displayName: String {
         switch self {

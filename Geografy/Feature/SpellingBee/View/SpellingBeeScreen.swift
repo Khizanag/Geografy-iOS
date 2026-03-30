@@ -74,7 +74,6 @@ struct SpellingBeeScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension SpellingBeeScreen {
     var scorePill: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
@@ -221,9 +220,7 @@ private extension SpellingBeeScreen {
 // MARK: - Helpers
 
 
-
 // MARK: - Actions
-
 private extension SpellingBeeScreen {
     func loadNextCountry() {
         let countries = countryDataService.countries.filter { !$0.name.isEmpty }
@@ -276,7 +273,6 @@ private extension SpellingBeeScreen {
 }
 
 // MARK: - Supporting Types
-
 private extension SpellingBeeScreen {
     enum HintType: Hashable {
         case firstLetter

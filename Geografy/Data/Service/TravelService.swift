@@ -39,7 +39,6 @@ final class TravelService {
 }
 
 // MARK: - Helpers
-
 private extension TravelService {
     func persist() {
         guard let data = try? JSONEncoder().encode(entries) else { return }

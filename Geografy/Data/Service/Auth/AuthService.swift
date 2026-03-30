@@ -52,7 +52,6 @@ final class AuthService {
 }
 
 // MARK: - Launch
-
 extension AuthService {
     func validateOnLaunch() async {
         guard case .authenticating = state else { return }
@@ -66,7 +65,6 @@ extension AuthService {
 }
 
 // MARK: - Sign In with Google
-
 #if !os(tvOS)
 extension AuthService {
     func signInWithGoogle() async {
@@ -89,7 +87,6 @@ extension AuthService {
 #endif
 
 // MARK: - Sign In
-
 extension AuthService {
     func handleAppleSignIn(_ authorization: ASAuthorization) {
         guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
@@ -139,7 +136,6 @@ extension AuthService {
 }
 
 // MARK: - Debug Sign In
-
 #if DEBUG
 extension AuthService {
     func debugSignIn() {
@@ -186,7 +182,6 @@ extension AuthService {
 #endif
 
 // MARK: - Sign Out / Delete
-
 extension AuthService {
     func signOut() {
         clearAuthTokens()
@@ -204,7 +199,6 @@ extension AuthService {
 }
 
 // MARK: - Helpers
-
 private extension AuthService {
     func validateGoogleSessionOnLaunch() {
         if let profile = fetchProfile(id: currentUserID) {

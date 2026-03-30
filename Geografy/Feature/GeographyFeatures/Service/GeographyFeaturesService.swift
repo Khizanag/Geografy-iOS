@@ -9,7 +9,6 @@ struct GeographyFeaturesService {
 }
 
 // MARK: - Mountains
-
 private let mountains: [GeographyFeature] = [
     GeographyFeature(
         id: "everest",
@@ -209,7 +208,6 @@ private let mountains: [GeographyFeature] = [
 ]
 
 // MARK: - Rivers
-
 private let rivers: [GeographyFeature] = [
     GeographyFeature(
         id: "nile",
@@ -344,7 +342,6 @@ private let rivers: [GeographyFeature] = [
 ]
 
 // MARK: - Deserts
-
 private let deserts: [GeographyFeature] = [
     GeographyFeature(
         id: "sahara",
@@ -427,7 +424,6 @@ private let deserts: [GeographyFeature] = [
 ]
 
 // MARK: - Lakes
-
 private let lakes: [GeographyFeature] = [
     GeographyFeature(
         id: "caspian-sea",

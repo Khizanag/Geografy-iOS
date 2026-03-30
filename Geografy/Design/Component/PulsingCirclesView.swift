@@ -14,7 +14,6 @@ struct PulsingCirclesView: View {
 }
 
 // MARK: - Subviews
-
 private extension PulsingCirclesView {
     var circles: some View {
         ZStack {

@@ -27,7 +27,6 @@ final class CountryDataService {
 }
 
 // MARK: - Helpers
-
 private extension CountryDataService {
     func applySupplementaryCapitals(_ countries: inout [Country]) {
         for index in countries.indices where countries[index].capitals == nil {

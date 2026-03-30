@@ -20,7 +20,6 @@ struct HomeTravelBucketListCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeTravelBucketListCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeTravelBucketListCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "list.star")
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.iconDefault)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }

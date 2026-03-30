@@ -18,7 +18,6 @@ struct LanguageBarChart: View {
 }
 
 // MARK: - Subviews
-
 private extension LanguageBarChart {
     var headerRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -64,7 +63,6 @@ private extension LanguageBarChart {
 }
 
 // MARK: - Helpers
-
 private extension LanguageBarChart {
     var sortedLanguages: [Country.Language] {
         languages.sorted { $0.percentage > $1.percentage }

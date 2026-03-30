@@ -42,7 +42,6 @@ struct InfoCardPopup: View {
 }
 
 // MARK: - Subviews
-
 private extension InfoCardPopup {
     var backdrop: some View {
         ZStack {
@@ -102,7 +101,7 @@ private extension InfoCardPopup {
                 .fill(DesignSystem.Color.accent.opacity(0.12))
                 .frame(width: 80, height: 80)
             Image(systemName: icon)
-                .font(.system(size: 32, weight: .medium))
+                .font(DesignSystem.Font.iconXL.weight(.medium))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
@@ -114,7 +113,7 @@ private extension InfoCardPopup {
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)
                     .frame(width: 30, height: 30)
                 Image(systemName: "xmark")
-                    .font(.system(size: 12, weight: .bold))
+                    .font(DesignSystem.Font.caption.bold())
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }

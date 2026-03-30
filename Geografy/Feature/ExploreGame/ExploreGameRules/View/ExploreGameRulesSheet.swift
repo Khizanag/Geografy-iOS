@@ -25,7 +25,6 @@ struct ExploreGameRulesSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension ExploreGameRulesSheet {
     func rulesSectionView(_ section: ExploreGameRuleSection) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

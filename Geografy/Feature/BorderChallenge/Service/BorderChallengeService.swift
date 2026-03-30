@@ -59,7 +59,6 @@ struct BorderChallengeService {
 }
 
 // MARK: - Alternate Names
-
 private extension BorderChallengeService {
     static let alternateNameMap: [String: [String]] = [
         "US": ["united states", "usa", "america", "united states of america"],

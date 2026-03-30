@@ -33,7 +33,6 @@ struct QuizTypingInputView: View {
 }
 
 // MARK: - Prompt
-
 private extension QuizTypingInputView {
     @ViewBuilder
     var promptSection: some View {
@@ -66,7 +65,7 @@ private extension QuizTypingInputView {
 
                 HStack(spacing: 4) {
                     Image(systemName: "arrow.up.left.and.arrow.down.right")
-                        .font(.system(size: 9))
+                        .font(DesignSystem.Font.nano)
                     Text("Tap to zoom")
                         .font(DesignSystem.Font.caption2)
                 }
@@ -90,7 +89,7 @@ private extension QuizTypingInputView {
 
             if let subject {
                 Text(subject)
-                    .font(.system(size: 34, weight: .black, design: .rounded))
+                    .font(DesignSystem.Font.roundedHeadline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
@@ -103,7 +102,6 @@ private extension QuizTypingInputView {
 }
 
 // MARK: - Typing Input
-
 private extension QuizTypingInputView {
     var typingSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -281,7 +279,6 @@ private extension QuizTypingInputView {
 }
 
 // MARK: - Helpers
-
 private extension QuizTypingInputView {
     var inputBorderColor: Color {
         guard showFeedback else {

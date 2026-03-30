@@ -39,7 +39,6 @@ struct ChallengeResultScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension ChallengeResultScreen {
     var winnerSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -48,7 +47,7 @@ private extension ChallengeResultScreen {
                     .fill(DesignSystem.Color.warning.opacity(0.12))
                     .frame(width: 96, height: 96)
                 Image(systemName: isTie ? "equal.circle.fill" : "trophy.fill")
-                    .font(.system(size: 44))
+                    .font(DesignSystem.Font.displayXS)
                     .foregroundStyle(DesignSystem.Color.warning)
                     .symbolEffect(.bounce)
             }
@@ -99,7 +98,7 @@ private extension ChallengeResultScreen {
                 }
 
                 Text("\(score)")
-                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.roundedTitle)
                     .foregroundStyle(isWinner ? DesignSystem.Color.warning : DesignSystem.Color.textPrimary)
 
                 Text(name)
@@ -146,7 +145,6 @@ private extension ChallengeResultScreen {
 }
 
 // MARK: - Helpers
-
 private extension ChallengeResultScreen {
     var isTie: Bool { room.player1Score == room.player2Score }
 

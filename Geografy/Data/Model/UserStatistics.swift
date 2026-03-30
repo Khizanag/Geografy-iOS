@@ -14,7 +14,6 @@ struct UserStatistics {
 }
 
 // MARK: - Computed Properties
-
 extension UserStatistics {
     var accuracyRate: Double {
         guard totalQuestions > 0 else { return 0 }

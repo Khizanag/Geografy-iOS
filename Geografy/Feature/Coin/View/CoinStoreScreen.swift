@@ -29,7 +29,6 @@ struct CoinStoreScreen: View {
 }
 
 // MARK: - Balance
-
 private extension CoinStoreScreen {
     var balanceSection: some View {
         CoinBalanceView()
@@ -38,7 +37,6 @@ private extension CoinStoreScreen {
 }
 
 // MARK: - Transaction History
-
 private extension CoinStoreScreen {
     var transactionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -116,7 +114,6 @@ private extension CoinStoreScreen {
 }
 
 // MARK: - Coin Packs
-
 private extension CoinStoreScreen {
     var coinPacksSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -142,7 +139,6 @@ private extension CoinStoreScreen {
 }
 
 // MARK: - Earn Info
-
 private extension CoinStoreScreen {
     var earnInfoSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

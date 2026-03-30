@@ -1,7 +1,6 @@
 import SwiftUI
 
 // MARK: - Discover Section View
-
 extension HomeScreen {
     @ViewBuilder
     func discoverSectionView(for section: HomeSection) -> some View {
@@ -29,7 +28,6 @@ extension HomeScreen {
 }
 
 // MARK: - World Records Section
-
 extension HomeScreen {
     var worldRecordsSection: some View {
         HomeWorldRecordsCard {
@@ -39,7 +37,6 @@ extension HomeScreen {
 }
 
 // MARK: - Organizations Section
-
 extension HomeScreen {
     var orgsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -52,7 +49,6 @@ extension HomeScreen {
 }
 
 // MARK: - Daily Challenge Section
-
 extension HomeScreen {
     var dailyChallengeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -68,9 +64,7 @@ extension HomeScreen {
 }
 
 // MARK: - Capital Quiz Section
-
 // MARK: - SRS Review Section
-
 extension HomeScreen {
     var srsReviewSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -91,7 +85,6 @@ extension HomeScreen {
 }
 
 // MARK: - Flag Game Section
-
 extension HomeScreen {
     var flagGameSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -103,7 +96,6 @@ extension HomeScreen {
 }
 
 // MARK: - Trivia Section
-
 extension HomeScreen {
     var triviaSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -115,7 +107,6 @@ extension HomeScreen {
 }
 
 // MARK: - Spelling Bee Section
-
 extension HomeScreen {
     var spellingBeeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -127,7 +118,6 @@ extension HomeScreen {
 }
 
 // MARK: - Learning Path Section
-
 extension HomeScreen {
     var learningPathSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -141,7 +131,6 @@ extension HomeScreen {
 }
 
 // MARK: - Map Puzzle Section
-
 extension HomeScreen {
     var mapPuzzleSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -155,7 +144,6 @@ extension HomeScreen {
 }
 
 // MARK: - Landmark Quiz Section
-
 extension HomeScreen {
     var landmarkQuizSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -167,7 +155,6 @@ extension HomeScreen {
 }
 
 // MARK: - Feed Section
-
 extension HomeScreen {
     var feedSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -179,7 +166,6 @@ extension HomeScreen {
 }
 
 // MARK: - Continent Stats Section
-
 extension HomeScreen {
     var continentStatsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -191,7 +177,6 @@ extension HomeScreen {
 }
 
 // MARK: - Country Compare Section
-
 extension HomeScreen {
     var countryCompareSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -203,7 +188,6 @@ extension HomeScreen {
 }
 
 // MARK: - Travel Bucket List Section
-
 extension HomeScreen {
     var travelBucketListSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -215,7 +199,6 @@ extension HomeScreen {
 }
 
 // MARK: - Ocean Explorer Section
-
 extension HomeScreen {
     var oceanExplorerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -227,7 +210,6 @@ extension HomeScreen {
 }
 
 // MARK: - Language Explorer Section
-
 extension HomeScreen {
     var languageExplorerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -239,7 +221,6 @@ extension HomeScreen {
 }
 
 // MARK: - Challenge Room Section
-
 extension HomeScreen {
     var challengeRoomSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -251,7 +232,6 @@ extension HomeScreen {
 }
 
 // MARK: - Independence Timeline Section
-
 extension HomeScreen {
     var independenceTimelineSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -263,7 +243,6 @@ extension HomeScreen {
 }
 
 // MARK: - Economy Explorer Section
-
 extension HomeScreen {
     var economyExplorerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -275,7 +254,6 @@ extension HomeScreen {
 }
 
 // MARK: - Geography Features Section
-
 extension HomeScreen {
     var geographyFeaturesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -287,7 +265,6 @@ extension HomeScreen {
 }
 
 // MARK: - Culture Explorer Section
-
 extension HomeScreen {
     var cultureExplorerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -299,7 +276,6 @@ extension HomeScreen {
 }
 
 // MARK: - Landmark Gallery Section
-
 extension HomeScreen {
     var landmarkGallerySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -311,7 +287,6 @@ extension HomeScreen {
 }
 
 // MARK: - Quotes Section
-
 extension HomeScreen {
     var quotesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -323,7 +298,6 @@ extension HomeScreen {
 }
 
 // MARK: - Map Coloring Section
-
 extension HomeScreen {
     var mapColoringSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -335,7 +309,6 @@ extension HomeScreen {
 }
 
 // MARK: - Country Nicknames Section
-
 extension HomeScreen {
     var countryNicknamesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -347,7 +320,6 @@ extension HomeScreen {
 }
 
 // MARK: - Word Search Section
-
 extension HomeScreen {
     var wordSearchSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -359,7 +331,6 @@ extension HomeScreen {
 }
 
 // MARK: - Border Challenge Section
-
 extension HomeScreen {
     var borderChallengeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

@@ -20,7 +20,6 @@ struct HomeMapColoringCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeMapColoringCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeMapColoringCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "paintpalette.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.purple)
         }
     }

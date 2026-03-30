@@ -53,7 +53,6 @@ final class PronunciationService {
 }
 
 // MARK: - Helpers
-
 private extension PronunciationService {
     var isEnabled: Bool {
         UserDefaults.standard.object(forKey: "pronunciationEnabled") as? Bool ?? true
@@ -273,7 +272,6 @@ private extension PronunciationService {
 }
 
 // MARK: - SpeechDelegate
-
 private final class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
     nonisolated(unsafe) var onDidFinish: (() -> Void)?
     nonisolated(unsafe) var onDidCancel: (() -> Void)?

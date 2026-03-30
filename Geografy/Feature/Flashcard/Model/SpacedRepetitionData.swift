@@ -27,7 +27,6 @@ struct SpacedRepetitionData: Codable {
 }
 
 // MARK: - Mastery Level
-
 extension SpacedRepetitionData {
     enum MasteryLevel: String, Codable {
         case new
@@ -47,7 +46,6 @@ extension SpacedRepetitionData {
 }
 
 // MARK: - Factory
-
 extension SpacedRepetitionData {
     static func makeNew() -> SpacedRepetitionData {
         SpacedRepetitionData(
@@ -63,7 +61,6 @@ extension SpacedRepetitionData {
 }
 
 // MARK: - SM-2 Algorithm
-
 extension SpacedRepetitionData {
     func updated(with result: FlashcardReviewResult) -> SpacedRepetitionData {
         var updated = self
@@ -117,7 +114,6 @@ extension SpacedRepetitionData {
 }
 
 // MARK: - Helpers
-
 private extension SpacedRepetitionData {
     func calculateInterval(
         repetitions: Int,

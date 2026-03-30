@@ -45,7 +45,6 @@ extension DesignSystem {
 }
 
 // MARK: - Hex Initializer
-
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

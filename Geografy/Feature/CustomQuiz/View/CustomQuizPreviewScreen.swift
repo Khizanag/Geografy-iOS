@@ -31,7 +31,6 @@ struct CustomQuizPreviewScreen: View {
 }
 
 // MARK: - Header Card
-
 private extension CustomQuizPreviewScreen {
     var headerCard: some View {
         CustomQuizCard(quiz: quiz)
@@ -39,7 +38,6 @@ private extension CustomQuizPreviewScreen {
 }
 
 // MARK: - Countries Section
-
 private extension CustomQuizPreviewScreen {
     var countriesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -78,7 +76,6 @@ private extension CustomQuizPreviewScreen {
 }
 
 // MARK: - Question Types Section
-
 private extension CustomQuizPreviewScreen {
     var questionTypesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -112,7 +109,6 @@ private extension CustomQuizPreviewScreen {
 }
 
 // MARK: - Difficulty Section
-
 private extension CustomQuizPreviewScreen {
     var difficultySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -142,7 +138,6 @@ private extension CustomQuizPreviewScreen {
 }
 
 // MARK: - Save Button
-
 private extension CustomQuizPreviewScreen {
     var saveButton: some View {
         GlassButton("Save Quiz", systemImage: "checkmark", fullWidth: true) {
@@ -154,7 +149,6 @@ private extension CustomQuizPreviewScreen {
 }
 
 // MARK: - Toolbar
-
 private extension CustomQuizPreviewScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {

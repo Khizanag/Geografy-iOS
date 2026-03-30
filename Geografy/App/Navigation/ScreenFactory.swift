@@ -12,7 +12,6 @@ enum ScreenFactory {
 }
 
 // MARK: - Core
-
 @MainActor
 private extension ScreenFactory {
     @ViewBuilder
@@ -45,7 +44,6 @@ private extension ScreenFactory {
 }
 
 // MARK: - Explore
-
 @MainActor
 private extension ScreenFactory {
     @ViewBuilder

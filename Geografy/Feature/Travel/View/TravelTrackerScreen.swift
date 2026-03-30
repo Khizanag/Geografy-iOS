@@ -64,7 +64,6 @@ struct TravelTrackerScreen: View {
 }
 
 // MARK: - Toolbar
-
 private extension TravelTrackerScreen {
     @ToolbarContentBuilder
     var addButton: some ToolbarContent {
@@ -93,7 +92,6 @@ private extension TravelTrackerScreen {
 }
 
 // MARK: - Subviews
-
 private extension TravelTrackerScreen {
     var loadingView: some View {
         ProgressView()
@@ -257,7 +255,7 @@ private extension TravelTrackerScreen {
         } label: {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: icon)
-                    .font(.system(size: 12))
+                    .font(DesignSystem.Font.caption)
                 Text(label)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -424,7 +422,7 @@ private extension TravelTrackerScreen {
             if let status {
                 HStack(spacing: 4) {
                     Image(systemName: status.icon)
-                        .font(.system(size: 9))
+                        .font(DesignSystem.Font.nano)
                     Text(status.shortLabel)
                         .font(DesignSystem.Font.caption2)
                         .fontWeight(.semibold)
@@ -444,7 +442,7 @@ private extension TravelTrackerScreen {
     var emptyState: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: selectedFilter?.icon ?? "airplane.departure")
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(selectedFilter?.color ?? DesignSystem.Color.textTertiary)
                 .padding(.top, DesignSystem.Spacing.xxl)
             VStack(spacing: DesignSystem.Spacing.xs) {
@@ -482,7 +480,7 @@ private extension TravelTrackerScreen {
     var noResultsState: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 36))
+                .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .padding(.top, DesignSystem.Spacing.xl)
             Text("No countries found")
@@ -507,7 +505,6 @@ private extension TravelTrackerScreen {
 }
 
 // MARK: - Data
-
 private extension TravelTrackerScreen {
     var isSearching: Bool { !searchText.isEmpty }
 

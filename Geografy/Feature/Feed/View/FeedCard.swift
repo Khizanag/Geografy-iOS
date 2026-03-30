@@ -22,7 +22,6 @@ struct FeedCard: View {
 }
 
 // MARK: - Subviews
-
 private extension FeedCard {
     var cardHeader: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -35,7 +34,7 @@ private extension FeedCard {
     var categoryChip: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: item.icon)
-                .font(.system(size: 11, weight: .semibold))
+                .font(DesignSystem.Font.caption2.weight(.semibold))
                 .foregroundStyle(item.color)
             Text(item.type.label)
                 .font(DesignSystem.Font.caption2)
@@ -85,7 +84,7 @@ private extension FeedCard {
                     .fontWeight(.semibold)
                     .foregroundStyle(item.color)
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(DesignSystem.Font.micro.weight(.semibold))
                     .foregroundStyle(item.color)
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)

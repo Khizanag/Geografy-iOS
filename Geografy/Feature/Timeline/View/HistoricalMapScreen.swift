@@ -50,7 +50,6 @@ struct HistoricalMapScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension HistoricalMapScreen {
     func mapContent(in size: CGSize) -> some View {
         MapCanvasView(
@@ -195,7 +194,6 @@ private extension HistoricalMapScreen {
 }
 
 // MARK: - Toolbar
-
 private extension HistoricalMapScreen {
     @ToolbarContentBuilder
     var closeToolbarItem: some ToolbarContent {
@@ -206,7 +204,6 @@ private extension HistoricalMapScreen {
 }
 
 // MARK: - Event Sheet
-
 private extension HistoricalMapScreen {
     func eventSheet(for event: HistoricalEvent) -> some View {
         NavigationStack {
@@ -268,7 +265,6 @@ private extension HistoricalMapScreen {
 }
 
 // MARK: - Gestures
-
 private extension HistoricalMapScreen {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
@@ -306,7 +302,6 @@ private extension HistoricalMapScreen {
 }
 
 // MARK: - Actions
-
 private extension HistoricalMapScreen {
     func handleTap(at point: CGPoint, in size: CGSize) {
         let originX = size.width / 2
@@ -385,7 +380,6 @@ private extension HistoricalMapScreen {
 }
 
 // MARK: - Data Loading
-
 private extension HistoricalMapScreen {
     func loadData() async {
         countryDataService.loadCountries()

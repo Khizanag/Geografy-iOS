@@ -35,7 +35,6 @@ struct FlashcardItem: Identifiable {
 }
 
 // MARK: - Factory
-
 extension FlashcardItem {
     static func make(from country: Country, type: FlashcardType) -> FlashcardItem {
         FlashcardItem(

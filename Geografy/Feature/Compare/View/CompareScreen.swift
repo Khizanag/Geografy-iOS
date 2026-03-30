@@ -32,7 +32,6 @@ struct CompareScreen: View {
 }
 
 // MARK: - Sheet Enum
-
 private extension CompareScreen {
     enum CompareSheet: Identifiable {
         case pickLeft
@@ -48,7 +47,6 @@ private extension CompareScreen {
 }
 
 // MARK: - Sheet Content
-
 private extension CompareScreen {
     @ViewBuilder
     func sheetContent(for sheet: CompareSheet) -> some View {
@@ -73,7 +71,6 @@ private extension CompareScreen {
 }
 
 // MARK: - Content
-
 private extension CompareScreen {
     var contentScrollView: some View {
         ScrollView {
@@ -161,7 +158,6 @@ private extension CompareScreen {
 }
 
 // MARK: - Metrics
-
 private extension CompareScreen {
     func metricsSection(left: Country, right: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -255,7 +251,6 @@ private extension CompareScreen {
 }
 
 // MARK: - Recent Comparisons
-
 private extension CompareScreen {
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -310,7 +305,6 @@ private extension CompareScreen {
 }
 
 // MARK: - Helpers
-
 private extension CompareScreen {
     func densityLabel(_ value: Double) -> String {
         String(format: "%.1f/km\u{00B2}", value)
@@ -356,7 +350,6 @@ private extension CompareScreen {
 }
 
 // MARK: - ComparisonPair
-
 struct ComparisonPair: Identifiable, Codable {
     var id: String { "\(leftCode)-\(rightCode)" }
 

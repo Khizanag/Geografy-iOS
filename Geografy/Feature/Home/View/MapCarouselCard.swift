@@ -23,7 +23,6 @@ struct MapCarouselCard: View {
 }
 
 // MARK: - Layouts
-
 private extension MapCarouselCard {
     var regularCard: some View {
         Button { onOpenMap() } label: {

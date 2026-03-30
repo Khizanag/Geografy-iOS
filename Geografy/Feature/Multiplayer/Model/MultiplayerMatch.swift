@@ -17,7 +17,6 @@ struct MultiplayerMatch: Identifiable, Hashable {
 }
 
 // MARK: - Computed Properties
-
 extension MultiplayerMatch {
     var playerScore: Int {
         rounds.filter(\.playerWonRound).count

@@ -20,7 +20,6 @@ struct ExploreGuessField: View {
 }
 
 // MARK: - Subviews
-
 private extension ExploreGuessField {
     var searchField: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -102,7 +101,6 @@ private extension ExploreGuessField {
 }
 
 // MARK: - Actions
-
 private extension ExploreGuessField {
     func selectCountry(_ country: Country) {
         query = ""
@@ -118,7 +116,6 @@ private extension ExploreGuessField {
 }
 
 // MARK: - Helpers
-
 private extension ExploreGuessField {
     var filteredSuggestions: [Country] {
         guard !query.isEmpty else { return [] }

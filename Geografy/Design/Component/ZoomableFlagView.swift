@@ -26,7 +26,6 @@ struct ZoomableFlagView: View {
 }
 
 // MARK: - Subviews
-
 private extension ZoomableFlagView {
     var backdrop: some View {
         Rectangle()
@@ -59,7 +58,6 @@ private extension ZoomableFlagView {
 }
 
 // MARK: - Gestures
-
 #if !os(tvOS)
 private extension ZoomableFlagView {
     var magnifyGesture: some Gesture {
@@ -93,7 +91,6 @@ private extension ZoomableFlagView {
 #endif
 
 // MARK: - Actions
-
 private extension ZoomableFlagView {
     func toggleZoom() {
         withAnimation(.spring(response: 0.3)) {

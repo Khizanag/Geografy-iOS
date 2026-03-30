@@ -39,7 +39,6 @@ struct TriviaScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension TriviaScreen {
     var backgroundView: some View {
         DesignSystem.Color.background
@@ -55,7 +54,7 @@ private extension TriviaScreen {
         VStack(spacing: DesignSystem.Spacing.xl) {
             Spacer()
             Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 60))
+                .font(DesignSystem.Font.display)
                 .foregroundStyle(DesignSystem.Color.success)
             Text("All Done!")
                 .font(DesignSystem.Font.title2)
@@ -226,7 +225,6 @@ private extension TriviaScreen {
 }
 
 // MARK: - Drag Gesture
-
 private extension TriviaScreen {
     var dragGesture: some Gesture {
         DragGesture()
@@ -256,7 +254,6 @@ private extension TriviaScreen {
 }
 
 // MARK: - Actions
-
 private extension TriviaScreen {
     func loadQuestions() {
         let generated = service.generateQuestions(from: countryDataService.countries)
@@ -300,7 +297,6 @@ private extension TriviaScreen {
 }
 
 // MARK: - SwipeHint
-
 private extension TriviaScreen {
     enum SwipeHint: Equatable {
         case none

@@ -39,7 +39,6 @@ struct FlagGameScreen: View {
 }
 
 // MARK: - Game Content
-
 private extension FlagGameScreen {
     var gameContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
@@ -134,7 +133,6 @@ private extension FlagGameScreen {
 }
 
 // MARK: - Helpers
-
 private extension FlagGameScreen {
     func optionState(for country: Country) -> QuizOptionButton.OptionState {
         guard showFeedback else { return .default }
@@ -145,7 +143,6 @@ private extension FlagGameScreen {
 }
 
 // MARK: - Actions
-
 private extension FlagGameScreen {
     func startGame() {
         gameState = FlagGameState()

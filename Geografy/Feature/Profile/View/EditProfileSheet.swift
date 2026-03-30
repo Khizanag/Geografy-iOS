@@ -34,7 +34,6 @@ struct EditProfileSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension EditProfileSheet {
     var formContent: some View {
         ScrollView(showsIndicators: false) {
@@ -92,7 +91,6 @@ private extension EditProfileSheet {
 }
 
 // MARK: - Helpers
-
 private extension EditProfileSheet {
     func saveProfile() {
         let trimmed = displayName.trimmingCharacters(in: .whitespaces)

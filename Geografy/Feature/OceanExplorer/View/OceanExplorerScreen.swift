@@ -27,7 +27,6 @@ struct OceanExplorerScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension OceanExplorerScreen {
     var segmentedPicker: some View {
         Picker("Type", selection: $selectedSegment) {
@@ -90,7 +89,7 @@ private extension OceanExplorerScreen {
                 )
                 .frame(width: 50, height: 50)
             Image(systemName: icon)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.iconDefault)
                 .foregroundStyle(DesignSystem.Color.blue)
         }
     }
@@ -153,7 +152,7 @@ private extension OceanExplorerScreen {
     func statTile(label: String, value: String, icon: String) -> some View {
         VStack(spacing: 4) {
             Image(systemName: icon)
-                .font(.system(size: 14))
+                .font(DesignSystem.Font.iconXS)
                 .foregroundStyle(DesignSystem.Color.blue)
             Text(value)
                 .font(DesignSystem.Font.subheadline)
@@ -188,7 +187,7 @@ private extension OceanExplorerScreen {
     func funFactRow(ocean: Ocean) -> some View {
         HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "lightbulb.fill")
-                .font(.system(size: 14))
+                .font(DesignSystem.Font.iconXS)
                 .foregroundStyle(DesignSystem.Color.warning)
                 .padding(.top, 2)
             Text(ocean.funFact)
@@ -225,7 +224,6 @@ private extension OceanExplorerScreen {
 }
 
 // MARK: - Helpers
-
 private extension OceanExplorerScreen {
     func startBlobAnimation() {
         blobAnimating = true

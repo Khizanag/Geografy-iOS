@@ -42,7 +42,6 @@ struct GlassButton: View {
 }
 
 // MARK: - Subviews
-
 private extension GlassButton {
     @ViewBuilder
     var label: some View {

@@ -21,7 +21,6 @@ struct ZoomableOrgLogoView: View {
 }
 
 // MARK: - Subviews
-
 private extension ZoomableOrgLogoView {
     var backdrop: some View {
         Rectangle()
@@ -78,7 +77,6 @@ private extension ZoomableOrgLogoView {
 }
 
 // MARK: - Gestures
-
 #if !os(tvOS)
 private extension ZoomableOrgLogoView {
     var magnifyGesture: some Gesture {
@@ -109,7 +107,6 @@ private extension ZoomableOrgLogoView {
 #endif
 
 // MARK: - Actions
-
 private extension ZoomableOrgLogoView {
     func toggleZoom() {
         withAnimation(.spring(response: 0.3)) {

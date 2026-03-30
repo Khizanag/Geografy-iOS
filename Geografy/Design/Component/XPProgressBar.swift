@@ -29,7 +29,6 @@ struct XPProgressBar: View {
 }
 
 // MARK: - Subviews
-
 private extension XPProgressBar {
     var levelLabelsRow: some View {
         HStack {

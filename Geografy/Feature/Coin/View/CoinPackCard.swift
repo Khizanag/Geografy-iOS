@@ -23,7 +23,6 @@ struct CoinPackCard: View {
 }
 
 // MARK: - Subviews
-
 private extension CoinPackCard {
     var tagBadge: some View {
         Group {
@@ -31,7 +30,7 @@ private extension CoinPackCard {
                 HStack(spacing: DesignSystem.Spacing.xxs) {
                     if !pack.badgeIcon.isEmpty {
                         Image(systemName: pack.badgeIcon)
-                            .font(.system(size: 9, weight: .bold))
+                            .font(DesignSystem.Font.nano.bold())
                     }
                     Text(tagText)
                 }
@@ -80,7 +79,6 @@ private extension CoinPackCard {
 }
 
 // MARK: - Styles
-
 private extension CoinPackCard {
     var tagColor: Color {
         if pack.isPopular {

@@ -23,7 +23,6 @@ struct QuizPackCategoryCard: View {
 }
 
 // MARK: - Subviews
-
 private extension QuizPackCategoryCard {
     var categoryIcon: some View {
         ZStack {

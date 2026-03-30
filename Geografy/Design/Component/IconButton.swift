@@ -29,7 +29,6 @@ struct IconButton: View {
 }
 
 // MARK: - Helpers
-
 private extension IconButton {
     var backgroundColor: Color {
         if isActive {

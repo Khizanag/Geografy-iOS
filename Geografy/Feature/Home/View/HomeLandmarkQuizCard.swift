@@ -20,7 +20,6 @@ struct HomeLandmarkQuizCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeLandmarkQuizCard {
     var quizIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeLandmarkQuizCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "photo.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.indigo)
         }
     }

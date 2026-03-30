@@ -7,7 +7,6 @@ enum AchievementCatalog {
 }
 
 // MARK: - Explorer
-
 private extension AchievementCatalog {
     static let explorer: [AchievementDefinition] = [
         AchievementDefinition(
@@ -49,7 +48,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Quiz Master
-
 private extension AchievementCatalog {
     static let quizMaster: [AchievementDefinition] = [
         AchievementDefinition(
@@ -91,7 +89,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Streak
-
 private extension AchievementCatalog {
     static let streak: [AchievementDefinition] = [
         AchievementDefinition(
@@ -127,7 +124,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Travel
-
 private extension AchievementCatalog {
     static let travel: [AchievementDefinition] = [
         AchievementDefinition(
@@ -162,7 +158,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Knowledge
-
 private extension AchievementCatalog {
     static let knowledge: [AchievementDefinition] = [
         AchievementDefinition(
@@ -190,7 +185,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Continental
-
 private extension AchievementCatalog {
     static let continental: [AchievementDefinition] = [
         AchievementDefinition(
@@ -233,7 +227,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Flashcard
-
 private extension AchievementCatalog {
     static let flashcard: [AchievementDefinition] = [
         AchievementDefinition(
@@ -258,7 +251,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Speed
-
 private extension AchievementCatalog {
     static let speed: [AchievementDefinition] = [
         AchievementDefinition(
@@ -279,7 +271,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Perfect Score
-
 private extension AchievementCatalog {
     static let perfectScore: [AchievementDefinition] = [
         AchievementDefinition(
@@ -305,7 +296,6 @@ private extension AchievementCatalog {
 }
 
 // MARK: - Social
-
 private extension AchievementCatalog {
     static let social: [AchievementDefinition] = [
         AchievementDefinition(

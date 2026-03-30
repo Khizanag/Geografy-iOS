@@ -24,7 +24,6 @@ enum CoinReason: String, Codable, CaseIterable {
 }
 
 // MARK: - Display
-
 extension CoinReason {
     var displayName: String {
         switch self {

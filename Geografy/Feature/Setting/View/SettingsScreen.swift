@@ -58,7 +58,6 @@ struct SettingsScreen: View {
 }
 
 // MARK: - Premium Section
-
 private extension SettingsScreen {
     @ViewBuilder
     var premiumSection: some View {
@@ -126,7 +125,6 @@ private extension SettingsScreen {
 }
 
 // MARK: - Account Section
-
 private extension SettingsScreen {
     @ViewBuilder
     var accountSection: some View {
@@ -250,7 +248,6 @@ private extension SettingsScreen {
 }
 
 // MARK: - Sections
-
 private extension SettingsScreen {
     var appearanceSection: some View {
         settingsGroup(header: "Appearance") {
@@ -342,7 +339,6 @@ private extension SettingsScreen {
 }
 
 // MARK: - Row Helpers
-
 private extension SettingsScreen {
     func settingsPickerRow(
         icon: String,
@@ -375,7 +371,6 @@ private extension SettingsScreen {
 }
 
 // MARK: - Helpers
-
 private extension SettingsScreen {
     func settingsGroup(header: String, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
@@ -419,7 +414,6 @@ private extension SettingsScreen {
 }
 
 // MARK: - Settings Row Components
-
 private struct SettingsToggleRow: View {
     let icon: String
     let iconColor: Color
@@ -479,7 +473,6 @@ private struct SettingsIconBadge: View {
 }
 
 // MARK: - Preview
-
 #Preview {
     NavigationStack {
         SettingsScreen()

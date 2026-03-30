@@ -25,7 +25,6 @@ enum SheetFactory {
 }
 
 // MARK: - Sheet Content
-
 private extension SheetFactory {
     @ViewBuilder
     static func sheetContent(for sheet: Sheet) -> some View {
@@ -94,7 +93,6 @@ private extension SheetFactory {
 }
 
 // MARK: - Sheet Config
-
 extension Sheet {
     var disableInteractiveDismiss: Bool {
         switch self {

@@ -43,7 +43,6 @@ struct MultiplayerResultScreen: View {
 }
 
 // MARK: - Result Header
-
 private extension MultiplayerResultScreen {
     var resultHeader: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -59,7 +58,7 @@ private extension MultiplayerResultScreen {
                 .frame(width: 80, height: 80)
 
             Image(systemName: resultSystemImage)
-                .font(.system(size: 36))
+                .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(resultColor)
         }
     }
@@ -78,7 +77,6 @@ private extension MultiplayerResultScreen {
 }
 
 // MARK: - Score Comparison
-
 private extension MultiplayerResultScreen {
     var scoreComparison: some View {
         HStack(spacing: DesignSystem.Spacing.lg) {
@@ -97,7 +95,7 @@ private extension MultiplayerResultScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
 
                 Text("\(match.playerScore)")
-                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.roundedLarge)
                     .foregroundStyle(DesignSystem.Color.accent)
 
                 Text(
@@ -113,7 +111,7 @@ private extension MultiplayerResultScreen {
 
     var vsLabel: some View {
         Text("VS")
-            .font(.system(size: 14, weight: .black, design: .rounded))
+            .font(DesignSystem.Font.roundedCaption2)
             .foregroundStyle(DesignSystem.Color.textTertiary)
     }
 
@@ -126,7 +124,7 @@ private extension MultiplayerResultScreen {
                     .lineLimit(1)
 
                 Text("\(match.opponentScore)")
-                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.roundedLarge)
                     .foregroundStyle(DesignSystem.Color.purple)
 
                 Text(
@@ -142,7 +140,6 @@ private extension MultiplayerResultScreen {
 }
 
 // MARK: - Rating Change
-
 private extension MultiplayerResultScreen {
     var ratingChangeSection: some View {
         CardView {
@@ -170,7 +167,6 @@ private extension MultiplayerResultScreen {
 }
 
 // MARK: - Round by Round
-
 private extension MultiplayerResultScreen {
     var roundByRoundSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -229,7 +225,6 @@ private extension MultiplayerResultScreen {
 }
 
 // MARK: - Action Buttons
-
 private extension MultiplayerResultScreen {
     var actionButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -272,7 +267,6 @@ private extension MultiplayerResultScreen {
 }
 
 // MARK: - Background
-
 private extension MultiplayerResultScreen {
     var ambientBlobs: some View {
         ZStack {
@@ -318,7 +312,6 @@ private extension MultiplayerResultScreen {
 }
 
 // MARK: - Animations
-
 private extension MultiplayerResultScreen {
     func animateContent() {
         withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2)) {
@@ -328,7 +321,6 @@ private extension MultiplayerResultScreen {
 }
 
 // MARK: - Helpers
-
 private extension MultiplayerResultScreen {
     var resultColor: Color {
         if match.playerWon {

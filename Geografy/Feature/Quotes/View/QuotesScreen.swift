@@ -30,7 +30,6 @@ struct QuotesScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension QuotesScreen {
     var quotesOfTheDaySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -64,7 +63,7 @@ private extension QuotesScreen {
         Button(action: action) {
             HStack(spacing: 4) {
                 Image(systemName: icon)
-                    .font(.system(size: 12))
+                    .font(DesignSystem.Font.caption)
                 Text(label)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -102,7 +101,7 @@ private extension QuotesScreen {
     func quoteTextSection(_ quote: Quote, isHighlighted: Bool) -> some View {
         HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "quote.opening")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(
                     isHighlighted
                         ? DesignSystem.Color.accent.opacity(0.6)
@@ -135,7 +134,7 @@ private extension QuotesScreen {
 
     func categoryChip(_ category: QuoteCategory) -> some View {
         Image(systemName: category.icon)
-            .font(.system(size: 12))
+            .font(DesignSystem.Font.caption)
             .foregroundStyle(DesignSystem.Color.accent)
             .padding(DesignSystem.Spacing.xs)
             .background(DesignSystem.Color.accent.opacity(0.12), in: Circle())

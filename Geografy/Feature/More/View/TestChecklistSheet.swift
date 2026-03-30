@@ -31,7 +31,6 @@ struct TestChecklistSheet: View {
 }
 
 // MARK: - Content
-
 private extension TestChecklistSheet {
     func checklistContent(_ checklist: TestChecklist) -> some View {
         ScrollView {

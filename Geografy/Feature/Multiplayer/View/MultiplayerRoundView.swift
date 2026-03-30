@@ -20,7 +20,6 @@ struct MultiplayerRoundView: View {
 }
 
 // MARK: - Subviews
-
 private extension MultiplayerRoundView {
     var questionPrompt: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -117,7 +116,7 @@ private extension MultiplayerRoundView {
 
     var opponentMarker: some View {
         Text("OPP")
-            .font(.system(size: 9, weight: .bold))
+            .font(DesignSystem.Font.nano.bold())
             .foregroundStyle(DesignSystem.Color.onAccent)
             .padding(.horizontal, DesignSystem.Spacing.xxs)
             .padding(.vertical, 2)
@@ -126,7 +125,6 @@ private extension MultiplayerRoundView {
 }
 
 // MARK: - Helpers
-
 private extension MultiplayerRoundView {
     func optionState(for option: QuizOption) -> QuizOptionButton.OptionState {
         guard showFeedback else {

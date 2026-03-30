@@ -20,7 +20,6 @@ struct HomeBorderChallengeCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeBorderChallengeCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeBorderChallengeCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "square.dashed")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.error)
         }
     }

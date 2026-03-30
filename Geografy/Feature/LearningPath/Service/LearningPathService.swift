@@ -23,7 +23,6 @@ final class LearningPathService {
 }
 
 // MARK: - Helpers
-
 private extension LearningPathService {
     func unlockNextModuleIfNeeded(after index: Int) {
         let nextIndex = index + 1
@@ -211,7 +210,6 @@ private extension LearningPathService {
 }
 
 // MARK: - Lesson Content
-
 private extension LearningPathService {
     var continentsIntroContent: String {
         "A continent is one of Earth's large landmasses. Geographers recognize seven continents: "

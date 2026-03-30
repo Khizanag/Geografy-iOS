@@ -21,7 +21,6 @@ struct QuizPack: Identifiable, Hashable {
 }
 
 // MARK: - Computed Properties
-
 extension QuizPack {
     var totalQuestions: Int {
         levels.reduce(0) { $0 + $1.questionCount }

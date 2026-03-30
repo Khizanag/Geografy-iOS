@@ -42,7 +42,6 @@ struct OrganizationDetailScreen: View {
 }
 
 // MARK: - Background
-
 private extension OrganizationDetailScreen {
     var ambientBackground: some View {
         ZStack {
@@ -81,7 +80,6 @@ private extension OrganizationDetailScreen {
 }
 
 // MARK: - Content
-
 private extension OrganizationDetailScreen {
     var scrollContent: some View {
         ScrollView {
@@ -245,7 +243,6 @@ private extension OrganizationDetailScreen {
 }
 
 // MARK: - Gamification
-
 private extension OrganizationDetailScreen {
     func trackOrgView() {
         let key = "viewed_orgs_\(achievementService.currentUserID)"
@@ -257,7 +254,6 @@ private extension OrganizationDetailScreen {
 }
 
 // MARK: - Helpers
-
 private extension OrganizationDetailScreen {
     var memberCountries: [Country] {
         countryDataService.countries

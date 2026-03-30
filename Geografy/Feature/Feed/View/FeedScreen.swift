@@ -23,7 +23,6 @@ struct FeedScreen: View {
 }
 
 // MARK: - Content
-
 private extension FeedScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {

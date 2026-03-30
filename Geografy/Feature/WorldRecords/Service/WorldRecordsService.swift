@@ -17,7 +17,6 @@ struct WorldRecordsService {
 }
 
 // MARK: - Helpers
-
 private extension WorldRecordsService {
     func areaRecords(from countries: [Country]) -> [WorldRecord] {
         let sorted = countries.sorted { $0.area > $1.area }

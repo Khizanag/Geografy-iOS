@@ -25,7 +25,6 @@ struct FlashcardDeckCard: View {
 }
 
 // MARK: - Subviews
-
 private extension FlashcardDeckCard {
     var gradient: some View {
         LinearGradient(

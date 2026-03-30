@@ -51,7 +51,6 @@ struct QuizSetupScreen: View {
 }
 
 // MARK: - Header
-
 private extension QuizSetupScreen {
     var gameModeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -101,7 +100,7 @@ private extension QuizSetupScreen {
                     .fill(DesignSystem.Color.accent.opacity(0.15))
                     .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
                 Image(systemName: selectedType.icon)
-                    .font(.system(size: 28))
+                    .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             VStack(spacing: DesignSystem.Spacing.xxs) {
@@ -121,7 +120,6 @@ private extension QuizSetupScreen {
 }
 
 // MARK: - Quiz Type Section
-
 private extension QuizSetupScreen {
     var quizTypeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -143,7 +141,6 @@ private extension QuizSetupScreen {
 }
 
 // MARK: - Answer Mode Section
-
 private extension QuizSetupScreen {
     var answerModeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -221,7 +218,6 @@ private extension QuizSetupScreen {
 }
 
 // MARK: - Region Section
-
 private extension QuizSetupScreen {
     var metricSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -272,7 +268,6 @@ private extension QuizSetupScreen {
 }
 
 // MARK: - Difficulty Section
-
 private extension QuizSetupScreen {
     var difficultySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -324,7 +319,6 @@ private extension QuizSetupScreen {
 }
 
 // MARK: - Question Count Section
-
 private extension QuizSetupScreen {
     var questionCountSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -356,7 +350,6 @@ private extension QuizSetupScreen {
 }
 
 // MARK: - Start Button
-
 private extension QuizSetupScreen {
     var startButton: some View {
         GlassButton("Start \(selectedType.displayName)", systemImage: "play.fill", fullWidth: true) {
@@ -372,7 +365,6 @@ private extension QuizSetupScreen {
 }
 
 // MARK: - Helpers
-
 private extension QuizSetupScreen {
     func sectionTitle(_ text: String) -> some View {
         Text(text)

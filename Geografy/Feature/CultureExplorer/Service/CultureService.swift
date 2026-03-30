@@ -16,7 +16,6 @@ struct CultureService {
 }
 
 // MARK: - Helpers
-
 private extension CultureService {
     func countryName(for code: String) -> String {
         Locale.current.localizedString(forRegionCode: code) ?? code
@@ -24,7 +23,6 @@ private extension CultureService {
 }
 
 // MARK: - Data
-
 private extension CultureService {
     var allFacts: [CultureFact] { [
         CultureFact(

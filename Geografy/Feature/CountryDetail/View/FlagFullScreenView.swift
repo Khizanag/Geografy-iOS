@@ -18,7 +18,6 @@ struct FlagFullScreenView: View {
 }
 
 // MARK: - Subviews
-
 private extension FlagFullScreenView {
     var flagContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {

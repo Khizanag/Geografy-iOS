@@ -31,7 +31,6 @@ struct HomeStreakCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeStreakCard {
     var streakIcon: some View {
         ZStack {
@@ -59,7 +58,7 @@ private extension HomeStreakCard {
                 )
 
             Text(streak > 0 ? "🔥" : "💤")
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.iconLarge)
                 .scaleEffect(isPulsing ? 1.2 : 1.0)
                 .animation(
                     isPulsing
@@ -100,7 +99,6 @@ private extension HomeStreakCard {
 }
 
 // MARK: - Helpers
-
 private extension HomeStreakCard {
     var streakTitle: String {
         if streak == 0 {

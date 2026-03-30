@@ -16,7 +16,6 @@ struct TravelJournalEntryCard: View {
 }
 
 // MARK: - Subviews
-
 private extension TravelJournalEntryCard {
     var cardContent: some View {
         CardView {
@@ -61,7 +60,7 @@ private extension TravelJournalEntryCard {
                         ? "star.fill"
                         : "star"
                 )
-                .font(.system(size: 10))
+                .font(DesignSystem.Font.micro)
                 .foregroundStyle(DesignSystem.Color.warning)
             }
         }
@@ -131,7 +130,7 @@ private extension TravelJournalEntryCard {
     var footerRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "calendar")
-                .font(.system(size: 11))
+                .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             Text(entry.formattedDateRange)
                 .font(DesignSystem.Font.caption2)
@@ -147,7 +146,7 @@ private extension TravelJournalEntryCard {
     var photoCountBadge: some View {
         HStack(spacing: 3) {
             Image(systemName: "photo")
-                .font(.system(size: 9))
+                .font(DesignSystem.Font.nano)
             Text("\(entry.photoFileNames.count)")
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
@@ -169,7 +168,6 @@ private extension TravelJournalEntryCard {
 }
 
 // MARK: - Helpers
-
 private extension TravelJournalEntryCard {
     var durationText: String {
         let days = entry.durationDays

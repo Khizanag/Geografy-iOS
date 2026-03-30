@@ -20,7 +20,6 @@ struct HomeSpellingBeeCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeSpellingBeeCard {
     var gameIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeSpellingBeeCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "textformat.abc")
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.iconDefault)
                 .foregroundStyle(DesignSystem.Color.purple)
         }
     }

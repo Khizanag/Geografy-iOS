@@ -27,7 +27,6 @@ struct OpponentAvatarView: View {
 }
 
 // MARK: - Subviews
-
 private extension OpponentAvatarView {
     var flagBadge: some View {
         FlagView(countryCode: opponent.countryCode, height: size * 0.35)

@@ -21,7 +21,6 @@ struct HomeLearningPathCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeLearningPathCard {
     var pathIcon: some View {
         ZStack {
@@ -36,7 +35,7 @@ private extension HomeLearningPathCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "graduationcap.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.blue)
         }
     }

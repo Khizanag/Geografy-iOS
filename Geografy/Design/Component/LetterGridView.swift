@@ -15,7 +15,6 @@ struct LetterGridView: View {
 }
 
 // MARK: - Content
-
 private extension LetterGridView {
     var typingContent: some View {
         let segments = LetterGridHelper.splitIntoSegments(targetText)
@@ -66,7 +65,6 @@ private extension LetterGridView {
 }
 
 // MARK: - Cells
-
 private extension LetterGridView {
     func separatorCell(_ separator: String) -> some View {
         Text(separator)
@@ -128,7 +126,6 @@ private extension LetterGridView {
 }
 
 // MARK: - Helper
-
 enum LetterGridHelper {
     struct WordSegment {
         let letters: [Character]

@@ -49,7 +49,6 @@ final class ChallengeRoomService {
 }
 
 // MARK: - Helpers
-
 private extension ChallengeRoomService {
     func generateQuestions(
         count: Int,

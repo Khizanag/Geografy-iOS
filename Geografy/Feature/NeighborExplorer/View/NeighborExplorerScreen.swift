@@ -32,7 +32,6 @@ struct NeighborExplorerScreen: View {
 }
 
 // MARK: - Toolbar
-
 private extension NeighborExplorerScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
@@ -43,7 +42,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Content
-
 private extension NeighborExplorerScreen {
     var contentView: some View {
         ScrollView {
@@ -64,7 +62,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Chain Section
-
 private extension NeighborExplorerScreen {
     var chainSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -82,7 +79,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Neighbors Section
-
 private extension NeighborExplorerScreen {
     var neighborsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -145,7 +141,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Path Finder Section
-
 private extension NeighborExplorerScreen {
     var pathFinderSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -229,7 +224,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Path Result Section
-
 private extension NeighborExplorerScreen {
     var pathResultSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -246,7 +240,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Background
-
 private extension NeighborExplorerScreen {
     var ambientBlobs: some View {
         ZStack {
@@ -289,7 +282,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Actions
-
 private extension NeighborExplorerScreen {
     func navigateTo(_ selected: Country) {
         guard let index = chain.firstIndex(of: selected) else { return }
@@ -353,7 +345,6 @@ private extension NeighborExplorerScreen {
 }
 
 // MARK: - Helpers
-
 private extension NeighborExplorerScreen {
     func neighborCountries(for current: Country) -> [Country] {
         CountryNeighbors.neighbors(for: current.code)

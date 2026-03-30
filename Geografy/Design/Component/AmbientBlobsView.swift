@@ -42,7 +42,6 @@ struct AmbientBlobsView: View {
 }
 
 // MARK: - Preset
-
 extension AmbientBlobsView {
     enum Preset {
         case standard
@@ -258,7 +257,6 @@ extension AmbientBlobsView {
 }
 
 // MARK: - Blob Descriptor
-
 extension AmbientBlobsView {
     struct ScaleRange {
         let idle: CGFloat

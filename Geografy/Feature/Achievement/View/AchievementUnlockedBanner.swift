@@ -25,7 +25,6 @@ struct AchievementUnlockedBanner: View {
 }
 
 // MARK: - Subviews
-
 private extension AchievementUnlockedBanner {
     var bannerContent: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -87,7 +86,6 @@ private extension AchievementUnlockedBanner {
 }
 
 // MARK: - Actions
-
 private extension AchievementUnlockedBanner {
     func dismiss() {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {

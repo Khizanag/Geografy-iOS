@@ -30,7 +30,6 @@ struct DailyChallengeResultView: View {
 
 
 // MARK: - Content
-
 private extension DailyChallengeResultView {
     var resultContent: some View {
         ScrollView {
@@ -49,7 +48,6 @@ private extension DailyChallengeResultView {
 }
 
 // MARK: - Score Section
-
 private extension DailyChallengeResultView {
     var scoreSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -67,7 +65,6 @@ private extension DailyChallengeResultView {
 }
 
 // MARK: - Stats Row
-
 private extension DailyChallengeResultView {
     var statsRow: some View {
         HStack(spacing: DesignSystem.Spacing.lg) {
@@ -102,7 +99,6 @@ private extension DailyChallengeResultView {
 }
 
 // MARK: - Streak Badge
-
 private extension DailyChallengeResultView {
     var streakBadge: some View {
         CardView {
@@ -134,7 +130,6 @@ private extension DailyChallengeResultView {
 }
 
 // MARK: - Action Buttons
-
 private extension DailyChallengeResultView {
     var actionButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -194,7 +189,6 @@ private extension DailyChallengeResultView {
 }
 
 // MARK: - Background
-
 private extension DailyChallengeResultView {
     var ambientBlobs: some View {
         ZStack {
@@ -229,7 +223,6 @@ private extension DailyChallengeResultView {
 }
 
 // MARK: - Helpers
-
 private extension DailyChallengeResultView {
     var scoreMessage: String {
         let accuracy = Double(score) / Double(maxScore)

@@ -11,7 +11,6 @@ struct QuizResult: Identifiable, Hashable {
 }
 
 // MARK: - Computed Properties
-
 extension QuizResult {
     var correctCount: Int {
         answers.filter(\.isCorrect).count
@@ -28,7 +27,6 @@ extension QuizResult {
 }
 
 // MARK: - QuizAnswer
-
 struct QuizAnswer: Identifiable {
     let id: UUID
     let question: QuizQuestion

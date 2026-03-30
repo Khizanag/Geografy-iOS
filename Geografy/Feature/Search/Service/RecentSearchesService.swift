@@ -33,7 +33,6 @@ final class RecentSearchesService {
 }
 
 // MARK: - Persistence
-
 private extension RecentSearchesService {
     func persist() {
         UserDefaults.standard.set(queries, forKey: storageKey)

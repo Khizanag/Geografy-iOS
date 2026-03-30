@@ -34,7 +34,6 @@ struct MapCanvasView: View {
 }
 
 // MARK: - Drawing
-
 private extension MapCanvasView {
     func drawAllCountries(
         in context: inout GraphicsContext,
@@ -109,7 +108,7 @@ private extension MapCanvasView {
             shadowContext.draw(
                 shadowContext.resolve(
                     Text(shape.name)
-                        .font(.system(size: fontSize, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
                         .foregroundStyle(.black)
                 ),
                 at: CGPoint(x: point.x + 0.5, y: point.y + 0.5),
@@ -119,7 +118,7 @@ private extension MapCanvasView {
             context.draw(
                 context.resolve(
                     Text(shape.name)
-                        .font(.system(size: fontSize, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
                         .foregroundStyle(.white)
                 ),
                 at: point,
@@ -130,7 +129,6 @@ private extension MapCanvasView {
 }
 
 // MARK: - Capital Pin
-
 private extension MapCanvasView {
     func drawCapitalPin(
         in context: inout GraphicsContext,
@@ -166,7 +164,6 @@ private extension MapCanvasView {
 }
 
 // MARK: - Density Heatmap
-
 private extension MapCanvasView {
     /// Maps population density (people/km²) to a color on a yellow→orange→red→dark-red gradient.
     /// Uses log10 scale since density spans 0.03 (Greenland) to 26000+ (Monaco).
@@ -198,7 +195,6 @@ private extension MapCanvasView {
 }
 
 // MARK: - Helpers
-
 private extension MapCanvasView {
     var horizontalOffsets: [CGFloat] {
         let mapWidthScaled = MapProjection.mapWidth * scale

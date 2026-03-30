@@ -18,7 +18,6 @@ struct GeoJSONGeometry: Codable {
 }
 
 // MARK: - GeoJSONCoordinates
-
 enum GeoJSONCoordinates: Codable {
     case polygon([[[Double]]])
     case multiPolygon([[[[Double]]]])
@@ -46,7 +45,6 @@ enum GeoJSONCoordinates: Codable {
 }
 
 // MARK: - AnyCodableValue
-
 enum AnyCodableValue: Codable {
     case string(String)
     case int(Int)

@@ -31,7 +31,6 @@ struct CapitalChainView: View {
 }
 
 // MARK: - Start Section
-
 private extension CapitalChainView {
     var startSection: some View {
         CardView {
@@ -79,7 +78,6 @@ private extension CapitalChainView {
 }
 
 // MARK: - Step View
-
 private extension CapitalChainView {
     func stepView(step: DailyChallenge.ChainStep) -> some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -113,7 +111,6 @@ private extension CapitalChainView {
 }
 
 // MARK: - Actions
-
 private extension CapitalChainView {
     func selectOption(
         _ option: Country,
@@ -154,7 +151,6 @@ private extension CapitalChainView {
 }
 
 // MARK: - Helpers
-
 private extension CapitalChainView {
     func optionState(
         option: Country,

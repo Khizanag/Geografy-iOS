@@ -83,7 +83,6 @@ final class CurrencyService {
 }
 
 // MARK: - Cache
-
 private extension CurrencyService {
     func cacheURL(for base: String) -> URL {
         cacheDirectory.appendingPathComponent("\(base).json")

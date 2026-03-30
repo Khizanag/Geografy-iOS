@@ -8,7 +8,6 @@ struct PlayerRating {
 }
 
 // MARK: - Defaults
-
 extension PlayerRating {
     static let initial = PlayerRating(
         rating: 1200,
@@ -19,7 +18,6 @@ extension PlayerRating {
 }
 
 // MARK: - Computed Properties
-
 extension PlayerRating {
     var totalMatches: Int {
         wins + losses + draws
@@ -64,7 +62,6 @@ extension PlayerRating {
 }
 
 // MARK: - ELO Calculation
-
 extension PlayerRating {
     static func calculateRatingChanges(
         playerRating: Int,

@@ -33,7 +33,6 @@ struct GeographyFeaturesScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension GeographyFeaturesScreen {
     var typePicker: some View {
         ScrollView(.horizontal, showsIndicators: false) {

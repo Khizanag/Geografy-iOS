@@ -27,7 +27,6 @@ final class FeedService {
 }
 
 // MARK: - Feed Data
-
 // swiftlint:disable closure_body_length
 private extension FeedService {
     static let allItems: [FeedItem] = [

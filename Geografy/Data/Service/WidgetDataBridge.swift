@@ -40,7 +40,6 @@ final class WidgetDataBridge {
 }
 
 // MARK: - Country of Day
-
 private extension WidgetDataBridge {
     func writeCountryOfDayIfNeeded(to defaults: UserDefaults) {
         if countryDataService.countries.isEmpty {
@@ -89,7 +88,6 @@ private extension WidgetDataBridge {
 }
 
 // MARK: - Shared Data Model
-
 struct WidgetCountryData: Codable {
     let code: String
     let name: String

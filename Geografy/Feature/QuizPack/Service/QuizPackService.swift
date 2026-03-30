@@ -77,7 +77,6 @@ final class QuizPackService {
 }
 
 // MARK: - Persistence
-
 private extension QuizPackService {
     func saveProgress() {
         guard let encoded = try? JSONEncoder().encode(
@@ -90,7 +89,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Pack Catalog
-
 extension QuizPackService {
     static func makeAllPacks(
         countries: [Country]
@@ -108,7 +106,6 @@ extension QuizPackService {
 }
 
 // MARK: - Capitals Packs
-
 private extension QuizPackService {
     static func makeCapitalsPacks(
         countries: [Country]
@@ -153,7 +150,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Flag Packs
-
 private extension QuizPackService {
     static func makeFlagPacks(
         countries: [Country]
@@ -210,7 +206,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Population Packs
-
 private extension QuizPackService {
     static func makePopulationPacks(
         countries: [Country]
@@ -255,7 +250,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Geography Packs
-
 private extension QuizPackService {
     static func makeGeographyPacks(
         countries: [Country]
@@ -324,7 +318,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Currency Packs
-
 private extension QuizPackService {
     static func makeCurrencyPacks(
         countries: [Country]
@@ -353,7 +346,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Government Packs
-
 private extension QuizPackService {
     static func makeGovernmentPacks(
         countries: [Country]
@@ -382,7 +374,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Organization Packs
-
 private extension QuizPackService {
     static func makeOrganizationPacks(
         countries: [Country]
@@ -418,7 +409,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Level Builder
-
 private extension QuizPackService {
     static func makeLevels(
         packSlug: String,
@@ -439,7 +429,6 @@ private extension QuizPackService {
 }
 
 // MARK: - Array Chunking
-
 private extension Array {
     func chunked(into size: Int) -> [[Element]] {
         guard size > 0 else { return [self] }

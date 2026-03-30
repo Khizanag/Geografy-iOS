@@ -41,7 +41,6 @@ struct EconomyExplorerScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension EconomyExplorerScreen {
     var headerStats: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -64,7 +63,7 @@ private extension EconomyExplorerScreen {
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: icon)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.title3)
                     .foregroundStyle(color)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(label)
@@ -84,11 +83,13 @@ private extension EconomyExplorerScreen {
     var rankingList: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(Array(filteredCountries.enumerated()), id: \.element.id) { index, country in
-                rankRow(
-                    country: country,
-                    rank: rankedCountries.firstIndex(where: { $0.id == country.id }).map { $0 + 1 } ?? index + 1
-                )
-                .onTapGesture { coordinator.push(.countryDetail(country)) }
+                Button { coordinator.push(.countryDetail(country)) } label: {
+                    rankRow(
+                        country: country,
+                        rank: rankedCountries.firstIndex(where: { $0.id == country.id }).map { $0 + 1 } ?? index + 1
+                    )
+                }
+                .buttonStyle(PressButtonStyle())
             }
         }
     }

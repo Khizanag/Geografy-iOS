@@ -13,7 +13,6 @@ struct CountryTimelineView: View {
 }
 
 // MARK: - Subviews
-
 private extension CountryTimelineView {
     func timelineRow(
         event: CountryTimelineEvent,

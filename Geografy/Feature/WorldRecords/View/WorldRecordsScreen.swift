@@ -41,7 +41,6 @@ struct WorldRecordsScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension WorldRecordsScreen {
     func categorySection(category: WorldRecordCategory, records: [WorldRecord]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -90,7 +89,7 @@ private extension WorldRecordsScreen {
                 .fill(DesignSystem.Color.accent.opacity(0.12))
                 .frame(width: 44, height: 44)
             Image(systemName: category.icon)
-                .font(.system(size: 18))
+                .font(DesignSystem.Font.iconSmall)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
@@ -139,7 +138,6 @@ private extension WorldRecordsScreen {
 }
 
 // MARK: - Actions
-
 private extension WorldRecordsScreen {
     func startBlobAnimation() {
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {

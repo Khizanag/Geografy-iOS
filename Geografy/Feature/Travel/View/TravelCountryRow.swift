@@ -20,7 +20,6 @@ struct TravelCountryRow: View {
 }
 
 // MARK: - Subviews
-
 private extension TravelCountryRow {
     var rowContent: some View {
         CardView {
@@ -54,7 +53,7 @@ private extension TravelCountryRow {
     var statusBadge: some View {
         HStack(spacing: 4) {
             Image(systemName: status.icon)
-                .font(.system(size: 9))
+                .font(DesignSystem.Font.nano)
             Text(status.shortLabel)
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)

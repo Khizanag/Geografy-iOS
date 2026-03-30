@@ -37,7 +37,6 @@ struct CultureExplorerScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension CultureExplorerScreen {
     var searchBar: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -63,20 +62,21 @@ private extension CultureExplorerScreen {
     }
 
     func profileRow(_ profile: CultureProfile) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                FlagView(countryCode: profile.countryCode, height: 36)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                rowInfo(profile)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .onTapGesture {
+        Button {
             selectedProfile = profile
+        } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    FlagView(countryCode: profile.countryCode, height: 36)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                    rowInfo(profile)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
+                .padding(DesignSystem.Spacing.md)
+            }
         }
         .buttonStyle(PressButtonStyle())
     }

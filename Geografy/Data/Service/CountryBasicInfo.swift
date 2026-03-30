@@ -14,7 +14,6 @@ enum CountryBasicInfo {
 }
 
 // MARK: - Data
-
 private extension CountryBasicInfo {
     static let data: [String: Info] = [
         // Africa

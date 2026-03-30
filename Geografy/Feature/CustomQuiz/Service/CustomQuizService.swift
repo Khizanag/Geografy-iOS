@@ -43,7 +43,6 @@ final class CustomQuizService {
 }
 
 // MARK: - Persistence
-
 private extension CustomQuizService {
     func persist() {
         let encoder = JSONEncoder()
@@ -54,7 +53,6 @@ private extension CustomQuizService {
 }
 
 // MARK: - JSON Decoder
-
 private extension JSONDecoder {
     static let iso8601: JSONDecoder = {
         let decoder = JSONDecoder()

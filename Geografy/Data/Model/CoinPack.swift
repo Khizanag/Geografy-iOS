@@ -12,7 +12,6 @@ struct CoinPack: Identifiable {
 }
 
 // MARK: - Available Packs
-
 extension CoinPack {
     static let allPacks: [CoinPack] = [
         CoinPack(
@@ -79,7 +78,6 @@ extension CoinPack {
 }
 
 // MARK: - Helpers
-
 extension CoinPack {
     var formattedCoins: String {
         let formatter = NumberFormatter()

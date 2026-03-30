@@ -37,7 +37,6 @@ final class TravelJournalEntry {
 }
 
 // MARK: - Computed Properties
-
 extension TravelJournalEntry {
     var durationDays: Int {
         let calendar = Calendar.current

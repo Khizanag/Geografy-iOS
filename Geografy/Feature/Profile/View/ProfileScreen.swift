@@ -37,7 +37,6 @@ struct ProfileScreen: View {
 }
 
 // MARK: - Scroll Content
-
 private extension ProfileScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
@@ -78,7 +77,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Guest Banner
-
 private extension ProfileScreen {
     var guestBanner: some View {
         Button {
@@ -91,7 +89,7 @@ private extension ProfileScreen {
                         .fill(DesignSystem.Color.warning.opacity(0.15))
                         .frame(width: 44, height: 44)
                     Image(systemName: "person.crop.circle.badge.exclamationmark.fill")
-                        .font(.system(size: 18))
+                        .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(DesignSystem.Color.warning)
                 }
                 VStack(alignment: .leading, spacing: 3) {
@@ -124,7 +122,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Header
-
 private extension ProfileScreen {
     var headerSection: some View {
         CardView {
@@ -194,7 +191,7 @@ private extension ProfileScreen {
     var premiumPill: some View {
         HStack(spacing: 3) {
             Image(systemName: "crown.fill")
-                .font(.system(size: 9))
+                .font(DesignSystem.Font.nano)
             Text("Premium")
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
@@ -220,7 +217,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Level Progress Section
-
 private extension ProfileScreen {
     var levelProgressSection: some View {
         CardView {
@@ -258,7 +254,7 @@ private extension ProfileScreen {
                 .animation(.spring(response: 0.6, dampingFraction: 0.8), value: xpService.progressFraction)
 
             Text("\(xpService.currentLevel.level)")
-                .font(.system(size: 22, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.roundedSubheadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
         }
     }
@@ -284,7 +280,7 @@ private extension ProfileScreen {
     var xpBadge: some View {
         VStack(spacing: 2) {
             Text("\(xpService.totalXP)")
-                .font(.system(size: 20, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.roundedSmall)
                 .foregroundStyle(DesignSystem.Color.accent)
             Text("Total XP")
                 .font(DesignSystem.Font.caption2)
@@ -304,7 +300,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Stats Grid
-
 private extension ProfileScreen {
     var statsGridSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -386,11 +381,11 @@ private extension ProfileScreen {
                     .frame(width: 36, height: 36)
                     .rotationEffect(.degrees(-90))
                 Text("\(percentage)")
-                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .font(DesignSystem.Font.roundedPico)
                     .foregroundStyle(color)
             }
             Text("\(percentage)%")
-                .font(.system(size: 17, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.roundedFootnote)
                 .foregroundStyle(color)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
@@ -420,11 +415,11 @@ private extension ProfileScreen {
                     .fill(color.opacity(0.15))
                     .frame(width: 36, height: 36)
                 Image(systemName: icon)
-                    .font(.system(size: 14))
+                    .font(DesignSystem.Font.iconXS)
                     .foregroundStyle(color)
             }
             Text(value)
-                .font(.system(size: 17, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.roundedFootnote)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
@@ -441,7 +436,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Weekly Activity
-
 private extension ProfileScreen {
     var weeklyActivitySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -459,7 +453,7 @@ private extension ProfileScreen {
     var streakBadgeRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "flame.fill")
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.title3)
                 .foregroundStyle(
                     streakService.currentStreak > 0
                         ? DesignSystem.Color.error
@@ -504,7 +498,7 @@ private extension ProfileScreen {
 
                 if isActive {
                     Image(systemName: isToday ? "flame.fill" : "checkmark")
-                        .font(.system(size: isToday ? 15 : 12, weight: .bold))
+                        .font(DesignSystem.Font.system(size: isToday ? 15 : 12, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.success)
                 } else {
                     Circle()
@@ -549,7 +543,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Achievements Preview
-
 private extension ProfileScreen {
     var achievementsPreviewSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -616,7 +609,7 @@ private extension ProfileScreen {
                     .stroke(achievementColor(for: definition.category).opacity(0.3), lineWidth: 1.5)
                     .frame(width: 52, height: 52)
                 Image(systemName: definition.iconName)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.iconDefault)
                     .foregroundStyle(achievementColor(for: definition.category))
             }
             Text(definition.title)
@@ -644,7 +637,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Badge Showcase
-
 private extension ProfileScreen {
     var badgeShowcaseSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -713,7 +705,7 @@ private extension ProfileScreen {
                     .frame(width: 52, height: 52)
 
                 Image(systemName: achievement.iconName)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.iconDefault)
                     .foregroundStyle(achievement.category.themeColor)
             }
 
@@ -740,7 +732,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Quiz History
-
 private extension ProfileScreen {
     var quizHistorySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -760,7 +751,7 @@ private extension ProfileScreen {
                     .fill(DesignSystem.Color.purple.opacity(0.15))
                     .frame(width: 36, height: 36)
                 Image(systemName: QuizType(rawValue: record.quizType)?.icon ?? "gamecontroller.fill")
-                    .font(.system(size: 14))
+                    .font(DesignSystem.Font.iconXS)
                     .foregroundStyle(DesignSystem.Color.purple)
             }
             VStack(alignment: .leading, spacing: 2) {
@@ -797,7 +788,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Premium Banner
-
 private extension ProfileScreen {
     var premiumBannerSection: some View {
         Button { activeSheet = .paywall } label: {
@@ -807,7 +797,7 @@ private extension ProfileScreen {
                         .fill(DesignSystem.Color.accent.opacity(0.15))
                         .frame(width: 44, height: 44)
                     Image(systemName: "crown.fill")
-                        .font(.system(size: 18))
+                        .font(DesignSystem.Font.iconSmall)
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -845,7 +835,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Account Section
-
 private extension ProfileScreen {
     var accountSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -912,7 +901,7 @@ private extension ProfileScreen {
                     .fill(color.opacity(0.12))
                     .frame(width: 36, height: 36)
                 Image(systemName: icon)
-                    .font(.system(size: 14))
+                    .font(DesignSystem.Font.iconXS)
                     .foregroundStyle(color)
             }
             Text(title)
@@ -930,7 +919,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Background
-
 private extension ProfileScreen {
     var ambientBlobs: some View {
         ZStack {
@@ -980,7 +968,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Sheet Type
-
 private extension ProfileScreen {
     enum ProfileSheet: Identifiable {
         case editProfile
@@ -1011,7 +998,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Helpers
-
 private extension ProfileScreen {
     func fetchQuizData() {
         let userID = authService.currentUserID
@@ -1082,7 +1068,6 @@ private extension ProfileScreen {
 }
 
 // MARK: - Profile Section Modifier
-
 private extension View {
     func profileSection(appeared: Bool, delay: Double) -> some View {
         self

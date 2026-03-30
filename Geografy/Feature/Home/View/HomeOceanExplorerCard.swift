@@ -20,7 +20,6 @@ struct HomeOceanExplorerCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeOceanExplorerCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeOceanExplorerCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "water.waves")
-                .font(.system(size: 26))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.blue)
         }
     }

@@ -31,7 +31,6 @@ enum QuestionGenerator {
 }
 
 // MARK: - Pool Filtering
-
 private extension QuestionGenerator {
     static func filteredPool(
         type: QuizType,
@@ -51,7 +50,6 @@ private extension QuestionGenerator {
 }
 
 // MARK: - Question Builders
-
 private extension QuestionGenerator {
     static func makeQuestion(
         type: QuizType,
@@ -264,7 +262,6 @@ private extension QuestionGenerator {
 }
 
 // MARK: - Distractor Selection
-
 private extension QuestionGenerator {
     static func selectDistractors(for country: Country, from allCountries: [Country], count: Int) -> [Country] {
         let sameContinentCountries = allCountries.filter {

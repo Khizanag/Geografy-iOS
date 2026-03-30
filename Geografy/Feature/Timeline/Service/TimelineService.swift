@@ -22,7 +22,6 @@ final class TimelineService {
 }
 
 // MARK: - Queries
-
 extension TimelineService {
     func events(
         for year: Int,
@@ -72,7 +71,6 @@ extension TimelineService {
 }
 
 // MARK: - Helpers
-
 private extension TimelineService {
     func matchesFilter(
         _ event: HistoricalEvent,

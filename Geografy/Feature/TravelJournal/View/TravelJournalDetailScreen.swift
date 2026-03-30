@@ -56,7 +56,6 @@ struct TravelJournalDetailScreen: View {
 }
 
 // MARK: - Toolbar
-
 private extension TravelJournalDetailScreen {
     var editButton: some View {
         Button {
@@ -70,7 +69,6 @@ private extension TravelJournalDetailScreen {
 }
 
 // MARK: - Subviews
-
 private extension TravelJournalDetailScreen {
     var headerSection: some View {
         CardView(
@@ -113,7 +111,7 @@ private extension TravelJournalDetailScreen {
                         ? "star.fill"
                         : "star"
                 )
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.title3)
                 .foregroundStyle(DesignSystem.Color.warning)
             }
             Spacer(minLength: 0)
@@ -124,7 +122,7 @@ private extension TravelJournalDetailScreen {
     var durationBadge: some View {
         HStack(spacing: 4) {
             Image(systemName: "clock")
-                .font(.system(size: 11))
+                .font(DesignSystem.Font.caption2)
             Text(durationText)
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
@@ -161,7 +159,7 @@ private extension TravelJournalDetailScreen {
     ) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
-                .font(.system(size: 12))
+                .font(DesignSystem.Font.caption)
                 .foregroundStyle(
                     DesignSystem.Color.textTertiary
                 )
@@ -262,7 +260,7 @@ private extension TravelJournalDetailScreen {
     ) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
-                .font(.system(size: 13))
+                .font(DesignSystem.Font.footnote)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .frame(width: 20)
             Text(label)
@@ -306,7 +304,6 @@ private extension TravelJournalDetailScreen {
 }
 
 // MARK: - Helpers
-
 private extension TravelJournalDetailScreen {
     var countryName: String {
         countryDataService.country(for: entry.countryCode)?.name

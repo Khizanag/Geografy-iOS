@@ -10,7 +10,6 @@ enum FlashcardReviewResult: String, CaseIterable, Identifiable {
 }
 
 // MARK: - Display
-
 extension FlashcardReviewResult {
     var displayName: String {
         switch self {

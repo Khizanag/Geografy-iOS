@@ -20,7 +20,6 @@ struct AchievementCard: View {
 }
 
 // MARK: - Subviews
-
 private extension AchievementCard {
     var cardContent: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -51,13 +50,13 @@ private extension AchievementCard {
                     .fill(categoryColor.opacity(isUnlocked ? 0.2 : 0.08))
                     .frame(width: 40, height: 40)
                 Image(systemName: isUnlocked ? definition.iconName : "lock.fill")
-                    .font(.system(size: 17))
+                    .font(DesignSystem.Font.headline)
                     .foregroundStyle(isUnlocked ? categoryColor : DesignSystem.Color.textTertiary)
             }
             Spacer()
             if isUnlocked {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 16))
+                    .font(DesignSystem.Font.callout)
                     .foregroundStyle(DesignSystem.Color.success)
             }
         }

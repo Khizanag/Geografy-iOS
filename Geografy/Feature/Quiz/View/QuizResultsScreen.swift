@@ -37,7 +37,6 @@ struct QuizResultsScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension QuizResultsScreen {
     var scoreSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -187,7 +186,6 @@ private extension QuizResultsScreen {
 }
 
 // MARK: - Gamification
-
 private extension QuizResultsScreen {
     func processQuizResult() {
         let difficulty = result.configuration.difficulty
@@ -241,7 +239,6 @@ private extension QuizResultsScreen {
 }
 
 // MARK: - Helpers
-
 private extension QuizResultsScreen {
     var scoreMessage: String {
         if result.accuracy >= 0.9 {

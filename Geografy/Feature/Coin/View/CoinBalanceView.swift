@@ -23,7 +23,6 @@ struct CoinBalanceView: View {
 }
 
 // MARK: - Subviews
-
 private extension CoinBalanceView {
     var coinIcon: some View {
         ZStack {
@@ -81,7 +80,6 @@ private extension CoinBalanceView {
 }
 
 // MARK: - Helpers
-
 private extension CoinBalanceView {
     var formattedDisplayBalance: String {
         let formatter = NumberFormatter()

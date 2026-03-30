@@ -38,7 +38,6 @@ struct LessonScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension LessonScreen {
     var lessonTypeTag: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -116,7 +115,6 @@ private extension LessonScreen {
 }
 
 // MARK: - Actions
-
 private extension LessonScreen {
     func startBlobAnimation() {
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {

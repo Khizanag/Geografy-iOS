@@ -27,7 +27,6 @@ struct TravelJournalPhotoGrid: View {
 }
 
 // MARK: - SelectedIndex
-
 private extension TravelJournalPhotoGrid {
     struct SelectedIndex: Identifiable {
         let value: Int
@@ -36,7 +35,6 @@ private extension TravelJournalPhotoGrid {
 }
 
 // MARK: - Subviews
-
 private extension TravelJournalPhotoGrid {
     func photoCell(at index: Int) -> some View {
         Button {
@@ -67,7 +65,7 @@ private extension TravelJournalPhotoGrid {
             onDelete?(index)
         } label: {
             Image(systemName: "xmark.circle.fill")
-                .font(.system(size: 18))
+                .font(DesignSystem.Font.iconSmall)
                 .foregroundStyle(DesignSystem.Color.onAccent)
                 .background(
                     DesignSystem.Color.error,
@@ -96,7 +94,7 @@ private extension TravelJournalPhotoGrid {
             selectedPhotoIndex = nil
         } label: {
             Image(systemName: "xmark.circle.fill")
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.iconLarge)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .padding(DesignSystem.Spacing.md)
         }

@@ -61,7 +61,6 @@ struct QuizSessionScreen: View {
 }
 
 // MARK: - Body Subviews
-
 private extension QuizSessionScreen {
     var quizContent: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -147,7 +146,7 @@ private extension QuizSessionScreen {
                 .fill(DesignSystem.Color.accent.opacity(0.12))
                 .frame(width: 80, height: 80)
             Image(systemName: "pause.circle.fill")
-                .font(.system(size: 44))
+                .font(DesignSystem.Font.displayXS)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
@@ -184,7 +183,6 @@ private extension QuizSessionScreen {
 }
 
 // MARK: - Subviews
-
 private extension QuizSessionScreen {
     var progressSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
@@ -239,7 +237,7 @@ private extension QuizSessionScreen {
                     .font(DesignSystem.Font.caption)
 
                 Text("\(String(Int(arcadeTimeRemaining)))s")
-                    .font(.system(size: 13, weight: .bold, design: .monospaced))
+                    .font(DesignSystem.Font.monoCaption2)
             }
             .foregroundStyle(arcadeTimerColor)
         }
@@ -255,9 +253,9 @@ private extension QuizSessionScreen {
     var streakBadge: some View {
         HStack(spacing: 4) {
             Image(systemName: "flame.fill")
-                .font(.system(size: 11, weight: .black))
+                .font(DesignSystem.Font.roundedNano)
             Text("\(currentStreak)×")
-                .font(.system(size: 13, weight: .black, design: .rounded))
+                .font(DesignSystem.Font.roundedMicro)
         }
         .foregroundStyle(.white)
         .padding(.horizontal, 10)
@@ -279,7 +277,7 @@ private extension QuizSessionScreen {
         HStack(spacing: DesignSystem.Spacing.xs) {
             timerProgressRing
             Text("\(Int(timerRemaining))s")
-                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .font(DesignSystem.Font.roundedMicro2)
                 .contentTransition(.numericText())
         }
         .foregroundStyle(timerColor)
@@ -363,7 +361,6 @@ private extension QuizSessionScreen {
 }
 
 // MARK: - Actions
-
 private extension QuizSessionScreen {
     func togglePause() {
         withAnimation(.easeInOut(duration: 0.25)) {
@@ -546,7 +543,6 @@ private extension QuizSessionScreen {
 }
 
 // MARK: - Timer
-
 private extension QuizSessionScreen {
     func startTimer() {
         timerCancellable?.cancel()
@@ -622,7 +618,6 @@ private extension QuizSessionScreen {
 }
 
 // MARK: - Helpers
-
 private extension QuizSessionScreen {
     func isTypingAnswerCorrect(input: String, question: QuizQuestion) -> Bool {
         let normalizedInput = normalizeText(input)

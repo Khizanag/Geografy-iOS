@@ -27,7 +27,6 @@ struct TravelStatusPickerSheet: View {
 }
 
 // MARK: - Subviews
-
 private extension TravelStatusPickerSheet {
     var hasExistingStatus: Bool {
         travelService.status(for: country.code) != nil
@@ -72,7 +71,7 @@ private extension TravelStatusPickerSheet {
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: status.icon)
-                    .font(.system(size: 18))
+                    .font(DesignSystem.Font.iconSmall)
                     .foregroundStyle(status.color)
                     .frame(width: 24)
                 Text(status.label)
@@ -81,7 +80,7 @@ private extension TravelStatusPickerSheet {
                 Spacer()
                 if isSelected {
                     Image(systemName: "checkmark")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(DesignSystem.Font.iconXS.weight(.semibold))
                         .foregroundStyle(status.color)
                 }
             }
@@ -109,7 +108,6 @@ private extension TravelStatusPickerSheet {
 }
 
 // MARK: - Gamification
-
 private extension TravelStatusPickerSheet {
     func awardTravelXP(for status: TravelStatus) {
         let key = "travel_xp_awarded"

@@ -89,7 +89,6 @@ final class SubscriptionService {
 }
 
 // MARK: - Helpers
-
 private extension SubscriptionService {
     func sortOrder(_ product: Product) -> Int {
         switch product.id {

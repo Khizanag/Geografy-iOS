@@ -20,7 +20,6 @@ struct HomeQuotesCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeQuotesCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeQuotesCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "quote.bubble.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.indigo)
         }
     }

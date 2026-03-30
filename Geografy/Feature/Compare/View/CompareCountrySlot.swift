@@ -18,7 +18,6 @@ struct CompareCountrySlot: View {
 }
 
 // MARK: - Subviews
-
 private extension CompareCountrySlot {
     @ViewBuilder
     var slotContent: some View {

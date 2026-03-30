@@ -62,7 +62,6 @@ struct TravelMapScreen: View {
 }
 
 // MARK: - Map
-
 private extension TravelMapScreen {
     func mapCanvas(in size: CGSize) -> some View {
         MapCanvasView(
@@ -111,7 +110,6 @@ private extension TravelMapScreen {
 }
 
 // MARK: - Data
-
 private extension TravelMapScreen {
     var highlightedStatuses: [String: TravelStatus] {
         switch selectedFilter {
@@ -143,7 +141,6 @@ private extension TravelMapScreen {
 }
 
 // MARK: - Toolbar
-
 private extension TravelMapScreen {
     var labelsToggle: some View {
         Button {
@@ -184,7 +181,6 @@ private extension TravelMapScreen {
 }
 
 // MARK: - Info Banner
-
 private extension TravelMapScreen {
     var infoBanner: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -229,7 +225,6 @@ private extension TravelMapScreen {
 }
 
 // MARK: - Data Loading
-
 private extension TravelMapScreen {
     func loadMapData() async {
         countryDataService.loadCountries()

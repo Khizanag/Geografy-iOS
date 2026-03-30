@@ -199,7 +199,6 @@ struct GeografyApp: App {
 }
 
 // MARK: - Mac Notification Names
-
 extension Notification.Name {
     static let macSwitchTab = Notification.Name("macSwitchTab")
     static let macStartQuiz = Notification.Name("macStartQuiz")

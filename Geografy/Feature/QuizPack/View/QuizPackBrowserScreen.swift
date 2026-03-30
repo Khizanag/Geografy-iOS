@@ -33,7 +33,6 @@ struct QuizPackBrowserScreen: View {
 }
 
 // MARK: - Content
-
 private extension QuizPackBrowserScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
@@ -56,7 +55,6 @@ private extension QuizPackBrowserScreen {
 }
 
 // MARK: - Overall Progress
-
 private extension QuizPackBrowserScreen {
     var overallProgress: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -111,7 +109,6 @@ private extension QuizPackBrowserScreen {
 }
 
 // MARK: - Category Filter
-
 private extension QuizPackBrowserScreen {
     var categoryFilter: some View {
         VStack(
@@ -199,7 +196,6 @@ private extension QuizPackBrowserScreen {
 }
 
 // MARK: - Pack Grid
-
 private extension QuizPackBrowserScreen {
     var packGrid: some View {
         VStack(
@@ -257,7 +253,6 @@ private extension QuizPackBrowserScreen {
 }
 
 // MARK: - Background
-
 private extension QuizPackBrowserScreen {
     var ambientBackground: some View {
         ZStack {
@@ -302,7 +297,6 @@ private extension QuizPackBrowserScreen {
 }
 
 // MARK: - Actions
-
 private extension QuizPackBrowserScreen {
     func loadData() {
         countryDataService.loadCountries()
@@ -340,7 +334,6 @@ private extension QuizPackBrowserScreen {
 }
 
 // MARK: - Computed Properties
-
 private extension QuizPackBrowserScreen {
     var filteredPacks: [QuizPack] {
         guard let category = selectedCategory else {
@@ -363,7 +356,6 @@ private extension QuizPackBrowserScreen {
 }
 
 // MARK: - Feed Section Modifier
-
 private extension View {
     func feedSection(
         appeared: Bool,

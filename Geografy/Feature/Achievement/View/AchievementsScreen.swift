@@ -43,7 +43,6 @@ struct AchievementsScreen: View {
 }
 
 // MARK: - Stats Header
-
 private extension AchievementsScreen {
     var statsHeader: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -95,7 +94,6 @@ private extension AchievementsScreen {
 }
 
 // MARK: - Category Filter
-
 private extension AchievementsScreen {
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -141,17 +139,18 @@ private extension AchievementsScreen {
 }
 
 // MARK: - Achievement Grid
-
 private extension AchievementsScreen {
     var achievementGrid: some View {
         LazyVStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(Array(filteredAchievements.enumerated()), id: \.element.id) { index, definition in
-                achievementRow(definition)
-                    .onTapGesture {
-                        hapticsService.impact(.light)
-                        selectedAchievement = definition
-                    }
-                    .opacity(appeared ? 1 : 0)
+                Button {
+                    hapticsService.impact(.light)
+                    selectedAchievement = definition
+                } label: {
+                    achievementRow(definition)
+                }
+                .buttonStyle(PressButtonStyle())
+                .opacity(appeared ? 1 : 0)
                     .offset(y: appeared ? 0 : 16)
                     .animation(
                         .spring(response: 0.5, dampingFraction: 0.8)
@@ -231,7 +230,6 @@ private extension AchievementsScreen {
 }
 
 // MARK: - Helpers
-
 private extension AchievementsScreen {
     var filteredAchievements: [AchievementDefinition] {
         let all = AchievementCatalog.all

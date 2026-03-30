@@ -38,7 +38,6 @@ struct WordSearchService {
 }
 
 // MARK: - Grid Building
-
 private extension WordSearchService {
     func emptyGrid() -> [[Character]] {
         Array(repeating: Array(repeating: Character(" "), count: gridSize), count: gridSize)

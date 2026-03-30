@@ -2,7 +2,6 @@ import Foundation
 import Observation
 
 // MARK: - Stat Category
-
 enum StatCategory: String, CaseIterable, Identifiable {
     case economy
     case demographics
@@ -44,7 +43,6 @@ enum StatCategory: String, CaseIterable, Identifiable {
 }
 
 // MARK: - Stat Indicator
-
 enum StatIndicator: String, CaseIterable, Identifiable {
     // Economy
     case gdp = "NY.GDP.MKTP.CD"
@@ -240,7 +238,6 @@ enum StatIndicator: String, CaseIterable, Identifiable {
 }
 
 // MARK: - WorldBankService
-
 @Observable
 @MainActor
 final class WorldBankService {
@@ -344,7 +341,6 @@ final class WorldBankService {
 }
 
 // MARK: - Helpers
-
 private extension WorldBankService {
     func cacheKey(_ indicator: StatIndicator, countryCode: String) -> String {
         "\(countryCode)_\(indicator.rawValue)"

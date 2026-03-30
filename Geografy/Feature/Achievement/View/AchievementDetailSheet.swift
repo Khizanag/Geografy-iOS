@@ -40,7 +40,6 @@ struct AchievementDetailSheet: View {
 }
 
 // MARK: - Hero
-
 private extension AchievementDetailSheet {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -71,7 +70,7 @@ private extension AchievementDetailSheet {
                 .frame(width: 100, height: 100)
 
             Image(systemName: isUnlocked ? definition.iconName : "lock.fill")
-                .font(.system(size: 44))
+                .font(DesignSystem.Font.displayXS)
                 .foregroundStyle(
                     isUnlocked ? definition.category.themeColor : DesignSystem.Color.textTertiary
                 )
@@ -104,7 +103,6 @@ private extension AchievementDetailSheet {
 }
 
 // MARK: - Info
-
 private extension AchievementDetailSheet {
     var infoSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -145,7 +143,6 @@ private extension AchievementDetailSheet {
 }
 
 // MARK: - Status
-
 private extension AchievementDetailSheet {
     @ViewBuilder
     var statusSection: some View {
@@ -210,7 +207,6 @@ private extension AchievementDetailSheet {
 }
 
 // MARK: - Pin
-
 private extension AchievementDetailSheet {
     var pinSection: some View {
         Button {

@@ -42,7 +42,6 @@ struct WordSearchScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension WordSearchScreen {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -51,7 +50,7 @@ private extension WordSearchScreen {
                     .fill(DesignSystem.Color.accent.opacity(0.12))
                     .frame(width: 96, height: 96)
                 Image(systemName: "character.magnify")
-                    .font(.system(size: 44))
+                    .font(DesignSystem.Font.displayXS)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             Text("Find hidden country names\nin a grid of letters")
@@ -130,7 +129,7 @@ private extension WordSearchScreen {
                     .fill(DesignSystem.Color.accent.opacity(0.08))
                     .frame(width: 140, height: 140)
                 Image(systemName: "character.magnify")
-                    .font(.system(size: 56))
+                    .font(DesignSystem.Font.displayMedium)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             .frame(height: 180)

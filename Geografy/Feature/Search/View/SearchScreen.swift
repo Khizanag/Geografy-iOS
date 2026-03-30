@@ -39,7 +39,6 @@ struct SearchScreen: View {
 
 
 // MARK: - Empty State
-
 private extension SearchScreen {
     var emptyStateContent: some View {
         ScrollView(showsIndicators: false) {
@@ -149,7 +148,6 @@ private extension SearchScreen {
 }
 
 // MARK: - Results
-
 private extension SearchScreen {
     @ViewBuilder
     var resultContent: some View {
@@ -169,7 +167,7 @@ private extension SearchScreen {
         VStack(spacing: DesignSystem.Spacing.md) {
             Spacer()
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             Text("No results for \"\(query)\"")
                 .font(DesignSystem.Font.headline)
@@ -254,7 +252,6 @@ private extension SearchScreen {
 }
 
 // MARK: - Row Content
-
 private extension SearchScreen {
     func countryRowContent(_ country: Country) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -335,7 +332,6 @@ private extension SearchScreen {
 }
 
 // MARK: - Toolbar
-
 private extension SearchScreen {
     @ToolbarContentBuilder
     var toolbarItems: some ToolbarContent {
@@ -353,7 +349,6 @@ private extension SearchScreen {
 }
 
 // MARK: - Search Logic
-
 private extension SearchScreen {
     func scheduleSearch(query: String) {
         searchTask?.cancel()

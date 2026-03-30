@@ -17,7 +17,6 @@ struct CountryProfileService {
 }
 
 // MARK: - Loading
-
 private extension CountryProfileService {
     static func loadProfiles() -> [String: CountryProfile] {
         guard let url = Bundle.main.url(

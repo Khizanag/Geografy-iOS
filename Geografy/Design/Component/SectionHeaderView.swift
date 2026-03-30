@@ -26,7 +26,6 @@ struct SectionHeaderView: View {
 }
 
 // MARK: - Subviews
-
 private extension SectionHeaderView {
     var accentBar: some View {
         RoundedRectangle(cornerRadius: 2)

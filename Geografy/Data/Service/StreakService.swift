@@ -55,7 +55,6 @@ final class StreakService {
 }
 
 // MARK: - Helpers
-
 private extension StreakService {
     func refreshStreak() {
         let userID = currentUserID

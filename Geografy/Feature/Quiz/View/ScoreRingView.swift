@@ -21,7 +21,6 @@ struct ScoreRingView: View {
 }
 
 // MARK: - Subviews
-
 private extension ScoreRingView {
     var backgroundRing: some View {
         Circle()
@@ -53,7 +52,6 @@ private extension ScoreRingView {
 }
 
 // MARK: - Helpers
-
 private extension ScoreRingView {
     var ringColor: Color {
         if progress < 0.4 {

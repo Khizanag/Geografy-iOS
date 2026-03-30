@@ -19,7 +19,6 @@ struct Organization: Identifiable, Hashable {
 }
 
 // MARK: - All Organizations
-
 extension Organization {
     static let all: [Organization] = [
         makeUN, makeNATO, makeEU, makeASEAN, makeAU,

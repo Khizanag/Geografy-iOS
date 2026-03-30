@@ -32,7 +32,6 @@ struct QuizPackCard: View {
 }
 
 // MARK: - Subviews
-
 private extension QuizPackCard {
     var gradient: some View {
         LinearGradient(
@@ -107,7 +106,6 @@ private extension QuizPackCard {
 }
 
 // MARK: - Helpers
-
 private extension QuizPackCard {
     func statPill(text: String, icon: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {

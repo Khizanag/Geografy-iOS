@@ -16,11 +16,10 @@ struct FunFactCard: View {
 }
 
 // MARK: - Subviews
-
 private extension FunFactCard {
     var emojiCircle: some View {
         Text(fact.emoji)
-            .font(.system(size: 24))
+            .font(DesignSystem.Font.iconMedium)
             .frame(
                 width: DesignSystem.Size.lg,
                 height: DesignSystem.Size.lg

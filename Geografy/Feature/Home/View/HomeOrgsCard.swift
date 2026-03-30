@@ -18,7 +18,6 @@ struct HomeOrgsCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeOrgsCard {
     var sectionHeader: some View {
         HStack {

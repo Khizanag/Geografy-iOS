@@ -30,7 +30,6 @@ struct FlashcardScreen: View {
 }
 
 // MARK: - Content
-
 private extension FlashcardScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
@@ -54,7 +53,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Stats Overview
-
 private extension FlashcardScreen {
     var statsOverview: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
@@ -111,7 +109,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Card Type Section
-
 private extension FlashcardScreen {
     var cardTypeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -147,7 +144,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Due for Review
-
 private extension FlashcardScreen {
     @ViewBuilder
     var dueForReviewSection: some View {
@@ -178,7 +174,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Deck Grid
-
 private extension FlashcardScreen {
     var deckGridSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -226,7 +221,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Background
-
 private extension FlashcardScreen {
     var ambientBackground: some View {
         ZStack {
@@ -288,7 +282,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Actions
-
 private extension FlashcardScreen {
     func loadCountries() {
         countryDataService.loadCountries()
@@ -331,7 +324,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Helpers
-
 private extension FlashcardScreen {
     func cardsForDeck(_ deck: FlashcardDeck) -> [FlashcardItem] {
         let countries = filteredCountries(
@@ -367,7 +359,6 @@ private extension FlashcardScreen {
 }
 
 // MARK: - Feed Section Modifier
-
 private extension View {
     func feedSection(appeared: Bool, delay: Double) -> some View {
         self

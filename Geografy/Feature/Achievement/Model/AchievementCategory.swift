@@ -14,7 +14,6 @@ enum AchievementCategory: String, CaseIterable, Codable {
 }
 
 // MARK: - Display
-
 extension AchievementCategory {
     var displayName: String {
         switch self {

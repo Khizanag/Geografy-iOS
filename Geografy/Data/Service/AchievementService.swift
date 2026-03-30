@@ -33,7 +33,6 @@ final class AchievementService {
     }
 
     // MARK: - Query
-
     func isUnlocked(_ achievementID: String) -> Bool {
         unlockedAchievements.contains { $0.id == achievementID }
     }
@@ -61,7 +60,6 @@ final class AchievementService {
     }
 
     // MARK: - Progress Tracking
-
     func updateProgress(_ achievementID: String, value: Int) {
         var allProgress = loadProgress()
         let definition = AchievementCatalog.all.first { $0.id == achievementID }
@@ -87,7 +85,6 @@ final class AchievementService {
     }
 
     // MARK: - Pinning
-
     func togglePin(_ achievementID: String) {
         if let index = pinnedIDs.firstIndex(of: achievementID) {
             pinnedIDs.remove(at: index)
@@ -98,7 +95,6 @@ final class AchievementService {
     }
 
     // MARK: - Check Methods
-
     func checkExplorerAchievements(totalExplored: Int) {
         let milestones: [(Int, String)] = [
             (5, "explorer_5"),
@@ -174,7 +170,6 @@ final class AchievementService {
 }
 
 // MARK: - Persistence
-
 private extension AchievementService {
     func unlock(_ achievementID: String) {
         guard !isUnlocked(achievementID),

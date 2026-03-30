@@ -37,7 +37,6 @@ struct IndependenceTimelineScreen: View {
 }
 
 // MARK: - Subviews
-
 private extension IndependenceTimelineScreen {
     var eraFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -108,7 +107,7 @@ private extension IndependenceTimelineScreen {
     var emptyState: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "calendar.badge.exclamationmark")
-                .font(.system(size: 44))
+                .font(DesignSystem.Font.displayXS)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
             Text("No events found")
                 .font(DesignSystem.Font.headline)
@@ -154,16 +153,17 @@ private extension IndependenceTimelineScreen {
     }
 
     func eventCard(event: IndependenceEvent) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(countryCode: event.countryCode, height: 32)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                eventInfo(event: event)
-                Spacer(minLength: 0)
+        Button { navigateToCountry(code: event.countryCode) } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    FlagView(countryCode: event.countryCode, height: 32)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                    eventInfo(event: event)
+                    Spacer(minLength: 0)
+                }
+                .padding(DesignSystem.Spacing.sm)
             }
-            .padding(DesignSystem.Spacing.sm)
         }
-        .onTapGesture { navigateToCountry(code: event.countryCode) }
         .buttonStyle(PressButtonStyle())
     }
 
@@ -207,7 +207,6 @@ private extension IndependenceTimelineScreen {
 }
 
 // MARK: - Actions
-
 private extension IndependenceTimelineScreen {
     func navigateToCountry(code: String) {
         // Navigation to country detail handled via coordinator when country data is available

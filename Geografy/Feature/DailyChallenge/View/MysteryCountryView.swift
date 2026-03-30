@@ -23,7 +23,6 @@ struct MysteryCountryView: View {
 }
 
 // MARK: - Layouts
-
 private extension MysteryCountryView {
     var compactLayout: some View {
         ScrollView {
@@ -60,12 +59,11 @@ private extension MysteryCountryView {
 }
 
 // MARK: - Prompt
-
 private extension MysteryCountryView {
     var promptSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "questionmark.circle.fill")
-                .font(.system(size: 48))
+                .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.accent)
             Text("Which country is this?")
                 .font(DesignSystem.Font.title2)
@@ -78,7 +76,6 @@ private extension MysteryCountryView {
 }
 
 // MARK: - Clues
-
 private extension MysteryCountryView {
     var cluesSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -148,7 +145,6 @@ private extension MysteryCountryView {
 }
 
 // MARK: - Guess
-
 private extension MysteryCountryView {
     var target: Country { content.targetCountry }
 
@@ -215,7 +211,6 @@ private extension MysteryCountryView {
 }
 
 // MARK: - Actions
-
 private extension MysteryCountryView {
     func revealClue(cost: Int) {
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {

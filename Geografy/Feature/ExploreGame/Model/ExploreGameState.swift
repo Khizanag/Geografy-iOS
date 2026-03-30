@@ -17,7 +17,6 @@ struct ExploreGameState {
 }
 
 // MARK: - Computed Properties
-
 extension ExploreGameState {
     var currentPointsAvailable: Int {
         let clueIndex = min(revealedClueCount - 1, clues.count - 1)
@@ -45,7 +44,6 @@ extension ExploreGameState {
 }
 
 // MARK: - Mutations
-
 extension ExploreGameState {
     mutating func revealNextClue() {
         guard hasMoreClues else { return }

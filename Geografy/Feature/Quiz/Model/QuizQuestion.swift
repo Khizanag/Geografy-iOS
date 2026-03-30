@@ -11,7 +11,6 @@ struct QuizQuestion: Identifiable {
 }
 
 // MARK: - QuizOption
-
 struct QuizOption: Identifiable {
     let id: UUID
     let text: String?

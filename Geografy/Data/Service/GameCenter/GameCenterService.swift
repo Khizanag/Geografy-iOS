@@ -99,7 +99,6 @@ final class GameCenterService {
 }
 
 // MARK: - Leaderboard IDs
-
 extension GameCenterService {
     enum LeaderboardID {
         static let totalXP = "com.khizanag.geografy.leaderboard.totalxp"
@@ -144,7 +143,6 @@ extension GameCenterService {
 }
 
 // MARK: - Retry Queue
-
 private extension GameCenterService {
     struct PendingSubmission: Codable {
         enum Kind: String, Codable {

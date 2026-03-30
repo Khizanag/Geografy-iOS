@@ -36,7 +36,6 @@ struct ComingSoonView: View {
 }
 
 // MARK: - Layouts
-
 private extension ComingSoonView {
     var isLandscape: Bool { verticalSizeClass == .compact }
     var circleScale: CGFloat { isLandscape ? 0.6 : 1.0 }
@@ -60,7 +59,6 @@ private extension ComingSoonView {
 }
 
 // MARK: - Subviews
-
 private extension ComingSoonView {
     var pulsingIcon: some View {
         PulsingCirclesView(icon: icon, isAnimating: isAnimating)

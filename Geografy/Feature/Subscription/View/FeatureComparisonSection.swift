@@ -19,7 +19,6 @@ struct FeatureComparisonSection: View {
 }
 
 // MARK: - Subviews
-
 private extension FeatureComparisonSection {
     var columnHeaders: some View {
         HStack {
@@ -67,13 +66,12 @@ private extension FeatureComparisonSection {
 
     func checkIcon(included: Bool) -> some View {
         Image(systemName: included ? "checkmark.circle.fill" : "xmark.circle.fill")
-            .font(.system(size: 16))
+            .font(DesignSystem.Font.callout)
             .foregroundStyle(included ? DesignSystem.Color.success : Color.white.opacity(0.2))
     }
 }
 
 // MARK: - Model
-
 private extension FeatureComparisonSection {
     struct FeatureItem {
         let name: String

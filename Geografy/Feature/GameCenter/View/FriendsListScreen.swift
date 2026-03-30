@@ -20,7 +20,6 @@ struct FriendsListScreen: View {
 }
 
 // MARK: - Content
-
 private extension FriendsListScreen {
     @ViewBuilder
     var content: some View {
@@ -57,7 +56,7 @@ private extension FriendsListScreen {
                     .fill(DesignSystem.Color.textTertiary.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "gamecontroller")
-                    .font(.system(size: 40))
+                    .font(DesignSystem.Font.displayXXS)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             Text("Sign in to Game Center")
@@ -91,7 +90,6 @@ private extension FriendsListScreen {
 }
 
 // MARK: - Friends List
-
 private extension FriendsListScreen {
     var friendsList: some View {
         ScrollView(showsIndicators: false) {
@@ -168,7 +166,6 @@ private extension FriendsListScreen {
 }
 
 // MARK: - Subviews
-
 private extension FriendsListScreen {
     func rankBadge(_ rank: Int) -> some View {
         ZStack {
@@ -234,7 +231,6 @@ private extension FriendsListScreen {
 }
 
 // MARK: - Helpers
-
 private extension FriendsListScreen {
     var sortedFriends: [GKPlayer] {
         friends.sorted { playerA, playerB in
@@ -269,7 +265,6 @@ private extension FriendsListScreen {
 }
 
 // MARK: - Actions
-
 private extension FriendsListScreen {
     func loadData() async {
         friends = await gameCenterService.loadFriends()

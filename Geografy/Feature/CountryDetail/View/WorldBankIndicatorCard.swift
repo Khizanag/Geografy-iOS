@@ -29,7 +29,6 @@ struct WorldBankIndicatorCard: View {
 }
 
 // MARK: - Subviews
-
 private extension WorldBankIndicatorCard {
     var cardHeader: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
@@ -133,7 +132,6 @@ private extension WorldBankIndicatorCard {
 }
 
 // MARK: - Loaded Subviews
-
 private extension WorldBankIndicatorCard {
     func latestValueRow(points: [WorldBankService.DataPoint]) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.sm) {
@@ -163,7 +161,7 @@ private extension WorldBankIndicatorCard {
 
             HStack(spacing: 3) {
                 Image(systemName: isPositive ? "arrow.up.right" : "arrow.down.right")
-                    .font(.system(size: 9, weight: .bold))
+                    .font(DesignSystem.Font.nano.bold())
                 Text(String(format: "%.0f%%", abs(change)))
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
@@ -228,7 +226,7 @@ private extension WorldBankIndicatorCard {
                 AxisValueLabel {
                     if let doubleValue = value.as(Double.self) {
                         Text(indicator.formatAxisValue(doubleValue))
-                            .font(.system(size: 9))
+                            .font(DesignSystem.Font.nano)
                             .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
                 }
@@ -246,7 +244,7 @@ private extension WorldBankIndicatorCard {
             if let age = cacheAge {
                 HStack(spacing: 3) {
                     Image(systemName: "arrow.clockwise")
-                        .font(.system(size: 8))
+                        .font(DesignSystem.Font.pico)
                     Text(formattedCacheAge(age))
                 }
                 .font(DesignSystem.Font.caption2)
@@ -257,7 +255,6 @@ private extension WorldBankIndicatorCard {
 }
 
 // MARK: - Helpers
-
 private extension WorldBankIndicatorCard {
     func chartXValues(min minYear: Int, max maxYear: Int, count: Int) -> [Int] {
         guard maxYear > minYear else { return [minYear] }

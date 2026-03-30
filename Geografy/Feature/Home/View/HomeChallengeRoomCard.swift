@@ -20,7 +20,6 @@ struct HomeChallengeRoomCard: View {
 }
 
 // MARK: - Subviews
-
 private extension HomeChallengeRoomCard {
     var cardIcon: some View {
         ZStack {
@@ -35,7 +34,7 @@ private extension HomeChallengeRoomCard {
                 )
                 .frame(width: 56, height: 56)
             Image(systemName: "person.2.fill")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(DesignSystem.Color.orange)
         }
     }
