@@ -313,12 +313,13 @@ private extension TravelJournalEditorSheet {
     }
 
     var photosPicker: some View {
-        PhotosPicker(
+        nonisolated(unsafe) let label = photosPickerLabel
+        return PhotosPicker(
             selection: $selectedPhotos,
             maxSelectionCount: 20,
             matching: .images
         ) {
-            photosPickerLabel
+            label
         }
         .buttonStyle(PressButtonStyle())
     }
