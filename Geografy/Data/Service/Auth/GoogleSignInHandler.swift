@@ -242,16 +242,12 @@ private extension GoogleSignInHandler {
 // MARK: - Presentation Context
 private final class PresentationContextProvider: NSObject, ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        let windowScene = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .first { $0.activationState == .foregroundActive }
-        if let window = windowScene?.windows.first(where: \.isKeyWindow) {
+        let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        let activeScene = scenes.first { $0.activationState == .foregroundActive } ?? scenes.first
+        if let window = activeScene?.windows.first(where: \.isKeyWindow) {
             return window
         }
-        if let windowScene {
-            return UIWindow(windowScene: windowScene)
-        }
-        return UIWindow()
+        return UIWindow(windowScene: activeScene ?? scenes[0])
     }
 }
 
