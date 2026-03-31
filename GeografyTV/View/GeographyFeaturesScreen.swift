@@ -34,7 +34,7 @@ struct GeographyFeaturesScreen: View {
                                 .font(.system(size: 22, weight: .semibold))
 
                             Text(feature.description)
-                                .font(.system(size: 18))
+                                .font(.system(size: 22))
                                 .foregroundStyle(.secondary)
                                 .lineLimit(2)
                         }
@@ -47,7 +47,7 @@ struct GeographyFeaturesScreen: View {
                                 .foregroundStyle(DesignSystem.Color.accent)
 
                             Text(feature.measurementUnit)
-                                .font(.system(size: 16))
+                                .font(.system(size: 22))
                                 .foregroundStyle(DesignSystem.Color.textTertiary)
                         }
                     }

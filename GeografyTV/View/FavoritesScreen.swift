@@ -56,14 +56,14 @@ private extension FavoritesScreen {
                             .font(.system(size: 22, weight: .semibold))
 
                         Text("\(country.capital) · \(country.continent.displayName)")
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(.secondary)
                     }
 
                     Spacer()
 
                     Text(country.population.formatted())
-                        .font(.system(size: 18))
+                        .font(.system(size: 22))
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
             }

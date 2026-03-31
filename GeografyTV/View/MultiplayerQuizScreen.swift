@@ -141,7 +141,7 @@ private extension MultiplayerQuizScreen {
                             .foregroundStyle(DesignSystem.Color.textPrimary)
 
                         Text("Ready")
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.success)
                     }
                 } else {
@@ -151,7 +151,7 @@ private extension MultiplayerQuizScreen {
                             .foregroundStyle(DesignSystem.Color.textTertiary)
 
                         Text("Press to Join")
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
                 }
@@ -375,7 +375,7 @@ private extension MultiplayerQuizScreen {
 
             if let gamepadButton {
                 Image(systemName: gamepadButton.icon)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(gamepadButton.color)
             }
 
@@ -417,7 +417,7 @@ private extension MultiplayerQuizScreen {
                     if revealAnswers {
                         let isCorrect = player.currentAnswer == currentQuestion?.correctOptionID
                         Image(systemName: player.hasAnswered ? (isCorrect ? "checkmark" : "xmark") : "minus")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.system(size: 22, weight: .bold))
                             .foregroundStyle(
                                 !player.hasAnswered
                                     ? DesignSystem.Color.textTertiary

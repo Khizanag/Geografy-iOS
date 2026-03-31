@@ -1,4 +1,4 @@
-#if canImport(CoreSpotlight)
+#if os(iOS)
 import CoreSpotlight
 import GeografyCore
 

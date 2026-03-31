@@ -100,7 +100,7 @@ private extension QuizSetupScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Text(type.description)
-                    .font(.system(size: 17))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
@@ -170,7 +170,7 @@ private extension QuizSetupScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Text(difficulty.subtitle)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(maxWidth: .infinity)

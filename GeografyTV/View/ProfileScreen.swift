@@ -48,7 +48,7 @@ private extension ProfileScreen {
                     .tint(DesignSystem.Color.accent)
 
                 Text("\(xpService.xpInCurrentLevel) / \(xpService.xpRequiredForNextLevel) XP")
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
         }

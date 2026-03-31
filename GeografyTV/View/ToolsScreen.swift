@@ -132,7 +132,7 @@ struct TVCurrencyInfoScreen: View {
                         .foregroundStyle(DesignSystem.Color.accent)
 
                     Text(country.currency.name)
-                        .font(.system(size: 16))
+                        .font(.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -156,7 +156,7 @@ struct TVTimeZoneScreen: View {
                 Spacer()
 
                 Text(country.capital)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
             }
         }

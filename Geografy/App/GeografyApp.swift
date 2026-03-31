@@ -65,7 +65,7 @@ struct GeografyApp: App {
                 .environment(testingModeService)
                 .task { await authService.validateOnLaunch() }
                 .task {
-                    #if canImport(UserNotifications)
+                    #if os(iOS)
                     let granted = await NotificationService.requestPermission()
                     if granted {
                         NotificationService.scheduleStreakReminder()
@@ -88,7 +88,7 @@ struct GeografyApp: App {
                 .task {
                     let countryService = CountryDataService()
                     countryService.loadCountries()
-                    #if canImport(CoreSpotlight)
+                    #if os(iOS)
                     SpotlightIndexer.indexCountries(countryService.countries)
                     #endif
                 }
