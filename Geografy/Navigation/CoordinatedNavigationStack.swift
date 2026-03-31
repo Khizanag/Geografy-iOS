@@ -61,16 +61,14 @@ private struct CloseButtonWrapper<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        if showCloseButton, !hideCloseButton {
-            content()
-                .toolbar {
+        content()
+            .toolbar {
+                if showCloseButton, !hideCloseButton {
                     ToolbarItem(placement: .topBarLeading) {
                         CircleCloseButton { dismiss() }
                     }
                 }
-        } else {
-            content()
-        }
+            }
     }
 }
 
@@ -99,6 +97,5 @@ private struct DestinationSheetView: View {
         ) {
             destination.content
         }
-        .presentationDetents([.large])
     }
 }
