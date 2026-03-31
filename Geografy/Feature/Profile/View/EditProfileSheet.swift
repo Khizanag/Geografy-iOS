@@ -12,20 +12,18 @@ struct EditProfileSheet: View {
     @State private var isSaving = false
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                formContent
+        ZStack {
+            DesignSystem.Color.background.ignoresSafeArea()
+            formContent
+        }
+        .navigationTitle("Edit Profile")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                cancelButton
             }
-            .navigationTitle("Edit Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    cancelButton
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    saveButton
-                }
+            ToolbarItem(placement: .topBarTrailing) {
+                saveButton
             }
         }
         .onAppear {

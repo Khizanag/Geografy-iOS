@@ -12,18 +12,16 @@ struct CustomQuizCountryPicker: View {
     @State private var selectedContinent: Country.Continent?
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                continentFilter
-                selectionBar
-                countryList
-            }
-            .background(DesignSystem.Color.background)
-            .navigationTitle("Select Countries")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
-            .searchable(text: $searchText, prompt: "Search countries")
+        VStack(spacing: 0) {
+            continentFilter
+            selectionBar
+            countryList
         }
+        .background(DesignSystem.Color.background)
+        .navigationTitle("Select Countries")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar { toolbarContent }
+        .searchable(text: $searchText, prompt: "Search countries")
     }
 }
 

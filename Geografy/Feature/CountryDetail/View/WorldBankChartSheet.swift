@@ -6,8 +6,6 @@ struct WorldBankChartSheet: View {
     let indicator: StatIndicator
     let allPoints: [WorldBankService.DataPoint]
 
-    @Environment(\.dismiss) private var dismiss
-
     @State private var selectedRange: TimeRange = .thirtyYears
     @State private var selectedPoint: WorldBankService.DataPoint?
 
@@ -28,25 +26,18 @@ struct WorldBankChartSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                    headerSection
-                    rangePicker
-                    fullChart
-                    statsSection
-                }
-                .padding(DesignSystem.Spacing.md)
+        ScrollView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                headerSection
+                rangePicker
+                fullChart
+                statsSection
             }
-            .background(DesignSystem.Color.background)
-            .navigationTitle(indicator.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
-            }
+            .padding(DesignSystem.Spacing.md)
         }
+        .background(DesignSystem.Color.background)
+        .navigationTitle(indicator.title)
+        .navigationBarTitleDisplayMode(.inline)
         .presentationDetents([.large])
     }
 }

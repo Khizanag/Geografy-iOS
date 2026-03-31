@@ -5,8 +5,6 @@ struct ComingSoonSheet: View {
     let icon: String
 
     var body: some View {
-        NavigationStack {
-            ComingSoonView(icon: icon, title: title, isDismissible: true)
-        }
+        ComingSoonView(icon: icon, title: title, isDismissible: true)
     }
 }

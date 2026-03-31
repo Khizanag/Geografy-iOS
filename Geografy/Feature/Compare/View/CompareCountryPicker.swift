@@ -14,24 +14,11 @@ struct CompareCountryPicker: View {
     let onSelect: (Country) -> Void
 
     var body: some View {
-        NavigationStack {
-            countryList
-                .background(DesignSystem.Color.background)
-                .navigationTitle("Select Country")
-                .navigationBarTitleDisplayMode(.inline)
-                .searchable(text: $searchText, prompt: "Search countries")
-                .toolbar { closeToolbarItem }
-        }
-    }
-}
-
-// MARK: - Toolbar
-private extension CompareCountryPicker {
-    @ToolbarContentBuilder
-    var closeToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            CircleCloseButton()
-        }
+        countryList
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Select Country")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchText, prompt: "Search countries")
     }
 }
 

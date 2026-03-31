@@ -3,7 +3,6 @@ import GeografyDesign
 
 struct QuizPackDetailScreen: View {
     @Environment(SubscriptionService.self) private var subscriptionService
-    @Environment(\.dismiss) private var dismiss
 
     let pack: QuizPack
     let allPacks: [QuizPack]
@@ -15,20 +14,17 @@ struct QuizPackDetailScreen: View {
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
-        NavigationStack {
-            scrollContent
-                .background(DesignSystem.Color.background)
-                .navigationTitle(pack.name)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { closeToolbarItem }
-                .sheet(isPresented: $showingPaywall) {
-                    PaywallScreen()
-                }
-                .fullScreenCover(item: $activeQuizConfig) { configuration in
-                    QuizSessionScreen(configuration: configuration)
-                }
-                .task { countryDataService.loadCountries() }
-        }
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle(pack.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $showingPaywall) {
+                PaywallScreen()
+            }
+            .fullScreenCover(item: $activeQuizConfig) { configuration in
+                QuizSessionScreen(configuration: configuration)
+            }
+            .task { countryDataService.loadCountries() }
     }
 }
 
@@ -192,15 +188,6 @@ private extension QuizPackDetailScreen {
         }
         .buttonStyle(PressButtonStyle())
         .disabled(locked)
-    }
-}
-
-// MARK: - Toolbar
-private extension QuizPackDetailScreen {
-    var closeToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { dismiss() }
-        }
     }
 }
 
