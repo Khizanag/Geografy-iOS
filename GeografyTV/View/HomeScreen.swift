@@ -191,7 +191,7 @@ private extension TVHomeFeedView {
                     .padding(32)
                     .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 20))
                 }
-                .buttonStyle(.card)
+                .buttonStyle(TVCardButtonStyle())
             }
         }
     }
@@ -218,7 +218,7 @@ private extension TVHomeFeedView {
                         color: DesignSystem.Color.accent
                     )
                 }
-                .buttonStyle(.card)
+                .buttonStyle(TVCardButtonStyle())
 
                 NavigationLink(value: TVQuickAction.countries) {
                     tvActionCardLabel(
@@ -228,7 +228,7 @@ private extension TVHomeFeedView {
                         color: DesignSystem.Color.blue
                     )
                 }
-                .buttonStyle(.card)
+                .buttonStyle(TVCardButtonStyle())
 
                 NavigationLink(value: TVQuickAction.randomCountry) {
                     tvActionCardLabel(
@@ -238,7 +238,7 @@ private extension TVHomeFeedView {
                         color: DesignSystem.Color.purple
                     )
                 }
-                .buttonStyle(.card)
+                .buttonStyle(TVCardButtonStyle())
             }
         }
         .navigationDestination(for: TVQuickAction.self) { action in

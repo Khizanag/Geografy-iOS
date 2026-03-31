@@ -43,6 +43,7 @@ struct TravelScreen: View {
             }
         }
         .navigationTitle("Travel Tracker")
+        .focusSection()
     }
 }
 

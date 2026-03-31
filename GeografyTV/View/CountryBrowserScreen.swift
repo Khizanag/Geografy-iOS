@@ -71,7 +71,7 @@ private extension CountryBrowserScreen {
                                 in: RoundedRectangle(cornerRadius: 16)
                             )
                         }
-                        .buttonStyle(.card)
+                        .buttonStyle(TVCardButtonStyle())
                     }
                 }
             }
