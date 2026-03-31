@@ -37,14 +37,17 @@ private extension CoordinatedNavigationStack {
 // MARK: - Close Button Wrapper
 private struct CloseButtonWrapper<Content: View>: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.hideCloseButton) private var hideCloseButton
-    @Environment(\.closeButtonLeading) private var closeButtonLeading
 
     let showCloseButton: Bool
     @ViewBuilder let content: () -> Content
 
+    @State private var hideCloseButton = false
+    @State private var closeButtonLeading = false
+
     var body: some View {
         content()
+            .onPreferenceChange(HideCloseButtonKey.self) { hideCloseButton = $0 }
+            .onPreferenceChange(CloseButtonLeadingKey.self) { closeButtonLeading = $0 }
             .toolbar {
                 if showCloseButton, !hideCloseButton {
                     ToolbarItem(placement: closeButtonLeading ? .topBarLeading : .topBarTrailing) {
