@@ -53,43 +53,15 @@ private extension TimeZoneScreen {
 // MARK: - Subviews
 private extension TimeZoneScreen {
     var tabPicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(TimeZoneTab.allCases, id: \.label) { tab in
-                    Button {
-                        hapticsService.impact(.light)
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            selectedTab = tab
-                        }
-                    } label: {
-                        HStack(spacing: DesignSystem.Spacing.xxs) {
-                            Image(systemName: tab.icon)
-                                .font(DesignSystem.Font.caption)
-                            Text(tab.label)
-                                .font(DesignSystem.Font.caption)
-                                .fontWeight(.medium)
-                        }
-                        .foregroundStyle(
-                            selectedTab == tab
-                                ? DesignSystem.Color.onAccent
-                                : DesignSystem.Color.textSecondary
-                        )
-                        .padding(.horizontal, DesignSystem.Spacing.sm)
-                        .padding(.vertical, DesignSystem.Spacing.xxs + 2)
-                        .background(
-                            selectedTab == tab
-                                ? DesignSystem.Color.accent
-                                : DesignSystem.Color.cardBackground,
-                            in: Capsule()
-                        )
-                    }
-                    .buttonStyle(PressButtonStyle())
-                }
+        Picker("", selection: $selectedTab) {
+            ForEach(TimeZoneTab.allCases, id: \.label) { tab in
+                Label(tab.label, systemImage: tab.icon)
+                    .tag(tab)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .readableContentWidth()
         }
+        .pickerStyle(.segmented)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 
     @ViewBuilder
