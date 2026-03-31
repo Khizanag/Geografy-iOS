@@ -152,6 +152,10 @@ private extension ExploreGameSessionScreen {
                             removal: .opacity
                         )
                     )
+                    .animation(
+                        .spring(response: 0.4, dampingFraction: 0.8),
+                        value: gameState.revealedClueCount
+                    )
                 }
                 wrongGuessBanner
             }
@@ -178,6 +182,10 @@ private extension ExploreGameSessionScreen {
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
             )
             .transition(.move(edge: .bottom).combined(with: .opacity))
+            .animation(
+                .spring(response: 0.3, dampingFraction: 0.7),
+                value: showWrongGuess
+            )
         }
     }
 }
@@ -237,19 +245,15 @@ private extension ExploreGameSessionScreen {
             hapticsService.impact(.light)
             wrongGuessName = country.name
             AccessibilityNotification.Announcement("\(country.name) is not correct. Minus 100 points").post()
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                showWrongGuess = true
-            }
+            showWrongGuess = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                withAnimation { showWrongGuess = false }
+                showWrongGuess = false
             }
         }
     }
 
     func revealNextClue() {
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-            gameState.revealNextClue()
-        }
+        gameState.revealNextClue()
     }
 
     func revealAnswer() {
@@ -260,18 +264,14 @@ private extension ExploreGameSessionScreen {
     func finishGame() {
         let gameResult = ExploreGameResult(from: gameState)
         gameService.recordResult(gameResult)
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-            result = gameResult
-        }
+        result = gameResult
     }
 
     func handlePlayAgain() {
         guard let newState = gameService.makePracticeGame() else { return }
-        withAnimation {
-            gameState = newState
-            result = nil
-            suggestions = []
-            showWrongGuess = false
-        }
+        gameState = newState
+        result = nil
+        suggestions = []
+        showWrongGuess = false
     }
 }

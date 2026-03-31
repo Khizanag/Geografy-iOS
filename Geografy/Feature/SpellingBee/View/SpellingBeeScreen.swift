@@ -62,7 +62,6 @@ private extension SpellingBeeScreen {
             Button { showGuide = true } label: {
                 Image(systemName: "info.circle")
             }
-            .buttonStyle(.plain)
             .accessibilityLabel("Show guide")
         }
 
@@ -75,7 +74,6 @@ private extension SpellingBeeScreen {
                         : DesignSystem.Color.textTertiary
                     )
             }
-            .buttonStyle(.plain)
             .accessibilityLabel("Auto continue: \(autoContinue ? "on" : "off")")
         }
     }

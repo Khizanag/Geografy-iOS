@@ -24,8 +24,8 @@ struct TravelTrackerScreen: View {
                 mainContent
             }
         }
-        .closeButtonPlacementLeading()
         .navigationTitle("Travel Tracker")
+        .closeButtonPlacementLeading()
         .searchable(text: $searchText, prompt: "Search countries…")
         .toolbar { toolbarContent }
         .sheet(isPresented: $showCountryPicker) {

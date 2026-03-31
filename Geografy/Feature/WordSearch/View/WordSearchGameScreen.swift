@@ -57,7 +57,7 @@ private extension WordSearchGameScreen {
 
                 if timerActive {
                     Button {
-                        withAnimation(.easeInOut(duration: 0.2)) { isPaused.toggle() }
+                        isPaused.toggle()
                     } label: {
                         Image(systemName: isPaused ? "play.fill" : "pause.fill")
                             .font(DesignSystem.Font.caption)
@@ -200,13 +200,17 @@ private extension WordSearchGameScreen {
                 .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
                 .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
                 .blur(radius: isPaused ? 8 : 0)
+                .animation(.easeInOut(duration: 0.2), value: isPaused)
 
                 if isPaused {
                     pauseOverlay
+                        .transition(.opacity)
+                        .animation(.easeInOut(duration: 0.2), value: isPaused)
                 }
             }
         }
         .aspectRatio(1, contentMode: .fit)
+        .animation(.easeInOut(duration: 0.4), value: isRevealed)
     }
 
     var pauseOverlay: some View {
@@ -222,7 +226,7 @@ private extension WordSearchGameScreen {
                         .fontWeight(.bold)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                     GlassButton("Continue", systemImage: "play.fill") {
-                        withAnimation(.easeInOut(duration: 0.2)) { isPaused = false }
+                        isPaused = false
                     }
                 }
             }
@@ -437,7 +441,7 @@ private extension WordSearchGameScreen {
 
     func revealAllWords() {
         timerActive = false
-        withAnimation(.easeInOut(duration: 0.4)) { isRevealed = true }
+        isRevealed = true
         hapticsService.impact(.light)
     }
 }

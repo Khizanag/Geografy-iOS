@@ -28,10 +28,8 @@ struct LandmarkGalleryScreen: View {
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Landmark Gallery")
-        .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $selectedLandmark) { landmark in
             LandmarkDetailView(landmark: landmark)
-                .presentationDetents([.large])
         }
     }
 }

@@ -188,14 +188,14 @@ private extension FlagGameScreen {
         let isCorrect = country.id == targetCountry?.id
 
         if isCorrect {
-            withAnimation(.spring()) { gameState.score += 10 }
+            gameState.score += 10
             if let target = targetCountry {
                 gameState.answeredCountries.append(target)
             }
             hapticsService.notification(.success)
             AccessibilityNotification.Announcement("Correct!").post()
         } else {
-            withAnimation(.spring()) { gameState.lives -= 1 }
+            gameState.lives -= 1
             hapticsService.notification(.error)
             AccessibilityNotification.Announcement("Incorrect. \(gameState.lives) lives remaining").post()
         }
