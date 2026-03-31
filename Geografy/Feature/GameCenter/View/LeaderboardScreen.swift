@@ -3,10 +3,9 @@ import GameKit
 import GeografyDesign
 
 struct LeaderboardScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
-
-    @State private var showSignIn = false
 
     var body: some View {
         scrollContent
@@ -14,9 +13,6 @@ struct LeaderboardScreen: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Leaderboards")
             .navigationBarTitleDisplayMode(.large)
-            .sheet(isPresented: $showSignIn) {
-                SignInOptionsSheet()
-            }
     }
 }
 
@@ -60,7 +56,7 @@ private extension LeaderboardScreen {
                 } else {
                     Button {
                         hapticsService.impact(.light)
-                        showSignIn = true
+                        coordinator.sheet(.signIn)
                     } label: {
                         Text("Sign In")
                             .font(DesignSystem.Font.caption)

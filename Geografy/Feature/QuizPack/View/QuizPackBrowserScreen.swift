@@ -2,6 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct QuizPackBrowserScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -11,7 +12,6 @@ struct QuizPackBrowserScreen: View {
     @State private var selectedPack: QuizPack?
     @State private var countryDataService = CountryDataService()
     @State private var allPacks: [QuizPack] = []
-    @State private var showingPaywall = false
     @State private var blobAnimating = false
     @State private var appeared = false
 
@@ -27,9 +27,6 @@ struct QuizPackBrowserScreen: View {
                     allPacks: allPacks,
                     packService: packService
                 )
-            }
-            .sheet(isPresented: $showingPaywall) {
-                PaywallScreen()
             }
     }
 }
@@ -331,7 +328,7 @@ private extension QuizPackBrowserScreen {
         guard unlocked else { return }
 
         if pack.isPremium, !subscriptionService.isPremium {
-            showingPaywall = true
+            coordinator.sheet(.paywall)
             return
         }
 

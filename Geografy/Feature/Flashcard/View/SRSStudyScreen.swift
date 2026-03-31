@@ -2,10 +2,10 @@ import SwiftUI
 import GeografyDesign
 
 struct SRSStudyScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
 
     @State private var countryDataService = CountryDataService()
-    @State private var showSession = false
     @State private var appeared = false
 
     var body: some View {
@@ -18,12 +18,6 @@ struct SRSStudyScreen: View {
         .task { countryDataService.loadCountries() }
         .onAppear {
             appeared = true
-        }
-        .fullScreenCover(isPresented: $showSession) {
-            FlashcardSessionScreen(
-                deck: .makeDueForReviewDeck(cardType: .countryToCapital),
-                cards: dueCards
-            )
         }
     }
 }
@@ -118,7 +112,14 @@ private extension SRSStudyScreen {
     }
 
     var startReviewButton: some View {
-        Button { showSession = true } label: {
+        Button {
+            coordinator.cover(
+                .flashcardSession(
+                    deck: .makeDueForReviewDeck(cardType: .countryToCapital),
+                    cards: dueCards
+                )
+            )
+        } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "play.fill")
                 Text("Start Review · \(dueCards.count) cards")

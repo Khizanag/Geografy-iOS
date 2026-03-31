@@ -3,9 +3,8 @@ import GeografyDesign
 import GeografyCore
 
 struct CountryProfileScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
-
-    @State private var showPaywall = false
 
     let country: Country
     let profile: CountryProfile?
@@ -20,7 +19,6 @@ struct CountryProfileScreen: View {
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Deep Dive")
-        .sheet(isPresented: $showPaywall) { PaywallScreen() }
     }
 }
 
@@ -105,7 +103,7 @@ private extension CountryProfileScreen {
     }
 
     var unlockButton: some View {
-        Button { showPaywall = true } label: {
+        Button { coordinator.sheet(.paywall) } label: {
             Text("Unlock with Premium")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.onAccent)

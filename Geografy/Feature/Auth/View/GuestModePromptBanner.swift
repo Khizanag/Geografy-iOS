@@ -2,18 +2,14 @@ import SwiftUI
 import GeografyDesign
 
 struct GuestModePromptBanner: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(AuthService.self) private var authService
 
     @AppStorage("guestBannerDismissed") private var isDismissed = false
 
-    @State private var showSignIn = false
-
     var body: some View {
         if authService.isGuest, !isDismissed {
             bannerContent
-                .sheet(isPresented: $showSignIn) {
-                    SignInOptionsSheet()
-                }
         }
     }
 }
@@ -57,7 +53,7 @@ private extension GuestModePromptBanner {
 
     var signInButton: some View {
         Button {
-            showSignIn = true
+            coordinator.sheet(.signIn)
         } label: {
             Text("Sign in")
                 .font(DesignSystem.Font.caption)

@@ -2,14 +2,13 @@ import SwiftUI
 import GeografyDesign
 
 struct QuizPackDetailScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
 
     let pack: QuizPack
     let allPacks: [QuizPack]
     let packService: QuizPackService
 
-    @State private var showingPaywall = false
-    @State private var activeQuizConfig: QuizConfiguration?
     @State private var activeLevel: QuizPackLevel?
     @State private var countryDataService = CountryDataService()
 
@@ -18,12 +17,6 @@ struct QuizPackDetailScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle(pack.name)
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $showingPaywall) {
-                PaywallScreen()
-            }
-            .fullScreenCover(item: $activeQuizConfig) { configuration in
-                QuizSessionScreen(configuration: configuration)
-            }
             .task { countryDataService.loadCountries() }
     }
 }
@@ -237,7 +230,7 @@ private extension QuizPackDetailScreen {
         guard !locked else { return }
 
         if pack.isPremium, !subscriptionService.isPremium {
-            showingPaywall = true
+            coordinator.sheet(.paywall)
             return
         }
 
@@ -245,7 +238,7 @@ private extension QuizPackDetailScreen {
 
         let metric: ComparisonMetric = pack.category == .population ? .population : .area
 
-        activeQuizConfig = QuizConfiguration(
+        let config = QuizConfiguration(
             type: pack.category.quizType,
             region: .world,
             difficulty: .easy,
@@ -254,5 +247,7 @@ private extension QuizPackDetailScreen {
             comparisonMetric: metric,
             gameMode: .standard,
         )
+
+        coordinator.cover(.quizSession(config))
     }
 }

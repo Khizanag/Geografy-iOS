@@ -13,9 +13,7 @@ struct SettingsScreen: View {
     @AppStorage("showCorrectAnswer") private var showCorrectAnswer = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
 
-    @State private var showSignIn = false
     @State private var showDeleteConfirmation = false
-    @State private var showPaywall = false
 
     var body: some View {
         ScrollView {
@@ -36,12 +34,6 @@ struct SettingsScreen: View {
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
         .task { await syncNotificationStatus() }
-        .sheet(isPresented: $showSignIn) {
-            SignInOptionsSheet()
-        }
-        .sheet(isPresented: $showPaywall) {
-            PaywallScreen()
-        }
         .confirmationDialog(
             "Delete Account",
             isPresented: $showDeleteConfirmation,
@@ -98,7 +90,7 @@ private extension SettingsScreen {
             }
         } else {
             settingsGroup(header: "Premium") {
-                Button { showPaywall = true } label: {
+                Button { coordinator.sheet(.paywall) } label: {
                     HStack(spacing: DesignSystem.Spacing.sm) {
                         SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
                         VStack(alignment: .leading, spacing: 2) {
@@ -155,7 +147,7 @@ private extension SettingsScreen {
             settingsDivider
 
             Button {
-                showSignIn = true
+                coordinator.sheet(.signIn)
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     SettingsIconBadge(systemImage: "person.badge.plus", color: DesignSystem.Color.accent)

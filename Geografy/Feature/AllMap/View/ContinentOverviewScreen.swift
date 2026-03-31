@@ -11,7 +11,6 @@ struct ContinentOverviewScreen: View {
     @State private var countryDataService = CountryDataService()
     @State private var sortBy: SortOption = .name
     @State private var appeared = false
-    @State private var showMap = false
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -29,16 +28,13 @@ struct ContinentOverviewScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    showMap = true
+                    coordinator.cover(.map(continentFilter: continent.displayName))
                 } label: {
                     Image(systemName: "map.fill")
                         .foregroundStyle(DesignSystem.Color.iconPrimary)
                 }
                 .buttonStyle(.plain)
             }
-        }
-        .fullScreenCover(isPresented: $showMap) {
-            MapScreen(continentFilter: continent.displayName)
         }
         .task { countryDataService.loadCountries() }
         .onAppear {
