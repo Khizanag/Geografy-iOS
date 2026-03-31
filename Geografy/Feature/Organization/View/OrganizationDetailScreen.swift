@@ -12,7 +12,6 @@ struct OrganizationDetailScreen: View {
     let organization: Organization
 
     @State private var countryDataService = CountryDataService()
-    @State private var showMap = false
     @State private var showLogoZoom = false
     @State private var blobAnimating = false
 
@@ -30,9 +29,6 @@ struct OrganizationDetailScreen: View {
                     showLogoZoom = false
                 }
             }
-        }
-        .fullScreenCover(isPresented: $showMap) {
-            OrganizationMapScreen(organization: organization)
         }
         .task { countryDataService.loadCountries() }
         .task { trackOrgView() }
@@ -173,7 +169,7 @@ private extension OrganizationDetailScreen {
     var openMapButton: some View {
         Button {
             hapticsService.impact(.medium)
-            showMap = true
+            coordinator.cover(.map(continentFilter: nil))
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "map.fill")
