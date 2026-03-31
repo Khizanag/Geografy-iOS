@@ -3,11 +3,11 @@ import GeografyDesign
 
 struct CustomQuizLibraryScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var quizService = CustomQuizService()
+    @Environment(Navigator.self) private var coordinator
 
+    @State private var quizService = CustomQuizService()
     @State private var showBuilder = false
     @State private var editingQuiz: CustomQuiz?
-    @State private var shareableQuiz: CustomQuiz?
     @State private var quizToDelete: CustomQuiz?
     @State private var countryDataService = CountryDataService()
 
@@ -19,7 +19,6 @@ struct CustomQuizLibraryScreen: View {
             .toolbar { toolbarContent }
             .sheet(isPresented: $showBuilder) { builderSheet }
             .sheet(item: $editingQuiz) { quiz in editSheet(for: quiz) }
-            .sheet(item: $shareableQuiz) { quiz in shareSheet(for: quiz) }
             .alert("Delete Quiz?", isPresented: deleteAlertBinding) { deleteAlertActions }
             .task { countryDataService.loadCountries() }
     }
@@ -78,7 +77,7 @@ private extension CustomQuizLibraryScreen {
             }
 
             Button {
-                shareableQuiz = quiz
+                coordinator.sheet(.customQuizShare(quiz))
             } label: {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
@@ -125,38 +124,6 @@ private extension CustomQuizLibraryScreen {
             countryDataService: countryDataService,
             quizService: quizService
         )
-    }
-
-    func shareSheet(for quiz: CustomQuiz) -> some View {
-        NavigationStack {
-            ScrollView {
-                Text(quiz.shareableJSON)
-                    .font(.system(.caption, design: .monospaced))
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .padding(DesignSystem.Spacing.md)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(DesignSystem.Color.cardBackground)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    )
-                    .padding(DesignSystem.Spacing.md)
-            }
-            .background(DesignSystem.Color.background)
-            .navigationTitle("Share Quiz")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        UIPasteboard.general.string = quiz.shareableJSON
-                    } label: {
-                        Label("Copy", systemImage: "doc.on.doc")
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { shareableQuiz = nil }
-                }
-            }
-        }
     }
 }
 
