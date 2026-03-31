@@ -4,9 +4,9 @@ import GeografyCore
 
 struct EconomyExplorerScreen: View {
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var countryDataService = CountryDataService()
     @State private var searchText = ""
     @State private var blobAnimating = false
 
@@ -38,7 +38,6 @@ struct EconomyExplorerScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Economy Explorer")
         .navigationBarTitleDisplayMode(.inline)
-        .task { countryDataService.loadCountries() }
         .onAppear { blobAnimating = true }
     }
 }
@@ -189,6 +188,9 @@ private extension EconomyExplorerScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(reduceMotion ? .default : .easeInOut(duration: 4.5).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? .default : .easeInOut(duration: 4.5).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }

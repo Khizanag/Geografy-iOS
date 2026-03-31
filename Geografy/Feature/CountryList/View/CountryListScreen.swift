@@ -31,8 +31,8 @@ struct CountryListScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var searchText = ""
     @State private var groupBy: GroupOption = .firstLetter
     @State private var sortBy: SortOption = .name
@@ -82,9 +82,6 @@ struct CountryListScreen: View {
         .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
             .closeButtonPlacementLeading()
         .toolbar { toolbarContent }
-        .task {
-            countryDataService.loadCountries()
-        }
         .onChange(of: groupBy) {
             expandedSections = Set(sectionKeys)
         }
@@ -280,7 +277,13 @@ private extension CountryListScreen {
                 Circle()
                     .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
                 Text(String(key.prefix(1)).uppercased())
-                    .font(DesignSystem.Font.system(size: groupBy == .firstLetter ? 16 : 13, weight: .bold, design: .rounded))
+                    .font(
+                        DesignSystem.Font.system(
+                            size: groupBy == .firstLetter ? 16 : 13,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             .frame(width: groupBy == .firstLetter ? 36 : 30, height: groupBy == .firstLetter ? 36 : 30)

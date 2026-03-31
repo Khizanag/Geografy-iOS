@@ -6,8 +6,8 @@ import GeografyDesign
 struct BorderChallengeScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(XPService.self) private var xpService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var selectedDifficulty: BorderChallengeService.Difficulty = .medium
     @State private var challengeCountry: Country?
     @State private var neighbors: [Country] = []
@@ -44,7 +44,6 @@ struct BorderChallengeScreen: View {
             }
         }
         .task {
-            countryDataService.loadCountries()
             startNewChallenge()
         }
     }
@@ -162,7 +161,10 @@ private extension BorderChallengeScreen {
             .disabled(guessText.trimmingCharacters(in: .whitespaces).isEmpty)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+        )
     }
 
     var neighborsGrid: some View {
@@ -201,7 +203,10 @@ private extension BorderChallengeScreen {
             Spacer(minLength: 0)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
     }
 }
 
@@ -277,7 +282,11 @@ private extension BorderChallengeScreen {
     }
 
     var xpBadge: some View {
-        let earned = service.xpEarned(found: foundNeighbors.count, total: neighbors.count, difficulty: selectedDifficulty)
+        let earned = service.xpEarned(
+            found: foundNeighbors.count,
+            total: neighbors.count,
+            difficulty: selectedDifficulty
+        )
         return HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "star.fill")
                 .foregroundStyle(DesignSystem.Color.warning)
@@ -309,7 +318,13 @@ private extension BorderChallengeScreen {
     }
 
     var timerColor: Color {
-        if secondsRemaining > 30 { DesignSystem.Color.success } else if secondsRemaining > 10 { DesignSystem.Color.warning } else { DesignSystem.Color.error }
+        if secondsRemaining > 30 {
+            DesignSystem.Color.success
+        } else if secondsRemaining > 10 {
+            DesignSystem.Color.warning
+        } else {
+            DesignSystem.Color.error
+        }
     }
 
     var resultGradeIcon: String {
@@ -360,7 +375,8 @@ private extension BorderChallengeScreen {
                 foundNeighbors.append(match)
             }
             hapticsService.notification(.success)
-            AccessibilityNotification.Announcement("Correct! \(match.name). \(foundNeighbors.count) of \(neighbors.count) found").post()
+            let message = "Correct! \(match.name). \(foundNeighbors.count) of \(neighbors.count) found"
+            AccessibilityNotification.Announcement(message).post()
             if foundNeighbors.count == neighbors.count { endGame() }
         } else {
             wrongGuesses.insert(input.lowercased())
