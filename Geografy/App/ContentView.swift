@@ -62,6 +62,9 @@ struct ContentView: View {
                 appCoordinator.selectedTab = tab
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .macOpenSearch)) { _ in
+            appCoordinator.homeNavigator.sheet(.search)
+        }
         #endif
     }
 }
