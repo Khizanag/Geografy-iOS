@@ -146,14 +146,14 @@ private extension CustomQuizLibraryScreen {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    CircleCloseButton { shareableQuiz = nil }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         UIPasteboard.general.string = quiz.shareableJSON
                     } label: {
                         Label("Copy", systemImage: "doc.on.doc")
                     }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton { shareableQuiz = nil }
                 }
             }
         }
