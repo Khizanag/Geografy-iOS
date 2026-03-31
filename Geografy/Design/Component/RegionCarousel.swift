@@ -7,9 +7,7 @@ struct RegionCarousel: View {
 
     @Binding var selectedRegion: QuizRegion
 
-    @State private var scrolledRegion: QuizRegion?
     @State private var countryDataService = CountryDataService()
-    @State private var hasAppeared = false
 
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -17,16 +15,6 @@ struct RegionCarousel: View {
             pageIndicator
         }
         .task { countryDataService.loadCountries() }
-        .onChange(of: scrolledRegion) { _, newValue in
-            guard hasAppeared, let newValue, newValue != selectedRegion else { return }
-            selectedRegion = newValue
-            hapticsService.selection()
-        }
-        .task {
-            scrolledRegion = selectedRegion
-            try? await Task.sleep(for: .milliseconds(300))
-            hasAppeared = true
-        }
     }
 }
 
@@ -44,12 +32,20 @@ private extension RegionCarousel {
                         description: description(for: region)
                     )
                     .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                    .id(region)
                 }
             }
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.viewAligned)
-        .scrollPosition(id: $scrolledRegion)
+        .scrollPosition(id: Binding<QuizRegion?>(
+            get: { selectedRegion },
+            set: { newValue in
+                guard let newValue, newValue != selectedRegion else { return }
+                selectedRegion = newValue
+                hapticsService.selection()
+            }
+        ))
         .scrollClipDisabled()
         .contentMargins(.horizontal, DesignSystem.Spacing.md)
     }
