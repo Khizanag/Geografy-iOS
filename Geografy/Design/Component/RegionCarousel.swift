@@ -7,6 +7,7 @@ struct RegionCarousel: View {
 
     @Binding var selectedRegion: QuizRegion
 
+    @State private var visibleRegion: QuizRegion?
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
@@ -15,18 +16,23 @@ struct RegionCarousel: View {
             pageIndicator
         }
         .task { countryDataService.loadCountries() }
+        .onAppear { visibleRegion = selectedRegion }
     }
 }
 
 // MARK: - Subviews
 private extension RegionCarousel {
+    var currentRegion: QuizRegion {
+        visibleRegion ?? selectedRegion
+    }
+
     var carousel: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(QuizRegion.allCases) { region in
                     RegionCard(
                         region: region,
-                        isSelected: region == selectedRegion,
+                        isSelected: region == currentRegion,
                         countryCount: region.filter(countryDataService.countries).count,
                         color: color(for: region),
                         description: description(for: region)
@@ -38,16 +44,14 @@ private extension RegionCarousel {
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.viewAligned)
-        .scrollPosition(id: Binding<QuizRegion?>(
-            get: { selectedRegion },
-            set: { newValue in
-                guard let newValue, newValue != selectedRegion else { return }
-                selectedRegion = newValue
-                hapticsService.selection()
-            }
-        ))
+        .scrollPosition(id: $visibleRegion)
         .scrollClipDisabled()
         .contentMargins(.horizontal, DesignSystem.Spacing.md)
+        .onChange(of: visibleRegion) { _, newValue in
+            guard let newValue, newValue != selectedRegion else { return }
+            selectedRegion = newValue
+            hapticsService.selection()
+        }
     }
 
     var pageIndicator: some View {
@@ -55,15 +59,15 @@ private extension RegionCarousel {
             ForEach(QuizRegion.allCases) { region in
                 Capsule()
                     .fill(
-                        region == selectedRegion
+                        region == currentRegion
                             ? DesignSystem.Color.accent
                             : DesignSystem.Color.textTertiary.opacity(0.3)
                     )
                     .frame(
-                        width: region == selectedRegion ? 20 : 6,
+                        width: region == currentRegion ? 20 : 6,
                         height: 6
                     )
-                    .animation(.easeInOut(duration: 0.25), value: selectedRegion)
+                    .animation(.easeInOut(duration: 0.25), value: currentRegion)
             }
         }
         .frame(maxWidth: .infinity)
