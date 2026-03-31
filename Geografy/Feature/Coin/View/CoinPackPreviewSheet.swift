@@ -24,10 +24,6 @@ struct CoinPackPreviewSheet: View {
         .padding(.bottom, DesignSystem.Spacing.md)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignSystem.Color.background.ignoresSafeArea())
-        .overlay(alignment: .topTrailing) {
-            CircleCloseButton()
-                .padding(DesignSystem.Spacing.md)
-        }
         .onAppear {
             coinAnimating = true
             sparkleVisible = true

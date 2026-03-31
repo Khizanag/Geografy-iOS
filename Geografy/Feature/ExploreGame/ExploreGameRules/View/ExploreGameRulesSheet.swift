@@ -3,22 +3,20 @@ import GeografyDesign
 
 struct ExploreGameRulesSheet: View {
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                    ForEach(ExploreGameRules.sections) { section in
-                        rulesSectionView(section)
-                    }
+        ScrollView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                ForEach(ExploreGameRules.sections) { section in
+                    rulesSectionView(section)
                 }
-                .padding(DesignSystem.Spacing.md)
             }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("How to Play")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
+            .padding(DesignSystem.Spacing.md)
+        }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("How to Play")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                CircleCloseButton()
             }
         }
         .presentationDetents([.medium])

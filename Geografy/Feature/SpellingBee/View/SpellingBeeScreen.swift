@@ -17,60 +17,58 @@ struct SpellingBeeScreen: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                ScrollView {
-                    VStack(spacing: DesignSystem.Spacing.lg) {
-                        scorePill
+        ZStack {
+            DesignSystem.Color.background.ignoresSafeArea()
+            ScrollView {
+                VStack(spacing: DesignSystem.Spacing.lg) {
+                    scorePill
 
-                        if let country = currentCountry {
-                            flagSection(for: country)
+                    if let country = currentCountry {
+                        flagSection(for: country)
 
-                            hintSection(for: country)
+                        hintSection(for: country)
 
-                            letterGrid
+                        letterGrid
 
-                            if showCorrectAnswer, !autoContinue {
-                                nextButton
-                            } else {
-                                inputSection
+                        if showCorrectAnswer, !autoContinue {
+                            nextButton
+                        } else {
+                            inputSection
 
-                                hintButtons
-                            }
+                            hintButtons
                         }
                     }
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.top, DesignSystem.Spacing.lg)
-                    .padding(.bottom, DesignSystem.Spacing.xxl)
-                    .readableContentWidth()
                 }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.top, DesignSystem.Spacing.lg)
+                .padding(.bottom, DesignSystem.Spacing.xxl)
+                .readableContentWidth()
             }
-            .navigationTitle("Spelling Bee")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button { showGuide = true } label: {
-                        Image(systemName: "info.circle")
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Show guide")
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { autoContinue.toggle() } label: {
-                        Image(systemName: autoContinue ? "forward.fill" : "forward")
-                            .foregroundStyle(
-                                autoContinue
-                                    ? DesignSystem.Color.accent
-                                    : DesignSystem.Color.textTertiary
-                            )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Auto continue: \(autoContinue ? "on" : "off")")
-                }
-            }
-            .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
         }
+        .navigationTitle("Spelling Bee")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button { showGuide = true } label: {
+                    Image(systemName: "info.circle")
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Show guide")
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { autoContinue.toggle() } label: {
+                    Image(systemName: autoContinue ? "forward.fill" : "forward")
+                        .foregroundStyle(
+                            autoContinue
+                                ? DesignSystem.Color.accent
+                                : DesignSystem.Color.textTertiary
+                        )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Auto continue: \(autoContinue ? "on" : "off")")
+            }
+        }
+        .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
         .onAppear {
             countryDataService.loadCountries()
             loadNextCountry()

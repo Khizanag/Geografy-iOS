@@ -13,21 +13,18 @@ struct HomeSectionEditorSheet: View {
     }
 
     var body: some View {
-        NavigationStack {
-            sectionList
-                .environment(\.editMode, .constant(.active))
-                .navigationTitle("Edit Sections")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
-                .confirmationDialog(
-                    "Reset Section Order",
-                    isPresented: $showResetConfirmation,
-                    titleVisibility: .visible,
-                    actions: { resetDialogActions },
-                    message: { Text("This will restore the default section order.") }
-                )
-        }
-        .presentationDetents([.medium])
+        sectionList
+            .environment(\.editMode, .constant(.active))
+            .navigationTitle("Edit Sections")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .confirmationDialog(
+                "Reset Section Order",
+                isPresented: $showResetConfirmation,
+                titleVisibility: .visible,
+                actions: { resetDialogActions },
+                message: { Text("This will restore the default section order.") }
+            )
     }
 }
 

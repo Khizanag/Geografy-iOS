@@ -4,6 +4,7 @@ import GeografyCore
 
 struct FlashcardSessionScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
@@ -18,28 +19,21 @@ struct FlashcardSessionScreen: View {
     @State private var correctCount = 0
     @State private var dragOffset: CGSize = .zero
     @State private var showQuitAlert = false
-    @State private var detailCountry: Country?
+
     @State private var showGuide = false
     @State private var cardShownAt: Date = .now
     @State private var thinkingTimes: [TimeInterval] = []
     var body: some View {
-        NavigationStack {
-            sessionContent
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
-                .alert("Quit Session?", isPresented: $showQuitAlert) {
-                    quitAlertActions
-                } message: {
-                    Text("Your progress will be saved.")
-                }
-                .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
-                .sheet(item: $detailCountry) { country in
-                    NavigationStack {
-                        CountryDetailScreen(country: country)
-                    }
-                }
-                .task { countryDataService.loadCountries() }
-        }
+        sessionContent
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .alert("Quit Session?", isPresented: $showQuitAlert) {
+                quitAlertActions
+            } message: {
+                Text("Your progress will be saved.")
+            }
+            .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
+            .task { countryDataService.loadCountries() }
     }
 }
 
@@ -269,8 +263,8 @@ private extension FlashcardSessionScreen {
 private extension FlashcardSessionScreen {
     func showCountryDetail() {
         let code = currentCard.countryCode
-        let country = countryDataService.countries.first { $0.code == code }
-        detailCountry = country
+        guard let country = countryDataService.countries.first(where: { $0.code == code }) else { return }
+        coordinator.sheet(.countryDetail(country))
     }
 
     func flipCard() {

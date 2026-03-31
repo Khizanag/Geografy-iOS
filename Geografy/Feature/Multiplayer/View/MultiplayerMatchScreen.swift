@@ -25,25 +25,23 @@ struct MultiplayerMatchScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            matchContent
-                .navigationBarTitleDisplayMode(.inline)
-                .alert("Quit Match?", isPresented: $showQuitAlert) {
-                    quitAlertActions
-                } message: {
-                    Text("Your progress will be lost.")
-                }
-                .task { loadMatch() }
-                .onAppear { startBlobAnimation() }
-                .onDisappear { opponentEngine.cancelPendingAnswer() }
-                .fullScreenCover(item: $completedMatch) { match in
-                    MultiplayerResultScreen(
-                        match: match,
-                        onRematch: { startRematch() },
-                        onDone: { dismiss() },
-                    )
-                }
-        }
+        matchContent
+            .navigationBarTitleDisplayMode(.inline)
+            .alert("Quit Match?", isPresented: $showQuitAlert) {
+                quitAlertActions
+            } message: {
+                Text("Your progress will be lost.")
+            }
+            .task { loadMatch() }
+            .onAppear { startBlobAnimation() }
+            .onDisappear { opponentEngine.cancelPendingAnswer() }
+            .fullScreenCover(item: $completedMatch) { match in
+                MultiplayerResultScreen(
+                    match: match,
+                    onRematch: { startRematch() },
+                    onDone: { dismiss() },
+                )
+            }
     }
 }
 

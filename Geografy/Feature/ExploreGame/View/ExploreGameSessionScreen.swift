@@ -28,18 +28,16 @@ struct ExploreGameSessionScreen: View {
     }
 
     var body: some View {
-        NavigationStack {
-            sessionContent
-                .navigationTitle("Mystery Country")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
-                .alert("Quit Game?", isPresented: $showQuitAlert) {
-                    quitAlertActions
-                } message: {
-                    Text("Your progress will be lost.")
-                }
-        }
-        .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
+        sessionContent
+            .navigationTitle("Mystery Country")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .alert("Quit Game?", isPresented: $showQuitAlert) {
+                quitAlertActions
+            } message: {
+                Text("Your progress will be lost.")
+            }
+            .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
     }
 }
 

@@ -17,16 +17,14 @@ struct DailyChallengeResultView: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            resultContent
-                .navigationTitle("Results")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden()
-                .onAppear { animateScore() }
-                .sheet(isPresented: $showShareCard) {
-                    shareCardSheet
-                }
-        }
+        resultContent
+            .navigationTitle("Results")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
+            .onAppear { animateScore() }
+            .sheet(isPresented: $showShareCard) {
+                shareCardSheet
+            }
     }
 }
 

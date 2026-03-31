@@ -26,37 +26,35 @@ struct SpeedRunSessionScreen: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if isFinished {
-                    resultsView
-                } else {
-                    gameplayView
-                }
+        Group {
+            if isFinished {
+                resultsView
+            } else {
+                gameplayView
             }
-            .background { AmbientBlobsView(.quiz) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Speed Run · \(region.displayName)")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
-            .alert("Give Up?", isPresented: $showGiveUpAlert) {
-                Button("Give Up", role: .destructive) { finishRun() }
-                Button("Continue", role: .cancel) {}
-            } message: {
-                Text("You'll see your results and missed countries.")
-            }
-            .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
-                quitAlertActions
-            } message: {
-                Text("Your progress will be lost.")
-            }
-            .task {
-                countryDataService.loadCountries()
-                startTimer()
-            }
-            .onAppear { isInputFocused = true }
-            .onDisappear { timerCancellable?.cancel() }
         }
+        .background { AmbientBlobsView(.quiz) }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("Speed Run · \(region.displayName)")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar { toolbarContent }
+        .alert("Give Up?", isPresented: $showGiveUpAlert) {
+            Button("Give Up", role: .destructive) { finishRun() }
+            Button("Continue", role: .cancel) {}
+        } message: {
+            Text("You'll see your results and missed countries.")
+        }
+        .alert("Quit Speed Run?", isPresented: $showQuitAlert) {
+            quitAlertActions
+        } message: {
+            Text("Your progress will be lost.")
+        }
+        .task {
+            countryDataService.loadCountries()
+            startTimer()
+        }
+        .onAppear { isInputFocused = true }
+        .onDisappear { timerCancellable?.cancel() }
     }
 }
 

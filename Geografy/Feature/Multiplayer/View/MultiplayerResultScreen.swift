@@ -14,30 +14,28 @@ struct MultiplayerResultScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    resultHeader
-                    scoreComparison
-                    ratingChangeSection
-                    roundByRoundSection
-                }
-                .padding(.vertical, DesignSystem.Spacing.lg)
-                .readableContentWidth()
-                .opacity(showContent ? 1 : 0)
-                .offset(y: showContent ? 0 : 20)
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                resultHeader
+                scoreComparison
+                ratingChangeSection
+                roundByRoundSection
             }
-            .safeAreaInset(edge: .bottom) { actionButtons }
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Match Result")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-            }
-            .onAppear {
-                startBlobAnimation()
-                animateContent()
-            }
+            .padding(.vertical, DesignSystem.Spacing.lg)
+            .readableContentWidth()
+            .opacity(showContent ? 1 : 0)
+            .offset(y: showContent ? 0 : 20)
+        }
+        .safeAreaInset(edge: .bottom) { actionButtons }
+        .background { ambientBlobs }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("Match Result")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+        }
+        .onAppear {
+            startBlobAnimation()
+            animateContent()
         }
     }
 }

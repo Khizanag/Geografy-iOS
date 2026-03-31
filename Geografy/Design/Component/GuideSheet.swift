@@ -40,11 +40,6 @@ struct GuideSheet<Illustration: View>: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
-            }
         }
     }
 }

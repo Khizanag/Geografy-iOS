@@ -12,34 +12,30 @@ struct SignInOptionsSheet: View {
     @State private var appeared = false
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
+        ZStack {
+            DesignSystem.Color.background.ignoresSafeArea()
 
-                AmbientBlobsView(.standard)
+            AmbientBlobsView(.standard)
 
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: DesignSystem.Spacing.xl) {
-                        heroSection
-                        statsRow
-                        benefitsSection
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: DesignSystem.Spacing.xl) {
+                    heroSection
+                    statsRow
+                    benefitsSection
 
-                        actionsSection
-                    }
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.top, DesignSystem.Spacing.xl)
+                    actionsSection
                 }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.top, DesignSystem.Spacing.xl)
             }
-            .onAppear {
-                withAnimation(.easeOut(duration: 0.6)) {
-                    appeared = true
-                }
-            }
-            .alert("Sign In Failed", isPresented: $showError) {
-                Button("OK", role: .cancel) {}
-            } message: {
-                Text(errorMessage)
-            }
+        }
+        .onAppear {
+            appeared = true
+        }
+        .alert("Sign In Failed", isPresented: $showError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(errorMessage)
         }
     }
 }
@@ -155,11 +151,16 @@ private extension SignInOptionsSheet {
 
     var benefits: [(icon: String, color: Color, title: String, subtitle: String)] {
         [
-            ("icloud.and.arrow.up.fill", DesignSystem.Color.blue, "Sync across devices", "Progress follows you everywhere"),
-            ("trophy.fill", DesignSystem.Color.warning, "Achievements & XP", "Earn rewards as you explore"),
-            ("airplane.departure", DesignSystem.Color.accent, "Track your travels", "Pin countries you've visited"),
-            ("chart.line.uptrend.xyaxis", DesignSystem.Color.indigo, "Quiz history & streaks", "Watch your knowledge grow"),
-            ("person.2.fill", DesignSystem.Color.purple, "Global leaderboards", "Compete with explorers worldwide"),
+            ("icloud.and.arrow.up.fill", DesignSystem.Color.blue, "Sync across devices",
+             "Progress follows you everywhere"),
+            ("trophy.fill", DesignSystem.Color.warning, "Achievements & XP",
+             "Earn rewards as you explore"),
+            ("airplane.departure", DesignSystem.Color.accent, "Track your travels",
+             "Pin countries you've visited"),
+            ("chart.line.uptrend.xyaxis", DesignSystem.Color.indigo, "Quiz history & streaks",
+             "Watch your knowledge grow"),
+            ("person.2.fill", DesignSystem.Color.purple, "Global leaderboards",
+             "Compete with explorers worldwide"),
         ]
     }
 

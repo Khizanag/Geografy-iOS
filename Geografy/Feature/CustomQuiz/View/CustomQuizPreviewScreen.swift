@@ -11,24 +11,21 @@ struct CustomQuizPreviewScreen: View {
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                    headerCard
-                    countriesSection
-                    questionTypesSection
-                    difficultySection
-                }
-                .padding(DesignSystem.Spacing.md)
-                .readableContentWidth()
+        ScrollView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                headerCard
+                countriesSection
+                questionTypesSection
+                difficultySection
             }
-            .safeAreaInset(edge: .bottom) { saveButton }
-            .background(DesignSystem.Color.background)
-            .navigationTitle("Preview")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
-            .task { countryDataService.loadCountries() }
+            .padding(DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
+        .safeAreaInset(edge: .bottom) { saveButton }
+        .background(DesignSystem.Color.background)
+        .navigationTitle("Preview")
+        .navigationBarTitleDisplayMode(.inline)
+        .task { countryDataService.loadCountries() }
     }
 }
 
@@ -147,15 +144,5 @@ private extension CustomQuizPreviewScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
-    }
-}
-
-// MARK: - Toolbar
-private extension CustomQuizPreviewScreen {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            CircleCloseButton()
-        }
     }
 }

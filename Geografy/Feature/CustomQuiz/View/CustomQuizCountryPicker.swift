@@ -146,9 +146,6 @@ private extension CustomQuizCountryPicker {
 private extension CustomQuizCountryPicker {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            CircleCloseButton()
-        }
         ToolbarItem(placement: .topBarTrailing) {
             Button("Done") { dismiss() }
                 .fontWeight(.semibold)

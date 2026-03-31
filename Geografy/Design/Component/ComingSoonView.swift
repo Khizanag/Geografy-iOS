@@ -22,13 +22,6 @@ struct ComingSoonView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignSystem.Color.background)
         .navigationTitle(title ?? "")
-        .toolbar {
-            if isDismissible {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
-            }
-        }
         .onAppear {
             isAnimating = true
         }
