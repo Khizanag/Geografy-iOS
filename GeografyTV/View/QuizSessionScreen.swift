@@ -299,8 +299,10 @@ private extension QuizSessionScreen {
             object: nil,
             queue: .main
         ) { _ in
-            hasGameController = true
-            bindControllerButtons()
+            Task { @MainActor in
+                hasGameController = true
+                bindControllerButtons()
+            }
         }
 
         NotificationCenter.default.addObserver(
@@ -308,7 +310,9 @@ private extension QuizSessionScreen {
             object: nil,
             queue: .main
         ) { _ in
-            hasGameController = GCController.controllers().contains { $0.extendedGamepad != nil }
+            Task { @MainActor in
+                hasGameController = GCController.controllers().contains { $0.extendedGamepad != nil }
+            }
         }
 
         bindControllerButtons()
