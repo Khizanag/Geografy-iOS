@@ -15,6 +15,9 @@ struct RegionCarousel: View {
             pageIndicator
         }
         .task { countryDataService.loadCountries() }
+        .onChange(of: selectedRegion) {
+            hapticsService.selection()
+        }
     }
 }
 
@@ -59,19 +62,9 @@ private extension RegionCarousel {
     }
 
     func regionCard(_ region: QuizRegion) -> some View {
-        let isSelected = region == selectedRegion
-
-        return Button {
-            hapticsService.selection()
-            withAnimation(.easeInOut(duration: 0.3)) {
-                selectedRegion = region
-            }
-        } label: {
-            cardContent(for: region, isSelected: isSelected)
-        }
-        .buttonStyle(PressButtonStyle())
-        .hoverEffect(.highlight)
-        .animation(.easeInOut(duration: 0.25), value: isSelected)
+        cardContent(for: region, isSelected: region == selectedRegion)
+            .hoverEffect(.highlight)
+            .animation(.easeInOut(duration: 0.25), value: selectedRegion)
     }
 
     func cardContent(for region: QuizRegion, isSelected: Bool) -> some View {
