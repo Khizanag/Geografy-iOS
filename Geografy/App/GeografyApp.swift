@@ -64,6 +64,15 @@ struct GeografyApp: App {
                 .environment(pronunciationService)
                 .environment(testingModeService)
                 .task { await authService.validateOnLaunch() }
+                .task {
+                    #if canImport(UserNotifications)
+                    let granted = await NotificationService.requestPermission()
+                    if granted {
+                        NotificationService.scheduleStreakReminder()
+                        NotificationService.scheduleDailyChallengeReminder()
+                    }
+                    #endif
+                }
                 .task { await subscriptionService.checkEntitlements() }
                 .task {
                     gameCenterService.authenticatePlayer()
