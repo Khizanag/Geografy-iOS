@@ -37,10 +37,7 @@ struct SpeedRunSetupScreen: View {
         .task { countryDataService.loadCountries() }
         .onAppear {
             appeared = true
-            guard !reduceMotion else { pulseTimer = true; return }
-            withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
-                pulseTimer = true
-            }
+            pulseTimer = true
         }
     }
 }
@@ -97,6 +94,7 @@ private extension SpeedRunSetupScreen {
                 .foregroundStyle(DesignSystem.Color.error)
                 .symbolEffect(.pulse, options: .repeating, value: appeared)
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: pulseTimer)
     }
 
     var countryCountBadge: some View {

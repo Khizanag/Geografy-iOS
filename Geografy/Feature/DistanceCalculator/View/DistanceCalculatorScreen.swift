@@ -56,10 +56,7 @@ struct DistanceCalculatorScreen: View {
             }
         }
         .onAppear {
-            guard !reduceMotion else { blobAnimating = true; return }
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
+            blobAnimating = true
         }
     }
 }
@@ -133,7 +130,10 @@ private extension DistanceCalculatorScreen {
                 }
             }
             .padding(DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .background(
+                DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
             .overlay(
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                     .strokeBorder(color.opacity(0.25), lineWidth: 1)
@@ -287,6 +287,7 @@ private extension DistanceCalculatorScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 
@@ -456,8 +457,16 @@ private struct DistanceMapView: View {
 
         var shadowContext = context
         shadowContext.opacity = 0.3
-        shadowContext.stroke(path, with: .color(DesignSystem.Color.accent), style: StrokeStyle(lineWidth: 4, lineCap: .round))
-        context.stroke(path, with: .color(DesignSystem.Color.accent), style: StrokeStyle(lineWidth: 2, lineCap: .round, dash: [6, 4]))
+        shadowContext.stroke(
+            path,
+            with: .color(DesignSystem.Color.accent),
+            style: StrokeStyle(lineWidth: 4, lineCap: .round)
+        )
+        context.stroke(
+            path,
+            with: .color(DesignSystem.Color.accent),
+            style: StrokeStyle(lineWidth: 2, lineCap: .round, dash: [6, 4])
+        )
     }
 
     private func drawDot(

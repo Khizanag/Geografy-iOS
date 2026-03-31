@@ -67,11 +67,13 @@ private extension LevelBadgeView {
                 .fontWeight(.black)
                 .foregroundStyle(DesignSystem.Color.onAccent)
         }
+        .animation(
+            animated && !reduceMotion ? .easeInOut(duration: 1.6).repeatForever(autoreverses: true) : nil,
+            value: glowPulse
+        )
         .onAppear {
-            guard animated, !reduceMotion else { return }
-            withAnimation(.easeInOut(duration: 1.6).repeatForever(autoreverses: true)) {
-                glowPulse = true
-            }
+            guard animated else { return }
+            glowPulse = true
         }
     }
 

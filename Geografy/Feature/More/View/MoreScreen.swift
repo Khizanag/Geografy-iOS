@@ -28,10 +28,7 @@ struct MoreScreen: View {
                 .presentationDetents([.medium])
             }
             .onAppear {
-                guard !reduceMotion else { blobAnimating = true; return }
-                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                    blobAnimating = true
-                }
+                blobAnimating = true
             }
     }
 }
@@ -98,6 +95,7 @@ private extension MoreScreen {
             )
         }
         .allowsHitTesting(false)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 
     struct BlobConfig {

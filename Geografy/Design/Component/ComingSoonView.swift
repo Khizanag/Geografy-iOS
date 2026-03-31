@@ -30,13 +30,7 @@ struct ComingSoonView: View {
             }
         }
         .onAppear {
-            guard !reduceMotion else {
-                isAnimating = true
-                return
-            }
-            withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
-                isAnimating = true
-            }
+            isAnimating = true
         }
     }
 }

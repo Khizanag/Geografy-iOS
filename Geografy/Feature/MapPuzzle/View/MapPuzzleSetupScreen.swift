@@ -113,6 +113,7 @@ private extension MapPuzzleSetupScreen {
             blobEllipse(color: DesignSystem.Color.purple, opacity: 0.18, offset: (160, 300), animates: !blobAnimating)
         }
         .allowsHitTesting(false)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 
     func blobEllipse(color: Color, opacity: Double, offset: (CGFloat, CGFloat), animates: Bool) -> some View {
@@ -147,9 +148,6 @@ private extension MapPuzzleSetupScreen {
 // MARK: - Actions
 private extension MapPuzzleSetupScreen {
     func startBlobAnimation() {
-        guard !reduceMotion else { blobAnimating = true; return }
-        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-            blobAnimating = true
-        }
+        blobAnimating = true
     }
 }

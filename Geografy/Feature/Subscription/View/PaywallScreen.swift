@@ -28,13 +28,8 @@ struct PaywallScreen: View {
         }
         .onAppear {
             appeared = true
-            guard !reduceMotion else { globePulse = true; blobAnimating = true; return }
-            withAnimation(.easeInOut(duration: 2.4).repeatForever(autoreverses: true)) {
-                globePulse = true
-            }
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
+            globePulse = true
+            blobAnimating = true
         }
     }
 }
@@ -144,6 +139,7 @@ private extension PaywallScreen {
             }
         }
         .frame(height: 130)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 2.4).repeatForever(autoreverses: true), value: globePulse)
     }
 }
 
@@ -415,5 +411,6 @@ private extension PaywallScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }

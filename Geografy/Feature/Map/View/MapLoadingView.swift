@@ -24,13 +24,8 @@ struct MapLoadingView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
-            guard !reduceMotion else { isAnimating = true; blobAnimating = true; return }
-            withAnimation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true)) {
-                isAnimating = true
-            }
-            withAnimation(.easeInOut(duration: 5).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
+            isAnimating = true
+            blobAnimating = true
         }
         .onReceive(Timer.publish(every: 0.4, on: .main, in: .common).autoconnect()) { _ in
             dotPhase = (dotPhase + 1) % 3
@@ -73,6 +68,7 @@ private extension MapLoadingView {
                 .offset(x: 120, y: 80)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
     }
 
     var globeSection: some View {

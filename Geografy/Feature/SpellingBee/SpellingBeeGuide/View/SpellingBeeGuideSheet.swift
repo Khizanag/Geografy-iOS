@@ -12,11 +12,9 @@ struct SpellingBeeGuideSheet: View {
         GuideSheet(pages: SpellingBeeGuide.pages) { index in
             illustrationView(for: illustrations[index])
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 2).repeatForever(autoreverses: true), value: animating)
         .onAppear {
-            guard !reduceMotion else { animating = true; return }
-            withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
-                animating = true
-            }
+            animating = true
         }
     }
 }

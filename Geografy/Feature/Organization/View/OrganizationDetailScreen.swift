@@ -37,10 +37,7 @@ struct OrganizationDetailScreen: View {
         .task { countryDataService.loadCountries() }
         .task { trackOrgView() }
         .onAppear {
-            guard !reduceMotion else { blobAnimating = true; return }
-            withAnimation(.easeInOut(duration: 5).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
+            blobAnimating = true
         }
     }
 }
@@ -80,6 +77,7 @@ private extension OrganizationDetailScreen {
                 .scaleEffect(blobAnimating ? 0.92 : 1.06)
         }
         .ignoresSafeArea()
+        .animation(reduceMotion ? nil : .easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 

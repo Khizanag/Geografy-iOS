@@ -1,4 +1,3 @@
-// swiftlint:disable file_length
 import SwiftUI
 import GeografyDesign
 import GeografyCore
@@ -133,6 +132,7 @@ private extension HomeScreen {
             )
         }
         .allowsHitTesting(false)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 
     struct BlobConfig {
@@ -550,15 +550,8 @@ private extension HomeScreen {
     }
 
     func startAnimations() {
-        withAnimation(.easeOut(duration: 0.5)) {
-            appeared = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            guard !reduceMotion else { blobAnimating = true; return }
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
-        }
+        appeared = true
+        blobAnimating = true
     }
 
     func openMap(named name: String) {

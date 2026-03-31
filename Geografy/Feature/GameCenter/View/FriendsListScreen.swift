@@ -21,10 +21,7 @@ struct FriendsListScreen: View {
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.large)            .task { await loadData() }
             .onAppear {
-                guard !reduceMotion else { animating = true; return }
-                withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
-                    animating = true
-                }
+                animating = true
             }
     }
 }

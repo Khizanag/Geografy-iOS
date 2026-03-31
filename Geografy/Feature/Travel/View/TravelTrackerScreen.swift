@@ -57,16 +57,8 @@ struct TravelTrackerScreen: View {
                 .presentationDetents([.large])
         }
         .onAppear {
-            if !reduceMotion {
-                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                    blobAnimating = true
-                }
-            } else {
-                blobAnimating = true
-            }
-            withAnimation(.easeOut(duration: 0.6)) {
-                appeared = true
-            }
+            blobAnimating = true
+            appeared = true
         }
     }
 }
@@ -174,6 +166,7 @@ private extension TravelTrackerScreen {
                 .scaleEffect(blobAnimating ? 1.05 : 0.95)
         }
         .allowsHitTesting(false)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 
     var statsSection: some View {

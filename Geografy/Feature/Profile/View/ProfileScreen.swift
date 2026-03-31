@@ -125,6 +125,7 @@ private extension ProfileScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(.easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 
@@ -222,9 +223,7 @@ private extension ProfileScreen {
             appeared = true
             return
         }
-        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-            blobAnimating = true
-        }
+        blobAnimating = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             appeared = true
         }
