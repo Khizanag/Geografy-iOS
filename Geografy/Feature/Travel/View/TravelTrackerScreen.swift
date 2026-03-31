@@ -28,6 +28,7 @@ struct TravelTrackerScreen: View {
         }
         .navigationTitle("Travel Tracker")
         .navigationBarTitleDisplayMode(.large)
+            .closeButtonPlacementLeading()
         .searchable(text: $searchText, prompt: "Search countries…")
         .toolbar { addButton }
         .task { countryDataService.loadCountries() }

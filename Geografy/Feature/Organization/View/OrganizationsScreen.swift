@@ -42,6 +42,7 @@ struct OrganizationsScreen: View {
         }
         .navigationTitle("Organizations")
         .toolbar { toolbarContent }
+            .closeButtonPlacementLeading()
         .task { countryDataService.loadCountries() }
     }
 }

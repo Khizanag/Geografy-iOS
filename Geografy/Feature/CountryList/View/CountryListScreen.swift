@@ -80,6 +80,7 @@ struct CountryListScreen: View {
         }
         .navigationTitle("Countries")
         .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
+            .closeButtonPlacementLeading()
         .toolbar { toolbarContent }
         .task {
             countryDataService.loadCountries()

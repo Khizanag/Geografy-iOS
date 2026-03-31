@@ -26,6 +26,7 @@ struct ContinentOverviewScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle(continent.displayName)
         .navigationBarTitleDisplayMode(.large)
+            .closeButtonPlacementLeading()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {

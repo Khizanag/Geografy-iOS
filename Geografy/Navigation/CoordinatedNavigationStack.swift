@@ -38,6 +38,7 @@ private extension CoordinatedNavigationStack {
 private struct CloseButtonWrapper<Content: View>: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hideCloseButton) private var hideCloseButton
+    @Environment(\.closeButtonLeading) private var closeButtonLeading
 
     let showCloseButton: Bool
     @ViewBuilder let content: () -> Content
@@ -46,7 +47,7 @@ private struct CloseButtonWrapper<Content: View>: View {
         content()
             .toolbar {
                 if showCloseButton, !hideCloseButton {
-                    ToolbarItem(placement: .topBarTrailing) {
+                    ToolbarItem(placement: closeButtonLeading ? .topBarLeading : .topBarTrailing) {
                         CircleCloseButton { dismiss() }
                     }
                 }

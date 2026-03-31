@@ -20,6 +20,7 @@ struct TravelJournalScreen: View {
         }
         .navigationTitle("Travel Journal")
         .navigationBarTitleDisplayMode(.large)
+            .closeButtonPlacementLeading()
         .toolbar { addEntryButton }
         .sheet(item: $activeSheet) { sheet in
             sheetContent(for: sheet)
