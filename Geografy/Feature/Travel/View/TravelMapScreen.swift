@@ -23,6 +23,34 @@ struct TravelMapScreen: View {
     }
 
     var body: some View {
+        mapLayer
+            .background(DesignSystem.Color.ocean)
+            .ignoresSafeArea()
+            .navigationTitle(selectedFilter.displayName)
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .top) {
+                if isLoaded {
+                    infoBanner
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+            }
+            .toolbarBackground(.clear, for: .navigationBar)
+            .closeButtonPlacementLeading()
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    labelsToggle
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    filterMenu
+                }
+            }
+            .task { await loadMapData() }
+    }
+}
+
+// MARK: - Map
+private extension TravelMapScreen {
+    var mapLayer: some View {
         ZStack {
             GeometryReader { geometry in
                 mapCanvas(in: geometry.size)
@@ -37,32 +65,8 @@ struct TravelMapScreen: View {
                     .transition(.opacity)
             }
         }
-        .background(DesignSystem.Color.ocean)
-        .ignoresSafeArea()
-        .navigationTitle(selectedFilter.displayName)
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .top) {
-            if isLoaded {
-                infoBanner
-                    .transition(.move(edge: .top).combined(with: .opacity))
-            }
-        }
-        .toolbarBackground(.clear, for: .navigationBar)
-        .closeButtonPlacementLeading()
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                labelsToggle
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                filterMenu
-            }
-        }
-        .task { await loadMapData() }
     }
-}
 
-// MARK: - Map
-private extension TravelMapScreen {
     func mapCanvas(in size: CGSize) -> some View {
         MapCanvasView(
             countryShapes: styledShapes,

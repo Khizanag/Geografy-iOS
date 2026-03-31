@@ -43,39 +43,28 @@ struct TravelJournalEditorSheet: View {
     }
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                countrySection
-                titleSection
-                dateSection
-                ratingSection
-                notesSection
-                photosSection
+        formContent
+            .navigationTitle(isEditing ? "Edit Entry" : "New Entry")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    CircleCloseButton()
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    saveButton
+                }
             }
-            .padding(DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-        }
-        .navigationTitle(isEditing ? "Edit Entry" : "New Entry")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton()
+            .sheet(isPresented: $showCountryPicker) {
+                countryPickerSheet
             }
-            ToolbarItem(placement: .confirmationAction) {
-                saveButton
+            .onChange(of: selectedPhotos) { _, newItems in
+                loadSelectedPhotos(newItems)
             }
-        }
-        .sheet(isPresented: $showCountryPicker) {
-            countryPickerSheet
-        }
-        .onChange(of: selectedPhotos) { _, newItems in
-            loadSelectedPhotos(newItems)
-        }
-        .task {
-            if let entry = existingEntry {
-                loadExistingPhotos(entry.photoFileNames)
+            .task {
+                if let entry = existingEntry {
+                    loadExistingPhotos(entry.photoFileNames)
+                }
             }
-        }
     }
 }
 
@@ -109,6 +98,21 @@ private extension TravelJournalEditorSheet {
 
 // MARK: - Subviews
 private extension TravelJournalEditorSheet {
+    var formContent: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                countrySection
+                titleSection
+                dateSection
+                ratingSection
+                notesSection
+                photosSection
+            }
+            .padding(DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+        }
+    }
+
     var countrySection: some View {
         VStack(
             alignment: .leading,

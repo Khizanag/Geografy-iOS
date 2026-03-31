@@ -17,6 +17,37 @@ struct TravelTrackerScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
+        contentView
+            .navigationTitle("Travel Tracker")
+            .closeButtonPlacementLeading()
+            .searchable(text: $searchText, prompt: "Search countries…")
+            .toolbar { toolbarContent }
+            .sheet(isPresented: $showCountryPicker) {
+                TravelCountryPickerSheet(
+                    countries: countryDataService.countries,
+                    isPresented: $showCountryPicker,
+                    preferredStatus: selectedFilter
+                )
+            }
+            .sheet(item: $selectedCountry) { country in
+                TravelStatusPickerSheet(
+                    country: country,
+                    isPresented: Binding(
+                        get: { selectedCountry != nil },
+                        set: { if !$0 { selectedCountry = nil } }
+                    )
+                )
+            }
+            .onAppear {
+                blobAnimating = true
+                appeared = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension TravelTrackerScreen {
+    var contentView: some View {
         ZStack {
             if countryDataService.countries.isEmpty {
                 loadingView
@@ -24,35 +55,8 @@ struct TravelTrackerScreen: View {
                 mainContent
             }
         }
-        .navigationTitle("Travel Tracker")
-        .closeButtonPlacementLeading()
-        .searchable(text: $searchText, prompt: "Search countries…")
-        .toolbar { toolbarContent }
-        .sheet(isPresented: $showCountryPicker) {
-            TravelCountryPickerSheet(
-                countries: countryDataService.countries,
-                isPresented: $showCountryPicker,
-                preferredStatus: selectedFilter
-            )
-        }
-        .sheet(item: $selectedCountry) { country in
-            TravelStatusPickerSheet(
-                country: country,
-                isPresented: Binding(
-                    get: { selectedCountry != nil },
-                    set: { if !$0 { selectedCountry = nil } }
-                )
-            )
-        }
-        .onAppear {
-            blobAnimating = true
-            appeared = true
-        }
     }
-}
 
-// MARK: - Subviews
-private extension TravelTrackerScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {

@@ -8,6 +8,15 @@ struct ChallengeResultScreen: View {
     var onPlayAgain: (() -> Void)?
 
     var body: some View {
+        scrollContent
+            .safeAreaInset(edge: .bottom) { actionButtons }
+            .navigationBarBackButtonHidden()
+    }
+}
+
+// MARK: - Subviews
+private extension ChallengeResultScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 winnerSection
@@ -20,27 +29,24 @@ struct ChallengeResultScreen: View {
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                if let onPlayAgain {
-                    GlassButton("Play Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
-                        onPlayAgain()
-                    }
-                }
+    }
 
-                GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
-                    coordinator.dismiss()
+    var actionButtons: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            if let onPlayAgain {
+                GlassButton("Play Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
+                    onPlayAgain()
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
-        }
-        .navigationBarBackButtonHidden()
-    }
-}
 
-// MARK: - Subviews
-private extension ChallengeResultScreen {
+            GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
+                coordinator.dismiss()
+            }
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
+    }
+
     var winnerSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {

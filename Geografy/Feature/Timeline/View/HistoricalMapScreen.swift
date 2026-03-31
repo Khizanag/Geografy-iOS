@@ -19,6 +19,23 @@ struct HistoricalMapScreen: View {
     @State private var isInitialized = false
 
     var body: some View {
+        mapLayer
+            .safeAreaInset(edge: .bottom) { sliderSection }
+            .background(DesignSystem.Color.ocean)
+            .ignoresSafeArea(edges: .top)
+            .navigationTitle("Historical Map")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.clear, for: .navigationBar)
+            .onAppear { selectedYear = initialYear }
+            .task { await loadData() }
+            .onChange(of: selectedYear) { updateCountryColors() }
+            .sheet(item: $selectedEvent) { eventSheet(for: $0) }
+    }
+}
+
+// MARK: - Subviews
+private extension HistoricalMapScreen {
+    var mapLayer: some View {
         ZStack {
             GeometryReader { geometry in
                 mapContent(in: geometry.size)
@@ -34,21 +51,8 @@ struct HistoricalMapScreen: View {
                     .transition(.opacity)
             }
         }
-        .safeAreaInset(edge: .bottom) { sliderSection }
-        .background(DesignSystem.Color.ocean)
-        .ignoresSafeArea(edges: .top)
-        .navigationTitle("Historical Map")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.clear, for: .navigationBar)
-        .onAppear { selectedYear = initialYear }
-        .task { await loadData() }
-        .onChange(of: selectedYear) { updateCountryColors() }
-        .sheet(item: $selectedEvent) { eventSheet(for: $0) }
     }
-}
 
-// MARK: - Subviews
-private extension HistoricalMapScreen {
     func mapContent(in size: CGSize) -> some View {
         MapCanvasView(
             countryShapes: mapState.countryShapes,

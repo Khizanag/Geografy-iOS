@@ -13,6 +13,15 @@ struct PropertyDetailSheet: View {
     var onAction: (() -> Void)?
 
     var body: some View {
+        sheetContent
+            .frame(maxWidth: .infinity)
+            .presentationDetents([.height(hasButtons ? 360 : 300)])
+    }
+}
+
+// MARK: - Subviews
+private extension PropertyDetailSheet {
+    var sheetContent: some View {
         VStack(spacing: 0) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 iconHeader
@@ -39,13 +48,8 @@ struct PropertyDetailSheet: View {
                 buttonsSection
             }
         }
-        .frame(maxWidth: .infinity)
-        .presentationDetents([.height(hasButtons ? 360 : 300)])
     }
-}
 
-// MARK: - Subviews
-private extension PropertyDetailSheet {
     var hasButtons: Bool {
         supportsMap || actionButtonTitle != nil
     }

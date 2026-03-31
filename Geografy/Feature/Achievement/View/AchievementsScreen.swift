@@ -10,6 +10,29 @@ struct AchievementsScreen: View {
     @State private var appeared = false
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Achievements")
+            .navigationBarTitleDisplayMode(.large)
+            .sheet(item: $selectedAchievement) { definition in
+                AchievementDetailSheet(
+                    definition: definition,
+                    isUnlocked: achievementService.isUnlocked(definition.id),
+                    progress: achievementService.progress(for: definition.id),
+                    isPinned: achievementService.isPinned(definition.id),
+                    canPin: achievementService.canPinMore,
+                    onTogglePin: { achievementService.togglePin(definition.id) }
+                )
+            }
+            .onAppear {
+                appeared = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension AchievementsScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 statsHeader
@@ -21,22 +44,6 @@ struct AchievementsScreen: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Achievements")
-        .navigationBarTitleDisplayMode(.large)
-        .sheet(item: $selectedAchievement) { definition in
-            AchievementDetailSheet(
-                definition: definition,
-                isUnlocked: achievementService.isUnlocked(definition.id),
-                progress: achievementService.progress(for: definition.id),
-                isPinned: achievementService.isPinned(definition.id),
-                canPin: achievementService.canPinMore,
-                onTogglePin: { achievementService.togglePin(definition.id) }
-            )
-        }
-        .onAppear {
-            appeared = true
         }
     }
 }

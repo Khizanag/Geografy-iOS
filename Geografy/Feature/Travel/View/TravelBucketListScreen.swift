@@ -311,6 +311,16 @@ struct BucketListCountryDetailView: View {
     @Binding var note: String
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle(country.name)
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// MARK: - Subviews
+private extension BucketListCountryDetailView {
+    var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 countryHeader
@@ -319,14 +329,8 @@ struct BucketListCountryDetailView: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle(country.name)
-        .navigationBarTitleDisplayMode(.inline)
     }
-}
 
-// MARK: - Subviews
-private extension BucketListCountryDetailView {
     var countryHeader: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
             FlagView(countryCode: country.code, height: 48)

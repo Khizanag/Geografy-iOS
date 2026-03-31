@@ -15,33 +15,9 @@ struct OrganizationsScreen: View {
     @State private var sortOption: OrgSortOption = .alphabetical
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(sortedOrgs) { org in
-                    Button {
-                        hapticsService.impact(.light)
-                        coordinator.push(.organizationDetail(org))
-                    } label: {
-                        CardView {
-                            HStack(spacing: DesignSystem.Spacing.sm) {
-                                orgLogo(org)
-                                orgInfo(org)
-                                Spacer(minLength: 0)
-                                orgTrailing(org)
-                            }
-                            .padding(DesignSystem.Spacing.sm)
-                        }
-                    }
-                    .buttonStyle(PressButtonStyle())
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.top, DesignSystem.Spacing.sm)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-            .readableContentWidth()
-        }
-        .navigationTitle("Organizations")
-        .toolbar { toolbarContent }
+        scrollContent
+            .navigationTitle("Organizations")
+            .toolbar { toolbarContent }
     }
 }
 
@@ -73,6 +49,34 @@ private extension OrganizationsScreen {
 
 // MARK: - Subviews
 private extension OrganizationsScreen {
+    var scrollContent: some View {
+        ScrollView {
+            LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(sortedOrgs) { org in
+                    Button {
+                        hapticsService.impact(.light)
+                        coordinator.push(.organizationDetail(org))
+                    } label: {
+                        CardView {
+                            HStack(spacing: DesignSystem.Spacing.sm) {
+                                orgLogo(org)
+                                orgInfo(org)
+                                Spacer(minLength: 0)
+                                orgTrailing(org)
+                            }
+                            .padding(DesignSystem.Spacing.sm)
+                        }
+                    }
+                    .buttonStyle(PressButtonStyle())
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.top, DesignSystem.Spacing.sm)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
+        }
+    }
+
     func orgLogo(_ org: Organization) -> some View {
         Group {
             if let urlString = org.logoURL, let url = URL(string: urlString) {

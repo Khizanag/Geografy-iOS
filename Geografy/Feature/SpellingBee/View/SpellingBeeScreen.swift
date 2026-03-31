@@ -18,6 +18,19 @@ struct SpellingBeeScreen: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Spelling Bee")
+            .closeButtonPlacementLeading()
+            .toolbar { toolbarContent }
+            .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
+            .onAppear { loadNextCountry() }
+    }
+}
+
+// MARK: - Subviews
+private extension SpellingBeeScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 scorePill
@@ -43,17 +56,8 @@ struct SpellingBeeScreen: View {
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Spelling Bee")
-        .closeButtonPlacementLeading()
-        .toolbar { toolbarContent }
-        .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
-        .onAppear { loadNextCountry() }
     }
-}
 
-// MARK: - Subviews
-private extension SpellingBeeScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {

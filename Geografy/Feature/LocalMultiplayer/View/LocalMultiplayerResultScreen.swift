@@ -12,6 +12,32 @@ struct LocalMultiplayerResultScreen: View {
     @State private var xpAwarded = false
 
     var body: some View {
+        scrollContent
+            .background { AmbientBlobsView(.standard) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .onAppear {
+                appeared = true
+                guard !xpAwarded else { return }
+                xpAwarded = true
+                if isWin {
+                    xpService.award(25, source: .quizCompletedMedium)
+                    hapticsService.notification(.success)
+                } else {
+                    xpService.award(10, source: .quizCompletedEasy)
+                }
+            }
+            .alert("Rematch?", isPresented: $coordinator.rematchRequested) {
+                Button("Accept") { coordinator.acceptRematch() }
+                Button("Decline", role: .cancel) { coordinator.declineRematch() }
+            } message: {
+                Text("\(coordinator.opponent?.displayName ?? "Opponent") wants a rematch!")
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension LocalMultiplayerResultScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 resultHeader
@@ -21,30 +47,8 @@ struct LocalMultiplayerResultScreen: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.lg)
         }
-        .background { AmbientBlobsView(.standard) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .onAppear {
-            appeared = true
-            guard !xpAwarded else { return }
-            xpAwarded = true
-            if isWin {
-                xpService.award(25, source: .quizCompletedMedium)
-                hapticsService.notification(.success)
-            } else {
-                xpService.award(10, source: .quizCompletedEasy)
-            }
-        }
-        .alert("Rematch?", isPresented: $coordinator.rematchRequested) {
-            Button("Accept") { coordinator.acceptRematch() }
-            Button("Decline", role: .cancel) { coordinator.declineRematch() }
-        } message: {
-            Text("\(coordinator.opponent?.displayName ?? "Opponent") wants a rematch!")
-        }
     }
-}
 
-// MARK: - Subviews
-private extension LocalMultiplayerResultScreen {
     var resultHeader: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {

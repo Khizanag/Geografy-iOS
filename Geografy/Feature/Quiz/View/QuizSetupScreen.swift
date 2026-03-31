@@ -15,6 +15,18 @@ struct QuizSetupScreen: View {
     @AppStorage("quiz_gameMode") private var selectedGameMode: QuizGameMode = .standard
 
     var body: some View {
+        scrollContent
+            .safeAreaInset(edge: .bottom) { startButton }
+            .background { AmbientBlobsView(.quiz) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Quiz")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// MARK: - Subviews
+private extension QuizSetupScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 headerSection
@@ -43,11 +55,6 @@ struct QuizSetupScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) { startButton }
-        .background { AmbientBlobsView(.quiz) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Quiz")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

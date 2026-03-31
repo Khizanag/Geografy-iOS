@@ -13,32 +13,24 @@ struct ContinentOverviewScreen: View {
     @State private var appeared = false
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-                statsGrid
-                countryListSection
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-            .readableContentWidth()
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle(continent.displayName)
-        .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    coordinator.cover(.map(continentFilter: continent))
-                } label: {
-                    Image(systemName: "map.fill")
-                        .foregroundStyle(DesignSystem.Color.iconPrimary)
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle(continent.displayName)
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        coordinator.cover(.map(continentFilter: continent))
+                    } label: {
+                        Image(systemName: "map.fill")
+                            .foregroundStyle(DesignSystem.Color.iconPrimary)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
-        }
-        .onAppear {
-            appeared = true
-        }
+            .onAppear {
+                appeared = true
+            }
     }
 }
 
@@ -78,6 +70,21 @@ private extension ContinentOverviewScreen {
 
     var mostPopulousCountry: Country? {
         countries.first
+    }
+}
+
+// MARK: - Subviews
+private extension ContinentOverviewScreen {
+    var scrollContent: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
+                statsGrid
+                countryListSection
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
+        }
     }
 }
 
