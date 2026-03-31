@@ -299,7 +299,7 @@ private extension FlashcardScreen {
         guard !items.isEmpty else { return }
         let shuffled = items.shuffled()
         let sessionCards = Array(shuffled.prefix(sessionCardCount))
-        coordinator.present(
+        coordinator.cover(
             .flashcardSession(deck: deck, cards: sessionCards)
         )
     }
@@ -312,7 +312,7 @@ private extension FlashcardScreen {
             cardType: selectedCardType
         )
         let sessionCards = Array(dueCards.shuffled().prefix(sessionCardCount))
-        coordinator.present(
+        coordinator.cover(
             .flashcardSession(deck: deck, cards: sessionCards)
         )
     }
