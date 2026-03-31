@@ -30,9 +30,6 @@ struct MapPuzzleScreen: View {
         .navigationTitle("\(continent.displayName) Puzzle")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
         }
         .task {
             countryDataService.loadCountries()

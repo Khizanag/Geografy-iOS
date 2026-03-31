@@ -24,13 +24,7 @@ struct GeographyFeaturesScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Geography Features")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .onAppear { blobAnimating = true }
+        .navigationBarTitleDisplayMode(.inline)        .onAppear { blobAnimating = true }
     }
 }
 

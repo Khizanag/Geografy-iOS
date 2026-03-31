@@ -186,9 +186,6 @@ private extension DailyChallengeResultView {
                 date: .now
             )
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
             }
         }
     }

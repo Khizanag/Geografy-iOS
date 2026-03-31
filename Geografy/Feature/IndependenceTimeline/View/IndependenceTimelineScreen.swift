@@ -29,13 +29,7 @@ struct IndependenceTimelineScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Independence Timeline")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .onAppear { blobAnimating = true }
+        .navigationBarTitleDisplayMode(.inline)        .onAppear { blobAnimating = true }
     }
 }
 

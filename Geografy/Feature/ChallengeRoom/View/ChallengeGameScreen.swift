@@ -31,9 +31,6 @@ struct ChallengeGameScreen: View {
         .navigationTitle("Challenge")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton { coordinator.dismiss() }
-            }
         }
     }
 }

@@ -84,9 +84,6 @@ private extension QuizSessionScreen {
                 pauseButton
             }
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { showQuitAlert = true }
-        }
     }
 
     var pauseButton: some View {

@@ -92,10 +92,6 @@ private extension SpeedRunSessionScreen {
                 .buttonStyle(.plain)
             }
         }
-
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { showQuitAlert = true }
-        }
     }
 
     var timerSection: some View {

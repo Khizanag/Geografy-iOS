@@ -62,9 +62,6 @@ struct MapScreen: View {
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                closeButton
-            }
             ToolbarItem(placement: .principal) {
                 if isLandscape {
                     bannerOverlay
@@ -136,9 +133,6 @@ private extension MapScreen {
 
 // MARK: - Controls
 private extension MapScreen {
-    var closeButton: some View {
-        CircleCloseButton()
-    }
 
     var labelsToggleButton: some View {
         Button {

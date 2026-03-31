@@ -72,9 +72,6 @@ private extension WordSearchGameScreen {
             }
             .fixedSize()
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { dismiss() }
-        }
     }
 
     var formattedTime: String {

@@ -19,13 +19,7 @@ struct FriendsListScreen: View {
             .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Friends")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
-            .task { await loadData() }
+            .navigationBarTitleDisplayMode(.large)            .task { await loadData() }
             .onAppear {
                 guard !reduceMotion else { animating = true; return }
                 withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {

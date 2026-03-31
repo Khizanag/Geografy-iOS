@@ -77,9 +77,6 @@ private extension ExploreGameSessionScreen {
             .buttonStyle(.plain)
             .accessibilityLabel("Show rules")
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { showQuitAlert = true }
-        }
     }
 
     @ViewBuilder

@@ -20,7 +20,6 @@ struct NeighborExplorerScreen: View {
         contentView
             .navigationTitle("Neighbor Explorer")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
             .task {
                 countryDataService.loadCountries()
                 chain = [country]
@@ -31,16 +30,6 @@ struct NeighborExplorerScreen: View {
             } message: {
                 Text("There's no land border route between these countries.")
             }
-    }
-}
-
-// MARK: - Toolbar
-private extension NeighborExplorerScreen {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 }
 

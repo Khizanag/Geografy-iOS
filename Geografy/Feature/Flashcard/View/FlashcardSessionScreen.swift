@@ -91,9 +91,6 @@ private extension FlashcardSessionScreen {
             }
             .buttonStyle(.plain)
         }
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { showQuitAlert = true }
-        }
     }
 
     @ViewBuilder

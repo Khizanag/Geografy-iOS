@@ -21,13 +21,7 @@ struct PaywallScreen: View {
                 scrollContent
             }
             .navigationTitle("Geografy Premium")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
-            }
-        }
+            .navigationBarTitleDisplayMode(.inline)        }
         .task {
             await subscriptionService.loadProducts()
             await subscriptionService.checkEntitlements()

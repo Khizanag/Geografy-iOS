@@ -41,7 +41,6 @@ struct HistoricalMapScreen: View {
             .navigationTitle("Historical Map")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.clear, for: .navigationBar)
-            .toolbar { closeToolbarItem }
             .onAppear { selectedYear = initialYear }
             .task { await loadData() }
             .onChange(of: selectedYear) { updateCountryColors() }
@@ -194,16 +193,6 @@ private extension HistoricalMapScreen {
     }
 }
 
-// MARK: - Toolbar
-private extension HistoricalMapScreen {
-    @ToolbarContentBuilder
-    var closeToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            CircleCloseButton()
-        }
-    }
-}
-
 // MARK: - Event Sheet
 private extension HistoricalMapScreen {
     func eventSheet(for event: HistoricalEvent) -> some View {
@@ -212,9 +201,6 @@ private extension HistoricalMapScreen {
                 .navigationTitle("Event Details")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        CircleCloseButton { selectedEvent = nil }
-                    }
                 }
         }
         .presentationDetents([.medium])

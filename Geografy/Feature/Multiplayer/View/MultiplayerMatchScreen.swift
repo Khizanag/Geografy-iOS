@@ -28,7 +28,6 @@ struct MultiplayerMatchScreen: View {
         NavigationStack {
             matchContent
                 .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
                 .alert("Quit Match?", isPresented: $showQuitAlert) {
                     quitAlertActions
                 } message: {
@@ -59,13 +58,6 @@ private extension MultiplayerMatchScreen {
         }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
-    }
-
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton { showQuitAlert = true }
-        }
     }
 
     @ViewBuilder

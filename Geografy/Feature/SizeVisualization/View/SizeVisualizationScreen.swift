@@ -20,13 +20,7 @@ struct SizeVisualizationScreen: View {
         }
         .navigationTitle("Size Visualization")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchQuery, prompt: "Search countries...")
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .sheet(isPresented: $showCompare) {
+        .searchable(text: $searchQuery, prompt: "Search countries...")        .sheet(isPresented: $showCompare) {
             if let selected = selectedCountry, let reference = referenceCountry {
                 SizeCompareView(
                     referenceCountry: reference,

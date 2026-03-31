@@ -27,13 +27,7 @@ struct MapColoringScreen: View {
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Map Coloring Book")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .task {
+        .navigationBarTitleDisplayMode(.inline)        .task {
             countryDataService.loadCountries()
             visibleGroups = Set(groupedCountries.keys)
         }
@@ -214,13 +208,7 @@ private extension MapColoringScreen {
             .padding(DesignSystem.Spacing.xl)
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(country.name)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton { selectedCountry = nil }
-                }
-            }
-        }
+            .navigationBarTitleDisplayMode(.inline)        }
         .presentationDetents([.medium])
     }
 }
