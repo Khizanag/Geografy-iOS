@@ -32,11 +32,11 @@
 		4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GeografyWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E5F60718293A4B5C6D7E8F90 /* Geografy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geografy.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		'TV000000000000000000PROD' = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeografyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		TV000000000000000000PROD /* GeografyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeografyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		'TV00000000000000000EXCPT' = {
+		TV00000000000000000EXCPT /* Exceptions for "Geografy" folder in "GeografyTV" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/ContentView.swift,
@@ -329,14 +329,34 @@
 				Feature/WordSearch/View/WordSearchScreen.swift,
 				Feature/WorldRecords/View/WorldRecordsScreen.swift,
 			);
-			target = TV000000000000000000TARG;
+			target = TV000000000000000000TARG /* GeografyTV */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */ = {isa = PBXFileSystemSynchronizedRootGroup; path = GeografyWidgets; sourceTree = "<group>"; };
-		A1B2C3D4E5F60718293A4B5C /* Geografy */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (TV00000000000000000EXCPT, ); path = Geografy; sourceTree = "<group>"; };
-		'TV00000000000000000GROUP' = {isa = PBXFileSystemSynchronizedRootGroup; path = GeografyTV; sourceTree = "<group>"; };
+		5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GeografyWidgets;
+			sourceTree = "<group>";
+		};
+		7265E8582F7BAC15009BF5F7 /* Package */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Package;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60718293A4B5C /* Geografy */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				TV00000000000000000EXCPT /* Exceptions for "Geografy" folder in "GeografyTV" target */,
+			);
+			path = Geografy;
+			sourceTree = "<group>";
+		};
+		TV00000000000000000GROUP /* GeografyTV */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GeografyTV;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -354,7 +374,7 @@
 				DC78F1C91C17F8E81AE3075D /* GeografyDesign in Frameworks */,
 			);
 		};
-		'TV0000000000000000FRAMWK' = {
+		TV0000000000000000FRAMWK /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				17D9BCE998F9907C1C96B4DD /* GeografyCore in Frameworks */,
@@ -367,8 +387,9 @@
 		C3D4E5F60718293A4B5C6D7E = {
 			isa = PBXGroup;
 			children = (
+				7265E8582F7BAC15009BF5F7 /* Package */,
 				A1B2C3D4E5F60718293A4B5C /* Geografy */,
-				TV00000000000000000GROUP,
+				TV00000000000000000GROUP /* GeografyTV */,
 				5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */,
 				F10203040506070809101112 /* Frameworks */,
 				D4E5F60718293A4B5C6D7E8F /* Products */,
@@ -379,7 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				E5F60718293A4B5C6D7E8F90 /* Geografy.app */,
-				TV000000000000000000PROD,
+				TV000000000000000000PROD /* GeografyTV.app */,
 				4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */,
 			);
 			name = Products;
@@ -410,8 +431,6 @@
 				5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */,
 			);
 			name = GeografyWidgets;
-			packageProductDependencies = (
-			);
 			productName = GeografyWidgets;
 			productReference = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -439,19 +458,19 @@
 			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
 			productType = "com.apple.product-type.application";
 		};
-		'TV000000000000000000TARG' = {
+		TV000000000000000000TARG /* GeografyTV */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = TV00000000000000000CFGLS;
+			buildConfigurationList = TV00000000000000000CFGLS /* Build configuration list for PBXNativeTarget "GeografyTV" */;
 			buildPhases = (
-				TV00000000000000000SOURC,
-				TV0000000000000000FRAMWK,
-				TV00000000000000000RSRCS,
+				TV00000000000000000SOURC /* Sources */,
+				TV0000000000000000FRAMWK /* Frameworks */,
+				TV00000000000000000RSRCS /* Resources */,
 			);
 			buildRules = (
 			);
 			fileSystemSynchronizedGroups = (
 				A1B2C3D4E5F60718293A4B5C /* Geografy */,
-				TV00000000000000000GROUP,
+				TV00000000000000000GROUP /* GeografyTV */,
 			);
 			name = GeografyTV;
 			packageProductDependencies = (
@@ -459,7 +478,7 @@
 				A8CC38025DD34FC658A3E9C3 /* GeografyDesign */,
 			);
 			productName = GeografyTV;
-			productReference = TV000000000000000000PROD;
+			productReference = TV000000000000000000PROD /* GeografyTV.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -502,7 +521,7 @@
 			projectRoot = "";
 			targets = (
 				F60718293A4B5C6D7E8F9001 /* Geografy */,
-				TV000000000000000000TARG,
+				TV000000000000000000TARG /* GeografyTV */,
 				AA5566778899001122334455 /* GeografyWidgets */,
 			);
 		};
@@ -519,7 +538,7 @@
 			files = (
 			);
 		};
-		'TV00000000000000000RSRCS' = {
+		TV00000000000000000RSRCS /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -537,7 +556,7 @@
 			files = (
 			);
 		};
-		'TV00000000000000000SOURC' = {
+		TV00000000000000000SOURC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
 			);
@@ -545,7 +564,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		AA6677889900112233445566 /* Debug */ = {
+		AA6677889900112233445566 /* Debug configuration for PBXNativeTarget "GeografyWidgets" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = GeografyWidgets/GeografyWidgets.entitlements;
@@ -571,7 +590,7 @@
 			};
 			name = Debug;
 		};
-		AA7788990011223344556677 /* Release */ = {
+		AA7788990011223344556677 /* Release configuration for PBXNativeTarget "GeografyWidgets" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = GeografyWidgets/GeografyWidgets.entitlements;
@@ -597,7 +616,7 @@
 			};
 			name = Release;
 		};
-		C5D6E7F8091A2B3C4D5E6F70 /* Debug */ = {
+		C5D6E7F8091A2B3C4D5E6F70 /* Debug configuration for PBXProject "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -664,7 +683,7 @@
 			};
 			name = Debug;
 		};
-		D6E7F8091A2B3C4D5E6F7081 /* Release */ = {
+		D6E7F8091A2B3C4D5E6F7081 /* Release configuration for PBXProject "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -724,7 +743,7 @@
 			};
 			name = Release;
 		};
-		E7F8091A2B3C4D5E6F708192 /* Debug */ = {
+		E7F8091A2B3C4D5E6F708192 /* Debug configuration for PBXNativeTarget "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -757,7 +776,7 @@
 			};
 			name = Debug;
 		};
-		F8091A2B3C4D5E6F70819203 /* Release */ = {
+		F8091A2B3C4D5E6F70819203 /* Release configuration for PBXNativeTarget "Geografy" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -790,7 +809,7 @@
 			};
 			name = Release;
 		};
-		'TV000000000000000DBGCFG' = {
+		TV000000000000000DBGCFG /* Debug configuration for PBXNativeTarget "GeografyTV" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
@@ -817,7 +836,7 @@
 			};
 			name = Debug;
 		};
-		'TV000000000000000RELCFG' = {
+		TV000000000000000RELCFG /* Release configuration for PBXNativeTarget "GeografyTV" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
@@ -850,32 +869,32 @@
 		071829A3B4C5D6E7F8091A2B /* Build configuration list for PBXNativeTarget "Geografy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E7F8091A2B3C4D5E6F708192 /* Debug */,
-				F8091A2B3C4D5E6F70819203 /* Release */,
+				E7F8091A2B3C4D5E6F708192 /* Debug configuration for PBXNativeTarget "Geografy" */,
+				F8091A2B3C4D5E6F70819203 /* Release configuration for PBXNativeTarget "Geografy" */,
 			);
 			defaultConfigurationName = Release;
 		};
 		AA8899001122334455667788 /* Build configuration list for PBXNativeTarget "GeografyWidgets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				AA6677889900112233445566 /* Debug */,
-				AA7788990011223344556677 /* Release */,
+				AA6677889900112233445566 /* Debug configuration for PBXNativeTarget "GeografyWidgets" */,
+				AA7788990011223344556677 /* Release configuration for PBXNativeTarget "GeografyWidgets" */,
 			);
 			defaultConfigurationName = Release;
 		};
 		B4C5D6E7F8091A2B3C4D5E6F /* Build configuration list for PBXProject "Geografy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C5D6E7F8091A2B3C4D5E6F70 /* Debug */,
-				D6E7F8091A2B3C4D5E6F7081 /* Release */,
+				C5D6E7F8091A2B3C4D5E6F70 /* Debug configuration for PBXProject "Geografy" */,
+				D6E7F8091A2B3C4D5E6F7081 /* Release configuration for PBXProject "Geografy" */,
 			);
 			defaultConfigurationName = Release;
 		};
-		'TV00000000000000000CFGLS' = {
+		TV00000000000000000CFGLS /* Build configuration list for PBXNativeTarget "GeografyTV" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				TV000000000000000DBGCFG,
-				TV000000000000000RELCFG,
+				TV000000000000000DBGCFG /* Debug configuration for PBXNativeTarget "GeografyTV" */,
+				TV000000000000000RELCFG /* Release configuration for PBXNativeTarget "GeografyTV" */,
 			);
 			defaultConfigurationName = Release;
 		};
