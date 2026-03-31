@@ -41,10 +41,6 @@
 			membershipExceptions = (
 				App/ContentView.swift,
 				App/GeografyApp.swift,
-				App/Navigation/AppCoordinator.swift,
-				App/Navigation/CoordinatedNavigationStack.swift,
-				App/Navigation/Destination.swift,
-				App/Navigation/Navigator.swift,
 				Design/Component/AlphabetJumpIndex.swift,
 				Design/Component/CircleCloseButton.swift,
 				Design/Component/ComingSoonSheet.swift,
@@ -317,6 +313,10 @@
 				Feature/WordSearch/View/WordSearchGameScreen.swift,
 				Feature/WordSearch/View/WordSearchScreen.swift,
 				Feature/WorldRecords/View/WorldRecordsScreen.swift,
+				Navigation/AppCoordinator.swift,
+				Navigation/CoordinatedNavigationStack.swift,
+				Navigation/Destination.swift,
+				Navigation/Navigator.swift,
 			);
 			target = TV000000000000000000TARG /* GeografyTV */;
 		};
