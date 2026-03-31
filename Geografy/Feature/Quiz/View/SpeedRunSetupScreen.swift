@@ -2,7 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct SpeedRunSetupScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 

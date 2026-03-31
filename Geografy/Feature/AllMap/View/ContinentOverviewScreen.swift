@@ -3,7 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct ContinentOverviewScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(Coordinator.self) private var sheetCoordinator: Coordinator?
     @Environment(FavoritesService.self) private var favoritesService
 

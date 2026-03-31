@@ -2,7 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct QuizSetupScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
 
     @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz

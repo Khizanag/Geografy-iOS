@@ -9,7 +9,7 @@ enum FavoritesSortOption: String, CaseIterable {
 }
 
 struct FavoritesScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
 

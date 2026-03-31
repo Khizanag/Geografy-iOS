@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 import GeografyDesign
 import GeografyCore
@@ -6,7 +7,7 @@ struct DistanceCalculatorScreen: View {
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var countryDataService = CountryDataService()
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var originCountry: Country?
@@ -544,3 +545,4 @@ private struct CountryPickerSheet: View {
         }
     }
 }
+#endif

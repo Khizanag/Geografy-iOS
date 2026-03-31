@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 import GeografyDesign
 
@@ -466,3 +467,4 @@ private struct CurrencyPickerSheet: View {
         }
     }
 }
+#endif

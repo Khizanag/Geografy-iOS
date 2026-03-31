@@ -3,7 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct FlashcardScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 

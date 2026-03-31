@@ -4,7 +4,7 @@ import GeografyCore
 
 struct FeedScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
 
     @State private var feedService = FeedService()
     @State private var countryDataService = CountryDataService()

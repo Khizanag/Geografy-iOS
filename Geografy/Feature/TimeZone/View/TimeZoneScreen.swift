@@ -1,9 +1,12 @@
+#if !os(tvOS)
 import SwiftUI
 import GeografyDesign
 import GeografyCore
 
 struct TimeZoneScreen: View {
+    #if !os(tvOS)
     @Environment(Coordinator.self) private var coordinator: Coordinator?
+    #endif
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -147,7 +150,9 @@ struct CountryWithZone: Identifiable {
 
 // MARK: - World Clock View
 private struct WorldClockView: View {
+    #if !os(tvOS)
     @Environment(Coordinator.self) private var coordinator: Coordinator?
+    #endif
 
     let countries: [CountryWithZone]
     @State private var searchText = ""
@@ -157,7 +162,11 @@ private struct WorldClockView: View {
 
     var body: some View {
         List(filteredCountries) { item in
-            Button { coordinator?.push(.countryDetail(item.country)) } label: {
+            Button {
+                #if !os(tvOS)
+                coordinator?.push(.countryDetail(item.country))
+                #endif
+            } label: {
                 worldClockRow(for: item)
             }
             .listRowBackground(DesignSystem.Color.cardBackground)
@@ -226,7 +235,9 @@ private struct WorldClockView: View {
 
 // MARK: - All Zones View
 private struct AllZonesView: View {
+    #if !os(tvOS)
     @Environment(Coordinator.self) private var coordinator: Coordinator?
+    #endif
 
     let countries: [CountryWithZone]
 
@@ -266,7 +277,11 @@ private struct AllZonesView: View {
                             Divider()
                                 .padding(.leading, 44)
                         }
-                        Button { coordinator?.push(.countryDetail(item.country)) } label: {
+                        Button {
+                            #if !os(tvOS)
+                            coordinator?.push(.countryDetail(item.country))
+                            #endif
+                        } label: {
                             zoneCountryRow(for: item)
                         }
                         .buttonStyle(.plain)
@@ -341,3 +356,4 @@ private struct AllZonesView: View {
         return colors[max(0, min(index, colors.count - 1))]
     }
 }
+#endif

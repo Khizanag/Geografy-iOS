@@ -8,7 +8,7 @@ enum OrgSortOption: String, CaseIterable {
 }
 
 struct OrganizationsScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var countryDataService = CountryDataService()

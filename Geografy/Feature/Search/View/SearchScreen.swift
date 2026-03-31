@@ -3,7 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct SearchScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
 
     @AppStorage("search_topAligned") private var topAligned = false
 

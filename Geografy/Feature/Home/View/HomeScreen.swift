@@ -12,7 +12,7 @@ struct HomeScreen: View {
     @Environment(HomeSectionOrderService.self) private var sectionOrderService
     @Environment(FlashcardService.self) var flashcardService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(TabCoordinator.self) var coordinator
+    @Environment(Navigator.self) var coordinator
 
     @State var countryDataService = CountryDataService()
     @State var dailyChallengeService: DailyChallengeService?
