@@ -9,6 +9,7 @@ struct ContentView: View {
 
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var appCoordinator = AppCoordinator()
     @State private var levelUpLevel: UserLevel?
@@ -59,12 +60,12 @@ struct ContentView: View {
         }
         .onContinueUserActivity(CSSearchableItemActionType) { activity in
             if let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                appCoordinator.handleSpotlightActivity(identifier)
+                appCoordinator.handleSpotlightActivity(identifier, countryDataService: countryDataService)
             }
         }
         .onContinueUserActivity("com.khizanag.geografy.viewCountry") { activity in
             if let code = activity.userInfo?["countryCode"] as? String {
-                appCoordinator.handleSpotlightActivity("country-\(code)")
+                appCoordinator.handleSpotlightActivity("country-\(code)", countryDataService: countryDataService)
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .switchTab)) { notification in

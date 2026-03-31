@@ -3,14 +3,14 @@ import GeografyCore
 
 /// Manages Explore Game sessions: daily game selection and practice mode.
 @Observable
+@MainActor
 final class ExploreGameService {
     private(set) var statistics = Statistics()
 
     private let countryDataService: CountryDataService
 
-    init(countryDataService: CountryDataService = CountryDataService()) {
+    init(countryDataService: CountryDataService) {
         self.countryDataService = countryDataService
-        countryDataService.loadCountries()
         loadStatistics()
     }
 }

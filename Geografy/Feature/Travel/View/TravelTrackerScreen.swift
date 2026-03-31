@@ -29,32 +29,7 @@ struct TravelTrackerScreen: View {
         .closeButtonPlacementLeading()
         .navigationTitle("Travel Tracker")
         .searchable(text: $searchText, prompt: "Search countries…")
-        .toolbar {
-            ToolbarItem(placement: .secondaryAction) {
-                Button {
-                    hapticsService.impact(.light)
-                    showBucketList = true
-                } label: {
-                    Label("Bucket List", systemImage: "list.star")
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    hapticsService.impact(.light)
-                    showCountryPicker = true
-                } label: {
-                    Image(systemName: "plus")
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-                .foregroundStyle(Color.red)
-                .tint(Color.clear)
-                .buttonStyle(.glassProminent)
-            }
-        }
+        .toolbar { toolbarContent }
         .fullScreenCover(isPresented: $showTravelMap) {
             TravelMapScreen(filter: travelMapFilter)
         }
@@ -86,6 +61,32 @@ struct TravelTrackerScreen: View {
 
 // MARK: - Subviews
 private extension TravelTrackerScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .secondaryAction) {
+            Button {
+                hapticsService.impact(.light)
+                showBucketList = true
+            } label: {
+                Label("Bucket List", systemImage: "list.star")
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+        }
+
+        ToolbarItem(placement: .primaryAction) {
+            Button {
+                hapticsService.impact(.light)
+                showCountryPicker = true
+            } label: {
+                Image(systemName: "plus")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+            .tint(Color.clear)
+            .buttonStyle(.glassProminent)
+        }
+    }
+
     var loadingView: some View {
         ProgressView()
             .tint(DesignSystem.Color.accent)
