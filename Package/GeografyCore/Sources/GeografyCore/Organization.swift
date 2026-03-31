@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 import SwiftUI
 
 public struct Organization: Identifiable, Hashable, Sendable {
@@ -38,14 +39,14 @@ public struct Organization: Identifiable, Hashable, Sendable {
 
 // MARK: - All Organizations
 public extension Organization {
-    nonisolated(unsafe) static let all: [Organization] = [
+    static let all: [Organization] = [
         makeUN, makeNATO, makeEU, makeASEAN, makeAU,
         makeArabLeague, makeBRICS, makeCARICOM, makeCELAC,
         makeCIS, makeCommonwealth, makeEAC, makeECOWAS,
         makeG7, makeG20, makeGCC, makeMercosur,
         makeNordicCouncil, makeOAS, makeOECD, makeOIF,
         makeOPEC, makePIF, makeSAARC, makeSADC, makeSCO,
-        makeUSMCA, makeV4, makeWTO,
+        makeUSMCA, makeV4, makeWTO
     ]
 
     static func find(_ id: String) -> Organization? {

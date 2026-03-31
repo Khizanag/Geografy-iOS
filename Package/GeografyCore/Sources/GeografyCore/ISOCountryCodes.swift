@@ -9,7 +9,7 @@ public enum ISOCountryCodes: Sendable {
         alpha2ToAlpha3[alpha2]
     }
 
-    nonisolated(unsafe) private static let alpha3ToAlpha2: [String: String] = [
+    private static let alpha3ToAlpha2: [String: String] = [
         "AFG": "AF", "ALB": "AL", "DZA": "DZ", "AND": "AD", "AGO": "AO",
         "ATG": "AG", "ARG": "AR", "ARM": "AM", "AUS": "AU", "AUT": "AT",
         "AZE": "AZ", "BHS": "BS", "BHR": "BH", "BGD": "BD", "BRB": "BB",
@@ -47,10 +47,10 @@ public enum ISOCountryCodes: Sendable {
         "USA": "US", "URY": "UY", "UZB": "UZ", "VUT": "VU", "VEN": "VE",
         "VNM": "VN", "YEM": "YE", "ZMB": "ZM", "ZWE": "ZW", "SSD": "SS",
         "PSE": "PS", "XKX": "XK", "ESH": "EH", "NCL": "NC", "SOM_": "SO",
-        "FLK": "FK", "GUF": "GF", "PRI": "PR", "ATF": "TF", "ATA": "AQ",
+        "FLK": "FK", "GUF": "GF", "PRI": "PR", "ATF": "TF", "ATA": "AQ"
     ]
 
-    nonisolated(unsafe) private static let alpha2ToAlpha3: [String: String] = {
+    private static let alpha2ToAlpha3: [String: String] = {
         Dictionary(uniqueKeysWithValues: alpha3ToAlpha2.map { ($0.value, $0.key) })
     }()
 }

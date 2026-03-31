@@ -1,7 +1,7 @@
 import Foundation
 
 public enum EthnicityData: Sendable {
-    nonisolated(unsafe) public static let data: [String: [PercentageItem]] = [
+    public static let data: [String: [PercentageItem]] = [
         // Africa
         "DZ": [.init(name: "Arab-Berber", percentage: 99), .init(name: "European", percentage: 1)],
         "AO": [.init(name: "Ovimbundu", percentage: 37), .init(name: "Kimbundu", percentage: 25), .init(name: "Bakongo", percentage: 13), .init(name: "Mestico", percentage: 2), .init(name: "European", percentage: 1), .init(name: "Other", percentage: 22)],
@@ -206,6 +206,6 @@ public enum EthnicityData: Sendable {
         "SB": [.init(name: "Melanesian", percentage: 95.3), .init(name: "Polynesian", percentage: 3.1), .init(name: "Micronesian", percentage: 1.2), .init(name: "Other", percentage: 0.4)],
         "TO": [.init(name: "Tongan", percentage: 97), .init(name: "Part Tongan", percentage: 0.8), .init(name: "Other", percentage: 2.2)],
         "TV": [.init(name: "Tuvaluan", percentage: 96), .init(name: "Micronesian", percentage: 4)],
-        "VU": [.init(name: "Ni-Vanuatu (Melanesian)", percentage: 97.6), .init(name: "Other", percentage: 2.4)],
+        "VU": [.init(name: "Ni-Vanuatu (Melanesian)", percentage: 97.6), .init(name: "Other", percentage: 2.4)]
     ]
 }
