@@ -43,8 +43,8 @@ extension HomeScreen {
     var orgsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             HomeOrgsCard(
-                onOrgTap: { coordinator.present(.organizationDetail($0)) },
-                onSeeAll: { coordinator.present(.organizations) }
+                onOrgTap: { coordinator.sheet(.organizationDetail($0)) },
+                onSeeAll: { coordinator.sheet(.organizations) }
             )
         }
     }
@@ -59,7 +59,7 @@ extension HomeScreen {
             HomeDailyChallengeCard(
                 streak: dailyChallengeService?.streak ?? 0,
                 hasCompletedToday: dailyChallengeService?.hasCompletedToday ?? false,
-                onTap: { coordinator.present(.dailyChallenge) }
+                onTap: { coordinator.sheet(.dailyChallenge) }
             )
         }
     }
@@ -73,7 +73,7 @@ extension HomeScreen {
             SectionHeaderView(title: "Due for Review")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeSRSReviewCard(dueCount: dueReviewCount) {
-                coordinator.present(.srsStudy)
+                coordinator.sheet(.srsStudy)
             }
         }
     }
@@ -92,7 +92,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Flag Matching")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeFlagGameCard { coordinator.present(.flagGame) }
+            HomeFlagGameCard { coordinator.sheet(.flagGame) }
         }
     }
 }
@@ -103,7 +103,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Trivia", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeTriviaCard { coordinator.present(.trivia) }
+            HomeTriviaCard { coordinator.sheet(.trivia) }
         }
     }
 }
@@ -114,7 +114,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Spelling Bee")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeSpellingBeeCard { coordinator.present(.spellingBee) }
+            HomeSpellingBeeCard { coordinator.sheet(.spellingBee) }
         }
     }
 }
@@ -126,7 +126,7 @@ extension HomeScreen {
             SectionHeaderView(title: "Learning Path")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
             HomeLearningPathCard {
-                coordinator.present(.learningPath)
+                coordinator.sheet(.learningPath)
             }
         }
     }
@@ -151,7 +151,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Landmark Quiz")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeLandmarkQuizCard { coordinator.present(.landmarkQuiz) }
+            HomeLandmarkQuizCard { coordinator.sheet(.landmarkQuiz) }
         }
     }
 }
@@ -162,7 +162,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Feed")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeFeedCard { coordinator.present(.feed) }
+            HomeFeedCard { coordinator.sheet(.feed) }
         }
     }
 }
@@ -184,7 +184,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Country Comparison")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeCountryCompareCard { coordinator.present(.compare) }
+            HomeCountryCompareCard { coordinator.sheet(.compare) }
         }
     }
 }
@@ -195,7 +195,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Travel Bucket List")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeTravelBucketListCard { coordinator.present(.travelBucketList) }
+            HomeTravelBucketListCard { coordinator.sheet(.travelBucketList) }
         }
     }
 }
@@ -228,7 +228,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Challenge Room")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeChallengeRoomCard { coordinator.present(.challengeRoom) }
+            HomeChallengeRoomCard { coordinator.sheet(.challengeRoom) }
         }
     }
 }
@@ -294,7 +294,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Quotes")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeQuotesCard { coordinator.present(.quotes) }
+            HomeQuotesCard { coordinator.sheet(.quotes) }
         }
     }
 }
@@ -316,7 +316,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Country Nicknames", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeCountryNicknamesCard { coordinator.present(.countryNicknames) }
+            HomeCountryNicknamesCard { coordinator.sheet(.countryNicknames) }
         }
     }
 }
@@ -327,7 +327,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Geography Word Search", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeWordSearchCard { coordinator.present(.wordSearch) }
+            HomeWordSearchCard { coordinator.sheet(.wordSearch) }
         }
     }
 }
@@ -338,7 +338,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Border Challenge", isNew: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeBorderChallengeCard { coordinator.present(.borderChallenge) }
+            HomeBorderChallengeCard { coordinator.sheet(.borderChallenge) }
         }
     }
 }

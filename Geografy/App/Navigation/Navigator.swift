@@ -10,15 +10,12 @@ final class Navigator {
         path.append(destination)
     }
 
-    func present(_ destination: Destination) {
-        switch destination.presentationStyle {
-        case .push:
-            push(destination)
-        case .sheet:
-            activeSheet = destination
-        case .fullScreenCover:
-            activeCover = destination
-        }
+    func sheet(_ destination: Destination) {
+        activeSheet = destination
+    }
+
+    func cover(_ destination: Destination) {
+        activeCover = destination
     }
 
     func pop() {
@@ -36,13 +33,5 @@ final class Navigator {
         } else {
             activeSheet = nil
         }
-    }
-
-    func dismissSheet() {
-        activeSheet = nil
-    }
-
-    func dismissCover() {
-        activeCover = nil
     }
 }

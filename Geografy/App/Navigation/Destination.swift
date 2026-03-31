@@ -1,199 +1,151 @@
 import SwiftUI
 import GeografyCore
 
-// MARK: - Presentation Style
-enum PresentationStyle {
-    case push
-    case sheet
-    case fullScreenCover
-}
-
 // MARK: - Destination
 enum Destination: Hashable, Identifiable {
-    // Push destinations
-    case map(continentFilter: Country.Continent? = nil)
-    case countryDetail(Country)
-    case organizationDetail(Organization)
-    case allMaps
-    case continentOverview(Country.Continent)
     case achievements
-    case themes
-    case settings
-    case quizSetup
-    case neighborExplorer(Country)
-    case worldRecords
-    case learningPath
-    case mapPuzzle
+    case allMaps
+    case borderChallenge
+    case challengeResult(ChallengeRoom)
+    case challengeRoom
+    case coinStore
+    case compare
+    case continentOverview(Country.Continent)
     case continentPicker
     case continentStats(String)
-    case oceanExplorer
-    case languageExplorer
-    case independenceTimeline
-    case economyExplorer
-    case geographyFeatures
-    case cultureExplorer
-    case landmarkGallery
-    case mapColoring
-    case territorialDisputes
-    case lesson(LearningModule, Lesson)
-    case challengeResult(ChallengeRoom)
-    case dailyChallengeResult(
-        score: Int,
-        maxScore: Int,
-        challengeType: DailyChallengeType,
-        timeSpent: TimeInterval,
-        streak: Int
-    )
-
-    // Sheet destinations
-    case signIn
-    case profile
     case countries
-    case favorites
-    case organizations
-    case coinStore
-    case paywall
-    case speedRunSetup
-    case dailyChallenge
-    case exploreGame
-    case multiplayer
-    case quizPacks
-    case customQuiz
-    case distanceCalculator
-    case currencyConverter
-    case timeZones
-    case compare
-    case timeline
-    case travelTracker
-    case travelJournal
-    case travelBucketList
-    case leaderboards
-    case search
-    case srsStudy
-    case flagGame
-    case trivia
-    case spellingBee
-    case landmarkQuiz
-    case feed
-    case challengeRoom
-    case quotes
+    case countryDetail(Country)
     case countryNicknames
-    case wordSearch
-    case borderChallenge
-    case localMultiplayer
-    case sectionEditor
-    case friends
-
-    // Full screen cover destinations
-    case mapFullScreen(continentFilter: String?)
-    case quizSession(QuizConfiguration)
+    case cultureExplorer
+    case currencyConverter
+    case customQuiz
+    case dailyChallenge
+    case dailyChallengeResult(score: Int, maxScore: Int, challengeType: DailyChallengeType, timeSpent: TimeInterval, streak: Int)
+    case distanceCalculator
+    case economyExplorer
+    case exploreGame
+    case favorites
+    case feed
+    case flagGame
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
-    case travelMap(TravelMapFilter)
+    case friends
+    case geographyFeatures
     case historicalMap(initialYear: Int)
+    case independenceTimeline
+    case landmarkGallery
+    case landmarkQuiz
+    case languageExplorer
+    case learningPath
+    case lesson(LearningModule, Lesson)
+    case leaderboards
+    case localMultiplayer
+    case map(continentFilter: Country.Continent? = nil)
+    case mapColoring
+    case mapFullScreen(continentFilter: String?)
+    case mapPuzzle
+    case multiplayer
+    case neighborExplorer(Country)
+    case oceanExplorer
+    case organizationDetail(Organization)
+    case organizations
+    case paywall
+    case profile
+    case quizPacks
+    case quizSession(QuizConfiguration)
+    case quizSetup
+    case quotes
+    case search
+    case sectionEditor
+    case settings
+    case signIn
     case speedRunSession(region: QuizRegion)
+    case speedRunSetup
+    case spellingBee
+    case srsStudy
+    case territorialDisputes
+    case themes
+    case timeline
+    case timeZones
+    case travelBucketList
+    case travelJournal
+    case travelMap(TravelMapFilter)
+    case travelTracker
+    case trivia
+    case wordSearch
+    case worldRecords
 
     var id: String {
         switch self {
-        // Push
-        case .map(let filter): "map-\(filter?.rawValue ?? "world")"
-        case .countryDetail(let country): "countryDetail-\(country.code)"
-        case .organizationDetail(let organization): "orgDetail-\(organization.id)"
-        case .allMaps: "allMaps"
-        case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
         case .achievements: "achievements"
-        case .themes: "themes"
-        case .settings: "settings"
-        case .quizSetup: "quizSetup"
-        case .neighborExplorer(let country): "neighborExplorer-\(country.code)"
-        case .worldRecords: "worldRecords"
-        case .learningPath: "learningPath"
-        case .mapPuzzle: "mapPuzzle"
+        case .allMaps: "allMaps"
+        case .borderChallenge: "borderChallenge"
+        case .challengeResult: "challengeResult"
+        case .challengeRoom: "challengeRoom"
+        case .coinStore: "coinStore"
+        case .compare: "compare"
+        case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
         case .continentPicker: "continentPicker"
         case .continentStats(let name): "continentStats-\(name)"
-        case .oceanExplorer: "oceanExplorer"
-        case .languageExplorer: "languageExplorer"
-        case .independenceTimeline: "independenceTimeline"
-        case .economyExplorer: "economyExplorer"
-        case .geographyFeatures: "geographyFeatures"
-        case .cultureExplorer: "cultureExplorer"
-        case .landmarkGallery: "landmarkGallery"
-        case .mapColoring: "mapColoring"
-        case .territorialDisputes: "territorialDisputes"
-        case .lesson(let module, let lesson): "lesson-\(module.id)-\(lesson.id)"
-        case .challengeResult: "challengeResult"
-        case .dailyChallengeResult: "dailyChallengeResult"
-
-        // Sheet
-        case .signIn: "signIn"
-        case .profile: "profile"
         case .countries: "countries"
-        case .favorites: "favorites"
-        case .organizations: "organizations"
-        case .coinStore: "coinStore"
-        case .paywall: "paywall"
-        case .speedRunSetup: "speedRunSetup"
-        case .dailyChallenge: "dailyChallenge"
-        case .exploreGame: "exploreGame"
-        case .multiplayer: "multiplayer"
-        case .quizPacks: "quizPacks"
-        case .customQuiz: "customQuiz"
-        case .distanceCalculator: "distanceCalculator"
-        case .currencyConverter: "currencyConverter"
-        case .timeZones: "timeZones"
-        case .compare: "compare"
-        case .timeline: "timeline"
-        case .travelTracker: "travelTracker"
-        case .travelJournal: "travelJournal"
-        case .travelBucketList: "travelBucketList"
-        case .leaderboards: "leaderboards"
-        case .search: "search"
-        case .srsStudy: "srsStudy"
-        case .flagGame: "flagGame"
-        case .trivia: "trivia"
-        case .spellingBee: "spellingBee"
-        case .landmarkQuiz: "landmarkQuiz"
-        case .feed: "feed"
-        case .challengeRoom: "challengeRoom"
-        case .quotes: "quotes"
+        case .countryDetail(let country): "countryDetail-\(country.code)"
         case .countryNicknames: "countryNicknames"
-        case .wordSearch: "wordSearch"
-        case .borderChallenge: "borderChallenge"
-        case .localMultiplayer: "localMultiplayer"
-        case .sectionEditor: "sectionEditor"
-        case .friends: "friends"
-
-        // Full screen cover
-        case .mapFullScreen(let filter): "mapFullScreen-\(filter ?? "world")"
-        case .quizSession: "quizSession"
+        case .cultureExplorer: "cultureExplorer"
+        case .currencyConverter: "currencyConverter"
+        case .customQuiz: "customQuiz"
+        case .dailyChallenge: "dailyChallenge"
+        case .dailyChallengeResult: "dailyChallengeResult"
+        case .distanceCalculator: "distanceCalculator"
+        case .economyExplorer: "economyExplorer"
+        case .exploreGame: "exploreGame"
+        case .favorites: "favorites"
+        case .feed: "feed"
+        case .flagGame: "flagGame"
         case .flashcardSession: "flashcardSession"
-        case .travelMap: "travelMap"
-        case .historicalMap(let year): "historicalMap-\(String(year))"
+        case .friends: "friends"
+        case .geographyFeatures: "geographyFeatures"
+        case .historicalMap(let year): "historicalMap-\(year)"
+        case .independenceTimeline: "independenceTimeline"
+        case .landmarkGallery: "landmarkGallery"
+        case .landmarkQuiz: "landmarkQuiz"
+        case .languageExplorer: "languageExplorer"
+        case .learningPath: "learningPath"
+        case .lesson(let module, let lesson): "lesson-\(module.id)-\(lesson.id)"
+        case .leaderboards: "leaderboards"
+        case .localMultiplayer: "localMultiplayer"
+        case .map(let filter): "map-\(filter?.rawValue ?? "world")"
+        case .mapColoring: "mapColoring"
+        case .mapFullScreen(let filter): "mapFullScreen-\(filter ?? "world")"
+        case .mapPuzzle: "mapPuzzle"
+        case .multiplayer: "multiplayer"
+        case .neighborExplorer(let country): "neighborExplorer-\(country.code)"
+        case .oceanExplorer: "oceanExplorer"
+        case .organizationDetail(let org): "orgDetail-\(org.id)"
+        case .organizations: "organizations"
+        case .paywall: "paywall"
+        case .profile: "profile"
+        case .quizPacks: "quizPacks"
+        case .quizSession: "quizSession"
+        case .quizSetup: "quizSetup"
+        case .quotes: "quotes"
+        case .search: "search"
+        case .sectionEditor: "sectionEditor"
+        case .settings: "settings"
+        case .signIn: "signIn"
         case .speedRunSession(let region): "speedRunSession-\(region.rawValue)"
-        }
-    }
-}
-
-// MARK: - Presentation Style
-extension Destination {
-    var presentationStyle: PresentationStyle {
-        switch self {
-        // Push destinations
-        case .map, .countryDetail, .organizationDetail, .allMaps, .continentOverview,
-             .achievements, .themes, .settings, .quizSetup, .neighborExplorer,
-             .worldRecords, .learningPath, .mapPuzzle, .continentPicker, .continentStats,
-             .oceanExplorer, .languageExplorer, .independenceTimeline, .economyExplorer,
-             .geographyFeatures, .cultureExplorer, .landmarkGallery, .mapColoring,
-             .territorialDisputes, .lesson, .challengeResult, .dailyChallengeResult:
-            .push
-
-        // Full screen cover destinations
-        case .mapFullScreen, .quizSession, .flashcardSession, .travelMap,
-             .historicalMap, .speedRunSession:
-            .fullScreenCover
-
-        // Sheet destinations (everything else)
-        default:
-            .sheet
+        case .speedRunSetup: "speedRunSetup"
+        case .spellingBee: "spellingBee"
+        case .srsStudy: "srsStudy"
+        case .territorialDisputes: "territorialDisputes"
+        case .themes: "themes"
+        case .timeline: "timeline"
+        case .timeZones: "timeZones"
+        case .travelBucketList: "travelBucketList"
+        case .travelJournal: "travelJournal"
+        case .travelMap: "travelMap"
+        case .travelTracker: "travelTracker"
+        case .trivia: "trivia"
+        case .wordSearch: "wordSearch"
+        case .worldRecords: "worldRecords"
         }
     }
 
@@ -215,177 +167,77 @@ extension Destination {
     @ViewBuilder
     var content: some View {
         switch self {
-        // Push — core
-        case .map(let continentFilter):
-            MapScreen(continentFilter: continentFilter?.rawValue)
-        case .countryDetail(let country):
-            CountryDetailScreen(country: country)
-        case .organizationDetail(let organization):
-            OrganizationDetailScreen(organization: organization)
-        case .allMaps:
-            AllMapsScreen()
-        case .continentOverview(let continent):
-            ContinentOverviewScreen(continent: continent)
-        case .achievements:
-            AchievementsScreen()
-        case .themes:
-            ThemesScreen()
-        case .settings:
-            SettingsScreen()
-        case .quizSetup:
-            QuizSetupScreen()
-        case .neighborExplorer(let country):
-            NeighborExplorerScreen(country: country)
-
-        // Push — explore
-        case .worldRecords:
-            WorldRecordsScreen()
-        case .learningPath:
-            LearningPathScreen()
-        case .mapPuzzle:
-            MapPuzzleSetupScreen()
-        case .continentPicker:
-            ContinentPickerScreen()
-        case .continentStats(let continentName):
-            ContinentStatsScreen(continentName: continentName)
-        case .oceanExplorer:
-            OceanExplorerScreen()
-        case .languageExplorer:
-            LanguageExplorerScreen()
-        case .independenceTimeline:
-            IndependenceTimelineScreen()
-
-        // Push — discover
-        case .economyExplorer:
-            EconomyExplorerScreen()
-        case .geographyFeatures:
-            GeographyFeaturesScreen()
-        case .cultureExplorer:
-            CultureExplorerScreen()
-        case .landmarkGallery:
-            LandmarkGalleryScreen()
-        case .mapColoring:
-            MapColoringScreen()
-        case .territorialDisputes:
-            TerritorialDisputesScreen()
-        case .lesson(let module, let lesson):
-            LessonScreen(module: module, lesson: lesson)
-
-        // Push — results
-        case .challengeResult(let room):
-            ChallengeResultScreen(room: room, onPlayAgain: nil)
-        case .dailyChallengeResult(let score, let maxScore, let challengeType, let timeSpent, let streak):
-            DailyChallengeResultView(
-                score: score,
-                maxScore: maxScore,
-                challengeType: challengeType,
-                timeSpent: timeSpent,
-                streak: streak
-            )
-
-        // Sheet — auth
-        case .signIn:
-            SignInOptionsSheet()
-
-        // Sheet — paywall
-        case .paywall:
-            PaywallScreen()
-
-        // Sheet — section editor
-        case .sectionEditor:
-            HomeSectionEditorSheet(sections: HomeSection.allCases.map { $0 })
-
-        // Sheet — core content
-        case .profile:
-            ProfileScreen()
-        case .countries:
-            CountryListScreen()
-        case .favorites:
-            FavoritesScreen()
-        case .organizations:
-            OrganizationsScreen()
-        case .coinStore:
-            CoinStoreScreen()
-
-        // Sheet — play modes
-        case .speedRunSetup:
-            SpeedRunSetupScreen()
-        case .dailyChallenge:
-            DailyChallengeScreen()
-        case .exploreGame:
-            ExploreGameScreen()
-        case .multiplayer:
-            MultiplayerLobbyScreen(multiplayerService: MultiplayerService())
-        case .quizPacks:
-            QuizPackBrowserScreen()
-        case .customQuiz:
-            CustomQuizLibraryScreen()
-        case .srsStudy:
-            SRSStudyScreen()
-        case .flagGame:
-            FlagGameScreen()
-        case .trivia:
-            TriviaScreen()
-        case .spellingBee:
-            SpellingBeeScreen()
-        case .landmarkQuiz:
-            LandmarkQuizScreen()
-
-        // Sheet — tools
-        case .distanceCalculator:
-            DistanceCalculatorScreen()
-        case .currencyConverter:
-            CurrencyConverterScreen()
-        case .timeZones:
-            TimeZoneScreen()
-        case .compare:
-            CompareScreen()
-        case .timeline:
-            TimelineScreen()
-
-        // Sheet — travel
-        case .travelTracker:
-            TravelTrackerScreen()
-        case .travelJournal:
-            TravelJournalScreen()
-        case .travelBucketList:
-            TravelBucketListScreen()
-
-        // Sheet — app
-        case .search:
-            SearchScreen()
-        case .leaderboards:
-            LeaderboardScreen()
-        case .feed:
-            FeedScreen()
-        case .challengeRoom:
-            ChallengeSetupScreen()
-        case .quotes:
-            QuotesScreen()
-        case .countryNicknames:
-            CountryNicknamesScreen()
-        case .localMultiplayer:
-            LocalMultiplayerEntryScreen()
-        case .wordSearch:
-            WordSearchScreen()
-        case .borderChallenge:
-            BorderChallengeScreen()
-        case .friends:
-            FriendsListScreen()
-
-        // Full screen cover
-        case .mapFullScreen(let continentFilter):
-            MapScreen(continentFilter: continentFilter)
-        case .quizSession(let configuration):
-            QuizSessionScreen(configuration: configuration)
-        case .flashcardSession(let deck, let cards):
-            FlashcardSessionScreen(deck: deck, cards: cards)
-        case .travelMap(let filter):
-            TravelMapScreen(filter: filter)
-        case .historicalMap(let initialYear):
-            HistoricalMapScreen(initialYear: initialYear)
-        case .speedRunSession(let region):
-            SpeedRunSessionScreen(region: region)
+        case .achievements: AchievementsScreen()
+        case .allMaps: AllMapsScreen()
+        case .borderChallenge: BorderChallengeScreen()
+        case .challengeResult(let room): ChallengeResultScreen(room: room, onPlayAgain: nil)
+        case .challengeRoom: ChallengeSetupScreen()
+        case .coinStore: CoinStoreScreen()
+        case .compare: CompareScreen()
+        case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)
+        case .continentPicker: ContinentPickerScreen()
+        case .continentStats(let name): ContinentStatsScreen(continentName: name)
+        case .countries: CountryListScreen()
+        case .countryDetail(let country): CountryDetailScreen(country: country)
+        case .countryNicknames: CountryNicknamesScreen()
+        case .cultureExplorer: CultureExplorerScreen()
+        case .currencyConverter: CurrencyConverterScreen()
+        case .customQuiz: CustomQuizLibraryScreen()
+        case .dailyChallenge: DailyChallengeScreen()
+        case .dailyChallengeResult(let score, let maxScore, let type, let time, let streak):
+            DailyChallengeResultView(score: score, maxScore: maxScore, challengeType: type, timeSpent: time, streak: streak)
+        case .distanceCalculator: DistanceCalculatorScreen()
+        case .economyExplorer: EconomyExplorerScreen()
+        case .exploreGame: ExploreGameScreen()
+        case .favorites: FavoritesScreen()
+        case .feed: FeedScreen()
+        case .flagGame: FlagGameScreen()
+        case .flashcardSession(let deck, let cards): FlashcardSessionScreen(deck: deck, cards: cards)
+        case .friends: FriendsListScreen()
+        case .geographyFeatures: GeographyFeaturesScreen()
+        case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
+        case .independenceTimeline: IndependenceTimelineScreen()
+        case .landmarkGallery: LandmarkGalleryScreen()
+        case .landmarkQuiz: LandmarkQuizScreen()
+        case .languageExplorer: LanguageExplorerScreen()
+        case .learningPath: LearningPathScreen()
+        case .lesson(let module, let lesson): LessonScreen(module: module, lesson: lesson)
+        case .leaderboards: LeaderboardScreen()
+        case .localMultiplayer: LocalMultiplayerEntryScreen()
+        case .map(let filter): MapScreen(continentFilter: filter?.rawValue)
+        case .mapColoring: MapColoringScreen()
+        case .mapFullScreen(let filter): MapScreen(continentFilter: filter)
+        case .mapPuzzle: MapPuzzleSetupScreen()
+        case .multiplayer: MultiplayerLobbyScreen(multiplayerService: MultiplayerService())
+        case .neighborExplorer(let country): NeighborExplorerScreen(country: country)
+        case .oceanExplorer: OceanExplorerScreen()
+        case .organizationDetail(let org): OrganizationDetailScreen(organization: org)
+        case .organizations: OrganizationsScreen()
+        case .paywall: PaywallScreen()
+        case .profile: ProfileScreen()
+        case .quizPacks: QuizPackBrowserScreen()
+        case .quizSession(let config): QuizSessionScreen(configuration: config)
+        case .quizSetup: QuizSetupScreen()
+        case .quotes: QuotesScreen()
+        case .search: SearchScreen()
+        case .sectionEditor: HomeSectionEditorSheet(sections: HomeSection.allCases.map { $0 })
+        case .settings: SettingsScreen()
+        case .signIn: SignInOptionsSheet()
+        case .speedRunSession(let region): SpeedRunSessionScreen(region: region)
+        case .speedRunSetup: SpeedRunSetupScreen()
+        case .spellingBee: SpellingBeeScreen()
+        case .srsStudy: SRSStudyScreen()
+        case .territorialDisputes: TerritorialDisputesScreen()
+        case .themes: ThemesScreen()
+        case .timeline: TimelineScreen()
+        case .timeZones: TimeZoneScreen()
+        case .travelBucketList: TravelBucketListScreen()
+        case .travelJournal: TravelJournalScreen()
+        case .travelMap(let filter): TravelMapScreen(filter: filter)
+        case .travelTracker: TravelTrackerScreen()
+        case .trivia: TriviaScreen()
+        case .wordSearch: WordSearchScreen()
+        case .worldRecords: WorldRecordsScreen()
         }
     }
 }

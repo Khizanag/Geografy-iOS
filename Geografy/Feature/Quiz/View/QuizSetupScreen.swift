@@ -132,7 +132,7 @@ private extension QuizSetupScreen {
                 selectedIDs: [selectedType.id],
                 onSelect: { type in
                     if type.isPremium, !subscriptionService.isPremium {
-                        coordinator.present(.paywall)
+                        coordinator.sheet(.paywall)
                     } else {
                         selectedType = type
                     }
@@ -356,9 +356,9 @@ private extension QuizSetupScreen {
     var startButton: some View {
         GlassButton("Start \(selectedType.displayName)", systemImage: "play.fill", fullWidth: true) {
             if selectedType.isPremium, !subscriptionService.isPremium {
-                coordinator.present(.paywall)
+                coordinator.sheet(.paywall)
             } else {
-                coordinator.present(.quizSession(makeConfiguration()))
+                coordinator.cover(.quizSession(makeConfiguration()))
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)

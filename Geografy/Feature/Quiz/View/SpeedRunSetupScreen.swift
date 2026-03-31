@@ -320,9 +320,9 @@ private extension SpeedRunSetupScreen {
     var startButton: some View {
         GlassButton("Start Speed Run", systemImage: "bolt.fill", fullWidth: true) {
             hapticsService.impact(.medium)
-            coordinator.dismissSheet()
+            coordinator.dismiss()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                coordinator.present(
+                coordinator.cover(
                     .speedRunSession(region: selectedRegion)
                 )
             }

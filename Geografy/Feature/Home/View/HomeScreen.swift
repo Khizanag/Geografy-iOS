@@ -188,7 +188,7 @@ private extension HomeScreen {
 // MARK: - Top Bar
 private extension HomeScreen {
     var profileButton: some View {
-        Button { coordinator.present(.profile) } label: {
+        Button { coordinator.sheet(.profile) } label: {
             ProfileAvatarView(
                 name: authService.currentProfile?.displayName ?? "Explorer",
                 size: DesignSystem.Size.md
@@ -198,7 +198,7 @@ private extension HomeScreen {
     }
 
     var statsButton: some View {
-        Button { coordinator.present(.coinStore) } label: {
+        Button { coordinator.sheet(.coinStore) } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 xpIndicator
                 divider
@@ -226,7 +226,7 @@ private extension HomeScreen {
     }
 
     var searchButton: some View {
-        Button { coordinator.present(.search) } label: {
+        Button { coordinator.sheet(.search) } label: {
             Image(systemName: "magnifyingglass")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
@@ -236,7 +236,7 @@ private extension HomeScreen {
     }
 
     var friendsButton: some View {
-        Button { coordinator.present(.friends) } label: {
+        Button { coordinator.sheet(.friends) } label: {
             Image(systemName: "person.2")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
@@ -304,7 +304,7 @@ private extension HomeScreen {
     }
 
     var editSectionsButton: some View {
-        Button { coordinator.present(.sectionEditor) } label: {
+        Button { coordinator.sheet(.sectionEditor) } label: {
             Image(systemName: "slider.horizontal.3")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -446,7 +446,7 @@ private extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Discover")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            Button { coordinator.present(.countryDetail(country)) } label: {
+            Button { coordinator.sheet(.countryDetail(country)) } label: {
                 HomeCountrySpotlightCard(
                     country: country,
                     funFact: spotlightFunFact(for: country)
@@ -476,7 +476,7 @@ private extension HomeScreen {
                 streak: streakService.currentStreak,
                 isAtRisk: streakService.currentStreak > 0 && !streakService.hasPlayedToday
             ) {
-                coordinator.present(.quizSetup)
+                coordinator.sheet(.quizSetup)
             }
         }
     }
@@ -497,9 +497,9 @@ private extension HomeScreen {
                 xpInCurrentLevel: xpService.xpInCurrentLevel,
                 xpRequiredForNextLevel: xpService.xpRequiredForNextLevel,
                 progressFraction: xpService.progressFraction,
-                onFavoritesTap: { coordinator.present(.favorites) },
-                onCountriesTap: { coordinator.present(.countries) },
-                onProfileTap: { coordinator.present(.profile) }
+                onFavoritesTap: { coordinator.sheet(.favorites) },
+                onCountriesTap: { coordinator.sheet(.countries) },
+                onProfileTap: { coordinator.sheet(.profile) }
             )
         }
     }
@@ -559,7 +559,7 @@ private extension HomeScreen {
     }
 
     func openMap(named name: String) {
-        coordinator.present(.mapFullScreen(continentFilter: name == "World map" ? nil : name))
+        coordinator.cover(.mapFullScreen(continentFilter: name == "World map" ? nil : name))
     }
 
     func loadDailyChallenge() {

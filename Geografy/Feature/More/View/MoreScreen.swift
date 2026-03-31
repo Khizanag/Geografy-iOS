@@ -185,7 +185,7 @@ private extension MoreScreen {
     func gridTile(for sheet: MoreSheet) -> some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.present(sheet.toDestination)
+            coordinator.sheet(sheet.toDestination)
         } label: {
             VStack(spacing: tileSpacing) {
                 ZStack {
