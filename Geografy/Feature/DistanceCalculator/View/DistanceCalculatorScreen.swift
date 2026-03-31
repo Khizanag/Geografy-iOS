@@ -17,6 +17,40 @@ struct DistanceCalculatorScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Distance Calculator")
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $showOriginPicker) {
+                CountryPickerSheet(
+                    title: "From Country",
+                    countries: countryDataService.countries
+                ) { country in
+                    hapticsService.selection()
+                    originCountry = country
+                    animateLine()
+                }
+            }
+            .sheet(isPresented: $showDestinationPicker) {
+                CountryPickerSheet(
+                    title: "To Country",
+                    countries: countryDataService.countries
+                ) { country in
+                    hapticsService.selection()
+                    destinationCountry = country
+                    animateLine()
+                }
+            }
+            .onAppear {
+                blobAnimating = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension DistanceCalculatorScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 pickerSection
@@ -29,38 +63,8 @@ struct DistanceCalculatorScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Distance Calculator")
-        .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showOriginPicker) {
-            CountryPickerSheet(
-                title: "From Country",
-                countries: countryDataService.countries
-            ) { country in
-                hapticsService.selection()
-                originCountry = country
-                animateLine()
-            }
-        }
-        .sheet(isPresented: $showDestinationPicker) {
-            CountryPickerSheet(
-                title: "To Country",
-                countries: countryDataService.countries
-            ) { country in
-                hapticsService.selection()
-                destinationCountry = country
-                animateLine()
-            }
-        }
-        .onAppear {
-            blobAnimating = true
-        }
     }
-}
 
-// MARK: - Subviews
-private extension DistanceCalculatorScreen {
     var pickerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             originPicker

@@ -16,6 +16,28 @@ struct SettingsScreen: View {
     @State private var showDeleteConfirmation = false
 
     var body: some View {
+        scrollContent
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .task { await syncNotificationStatus() }
+            .confirmationDialog(
+                "Delete Account",
+                isPresented: $showDeleteConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Delete Account", role: .destructive) {
+                    authService.deleteAccount()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("All your progress, XP, and achievements will be permanently deleted.")
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension SettingsScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 premiumSection
@@ -30,21 +52,6 @@ struct SettingsScreen: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
-        }
-        .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.inline)
-        .task { await syncNotificationStatus() }
-        .confirmationDialog(
-            "Delete Account",
-            isPresented: $showDeleteConfirmation,
-            titleVisibility: .visible
-        ) {
-            Button("Delete Account", role: .destructive) {
-                authService.deleteAccount()
-            }
-            Button("Cancel", role: .cancel) {}
-        } message: {
-            Text("All your progress, XP, and achievements will be permanently deleted.")
         }
     }
 }

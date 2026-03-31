@@ -21,6 +21,47 @@ struct OrganizationMapScreen: View {
     private let nonMemberColor = DesignSystem.Color.cardBackground
 
     var body: some View {
+        mainContent
+            .background(DesignSystem.Color.ocean)
+            .ignoresSafeArea()
+            .safeAreaInset(edge: .top) {
+                if !isLandscape {
+                    topContent
+                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                }
+            }
+            .toolbarBackground(.clear, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    if isLandscape {
+                        topContent
+                            .frame(maxWidth: 500)
+                            .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    labelsToggleButton
+                }
+            }
+            .navigationDestination(item: $navigateToCountry) { country in
+                CountryDetailScreen(country: country)
+            }
+            .overlay {
+                if showFlagPreview, let code = mapState.selectedCountryCode {
+                    ZoomableFlagView(countryCode: code) {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            showFlagPreview = false
+                        }
+                    }
+                }
+            }
+            .task { await loadMapData() }
+    }
+}
+
+// MARK: - Content
+private extension OrganizationMapScreen {
+    var mainContent: some View {
         ZStack {
             GeometryReader { geometry in
                 mapCanvas(in: geometry.size)
@@ -35,45 +76,8 @@ struct OrganizationMapScreen: View {
                     .transition(.opacity)
             }
         }
-        .background(DesignSystem.Color.ocean)
-        .ignoresSafeArea()
-        .safeAreaInset(edge: .top) {
-            if !isLandscape {
-                topContent
-                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-            }
-        }
-        .toolbarBackground(.clear, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                if isLandscape {
-                    topContent
-                        .frame(maxWidth: 500)
-                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                labelsToggleButton
-            }
-        }
-        .navigationDestination(item: $navigateToCountry) { country in
-            CountryDetailScreen(country: country)
-        }
-        .overlay {
-            if showFlagPreview, let code = mapState.selectedCountryCode {
-                ZoomableFlagView(countryCode: code) {
-                    withAnimation(.easeInOut(duration: 0.25)) {
-                        showFlagPreview = false
-                    }
-                }
-            }
-        }
-        .task { await loadMapData() }
     }
-}
 
-// MARK: - Content
-private extension OrganizationMapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
     var topContent: some View {

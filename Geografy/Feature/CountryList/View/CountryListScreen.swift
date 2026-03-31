@@ -45,6 +45,25 @@ struct CountryListScreen: View {
     @State private var showPopulation = true
 
     var body: some View {
+        listContent
+            .navigationTitle("Countries")
+            .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
+                .closeButtonPlacementLeading()
+            .toolbar { toolbarContent }
+            .onChange(of: groupBy) {
+                expandedSections = Set(sectionKeys)
+            }
+            .onChange(of: countryDataService.countries.count) {
+                if expandedSections.isEmpty {
+                    expandedSections = Set(sectionKeys)
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CountryListScreen {
+    var listContent: some View {
         ScrollViewReader { proxy in
             ZStack(alignment: .trailing) {
                 ScrollView {
@@ -76,18 +95,6 @@ struct CountryListScreen: View {
                     }
                     .padding(.trailing, 4)
                 }
-            }
-        }
-        .navigationTitle("Countries")
-        .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
-            .closeButtonPlacementLeading()
-        .toolbar { toolbarContent }
-        .onChange(of: groupBy) {
-            expandedSections = Set(sectionKeys)
-        }
-        .onChange(of: countryDataService.countries.count) {
-            if expandedSections.isEmpty {
-                expandedSections = Set(sectionKeys)
             }
         }
     }

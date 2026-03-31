@@ -10,6 +10,28 @@ struct TerritorialDisputesScreen: View {
     @State private var appeared = false
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Territorial Disputes")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .onAppear {
+                loadSelections()
+                appeared = true
+            }
+            .alert("Reset to Defaults", isPresented: $showingResetAlert) {
+                Button("Reset", role: .destructive, action: resetToDefaults)
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("All territorial dispute settings will be reset to their internationally recognized defaults.")
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension TerritorialDisputesScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 introCard
@@ -35,26 +57,8 @@ struct TerritorialDisputesScreen: View {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Territorial Disputes")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .onAppear {
-            loadSelections()
-            appeared = true
-        }
-        .alert("Reset to Defaults", isPresented: $showingResetAlert) {
-            Button("Reset", role: .destructive, action: resetToDefaults)
-            Button("Cancel", role: .cancel) {}
-        } message: {
-            Text("All territorial dispute settings will be reset to their internationally recognized defaults.")
-        }
     }
-}
 
-// MARK: - Subviews
-private extension TerritorialDisputesScreen {
     var disclaimerText: String {
         "Choose how disputed territories appear on maps. "
         + "Settings reflect your personal preference — not a political statement. "

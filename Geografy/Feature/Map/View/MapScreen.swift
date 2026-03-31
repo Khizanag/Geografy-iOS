@@ -20,12 +20,53 @@ struct MapScreen: View {
     @State private var isInitialized = false
 
     var body: some View {
+        mainContent
+            .background(DesignSystem.Color.ocean)
+            .ignoresSafeArea()
+            .navigationTitle(continentFilter ?? "World Map")
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .top) {
+                if !isLandscape {
+                    bannerOverlay
+                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                }
+            }
+            .toolbarBackground(.clear, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    if isLandscape {
+                        bannerOverlay
+                            .frame(maxWidth: 500)
+                            .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    labelsToggleButton
+                }
+            }
+            .navigationDestination(item: $navigateToCountry) { country in
+                CountryDetailScreen(country: country)
+            }
+            .overlay {
+                if showFlagPreview, let code = mapState.selectedCountryCode {
+                    flagPreview(for: code)
+                }
+            }
+            .task {
+                await loadMapData()
+            }
+    }
+}
+
+// MARK: - Content
+private extension MapScreen {
+    var mainContent: some View {
         ZStack {
             GeometryReader { geometry in
                 mapContent(in: geometry.size)
                     .onAppear {
                         screenSize = geometry.size
-                        // Fallback: shapes may have loaded before onAppear fired
                         if !isInitialized, !mapState.countryShapes.isEmpty {
                             setInitialScale(for: geometry.size)
                             isInitialized = true
@@ -36,7 +77,6 @@ struct MapScreen: View {
                         updateMinScale(for: newSize)
                     }
                     .onChange(of: mapState.countryShapes.isEmpty) { _, isEmpty in
-                        // Triggered when shapes first load; re-initialize if screen size is ready
                         if !isEmpty, screenSize.width > 0, !isInitialized {
                             setInitialScale(for: screenSize)
                             isInitialized = true
@@ -49,46 +89,8 @@ struct MapScreen: View {
                     .transition(.opacity)
             }
         }
-        .background(DesignSystem.Color.ocean)
-        .ignoresSafeArea()
-        .navigationTitle(continentFilter ?? "World Map")
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .top) {
-            if !isLandscape {
-                bannerOverlay
-                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-            }
-        }
-        .toolbarBackground(.clear, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                if isLandscape {
-                    bannerOverlay
-                        .frame(maxWidth: 500)
-                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                labelsToggleButton
-            }
-        }
-        .navigationDestination(item: $navigateToCountry) { country in
-            CountryDetailScreen(country: country)
-        }
-        .overlay {
-            if showFlagPreview, let code = mapState.selectedCountryCode {
-                flagPreview(for: code)
-            }
-        }
-        .task {
-            await loadMapData()
-        }
     }
-}
 
-// MARK: - Content
-private extension MapScreen {
     var isLandscape: Bool { verticalSizeClass == .compact }
 
     func flagPreview(for code: String) -> some View {
