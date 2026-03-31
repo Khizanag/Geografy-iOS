@@ -217,14 +217,16 @@ private extension ProfileScreen {
 
     func handleAppear() {
         fetchQuizData()
-        guard !reduceMotion else { blobAnimating = true; return }
+        guard !reduceMotion else {
+            blobAnimating = true
+            appeared = true
+            return
+        }
         withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
             blobAnimating = true
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            withAnimation(.easeOut(duration: 0.4)) {
-                appeared = true
-            }
+            appeared = true
         }
     }
 }
