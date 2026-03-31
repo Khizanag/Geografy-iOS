@@ -3,6 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct TravelTrackerScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
@@ -11,12 +12,9 @@ struct TravelTrackerScreen: View {
     @State private var selectedFilter: TravelStatus? = nil
     @State private var searchText = ""
     @State private var showCountryPicker = false
-    @State private var showTravelMap = false
-    @State private var travelMapFilter: TravelMapFilter = .visited
     @State private var selectedCountry: Country?
     @State private var appeared = false
     @State private var blobAnimating = false
-    @State private var showBucketList = false
 
     var body: some View {
         ZStack {
@@ -30,9 +28,6 @@ struct TravelTrackerScreen: View {
         .navigationTitle("Travel Tracker")
         .searchable(text: $searchText, prompt: "Search countries…")
         .toolbar { toolbarContent }
-        .fullScreenCover(isPresented: $showTravelMap) {
-            TravelMapScreen(filter: travelMapFilter)
-        }
         .sheet(isPresented: $showCountryPicker) {
             TravelCountryPickerSheet(
                 countries: countryDataService.countries,
@@ -49,9 +44,6 @@ struct TravelTrackerScreen: View {
                 )
             )
         }
-        .sheet(isPresented: $showBucketList) {
-            TravelBucketListScreen()
-        }
         .onAppear {
             blobAnimating = true
             appeared = true
@@ -66,7 +58,7 @@ private extension TravelTrackerScreen {
         ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
-                showBucketList = true
+                coordinator.sheet(.travelBucketList)
             } label: {
                 Label("Bucket List", systemImage: "list.star")
                     .foregroundStyle(DesignSystem.Color.accent)
@@ -171,8 +163,7 @@ private extension TravelTrackerScreen {
 
     var viewOnMapSection: some View {
         Button {
-            travelMapFilter = currentTravelMapFilter
-            showTravelMap = true
+            coordinator.cover(.travelMap(currentTravelMapFilter))
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
