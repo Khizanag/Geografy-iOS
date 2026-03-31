@@ -33,13 +33,11 @@ private extension TimeZoneScreen {
     enum TimeZoneTab: CaseIterable {
         case worldClock
         case allZones
-        case quiz
 
         var label: String {
             switch self {
             case .worldClock: "World Clock"
             case .allZones: "By Zone"
-            case .quiz: "Quiz"
             }
         }
 
@@ -47,7 +45,6 @@ private extension TimeZoneScreen {
             switch self {
             case .worldClock: "clock.fill"
             case .allZones: "list.bullet.rectangle"
-            case .quiz: "questionmark.circle.fill"
             }
         }
     }
@@ -102,8 +99,6 @@ private extension TimeZoneScreen {
             WorldClockView(countries: countriesWithZones)
         case .allZones:
             AllZonesView(countries: countriesWithZones)
-        case .quiz:
-            TimeZoneQuizView(countries: countriesWithZones)
         }
     }
 
@@ -358,188 +353,5 @@ private struct AllZonesView: View {
         let normalized = (offset + 12) / 26
         let index = Int(normalized * Double(colors.count - 1))
         return colors[max(0, min(index, colors.count - 1))]
-    }
-}
-
-// MARK: - Time Zone Quiz View
-private struct TimeZoneQuizView: View {
-    let countries: [CountryWithZone]
-
-    @State private var questionPair: (CountryWithZone, CountryWithZone)?
-    @State private var choices: [Int] = []
-    @State private var selectedAnswer: Int?
-    @State private var score = 0
-    @State private var totalAnswered = 0
-    @State private var answerState: AnswerState = .unanswered
-
-    private enum AnswerState {
-        case unanswered, correct, wrong
-    }
-
-    var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                scoreHeader
-                if let (countryA, countryB) = questionPair {
-                    questionCard(countryA: countryA, countryB: countryB)
-                    choicesGrid
-                    nextButton
-                } else {
-                    emptyState
-                }
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .onAppear { generateQuestion() }
-    }
-
-    private var scoreHeader: some View {
-        HStack {
-            Label("\(score)/\(totalAnswered)", systemImage: "checkmark.circle.fill")
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.success)
-                .accessibilityLabel("Score: \(score) out of \(totalAnswered)")
-            Spacer()
-            Text("Time Difference Quiz")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .accessibilityAddTraits(.isHeader)
-        }
-    }
-
-    private func questionCard(countryA: CountryWithZone, countryB: CountryWithZone) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                Text("What is the time difference?")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-
-                HStack(spacing: DesignSystem.Spacing.lg) {
-                    countryTimeCard(for: countryA, color: DesignSystem.Color.accent)
-                    Image(systemName: "arrow.left.arrow.right")
-                        .font(DesignSystem.Font.title2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .accessibilityHidden(true)
-                    countryTimeCard(for: countryB, color: DesignSystem.Color.blue)
-                }
-            }
-            .padding(DesignSystem.Spacing.md)
-            .frame(maxWidth: .infinity)
-        }
-    }
-
-    private func countryTimeCard(for item: CountryWithZone, color: Color) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            FlagView(countryCode: item.country.code, height: 32)
-            Text(item.country.name)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.medium)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-            Text(item.utcOffsetLabel)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(color)
-                .fontWeight(.semibold)
-        }
-        .frame(maxWidth: .infinity)
-    }
-
-    private var choicesGrid: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(choices.enumerated()), id: \.element) { index, choice in
-                QuizOptionButton(
-                    text: choiceLabel(for: choice),
-                    flagCode: nil,
-                    state: optionState(for: choice),
-                    index: index
-                ) {
-                    guard selectedAnswer == nil else { return }
-                    selectedAnswer = choice
-                    if choice == correctAnswer {
-                        answerState = .correct
-                        score += 1
-                    } else {
-                        answerState = .wrong
-                    }
-                    totalAnswered += 1
-                }
-            }
-        }
-    }
-
-    private var nextButton: some View {
-        Group {
-            if selectedAnswer != nil {
-                GlassButton("Next Question", systemImage: "arrow.right", fullWidth: true) {
-                    generateQuestion()
-                }
-            }
-        }
-    }
-
-    private var emptyState: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "clock.badge.questionmark")
-                .font(DesignSystem.Font.displayXS)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Text("Not enough countries with time zone data")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .padding(DesignSystem.Spacing.xl)
-    }
-
-    private func optionState(for choice: Int) -> QuizOptionButton.OptionState {
-        guard let selected = selectedAnswer else { return .default }
-        let isCorrect = choice == correctAnswer
-        if isCorrect { return .correct }
-        if choice == selected { return .incorrect }
-        return .disabled
-    }
-
-    private func choiceLabel(for hours: Int) -> String {
-        if hours == 0 {
-            "Same time"
-        } else {
-            "\(abs(hours))h difference"
-        }
-    }
-
-    private var correctAnswer: Int {
-        guard let (a, b) = questionPair else { return 0 }
-        return Int(round(b.utcOffsetHours - a.utcOffsetHours))
-    }
-
-    private func generateQuestion() {
-        selectedAnswer = nil
-        answerState = .unanswered
-
-        let available = countries
-        guard available.count >= 2 else {
-            questionPair = nil
-            return
-        }
-
-        var countryA: CountryWithZone
-        var countryB: CountryWithZone
-        repeat {
-            countryA = available.randomElement()!
-            countryB = available.randomElement()!
-        } while countryA.id == countryB.id || countryA.utcOffsetHours == countryB.utcOffsetHours
-
-        questionPair = (countryA, countryB)
-
-        let correct = Int(round(countryB.utcOffsetHours - countryA.utcOffsetHours))
-        var wrongChoices = Set<Int>()
-        while wrongChoices.count < 3 {
-            let candidate = Int.random(in: -12...14)
-            if candidate != correct {
-                wrongChoices.insert(candidate)
-            }
-        }
-        choices = ([correct] + wrongChoices).shuffled()
     }
 }
