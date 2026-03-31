@@ -122,26 +122,16 @@ private extension CountryDetailScreen {
         case .info(let item):
             propertyDetailSheet(for: item)
         case .compare:
-            NavigationStack { CompareScreen(preselectedCountry: country) }
-                .presentationDetents([.large])
+            CompareScreen(preselectedCountry: country)
         case .currencyConverter(let code):
-            NavigationStack { CurrencyConverterScreen(preselectedCurrencyCode: code) }
-                .presentationDetents([.large])
+            CurrencyConverterScreen(preselectedCurrencyCode: code)
         case .deepDive:
-            NavigationStack {
-                CountryProfileScreen(
-                    country: country,
-                    profile: profileService.profile(for: country.code)
-                )
-                .toolbar {
-                }
-            }
-            .presentationDetents([.large])
+            CountryProfileScreen(
+                country: country,
+                profile: profileService.profile(for: country.code)
+            )
         case .neighborExplorer:
-            NavigationStack {
-                NeighborExplorerScreen(country: country)
-            }
-            .presentationDetents([.large])
+            NeighborExplorerScreen(country: country)
         case .organizationMap(let organization):
             OrganizationMapScreen(organization: organization)
         }
@@ -563,12 +553,7 @@ private extension CountryDetailScreen {
     }
 
     var continentMapCover: some View {
-        NavigationStack {
-            MapScreen(continentFilter: country.continent.displayName)
-                .navigationDestination(for: Country.self) { detailCountry in
-                    CountryDetailScreen(country: detailCountry)
-                }
-        }
+        MapScreen(continentFilter: country.continent.displayName)
     }
 
     @ViewBuilder

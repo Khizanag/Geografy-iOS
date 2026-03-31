@@ -9,24 +9,22 @@ struct SizeCompareView: View {
     let comparisonCountry: Country
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                mainContent
+        ZStack {
+            DesignSystem.Color.background.ignoresSafeArea()
+            mainContent
+        }
+        .navigationTitle("Size Comparison")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                CircleCloseButton { dismiss() }
             }
-            .navigationTitle("Size Comparison")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    CircleCloseButton { dismiss() }
+            ToolbarItem(placement: .topBarTrailing) {
+                ShareLink(item: shareText) {
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundStyle(DesignSystem.Color.accent)
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    ShareLink(item: shareText) {
-                        Image(systemName: "square.and.arrow.up")
-                            .foregroundStyle(DesignSystem.Color.accent)
-                    }
-                    .buttonStyle(.plain)
-                }
+                .buttonStyle(.plain)
             }
         }
         .presentationDetents([.medium, .large])
@@ -149,9 +147,15 @@ private extension SizeCompareView {
 
     var comparisonLabel: String {
         if comparisonCountry.area > referenceCountry.area {
-            return String(format: "%@ is %.1fx larger than %@", comparisonCountry.name, multiplier, referenceCountry.name)
+            return String(
+                format: "%@ is %.1fx larger than %@",
+                comparisonCountry.name, multiplier, referenceCountry.name
+            )
         } else if comparisonCountry.area < referenceCountry.area {
-            return String(format: "%@ is %.1fx smaller than %@", comparisonCountry.name, multiplier, referenceCountry.name)
+            return String(
+                format: "%@ is %.1fx smaller than %@",
+                comparisonCountry.name, multiplier, referenceCountry.name
+            )
         }
         return "\(comparisonCountry.name) and \(referenceCountry.name) are similar in size"
     }
@@ -169,6 +173,7 @@ private extension SizeCompareView {
     }
 
     var shareText: String {
+        // swiftlint:disable:next line_length
         "\(comparisonLabel) by land area. Reference: \(formattedArea(referenceCountry.area)), \(comparisonCountry.name): \(formattedArea(comparisonCountry.area))"
     }
 

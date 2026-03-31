@@ -9,7 +9,7 @@ enum Destination: Hashable, Identifiable {
     case challengeResult(ChallengeRoom)
     case challengeRoom
     case coinStore
-    case compare
+    case compare(preselectedCountry: Country? = nil)
     case continentOverview(Country.Continent)
     case continentPicker
     case continentStats(String)
@@ -17,7 +17,7 @@ enum Destination: Hashable, Identifiable {
     case countryDetail(Country)
     case countryNicknames
     case cultureExplorer
-    case currencyConverter
+    case currencyConverter(preselectedCode: String? = nil)
     case customQuiz
     case customQuizShare(CustomQuiz)
     case dailyChallenge
@@ -85,7 +85,7 @@ enum Destination: Hashable, Identifiable {
         case .challengeResult: "challengeResult"
         case .challengeRoom: "challengeRoom"
         case .coinStore: "coinStore"
-        case .compare: "compare"
+        case .compare(let country): "compare-\(country?.code ?? "none")"
         case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
         case .continentPicker: "continentPicker"
         case .continentStats(let name): "continentStats-\(name)"
@@ -93,7 +93,7 @@ enum Destination: Hashable, Identifiable {
         case .countryDetail(let country): "countryDetail-\(country.code)"
         case .countryNicknames: "countryNicknames"
         case .cultureExplorer: "cultureExplorer"
-        case .currencyConverter: "currencyConverter"
+        case .currencyConverter(let code): "currencyConverter-\(code ?? "none")"
         case .customQuiz: "customQuiz"
         case .customQuizShare(let quiz): "customQuizShare-\(quiz.id)"
         case .dailyChallenge: "dailyChallenge"
@@ -168,7 +168,7 @@ extension Destination {
         case .challengeResult(let room): ChallengeResultScreen(room: room, onPlayAgain: nil)
         case .challengeRoom: ChallengeSetupScreen()
         case .coinStore: CoinStoreScreen()
-        case .compare: CompareScreen()
+        case .compare(let country): CompareScreen(preselectedCountry: country)
         case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)
         case .continentPicker: ContinentPickerScreen()
         case .continentStats(let name): ContinentStatsScreen(continentName: name)
@@ -176,7 +176,7 @@ extension Destination {
         case .countryDetail(let country): CountryDetailScreen(country: country)
         case .countryNicknames: CountryNicknamesScreen()
         case .cultureExplorer: CultureExplorerScreen()
-        case .currencyConverter: CurrencyConverterScreen()
+        case .currencyConverter(let code): CurrencyConverterScreen(preselectedCurrencyCode: code)
         case .customQuiz: CustomQuizLibraryScreen()
         case .customQuizShare(let quiz): CustomQuizShareScreen(quiz: quiz)
         case .dailyChallenge: DailyChallengeScreen()

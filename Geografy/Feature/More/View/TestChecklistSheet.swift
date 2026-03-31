@@ -8,26 +8,19 @@ struct TestChecklistSheet: View {
     @State private var checked: Set<Int> = []
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if let checklist {
-                    checklistContent(checklist)
-                } else {
-                    ContentUnavailableView(
-                        "No Checklist",
-                        systemImage: "checkmark.circle",
-                        description: Text("No test items defined for this feature yet.")
-                    )
-                }
-            }
-            .navigationTitle("Test: \(title)")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton()
-                }
+        Group {
+            if let checklist {
+                checklistContent(checklist)
+            } else {
+                ContentUnavailableView(
+                    "No Checklist",
+                    systemImage: "checkmark.circle",
+                    description: Text("No test items defined for this feature yet.")
+                )
             }
         }
+        .navigationTitle("Test: \(title)")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

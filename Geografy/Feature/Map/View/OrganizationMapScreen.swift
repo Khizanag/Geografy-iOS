@@ -21,56 +21,54 @@ struct OrganizationMapScreen: View {
     private let nonMemberColor = DesignSystem.Color.cardBackground
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                GeometryReader { geometry in
-                    mapCanvas(in: geometry.size)
-                        .onAppear { screenSize = geometry.size }
-                        .onChange(of: geometry.size) { _, newSize in
-                            screenSize = newSize
-                            updateMinScale(for: newSize)
-                        }
-                }
-                if mapState.countryShapes.isEmpty {
-                    MapLoadingView()
-                        .transition(.opacity)
-                }
+        ZStack {
+            GeometryReader { geometry in
+                mapCanvas(in: geometry.size)
+                    .onAppear { screenSize = geometry.size }
+                    .onChange(of: geometry.size) { _, newSize in
+                        screenSize = newSize
+                        updateMinScale(for: newSize)
+                    }
             }
-            .background(DesignSystem.Color.ocean)
-            .ignoresSafeArea()
-            .safeAreaInset(edge: .top) {
-                if !isLandscape {
+            if mapState.countryShapes.isEmpty {
+                MapLoadingView()
+                    .transition(.opacity)
+            }
+        }
+        .background(DesignSystem.Color.ocean)
+        .ignoresSafeArea()
+        .safeAreaInset(edge: .top) {
+            if !isLandscape {
+                topContent
+                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+            }
+        }
+        .toolbarBackground(.clear, for: .navigationBar)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                if isLandscape {
                     topContent
+                        .frame(maxWidth: 500)
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
-            .toolbarBackground(.clear, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    if isLandscape {
-                        topContent
-                            .frame(maxWidth: 500)
-                            .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    labelsToggleButton
-                }
+            ToolbarItem(placement: .topBarTrailing) {
+                labelsToggleButton
             }
-            .navigationDestination(item: $navigateToCountry) { country in
-                CountryDetailScreen(country: country)
-            }
-            .overlay {
-                if showFlagPreview, let code = mapState.selectedCountryCode {
-                    ZoomableFlagView(countryCode: code) {
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            showFlagPreview = false
-                        }
-                    }
-                }
-            }
-            .task { await loadMapData() }
         }
+        .navigationDestination(item: $navigateToCountry) { country in
+            CountryDetailScreen(country: country)
+        }
+        .overlay {
+            if showFlagPreview, let code = mapState.selectedCountryCode {
+                ZoomableFlagView(countryCode: code) {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        showFlagPreview = false
+                    }
+                }
+            }
+        }
+        .task { await loadMapData() }
     }
 }
 

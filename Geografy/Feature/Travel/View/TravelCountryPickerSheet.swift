@@ -16,20 +16,18 @@ struct TravelCountryPickerSheet: View {
     @State private var selectedCountry: Country?
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                DesignSystem.Color.background.ignoresSafeArea()
-                countryList
-            }
-            .navigationTitle(navigationTitle)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { doneButton }
-            .searchable(
-                text: $searchText,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "Search countries…"
-            )
+        ZStack {
+            DesignSystem.Color.background.ignoresSafeArea()
+            countryList
         }
+        .navigationTitle(navigationTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar { doneButton }
+        .searchable(
+            text: $searchText,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: "Search countries…"
+        )
         .sheet(item: $selectedCountry) { country in
             TravelStatusPickerSheet(
                 country: country,

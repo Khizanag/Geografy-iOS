@@ -24,23 +24,21 @@ struct GuideSheet<Illustration: View>: View {
     @State private var currentPage = 0
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                TabView(selection: $currentPage) {
-                    ForEach(Array(pages.enumerated()), id: \.element.id) { index, page in
-                        pageContent(page, index: index)
-                            .tag(index)
-                    }
+        VStack(spacing: 0) {
+            TabView(selection: $currentPage) {
+                ForEach(Array(pages.enumerated()), id: \.element.id) { index, page in
+                    pageContent(page, index: index)
+                        .tag(index)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-
-                pageIndicatorAndButton
             }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
+            .tabViewStyle(.page(indexDisplayMode: .never))
+
+            pageIndicatorAndButton
         }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        #if !os(tvOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 }
 

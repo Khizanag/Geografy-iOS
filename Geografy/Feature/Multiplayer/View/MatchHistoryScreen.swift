@@ -2,28 +2,19 @@ import SwiftUI
 import GeografyDesign
 
 struct MatchHistoryScreen: View {
-    @Environment(\.dismiss) private var dismiss
-
     let multiplayerService: MultiplayerService
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if multiplayerService.matchHistory.isEmpty {
-                    emptyState
-                } else {
-                    matchList
-                }
-            }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Match History")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { dismiss() }
-                }
+        Group {
+            if multiplayerService.matchHistory.isEmpty {
+                emptyState
+            } else {
+                matchList
             }
         }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("Match History")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -2,7 +2,6 @@ import SwiftUI
 import GeografyDesign
 
 struct AchievementDetailSheet: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
 
     let definition: AchievementDefinition
@@ -13,30 +12,23 @@ struct AchievementDetailSheet: View {
     let onTogglePin: () -> Void
 
     var body: some View {
-        NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: DesignSystem.Spacing.xl) {
-                    heroSection
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                heroSection
 
-                    infoSection
+                infoSection
 
-                    statusSection
+                statusSection
 
-                    if isUnlocked {
-                        pinSection
-                    }
-                }
-                .padding(DesignSystem.Spacing.lg)
-            }
-            .navigationTitle(definition.title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { dismiss() }
+                if isUnlocked {
+                    pinSection
                 }
             }
-            .presentationDetents([.fraction(0.65), .large])
+            .padding(DesignSystem.Spacing.lg)
         }
+        .navigationTitle(definition.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .presentationDetents([.fraction(0.65), .large])
     }
 }
 
