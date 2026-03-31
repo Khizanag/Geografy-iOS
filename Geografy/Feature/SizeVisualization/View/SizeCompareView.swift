@@ -9,10 +9,8 @@ struct SizeCompareView: View {
     let comparisonCountry: Country
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            mainContent
-        }
+        mainContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Size Comparison")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

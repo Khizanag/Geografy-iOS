@@ -20,8 +20,7 @@ struct TriviaScreen: View {
     private let service = TriviaService()
 
     var body: some View {
-        ZStack {
-            backgroundView
+        Group {
             if questions.isEmpty {
                 loadingView
             } else if currentIndex >= questions.count {
@@ -30,6 +29,7 @@ struct TriviaScreen: View {
                 gameContent
             }
         }
+        .background { backgroundView }
         .navigationTitle("Trivia")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {

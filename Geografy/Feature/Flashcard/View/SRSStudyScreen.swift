@@ -9,10 +9,8 @@ struct SRSStudyScreen: View {
     @State private var appeared = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            contentView
-        }
+        contentView
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Review")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {

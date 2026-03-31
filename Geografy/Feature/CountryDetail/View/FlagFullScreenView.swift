@@ -8,12 +8,8 @@ struct FlagFullScreenView: View {
     let countryName: String
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background
-                .ignoresSafeArea()
-
-            flagContent
-        }
+        flagContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .onTapGesture { dismiss() }
     }
 }

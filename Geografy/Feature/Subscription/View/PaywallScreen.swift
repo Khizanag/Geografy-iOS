@@ -14,11 +14,9 @@ struct PaywallScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        ZStack {
-            backgroundGradient
-            ambientBlobs
-            scrollContent
-        }
+        scrollContent
+            .background { ambientBlobs }
+            .background { backgroundGradient }
         .navigationTitle("Geografy Premium")
         .navigationBarTitleDisplayMode(.inline)
         .task {
