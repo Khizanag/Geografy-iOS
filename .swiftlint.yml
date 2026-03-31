@@ -48,6 +48,12 @@ identifier_name:
     - xp
     - cx
     - cy
+    - xs
+    - sm
+    - md
+    - lg
+    - xl
+    - tv
     - n
     - j
     - a

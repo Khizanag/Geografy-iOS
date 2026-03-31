@@ -214,7 +214,7 @@ public struct CountryNeighbors: Sendable {
         "VC": [], "WS": [], "ST": [], "SG": [],
         "SB": [], "LK": [], "TW": [], "TT": [],
         "TV": [], "GB": [], "VU": [],
-        "TO": [], "TK": []
+        "TO": [], "TK": [],
     ]
 
     public static func neighbors(for countryCode: String) -> [String] {

@@ -46,7 +46,7 @@ public extension Organization {
         makeG7, makeG20, makeGCC, makeMercosur,
         makeNordicCouncil, makeOAS, makeOECD, makeOIF,
         makeOPEC, makePIF, makeSAARC, makeSADC, makeSCO,
-        makeUSMCA, makeV4, makeWTO
+        makeUSMCA, makeV4, makeWTO,
     ]
 
     static func find(_ id: String) -> Organization? {

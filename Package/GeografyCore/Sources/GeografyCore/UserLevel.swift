@@ -26,7 +26,7 @@ public extension UserLevel {
         UserLevel(level: 7, title: "Ambassador", minXP: 5_500, maxXP: 9_000),
         UserLevel(level: 8, title: "World Citizen", minXP: 9_000, maxXP: 14_000),
         UserLevel(level: 9, title: "Global Expert", minXP: 14_000, maxXP: 21_000),
-        UserLevel(level: 10, title: "Master Geographer", minXP: 21_000, maxXP: Int.max)
+        UserLevel(level: 10, title: "Master Geographer", minXP: 21_000, maxXP: Int.max),
     ]
 
     static func level(for totalXP: Int) -> UserLevel {

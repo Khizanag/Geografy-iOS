@@ -47,7 +47,7 @@ public enum ISOCountryCodes: Sendable {
         "USA": "US", "URY": "UY", "UZB": "UZ", "VUT": "VU", "VEN": "VE",
         "VNM": "VN", "YEM": "YE", "ZMB": "ZM", "ZWE": "ZW", "SSD": "SS",
         "PSE": "PS", "XKX": "XK", "ESH": "EH", "NCL": "NC", "SOM_": "SO",
-        "FLK": "FK", "GUF": "GF", "PRI": "PR", "ATF": "TF", "ATA": "AQ"
+        "FLK": "FK", "GUF": "GF", "PRI": "PR", "ATF": "TF", "ATA": "AQ",
     ]
 
     private static let alpha2ToAlpha3: [String: String] = {

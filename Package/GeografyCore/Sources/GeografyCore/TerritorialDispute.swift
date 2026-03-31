@@ -65,7 +65,7 @@ public extension TerritorialDispute {
             region: .europe,
             options: [
                 .init(key: "separate", label: "Republic of Kosovo", mergesInto: nil),
-                .init(key: "serbia", label: "Part of Serbia", mergesInto: "RS")
+                .init(key: "serbia", label: "Part of Serbia", mergesInto: "RS"),
             ],
             defaultOptionKey: "separate"
         ),
@@ -78,7 +78,7 @@ public extension TerritorialDispute {
             region: .europe,
             options: [
                 .init(key: "cyprus", label: "Part of Cyprus", mergesInto: "CY"),
-                .init(key: "separate", label: "Separate (TRNC)", mergesInto: nil)
+                .init(key: "separate", label: "Separate (TRNC)", mergesInto: nil),
             ],
             defaultOptionKey: "cyprus"
         ),
@@ -91,7 +91,7 @@ public extension TerritorialDispute {
             region: .europe,
             options: [
                 .init(key: "ukraine", label: "Part of Ukraine", mergesInto: "UA"),
-                .init(key: "russia", label: "Part of Russia", mergesInto: "RU")
+                .init(key: "russia", label: "Part of Russia", mergesInto: "RU"),
             ],
             defaultOptionKey: "ukraine"
         ),
@@ -104,7 +104,7 @@ public extension TerritorialDispute {
             region: .europe,
             options: [
                 .init(key: "moldova", label: "Part of Moldova", mergesInto: "MD"),
-                .init(key: "separate", label: "Separate (unrecognized)", mergesInto: nil)
+                .init(key: "separate", label: "Separate (unrecognized)", mergesInto: nil),
             ],
             defaultOptionKey: "moldova"
         ),
@@ -118,7 +118,7 @@ public extension TerritorialDispute {
             region: .middleEastAsia,
             options: [
                 .init(key: "separate", label: "State of Palestine", mergesInto: nil),
-                .init(key: "israel", label: "Israeli-administered", mergesInto: "IL")
+                .init(key: "israel", label: "Israeli-administered", mergesInto: "IL"),
             ],
             defaultOptionKey: "separate"
         ),
@@ -131,7 +131,7 @@ public extension TerritorialDispute {
             region: .middleEastAsia,
             options: [
                 .init(key: "separate", label: "Republic of China (Taiwan)", mergesInto: nil),
-                .init(key: "china", label: "Part of China", mergesInto: "CN")
+                .init(key: "china", label: "Part of China", mergesInto: "CN"),
             ],
             defaultOptionKey: "separate"
         ),
@@ -144,7 +144,7 @@ public extension TerritorialDispute {
             region: .middleEastAsia,
             options: [
                 .init(key: "syria", label: "Part of Syria", mergesInto: "SY"),
-                .init(key: "israel", label: "Part of Israel", mergesInto: "IL")
+                .init(key: "israel", label: "Part of Israel", mergesInto: "IL"),
             ],
             defaultOptionKey: "syria"
         ),
@@ -158,7 +158,7 @@ public extension TerritorialDispute {
             options: [
                 .init(key: "disputed", label: "Disputed (as shown)", mergesInto: nil),
                 .init(key: "india", label: "Part of India", mergesInto: nil),
-                .init(key: "pakistan", label: "Part of Pakistan", mergesInto: nil)
+                .init(key: "pakistan", label: "Part of Pakistan", mergesInto: nil),
             ],
             defaultOptionKey: "disputed"
         ),
@@ -172,7 +172,7 @@ public extension TerritorialDispute {
             region: .africa,
             options: [
                 .init(key: "morocco", label: "Part of Morocco", mergesInto: "MA"),
-                .init(key: "separate", label: "Sahrawi Republic (SADR)", mergesInto: nil)
+                .init(key: "separate", label: "Sahrawi Republic (SADR)", mergesInto: nil),
             ],
             defaultOptionKey: "morocco"
         ),
@@ -185,7 +185,7 @@ public extension TerritorialDispute {
             region: .africa,
             options: [
                 .init(key: "somalia", label: "Part of Somalia", mergesInto: "SO"),
-                .init(key: "separate", label: "Separate (Somaliland)", mergesInto: nil)
+                .init(key: "separate", label: "Separate (Somaliland)", mergesInto: nil),
             ],
             defaultOptionKey: "somalia"
         ),
@@ -199,10 +199,10 @@ public extension TerritorialDispute {
             region: .americas,
             options: [
                 .init(key: "uk", label: "British Territory", mergesInto: nil),
-                .init(key: "argentina", label: "Argentine Territory (Malvinas)", mergesInto: "AR")
+                .init(key: "argentina", label: "Argentine Territory (Malvinas)", mergesInto: "AR"),
             ],
             defaultOptionKey: "uk"
-        )
+        ),
     ]
 
     static func grouped() -> [(region: Region, disputes: [TerritorialDispute])] {
