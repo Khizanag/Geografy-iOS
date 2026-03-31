@@ -4,8 +4,6 @@ import Observation
 @Observable
 @MainActor
 final class FeatureFlagService {
-    static let shared = FeatureFlagService()
-
     private let defaults = UserDefaults.standard
     private let prefix = "feature_flag_"
 
