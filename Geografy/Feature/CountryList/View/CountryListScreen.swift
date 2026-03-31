@@ -47,8 +47,8 @@ struct CountryListScreen: View {
     var body: some View {
         listContent
             .navigationTitle("Countries")
+            .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
-                .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .onChange(of: groupBy) {
                 expandedSections = Set(sectionKeys)

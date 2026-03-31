@@ -38,9 +38,9 @@ struct CustomQuizBuilderScreen: View {
         .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbarContent }
+        .onAppear { loadExistingQuiz() }
         .sheet(isPresented: $showCountryPicker) { countryPickerSheet }
         .sheet(isPresented: $showPreview) { previewSheet }
-        .onAppear { loadExistingQuiz() }
     }
 }
 

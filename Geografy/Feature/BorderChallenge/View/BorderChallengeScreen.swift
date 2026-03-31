@@ -35,6 +35,9 @@ struct BorderChallengeScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Border Challenge")
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            startNewChallenge()
+        }
         .onReceive(timer) { _ in
             guard timerActive, !isGameOver else { return }
             if secondsRemaining > 0 {
@@ -42,9 +45,6 @@ struct BorderChallengeScreen: View {
             } else {
                 endGame()
             }
-        }
-        .task {
-            startNewChallenge()
         }
     }
 }
