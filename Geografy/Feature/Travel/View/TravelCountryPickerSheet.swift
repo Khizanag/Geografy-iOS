@@ -16,10 +16,8 @@ struct TravelCountryPickerSheet: View {
     @State private var selectedCountry: Country?
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            countryList
-        }
+        countryList
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { doneButton }

@@ -18,34 +18,32 @@ struct SpellingBeeScreen: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            ScrollView {
-                VStack(spacing: DesignSystem.Spacing.lg) {
-                    scorePill
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                scorePill
 
-                    if let country = currentCountry {
-                        flagSection(for: country)
+                if let country = currentCountry {
+                    flagSection(for: country)
 
-                        hintSection(for: country)
+                    hintSection(for: country)
 
-                        letterGrid
+                    letterGrid
 
-                        if showCorrectAnswer, !autoContinue {
-                            nextButton
-                        } else {
-                            inputSection
+                    if showCorrectAnswer, !autoContinue {
+                        nextButton
+                    } else {
+                        inputSection
 
-                            hintButtons
-                        }
+                        hintButtons
                     }
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.top, DesignSystem.Spacing.lg)
-                .padding(.bottom, DesignSystem.Spacing.xxl)
-                .readableContentWidth()
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.top, DesignSystem.Spacing.lg)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
         }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Spelling Bee")
         .closeButtonPlacementLeading()
         .toolbar { toolbarContent }

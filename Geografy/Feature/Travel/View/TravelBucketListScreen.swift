@@ -18,8 +18,7 @@ struct TravelBucketListScreen: View {
     private let notesKey = "bucketList_notes"
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
+        Group {
             if countryDataService.countries.isEmpty {
                 ProgressView().tint(DesignSystem.Color.accent)
             } else if bucketListCountries.isEmpty {
@@ -28,6 +27,7 @@ struct TravelBucketListScreen: View {
                 mainContent
             }
         }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Bucket List")
         .closeButtonPlacementLeading()
         .toolbar { toolbarItems }

@@ -12,10 +12,8 @@ struct EditProfileSheet: View {
     @State private var isSaving = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            formContent
-        }
+        formContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Edit Profile")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

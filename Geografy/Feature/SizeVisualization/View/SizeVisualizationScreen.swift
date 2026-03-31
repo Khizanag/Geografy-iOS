@@ -14,10 +14,8 @@ struct SizeVisualizationScreen: View {
     @State private var showCompare = false
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            mainContent
-        }
+        mainContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Size Visualization")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $searchQuery, prompt: "Search countries...")        .sheet(isPresented: $showCompare) {

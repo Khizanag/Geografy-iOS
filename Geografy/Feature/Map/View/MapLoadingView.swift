@@ -9,19 +9,17 @@ struct MapLoadingView: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        ZStack {
-            oceanBackground
-            VStack(spacing: 0) {
-                Spacer()
-                globeSection
-                    .padding(.bottom, DesignSystem.Spacing.lg)
-                textSection
-                    .padding(.bottom, 40)
-                Spacer()
-                copyrightLabel
-                    .padding(.bottom, DesignSystem.Spacing.xl)
-            }
+        VStack(spacing: 0) {
+            Spacer()
+            globeSection
+                .padding(.bottom, DesignSystem.Spacing.lg)
+            textSection
+                .padding(.bottom, 40)
+            Spacer()
+            copyrightLabel
+                .padding(.bottom, DesignSystem.Spacing.xl)
         }
+        .background { oceanBackground }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             isAnimating = true

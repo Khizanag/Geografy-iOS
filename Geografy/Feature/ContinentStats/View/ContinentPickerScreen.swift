@@ -8,10 +8,8 @@ struct ContinentPickerScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
-            mainContent
-        }
+        mainContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Continents")
         .navigationBarTitleDisplayMode(.large)
     }

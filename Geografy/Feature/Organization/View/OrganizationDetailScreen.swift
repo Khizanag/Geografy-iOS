@@ -16,10 +16,8 @@ struct OrganizationDetailScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        ZStack {
-            ambientBackground
-            scrollContent
-        }
+        scrollContent
+            .background { ambientBackground }
         .navigationTitle(organization.displayName)
         .closeButtonPlacementLeading()
         .background(DesignSystem.Color.background)

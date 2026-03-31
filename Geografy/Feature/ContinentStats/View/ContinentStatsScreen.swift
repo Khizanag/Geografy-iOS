@@ -12,14 +12,14 @@ struct ContinentStatsScreen: View {
     let continentName: String
 
     var body: some View {
-        ZStack {
-            DesignSystem.Color.background.ignoresSafeArea()
+        Group {
             if countryDataService.countries.isEmpty {
                 ProgressView().tint(DesignSystem.Color.accent)
             } else {
                 mainContent
             }
         }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle(continentName)
         .navigationBarTitleDisplayMode(.large)
         .onAppear {
