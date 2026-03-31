@@ -62,12 +62,19 @@ struct ContentView: View {
                 appCoordinator.handleSpotlightActivity(identifier)
             }
         }
-        #if targetEnvironment(macCatalyst)
-        .onReceive(NotificationCenter.default.publisher(for: .macSwitchTab)) { notification in
+        .onReceive(NotificationCenter.default.publisher(for: .switchTab)) { notification in
             if let tab = notification.object as? Int {
                 appCoordinator.selectedTab = tab
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: .startQuiz)) { _ in
+            appCoordinator.selectedTab = 1
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .startDailyChallenge)) { _ in
+            appCoordinator.selectedTab = 0
+            appCoordinator.homeNavigator.sheet(.dailyChallenge)
+        }
+        #if targetEnvironment(macCatalyst)
         .onReceive(NotificationCenter.default.publisher(for: .macOpenSearch)) { _ in
             appCoordinator.homeNavigator.sheet(.search)
         }
