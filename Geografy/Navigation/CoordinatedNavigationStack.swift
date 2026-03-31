@@ -46,7 +46,7 @@ private struct CloseButtonWrapper<Content: View>: View {
         content()
             .toolbar {
                 if showCloseButton, !hideCloseButton {
-                    ToolbarItem(placement: .topBarLeading) {
+                    ToolbarItem(placement: .topBarTrailing) {
                         CircleCloseButton { dismiss() }
                     }
                 }
