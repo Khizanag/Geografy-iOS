@@ -225,7 +225,5 @@ private extension TerritorialDisputesScreen {
 
 // MARK: - Preview
 #Preview {
-    NavigationStack {
-        TerritorialDisputesScreen()
-    }
+    TerritorialDisputesScreen()
 }

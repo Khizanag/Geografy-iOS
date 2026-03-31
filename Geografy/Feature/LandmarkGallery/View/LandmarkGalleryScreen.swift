@@ -30,10 +30,8 @@ struct LandmarkGalleryScreen: View {
         .navigationTitle("Landmark Gallery")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $selectedLandmark) { landmark in
-            NavigationStack {
-                LandmarkDetailView(landmark: landmark)
-            }
-            .presentationDetents([.large])
+            LandmarkDetailView(landmark: landmark)
+                .presentationDetents([.large])
         }
     }
 }

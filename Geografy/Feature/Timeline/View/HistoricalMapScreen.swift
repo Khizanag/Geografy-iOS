@@ -194,14 +194,10 @@ private extension HistoricalMapScreen {
 // MARK: - Event Sheet
 private extension HistoricalMapScreen {
     func eventSheet(for event: HistoricalEvent) -> some View {
-        NavigationStack {
-            eventSheetContent(for: event)
-                .navigationTitle("Event Details")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                }
-        }
-        .presentationDetents([.medium])
+        eventSheetContent(for: event)
+            .navigationTitle("Event Details")
+            .navigationBarTitleDisplayMode(.inline)
+            .presentationDetents([.medium])
     }
 
     func eventSheetContent(for event: HistoricalEvent) -> some View {

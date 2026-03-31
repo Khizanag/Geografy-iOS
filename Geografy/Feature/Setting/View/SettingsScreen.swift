@@ -494,7 +494,5 @@ private struct SettingsIconBadge: View {
 
 // MARK: - Preview
 #Preview {
-    NavigationStack {
-        SettingsScreen()
-    }
+    SettingsScreen()
 }

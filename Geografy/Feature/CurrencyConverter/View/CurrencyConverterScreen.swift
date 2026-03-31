@@ -420,35 +420,33 @@ private struct CurrencyPickerSheet: View {
     @State private var searchText = ""
 
     var body: some View {
-        NavigationStack {
-            List(filteredCurrencies) { entry in
-                Button {
-                    onSelect(entry)
-                    dismiss()
-                } label: {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: entry.countryCode, height: 24)
-                            .frame(width: 36, alignment: .center)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(entry.code)
-                                .font(DesignSystem.Font.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(DesignSystem.Color.textPrimary)
-                            Text(entry.name)
-                                .font(DesignSystem.Font.caption)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                        }
+        List(filteredCurrencies) { entry in
+            Button {
+                onSelect(entry)
+                dismiss()
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    FlagView(countryCode: entry.countryCode, height: 24)
+                        .frame(width: 36, alignment: .center)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(entry.code)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(entry.name)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
             }
-            .searchable(text: $searchText, prompt: "Search currency or country…")
-            .navigationTitle(title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
-                        .tint(DesignSystem.Color.textPrimary)
-                }
+        }
+        .searchable(text: $searchText, prompt: "Search currency or country…")
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") { dismiss() }
+                    .tint(DesignSystem.Color.textPrimary)
             }
         }
     }

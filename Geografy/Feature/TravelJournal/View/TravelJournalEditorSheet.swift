@@ -356,18 +356,9 @@ private extension TravelJournalEditorSheet {
     }
 
     var countryPickerSheet: some View {
-        NavigationStack {
-            countryPickerContent
-                .navigationTitle("Select Country")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        CircleCloseButton {
-                            showCountryPicker = false
-                        }
-                    }
-                }
-        }
+        countryPickerContent
+            .navigationTitle("Select Country")
+            .navigationBarTitleDisplayMode(.inline)
     }
 
     var countryPickerContent: some View {
