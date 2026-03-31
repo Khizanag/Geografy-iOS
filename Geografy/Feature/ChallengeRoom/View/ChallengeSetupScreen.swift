@@ -18,11 +18,11 @@ struct ChallengeSetupScreen: View {
 
     var body: some View {
         scrollContent
-            .safeAreaInset(edge: .bottom) { startButton }
             .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Challenge Room")
             .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) { startButton }
             .fullScreenCover(item: $challengeRoom) { room in
                 CoordinatedNavigationStack(navigator: Navigator()) {
                     if selectedMode == .splitScreen {

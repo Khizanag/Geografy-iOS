@@ -22,6 +22,9 @@ struct DistanceCalculatorScreen: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Distance Calculator")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                blobAnimating = true
+            }
             .sheet(isPresented: $showOriginPicker) {
                 CountryPickerSheet(
                     title: "From Country",
@@ -41,9 +44,6 @@ struct DistanceCalculatorScreen: View {
                     destinationCountry = country
                     animateLine()
                 }
-            }
-            .onAppear {
-                blobAnimating = true
             }
     }
 }

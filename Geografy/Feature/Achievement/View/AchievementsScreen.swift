@@ -14,6 +14,9 @@ struct AchievementsScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle("Achievements")
             .navigationBarTitleDisplayMode(.large)
+            .onAppear {
+                appeared = true
+            }
             .sheet(item: $selectedAchievement) { definition in
                 AchievementDetailSheet(
                     definition: definition,
@@ -23,9 +26,6 @@ struct AchievementsScreen: View {
                     canPin: achievementService.canPinMore,
                     onTogglePin: { achievementService.togglePin(definition.id) }
                 )
-            }
-            .onAppear {
-                appeared = true
             }
     }
 }

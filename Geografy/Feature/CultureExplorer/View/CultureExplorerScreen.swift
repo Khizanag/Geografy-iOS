@@ -24,11 +24,6 @@ struct CultureExplorerScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .overlay {
-            if filteredProfiles.isEmpty, !searchQuery.isEmpty {
-                ContentUnavailableView.search(text: searchQuery)
-            }
-        }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Culture Explorer")
         .navigationBarTitleDisplayMode(.inline)
@@ -36,6 +31,11 @@ struct CultureExplorerScreen: View {
         .sheet(item: $selectedProfile) { profile in
             CultureDetailView(profile: profile)
                 .presentationDetents([.large])
+        }
+        .overlay {
+            if filteredProfiles.isEmpty, !searchQuery.isEmpty {
+                ContentUnavailableView.search(text: searchQuery)
+            }
         }
     }
 }

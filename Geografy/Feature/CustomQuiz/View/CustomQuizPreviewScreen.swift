@@ -20,10 +20,10 @@ struct CustomQuizPreviewScreen: View {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) { saveButton }
         .background(DesignSystem.Color.background)
         .navigationTitle("Preview")
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .bottom) { saveButton }
     }
 }
 

@@ -28,6 +28,15 @@ struct CurrencyConverterScreen: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Currency Converter")
             .navigationBarTitleDisplayMode(.inline)
+            .task {
+                setupDefaults()
+                if let from = fromCurrency {
+                    await currencyService.fetchRates(for: from.code)
+                }
+            }
+            .onAppear {
+                blobAnimating = true
+            }
             .sheet(isPresented: $showFromPicker) {
                 CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
                     hapticsService.selection()
@@ -40,15 +49,6 @@ struct CurrencyConverterScreen: View {
                     hapticsService.selection()
                     toCurrency = entry
                 }
-            }
-            .task {
-                setupDefaults()
-                if let from = fromCurrency {
-                    await currencyService.fetchRates(for: from.code)
-                }
-            }
-            .onAppear {
-                blobAnimating = true
             }
     }
 }
