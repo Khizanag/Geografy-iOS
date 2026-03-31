@@ -37,6 +37,7 @@ struct ChallengeSetupScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Challenge Room")
         .navigationBarTitleDisplayMode(.inline)
+        .interactiveDismissDisabled(true)
         .task { countryDataService.loadCountries() }
         .fullScreenCover(item: $challengeRoom) { room in
             CoordinatedNavigationStack(navigator: Navigator()) {

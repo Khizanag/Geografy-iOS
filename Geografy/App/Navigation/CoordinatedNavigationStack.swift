@@ -53,6 +53,5 @@ private struct DestinationSheetView: View {
             destination.content
         }
         .presentationDetents([.large])
-        .interactiveDismissDisabled(destination.disableInteractiveDismiss)
     }
 }

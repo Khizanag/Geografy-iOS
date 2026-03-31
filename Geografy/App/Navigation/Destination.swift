@@ -149,16 +149,6 @@ enum Destination: Hashable, Identifiable {
         }
     }
 
-    var disableInteractiveDismiss: Bool {
-        switch self {
-        case .flagGame, .trivia, .spellingBee, .landmarkQuiz,
-             .wordSearch, .borderChallenge, .challengeRoom,
-             .localMultiplayer:
-            true
-        default:
-            false
-        }
-    }
 }
 
 // MARK: - Content
