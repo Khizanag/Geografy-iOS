@@ -43,7 +43,7 @@ private extension NicknamesScreen {
                     .font(.system(size: 22, weight: .bold))
 
                 Text(nickname.reason)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
             }

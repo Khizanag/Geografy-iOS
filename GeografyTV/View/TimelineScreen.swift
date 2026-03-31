@@ -62,7 +62,7 @@ private extension TimelineScreen {
                     .font(.system(size: 20, weight: .semibold))
 
                 Text(event.description)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
             }

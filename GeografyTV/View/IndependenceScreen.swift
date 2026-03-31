@@ -35,7 +35,7 @@ struct IndependenceScreen: View {
                                 .font(.system(size: 22, weight: .semibold))
 
                             Text(event.description)
-                                .font(.system(size: 18))
+                                .font(.system(size: 22))
                                 .foregroundStyle(.secondary)
                                 .lineLimit(1)
                         }
@@ -49,7 +49,7 @@ struct IndependenceScreen: View {
 
                             if !event.independenceFrom.isEmpty {
                                 Text("from \(event.independenceFrom)")
-                                    .font(.system(size: 16))
+                                    .font(.system(size: 22))
                                     .foregroundStyle(DesignSystem.Color.textTertiary)
                             }
                         }

@@ -149,7 +149,7 @@ private extension QuizSessionScreen {
             ForEach(Array(GamepadButton.allCases.enumerated()), id: \.element) { index, button in
                 if let question = currentQuestion, index < question.options.count {
                     Label(button.label, systemImage: button.icon)
-                        .font(.system(size: 16))
+                        .font(.system(size: 22))
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
             }

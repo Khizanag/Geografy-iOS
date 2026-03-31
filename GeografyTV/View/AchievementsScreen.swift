@@ -49,7 +49,7 @@ private extension AchievementsScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
 
                 Text(xpService.currentLevel.title)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
 
@@ -62,7 +62,7 @@ private extension AchievementsScreen {
                     .tint(DesignSystem.Color.accent)
 
                 Text("\(xpService.xpRequiredForNextLevel - xpService.xpInCurrentLevel) XP to next level")
-                    .font(.system(size: 16))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
         }
@@ -87,7 +87,7 @@ private extension AchievementsScreen {
                     )
 
                 Text(achievement.description)
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
 

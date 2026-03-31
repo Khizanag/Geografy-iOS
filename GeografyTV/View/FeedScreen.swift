@@ -21,7 +21,7 @@ struct FeedScreen: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         Text(item.type.label)
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.system(size: 22, weight: .bold))
                             .foregroundStyle(item.color)
                             .textCase(.uppercase)
 

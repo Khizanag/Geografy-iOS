@@ -23,7 +23,7 @@ struct CultureScreen: View {
                             .font(.system(size: 22, weight: .semibold))
 
                         Text(fact.cuisine)
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
                     }

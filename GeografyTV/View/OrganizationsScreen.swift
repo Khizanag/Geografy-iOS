@@ -24,7 +24,7 @@ struct OrganizationsScreen: View {
                             .font(.system(size: 22, weight: .semibold))
 
                         Text(organization.fullName)
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
                     }
@@ -66,7 +66,7 @@ struct TVOrganizationDetailScreen: View {
                     }
 
                     Text(organization.description)
-                        .font(.system(size: 18))
+                        .font(.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -83,7 +83,7 @@ struct TVOrganizationDetailScreen: View {
                             Spacer()
 
                             Text(country.capital)
-                                .font(.system(size: 18))
+                                .font(.system(size: 22))
                                 .foregroundStyle(.secondary)
                         }
                     }

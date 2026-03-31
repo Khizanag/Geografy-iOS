@@ -53,7 +53,7 @@ private extension LandmarkScreen {
                     FlagView(countryCode: landmark.countryCode, height: 20)
 
                     Text(landmark.city)
-                        .font(.system(size: 18))
+                        .font(.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -62,7 +62,7 @@ private extension LandmarkScreen {
 
             if landmark.isUNESCO {
                 Image(systemName: "star.fill")
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.warning)
             }
         }

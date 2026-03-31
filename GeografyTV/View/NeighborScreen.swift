@@ -29,11 +29,11 @@ struct NeighborScreen: View {
                             let count = CountryNeighbors.data[country.code]?.count ?? 0
                             if count > 0 {
                                 Text("\(count) neighbors")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 22))
                                     .foregroundStyle(.secondary)
                             } else {
                                 Text("Island")
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 22))
                                     .foregroundStyle(.tertiary)
                             }
                         }
@@ -72,7 +72,7 @@ private extension NeighborScreen {
                             Spacer()
 
                             Text(neighbor.capital)
-                                .font(.system(size: 18))
+                                .font(.system(size: 22))
                                 .foregroundStyle(.secondary)
                         }
                     }

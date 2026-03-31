@@ -60,7 +60,7 @@ private extension CountryBrowserScreen {
                                     .multilineTextAlignment(.center)
 
                                 Text(country.capital)
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 22))
                                     .foregroundStyle(DesignSystem.Color.textSecondary)
                                     .lineLimit(1)
                             }
@@ -100,14 +100,14 @@ private extension CountryBrowserScreen {
                                     .font(.system(size: 22, weight: .semibold))
 
                                 Text(country.capital)
-                                    .font(.system(size: 18))
+                                    .font(.system(size: 22))
                                     .foregroundStyle(.secondary)
                             }
 
                             Spacer()
 
                             Text(country.continent.displayName)
-                                .font(.system(size: 18))
+                                .font(.system(size: 22))
                                 .foregroundStyle(.tertiary)
                         }
                     }

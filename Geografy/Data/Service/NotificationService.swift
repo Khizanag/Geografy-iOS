@@ -1,4 +1,4 @@
-#if canImport(UserNotifications)
+#if os(iOS)
 import UserNotifications
 
 enum NotificationService {

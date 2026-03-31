@@ -30,7 +30,7 @@ struct LanguageScreen: View {
                                 .font(.system(size: 22, weight: .semibold))
 
                             Text(language.nativeName)
-                                .font(.system(size: 18))
+                                .font(.system(size: 22))
                                 .foregroundStyle(.secondary)
                         }
 
@@ -38,11 +38,11 @@ struct LanguageScreen: View {
 
                         VStack(alignment: .trailing, spacing: 2) {
                             Text("\(language.speakerCount)M speakers")
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(.system(size: 22, weight: .semibold))
                                 .foregroundStyle(DesignSystem.Color.accent)
 
                             Text(language.family)
-                                .font(.system(size: 16))
+                                .font(.system(size: 22))
                                 .foregroundStyle(DesignSystem.Color.textTertiary)
                         }
                     }

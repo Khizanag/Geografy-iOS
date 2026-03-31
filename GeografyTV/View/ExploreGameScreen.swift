@@ -97,7 +97,7 @@ private extension ExploreGameScreen {
                             .foregroundStyle(DesignSystem.Color.textPrimary)
 
                         Text(clue.detail)
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
@@ -151,7 +151,7 @@ private extension ExploreGameScreen {
 
             if !state.guessHistory.isEmpty {
                 Text("Wrong guesses: \(state.wrongGuessCount)")
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
                     .focusable(false)
             }

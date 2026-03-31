@@ -55,7 +55,7 @@ private extension TravelScreen {
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.success)
                 Text("Visited")
-                    .font(.system(size: 16))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
             }
 
@@ -64,7 +64,7 @@ private extension TravelScreen {
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.accent)
                 Text("Want to Visit")
-                    .font(.system(size: 16))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
             }
 
@@ -74,7 +74,7 @@ private extension TravelScreen {
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.warning)
                 Text("World Covered")
-                    .font(.system(size: 16))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
             }
         }
@@ -118,7 +118,7 @@ private extension TravelScreen {
             }
         } label: {
             Text(currentStatus?.rawValue.capitalized ?? "Not Set")
-                .font(.system(size: 18))
+                .font(.system(size: 22))
                 .foregroundStyle(statusColor(currentStatus))
         }
     }

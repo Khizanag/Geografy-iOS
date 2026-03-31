@@ -31,7 +31,7 @@ struct QuotesScreen: View {
 
                         HStack(spacing: 12) {
                             Text("— \(quote.author)")
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(.system(size: 22, weight: .semibold))
                                 .foregroundStyle(.secondary)
 
                             if let code = quote.countryCode {

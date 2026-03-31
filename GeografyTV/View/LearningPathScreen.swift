@@ -24,7 +24,7 @@ struct LearningPathScreen: View {
                             .font(.system(size: 22, weight: .semibold))
 
                         Text(module.description)
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
 
@@ -74,7 +74,7 @@ struct TVModuleLessonsScreen: View {
                         .font(.system(size: 22, weight: .semibold))
 
                     Text(lesson.type.rawValue.capitalized)
-                        .font(.system(size: 18))
+                        .font(.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
 

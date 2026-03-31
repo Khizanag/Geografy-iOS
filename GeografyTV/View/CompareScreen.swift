@@ -161,7 +161,7 @@ private extension CompareScreen {
                     .foregroundStyle(DesignSystem.Color.textTertiary)
 
                 Text(label)
-                    .font(.system(size: 16))
+                    .font(.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(width: 140)
@@ -216,7 +216,7 @@ struct TVCountryPickerSheet: View {
                         Spacer()
 
                         Text(country.continent.displayName)
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(.secondary)
                     }
                 }

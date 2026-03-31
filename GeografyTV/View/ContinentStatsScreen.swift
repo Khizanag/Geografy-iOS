@@ -91,11 +91,11 @@ private extension ContinentStatsScreen {
             Spacer()
 
             Text(country.capital)
-                .font(.system(size: 18))
+                .font(.system(size: 22))
                 .foregroundStyle(.secondary)
 
             Text(country.population.formatted())
-                .font(.system(size: 18, weight: .semibold))
+                .font(.system(size: 22, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .frame(width: 120, alignment: .trailing)
         }

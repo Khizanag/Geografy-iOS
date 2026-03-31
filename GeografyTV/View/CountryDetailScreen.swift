@@ -184,7 +184,7 @@ private extension CountryDetailScreen {
                         Spacer()
 
                         Image(systemName: "speaker.wave.2")
-                            .font(.system(size: 18))
+                            .font(.system(size: 22))
                             .foregroundStyle(.tertiary)
                     }
                 }
@@ -228,7 +228,7 @@ private extension CountryDetailScreen {
 
                                 if let fullName = organization?.fullName {
                                     Text(fullName)
-                                        .font(.system(size: 18))
+                                        .font(.system(size: 22))
                                         .foregroundStyle(.secondary)
                                         .lineLimit(1)
                                 }
@@ -237,7 +237,7 @@ private extension CountryDetailScreen {
                             Spacer()
 
                             Image(systemName: "chevron.right")
-                                .font(.system(size: 18))
+                                .font(.system(size: 22))
                                 .foregroundStyle(.tertiary)
                         }
                     }

@@ -43,16 +43,16 @@ private extension OceanScreen {
 
             HStack(spacing: 32) {
                 Label("Avg depth: \(Int(ocean.averageDepth).formatted())m", systemImage: "arrow.down")
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
 
                 Label("Max depth: \(Int(ocean.maxDepth).formatted())m", systemImage: "arrow.down.to.line")
-                    .font(.system(size: 18))
+                    .font(.system(size: 22))
                     .foregroundStyle(.secondary)
             }
 
             Text(ocean.funFact)
-                .font(.system(size: 18))
+                .font(.system(size: 22))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .lineLimit(2)
         }
