@@ -160,7 +160,6 @@
 				Feature/Favorite/View/FavoritesScreen.swift,
 				Feature/Feed/View/FeedCard.swift,
 				Feature/Feed/View/FeedScreen.swift,
-				Feature/FlagEvolution/Model/FlagHistoryEvent.swift,
 				Feature/FlagGame/View/FlagGameResultScreen.swift,
 				Feature/FlagGame/View/FlagGameScreen.swift,
 				Feature/Flashcard/FlashcardGuide/Model/FlashcardGuide.swift,
