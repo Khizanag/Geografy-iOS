@@ -24,6 +24,7 @@ struct IconButton: View {
                 .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 .background(backgroundColor)
                 .clipShape(Circle())
+                .hoverEffect(.lift)
         }
         .buttonStyle(.plain)
     }
