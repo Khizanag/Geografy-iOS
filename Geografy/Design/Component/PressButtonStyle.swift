@@ -25,6 +25,7 @@ private struct PressButtonBody: View {
             .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
             .opacity(configuration.isPressed ? 0.85 : 1.0)
             .animation(.spring(response: 0.25, dampingFraction: 0.7), value: configuration.isPressed)
+            .hoverEffect(.lift)
             #if !os(tvOS)
             .onChange(of: configuration.isPressed) { _, isPressed in
                 if isPressed {

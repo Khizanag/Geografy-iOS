@@ -26,6 +26,7 @@ struct CountryRowView: View {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
         )
+        .hoverEffect(.lift)
         .countryContextMenu(country)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(country.name), \(country.continent.displayName)")

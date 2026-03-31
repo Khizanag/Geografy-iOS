@@ -65,6 +65,7 @@ private extension GlassButton {
         .foregroundStyle(foregroundColor)
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xxs)
+        .hoverEffect(.highlight)
     }
 
     var inlineLabel: some View {
@@ -79,6 +80,7 @@ private extension GlassButton {
         .foregroundStyle(foregroundColor)
         .padding(.horizontal, DesignSystem.Spacing.lg)
         .padding(.vertical, DesignSystem.Spacing.sm)
+        .hoverEffect(.highlight)
     }
 
     var foregroundColor: Color {

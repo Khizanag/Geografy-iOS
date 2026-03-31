@@ -70,6 +70,7 @@ private extension RegionCarousel {
             cardContent(for: region, isSelected: isSelected)
         }
         .buttonStyle(PressButtonStyle())
+        .hoverEffect(.highlight)
         .animation(.easeInOut(duration: 0.25), value: isSelected)
     }
 
