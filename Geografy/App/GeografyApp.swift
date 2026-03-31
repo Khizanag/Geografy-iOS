@@ -27,6 +27,9 @@ struct GeografyApp: App {
     @State private var widgetDataBridge = WidgetDataBridge()
 
     init() {
+        #if os(iOS)
+        BackgroundTaskService.registerTasks()
+        #endif
         let db = DatabaseManager()
         let auth = AuthService(db: db)
         let userID = auth.currentUserID
@@ -172,6 +175,11 @@ struct GeografyApp: App {
             if newPhase == .active {
                 streakService.recordDailyLogin()
             }
+            #if os(iOS)
+            if newPhase == .background {
+                BackgroundTaskService.scheduleWidgetRefresh()
+            }
+            #endif
         }
         #if targetEnvironment(macCatalyst)
         .defaultSize(width: 1200, height: 800)
@@ -182,7 +190,7 @@ struct GeografyApp: App {
 
             CommandGroup(replacing: .appSettings) {
                 Button("Settings...") {
-                    NotificationCenter.default.post(name: .macSwitchTab, object: 4)
+                    NotificationCenter.default.post(name: .switchTab, object: 4)
                 }
                 .keyboardShortcut(",", modifiers: .command)
             }
@@ -197,34 +205,34 @@ struct GeografyApp: App {
 
             CommandMenu("Quiz") {
                 Button("Start Quick Quiz") {
-                    NotificationCenter.default.post(name: .macStartQuiz, object: nil)
+                    NotificationCenter.default.post(name: .startQuiz, object: nil)
                 }
                 .keyboardShortcut("q", modifiers: [.command, .shift])
             }
 
             CommandMenu("Navigate") {
                 Button("Home") {
-                    NotificationCenter.default.post(name: .macSwitchTab, object: 0)
+                    NotificationCenter.default.post(name: .switchTab, object: 0)
                 }
                 .keyboardShortcut("1", modifiers: .command)
 
                 Button("Quiz") {
-                    NotificationCenter.default.post(name: .macSwitchTab, object: 1)
+                    NotificationCenter.default.post(name: .switchTab, object: 1)
                 }
                 .keyboardShortcut("2", modifiers: .command)
 
                 Button("Countries") {
-                    NotificationCenter.default.post(name: .macSwitchTab, object: 2)
+                    NotificationCenter.default.post(name: .switchTab, object: 2)
                 }
                 .keyboardShortcut("3", modifiers: .command)
 
                 Button("Maps") {
-                    NotificationCenter.default.post(name: .macSwitchTab, object: 3)
+                    NotificationCenter.default.post(name: .switchTab, object: 3)
                 }
                 .keyboardShortcut("4", modifiers: .command)
 
                 Button("More") {
-                    NotificationCenter.default.post(name: .macSwitchTab, object: 4)
+                    NotificationCenter.default.post(name: .switchTab, object: 4)
                 }
                 .keyboardShortcut("5", modifiers: .command)
 
@@ -263,12 +271,13 @@ private extension GeografyApp {
     }
 }
 
-#if targetEnvironment(macCatalyst)
-// MARK: - Mac Notification Names
+// MARK: - Notification Names
 extension Notification.Name {
-    static let macSwitchTab = Notification.Name("macSwitchTab")
-    static let macStartQuiz = Notification.Name("macStartQuiz")
+    static let switchTab = Notification.Name("switchTab")
+    static let startQuiz = Notification.Name("startQuiz")
+    static let startDailyChallenge = Notification.Name("startDailyChallenge")
+    #if targetEnvironment(macCatalyst)
     static let macRandomCountry = Notification.Name("macRandomCountry")
     static let macOpenSearch = Notification.Name("macOpenSearch")
+    #endif
 }
-#endif
