@@ -14,14 +14,13 @@ struct PaywallScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                backgroundGradient
-                ambientBlobs
-                scrollContent
-            }
-            .navigationTitle("Geografy Premium")
-            .navigationBarTitleDisplayMode(.inline)        }
+        ZStack {
+            backgroundGradient
+            ambientBlobs
+            scrollContent
+        }
+        .navigationTitle("Geografy Premium")
+        .navigationBarTitleDisplayMode(.inline)
         .task {
             await subscriptionService.loadProducts()
             await subscriptionService.checkEntitlements()

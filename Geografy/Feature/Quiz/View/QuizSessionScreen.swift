@@ -38,27 +38,25 @@ struct QuizSessionScreen: View {
     @State var arcadeTimerCancellable: AnyCancellable?
 
     var body: some View {
-        NavigationStack {
-            quizContent
-                .navigationTitle(configuration.type.displayName)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { toolbarContent }
-                .alert("Quit Quiz?", isPresented: $showQuitAlert) {
-                    quitAlertActions
-                } message: {
-                    Text("Your progress will be lost.")
-                }
-                .task { loadQuiz() }
-                .onDisappear {
-                    timerCancellable?.cancel()
-                    arcadeTimerCancellable?.cancel()
-                }
-                .navigationDestination(item: $navigateToResult) { result in
-                    resultsDestination(for: result)
-                }
-        }
-        .overlay { flagPreviewOverlay }
-        .overlay { pauseOverlay }
+        quizContent
+            .navigationTitle(configuration.type.displayName)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .alert("Quit Quiz?", isPresented: $showQuitAlert) {
+                quitAlertActions
+            } message: {
+                Text("Your progress will be lost.")
+            }
+            .task { loadQuiz() }
+            .onDisappear {
+                timerCancellable?.cancel()
+                arcadeTimerCancellable?.cancel()
+            }
+            .navigationDestination(item: $navigateToResult) { result in
+                resultsDestination(for: result)
+            }
+            .overlay { flagPreviewOverlay }
+            .overlay { pauseOverlay }
     }
 }
 
@@ -244,7 +242,13 @@ private extension QuizSessionScreen {
     }
 
     var arcadeTimerColor: Color {
-        if arcadeTimeRemaining > 20 { DesignSystem.Color.success } else if arcadeTimeRemaining > 10 { DesignSystem.Color.warning } else { DesignSystem.Color.error }
+        if arcadeTimeRemaining > 20 {
+            DesignSystem.Color.success
+        } else if arcadeTimeRemaining > 10 {
+            DesignSystem.Color.warning
+        } else {
+            DesignSystem.Color.error
+        }
     }
 
     var streakBadge: some View {

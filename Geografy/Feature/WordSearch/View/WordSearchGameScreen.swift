@@ -21,25 +21,23 @@ struct WordSearchGameScreen: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if let puzzle {
-                    gameContent(puzzle)
-                } else {
-                    ProgressView().tint(DesignSystem.Color.accent)
-                }
+        Group {
+            if let puzzle {
+                gameContent(puzzle)
+            } else {
+                ProgressView().tint(DesignSystem.Color.accent)
             }
-            .background(DesignSystem.Color.background)
-            .navigationTitle("Word Search")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
-            .toolbar { toolbarContent }
-            .onReceive(timer) { _ in
-                guard timerActive, !isPaused else { return }
-                elapsedSeconds += 1
-            }
-            .task { startPuzzle() }
         }
+        .background(DesignSystem.Color.background)
+        .navigationTitle("Word Search")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
+        .toolbar { toolbarContent }
+        .onReceive(timer) { _ in
+            guard timerActive, !isPaused else { return }
+            elapsedSeconds += 1
+        }
+        .task { startPuzzle() }
     }
 }
 
@@ -145,7 +143,7 @@ private extension WordSearchGameScreen {
                     )
                     ResultStatItem(
                         icon: "eye.fill",
-                        value: "\(hintRevealedIDs.count + (isRevealed ? puzzle.words.count - foundWordIDs.count - hintRevealedIDs.count : 0))",
+                        value: "\(hintRevealedIDs.count + (isRevealed ? puzzle.words.count - foundWordIDs.count - hintRevealedIDs.count : 0))", // swiftlint:disable:this line_length
                         label: "Revealed",
                         color: DesignSystem.Color.warning
                     )

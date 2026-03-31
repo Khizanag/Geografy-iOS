@@ -28,21 +28,19 @@ struct CustomQuizBuilderScreen: View {
     }
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                stepIndicator
-                stepContent
-                Spacer(minLength: 0)
-                navigationButtons
-            }
-            .background(DesignSystem.Color.background)
-            .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
-            .sheet(isPresented: $showCountryPicker) { countryPickerSheet }
-            .sheet(isPresented: $showPreview) { previewSheet }
-            .onAppear { loadExistingQuiz() }
+        VStack(spacing: 0) {
+            stepIndicator
+            stepContent
+            Spacer(minLength: 0)
+            navigationButtons
         }
+        .background(DesignSystem.Color.background)
+        .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar { toolbarContent }
+        .sheet(isPresented: $showCountryPicker) { countryPickerSheet }
+        .sheet(isPresented: $showPreview) { previewSheet }
+        .onAppear { loadExistingQuiz() }
     }
 }
 
@@ -91,7 +89,11 @@ private extension CustomQuizBuilderScreen {
 
         return VStack(spacing: DesignSystem.Spacing.xxs) {
             Circle()
-                .fill(isActive ? DesignSystem.Color.accent : isCompleted ? DesignSystem.Color.success : DesignSystem.Color.cardBackgroundHighlighted)
+                .fill(
+                    isActive
+                        ? DesignSystem.Color.accent
+                        : isCompleted ? DesignSystem.Color.success : DesignSystem.Color.cardBackgroundHighlighted
+                )
                 .frame(width: 10, height: 10)
 
             Text(step.title)

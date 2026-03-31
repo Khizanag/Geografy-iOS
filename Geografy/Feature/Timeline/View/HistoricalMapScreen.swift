@@ -19,33 +19,31 @@ struct HistoricalMapScreen: View {
     @State private var isInitialized = false
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                GeometryReader { geometry in
-                    mapContent(in: geometry.size)
-                        .onAppear { screenSize = geometry.size }
-                        .onChange(of: geometry.size) { _, newSize in
-                            screenSize = newSize
-                            updateMinScale(for: newSize)
-                        }
-                }
-
-                if allShapes.isEmpty {
-                    MapLoadingView()
-                        .transition(.opacity)
-                }
+        ZStack {
+            GeometryReader { geometry in
+                mapContent(in: geometry.size)
+                    .onAppear { screenSize = geometry.size }
+                    .onChange(of: geometry.size) { _, newSize in
+                        screenSize = newSize
+                        updateMinScale(for: newSize)
+                    }
             }
-            .safeAreaInset(edge: .bottom) { sliderSection }
-            .background(DesignSystem.Color.ocean)
-            .ignoresSafeArea(edges: .top)
-            .navigationTitle("Historical Map")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.clear, for: .navigationBar)
-            .onAppear { selectedYear = initialYear }
-            .task { await loadData() }
-            .onChange(of: selectedYear) { updateCountryColors() }
-            .sheet(item: $selectedEvent) { eventSheet(for: $0) }
+
+            if allShapes.isEmpty {
+                MapLoadingView()
+                    .transition(.opacity)
+            }
         }
+        .safeAreaInset(edge: .bottom) { sliderSection }
+        .background(DesignSystem.Color.ocean)
+        .ignoresSafeArea(edges: .top)
+        .navigationTitle("Historical Map")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.clear, for: .navigationBar)
+        .onAppear { selectedYear = initialYear }
+        .task { await loadData() }
+        .onChange(of: selectedYear) { updateCountryColors() }
+        .sheet(item: $selectedEvent) { eventSheet(for: $0) }
     }
 }
 
