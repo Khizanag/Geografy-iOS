@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 import GeografyCore
 
@@ -94,6 +95,7 @@ struct GeografyApp: App {
                             )
                         }
                     }
+                    requestReviewIfAppropriate()
                 }
                 .onChange(of: authService.currentUserID) { _, newUserID in
                     xpService.switchUser(id: newUserID)
@@ -196,6 +198,24 @@ struct GeografyApp: App {
             }
         }
         #endif
+    }
+}
+
+// MARK: - App Review
+private extension GeografyApp {
+    func requestReviewIfAppropriate() {
+        let key = "app_review_milestone"
+        let unlocked = achievementService.unlockedAchievements.count
+        let lastMilestone = UserDefaults.standard.integer(forKey: key)
+        let milestones = [3, 7, 15]
+        guard let milestone = milestones.first(where: { unlocked >= $0 && lastMilestone < $0 }) else { return }
+        UserDefaults.standard.set(milestone, forKey: key)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            if let scene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            }
+        }
     }
 }
 
