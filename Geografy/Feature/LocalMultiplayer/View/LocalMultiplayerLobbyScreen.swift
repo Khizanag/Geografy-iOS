@@ -72,11 +72,7 @@ private extension LocalMultiplayerLobbyScreen {
                 onSelect: { coordinator.quizType = $0 }
             )
 
-            RegionSelectionBar(
-                items: QuizRegion.allCases.map { $0 },
-                selectedID: coordinator.region.id,
-                onSelect: { coordinator.region = $0 }
-            )
+            RegionCarousel(selectedRegion: $coordinator.region)
 
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Picker("Difficulty", selection: $coordinator.difficulty) {

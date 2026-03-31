@@ -121,11 +121,7 @@ private extension MultiplayerLobbyScreen {
             SectionHeaderView(title: "Region", icon: "globe")
                 .padding(.horizontal, DesignSystem.Spacing.md)
 
-            RegionSelectionBar(
-                items: QuizRegion.allCases.map { $0 },
-                selectedID: selectedRegion.id,
-                onSelect: { selectedRegion = $0 }
-            )
+            RegionCarousel(selectedRegion: $selectedRegion)
         }
     }
 
