@@ -18,6 +18,7 @@ struct FlashcardScreen: View {
         scrollContent
             .background { ambientBackground }
             .navigationTitle("Flashcards")
+            .closeButtonPlacementLeading()
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showGuide = true } label: {

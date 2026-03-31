@@ -53,6 +53,7 @@ struct MapScreen: View {
         .ignoresSafeArea()
         .navigationTitle(continentFilter ?? "World Map")
         .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
         .safeAreaInset(edge: .top) {
             if !isLandscape {
                 bannerOverlay

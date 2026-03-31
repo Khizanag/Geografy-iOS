@@ -34,6 +34,7 @@ struct CountryDetailScreen: View {
         contentScrollView
             .background(DesignSystem.Color.background)
             .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
             .toolbar { favoriteToolbarItem }
             .toolbar { compareToolbarItem }
             .toolbar {

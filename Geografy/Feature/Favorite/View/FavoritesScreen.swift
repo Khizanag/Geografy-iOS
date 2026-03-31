@@ -32,6 +32,7 @@ struct FavoritesScreen: View {
         }
         .navigationTitle("Favorites")
         .searchable(text: $searchText, prompt: "Search favorites")
+            .closeButtonPlacementLeading()
         .toolbar { toolbarContent }
         .task { countryDataService.loadCountries() }
     }

@@ -30,6 +30,7 @@ struct TravelBucketListScreen: View {
         }
         .navigationTitle("Bucket List")
         .navigationBarTitleDisplayMode(.large)
+            .closeButtonPlacementLeading()
         .toolbar { toolbarItems }
         .task { countryDataService.loadCountries() }
         .onAppear { loadPersistedData() }
@@ -325,6 +326,7 @@ struct BucketListCountryDetailView: View {
         .background(DesignSystem.Color.background)
         .navigationTitle(country.name)
         .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
         .toolbar {
         }
     }
