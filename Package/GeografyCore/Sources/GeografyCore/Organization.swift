@@ -1,4 +1,3 @@
-// swiftlint:disable file_length
 import SwiftUI
 
 public struct Organization: Identifiable, Hashable, Sendable {
