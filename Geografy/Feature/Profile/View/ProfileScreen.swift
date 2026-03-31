@@ -4,7 +4,7 @@ import GeografyCore
 import GeografyDesign
 
 struct ProfileScreen: View {
-    @Environment(Navigator.self) private var coordinator
+    @Environment(Navigator.self) var coordinator
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(AuthService.self) var authService
     @Environment(XPService.self) var xpService
