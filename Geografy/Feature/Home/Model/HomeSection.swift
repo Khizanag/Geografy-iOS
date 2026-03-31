@@ -129,4 +129,34 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
             false
         }
     }
+
+    var featureFlag: FeatureFlag? {
+        switch self {
+        case .dailyChallenge: .dailyChallenge
+        case .srsReview: .flashcards
+        case .flagGame: .flagGame
+        case .trivia: .trivia
+        case .spellingBee: .spellingBee
+        case .learningPath: .learningPath
+        case .landmarkQuiz: .landmarkQuiz
+        case .feed: .feed
+        case .countryCompare: .compare
+        case .travelBucketList: .travelBucketList
+        case .oceanExplorer: .oceanExplorer
+        case .languageExplorer: .languageExplorer
+        case .challengeRoom: .challengeRoom
+        case .independenceTimeline: nil
+        case .economyExplorer: .economyExplorer
+        case .geographyFeatures: .geographyFeatures
+        case .cultureExplorer: .cultureExplorer
+        case .landmarkGallery: .landmarkGallery
+        case .quotes: .quotes
+        case .mapColoring: .mapColoring
+        case .countryNicknames: .countryNicknames
+        case .wordSearch: .wordSearch
+        case .borderChallenge: .borderChallenge
+        case .mapPuzzle: nil
+        default: nil
+        }
+    }
 }

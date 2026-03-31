@@ -25,6 +25,7 @@ enum Destination: Hashable, Identifiable {
     case economyExplorer
     case exploreGame
     case favorites
+    case featureFlags
     case feed
     case flagGame
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
@@ -98,6 +99,7 @@ enum Destination: Hashable, Identifiable {
         case .economyExplorer: "economyExplorer"
         case .exploreGame: "exploreGame"
         case .favorites: "favorites"
+        case .featureFlags: "featureFlags"
         case .feed: "feed"
         case .flagGame: "flagGame"
         case .flashcardSession: "flashcardSession"
@@ -180,6 +182,7 @@ extension Destination {
         case .economyExplorer: EconomyExplorerScreen()
         case .exploreGame: ExploreGameScreen()
         case .favorites: FavoritesScreen()
+        case .featureFlags: FeatureFlagsScreen()
         case .feed: FeedScreen()
         case .flagGame: FlagGameScreen()
         case .flashcardSession(let deck, let cards): FlashcardSessionScreen(deck: deck, cards: cards)
