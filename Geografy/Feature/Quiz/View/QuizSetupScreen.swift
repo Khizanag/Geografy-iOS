@@ -262,11 +262,8 @@ private extension QuizSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Region")
-            RegionSelectionBar(
-                items: QuizRegion.allCases.map { $0 },
-                selectedID: selectedRegion.id,
-                onSelect: { selectedRegion = $0 }
-            )
+                .padding(.horizontal, DesignSystem.Spacing.md)
+            RegionCarousel(selectedRegion: $selectedRegion)
         }
     }
 }
