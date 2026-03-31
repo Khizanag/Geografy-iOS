@@ -511,8 +511,8 @@
 			mainGroup = C3D4E5F60718293A4B5C6D7E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Packages/GeografyCore" */,
-				8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Packages/GeografyDesign" */,
+				927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */,
+				8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = D4E5F60718293A4B5C6D7E8F /* Products */;
@@ -900,40 +900,40 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Packages/GeografyDesign" */ = {
+		8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/GeografyDesign;
+			relativePath = Package/GeografyDesign;
 		};
-		927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Packages/GeografyCore" */ = {
+		927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/GeografyCore;
+			relativePath = Package/GeografyCore;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		13D82248DB522887EFAAD1C3 /* GeografyCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Packages/GeografyCore" */;
+			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */;
 			productName = GeografyCore;
 		};
 		34FC847202CF095DC0971632 /* GeografyCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Packages/GeografyCore" */;
+			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */;
 			productName = GeografyCore;
 		};
 		95C210184C659B4DF16FD56F /* GeografyCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Packages/GeografyCore" */;
+			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */;
 			productName = GeografyCore;
 		};
 		A8CC38025DD34FC658A3E9C3 /* GeografyDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Packages/GeografyDesign" */;
+			package = 8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */;
 			productName = GeografyDesign;
 		};
 		EA372ADABE7CE7452D776C96 /* GeografyDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Packages/GeografyDesign" */;
+			package = 8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */;
 			productName = GeografyDesign;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -1,4 +1,3 @@
-// swiftlint:disable file_length
 import Foundation
 
 public enum UNESCOSiteType: String, Sendable {

@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 struct RegionCarousel: View {
@@ -149,3 +150,4 @@ private extension RegionCarousel {
         }
     }
 }
+#endif
