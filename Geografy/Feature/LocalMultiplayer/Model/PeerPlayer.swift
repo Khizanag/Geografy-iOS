@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import MultipeerConnectivity
 
 struct PeerPlayer: Identifiable, Equatable {
@@ -17,3 +18,4 @@ struct PeerPlayer: Identifiable, Equatable {
         lhs.peerID == rhs.peerID && lhs.isReady == rhs.isReady
     }
 }
+#endif

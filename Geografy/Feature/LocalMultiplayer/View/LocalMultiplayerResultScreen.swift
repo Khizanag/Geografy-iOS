@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 struct LocalMultiplayerResultScreen: View {
@@ -158,3 +159,4 @@ private extension LocalMultiplayerResultScreen {
         if isWin { "You outplayed your opponent!" } else if isDraw { "Perfectly matched!" } else { "Better luck next time!" }
     }
 }
+#endif

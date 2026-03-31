@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import MultipeerConnectivity
 import SwiftUI
 
@@ -345,3 +346,4 @@ private extension LocalMultiplayerCoordinator {
         xpAwarded = false
     }
 }
+#endif

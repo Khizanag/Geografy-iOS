@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 // MARK: - Stats Grid
@@ -142,3 +143,4 @@ private extension ProfileScreen {
         .accessibilityLabel("\(label): \(value)")
     }
 }
+#endif

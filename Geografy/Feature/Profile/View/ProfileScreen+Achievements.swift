@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 // MARK: - Achievements Preview
@@ -96,3 +97,4 @@ private extension ProfileScreen {
         category.themeColor
     }
 }
+#endif

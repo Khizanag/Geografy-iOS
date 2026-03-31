@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 struct LocalMultiplayerMatchScreen: View {
@@ -161,3 +162,4 @@ private extension LocalMultiplayerMatchScreen {
         return .disabled
     }
 }
+#endif

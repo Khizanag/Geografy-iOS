@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 // MARK: - Quiz History
@@ -193,3 +194,4 @@ private extension ProfileScreen {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 }
+#endif

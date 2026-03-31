@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 // MARK: - Level Progress Section
@@ -90,3 +91,4 @@ private extension ProfileScreen {
         )
     }
 }
+#endif

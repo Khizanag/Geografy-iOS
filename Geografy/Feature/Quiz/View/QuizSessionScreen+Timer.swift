@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Combine
 import SwiftUI
 
@@ -75,3 +76,4 @@ extension QuizSessionScreen {
         navigateToResult = result
     }
 }
+#endif

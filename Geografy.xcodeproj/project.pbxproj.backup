@@ -1,0 +1,876 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 90;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3D4E5F6A7B8C9DAEBFC0D1E2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GeografyWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		E5F60718293A4B5C6D7E8F90 /* Geografy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geografy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		TV000000000000000000PROD /* GeografyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeografyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		TV00000000000000000EXCPT /* Exceptions for "Geografy" folder in "GeografyTV" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/ContentView.swift,
+				App/GeografyApp.swift,
+				App/Navigation/AppCoordinator.swift,
+				App/Navigation/CoordinatedNavigationStack.swift,
+				App/Navigation/Cover.swift,
+				App/Navigation/CoverFactory.swift,
+				App/Navigation/Destination.swift,
+				App/Navigation/NavigatorView.swift,
+				App/Navigation/Screen.swift,
+				App/Navigation/ScreenFactory.swift,
+				App/Navigation/Sheet.swift,
+				App/Navigation/SheetFactory.swift,
+				App/Navigation/TabCoordinator.swift,
+				Design/Component/AlphabetJumpIndex.swift,
+				Design/Component/CircleCloseButton.swift,
+				Design/Component/ComingSoonSheet.swift,
+				Design/Component/ComingSoonView.swift,
+				Design/Component/CountryRowView.swift,
+				Design/Component/EmptyStateView.swift,
+				Design/Component/FavoriteToggleButton.swift,
+				Design/Component/GeoButton.swift,
+				Design/Component/GlassButton.swift,
+				Design/Component/GuideSheet.swift,
+				Design/Component/IconButton.swift,
+				Design/Component/InfoTile.swift,
+				Design/Component/LanguageBarChart.swift,
+				Design/Component/LetterGridView.swift,
+				Design/Component/LevelBadgeView.swift,
+				Design/Component/NewBadge.swift,
+				Design/Component/PercentageBarChart.swift,
+				Design/Component/PremiumBadge.swift,
+				Design/Component/PremiumLockedOverlay.swift,
+				Design/Component/PressButtonStyle.swift,
+				Design/Component/ProfileAvatarView.swift,
+				Design/Component/PulsingCirclesView.swift,
+				Design/Component/QuestionCounterPill.swift,
+				Design/Component/RegionSelectionBar.swift,
+				Design/Component/ResultStatItem.swift,
+				Design/Component/SectionHeaderView.swift,
+				Design/Component/SessionProgressBar.swift,
+				Design/Component/SessionProgressView.swift,
+				Design/Component/SpeakerButton.swift,
+				Design/Component/TypeSelectionGrid.swift,
+				Design/Component/XPProgressBar.swift,
+				Design/Component/ZoomableFlagView.swift,
+				Design/Component/ZoomableOrgLogoView.swift,
+				Feature/Achievement/View/AchievementCard.swift,
+				Feature/Achievement/View/AchievementDetailSheet.swift,
+				Feature/Achievement/View/AchievementsScreen.swift,
+				Feature/Achievement/View/AchievementUnlockedBanner.swift,
+				Feature/Achievement/View/LevelUpSheet.swift,
+				Feature/AllMap/View/AllMapsScreen.swift,
+				Feature/AllMap/View/ContinentOverviewScreen.swift,
+				Feature/Auth/View/GuestModePromptBanner.swift,
+				Feature/Auth/View/SignInOptionsSheet.swift,
+				Feature/BorderChallenge/Service/BorderChallengeService.swift,
+				Feature/BorderChallenge/View/BorderChallengeScreen.swift,
+				Feature/ChallengeRoom/Model/ChallengeRoom.swift,
+				Feature/ChallengeRoom/Service/ChallengeRoomService.swift,
+				Feature/ChallengeRoom/View/ChallengeGameScreen.swift,
+				Feature/ChallengeRoom/View/ChallengeResultScreen.swift,
+				Feature/ChallengeRoom/View/ChallengeSetupScreen.swift,
+				Feature/ChallengeRoom/View/ChallengeSplitScreen.swift,
+				Feature/Coin/View/CoinBalanceView.swift,
+				Feature/Coin/View/CoinPackCard.swift,
+				Feature/Coin/View/CoinPackPreviewSheet.swift,
+				Feature/Coin/View/CoinStoreScreen.swift,
+				Feature/Coin/View/CoinTransactionRow.swift,
+				Feature/Compare/View/CompareBarChart.swift,
+				Feature/Compare/View/CompareCountryPicker.swift,
+				Feature/Compare/View/CompareCountrySlot.swift,
+				Feature/Compare/View/CompareMetricRow.swift,
+				Feature/Compare/View/CompareScreen.swift,
+				Feature/ContinentStats/View/ContinentPickerScreen.swift,
+				Feature/ContinentStats/View/ContinentStatsScreen.swift,
+				Feature/CountryDetail/View/ContinentExploreSection.swift,
+				Feature/CountryDetail/View/CountryDetailEconomySection.swift,
+				Feature/CountryDetail/View/CountryDetailOrganizationsSection.swift,
+				Feature/CountryDetail/View/CountryDetailPeopleSection.swift,
+				Feature/CountryDetail/View/CountryDetailScreen.swift,
+				Feature/CountryDetail/View/CountryFunFactsSection.swift,
+				Feature/CountryDetail/View/CountryNeighborsSection.swift,
+				Feature/CountryDetail/View/CountryPhrasebookSection.swift,
+				Feature/CountryDetail/View/CountryStatisticsView.swift,
+				Feature/CountryDetail/View/DeepDiveSection.swift,
+				Feature/CountryDetail/View/FlagFullScreenView.swift,
+				Feature/CountryDetail/View/FlagSymbolismSection.swift,
+				Feature/CountryDetail/View/InfoCardPopup.swift,
+				Feature/CountryDetail/View/PropertyDetailSheet.swift,
+				Feature/CountryDetail/View/UNESCOSection.swift,
+				Feature/CountryDetail/View/WorldBankChartSheet.swift,
+				Feature/CountryDetail/View/WorldBankIndicatorCard.swift,
+				Feature/CountryList/View/CountryListScreen.swift,
+				Feature/CountryNicknames/View/CountryNicknamesScreen.swift,
+				Feature/CountryNicknames/View/NicknameQuizScreen.swift,
+				Feature/CountryProfile/Model/CountryFunFact.swift,
+				Feature/CountryProfile/Model/CountryPhrase.swift,
+				Feature/CountryProfile/Model/CountryProfile.swift,
+				Feature/CountryProfile/Model/CountryTimelineEvent.swift,
+				Feature/CountryProfile/Service/CountryProfileService.swift,
+				Feature/CountryProfile/View/CountryProfileScreen.swift,
+				Feature/CountryProfile/View/CountryProfileSection.swift,
+				Feature/CountryProfile/View/CountryTimelineView.swift,
+				Feature/CountryProfile/View/FunFactCard.swift,
+				Feature/CountryProfile/View/PhraseCard.swift,
+				Feature/CultureExplorer/View/CultureDetailView.swift,
+				Feature/CultureExplorer/View/CultureExplorerScreen.swift,
+				Feature/CustomQuiz/Model/CustomQuiz.swift,
+				Feature/CustomQuiz/Service/CustomQuizService.swift,
+				Feature/CustomQuiz/View/CustomQuizBuilderScreen.swift,
+				Feature/CustomQuiz/View/CustomQuizCard.swift,
+				Feature/CustomQuiz/View/CustomQuizCountryPicker.swift,
+				Feature/CustomQuiz/View/CustomQuizLibraryScreen.swift,
+				Feature/CustomQuiz/View/CustomQuizPreviewScreen.swift,
+				Feature/DailyChallenge/View/CapitalChainView.swift,
+				Feature/DailyChallenge/View/DailyChallengeResultView.swift,
+				Feature/DailyChallenge/View/DailyChallengeScreen.swift,
+				Feature/DailyChallenge/View/DailyChallengeSessionScreen.swift,
+				Feature/DailyChallenge/View/DailyChallengeShareCard.swift,
+				Feature/DailyChallenge/View/FlagSequenceView.swift,
+				Feature/DailyChallenge/View/MysteryCountryView.swift,
+				Feature/EconomyExplorer/View/EconomyExplorerScreen.swift,
+				Feature/ExploreGame/ExploreGameRules/Model/ExploreGameRules.swift,
+				Feature/ExploreGame/ExploreGameRules/View/ExploreGameRulesSheet.swift,
+				Feature/ExploreGame/View/ExploreClueCard.swift,
+				Feature/ExploreGame/View/ExploreGameResultView.swift,
+				Feature/ExploreGame/View/ExploreGameScreen.swift,
+				Feature/ExploreGame/View/ExploreGameSessionScreen.swift,
+				Feature/ExploreGame/View/ExploreGuessField.swift,
+				Feature/Favorite/View/FavoritesScreen.swift,
+				Feature/Feed/View/FeedCard.swift,
+				Feature/Feed/View/FeedScreen.swift,
+				Feature/FlagEvolution/Model/FlagHistoryEvent.swift,
+				Feature/FlagGame/View/FlagGameResultScreen.swift,
+				Feature/FlagGame/View/FlagGameScreen.swift,
+				Feature/Flashcard/FlashcardGuide/Model/FlashcardGuide.swift,
+				Feature/Flashcard/FlashcardGuide/View/FlashcardGuideSheet.swift,
+				Feature/Flashcard/View/FlashcardCardView.swift,
+				Feature/Flashcard/View/FlashcardDeckCard.swift,
+				Feature/Flashcard/View/FlashcardScreen.swift,
+				Feature/Flashcard/View/FlashcardSessionScreen.swift,
+				Feature/Flashcard/View/FlashcardStatsView.swift,
+				Feature/Flashcard/View/SRSStudyScreen.swift,
+				Feature/GameCenter/View/FriendsListScreen.swift,
+				Feature/GameCenter/View/GameCenterViewControllerRepresentable.swift,
+				Feature/GameCenter/View/LeaderboardScreen.swift,
+				Feature/GeographyFeatures/View/GeographyFeaturesScreen.swift,
+				Feature/Home/Model/HomeSection.swift,
+				Feature/Home/View/HomeBorderChallengeCard.swift,
+				Feature/Home/View/HomeChallengeRoomCard.swift,
+				Feature/Home/View/HomeComingSoonSection.swift,
+				Feature/Home/View/HomeContinentStatsCard.swift,
+				Feature/Home/View/HomeCountryCompareCard.swift,
+				Feature/Home/View/HomeCountryNicknamesCard.swift,
+				Feature/Home/View/HomeCountrySpotlightCard.swift,
+				Feature/Home/View/HomeCultureExplorerCard.swift,
+				Feature/Home/View/HomeDailyChallengeCard.swift,
+				Feature/Home/View/HomeEconomyExplorerCard.swift,
+				Feature/Home/View/HomeFeedCard.swift,
+				Feature/Home/View/HomeFlagGameCard.swift,
+				Feature/Home/View/HomeGeographyFeaturesCard.swift,
+				Feature/Home/View/HomeIndependenceTimelineCard.swift,
+				Feature/Home/View/HomeLandmarkGalleryCard.swift,
+				Feature/Home/View/HomeLandmarkQuizCard.swift,
+				Feature/Home/View/HomeLanguageExplorerCard.swift,
+				Feature/Home/View/HomeLearningPathCard.swift,
+				Feature/Home/View/HomeMapColoringCard.swift,
+				Feature/Home/View/HomeMapPuzzleCard.swift,
+				Feature/Home/View/HomeOceanExplorerCard.swift,
+				Feature/Home/View/HomeOrgsCard.swift,
+				Feature/Home/View/HomeProgressCard.swift,
+				Feature/Home/View/HomeQuotesCard.swift,
+				Feature/Home/View/HomeScreen.swift,
+				"Feature/Home/View/HomeScreen+NewSections.swift",
+				Feature/Home/View/HomeSectionEditorSheet.swift,
+				Feature/Home/View/HomeSizeVisualizationCard.swift,
+				Feature/Home/View/HomeSpellingBeeCard.swift,
+				Feature/Home/View/HomeSRSReviewCard.swift,
+				Feature/Home/View/HomeStreakCard.swift,
+				Feature/Home/View/HomeTravelBucketListCard.swift,
+				Feature/Home/View/HomeTriviaCard.swift,
+				Feature/Home/View/HomeWordSearchCard.swift,
+				Feature/Home/View/HomeWorldRecordsCard.swift,
+				Feature/Home/View/MapCarouselCard.swift,
+				Feature/IndependenceTimeline/View/IndependenceTimelineScreen.swift,
+				Feature/LandmarkGallery/View/LandmarkDetailView.swift,
+				Feature/LandmarkGallery/View/LandmarkGalleryScreen.swift,
+				Feature/LandmarkQuiz/Model/LandmarkQuestion.swift,
+				Feature/LandmarkQuiz/Service/LandmarkQuizService.swift,
+				Feature/LandmarkQuiz/View/LandmarkQuizScreen.swift,
+				Feature/LanguageExplorer/View/LanguageDetailView.swift,
+				Feature/LanguageExplorer/View/LanguageExplorerScreen.swift,
+				Feature/LearningPath/View/LearningPathScreen.swift,
+				Feature/LearningPath/View/LessonScreen.swift,
+				Feature/LearningPath/View/ModuleLessonsScreen.swift,
+				Feature/Map/View/CountryBannerView.swift,
+				Feature/Map/View/MapControlsView.swift,
+				Feature/Map/View/MapScreen.swift,
+				Feature/Map/View/OrganizationMapScreen.swift,
+				Feature/MapColoring/View/MapColoringScreen.swift,
+				Feature/MapPuzzle/View/MapPuzzleScreen.swift,
+				Feature/MapPuzzle/View/MapPuzzleSetupScreen.swift,
+				Feature/More/Model/MoreSheet.swift,
+				Feature/More/View/MoreScreen.swift,
+				Feature/More/View/TestChecklistSheet.swift,
+				Feature/Multiplayer/Model/MockOpponent.swift,
+				Feature/Multiplayer/Model/MultiplayerMatch.swift,
+				Feature/Multiplayer/Model/MultiplayerRound.swift,
+				Feature/Multiplayer/Model/PlayerRating.swift,
+				Feature/Multiplayer/Service/MockOpponentEngine.swift,
+				Feature/Multiplayer/Service/MultiplayerService.swift,
+				Feature/Multiplayer/View/MatchHistoryScreen.swift,
+				Feature/Multiplayer/View/MultiplayerLobbyScreen.swift,
+				Feature/Multiplayer/View/MultiplayerMatchScreen.swift,
+				Feature/Multiplayer/View/MultiplayerResultScreen.swift,
+				Feature/Multiplayer/View/MultiplayerRoundView.swift,
+				Feature/Multiplayer/View/OpponentAvatarView.swift,
+				Feature/NationalSymbols/Model/NationalSymbol.swift,
+				Feature/NationalSymbols/Service/NationalSymbolsService.swift,
+				Feature/NeighborExplorer/View/NeighborChainView.swift,
+				Feature/NeighborExplorer/View/NeighborExplorerScreen.swift,
+				Feature/OceanExplorer/View/OceanExplorerScreen.swift,
+				Feature/Organization/View/OrganizationDetailScreen.swift,
+				Feature/Organization/View/OrganizationsScreen.swift,
+				Feature/Profile/View/EditProfileSheet.swift,
+				Feature/Profile/View/ProfileScreen.swift,
+				Feature/Quiz/View/QuizOptionButton.swift,
+				Feature/Quiz/View/QuizQuestionView.swift,
+				Feature/Quiz/View/QuizResultsScreen.swift,
+				Feature/Quiz/View/QuizSessionScreen.swift,
+				Feature/Quiz/View/QuizSetupScreen.swift,
+				Feature/Quiz/View/QuizSpellingBeeView.swift,
+				Feature/Quiz/View/QuizTypingInputView.swift,
+				Feature/Quiz/View/ScoreRingView.swift,
+				Feature/Quiz/View/SpeedRunSessionScreen.swift,
+				Feature/Quiz/View/SpeedRunSetupScreen.swift,
+				Feature/QuizPack/Model/QuizPack.swift,
+				Feature/QuizPack/Model/QuizPackCategory.swift,
+				Feature/QuizPack/Model/QuizPackLevel.swift,
+				Feature/QuizPack/Model/QuizPackProgress.swift,
+				Feature/QuizPack/Service/QuizPackService.swift,
+				Feature/QuizPack/View/QuizPackBrowserScreen.swift,
+				Feature/QuizPack/View/QuizPackCard.swift,
+				Feature/QuizPack/View/QuizPackCategoryCard.swift,
+				Feature/QuizPack/View/QuizPackDetailScreen.swift,
+				Feature/QuizPack/View/QuizPackLevelCard.swift,
+				Feature/Quotes/View/QuotesScreen.swift,
+				Feature/Search/View/SearchScreen.swift,
+				Feature/Setting/View/SettingsScreen.swift,
+				Feature/Setting/View/TerritorialDisputesScreen.swift,
+				Feature/SizeVisualization/View/SizeCompareView.swift,
+				Feature/SizeVisualization/View/SizeVisualizationScreen.swift,
+				Feature/SpellingBee/SpellingBeeGuide/Model/SpellingBeeGuide.swift,
+				Feature/SpellingBee/SpellingBeeGuide/View/SpellingBeeGuideSheet.swift,
+				Feature/SpellingBee/View/SpellingBeeScreen.swift,
+				Feature/Subscription/View/FeatureComparisonSection.swift,
+				Feature/Subscription/View/PaywallScreen.swift,
+				Feature/Subscription/View/SubscriptionCard.swift,
+				Feature/Theme/View/ThemesScreen.swift,
+				Feature/Timeline/View/HistoricalMapScreen.swift,
+				Feature/Timeline/View/TimelineEventCard.swift,
+				Feature/Timeline/View/TimelineScreen.swift,
+				Feature/Timeline/View/TimelineSlider.swift,
+				Feature/Timeline/View/TimelineTodaySection.swift,
+				Feature/Tools/View/CurrencyConverterScreen.swift,
+				Feature/Tools/View/DistanceCalculatorScreen.swift,
+				Feature/Tools/View/TimeZoneScreen.swift,
+				Feature/Travel/Model/TravelMapFilter.swift,
+				Feature/Travel/View/TravelBucketListScreen.swift,
+				Feature/Travel/View/TravelCountryPickerSheet.swift,
+				Feature/Travel/View/TravelCountryRow.swift,
+				Feature/Travel/View/TravelMapScreen.swift,
+				Feature/Travel/View/TravelStatsCard.swift,
+				Feature/Travel/View/TravelStatusPickerSheet.swift,
+				Feature/Travel/View/TravelTrackerScreen.swift,
+				Feature/TravelJournal/Model/TravelJournalEntry.swift,
+				Feature/TravelJournal/Service/TravelJournalService.swift,
+				Feature/TravelJournal/View/TravelJournalDetailScreen.swift,
+				Feature/TravelJournal/View/TravelJournalEditorSheet.swift,
+				Feature/TravelJournal/View/TravelJournalEntryCard.swift,
+				Feature/TravelJournal/View/TravelJournalPhotoGrid.swift,
+				Feature/TravelJournal/View/TravelJournalScreen.swift,
+				Feature/TravelJournal/View/TravelJournalStatsView.swift,
+				Feature/Trivia/View/TriviaScreen.swift,
+				Feature/WordSearch/Model/WordSearchPuzzle.swift,
+				Feature/WordSearch/Service/WordSearchService.swift,
+				Feature/WordSearch/View/WordSearchGameScreen.swift,
+				Feature/WordSearch/View/WordSearchScreen.swift,
+				Feature/WorldRecords/View/WorldRecordsScreen.swift,
+			);
+			target = TV000000000000000000TARG /* GeografyTV */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GeografyWidgets;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60718293A4B5C /* Geografy */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				TV00000000000000000EXCPT /* Exceptions for "Geografy" folder in "GeografyTV" target */,
+			);
+			path = Geografy;
+			sourceTree = "<group>";
+		};
+		TV00000000000000000GROUP /* GeografyTV */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GeografyTV;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8E9F0A1B2C3D4E5F6A7B8C9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */,
+			);
+		};
+		B2C3D4E5F60718293A4B5C6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		TV0000000000000000FRAMWK /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C3D4E5F60718293A4B5C6D7E = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F60718293A4B5C /* Geografy */,
+				TV00000000000000000GROUP /* GeografyTV */,
+				5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */,
+				F10203040506070809101112 /* Frameworks */,
+				D4E5F60718293A4B5C6D7E8F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D4E5F60718293A4B5C6D7E8F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E5F60718293A4B5C6D7E8F90 /* Geografy.app */,
+				TV000000000000000000PROD /* GeografyTV.app */,
+				4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F10203040506070809101112 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA5566778899001122334455 /* GeografyWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA8899001122334455667788 /* Build configuration list for PBXNativeTarget "GeografyWidgets" */;
+			buildPhases = (
+				AA2233445566778899001122 /* Sources */,
+				8E9F0A1B2C3D4E5F6A7B8C9D /* Frameworks */,
+				AA3344556677889900112233 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */,
+			);
+			name = GeografyWidgets;
+			productName = GeografyWidgets;
+			productReference = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F60718293A4B5C6D7E8F9001 /* Geografy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 071829A3B4C5D6E7F8091A2B /* Build configuration list for PBXNativeTarget "Geografy" */;
+			buildPhases = (
+				1829A3B4C5D6E7F8091A2B3C /* Sources */,
+				B2C3D4E5F60718293A4B5C6D /* Frameworks */,
+				29A3B4C5D6E7F8091A2B3C4D /* Resources */,
+				3D4E5F6A7B8C9DAEBFC0D1E2 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				A1B2C3D4E5F60718293A4B5C /* Geografy */,
+			);
+			name = Geografy;
+			productName = Geografy;
+			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		TV000000000000000000TARG /* GeografyTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = TV00000000000000000CFGLS /* Build configuration list for PBXNativeTarget "GeografyTV" */;
+			buildPhases = (
+				TV00000000000000000SOURC /* Sources */,
+				TV0000000000000000FRAMWK /* Frameworks */,
+				TV00000000000000000RSRCS /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				A1B2C3D4E5F60718293A4B5C /* Geografy */,
+				TV00000000000000000GROUP /* GeografyTV */,
+			);
+			name = GeografyTV;
+			productName = GeografyTV;
+			productReference = TV000000000000000000PROD /* GeografyTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A3B4C5D6E7F8091A2B3C4D5E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					AA5566778899001122334455 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					F60718293A4B5C6D7E8F9001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					TV000000000000000000TARG = {
+						CreatedOnToolsVersion = 26.2;
+					};
+				};
+			};
+			buildConfigurationList = B4C5D6E7F8091A2B3C4D5E6F /* Build configuration list for PBXProject "Geografy" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C3D4E5F60718293A4B5C6D7E;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 90;
+			productRefGroup = D4E5F60718293A4B5C6D7E8F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F60718293A4B5C6D7E8F9001 /* Geografy */,
+				TV000000000000000000TARG /* GeografyTV */,
+				AA5566778899001122334455 /* GeografyWidgets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		29A3B4C5D6E7F8091A2B3C4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		AA3344556677889900112233 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		TV00000000000000000RSRCS /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1829A3B4C5D6E7F8091A2B3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		AA2233445566778899001122 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		TV00000000000000000SOURC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA6677889900112233445566 /* Debug configuration for PBXNativeTarget "GeografyWidgets" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GeografyWidgets/GeografyWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GeografyWidgetsInfo.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Geografy Widgets";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.dev.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA7788990011223344556677 /* Release configuration for PBXNativeTarget "GeografyWidgets" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GeografyWidgets/GeografyWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GeografyWidgetsInfo.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Geografy Widgets";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.dev.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C5D6E7F8091A2B3C4D5E6F70 /* Debug configuration for PBXProject "Geografy" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 92WH2S2Z85;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		D6E7F8091A2B3C4D5E6F7081 /* Release configuration for PBXProject "Geografy" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 92WH2S2Z85;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E7F8091A2B3C4D5E6F708192 /* Debug configuration for PBXNativeTarget "Geografy" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Geografy/Geografy.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBonjourServices = "_geografy-quiz._tcp";
+				INFOPLIST_KEY_NSGKFriendListUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Geografy uses your local network to play quiz matches with nearby friends.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.dev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F8091A2B3C4D5E6F70819203 /* Release configuration for PBXNativeTarget "Geografy" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Geografy/Geografy.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBonjourServices = "_geografy-quiz._tcp";
+				INFOPLIST_KEY_NSGKFriendListUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Geografy uses your local network to play quiz matches with nearby friends.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "TODO: update this text";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.dev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		TV000000000000000DBGCFG /* Debug configuration for PBXNativeTarget "GeografyTV" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GeografyTV/GeografyTV.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.dev.tv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		TV000000000000000RELCFG /* Release configuration for PBXNativeTarget "GeografyTV" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GeografyTV/GeografyTV.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.khizanag.geografy.dev.tv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		071829A3B4C5D6E7F8091A2B /* Build configuration list for PBXNativeTarget "Geografy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E7F8091A2B3C4D5E6F708192 /* Debug configuration for PBXNativeTarget "Geografy" */,
+				F8091A2B3C4D5E6F70819203 /* Release configuration for PBXNativeTarget "Geografy" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		AA8899001122334455667788 /* Build configuration list for PBXNativeTarget "GeografyWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA6677889900112233445566 /* Debug configuration for PBXNativeTarget "GeografyWidgets" */,
+				AA7788990011223344556677 /* Release configuration for PBXNativeTarget "GeografyWidgets" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		B4C5D6E7F8091A2B3C4D5E6F /* Build configuration list for PBXProject "Geografy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5D6E7F8091A2B3C4D5E6F70 /* Debug configuration for PBXProject "Geografy" */,
+				D6E7F8091A2B3C4D5E6F7081 /* Release configuration for PBXProject "Geografy" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		TV00000000000000000CFGLS /* Build configuration list for PBXNativeTarget "GeografyTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				TV000000000000000DBGCFG /* Debug configuration for PBXNativeTarget "GeografyTV" */,
+				TV000000000000000RELCFG /* Release configuration for PBXNativeTarget "GeografyTV" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A3B4C5D6E7F8091A2B3C4D5E /* Project object */;
+}

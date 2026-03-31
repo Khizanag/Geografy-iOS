@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 struct WikipediaSection: View {
@@ -39,14 +40,12 @@ struct WikipediaSection: View {
             }
         }
         .buttonStyle(PressButtonStyle())
-        #if canImport(SafariServices)
         .sheet(isPresented: $showSafari) {
             if let url = wikipediaURL {
                 SafariView(url: url)
                     .ignoresSafeArea()
             }
         }
-        #endif
     }
 }
 
@@ -73,3 +72,4 @@ private extension WikipediaSection {
         return URL(string: "https://en.wikipedia.org/wiki/\(encodedName)")
     }
 }
+#endif

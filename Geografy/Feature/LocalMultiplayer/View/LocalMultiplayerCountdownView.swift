@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 struct LocalMultiplayerCountdownView: View {
@@ -29,3 +30,4 @@ struct LocalMultiplayerCountdownView: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 }
+#endif

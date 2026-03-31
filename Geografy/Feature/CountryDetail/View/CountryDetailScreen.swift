@@ -542,7 +542,9 @@ private extension CountryDetailScreen {
                 }
                 unescoSection
                 deepDiveSection
+                #if !os(tvOS)
                 WikipediaSection(countryName: country.name)
+                #endif
                 continentExploreSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)

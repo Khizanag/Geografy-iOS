@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 // MARK: - Weekly Activity
@@ -112,3 +113,4 @@ private extension ProfileScreen {
         return String(formatter.string(from: date).prefix(2))
     }
 }
+#endif

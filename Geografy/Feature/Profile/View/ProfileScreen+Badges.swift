@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 // MARK: - Badge Showcase
@@ -97,3 +98,4 @@ private extension ProfileScreen {
             }
     }
 }
+#endif
