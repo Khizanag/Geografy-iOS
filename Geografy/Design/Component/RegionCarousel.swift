@@ -9,6 +9,7 @@ struct RegionCarousel: View {
 
     @State private var scrolledRegion: QuizRegion?
     @State private var countryDataService = CountryDataService()
+    @State private var hasAppeared = false
 
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
@@ -16,11 +17,15 @@ struct RegionCarousel: View {
             pageIndicator
         }
         .task { countryDataService.loadCountries() }
-        .onAppear { scrolledRegion = selectedRegion }
         .onChange(of: scrolledRegion) { _, newValue in
-            guard let newValue, newValue != selectedRegion else { return }
+            guard hasAppeared, let newValue, newValue != selectedRegion else { return }
             selectedRegion = newValue
             hapticsService.selection()
+        }
+        .task {
+            scrolledRegion = selectedRegion
+            try? await Task.sleep(for: .milliseconds(300))
+            hasAppeared = true
         }
     }
 }
