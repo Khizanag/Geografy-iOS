@@ -28,6 +28,7 @@ struct TravelMapScreen: View {
             .ignoresSafeArea()
             .navigationTitle(selectedFilter.displayName)
             .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
             .safeAreaInset(edge: .top) {
                 if isLoaded {
                     infoBanner
@@ -35,7 +36,6 @@ struct TravelMapScreen: View {
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
-            .closeButtonPlacementLeading()
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     labelsToggle

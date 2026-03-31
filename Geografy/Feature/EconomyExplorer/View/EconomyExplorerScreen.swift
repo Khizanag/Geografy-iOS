@@ -33,11 +33,11 @@ struct EconomyExplorerScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .searchable(text: $searchText, prompt: "Search countries")
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Economy Explorer")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $searchText, prompt: "Search countries")
         .onAppear { blobAnimating = true }
     }
 }

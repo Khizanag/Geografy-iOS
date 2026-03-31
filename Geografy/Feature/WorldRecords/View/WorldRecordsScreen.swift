@@ -29,7 +29,8 @@ struct WorldRecordsScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("World Records")
-        .navigationBarTitleDisplayMode(.inline)        .task {
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
             records = worldRecordsService.computeRecords(from: countryDataService.countries)
         }
         .onAppear { startBlobAnimation() }

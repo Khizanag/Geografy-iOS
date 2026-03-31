@@ -19,7 +19,8 @@ struct FriendsListScreen: View {
             .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Friends")
-            .navigationBarTitleDisplayMode(.large)            .task { await loadData() }
+            .navigationBarTitleDisplayMode(.large)
+            .task { await loadData() }
             .onAppear {
                 animating = true
             }

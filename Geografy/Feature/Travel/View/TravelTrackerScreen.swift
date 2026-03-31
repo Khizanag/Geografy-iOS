@@ -22,6 +22,10 @@ struct TravelTrackerScreen: View {
             .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search countries…")
             .toolbar { toolbarContent }
+            .onAppear {
+                blobAnimating = true
+                appeared = true
+            }
             .sheet(isPresented: $showCountryPicker) {
                 TravelCountryPickerSheet(
                     countries: countryDataService.countries,
@@ -37,10 +41,6 @@ struct TravelTrackerScreen: View {
                         set: { if !$0 { selectedCountry = nil } }
                     )
                 )
-            }
-            .onAppear {
-                blobAnimating = true
-                appeared = true
             }
     }
 }

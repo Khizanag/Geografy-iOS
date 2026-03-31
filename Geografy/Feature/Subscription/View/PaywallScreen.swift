@@ -17,17 +17,17 @@ struct PaywallScreen: View {
         scrollContent
             .background { ambientBlobs }
             .background { backgroundGradient }
-        .navigationTitle("Geografy Premium")
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            await subscriptionService.loadProducts()
-            await subscriptionService.checkEntitlements()
-        }
-        .onAppear {
-            appeared = true
-            globePulse = true
-            blobAnimating = true
-        }
+            .navigationTitle("Geografy Premium")
+            .navigationBarTitleDisplayMode(.inline)
+            .task {
+                await subscriptionService.loadProducts()
+                await subscriptionService.checkEntitlements()
+            }
+            .onAppear {
+                appeared = true
+                globePulse = true
+                blobAnimating = true
+            }
     }
 }
 

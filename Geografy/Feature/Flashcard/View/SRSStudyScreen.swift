@@ -11,11 +11,11 @@ struct SRSStudyScreen: View {
     var body: some View {
         contentView
             .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Review")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            appeared = true
-        }
+            .navigationTitle("Review")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                appeared = true
+            }
     }
 }
 

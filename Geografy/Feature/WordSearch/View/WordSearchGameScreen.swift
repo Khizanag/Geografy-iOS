@@ -32,11 +32,11 @@ struct WordSearchGameScreen: View {
         .navigationTitle("Word Search")
         .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
         .toolbar { toolbarContent }
+        .task { startPuzzle() }
         .onReceive(timer) { _ in
             guard timerActive, !isPaused else { return }
             elapsedSeconds += 1
         }
-        .task { startPuzzle() }
     }
 }
 

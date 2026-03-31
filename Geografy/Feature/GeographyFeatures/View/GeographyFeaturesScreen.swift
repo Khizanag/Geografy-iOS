@@ -24,7 +24,8 @@ struct GeographyFeaturesScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Geography Features")
-        .navigationBarTitleDisplayMode(.inline)        .onAppear { blobAnimating = true }
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear { blobAnimating = true }
     }
 }
 

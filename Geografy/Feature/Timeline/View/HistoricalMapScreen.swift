@@ -20,14 +20,14 @@ struct HistoricalMapScreen: View {
 
     var body: some View {
         mapLayer
-            .safeAreaInset(edge: .bottom) { sliderSection }
             .background(DesignSystem.Color.ocean)
             .ignoresSafeArea(edges: .top)
             .navigationTitle("Historical Map")
             .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) { sliderSection }
             .toolbarBackground(.clear, for: .navigationBar)
-            .onAppear { selectedYear = initialYear }
             .task { await loadData() }
+            .onAppear { selectedYear = initialYear }
             .onChange(of: selectedYear) { updateCountryColors() }
             .sheet(item: $selectedEvent) { eventSheet(for: $0) }
     }

@@ -9,15 +9,15 @@ struct LocalMultiplayerLobbyScreen: View {
 
     var body: some View {
         scrollContent
+            .background { AmbientBlobsView(.standard) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
+            .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
                 if coordinator.isHost, coordinator.opponent?.isReady == true {
                     startButton
                 }
             }
-            .background { AmbientBlobsView(.standard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
-            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

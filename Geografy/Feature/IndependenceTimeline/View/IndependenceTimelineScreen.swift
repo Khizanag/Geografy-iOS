@@ -29,7 +29,8 @@ struct IndependenceTimelineScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Independence Timeline")
-        .navigationBarTitleDisplayMode(.inline)        .onAppear { blobAnimating = true }
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear { blobAnimating = true }
     }
 }
 

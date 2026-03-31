@@ -27,7 +27,8 @@ struct MapColoringScreen: View {
         }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Map Coloring Book")
-        .navigationBarTitleDisplayMode(.inline)        .task {
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
             visibleGroups = Set(groupedCountries.keys)
         }
         .sheet(item: $selectedCountry) { country in

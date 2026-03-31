@@ -42,11 +42,6 @@ struct QuizSessionScreen: View {
             .navigationTitle(configuration.type.displayName)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
-            .alert("Quit Quiz?", isPresented: $showQuitAlert) {
-                quitAlertActions
-            } message: {
-                Text("Your progress will be lost.")
-            }
             .task { loadQuiz() }
             .onDisappear {
                 timerCancellable?.cancel()
@@ -54,6 +49,11 @@ struct QuizSessionScreen: View {
             }
             .navigationDestination(item: $navigateToResult) { result in
                 resultsDestination(for: result)
+            }
+            .alert("Quit Quiz?", isPresented: $showQuitAlert) {
+                quitAlertActions
+            } message: {
+                Text("Your progress will be lost.")
             }
             .overlay { flagPreviewOverlay }
             .overlay { pauseOverlay }

@@ -26,9 +26,9 @@ struct FlashcardScreen: View {
                     .buttonStyle(.plain)
                 }
             }
-            .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
             .task { loadData() }
             .onAppear { startAnimations() }
+            .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
     }
 }
 

@@ -32,6 +32,11 @@ struct SpeedRunSessionScreen: View {
             .navigationTitle("Speed Run · \(region.displayName)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
+            .task {
+                startTimer()
+            }
+            .onAppear { isInputFocused = true }
+            .onDisappear { timerCancellable?.cancel() }
             .alert("Give Up?", isPresented: $showGiveUpAlert) {
                 Button("Give Up", role: .destructive) { finishRun() }
                 Button("Continue", role: .cancel) {}
@@ -43,11 +48,6 @@ struct SpeedRunSessionScreen: View {
             } message: {
                 Text("Your progress will be lost.")
             }
-            .task {
-                startTimer()
-            }
-            .onAppear { isInputFocused = true }
-            .onDisappear { timerCancellable?.cancel() }
     }
 }
 

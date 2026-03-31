@@ -18,24 +18,24 @@ struct TravelCountryPickerSheet: View {
     var body: some View {
         countryList
             .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(navigationTitle)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar { doneButton }
-        .searchable(
-            text: $searchText,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "Search countries…"
-        )
-        .sheet(item: $selectedCountry) { country in
-            TravelStatusPickerSheet(
-                country: country,
-                isPresented: Binding(
-                    get: { selectedCountry != nil },
-                    set: { if !$0 { selectedCountry = nil } }
-                )
+            .navigationTitle(navigationTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(
+                text: $searchText,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search countries…"
             )
-        }
-        .presentationDetents([.large])
+            .toolbar { doneButton }
+            .sheet(item: $selectedCountry) { country in
+                TravelStatusPickerSheet(
+                    country: country,
+                    isPresented: Binding(
+                        get: { selectedCountry != nil },
+                        set: { if !$0 { selectedCountry = nil } }
+                    )
+                )
+            }
+            .presentationDetents([.large])
     }
 }
 

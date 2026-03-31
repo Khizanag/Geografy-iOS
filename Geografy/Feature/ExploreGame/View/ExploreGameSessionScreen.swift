@@ -32,12 +32,12 @@ struct ExploreGameSessionScreen: View {
             .navigationTitle("Mystery Country")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
+            .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
             .alert("Quit Game?", isPresented: $showQuitAlert) {
                 quitAlertActions
             } message: {
                 Text("Your progress will be lost.")
             }
-            .sheet(isPresented: $showRules) { ExploreGameRulesSheet() }
     }
 }
 
