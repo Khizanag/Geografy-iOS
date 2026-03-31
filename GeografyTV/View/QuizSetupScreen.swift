@@ -3,6 +3,8 @@ import GeografyDesign
 import GeografyCore
 
 struct QuizSetupScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     let countryDataService: CountryDataService
 
     @State private var selectedType: QuizType = .flagQuiz

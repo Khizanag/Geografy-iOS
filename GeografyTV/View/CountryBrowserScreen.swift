@@ -3,6 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct CountryBrowserScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(FavoritesService.self) private var favoritesService
 
     let countryDataService: CountryDataService

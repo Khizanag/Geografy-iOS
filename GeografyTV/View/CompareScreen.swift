@@ -224,5 +224,6 @@ struct TVCountryPickerSheet: View {
             .searchable(text: $searchText, prompt: "Search countries")
             .navigationTitle("Select Country")
         }
+        .onExitCommand { dismiss() }
     }
 }

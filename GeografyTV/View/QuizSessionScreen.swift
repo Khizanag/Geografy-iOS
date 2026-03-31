@@ -4,6 +4,7 @@ import GeografyDesign
 import GeografyCore
 
 struct QuizSessionScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(XPService.self) private var xpService
 

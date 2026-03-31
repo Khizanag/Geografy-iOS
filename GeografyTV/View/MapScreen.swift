@@ -3,6 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct MapScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(TravelService.self) private var travelService
 
     let countryDataService: CountryDataService

@@ -323,5 +323,6 @@ struct TVOrganizationSheetView: View {
                 }
             }
         }
+        .onExitCommand { dismiss() }
     }
 }
