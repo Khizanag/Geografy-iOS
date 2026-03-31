@@ -23,12 +23,12 @@ struct CompareScreen: View {
         .padding(60)
         .navigationTitle("Compare Countries")
         .sheet(isPresented: $showPickerA) {
-            TVCountryPickerSheet(countries: countryDataService.countries) { country in
+            CountryPickerSheet(countries: countryDataService.countries) { country in
                 countryA = country
             }
         }
         .sheet(isPresented: $showPickerB) {
-            TVCountryPickerSheet(countries: countryDataService.countries) { country in
+            CountryPickerSheet(countries: countryDataService.countries) { country in
                 countryB = country
             }
         }
@@ -182,7 +182,7 @@ private extension CompareScreen {
 }
 
 // MARK: - Country Picker Sheet
-struct TVCountryPickerSheet: View {
+struct CountryPickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     let countries: [Country]

@@ -21,7 +21,7 @@ struct OrganizationDetailScreen: View {
             scrollContent
         }
         .navigationTitle(organization.displayName)
-        .navigationBarTitleDisplayMode(.inline)
+        .closeButtonPlacementLeading()
         .background(DesignSystem.Color.background)
         .overlay {
             if showLogoZoom, let urlString = organization.logoURL, let url = URL(string: urlString) {
@@ -31,9 +31,7 @@ struct OrganizationDetailScreen: View {
             }
         }
         .task { trackOrgView() }
-        .onAppear {
-            blobAnimating = true
-        }
+        .onAppear { blobAnimating = true }
     }
 }
 
@@ -72,7 +70,10 @@ private extension OrganizationDetailScreen {
                 .scaleEffect(blobAnimating ? 0.92 : 1.06)
         }
         .ignoresSafeArea()
-        .animation(reduceMotion ? nil : .easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 5).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
 

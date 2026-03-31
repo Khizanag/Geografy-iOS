@@ -10,7 +10,7 @@ struct CultureScreen: View {
     var body: some View {
         List(service.facts) { fact in
             NavigationLink {
-                TVCultureDetailView(
+                CultureDetailView(
                     country: countryDataService.countries.first { $0.code == fact.countryCode },
                     fact: fact
                 )
@@ -35,7 +35,7 @@ struct CultureScreen: View {
 }
 
 // MARK: - Detail
-struct TVCultureDetailView: View {
+struct CultureDetailView: View {
     let country: Country?
     let fact: CultureFact
 

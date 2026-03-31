@@ -30,7 +30,6 @@ struct WordSearchGameScreen: View {
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Word Search")
-        .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
         .toolbar { toolbarContent }
         .onReceive(timer) { _ in

@@ -9,7 +9,7 @@ struct HomeScreen: View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
-                    TVHomeFeedView(countryDataService: countryDataService)
+                    HomeFeedView(countryDataService: countryDataService)
                         .navigationDestination(for: Country.self) { country in
                             CountryDetailScreen(country: country)
                         }
@@ -60,7 +60,7 @@ struct HomeScreen: View {
 }
 
 // MARK: - Home Feed
-struct TVHomeFeedView: View {
+struct HomeFeedView: View {
     @Environment(XPService.self) private var xpService
     @Environment(StreakService.self) private var streakService
 
@@ -92,7 +92,7 @@ struct TVHomeFeedView: View {
 }
 
 // MARK: - Hero
-private extension TVHomeFeedView {
+private extension HomeFeedView {
     var heroSection: some View {
         VStack(spacing: 20) {
             Image(systemName: "globe.americas.fill")
@@ -112,7 +112,7 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Stats
-private extension TVHomeFeedView {
+private extension HomeFeedView {
     var statsRow: some View {
         HStack(spacing: 40) {
             tvStatCard(
@@ -159,7 +159,7 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Spotlight
-private extension TVHomeFeedView {
+private extension HomeFeedView {
     @ViewBuilder
     var spotlightSection: some View {
         if let country = spotlightCountry {
@@ -191,7 +191,7 @@ private extension TVHomeFeedView {
                     .padding(32)
                     .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 20))
                 }
-                .buttonStyle(TVCardButtonStyle())
+                .buttonStyle(CardButtonStyle())
             }
         }
     }
@@ -202,7 +202,7 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Quick Actions
-private extension TVHomeFeedView {
+private extension HomeFeedView {
     var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Quick Start")
@@ -210,7 +210,7 @@ private extension TVHomeFeedView {
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             HStack(spacing: 32) {
-                NavigationLink(value: TVQuickAction.quiz) {
+                NavigationLink(value: QuickAction.quiz) {
                     tvActionCardLabel(
                         icon: "gamecontroller.fill",
                         title: "Start Quiz",
@@ -218,9 +218,9 @@ private extension TVHomeFeedView {
                         color: DesignSystem.Color.accent
                     )
                 }
-                .buttonStyle(TVCardButtonStyle())
+                .buttonStyle(CardButtonStyle())
 
-                NavigationLink(value: TVQuickAction.countries) {
+                NavigationLink(value: QuickAction.countries) {
                     tvActionCardLabel(
                         icon: "globe",
                         title: "Browse Countries",
@@ -228,9 +228,9 @@ private extension TVHomeFeedView {
                         color: DesignSystem.Color.blue
                     )
                 }
-                .buttonStyle(TVCardButtonStyle())
+                .buttonStyle(CardButtonStyle())
 
-                NavigationLink(value: TVQuickAction.randomCountry) {
+                NavigationLink(value: QuickAction.randomCountry) {
                     tvActionCardLabel(
                         icon: "shuffle",
                         title: "Random Country",
@@ -238,10 +238,10 @@ private extension TVHomeFeedView {
                         color: DesignSystem.Color.purple
                     )
                 }
-                .buttonStyle(TVCardButtonStyle())
+                .buttonStyle(CardButtonStyle())
             }
         }
-        .navigationDestination(for: TVQuickAction.self) { action in
+        .navigationDestination(for: QuickAction.self) { action in
             switch action {
             case .quiz:
                 QuizSetupScreen(countryDataService: countryDataService)
@@ -276,7 +276,7 @@ private extension TVHomeFeedView {
 }
 
 // MARK: - Quick Action
-enum TVQuickAction: Hashable {
+enum QuickAction: Hashable {
     case quiz
     case countries
     case randomCountry

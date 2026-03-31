@@ -117,7 +117,7 @@ private extension QuizSetupScreen {
                     .stroke(isSelected ? color : .clear, lineWidth: 3)
             )
         }
-        .buttonStyle(TVCardButtonStyle())
+        .buttonStyle(CardButtonStyle())
         .accessibilityLabel("\(type.displayName). \(type.description)")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
@@ -185,7 +185,7 @@ private extension QuizSetupScreen {
                     .stroke(isSelected ? color : .clear, lineWidth: 3)
             )
         }
-        .buttonStyle(TVCardButtonStyle())
+        .buttonStyle(CardButtonStyle())
         .accessibilityLabel("\(difficulty.displayName). \(difficulty.subtitle)")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }

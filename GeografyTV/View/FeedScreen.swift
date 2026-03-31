@@ -45,13 +45,13 @@ struct FeedScreen: View {
         .navigationTitle("Feed")
         .task { service.loadFeed() }
         .sheet(item: $selectedItem) { item in
-            TVFeedDetailView(item: item, countryDataService: countryDataService)
+            FeedDetailView(item: item, countryDataService: countryDataService)
         }
     }
 }
 
 // MARK: - Detail
-struct TVFeedDetailView: View {
+struct FeedDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
     let item: FeedItem

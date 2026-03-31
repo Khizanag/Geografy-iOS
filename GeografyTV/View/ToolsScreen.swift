@@ -8,19 +8,19 @@ struct ToolsScreen: View {
     var body: some View {
         List {
             NavigationLink {
-                TVDistanceCalculatorScreen(countryDataService: countryDataService)
+                DistanceCalculatorScreen(countryDataService: countryDataService)
             } label: {
                 Label("Distance Calculator", systemImage: "ruler.fill")
             }
 
             NavigationLink {
-                TVCurrencyInfoScreen(countryDataService: countryDataService)
+                CurrencyInfoScreen(countryDataService: countryDataService)
             } label: {
                 Label("Currency Info", systemImage: "dollarsign.circle.fill")
             }
 
             NavigationLink {
-                TVTimeZoneScreen(countryDataService: countryDataService)
+                TimeZoneScreen(countryDataService: countryDataService)
             } label: {
                 Label("Time Zones", systemImage: "clock.fill")
             }
@@ -30,7 +30,7 @@ struct ToolsScreen: View {
 }
 
 // MARK: - Distance Calculator
-struct TVDistanceCalculatorScreen: View {
+struct DistanceCalculatorScreen: View {
     let countryDataService: CountryDataService
 
     @State private var countryA: Country?
@@ -103,17 +103,17 @@ struct TVDistanceCalculatorScreen: View {
         }
         .navigationTitle("Distance Calculator")
         .sheet(isPresented: $showPickerA) {
-            TVCountryPickerSheet(countries: countryDataService.countries) { countryA = $0 }
+            CountryPickerSheet(countries: countryDataService.countries) { countryA = $0 }
         }
         .sheet(isPresented: $showPickerB) {
-            TVCountryPickerSheet(countries: countryDataService.countries) { countryB = $0 }
+            CountryPickerSheet(countries: countryDataService.countries) { countryB = $0 }
         }
     }
 
 }
 
 // MARK: - Currency Info
-struct TVCurrencyInfoScreen: View {
+struct CurrencyInfoScreen: View {
     let countryDataService: CountryDataService
 
     var body: some View {
@@ -142,7 +142,7 @@ struct TVCurrencyInfoScreen: View {
 }
 
 // MARK: - Time Zones
-struct TVTimeZoneScreen: View {
+struct TimeZoneScreen: View {
     let countryDataService: CountryDataService
 
     var body: some View {

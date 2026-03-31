@@ -8,7 +8,7 @@ struct OrganizationsScreen: View {
     var body: some View {
         List(Organization.all) { organization in
             NavigationLink {
-                TVOrganizationDetailScreen(
+                OrganizationDetailScreen(
                     organization: organization,
                     countryDataService: countryDataService
                 )
@@ -36,7 +36,7 @@ struct OrganizationsScreen: View {
 }
 
 // MARK: - Detail
-struct TVOrganizationDetailScreen: View {
+struct OrganizationDetailScreen: View {
     let organization: Organization
     let countryDataService: CountryDataService
 
