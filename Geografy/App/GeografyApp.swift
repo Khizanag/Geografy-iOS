@@ -158,6 +158,9 @@ struct GeografyApp: App {
             }
         }
         #if targetEnvironment(macCatalyst)
+        .defaultSize(width: 1200, height: 800)
+        #endif
+        #if targetEnvironment(macCatalyst)
         .commands {
             CommandGroup(replacing: .newItem) {}
 
