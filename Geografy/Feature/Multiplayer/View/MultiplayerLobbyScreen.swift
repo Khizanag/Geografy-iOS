@@ -259,25 +259,22 @@ private extension MultiplayerLobbyScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 
     func startBlobAnimation() {
-        guard !reduceMotion else { blobAnimating = true; return }
-        withAnimation(
-            .easeInOut(duration: 6).repeatForever(autoreverses: true)
-        ) {
-            blobAnimating = true
-        }
+        blobAnimating = true
     }
 }
 
 // MARK: - Actions
 private extension MultiplayerLobbyScreen {
     func startSearching() {
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-            isSearching = true
-            opponent = nil
-        }
+        isSearching = true
+        opponent = nil
 
         let searchDuration = Double.random(in: 2.0...3.5)
 
@@ -288,9 +285,7 @@ private extension MultiplayerLobbyScreen {
 
             let foundOpponent = MockOpponent.makeRandom()
 
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                opponent = foundOpponent
-            }
+            opponent = foundOpponent
 
             try? await Task.sleep(for: .seconds(1.2))
 
@@ -302,10 +297,8 @@ private extension MultiplayerLobbyScreen {
     }
 
     func cancelSearch() {
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-            isSearching = false
-            opponent = nil
-        }
+        isSearching = false
+        opponent = nil
     }
 }
 

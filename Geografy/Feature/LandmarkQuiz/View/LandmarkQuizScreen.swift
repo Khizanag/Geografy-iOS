@@ -286,13 +286,11 @@ private extension LandmarkQuizScreen {
     func advanceQuestion() {
         let nextIndex = currentQuestionIndex + 1
         if nextIndex >= quizService.questions.count {
-            withAnimation { isGameOver = true }
+            isGameOver = true
         } else {
-            withAnimation {
-                currentQuestionIndex = nextIndex
-                selectedAnswer = nil
-                timeRemaining = 20
-            }
+            currentQuestionIndex = nextIndex
+            selectedAnswer = nil
+            timeRemaining = 20
             prepareAnswers()
             startTimer()
         }

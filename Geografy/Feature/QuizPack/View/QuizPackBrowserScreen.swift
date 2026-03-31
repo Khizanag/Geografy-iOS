@@ -292,6 +292,10 @@ private extension QuizPackBrowserScreen {
                 .scaleEffect(blobAnimating ? 0.90 : 1.08)
         }
         .ignoresSafeArea()
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
 
@@ -305,19 +309,8 @@ private extension QuizPackBrowserScreen {
     }
 
     func startAnimations() {
-        if !reduceMotion {
-            withAnimation(
-                .easeInOut(duration: 6)
-                    .repeatForever(autoreverses: true)
-            ) {
-                blobAnimating = true
-            }
-        } else {
-            blobAnimating = true
-        }
-        withAnimation(.easeOut(duration: 0.7)) {
-            appeared = true
-        }
+        blobAnimating = true
+        appeared = true
     }
 
     func handlePackTap(

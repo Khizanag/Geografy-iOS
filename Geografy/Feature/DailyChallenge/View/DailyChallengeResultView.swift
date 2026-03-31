@@ -208,14 +208,12 @@ private extension DailyChallengeResultView {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
         .onAppear {
-            guard !reduceMotion else { blobAnimating = true; return }
-            withAnimation(
-                .easeInOut(duration: 6)
-                    .repeatForever(autoreverses: true)
-            ) {
-                blobAnimating = true
-            }
+            blobAnimating = true
         }
     }
 }
@@ -245,9 +243,7 @@ private extension DailyChallengeResultView {
     }
 
     func animateScore() {
-        withAnimation(.easeOut(duration: 1.2)) {
-            animatedScore = score
-        }
+        animatedScore = score
         AccessibilityNotification.Announcement("\(scoreMessage) \(score) out of \(maxScore) points").post()
     }
 }

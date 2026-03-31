@@ -241,15 +241,14 @@ private extension MultiplayerMatchScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 
     func startBlobAnimation() {
-        guard !reduceMotion else { blobAnimating = true; return }
-        withAnimation(
-            .easeInOut(duration: 6).repeatForever(autoreverses: true)
-        ) {
-            blobAnimating = true
-        }
+        blobAnimating = true
     }
 }
 
@@ -349,14 +348,12 @@ private extension MultiplayerMatchScreen {
 
             rounds.append(round)
 
-            withAnimation(.easeInOut(duration: 0.3)) {
-                if round.playerWonRound {
-                    playerScore += 1
-                } else if round.opponentWonRound {
-                    opponentScore += 1
-                }
-                showFeedback = true
+            if round.playerWonRound {
+                playerScore += 1
+            } else if round.opponentWonRound {
+                opponentScore += 1
             }
+            showFeedback = true
 
             try? await Task.sleep(for: .seconds(1.5))
 
@@ -366,12 +363,10 @@ private extension MultiplayerMatchScreen {
 
     func advanceToNext() {
         if currentIndex + 1 < questions.count {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                currentIndex += 1
-                selectedOptionID = nil
-                showFeedback = false
-                questionStartTime = Date()
-            }
+            currentIndex += 1
+            selectedOptionID = nil
+            showFeedback = false
+            questionStartTime = Date()
             opponentEngine.reset()
             startOpponentThinking()
         } else {

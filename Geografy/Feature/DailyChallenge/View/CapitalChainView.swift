@@ -126,13 +126,11 @@ private extension CapitalChainView {
             correctCount += 1
             hapticsService.notification(.success)
         } else {
-            withAnimation { score = max(0, score - 250) }
+            score = max(0, score - 250)
             hapticsService.impact(.light)
         }
 
-        withAnimation(.easeInOut(duration: 0.3)) {
-            showFeedback = true
-        }
+        showFeedback = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             advance()
@@ -141,11 +139,9 @@ private extension CapitalChainView {
 
     func advance() {
         if currentStep + 1 < content.chainSteps.count {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                currentStep += 1
-                selectedOption = nil
-                showFeedback = false
-            }
+            currentStep += 1
+            selectedOption = nil
+            showFeedback = false
         } else {
             onFinish()
         }

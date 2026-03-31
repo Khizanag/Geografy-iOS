@@ -371,9 +371,7 @@ private extension BorderChallengeScreen {
 
         let remaining = neighbors.filter { !foundNeighbors.contains($0) }
         if let match = service.isCorrectGuess(input, for: remaining) {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                foundNeighbors.append(match)
-            }
+            foundNeighbors.append(match)
             hapticsService.notification(.success)
             let message = "Correct! \(match.name). \(foundNeighbors.count) of \(neighbors.count) found"
             AccessibilityNotification.Announcement(message).post()
@@ -387,7 +385,7 @@ private extension BorderChallengeScreen {
 
     func revealAnswers() {
         timerActive = false
-        withAnimation(.easeInOut(duration: 0.4)) { isRevealed = true }
+        isRevealed = true
         hapticsService.impact(.light)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { endGame() }
     }
@@ -403,6 +401,6 @@ private extension BorderChallengeScreen {
             }
             xpService.award(xp, source: source)
         }
-        withAnimation { isGameOver = true }
+        isGameOver = true
     }
 }

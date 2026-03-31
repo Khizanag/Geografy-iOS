@@ -115,13 +115,11 @@ private extension FlagSequenceView {
             correctCount += 1
             hapticsService.notification(.success)
         } else {
-            withAnimation { score = max(0, score - 200) }
+            score = max(0, score - 200)
             hapticsService.impact(.light)
         }
 
-        withAnimation(.easeInOut(duration: 0.3)) {
-            showFeedback = true
-        }
+        showFeedback = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             advance()
@@ -130,11 +128,9 @@ private extension FlagSequenceView {
 
     func advance() {
         if currentIndex + 1 < content.countries.count {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                currentIndex += 1
-                selectedOption = nil
-                showFeedback = false
-            }
+            currentIndex += 1
+            selectedOption = nil
+            showFeedback = false
         } else {
             onFinish()
         }

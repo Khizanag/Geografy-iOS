@@ -215,16 +215,14 @@ private extension MysteryCountryView {
 // MARK: - Actions
 private extension MysteryCountryView {
     func revealClue(cost: Int) {
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-            score = max(0, score - cost)
-            revealedClueCount += 1
-        }
+        score = max(0, score - cost)
+        revealedClueCount += 1
     }
 
     func submitGuess() {
         guessSubmitted = true
         if !isCorrect {
-            withAnimation { score = max(0, score - 200) }
+            score = max(0, score - 200)
         }
         hapticsService.notification(isCorrect ? .success : .error)
         onFinish()
