@@ -27,7 +27,7 @@ public enum FlagAspectRatio {
             "NR", "NZ", "PG", "SB", "SL", "TT", "TV",
             "VC", "VU", "WS",
             // Middle East 1:2
-            "AE", "JO", "KW", "OM", "PS"
+            "AE", "JO", "KW", "OM", "PS",
         ]
         for code in oneToTwo { map[code] = 2.0 }
 
@@ -53,7 +53,7 @@ public enum FlagAspectRatio {
             "GN", "GQ", "GW", "KE", "KM", "LS", "MA", "MG", "ML",
             "MR", "MW", "MZ", "NA", "NE", "NG", "RW", "SD", "SN",
             "SO", "SS", "ST", "TD", "TN", "TZ", "UG", "ZA", "ZM",
-            "ZW"
+            "ZW",
             // Africa exception overridden below: CI, SL already in 1:2
         ]
         for code in twoToThree { map[code] = 1.5 }

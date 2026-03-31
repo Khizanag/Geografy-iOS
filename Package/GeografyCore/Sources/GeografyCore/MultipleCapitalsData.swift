@@ -6,11 +6,11 @@ public enum MultipleCapitalsData: Sendable {
     public static let data: [String: [Country.Capital]] = [
         "BJ": [
             Country.Capital(name: "Porto-Novo", role: "Legislative"),
-            Country.Capital(name: "Cotonou", role: "Seat of Government")
+            Country.Capital(name: "Cotonou", role: "Seat of Government"),
         ],
         "IL": [
             Country.Capital(name: "Jerusalem", role: "Declared"),
-            Country.Capital(name: "Tel Aviv", role: "Diplomatic")
-        ]
+            Country.Capital(name: "Tel Aviv", role: "Diplomatic"),
+        ],
     ]
 }

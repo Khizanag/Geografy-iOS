@@ -93,7 +93,7 @@ public extension CoinPack {
             isPopular: false,
             isBestValue: false,
             badgeIcon: "crown.fill"
-        )
+        ),
     ]
 }
 

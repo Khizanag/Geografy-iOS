@@ -58,7 +58,6 @@ private extension RegionCarousel {
 
     func regionCard(_ region: QuizRegion) -> some View {
         let isSelected = region == selectedRegion
-        let count = region.filter(countryDataService.countries).count
 
         return Button {
             hapticsService.selection()
@@ -66,54 +65,61 @@ private extension RegionCarousel {
                 selectedRegion = region
             }
         } label: {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                ZStack {
-                    Circle()
-                        .fill(color(for: region).opacity(isSelected ? 0.18 : 0.08))
-                        .frame(width: 64, height: 64)
-
-                    Image(systemName: region.regionIcon)
-                        .font(DesignSystem.Font.iconLarge.weight(.medium))
-                        .foregroundStyle(color(for: region))
-                }
-
-                VStack(spacing: DesignSystem.Spacing.xxs) {
-                    Text(region.displayName)
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                    Text("\(count) countries")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-
-                Text(description(for: region))
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .frame(height: 34)
-            }
-            .padding(.vertical, DesignSystem.Spacing.lg)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                    .fill(DesignSystem.Color.cardBackground)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                            .strokeBorder(
-                                isSelected
-                                    ? color(for: region).opacity(0.5)
-                                    : DesignSystem.Color.cardBackgroundHighlighted,
-                                lineWidth: isSelected ? 1.5 : 1
-                            )
-                    )
-            )
+            cardContent(for: region, isSelected: isSelected)
         }
         .buttonStyle(PressButtonStyle())
         .animation(.easeInOut(duration: 0.25), value: isSelected)
+    }
+
+    func cardContent(for region: QuizRegion, isSelected: Bool) -> some View {
+        let count = region.filter(countryDataService.countries).count
+        let regionColor = color(for: region)
+
+        return VStack(spacing: DesignSystem.Spacing.md) {
+            ZStack {
+                Circle()
+                    .fill(regionColor.opacity(isSelected ? 0.18 : 0.08))
+                    .frame(width: 64, height: 64)
+
+                Image(systemName: region.regionIcon)
+                    .font(DesignSystem.Font.iconLarge.weight(.medium))
+                    .foregroundStyle(regionColor)
+            }
+
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Text(region.displayName)
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                Text("\(count) countries")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+
+            Text(description(for: region))
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .frame(height: 34)
+        }
+        .padding(.vertical, DesignSystem.Spacing.lg)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                .fill(DesignSystem.Color.cardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                        .strokeBorder(
+                            isSelected
+                                ? regionColor.opacity(0.5)
+                                : DesignSystem.Color.cardBackgroundHighlighted,
+                            lineWidth: isSelected ? 1.5 : 1
+                        )
+                )
+        )
     }
 }
 
