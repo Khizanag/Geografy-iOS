@@ -80,5 +80,6 @@ private struct DestinationSheetView: View {
         ) {
             destination.content
         }
+        .presentationSizing(.form)
     }
 }
