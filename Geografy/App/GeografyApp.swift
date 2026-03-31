@@ -70,7 +70,10 @@ struct GeografyApp: App {
                 .environment(testingModeService)
                 .environment(featureFlagService)
                 .environment(countryDataService)
-                .task { await authService.validateOnLaunch() }
+                .task {
+                    countryDataService.loadCountries()
+                }
+                .task(priority: .utility) { await authService.validateOnLaunch() }
                 .task(priority: .utility) { await subscriptionService.checkEntitlements() }
                 .task(priority: .utility) {
                     gameCenterService.authenticatePlayer()
@@ -97,7 +100,7 @@ struct GeografyApp: App {
                     SpotlightIndexer.indexCountries(countryDataService.countries)
                     #endif
                 }
-                .task {
+                .task(priority: .background) {
                     widgetDataBridge.loadCountriesIfNeeded()
                     widgetDataBridge.synchronize(
                         streak: streakService.currentStreak,
