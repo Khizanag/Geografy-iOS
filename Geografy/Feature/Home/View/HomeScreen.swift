@@ -573,7 +573,9 @@ private extension HomeScreen {
 
     @ViewBuilder
     func sectionView(for section: HomeSection) -> some View {
-        if sectionNeedsPadding(section) {
+        if let flag = section.featureFlag, !FeatureFlagService.shared.isEnabled(flag) {
+            EmptyView()
+        } else if sectionNeedsPadding(section) {
             paddedSectionView(for: section)
                 .padding(.horizontal, DesignSystem.Spacing.md)
         } else {

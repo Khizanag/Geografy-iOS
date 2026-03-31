@@ -334,6 +334,24 @@ private extension SettingsScreen {
                     set: { testingModeService.isEnabled = $0 }
                 )
             )
+
+            Button {
+                coordinator.push(.featureFlags)
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    SettingsIconBadge(systemImage: "flag.fill", color: DesignSystem.Color.accent)
+                    Text("Feature Flags")
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+            }
+            .buttonStyle(.plain)
         }
     }
 }

@@ -10,7 +10,8 @@ enum BackgroundTaskService {
             forTaskWithIdentifier: widgetRefreshID,
             using: nil
         ) { task in
-            handleWidgetRefresh(task as! BGAppRefreshTask)
+            guard let refreshTask = task as? BGAppRefreshTask else { return }
+            handleWidgetRefresh(refreshTask)
         }
     }
 
