@@ -319,6 +319,7 @@ private struct AllZonesView: View {
     private func zoneCountryRow(for item: CountryWithZone) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: item.country.code, height: 20)
+                .frame(width: 32, alignment: .center)
             Text(item.country.name)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
