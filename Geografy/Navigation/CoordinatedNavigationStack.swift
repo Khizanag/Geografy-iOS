@@ -18,7 +18,7 @@ struct CoordinatedNavigationStack<Root: View>: View {
             DestinationSheetView(destination: destination)
         }
         .fullScreenCover(item: $navigator.activeCover) { destination in
-            destination.content
+            DestinationCoverView(destination: destination)
         }
         .environment(navigator)
     }
@@ -37,6 +37,20 @@ private extension CoordinatedNavigationStack {
                 }
         } else {
             root()
+        }
+    }
+}
+
+// MARK: - Destination Cover View
+private struct DestinationCoverView: View {
+    let destination: Destination
+
+    var body: some View {
+        CoordinatedNavigationStack(
+            navigator: Navigator(),
+            showCloseButton: true
+        ) {
+            destination.content
         }
     }
 }
