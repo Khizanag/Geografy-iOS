@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CountryProfileSection: View {
     let profile: CountryProfile

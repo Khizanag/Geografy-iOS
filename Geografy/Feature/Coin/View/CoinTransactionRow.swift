@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyCore
+import GeografyDesign
 
 struct CoinTransactionRow: View {
     let transaction: CoinTransaction

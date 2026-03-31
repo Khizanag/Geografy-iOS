@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 private struct WorldRecordTile: Identifiable {
     let id = UUID()

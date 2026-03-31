@@ -1,6 +1,8 @@
 // swiftlint:disable file_length
 import GameController
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct MultiplayerQuizScreen: View {
     @Environment(\.dismiss) private var dismiss

@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 enum OrgSortOption: String, CaseIterable {
     case alphabetical = "Name"

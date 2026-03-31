@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct MultiplayerRoundView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct FlagSequenceView: View {
     @Environment(HapticsService.self) private var hapticsService

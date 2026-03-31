@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 enum AchievementCategory: String, CaseIterable, Codable {
     case explorer

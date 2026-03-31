@@ -1,5 +1,7 @@
-import SwiftData
 import SwiftUI
+import SwiftData
+import GeografyCore
+import GeografyDesign
 
 struct ProfileScreen: View {
     @Environment(SubscriptionService.self) var subscriptionService

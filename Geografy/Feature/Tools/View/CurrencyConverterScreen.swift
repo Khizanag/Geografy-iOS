@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CurrencyConverterScreen: View {
     @Environment(CurrencyService.self) private var currencyService

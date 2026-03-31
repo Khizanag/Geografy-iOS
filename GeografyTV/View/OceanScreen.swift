@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct OceanScreen: View {
     private let service = OceanService()

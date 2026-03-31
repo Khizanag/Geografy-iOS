@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct MultiplayerResultScreen: View {
     @Environment(\.dismiss) private var dismiss

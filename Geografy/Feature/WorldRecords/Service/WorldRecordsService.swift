@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct WorldRecordsService {
     func computeRecords(from countries: [Country]) -> [WorldRecord] {

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct TravelJournalPhotoGrid: View {
     let images: [UIImage]

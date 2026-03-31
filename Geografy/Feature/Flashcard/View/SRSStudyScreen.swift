@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct SRSStudyScreen: View {
     @Environment(FlashcardService.self) private var flashcardService

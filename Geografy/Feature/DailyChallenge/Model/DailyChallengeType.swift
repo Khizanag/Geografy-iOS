@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 /// The three rotating challenge types. The day-of-year modulo 3 picks which type to show.
 enum DailyChallengeType: String, CaseIterable, Codable {

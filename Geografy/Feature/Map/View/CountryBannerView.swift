@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CountryBannerView: View {
     let countryCode: String

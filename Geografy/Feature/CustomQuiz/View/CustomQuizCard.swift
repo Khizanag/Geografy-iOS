@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CustomQuizCard: View {
     let quiz: CustomQuiz

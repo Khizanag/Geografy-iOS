@@ -1,5 +1,6 @@
-import Combine
 import SwiftUI
+import Combine
+import GeografyDesign
 
 struct LandmarkQuizScreen: View {
     @Environment(HapticsService.self) private var hapticsService

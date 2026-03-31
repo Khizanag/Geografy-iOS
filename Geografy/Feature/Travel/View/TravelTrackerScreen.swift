@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct TravelTrackerScreen: View {
     @Environment(TravelService.self) private var travelService

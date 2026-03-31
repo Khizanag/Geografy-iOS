@@ -1,5 +1,7 @@
-import PhotosUI
 import SwiftUI
+import PhotosUI
+import GeografyCore
+import GeografyDesign
 
 struct TravelJournalEditorSheet: View {
     @Environment(\.dismiss) private var dismiss

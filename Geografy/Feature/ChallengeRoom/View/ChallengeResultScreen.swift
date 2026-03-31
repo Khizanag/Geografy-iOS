@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct ChallengeResultScreen: View {
     @Environment(Coordinator.self) private var coordinator

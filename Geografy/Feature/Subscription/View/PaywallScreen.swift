@@ -1,5 +1,6 @@
-import StoreKit
 import SwiftUI
+import StoreKit
+import GeografyDesign
 
 struct PaywallScreen: View {
     @Environment(\.dismiss) private var dismiss

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 enum FlashcardReviewResult: String, CaseIterable, Identifiable {
     case again

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct InfoTile: View {
     private let icon: String

@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct Quote: Identifiable {
     let id: String

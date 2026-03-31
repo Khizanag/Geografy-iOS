@@ -1,4 +1,5 @@
 import Observation
+import GeografyCore
 import StoreKit
 
 @Observable

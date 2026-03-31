@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 // MARK: - Continent Explore Section
 extension CountryDetailScreen {

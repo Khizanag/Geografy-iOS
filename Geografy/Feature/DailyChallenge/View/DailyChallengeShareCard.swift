@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct DailyChallengeShareCard: View {
     let score: Int

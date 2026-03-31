@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CultureDetailView: View {
     @Environment(\.dismiss) private var dismiss

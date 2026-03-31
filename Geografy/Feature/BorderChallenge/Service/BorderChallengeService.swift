@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct BorderChallengeService {
     enum Difficulty: String, CaseIterable {

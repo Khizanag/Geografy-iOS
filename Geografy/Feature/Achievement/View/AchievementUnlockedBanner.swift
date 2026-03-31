@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct AchievementUnlockedBanner: View {
     @Environment(HapticsService.self) private var hapticsService

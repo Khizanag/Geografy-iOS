@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 /// Generates progressive clues for a given country.
 enum ClueGenerator {

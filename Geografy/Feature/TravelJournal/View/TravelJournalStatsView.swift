@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct TravelJournalStatsView: View {
     let totalEntries: Int

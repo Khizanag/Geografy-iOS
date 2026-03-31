@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 /// Represents a single daily challenge instance with its content and date.
 struct DailyChallenge: Identifiable {

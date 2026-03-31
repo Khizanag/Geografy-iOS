@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct SectionHeaderView: View {
     let title: String

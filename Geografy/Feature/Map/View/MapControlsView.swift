@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct MapControlsView: View {
     @Binding var showLabels: Bool

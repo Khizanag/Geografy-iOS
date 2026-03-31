@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyCore
 
 enum Destination: Hashable {
     case countryDetail(Country)

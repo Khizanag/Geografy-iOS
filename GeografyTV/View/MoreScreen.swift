@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyCore
 
 struct MoreScreen: View {
     let countryDataService: CountryDataService

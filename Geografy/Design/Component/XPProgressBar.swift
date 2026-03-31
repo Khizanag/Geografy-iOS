@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct XPProgressBar: View {
     let currentLevelNumber: Int

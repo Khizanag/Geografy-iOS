@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct FlashcardDeckCard: View {
     let deck: FlashcardDeck

@@ -1,5 +1,6 @@
-import AuthenticationServices
 import SwiftUI
+import AuthenticationServices
+import GeografyDesign
 
 struct SignInOptionsSheet: View {
     @Environment(AuthService.self) private var authService

@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct FavoritesScreen: View {
     @Environment(FavoritesService.self) private var favoritesService

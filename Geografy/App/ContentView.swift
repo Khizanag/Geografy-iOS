@@ -1,5 +1,7 @@
-import Combine
 import SwiftUI
+import Combine
+import GeografyCore
+import GeografyDesign
 
 struct ContentView: View {
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"

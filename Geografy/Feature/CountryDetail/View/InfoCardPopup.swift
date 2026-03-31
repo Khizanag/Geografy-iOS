@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct InfoCardPopup: View {
     private let icon: String

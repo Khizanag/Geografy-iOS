@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CoinBalanceView: View {
     @Environment(CoinService.self) private var coinService

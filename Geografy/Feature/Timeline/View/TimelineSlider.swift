@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct TimelineSlider: View {
     @Binding var selectedYear: Int

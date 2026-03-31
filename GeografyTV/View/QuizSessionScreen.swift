@@ -1,5 +1,7 @@
 import GameController
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct QuizSessionScreen: View {
     @Environment(\.dismiss) private var dismiss

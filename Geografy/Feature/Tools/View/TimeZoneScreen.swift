@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct TimeZoneScreen: View {
     @Environment(Coordinator.self) private var coordinator: Coordinator?

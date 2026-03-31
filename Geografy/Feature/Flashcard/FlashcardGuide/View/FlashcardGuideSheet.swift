@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct FlashcardGuideSheet: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

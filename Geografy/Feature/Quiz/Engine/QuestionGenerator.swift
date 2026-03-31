@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 enum QuestionGenerator {
     #if !os(tvOS)

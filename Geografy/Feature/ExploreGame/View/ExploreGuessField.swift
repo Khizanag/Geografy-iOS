@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 /// Search field with autocomplete for guessing a country.
 struct ExploreGuessField: View {

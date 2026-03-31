@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct ScoreRingView: View {
     let progress: Double

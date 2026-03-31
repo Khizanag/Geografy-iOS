@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct FeedScreen: View {
     let countryDataService: CountryDataService

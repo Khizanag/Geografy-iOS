@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct FavoriteToggleButton: View {
     @Environment(FavoritesService.self) private var favoritesService

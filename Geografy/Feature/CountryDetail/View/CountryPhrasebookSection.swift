@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 // MARK: - Phrasebook Section
 extension CountryDetailScreen {

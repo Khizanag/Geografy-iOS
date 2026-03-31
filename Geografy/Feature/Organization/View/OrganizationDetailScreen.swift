@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct OrganizationDetailScreen: View {
     @Environment(TabCoordinator.self) private var coordinator

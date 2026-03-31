@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct IconButton: View {
     private let systemImage: String

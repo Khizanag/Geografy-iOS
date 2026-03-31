@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct FlagGameState {
     var score: Int = 0

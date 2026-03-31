@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct AlphabetJumpIndex: View {
     let letters: [String]

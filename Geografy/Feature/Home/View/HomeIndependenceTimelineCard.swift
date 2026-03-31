@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct HomeIndependenceTimelineCard: View {
     let onTap: () -> Void

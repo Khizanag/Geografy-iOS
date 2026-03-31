@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 enum Screen: Hashable {
     case map(continentFilter: Country.Continent? = nil)

@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 enum CapitalCoordinateService {
     struct Coordinate {

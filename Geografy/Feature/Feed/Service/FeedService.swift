@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyCore
 
 @Observable
 final class FeedService {

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CultureExplorerScreen: View {
     @State private var searchQuery = ""

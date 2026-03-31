@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct FlashcardStatsView: View {
     let cardsReviewed: Int

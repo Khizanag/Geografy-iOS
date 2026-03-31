@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct WorldRecordsScreen: View {
     let countryDataService: CountryDataService

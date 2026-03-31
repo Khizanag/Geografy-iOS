@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct QuestionCounterPill: View {
     let current: Int

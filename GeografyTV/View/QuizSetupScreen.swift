@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct QuizSetupScreen: View {
     let countryDataService: CountryDataService

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct HomeMapColoringCard: View {
     let onTap: () -> Void

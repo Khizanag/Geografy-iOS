@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct TravelJournalDetailScreen: View {
     @Environment(\.dismiss) private var dismiss

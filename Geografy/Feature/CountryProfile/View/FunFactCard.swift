@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct FunFactCard: View {
     let fact: CountryFunFact

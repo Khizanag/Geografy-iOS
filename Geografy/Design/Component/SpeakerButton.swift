@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct SpeakerButton: View {
     @Environment(PronunciationService.self) private var pronunciationService

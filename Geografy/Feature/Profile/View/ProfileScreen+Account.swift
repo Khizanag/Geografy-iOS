@@ -1,5 +1,7 @@
 #if !os(tvOS)
 import SwiftUI
+import GeografyCore
+import GeografyDesign
 
 // MARK: - Quiz History
 extension ProfileScreen {

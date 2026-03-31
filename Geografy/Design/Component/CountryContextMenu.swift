@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyCore
 
 struct CountryContextMenu: ViewModifier {
     @Environment(FavoritesService.self) private var favoritesService

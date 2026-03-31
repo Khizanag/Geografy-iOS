@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct TimelineTodaySection: View {
     let events: [HistoricalEvent]

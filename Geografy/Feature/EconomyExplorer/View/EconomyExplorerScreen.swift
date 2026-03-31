@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct EconomyExplorerScreen: View {
     @Environment(TabCoordinator.self) private var coordinator

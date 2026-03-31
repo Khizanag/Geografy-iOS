@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import SwiftUI
+import GeografyDesign
 
 struct LocalMultiplayerCountdownView: View {
     let coordinator: LocalMultiplayerCoordinator
