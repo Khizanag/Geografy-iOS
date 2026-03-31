@@ -3,7 +3,7 @@ import SwiftUI
 import GeografyDesign
 
 struct FeatureFlagsScreen: View {
-    @State private var featureFlags = FeatureFlagService.shared
+    @Environment(FeatureFlagService.self) private var featureFlags
     @State private var searchText = ""
 
     var body: some View {

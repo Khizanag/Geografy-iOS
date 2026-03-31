@@ -1,3 +1,4 @@
+// swiftlint:disable file_length
 import SwiftUI
 import GeografyDesign
 import GeografyCore
@@ -13,6 +14,7 @@ struct HomeScreen: View {
     @Environment(FlashcardService.self) var flashcardService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Navigator.self) var coordinator
+    @Environment(FeatureFlagService.self) var featureFlags
 
     @State var countryDataService = CountryDataService()
     @State var dailyChallengeService: DailyChallengeService?
@@ -573,7 +575,7 @@ private extension HomeScreen {
 
     @ViewBuilder
     func sectionView(for section: HomeSection) -> some View {
-        if let flag = section.featureFlag, !FeatureFlagService.shared.isEnabled(flag) {
+        if let flag = section.featureFlag, !featureFlags.isEnabled(flag) {
             EmptyView()
         } else if sectionNeedsPadding(section) {
             paddedSectionView(for: section)

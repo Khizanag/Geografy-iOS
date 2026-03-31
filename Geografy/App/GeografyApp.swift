@@ -25,6 +25,7 @@ struct GeografyApp: App {
     @State private var learningPathService = LearningPathService()
     @State private var pronunciationService = PronunciationService()
     @State private var widgetDataBridge = WidgetDataBridge()
+    @State private var featureFlagService = FeatureFlagService()
 
     init() {
         #if os(iOS)
@@ -66,6 +67,7 @@ struct GeografyApp: App {
                 .environment(learningPathService)
                 .environment(pronunciationService)
                 .environment(testingModeService)
+                .environment(featureFlagService)
                 .task { await authService.validateOnLaunch() }
                 .task {
                     #if os(iOS)
