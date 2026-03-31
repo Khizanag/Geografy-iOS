@@ -29,13 +29,7 @@ struct WorldRecordsScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("World Records")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .task {
+        .navigationBarTitleDisplayMode(.inline)        .task {
             countryDataService.loadCountries()
             records = worldRecordsService.computeRecords(from: countryDataService.countries)
         }

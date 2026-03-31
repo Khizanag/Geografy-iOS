@@ -46,9 +46,6 @@ struct OrganizationMapScreen: View {
             }
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    CircleCloseButton()
-                }
                 ToolbarItem(placement: .principal) {
                     if isLandscape {
                         topContent

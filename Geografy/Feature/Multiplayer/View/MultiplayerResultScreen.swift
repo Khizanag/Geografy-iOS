@@ -33,9 +33,6 @@ struct MultiplayerResultScreen: View {
             .navigationTitle("Match Result")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { onDone() }
-                }
             }
             .onAppear {
                 startBlobAnimation()

@@ -27,13 +27,7 @@ struct MapPuzzleSetupScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Map Puzzle")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .navigationDestination(isPresented: $showPuzzle) {
+        .navigationBarTitleDisplayMode(.inline)        .navigationDestination(isPresented: $showPuzzle) {
             if let continent = selectedContinent {
                 MapPuzzleScreen(continent: continent)
             }

@@ -49,9 +49,6 @@ struct TravelMapScreen: View {
         }
         .toolbarBackground(.clear, for: .navigationBar)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                CircleCloseButton()
-            }
             ToolbarItem(placement: .topBarTrailing) {
                 labelsToggle
             }

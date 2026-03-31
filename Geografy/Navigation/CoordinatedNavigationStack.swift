@@ -1,5 +1,24 @@
 import SwiftUI
 
+// MARK: - Hide Close Button Environment Key
+private struct HideCloseButtonKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var hideCloseButton: Bool {
+        get { self[HideCloseButtonKey.self] }
+        set { self[HideCloseButtonKey.self] = newValue }
+    }
+}
+
+extension View {
+    func hideNavigationCloseButton(_ hidden: Bool = true) -> some View {
+        environment(\.hideCloseButton, hidden)
+    }
+}
+
+// MARK: - Coordinated Navigation Stack
 struct CoordinatedNavigationStack<Root: View>: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -26,17 +45,31 @@ struct CoordinatedNavigationStack<Root: View>: View {
 
 // MARK: - Subviews
 private extension CoordinatedNavigationStack {
-    @ViewBuilder
     var rootWithCloseButton: some View {
-        if showCloseButton {
+        CloseButtonWrapper(showCloseButton: showCloseButton) {
             root()
+        }
+    }
+}
+
+// MARK: - Close Button Wrapper
+private struct CloseButtonWrapper<Content: View>: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.hideCloseButton) private var hideCloseButton
+
+    let showCloseButton: Bool
+    @ViewBuilder let content: () -> Content
+
+    var body: some View {
+        if showCloseButton, !hideCloseButton {
+            content()
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         CircleCloseButton { dismiss() }
                     }
                 }
         } else {
-            root()
+            content()
         }
     }
 }
