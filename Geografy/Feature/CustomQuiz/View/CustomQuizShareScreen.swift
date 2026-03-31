@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 import GeografyDesign
 
@@ -31,3 +32,4 @@ struct CustomQuizShareScreen: View {
         }
     }
 }
+#endif

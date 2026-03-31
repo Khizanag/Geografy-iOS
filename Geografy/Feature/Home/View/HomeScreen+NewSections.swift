@@ -184,7 +184,7 @@ extension HomeScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Country Comparison")
                 .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeCountryCompareCard { coordinator.sheet(.compare) }
+            HomeCountryCompareCard { coordinator.sheet(.compare()) }
         }
     }
 }

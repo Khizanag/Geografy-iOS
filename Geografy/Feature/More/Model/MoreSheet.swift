@@ -227,7 +227,7 @@ enum MoreSheet: Identifiable {
         case .favorites: .favorites
         case .travel: .travelTracker
         case .dailyChallenge: .dailyChallenge
-        case .compare: .compare
+        case .compare: .compare()
         case .travelJournal: .travelJournal
         case .quizPacks: .quizPacks
         case .customQuiz: .customQuiz
@@ -235,7 +235,7 @@ enum MoreSheet: Identifiable {
         case .exploreGame: .exploreGame
         case .speedRun: .speedRunSetup
         case .distanceCalculator: .distanceCalculator
-        case .currencyConverter: .currencyConverter
+        case .currencyConverter: .currencyConverter()
         case .timeZones: .timeZones
         case .timeline: .timeline
         case .achievements: .achievements

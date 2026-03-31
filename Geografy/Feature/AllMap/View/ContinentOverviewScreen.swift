@@ -28,7 +28,7 @@ struct ContinentOverviewScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    coordinator.cover(.map(continentFilter: continent.displayName))
+                    coordinator.cover(.map(continentFilter: continent))
                 } label: {
                     Image(systemName: "map.fill")
                         .foregroundStyle(DesignSystem.Color.iconPrimary)
