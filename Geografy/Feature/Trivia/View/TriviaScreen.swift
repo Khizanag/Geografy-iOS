@@ -32,7 +32,6 @@ struct TriviaScreen: View {
         }
         .navigationTitle("Trivia")
         .navigationBarTitleDisplayMode(.inline)
-        .interactiveDismissDisabled(true)
         .onAppear {
             countryDataService.loadCountries()
             loadQuestions()
