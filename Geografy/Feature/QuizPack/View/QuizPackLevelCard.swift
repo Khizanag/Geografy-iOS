@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct QuizPackLevelCard: View {
     let level: QuizPackLevel

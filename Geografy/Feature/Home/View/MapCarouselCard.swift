@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct MapCarouselCard: View {
     private let mapName: String

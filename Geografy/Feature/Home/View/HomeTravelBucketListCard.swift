@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct HomeTravelBucketListCard: View {
     let onTap: () -> Void

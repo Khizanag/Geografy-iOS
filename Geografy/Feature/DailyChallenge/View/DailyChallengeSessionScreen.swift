@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct DailyChallengeSessionScreen: View {
     @Environment(Coordinator.self) private var coordinator

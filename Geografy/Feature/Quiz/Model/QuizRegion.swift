@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 enum QuizRegion: String, CaseIterable, Identifiable, Codable {
     case world

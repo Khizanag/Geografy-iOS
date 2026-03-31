@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 final class ChallengeRoomService {
     struct RoomConfiguration {

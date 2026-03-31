@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct TimelineFilter: Equatable {
     var continent: Country.Continent?

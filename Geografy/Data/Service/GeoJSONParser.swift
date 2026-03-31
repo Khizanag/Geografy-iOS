@@ -1,5 +1,7 @@
+import Foundation
 import CoreGraphics
-import SwiftUI
+import GeografyCore
+import GeografyDesign
 
 enum GeoJSONParser {
     private static var territoryMergeMap: [String: String] {

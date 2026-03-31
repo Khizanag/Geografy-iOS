@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct SpeedRunSetupScreen: View {
     @Environment(TabCoordinator.self) private var coordinator

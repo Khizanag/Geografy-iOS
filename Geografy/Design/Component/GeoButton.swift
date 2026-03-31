@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct GeoButton: View {
     enum Style {

@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct QuizQuestion: Identifiable {
     let id: UUID

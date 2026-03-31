@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 @Observable
 final class NationalSymbolsService {

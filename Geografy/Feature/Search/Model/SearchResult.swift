@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 enum SearchRow: Identifiable, Hashable {
     case country(Country)

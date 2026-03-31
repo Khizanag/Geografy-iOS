@@ -1,5 +1,6 @@
-import StoreKit
 import SwiftUI
+import StoreKit
+import GeografyDesign
 
 struct SubscriptionCard: View {
     let productID: String

@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 enum MoreSheet: Identifiable {
     case profile, countries, orgs, favorites, travel

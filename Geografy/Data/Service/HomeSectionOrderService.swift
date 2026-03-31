@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import Foundation
+import GeografyCore
 import Observation
 
 @Observable

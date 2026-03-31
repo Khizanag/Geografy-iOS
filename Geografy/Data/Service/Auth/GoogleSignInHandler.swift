@@ -16,6 +16,7 @@
 
 #if !os(tvOS)
 import AuthenticationServices
+import GeografyCore
 import CryptoKit
 import Foundation
 import UIKit

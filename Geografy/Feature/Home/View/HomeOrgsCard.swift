@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct HomeOrgsCard: View {
     let onOrgTap: (Organization) -> Void

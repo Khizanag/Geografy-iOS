@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct DistanceCalculatorScreen: View {
     @Environment(HapticsService.self) private var hapticsService

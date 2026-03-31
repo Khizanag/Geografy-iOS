@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct GuestModePromptBanner: View {
     @Environment(AuthService.self) private var authService

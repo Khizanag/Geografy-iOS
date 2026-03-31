@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct FlashcardItem: Identifiable {
     let id: String

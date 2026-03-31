@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct SessionProgressBar: View {
     let progress: CGFloat

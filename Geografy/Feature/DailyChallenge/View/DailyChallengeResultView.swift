@@ -1,5 +1,6 @@
-import Accessibility
 import SwiftUI
+import Accessibility
+import GeografyDesign
 
 struct DailyChallengeResultView: View {
     @Environment(Coordinator.self) private var coordinator

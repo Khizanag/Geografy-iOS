@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 // MARK: - Deep Dive Section
 extension CountryDetailScreen {

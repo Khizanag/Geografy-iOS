@@ -1,5 +1,7 @@
-import Accessibility
 import SwiftUI
+import Accessibility
+import GeografyCore
+import GeografyDesign
 
 struct ExploreGameSessionScreen: View {
     @Environment(HapticsService.self) private var hapticsService

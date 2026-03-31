@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct NicknamesScreen: View {
     @State private var service = CountryNicknamesService()

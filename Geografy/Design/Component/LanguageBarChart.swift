@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct LanguageBarChart: View {
     let languages: [Country.Language]

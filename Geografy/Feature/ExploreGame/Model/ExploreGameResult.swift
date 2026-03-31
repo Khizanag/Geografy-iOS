@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 /// Captures the result of a completed Explore Game round.
 struct ExploreGameResult: Identifiable, Hashable {

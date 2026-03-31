@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct SearchScreen: View {
     @Environment(TabCoordinator.self) private var coordinator

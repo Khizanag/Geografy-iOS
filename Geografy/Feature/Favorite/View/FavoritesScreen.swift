@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 enum FavoritesSortOption: String, CaseIterable {
     case dateAdded = "Date Added"

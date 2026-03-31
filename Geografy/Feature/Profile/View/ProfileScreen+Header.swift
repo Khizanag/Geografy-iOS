@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import SwiftUI
+import GeografyDesign
 
 // MARK: - Guest Banner
 extension ProfileScreen {

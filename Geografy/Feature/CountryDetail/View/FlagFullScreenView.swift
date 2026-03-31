@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct FlagFullScreenView: View {
     @Environment(\.dismiss) private var dismiss

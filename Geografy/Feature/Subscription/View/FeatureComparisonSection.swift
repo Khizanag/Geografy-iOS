@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct FeatureComparisonSection: View {
     @State private var appeared = false

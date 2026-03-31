@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct EmptyStateView: View {
     let icon: String

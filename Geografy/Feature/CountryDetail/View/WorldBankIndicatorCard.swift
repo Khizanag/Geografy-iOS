@@ -1,5 +1,6 @@
-import Charts
 import SwiftUI
+import Charts
+import GeografyDesign
 
 struct WorldBankIndicatorCard: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

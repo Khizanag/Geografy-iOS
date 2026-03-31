@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct PremiumBadge: View {
     var body: some View {

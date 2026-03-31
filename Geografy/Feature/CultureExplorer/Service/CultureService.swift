@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct CultureService {
     var facts: [CultureFact] { allFacts }

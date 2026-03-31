@@ -1,5 +1,7 @@
-import Combine
 import SwiftUI
+import Combine
+import GeografyCore
+import GeografyDesign
 
 struct SpeedRunSessionScreen: View {
     @Environment(\.dismiss) private var dismiss

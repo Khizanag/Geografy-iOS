@@ -1,5 +1,7 @@
-import Accessibility
 import SwiftUI
+import Accessibility
+import GeografyCore
+import GeografyDesign
 
 struct SpellingBeeScreen: View {
     @State private var countryDataService = CountryDataService()

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct MultiplayerLobbyScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

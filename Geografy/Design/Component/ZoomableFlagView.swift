@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct ZoomableFlagView: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency

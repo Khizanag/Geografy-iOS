@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import Foundation
+import GeografyCore
 
 struct SerializableQuestion: Codable, Identifiable {
     let id: UUID

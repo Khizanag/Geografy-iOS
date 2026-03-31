@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct CountryProfileScreen: View {
     @Environment(SubscriptionService.self) private var subscriptionService

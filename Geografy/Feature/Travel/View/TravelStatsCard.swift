@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct TravelStatsCard: View {
     let visitedCount: Int

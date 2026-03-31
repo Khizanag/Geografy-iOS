@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct ResultStatItem: View {
     let icon: String

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct TravelJournalScreen: View {
     @Environment(HapticsService.self) private var hapticsService

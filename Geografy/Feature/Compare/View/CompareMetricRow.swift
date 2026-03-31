@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CompareMetricRow: View {
     let title: String

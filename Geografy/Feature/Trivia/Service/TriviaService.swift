@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 struct TriviaService {
     func generateQuestions(from countries: [Country]) -> [TriviaQuestion] {

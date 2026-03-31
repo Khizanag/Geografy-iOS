@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct MapColoringScreen: View {
     @Environment(\.dismiss) private var dismiss

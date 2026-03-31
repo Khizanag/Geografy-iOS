@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct LanguageScreen: View {
     @State private var service = LanguageService()

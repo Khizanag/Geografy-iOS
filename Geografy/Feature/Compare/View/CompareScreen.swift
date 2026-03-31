@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct CompareScreen: View {
     @Environment(HapticsService.self) private var hapticsService

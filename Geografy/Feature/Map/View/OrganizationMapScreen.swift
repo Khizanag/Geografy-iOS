@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct OrganizationMapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass

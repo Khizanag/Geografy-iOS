@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct HomeTriviaCard: View {
     let onTap: () -> Void

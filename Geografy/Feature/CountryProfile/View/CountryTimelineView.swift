@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CountryTimelineView: View {
     let events: [CountryTimelineEvent]

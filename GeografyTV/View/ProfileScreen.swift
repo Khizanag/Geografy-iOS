@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct ProfileScreen: View {
     @Environment(XPService.self) private var xpService

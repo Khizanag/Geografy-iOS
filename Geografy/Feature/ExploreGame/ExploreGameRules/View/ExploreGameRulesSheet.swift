@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct ExploreGameRulesSheet: View {
     var body: some View {

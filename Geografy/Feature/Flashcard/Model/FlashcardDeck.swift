@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyCore
 
 struct FlashcardDeck: Identifiable {
     let id: String

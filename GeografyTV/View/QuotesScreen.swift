@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct QuotesScreen: View {
     @State private var service = QuotesService()

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct QuizPackDetailScreen: View {
     @Environment(SubscriptionService.self) private var subscriptionService

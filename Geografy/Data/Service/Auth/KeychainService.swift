@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 import Security
 
 struct KeychainService {

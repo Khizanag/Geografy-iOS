@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct NewBadge: View {
     var body: some View {

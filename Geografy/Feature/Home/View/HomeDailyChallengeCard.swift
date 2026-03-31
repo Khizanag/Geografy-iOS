@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct HomeDailyChallengeCard: View {
     let streak: Int

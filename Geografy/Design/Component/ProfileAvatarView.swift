@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct ProfileAvatarView: View {
     let name: String

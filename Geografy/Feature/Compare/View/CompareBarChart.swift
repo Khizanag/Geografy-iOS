@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct CompareBarChart: View {
     let title: String

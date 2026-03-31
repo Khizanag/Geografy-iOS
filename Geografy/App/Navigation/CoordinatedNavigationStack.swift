@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyCore
 
 struct CoordinatedNavigationStack<Root: View>: View {
     @Bindable var coordinator: TabCoordinator

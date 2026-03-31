@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct TravelCountryRow: View {
     @Environment(TravelService.self) private var travelService

@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct MoreScreen: View {
     @Environment(\.horizontalSizeClass) private var sizeClass

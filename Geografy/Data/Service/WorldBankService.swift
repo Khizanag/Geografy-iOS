@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import GeografyCore
 
 // MARK: - Stat Category
 enum StatCategory: String, CaseIterable, Identifiable {

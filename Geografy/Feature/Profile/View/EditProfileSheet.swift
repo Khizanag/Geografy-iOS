@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct EditProfileSheet: View {
     @Environment(AuthService.self) private var authService

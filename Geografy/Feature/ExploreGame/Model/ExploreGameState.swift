@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 /// Tracks the state of a single Explore Game round.
 struct ExploreGameState {

@@ -1,5 +1,5 @@
 import SwiftUI
-import UserNotifications
+import GeografyDesign
 
 struct SettingsScreen: View {
     @Environment(TabCoordinator.self) private var coordinator

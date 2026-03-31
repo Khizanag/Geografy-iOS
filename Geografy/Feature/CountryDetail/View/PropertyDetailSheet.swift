@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct PropertyDetailSheet: View {
     let icon: String

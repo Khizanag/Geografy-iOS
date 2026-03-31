@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct IndependenceScreen: View {
     private let service = IndependenceTimelineService()

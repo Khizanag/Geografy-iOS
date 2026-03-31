@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import SwiftUI
+import GeografyDesign
 
 // MARK: - Achievements Preview
 extension ProfileScreen {

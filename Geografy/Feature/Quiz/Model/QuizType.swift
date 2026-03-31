@@ -1,4 +1,5 @@
 import Foundation
+import GeografyCore
 
 enum QuizType: String, CaseIterable, Identifiable, Codable {
     case flagQuiz

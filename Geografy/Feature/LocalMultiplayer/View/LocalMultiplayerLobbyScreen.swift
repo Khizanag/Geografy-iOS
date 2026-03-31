@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import SwiftUI
+import GeografyDesign
 
 struct LocalMultiplayerLobbyScreen: View {
     @Environment(HapticsService.self) private var hapticsService

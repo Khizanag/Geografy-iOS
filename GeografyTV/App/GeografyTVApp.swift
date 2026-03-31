@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyCore
 
 @main
 struct GeografyTVApp: App {

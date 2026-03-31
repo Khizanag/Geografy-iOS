@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct LandmarkDetailView: View {
     @Environment(\.dismiss) private var dismiss

@@ -1,4 +1,6 @@
 import SwiftUI
+import GeografyDesign
+import GeografyCore
 
 struct MysteryCountryView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass

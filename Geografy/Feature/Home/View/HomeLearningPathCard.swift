@@ -1,4 +1,5 @@
 import SwiftUI
+import GeografyDesign
 
 struct HomeLearningPathCard: View {
     @Environment(LearningPathService.self) private var learningPathService
