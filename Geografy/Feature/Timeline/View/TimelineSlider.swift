@@ -49,7 +49,7 @@ private extension TimelineSlider {
         .navigationTitle("Select Year")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("Done") { showYearPicker = false }
                     .fontWeight(.semibold)
             }

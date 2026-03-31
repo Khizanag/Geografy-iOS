@@ -97,10 +97,10 @@ struct CountryListScreen: View {
 private extension CountryListScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .secondaryAction) {
             sortOrderButton
         }
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             filterMenu
         }
     }

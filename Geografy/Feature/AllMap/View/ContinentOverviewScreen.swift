@@ -26,7 +26,7 @@ struct ContinentOverviewScreen: View {
         .navigationTitle(continent.displayName)
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Button {
                     coordinator.cover(.map(continentFilter: continent))
                 } label: {

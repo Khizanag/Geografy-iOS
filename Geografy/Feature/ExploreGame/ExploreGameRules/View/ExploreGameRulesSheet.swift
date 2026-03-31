@@ -15,7 +15,7 @@ struct ExploreGameRulesSheet: View {
         .navigationTitle("How to Play")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 CircleCloseButton()
             }
         }

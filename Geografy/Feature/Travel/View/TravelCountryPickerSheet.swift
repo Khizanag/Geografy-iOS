@@ -134,7 +134,7 @@ private extension TravelCountryPickerSheet {
 
     @ToolbarContentBuilder
     var doneButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .confirmationAction) {
             Button("Done") { isPresented = false }
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)

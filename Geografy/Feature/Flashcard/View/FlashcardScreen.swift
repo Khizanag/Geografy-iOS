@@ -19,7 +19,7 @@ struct FlashcardScreen: View {
             .background { ambientBackground }
             .navigationTitle("Flashcards")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .primaryAction) {
                     Button { showGuide = true } label: {
                         Image(systemName: "info.circle")
                     }

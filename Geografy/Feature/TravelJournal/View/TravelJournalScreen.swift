@@ -53,7 +53,7 @@ extension TravelJournalScreen {
 private extension TravelJournalScreen {
     @ToolbarContentBuilder
     var addEntryButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
                 activeSheet = .newEntry
