@@ -264,13 +264,11 @@ private extension NeighborExplorerScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 
     func startBlobAnimation() {
-        guard !reduceMotion else { blobAnimating = true; return }
-        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-            blobAnimating = true
-        }
+        blobAnimating = true
     }
 }
 

@@ -29,16 +29,8 @@ struct CoinPackPreviewSheet: View {
                 .padding(DesignSystem.Spacing.md)
         }
         .onAppear {
-            if reduceMotion {
-                coinAnimating = true
-            } else {
-                withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
-                    coinAnimating = true
-                }
-            }
-            withAnimation(.easeIn(duration: 0.6).delay(0.3)) {
-                sparkleVisible = true
-            }
+            coinAnimating = true
+            sparkleVisible = true
         }
     }
 }
@@ -58,6 +50,10 @@ private extension CoinPackPreviewSheet {
             sparkles
         }
         .frame(height: 160)
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
+            value: coinAnimating
+        )
     }
 
     var glowCircle: some View {

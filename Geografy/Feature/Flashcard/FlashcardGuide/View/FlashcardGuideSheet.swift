@@ -12,12 +12,8 @@ struct FlashcardGuideSheet: View {
         GuideSheet(pages: FlashcardGuide.pages) { index in
             illustrationView(for: illustrations[index])
         }
-        .onAppear {
-            guard !reduceMotion else { animating = true; return }
-            withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
-                animating = true
-            }
-        }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 2).repeatForever(autoreverses: true), value: animating)
+        .onAppear { animating = true }
     }
 }
 
@@ -81,7 +77,9 @@ private extension FlashcardGuideSheet {
                 }
                 .scaleEffect(animating ? 1.0 : 0.9)
                 .animation(
-                    reduceMotion ? .default : .easeInOut(duration: 2).repeatForever(autoreverses: true).delay(Double(index) * 0.2),
+                    reduceMotion
+                        ? .default
+                        : .easeInOut(duration: 2).repeatForever(autoreverses: true).delay(Double(index) * 0.2),
                     value: animating
                 )
             }

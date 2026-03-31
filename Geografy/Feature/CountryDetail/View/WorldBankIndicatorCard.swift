@@ -80,12 +80,11 @@ private extension WorldBankIndicatorCard {
                 .frame(height: 90)
         }
         .opacity(pulseOpacity)
-        .onAppear {
-            guard !reduceMotion else { pulseOpacity = 1.0; return }
-            withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) {
-                pulseOpacity = 1.0
-            }
-        }
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 0.9).repeatForever(autoreverses: true),
+            value: pulseOpacity
+        )
+        .onAppear { pulseOpacity = 1.0 }
     }
 
     var errorView: some View {

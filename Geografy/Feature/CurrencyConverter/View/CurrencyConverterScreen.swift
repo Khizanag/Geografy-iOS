@@ -61,10 +61,7 @@ struct CurrencyConverterScreen: View {
             }
         }
         .onAppear {
-            guard !reduceMotion else { blobAnimating = true; return }
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                blobAnimating = true
-            }
+            blobAnimating = true
         }
     }
 }
@@ -285,7 +282,9 @@ private extension CurrencyConverterScreen {
                         .accessibilityLabel("\(formatAmount(converted)) \(toEntry.code)")
 
                         if let amount = Double(amountText), let fromEntry = fromCurrency {
-                            Text("\(formatAmount(amount)) \(fromEntry.code) = \(formatAmount(converted)) \(toEntry.code)")
+                            Text(
+                                "\(formatAmount(amount)) \(fromEntry.code) = \(formatAmount(converted)) \(toEntry.code)"
+                            )
                                 .font(DesignSystem.Font.caption)
                                 .foregroundStyle(DesignSystem.Color.textSecondary)
                                 .multilineTextAlignment(.center)
@@ -339,6 +338,7 @@ private extension CurrencyConverterScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 

@@ -25,16 +25,8 @@ struct AllMapsScreen: View {
             .background { ambientBackground }
             .navigationTitle("All Maps")
             .onAppear {
-                if reduceMotion {
-                    blobAnimating = true
-                } else {
-                    withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                        blobAnimating = true
-                    }
-                }
-                withAnimation(.easeOut(duration: 0.7)) {
-                    appeared = true
-                }
+                blobAnimating = true
+                appeared = true
             }
     }
 }
@@ -116,6 +108,7 @@ private extension AllMapsScreen {
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
         }
         .ignoresSafeArea()
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 

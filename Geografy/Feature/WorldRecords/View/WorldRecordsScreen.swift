@@ -119,6 +119,7 @@ private extension WorldRecordsScreen {
             blobEllipse(color: DesignSystem.Color.indigo, opacity: 0.20, offset: (160, 300), animates: !blobAnimating)
         }
         .allowsHitTesting(false)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 
     func blobEllipse(color: Color, opacity: Double, offset: (CGFloat, CGFloat), animates: Bool) -> some View {
@@ -141,9 +142,6 @@ private extension WorldRecordsScreen {
 // MARK: - Actions
 private extension WorldRecordsScreen {
     func startBlobAnimation() {
-        guard !reduceMotion else { blobAnimating = true; return }
-        withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-            blobAnimating = true
-        }
+        blobAnimating = true
     }
 }
