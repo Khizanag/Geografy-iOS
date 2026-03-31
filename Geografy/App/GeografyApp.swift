@@ -198,9 +198,11 @@ struct GeografyApp: App {
     }
 }
 
+#if targetEnvironment(macCatalyst)
 // MARK: - Mac Notification Names
 extension Notification.Name {
     static let macSwitchTab = Notification.Name("macSwitchTab")
     static let macStartQuiz = Notification.Name("macStartQuiz")
     static let macRandomCountry = Notification.Name("macRandomCountry")
 }
+#endif
