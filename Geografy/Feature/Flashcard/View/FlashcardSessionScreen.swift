@@ -27,12 +27,12 @@ struct FlashcardSessionScreen: View {
         sessionContent
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
+            .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
             .alert("Quit Session?", isPresented: $showQuitAlert) {
                 quitAlertActions
             } message: {
                 Text("Your progress will be saved.")
             }
-            .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
     }
 }
 

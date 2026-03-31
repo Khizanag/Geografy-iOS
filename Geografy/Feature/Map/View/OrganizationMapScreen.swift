@@ -43,6 +43,7 @@ struct OrganizationMapScreen: View {
                     labelsToggleButton
                 }
             }
+            .task { await loadMapData() }
             .navigationDestination(item: $navigateToCountry) { country in
                 CountryDetailScreen(country: country)
             }
@@ -55,7 +56,6 @@ struct OrganizationMapScreen: View {
                     }
                 }
             }
-            .task { await loadMapData() }
     }
 }
 

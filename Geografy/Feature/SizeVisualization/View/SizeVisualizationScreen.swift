@@ -16,16 +16,17 @@ struct SizeVisualizationScreen: View {
     var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Size Visualization")
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchQuery, prompt: "Search countries...")        .sheet(isPresented: $showCompare) {
-            if let selected = selectedCountry, let reference = referenceCountry {
-                SizeCompareView(
-                    referenceCountry: reference,
-                    comparisonCountry: selected
-                )
+            .navigationTitle("Size Visualization")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchQuery, prompt: "Search countries...")
+            .sheet(isPresented: $showCompare) {
+                if let selected = selectedCountry, let reference = referenceCountry {
+                    SizeCompareView(
+                        referenceCountry: reference,
+                        comparisonCountry: selected
+                    )
+                }
             }
-        }
     }
 }
 

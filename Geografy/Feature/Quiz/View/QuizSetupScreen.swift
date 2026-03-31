@@ -16,11 +16,11 @@ struct QuizSetupScreen: View {
 
     var body: some View {
         scrollContent
-            .safeAreaInset(edge: .bottom) { startButton }
             .background { AmbientBlobsView(.quiz) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Quiz")
             .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) { startButton }
     }
 }
 

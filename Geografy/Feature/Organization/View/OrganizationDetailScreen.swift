@@ -18,18 +18,18 @@ struct OrganizationDetailScreen: View {
     var body: some View {
         scrollContent
             .background { ambientBackground }
-        .navigationTitle(organization.displayName)
-        .closeButtonPlacementLeading()
-        .background(DesignSystem.Color.background)
-        .overlay {
-            if showLogoZoom, let urlString = organization.logoURL, let url = URL(string: urlString) {
-                ZoomableOrgLogoView(url: url, organization: organization) {
-                    showLogoZoom = false
+            .background(DesignSystem.Color.background)
+            .navigationTitle(organization.displayName)
+            .closeButtonPlacementLeading()
+            .task { trackOrgView() }
+            .onAppear { blobAnimating = true }
+            .overlay {
+                if showLogoZoom, let urlString = organization.logoURL, let url = URL(string: urlString) {
+                    ZoomableOrgLogoView(url: url, organization: organization) {
+                        showLogoZoom = false
+                    }
                 }
             }
-        }
-        .task { trackOrgView() }
-        .onAppear { blobAnimating = true }
     }
 }
 

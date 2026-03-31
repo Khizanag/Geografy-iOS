@@ -14,19 +14,19 @@ struct EditProfileSheet: View {
     var body: some View {
         formContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Edit Profile")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                cancelButton
+            .navigationTitle("Edit Profile")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    cancelButton
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    saveButton
+                }
             }
-            ToolbarItem(placement: .confirmationAction) {
-                saveButton
+            .onAppear {
+                displayName = authService.currentProfile?.displayName ?? ""
             }
-        }
-        .onAppear {
-            displayName = authService.currentProfile?.displayName ?? ""
-        }
     }
 }
 

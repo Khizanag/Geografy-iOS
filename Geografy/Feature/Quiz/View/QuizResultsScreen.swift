@@ -28,13 +28,13 @@ struct QuizResultsScreen: View {
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
+        .background(DesignSystem.Color.background)
+        .navigationTitle("Results")
+        .navigationBarBackButtonHidden()
         .safeAreaInset(edge: .bottom) {
             actionButtons
                 .padding(.horizontal, DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Results")
-        .navigationBarBackButtonHidden()
         .task { processQuizResult() }
     }
 }

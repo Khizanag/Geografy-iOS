@@ -29,6 +29,7 @@ struct QuizPackBrowserScreen: View {
                 )
             }
     }
+
 }
 
 // MARK: - Content

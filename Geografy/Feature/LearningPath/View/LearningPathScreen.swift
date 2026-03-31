@@ -21,11 +21,11 @@ struct LearningPathScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Learning Path")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear { startBlobAnimation() }
         .sheet(item: $selectedModule) { module in
             ModuleLessonsScreen(module: module)
                 .presentationDetents([.large])
         }
-        .onAppear { startBlobAnimation() }
     }
 }
 

@@ -21,13 +21,13 @@ struct TravelJournalScreen: View {
         .navigationTitle("Travel Journal")
         .closeButtonPlacementLeading()
         .toolbar { addEntryButton }
-        .sheet(item: $activeSheet) { sheet in
-            sheetContent(for: sheet)
-        }
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) {
                 appeared = true
             }
+        }
+        .sheet(item: $activeSheet) { sheet in
+            sheetContent(for: sheet)
         }
     }
 }

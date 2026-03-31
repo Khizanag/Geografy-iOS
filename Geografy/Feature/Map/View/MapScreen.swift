@@ -45,6 +45,9 @@ struct MapScreen: View {
                     labelsToggleButton
                 }
             }
+            .task {
+                await loadMapData()
+            }
             .navigationDestination(item: $navigateToCountry) { country in
                 CountryDetailScreen(country: country)
             }
@@ -52,9 +55,6 @@ struct MapScreen: View {
                 if showFlagPreview, let code = mapState.selectedCountryCode {
                     flagPreview(for: code)
                 }
-            }
-            .task {
-                await loadMapData()
             }
     }
 }

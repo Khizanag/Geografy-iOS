@@ -10,6 +10,9 @@ struct WordSearchScreen: View {
 
     var body: some View {
         scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Word Search")
+            .closeButtonPlacementLeading()
             .safeAreaInset(edge: .bottom) {
                 GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
                     coordinator.cover(.wordSearchGame(selectedTheme))
@@ -17,9 +20,6 @@ struct WordSearchScreen: View {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.bottom, DesignSystem.Spacing.md)
             }
-            .background(DesignSystem.Color.background)
-            .navigationTitle("Word Search")
-            .closeButtonPlacementLeading()
             .toolbar {
                 ToolbarItem(placement: .secondaryAction) {
                     Button { showGuide = true } label: {

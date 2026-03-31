@@ -26,11 +26,11 @@ struct MultiplayerResultScreen: View {
             .opacity(showContent ? 1 : 0)
             .offset(y: showContent ? 0 : 20)
         }
-        .safeAreaInset(edge: .bottom) { actionButtons }
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Match Result")
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .bottom) { actionButtons }
         .toolbar {
         }
         .onAppear {

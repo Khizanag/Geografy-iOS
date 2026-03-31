@@ -20,15 +20,15 @@ struct MoreScreen: View {
             .navigationTitle("More")
             .navigationBarTitleDisplayMode(.large)
             .searchable(text: $searchText, prompt: "Find a feature…")
+            .onAppear {
+                blobAnimating = true
+            }
             .sheet(item: $testChecklistSheet) { sheet in
                 TestChecklistSheet(
                     title: sheet.label,
                     checklist: testChecklistService.checklist(for: sheet.testKey)
                 )
                 .presentationDetents([.medium])
-            }
-            .onAppear {
-                blobAnimating = true
             }
     }
 }

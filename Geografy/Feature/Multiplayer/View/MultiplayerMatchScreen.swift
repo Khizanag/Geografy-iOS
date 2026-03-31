@@ -27,11 +27,6 @@ struct MultiplayerMatchScreen: View {
     var body: some View {
         matchContent
             .navigationBarTitleDisplayMode(.inline)
-            .alert("Quit Match?", isPresented: $showQuitAlert) {
-                quitAlertActions
-            } message: {
-                Text("Your progress will be lost.")
-            }
             .task { loadMatch() }
             .onAppear { startBlobAnimation() }
             .onDisappear { opponentEngine.cancelPendingAnswer() }
@@ -41,6 +36,11 @@ struct MultiplayerMatchScreen: View {
                     onRematch: { startRematch() },
                     onDone: { dismiss() },
                 )
+            }
+            .alert("Quit Match?", isPresented: $showQuitAlert) {
+                quitAlertActions
+            } message: {
+                Text("Your progress will be lost.")
             }
     }
 }

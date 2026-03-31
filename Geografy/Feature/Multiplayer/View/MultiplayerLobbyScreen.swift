@@ -27,15 +27,15 @@ struct MultiplayerLobbyScreen: View {
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
+        .background { ambientBlobs }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle("Multiplayer")
+        .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
             if !isSearching {
                 footerButton
             }
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Multiplayer")
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear { startBlobAnimation() }
         .fullScreenCover(isPresented: $showMatch) {
             matchDestination

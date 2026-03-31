@@ -20,16 +20,16 @@ struct LessonScreen: View {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
+        .background { ambientBlobs }
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle(lesson.title)
+        .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
             completeButton
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
                 .background(.ultraThinMaterial)
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(lesson.title)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 CircleCloseButton { dismiss() }

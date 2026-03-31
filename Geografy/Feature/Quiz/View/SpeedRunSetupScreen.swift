@@ -29,11 +29,11 @@ struct SpeedRunSetupScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) { startButton }
         .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Speed Run")
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .bottom) { startButton }
         .onAppear {
             appeared = true
             pulseTimer = true

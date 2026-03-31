@@ -54,16 +54,16 @@ struct TravelJournalEditorSheet: View {
                     saveButton
                 }
             }
-            .sheet(isPresented: $showCountryPicker) {
-                countryPickerSheet
-            }
-            .onChange(of: selectedPhotos) { _, newItems in
-                loadSelectedPhotos(newItems)
-            }
             .task {
                 if let entry = existingEntry {
                     loadExistingPhotos(entry.photoFileNames)
                 }
+            }
+            .onChange(of: selectedPhotos) { _, newItems in
+                loadSelectedPhotos(newItems)
+            }
+            .sheet(isPresented: $showCountryPicker) {
+                countryPickerSheet
             }
     }
 }
