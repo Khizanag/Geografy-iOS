@@ -96,7 +96,7 @@ private extension CustomQuizLibraryScreen {
 private extension CustomQuizLibraryScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 showBuilder = true
             } label: {

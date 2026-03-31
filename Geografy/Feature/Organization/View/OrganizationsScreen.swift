@@ -49,7 +49,7 @@ struct OrganizationsScreen: View {
 private extension OrganizationsScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             Menu {
                 ForEach(OrgSortOption.allCases, id: \.self) { option in
                     Button {

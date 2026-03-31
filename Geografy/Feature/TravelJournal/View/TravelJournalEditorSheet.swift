@@ -58,10 +58,10 @@ struct TravelJournalEditorSheet: View {
         .navigationTitle(isEditing ? "Edit Entry" : "New Entry")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .cancellationAction) {
                 CircleCloseButton()
             }
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 saveButton
             }
         }

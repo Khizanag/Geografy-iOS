@@ -119,7 +119,7 @@ private extension CountryDetailScreen {
 private extension CountryDetailScreen {
     @ToolbarContentBuilder
     var favoriteToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
@@ -140,7 +140,7 @@ private extension CountryDetailScreen {
 
     @ToolbarContentBuilder
     var compareToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .secondaryAction) {
             Button {
                 hapticsService.impact(.light)
                 coordinator.sheet(.compare(preselectedCountry: country))

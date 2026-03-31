@@ -53,7 +53,7 @@ private extension HomeSectionEditorSheet {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+        ToolbarItem(placement: .cancellationAction) {
             CircleCloseButton()
         }
         ToolbarItem(placement: .confirmationAction) {

@@ -160,7 +160,7 @@ private extension TravelBucketListScreen {
 private extension TravelBucketListScreen {
     @ToolbarContentBuilder
     var toolbarItems: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
                 prepareShareText()

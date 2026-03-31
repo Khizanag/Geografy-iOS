@@ -144,7 +144,7 @@ private extension CustomQuizCountryPicker {
 private extension CustomQuizCountryPicker {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .confirmationAction) {
             Button("Done") { dismiss() }
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)

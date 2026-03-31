@@ -31,10 +31,10 @@ struct TravelJournalDetailScreen: View {
         .navigationTitle(entry.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .cancellationAction) {
                 CircleCloseButton()
             }
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 editButton
             }
         }

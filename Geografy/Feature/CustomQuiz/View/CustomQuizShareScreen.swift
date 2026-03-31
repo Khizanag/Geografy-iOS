@@ -22,7 +22,7 @@ struct CustomQuizShareScreen: View {
         .navigationTitle("Share Quiz")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Button {
                     UIPasteboard.general.string = quiz.shareableJSON
                 } label: {

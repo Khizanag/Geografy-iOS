@@ -40,7 +40,7 @@ struct FavoritesScreen: View {
 private extension FavoritesScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             optionsMenu
         }
     }

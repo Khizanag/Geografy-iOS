@@ -63,7 +63,7 @@ struct TravelTrackerScreen: View {
 private extension TravelTrackerScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
                 showBucketList = true
