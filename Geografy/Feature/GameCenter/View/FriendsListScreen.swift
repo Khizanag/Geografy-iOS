@@ -105,7 +105,7 @@ private extension FriendsListScreen {
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Add friends through Game Center to see them here and compare your geography skills.")
+                Text("Only Game Center friends who also have Geografy installed will appear here.")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)

@@ -60,7 +60,16 @@ final class GameCenterService {
     func loadFriends() async -> [GKPlayer] {
         guard isAuthenticated else { return [] }
         do {
-            return try await GKLocalPlayer.local.loadFriends()
+            let status = try await GKLocalPlayer.local.loadFriendsAuthorizationStatus()
+            switch status {
+            case .authorized:
+                return try await GKLocalPlayer.local.loadFriends()
+            case .notDetermined:
+                // Triggers the system prompt asking user to share friends
+                return try await GKLocalPlayer.local.loadFriends()
+            default:
+                return []
+            }
         } catch {
             return []
         }
