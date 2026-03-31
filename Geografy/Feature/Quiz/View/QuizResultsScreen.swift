@@ -66,6 +66,10 @@ private extension QuizResultsScreen {
                 .padding(.vertical, DesignSystem.Spacing.xs)
                 .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
                 .transition(.scale(scale: 0.7).combined(with: .opacity))
+                .animation(
+                    .spring(response: 0.5, dampingFraction: 0.7).delay(0.5),
+                    value: showXPBadge
+                )
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel("Earned \(xpEarned) XP")
             }
@@ -155,7 +159,9 @@ private extension QuizResultsScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(index). \(answer.question.correctCountry.name), \(answer.isCorrect ? "correct" : "incorrect")")
+        .accessibilityLabel(
+            "\(index). \(answer.question.correctCountry.name), \(answer.isCorrect ? "correct" : "incorrect")"
+        )
     }
 
     var actionButtons: some View {
@@ -245,10 +251,9 @@ private extension QuizResultsScreen {
         let history = (try? database.mainContext.fetch(descriptor)) ?? []
         achievementService.checkQuizAchievements(history: history)
 
-        withAnimation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.5)) {
-            showXPBadge = true
-        }
+        showXPBadge = true
 
+        // swiftlint:disable:next line_length
         AccessibilityNotification.Announcement("\(scoreMessage) \(result.correctCount) correct out of \(result.answers.count)").post()
     }
 }

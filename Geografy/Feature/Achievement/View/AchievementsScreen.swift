@@ -36,9 +36,7 @@ struct AchievementsScreen: View {
             )
         }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.4).delay(0.1)) {
-                appeared = true
-            }
+            appeared = true
         }
     }
 }
@@ -165,6 +163,7 @@ private extension AchievementsScreen {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     func achievementRow(_ definition: AchievementDefinition) -> some View {
         let isUnlocked = achievementService.isUnlocked(definition.id)
         let progress = achievementService.progress(for: definition.id)
@@ -232,7 +231,9 @@ private extension AchievementsScreen {
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(definition.title), \(isUnlocked ? "unlocked" : "locked"), \(definition.rarity.displayName)")
+        .accessibilityLabel(
+            "\(definition.title), \(isUnlocked ? "unlocked" : "locked"), \(definition.rarity.displayName)"
+        )
         .accessibilityHint(definition.requirement)
     }
 }

@@ -29,7 +29,7 @@ struct TravelBucketListScreen: View {
             }
         }
         .navigationTitle("Bucket List")
-        .navigationBarTitleDisplayMode(.large)
+        .closeButtonPlacementLeading()
         .toolbar { toolbarItems }
         .onAppear { loadPersistedData() }
         .sheet(item: $selectedCountry) { country in

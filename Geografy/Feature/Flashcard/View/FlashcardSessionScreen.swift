@@ -42,6 +42,7 @@ private extension FlashcardSessionScreen {
     var sessionContent: some View {
         if showResults {
             resultsContent
+                .transition(.opacity)
         } else {
             activeSessionContent
         }
@@ -115,6 +116,7 @@ private extension FlashcardSessionScreen {
                     swipeColor: swipeTintColor,
                     swipeOpacity: swipeTintOpacity
                 )
+                .animation(.spring(response: 0.4, dampingFraction: 0.8), value: isFlipped)
                 .frame(
                     width: max(geometry.size.width - DesignSystem.Spacing.xl * 2, 0),
                     height: max(geometry.size.height * 0.85, 0)
@@ -271,9 +273,7 @@ private extension FlashcardSessionScreen {
             let thinkingTime = Date.now.timeIntervalSince(cardShownAt)
             thinkingTimes.append(thinkingTime)
         }
-        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-            isFlipped.toggle()
-        }
+        isFlipped.toggle()
         hapticsService.impact(.light)
     }
 
@@ -312,7 +312,7 @@ private extension FlashcardSessionScreen {
                     dragOffset = .zero
                 }
             } else {
-                withAnimation { showResults = true }
+                showResults = true
             }
         }
     }
@@ -357,7 +357,7 @@ private extension FlashcardSessionScreen {
                     dragOffset = .zero
                 }
             } else {
-                withAnimation { showResults = true }
+                showResults = true
             }
         }
     }

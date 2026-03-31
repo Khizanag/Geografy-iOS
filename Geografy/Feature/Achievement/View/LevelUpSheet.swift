@@ -18,19 +18,17 @@ struct LevelUpSheet: View {
                 .ignoresSafeArea()
             particleLayer
                 .opacity(particlesVisible ? 1 : 0)
+                .animation(.easeOut(duration: 0.3).delay(0.15), value: particlesVisible)
             mainContent
                 .scaleEffect(contentScale)
                 .opacity(contentOpacity)
+                .animation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.05), value: contentScale)
         }
         .onAppear {
             hapticsService.notification(.success)
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.05)) {
-                contentScale = 1.0
-                contentOpacity = 1.0
-            }
-            withAnimation(.easeOut(duration: 0.3).delay(0.15)) {
-                particlesVisible = true
-            }
+            contentScale = 1.0
+            contentOpacity = 1.0
+            particlesVisible = true
         }
     }
 }

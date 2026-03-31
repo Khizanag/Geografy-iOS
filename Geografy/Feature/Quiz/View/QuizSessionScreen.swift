@@ -410,7 +410,7 @@ extension QuizSessionScreen {
             hapticsService.notification(.success)
             currentStreak += 1
             if isArcadeMode {
-                withAnimation { arcadeScore += 10 }
+                arcadeScore += 10
             }
             if currentStreak >= 2 {
                 showStreakBurst = true
@@ -422,7 +422,7 @@ extension QuizSessionScreen {
             hapticsService.impact(.light)
             currentStreak = 0
             if isArcadeMode {
-                withAnimation { arcadeLives -= 1 }
+                arcadeLives -= 1
                 if arcadeLives <= 0 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         finishArcade()
@@ -434,16 +434,14 @@ extension QuizSessionScreen {
 
     func advanceToNext() {
         if currentIndex + 1 < questions.count {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                currentIndex += 1
-                selectedOptionID = nil
-                showFeedback = false
-                typingInput = ""
-                showHint = false
-                typingIsCorrect = false
-                questionStartTime = Date()
-                timerRemaining = configuration.difficulty.timerDuration
-            }
+            currentIndex += 1
+            selectedOptionID = nil
+            showFeedback = false
+            typingInput = ""
+            showHint = false
+            typingIsCorrect = false
+            questionStartTime = Date()
+            timerRemaining = configuration.difficulty.timerDuration
             if !isArcadeMode {
                 startTimer()
             }
