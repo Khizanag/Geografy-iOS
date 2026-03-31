@@ -3,7 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct DailyChallengeSessionScreen: View {
-    @Environment(Coordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(GameCenterService.self) private var gameCenterService
 
     let challenge: DailyChallenge

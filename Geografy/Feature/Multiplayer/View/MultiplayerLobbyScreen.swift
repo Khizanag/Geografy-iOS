@@ -41,7 +41,7 @@ struct MultiplayerLobbyScreen: View {
             matchDestination
         }
         .fullScreenCover(isPresented: $showLocalPlay) {
-            NavigatorView {
+            CoordinatedNavigationStack(navigator: Navigator()) {
                 LocalMultiplayerEntryScreen()
             }
         }

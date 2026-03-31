@@ -44,7 +44,7 @@ private extension DailyChallengeScreen {
     }
 
     var sessionCover: some View {
-        NavigatorView {
+        CoordinatedNavigationStack(navigator: Navigator()) {
             if let challenge = service?.todayChallenge, let service {
                 DailyChallengeSessionScreen(
                     challenge: challenge,

@@ -1,13 +1,21 @@
 import SwiftUI
 import GeografyCore
 
-struct FlashcardDeck: Identifiable {
+struct FlashcardDeck: Identifiable, Equatable, Hashable {
     let id: String
     let name: String
     let icon: String
     let continentFilter: Country.Continent?
     let cardType: FlashcardType
     let gradientColors: (Color, Color)
+
+    static func == (lhs: FlashcardDeck, rhs: FlashcardDeck) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 // MARK: - Predefined Decks

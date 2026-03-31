@@ -1,7 +1,7 @@
 import Foundation
 import GeografyCore
 
-struct FlashcardItem: Identifiable {
+struct FlashcardItem: Identifiable, Equatable, Hashable {
     let id: String
     let type: FlashcardType
     let countryCode: String

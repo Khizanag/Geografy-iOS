@@ -3,11 +3,22 @@ import SwiftUI
 @Observable
 final class Navigator {
     var path = NavigationPath()
-    var activeSheet: Sheet?
-    var activeCover: Cover?
+    var activeSheet: Destination?
+    var activeCover: Destination?
 
-    func push(_ screen: Screen) {
-        path.append(screen)
+    func push(_ destination: Destination) {
+        path.append(destination)
+    }
+
+    func present(_ destination: Destination) {
+        switch destination.presentationStyle {
+        case .push:
+            push(destination)
+        case .sheet:
+            activeSheet = destination
+        case .fullScreenCover:
+            activeCover = destination
+        }
     }
 
     func pop() {
@@ -19,12 +30,12 @@ final class Navigator {
         path = NavigationPath()
     }
 
-    func present(_ sheet: Sheet) {
-        activeSheet = sheet
-    }
-
-    func presentFullScreen(_ cover: Cover) {
-        activeCover = cover
+    func dismiss() {
+        if activeCover != nil {
+            activeCover = nil
+        } else {
+            activeSheet = nil
+        }
     }
 
     func dismissSheet() {

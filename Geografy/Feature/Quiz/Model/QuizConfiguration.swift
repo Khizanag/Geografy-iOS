@@ -1,7 +1,7 @@
 import Foundation
 import GeografyCore
 
-struct QuizConfiguration: Identifiable {
+struct QuizConfiguration: Identifiable, Equatable, Hashable {
     let id = UUID()
     let type: QuizType
     let region: QuizRegion

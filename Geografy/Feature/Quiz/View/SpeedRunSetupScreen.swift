@@ -322,7 +322,7 @@ private extension SpeedRunSetupScreen {
             hapticsService.impact(.medium)
             coordinator.dismissSheet()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                coordinator.presentFullScreen(
+                coordinator.present(
                     .speedRunSession(region: selectedRegion)
                 )
             }

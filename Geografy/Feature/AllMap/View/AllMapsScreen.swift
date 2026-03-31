@@ -217,8 +217,8 @@ private extension AllMapsScreen {
 // MARK: - Helpers
 private extension AllMapsScreen {
     func openMap(named name: String) {
-        coordinator.presentFullScreen(
-            .map(continentFilter: name == "World" ? nil : name)
+        coordinator.present(
+            .mapFullScreen(continentFilter: name == "World" ? nil : name)
         )
     }
 

@@ -219,7 +219,7 @@ enum MoreSheet: Identifiable {
         }
     }
 
-    var toSheet: Sheet {
+    var toDestination: Destination {
         switch self {
         case .profile: .profile
         case .countries: .countries
