@@ -77,6 +77,13 @@ struct GeografyApp: App {
                     }
                 }
                 .task {
+                    let countryService = CountryDataService()
+                    countryService.loadCountries()
+                    #if canImport(CoreSpotlight)
+                    SpotlightIndexer.indexCountries(countryService.countries)
+                    #endif
+                }
+                .task {
                     widgetDataBridge.loadCountriesIfNeeded()
                     widgetDataBridge.synchronize(
                         streak: streakService.currentStreak,

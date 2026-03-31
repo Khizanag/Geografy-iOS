@@ -1,7 +1,8 @@
-import SwiftUI
 import Combine
+import CoreSpotlight
 import GeografyCore
 import GeografyDesign
+import SwiftUI
 
 struct ContentView: View {
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
@@ -55,6 +56,11 @@ struct ContentView: View {
         .toolbarBackgroundVisibility(.hidden, for: .tabBar)
         .onOpenURL { url in
             appCoordinator.handleDeepLink(url)
+        }
+        .onContinueUserActivity(CSSearchableItemActionType) { activity in
+            if let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                appCoordinator.handleSpotlightActivity(identifier)
+            }
         }
         #if targetEnvironment(macCatalyst)
         .onReceive(NotificationCenter.default.publisher(for: .macSwitchTab)) { notification in

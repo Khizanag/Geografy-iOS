@@ -1,3 +1,4 @@
+import GeografyCore
 import SwiftUI
 
 @Observable
@@ -37,5 +38,15 @@ final class AppCoordinator {
         case "progress": selectedTab = 0; homeNavigator.sheet(.leaderboards)
         default: break
         }
+    }
+
+    func handleSpotlightActivity(_ identifier: String) {
+        guard identifier.hasPrefix("country-") else { return }
+        let code = String(identifier.dropFirst("country-".count))
+        let service = CountryDataService()
+        service.loadCountries()
+        guard let country = service.country(for: code) else { return }
+        selectedTab = 0
+        homeNavigator.sheet(.countryDetail(country))
     }
 }
