@@ -17,7 +17,10 @@ struct TerritorialDisputesScreen: View {
                     .offset(y: appeared ? 0 : 12)
                     .animation(.easeOut(duration: 0.4), value: appeared)
 
-                ForEach(Array(TerritorialDispute.grouped().enumerated()), id: \.element.region.rawValue) { index, group in
+                ForEach(
+                    Array(TerritorialDispute.grouped().enumerated()),
+                    id: \.element.region.rawValue
+                ) { index, group in
                     regionSection(group.region, disputes: group.disputes)
                         .opacity(appeared ? 1 : 0)
                         .offset(y: appeared ? 0 : 12)
@@ -70,6 +73,7 @@ private extension TerritorialDisputesScreen {
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                 }
 
+                // swiftlint:disable:next line_length
                 Text("Choose how disputed territories appear on maps. Settings reflect your personal preference — not a political statement. Defaults follow international consensus.")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -84,7 +88,10 @@ private extension TerritorialDisputesScreen {
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
                 .padding(DesignSystem.Spacing.xs)
-                .background(DesignSystem.Color.accent.opacity(0.08), in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+                .background(
+                    DesignSystem.Color.accent.opacity(0.08),
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                )
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(DesignSystem.Spacing.md)
