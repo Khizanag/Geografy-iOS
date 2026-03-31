@@ -48,6 +48,7 @@ struct TravelMapScreen: View {
             }
         }
         .toolbarBackground(.clear, for: .navigationBar)
+        .closeButtonPlacementLeading()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 labelsToggle
