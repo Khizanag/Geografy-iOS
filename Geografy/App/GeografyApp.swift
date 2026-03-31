@@ -214,6 +214,11 @@ struct GeografyApp: App {
 
                 Divider()
 
+                Button("Search") {
+                    NotificationCenter.default.post(name: .macOpenSearch, object: nil)
+                }
+                .keyboardShortcut("f", modifiers: .command)
+
                 Button("Random Country") {
                     NotificationCenter.default.post(name: .macRandomCountry, object: nil)
                 }
@@ -248,5 +253,6 @@ extension Notification.Name {
     static let macSwitchTab = Notification.Name("macSwitchTab")
     static let macStartQuiz = Notification.Name("macStartQuiz")
     static let macRandomCountry = Notification.Name("macRandomCountry")
+    static let macOpenSearch = Notification.Name("macOpenSearch")
 }
 #endif
