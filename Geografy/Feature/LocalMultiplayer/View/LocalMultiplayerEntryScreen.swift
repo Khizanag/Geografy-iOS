@@ -48,6 +48,7 @@ private extension LocalMultiplayerEntryScreen {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
+        .interactiveDismissDisabled(true)
     }
 
     var heroSection: some View {

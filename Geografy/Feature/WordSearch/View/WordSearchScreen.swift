@@ -28,6 +28,7 @@ struct WordSearchScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Word Search")
         .navigationBarTitleDisplayMode(.inline)
+        .interactiveDismissDisabled(true)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button { showGuide = true } label: {

@@ -48,6 +48,7 @@ struct SpellingBeeScreen: View {
             }
             .navigationTitle("Spelling Bee")
             .navigationBarTitleDisplayMode(.inline)
+        .interactiveDismissDisabled(true)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showGuide = true } label: {
