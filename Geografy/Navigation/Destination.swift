@@ -19,7 +19,9 @@ enum Destination: Hashable, Identifiable {
     case cultureExplorer
     case currencyConverter
     case customQuiz
+    case customQuizShare(CustomQuiz)
     case dailyChallenge
+    // swiftlint:disable:next line_length
     case dailyChallengeResult(score: Int, maxScore: Int, challengeType: DailyChallengeType, timeSpent: TimeInterval, streak: Int)
     case distanceCalculator
     case economyExplorer
@@ -93,6 +95,7 @@ enum Destination: Hashable, Identifiable {
         case .cultureExplorer: "cultureExplorer"
         case .currencyConverter: "currencyConverter"
         case .customQuiz: "customQuiz"
+        case .customQuizShare(let quiz): "customQuizShare-\(quiz.id)"
         case .dailyChallenge: "dailyChallenge"
         case .dailyChallengeResult: "dailyChallengeResult"
         case .distanceCalculator: "distanceCalculator"
@@ -175,9 +178,12 @@ extension Destination {
         case .cultureExplorer: CultureExplorerScreen()
         case .currencyConverter: CurrencyConverterScreen()
         case .customQuiz: CustomQuizLibraryScreen()
+        case .customQuizShare(let quiz): CustomQuizShareScreen(quiz: quiz)
         case .dailyChallenge: DailyChallengeScreen()
         case .dailyChallengeResult(let score, let maxScore, let type, let time, let streak):
-            DailyChallengeResultView(score: score, maxScore: maxScore, challengeType: type, timeSpent: time, streak: streak)
+            DailyChallengeResultView(
+                score: score, maxScore: maxScore, challengeType: type, timeSpent: time, streak: streak
+            )
         case .distanceCalculator: DistanceCalculatorScreen()
         case .economyExplorer: EconomyExplorerScreen()
         case .exploreGame: ExploreGameScreen()
