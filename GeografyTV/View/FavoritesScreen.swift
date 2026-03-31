@@ -22,6 +22,7 @@ struct FavoritesScreen: View {
             }
         }
         .navigationTitle("Favorites")
+        .focusSection()
     }
 }
 
