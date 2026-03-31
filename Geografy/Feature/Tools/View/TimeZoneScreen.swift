@@ -175,6 +175,7 @@ private struct WorldClockView: View {
     private func worldClockRow(for item: CountryWithZone) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: item.country.code, height: 24)
+                .frame(width: 36, alignment: .center)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(item.country.name)
