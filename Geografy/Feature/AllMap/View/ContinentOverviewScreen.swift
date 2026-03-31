@@ -44,7 +44,7 @@ struct ContinentOverviewScreen: View {
         }
         .task { countryDataService.loadCountries() }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.6)) { appeared = true }
+            appeared = true
         }
     }
 }
