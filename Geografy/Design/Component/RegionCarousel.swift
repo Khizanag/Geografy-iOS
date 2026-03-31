@@ -7,6 +7,7 @@ struct RegionCarousel: View {
 
     @Binding var selectedRegion: QuizRegion
 
+    @State private var scrolledRegion: QuizRegion?
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
@@ -15,7 +16,10 @@ struct RegionCarousel: View {
             pageIndicator
         }
         .task { countryDataService.loadCountries() }
-        .onChange(of: selectedRegion) {
+        .onAppear { scrolledRegion = selectedRegion }
+        .onChange(of: scrolledRegion) { _, newValue in
+            guard let newValue, newValue != selectedRegion else { return }
+            selectedRegion = newValue
             hapticsService.selection()
         }
     }
@@ -27,17 +31,20 @@ private extension RegionCarousel {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(QuizRegion.allCases) { region in
-                    regionCard(region)
-                        .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                    RegionCard(
+                        region: region,
+                        isSelected: region == selectedRegion,
+                        countryCount: region.filter(countryDataService.countries).count,
+                        color: color(for: region),
+                        description: description(for: region)
+                    )
+                    .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
                 }
             }
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.viewAligned)
-        .scrollPosition(id: Binding<QuizRegion?>(
-            get: { selectedRegion },
-            set: { if let value = $0 { selectedRegion = value } }
-        ))
+        .scrollPosition(id: $scrolledRegion)
         .scrollClipDisabled()
         .contentMargins(.horizontal, DesignSystem.Spacing.md)
     }
@@ -60,26 +67,26 @@ private extension RegionCarousel {
         }
         .frame(maxWidth: .infinity)
     }
+}
 
-    func regionCard(_ region: QuizRegion) -> some View {
-        cardContent(for: region, isSelected: region == selectedRegion)
-            .hoverEffect(.highlight)
-            .animation(.easeInOut(duration: 0.25), value: selectedRegion)
-    }
+// MARK: - Region Card
+private struct RegionCard: View {
+    let region: QuizRegion
+    let isSelected: Bool
+    let countryCount: Int
+    let color: Color
+    let description: String
 
-    func cardContent(for region: QuizRegion, isSelected: Bool) -> some View {
-        let count = region.filter(countryDataService.countries).count
-        let regionColor = color(for: region)
-
-        return VStack(spacing: DesignSystem.Spacing.md) {
+    var body: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
                 Circle()
-                    .fill(regionColor.opacity(isSelected ? 0.18 : 0.08))
+                    .fill(color.opacity(isSelected ? 0.18 : 0.08))
                     .frame(width: 64, height: 64)
 
                 Image(systemName: region.regionIcon)
                     .font(DesignSystem.Font.iconLarge.weight(.medium))
-                    .foregroundStyle(regionColor)
+                    .foregroundStyle(color)
             }
 
             VStack(spacing: DesignSystem.Spacing.xxs) {
@@ -88,12 +95,12 @@ private extension RegionCarousel {
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
-                Text("\(count) countries")
+                Text("\(countryCount) countries")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
 
-            Text(description(for: region))
+            Text(description)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .multilineTextAlignment(.center)
@@ -110,12 +117,14 @@ private extension RegionCarousel {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
                         .strokeBorder(
                             isSelected
-                                ? regionColor.opacity(0.5)
+                                ? color.opacity(0.5)
                                 : DesignSystem.Color.cardBackgroundHighlighted,
                             lineWidth: isSelected ? 1.5 : 1
                         )
                 )
         )
+        .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .hoverEffect(.highlight)
     }
 }
 
