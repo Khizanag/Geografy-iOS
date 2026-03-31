@@ -62,6 +62,11 @@ struct ContentView: View {
                 appCoordinator.handleSpotlightActivity(identifier)
             }
         }
+        .onContinueUserActivity("com.khizanag.geografy.viewCountry") { activity in
+            if let code = activity.userInfo?["countryCode"] as? String {
+                appCoordinator.handleSpotlightActivity("country-\(code)")
+            }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .switchTab)) { notification in
             if let tab = notification.object as? Int {
                 appCoordinator.selectedTab = tab

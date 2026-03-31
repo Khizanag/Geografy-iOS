@@ -54,6 +54,11 @@ struct CountryDetailScreen: View {
             .task { countryDataService.loadCountries() }
             .task { trackExploration() }
             .onAppear { appeared = true }
+            .userActivity("com.khizanag.geografy.viewCountry") { activity in
+                activity.title = country.name
+                activity.isEligibleForHandoff = true
+                activity.userInfo = ["countryCode": country.code]
+            }
             .sheet(item: $activeSheet) { sheet in countryDetailSheetContent(for: sheet) }
             .fullScreenCover(isPresented: $showContinentMap) { continentMapCover }
             .overlay { flagFullScreenOverlay }
