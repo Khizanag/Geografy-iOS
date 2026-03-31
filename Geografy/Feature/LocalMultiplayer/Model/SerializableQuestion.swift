@@ -33,6 +33,7 @@ extension SerializableQuestion {
         self.correctCountryCode = question.correctCountry.code
     }
 
+    @MainActor
     func toQuizQuestion(using countryDataService: CountryDataService) -> QuizQuestion? {
         guard let country = countryDataService.country(for: correctCountryCode) else { return nil }
         return QuizQuestion(

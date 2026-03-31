@@ -3,20 +3,29 @@ import GeografyDesign
 import GeografyCore
 
 struct ExploreGameScreen: View {
-    @State private var gameService = ExploreGameService()
+    @Environment(CountryDataService.self) private var countryDataService
+
+    @State private var gameService: ExploreGameService?
     @State private var activeSession: ExploreGameState?
 
     var body: some View {
-        if let activeSession {
-            ExploreGameSessionScreen(
-                initialState: activeSession,
-                gameService: gameService,
-                onDismiss: { self.activeSession = nil }
-            )
-        } else {
-            mainContent
-                .navigationTitle("Mystery Country")
-                .navigationBarTitleDisplayMode(.inline)
+        Group {
+            if let activeSession, let gameService {
+                ExploreGameSessionScreen(
+                    initialState: activeSession,
+                    gameService: gameService,
+                    onDismiss: { self.activeSession = nil }
+                )
+            } else {
+                mainContent
+                    .navigationTitle("Mystery Country")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+        }
+        .onAppear {
+            if gameService == nil {
+                gameService = ExploreGameService(countryDataService: countryDataService)
+            }
         }
     }
 }
@@ -156,7 +165,7 @@ private extension ExploreGameScreen {
                 statTile(
                     icon: "gamecontroller.fill",
                     title: "Games Played",
-                    value: "\(gameService.statistics.gamesPlayed)"
+                    value: "\(gameService?.statistics.gamesPlayed)"
                 )
                 statTile(
                     icon: "star.fill",
@@ -166,12 +175,12 @@ private extension ExploreGameScreen {
                 statTile(
                     icon: "flame.fill",
                     title: "Current Streak",
-                    value: "\(gameService.statistics.currentStreak)"
+                    value: "\(gameService?.statistics.currentStreak)"
                 )
                 statTile(
                     icon: "trophy.fill",
                     title: "Best Streak",
-                    value: "\(gameService.statistics.bestStreak)"
+                    value: "\(gameService?.statistics.bestStreak)"
                 )
             }
         }
@@ -207,17 +216,17 @@ private extension ExploreGameScreen {
 // MARK: - Actions
 private extension ExploreGameScreen {
     func startDailyGame() {
-        guard let state = gameService.makeDailyGame() else { return }
+        guard let state = gameService?.makeDailyGame() else { return }
         activeSession = state
     }
 
     func startPracticeGame() {
-        guard let state = gameService.makePracticeGame() else { return }
+        guard let state = gameService?.makePracticeGame() else { return }
         activeSession = state
     }
 
     var averageScoreFormatted: String {
-        let average = gameService.statistics.averageScore
+        let average = gameService?.statistics.averageScore ?? 0
         return average > 0 ? "\(Int(average))" : "—"
     }
 }
