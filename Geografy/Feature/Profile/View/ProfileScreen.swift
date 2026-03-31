@@ -4,6 +4,7 @@ import GeografyCore
 import GeografyDesign
 
 struct ProfileScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(AuthService.self) var authService
     @Environment(XPService.self) var xpService
@@ -17,7 +18,6 @@ struct ProfileScreen: View {
 
     @State var recentQuizzes: [QuizHistoryRecord] = []
     @State var statistics: UserStatistics?
-    @State var activeSheet: ProfileSheet?
     @State var showDeleteAlert = false
     @State private var blobAnimating = false
     @State private var appeared = false
@@ -29,7 +29,6 @@ struct ProfileScreen: View {
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.large)
             .toolbar { toolbarContent }
-            .sheet(item: $activeSheet) { sheet in profileSheetContent(for: sheet) }
             .alert("Delete Account", isPresented: $showDeleteAlert) {
                 deleteAlertActions
             } message: {
@@ -126,36 +125,6 @@ private extension ProfileScreen {
         .allowsHitTesting(false)
         .ignoresSafeArea()
         .animation(.easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
-    }
-}
-
-// MARK: - Sheet Type
-extension ProfileScreen {
-    enum ProfileSheet: Identifiable {
-        case editProfile
-        case signIn
-        case paywall
-        case achievements
-
-        var id: Self { self }
-    }
-
-    @ViewBuilder
-    func profileSheetContent(for sheet: ProfileSheet) -> some View {
-        switch sheet {
-        case .editProfile:
-            EditProfileSheet()
-        case .signIn:
-            SignInOptionsSheet()
-        case .paywall:
-            PaywallScreen()
-        case .achievements:
-            CoordinatedNavigationStack(navigator: Navigator(), showCloseButton: true) {
-                AchievementsScreen()
-                    .navigationTitle("Achievements")
-                    .navigationBarTitleDisplayMode(.large)
-            }
-        }
     }
 }
 

@@ -2,6 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct MultiplayerLobbyScreen: View {
+    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let multiplayerService: MultiplayerService
@@ -12,7 +13,6 @@ struct MultiplayerLobbyScreen: View {
     @State private var searchProgress: CGFloat = 0
     @State private var opponent: MockOpponent?
     @State private var showMatch = false
-    @State private var showLocalPlay = false
     @State private var blobAnimating = false
 
     var body: some View {
@@ -39,11 +39,6 @@ struct MultiplayerLobbyScreen: View {
         .onAppear { startBlobAnimation() }
         .fullScreenCover(isPresented: $showMatch) {
             matchDestination
-        }
-        .fullScreenCover(isPresented: $showLocalPlay) {
-            CoordinatedNavigationStack(navigator: Navigator()) {
-                LocalMultiplayerEntryScreen()
-            }
         }
     }
 }
@@ -132,7 +127,7 @@ private extension MultiplayerLobbyScreen {
                 startSearching()
             }
             Button {
-                showLocalPlay = true
+                coordinator.cover(.localMultiplayer)
             } label: {
                 HStack(spacing: DesignSystem.Spacing.xs) {
                     Image(systemName: "antenna.radiowaves.left.and.right")

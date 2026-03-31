@@ -104,7 +104,7 @@ extension CountryDetailScreen {
                         actionButtonTitle: "Convert \(country.currency.code)",
                         actionButtonIcon: "arrow.left.arrow.right",
                         onAction: { [self] in
-                            activeSheet = .currencyConverter(country.currency.code)
+                            coordinator.sheet(.currencyConverter(preselectedCode: country.currency.code))
                         }
                     )
                 )

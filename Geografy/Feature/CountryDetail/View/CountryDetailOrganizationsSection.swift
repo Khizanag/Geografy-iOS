@@ -61,7 +61,7 @@ extension CountryDetailScreen {
 
                     Button {
                         hapticsService.impact(.light)
-                        activeSheet = .organizationMap(org)
+                        coordinator.sheet(.organizationMap(org))
                     } label: {
                         orgActionButton(icon: "map", label: "Map", color: org.highlightColor)
                     }

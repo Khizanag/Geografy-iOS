@@ -11,7 +11,7 @@ extension ProfileScreen {
                 Spacer()
                 Button {
                     hapticsService.impact(.light)
-                    activeSheet = .achievements
+                    coordinator.sheet(.achievements)
                 } label: {
                     HStack(spacing: 4) {
                         Text("See All")
