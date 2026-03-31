@@ -3,7 +3,7 @@ import GeografyDesign
 
 struct MoreScreen: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TestingModeService.self) private var testingModeService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

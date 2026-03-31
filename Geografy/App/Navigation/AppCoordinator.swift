@@ -4,13 +4,13 @@ import SwiftUI
 final class AppCoordinator {
     var selectedTab = 0
 
-    let homeCoordinator = TabCoordinator()
-    let quizCoordinator = TabCoordinator()
-    let countriesCoordinator = TabCoordinator()
-    let allMapsCoordinator = TabCoordinator()
-    let moreCoordinator = TabCoordinator()
+    let homeCoordinator = Navigator()
+    let quizCoordinator = Navigator()
+    let countriesCoordinator = Navigator()
+    let allMapsCoordinator = Navigator()
+    let moreCoordinator = Navigator()
 
-    func coordinator(for tab: Int) -> TabCoordinator {
+    func coordinator(for tab: Int) -> Navigator {
         switch tab {
         case 0: homeCoordinator
         case 1: quizCoordinator

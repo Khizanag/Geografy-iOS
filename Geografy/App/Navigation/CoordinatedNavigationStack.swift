@@ -2,7 +2,7 @@ import SwiftUI
 import GeografyCore
 
 struct CoordinatedNavigationStack<Root: View>: View {
-    @Bindable var coordinator: TabCoordinator
+    @Bindable var coordinator: Navigator
     @ViewBuilder var root: () -> Root
 
     var body: some View {

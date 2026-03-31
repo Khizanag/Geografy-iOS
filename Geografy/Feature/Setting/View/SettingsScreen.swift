@@ -2,7 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct SettingsScreen: View {
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService

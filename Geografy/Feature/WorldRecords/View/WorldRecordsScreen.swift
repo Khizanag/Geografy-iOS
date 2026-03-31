@@ -4,7 +4,7 @@ import GeografyCore
 
 struct WorldRecordsScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var countryDataService = CountryDataService()

@@ -5,7 +5,7 @@ import GeografyCore
 struct IndependenceTimelineScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
 
     @State private var selectedEra: IndependenceEra = .lateTwentieth
     @State private var selectedColonizer = ""

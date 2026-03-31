@@ -3,7 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct CountryDetailScreen: View {
-    @Environment(TabCoordinator.self) var coordinator
+    @Environment(Navigator.self) var coordinator
     @Environment(Coordinator.self) private var sheetCoordinator: Coordinator?
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) private var travelService

@@ -3,7 +3,7 @@ import GeografyDesign
 
 struct ModuleLessonsScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(LearningPathService.self) private var learningPathService
 
     let module: LearningModule

@@ -4,7 +4,7 @@ import GeografyCore
 
 struct ContinentStatsScreen: View {
     @Environment(HapticsService.self) private var hapticsService
-    @Environment(TabCoordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
 
     @State private var countryDataService = CountryDataService()
     @State private var appeared = false

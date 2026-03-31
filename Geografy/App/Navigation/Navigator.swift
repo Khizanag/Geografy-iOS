@@ -1,7 +1,7 @@
 import SwiftUI
 
 @Observable
-final class TabCoordinator {
+final class Navigator {
     var path = NavigationPath()
     var activeSheet: Sheet?
     var activeCover: Cover?

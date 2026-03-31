@@ -51,7 +51,7 @@
 				App/Navigation/ScreenFactory.swift,
 				App/Navigation/Sheet.swift,
 				App/Navigation/SheetFactory.swift,
-				App/Navigation/TabCoordinator.swift,
+				App/Navigation/Navigator.swift,
 				Design/Component/AlphabetJumpIndex.swift,
 				Design/Component/CircleCloseButton.swift,
 				Design/Component/ComingSoonSheet.swift,
