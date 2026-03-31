@@ -55,6 +55,12 @@ struct TerritorialDisputesScreen: View {
 
 // MARK: - Subviews
 private extension TerritorialDisputesScreen {
+    var disclaimerText: String {
+        "Choose how disputed territories appear on maps. "
+        + "Settings reflect your personal preference — not a political statement. "
+        + "Defaults follow international consensus."
+    }
+
     var introCard: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
@@ -73,8 +79,7 @@ private extension TerritorialDisputesScreen {
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                 }
 
-                // swiftlint:disable:next line_length
-                Text("Choose how disputed territories appear on maps. Settings reflect your personal preference — not a political statement. Defaults follow international consensus.")
+                Text(disclaimerText)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)

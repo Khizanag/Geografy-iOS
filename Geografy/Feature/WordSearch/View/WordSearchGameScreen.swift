@@ -142,7 +142,7 @@ private extension WordSearchGameScreen {
                     )
                     ResultStatItem(
                         icon: "eye.fill",
-                        value: "\(hintRevealedIDs.count + (isRevealed ? puzzle.words.count - foundWordIDs.count - hintRevealedIDs.count : 0))", // swiftlint:disable:this line_length
+                        value: "\(revealedCount)",
                         label: "Revealed",
                         color: DesignSystem.Color.warning
                     )
@@ -346,6 +346,12 @@ private extension WordSearchGameScreen {
 
 // MARK: - Helpers
 private extension WordSearchGameScreen {
+    var revealedCount: Int {
+        guard let puzzle else { return 0 }
+        let autoRevealed = isRevealed ? puzzle.words.count - foundWordIDs.count - hintRevealedIDs.count : 0
+        return hintRevealedIDs.count + autoRevealed
+    }
+
     var gameFinished: Bool {
         guard let puzzle else { return false }
         return allFound(puzzle) || isRevealed

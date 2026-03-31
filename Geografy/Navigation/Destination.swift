@@ -21,8 +21,10 @@ enum Destination: Hashable, Identifiable {
     case customQuiz
     case customQuizShare(CustomQuiz)
     case dailyChallenge
-    // swiftlint:disable:next line_length
-    case dailyChallengeResult(score: Int, maxScore: Int, challengeType: DailyChallengeType, timeSpent: TimeInterval, streak: Int)
+    case dailyChallengeResult(
+        score: Int, maxScore: Int, challengeType: DailyChallengeType,
+        timeSpent: TimeInterval, streak: Int
+    )
     case editProfile
     case distanceCalculator
     case economyExplorer
