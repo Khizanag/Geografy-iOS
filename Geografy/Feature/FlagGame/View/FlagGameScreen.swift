@@ -33,7 +33,6 @@ struct FlagGameScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Flag Game")
         .navigationBarTitleDisplayMode(.inline)
-        .interactiveDismissDisabled(true)
         .onAppear {
             countryDataService.loadCountries()
             startGame()

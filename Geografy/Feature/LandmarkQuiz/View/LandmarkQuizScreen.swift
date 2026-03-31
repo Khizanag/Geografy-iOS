@@ -27,7 +27,6 @@ struct LandmarkQuizScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Landmark Quiz")
         .navigationBarTitleDisplayMode(.inline)
-        .interactiveDismissDisabled(true)
         .task { loadQuiz() }
         .onDisappear { timerCancellable?.cancel() }
     }

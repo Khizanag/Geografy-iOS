@@ -35,7 +35,6 @@ struct BorderChallengeScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Border Challenge")
         .navigationBarTitleDisplayMode(.inline)
-        .interactiveDismissDisabled(true)
         .onReceive(timer) { _ in
             guard timerActive, !isGameOver else { return }
             if secondsRemaining > 0 {
