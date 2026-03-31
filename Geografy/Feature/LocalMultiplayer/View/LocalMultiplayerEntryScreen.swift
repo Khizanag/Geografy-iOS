@@ -27,7 +27,7 @@ struct LocalMultiplayerEntryScreen: View {
         }
         .animation(.easeInOut(duration: 0.3), value: coordinator.state)
         .onAppear {
-            withAnimation(.easeOut(duration: 0.6)) { appeared = true }
+            appeared = true
         }
     }
 }

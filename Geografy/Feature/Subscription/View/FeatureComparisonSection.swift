@@ -14,7 +14,7 @@ struct FeatureComparisonSection: View {
         .padding(DesignSystem.Spacing.md)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .onAppear {
-            withAnimation(.easeOut(duration: 0.5).delay(0.2)) { appeared = true }
+            appeared = true
         }
     }
 }

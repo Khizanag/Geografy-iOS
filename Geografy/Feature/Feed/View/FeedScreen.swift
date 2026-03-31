@@ -19,7 +19,7 @@ struct FeedScreen: View {
             .task {
                 countryDataService.loadCountries()
                 feedService.loadFeed()
-                withAnimation(.easeOut(duration: 0.5)) { appeared = true }
+                appeared = true
             }
     }
 }

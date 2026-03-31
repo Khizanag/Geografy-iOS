@@ -27,7 +27,7 @@ struct PaywallScreen: View {
             await subscriptionService.checkEntitlements()
         }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.6)) { appeared = true }
+            appeared = true
             guard !reduceMotion else { globePulse = true; blobAnimating = true; return }
             withAnimation(.easeInOut(duration: 2.4).repeatForever(autoreverses: true)) {
                 globePulse = true

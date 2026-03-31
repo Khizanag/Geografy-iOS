@@ -36,7 +36,7 @@ struct SpeedRunSetupScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { countryDataService.loadCountries() }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.8)) { appeared = true }
+            appeared = true
             guard !reduceMotion else { pulseTimer = true; return }
             withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                 pulseTimer = true

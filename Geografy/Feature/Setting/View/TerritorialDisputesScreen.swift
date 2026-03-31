@@ -39,7 +39,7 @@ struct TerritorialDisputesScreen: View {
         .toolbarColorScheme(.dark, for: .navigationBar)
         .onAppear {
             loadSelections()
-            withAnimation { appeared = true }
+            appeared = true
         }
         .alert("Reset to Defaults", isPresented: $showingResetAlert) {
             Button("Reset", role: .destructive, action: resetToDefaults)

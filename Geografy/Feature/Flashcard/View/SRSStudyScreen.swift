@@ -17,7 +17,7 @@ struct SRSStudyScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { countryDataService.loadCountries() }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.4)) { appeared = true }
+            appeared = true
         }
         .fullScreenCover(isPresented: $showSession) {
             FlashcardSessionScreen(

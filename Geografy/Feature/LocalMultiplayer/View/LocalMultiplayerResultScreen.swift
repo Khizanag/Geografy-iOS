@@ -24,7 +24,7 @@ struct LocalMultiplayerResultScreen: View {
         .background { AmbientBlobsView(.standard) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .onAppear {
-            withAnimation(.easeOut(duration: 0.6)) { appeared = true }
+            appeared = true
             guard !xpAwarded else { return }
             xpAwarded = true
             if isWin {

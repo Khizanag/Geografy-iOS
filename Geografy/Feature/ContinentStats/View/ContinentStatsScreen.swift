@@ -24,7 +24,7 @@ struct ContinentStatsScreen: View {
         .navigationBarTitleDisplayMode(.large)
         .task { countryDataService.loadCountries() }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.5)) { appeared = true }
+            appeared = true
         }
     }
 }
