@@ -380,10 +380,21 @@ private extension AuthService {
     }
 
     func fetchAppleCredentialState(userID: String) async -> ASAuthorizationAppleIDProvider.CredentialState {
-        await withCheckedContinuation { continuation in
-            ASAuthorizationAppleIDProvider().getCredentialState(forUserID: userID) { credentialState, _ in
-                continuation.resume(returning: credentialState)
+        await withTaskGroup(of: ASAuthorizationAppleIDProvider.CredentialState.self) { group in
+            group.addTask {
+                await withCheckedContinuation { continuation in
+                    ASAuthorizationAppleIDProvider().getCredentialState(forUserID: userID) { state, _ in
+                        continuation.resume(returning: state)
+                    }
+                }
             }
+            group.addTask {
+                try? await Task.sleep(for: .seconds(5))
+                return .notFound
+            }
+            let result = await group.next() ?? .notFound
+            group.cancelAll()
+            return result
         }
     }
 }
