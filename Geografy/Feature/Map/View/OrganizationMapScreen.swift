@@ -45,7 +45,6 @@ struct OrganizationMapScreen: View {
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
-            .closeButtonPlacementLeading()
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     if isLandscape {
