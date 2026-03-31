@@ -8,9 +8,8 @@ struct TimeZoneScreen: View {
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    @State private var countryDataService = CountryDataService()
 
     @State private var selectedTab: TimeZoneTab = .worldClock
     @State private var blobAnimating = false
@@ -24,7 +23,6 @@ struct TimeZoneScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Time Zones")
         .navigationBarTitleDisplayMode(.inline)
-        .task { countryDataService.loadCountries() }
         .onAppear {
             blobAnimating = true
         }

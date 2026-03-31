@@ -3,9 +3,9 @@ import GeografyDesign
 
 struct DailyChallengeScreen: View {
     @Environment(XPService.self) private var xpService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var countryDataService = CountryDataService()
     @State private var service: DailyChallengeService?
     @State private var showSession = false
     @State private var blobAnimating = false
@@ -416,7 +416,6 @@ private extension DailyChallengeScreen {
 // MARK: - Actions
 private extension DailyChallengeScreen {
     func loadData() {
-        countryDataService.loadCountries()
         let challengeService = DailyChallengeService(
             countryDataService: countryDataService,
             userID: xpService.currentUserID

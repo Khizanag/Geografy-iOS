@@ -2,11 +2,17 @@ import Foundation
 import GeografyCore
 
 @Observable
+@MainActor
 final class CountryDataService {
     private(set) var countries: [Country] = []
     private var countriesByCode: [String: Country] = [:]
 
+    init() {
+        loadCountries()
+    }
+
     func loadCountries() {
+        guard countries.isEmpty else { return }
         guard let url = Bundle.main.url(forResource: "countries", withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
             return

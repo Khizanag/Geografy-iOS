@@ -6,6 +6,7 @@ import GeografyDesign
 struct QuizSessionScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let configuration: QuizConfiguration
 
@@ -22,7 +23,6 @@ struct QuizSessionScreen: View {
     @State private var showFlagPreview = false
     @State var isPaused = false
     @State var navigateToResult: QuizResult?
-    @State private var countryDataService = CountryDataService()
 
     @AppStorage("quiz_showAutocomplete") private var showAutocomplete = false
     @State private var typingInput: String = ""
@@ -499,7 +499,6 @@ extension QuizSessionScreen {
     }
 
     func loadQuiz() {
-        countryDataService.loadCountries()
         let pool = configuration.region.filter(countryDataService.countries)
         let optionCount = max(configuration.difficulty.optionCount, 4)
         guard pool.count >= optionCount else { return }

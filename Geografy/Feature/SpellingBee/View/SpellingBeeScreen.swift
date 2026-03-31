@@ -4,7 +4,8 @@ import GeografyCore
 import GeografyDesign
 
 struct SpellingBeeScreen: View {
-    @State private var countryDataService = CountryDataService()
+    @Environment(CountryDataService.self) private var countryDataService
+
     @State private var currentCountry: Country?
     @State private var typedText = ""
     @State private var usedHints: Set<HintType> = []
@@ -70,7 +71,6 @@ struct SpellingBeeScreen: View {
         }
         .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
         .onAppear {
-            countryDataService.loadCountries()
             loadNextCountry()
         }
     }

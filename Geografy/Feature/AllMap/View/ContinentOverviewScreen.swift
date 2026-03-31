@@ -5,10 +5,10 @@ import GeografyCore
 struct ContinentOverviewScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let continent: Country.Continent
 
-    @State private var countryDataService = CountryDataService()
     @State private var sortBy: SortOption = .name
     @State private var appeared = false
 
@@ -36,7 +36,6 @@ struct ContinentOverviewScreen: View {
                 .buttonStyle(.plain)
             }
         }
-        .task { countryDataService.loadCountries() }
         .onAppear {
             appeared = true
         }

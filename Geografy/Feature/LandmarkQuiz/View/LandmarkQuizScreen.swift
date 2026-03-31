@@ -4,9 +4,9 @@ import GeografyDesign
 
 struct LandmarkQuizScreen: View {
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var quizService = LandmarkQuizService()
-    @State private var countryDataService = CountryDataService()
     @State private var currentQuestionIndex = 0
     @State private var score = 0
     @State private var selectedAnswer: String?
@@ -248,7 +248,6 @@ private extension LandmarkQuizScreen {
     }
 
     func loadQuiz() {
-        countryDataService.loadCountries()
         quizService.loadQuestions()
         prepareAnswers()
         startTimer()

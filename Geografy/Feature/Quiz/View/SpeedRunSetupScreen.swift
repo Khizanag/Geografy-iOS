@@ -4,13 +4,13 @@ import GeografyDesign
 struct SpeedRunSetupScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @AppStorage("speedrun_selectedRegion") private var selectedRegion: QuizRegion = .world
 
     @State private var appeared = false
     @State private var pulseTimer = false
-    @State private var countryDataService = CountryDataService()
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -34,7 +34,6 @@ struct SpeedRunSetupScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Speed Run")
         .navigationBarTitleDisplayMode(.inline)
-        .task { countryDataService.loadCountries() }
         .onAppear {
             appeared = true
             pulseTimer = true

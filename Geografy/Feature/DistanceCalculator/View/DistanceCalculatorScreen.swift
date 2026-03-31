@@ -5,8 +5,7 @@ import GeografyCore
 
 struct DistanceCalculatorScreen: View {
     @Environment(HapticsService.self) private var hapticsService
-
-    @State private var countryDataService = CountryDataService()
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -34,7 +33,6 @@ struct DistanceCalculatorScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Distance Calculator")
         .navigationBarTitleDisplayMode(.inline)
-        .task { countryDataService.loadCountries() }
         .sheet(isPresented: $showOriginPicker) {
             CountryPickerSheet(
                 title: "From Country",

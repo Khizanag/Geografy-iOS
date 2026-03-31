@@ -12,9 +12,9 @@ struct CountryDetailScreen: View {
     @Environment(HapticsService.self) var hapticsService
     @Environment(WorldBankService.self) private var worldBankService
     @Environment(PronunciationService.self) private var pronunciationService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
-    @State private var countryDataService = CountryDataService()
     @State var profileService = CountryProfileService()
     @State var appeared = false
     @State var activeSheet: CountryDetailSheet?
@@ -50,7 +50,6 @@ struct CountryDetailScreen: View {
                     .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
                 }
             }
-            .task { countryDataService.loadCountries() }
             .task { trackExploration() }
             .onAppear { appeared = true }
             .userActivity("com.khizanag.geografy.viewCountry") { activity in

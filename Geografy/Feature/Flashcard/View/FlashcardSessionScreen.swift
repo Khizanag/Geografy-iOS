@@ -8,11 +8,11 @@ struct FlashcardSessionScreen: View {
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let deck: FlashcardDeck
     let cards: [FlashcardItem]
 
-    @State private var countryDataService = CountryDataService()
     @State private var currentIndex = 0
     @State private var isFlipped = false
     @State private var showResults = false
@@ -33,7 +33,6 @@ struct FlashcardSessionScreen: View {
                 Text("Your progress will be saved.")
             }
             .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
-            .task { countryDataService.loadCountries() }
     }
 }
 

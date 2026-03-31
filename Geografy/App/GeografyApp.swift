@@ -26,6 +26,7 @@ struct GeografyApp: App {
     @State private var pronunciationService = PronunciationService()
     @State private var widgetDataBridge = WidgetDataBridge()
     @State private var featureFlagService = FeatureFlagService()
+    @State private var countryDataService = CountryDataService()
 
     init() {
         #if os(iOS)
@@ -68,18 +69,10 @@ struct GeografyApp: App {
                 .environment(pronunciationService)
                 .environment(testingModeService)
                 .environment(featureFlagService)
+                .environment(countryDataService)
                 .task { await authService.validateOnLaunch() }
-                .task {
-                    #if os(iOS)
-                    let granted = await NotificationService.requestPermission()
-                    if granted {
-                        NotificationService.scheduleStreakReminder()
-                        NotificationService.scheduleDailyChallengeReminder()
-                    }
-                    #endif
-                }
-                .task { await subscriptionService.checkEntitlements() }
-                .task {
+                .task(priority: .utility) { await subscriptionService.checkEntitlements() }
+                .task(priority: .utility) {
                     gameCenterService.authenticatePlayer()
                     let longestStreak = authService.currentProfile?.longestStreak
                         ?? streakService.currentStreak
@@ -90,11 +83,18 @@ struct GeografyApp: App {
                         )
                     }
                 }
-                .task {
-                    let countryService = CountryDataService()
-                    countryService.loadCountries()
+                .task(priority: .background) {
                     #if os(iOS)
-                    SpotlightIndexer.indexCountries(countryService.countries)
+                    let granted = await NotificationService.requestPermission()
+                    if granted {
+                        NotificationService.scheduleStreakReminder()
+                        NotificationService.scheduleDailyChallengeReminder()
+                    }
+                    #endif
+                }
+                .task(priority: .background) {
+                    #if os(iOS)
+                    SpotlightIndexer.indexCountries(countryDataService.countries)
                     #endif
                 }
                 .task {

@@ -13,9 +13,9 @@ struct HomeScreen: View {
     @Environment(FlashcardService.self) var flashcardService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Navigator.self) var coordinator
+    @Environment(CountryDataService.self) var countryDataService
     @Environment(FeatureFlagService.self) var featureFlags
 
-    @State var countryDataService = CountryDataService()
     @State var dailyChallengeService: DailyChallengeService?
     @State private var selectedMapIndex = 0
     @State private var blobAnimating = false
@@ -37,7 +37,6 @@ struct HomeScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task {
-                countryDataService.loadCountries()
                 loadDailyChallenge()
                 startAnimations()
             }

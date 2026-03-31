@@ -5,8 +5,8 @@ import GeografyCore
 struct MapColoringScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var selectedScheme: ColoringScheme = .continent
     @State private var visibleGroups: Set<String> = []
     @State private var selectedCountry: Country?
@@ -28,7 +28,6 @@ struct MapColoringScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Map Coloring Book")
         .navigationBarTitleDisplayMode(.inline)        .task {
-            countryDataService.loadCountries()
             visibleGroups = Set(groupedCountries.keys)
         }
         .sheet(item: $selectedCountry) { country in

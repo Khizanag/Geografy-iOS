@@ -6,9 +6,9 @@ struct CurrencyConverterScreen: View {
     @Environment(CurrencyService.self) private var currencyService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.dismiss) private var dismiss
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var countryDataService = CountryDataService()
     @State private var fromCurrency: CurrencyEntry?
     @State private var toCurrency: CurrencyEntry?
     @State private var amountText = "1"
@@ -54,7 +54,6 @@ struct CurrencyConverterScreen: View {
             }
         }
         .task {
-            countryDataService.loadCountries()
             setupDefaults()
             if let from = fromCurrency {
                 await currencyService.fetchRates(for: from.code)

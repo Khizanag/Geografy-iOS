@@ -7,8 +7,8 @@ import GeografyCore
 struct FlagGameScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var gameState = FlagGameState()
     @State private var targetCountry: Country?
     @State private var options: [Country] = []
@@ -34,7 +34,6 @@ struct FlagGameScreen: View {
         .navigationTitle("Flag Game")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            countryDataService.loadCountries()
             startGame()
         }
         .onDisappear { timerCancellable?.cancel() }
