@@ -34,7 +34,6 @@ struct SearchScreen: View {
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Search")
-        .toolbar { toolbarItems }
     }
 }
 
@@ -331,23 +330,6 @@ private extension SearchScreen {
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
         .contentShape(Rectangle())
-    }
-}
-
-// MARK: - Toolbar
-private extension SearchScreen {
-    @ToolbarContentBuilder
-    var toolbarItems: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                withAnimation(.easeInOut(duration: 0.3)) { topAligned.toggle() }
-            } label: {
-                Image(systemName: topAligned ? "arrow.down.to.line" : "arrow.up.to.line")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .buttonStyle(.plain)
-        }
     }
 }
 

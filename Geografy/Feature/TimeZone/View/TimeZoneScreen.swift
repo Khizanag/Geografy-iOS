@@ -22,7 +22,6 @@ struct TimeZoneScreen: View {
         .background { ambientBlobs }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Time Zones")
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             blobAnimating = true
         }

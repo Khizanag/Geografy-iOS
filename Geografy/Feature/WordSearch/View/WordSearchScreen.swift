@@ -28,9 +28,9 @@ struct WordSearchScreen: View {
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Word Search")
-        .navigationBarTitleDisplayMode(.inline)
+        .closeButtonPlacementLeading()
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .secondaryAction) {
                 Button { showGuide = true } label: {
                     Image(systemName: "info.circle")
                 }

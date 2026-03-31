@@ -7,7 +7,7 @@ struct LearningPathScreen: View {
     var body: some View {
         List(service.modules) { module in
             NavigationLink {
-                TVModuleLessonsScreen(module: module, service: service)
+                ModuleLessonsScreen(module: module, service: service)
             } label: {
                 HStack(spacing: 20) {
                     Image(systemName: module.icon)
@@ -54,7 +54,7 @@ struct LearningPathScreen: View {
 }
 
 // MARK: - Module Lessons
-struct TVModuleLessonsScreen: View {
+struct ModuleLessonsScreen: View {
     let module: LearningModule
     let service: LearningPathService
 

@@ -20,17 +20,15 @@ struct FavoritesScreen: View {
     @State private var continentFilter: Country.Continent?
 
     var body: some View {
-        ScrollView {
-            Group {
-                if filteredCountries.isEmpty {
-                    emptyState
-                } else {
-                    countryList
-                }
+        Group {
+            if filteredCountries.isEmpty {
+                emptyState
+            } else {
+                countryList
             }
-            .readableContentWidth()
         }
         .navigationTitle("Favorites")
+        .closeButtonPlacementLeading()
         .searchable(text: $searchText, prompt: "Search favorites")
         .toolbar { toolbarContent }
     }
@@ -122,30 +120,33 @@ private extension FavoritesScreen {
 // MARK: - Content
 private extension FavoritesScreen {
     var countryList: some View {
-        LazyVStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(filteredCountries) { country in
-                Button {
-                    coordinator.push(.countryDetail(country))
-                    hapticsService.impact(.light)
-                } label: {
-                    CountryRowView(
-                        country: country,
-                        isFavorite: true,
-                        showContinent: true,
-                        onFavoriteTap: {
-                            favoritesService.toggle(code: country.code)
-                        }
-                    )
-                }
-                .buttonStyle(PressButtonStyle())
-                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                    removeButton(for: country)
+        ScrollView {
+            LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(filteredCountries) { country in
+                    Button {
+                        coordinator.push(.countryDetail(country))
+                        hapticsService.impact(.light)
+                    } label: {
+                        CountryRowView(
+                            country: country,
+                            isFavorite: true,
+                            showContinent: true,
+                            onFavoriteTap: {
+                                favoritesService.toggle(code: country.code)
+                            }
+                        )
+                    }
+                    .buttonStyle(PressButtonStyle())
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        removeButton(for: country)
+                    }
                 }
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.top, DesignSystem.Spacing.sm)
+            .readableContentWidth()
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.xxl)
-        .padding(.top, DesignSystem.Spacing.sm)
     }
 
     func removeButton(for country: Country) -> some View {

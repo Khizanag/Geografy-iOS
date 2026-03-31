@@ -25,7 +25,7 @@ struct LandmarkScreen: View {
             Section {
                 ForEach(displayedLandmarks) { landmark in
                     NavigationLink {
-                        TVLandmarkDetailScreen(landmark: landmark)
+                        LandmarkDetailScreen(landmark: landmark)
                     } label: {
                         landmarkRow(landmark)
                     }
@@ -70,7 +70,7 @@ private extension LandmarkScreen {
 }
 
 // MARK: - Detail
-struct TVLandmarkDetailScreen: View {
+struct LandmarkDetailScreen: View {
     let landmark: Landmark
 
     private var accentSwiftUIColor: Color {

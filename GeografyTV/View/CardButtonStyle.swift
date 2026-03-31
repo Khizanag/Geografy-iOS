@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TVCardButtonStyle: ButtonStyle {
+struct CardButtonStyle: ButtonStyle {
     @Environment(\.isFocused) private var isFocused
 
     func makeBody(configuration: Configuration) -> some View {

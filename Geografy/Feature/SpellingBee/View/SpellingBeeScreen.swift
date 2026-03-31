@@ -47,37 +47,38 @@ struct SpellingBeeScreen: View {
             }
         }
         .navigationTitle("Spelling Bee")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button { showGuide = true } label: {
-                    Image(systemName: "info.circle")
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Show guide")
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button { autoContinue.toggle() } label: {
-                    Image(systemName: autoContinue ? "forward.fill" : "forward")
-                        .foregroundStyle(
-                            autoContinue
-                                ? DesignSystem.Color.accent
-                                : DesignSystem.Color.textTertiary
-                        )
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Auto continue: \(autoContinue ? "on" : "off")")
-            }
-        }
+        .closeButtonPlacementLeading()
+        .toolbar { toolbarContent }
         .sheet(isPresented: $showGuide) { SpellingBeeGuideSheet() }
-        .onAppear {
-            loadNextCountry()
-        }
+        .onAppear { loadNextCountry() }
     }
 }
 
 // MARK: - Subviews
 private extension SpellingBeeScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button { showGuide = true } label: {
+                Image(systemName: "info.circle")
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Show guide")
+        }
+
+        ToolbarItem(placement: .primaryAction) {
+            Button { autoContinue.toggle() } label: {
+                Image(systemName: autoContinue ? "forward.fill" : "forward")
+                    .foregroundStyle(
+                        autoContinue
+                        ? DesignSystem.Color.accent
+                        : DesignSystem.Color.textTertiary
+                    )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Auto continue: \(autoContinue ? "on" : "off")")
+        }
+    }
     var scorePill: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
             Label("Round \(roundNumber)", systemImage: "flag")

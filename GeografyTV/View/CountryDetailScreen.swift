@@ -34,7 +34,7 @@ struct CountryDetailScreen: View {
             FlagFocusView(countryCode: country.code, countryName: country.name)
         }
         .sheet(item: $showOrganizationDetail) { organization in
-            TVOrganizationSheetView(organization: organization)
+            OrganizationSheetView(organization: organization)
         }
     }
 }
@@ -285,7 +285,7 @@ private extension CountryDetailScreen {
 }
 
 // MARK: - Organization Sheet
-struct TVOrganizationSheetView: View {
+struct OrganizationSheetView: View {
     @Environment(\.dismiss) private var dismiss
 
     let organization: Organization

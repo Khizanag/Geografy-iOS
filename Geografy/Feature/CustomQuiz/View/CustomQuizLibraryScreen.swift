@@ -15,7 +15,7 @@ struct CustomQuizLibraryScreen: View {
         content
             .background(DesignSystem.Color.background)
             .navigationTitle("My Quizzes")
-            .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .sheet(isPresented: $showBuilder) { builderSheet }
             .sheet(item: $editingQuiz) { quiz in editSheet(for: quiz) }

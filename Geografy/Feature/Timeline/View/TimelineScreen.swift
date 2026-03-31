@@ -20,11 +20,11 @@ struct TimelineScreen: View {
         }
         .background(DesignSystem.Color.background)
         .navigationTitle("Timeline")
-        .navigationBarTitleDisplayMode(.large)
+        .closeButtonPlacementLeading()
+        .toolbar { toolbarContent }
         .onAppear {
             timelineService.loadEvents()
         }
-        .toolbar { historicalMapToolbarItem }
         .sheet(item: $selectedEvent) { event in
             eventDetailSheet(for: event)
         }
@@ -297,8 +297,8 @@ private extension TimelineScreen {
 // MARK: - Toolbar
 private extension TimelineScreen {
     @ToolbarContentBuilder
-    var historicalMapToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
             Button { coordinator.cover(.historicalMap(initialYear: selectedYear)) } label: {
                 Label("Historical Map", systemImage: "map.fill")
             }
