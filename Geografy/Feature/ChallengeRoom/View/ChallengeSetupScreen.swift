@@ -17,6 +17,33 @@ struct ChallengeSetupScreen: View {
     private let roundOptions = [5, 10, 15]
 
     var body: some View {
+        scrollContent
+            .safeAreaInset(edge: .bottom) { startButton }
+            .background { AmbientBlobsView(.standard) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Challenge Room")
+            .navigationBarTitleDisplayMode(.inline)
+            .fullScreenCover(item: $challengeRoom) { room in
+                CoordinatedNavigationStack(navigator: Navigator()) {
+                    if selectedMode == .splitScreen {
+                        ChallengeSplitScreen(
+                            room: room,
+                            challengeRoomService: challengeRoomService
+                        )
+                    } else {
+                        ChallengeGameScreen(
+                            room: room,
+                            challengeRoomService: challengeRoomService
+                        )
+                    }
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension ChallengeSetupScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 headerSection
@@ -31,31 +58,8 @@ struct ChallengeSetupScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) { startButton }
-        .background { AmbientBlobsView(.standard) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Challenge Room")
-        .navigationBarTitleDisplayMode(.inline)
-        .fullScreenCover(item: $challengeRoom) { room in
-            CoordinatedNavigationStack(navigator: Navigator()) {
-                if selectedMode == .splitScreen {
-                    ChallengeSplitScreen(
-                        room: room,
-                        challengeRoomService: challengeRoomService
-                    )
-                } else {
-                    ChallengeGameScreen(
-                        room: room,
-                        challengeRoomService: challengeRoomService
-                    )
-                }
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension ChallengeSetupScreen {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {

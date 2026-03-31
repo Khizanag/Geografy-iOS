@@ -8,6 +8,22 @@ struct LocalMultiplayerLobbyScreen: View {
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
     var body: some View {
+        scrollContent
+            .safeAreaInset(edge: .bottom) {
+                if coordinator.isHost, coordinator.opponent?.isReady == true {
+                    startButton
+                }
+            }
+            .background { AmbientBlobsView(.standard) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// MARK: - Subviews
+private extension LocalMultiplayerLobbyScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 connectionStatus
@@ -26,15 +42,6 @@ struct LocalMultiplayerLobbyScreen: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) {
-            if coordinator.isHost, coordinator.opponent?.isReady == true {
-                startButton
-            }
-        }
-        .background { AmbientBlobsView(.standard) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

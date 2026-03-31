@@ -9,6 +9,32 @@ struct WordSearchScreen: View {
     @State private var showGuide = false
 
     var body: some View {
+        scrollContent
+            .safeAreaInset(edge: .bottom) {
+                GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
+                    coordinator.cover(.wordSearchGame(selectedTheme))
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.md)
+            }
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Word Search")
+            .closeButtonPlacementLeading()
+            .toolbar {
+                ToolbarItem(placement: .secondaryAction) {
+                    Button { showGuide = true } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .sheet(isPresented: $showGuide) { wordSearchGuide }
+    }
+}
+
+// MARK: - Subviews
+private extension WordSearchScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 heroSection
@@ -19,30 +45,8 @@ struct WordSearchScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) {
-            GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-                coordinator.cover(.wordSearchGame(selectedTheme))
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Word Search")
-        .closeButtonPlacementLeading()
-        .toolbar {
-            ToolbarItem(placement: .secondaryAction) {
-                Button { showGuide = true } label: {
-                    Image(systemName: "info.circle")
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        .sheet(isPresented: $showGuide) { wordSearchGuide }
     }
-}
 
-// MARK: - Subviews
-private extension WordSearchScreen {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
