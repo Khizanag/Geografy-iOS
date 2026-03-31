@@ -11,7 +11,7 @@ final class GameCenterService {
     private let pendingKey = "gamecenter_pending_submissions"
 
     func authenticatePlayer() {
-        GKLocalPlayer.local.authenticateHandler = { [weak self] _, _ in
+        GKLocalPlayer.local.authenticateHandler = { [weak self] _, error in
             guard let self else { return }
             let player = GKLocalPlayer.local
             if player.isAuthenticated {
@@ -21,6 +21,9 @@ final class GameCenterService {
             } else {
                 self.isAuthenticated = false
                 self.playerDisplayName = nil
+                if let error = error as? NSError, error.code == GKError.notSupported.rawValue || error.code == 15 {
+                    // Game Center not configured for this bundle ID — expected in dev builds
+                }
             }
         }
     }

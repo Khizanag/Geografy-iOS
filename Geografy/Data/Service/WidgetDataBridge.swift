@@ -6,7 +6,7 @@ import WidgetKit
 @Observable
 @MainActor
 final class WidgetDataBridge {
-    private static let defaults = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
+    private static let defaults: UserDefaults? = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
 
     private var countryDataService = CountryDataService()
 
