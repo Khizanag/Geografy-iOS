@@ -23,6 +23,7 @@ enum Destination: Hashable, Identifiable {
     case dailyChallenge
     // swiftlint:disable:next line_length
     case dailyChallengeResult(score: Int, maxScore: Int, challengeType: DailyChallengeType, timeSpent: TimeInterval, streak: Int)
+    case editProfile
     case distanceCalculator
     case economyExplorer
     case exploreGame
@@ -50,6 +51,7 @@ enum Destination: Hashable, Identifiable {
     case neighborExplorer(Country)
     case oceanExplorer
     case organizationDetail(Organization)
+    case organizationMap(Organization)
     case organizations
     case paywall
     case profile
@@ -75,6 +77,7 @@ enum Destination: Hashable, Identifiable {
     case travelTracker
     case trivia
     case wordSearch
+    case wordSearchGame(WordSearchTheme)
     case worldRecords
 
     var id: String {
@@ -98,6 +101,7 @@ enum Destination: Hashable, Identifiable {
         case .customQuizShare(let quiz): "customQuizShare-\(quiz.id)"
         case .dailyChallenge: "dailyChallenge"
         case .dailyChallengeResult: "dailyChallengeResult"
+        case .editProfile: "editProfile"
         case .distanceCalculator: "distanceCalculator"
         case .economyExplorer: "economyExplorer"
         case .exploreGame: "exploreGame"
@@ -125,6 +129,7 @@ enum Destination: Hashable, Identifiable {
         case .neighborExplorer(let country): "neighborExplorer-\(country.code)"
         case .oceanExplorer: "oceanExplorer"
         case .organizationDetail(let org): "orgDetail-\(org.id)"
+        case .organizationMap(let org): "orgMap-\(org.id)"
         case .organizations: "organizations"
         case .paywall: "paywall"
         case .profile: "profile"
@@ -150,6 +155,7 @@ enum Destination: Hashable, Identifiable {
         case .travelTracker: "travelTracker"
         case .trivia: "trivia"
         case .wordSearch: "wordSearch"
+        case .wordSearchGame(let theme): "wordSearchGame-\(theme.rawValue)"
         case .worldRecords: "worldRecords"
         }
     }
@@ -184,6 +190,7 @@ extension Destination {
             DailyChallengeResultView(
                 score: score, maxScore: maxScore, challengeType: type, timeSpent: time, streak: streak
             )
+        case .editProfile: EditProfileSheet()
         case .distanceCalculator: DistanceCalculatorScreen()
         case .economyExplorer: EconomyExplorerScreen()
         case .exploreGame: ExploreGameScreen()
@@ -211,6 +218,7 @@ extension Destination {
         case .neighborExplorer(let country): NeighborExplorerScreen(country: country)
         case .oceanExplorer: OceanExplorerScreen()
         case .organizationDetail(let org): OrganizationDetailScreen(organization: org)
+        case .organizationMap(let org): OrganizationMapScreen(organization: org)
         case .organizations: OrganizationsScreen()
         case .paywall: PaywallScreen()
         case .profile: ProfileScreen()
@@ -236,6 +244,7 @@ extension Destination {
         case .travelTracker: TravelTrackerScreen()
         case .trivia: TriviaScreen()
         case .wordSearch: WordSearchScreen()
+        case .wordSearchGame(let theme): WordSearchGameScreen(theme: theme)
         case .worldRecords: WorldRecordsScreen()
         }
     }

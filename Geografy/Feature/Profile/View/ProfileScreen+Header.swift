@@ -7,7 +7,7 @@ extension ProfileScreen {
     var guestBanner: some View {
         Button {
             hapticsService.impact(.medium)
-            activeSheet = .signIn
+            coordinator.sheet(.signIn)
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 ZStack {
@@ -64,7 +64,7 @@ extension ProfileScreen {
     var editButton: some View {
         Button {
             hapticsService.impact(.light)
-            activeSheet = .editProfile
+            coordinator.sheet(.editProfile)
         } label: {
             Image(systemName: "pencil")
         }

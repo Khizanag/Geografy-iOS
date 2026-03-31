@@ -66,7 +66,7 @@ private extension ProfileScreen {
 // MARK: - Premium Banner
 extension ProfileScreen {
     var premiumBannerSection: some View {
-        Button { activeSheet = .paywall } label: {
+        Button { coordinator.sheet(.paywall) } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 ZStack {
                     Circle()
@@ -134,7 +134,7 @@ private extension ProfileScreen {
     var signInRow: some View {
         Button {
             hapticsService.impact(.medium)
-            activeSheet = .signIn
+            coordinator.sheet(.signIn)
         } label: {
             accountRowLabel(
                 icon: "person.badge.plus.fill",

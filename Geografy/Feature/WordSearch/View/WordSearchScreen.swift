@@ -3,8 +3,9 @@ import GeografyDesign
 import GeografyCore
 
 struct WordSearchScreen: View {
+    @Environment(Navigator.self) private var coordinator
+
     @State private var selectedTheme: WordSearchTheme = .capitals
-    @State private var showGame = false
     @State private var showGuide = false
 
     var body: some View {
@@ -20,7 +21,7 @@ struct WordSearchScreen: View {
         }
         .safeAreaInset(edge: .bottom) {
             GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-                showGame = true
+                coordinator.cover(.wordSearchGame(selectedTheme))
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.md)
@@ -37,9 +38,6 @@ struct WordSearchScreen: View {
             }
         }
         .sheet(isPresented: $showGuide) { wordSearchGuide }
-        .fullScreenCover(isPresented: $showGame) {
-            WordSearchGameScreen(theme: selectedTheme)
-        }
     }
 }
 
@@ -100,7 +98,10 @@ private extension WordSearchScreen {
             Spacer(minLength: 0)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
     }
 
     var wordSearchGuide: some View {
@@ -110,18 +111,36 @@ private extension WordSearchScreen {
                     title: "Find Hidden Words",
                     subtitle: "Country names and capitals are hidden in a grid of letters. Drag to select them!",
                     steps: [
-                        GuideStep(icon: "hand.draw.fill", title: "Drag to Select", description: "Drag across letters horizontally, vertically, or diagonally"),
-                        GuideStep(icon: "checkmark.circle.fill", title: "Words Highlight", description: "Correctly found words turn green in the grid"),
-                        GuideStep(icon: "clock.fill", title: "Race the Clock", description: "Your time is tracked — try to beat your best"),
+                        GuideStep(
+                            icon: "hand.draw.fill", title: "Drag to Select",
+                            description: "Drag across letters horizontally, vertically, or diagonally"
+                        ),
+                        GuideStep(
+                            icon: "checkmark.circle.fill", title: "Words Highlight",
+                            description: "Correctly found words turn green in the grid"
+                        ),
+                        GuideStep(
+                            icon: "clock.fill", title: "Race the Clock",
+                            description: "Your time is tracked — try to beat your best"
+                        ),
                     ]
                 ),
                 GuidePage(
                     title: "Tips & Tricks",
                     subtitle: "Master the word search with these strategies.",
                     steps: [
-                        GuideStep(icon: "eye.fill", title: "Scan Systematically", description: "Check each row and column one at a time"),
-                        GuideStep(icon: "arrow.left.arrow.right", title: "Words Go Both Ways", description: "Words can be placed forward or backward"),
-                        GuideStep(icon: "arrow.up.left.and.arrow.down.right", title: "Try Diagonals", description: "Don't forget diagonal words — they're sneaky"),
+                        GuideStep(
+                            icon: "eye.fill", title: "Scan Systematically",
+                            description: "Check each row and column one at a time"
+                        ),
+                        GuideStep(
+                            icon: "arrow.left.arrow.right", title: "Words Go Both Ways",
+                            description: "Words can be placed forward or backward"
+                        ),
+                        GuideStep(
+                            icon: "arrow.up.left.and.arrow.down.right", title: "Try Diagonals",
+                            description: "Don't forget diagonal words — they're sneaky"
+                        ),
                     ]
                 ),
             ]

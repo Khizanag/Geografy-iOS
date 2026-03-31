@@ -19,7 +19,6 @@ struct CountryDetailScreen: View {
     @State var appeared = false
     @State var activeSheet: CountryDetailSheet?
     @State private var showFlagFullScreen = false
-    @State private var showContinentMap = false
     @State private var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
     @State var populationStartDate = Date()
@@ -60,7 +59,6 @@ struct CountryDetailScreen: View {
                 activity.userInfo = ["countryCode": country.code]
             }
             .sheet(item: $activeSheet) { sheet in countryDetailSheetContent(for: sheet) }
-            .fullScreenCover(isPresented: $showContinentMap) { continentMapCover }
             .overlay { flagFullScreenOverlay }
     }
 }
@@ -81,24 +79,14 @@ extension CountryDetailScreen {
 
     enum CountryDetailSheet: Identifiable {
         case travelPicker
-        case paywall
         case info(InfoItem)
-        case compare
-        case currencyConverter(String)
         case deepDive
-        case neighborExplorer
-        case organizationMap(Organization)
 
         var id: String {
             switch self {
             case .travelPicker: "travelPicker"
-            case .paywall: "paywall"
             case .info(let item): "info-\(item.id)"
-            case .compare: "compare"
-            case .currencyConverter(let code): "currencyConverter-\(code)"
             case .deepDive: "deepDive"
-            case .neighborExplorer: "neighborExplorer"
-            case .organizationMap(let org): "orgMap-\(org.id)"
             }
         }
     }
@@ -117,23 +105,13 @@ private extension CountryDetailScreen {
                     set: { if !$0 { activeSheet = nil } }
                 )
             )
-        case .paywall:
-            PaywallScreen()
         case .info(let item):
             propertyDetailSheet(for: item)
-        case .compare:
-            CompareScreen(preselectedCountry: country)
-        case .currencyConverter(let code):
-            CurrencyConverterScreen(preselectedCurrencyCode: code)
         case .deepDive:
             CountryProfileScreen(
                 country: country,
                 profile: profileService.profile(for: country.code)
             )
-        case .neighborExplorer:
-            NeighborExplorerScreen(country: country)
-        case .organizationMap(let organization):
-            OrganizationMapScreen(organization: organization)
         }
     }
 }
@@ -166,7 +144,7 @@ private extension CountryDetailScreen {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
                 hapticsService.impact(.light)
-                activeSheet = .compare
+                coordinator.sheet(.compare(preselectedCountry: country))
             } label: {
                 Image(systemName: "arrow.left.arrow.right")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
@@ -394,7 +372,7 @@ extension CountryDetailScreen {
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                     .fill(DesignSystem.Color.cardBackground)
                     .frame(height: 80)
-                PremiumLockedOverlay(onUnlock: { activeSheet = .paywall })
+                PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) })
             }
         }
     }
@@ -404,7 +382,7 @@ extension CountryDetailScreen {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 .fill(DesignSystem.Color.cardBackground)
                 .frame(height: height)
-            PremiumLockedOverlay(onUnlock: { activeSheet = .paywall })
+            PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) })
         }
     }
 }
@@ -544,16 +522,12 @@ private extension CountryDetailScreen {
             mapButtonTitle: item.mapButtonTitle,
             onShowMap: {
                 activeSheet = nil
-                showContinentMap = true
+                coordinator.cover(.mapFullScreen(continentFilter: country.continent.displayName))
             },
             actionButtonTitle: item.actionButtonTitle,
             actionButtonIcon: item.actionButtonIcon,
             onAction: item.onAction
         )
-    }
-
-    var continentMapCover: some View {
-        MapScreen(continentFilter: country.continent.displayName)
     }
 
     @ViewBuilder
