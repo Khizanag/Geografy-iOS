@@ -16,7 +16,7 @@ public struct UserLevel: Equatable, Sendable {
 
 // MARK: - Thresholds
 public extension UserLevel {
-    nonisolated(unsafe) static let thresholds: [UserLevel] = [
+    static let thresholds: [UserLevel] = [
         UserLevel(level: 1, title: "Explorer", minXP: 0, maxXP: 100),
         UserLevel(level: 2, title: "Traveler", minXP: 100, maxXP: 300),
         UserLevel(level: 3, title: "Adventurer", minXP: 300, maxXP: 700),
@@ -26,10 +26,10 @@ public extension UserLevel {
         UserLevel(level: 7, title: "Ambassador", minXP: 5_500, maxXP: 9_000),
         UserLevel(level: 8, title: "World Citizen", minXP: 9_000, maxXP: 14_000),
         UserLevel(level: 9, title: "Global Expert", minXP: 14_000, maxXP: 21_000),
-        UserLevel(level: 10, title: "Master Geographer", minXP: 21_000, maxXP: Int.max),
+        UserLevel(level: 10, title: "Master Geographer", minXP: 21_000, maxXP: Int.max)
     ]
 
-    static func level(for xp: Int) -> UserLevel {
-        thresholds.last(where: { xp >= $0.minXP }) ?? thresholds[0]
+    static func level(for totalXP: Int) -> UserLevel {
+        thresholds.last(where: { totalXP >= $0.minXP }) ?? thresholds[0]
     }
 }

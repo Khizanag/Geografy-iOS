@@ -2,6 +2,7 @@ included:
   - Geografy
   - GeografyTV
   - GeografyWidgets
+  - Package
 
 excluded:
   - Geografy/Resource

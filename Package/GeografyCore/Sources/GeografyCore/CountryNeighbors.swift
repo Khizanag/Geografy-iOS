@@ -3,7 +3,7 @@ import Foundation
 public struct CountryNeighbors: Sendable {
     /// Maps ISO 3166-1 alpha-2 country code to its land-border neighbors.
     /// Empty array means the country is an island nation with no land neighbors.
-    nonisolated(unsafe) public static let data: [String: [String]] = [
+    public static let data: [String: [String]] = [
         // A
         "AF": ["CN", "IR", "PK", "TJ", "TM", "UZ"],
         "AL": ["GR", "ME", "MK", "RS"],
@@ -214,7 +214,7 @@ public struct CountryNeighbors: Sendable {
         "VC": [], "WS": [], "ST": [], "SG": [],
         "SB": [], "LK": [], "TW": [], "TT": [],
         "TV": [], "GB": [], "VU": [],
-        "TO": [], "TK": [],
+        "TO": [], "TK": []
     ]
 
     public static func neighbors(for countryCode: String) -> [String] {

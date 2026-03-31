@@ -5,26 +5,17 @@ struct LeaderboardScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
 
-    @State private var showLeaderboard = false
     @State private var showSignIn = false
-    @State private var selectedLeaderboardID = ""
 
     var body: some View {
         scrollContent
             .background { AmbientBlobsView(.leaderboard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Leaderboards")
-        .navigationBarTitleDisplayMode(.large)
-        .sheet(isPresented: $showSignIn) {
-            SignInOptionsSheet()
-        }
-        .fullScreenCover(isPresented: $showLeaderboard) {
-            GameCenterViewControllerRepresentable(
-                isPresented: $showLeaderboard,
-                leaderboardID: selectedLeaderboardID
-            )
-            .ignoresSafeArea()
-        }
+            .navigationTitle("Leaderboards")
+            .navigationBarTitleDisplayMode(.large)
+            .sheet(isPresented: $showSignIn) {
+                SignInOptionsSheet()
+            }
     }
 }
 
@@ -113,8 +104,11 @@ private extension LeaderboardScreen {
                 }
                 Button {
                     hapticsService.impact(.light)
-                    selectedLeaderboardID = info.id
-                    showLeaderboard = true
+                    GKAccessPoint.shared.trigger(
+                        leaderboardID: info.id,
+                        playerScope: .global,
+                        timeScope: .allTime
+                    ) {}
                 } label: {
                     HStack(spacing: DesignSystem.Spacing.xs) {
                         Image(systemName: "list.number")
@@ -141,8 +135,7 @@ private extension LeaderboardScreen {
     var openGameCenterButton: some View {
         Button {
             hapticsService.impact(.medium)
-            selectedLeaderboardID = ""
-            showLeaderboard = true
+            GKAccessPoint.shared.trigger(state: .dashboard) {}
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "gamecontroller.fill")

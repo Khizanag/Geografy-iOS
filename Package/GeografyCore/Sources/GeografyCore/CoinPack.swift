@@ -33,7 +33,7 @@ public struct CoinPack: Identifiable, Sendable {
 
 // MARK: - Available Packs
 public extension CoinPack {
-    nonisolated(unsafe) static let allPacks: [CoinPack] = [
+    static let allPacks: [CoinPack] = [
         CoinPack(
             id: "com.khizanag.geografy.coins.100",
             coins: 100,
@@ -93,7 +93,7 @@ public extension CoinPack {
             isPopular: false,
             isBestValue: false,
             badgeIcon: "crown.fill"
-        ),
+        )
     ]
 }
 

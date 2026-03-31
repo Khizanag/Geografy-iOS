@@ -183,7 +183,6 @@
 				Feature/Flashcard/View/FlashcardStatsView.swift,
 				Feature/Flashcard/View/SRSStudyScreen.swift,
 				Feature/GameCenter/View/FriendsListScreen.swift,
-				Feature/GameCenter/View/GameCenterViewControllerRepresentable.swift,
 				Feature/GameCenter/View/LeaderboardScreen.swift,
 				Feature/GeographyFeatures/View/GeographyFeaturesScreen.swift,
 				Feature/Home/Model/HomeSection.swift,
