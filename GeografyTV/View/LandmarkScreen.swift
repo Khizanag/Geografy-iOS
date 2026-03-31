@@ -42,7 +42,7 @@ private extension LandmarkScreen {
         HStack(spacing: 20) {
             Image(systemName: landmark.symbolName)
                 .font(.system(size: 28))
-                .foregroundStyle(Color(hex: landmark.accentColor) ?? DesignSystem.Color.accent)
+                .foregroundStyle(Color(hex: landmark.accentColor))
                 .frame(width: 44)
 
             VStack(alignment: .leading, spacing: 4) {
@@ -74,7 +74,7 @@ struct TVLandmarkDetailScreen: View {
     let landmark: Landmark
 
     private var accentSwiftUIColor: Color {
-        Color(hex: landmark.accentColor) ?? DesignSystem.Color.accent
+        Color(hex: landmark.accentColor)
     }
 
     var body: some View {
