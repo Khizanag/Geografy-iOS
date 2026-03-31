@@ -12,47 +12,32 @@ struct TravelJournalDetailScreen: View {
     @State private var showDeleteConfirmation = false
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                headerSection
-                if !entry.photoFileNames.isEmpty {
-                    photosSection
+        scrollContent
+            .navigationTitle(entry.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    CircleCloseButton()
                 }
-                if !entry.notes.isEmpty {
-                    notesSection
+                ToolbarItem(placement: .primaryAction) {
+                    editButton
                 }
-                detailsSection
-                deleteButton
             }
-            .padding(DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-            .readableContentWidth()
-        }
-        .navigationTitle(entry.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton()
+            .confirmationDialog(
+                "Delete Entry",
+                isPresented: $showDeleteConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Delete", role: .destructive) {
+                    journalService.deleteEntry(entry)
+                    activeSheet = nil
+                }
+            } message: {
+                Text(
+                    "Are you sure you want to delete this "
+                        + "journal entry? This cannot be undone."
+                )
             }
-            ToolbarItem(placement: .primaryAction) {
-                editButton
-            }
-        }
-        .confirmationDialog(
-            "Delete Entry",
-            isPresented: $showDeleteConfirmation,
-            titleVisibility: .visible
-        ) {
-            Button("Delete", role: .destructive) {
-                journalService.deleteEntry(entry)
-                activeSheet = nil
-            }
-        } message: {
-            Text(
-                "Are you sure you want to delete this "
-                    + "journal entry? This cannot be undone."
-            )
-        }
     }
 }
 
@@ -71,6 +56,25 @@ private extension TravelJournalDetailScreen {
 
 // MARK: - Subviews
 private extension TravelJournalDetailScreen {
+    var scrollContent: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                headerSection
+                if !entry.photoFileNames.isEmpty {
+                    photosSection
+                }
+                if !entry.notes.isEmpty {
+                    notesSection
+                }
+                detailsSection
+                deleteButton
+            }
+            .padding(DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth()
+        }
+    }
+
     var headerSection: some View {
         CardView(
             cornerRadius: DesignSystem.CornerRadius.extraLarge

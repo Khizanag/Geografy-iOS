@@ -12,6 +12,23 @@ struct SignInOptionsSheet: View {
     @State private var appeared = false
 
     var body: some View {
+        scrollContent
+            .background { AmbientBlobsView(.standard) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .onAppear {
+                appeared = true
+            }
+            .alert("Sign In Failed", isPresented: $showError) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(errorMessage)
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension SignInOptionsSheet {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 heroSection
@@ -22,16 +39,6 @@ struct SignInOptionsSheet: View {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.xl)
-        }
-        .background { AmbientBlobsView(.standard) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .onAppear {
-            appeared = true
-        }
-        .alert("Sign In Failed", isPresented: $showError) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(errorMessage)
         }
     }
 }

@@ -23,6 +23,39 @@ struct CurrencyConverterScreen: View {
     }
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Currency Converter")
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $showFromPicker) {
+                CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
+                    hapticsService.selection()
+                    fromCurrency = entry
+                    Task { await currencyService.fetchRates(for: entry.code) }
+                }
+            }
+            .sheet(isPresented: $showToPicker) {
+                CurrencyPickerSheet(title: "To Currency", currencies: allCurrencies) { entry in
+                    hapticsService.selection()
+                    toCurrency = entry
+                }
+            }
+            .task {
+                setupDefaults()
+                if let from = fromCurrency {
+                    await currencyService.fetchRates(for: from.code)
+                }
+            }
+            .onAppear {
+                blobAnimating = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CurrencyConverterScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 quickChipsSection
@@ -37,36 +70,8 @@ struct CurrencyConverterScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Currency Converter")
-        .navigationBarTitleDisplayMode(.inline)        .sheet(isPresented: $showFromPicker) {
-            CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
-                hapticsService.selection()
-                fromCurrency = entry
-                Task { await currencyService.fetchRates(for: entry.code) }
-            }
-        }
-        .sheet(isPresented: $showToPicker) {
-            CurrencyPickerSheet(title: "To Currency", currencies: allCurrencies) { entry in
-                hapticsService.selection()
-                toCurrency = entry
-            }
-        }
-        .task {
-            setupDefaults()
-            if let from = fromCurrency {
-                await currencyService.fetchRates(for: from.code)
-            }
-        }
-        .onAppear {
-            blobAnimating = true
-        }
     }
-}
 
-// MARK: - Subviews
-private extension CurrencyConverterScreen {
     var quickChipsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text("Quick select")
