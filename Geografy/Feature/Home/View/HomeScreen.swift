@@ -166,7 +166,7 @@ private extension HomeScreen {
 // MARK: - Main Feed
 private extension HomeScreen {
     var mainFeed: some View {
-        ScrollView(showsIndicators: false) {
+        ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 greetingSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
@@ -182,6 +182,7 @@ private extension HomeScreen {
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .background(alignment: .top) {
                 scrollableBlobs
+                    .clipped()
             }
         }
     }
