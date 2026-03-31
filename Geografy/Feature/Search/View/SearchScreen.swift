@@ -4,6 +4,7 @@ import GeografyCore
 
 struct SearchScreen: View {
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryService
 
     @AppStorage("search_topAligned") private var topAligned = false
 
@@ -11,7 +12,6 @@ struct SearchScreen: View {
     @State private var sections: [SearchResultSection] = []
     @State private var isSearching = false
     @State private var recentService = RecentSearchesService()
-    @State private var countryService = CountryDataService()
     @State private var searchTask: Task<Void, Never>?
 
     private let trendingQueries = [
@@ -35,7 +35,6 @@ struct SearchScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Search")
         .toolbar { toolbarItems }
-        .task { countryService.loadCountries() }
     }
 }
 
@@ -100,7 +99,10 @@ private extension SearchScreen {
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .background(
+                    DesignSystem.Color.cardBackground,
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                )
                 .contentShape(Rectangle())
             }
             .buttonStyle(PressButtonStyle())
@@ -401,8 +403,9 @@ private extension SearchScreen {
         }
 
         let orgMatches = Organization.all.filter {
-            let normalizedFull = $0.fullName.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
-            let normalizedDisplay = $0.displayName.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
+            let foldingOptions: String.CompareOptions = [.caseInsensitive, .diacriticInsensitive]
+            let normalizedFull = $0.fullName.folding(options: foldingOptions, locale: .current)
+            let normalizedDisplay = $0.displayName.folding(options: foldingOptions, locale: .current)
             return normalizedFull.contains(normalized) || normalizedDisplay.contains(normalized)
         }
 

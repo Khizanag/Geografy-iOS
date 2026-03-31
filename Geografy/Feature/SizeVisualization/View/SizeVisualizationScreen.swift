@@ -5,8 +5,8 @@ import GeografyCore
 struct SizeVisualizationScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var sortMode: SortMode = .area
     @State private var searchQuery = ""
     @State private var referenceCountry: Country?
@@ -28,7 +28,6 @@ struct SizeVisualizationScreen: View {
                 )
             }
         }
-        .task { countryDataService.loadCountries() }
     }
 }
 
@@ -95,7 +94,10 @@ private extension SizeVisualizationScreen {
             .foregroundStyle(DesignSystem.Color.accent)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.accent.opacity(0.1), in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+        .background(
+            DesignSystem.Color.accent.opacity(0.1),
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+        )
     }
 
     var countryList: some View {
