@@ -2,7 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct ChallengeResultScreen: View {
-    @Environment(Coordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
 
     let room: ChallengeRoom
     var onPlayAgain: (() -> Void)?

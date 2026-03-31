@@ -39,7 +39,7 @@ struct ChallengeSetupScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { countryDataService.loadCountries() }
         .fullScreenCover(item: $challengeRoom) { room in
-            NavigatorView {
+            CoordinatedNavigationStack(navigator: Navigator()) {
                 if selectedMode == .splitScreen {
                     ChallengeSplitScreen(
                         room: room,

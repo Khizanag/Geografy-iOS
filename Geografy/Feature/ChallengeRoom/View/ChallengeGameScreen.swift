@@ -2,7 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct ChallengeGameScreen: View {
-    @Environment(Coordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var room: ChallengeRoom

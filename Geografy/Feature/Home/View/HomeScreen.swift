@@ -559,7 +559,7 @@ private extension HomeScreen {
     }
 
     func openMap(named name: String) {
-        coordinator.presentFullScreen(.map(continentFilter: name == "World map" ? nil : name))
+        coordinator.present(.mapFullScreen(continentFilter: name == "World map" ? nil : name))
     }
 
     func loadDailyChallenge() {

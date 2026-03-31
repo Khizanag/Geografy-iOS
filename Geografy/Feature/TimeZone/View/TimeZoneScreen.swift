@@ -5,7 +5,7 @@ import GeografyCore
 
 struct TimeZoneScreen: View {
     #if !os(tvOS)
-    @Environment(Coordinator.self) private var coordinator: Coordinator?
+    @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -151,7 +151,7 @@ struct CountryWithZone: Identifiable {
 // MARK: - World Clock View
 private struct WorldClockView: View {
     #if !os(tvOS)
-    @Environment(Coordinator.self) private var coordinator: Coordinator?
+    @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
 
     let countries: [CountryWithZone]
@@ -236,7 +236,7 @@ private struct WorldClockView: View {
 // MARK: - All Zones View
 private struct AllZonesView: View {
     #if !os(tvOS)
-    @Environment(Coordinator.self) private var coordinator: Coordinator?
+    @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
 
     let countries: [CountryWithZone]

@@ -358,7 +358,7 @@ private extension QuizSetupScreen {
             if selectedType.isPremium, !subscriptionService.isPremium {
                 coordinator.present(.paywall)
             } else {
-                coordinator.presentFullScreen(.quizSession(makeConfiguration()))
+                coordinator.present(.quizSession(makeConfiguration()))
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)

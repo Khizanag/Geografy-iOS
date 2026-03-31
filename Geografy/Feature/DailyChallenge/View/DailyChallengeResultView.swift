@@ -3,7 +3,7 @@ import Accessibility
 import GeografyDesign
 
 struct DailyChallengeResultView: View {
-    @Environment(Coordinator.self) private var coordinator
+    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let score: Int

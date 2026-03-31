@@ -149,7 +149,7 @@ extension ProfileScreen {
         case .paywall:
             PaywallScreen()
         case .achievements:
-            NavigatorView {
+            CoordinatedNavigationStack(navigator: Navigator(), showCloseButton: true) {
                 AchievementsScreen()
                     .navigationTitle("Achievements")
                     .navigationBarTitleDisplayMode(.large)

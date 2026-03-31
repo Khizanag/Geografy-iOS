@@ -68,31 +68,31 @@ private extension ContentView {
     var tabContent: some View {
         TabView(selection: $appCoordinator.selectedTab) {
             Tab("Home", systemImage: "house.fill", value: 0) {
-                CoordinatedNavigationStack(coordinator: appCoordinator.homeCoordinator) {
+                CoordinatedNavigationStack(navigator: appCoordinator.homeNavigator) {
                     HomeScreen()
                 }
             }
 
             Tab("Quiz", systemImage: "gamecontroller.fill", value: 1) {
-                CoordinatedNavigationStack(coordinator: appCoordinator.quizCoordinator) {
+                CoordinatedNavigationStack(navigator: appCoordinator.quizNavigator) {
                     QuizSetupScreen()
                 }
             }
 
             Tab("Countries", systemImage: "globe", value: 2) {
-                CoordinatedNavigationStack(coordinator: appCoordinator.countriesCoordinator) {
+                CoordinatedNavigationStack(navigator: appCoordinator.countriesNavigator) {
                     CountryListScreen()
                 }
             }
 
             Tab("All Maps", systemImage: "map.fill", value: 3) {
-                CoordinatedNavigationStack(coordinator: appCoordinator.allMapsCoordinator) {
+                CoordinatedNavigationStack(navigator: appCoordinator.allMapsNavigator) {
                     AllMapsScreen()
                 }
             }
 
             Tab("More", systemImage: "ellipsis", value: 4) {
-                CoordinatedNavigationStack(coordinator: appCoordinator.moreCoordinator) {
+                CoordinatedNavigationStack(navigator: appCoordinator.moreNavigator) {
                     MoreScreen()
                 }
             }

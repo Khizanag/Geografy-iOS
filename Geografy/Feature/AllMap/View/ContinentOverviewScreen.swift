@@ -4,7 +4,6 @@ import GeografyCore
 
 struct ContinentOverviewScreen: View {
     @Environment(Navigator.self) private var coordinator
-    @Environment(Coordinator.self) private var sheetCoordinator: Coordinator?
     @Environment(FavoritesService.self) private var favoritesService
 
     let continent: Country.Continent
@@ -53,11 +52,7 @@ struct ContinentOverviewScreen: View {
 // MARK: - Navigation
 private extension ContinentOverviewScreen {
     func navigateToCountry(_ country: Country) {
-        if let sheetCoordinator {
-            sheetCoordinator.push(.countryDetail(country))
-        } else {
-            coordinator.push(.countryDetail(country))
-        }
+        coordinator.push(.countryDetail(country))
     }
 }
 

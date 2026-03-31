@@ -1,29 +1,58 @@
 import SwiftUI
-import GeografyCore
 
 struct CoordinatedNavigationStack<Root: View>: View {
-    @Bindable var coordinator: Navigator
+    @Environment(\.dismiss) private var dismiss
+
+    @Bindable var navigator: Navigator
+    var showCloseButton: Bool = false
     @ViewBuilder var root: () -> Root
 
     var body: some View {
-        NavigationStack(path: $coordinator.path) {
+        NavigationStack(path: $navigator.path) {
+            rootWithCloseButton
+                .navigationDestination(for: Destination.self) { destination in
+                    destination.content
+                }
+        }
+        .sheet(item: $navigator.activeSheet) { destination in
+            DestinationSheetView(destination: destination)
+        }
+        .fullScreenCover(item: $navigator.activeCover) { destination in
+            destination.content
+        }
+        .environment(navigator)
+    }
+}
+
+// MARK: - Subviews
+private extension CoordinatedNavigationStack {
+    @ViewBuilder
+    var rootWithCloseButton: some View {
+        if showCloseButton {
             root()
-                .navigationDestination(for: Screen.self) { screen in
-                    ScreenFactory.view(for: screen)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        CircleCloseButton { dismiss() }
+                    }
                 }
-                .navigationDestination(for: Country.self) { country in
-                    CountryDetailScreen(country: country)
-                }
-                .navigationDestination(for: Organization.self) { organization in
-                    OrganizationDetailScreen(organization: organization)
-                }
+        } else {
+            root()
         }
-        .sheet(item: $coordinator.activeSheet) { sheet in
-            SheetFactory.view(for: sheet)
+    }
+}
+
+// MARK: - Destination Sheet View
+private struct DestinationSheetView: View {
+    let destination: Destination
+
+    var body: some View {
+        CoordinatedNavigationStack(
+            navigator: Navigator(),
+            showCloseButton: true
+        ) {
+            destination.content
         }
-        .fullScreenCover(item: $coordinator.activeCover) { cover in
-            CoverFactory.view(for: cover)
-        }
-        .environment(coordinator)
+        .presentationDetents([.large])
+        .interactiveDismissDisabled(destination.disableInteractiveDismiss)
     }
 }
