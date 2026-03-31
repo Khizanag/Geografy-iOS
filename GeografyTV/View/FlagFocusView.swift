@@ -3,6 +3,7 @@ import GeografyDesign
 import GeografyCore
 
 struct FlagFocusView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
 
     let countryCode: String

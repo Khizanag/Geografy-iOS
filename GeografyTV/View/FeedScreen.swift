@@ -114,5 +114,6 @@ struct TVFeedDetailView: View {
                 }
             }
         }
+        .onExitCommand { dismiss() }
     }
 }

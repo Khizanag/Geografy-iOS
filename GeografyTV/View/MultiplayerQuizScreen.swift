@@ -5,6 +5,7 @@ import GeografyDesign
 import GeografyCore
 
 struct MultiplayerQuizScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
 
     let countryDataService: CountryDataService
