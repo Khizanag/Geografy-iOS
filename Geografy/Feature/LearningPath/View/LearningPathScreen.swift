@@ -22,10 +22,8 @@ struct LearningPathScreen: View {
         .navigationTitle("Learning Path")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $selectedModule) { module in
-            NavigationStack {
-                ModuleLessonsScreen(module: module)
-            }
-            .presentationDetents([.large])
+            ModuleLessonsScreen(module: module)
+                .presentationDetents([.large])
         }
         .onAppear { startBlobAnimation() }
     }

@@ -142,19 +142,17 @@ private extension TravelBucketListScreen {
 
     @ViewBuilder
     func bucketListDetailSheet(for country: Country) -> some View {
-        NavigationStack {
-            BucketListCountryDetailView(
-                country: country,
-                priority: Binding(
-                    get: { priorities[country.code] ?? .someday },
-                    set: { setPriority($0, for: country.code) }
-                ),
-                note: Binding(
-                    get: { notes[country.code] ?? "" },
-                    set: { setNote($0, for: country.code) }
-                )
+        BucketListCountryDetailView(
+            country: country,
+            priority: Binding(
+                get: { priorities[country.code] ?? .someday },
+                set: { setPriority($0, for: country.code) }
+            ),
+            note: Binding(
+                get: { notes[country.code] ?? "" },
+                set: { setNote($0, for: country.code) }
             )
-        }
+        )
         .presentationDetents([.medium, .large])
     }
 }

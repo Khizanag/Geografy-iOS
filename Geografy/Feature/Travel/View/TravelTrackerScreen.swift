@@ -32,9 +32,7 @@ struct TravelTrackerScreen: View {
         .toolbar { addButton }
         .task { countryDataService.loadCountries() }
         .fullScreenCover(isPresented: $showTravelMap) {
-            NavigationStack {
-                TravelMapScreen(filter: travelMapFilter)
-            }
+            TravelMapScreen(filter: travelMapFilter)
         }
         .sheet(isPresented: $showCountryPicker) {
             TravelCountryPickerSheet(
@@ -53,7 +51,7 @@ struct TravelTrackerScreen: View {
             )
         }
         .sheet(isPresented: $showBucketList) {
-            NavigationStack { TravelBucketListScreen() }
+            TravelBucketListScreen()
                 .presentationDetents([.large])
         }
         .onAppear {

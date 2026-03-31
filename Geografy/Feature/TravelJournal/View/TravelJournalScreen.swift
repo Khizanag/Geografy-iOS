@@ -234,30 +234,24 @@ private extension TravelJournalScreen {
     ) -> some View {
         switch sheet {
         case .newEntry:
-            NavigationStack {
-                TravelJournalEditorSheet(
-                    activeSheet: $activeSheet,
-                    countryDataService: countryDataService
-                )
-            }
+            TravelJournalEditorSheet(
+                activeSheet: $activeSheet,
+                countryDataService: countryDataService
+            )
             .environment(journalService)
         case .editEntry(let entry):
-            NavigationStack {
-                TravelJournalEditorSheet(
-                    entry: entry,
-                    activeSheet: $activeSheet,
-                    countryDataService: countryDataService
-                )
-            }
+            TravelJournalEditorSheet(
+                entry: entry,
+                activeSheet: $activeSheet,
+                countryDataService: countryDataService
+            )
             .environment(journalService)
         case .detail(let entry):
-            NavigationStack {
-                TravelJournalDetailScreen(
-                    entry: entry,
-                    activeSheet: $activeSheet,
-                    countryDataService: countryDataService
-                )
-            }
+            TravelJournalDetailScreen(
+                entry: entry,
+                activeSheet: $activeSheet,
+                countryDataService: countryDataService
+            )
             .environment(journalService)
         }
     }

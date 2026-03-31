@@ -38,9 +38,7 @@ struct ContinentOverviewScreen: View {
             }
         }
         .fullScreenCover(isPresented: $showMap) {
-            NavigationStack {
-                MapScreen(continentFilter: continent.displayName)
-            }
+            MapScreen(continentFilter: continent.displayName)
         }
         .task { countryDataService.loadCountries() }
         .onAppear {

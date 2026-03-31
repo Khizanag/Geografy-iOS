@@ -514,32 +514,30 @@ private struct CountryPickerSheet: View {
     @State private var searchText = ""
 
     var body: some View {
-        NavigationStack {
-            List(filteredCountries) { country in
-                Button {
-                    onSelect(country)
-                    dismiss()
-                } label: {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: country.code, height: 24)
-                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                            Text(country.name)
-                                .font(DesignSystem.Font.body)
-                                .foregroundStyle(DesignSystem.Color.textPrimary)
-                            Text(country.capital)
-                                .font(DesignSystem.Font.caption)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                        }
+        List(filteredCountries) { country in
+            Button {
+                onSelect(country)
+                dismiss()
+            } label: {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    FlagView(countryCode: country.code, height: 24)
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text(country.name)
+                            .font(DesignSystem.Font.body)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(country.capital)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
             }
-            .searchable(text: $searchText, prompt: "Search countries…")
-            .navigationTitle(title)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
-                }
+        }
+        .searchable(text: $searchText, prompt: "Search countries…")
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") { dismiss() }
             }
         }
     }

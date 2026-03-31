@@ -217,18 +217,9 @@ private extension TimelineScreen {
     }
 
     func eventDetailSheet(for event: HistoricalEvent) -> some View {
-        NavigationStack {
-            eventDetailContent(for: event)
-                .navigationTitle("Event Details")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        CircleCloseButton {
-                            selectedEvent = nil
-                        }
-                    }
-                }
-        }
+        eventDetailContent(for: event)
+            .navigationTitle("Event Details")
+            .navigationBarTitleDisplayMode(.inline)
     }
 
     func eventDetailContent(for event: HistoricalEvent) -> some View {

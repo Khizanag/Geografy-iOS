@@ -23,10 +23,8 @@ struct LanguageExplorerScreen: View {
         .searchable(text: $searchQuery, prompt: "Search languages...")
         .sheet(isPresented: $showingDetail) {
             if let language = selectedLanguage {
-                NavigationStack {
-                    LanguageDetailView(language: language, maxSpeakers: languageService.maxSpeakers)
-                }
-                .presentationDetents([.large])
+                LanguageDetailView(language: language, maxSpeakers: languageService.maxSpeakers)
+                    .presentationDetents([.large])
             }
         }
     }

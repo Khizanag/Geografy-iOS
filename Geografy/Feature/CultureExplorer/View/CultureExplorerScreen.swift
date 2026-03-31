@@ -34,10 +34,8 @@ struct CultureExplorerScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $searchQuery, prompt: "Search countries or dishes...")
         .sheet(item: $selectedProfile) { profile in
-            NavigationStack {
-                CultureDetailView(profile: profile)
-            }
-            .presentationDetents([.large])
+            CultureDetailView(profile: profile)
+                .presentationDetents([.large])
         }
     }
 }

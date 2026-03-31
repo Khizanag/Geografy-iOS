@@ -189,26 +189,25 @@ private extension MapColoringScreen {
     }
 
     func countryDetailPopup(_ country: Country) -> some View {
-        NavigationStack {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                FlagView(countryCode: country.code, height: 80)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-                    .geoShadow(.card)
-                VStack(spacing: DesignSystem.Spacing.xs) {
-                    Text(country.name)
-                        .font(DesignSystem.Font.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text(groupLabel(for: country))
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                Spacer()
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            FlagView(countryCode: country.code, height: 80)
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+                .geoShadow(.card)
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Text(country.name)
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(groupLabel(for: country))
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
-            .padding(DesignSystem.Spacing.xl)
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle(country.name)
-            .navigationBarTitleDisplayMode(.inline)        }
+            Spacer()
+        }
+        .padding(DesignSystem.Spacing.xl)
+        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .navigationTitle(country.name)
+        .navigationBarTitleDisplayMode(.inline)
         .presentationDetents([.medium])
     }
 }

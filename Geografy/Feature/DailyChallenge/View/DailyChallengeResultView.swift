@@ -175,17 +175,13 @@ private extension DailyChallengeResultView {
     }
 
     var shareCardSheet: some View {
-        NavigationStack {
-            DailyChallengeShareCard(
-                score: score,
-                maxScore: maxScore,
-                challengeType: challengeType,
-                streak: streak,
-                date: .now
-            )
-            .toolbar {
-            }
-        }
+        DailyChallengeShareCard(
+            score: score,
+            maxScore: maxScore,
+            challengeType: challengeType,
+            streak: streak,
+            date: .now
+        )
     }
 }
 

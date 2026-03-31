@@ -40,20 +40,18 @@ private extension TimelineSlider {
     }
 
     var yearPickerSheet: some View {
-        NavigationStack {
-            Picker("Year", selection: $selectedYear) {
-                ForEach(range.reversed(), id: \.self) { year in
-                    Text(String(year)).tag(year)
-                }
+        Picker("Year", selection: $selectedYear) {
+            ForEach(range.reversed(), id: \.self) { year in
+                Text(String(year)).tag(year)
             }
-            .pickerStyle(.wheel)
-            .navigationTitle("Select Year")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { showYearPicker = false }
-                        .fontWeight(.semibold)
-                }
+        }
+        .pickerStyle(.wheel)
+        .navigationTitle("Select Year")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Done") { showYearPicker = false }
+                    .fontWeight(.semibold)
             }
         }
         .presentationDetents([.medium])

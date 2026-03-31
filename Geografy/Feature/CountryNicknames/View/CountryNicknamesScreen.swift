@@ -39,9 +39,7 @@ struct CountryNicknamesScreen: View {
         .searchable(text: $searchQuery, prompt: "Search nicknames…")
         .task { countryDataService.loadCountries() }
         .sheet(isPresented: $isQuizMode) {
-            NavigationStack {
-                NicknameQuizScreen(nicknames: nicknamesService.nicknames, countryDataService: countryDataService)
-            }
+            NicknameQuizScreen(nicknames: nicknamesService.nicknames, countryDataService: countryDataService)
         }
     }
 }
