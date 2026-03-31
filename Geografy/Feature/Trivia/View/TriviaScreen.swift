@@ -3,8 +3,8 @@ import GeografyDesign
 
 struct TriviaScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var questions: [TriviaQuestion] = []
     @State private var currentIndex = 0
     @State private var streak = 0
@@ -33,7 +33,6 @@ struct TriviaScreen: View {
         .navigationTitle("Trivia")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            countryDataService.loadCountries()
             loadQuestions()
         }
     }

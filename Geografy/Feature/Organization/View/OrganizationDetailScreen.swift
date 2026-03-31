@@ -7,11 +7,11 @@ struct OrganizationDetailScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let organization: Organization
 
-    @State private var countryDataService = CountryDataService()
     @State private var showLogoZoom = false
     @State private var blobAnimating = false
 
@@ -30,7 +30,6 @@ struct OrganizationDetailScreen: View {
                 }
             }
         }
-        .task { countryDataService.loadCountries() }
         .task { trackOrgView() }
         .onAppear {
             blobAnimating = true

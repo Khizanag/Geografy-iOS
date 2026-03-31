@@ -5,8 +5,8 @@ import GeografyCore
 struct TravelBucketListScreen: View {
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var selectedSort: BucketListSort = .continent
     @State private var priorities: [String: BucketListPriority] = [:]
     @State private var notes: [String: String] = [:]
@@ -31,7 +31,6 @@ struct TravelBucketListScreen: View {
         .navigationTitle("Bucket List")
         .navigationBarTitleDisplayMode(.large)
         .toolbar { toolbarItems }
-        .task { countryDataService.loadCountries() }
         .onAppear { loadPersistedData() }
         .sheet(item: $selectedCountry) { country in
             bucketListDetailSheet(for: country)

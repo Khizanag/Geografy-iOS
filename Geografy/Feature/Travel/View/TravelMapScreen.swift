@@ -6,11 +6,11 @@ struct TravelMapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let filter: TravelMapFilter
 
     @State private var mapState = MapState()
-    @State private var countryDataService = CountryDataService()
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
     @State private var selectedFilter: TravelMapFilter
@@ -232,8 +232,6 @@ private extension TravelMapScreen {
 // MARK: - Data Loading
 private extension TravelMapScreen {
     func loadMapData() async {
-        countryDataService.loadCountries()
-
         let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
             guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
                   let data = try? Data(contentsOf: url) else { return [] }

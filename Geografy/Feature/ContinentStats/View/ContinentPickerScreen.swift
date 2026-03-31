@@ -5,8 +5,7 @@ import GeografyCore
 struct ContinentPickerScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(Navigator.self) private var coordinator
-
-    @State private var countryDataService = CountryDataService()
+    @Environment(CountryDataService.self) private var countryDataService
 
     var body: some View {
         ZStack {
@@ -15,7 +14,6 @@ struct ContinentPickerScreen: View {
         }
         .navigationTitle("Continents")
         .navigationBarTitleDisplayMode(.large)
-        .task { countryDataService.loadCountries() }
     }
 }
 

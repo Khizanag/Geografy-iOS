@@ -8,10 +8,10 @@ struct SpeedRunSessionScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let region: QuizRegion
 
-    @State private var countryDataService = CountryDataService()
     @State private var elapsedTime: TimeInterval = 0
     @State private var timerCancellable: AnyCancellable?
     @State private var inputText = ""
@@ -50,7 +50,6 @@ struct SpeedRunSessionScreen: View {
             Text("Your progress will be lost.")
         }
         .task {
-            countryDataService.loadCountries()
             startTimer()
         }
         .onAppear { isInputFocused = true }

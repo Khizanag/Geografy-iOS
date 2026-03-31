@@ -4,11 +4,11 @@ import GeografyCore
 
 struct NeighborExplorerScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let country: Country
 
-    @State private var countryDataService = CountryDataService()
     @State private var chain: [Country] = []
     @State private var destinationCode = ""
     @State private var pathResult: [Country] = []
@@ -21,7 +21,6 @@ struct NeighborExplorerScreen: View {
             .navigationTitle("Neighbor Explorer")
             .navigationBarTitleDisplayMode(.inline)
             .task {
-                countryDataService.loadCountries()
                 chain = [country]
             }
             .onAppear { startBlobAnimation() }

@@ -5,10 +5,10 @@ import GeografyCore
 struct FlashcardScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedCardType: FlashcardType = .countryToCapital
-    @State private var countryDataService = CountryDataService()
     @AppStorage("flashcard_sessionCardCount") private var sessionCardCount = 20
     @State private var blobAnimating = false
     @State private var appeared = false
@@ -27,7 +27,7 @@ struct FlashcardScreen: View {
                 }
             }
             .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
-            .task { loadCountries() }
+            .task { loadData() }
             .onAppear { startAnimations() }
     }
 }
@@ -290,8 +290,7 @@ private extension FlashcardScreen {
 
 // MARK: - Actions
 private extension FlashcardScreen {
-    func loadCountries() {
-        countryDataService.loadCountries()
+    func loadData() {
         flashcardService.loadData()
     }
 

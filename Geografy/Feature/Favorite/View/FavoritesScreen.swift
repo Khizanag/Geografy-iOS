@@ -12,8 +12,8 @@ struct FavoritesScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var searchText = ""
     @State private var sortBy: FavoritesSortOption = .dateAdded
     @State private var sortAscending = false
@@ -33,7 +33,6 @@ struct FavoritesScreen: View {
         .navigationTitle("Favorites")
         .searchable(text: $searchText, prompt: "Search favorites")
         .toolbar { toolbarContent }
-        .task { countryDataService.loadCountries() }
     }
 }
 

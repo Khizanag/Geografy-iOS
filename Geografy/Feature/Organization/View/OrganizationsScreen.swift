@@ -10,8 +10,8 @@ enum OrgSortOption: String, CaseIterable {
 struct OrganizationsScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var sortOption: OrgSortOption = .alphabetical
 
     var body: some View {
@@ -42,7 +42,6 @@ struct OrganizationsScreen: View {
         }
         .navigationTitle("Organizations")
         .toolbar { toolbarContent }
-        .task { countryDataService.loadCountries() }
     }
 }
 

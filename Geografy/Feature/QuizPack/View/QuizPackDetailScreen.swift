@@ -4,20 +4,19 @@ import GeografyDesign
 struct QuizPackDetailScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let pack: QuizPack
     let allPacks: [QuizPack]
     let packService: QuizPackService
 
     @State private var activeLevel: QuizPackLevel?
-    @State private var countryDataService = CountryDataService()
 
     var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)
             .navigationTitle(pack.name)
             .navigationBarTitleDisplayMode(.inline)
-            .task { countryDataService.loadCountries() }
     }
 }
 

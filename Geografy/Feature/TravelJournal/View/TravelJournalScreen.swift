@@ -3,9 +3,9 @@ import GeografyDesign
 
 struct TravelJournalScreen: View {
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var journalService = TravelJournalService()
-    @State private var countryDataService = CountryDataService()
     @State private var activeSheet: ActiveSheet?
     @State private var searchText = ""
     @State private var appeared = false
@@ -24,7 +24,6 @@ struct TravelJournalScreen: View {
         .sheet(item: $activeSheet) { sheet in
             sheetContent(for: sheet)
         }
-        .task { countryDataService.loadCountries() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) {
                 appeared = true

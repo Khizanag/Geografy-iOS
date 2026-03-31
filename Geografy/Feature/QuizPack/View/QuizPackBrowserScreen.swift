@@ -4,13 +4,13 @@ import GeografyDesign
 struct QuizPackBrowserScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var packService = QuizPackService()
 
     @State private var selectedCategory: QuizPackCategory?
     @State private var selectedPack: QuizPack?
-    @State private var countryDataService = CountryDataService()
     @State private var allPacks: [QuizPack] = []
     @State private var blobAnimating = false
     @State private var appeared = false
@@ -298,7 +298,6 @@ private extension QuizPackBrowserScreen {
 // MARK: - Actions
 private extension QuizPackBrowserScreen {
     func loadData() {
-        countryDataService.loadCountries()
         packService.loadProgress()
         allPacks = QuizPackService.makeAllPacks(
             countries: countryDataService.countries

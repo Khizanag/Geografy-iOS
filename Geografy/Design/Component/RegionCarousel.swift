@@ -4,18 +4,17 @@ import GeografyDesign
 
 struct RegionCarousel: View {
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     @Binding var selectedRegion: QuizRegion
 
     @State private var visibleRegion: QuizRegion?
-    @State private var countryDataService = CountryDataService()
 
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             carousel
             pageIndicator
         }
-        .task { countryDataService.loadCountries() }
         .onAppear { visibleRegion = selectedRegion }
     }
 }

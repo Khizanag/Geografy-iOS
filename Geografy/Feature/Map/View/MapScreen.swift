@@ -7,13 +7,13 @@ struct MapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     var continentFilter: String?
 
     @Namespace private var flagNamespace
 
     @State private var mapState = MapState()
-    @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
     @State private var showFlagPreview = false
     @State private var screenSize: CGSize = .zero
@@ -385,8 +385,6 @@ private extension MapScreen {
     }
 
     func loadMapData() async {
-        countryDataService.loadCountries()
-
         // Capture on main thread before switching to background
         let filter = continentFilter
 

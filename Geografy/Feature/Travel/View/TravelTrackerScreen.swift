@@ -5,9 +5,9 @@ import GeografyCore
 struct TravelTrackerScreen: View {
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var countryDataService = CountryDataService()
     @State private var selectedFilter: TravelStatus? = nil
     @State private var searchText = ""
     @State private var showCountryPicker = false
@@ -26,11 +26,35 @@ struct TravelTrackerScreen: View {
                 mainContent
             }
         }
+        .closeButtonPlacementLeading()
         .navigationTitle("Travel Tracker")
-        .navigationBarTitleDisplayMode(.large)
         .searchable(text: $searchText, prompt: "Search countries…")
-        .toolbar { addButton }
-        .task { countryDataService.loadCountries() }
+        .toolbar {
+            ToolbarItem(placement: .secondaryAction) {
+                Button {
+                    hapticsService.impact(.light)
+                    showBucketList = true
+                } label: {
+                    Label("Bucket List", systemImage: "list.star")
+                        .foregroundStyle(DesignSystem.Color.accent)
+                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    hapticsService.impact(.light)
+                    showCountryPicker = true
+                } label: {
+                    Image(systemName: "plus")
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                }
+                .foregroundStyle(Color.red)
+                .tint(Color.clear)
+                .buttonStyle(.glassProminent)
+            }
+        }
         .fullScreenCover(isPresented: $showTravelMap) {
             TravelMapScreen(filter: travelMapFilter)
         }
@@ -52,39 +76,10 @@ struct TravelTrackerScreen: View {
         }
         .sheet(isPresented: $showBucketList) {
             TravelBucketListScreen()
-                .presentationDetents([.large])
         }
         .onAppear {
             blobAnimating = true
             appeared = true
-        }
-    }
-}
-
-// MARK: - Toolbar
-private extension TravelTrackerScreen {
-    @ToolbarContentBuilder
-    var addButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                hapticsService.impact(.light)
-                showBucketList = true
-            } label: {
-                Label("Bucket List", systemImage: "list.star")
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .buttonStyle(.plain)
-        }
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                hapticsService.impact(.light)
-                showCountryPicker = true
-            } label: {
-                Image(systemName: "plus")
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .buttonStyle(.plain)
         }
     }
 }
@@ -99,31 +94,28 @@ private extension TravelTrackerScreen {
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 0) {
-                    statsSection
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .padding(.top, DesignSystem.Spacing.md)
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 20)
-                        .animation(.easeOut(duration: 0.5), value: appeared)
+                statsSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.top, DesignSystem.Spacing.md)
+                    .offset(y: appeared ? 0 : 20)
+                    .animation(.easeOut(duration: 0.5), value: appeared)
 
-                    viewOnMapSection
-                        .padding(.top, DesignSystem.Spacing.lg)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 20)
-                        .animation(.easeOut(duration: 0.5).delay(0.08), value: appeared)
+                viewOnMapSection
+                    .padding(.top, DesignSystem.Spacing.lg)
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .offset(y: appeared ? 0 : 20)
+                    .animation(.easeOut(duration: 0.5).delay(0.08), value: appeared)
 
-                    filterTabs
-                        .padding(.top, DesignSystem.Spacing.lg)
-                        .opacity(appeared ? 1 : 0)
-                        .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
+                filterTabs
+                    .padding(.top, DesignSystem.Spacing.lg)
+                    .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
 
-                    countryList
-                        .padding(.top, DesignSystem.Spacing.sm)
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                        .opacity(appeared ? 1 : 0)
-                        .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
+                countryList
+                    .padding(.top, DesignSystem.Spacing.sm)
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
             }
+            .opacity(appeared ? 1 : 0)
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }

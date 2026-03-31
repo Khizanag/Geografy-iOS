@@ -5,11 +5,11 @@ import GeografyCore
 struct OrganizationMapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let organization: Organization
 
     @State private var mapState = MapState()
-    @State private var countryDataService = CountryDataService()
     @State private var navigateToCountry: Country?
     @Namespace private var flagNamespace
 
@@ -366,8 +366,6 @@ private extension OrganizationMapScreen {
     }
 
     func loadMapData() async {
-        countryDataService.loadCountries()
-
         let memberCodes = Set(
             countryDataService.countries
                 .filter { $0.organizations.contains(organization.id) }

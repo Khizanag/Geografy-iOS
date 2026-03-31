@@ -5,9 +5,9 @@ import GeografyCore
 struct FeedScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var feedService = FeedService()
-    @State private var countryDataService = CountryDataService()
     @State private var appeared = false
     @State private var isRefreshing = false
 
@@ -17,7 +17,6 @@ struct FeedScreen: View {
             .navigationTitle("Feed")
             .navigationBarTitleDisplayMode(.large)
             .task {
-                countryDataService.loadCountries()
                 feedService.loadFeed()
                 appeared = true
             }

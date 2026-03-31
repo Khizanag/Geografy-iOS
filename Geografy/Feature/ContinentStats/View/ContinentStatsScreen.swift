@@ -5,8 +5,8 @@ import GeografyCore
 struct ContinentStatsScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var countryDataService = CountryDataService()
     @State private var appeared = false
 
     let continentName: String
@@ -22,7 +22,6 @@ struct ContinentStatsScreen: View {
         }
         .navigationTitle(continentName)
         .navigationBarTitleDisplayMode(.large)
-        .task { countryDataService.loadCountries() }
         .onAppear {
             appeared = true
         }

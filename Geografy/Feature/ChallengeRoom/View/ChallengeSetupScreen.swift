@@ -2,6 +2,7 @@ import SwiftUI
 import GeografyDesign
 
 struct ChallengeSetupScreen: View {
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var player1Name = ""
     @State private var player2Name = ""
@@ -11,8 +12,6 @@ struct ChallengeSetupScreen: View {
     @State private var selectedMetric: ComparisonMetric = .population
     @State private var showingGame = false
     @State private var challengeRoom: ChallengeRoom?
-
-    @State private var countryDataService = CountryDataService()
 
     private let challengeRoomService = ChallengeRoomService()
     private let roundOptions = [5, 10, 15]
@@ -37,7 +36,6 @@ struct ChallengeSetupScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Challenge Room")
         .navigationBarTitleDisplayMode(.inline)
-        .task { countryDataService.loadCountries() }
         .fullScreenCover(item: $challengeRoom) { room in
             CoordinatedNavigationStack(navigator: Navigator()) {
                 if selectedMode == .splitScreen {

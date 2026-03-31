@@ -4,8 +4,7 @@ import GeografyCore
 
 struct TimelineScreen: View {
     @Environment(Navigator.self) private var coordinator
-
-    @State private var countryDataService = CountryDataService()
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var timelineService = TimelineService()
     @State private var selectedYear = 1960
@@ -23,7 +22,6 @@ struct TimelineScreen: View {
         .navigationTitle("Timeline")
         .navigationBarTitleDisplayMode(.large)
         .onAppear {
-            countryDataService.loadCountries()
             timelineService.loadEvents()
         }
         .toolbar { historicalMapToolbarItem }

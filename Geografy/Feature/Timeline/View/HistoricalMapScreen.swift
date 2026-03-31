@@ -5,11 +5,11 @@ struct HistoricalMapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let initialYear: Int
 
     @State private var mapState = MapState()
-    @State private var countryDataService = CountryDataService()
     @State private var timelineService = TimelineService()
     @State private var selectedYear = 1960
     @State private var allShapes: [CountryShape] = []
@@ -363,7 +363,6 @@ private extension HistoricalMapScreen {
 // MARK: - Data Loading
 private extension HistoricalMapScreen {
     func loadData() async {
-        countryDataService.loadCountries()
         timelineService.loadEvents()
         buildIndependenceMap()
 

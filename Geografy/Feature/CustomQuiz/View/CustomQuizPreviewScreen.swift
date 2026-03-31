@@ -4,11 +4,10 @@ import GeografyCore
 
 struct CustomQuizPreviewScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(CountryDataService.self) private var countryDataService
 
     let quiz: CustomQuiz
     let onSave: (CustomQuiz) -> Void
-
-    @State private var countryDataService = CountryDataService()
 
     var body: some View {
         ScrollView {
@@ -25,7 +24,6 @@ struct CustomQuizPreviewScreen: View {
         .background(DesignSystem.Color.background)
         .navigationTitle("Preview")
         .navigationBarTitleDisplayMode(.inline)
-        .task { countryDataService.loadCountries() }
     }
 }
 

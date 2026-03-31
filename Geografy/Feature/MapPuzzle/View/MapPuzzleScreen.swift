@@ -5,10 +5,10 @@ import GeografyCore
 struct MapPuzzleScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     let continent: Country.Continent
 
-    @State private var countryDataService = CountryDataService()
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
     @State private var selectedOptionIndex: Int?
@@ -32,7 +32,6 @@ struct MapPuzzleScreen: View {
         .toolbar {
         }
         .task {
-            countryDataService.loadCountries()
             buildQuestions()
         }
     }

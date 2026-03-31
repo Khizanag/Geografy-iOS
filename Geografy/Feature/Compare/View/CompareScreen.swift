@@ -4,8 +4,7 @@ import GeografyCore
 
 struct CompareScreen: View {
     @Environment(HapticsService.self) private var hapticsService
-
-    @State private var countryDataService = CountryDataService()
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var leftCountry: Country?
     @State private var rightCountry: Country?
@@ -22,7 +21,6 @@ struct CompareScreen: View {
         contentScrollView
             .background(DesignSystem.Color.background)
             .navigationTitle("Compare")
-            .task { countryDataService.loadCountries() }
             .onAppear {
             loadRecentPairs()
             if let preselected = preselectedCountry, leftCountry == nil {

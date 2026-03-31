@@ -5,9 +5,9 @@ import GeografyCore
 struct WorldRecordsScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var countryDataService = CountryDataService()
     @State private var records: [WorldRecord] = []
     @State private var blobAnimating = false
 
@@ -30,7 +30,6 @@ struct WorldRecordsScreen: View {
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("World Records")
         .navigationBarTitleDisplayMode(.inline)        .task {
-            countryDataService.loadCountries()
             records = worldRecordsService.computeRecords(from: countryDataService.countries)
         }
         .onAppear { startBlobAnimation() }

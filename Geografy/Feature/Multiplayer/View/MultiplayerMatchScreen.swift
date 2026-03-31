@@ -4,6 +4,7 @@ import GeografyDesign
 struct MultiplayerMatchScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let opponent: MockOpponent
@@ -19,7 +20,6 @@ struct MultiplayerMatchScreen: View {
     @State private var rounds: [MultiplayerRound] = []
     @State private var questionStartTime = Date()
     @State private var opponentEngine = MockOpponentEngine()
-    @State private var countryDataService = CountryDataService()
     @State private var showQuitAlert = false
     @State private var completedMatch: MultiplayerMatch?
     @State private var blobAnimating = false
@@ -256,7 +256,6 @@ private extension MultiplayerMatchScreen {
 // MARK: - Actions
 private extension MultiplayerMatchScreen {
     func loadMatch() {
-        countryDataService.loadCountries()
         let pool = configuration.region.filter(countryDataService.countries)
         let optionCount = max(configuration.difficulty.optionCount, 4)
         guard pool.count >= optionCount else { return }

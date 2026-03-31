@@ -4,12 +4,12 @@ import GeografyDesign
 struct CustomQuizLibraryScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var quizService = CustomQuizService()
     @State private var showBuilder = false
     @State private var editingQuiz: CustomQuiz?
     @State private var quizToDelete: CustomQuiz?
-    @State private var countryDataService = CountryDataService()
 
     var body: some View {
         content
@@ -20,7 +20,6 @@ struct CustomQuizLibraryScreen: View {
             .sheet(isPresented: $showBuilder) { builderSheet }
             .sheet(item: $editingQuiz) { quiz in editSheet(for: quiz) }
             .alert("Delete Quiz?", isPresented: deleteAlertBinding) { deleteAlertActions }
-            .task { countryDataService.loadCountries() }
     }
 }
 

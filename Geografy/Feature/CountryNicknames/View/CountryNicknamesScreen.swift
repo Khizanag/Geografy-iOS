@@ -4,9 +4,9 @@ import GeografyCore
 
 struct CountryNicknamesScreen: View {
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var nicknamesService = CountryNicknamesService()
-    @State private var countryDataService = CountryDataService()
     @State private var searchQuery = ""
     @State private var selectedCategory: NicknameCategory?
     @State private var expandedNicknameID: String?
@@ -37,7 +37,6 @@ struct CountryNicknamesScreen: View {
         .navigationTitle("Country Nicknames")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $searchQuery, prompt: "Search nicknames…")
-        .task { countryDataService.loadCountries() }
         .sheet(isPresented: $isQuizMode) {
             NicknameQuizScreen(nicknames: nicknamesService.nicknames, countryDataService: countryDataService)
         }
