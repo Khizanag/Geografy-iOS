@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TimeZoneScreen: View {
+    @Environment(Coordinator.self) private var coordinator: Coordinator?
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -144,6 +145,8 @@ struct CountryWithZone: Identifiable {
 
 // MARK: - World Clock View
 private struct WorldClockView: View {
+    @Environment(Coordinator.self) private var coordinator: Coordinator?
+
     let countries: [CountryWithZone]
     @State private var searchText = ""
     @State private var now = Date()
@@ -152,9 +155,11 @@ private struct WorldClockView: View {
 
     var body: some View {
         List(filteredCountries) { item in
-            worldClockRow(for: item)
-                .listRowBackground(DesignSystem.Color.cardBackground)
-                .listRowSeparatorTint(DesignSystem.Color.textTertiary.opacity(0.2))
+            Button { coordinator?.push(.countryDetail(item.country)) } label: {
+                worldClockRow(for: item)
+            }
+            .listRowBackground(DesignSystem.Color.cardBackground)
+            .listRowSeparatorTint(DesignSystem.Color.textTertiary.opacity(0.2))
         }
         .listStyle(.plain)
         .searchable(text: $searchText, prompt: "Search country…")
@@ -218,6 +223,8 @@ private struct WorldClockView: View {
 
 // MARK: - All Zones View
 private struct AllZonesView: View {
+    @Environment(Coordinator.self) private var coordinator: Coordinator?
+
     let countries: [CountryWithZone]
 
     var body: some View {
@@ -256,7 +263,10 @@ private struct AllZonesView: View {
                             Divider()
                                 .padding(.leading, 44)
                         }
-                        zoneCountryRow(for: item)
+                        Button { coordinator?.push(.countryDetail(item.country)) } label: {
+                            zoneCountryRow(for: item)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
