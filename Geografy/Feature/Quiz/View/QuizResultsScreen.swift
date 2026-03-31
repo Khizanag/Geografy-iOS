@@ -253,8 +253,8 @@ private extension QuizResultsScreen {
 
         showXPBadge = true
 
-        // swiftlint:disable:next line_length
-        AccessibilityNotification.Announcement("\(scoreMessage) \(result.correctCount) correct out of \(result.answers.count)").post()
+        let announcement = "\(scoreMessage) \(result.correctCount) correct out of \(result.answers.count)"
+        AccessibilityNotification.Announcement(announcement).post()
     }
 }
 

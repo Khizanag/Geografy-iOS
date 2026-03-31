@@ -173,8 +173,9 @@ private extension SizeCompareView {
     }
 
     var shareText: String {
-        // swiftlint:disable:next line_length
-        "\(comparisonLabel) by land area. Reference: \(formattedArea(referenceCountry.area)), \(comparisonCountry.name): \(formattedArea(comparisonCountry.area))"
+        let reference = formattedArea(referenceCountry.area)
+        let comparison = formattedArea(comparisonCountry.area)
+        return "\(comparisonLabel) by land area. Reference: \(reference), \(comparisonCountry.name): \(comparison)"
     }
 
     func formattedArea(_ area: Double) -> String {

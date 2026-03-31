@@ -163,34 +163,12 @@ private extension AchievementsScreen {
         }
     }
 
-    // swiftlint:disable:next function_body_length
     func achievementRow(_ definition: AchievementDefinition) -> some View {
         let isUnlocked = achievementService.isUnlocked(definition.id)
         let progress = achievementService.progress(for: definition.id)
 
         return HStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                Circle()
-                    .fill(definition.category.themeColor.opacity(isUnlocked ? 0.2 : 0.08))
-                    .frame(width: 48, height: 48)
-
-                Circle()
-                    .strokeBorder(
-                        isUnlocked ? definition.rarity.borderGradient : LinearGradient(
-                            colors: [DesignSystem.Color.textTertiary.opacity(0.2)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: isUnlocked ? definition.rarity.borderWidth : 1
-                    )
-                    .frame(width: 48, height: 48)
-
-                Image(systemName: isUnlocked ? definition.iconName : "lock.fill")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(
-                        isUnlocked ? definition.category.themeColor : DesignSystem.Color.textTertiary
-                    )
-            }
+            achievementIcon(definition, isUnlocked: isUnlocked)
 
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 HStack(spacing: DesignSystem.Spacing.xs) {
@@ -235,6 +213,31 @@ private extension AchievementsScreen {
             "\(definition.title), \(isUnlocked ? "unlocked" : "locked"), \(definition.rarity.displayName)"
         )
         .accessibilityHint(definition.requirement)
+    }
+
+    func achievementIcon(_ definition: AchievementDefinition, isUnlocked: Bool) -> some View {
+        ZStack {
+            Circle()
+                .fill(definition.category.themeColor.opacity(isUnlocked ? 0.2 : 0.08))
+                .frame(width: 48, height: 48)
+
+            Circle()
+                .strokeBorder(
+                    isUnlocked ? definition.rarity.borderGradient : LinearGradient(
+                        colors: [DesignSystem.Color.textTertiary.opacity(0.2)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: isUnlocked ? definition.rarity.borderWidth : 1
+                )
+                .frame(width: 48, height: 48)
+
+            Image(systemName: isUnlocked ? definition.iconName : "lock.fill")
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(
+                    isUnlocked ? definition.category.themeColor : DesignSystem.Color.textTertiary
+                )
+        }
     }
 }
 
