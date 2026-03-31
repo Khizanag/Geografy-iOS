@@ -71,11 +71,9 @@ private extension ChallengeGameScreen {
             Spacer()
 
             GlassButton("I'm Ready", systemImage: "play.fill", fullWidth: true) {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    showingPassScreen = false
-                    selectedOptionIndex = nil
-                    showingResult = false
-                }
+                showingPassScreen = false
+                selectedOptionIndex = nil
+                showingResult = false
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.lg)
@@ -232,9 +230,7 @@ private extension ChallengeGameScreen {
         wasCorrect = index == correctIndex
         challengeRoomService.score(room: &room, wasCorrect: wasCorrect)
         hapticsService.notification(wasCorrect ? .success : .error)
-        withAnimation(.easeInOut(duration: 0.25)) {
-            showingResult = true
-        }
+        showingResult = true
     }
 
     func advanceToNext() {
@@ -242,11 +238,9 @@ private extension ChallengeGameScreen {
         if room.isFinished {
             coordinator.push(.challengeResult(room))
         } else {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                showingPassScreen = true
-                showingResult = false
-                selectedOptionIndex = nil
-            }
+            showingPassScreen = true
+            showingResult = false
+            selectedOptionIndex = nil
         }
     }
 }

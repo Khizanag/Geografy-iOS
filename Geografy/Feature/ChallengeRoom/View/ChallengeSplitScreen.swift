@@ -201,12 +201,10 @@ private extension ChallengeSplitScreen {
         if currentRound >= room.totalRounds {
             coordinator.push(.challengeResult(room))
         } else {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                currentRound += 1
-                player1Answer = nil
-                player2Answer = nil
-                showFeedback = false
-            }
+            currentRound += 1
+            player1Answer = nil
+            player2Answer = nil
+            showFeedback = false
         }
     }
 }

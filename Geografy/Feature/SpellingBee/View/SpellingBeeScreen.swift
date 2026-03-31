@@ -252,9 +252,7 @@ private extension SpellingBeeScreen {
 
         if isCorrect {
             let pointsEarned = max(10, 30 - (usedHints.count * 10))
-            withAnimation {
-                score += pointsEarned
-            }
+            score += pointsEarned
             feedback = .correct
             showCorrectAnswer = true
             isInputFocused = false

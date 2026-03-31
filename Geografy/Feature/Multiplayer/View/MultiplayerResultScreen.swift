@@ -298,24 +298,21 @@ private extension MultiplayerResultScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 
     func startBlobAnimation() {
-        guard !reduceMotion else { blobAnimating = true; return }
-        withAnimation(
-            .easeInOut(duration: 6).repeatForever(autoreverses: true)
-        ) {
-            blobAnimating = true
-        }
+        blobAnimating = true
     }
 }
 
 // MARK: - Animations
 private extension MultiplayerResultScreen {
     func animateContent() {
-        withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2)) {
-            showContent = true
-        }
+        showContent = true
     }
 }
 
