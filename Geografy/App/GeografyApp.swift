@@ -161,6 +161,21 @@ struct GeografyApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {}
 
+            CommandGroup(replacing: .appSettings) {
+                Button("Settings...") {
+                    NotificationCenter.default.post(name: .macSwitchTab, object: 4)
+                }
+                .keyboardShortcut(",", modifiers: .command)
+            }
+
+            CommandGroup(replacing: .help) {
+                Button("Geografy Help") {
+                    if let url = URL(string: "https://github.com/Khizanag/Geografy-iOS") {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            }
+
             CommandMenu("Quiz") {
                 Button("Start Quick Quiz") {
                     NotificationCenter.default.post(name: .macStartQuiz, object: nil)
@@ -188,6 +203,11 @@ struct GeografyApp: App {
                     NotificationCenter.default.post(name: .macSwitchTab, object: 3)
                 }
                 .keyboardShortcut("4", modifiers: .command)
+
+                Button("More") {
+                    NotificationCenter.default.post(name: .macSwitchTab, object: 4)
+                }
+                .keyboardShortcut("5", modifiers: .command)
 
                 Divider()
 
