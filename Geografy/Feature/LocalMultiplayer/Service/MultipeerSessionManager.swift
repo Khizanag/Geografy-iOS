@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import MultipeerConnectivity
 
 @MainActor
@@ -133,3 +134,4 @@ extension MultipeerSessionManager: MCNearbyServiceAdvertiserDelegate {
         }
     }
 }
+#endif

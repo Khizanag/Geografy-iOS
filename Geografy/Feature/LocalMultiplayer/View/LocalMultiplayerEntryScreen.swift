@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 struct LocalMultiplayerEntryScreen: View {
@@ -186,3 +187,4 @@ private extension LocalMultiplayerEntryScreen {
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 }
+#endif

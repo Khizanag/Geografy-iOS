@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Foundation
 
 struct SerializableQuestion: Codable, Identifiable {
@@ -44,3 +45,4 @@ extension SerializableQuestion {
         )
     }
 }
+#endif

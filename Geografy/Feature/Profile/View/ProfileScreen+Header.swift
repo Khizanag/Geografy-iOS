@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 // MARK: - Guest Banner
@@ -143,3 +144,4 @@ private extension ProfileScreen {
         .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
     }
 }
+#endif

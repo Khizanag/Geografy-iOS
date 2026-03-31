@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import SwiftUI
 
 struct LocalMultiplayerLobbyScreen: View {
@@ -236,3 +237,4 @@ private extension LocalMultiplayerLobbyScreen {
         .padding(.bottom, DesignSystem.Spacing.md)
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Foundation
 
 enum PeerMessage: Codable {
@@ -33,3 +34,4 @@ extension PeerMessage {
         try JSONDecoder().decode(PeerMessage.self, from: data)
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Foundation
 
 enum LocalMatchState: Equatable {
@@ -10,3 +11,4 @@ enum LocalMatchState: Equatable {
     case finished
     case disconnected
 }
+#endif
