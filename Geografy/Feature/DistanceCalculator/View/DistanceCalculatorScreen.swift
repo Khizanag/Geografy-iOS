@@ -4,10 +4,10 @@ import GeografyDesign
 import SwiftUI
 
 struct DistanceCalculatorScreen: View {
-    @Environment(HapticsService.self) private var hapticsService
-    @Environment(CountryDataService.self) private var countryDataService
-    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(CountryDataService.self) private var countryDataService
+    @Environment(HapticsService.self) private var hapticsService
+    @Environment(Navigator.self) private var coordinator
 
     @State private var originCountry: Country?
     @State private var destinationCountry: Country?
@@ -17,14 +17,12 @@ struct DistanceCalculatorScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        scrollContent
+        extractedContent
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Distance Calculator")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                blobAnimating = true
-            }
+            .onAppear { blobAnimating = true }
             .sheet(isPresented: $showOriginPicker) {
                 CountryPickerSheet(
                     title: "From Country",
@@ -50,7 +48,7 @@ struct DistanceCalculatorScreen: View {
 
 // MARK: - Subviews
 private extension DistanceCalculatorScreen {
-    var scrollContent: some View {
+    var extractedContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 pickerSection
@@ -289,7 +287,10 @@ private extension DistanceCalculatorScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
 
@@ -516,6 +517,17 @@ private struct CountryPickerSheet: View {
     @State private var searchText = ""
 
     var body: some View {
+        extractedContent
+            .searchable(text: $searchText, prompt: "Search countries…")
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+    }
+}
+
+// MARK: - Subviews
+private extension CountryPickerSheet {
+    var extractedContent: some View {
         List(filteredCountries) { country in
             Button {
                 onSelect(country)
@@ -534,17 +546,22 @@ private struct CountryPickerSheet: View {
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search countries…")
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") { dismiss() }
-            }
+    }
+}
+
+// MARK: - Toolbar
+private extension CountryPickerSheet {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel") { dismiss() }
         }
     }
+}
 
-    private var filteredCountries: [Country] {
+// MARK: - Helpers
+private extension CountryPickerSheet {
+    var filteredCountries: [Country] {
         let all = countries
         guard !searchText.isEmpty else { return all }
         let query = searchText.lowercased()
