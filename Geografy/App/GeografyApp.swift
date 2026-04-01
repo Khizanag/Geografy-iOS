@@ -37,9 +37,7 @@ struct GeografyApp: App {
         let userID = auth.currentUserID
         let xp = XPService(db: db, userID: userID)
         let achievement = AchievementService(db: db, xpService: xp, userID: userID)
-        let streak = StreakService(
-            db: db, xpService: xp, achievementService: achievement, userID: userID
-        )
+        let streak = StreakService(db: db, xpService: xp, achievementService: achievement, userID: userID)
         let favorites = FavoritesService(container: db.container)
         _databaseManager = State(wrappedValue: db)
         _authService = State(wrappedValue: auth)
@@ -52,26 +50,26 @@ struct GeografyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(hapticsService)
-                .environment(favoritesService)
-                .environment(travelService)
-                .environment(gameCenterService)
-                .environment(homeSectionOrderService)
-                .environment(databaseManager)
-                .environment(authService)
-                .environment(xpService)
-                .environment(streakService)
                 .environment(achievementService)
+                .environment(authService)
                 .environment(coinService)
-                .environment(flashcardService)
-                .environment(subscriptionService)
-                .environment(worldBankService)
+                .environment(countryDataService)
                 .environment(currencyService)
+                .environment(databaseManager)
+                .environment(favoritesService)
+                .environment(featureFlagService)
+                .environment(flashcardService)
+                .environment(gameCenterService)
+                .environment(hapticsService)
+                .environment(homeSectionOrderService)
                 .environment(learningPathService)
                 .environment(pronunciationService)
+                .environment(streakService)
+                .environment(subscriptionService)
                 .environment(testingModeService)
-                .environment(featureFlagService)
-                .environment(countryDataService)
+                .environment(travelService)
+                .environment(worldBankService)
+                .environment(xpService)
                 .task { countryDataService.loadCountries() }
                 .task(priority: .utility) { await authService.validateOnLaunch() }
                 .task(priority: .utility) { await subscriptionService.checkEntitlements() }
