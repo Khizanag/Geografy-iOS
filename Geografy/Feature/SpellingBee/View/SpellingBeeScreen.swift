@@ -62,21 +62,19 @@ private extension SpellingBeeScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Button { showGuide = true } label: {
-                Image(systemName: "info.circle")
+                Label("Guide", systemImage: "info.circle")
             }
-            .accessibilityLabel("Show guide")
         }
 
         ToolbarItem(placement: .primaryAction) {
             Button { autoContinue.toggle() } label: {
-                Image(systemName: autoContinue ? "forward.fill" : "forward")
+                Label("Auto Continue", systemImage: autoContinue ? "forward.fill" : "forward")
                     .foregroundStyle(
                         autoContinue
                         ? DesignSystem.Color.accent
                         : DesignSystem.Color.textTertiary
                     )
             }
-            .accessibilityLabel("Auto continue: \(autoContinue ? "on" : "off")")
         }
     }
     var scorePill: some View {

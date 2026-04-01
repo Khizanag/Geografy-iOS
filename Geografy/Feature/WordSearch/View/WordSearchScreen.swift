@@ -163,9 +163,8 @@ private extension WordSearchScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .secondaryAction) {
             Button { showGuide = true } label: {
-                Image(systemName: "info.circle")
+                Label("Guide", systemImage: "info.circle")
             }
-            .buttonStyle(.plain)
         }
     }
 }

@@ -81,9 +81,8 @@ private extension FlashcardSessionScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Button { showGuide = true } label: {
-                Image(systemName: "questionmark.circle")
+                Label("Guide", systemImage: "questionmark.circle")
             }
-            .buttonStyle(.plain)
         }
     }
 

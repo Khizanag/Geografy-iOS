@@ -70,10 +70,8 @@ private extension ExploreGameSessionScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Button { showRules = true } label: {
-                Image(systemName: "questionmark.circle")
+                Label("Rules", systemImage: "questionmark.circle")
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Show rules")
         }
     }
 

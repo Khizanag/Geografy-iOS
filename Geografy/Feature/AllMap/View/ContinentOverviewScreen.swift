@@ -22,10 +22,9 @@ struct ContinentOverviewScreen: View {
                     Button {
                         coordinator.cover(.map(continentFilter: continent))
                     } label: {
-                        Image(systemName: "map.fill")
+                        Label("Map", systemImage: "map.fill")
                             .foregroundStyle(DesignSystem.Color.iconPrimary)
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .onAppear {

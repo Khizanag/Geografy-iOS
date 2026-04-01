@@ -52,11 +52,10 @@ private extension TravelJournalScreen {
                 hapticsService.impact(.light)
                 activeSheet = .newEntry
             } label: {
-                Image(systemName: "plus")
+                Label("Add", systemImage: "plus")
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.accent)
             }
-            .buttonStyle(.plain)
         }
     }
 }

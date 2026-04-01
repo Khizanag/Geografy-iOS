@@ -100,10 +100,9 @@ private extension CustomQuizLibraryScreen {
             Button {
                 showBuilder = true
             } label: {
-                Image(systemName: "plus")
+                Label("Add", systemImage: "plus")
                     .foregroundStyle(DesignSystem.Color.accent)
             }
-            .buttonStyle(.plain)
         }
     }
 }
