@@ -15,15 +15,15 @@ extension CountryDetailScreen {
                 sectionHeader("Fun Facts")
 
                 ForEach(Array(funFacts.enumerated()), id: \.offset) { index, fact in
-                    FunFactCard(fact: fact, index: index)
+                    TappableFunFactCard(fact: fact, index: index)
                 }
             }
         }
     }
 }
 
-// MARK: - Fun Fact Card
-private struct FunFactCard: View {
+// MARK: - Tappable Fun Fact Card
+private struct TappableFunFactCard: View {
     let fact: String
     let index: Int
 
@@ -33,18 +33,19 @@ private struct FunFactCard: View {
         cardButton
             .sheet(isPresented: $showDetail) {
                 FunFactDetailSheet(fact: fact, index: index)
+                    .presentationDetents([.medium])
             }
     }
 }
 
 // MARK: - Card Content
-private extension FunFactCard {
+private extension TappableFunFactCard {
     var cardButton: some View {
         Button { showDetail = true } label: {
             CardView {
                 HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
-                    iconCircle
-                    factText
+                    numberCircle
+                    factPreview
                     Spacer(minLength: 0)
                     chevron
                 }
@@ -55,7 +56,7 @@ private extension FunFactCard {
         .accessibilityLabel("Fun fact: \(fact)")
     }
 
-    var iconCircle: some View {
+    var numberCircle: some View {
         ZStack {
             Circle()
                 .fill(DesignSystem.Color.warning.opacity(0.15))
@@ -68,12 +69,17 @@ private extension FunFactCard {
         .accessibilityHidden(true)
     }
 
-    var factText: some View {
-        Text(fact)
-            .font(DesignSystem.Font.subheadline)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .lineLimit(2)
-            .multilineTextAlignment(.leading)
+    var factPreview: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            Text("Fact #\(index + 1)")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.accent)
+            Text(fact)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+        }
     }
 
     var chevron: some View {
@@ -91,9 +97,8 @@ private struct FunFactDetailSheet: View {
 
     var body: some View {
         sheetContent
-            .navigationTitle("Fun Fact")
+            .navigationTitle("Fun Fact #\(index + 1)")
             .navigationBarTitleDisplayMode(.inline)
-            .presentationDetents([.medium])
     }
 }
 
@@ -102,7 +107,9 @@ private extension FunFactDetailSheet {
     var sheetContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                headerIcon
+                Image(systemName: "lightbulb.fill")
+                    .font(DesignSystem.Font.displayXS)
+                    .foregroundStyle(DesignSystem.Color.warning)
 
                 Text(fact)
                     .font(DesignSystem.Font.body)
@@ -114,16 +121,5 @@ private extension FunFactDetailSheet {
             .frame(maxWidth: .infinity)
         }
         .background(DesignSystem.Color.background)
-    }
-
-    var headerIcon: some View {
-        ZStack {
-            Circle()
-                .fill(DesignSystem.Color.warning.opacity(0.15))
-                .frame(width: 56, height: 56)
-            Image(systemName: "lightbulb.fill")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.warning)
-        }
     }
 }
