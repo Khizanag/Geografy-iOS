@@ -40,14 +40,7 @@ private extension WordSearchGameScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Image(systemName: "timer")
-                        .font(DesignSystem.Font.caption2)
-                    Text(formattedTime)
-                        .font(DesignSystem.Font.monoCaption2)
-                }
-                .foregroundStyle(isPaused ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
-                .padding(.horizontal, DesignSystem.Spacing.xxs)
+                QuizTimerBadge(seconds: elapsedSeconds, style: .compact)
 
                 if timerActive {
                     Button {
@@ -58,7 +51,6 @@ private extension WordSearchGameScreen {
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                     .buttonStyle(.plain)
-                    .padding(.trailing, DesignSystem.Spacing.sm)
                 }
             }
             .fixedSize()

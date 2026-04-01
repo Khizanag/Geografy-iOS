@@ -84,19 +84,7 @@ private extension LandmarkQuizScreen {
     }
 
     var timerBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "timer")
-                .font(DesignSystem.Font.caption)
-
-            Text("\(String(timeRemaining))s")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-                .contentTransition(.numericText())
-        }
-        .foregroundStyle(timerColor)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(timerColor.opacity(0.15), in: Capsule())
+        QuizTimerBadge(seconds: timeRemaining, totalSeconds: 20)
     }
 
     var scoreBadge: some View {
@@ -302,14 +290,6 @@ private extension LandmarkQuizScreen {
 private extension LandmarkQuizScreen {
     var currentQuestion: LandmarkQuestion {
         quizService.questions[currentQuestionIndex]
-    }
-
-    var timerColor: Color {
-        switch timeRemaining {
-        case 11...: DesignSystem.Color.success
-        case 6...10: DesignSystem.Color.warning
-        default: DesignSystem.Color.error
-        }
     }
 
     var progressFraction: CGFloat {
