@@ -1,8 +1,9 @@
 import Geografy_Core_Common
 import Geografy_Core_Service
 import Geografy_Core_DesignSystem
-import StoreKit
+import Geografy_Feature_Flashcard
 import Geografy_Feature_LearningPath
+import StoreKit
 import SwiftUI
 
 @main

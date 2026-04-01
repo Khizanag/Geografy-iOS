@@ -1,6 +1,7 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
+import Geografy_Feature_ExploreGame
 import SwiftUI
 
 struct ExploreGameScreen: View {

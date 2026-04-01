@@ -1,5 +1,6 @@
-import Geografy_Core_Service
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 struct ProfileScreen: View {
@@ -17,8 +18,16 @@ struct ProfileScreen: View {
             Section("Stats") {
                 statRow(label: "Total XP", value: "\(xpService.totalXP)", icon: "star.fill")
                 statRow(label: "Current Streak", value: "\(streakService.currentStreak) days", icon: "flame.fill")
-                statRow(label: "Countries Visited", value: "\(travelService.visitedCodes.count)", icon: "airplane.departure")
-                statRow(label: "Want to Visit", value: "\(travelService.wantToVisitCodes.count)", icon: "mappin.and.ellipse")
+                statRow(
+                    label: "Countries Visited",
+                    value: "\(travelService.visitedCodes.count)",
+                    icon: "airplane.departure"
+                )
+                statRow(
+                    label: "Want to Visit",
+                    value: "\(travelService.wantToVisitCodes.count)",
+                    icon: "mappin.and.ellipse"
+                )
                 statRow(
                     label: "Achievements",
                     value: "\(achievementService.unlockedAchievements.count) / \(AchievementCatalog.all.count)",

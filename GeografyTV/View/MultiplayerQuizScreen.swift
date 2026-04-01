@@ -1,8 +1,9 @@
-import Geografy_Core_Service
 // swiftlint:disable file_length
 import GameController
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
+import Geografy_Feature_Quiz
 import SwiftUI
 
 struct MultiplayerQuizScreen: View {
