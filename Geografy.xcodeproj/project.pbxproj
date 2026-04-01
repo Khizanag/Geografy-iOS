@@ -11,6 +11,7 @@
 		43ADC19535306C63A9CF7235 /* GeografyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 34FC847202CF095DC0971632 /* GeografyCore */; };
 		4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */; };
+		727A0FDC2F7D52E3001B7073 /* Geografy-Feature-Map in Frameworks */ = {isa = PBXBuildFile; productRef = 727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */; };
 		76D2AA51564B4B0B8E8EB005 /* GeografyDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A8CC38025DD34FC658A3E9C3 /* GeografyDesign */; };
 		97B8D39022A4E6E3F0DF5189 /* GeografyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 95C210184C659B4DF16FD56F /* GeografyCore */; };
 		DC78F1C91C17F8E81AE3075D /* GeografyDesign in Frameworks */ = {isa = PBXBuildFile; productRef = EA372ADABE7CE7452D776C96 /* GeografyDesign */; };
@@ -221,8 +222,6 @@
 				Feature/LearningPath/View/LearningPathScreen.swift,
 				Feature/LearningPath/View/LessonScreen.swift,
 				Feature/LearningPath/View/ModuleLessonsScreen.swift,
-				Feature/Map/View/CountryBannerView.swift,
-				Feature/Map/View/MapControlsView.swift,
 				Feature/Map/View/MapScreen.swift,
 				Feature/Map/View/OrganizationMapScreen.swift,
 				Feature/MapColoring/View/MapColoringScreen.swift,
@@ -359,6 +358,7 @@
 		B2C3D4E5F60718293A4B5C6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				727A0FDC2F7D52E3001B7073 /* Geografy-Feature-Map in Frameworks */,
 				43ADC19535306C63A9CF7235 /* GeografyCore in Frameworks */,
 				DC78F1C91C17F8E81AE3075D /* GeografyDesign in Frameworks */,
 			);
@@ -442,6 +442,7 @@
 			packageProductDependencies = (
 				34FC847202CF095DC0971632 /* GeografyCore */,
 				EA372ADABE7CE7452D776C96 /* GeografyDesign */,
+				727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */,
 			);
 			productName = Geografy;
 			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
@@ -910,6 +911,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */;
 			productName = GeografyCore;
+		};
+		727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Feature-Map";
 		};
 		95C210184C659B4DF16FD56F /* GeografyCore */ = {
 			isa = XCSwiftPackageProductDependency;
