@@ -380,7 +380,6 @@ private extension FlashcardSessionScreen {
             )
         }
     }
-
 }
 
 // MARK: - Helpers

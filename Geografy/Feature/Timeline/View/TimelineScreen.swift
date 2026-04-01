@@ -209,7 +209,10 @@ private extension TimelineScreen {
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.bottom, DesignSystem.Spacing.xs)
     }
+}
 
+// MARK: - Event Detail
+private extension TimelineScreen {
     func eventDetailSheet(for event: HistoricalEvent) -> some View {
         eventDetailContent(for: event)
             .navigationTitle("Event Details")
@@ -307,7 +310,7 @@ private extension TimelineScreen {
     }
 }
 
-// MARK: - Computed Properties
+// MARK: - Helpers
 private extension TimelineScreen {
     var selectableContinents: [Country.Continent] {
         Country.Continent.allCases.filter { $0 != .antarctica }

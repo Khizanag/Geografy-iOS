@@ -140,6 +140,10 @@ private extension BorderChallengeScreen {
         }
     }
 
+}
+
+// MARK: - Input & Neighbors Grid
+private extension BorderChallengeScreen {
     var guessField: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             TextField("Type a neighbor...", text: $guessText)

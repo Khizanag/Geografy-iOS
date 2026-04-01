@@ -60,7 +60,7 @@ struct QuizSessionScreen: View {
     }
 }
 
-// MARK: - Body Subviews
+// MARK: - Subviews
 private extension QuizSessionScreen {
     var quizContent: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
@@ -122,7 +122,10 @@ private extension QuizSessionScreen {
             }
         }
     }
+}
 
+// MARK: - Pause Overlay
+private extension QuizSessionScreen {
     @ViewBuilder
     var pauseOverlay: some View {
         if isPaused {
@@ -176,10 +179,9 @@ private extension QuizSessionScreen {
         }
         .buttonStyle(.glass)
     }
-
 }
 
-// MARK: - Subviews
+// MARK: - Progress & Question
 private extension QuizSessionScreen {
     var progressSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {

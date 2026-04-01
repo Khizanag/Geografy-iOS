@@ -29,7 +29,6 @@ struct QuizPackBrowserScreen: View {
                 )
             }
     }
-
 }
 
 // MARK: - Content
@@ -329,7 +328,7 @@ private extension QuizPackBrowserScreen {
     }
 }
 
-// MARK: - Computed Properties
+// MARK: - Helpers
 private extension QuizPackBrowserScreen {
     var filteredPacks: [QuizPack] {
         guard let category = selectedCategory else {

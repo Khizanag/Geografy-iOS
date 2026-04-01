@@ -368,13 +368,29 @@ private extension SearchScreen {
             locale: .current
         )
 
-        let countryMatches = countryService.countries.filter {
+        let countryMatches = matchingCountries(normalized: normalized)
+        let capitalMatches = matchingCapitals(normalized: normalized, excludingCountries: countryMatches)
+        let orgMatches = matchingOrganizations(normalized: normalized)
+
+        return buildSections(
+            countries: countryMatches,
+            capitals: capitalMatches,
+            organizations: orgMatches
+        )
+    }
+
+    func matchingCountries(normalized: String) -> [Country] {
+        countryService.countries.filter {
             $0.name.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
                 .contains(normalized)
         }
+    }
 
-        let capitalMatches: [(Country, String)] = countryService.countries.flatMap { country in
-            guard !countryMatches.contains(where: { $0.code == country.code }) else { return [(Country, String)]() }
+    func matchingCapitals(normalized: String, excludingCountries: [Country]) -> [(Country, String)] {
+        countryService.countries.flatMap { country in
+            guard !excludingCountries.contains(where: { $0.code == country.code }) else {
+                return [(Country, String)]()
+            }
             return country.allCapitals.compactMap { capital in
                 let normalizedCapital = capital.name.folding(
                     options: [.caseInsensitive, .diacriticInsensitive],
@@ -383,45 +399,53 @@ private extension SearchScreen {
                 return normalizedCapital.contains(normalized) ? (country, capital.name) : nil
             }
         }
+    }
 
-        let orgMatches = Organization.all.filter {
+    func matchingOrganizations(normalized: String) -> [Organization] {
+        Organization.all.filter {
             let foldingOptions: String.CompareOptions = [.caseInsensitive, .diacriticInsensitive]
             let normalizedFull = $0.fullName.folding(options: foldingOptions, locale: .current)
             let normalizedDisplay = $0.displayName.folding(options: foldingOptions, locale: .current)
             return normalizedFull.contains(normalized) || normalizedDisplay.contains(normalized)
         }
+    }
 
+    func buildSections(
+        countries: [Country],
+        capitals: [(Country, String)],
+        organizations: [Organization]
+    ) -> [SearchResultSection] {
         var result: [SearchResultSection] = []
 
-        if !countryMatches.isEmpty {
+        if !countries.isEmpty {
             result.append(
                 SearchResultSection(
                     id: "countries",
                     title: "Countries",
                     icon: "globe",
-                    rows: countryMatches.prefix(8).map { .country($0) }
+                    rows: countries.prefix(8).map { .country($0) }
                 )
             )
         }
 
-        if !capitalMatches.isEmpty {
+        if !capitals.isEmpty {
             result.append(
                 SearchResultSection(
                     id: "capitals",
                     title: "Capitals",
                     icon: "building.2.fill",
-                    rows: capitalMatches.prefix(6).map { .capital(country: $0.0, capitalName: $0.1) }
+                    rows: capitals.prefix(6).map { .capital(country: $0.0, capitalName: $0.1) }
                 )
             )
         }
 
-        if !orgMatches.isEmpty {
+        if !organizations.isEmpty {
             result.append(
                 SearchResultSection(
                     id: "organizations",
                     title: "Organizations",
                     icon: "building.columns.fill",
-                    rows: orgMatches.prefix(5).map { .organization($0) }
+                    rows: organizations.prefix(5).map { .organization($0) }
                 )
             )
         }

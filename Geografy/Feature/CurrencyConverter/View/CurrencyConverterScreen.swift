@@ -262,44 +262,48 @@ private extension CurrencyConverterScreen {
                     ProgressView()
                         .tint(DesignSystem.Color.accent)
                 } else if let converted = convertedAmount, let toEntry = toCurrency {
-                    VStack(spacing: DesignSystem.Spacing.xs) {
-                        Text("Result")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                            .textCase(.uppercase)
-                            .accessibilityAddTraits(.isHeader)
-
-                        HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
-                            Text(formatAmount(converted))
-                                .font(DesignSystem.Font.roundedXL)
-                                .foregroundStyle(DesignSystem.Color.accent)
-                                .contentTransition(.numericText())
-                                .animation(.spring(response: 0.4), value: converted)
-                                .minimumScaleFactor(0.5)
-                                .lineLimit(1)
-
-                            Text(toEntry.code)
-                                .font(DesignSystem.Font.title2)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                        }
-                        .accessibilityElement(children: .combine)
-                        .accessibilityLabel("\(formatAmount(converted)) \(toEntry.code)")
-
-                        if let amount = Double(amountText), let fromEntry = fromCurrency {
-                            Text(
-                                "\(formatAmount(amount)) \(fromEntry.code) = \(formatAmount(converted)) \(toEntry.code)"
-                            )
-                                .font(DesignSystem.Font.caption)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                                .multilineTextAlignment(.center)
-                        }
-                    }
+                    resultContent(converted: converted, toEntry: toEntry)
                 }
             }
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.lg)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
+    func resultContent(converted: Double, toEntry: CurrencyEntry) -> some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text("Result")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .textCase(.uppercase)
+                .accessibilityAddTraits(.isHeader)
+
+            HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
+                Text(formatAmount(converted))
+                    .font(DesignSystem.Font.roundedXL)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .contentTransition(.numericText())
+                    .animation(.spring(response: 0.4), value: converted)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
+
+                Text(toEntry.code)
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("\(formatAmount(converted)) \(toEntry.code)")
+
+            if let amount = Double(amountText), let fromEntry = fromCurrency {
+                Text(
+                    "\(formatAmount(amount)) \(fromEntry.code) = \(formatAmount(converted)) \(toEntry.code)"
+                )
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+        }
     }
 
     func updatedFooter(date: Date) -> some View {
@@ -313,7 +317,10 @@ private extension CurrencyConverterScreen {
         .foregroundStyle(DesignSystem.Color.textTertiary)
         .accessibilityElement(children: .combine)
     }
+}
 
+// MARK: - Background
+private extension CurrencyConverterScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
@@ -343,6 +350,24 @@ private extension CurrencyConverterScreen {
         .allowsHitTesting(false)
         .ignoresSafeArea()
         .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+    }
+}
+
+// MARK: - Actions
+private extension CurrencyConverterScreen {
+    func setupDefaults() {
+        let currencies = allCurrencies
+        guard !currencies.isEmpty else { return }
+
+        if let preselected = preselectedCurrencyCode,
+           let match = currencies.first(where: { $0.code == preselected }) {
+            fromCurrency = match
+        } else {
+            fromCurrency = currencies.first(where: { $0.code == "USD" }) ?? currencies.first
+        }
+
+        toCurrency = currencies.first(where: { $0.code == "EUR" })
+            ?? currencies.first(where: { $0.code != fromCurrency?.code })
     }
 }
 
@@ -377,21 +402,6 @@ private extension CurrencyConverterScreen {
             !currencyService.rates.isEmpty
         else { return nil }
         return currencyService.convert(amount: amount, from: fromEntry.code, to: toEntry.code)
-    }
-
-    func setupDefaults() {
-        let currencies = allCurrencies
-        guard !currencies.isEmpty else { return }
-
-        if let preselected = preselectedCurrencyCode,
-           let match = currencies.first(where: { $0.code == preselected }) {
-            fromCurrency = match
-        } else {
-            fromCurrency = currencies.first(where: { $0.code == "USD" }) ?? currencies.first
-        }
-
-        toCurrency = currencies.first(where: { $0.code == "EUR" })
-            ?? currencies.first(where: { $0.code != fromCurrency?.code })
     }
 
     func formatAmount(_ value: Double) -> String {

@@ -50,53 +50,6 @@ private extension TriviaScreen {
             .tint(DesignSystem.Color.accent)
     }
 
-    var completionView: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-            Image(systemName: "checkmark.seal.fill")
-                .font(DesignSystem.Font.display)
-                .foregroundStyle(DesignSystem.Color.success)
-            Text("All Done!")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.xl) {
-                    completionStat(value: "\(totalCorrect)/\(totalAnswered)", label: "Correct")
-                    Divider().frame(height: 40)
-                    completionStat(value: "\(streak)", label: "Best Streak")
-                }
-                .padding(DesignSystem.Spacing.lg)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            Spacer()
-            Button { dismiss() } label: {
-                Text("Done")
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.md)
-            }
-            .buttonStyle(.glass)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xl)
-        }
-    }
-
-    func completionStat(value: String, label: String) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-    }
-
     var gameContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             streakAndProgressBar
@@ -117,11 +70,6 @@ private extension TriviaScreen {
 
     var streakAndProgressBar: some View {
         SessionProgressView(progress: progress, current: currentIndex + 1, total: questions.count)
-    }
-
-    var progress: CGFloat {
-        guard !questions.isEmpty else { return 0 }
-        return CGFloat(currentIndex) / CGFloat(questions.count)
     }
 
     var cardStack: some View {
@@ -207,20 +155,73 @@ private extension TriviaScreen {
             .opacity(opacity)
     }
 
-    var trueOpacity: Double {
-        guard cardOffset > 0 else { return 0 }
-        return min(1, cardOffset / 80)
-    }
-
-    var falseOpacity: Double {
-        guard cardOffset < 0 else { return 0 }
-        return min(1, -cardOffset / 80)
-    }
-
     var instructionLabel: some View {
         Text("Swipe right for TRUE · Swipe left for FALSE")
             .font(DesignSystem.Font.caption)
             .foregroundStyle(DesignSystem.Color.textTertiary)
+    }
+}
+
+// MARK: - Completion
+private extension TriviaScreen {
+    var completionView: some View {
+        VStack(spacing: DesignSystem.Spacing.xl) {
+            Spacer()
+
+            Image(systemName: "checkmark.seal.fill")
+                .font(DesignSystem.Font.display)
+                .foregroundStyle(DesignSystem.Color.success)
+
+            Text("All Done!")
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            completionStats
+
+            Spacer()
+
+            completionDoneButton
+        }
+    }
+
+    var completionStats: some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.xl) {
+                completionStat(value: "\(totalCorrect)/\(totalAnswered)", label: "Correct")
+                Divider().frame(height: 40)
+                completionStat(value: "\(streak)", label: "Best Streak")
+            }
+            .padding(DesignSystem.Spacing.lg)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
+    func completionStat(value: String, label: String) -> some View {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
+            Text(value)
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text(label)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    var completionDoneButton: some View {
+        Button { dismiss() } label: {
+            Text("Done")
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.md)
+        }
+        .buttonStyle(.glass)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.xl)
     }
 }
 
@@ -296,8 +297,23 @@ private extension TriviaScreen {
     }
 }
 
-// MARK: - SwipeHint
+// MARK: - Helpers
 private extension TriviaScreen {
+    var progress: CGFloat {
+        guard !questions.isEmpty else { return 0 }
+        return CGFloat(currentIndex) / CGFloat(questions.count)
+    }
+
+    var trueOpacity: Double {
+        guard cardOffset > 0 else { return 0 }
+        return min(1, cardOffset / 80)
+    }
+
+    var falseOpacity: Double {
+        guard cardOffset < 0 else { return 0 }
+        return min(1, -cardOffset / 80)
+    }
+
     enum SwipeHint: Equatable {
         case none
         case trueSwipe

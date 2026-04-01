@@ -143,16 +143,7 @@ private extension ChallengeSetupScreen {
         return Button { selectedMode = mode } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
-                    ZStack {
-                        Circle()
-                            .fill(DesignSystem.Color.orange.opacity(isSelected ? 0.2 : 0.08))
-                            .frame(width: 40, height: 40)
-                        Image(systemName: mode.icon)
-                            .font(DesignSystem.Font.subheadline)
-                            .foregroundStyle(
-                                isSelected ? DesignSystem.Color.orange : DesignSystem.Color.textSecondary
-                            )
-                    }
+                    modeIcon(mode, isSelected: isSelected)
 
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text(mode.rawValue)
@@ -177,6 +168,19 @@ private extension ChallengeSetupScreen {
             }
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    func modeIcon(_ mode: ChallengeMode, isSelected: Bool) -> some View {
+        ZStack {
+            Circle()
+                .fill(DesignSystem.Color.orange.opacity(isSelected ? 0.2 : 0.08))
+                .frame(width: 40, height: 40)
+            Image(systemName: mode.icon)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(
+                    isSelected ? DesignSystem.Color.orange : DesignSystem.Color.textSecondary
+                )
+        }
     }
 
     var settingsSection: some View {
@@ -311,20 +315,8 @@ private extension ChallengeSetupScreen {
     }
 }
 
-// MARK: - Helpers
+// MARK: - Actions
 private extension ChallengeSetupScreen {
-    func sectionTitle(_ text: String) -> some View {
-        Text(text)
-            .font(DesignSystem.Font.headline)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-    }
-
-    var isFormValid: Bool {
-        !player1Name.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !player2Name.trimmingCharacters(in: .whitespaces).isEmpty
-    }
-
     func startChallenge() {
         let name1 = player1Name.trimmingCharacters(in: .whitespaces)
         let name2 = player2Name.trimmingCharacters(in: .whitespaces)
@@ -338,6 +330,21 @@ private extension ChallengeSetupScreen {
         )
         let room = challengeRoomService.generateRoom(configuration: configuration)
         challengeRoom = room
+    }
+}
+
+// MARK: - Helpers
+private extension ChallengeSetupScreen {
+    func sectionTitle(_ text: String) -> some View {
+        Text(text)
+            .font(DesignSystem.Font.headline)
+            .fontWeight(.semibold)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+    }
+
+    var isFormValid: Bool {
+        !player1Name.trimmingCharacters(in: .whitespaces).isEmpty &&
+        !player2Name.trimmingCharacters(in: .whitespaces).isEmpty
     }
 }
 

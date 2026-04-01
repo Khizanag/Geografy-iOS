@@ -309,7 +309,7 @@ private extension MultiplayerResultScreen {
     }
 }
 
-// MARK: - Animations
+// MARK: - Actions
 private extension MultiplayerResultScreen {
     func animateContent() {
         showContent = true

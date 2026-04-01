@@ -135,7 +135,6 @@ private extension MapScreen {
 
 // MARK: - Controls
 private extension MapScreen {
-
     var labelsToggleButton: some View {
         Button {
             mapState.showLabels.toggle()
@@ -156,7 +155,6 @@ private extension MapScreen {
         .accessibilityValue(mapState.showLabels ? "Shown" : "Hidden")
         .accessibilityHint("Double tap to toggle country name labels")
     }
-
 }
 
 // MARK: - Banner
