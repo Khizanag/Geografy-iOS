@@ -13,6 +13,15 @@ struct ExploreGameResultView: View {
     @State private var contentVisible = false
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .onAppear { animateIn() }
+    }
+}
+
+// MARK: - Subviews
+private extension ExploreGameResultView {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 resultHeader
@@ -22,13 +31,8 @@ struct ExploreGameResultView: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .onAppear { animateIn() }
     }
-}
 
-// MARK: - Subviews
-private extension ExploreGameResultView {
     var resultHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             resultIcon

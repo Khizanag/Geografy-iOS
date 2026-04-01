@@ -9,29 +9,32 @@ struct ExploreGameScreen: View {
     @State private var activeSession: ExploreGameState?
 
     var body: some View {
-        Group {
-            if let activeSession, let gameService {
-                ExploreGameSessionScreen(
-                    initialState: activeSession,
-                    gameService: gameService,
-                    onDismiss: { self.activeSession = nil }
-                )
-            } else {
-                mainContent
-                    .navigationTitle("Mystery Country")
-                    .navigationBarTitleDisplayMode(.inline)
+        screenContent
+            .onAppear {
+                if gameService == nil {
+                    gameService = ExploreGameService(countryDataService: countryDataService)
+                }
             }
-        }
-        .onAppear {
-            if gameService == nil {
-                gameService = ExploreGameService(countryDataService: countryDataService)
-            }
-        }
     }
 }
 
 // MARK: - Body Subviews
 private extension ExploreGameScreen {
+    @ViewBuilder
+    var screenContent: some View {
+        if let activeSession, let gameService {
+            ExploreGameSessionScreen(
+                initialState: activeSession,
+                gameService: gameService,
+                onDismiss: { self.activeSession = nil }
+            )
+        } else {
+            mainContent
+                .navigationTitle("Mystery Country")
+                .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
     var mainContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {

@@ -16,24 +16,30 @@ struct NicknameQuizScreen: View {
     @State private var isGameOver = false
 
     var body: some View {
-        Group {
-            if isGameOver {
-                gameOverContent
-            } else if questions.isEmpty {
-                ProgressView().tint(DesignSystem.Color.accent)
-            } else {
-                quizContent
+        mainContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Nickname Quiz")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton { dismiss() }
+                }
             }
+            .task { buildQuestions() }
+    }
+}
+
+// MARK: - Main Content
+private extension NicknameQuizScreen {
+    @ViewBuilder
+    var mainContent: some View {
+        if isGameOver {
+            gameOverContent
+        } else if questions.isEmpty {
+            ProgressView().tint(DesignSystem.Color.accent)
+        } else {
+            quizContent
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Nickname Quiz")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .task { buildQuestions() }
     }
 }
 

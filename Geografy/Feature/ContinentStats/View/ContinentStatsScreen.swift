@@ -12,24 +12,27 @@ struct ContinentStatsScreen: View {
     let continentName: String
 
     var body: some View {
-        Group {
-            if countryDataService.countries.isEmpty {
-                ProgressView().tint(DesignSystem.Color.accent)
-            } else {
-                mainContent
+        loadedContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(continentName)
+            .navigationBarTitleDisplayMode(.large)
+            .onAppear {
+                appeared = true
             }
-        }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(continentName)
-        .navigationBarTitleDisplayMode(.large)
-        .onAppear {
-            appeared = true
-        }
     }
 }
 
 // MARK: - Subviews
 private extension ContinentStatsScreen {
+    @ViewBuilder
+    var loadedContent: some View {
+        if countryDataService.countries.isEmpty {
+            ProgressView().tint(DesignSystem.Color.accent)
+        } else {
+            mainContent
+        }
+    }
+
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {

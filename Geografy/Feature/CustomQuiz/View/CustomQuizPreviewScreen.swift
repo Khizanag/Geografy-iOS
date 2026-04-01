@@ -10,6 +10,17 @@ struct CustomQuizPreviewScreen: View {
     let onSave: (CustomQuiz) -> Void
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Preview")
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) { saveButton }
+    }
+}
+
+// MARK: - Subviews
+private extension CustomQuizPreviewScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 headerCard
@@ -20,10 +31,6 @@ struct CustomQuizPreviewScreen: View {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Preview")
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) { saveButton }
     }
 }
 

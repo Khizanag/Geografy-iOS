@@ -11,6 +11,21 @@ struct CultureDetailView: View {
     }
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(countryName)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    CircleCloseButton { dismiss() }
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CultureDetailView {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 headerSection
@@ -21,19 +36,8 @@ struct CultureDetailView: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xl)
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(countryName)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension CultureDetailView {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: profile.countryCode, height: 80)

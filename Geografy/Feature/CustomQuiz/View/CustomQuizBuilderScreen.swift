@@ -28,19 +28,26 @@ struct CustomQuizBuilderScreen: View {
     }
 
     var body: some View {
+        formContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .onAppear { loadExistingQuiz() }
+            .sheet(isPresented: $showCountryPicker) { countryPickerSheet }
+            .sheet(isPresented: $showPreview) { previewSheet }
+    }
+}
+
+// MARK: - Main Content
+private extension CustomQuizBuilderScreen {
+    var formContent: some View {
         VStack(spacing: 0) {
             stepIndicator
             stepContent
             Spacer(minLength: 0)
             navigationButtons
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar { toolbarContent }
-        .onAppear { loadExistingQuiz() }
-        .sheet(isPresented: $showCountryPicker) { countryPickerSheet }
-        .sheet(isPresented: $showPreview) { previewSheet }
     }
 }
 

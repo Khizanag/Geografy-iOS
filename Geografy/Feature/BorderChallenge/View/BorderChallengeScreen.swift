@@ -23,28 +23,34 @@ struct BorderChallengeScreen: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        Group {
-            if isGameOver {
-                resultContent
-            } else if challengeCountry != nil {
-                gameContent
-            } else {
-                ProgressView().tint(DesignSystem.Color.accent)
+        mainContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Border Challenge")
+            .navigationBarTitleDisplayMode(.inline)
+            .task {
+                startNewChallenge()
             }
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Border Challenge")
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            startNewChallenge()
-        }
-        .onReceive(timer) { _ in
-            guard timerActive, !isGameOver else { return }
-            if secondsRemaining > 0 {
-                secondsRemaining -= 1
-            } else {
-                endGame()
+            .onReceive(timer) { _ in
+                guard timerActive, !isGameOver else { return }
+                if secondsRemaining > 0 {
+                    secondsRemaining -= 1
+                } else {
+                    endGame()
+                }
             }
+    }
+}
+
+// MARK: - Main Content
+private extension BorderChallengeScreen {
+    @ViewBuilder
+    var mainContent: some View {
+        if isGameOver {
+            resultContent
+        } else if challengeCountry != nil {
+            gameContent
+        } else {
+            ProgressView().tint(DesignSystem.Color.accent)
         }
     }
 }

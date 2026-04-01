@@ -11,14 +11,21 @@ struct DailyChallengeShareCard: View {
     @State private var renderedImage: Image?
 
     var body: some View {
+        mainContent
+            .padding(DesignSystem.Spacing.md)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Share")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// MARK: - Subviews
+private extension DailyChallengeShareCard {
+    var mainContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             shareCardPreview
             shareActions
         }
-        .padding(DesignSystem.Spacing.md)
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Share")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

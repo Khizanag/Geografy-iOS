@@ -24,6 +24,19 @@ struct EconomyExplorerScreen: View {
     }
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Economy Explorer")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchText, prompt: "Search countries")
+            .onAppear { blobAnimating = true }
+    }
+}
+
+// MARK: - Subviews
+private extension EconomyExplorerScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 headerStats
@@ -33,17 +46,8 @@ struct EconomyExplorerScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Economy Explorer")
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchText, prompt: "Search countries")
-        .onAppear { blobAnimating = true }
     }
-}
 
-// MARK: - Subviews
-private extension EconomyExplorerScreen {
     var headerStats: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             statCard(

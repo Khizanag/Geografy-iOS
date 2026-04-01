@@ -6,6 +6,25 @@ struct CustomQuizShareScreen: View {
     let quiz: CustomQuiz
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Share Quiz")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        UIPasteboard.general.string = quiz.shareableJSON
+                    } label: {
+                        Label("Copy", systemImage: "doc.on.doc")
+                    }
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CustomQuizShareScreen {
+    var scrollContent: some View {
         ScrollView {
             Text(quiz.shareableJSON)
                 .font(.system(.caption, design: .monospaced))
@@ -17,18 +36,6 @@ struct CustomQuizShareScreen: View {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 )
                 .padding(DesignSystem.Spacing.md)
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Share Quiz")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    UIPasteboard.general.string = quiz.shareableJSON
-                } label: {
-                    Label("Copy", systemImage: "doc.on.doc")
-                }
-            }
         }
     }
 }

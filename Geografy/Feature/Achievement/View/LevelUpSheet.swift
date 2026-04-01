@@ -13,6 +13,19 @@ struct LevelUpSheet: View {
     @State private var particlesVisible = false
 
     var body: some View {
+        overlayContent
+            .onAppear {
+                hapticsService.notification(.success)
+                contentScale = 1.0
+                contentOpacity = 1.0
+                particlesVisible = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension LevelUpSheet {
+    var overlayContent: some View {
         ZStack {
             Color.black.opacity(0.88)
                 .ignoresSafeArea()
@@ -24,17 +37,8 @@ struct LevelUpSheet: View {
                 .opacity(contentOpacity)
                 .animation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.05), value: contentScale)
         }
-        .onAppear {
-            hapticsService.notification(.success)
-            contentScale = 1.0
-            contentOpacity = 1.0
-            particlesVisible = true
-        }
     }
-}
 
-// MARK: - Subviews
-private extension LevelUpSheet {
     var mainContent: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             levelUpHeadline

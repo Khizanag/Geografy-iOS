@@ -16,6 +16,26 @@ struct CultureExplorerScreen: View {
     }
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Culture Explorer")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchQuery, prompt: "Search countries or dishes...")
+            .sheet(item: $selectedProfile) { profile in
+                CultureDetailView(profile: profile)
+                    .presentationDetents([.large])
+            }
+            .overlay {
+                if filteredProfiles.isEmpty, !searchQuery.isEmpty {
+                    ContentUnavailableView.search(text: searchQuery)
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CultureExplorerScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 profileList
@@ -24,24 +44,8 @@ struct CultureExplorerScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Culture Explorer")
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchQuery, prompt: "Search countries or dishes...")
-        .sheet(item: $selectedProfile) { profile in
-            CultureDetailView(profile: profile)
-                .presentationDetents([.large])
-        }
-        .overlay {
-            if filteredProfiles.isEmpty, !searchQuery.isEmpty {
-                ContentUnavailableView.search(text: searchQuery)
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension CultureExplorerScreen {
     var profileList: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(filteredProfiles) { profile in
