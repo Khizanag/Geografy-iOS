@@ -36,7 +36,12 @@ private extension RegionCarousel {
                         color: color(for: region),
                         description: description(for: region)
                     )
-                    .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                    .containerRelativeFrame(
+                        .horizontal,
+                        count: 5,
+                        span: 4,
+                        spacing: DesignSystem.Spacing.sm
+                    )
                     .id(region)
                 }
             }
@@ -45,7 +50,7 @@ private extension RegionCarousel {
         .scrollTargetBehavior(.viewAligned)
         .scrollPosition(id: $visibleRegion)
         .scrollClipDisabled()
-        .contentMargins(.trailing, DesignSystem.Spacing.md)
+        .contentMargins(.horizontal, DesignSystem.Spacing.md)
         .onChange(of: visibleRegion) { _, newValue in
             guard let newValue, newValue != selectedRegion else { return }
             selectedRegion = newValue
