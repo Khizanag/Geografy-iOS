@@ -3,14 +3,14 @@ import GeografyDesign
 import SwiftUI
 
 struct CountryNicknamesScreen: View {
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(HapticsService.self) private var hapticsService
+    @Environment(Navigator.self) private var coordinator
 
     @State private var nicknamesService = CountryNicknamesService()
     @State private var searchQuery = ""
     @State private var selectedCategory: NicknameCategory?
     @State private var expandedNicknameID: String?
-    @State private var isQuizMode = false
 
     private var filteredNicknames: [CountryNickname] {
         nicknamesService.filteredNicknames(query: searchQuery, category: selectedCategory)
@@ -22,9 +22,6 @@ struct CountryNicknamesScreen: View {
             .navigationTitle("Country Nicknames")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $searchQuery, prompt: "Search nicknames…")
-            .sheet(isPresented: $isQuizMode) {
-                NicknameQuizScreen(nicknames: nicknamesService.nicknames, countryDataService: countryDataService)
-            }
     }
 }
 
@@ -92,7 +89,7 @@ private extension CountryNicknamesScreen {
     var quizBanner: some View {
         Button {
             hapticsService.impact(.medium)
-            isQuizMode = true
+            coordinator.push(.countryNicknameQuiz)
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: "questionmark.circle.fill")
@@ -113,7 +110,10 @@ private extension CountryNicknamesScreen {
                     .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.7))
             }
             .padding(DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.accent, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            .background(
+                DesignSystem.Color.accent,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            )
         }
         .buttonStyle(PressButtonStyle())
     }

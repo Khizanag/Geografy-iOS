@@ -14,6 +14,7 @@ enum Destination: Hashable, Identifiable {
     case countries
     case countryDetail(Country)
     case countryNicknames
+    case countryNicknameQuiz
     case cultureExplorer
     case currencyConverter(preselectedCode: String? = nil)
     case customQuiz
@@ -93,6 +94,7 @@ enum Destination: Hashable, Identifiable {
         case .countries: "countries"
         case .countryDetail(let country): "countryDetail-\(country.code)"
         case .countryNicknames: "countryNicknames"
+        case .countryNicknameQuiz: "countryNicknameQuiz"
         case .cultureExplorer: "cultureExplorer"
         case .currencyConverter(let code): "currencyConverter-\(code ?? "none")"
         case .customQuiz: "customQuiz"
@@ -177,6 +179,7 @@ extension Destination {
         case .countries: CountryListScreen()
         case .countryDetail(let country): CountryDetailScreen(country: country)
         case .countryNicknames: CountryNicknamesScreen()
+        case .countryNicknameQuiz: NicknameQuizScreen()
         case .cultureExplorer: CultureExplorerScreen()
         case .currencyConverter(let code): CurrencyConverterScreen(preselectedCurrencyCode: code)
         case .customQuiz: CustomQuizLibraryScreen()
