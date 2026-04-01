@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 enum MapColorPalette {
     static func assignColors(to shapes: inout [CountryShape]) {

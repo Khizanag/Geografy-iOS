@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct FlashcardCardView: View {
     @Environment(PronunciationService.self) private var pronunciationService

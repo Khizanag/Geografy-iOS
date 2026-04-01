@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct NicknameQuizScreen: View {
     @Environment(\.dismiss) private var dismiss

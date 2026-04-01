@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct TypeSelectionGrid<T: SelectableType>: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency

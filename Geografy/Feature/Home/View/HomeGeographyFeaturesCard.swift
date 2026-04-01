@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct HomeGeographyFeaturesCard: View {
     let onTap: () -> Void

@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 enum LevelBadgeSize {
     case small

@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct TravelJournalEntryCard: View {
     @Environment(TravelJournalService.self) private var journalService

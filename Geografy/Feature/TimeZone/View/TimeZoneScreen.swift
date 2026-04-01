@@ -1,7 +1,7 @@
 #if !os(tvOS)
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct TimeZoneScreen: View {
     #if !os(tvOS)

@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct PremiumLockedOverlay: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency

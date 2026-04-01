@@ -1,6 +1,6 @@
 import Foundation
-import GeografyCore
 import GameKit
+import GeografyCore
 import Observation
 
 @Observable

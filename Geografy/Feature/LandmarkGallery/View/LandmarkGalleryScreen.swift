@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct LandmarkGalleryScreen: View {
     @State private var selectedCategory: LandmarkCategory?

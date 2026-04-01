@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct TriviaScreen: View {
     let countryDataService: CountryDataService

@@ -16,9 +16,9 @@
 
 #if !os(tvOS)
 import AuthenticationServices
-import GeografyCore
 import CryptoKit
 import Foundation
+import GeografyCore
 import UIKit
 
 // MARK: - GoogleUserInfo

@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct CountryStatisticsView: View {
     @Environment(WorldBankService.self) private var worldBankService

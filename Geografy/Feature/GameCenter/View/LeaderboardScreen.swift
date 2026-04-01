@@ -1,6 +1,6 @@
-import SwiftUI
 import GameKit
 import GeografyDesign
+import SwiftUI
 
 struct LeaderboardScreen: View {
     @Environment(Navigator.self) private var coordinator

@@ -1,6 +1,6 @@
 #if os(iOS)
-import UIKit
 import GeografyCore
+import UIKit
 #endif
 import Foundation
 import Observation

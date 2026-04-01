@@ -1,8 +1,8 @@
 import Accessibility
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
 import SwiftData
+import SwiftUI
 
 struct QuizResultsScreen: View {
     @Environment(XPService.self) private var xpService

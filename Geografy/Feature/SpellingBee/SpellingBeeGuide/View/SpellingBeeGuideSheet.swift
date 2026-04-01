@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct SpellingBeeGuideSheet: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

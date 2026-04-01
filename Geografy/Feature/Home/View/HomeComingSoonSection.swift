@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct HomeComingSoonSection: View {
     @Environment(HapticsService.self) private var hapticsService

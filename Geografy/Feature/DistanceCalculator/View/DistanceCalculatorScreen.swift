@@ -1,7 +1,7 @@
 #if !os(tvOS)
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct DistanceCalculatorScreen: View {
     @Environment(HapticsService.self) private var hapticsService

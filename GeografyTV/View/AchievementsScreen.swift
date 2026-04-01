@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct AchievementsScreen: View {
     @Environment(AchievementService.self) private var achievementService

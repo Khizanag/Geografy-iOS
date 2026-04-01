@@ -1,6 +1,6 @@
 #if !os(tvOS)
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct WikipediaSection: View {
     private let countryName: String

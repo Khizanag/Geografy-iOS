@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct HomeProgressCard: View {
     @Environment(HapticsService.self) private var hapticsService

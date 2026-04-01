@@ -1,6 +1,6 @@
 #if !os(tvOS)
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 // MARK: - Badge Showcase
 extension ProfileScreen {

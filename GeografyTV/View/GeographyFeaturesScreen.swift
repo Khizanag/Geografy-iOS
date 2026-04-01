@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct GeographyFeaturesScreen: View {
     @State private var selectedType: GeographyFeatureType = .mountain

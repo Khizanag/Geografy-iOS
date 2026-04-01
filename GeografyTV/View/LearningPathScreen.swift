@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct LearningPathScreen: View {
     @State private var service = LearningPathService()

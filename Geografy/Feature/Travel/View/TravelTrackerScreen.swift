@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct TravelTrackerScreen: View {
     @Environment(Navigator.self) private var coordinator

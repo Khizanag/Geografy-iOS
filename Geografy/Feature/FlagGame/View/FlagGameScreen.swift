@@ -1,8 +1,8 @@
 import Accessibility
 import Combine
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct FlagGameScreen: View {
     @Environment(\.dismiss) private var dismiss

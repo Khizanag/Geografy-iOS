@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct QuizPackCard: View {
     let pack: QuizPack
