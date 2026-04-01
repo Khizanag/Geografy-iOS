@@ -4,12 +4,16 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CurrencyConverterScreen: View {
-    public init() {}
+    public init(preselectedCurrencyCode: String? = nil) {
+        self.preselectedCurrencyCode = preselectedCurrencyCode
+    }
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(CurrencyService.self) private var currencyService
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     public let preselectedCurrencyCode: String?
 
@@ -20,16 +24,14 @@ public struct CurrencyConverterScreen: View {
     @State private var showToPicker = false
     @State private var blobAnimating = false
 
-    public init(preselectedCurrencyCode: String? = nil) {
-        self.preselectedCurrencyCode = preselectedCurrencyCode
-    }
-
     public var body: some View {
         extractedContent
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Currency Converter")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .task {
                 setupDefaults()
                 if let from = fromCurrency {
@@ -39,14 +41,18 @@ public struct CurrencyConverterScreen: View {
             .onAppear { blobAnimating = true }
             .sheet(isPresented: $showFromPicker) {
                 CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
+                    #if !os(tvOS)
                     hapticsService.selection()
+                    #endif
                     fromCurrency = entry
                     Task { await currencyService.fetchRates(for: entry.code) }
                 }
             }
             .sheet(isPresented: $showToPicker) {
                 CurrencyPickerSheet(title: "To Currency", currencies: allCurrencies) { entry in
+                    #if !os(tvOS)
                     hapticsService.selection()
+                    #endif
                     toCurrency = entry
                 }
             }
@@ -94,7 +100,9 @@ private extension CurrencyConverterScreen {
     func quickChip(for entry: CurrencyEntry) -> some View {
         let isSelected = fromCurrency?.code == entry.code
         return Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             fromCurrency = entry
             Task { await currencyService.fetchRates(for: entry.code) }
         } label: {
@@ -239,7 +247,9 @@ private extension CurrencyConverterScreen {
         HStack {
             Spacer()
             Button {
+                #if !os(tvOS)
                 hapticsService.impact(.light)
+                #endif
                 let previous = fromCurrency
                 fromCurrency = toCurrency
                 toCurrency = previous
@@ -438,7 +448,9 @@ private struct CurrencyPickerSheet: View {
         extractedContent
             .searchable(text: $searchText, prompt: "Search currency or country…")
             .navigationTitle(title)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar { toolbarContent }
     }
 }

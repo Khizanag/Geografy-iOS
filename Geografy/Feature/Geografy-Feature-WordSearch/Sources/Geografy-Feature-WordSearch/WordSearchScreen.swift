@@ -164,10 +164,18 @@ private extension WordSearchScreen {
 private extension WordSearchScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
+        #if os(tvOS)
+        ToolbarItem(placement: .automatic) {
+            Button { showGuide = true } label: {
+                Label("Guide", systemImage: "info.circle")
+            }
+        }
+        #else
         ToolbarItem(placement: .secondaryAction) {
             Button { showGuide = true } label: {
                 Label("Guide", systemImage: "info.circle")
             }
         }
+        #endif
     }
 }

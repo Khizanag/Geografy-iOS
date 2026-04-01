@@ -3,7 +3,8 @@ import Geografy_Core_Common
 
 @Observable
 public final class TimelineService {
-    private(set) var events: [HistoricalEvent] = []
+    public init() {}
+    public private(set) var events: [HistoricalEvent] = []
 
     public func loadEvents() {
         guard let url = Bundle.main.url(

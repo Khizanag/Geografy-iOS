@@ -2,6 +2,7 @@ import Foundation
 
 @Observable
 public final class CountryNicknamesService {
+    public init() {}
     private(set) var nicknames: [CountryNickname] = CountryNicknamesService.allNicknames
 
     public func nicknames(for category: NicknameCategory?) -> [CountryNickname] {
@@ -28,7 +29,7 @@ public final class CountryNicknamesService {
 // MARK: - Data
 private extension CountryNicknamesService {
     // swiftlint:disable:next closure_body_length
-    static let allNicknames: [CountryNickname] = [
+    nonisolated(unsafe) public static let allNicknames: [CountryNickname] = [
         CountryNickname(
             id: "AZ", countryCode: "AZ",
             nickname: "Land of Fire",

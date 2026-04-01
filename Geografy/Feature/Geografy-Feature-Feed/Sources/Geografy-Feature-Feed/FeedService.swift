@@ -3,8 +3,9 @@ import SwiftUI
 
 @Observable
 public final class FeedService {
-    private(set) var items: [FeedItem] = []
-    private(set) var savedItemIDs: Set<String> = []
+    public init() {}
+    public private(set) var items: [FeedItem] = []
+    public private(set) var savedItemIDs: Set<String> = []
 
     public func loadFeed() {
         items = Self.allItems.shuffled()
@@ -30,7 +31,7 @@ public final class FeedService {
 // MARK: - Feed Data
 // swiftlint:disable closure_body_length
 private extension FeedService {
-    static let allItems: [FeedItem] = [
+    nonisolated(unsafe) public static let allItems: [FeedItem] = [
         // MARK: Did You Know
         .init(
             id: "dyk01",

@@ -7,7 +7,9 @@ import SwiftUI
 public struct CountryNicknamesScreen: View {
     public init() {}
     @Environment(CountryDataService.self) private var countryDataService
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(Navigator.self) private var coordinator
 
     @State private var nicknamesService = CountryNicknamesService()
@@ -23,7 +25,9 @@ public struct CountryNicknamesScreen: View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Country Nicknames")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .searchable(text: $searchQuery, prompt: "Search nicknames…")
     }
 }
@@ -91,7 +95,9 @@ private extension CountryNicknamesScreen {
 
     var quizBanner: some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.medium)
+            #endif
             coordinator.push(.countryNicknameQuiz)
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
@@ -139,7 +145,9 @@ private extension CountryNicknamesScreen {
             .first { $0.code == nickname.countryCode }?.name ?? nickname.countryCode
 
         return Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                 expandedNicknameID = isExpanded ? nil : nickname.id
             }

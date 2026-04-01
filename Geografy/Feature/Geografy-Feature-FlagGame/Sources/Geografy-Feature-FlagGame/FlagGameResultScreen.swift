@@ -3,7 +3,17 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FlagGameResultScreen: View {
-    public init() {}
+    public init(
+        score: Int,
+        answeredCountries: [Country],
+        onPlayAgain: @escaping () -> Void,
+        onDismiss: @escaping () -> Void
+    ) {
+        self.score = score
+        self.answeredCountries = answeredCountries
+        self.onPlayAgain = onPlayAgain
+        self.onDismiss = onDismiss
+    }
     public let score: Int
     public let answeredCountries: [Country]
     public let onPlayAgain: () -> Void

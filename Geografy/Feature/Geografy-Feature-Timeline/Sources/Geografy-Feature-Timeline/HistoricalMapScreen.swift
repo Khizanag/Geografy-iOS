@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Feature_Map
 import Geografy_Core_Service
@@ -5,10 +6,16 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct HistoricalMapScreen: View {
-    public init() {}
+    public init(
+        initialYear: Int
+    ) {
+        self.initialYear = initialYear
+    }
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
     public let initialYear: Int
@@ -27,7 +34,9 @@ public struct HistoricalMapScreen: View {
             .background(DesignSystem.Color.ocean)
             .ignoresSafeArea(edges: .top)
             .navigationTitle("Historical Map")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .safeAreaInset(edge: .bottom) { sliderSection }
             .toolbarBackground(.clear, for: .navigationBar)
             .task { await loadData() }
@@ -204,7 +213,9 @@ private extension HistoricalMapScreen {
     func eventSheet(for event: HistoricalEvent) -> some View {
         eventSheetContent(for: event)
             .navigationTitle("Event Details")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .presentationDetents([.medium])
     }
 
@@ -317,7 +328,9 @@ private extension HistoricalMapScreen {
                 } else {
                     mapState.selectedCountryCode = shape.id
                 }
+                #if !os(tvOS)
                 hapticsService.impact(.medium)
+                #endif
                 return
             }
         }
@@ -479,3 +492,5 @@ private extension HistoricalMapScreen {
         )
     }
 }
+
+#endif

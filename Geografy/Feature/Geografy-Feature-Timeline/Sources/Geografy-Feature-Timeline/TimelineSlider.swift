@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Geografy_Core_DesignSystem
 import SwiftUI
 
@@ -47,7 +48,9 @@ private extension TimelineSlider {
         }
         .pickerStyle(.wheel)
         .navigationTitle("Select Year")
+        #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") { showYearPicker = false }
@@ -122,3 +125,5 @@ private extension TimelineSlider {
         return 0.3 + Double(clamped) / 30.0
     }
 }
+
+#endif

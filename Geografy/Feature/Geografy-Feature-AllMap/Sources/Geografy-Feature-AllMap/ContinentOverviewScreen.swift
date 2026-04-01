@@ -4,10 +4,29 @@ import Geografy_Core_Service
 import Geografy_Core_DesignSystem
 import SwiftUI
 
+private enum SortOption: String, CaseIterable {
+    case name = "Name"
+    case population = "Population"
+    case area = "Area"
+    case gdp = "GDP"
+
+    var icon: String {
+        switch self {
+        case .name: "textformat"
+        case .population: "person.3"
+        case .area: "map"
+        case .gdp: "chart.bar"
+        }
+    }
+}
+
 public struct ContinentOverviewScreen: View {
-    public init() {}
+    public init(
+        continent: Country.Continent
+    ) {
+        self.continent = continent
+    }
     @Environment(Navigator.self) private var coordinator
-    @Environment(FavoritesService.self) private var favoritesService
     @Environment(CountryDataService.self) private var countryDataService
 
     public let continent: Country.Continent
@@ -19,7 +38,9 @@ public struct ContinentOverviewScreen: View {
         scrollContent
             .background(DesignSystem.Color.background)
             .navigationTitle(continent.displayName)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.large)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -171,12 +192,20 @@ private extension ContinentOverviewScreen {
             }
             ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
                 Button { navigateToCountry(country) } label: {
-                    CountryRowView(
-                        country: country,
-                        isFavorite: favoritesService.isFavorite(code: country.code),
-                        showContinent: false,
-                        onFavoriteTap: { favoritesService.toggle(code: country.code) }
-                    )
+                    CardView {
+                        HStack(spacing: DesignSystem.Spacing.sm) {
+                            FlagView(countryCode: country.code, height: 24, fixedWidth: true)
+                            Text(country.name)
+                                .font(DesignSystem.Font.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundStyle(DesignSystem.Color.textPrimary)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(DesignSystem.Font.caption)
+                                .foregroundStyle(DesignSystem.Color.textTertiary)
+                        }
+                        .padding(DesignSystem.Spacing.sm)
+                    }
                 }
                 .buttonStyle(PressButtonStyle())
                 .opacity(appeared ? 1 : 0)

@@ -3,7 +3,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct LessonScreen: View {
-    public init() {}
+    public init(
+        module: LearningModule,
+        lesson: Lesson
+    ) {
+        self.module = module
+        self.lesson = lesson
+    }
     @Environment(\.dismiss) private var dismiss
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -18,7 +24,9 @@ public struct LessonScreen: View {
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(lesson.title)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .safeAreaInset(edge: .bottom) {
                 completeButton
                     .padding(.horizontal, DesignSystem.Spacing.md)

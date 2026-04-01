@@ -6,7 +6,9 @@ import SwiftUI
 
 public struct ContinentPickerScreen: View {
     public init() {}
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -14,7 +16,9 @@ public struct ContinentPickerScreen: View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Continents")
+        #if !os(tvOS)
         .navigationBarTitleDisplayMode(.large)
+        #endif
     }
 }
 
@@ -54,7 +58,9 @@ private extension ContinentPickerScreen {
     func continentCard(_ continent: Country.Continent) -> some View {
         let countryCount = countryDataService.countries.filter { $0.continent == continent }.count
         return Button {
+            #if !os(tvOS)
             hapticsService.impact(.medium)
+            #endif
             coordinator.push(.continentStats(continent.displayName))
         } label: {
             CardView {

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct NationalSymbol: Identifiable {
+public struct NationalSymbol: Sendable, Identifiable {
     public let id: String
     public let countryCode: String
     public let animal: String

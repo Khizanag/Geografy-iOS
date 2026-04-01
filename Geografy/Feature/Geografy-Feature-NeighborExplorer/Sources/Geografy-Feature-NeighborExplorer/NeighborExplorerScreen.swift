@@ -4,7 +4,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct NeighborExplorerScreen: View {
-    public init() {}
+    public init(
+        country: Country
+    ) {
+        self.country = country
+    }
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -21,7 +25,9 @@ public struct NeighborExplorerScreen: View {
     public var body: some View {
         contentView
             .navigationTitle("Neighbor Explorer")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .task {
                 chain = [country]
             }

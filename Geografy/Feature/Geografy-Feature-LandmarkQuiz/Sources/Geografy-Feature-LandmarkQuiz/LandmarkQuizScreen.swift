@@ -5,7 +5,9 @@ import SwiftUI
 
 public struct LandmarkQuizScreen: View {
     public init() {}
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var quizService = LandmarkQuizService()
@@ -28,7 +30,9 @@ public struct LandmarkQuizScreen: View {
         .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Landmark Quiz")
+        #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
         .task { loadQuiz() }
         .onDisappear { timerCancellable?.cancel() }
     }
@@ -240,9 +244,13 @@ private extension LandmarkQuizScreen {
 
         if isCorrect {
             score += 1
+            #if !os(tvOS)
             hapticsService.notification(.success)
+            #endif
         } else {
+            #if !os(tvOS)
             hapticsService.notification(.error)
+            #endif
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {

@@ -6,7 +6,9 @@ import SwiftUI
 
 public struct BorderChallengeScreen: View {
     public init() {}
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var selectedDifficulty: BorderChallengeService.Difficulty = .medium
@@ -27,7 +29,9 @@ public struct BorderChallengeScreen: View {
         mainContent
             .background(DesignSystem.Color.background)
             .navigationTitle("Border Challenge")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .task {
                 startNewChallenge()
             }
@@ -383,13 +387,17 @@ private extension BorderChallengeScreen {
         let remaining = neighbors.filter { !foundNeighbors.contains($0) }
         if let match = service.isCorrectGuess(input, for: remaining) {
             foundNeighbors.append(match)
+            #if !os(tvOS)
             hapticsService.notification(.success)
+            #endif
             let message = "Correct! \(match.name). \(foundNeighbors.count) of \(neighbors.count) found"
             AccessibilityNotification.Announcement(message).post()
             if foundNeighbors.count == neighbors.count { endGame() }
         } else {
             wrongGuesses.insert(input.lowercased())
+            #if !os(tvOS)
             hapticsService.notification(.error)
+            #endif
             AccessibilityNotification.Announcement("Incorrect guess").post()
         }
     }
@@ -397,7 +405,9 @@ private extension BorderChallengeScreen {
     func revealAnswers() {
         timerActive = false
         isRevealed = true
+        #if !os(tvOS)
         hapticsService.impact(.light)
+        #endif
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { endGame() }
     }
 

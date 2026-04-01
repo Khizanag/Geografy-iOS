@@ -3,7 +3,7 @@ import Foundation
 
 @Observable
 public final class LearningPathService {
-    private(set) var modules: [LearningModule] = []
+    public private(set) var modules: [LearningModule] = []
 
     private let storageKey = "learningPath.progress"
 

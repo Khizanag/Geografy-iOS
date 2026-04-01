@@ -1,4 +1,5 @@
 import Geografy_Core_DesignSystem
+import Geografy_Feature_LearningPath
 import SwiftUI
 
 struct HomeLearningPathCard: View {

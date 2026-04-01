@@ -198,7 +198,9 @@ private extension TimelineScreen {
         )
     }
 
+    @ViewBuilder
     var timelineSliderSection: some View {
+        #if !os(tvOS)
         CardView {
             TimelineSlider(
                 selectedYear: $selectedYear,
@@ -215,6 +217,7 @@ private extension TimelineScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.bottom, DesignSystem.Spacing.xs)
+        #endif
     }
 }
 
@@ -223,7 +226,9 @@ private extension TimelineScreen {
     func eventDetailSheet(for event: HistoricalEvent) -> some View {
         eventDetailContent(for: event)
             .navigationTitle("Event Details")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
     }
 
     func eventDetailContent(for event: HistoricalEvent) -> some View {
@@ -293,11 +298,20 @@ private extension TimelineScreen {
             SectionHeaderView(title: "Country", icon: "globe")
                 .accessibilityAddTraits(.isHeader)
             Button { coordinator.push(.countryDetail(country)) } label: {
-                CountryRowView(
-                    country: country,
-                    isFavorite: false,
-                    showContinent: true
-                )
+                CardView {
+                    HStack(spacing: DesignSystem.Spacing.sm) {
+                        FlagView(countryCode: country.code, height: 24, fixedWidth: true)
+                        Text(country.name)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    }
+                    .padding(DesignSystem.Spacing.sm)
+                }
             }
             .buttonStyle(PressButtonStyle())
         }
