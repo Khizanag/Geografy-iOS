@@ -1,12 +1,12 @@
 import Foundation
 
-struct WorldRecord: Identifiable {
-    let id = UUID()
-    let category: WorldRecordCategory
-    let title: String
-    let countryCode: String
-    let countryName: String
-    let value: String
-    let unit: String
-    let description: String
+public struct WorldRecord: Identifiable, Sendable {
+    public let id = UUID()
+    public let category: WorldRecordCategory
+    public let title: String
+    public let countryCode: String
+    public let countryName: String
+    public let value: String
+    public let unit: String
+    public let description: String
 }

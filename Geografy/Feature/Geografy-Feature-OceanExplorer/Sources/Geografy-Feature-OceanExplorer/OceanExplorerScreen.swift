@@ -19,7 +19,9 @@ public struct OceanExplorerScreen: View {
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Ocean Explorer")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear { startBlobAnimation() }
     }
 }

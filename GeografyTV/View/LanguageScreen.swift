@@ -1,5 +1,6 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Feature_LanguageExplorer
 
 struct LanguageScreen: View {
     @State private var service = LanguageService()

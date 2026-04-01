@@ -1,12 +1,12 @@
 import Foundation
 
-struct Language: Identifiable {
-    let id: String // ISO 639-1 code
-    let name: String
-    let nativeName: String
-    let speakerCount: Int // millions
-    let countries: [String] // country codes where official
-    let family: String
-    let script: String
-    let funFact: String
+public struct Language: Identifiable {
+    public let id: String // ISO 639-1 code
+    public let name: String
+    public let nativeName: String
+    public let speakerCount: Int // millions
+    public let countries: [String] // country codes where official
+    public let family: String
+    public let script: String
+    public let funFact: String
 }

@@ -1,5 +1,6 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Feature_LandmarkGallery
 
 struct LandmarkScreen: View {
     @State private var selectedCategory: LandmarkCategory?

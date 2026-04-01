@@ -20,7 +20,9 @@ public struct MapPuzzleSetupScreen: View {
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Map Puzzle")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear { startBlobAnimation() }
             .navigationDestination(isPresented: $showPuzzle) {
                 if let continent = selectedContinent {

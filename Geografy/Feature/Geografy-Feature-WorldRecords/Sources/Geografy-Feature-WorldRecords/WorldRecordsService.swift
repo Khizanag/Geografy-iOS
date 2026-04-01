@@ -1,8 +1,9 @@
 import Foundation
 import Geografy_Core_Common
 
-struct WorldRecordsService {
-    func computeRecords(from countries: [Country]) -> [WorldRecord] {
+public struct WorldRecordsService {
+    public init() {}
+    public func computeRecords(from countries: [Country]) -> [WorldRecord] {
         var records: [WorldRecord] = []
 
         records += areaRecords(from: countries)

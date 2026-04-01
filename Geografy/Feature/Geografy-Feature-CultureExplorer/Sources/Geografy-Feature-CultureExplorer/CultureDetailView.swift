@@ -4,17 +4,19 @@ import SwiftUI
 struct CultureDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    let profile: CultureProfile
+    public let profile: CultureProfile
 
     private var countryName: String {
         Locale.current.localizedString(forRegionCode: profile.countryCode) ?? profile.countryCode
     }
 
-    var body: some View {
+    public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(countryName)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     CircleCloseButton { dismiss() }

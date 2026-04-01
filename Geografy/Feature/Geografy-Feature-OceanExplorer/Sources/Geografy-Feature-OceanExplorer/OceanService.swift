@@ -1,7 +1,8 @@
 import Foundation
 
-final class OceanService {
-    let oceans: [Ocean] = [
+public final class OceanService {
+    public init() {}
+    public let oceans: [Ocean] = [
         Ocean(
             id: "pacific",
             name: "Pacific Ocean",
@@ -147,6 +148,6 @@ final class OceanService {
         ),
     ]
 
-    var oceansList: [Ocean] { oceans.filter { $0.isOcean } }
-    var seasList: [Ocean] { oceans.filter { !$0.isOcean } }
+    public var oceansList: [Ocean] { oceans.filter { $0.isOcean } }
+    public var seasList: [Ocean] { oceans.filter { !$0.isOcean } }
 }

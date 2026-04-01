@@ -14,7 +14,9 @@ public struct LanguageExplorerScreen: View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Language Explorer")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .searchable(text: $searchQuery, prompt: "Search languages...")
             .sheet(isPresented: $showingDetail) {
                 if let language = selectedLanguage {
