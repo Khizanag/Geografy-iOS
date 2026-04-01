@@ -15,29 +15,37 @@ struct CountryBannerView: View {
     @State private var dragOffset: CGFloat = 0
 
     var body: some View {
+        bannerCard
+            .offset(y: min(dragOffset, 0))
+            .opacity(1 + Double(min(dragOffset, 0)) / 100)
+            .gesture(swipeToDismiss)
+    }
+}
+
+// MARK: - Subviews
+private extension CountryBannerView {
+    var bannerCard: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            flagView
+            flagButton
+
             infoSection
+
             Spacer(minLength: DesignSystem.Spacing.xxs)
+
             if let onMoreInfo {
                 moreInfoButton(action: onMoreInfo)
             }
-            closeButton
+
+            dismissButton
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .offset(y: min(dragOffset, 0))
-        .opacity(1 + Double(min(dragOffset, 0)) / 100)
-        .gesture(swipeToDismiss)
     }
-}
 
-// MARK: - Subviews
-private extension CountryBannerView {
-    var flagView: some View {
+    var flagButton: some View {
         Button { onFlagTap?() } label: {
             FlagView(countryCode: countryCode, height: DesignSystem.Size.xl)
                 .matchedGeometryEffect(id: countryCode, in: namespace)
@@ -55,20 +63,24 @@ private extension CountryBannerView {
                 .lineLimit(2)
                 .minimumScaleFactor(0.8)
 
-            HStack(alignment: .top, spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: "star.fill")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .padding(.top, 2)
-                    .accessibilityHidden(true)
-
-                Text(capital)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
+            capitalLabel
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(name), capital \(capital)")
+    }
+
+    var capitalLabel: some View {
+        HStack(alignment: .top, spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: "star.fill")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .padding(.top, 2)
+                .accessibilityHidden(true)
+
+            Text(capital)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
     }
 
     func moreInfoButton(action: @escaping () -> Void) -> some View {
@@ -87,7 +99,7 @@ private extension CountryBannerView {
         .buttonStyle(.glass)
     }
 
-    var closeButton: some View {
+    var dismissButton: some View {
         Button(action: onDismiss) {
             Image(systemName: "xmark")
                 .font(DesignSystem.Font.caption)
