@@ -11,14 +11,13 @@ struct HomeScreen: View {
     @Environment(CoinService.self) private var coinService
     @Environment(HomeSectionOrderService.self) private var sectionOrderService
     @Environment(FlashcardService.self) var flashcardService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @Environment(Navigator.self) var coordinator
     @Environment(CountryDataService.self) var countryDataService
     @Environment(FeatureFlagService.self) var featureFlags
 
     @State var dailyChallengeService: DailyChallengeService?
     @State private var selectedMapIndex = 0
-    @State private var blobAnimating = false
     @State private var appeared = false
 
     private let maps: [(name: String, icon: String)] = [
@@ -33,134 +32,14 @@ struct HomeScreen: View {
 
     var body: some View {
         mainFeed
-            .background { scrollableBlobs }
+            .background { AmbientBlobsView(.rich) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .clipped()
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task {
                 loadDailyChallenge()
                 startAnimations()
             }
-    }
-}
-
-// MARK: - Background
-private extension HomeScreen {
-    var scrollableBlobs: some View {
-        ZStack(alignment: .top) {
-            // Section 1 — top hero
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.accent, opacity: 0.35,
-                    endRadius: 280, width: 560, height: 420, blur: 40,
-                    offset: (-100, 0), scale: blobAnimating ? 1.12 : 0.88
-                )
-            )
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.indigo, opacity: 0.28,
-                    endRadius: 240, width: 480, height: 380, blur: 48,
-                    offset: (180, 60), scale: blobAnimating ? 0.86 : 1.12
-                )
-            )
-            // Section 2 — carousel
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.blue, opacity: 0.22,
-                    endRadius: 220, width: 440, height: 340, blur: 44,
-                    offset: (-140, 550), scale: blobAnimating ? 1.08 : 0.92
-                )
-            )
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.purple, opacity: 0.18,
-                    endRadius: 200, width: 400, height: 360, blur: 52,
-                    offset: (200, 800), scale: blobAnimating ? 0.90 : 1.10
-                )
-            )
-            // Section 3 — quiz / discover
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.accent, opacity: 0.20,
-                    endRadius: 220, width: 440, height: 340, blur: 48,
-                    offset: (-80, 1200), scale: blobAnimating ? 1.06 : 0.94
-                )
-            )
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.indigo, opacity: 0.22,
-                    endRadius: 200, width: 400, height: 320, blur: 44,
-                    offset: (180, 1500), scale: blobAnimating ? 0.88 : 1.10
-                )
-            )
-            // Section 4 — records / orgs
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.blue, opacity: 0.18,
-                    endRadius: 240, width: 480, height: 360, blur: 52,
-                    offset: (-120, 1900), scale: blobAnimating ? 1.07 : 0.93
-                )
-            )
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.purple, opacity: 0.16,
-                    endRadius: 220, width: 440, height: 340, blur: 48,
-                    offset: (160, 2250), scale: blobAnimating ? 0.91 : 1.09
-                )
-            )
-            // Section 5 — stats / coming soon
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.accent, opacity: 0.16,
-                    endRadius: 240, width: 480, height: 360, blur: 52,
-                    offset: (-100, 2700), scale: blobAnimating ? 1.05 : 0.95
-                )
-            )
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.indigo, opacity: 0.18,
-                    endRadius: 220, width: 440, height: 340, blur: 44,
-                    offset: (140, 3100), scale: blobAnimating ? 0.92 : 1.08
-                )
-            )
-            homeBlob(
-                BlobConfig(
-                    color: DesignSystem.Color.blue, opacity: 0.14,
-                    endRadius: 260, width: 520, height: 380, blur: 56,
-                    offset: (-80, 3500), scale: blobAnimating ? 1.06 : 0.94
-                )
-            )
-        }
-        .allowsHitTesting(false)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
-    }
-
-    struct BlobConfig {
-        let color: Color
-        let opacity: Double
-        let endRadius: CGFloat
-        let width: CGFloat
-        let height: CGFloat
-        let blur: CGFloat
-        let offset: (CGFloat, CGFloat)
-        let scale: CGFloat
-    }
-
-    func homeBlob(_ config: BlobConfig) -> some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [config.color.opacity(config.opacity), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: config.endRadius
-                )
-            )
-            .frame(width: config.width, height: config.height)
-            .blur(radius: config.blur)
-            .offset(x: config.offset.0, y: config.offset.1)
-            .scaleEffect(config.scale)
     }
 }
 
@@ -548,7 +427,6 @@ private extension HomeScreen {
 
     func startAnimations() {
         appeared = true
-        blobAnimating = true
     }
 
     func openMap(named name: String) {
