@@ -17,7 +17,7 @@ Follow all rules in `~/.claude/rules/personal-apps.md` (shared across all person
 - **UI**: SwiftUI only (UIKit only when SwiftUI can't achieve the goal)
 - **Design pattern**: Views with extracted subviews. MVVM only when views become large
 - **Design system**: `DesignSystem.Color`, `DesignSystem.Font`, `DesignSystem.Spacing`, `DesignSystem.Size`, `DesignSystem.CornerRadius`, `DesignSystem.IconSize`
-- **Navigation**: Coordinator pattern — `AppCoordinator` owns per-tab `TabCoordinator`s. `Screen` (push), `Sheet` (modal), `Cover` (fullScreenCover) enums with factory views. `CoordinatedNavigationStack` wraps each tab.
+- **Navigation**: Single `Destination` enum (presentation-agnostic). Single `Navigator` class with `push()`, `sheet()`, `cover()`. `CoordinatedNavigationStack` wraps each tab, auto-adds close buttons to sheets/covers. NEVER use `NavigationStack` or `NavigationLink` directly.
 - **Data**: 197 countries in `countries.json`, 10m GeoJSON for map borders, 255 PDF flag assets, 29 international organizations
 - **Offline-first**: All data bundled, no network required (World Bank API for live stats)
 - **StoreKit 2**: Full subscription flow (monthly/annual/lifetime), debug override for development
@@ -27,7 +27,7 @@ Follow all rules in `~/.claude/rules/personal-apps.md` (shared across all person
 ```
 Geografy/
   App/                    — Entry point, ContentView
-    Navigation/           — AppCoordinator, TabCoordinator, Screen/Sheet/Cover enums, Factories
+    Navigation/           — AppCoordinator, Navigator, Destination enum, CoordinatedNavigationStack
   Design/
     Theme/                — Colors, Font, Spacing, Size, CornerRadius, IconSize, Shadow
     Component/            — Reusable UI components (see Component Catalog below)
@@ -96,14 +96,16 @@ Geografy/
 These components MUST be reused — NEVER create alternatives:
 
 ### Navigation & Chrome
-- **Close button**: `CircleCloseButton()` — every sheet MUST have one in `.topBarTrailing` toolbar
+- **Close button**: Auto-managed by `CoordinatedNavigationStack` — do NOT add manual close buttons
+- **Close button placement**: Use `.closeButtonPlacementLeading()` when 2+ trailing toolbar items
 - **Section headers**: `SectionHeaderView(title:icon:isNew:)` — accent bar or icon style
 - **Glass buttons**: `GlassButton("Title", systemImage:, role:, fullWidth:)` for primary/secondary actions
 - **Press style**: `PressButtonStyle()` for tappable cards
-- **Toolbar buttons**: Always `.buttonStyle(.plain)` — no tinted toolbar buttons
+- **Toolbar buttons**: Always use `Label("Text", systemImage:)` — NEVER bare `Image(systemName:)`
 
 ### Content Display
-- **Flags**: `FlagView(countryCode:height:)` — PDF vectors with correct aspect ratios
+- **Flags**: `FlagView(countryCode:height:fixedWidth:)` — PDF vectors, use `fixedWidth: true` in list rows for alignment
+- **Quiz timer**: `QuizTimerBadge(seconds:totalSeconds:style:)` — unified timer for all quiz screens
 - **Cards**: `CardView { content }` — standard card background
 - **Country rows**: `CountryRowView(country:isFavorite:...)` — standard country list item
 - **Profile avatar**: `ProfileAvatarView(name:size:)`
@@ -114,7 +116,7 @@ These components MUST be reused — NEVER create alternatives:
 
 ### Selection Components (one solution per problem)
 - **Game type selection**: `TypeSelectionGrid` (horizontal card scroll) — for quiz types, flashcard types
-- **Region selection**: `RegionSelectionBar` (horizontal capsule chips) — for continent/region filtering
+- **Region selection**: `RegionCarousel` (carousel with symmetric peek) — for continent/region filtering
 - **Quiz answer options**: `QuizOptionButton` — for ALL quiz-like answer buttons (Quiz, DailyChallenge, Multiplayer, TimeZone, Trivia)
 - **Difficulty**: Segmented `Picker` — for Easy/Medium/Hard
 - **Compact values**: Menu `Picker` — for question count, theme, etc.
@@ -127,11 +129,22 @@ These components MUST be reused — NEVER create alternatives:
 - **Result stats**: `ResultStatItem(icon:value:label:color:)` — stat grid items
 
 ## Key Conventions
+- **Body = content + modifiers**: Extract inline views into a named property (`scrollContent`, `mainContent`). Body should ONLY be the extracted property + modifier chain.
+- **Modifier chain order**: background → ignoresSafeArea → navigationTitle → navigationBarTitleDisplayMode → closeButtonPlacementLeading → searchable → safeAreaInset → toolbarBackground → toolbarColorScheme → toolbar → task → onAppear → onChange → onReceive → sheet → fullScreenCover → alert → overlay
+- **Property ordering**: `@Environment` first (sorted), then `let`/`@Binding` params, then `@State`
+- **MARK sections**: `Subviews`, `Toolbar`, `Actions`, `Helpers`, `Background` — NO empty line between MARK and content
+- **No withAnimation wrapping state**: Use per-element `.animation(_:value:)` instead — `withAnimation` propagates to toolbar/close buttons
+- **No NavigationStack directly**: Use `CoordinatedNavigationStack` or present via coordinator
+- **No .sheet/.fullScreenCover for Destinations**: Use `coordinator.sheet()` / `coordinator.cover()` — inline `.sheet()` only for views with Bindings/callbacks
+- **Toolbar Labels**: Always `Label("Text", systemImage:)` — NEVER bare `Image(systemName:)` in toolbar buttons
+- **Toolbar placements**: Use semantic `.primaryAction`, `.confirmationAction`, `.cancellationAction` — not positional `.topBarTrailing`
+- **Menu items**: Every menu option MUST have an SF Symbol icon via `Label`
+- **FlagView alignment**: Use `fixedWidth: true` in list rows for consistent text alignment
+- **Backgrounds**: Use `.background { }` modifier — NEVER ZStack for background layers
 - **VStack spacing over padding**: Use `VStack(spacing:)` — NEVER repeat `.padding(.top, X)` on every item
 - **Full variable names**: `geometryReader` not `geo`, `index` not `idx`, `button` not `btn`
-- **Decompose for readability**: Split into well-named functions and computed properties
-- **Never disable SwiftLint**: Fix the underlying issue instead
-- **Screen size compatibility**: Every page must work on iPhone 12 Mini (375pt) and largest iPhones
+- **Never disable SwiftLint**: Fix the underlying issue instead — extract, restructure, break lines
+- **Imports sorted**: Alphabetically — enforced by `sorted_imports` SwiftLint rule
 - **No hardcoded colors**: Colors → `DesignSystem.Color.*`, shadows → `.geoShadow(.subtle/.card/.elevated)`
 - **No SwiftUI colors directly**: No `.white`, `.black`, `.blue` — use DesignSystem tokens
 - **Glass effects**: Use iOS 26 `.glassEffect()` and `.buttonStyle(.glass)`
@@ -139,6 +152,9 @@ These components MUST be reused — NEVER create alternatives:
 - **Blobs in background**: Always `.background { AmbientBlobsView(.preset) }` — NEVER in a ZStack with content
 - **Trunk-based development**: Commit + push every valid increment immediately
 - **Sub-feature folders**: Features with sub-pages use nested folders (e.g., `ExploreGame/ExploreGameRules/View/`)
+- **CountryDataService**: Shared via `@Environment` — load once in `bootstrap()`, never create new instances
+- **Service init()**: Keep lightweight — defer SwiftData fetches to `bootstrap()` for fast app startup
+- **Sections expanded by default**: Use `.onAppear { expandedSections = Set(allKeys) }` for list sections
 
 ## Current State (55+ features)
 - Interactive world map with 258 countries, zoom/pan, country selection, capital pins
