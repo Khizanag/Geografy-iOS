@@ -1,3 +1,4 @@
+import GeografyCore
 import Foundation
 
 struct WordSearchService {

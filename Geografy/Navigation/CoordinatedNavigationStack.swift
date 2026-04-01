@@ -1,4 +1,5 @@
 import SwiftUI
+import Geografy_Core_Service
 
 // MARK: - Coordinated Navigation Stack
 struct CoordinatedNavigationStack<Root: View>: View {

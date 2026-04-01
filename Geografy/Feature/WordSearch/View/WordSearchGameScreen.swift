@@ -1,4 +1,6 @@
+import GeografyCore
 import GeografyDesign
+import Geografy_Core_Service
 import SwiftUI
 
 struct WordSearchGameScreen: View {

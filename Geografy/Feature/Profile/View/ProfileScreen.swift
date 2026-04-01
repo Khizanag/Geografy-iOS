@@ -1,4 +1,5 @@
 import GeografyCore
+import Geografy_Core_Service
 import GeografyDesign
 import SwiftData
 import SwiftUI

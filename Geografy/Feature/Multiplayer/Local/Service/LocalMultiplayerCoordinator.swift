@@ -1,5 +1,7 @@
+import GeografyCore
 #if !os(tvOS)
 import MultipeerConnectivity
+import Geografy_Core_Service
 import SwiftUI
 
 @MainActor

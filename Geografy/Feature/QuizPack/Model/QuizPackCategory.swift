@@ -1,3 +1,4 @@
+import GeografyCore
 import SwiftUI
 
 enum QuizPackCategory: String, CaseIterable, Identifiable {
