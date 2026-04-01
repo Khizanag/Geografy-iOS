@@ -134,7 +134,7 @@ private extension SizeVisualizationScreen {
     }
 }
 
-// MARK: - Helpers
+// MARK: - Supporting Types
 private extension SizeVisualizationScreen {
     enum SortMode: String, CaseIterable, Identifiable {
         case area
@@ -151,7 +151,10 @@ private extension SizeVisualizationScreen {
             }
         }
     }
+}
 
+// MARK: - Helpers
+private extension SizeVisualizationScreen {
     var filteredCountries: [Country] {
         let base = countryDataService.countries
         let searched = searchQuery.isEmpty ? base : base.filter {

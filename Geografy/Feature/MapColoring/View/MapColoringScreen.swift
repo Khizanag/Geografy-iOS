@@ -105,7 +105,10 @@ private extension MapColoringScreen {
             Spacer()
         }
     }
+}
 
+// MARK: - Country Groups
+private extension MapColoringScreen {
     var countryGroupsList: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ForEach(Array(groupedCountries.keys.sorted()), id: \.self) { group in
@@ -188,6 +191,10 @@ private extension MapColoringScreen {
         .buttonStyle(PressButtonStyle())
     }
 
+}
+
+// MARK: - Country Detail Popup
+private extension MapColoringScreen {
     func countryDetailPopup(_ country: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             FlagView(countryCode: country.code, height: 80)

@@ -22,16 +22,16 @@ struct CompareScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle("Compare")
             .onAppear {
-            loadRecentPairs()
-            if let preselected = preselectedCountry, leftCountry == nil {
-                leftCountry = preselected
+                loadRecentPairs()
+                if let preselected = preselectedCountry, leftCountry == nil {
+                    leftCountry = preselected
+                }
             }
-        }
             .sheet(item: $activeSheet) { sheetContent(for: $0) }
     }
 }
 
-// MARK: - Sheet Enum
+// MARK: - Sheet
 private extension CompareScreen {
     enum CompareSheet: Identifiable {
         case pickLeft
@@ -44,10 +44,7 @@ private extension CompareScreen {
             }
         }
     }
-}
 
-// MARK: - Sheet Content
-private extension CompareScreen {
     @ViewBuilder
     func sheetContent(for sheet: CompareSheet) -> some View {
         let excluded: Country? = switch sheet {
@@ -70,7 +67,7 @@ private extension CompareScreen {
     }
 }
 
-// MARK: - Content
+// MARK: - Subviews
 private extension CompareScreen {
     var contentScrollView: some View {
         ScrollView {
@@ -335,6 +332,10 @@ private extension CompareScreen {
         return names.joined(separator: ", ") + suffix
     }
 
+}
+
+// MARK: - Actions
+private extension CompareScreen {
     func saveIfBothSelected() {
         guard let left = leftCountry, let right = rightCountry else { return }
         let pair = ComparisonPair(

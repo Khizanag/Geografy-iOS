@@ -45,7 +45,7 @@ struct MultiplayerMatchScreen: View {
     }
 }
 
-// MARK: - Body Subviews
+// MARK: - Subviews
 private extension MultiplayerMatchScreen {
     var matchContent: some View {
         VStack(spacing: 0) {
@@ -175,7 +175,7 @@ private extension MultiplayerMatchScreen {
     }
 }
 
-// MARK: - Question Content
+// MARK: - Question
 private extension MultiplayerMatchScreen {
     @ViewBuilder
     var questionContent: some View {
