@@ -1,0 +1,44 @@
+#!/bin/zsh
+
+# SwiftLint pre-commit hook
+# Runs swiftlint --strict on staged .swift files only
+
+if ! command -v swiftlint &> /dev/null; then
+    echo "warning: SwiftLint not installed, skipping lint"
+    exit 0
+fi
+
+# Get staged Swift files (added, modified, renamed)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.swift$')
+
+if [ -z "$STAGED_FILES" ]; then
+    exit 0
+fi
+
+echo "Running SwiftLint on $(echo "$STAGED_FILES" | wc -l | tr -d ' ') staged files..."
+
+FAILED=0
+
+echo "$STAGED_FILES" | while IFS= read -r file; do
+    if [ -f "$file" ]; then
+        RESULT=$(swiftlint lint --strict --quiet "$file" 2>&1)
+        if [ -n "$RESULT" ]; then
+            echo "$RESULT"
+            FAILED=1
+        fi
+    fi
+done
+
+# Re-check with all files at once for accurate exit code
+LINT_OUTPUT=$(echo "$STAGED_FILES" | tr '\n' ' ' | xargs swiftlint lint --strict --quiet 2>&1)
+
+if [ -n "$LINT_OUTPUT" ]; then
+    echo ""
+    echo "SwiftLint violations found:"
+    echo "$LINT_OUTPUT"
+    echo ""
+    echo "Fix violations before committing, or use --no-verify to skip."
+    exit 1
+fi
+
+exit 0
