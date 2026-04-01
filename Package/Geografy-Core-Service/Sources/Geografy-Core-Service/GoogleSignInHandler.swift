@@ -128,7 +128,7 @@ public extension GoogleSignInHandler {
         case userInfoFetchFailed
         case missingUserID
 
-        var errorDescription: String? {
+        public var errorDescription: String? {
             switch self {
             case .invalidCallback:
                 "The Google sign-in callback URL was invalid."

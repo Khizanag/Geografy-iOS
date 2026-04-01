@@ -1,6 +1,7 @@
 import AuthenticationServices
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Core_Service
 
 struct SignInOptionsSheet: View {
     @Environment(\.dismiss) private var dismiss

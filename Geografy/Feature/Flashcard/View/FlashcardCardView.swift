@@ -1,6 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Core_Service
 
 struct FlashcardCardView: View {
     @Environment(PronunciationService.self) private var pronunciationService
