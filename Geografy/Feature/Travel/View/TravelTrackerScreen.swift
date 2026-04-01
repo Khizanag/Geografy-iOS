@@ -3,11 +3,11 @@ import GeografyDesign
 import SwiftUI
 
 struct TravelTrackerScreen: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(CountryDataService.self) private var countryDataService
+    @Environment(HapticsService.self) private var hapticsService
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
-    @Environment(HapticsService.self) private var hapticsService
-    @Environment(CountryDataService.self) private var countryDataService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedFilter: TravelStatus? = nil
     @State private var searchText = ""
@@ -17,7 +17,7 @@ struct TravelTrackerScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        contentView
+        extractedContent
             .navigationTitle("Travel Tracker")
             .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search countries…")
@@ -47,39 +47,12 @@ struct TravelTrackerScreen: View {
 
 // MARK: - Subviews
 private extension TravelTrackerScreen {
-    var contentView: some View {
-        ZStack {
-            if countryDataService.countries.isEmpty {
-                loadingView
-            } else {
-                mainContent
-            }
-        }
-    }
-
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button {
-                hapticsService.impact(.light)
-                coordinator.sheet(.travelBucketList)
-            } label: {
-                Label("Bucket List", systemImage: "list.star")
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-        }
-
-        ToolbarItem(placement: .primaryAction) {
-            Button {
-                hapticsService.impact(.light)
-                showCountryPicker = true
-            } label: {
-                Image(systemName: "plus")
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .tint(Color.clear)
-            .buttonStyle(.glassProminent)
+    @ViewBuilder
+    var extractedContent: some View {
+        if countryDataService.countries.isEmpty {
+            loadingView
+        } else {
+            mainContent
         }
     }
 
@@ -164,6 +137,35 @@ private extension TravelTrackerScreen {
     }
 }
 
+// MARK: - Toolbar
+private extension TravelTrackerScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button {
+                hapticsService.impact(.light)
+                coordinator.sheet(.travelBucketList)
+            } label: {
+                Label("Bucket List", systemImage: "list.star")
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+        }
+
+        ToolbarItem(placement: .primaryAction) {
+            Button {
+                hapticsService.impact(.light)
+                showCountryPicker = true
+            } label: {
+                Image(systemName: "plus")
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+            .tint(Color.clear)
+            .buttonStyle(.glassProminent)
+        }
+    }
+}
+
 // MARK: - Filters
 private extension TravelTrackerScreen {
     var filterTabs: some View {
@@ -222,13 +224,12 @@ private extension TravelTrackerScreen {
 
 // MARK: - Country List
 private extension TravelTrackerScreen {
+    @ViewBuilder
     var countryList: some View {
-        Group {
-            if isSearching {
-                searchResultsList
-            } else {
-                trackedCountryList
-            }
+        if isSearching {
+            searchResultsList
+        } else {
+            trackedCountryList
         }
     }
 
@@ -333,25 +334,24 @@ private extension TravelTrackerScreen {
         .buttonStyle(PressButtonStyle())
     }
 
+    @ViewBuilder
     func searchRowTrailing(_ status: TravelStatus?) -> some View {
-        Group {
-            if let status {
-                HStack(spacing: 4) {
-                    Image(systemName: status.icon)
-                        .font(DesignSystem.Font.nano)
-                    Text(status.shortLabel)
-                        .font(DesignSystem.Font.caption2)
-                        .fontWeight(.semibold)
-                }
-                .foregroundStyle(status.color)
-                .padding(.horizontal, DesignSystem.Spacing.xs)
-                .padding(.vertical, DesignSystem.Spacing.xxs)
-                .background(status.color.opacity(0.15), in: Capsule())
-            } else {
-                Image(systemName: "plus.circle")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
+        if let status {
+            HStack(spacing: 4) {
+                Image(systemName: status.icon)
+                    .font(DesignSystem.Font.nano)
+                Text(status.shortLabel)
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.semibold)
             }
+            .foregroundStyle(status.color)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
+            .padding(.vertical, DesignSystem.Spacing.xxs)
+            .background(status.color.opacity(0.15), in: Capsule())
+        } else {
+            Image(systemName: "plus.circle")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
         }
     }
 }
@@ -425,10 +425,7 @@ private extension TravelTrackerScreen {
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xxl)
     }
-}
 
-// MARK: - Background
-private extension TravelTrackerScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
@@ -463,7 +460,10 @@ private extension TravelTrackerScreen {
                 .scaleEffect(blobAnimating ? 1.05 : 0.95)
         }
         .allowsHitTesting(false)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
 
