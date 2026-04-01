@@ -6,113 +6,331 @@ included:
 
 excluded:
   - Geografy/Resource
+  - "**/Tests"
+  - "**/.build"
+
+# MARK: - Disabled rules
 
 disabled_rules:
-  - todo
+  - generic_type_name
+  - identifier_name
   - nesting
-  - large_tuple
-  - inclusive_language
-  - implicit_optional_initialization
-  - for_where
+  - orphaned_doc_comment
+  - todo
+  - trailing_closure
+  - type_name
+  - non_optional_string_data_conversion
 
-opt_in_rules:
-  - empty_count
-  - empty_string
-  - explicit_init
-  - first_where
-  - sorted_imports
+# MARK: - Default rules' configurations
 
+blanket_disable_command:
+  severity: error
+closing_brace:
+  severity: error
+closure_parameter_position:
+  severity: error
+colon:
+  severity: error
+comma:
+  severity: error
+comment_spacing:
+  severity: error
+computed_accessors_order:
+  severity: error
+control_statement:
+  severity: error
+cyclomatic_complexity:
+  - 15
+  - 25
+duplicate_conditions:
+  severity: error
+duplicate_enum_cases:
+  severity: error
+duplicate_imports:
+  severity: error
+duplicated_key_in_dictionary_literal:
+  severity: error
+empty_enum_arguments:
+  severity: error
+empty_parameters:
+  severity: error
+empty_parentheses_with_trailing_closure:
+  severity: error
+file_length:
+  - 650
+  - 1000
+for_where:
+  severity: error
+force_cast:
+  severity: error
+force_try:
+  severity: error
+function_body_length:
+  warning: 60
+  error: 100
+function_parameter_count:
+  - 6
+  - 10
+implicit_getter:
+  severity: error
+inclusive_language:
+  severity: warning
+invalid_swiftlint_command:
+  severity: error
+large_tuple:
+  - 4
+  - 5
+leading_whitespace:
+  severity: error
 line_length:
   warning: 120
   error: 320
   ignores_comments: true
   ignores_urls: true
-
-file_length:
-  warning: 650
-  error: 800
-
-type_body_length:
-  warning: 300
-  error: 500
-
-function_body_length:
-  warning: 60
-  error: 100
-
-identifier_name:
-  min_length:
-    warning: 2
-  excluded:
-    - id
-    - db
-    - xp
-    - cx
-    - cy
-    - xs
-    - sm
-    - md
-    - lg
-    - xl
-    - tv
-    - n
-    - j
-    - a
-    - x
-    - y
-    - g
-    - b
-    - r
-    - i
-    - p
-
+mark:
+  severity: error
+multiple_closures_with_trailing_closure:
+  severity: error
+no_space_in_method_call:
+  severity: error
+opening_brace:
+  severity: error
+redundant_discardable_let:
+  severity: error
+redundant_set_access_control:
+  severity: error
+redundant_string_enum_value:
+  severity: error
+redundant_void_return:
+  severity: error
+return_arrow_whitespace:
+  severity: error
+shorthand_operator:
+  severity: error
+statement_position:
+  severity: error
+switch_case_alignment:
+  severity: error
+syntactic_sugar:
+  severity: error
 trailing_comma:
   mandatory_comma: true
-
+  severity: error
+trailing_newline:
+  severity: error
+trailing_semicolon:
+  severity: error
+trailing_whitespace:
+  severity: error
+type_body_length:
+  - 300
+  - 500
+vertical_parameter_alignment:
+  severity: error
 vertical_whitespace:
   max_empty_lines: 1
+  severity: error
+void_return:
+  severity: error
 
-cyclomatic_complexity:
-  warning: 15
-  error: 25
+# MARK: - Opt-in rules
+
+opt_in_rules:
+  - closure_body_length
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - comma_inheritance
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - direct_return
+  - discouraged_assert
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - explicit_init
+  - fallthrough
+  - fatal_error_message
+  - first_where
+  - flatmap_over_map_reduce
+  - force_unwrapping
+  - identical_operands
+  - implicit_return
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - literal_expression_end_indentation
+  - local_doc_comment
+  - lower_acl_than_parent
+  - modifier_order
+  - multiline_arguments
+  - multiline_arguments_brackets
+  - multiline_function_chains
+  - multiline_literal_brackets
+  - multiline_parameters
+  - multiline_parameters_brackets
+  - number_separator
+  - operator_usage_whitespace
+  - overridden_super_call
+  - pattern_matching_keywords
+  - period_spacing
+  - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
+  - reduce_into
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - return_value_from_void_function
+  - shorthand_optional_binding
+  - sorted_first_last
+  - sorted_imports
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - vertical_parameter_alignment_on_call
+  - vertical_whitespace_closing_braces
+  - vertical_whitespace_opening_braces
+  - yoda_condition
+
+# MARK: - Opt-in rules' configurations
+
+closure_body_length:
+  warning: 30
+  error: 100
+closure_end_indentation:
+  severity: error
+closure_spacing:
+  severity: error
+collection_alignment:
+  severity: error
+comma_inheritance:
+  severity: error
+contains_over_filter_count:
+  severity: error
+contains_over_filter_is_empty:
+  severity: error
+contains_over_first_not_nil:
+  severity: error
+direct_return:
+  severity: error
+empty_collection_literal:
+  severity: error
+empty_count:
+  severity: error
+empty_string:
+  severity: error
+explicit_init:
+  severity: error
+first_where:
+  severity: error
+force_unwrapping:
+  severity: error
+identical_operands:
+  severity: error
+implicit_return:
+  severity: error
+joined_default_parameter:
+  severity: error
+last_where:
+  severity: error
+literal_expression_end_indentation:
+  severity: error
+lower_acl_than_parent:
+  severity: error
+modifier_order:
+  severity: error
+multiline_arguments:
+  severity: error
+multiline_arguments_brackets:
+  severity: error
+multiline_function_chains:
+  severity: error
+multiline_literal_brackets:
+  severity: error
+multiline_parameters:
+  severity: error
+multiline_parameters_brackets:
+  severity: error
+number_separator:
+  severity: error
+operator_usage_whitespace:
+  severity: error
+overridden_super_call:
+  severity: error
+pattern_matching_keywords:
+  severity: error
+period_spacing:
+  severity: error
+prefer_self_type_over_type_of_self:
+  severity: error
+prefer_zero_over_explicit_init:
+  severity: error
+reduce_into:
+  severity: error
+redundant_nil_coalescing:
+  severity: error
+redundant_type_annotation:
+  severity: error
+return_value_from_void_function:
+  severity: error
+shorthand_optional_binding:
+  severity: error
+sorted_first_last:
+  severity: error
+sorted_imports:
+  severity: error
+toggle_bool:
+  severity: error
+unneeded_parentheses_in_closure_argument:
+  severity: error
+vertical_parameter_alignment_on_call:
+  severity: error
+vertical_whitespace_closing_braces:
+  severity: error
+vertical_whitespace_opening_braces:
+  severity: error
+yoda_condition:
+  severity: error
+
+# MARK: - Custom rules
 
 custom_rules:
-    no_empty_line_after_mark_comment:
-        name: "No Empty Line After MARK Comment"
-        regex: '// MARK:[^\n]*\n\n'
-        message: "No empty line allowed after MARK comment"
-        severity: error
+  no_empty_line_after_mark_comment:
+    name: "No Empty Line After MARK Comment"
+    regex: '// MARK:[^\n]*\n\n'
+    message: "No empty line allowed after MARK comment"
+    severity: error
 
-    no_empty_line_after_doc_comment:
-        name: "No Empty Line After Documentation Comment"
-        regex: '///[^\n]*\n\n\s*(public |private |internal |fileprivate |open |@|struct |class |enum |func |var |let |protocol |extension )'
-        message: "No empty line allowed between documentation comment and declaration"
-        severity: error
+  no_empty_line_after_doc_comment:
+    name: "No Empty Line After Documentation Comment"
+    regex: '///[^\n]*\n\n\s*(public |private |internal |fileprivate |open |@|struct |class |enum |func |var |let |protocol |extension )'
+    message: "No empty line between documentation comment and declaration"
+    severity: error
 
-    no_navigation_link:
-        name: "No NavigationLink"
-        regex: 'NavigationLink\s*[\({]'
-        message: "Use coordinator.push() / coordinator.present() instead of NavigationLink"
-        severity: error
-        included: "Geografy/"
-        excluded: "GeografyTV/"
+  no_navigation_link:
+    name: "No NavigationLink"
+    regex: 'NavigationLink\s*[\({]'
+    message: "Use coordinator.push() instead of NavigationLink"
+    severity: error
+    included: "Geografy/"
+    excluded: "GeografyTV/"
 
-    no_inline_font:
-        name: "No Inline Font System Size"
-        regex: '\.font\(\.system\(size:'
-        message: "Use DesignSystem.Font.* tokens instead of inline .font(.system(size:))"
-        severity: error
-        included: "Geografy/"
-        excluded: "Typography\\.swift|GeografyTV/"
+  no_inline_font:
+    name: "No Inline Font System Size"
+    regex: '\.font\(\.system\(size:'
+    message: "Use DesignSystem.Font.* tokens instead of .font(.system(size:))"
+    severity: error
+    included: "Geografy/"
+    excluded: "Typography\\.swift|GeografyTV/"
 
-    no_on_tap_gesture_navigation:
-        name: "No onTapGesture for Navigation"
-        regex: '\.onTapGesture\s*\{[^}]*coordinator\.'
-        message: "Use Button with coordinator.push() instead of onTapGesture"
-        severity: error
+  no_on_tap_gesture_navigation:
+    name: "No onTapGesture for Navigation"
+    regex: '\.onTapGesture\s*\{[^}]*coordinator\.'
+    message: "Use Button with coordinator.push() instead of onTapGesture"
+    severity: error
 
-    no_presentation_drag_indicator:
-        name: "No presentationDragIndicator"
-        regex: '\.presentationDragIndicator\('
-        message: "Do not use .presentationDragIndicator — the system default is preferred"
-        severity: error
+  no_presentation_drag_indicator:
+    name: "No presentationDragIndicator"
+    regex: '\.presentationDragIndicator\('
+    message: "Do not use .presentationDragIndicator"
+    severity: error
