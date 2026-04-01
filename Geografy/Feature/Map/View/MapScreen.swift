@@ -1,4 +1,5 @@
 import Geografy_Feature_Map
+import Geografy_Core_Service
 import GeografyCore
 import GeografyDesign
 import SwiftUI
