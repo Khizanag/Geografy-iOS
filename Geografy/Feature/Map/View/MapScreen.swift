@@ -142,7 +142,9 @@ private extension MapScreen {
         } label: {
             Text("Aa")
                 .font(DesignSystem.Font.headline)
-                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
+                .foregroundStyle(
+                    mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary
+                )
                 .padding(DesignSystem.Spacing.xs)
                 .background {
                     if mapState.showLabels {
@@ -233,7 +235,7 @@ private extension MapScreen {
     }
 }
 
-// MARK: - Actions
+// MARK: - Map Geometry
 private extension MapScreen {
     func clampVerticalOffset() {
         let bounds = mapState.contentBounds
@@ -355,6 +357,10 @@ private extension MapScreen {
         return mapState.contentBounds
     }
 
+}
+
+// MARK: - Actions
+private extension MapScreen {
     func handleTap(at point: CGPoint, in size: CGSize) {
         let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
         let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
@@ -384,6 +390,10 @@ private extension MapScreen {
         mapState.selectedCountryCode = nil
     }
 
+}
+
+// MARK: - Data Loading
+private extension MapScreen {
     func loadMapData() async {
         // Capture on main thread before switching to background
         let filter = continentFilter
