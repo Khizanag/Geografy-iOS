@@ -50,14 +50,9 @@ struct CountryListScreen: View {
             .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
             .toolbar { toolbarContent }
-            .onChange(of: groupBy) {
-                expandedSections = Set(sectionKeys)
-            }
-            .onChange(of: countryDataService.countries.count) {
-                if expandedSections.isEmpty {
-                    expandedSections = Set(sectionKeys)
-                }
-            }
+            .onAppear { expandedSections = Set(sectionKeys) }
+            .onChange(of: groupBy) { expandedSections = Set(sectionKeys) }
+            .onChange(of: countryDataService.countries.count) { expandedSections = Set(sectionKeys) }
     }
 }
 
