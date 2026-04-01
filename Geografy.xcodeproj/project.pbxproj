@@ -169,7 +169,6 @@
 				Feature/GeographyFeatures/View/GeographyFeaturesScreen.swift,
 				Feature/Home/Model/HomeSection.swift,
 				Feature/Home/View/HomeBorderChallengeCard.swift,
-				Feature/Home/View/HomeChallengeRoomCard.swift,
 				Feature/Home/View/HomeComingSoonSection.swift,
 				Feature/Home/View/HomeContinentStatsCard.swift,
 				Feature/Home/View/HomeCountryCompareCard.swift,
