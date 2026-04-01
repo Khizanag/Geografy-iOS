@@ -111,11 +111,11 @@ private extension CountryListScreen {
         Button {
             sortAscending.toggle()
         } label: {
-            Image(systemName: sortAscending ? "arrow.up" : "arrow.down")
-                .font(DesignSystem.Font.footnote)
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
+            Label(
+                sortAscending ? "Sort Ascending" : "Sort Descending",
+                systemImage: sortAscending ? "arrow.up" : "arrow.down"
+            )
         }
-        .buttonStyle(.plain)
     }
 
     var filterMenu: some View {
@@ -128,11 +128,12 @@ private extension CountryListScreen {
             displaySubmenu
             resetButton
         } label: {
-            let icon = hasActiveFilters
-                ? "line.3.horizontal.decrease.circle.fill"
-                : "line.3.horizontal.decrease"
-            Image(systemName: icon)
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
+            Label(
+                "Filter",
+                systemImage: hasActiveFilters
+                    ? "line.3.horizontal.decrease.circle.fill"
+                    : "line.3.horizontal.decrease"
+            )
         }
         .tint(DesignSystem.Color.onAccent)
     }

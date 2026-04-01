@@ -46,11 +46,8 @@ private extension WordSearchGameScreen {
                     Button {
                         isPaused.toggle()
                     } label: {
-                        Image(systemName: isPaused ? "play.fill" : "pause.fill")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                        Label(isPaused ? "Resume" : "Pause", systemImage: isPaused ? "play.fill" : "pause.fill")
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .fixedSize()
