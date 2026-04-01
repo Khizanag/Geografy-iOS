@@ -14,6 +14,18 @@ struct IndependenceTimelineScreen: View {
     private let service = IndependenceTimelineService()
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Independence Timeline")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear { blobAnimating = true }
+    }
+}
+
+// MARK: - Subviews
+private extension IndependenceTimelineScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 eraFilter
@@ -26,16 +38,8 @@ struct IndependenceTimelineScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Independence Timeline")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { blobAnimating = true }
     }
-}
 
-// MARK: - Subviews
-private extension IndependenceTimelineScreen {
     var eraFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
@@ -200,7 +204,10 @@ private extension IndependenceTimelineScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(reduceMotion ? .default : .easeInOut(duration: 4).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? .default : .easeInOut(duration: 4).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
 

@@ -13,6 +13,18 @@ struct OceanExplorerScreen: View {
     private let segments = ["Oceans", "Seas"]
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Ocean Explorer")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear { startBlobAnimation() }
+    }
+}
+
+// MARK: - Subviews
+private extension OceanExplorerScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 segmentedPicker
@@ -22,16 +34,8 @@ struct OceanExplorerScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Ocean Explorer")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { startBlobAnimation() }
     }
-}
 
-// MARK: - Subviews
-private extension OceanExplorerScreen {
     var segmentedPicker: some View {
         Picker("Type", selection: $selectedSegment) {
             ForEach(segments.indices, id: \.self) { index in
@@ -80,7 +84,9 @@ private extension OceanExplorerScreen {
         }
         .padding(DesignSystem.Spacing.md)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(ocean.name), area: \(formatArea(ocean.area)), average depth: \(formatDepth(ocean.averageDepth))")
+        .accessibilityLabel(
+            "\(ocean.name), area: \(formatArea(ocean.area)), average depth: \(formatDepth(ocean.averageDepth))"
+        )
         .accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
     }
 
@@ -227,7 +233,10 @@ private extension OceanExplorerScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(reduceMotion ? .default : .easeInOut(duration: 4).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? .default : .easeInOut(duration: 4).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
 
