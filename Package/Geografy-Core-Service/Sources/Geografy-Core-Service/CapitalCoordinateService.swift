@@ -16,7 +16,7 @@ public enum CapitalCoordinateService {
         coordinates[countryCode]
     }
 
-    private static let coordinates: [String: Coordinate] = [
+    nonisolated(unsafe) private static let coordinates: [String: Coordinate] = [
         "AF": Coordinate(latitude: 34.52, longitude: 69.18),
         "AL": Coordinate(latitude: 41.33, longitude: 19.82),
         "DZ": Coordinate(latitude: 36.74, longitude: 3.06),

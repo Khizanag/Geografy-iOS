@@ -3,6 +3,7 @@ import Foundation
 import Geografy_Core_Common
 import Observation
 import SwiftData
+import Geografy_Core_Service
 
 @Observable
 @MainActor

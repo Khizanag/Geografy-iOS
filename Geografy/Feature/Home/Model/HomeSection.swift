@@ -1,5 +1,6 @@
 import Foundation
 import Geografy_Core_Common
+import Geografy_Core_Service
 
 enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case guestBanner

@@ -3,6 +3,7 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftData
 import SwiftUI
+import Geografy_Core_Service
 
 struct QuizResultsScreen: View {
     @Environment(XPService.self) private var xpService
