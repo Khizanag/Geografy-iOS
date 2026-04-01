@@ -3,6 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "Geografy-Core-Navigation",
+    platforms: [
+        .iOS("26.0"),
+        .tvOS("26.0"),
+    ],
     products: [
         .library(
             name: "Geografy-Core-Navigation",

@@ -3,6 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "Geografy-Feature-Quotes",
+    platforms: [
+        .iOS("26.0"),
+        .tvOS("26.0"),
+    ],
     products: [
         .library(
             name: "Geografy-Feature-Quotes",
