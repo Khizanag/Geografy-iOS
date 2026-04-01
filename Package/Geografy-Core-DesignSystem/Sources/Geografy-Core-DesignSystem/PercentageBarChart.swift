@@ -1,14 +1,25 @@
 import Geografy_Core_Common
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct PercentageBarChart: View {
-    let title: String
-    let icon: String
-    let items: [PercentageItem]
-    let appeared: Bool
+public struct PercentageBarChart: View {
+    public let title: String
+    public let icon: String
+    public let items: [PercentageItem]
+    public let appeared: Bool
 
-    var body: some View {
+    public init(
+        title: String,
+        icon: String,
+        items: [PercentageItem],
+        appeared: Bool
+    ) {
+        self.title = title
+        self.icon = icon
+        self.items = items
+        self.appeared = appeared
+    }
+
+    public var body: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 headerRow

@@ -1,18 +1,30 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct TypeSelectionGrid<T: SelectableType>: View {
+public struct TypeSelectionGrid<T: SelectableType>: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
 
-    let items: [T]
-    let selectedIDs: Set<T.ID>
-    let onSelect: (T) -> Void
-    var isLocked: (T) -> Bool = { _ in false }
+    public let items: [T]
+    public let selectedIDs: Set<T.ID>
+    public let onSelect: (T) -> Void
+    public var isLocked: (T) -> Bool = { _ in false }
 
-    var body: some View {
+    public init(
+        items: [T],
+        selectedIDs: Set<T.ID>,
+        onSelect: @escaping (T) -> Void,
+        isLocked: @escaping (T) -> Bool = { _ in false }
+    ) {
+        self.items = items
+        self.selectedIDs = selectedIDs
+        self.onSelect = onSelect
+        self.isLocked = isLocked
+    }
+
+    public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(items) { item in
@@ -32,7 +44,9 @@ private extension TypeSelectionGrid {
         let locked = isLocked(item)
 
         return Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             onSelect(item)
         } label: {
             cardContent(item: item, isSelected: isSelected, isLocked: locked)

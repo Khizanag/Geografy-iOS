@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_DesignSystem
 
 enum SpellingBeeIllustration: Int, CaseIterable {
     case flagAndType

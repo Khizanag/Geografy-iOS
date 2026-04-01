@@ -1,12 +1,15 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct PremiumLockedOverlay: View {
+public struct PremiumLockedOverlay: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
-    let onUnlock: () -> Void
+    public let onUnlock: () -> Void
 
-    var body: some View {
+    public init(onUnlock: @escaping () -> Void) {
+        self.onUnlock = onUnlock
+    }
+
+    public var body: some View {
         ZStack {
             Rectangle()
                 .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.cardBackground) : AnyShapeStyle(.ultraThinMaterial))

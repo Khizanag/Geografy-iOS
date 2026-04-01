@@ -1,13 +1,24 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct ResultStatItem: View {
-    let icon: String
-    let value: String
-    let label: String
-    var color: Color = DesignSystem.Color.accent
+public struct ResultStatItem: View {
+    public let icon: String
+    public let value: String
+    public let label: String
+    public var color: Color = DesignSystem.Color.accent
 
-    var body: some View {
+    public init(
+        icon: String,
+        value: String,
+        label: String,
+        color: Color = DesignSystem.Color.accent
+    ) {
+        self.icon = icon
+        self.value = value
+        self.label = label
+        self.color = color
+    }
+
+    public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.title2)

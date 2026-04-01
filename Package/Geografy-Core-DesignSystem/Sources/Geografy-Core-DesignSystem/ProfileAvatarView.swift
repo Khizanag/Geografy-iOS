@@ -1,11 +1,15 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct ProfileAvatarView: View {
-    let name: String
-    let size: CGFloat
+public struct ProfileAvatarView: View {
+    public let name: String
+    public let size: CGFloat
 
-    var body: some View {
+    public init(name: String, size: CGFloat) {
+        self.name = name
+        self.size = size
+    }
+
+    public var body: some View {
         ZStack {
             Circle()
                 .fill(gradient)

@@ -1,14 +1,27 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct EmptyStateView: View {
-    let icon: String
-    let title: String
-    let subtitle: String
-    var actionTitle: String?
-    var action: (() -> Void)?
+public struct EmptyStateView: View {
+    public let icon: String
+    public let title: String
+    public let subtitle: String
+    public var actionTitle: String?
+    public var action: (() -> Void)?
 
-    var body: some View {
+    public init(
+        icon: String,
+        title: String,
+        subtitle: String,
+        actionTitle: String? = nil,
+        action: (() -> Void)? = nil
+    ) {
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        self.actionTitle = actionTitle
+        self.action = action
+    }
+
+    public var body: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             iconCircle
             titleLabel

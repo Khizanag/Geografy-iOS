@@ -1,15 +1,22 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct AlphabetJumpIndex: View {
-    let letters: [String]
-    let onSelect: (String) -> Void
+public struct AlphabetJumpIndex: View {
+    public let letters: [String]
+    public let onSelect: (String) -> Void
 
     @GestureState private var isDragging = false
     @State private var selectedLetter: String?
     @State private var totalHeight: CGFloat = 0
 
-    var body: some View {
+    public init(
+        letters: [String],
+        onSelect: @escaping (String) -> Void
+    ) {
+        self.letters = letters
+        self.onSelect = onSelect
+    }
+
+    public var body: some View {
         extractedContent
             .frame(width: 44)
             .contentShape(Rectangle())
@@ -45,6 +52,7 @@ private extension AlphabetJumpIndex {
         } action: { height in
             totalHeight = height
         }
+        #if !os(tvOS)
         .gesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
                 .updating($isDragging) { _, state, _ in
@@ -60,6 +68,7 @@ private extension AlphabetJumpIndex {
                     selectedLetter = nil
                 }
         )
+        #endif
     }
 }
 

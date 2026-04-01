@@ -1,12 +1,21 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct QuizTimerBadge: View {
-    let seconds: Int
-    var totalSeconds: Int?
-    var style: Style = .pill
+public struct QuizTimerBadge: View {
+    public let seconds: Int
+    public var totalSeconds: Int?
+    public var style: Style = .pill
 
-    var body: some View {
+    public init(
+        seconds: Int,
+        totalSeconds: Int? = nil,
+        style: Style = .pill
+    ) {
+        self.seconds = seconds
+        self.totalSeconds = totalSeconds
+        self.style = style
+    }
+
+    public var body: some View {
         badgeContent
             .foregroundStyle(timerColor)
             .padding(.horizontal, style == .compact ? DesignSystem.Spacing.xs : DesignSystem.Spacing.sm)
@@ -20,7 +29,7 @@ struct QuizTimerBadge: View {
 }
 
 // MARK: - Style
-extension QuizTimerBadge {
+public extension QuizTimerBadge {
     enum Style {
         case pill
         case compact

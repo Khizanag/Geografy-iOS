@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_DesignSystem
 
 enum FlashcardIllustration: Int, CaseIterable {
     case tapToFlip

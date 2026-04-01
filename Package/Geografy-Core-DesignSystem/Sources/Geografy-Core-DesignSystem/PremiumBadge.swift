@@ -1,8 +1,9 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct PremiumBadge: View {
-    var body: some View {
+public struct PremiumBadge: View {
+    public init() {}
+
+    public var body: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "crown.fill")
                 .font(DesignSystem.Font.caption2)

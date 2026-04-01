@@ -1,16 +1,26 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct RegionSelectionBar<T: RegionSelectable>: View {
+public struct RegionSelectionBar<T: RegionSelectable>: View {
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
 
-    let items: [T]
-    let selectedID: T.ID
-    let onSelect: (T) -> Void
+    public let items: [T]
+    public let selectedID: T.ID
+    public let onSelect: (T) -> Void
 
-    var body: some View {
+    public init(
+        items: [T],
+        selectedID: T.ID,
+        onSelect: @escaping (T) -> Void
+    ) {
+        self.items = items
+        self.selectedID = selectedID
+        self.onSelect = onSelect
+    }
+
+    public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(items) { item in
@@ -28,7 +38,9 @@ private extension RegionSelectionBar {
         let isSelected = selectedID == item.id
 
         return Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             onSelect(item)
         } label: {
             HStack(spacing: DesignSystem.Spacing.xxs) {

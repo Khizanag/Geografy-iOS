@@ -1,13 +1,12 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct InfoTile: View {
+public struct InfoTile: View {
     private let icon: String
     private let title: String
     private let value: String
     private let onTap: () -> Void
 
-    init(
+    public init(
         icon: String,
         title: String,
         value: String,
@@ -19,7 +18,7 @@ struct InfoTile: View {
         self.onTap = onTap
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: onTap) {
             CardView {
                 tileContent

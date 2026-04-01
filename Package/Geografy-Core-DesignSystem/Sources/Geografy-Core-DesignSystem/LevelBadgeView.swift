@@ -1,26 +1,25 @@
 import Geografy_Core_Common
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-enum LevelBadgeSize {
+public enum LevelBadgeSize {
     case small
     case large
 
-    var diameter: CGFloat {
+    public var diameter: CGFloat {
         switch self {
         case .small: 44
         case .large: 96
         }
     }
 
-    var numberFont: Font {
+    public var numberFont: Font {
         switch self {
         case .small: DesignSystem.Font.headline
         case .large: DesignSystem.Font.largeTitle.weight(.black)
         }
     }
 
-    var glowRadius: CGFloat {
+    public var glowRadius: CGFloat {
         switch self {
         case .small: 6
         case .large: 18
@@ -28,16 +27,26 @@ enum LevelBadgeSize {
     }
 }
 
-struct LevelBadgeView: View {
+public struct LevelBadgeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    let level: UserLevel
-    var size: LevelBadgeSize = .small
-    var animated: Bool = false
+    public let level: UserLevel
+    public var size: LevelBadgeSize = .small
+    public var animated: Bool = false
 
     @State private var glowPulse = false
 
-    var body: some View {
+    public init(
+        level: UserLevel,
+        size: LevelBadgeSize = .small,
+        animated: Bool = false
+    ) {
+        self.level = level
+        self.size = size
+        self.animated = animated
+    }
+
+    public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             badgeCircle
             if size == .large {

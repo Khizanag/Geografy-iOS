@@ -1,13 +1,17 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct SessionProgressBar: View {
-    let progress: CGFloat
-    var height: CGFloat = 6
+public struct SessionProgressBar: View {
+    public let progress: CGFloat
+    public var height: CGFloat = 6
 
     @State private var animatedProgress: CGFloat = 0
 
-    var body: some View {
+    public init(progress: CGFloat, height: CGFloat = 6) {
+        self.progress = progress
+        self.height = height
+    }
+
+    public var body: some View {
         extractedContent
             .frame(height: height)
             .accessibilityElement(children: .ignore)
