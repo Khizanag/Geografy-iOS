@@ -86,18 +86,16 @@ struct GeografyApp: App {
                         )
                     }
                 }
-                #if os(iOS)
                 .task(priority: .background) {
+                    #if os(iOS)
                     let granted = await NotificationService.requestPermission()
                     if granted {
                         NotificationService.scheduleStreakReminder()
                         NotificationService.scheduleDailyChallengeReminder()
                     }
-                }
-                .task(priority: .background) {
                     SpotlightIndexer.indexCountries(countryDataService.countries)
+                    #endif
                 }
-                #endif
                 .task(priority: .background) {
                     widgetDataBridge.loadCountriesIfNeeded()
                     widgetDataBridge.synchronize(
