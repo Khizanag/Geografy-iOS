@@ -1,6 +1,6 @@
 #if os(iOS)
 import CoreSpotlight
-import GeografyCore
+import Geografy_Core_Common
 
 enum SpotlightIndexer {
     static func indexCountries(_ countries: [Country]) {

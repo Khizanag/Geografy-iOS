@@ -1,4 +1,4 @@
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import StoreKit
 import SwiftUI
 

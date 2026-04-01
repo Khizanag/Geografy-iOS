@@ -1,6 +1,6 @@
 import Combine
 import Foundation
-import GeografyCore
+import Geografy_Core_Common
 import Observation
 import SwiftData
 

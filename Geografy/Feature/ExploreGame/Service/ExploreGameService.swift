@@ -1,6 +1,6 @@
 import Foundation
 import Geografy_Core_Service
-import GeografyCore
+import Geografy_Core_Common
 
 /// Manages Explore Game sessions: daily game selection and practice mode.
 @Observable

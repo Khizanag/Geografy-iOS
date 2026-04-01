@@ -18,7 +18,7 @@
 import AuthenticationServices
 import CryptoKit
 import Foundation
-import GeografyCore
+import Geografy_Core_Common
 import UIKit
 
 // MARK: - GoogleUserInfo

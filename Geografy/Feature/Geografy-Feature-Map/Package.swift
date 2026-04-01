@@ -14,15 +14,15 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../../../Package/GeografyCore"),
-        .package(path: "../../../Package/GeografyDesign"),
+        .package(path: "../../../Package/Geografy-Core-Common"),
+        .package(path: "../../../Package/Geografy-Core-DesignSystem"),
     ],
     targets: [
         .target(
             name: "Geografy-Feature-Map",
             dependencies: [
-                .product(name: "GeografyCore", package: "GeografyCore"),
-                .product(name: "GeografyDesign", package: "GeografyDesign"),
+                .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
+                .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
             ]
         ),
         .testTarget(

@@ -1,7 +1,7 @@
-import GeografyCore
+import Geografy_Core_Common
 import Accessibility
 import Geografy_Core_Service
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct DailyChallengeResultView: View {

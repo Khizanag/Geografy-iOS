@@ -1,6 +1,6 @@
 import Accessibility
-import GeografyCore
-import GeografyDesign
+import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 import SwiftData
 import SwiftUI
 

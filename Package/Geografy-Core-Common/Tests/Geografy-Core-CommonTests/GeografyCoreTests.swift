@@ -1,4 +1,4 @@
-@testable import GeografyCore
+@testable import Geografy_Core_Common
 import Testing
 
 @Test func example() async throws {

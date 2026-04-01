@@ -1,4 +1,4 @@
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 // MARK: - Continent Explore Section

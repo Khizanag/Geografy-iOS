@@ -1,5 +1,5 @@
 import AuthenticationServices
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct SignInOptionsSheet: View {

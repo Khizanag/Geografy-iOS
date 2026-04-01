@@ -1,5 +1,5 @@
 import Charts
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct WorldBankChartSheet: View {

@@ -1,6 +1,6 @@
 import GameController
-import GeografyCore
-import GeografyDesign
+import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct QuizSessionScreen: View {
