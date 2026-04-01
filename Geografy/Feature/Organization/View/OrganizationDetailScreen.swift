@@ -207,7 +207,7 @@ private extension OrganizationDetailScreen {
                 Button { coordinator.push(.countryDetail(country)) } label: {
                     CardView {
                         HStack(spacing: DesignSystem.Spacing.sm) {
-                            FlagView(countryCode: country.code, height: DesignSystem.Size.md)
+                            FlagView(countryCode: country.code, height: DesignSystem.Size.md, fixedWidth: true)
                             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                                 Text(country.name)
                                     .font(DesignSystem.Font.headline)

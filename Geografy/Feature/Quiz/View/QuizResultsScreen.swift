@@ -143,7 +143,7 @@ private extension QuizResultsScreen {
                     .frame(width: DesignSystem.Spacing.lg)
 
                 if let flagCode = answer.question.promptFlag {
-                    FlagView(countryCode: flagCode, height: DesignSystem.Spacing.lg)
+                    FlagView(countryCode: flagCode, height: DesignSystem.Spacing.lg, fixedWidth: true)
                         .frame(width: 40, alignment: .center)
                 }
 

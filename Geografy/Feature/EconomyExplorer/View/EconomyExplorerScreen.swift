@@ -111,7 +111,7 @@ private extension EconomyExplorerScreen {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     rankBadge(rank: rank)
-                    FlagView(countryCode: country.code, height: 28)
+                    FlagView(countryCode: country.code, height: 28, fixedWidth: true)
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                     countryInfo(country: country, perCapita: perCapita)
                     Spacer(minLength: 0)

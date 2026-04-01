@@ -54,7 +54,7 @@ private extension CountryRowView {
     var contentRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if showFlag {
-                FlagView(countryCode: country.code, height: 36)
+                FlagView(countryCode: country.code, height: 36, fixedWidth: true)
                     .geoShadow(.subtle)
                     .frame(width: 56, alignment: .center)
             }

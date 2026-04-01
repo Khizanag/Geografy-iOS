@@ -80,7 +80,7 @@ private extension SizeVisualizationScreen {
 
     func referenceRow(_ country: Country) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: country.code, height: 20)
+            FlagView(countryCode: country.code, height: 20, fixedWidth: true)
             Text("Reference: \(country.name)")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.medium)

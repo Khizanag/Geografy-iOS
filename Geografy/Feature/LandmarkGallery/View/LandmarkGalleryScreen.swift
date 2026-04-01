@@ -114,7 +114,7 @@ private extension LandmarkGalleryScreen {
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
                         HStack(spacing: 4) {
-                            FlagView(countryCode: landmark.countryCode, height: 14)
+                            FlagView(countryCode: landmark.countryCode, height: 14, fixedWidth: true)
                                 .clipShape(RoundedRectangle(cornerRadius: 2))
                             Text(landmark.city)
                                 .font(DesignSystem.Font.caption2)

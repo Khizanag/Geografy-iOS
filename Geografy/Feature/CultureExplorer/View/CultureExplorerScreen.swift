@@ -60,7 +60,7 @@ private extension CultureExplorerScreen {
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
-                    FlagView(countryCode: profile.countryCode, height: 36)
+                    FlagView(countryCode: profile.countryCode, height: 36, fixedWidth: true)
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                     rowInfo(profile)
                     Spacer()

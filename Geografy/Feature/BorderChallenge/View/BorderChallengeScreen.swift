@@ -194,7 +194,7 @@ private extension BorderChallengeScreen {
 
         return HStack(spacing: DesignSystem.Spacing.sm) {
             if isFound || isRevealing {
-                FlagView(countryCode: neighbor.code, height: 24)
+                FlagView(countryCode: neighbor.code, height: 24, fixedWidth: true)
             } else {
                 RoundedRectangle(cornerRadius: 4)
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)

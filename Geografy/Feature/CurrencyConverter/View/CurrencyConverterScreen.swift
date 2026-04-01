@@ -179,7 +179,7 @@ private extension CurrencyConverterScreen {
 
                 if let entry {
                     HStack(spacing: DesignSystem.Spacing.xs) {
-                        FlagView(countryCode: entry.countryCode, height: 22)
+                        FlagView(countryCode: entry.countryCode, height: 22, fixedWidth: true)
                         VStack(alignment: .leading, spacing: 1) {
                             Text(entry.code)
                                 .font(DesignSystem.Font.subheadline)
@@ -440,7 +440,7 @@ private struct CurrencyPickerSheet: View {
                 dismiss()
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: entry.countryCode, height: 24)
+                    FlagView(countryCode: entry.countryCode, height: 24, fixedWidth: true)
                         .frame(width: 36, alignment: .center)
                     VStack(alignment: .leading, spacing: 2) {
                         Text(entry.code)
