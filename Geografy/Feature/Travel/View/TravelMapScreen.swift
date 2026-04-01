@@ -4,18 +4,18 @@ import SwiftUI
 
 struct TravelMapScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(TravelService.self) private var travelService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(HapticsService.self) private var hapticsService
+    @Environment(TravelService.self) private var travelService
 
     let filter: TravelMapFilter
 
+    @State private var isInitialized = false
+    @State private var isLoaded = false
     @State private var mapState = MapState()
     @State private var screenSize: CGSize = .zero
-    @State private var isInitialized = false
     @State private var selectedFilter: TravelMapFilter
     @State private var showLabels = false
-    @State private var isLoaded = false
 
     init(filter: TravelMapFilter) {
         self.filter = filter
@@ -23,7 +23,7 @@ struct TravelMapScreen: View {
     }
 
     var body: some View {
-        mapLayer
+        extractedContent
             .background(DesignSystem.Color.ocean)
             .ignoresSafeArea()
             .navigationTitle(selectedFilter.displayName)
@@ -36,30 +36,22 @@ struct TravelMapScreen: View {
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    labelsToggle
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    filterMenu
-                }
-            }
+            .toolbar { toolbarContent }
             .task { await loadMapData() }
     }
 }
 
-// MARK: - Map
+// MARK: - Subviews
 private extension TravelMapScreen {
-    var mapLayer: some View {
-        ZStack {
-            GeometryReader { geometry in
-                mapCanvas(in: geometry.size)
-                    .onAppear { screenSize = geometry.size }
-                    .onChange(of: geometry.size) { _, newSize in
-                        screenSize = newSize
-                    }
-            }
-
+    var extractedContent: some View {
+        GeometryReader { geometry in
+            mapCanvas(in: geometry.size)
+                .onAppear { screenSize = geometry.size }
+                .onChange(of: geometry.size) { _, newSize in
+                    screenSize = newSize
+                }
+        }
+        .overlay {
             if mapState.countryShapes.isEmpty {
                 MapLoadingView()
                     .transition(.opacity)
@@ -84,70 +76,47 @@ private extension TravelMapScreen {
         .gesture(magnifyGesture)
     }
 
-    var magnifyGesture: some Gesture {
-        MagnifyGesture()
-            .onChanged { value in
-                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
-                let scaleRatio = newScale / mapState.scale
-                mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio,
-                    height: mapState.offset.height * scaleRatio
-                )
-                mapState.scale = newScale
-            }
-            .onEnded { _ in
-                mapState.lastScale = mapState.scale
-                mapState.lastOffset = mapState.offset
-            }
-    }
+    var infoBanner: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: filterIcon)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(filterColor)
+                .accessibilityHidden(true)
 
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                mapState.offset = CGSize(
-                    width: mapState.lastOffset.width + value.translation.width,
-                    height: mapState.lastOffset.height + value.translation.height
-                )
-            }
-            .onEnded { _ in
-                mapState.lastOffset = mapState.offset
-            }
-    }
-}
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text(selectedFilter.displayName)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
-// MARK: - Data
-private extension TravelMapScreen {
-    var highlightedStatuses: [String: TravelStatus] {
-        switch selectedFilter {
-        case .visited:
-            travelService.entries.filter { $0.value == .visited }
-        case .wantToVisit:
-            travelService.entries.filter { $0.value == .wantToVisit }
-        case .all:
-            travelService.entries
+                Text("\(travelCodes.count) countries")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+
+            Spacer()
         }
-    }
-
-    var travelCodes: Set<String> {
-        Set(highlightedStatuses.keys)
-    }
-
-    var styledShapes: [CountryShape] {
-        mapState.countryShapes
-            .map { shape in
-                var modified = shape
-                if !travelCodes.contains(shape.id) {
-                    modified.color = Color(hex: "1A1A2E").opacity(0.5)
-                    // Hide labels for non-travel countries
-                    modified.name = ""
-                }
-                return modified
-            }
+        .padding(DesignSystem.Spacing.sm)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .animation(.easeInOut(duration: 0.3), value: selectedFilter)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(selectedFilter.displayName), \(travelCodes.count) countries")
     }
 }
 
 // MARK: - Toolbar
 private extension TravelMapScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            labelsToggle
+        }
+        ToolbarItem(placement: .primaryAction) {
+            filterMenu
+        }
+    }
+
     var labelsToggle: some View {
         Button {
             showLabels.toggle()
@@ -184,34 +153,66 @@ private extension TravelMapScreen {
     }
 }
 
-// MARK: - Info Banner
+// MARK: - Gestures
 private extension TravelMapScreen {
-    var infoBanner: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: filterIcon)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(filterColor)
-                .accessibilityHidden(true)
-
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(selectedFilter.displayName)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                Text("\(travelCodes.count) countries")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+    var magnifyGesture: some Gesture {
+        MagnifyGesture()
+            .onChanged { value in
+                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
+                let scaleRatio = newScale / mapState.scale
+                mapState.offset = CGSize(
+                    width: mapState.offset.width * scaleRatio,
+                    height: mapState.offset.height * scaleRatio
+                )
+                mapState.scale = newScale
             }
+            .onEnded { _ in
+                mapState.lastScale = mapState.scale
+                mapState.lastOffset = mapState.offset
+            }
+    }
 
-            Spacer()
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                mapState.offset = CGSize(
+                    width: mapState.lastOffset.width + value.translation.width,
+                    height: mapState.lastOffset.height + value.translation.height
+                )
+            }
+            .onEnded { _ in
+                mapState.lastOffset = mapState.offset
+            }
+    }
+}
+
+// MARK: - Helpers
+private extension TravelMapScreen {
+    var highlightedStatuses: [String: TravelStatus] {
+        switch selectedFilter {
+        case .visited:
+            travelService.entries.filter { $0.value == .visited }
+        case .wantToVisit:
+            travelService.entries.filter { $0.value == .wantToVisit }
+        case .all:
+            travelService.entries
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .animation(.easeInOut(duration: 0.3), value: selectedFilter)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(selectedFilter.displayName), \(travelCodes.count) countries")
+    }
+
+    var travelCodes: Set<String> {
+        Set(highlightedStatuses.keys)
+    }
+
+    var styledShapes: [CountryShape] {
+        mapState.countryShapes
+            .map { shape in
+                var modified = shape
+                if !travelCodes.contains(shape.id) {
+                    modified.color = Color(hex: "1A1A2E").opacity(0.5)
+                    modified.name = ""
+                }
+                return modified
+            }
     }
 
     var filterIcon: String {
@@ -231,7 +232,7 @@ private extension TravelMapScreen {
     }
 }
 
-// MARK: - Data Loading
+// MARK: - Actions
 private extension TravelMapScreen {
     func loadMapData() async {
         let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
