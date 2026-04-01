@@ -13,64 +13,56 @@ extension CountryDetailScreen {
         if !funFacts.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("Fun Facts")
-                CardView {
-                    VStack(spacing: 0) {
-                        ForEach(Array(funFacts.enumerated()), id: \.offset) { index, fact in
-                            FunFactRow(fact: fact)
-                            if index < funFacts.count - 1 {
-                                Divider()
-                                    .padding(.leading, 52)
-                            }
-                        }
-                    }
+
+                ForEach(Array(funFacts.enumerated()), id: \.offset) { index, fact in
+                    FunFactCard(fact: fact, index: index)
                 }
             }
         }
     }
 }
 
-// MARK: - Fun Fact Row
-private struct FunFactRow: View {
+// MARK: - Fun Fact Card
+private struct FunFactCard: View {
     let fact: String
+    let index: Int
 
-    @State private var expanded = false
+    @State private var showDetail = false
 
     var body: some View {
-        Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                expanded.toggle()
+        cardButton
+            .sheet(isPresented: $showDetail) {
+                FunFactDetailSheet(fact: fact, index: index)
             }
-        } label: {
-            rowContent
-        }
-        .buttonStyle(PressButtonStyle())
     }
 }
 
-// MARK: - Subviews
-private extension FunFactRow {
-    var rowContent: some View {
-        HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
-            iconCircle
-            factText
-            Spacer(minLength: 0)
-            chevron
+// MARK: - Card Content
+private extension FunFactCard {
+    var cardButton: some View {
+        Button { showDetail = true } label: {
+            CardView {
+                HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
+                    iconCircle
+                    factText
+                    Spacer(minLength: 0)
+                    chevron
+                }
+                .padding(DesignSystem.Spacing.md)
+            }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .contentShape(Rectangle())
-        .accessibilityElement(children: .combine)
+        .buttonStyle(PressButtonStyle())
         .accessibilityLabel("Fun fact: \(fact)")
-        .accessibilityHint(expanded ? "Double tap to collapse" : "Double tap to expand")
     }
 
     var iconCircle: some View {
         ZStack {
             Circle()
                 .fill(DesignSystem.Color.warning.opacity(0.15))
-                .frame(width: 32, height: 32)
-            Image(systemName: "lightbulb.fill")
+                .frame(width: 36, height: 36)
+            Text("\(index + 1)")
                 .font(DesignSystem.Font.footnote)
+                .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.warning)
         }
         .accessibilityHidden(true)
@@ -80,17 +72,58 @@ private extension FunFactRow {
         Text(fact)
             .font(DesignSystem.Font.subheadline)
             .foregroundStyle(DesignSystem.Color.textPrimary)
-            .lineLimit(expanded ? nil : 2)
+            .lineLimit(2)
             .multilineTextAlignment(.leading)
-            .animation(.easeInOut(duration: 0.2), value: expanded)
     }
 
     var chevron: some View {
-        Image(systemName: "chevron.down")
+        Image(systemName: "chevron.right")
             .font(DesignSystem.Font.caption2)
             .foregroundStyle(DesignSystem.Color.textTertiary)
-            .rotationEffect(.degrees(expanded ? 180 : 0))
-            .animation(.spring(response: 0.3, dampingFraction: 0.75), value: expanded)
             .accessibilityHidden(true)
+    }
+}
+
+// MARK: - Detail Sheet
+private struct FunFactDetailSheet: View {
+    let fact: String
+    let index: Int
+
+    var body: some View {
+        sheetContent
+            .navigationTitle("Fun Fact")
+            .navigationBarTitleDisplayMode(.inline)
+            .presentationDetents([.medium])
+    }
+}
+
+// MARK: - Sheet Content
+private extension FunFactDetailSheet {
+    var sheetContent: some View {
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                headerIcon
+
+                Text(fact)
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(DesignSystem.Spacing.lg)
+            .frame(maxWidth: .infinity)
+        }
+        .background(DesignSystem.Color.background)
+    }
+
+    var headerIcon: some View {
+        ZStack {
+            Circle()
+                .fill(DesignSystem.Color.warning.opacity(0.15))
+                .frame(width: 56, height: 56)
+            Image(systemName: "lightbulb.fill")
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(DesignSystem.Color.warning)
+        }
     }
 }
