@@ -5,6 +5,7 @@ import SwiftUI
 struct MapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
@@ -14,7 +15,6 @@ struct MapScreen: View {
     @Namespace private var flagNamespace
 
     @State private var mapState = MapState()
-    @State private var navigateToCountry: Country?
     @State private var showFlagPreview = false
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
@@ -33,24 +33,8 @@ struct MapScreen: View {
             }
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    if isLandscape {
-                        bannerOverlay
-                            .frame(maxWidth: 500)
-                            .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    labelsToggleButton
-                }
-            }
-            .task {
-                await loadMapData()
-            }
-            .navigationDestination(item: $navigateToCountry) { country in
-                CountryDetailScreen(country: country)
-            }
+            .toolbar { toolbarContent }
+            .task { await loadMapData() }
             .overlay {
                 if showFlagPreview, let code = mapState.selectedCountryCode {
                     flagPreview(for: code)
@@ -133,8 +117,22 @@ private extension MapScreen {
 
 }
 
-// MARK: - Controls
+// MARK: - Toolbar
 private extension MapScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            if isLandscape {
+                bannerOverlay
+                    .frame(maxWidth: 500)
+                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+            }
+        }
+        ToolbarItem(placement: .primaryAction) {
+            labelsToggleButton
+        }
+    }
+
     var labelsToggleButton: some View {
         Button {
             mapState.showLabels.toggle()
@@ -179,7 +177,7 @@ private extension MapScreen {
                         showFlagPreview = true
                     }
                 },
-                onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
+                onMoreInfo: country.map { selected in { coordinator.push(.countryDetail(selected)) } },
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
             .transition(.move(edge: .top).combined(with: .opacity))
