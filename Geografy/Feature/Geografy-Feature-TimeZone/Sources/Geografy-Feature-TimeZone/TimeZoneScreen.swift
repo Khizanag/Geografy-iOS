@@ -5,7 +5,8 @@ import Geografy_Core_Service
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct TimeZoneScreen: View {
+public struct TimeZoneScreen: View {
+    public init() {}
     #if !os(tvOS)
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
@@ -16,7 +17,7 @@ struct TimeZoneScreen: View {
     @State private var selectedTab: TimeZoneTab = .worldClock
     @State private var blobAnimating = false
 
-    var body: some View {
+    public var body: some View {
         mainContent
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
@@ -124,15 +125,20 @@ private extension TimeZoneScreen {
 }
 
 // MARK: - CountryWithZone
-struct CountryWithZone: Identifiable {
-    let country: Country
-    let timeZone: TimeZone
+public struct CountryWithZone: Identifiable {
+    public let country: Country
+    public let timeZone: TimeZone
 
-    var id: String { country.code }
+    public init(country: Country, timeZone: TimeZone) {
+        self.country = country
+        self.timeZone = timeZone
+    }
 
-    var currentTime: Date { Date() }
+    public var id: String { country.code }
 
-    var utcOffsetHours: Double {
+    public var currentTime: Date { Date() }
+
+    public var utcOffsetHours: Double {
         Double(timeZone.secondsFromGMT(for: Date())) / 3600
     }
 
@@ -161,7 +167,7 @@ private struct WorldClockView: View {
 
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
-    var body: some View {
+    public var body: some View {
         listContent
             .listStyle(.plain)
             .searchable(text: $searchText, prompt: "Search country…")
@@ -246,7 +252,7 @@ private struct AllZonesView: View {
 
     let countries: [CountryWithZone]
 
-    var body: some View {
+    public var body: some View {
         scrollContent
     }
 

@@ -1,10 +1,9 @@
 import Foundation
-import Geografy_Core_Common
 
 /// Static mapping from ISO country code to primary IANA time zone identifier.
 /// Countries with multiple zones use the capital / most populous zone.
-enum CountryTimeZoneData {
-    static let timeZoneByCountryCode: [String: String] = [
+public enum CountryTimeZoneData {
+    public static let timeZoneByCountryCode: [String: String] = [
         "AD": "Europe/Andorra",
         "AE": "Asia/Dubai",
         "AF": "Asia/Kabul",
@@ -201,7 +200,7 @@ enum CountryTimeZoneData {
         "ZW": "Africa/Harare",
     ]
 
-    static func timeZone(for countryCode: String) -> TimeZone? {
+    public static func timeZone(for countryCode: String) -> TimeZone? {
         guard let identifier = timeZoneByCountryCode[countryCode] else { return nil }
         return TimeZone(identifier: identifier)
     }
