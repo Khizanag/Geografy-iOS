@@ -1,3 +1,4 @@
+import GeografyCore
 import GeografyDesign
 import SwiftUI
 
@@ -196,7 +197,7 @@ private extension SettingsScreen {
         }
     }
 
-    func authenticatedAccountHeader(profile: AuthService.UserProfile?) -> some View {
+    func authenticatedAccountHeader(profile: UserProfile?) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()
