@@ -1,6 +1,6 @@
-import GeografyCore
+import Geografy_Core_Common
 #if !os(tvOS)
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct CustomQuizShareScreen: View {

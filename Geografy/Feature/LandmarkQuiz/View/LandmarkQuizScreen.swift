@@ -1,6 +1,6 @@
 import Combine
 import Geografy_Core_Service
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct LandmarkQuizScreen: View {

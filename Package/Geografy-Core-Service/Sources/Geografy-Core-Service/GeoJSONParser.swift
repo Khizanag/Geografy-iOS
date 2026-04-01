@@ -1,7 +1,7 @@
 import CoreGraphics
 import Foundation
-import GeografyCore
-import GeografyDesign
+import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 
 public enum GeoJSONParser {
     private static var territoryMergeMap: [String: String] {

@@ -1,5 +1,5 @@
 #if !os(tvOS)
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 // MARK: - Level Progress Section

@@ -1,7 +1,7 @@
 import CoreSpotlight
 import Geografy_Core_Service
-import GeografyCore
-import GeografyDesign
+import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct ContentView: View {

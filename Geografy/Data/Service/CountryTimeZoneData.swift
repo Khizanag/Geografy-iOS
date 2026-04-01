@@ -1,5 +1,5 @@
 import Foundation
-import GeografyCore
+import Geografy_Core_Common
 
 /// Static mapping from ISO country code to primary IANA time zone identifier.
 /// Countries with multiple zones use the capital / most populous zone.

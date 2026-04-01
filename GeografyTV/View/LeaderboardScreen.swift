@@ -1,5 +1,5 @@
 import GameKit
-import GeografyDesign
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct LeaderboardScreen: View {

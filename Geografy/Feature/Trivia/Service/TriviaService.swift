@@ -1,5 +1,5 @@
 import Foundation
-import GeografyCore
+import Geografy_Core_Common
 
 struct TriviaService {
     func generateQuestions(from countries: [Country]) -> [TriviaQuestion] {

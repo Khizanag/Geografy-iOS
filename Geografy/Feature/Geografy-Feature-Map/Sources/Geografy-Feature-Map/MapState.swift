@@ -1,4 +1,4 @@
-import GeografyCore
+import Geografy_Core_Common
 import SwiftUI
 
 @MainActor

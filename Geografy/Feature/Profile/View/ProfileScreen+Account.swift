@@ -1,6 +1,6 @@
 #if !os(tvOS)
-import GeografyCore
-import GeografyDesign
+import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 import SwiftUI
 
 // MARK: - Quiz History
