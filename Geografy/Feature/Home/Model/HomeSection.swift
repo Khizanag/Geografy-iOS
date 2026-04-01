@@ -13,7 +13,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case progress
     case flagGame
     case trivia
-    case spellingBee
     case learningPath
     case mapPuzzle
     case landmarkQuiz
@@ -51,7 +50,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .progress: "Statistics"
         case .flagGame: "Flag Matching"
         case .trivia: "Trivia"
-        case .spellingBee: "Spelling Bee"
         case .learningPath: "Learning Path"
         case .mapPuzzle: "Map Puzzle"
         case .landmarkQuiz: "Landmark Quiz"
@@ -88,7 +86,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .progress: "chart.bar.fill"
         case .flagGame: "flag.fill"
         case .trivia: "questionmark.bubble.fill"
-        case .spellingBee: "textformat.abc"
         case .learningPath: "graduationcap.fill"
         case .mapPuzzle: "puzzlepiece.fill"
         case .landmarkQuiz: "photo.fill"
@@ -134,7 +131,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .srsReview: .flashcards
         case .flagGame: .flagGame
         case .trivia: .trivia
-        case .spellingBee: .spellingBee
         case .learningPath: .learningPath
         case .landmarkQuiz: .landmarkQuiz
         case .feed: .feed

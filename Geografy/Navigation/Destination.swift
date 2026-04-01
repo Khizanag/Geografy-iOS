@@ -74,7 +74,6 @@ extension Destination {
         case .signIn: SignInOptionsSheet()
         case .speedRunSession(let region): SpeedRunSessionScreen(region: region)
         case .speedRunSetup: SpeedRunSetupScreen()
-        case .spellingBee: SpellingBeeScreen()
         case .srsStudy: SRSStudyScreen()
         case .territorialDisputes: TerritorialDisputesScreen()
         case .themes: ThemesScreen()

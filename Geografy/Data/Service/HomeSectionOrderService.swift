@@ -34,7 +34,6 @@ final class HomeSectionOrderService {
             .worldRecords,
             .trivia,
             .organizations,
-            .spellingBee,
             .countryCompare,
             .travelBucketList,
             .landmarkQuiz,

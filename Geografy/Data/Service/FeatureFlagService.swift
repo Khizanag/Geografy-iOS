@@ -36,7 +36,6 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
     case localMultiplayer
     case flagGame
     case trivia
-    case spellingBee
     case wordSearch
     case borderChallenge
     case landmarkQuiz
@@ -76,7 +75,6 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
         case .localMultiplayer: "Local Multiplayer"
         case .flagGame: "Flag Game"
         case .trivia: "Trivia"
-        case .spellingBee: "Spelling Bee"
         case .wordSearch: "Word Search"
         case .borderChallenge: "Border Challenge"
         case .landmarkQuiz: "Landmark Quiz"
@@ -116,7 +114,6 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
         case .localMultiplayer: "antenna.radiowaves.left.and.right"
         case .flagGame: "flag.fill"
         case .trivia: "questionmark.circle"
-        case .spellingBee: "textformat.abc"
         case .wordSearch: "character.magnify"
         case .borderChallenge: "square.dashed"
         case .landmarkQuiz: "building.columns"
@@ -149,8 +146,7 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
     var category: Category {
         switch self {
         case .dailyChallenge, .speedRun, .flashcards, .exploreGame,
-             .flagGame, .trivia, .spellingBee, .wordSearch,
-             .borderChallenge, .landmarkQuiz,
+             .flagGame, .trivia, .wordSearch, .borderChallenge, .landmarkQuiz,
              .quizPacks, .customQuiz, .learningPath:
             .games
         case .multiplayer, .localMultiplayer, .leaderboards, .friends:

@@ -464,7 +464,6 @@ private extension HomeScreen {
         switch section {
         case .flagGame: flagGameSection
         case .trivia: triviaSection
-        case .spellingBee: spellingBeeSection
         case .learningPath: learningPathSection
         case .mapPuzzle: mapPuzzleSection
         case .landmarkQuiz: landmarkQuizSection

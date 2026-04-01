@@ -87,13 +87,7 @@ private extension TestChecklistService {
             "Score tracks correctly",
             "Result screen at end",
         ]),
-        "spellingBee": TestChecklist(items: [
-            "Flag and hint display correctly",
-            "Letter input and validation works",
-            "Correct spelling advances to next",
-            "Info guide sheet opens",
-        ]),
-        "landmarkQuiz": TestChecklist(items: [
+"landmarkQuiz": TestChecklist(items: [
             "Landmark images load",
             "Answer options display",
             "Score and progress tracking",
