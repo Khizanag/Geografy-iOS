@@ -12,17 +12,10 @@ struct TravelJournalDetailScreen: View {
     @State private var showDeleteConfirmation = false
 
     var body: some View {
-        scrollContent
+        extractedContent
             .navigationTitle(entry.title)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton()
-                }
-                ToolbarItem(placement: .primaryAction) {
-                    editButton
-                }
-            }
+            .toolbar { toolbarContent }
             .confirmationDialog(
                 "Delete Entry",
                 isPresented: $showDeleteConfirmation,
@@ -41,8 +34,18 @@ struct TravelJournalDetailScreen: View {
     }
 }
 
-// MARK: - Subviews
+// MARK: - Toolbar
 private extension TravelJournalDetailScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            CircleCloseButton()
+        }
+        ToolbarItem(placement: .primaryAction) {
+            editButton
+        }
+    }
+
     var editButton: some View {
         Button {
             activeSheet = .editEntry(entry)
@@ -52,8 +55,11 @@ private extension TravelJournalDetailScreen {
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
+}
 
-    var scrollContent: some View {
+// MARK: - Subviews
+private extension TravelJournalDetailScreen {
+    var extractedContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 headerSection
@@ -73,9 +79,7 @@ private extension TravelJournalDetailScreen {
     }
 
     var headerSection: some View {
-        CardView(
-            cornerRadius: DesignSystem.CornerRadius.extraLarge
-        ) {
+        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 countryRow
                 ratingRow
@@ -92,14 +96,10 @@ private extension TravelJournalDetailScreen {
             VStack(alignment: .leading, spacing: 2) {
                 Text(countryName)
                     .font(DesignSystem.Font.title2)
-                    .foregroundStyle(
-                        DesignSystem.Color.textPrimary
-                    )
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
                 Text(entry.formattedDateRange)
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(
-                        DesignSystem.Color.textSecondary
-                    )
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             Spacer(minLength: 0)
         }
@@ -108,13 +108,9 @@ private extension TravelJournalDetailScreen {
     var ratingRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(1...5, id: \.self) { star in
-                Image(
-                    systemName: star <= entry.rating
-                        ? "star.fill"
-                        : "star"
-                )
-                .font(DesignSystem.Font.title3)
-                .foregroundStyle(DesignSystem.Color.warning)
+                Image(systemName: star <= entry.rating ? "star.fill" : "star")
+                    .font(DesignSystem.Font.title3)
+                    .foregroundStyle(DesignSystem.Color.warning)
             }
             Spacer(minLength: 0)
             durationBadge
@@ -132,51 +128,30 @@ private extension TravelJournalDetailScreen {
         .foregroundStyle(DesignSystem.Color.accent)
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(
-            DesignSystem.Color.accent.opacity(0.12),
-            in: Capsule()
-        )
+        .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
     }
 
     var dateRow: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
-            dateDetail(
-                label: "Start",
-                icon: "airplane.departure",
-                date: entry.startDate
-            )
-            dateDetail(
-                label: "End",
-                icon: "airplane.arrival",
-                date: entry.endDate
-            )
+            dateDetail(label: "Start", icon: "airplane.departure", date: entry.startDate)
+            dateDetail(label: "End", icon: "airplane.arrival", date: entry.endDate)
             Spacer(minLength: 0)
         }
     }
 
-    func dateDetail(
-        label: String,
-        icon: String,
-        date: Date
-    ) -> some View {
+    func dateDetail(label: String, icon: String, date: Date) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(
-                    DesignSystem.Color.textTertiary
-                )
+                .foregroundStyle(DesignSystem.Color.textTertiary)
             VStack(alignment: .leading, spacing: 1) {
                 Text(label)
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(
-                        DesignSystem.Color.textTertiary
-                    )
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
                 Text(formattedDate(date))
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.medium)
-                    .foregroundStyle(
-                        DesignSystem.Color.textPrimary
-                    )
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
             }
         }
     }
@@ -185,84 +160,44 @@ private extension TravelJournalDetailScreen {
 // MARK: - Content Sections
 private extension TravelJournalDetailScreen {
     var photosSection: some View {
-        VStack(
-            alignment: .leading,
-            spacing: DesignSystem.Spacing.xs
-        ) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(
                 title: "Photos (\(entry.photoFileNames.count))",
                 icon: "photo.fill"
             )
-            TravelJournalPhotoGrid(
-                images: loadedPhotos,
-                isReadOnly: true
-            )
+            TravelJournalPhotoGrid(images: loadedPhotos, isReadOnly: true)
         }
     }
 
     var notesSection: some View {
-        VStack(
-            alignment: .leading,
-            spacing: DesignSystem.Spacing.xs
-        ) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Notes", icon: "note.text")
             CardView {
                 Text(entry.notes)
                     .font(DesignSystem.Font.body)
-                    .foregroundStyle(
-                        DesignSystem.Color.textPrimary
-                    )
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .leading
-                    )
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(DesignSystem.Spacing.md)
             }
         }
     }
 
     var detailsSection: some View {
-        VStack(
-            alignment: .leading,
-            spacing: DesignSystem.Spacing.xs
-        ) {
-            SectionHeaderView(
-                title: "Details",
-                icon: "info.circle"
-            )
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+            SectionHeaderView(title: "Details", icon: "info.circle")
             CardView {
                 VStack(spacing: DesignSystem.Spacing.sm) {
-                    detailRow(
-                        icon: "calendar",
-                        label: "Duration",
-                        value: durationText
-                    )
-                    detailRow(
-                        icon: "photo",
-                        label: "Photos",
-                        value: "\(entry.photoFileNames.count)"
-                    )
-                    detailRow(
-                        icon: "star.fill",
-                        label: "Rating",
-                        value: "\(entry.rating)/5"
-                    )
-                    detailRow(
-                        icon: "clock",
-                        label: "Created",
-                        value: formattedDate(entry.createdAt)
-                    )
+                    detailRow(icon: "calendar", label: "Duration", value: durationText)
+                    detailRow(icon: "photo", label: "Photos", value: "\(entry.photoFileNames.count)")
+                    detailRow(icon: "star.fill", label: "Rating", value: "\(entry.rating)/5")
+                    detailRow(icon: "clock", label: "Created", value: formattedDate(entry.createdAt))
                 }
                 .padding(DesignSystem.Spacing.md)
             }
         }
     }
 
-    func detailRow(
-        icon: String,
-        label: String,
-        value: String
-    ) -> some View {
+    func detailRow(icon: String, label: String, value: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.footnote)
@@ -270,16 +205,12 @@ private extension TravelJournalDetailScreen {
                 .frame(width: 20)
             Text(label)
                 .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(
-                    DesignSystem.Color.textSecondary
-                )
+                .foregroundStyle(DesignSystem.Color.textSecondary)
             Spacer(minLength: 0)
             Text(value)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.medium)
-                .foregroundStyle(
-                    DesignSystem.Color.textPrimary
-                )
+                .foregroundStyle(DesignSystem.Color.textPrimary)
         }
     }
 
@@ -298,9 +229,7 @@ private extension TravelJournalDetailScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
                 DesignSystem.Color.error.opacity(0.1),
-                in: RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
             )
         }
         .buttonStyle(PressButtonStyle())
