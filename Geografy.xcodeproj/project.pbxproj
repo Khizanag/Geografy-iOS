@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17D9BCE998F9907C1C96B4DD /* GeografyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 13D82248DB522887EFAAD1C3 /* GeografyCore */; };
-		43ADC19535306C63A9CF7235 /* GeografyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 34FC847202CF095DC0971632 /* GeografyCore */; };
 		4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */; };
 		727A0FDC2F7D52E3001B7073 /* Geografy-Feature-Map in Frameworks */ = {isa = PBXBuildFile; productRef = 727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */; };
 		727A15E62F7D5BC5001B7073 /* Geografy-Core-Service in Frameworks */ = {isa = PBXBuildFile; productRef = 727A15E52F7D5BC5001B7073 /* Geografy-Core-Service */; };
-		76D2AA51564B4B0B8E8EB005 /* GeografyDesign in Frameworks */ = {isa = PBXBuildFile; productRef = A8CC38025DD34FC658A3E9C3 /* GeografyDesign */; };
-		97B8D39022A4E6E3F0DF5189 /* GeografyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 95C210184C659B4DF16FD56F /* GeografyCore */; };
-		DC78F1C91C17F8E81AE3075D /* GeografyDesign in Frameworks */ = {isa = PBXBuildFile; productRef = EA372ADABE7CE7452D776C96 /* GeografyDesign */; };
+		727A214C2F7D6582001B7073 /* Geografy-Core-Common in Frameworks */ = {isa = PBXBuildFile; productRef = 727A214B2F7D6582001B7073 /* Geografy-Core-Common */; };
+		727A214E2F7D6582001B7073 /* Geografy-Core-DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -343,23 +340,20 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */,
-				97B8D39022A4E6E3F0DF5189 /* GeografyCore in Frameworks */,
 			);
 		};
 		B2C3D4E5F60718293A4B5C6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				727A214E2F7D6582001B7073 /* Geografy-Core-DesignSystem in Frameworks */,
 				727A0FDC2F7D52E3001B7073 /* Geografy-Feature-Map in Frameworks */,
+				727A214C2F7D6582001B7073 /* Geografy-Core-Common in Frameworks */,
 				727A15E62F7D5BC5001B7073 /* Geografy-Core-Service in Frameworks */,
-				43ADC19535306C63A9CF7235 /* GeografyCore in Frameworks */,
-				DC78F1C91C17F8E81AE3075D /* GeografyDesign in Frameworks */,
 			);
 		};
 		TV0000000000000000FRAMWK /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				17D9BCE998F9907C1C96B4DD /* GeografyCore in Frameworks */,
-				76D2AA51564B4B0B8E8EB005 /* GeografyDesign in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -432,10 +426,10 @@
 			);
 			name = Geografy;
 			packageProductDependencies = (
-				34FC847202CF095DC0971632 /* GeografyCore */,
-				EA372ADABE7CE7452D776C96 /* GeografyDesign */,
 				727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */,
 				727A15E52F7D5BC5001B7073 /* Geografy-Core-Service */,
+				727A214B2F7D6582001B7073 /* Geografy-Core-Common */,
+				727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */,
 			);
 			productName = Geografy;
 			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
@@ -456,10 +450,6 @@
 				TV00000000000000000GROUP /* GeografyTV */,
 			);
 			name = GeografyTV;
-			packageProductDependencies = (
-				13D82248DB522887EFAAD1C3 /* GeografyCore */,
-				A8CC38025DD34FC658A3E9C3 /* GeografyDesign */,
-			);
 			productName = GeografyTV;
 			productReference = TV000000000000000000PROD /* GeografyTV.app */;
 			productType = "com.apple.product-type.application";
@@ -495,8 +485,6 @@
 			mainGroup = C3D4E5F60718293A4B5C6D7E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */,
-				8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = D4E5F60718293A4B5C6D7E8F /* Products */;
@@ -883,28 +871,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Package/GeografyDesign;
-		};
-		927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Package/GeografyCore;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		13D82248DB522887EFAAD1C3 /* GeografyCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */;
-			productName = GeografyCore;
-		};
-		34FC847202CF095DC0971632 /* GeografyCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */;
-			productName = GeografyCore;
-		};
 		727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-Map";
@@ -913,20 +880,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Core-Service";
 		};
-		95C210184C659B4DF16FD56F /* GeografyCore */ = {
+		727A214B2F7D6582001B7073 /* Geografy-Core-Common */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 927CBC359A8FFAB97A2EE9AF /* XCLocalSwiftPackageReference "Package/GeografyCore" */;
-			productName = GeografyCore;
+			productName = "Geografy-Core-Common";
 		};
-		A8CC38025DD34FC658A3E9C3 /* GeografyDesign */ = {
+		727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */;
-			productName = GeografyDesign;
-		};
-		EA372ADABE7CE7452D776C96 /* GeografyDesign */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8D71238E3FE7FA0DAECDCBF7 /* XCLocalSwiftPackageReference "Package/GeografyDesign" */;
-			productName = GeografyDesign;
+			productName = "Geografy-Core-DesignSystem";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
