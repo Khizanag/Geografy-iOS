@@ -20,14 +20,14 @@ struct SpeakerButton: View {
             }
         } label: {
             Image(systemName: isActivelySpeaking ? "speaker.wave.3.fill" : "speaker.wave.2")
-                .font(DesignSystem.Font.footnote.weight(.medium))
+                .font(DesignSystem.Font.caption2.weight(.medium))
                 .foregroundStyle(
                     isActivelySpeaking
                         ? DesignSystem.Color.accent
                         : DesignSystem.Color.textSecondary
                 )
                 .symbolEffect(.variableColor.iterative.reversing, isActive: isActivelySpeaking)
-                .frame(width: 44, height: 44)
+                .frame(width: 32, height: 32)
         }
         .glassEffect(.regular.interactive(), in: .circle)
         .buttonStyle(.plain)
