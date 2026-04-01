@@ -28,6 +28,7 @@ import Geografy_Feature_LandmarkGallery
 import Geografy_Feature_LandmarkQuiz
 import Geografy_Feature_LanguageExplorer
 import Geografy_Feature_LearningPath
+import Geografy_Feature_Map
 import Geografy_Feature_MapColoring
 import Geografy_Feature_MapPuzzle
 import Geografy_Feature_Multiplayer

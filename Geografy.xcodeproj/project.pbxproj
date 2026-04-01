@@ -282,12 +282,9 @@
 				Feature/Home/View/HomeWordSearchCard.swift,
 				Feature/Home/View/HomeWorldRecordsCard.swift,
 				Feature/Home/View/MapCarouselCard.swift,
-				Feature/Map/View/MapScreen.swift,
-				Feature/Map/View/OrganizationMapScreen.swift,
 				Feature/More/Model/MoreSheet.swift,
 				Feature/More/View/MoreScreen.swift,
 				Feature/More/View/TestChecklistSheet.swift,
-				Feature/Quotes/View/QuotesScreen.swift,
 				Navigation/AppCoordinator.swift,
 				Navigation/Destination.swift,
 			);

@@ -1,77 +1,76 @@
 import Geografy_Core_Navigation
-import Geografy_Feature_Map
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
-struct MapScreen: View {
-    @Environment(\.dismiss) private var dismiss
+public struct OrganizationMapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(Navigator.self) private var coordinator
-    @Environment(TravelService.self) private var travelService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    #if !os(tvOS)
+    @Environment(HapticsService.self) private var hapticsService
+    #endif
 
-    var continentFilter: String?
+    public let organization: Organization
 
-    @Namespace private var flagNamespace
+    public init(organization: Organization) {
+        self.organization = organization
+    }
 
     @State private var mapState = MapState()
+    @State private var navigateToCountry: Country?
+    @Namespace private var flagNamespace
     @State private var showFlagPreview = false
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
+    @State private var memberCount = 0
 
-    var body: some View {
-        mainContent
+    private let nonMemberColor = DesignSystem.Color.cardBackground
+
+    public var body: some View {
+        extractedContent
             .background(DesignSystem.Color.ocean)
             .ignoresSafeArea()
-            .navigationTitle(continentFilter ?? "World Map")
-            .navigationBarTitleDisplayMode(.inline)
-            .closeButtonPlacementLeading()
             .safeAreaInset(edge: .top) {
                 if !isLandscape {
-                    bannerOverlay
+                    topContent
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar { toolbarContent }
             .task { await loadMapData() }
+            .onChange(of: navigateToCountry) { _, country in
+                if let country {
+                    coordinator.push(.countryDetail(country))
+                    navigateToCountry = nil
+                }
+            }
             .overlay {
                 if showFlagPreview, let code = mapState.selectedCountryCode {
-                    flagPreview(for: code)
+                    ZoomableFlagView(countryCode: code) {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            showFlagPreview = false
+                        }
+                    }
                 }
             }
     }
 }
 
-// MARK: - Content
-private extension MapScreen {
-    var mainContent: some View {
+// MARK: - Subviews
+private extension OrganizationMapScreen {
+    var extractedContent: some View {
         ZStack {
             GeometryReader { geometry in
-                mapContent(in: geometry.size)
-                    .onAppear {
-                        screenSize = geometry.size
-                        if !isInitialized, !mapState.countryShapes.isEmpty {
-                            setInitialScale(for: geometry.size)
-                            isInitialized = true
-                        }
-                    }
+                mapCanvas(in: geometry.size)
+                    .onAppear { screenSize = geometry.size }
                     .onChange(of: geometry.size) { _, newSize in
                         screenSize = newSize
                         updateMinScale(for: newSize)
                     }
-                    .onChange(of: mapState.countryShapes.isEmpty) { _, isEmpty in
-                        if !isEmpty, screenSize.width > 0, !isInitialized {
-                            setInitialScale(for: screenSize)
-                            isInitialized = true
-                        }
-                    }
             }
-
             if mapState.countryShapes.isEmpty {
                 MapLoadingView()
                     .transition(.opacity)
@@ -81,22 +80,11 @@ private extension MapScreen {
 
     var isLandscape: Bool { verticalSizeClass == .compact }
 
-    func flagPreview(for code: String) -> some View {
-        ZoomableFlagView(countryCode: code) {
-            withAnimation(.easeInOut(duration: 0.25)) {
-                showFlagPreview = false
-            }
+    var topContent: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            orgHeader
+            bannerOverlay
         }
-    }
-
-    var selectedCapitalPoint: CGPoint? {
-        guard let code = mapState.selectedCountryCode,
-              let info = CountryBasicInfo.info(for: code) else { return nil }
-        return MapProjection.project(longitude: info.capitalLongitude, latitude: info.capitalLatitude)
-    }
-
-    func mapContent(in size: CGSize) -> some View {
-        mapCanvas(in: size)
     }
 
     func mapCanvas(in size: CGSize) -> some View {
@@ -107,27 +95,31 @@ private extension MapScreen {
             selectedCountryCode: mapState.selectedCountryCode,
             showLabels: mapState.showLabels,
             canvasSize: size,
-            capitalPoint: selectedCapitalPoint,
-            travelStatuses: travelService.entries
+            capitalPoint: selectedCapitalPoint
         )
-        .accessibilityLabel("Interactive world map")
-        .accessibilityHint("Double tap to select a country")
+        #if !os(tvOS)
         .gesture(dragGesture)
         .gesture(magnifyGesture)
         .onTapGesture(count: 1) { location in
             handleTap(at: location, in: size)
         }
+        #endif
     }
 
+    var selectedCapitalPoint: CGPoint? {
+        guard let code = mapState.selectedCountryCode,
+              let info = CountryBasicInfo.info(for: code) else { return nil }
+        return MapProjection.project(longitude: info.capitalLongitude, latitude: info.capitalLatitude)
+    }
 }
 
 // MARK: - Toolbar
-private extension MapScreen {
+private extension OrganizationMapScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
             if isLandscape {
-                bannerOverlay
+                topContent
                     .frame(maxWidth: 500)
                     .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
@@ -140,13 +132,13 @@ private extension MapScreen {
     var labelsToggleButton: some View {
         Button {
             mapState.showLabels.toggle()
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
         } label: {
             Text("Aa")
                 .font(DesignSystem.Font.headline)
-                .foregroundStyle(
-                    mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary
-                )
+                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
                 .padding(DesignSystem.Spacing.xs)
                 .background {
                     if mapState.showLabels {
@@ -155,14 +147,89 @@ private extension MapScreen {
                 }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Country labels")
-        .accessibilityValue(mapState.showLabels ? "Shown" : "Hidden")
-        .accessibilityHint("Double tap to toggle country name labels")
+    }
+}
+
+// MARK: - Org Header
+private extension OrganizationMapScreen {
+    var orgHeader: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            orgHeaderContent
+            legend
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.top, DesignSystem.Spacing.xxs)
+    }
+
+    var orgHeaderContent: some View {
+        HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(organization.highlightColor.opacity(0.15))
+                    .frame(width: 40, height: 40)
+                Image(systemName: organization.icon)
+                    .font(DesignSystem.Font.iconSmall.weight(.medium))
+                    .foregroundStyle(organization.highlightColor)
+            }
+
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text(organization.displayName)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                if organization.fullName != organization.displayName {
+                    Text(organization.fullName)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            memberCountBadge
+        }
+    }
+
+    var memberCountBadge: some View {
+        Text("\(memberCount) members")
+            .font(DesignSystem.Font.caption2)
+            .fontWeight(.semibold)
+            .foregroundStyle(organization.highlightColor)
+            .lineLimit(1)
+            .fixedSize(horizontal: true, vertical: false)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
+            .padding(.vertical, DesignSystem.Spacing.xxs)
+            .background(organization.highlightColor.opacity(0.15))
+            .clipShape(Capsule())
+    }
+
+    var legend: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            legendDot(color: organization.highlightColor, label: "Member")
+            legendDot(color: DesignSystem.Color.textTertiary, label: "Other")
+        }
+    }
+
+    func legendDot(color: Color, label: String) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Circle()
+                .fill(color)
+                .frame(width: 8, height: 8)
+            Text(label)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
     }
 }
 
 // MARK: - Banner
-private extension MapScreen {
+private extension OrganizationMapScreen {
     @ViewBuilder
     var bannerOverlay: some View {
         if let shape = mapState.selectedShape {
@@ -181,16 +248,17 @@ private extension MapScreen {
                         showFlagPreview = true
                     }
                 },
-                onMoreInfo: country.map { selected in { coordinator.push(.countryDetail(selected)) } },
-                onDismiss: { withAnimation(.easeInOut(duration: 0.3)) { mapState.selectedCountryCode = nil } }
+                onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
+                onDismiss: { mapState.selectedCountryCode = nil }
             )
             .transition(.move(edge: .top).combined(with: .opacity))
         }
     }
 }
 
+#if !os(tvOS)
 // MARK: - Gestures
-private extension MapScreen {
+private extension OrganizationMapScreen {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
             .onChanged { value in
@@ -236,20 +304,47 @@ private extension MapScreen {
             }
     }
 }
+#endif
 
-// MARK: - Map Geometry
-private extension MapScreen {
+// MARK: - Actions
+private extension OrganizationMapScreen {
+    func handleTap(at point: CGPoint, in size: CGSize) {
+        let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
+        let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
+        let mapPoint = CGPoint(
+            x: (point.x - originX) / mapState.scale,
+            y: (point.y - originY) / mapState.scale
+        )
+        let sortedByArea = mapState.countryShapes.sorted {
+            $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
+        }
+        for shape in sortedByArea {
+            if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
+                if mapState.selectedCountryCode == shape.id {
+                    mapState.selectedCountryCode = nil
+                    #if !os(tvOS)
+                    hapticsService.impact(.light)
+                    #endif
+                } else {
+                    mapState.selectedCountryCode = shape.id
+                    #if !os(tvOS)
+                    hapticsService.impact(.medium)
+                    #endif
+                }
+                return
+            }
+        }
+        mapState.selectedCountryCode = nil
+    }
+
     func clampVerticalOffset() {
         let bounds = mapState.contentBounds
         guard bounds.height > 0 else { return }
-
         let scaledContentHeight = bounds.height * mapState.scale
         let maxOffsetY = max(0, (scaledContentHeight - screenSize.height) / 2)
-
         let contentCenterInMap = (bounds.minY + bounds.maxY) / 2
         let mapCenter = MapProjection.mapHeight / 2
         let centerCorrection = (mapCenter - contentCenterInMap) * mapState.scale
-
         let correctedOffset = mapState.offset.height - centerCorrection
         let clamped = min(max(correctedOffset, -maxOffsetY), maxOffsetY)
         mapState.offset.height = clamped + centerCorrection
@@ -258,7 +353,6 @@ private extension MapScreen {
     func wrapHorizontalOffset() {
         let mapWidthScaled = MapProjection.mapWidth * mapState.scale
         let halfWidth = mapWidthScaled / 2
-
         if mapState.offset.width > halfWidth {
             mapState.offset.width -= mapWidthScaled
         } else if mapState.offset.width < -halfWidth {
@@ -270,148 +364,43 @@ private extension MapScreen {
         guard size.width > 0, size.height > 0 else { return }
         let newMin = computeMinScale(for: size)
         mapState.minScale = newMin
-
         if mapState.scale < newMin {
             mapState.scale = newMin
             mapState.lastScale = newMin
         }
-
         centerOnContent()
         clampVerticalOffset()
         mapState.lastOffset = mapState.offset
     }
 
-    func setInitialScale(for size: CGSize) {
-        guard size.width > 0, size.height > 0 else { return }
-        let fitScale = computeMinScale(for: size)
-        mapState.scale = fitScale
-        mapState.lastScale = fitScale
-        mapState.minScale = fitScale
-        centerOnContent()
-    }
-
-    func computeMinScale(for size: CGSize) -> CGFloat {
-        if continentFilter != nil {
-            let bounds = effectiveViewportBounds
-            guard bounds.width > 0, bounds.height > 0 else {
-                return size.width / MapProjection.mapWidth
-            }
-            let fitContentWidth = size.width / bounds.width
-            let fitContentHeight = size.height / bounds.height
-            return min(fitContentWidth, fitContentHeight) * 0.9
-        }
-
-        let fitWidth = size.width / MapProjection.mapWidth
-        let isLandscape = size.width > size.height
-        if isLandscape {
-            let bounds = mapState.contentBounds
-            guard bounds.height > 0 else { return fitWidth }
-            let fitContentHeight = size.height / bounds.height
-            return max(fitWidth, fitContentHeight)
-        }
-
-        return fitWidth
-    }
-
     func centerOnContent() {
-        let bounds = effectiveViewportBounds
+        let bounds = mapState.contentBounds
         guard bounds.width > 0, bounds.height > 0 else { return }
-
         let contentCenterX = (bounds.minX + bounds.maxX) / 2
         let contentCenterY = (bounds.minY + bounds.maxY) / 2
-        let mapCenterX = MapProjection.mapWidth / 2
-        let mapCenterY = MapProjection.mapHeight / 2
-
-        let offsetX = (mapCenterX - contentCenterX) * mapState.scale
-        let offsetY = (mapCenterY - contentCenterY) * mapState.scale
-
+        let offsetX = (MapProjection.mapWidth / 2 - contentCenterX) * mapState.scale
+        let offsetY = (MapProjection.mapHeight / 2 - contentCenterY) * mapState.scale
         mapState.offset = CGSize(width: offsetX, height: offsetY)
         mapState.lastOffset = mapState.offset
     }
 
-    // Returns a viewport rect for continents that span the antimeridian or
-    // have outlier territories that would skew the computed bounding box.
-    func continentViewportBounds(for filter: String) -> CGRect? {
-        typealias Bounds = (minLng: Double, maxLng: Double, minLat: Double, maxLat: Double)
-        let lookup: [String: Bounds] = [
-            "Europe": (-25, 40, 34, 72),
-            "North America": (-140, -52, 7, 72),
-            "Oceania": (112, 178, -50, 10),
-            "Asia": (26, 145, -11, 78),
-            "Africa": (-20, 55, -35, 38),
-            "South America": (-82, -34, -56, 13),
-        ]
-        guard let b = lookup[filter] else { return nil }
-        let topLeft = MapProjection.project(longitude: b.minLng, latitude: b.maxLat)
-        let bottomRight = MapProjection.project(longitude: b.maxLng, latitude: b.minLat)
-        return CGRect(
-            x: topLeft.x,
-            y: topLeft.y,
-            width: bottomRight.x - topLeft.x,
-            height: bottomRight.y - topLeft.y
-        )
-    }
-
-    var effectiveViewportBounds: CGRect {
-        if let filter = continentFilter, let vp = continentViewportBounds(for: filter) {
-            return vp
-        }
-        return mapState.contentBounds
-    }
-
-}
-
-// MARK: - Actions
-private extension MapScreen {
-    func handleTap(at point: CGPoint, in size: CGSize) {
-        let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
-        let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
-
-        let mapPoint = CGPoint(
-            x: (point.x - originX) / mapState.scale,
-            y: (point.y - originY) / mapState.scale
-        )
-
-        let sortedByArea = mapState.countryShapes.sorted {
-            $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
-        }
-
-        for shape in sortedByArea {
-            if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    if mapState.selectedCountryCode == shape.id {
-                        mapState.selectedCountryCode = nil
-                        hapticsService.impact(.light)
-                    } else {
-                        mapState.selectedCountryCode = shape.id
-                        hapticsService.impact(.medium)
-                    }
-                }
-                return
-            }
-        }
-
-        withAnimation(.easeInOut(duration: 0.3)) {
-            mapState.selectedCountryCode = nil
-        }
-    }
-
-}
-
-// MARK: - Data Loading
-private extension MapScreen {
     func loadMapData() async {
-        // Capture on main thread before switching to background
-        let filter = continentFilter
+        let memberCodes = Set(
+            countryDataService.countries
+                .filter { $0.organizations.contains(organization.id) }
+                .map { $0.code }
+        )
+        memberCount = memberCodes.count
 
-        // Move heavy I/O and parsing off the main thread so the loading
-        // indicator renders immediately
+        let highlightColor = organization.highlightColor
+        let dimColor = nonMemberColor
+
         let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
             guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
                   let data = try? Data(contentsOf: url) else { return [] }
             var parsed = GeoJSONParser.parse(data: data)
-            if let filter {
-                parsed = parsed.filter { $0.continent == filter }
+            for i in parsed.indices {
+                parsed[i].color = memberCodes.contains(parsed[i].id) ? highlightColor : dimColor
             }
             return parsed
         }.value
@@ -425,9 +414,28 @@ private extension MapScreen {
         }
 
         if screenSize.width > 0, !isInitialized {
-            setInitialScale(for: screenSize)
+            let fitScale = computeMinScale(for: screenSize)
+            mapState.scale = fitScale
+            mapState.lastScale = fitScale
+            mapState.minScale = fitScale
+            centerOnContent()
             isInitialized = true
         }
+    }
+}
+
+// MARK: - Helpers
+private extension OrganizationMapScreen {
+    func computeMinScale(for size: CGSize) -> CGFloat {
+        let fitWidth = size.width / MapProjection.mapWidth
+        let isLandscape = size.width > size.height
+        if isLandscape {
+            let bounds = mapState.contentBounds
+            guard bounds.height > 0 else { return fitWidth }
+            let fitContentHeight = size.height / bounds.height
+            return max(fitWidth, fitContentHeight)
+        }
+        return fitWidth
     }
 
     func computeContentBounds(from shapes: [CountryShape]) -> CGRect {
@@ -436,14 +444,12 @@ private extension MapScreen {
         var minY = first.boundingBox.minY
         var maxX = first.boundingBox.maxX
         var maxY = first.boundingBox.maxY
-
         for shape in shapes.dropFirst() {
             minX = min(minX, shape.boundingBox.minX)
             minY = min(minY, shape.boundingBox.minY)
             maxX = max(maxX, shape.boundingBox.maxX)
             maxY = max(maxY, shape.boundingBox.maxY)
         }
-
         return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }
