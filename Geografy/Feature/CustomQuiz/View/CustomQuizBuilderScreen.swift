@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_Service
 import Geografy_Core_DesignSystem
@@ -470,3 +471,4 @@ private extension CustomQuizBuilderScreen {
         selectedDifficulty = quiz.difficulty
     }
 }
+#endif

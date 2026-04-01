@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
@@ -196,3 +197,4 @@ private extension CustomQuizCountryPicker {
         selectedCodes.subtract(visibleCodes)
     }
 }
+#endif

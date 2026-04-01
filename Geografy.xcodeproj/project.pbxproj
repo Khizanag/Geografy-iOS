@@ -13,6 +13,10 @@
 		727A15E62F7D5BC5001B7073 /* Geografy-Core-Service in Frameworks */ = {isa = PBXBuildFile; productRef = 727A15E52F7D5BC5001B7073 /* Geografy-Core-Service */; };
 		727A214C2F7D6582001B7073 /* Geografy-Core-Common in Frameworks */ = {isa = PBXBuildFile; productRef = 727A214B2F7D6582001B7073 /* Geografy-Core-Common */; };
 		727A214E2F7D6582001B7073 /* Geografy-Core-DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */; };
+		727A21502F7D6665001B7073 /* Geografy-Core-Common in Frameworks */ = {isa = PBXBuildFile; productRef = 727A214F2F7D6665001B7073 /* Geografy-Core-Common */; };
+		727A21522F7D6665001B7073 /* Geografy-Core-DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 727A21512F7D6665001B7073 /* Geografy-Core-DesignSystem */; };
+		727A21542F7D6665001B7073 /* Geografy-Core-Service in Frameworks */ = {isa = PBXBuildFile; productRef = 727A21532F7D6665001B7073 /* Geografy-Core-Service */; };
+		727A21562F7D66ED001B7073 /* Geografy-Feature-Map in Frameworks */ = {isa = PBXBuildFile; productRef = 727A21552F7D66ED001B7073 /* Geografy-Feature-Map */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -354,6 +358,10 @@
 		TV0000000000000000FRAMWK /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				727A21562F7D66ED001B7073 /* Geografy-Feature-Map in Frameworks */,
+				727A21522F7D6665001B7073 /* Geografy-Core-DesignSystem in Frameworks */,
+				727A21502F7D6665001B7073 /* Geografy-Core-Common in Frameworks */,
+				727A21542F7D6665001B7073 /* Geografy-Core-Service in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -450,6 +458,12 @@
 				TV00000000000000000GROUP /* GeografyTV */,
 			);
 			name = GeografyTV;
+			packageProductDependencies = (
+				727A214F2F7D6665001B7073 /* Geografy-Core-Common */,
+				727A21512F7D6665001B7073 /* Geografy-Core-DesignSystem */,
+				727A21532F7D6665001B7073 /* Geografy-Core-Service */,
+				727A21552F7D66ED001B7073 /* Geografy-Feature-Map */,
+			);
 			productName = GeografyTV;
 			productReference = TV000000000000000000PROD /* GeografyTV.app */;
 			productType = "com.apple.product-type.application";
@@ -887,6 +901,22 @@
 		727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Core-DesignSystem";
+		};
+		727A214F2F7D6665001B7073 /* Geografy-Core-Common */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Core-Common";
+		};
+		727A21512F7D6665001B7073 /* Geografy-Core-DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Core-DesignSystem";
+		};
+		727A21532F7D6665001B7073 /* Geografy-Core-Service */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Core-Service";
+		};
+		727A21552F7D66ED001B7073 /* Geografy-Feature-Map */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Feature-Map";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

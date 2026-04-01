@@ -38,9 +38,11 @@ public struct CountryBannerView: View {
 
     public var body: some View {
         bannerCard
+            #if !os(tvOS)
             .offset(y: min(dragOffset, 0))
             .opacity(1 + Double(min(dragOffset, 0)) / 100)
             .gesture(swipeToDismiss)
+            #endif
     }
 }
 
@@ -135,6 +137,7 @@ private extension CountryBannerView {
 }
 
 // MARK: - Gestures
+#if !os(tvOS)
 private extension CountryBannerView {
     var swipeToDismiss: some Gesture {
         DragGesture(minimumDistance: 10)
@@ -157,3 +160,4 @@ private extension CountryBannerView {
             }
     }
 }
+#endif

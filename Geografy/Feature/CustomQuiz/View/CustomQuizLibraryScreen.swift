@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Service
@@ -149,3 +150,4 @@ private extension CustomQuizLibraryScreen {
         }
     }
 }
+#endif
