@@ -27,6 +27,7 @@ struct GeografyApp: App {
     @State private var widgetDataBridge = WidgetDataBridge()
     @State private var worldBankService = WorldBankService()
     @State private var xpService: XPService
+    @State private var isReady = false
 
     init() {
         #if os(iOS)
@@ -49,44 +50,62 @@ struct GeografyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(achievementService)
-                .environment(authService)
-                .environment(coinService)
-                .environment(countryDataService)
-                .environment(currencyService)
-                .environment(databaseManager)
-                .environment(favoritesService)
-                .environment(featureFlagService)
-                .environment(flashcardService)
-                .environment(gameCenterService)
-                .environment(hapticsService)
-                .environment(homeSectionOrderService)
-                .environment(learningPathService)
-                .environment(pronunciationService)
-                .environment(streakService)
-                .environment(subscriptionService)
-                .environment(testingModeService)
-                .environment(travelService)
-                .environment(worldBankService)
-                .environment(xpService)
-                .task { countryDataService.loadCountries() }
-                .task(priority: .utility) { await authService.validateOnLaunch() }
-                .task(priority: .utility) { await subscriptionService.checkEntitlements() }
-                .task(priority: .utility) { await authenticateGameCenter() }
-                .task(priority: .background) { await setupNotificationsAndSpotlight() }
-                .task(priority: .background) { syncWidgetData() }
-                .onReceive(achievementService.unlockPublisher) { handleAchievementUnlock($0) }
-                .onChange(of: authService.currentUserID) { _, id in handleUserSwitch(id) }
-                .onChange(of: xpService.totalXP) { _, xp in handleXPChange(xp) }
-                .onChange(of: streakService.currentStreak) { _, streak in handleStreakChange(streak) }
-                .onChange(of: travelService.visitedCodes.count) { _, count in handleVisitedChange(count) }
+            ZStack {
+                if isReady {
+                    contentView
+                        .transition(.opacity)
+                } else {
+                    LaunchScreen()
+                }
+            }
+            .animation(.easeOut(duration: 0.3), value: isReady)
+            .task {
+                countryDataService.loadCountries()
+                isReady = true
+            }
         }
         .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)
         .defaultSize(width: 1200, height: 800)
         .commands { macCommands }
         #endif
+    }
+}
+
+// MARK: - Content View
+private extension GeografyApp {
+    var contentView: some View {
+        ContentView()
+            .environment(achievementService)
+            .environment(authService)
+            .environment(coinService)
+            .environment(countryDataService)
+            .environment(currencyService)
+            .environment(databaseManager)
+            .environment(favoritesService)
+            .environment(featureFlagService)
+            .environment(flashcardService)
+            .environment(gameCenterService)
+            .environment(hapticsService)
+            .environment(homeSectionOrderService)
+            .environment(learningPathService)
+            .environment(pronunciationService)
+            .environment(streakService)
+            .environment(subscriptionService)
+            .environment(testingModeService)
+            .environment(travelService)
+            .environment(worldBankService)
+            .environment(xpService)
+            .task(priority: .utility) { await authService.validateOnLaunch() }
+            .task(priority: .utility) { await subscriptionService.checkEntitlements() }
+            .task(priority: .utility) { await authenticateGameCenter() }
+            .task(priority: .background) { await setupNotificationsAndSpotlight() }
+            .task(priority: .background) { syncWidgetData() }
+            .onReceive(achievementService.unlockPublisher) { handleAchievementUnlock($0) }
+            .onChange(of: authService.currentUserID) { _, id in handleUserSwitch(id) }
+            .onChange(of: xpService.totalXP) { _, xp in handleXPChange(xp) }
+            .onChange(of: streakService.currentStreak) { _, streak in handleStreakChange(streak) }
+            .onChange(of: travelService.visitedCodes.count) { _, count in handleVisitedChange(count) }
     }
 }
 

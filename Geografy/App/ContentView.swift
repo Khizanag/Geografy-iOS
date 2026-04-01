@@ -14,14 +14,12 @@ struct ContentView: View {
     @State private var levelUpLevel: UserLevel?
     @State private var currentBannerAchievement: AchievementDefinition?
     @State private var bannerQueue: [AchievementDefinition] = []
-    @State private var isReady = false
 
     var body: some View {
-        launchGate
+        mainContent
             .tint(DesignSystem.Color.accent)
             .preferredColorScheme(colorScheme)
             .toolbarBackgroundVisibility(.hidden, for: .tabBar)
-            .task { await waitUntilReady() }
             .onReceive(xpService.levelUpPublisher) { levelUpLevel = $0 }
             .onReceive(achievementService.unlockPublisher) { achievement in
                 bannerQueue.append(achievement)
@@ -66,18 +64,6 @@ struct ContentView: View {
 
 // MARK: - Subviews
 private extension ContentView {
-    var launchGate: some View {
-        ZStack {
-            if isReady {
-                mainContent
-                    .transition(.opacity)
-            } else {
-                LaunchScreen()
-            }
-        }
-        .animation(.easeOut(duration: 0.4), value: isReady)
-    }
-
     var mainContent: some View {
         ZStack(alignment: .top) {
             tabContent
@@ -145,13 +131,6 @@ private extension ContentView {
 
 // MARK: - Helpers
 private extension ContentView {
-    func waitUntilReady() async {
-        while countryDataService.countries.isEmpty {
-            try? await Task.sleep(for: .milliseconds(50))
-        }
-        isReady = true
-    }
-
     var colorScheme: ColorScheme? {
         switch selectedTheme {
         case "Light": .light
