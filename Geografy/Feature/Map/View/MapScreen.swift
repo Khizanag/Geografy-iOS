@@ -25,6 +25,7 @@ struct MapScreen: View {
             .ignoresSafeArea()
             .navigationTitle(continentFilter ?? "World Map")
             .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
             .safeAreaInset(edge: .top) {
                 if !isLandscape {
                     bannerOverlay
@@ -178,7 +179,7 @@ private extension MapScreen {
                     }
                 },
                 onMoreInfo: country.map { selected in { coordinator.push(.countryDetail(selected)) } },
-                onDismiss: { mapState.selectedCountryCode = nil }
+                onDismiss: { withAnimation(.easeInOut(duration: 0.3)) { mapState.selectedCountryCode = nil } }
             )
             .transition(.move(edge: .top).combined(with: .opacity))
         }
@@ -374,18 +375,22 @@ private extension MapScreen {
 
         for shape in sortedByArea {
             if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-                if mapState.selectedCountryCode == shape.id {
-                    mapState.selectedCountryCode = nil
-                    hapticsService.impact(.light)
-                } else {
-                    mapState.selectedCountryCode = shape.id
-                    hapticsService.impact(.medium)
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    if mapState.selectedCountryCode == shape.id {
+                        mapState.selectedCountryCode = nil
+                        hapticsService.impact(.light)
+                    } else {
+                        mapState.selectedCountryCode = shape.id
+                        hapticsService.impact(.medium)
+                    }
                 }
                 return
             }
         }
 
-        mapState.selectedCountryCode = nil
+        withAnimation(.easeInOut(duration: 0.3)) {
+            mapState.selectedCountryCode = nil
+        }
     }
 
 }
