@@ -23,7 +23,7 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
     case travelBucketList
     case oceanExplorer
     case languageExplorer
-    case challengeRoom
+
     case independenceTimeline
     case economyExplorer
     case geographyFeatures
@@ -61,7 +61,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .travelBucketList: "Travel Bucket List"
         case .oceanExplorer: "Ocean Explorer"
         case .languageExplorer: "Language Explorer"
-        case .challengeRoom: "Challenge Room"
         case .independenceTimeline: "Independence Timeline"
         case .economyExplorer: "Economy Explorer"
         case .geographyFeatures: "Geography Features"
@@ -99,7 +98,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .travelBucketList: "list.star"
         case .oceanExplorer: "water.waves"
         case .languageExplorer: "character.book.closed.fill"
-        case .challengeRoom: "person.2.fill"
         case .independenceTimeline: "calendar.badge.clock"
         case .economyExplorer: "chart.line.uptrend.xyaxis"
         case .geographyFeatures: "mountain.2.fill"
@@ -144,7 +142,6 @@ enum HomeSection: String, CaseIterable, Identifiable, Codable {
         case .travelBucketList: .travelBucketList
         case .oceanExplorer: .oceanExplorer
         case .languageExplorer: .languageExplorer
-        case .challengeRoom: .challengeRoom
         case .independenceTimeline: nil
         case .economyExplorer: .economyExplorer
         case .geographyFeatures: .geographyFeatures
