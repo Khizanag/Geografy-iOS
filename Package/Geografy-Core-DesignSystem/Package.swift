@@ -1,12 +1,8 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
     name: "Geografy-Core-DesignSystem",
-    platforms: [
-        .iOS(.v26),
-        .tvOS(.v26),
-    ],
     products: [
         .library(
             name: "Geografy-Core-DesignSystem",
