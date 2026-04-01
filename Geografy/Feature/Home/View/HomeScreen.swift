@@ -1,7 +1,10 @@
 import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
+import Geografy_Feature_Auth
+import Geografy_Feature_DailyChallenge
+import Geografy_Feature_Flashcard
 import SwiftUI
 
 struct HomeScreen: View {

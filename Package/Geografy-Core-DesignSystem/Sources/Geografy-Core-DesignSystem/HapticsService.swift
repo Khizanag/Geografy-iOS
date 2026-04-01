@@ -4,18 +4,31 @@ import UIKit
 import Foundation
 import Observation
 
+#if !os(iOS)
+public enum HapticImpactStyle {
+    case light, medium, heavy, soft, rigid
+}
+
+public enum HapticNotificationType {
+    case success, warning, error
+}
+#else
+public typealias HapticImpactStyle = UIImpactFeedbackGenerator.FeedbackStyle
+public typealias HapticNotificationType = UINotificationFeedbackGenerator.FeedbackType
+#endif
+
 @Observable
 @MainActor
 public final class HapticsService {
     public init() {}
 
     #if os(iOS)
-    public func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
+    public func impact(_ style: HapticImpactStyle) {
         guard isEnabled else { return }
         UIImpactFeedbackGenerator(style: style).impactOccurred()
     }
 
-    public func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
+    public func notification(_ type: HapticNotificationType) {
         guard isEnabled else { return }
         UINotificationFeedbackGenerator().notificationOccurred(type)
     }
@@ -25,8 +38,8 @@ public final class HapticsService {
         UISelectionFeedbackGenerator().selectionChanged()
     }
     #else
-    public func impact(_ style: Any) {}
-    public func notification(_ type: Any) {}
+    public func impact(_ style: HapticImpactStyle) {}
+    public func notification(_ type: HapticNotificationType) {}
     public func selection() {}
     #endif
 }

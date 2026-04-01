@@ -1,8 +1,9 @@
 import Geografy_Core_Navigation
-import Geografy_Feature_Map
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
+import Geografy_Feature_CountryDetail
+import Geografy_Feature_Map
 import SwiftUI
 
 struct OrganizationMapScreen: View {
