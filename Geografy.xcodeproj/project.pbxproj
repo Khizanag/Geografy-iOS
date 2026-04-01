@@ -23,6 +23,8 @@
 		727A40032F7D8001001B7073 /* Geografy-Feature-Quotes in Frameworks */ = {isa = PBXBuildFile; productRef = 727A40022F7D8001001B7073 /* Geografy-Feature-Quotes */; };
 		727A50012F7D9000001B7073 /* Geografy-Feature-TimeZone in Frameworks */ = {isa = PBXBuildFile; productRef = 727A50002F7D9000001B7073 /* Geografy-Feature-TimeZone */; };
 		727A50032F7D9001001B7073 /* Geografy-Feature-TimeZone in Frameworks */ = {isa = PBXBuildFile; productRef = 727A50022F7D9001001B7073 /* Geografy-Feature-TimeZone */; };
+		727A60012F7DA000001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */ = {isa = PBXBuildFile; productRef = 727A60002F7DA000001B7073 /* Geografy-Feature-SizeVisualization */; };
+		727A60032F7DA001001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */ = {isa = PBXBuildFile; productRef = 727A60022F7DA001001B7073 /* Geografy-Feature-SizeVisualization */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -273,7 +275,6 @@
 				Feature/Search/View/SearchScreen.swift,
 				Feature/Setting/View/SettingsScreen.swift,
 				Feature/Setting/View/TerritorialDisputesScreen.swift,
-				Feature/SizeVisualization/View/SizeCompareView.swift,
 				Feature/SizeVisualization/View/SizeVisualizationScreen.swift,
 				Feature/SpellingBee/SpellingBeeGuide/Model/SpellingBeeGuide.swift,
 				Feature/SpellingBee/SpellingBeeGuide/View/SpellingBeeGuideSheet.swift,
@@ -358,6 +359,7 @@
 				727A30012F7D7000001B7073 /* Geografy-Core-Navigation in Frameworks */,
 				727A40012F7D8000001B7073 /* Geografy-Feature-Quotes in Frameworks */,
 				727A50012F7D9000001B7073 /* Geografy-Feature-TimeZone in Frameworks */,
+				727A60012F7DA000001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */,
 			);
 		};
 		TV0000000000000000FRAMWK /* Frameworks */ = {
@@ -370,6 +372,7 @@
 				727A30032F7D7001001B7073 /* Geografy-Core-Navigation in Frameworks */,
 				727A40032F7D8001001B7073 /* Geografy-Feature-Quotes in Frameworks */,
 				727A50032F7D9001001B7073 /* Geografy-Feature-TimeZone in Frameworks */,
+				727A60032F7DA001001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -447,6 +450,7 @@
 				727A30002F7D7000001B7073 /* Geografy-Core-Navigation */,
 				727A40002F7D8000001B7073 /* Geografy-Feature-Quotes */,
 				727A50002F7D9000001B7073 /* Geografy-Feature-TimeZone */,
+				727A60002F7DA000001B7073 /* Geografy-Feature-SizeVisualization */,
 				727A214B2F7D6582001B7073 /* Geografy-Core-Common */,
 				727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */,
 			);
@@ -476,6 +480,7 @@
 				727A30022F7D7001001B7073 /* Geografy-Core-Navigation */,
 				727A40022F7D8001001B7073 /* Geografy-Feature-Quotes */,
 				727A50022F7D9001001B7073 /* Geografy-Feature-TimeZone */,
+				727A60022F7DA001001B7073 /* Geografy-Feature-SizeVisualization */,
 				727A21552F7D66ED001B7073 /* Geografy-Feature-Map */,
 			);
 			productName = GeografyTV;
@@ -955,6 +960,14 @@
 		727A50022F7D9001001B7073 /* Geografy-Feature-TimeZone */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-TimeZone";
+		};
+		727A60002F7DA000001B7073 /* Geografy-Feature-SizeVisualization */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Feature-SizeVisualization";
+		};
+		727A60022F7DA001001B7073 /* Geografy-Feature-SizeVisualization */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Feature-SizeVisualization";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -2,29 +2,36 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct SizeCompareView: View {
+public struct SizeCompareView: View {
+
+    public init(referenceCountry: Country, comparisonCountry: Country) {
+        self.referenceCountry = referenceCountry
+        self.comparisonCountry = comparisonCountry
+    }
     @Environment(\.dismiss) private var dismiss
 
-    let referenceCountry: Country
-    let comparisonCountry: Country
+    public let referenceCountry: Country
+    public let comparisonCountry: Country
 
-    var body: some View {
+    public var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Size Comparison")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                CircleCloseButton { dismiss() }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                ShareLink(item: shareText) {
-                    Label("Share", systemImage: "square.and.arrow.up")
-                        .foregroundStyle(DesignSystem.Color.accent)
+            .navigationTitle("Size Comparison")
+            #if !os(tvOS)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    CircleCloseButton { dismiss() }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    ShareLink(item: shareText) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                            .foregroundStyle(DesignSystem.Color.accent)
+                    }
                 }
             }
-        }
-        .presentationDetents([.medium, .large])
+            .presentationDetents([.medium, .large])
+            #endif
     }
 }
 
