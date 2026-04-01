@@ -2,6 +2,7 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_Quotes
 import Geografy_Feature_TimeZone
+import Geografy_Feature_SizeVisualization
 import SwiftUI
 
 // MARK: - Content
