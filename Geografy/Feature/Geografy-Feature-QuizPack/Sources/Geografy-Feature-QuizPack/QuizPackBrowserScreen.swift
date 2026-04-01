@@ -217,10 +217,8 @@ private extension QuizPackBrowserScreen {
     var packGridContent: some View {
         LazyVGrid(
             columns: [
-                GridItem(
-                    .adaptive(minimum: 140),
-                    spacing: DesignSystem.Spacing.sm
-                ),
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
             ],
             spacing: DesignSystem.Spacing.sm
         ) {
