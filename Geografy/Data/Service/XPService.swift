@@ -58,7 +58,7 @@ final class XPService {
 }
 
 // MARK: - Helpers
-private extension XPService {
+extension XPService {
     func refreshXP() {
         let userID = currentUserID
         let descriptor = FetchDescriptor<XPRecord>(
