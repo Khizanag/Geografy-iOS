@@ -108,17 +108,6 @@ extension HomeScreen {
     }
 }
 
-// MARK: - Spelling Bee Section
-extension HomeScreen {
-    var spellingBeeSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Spelling Bee")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeSpellingBeeCard { coordinator.sheet(.spellingBee) }
-        }
-    }
-}
-
 // MARK: - Learning Path Section
 extension HomeScreen {
     var learningPathSection: some View {

@@ -8,7 +8,7 @@ enum MoreSheet: Identifiable {
     case profile, countries, orgs, favorites, travel
     case dailyChallenge, compare, travelJournal, travelBucketList
     case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
-    case flagGame, trivia, spellingBee, landmarkQuiz
+    case flagGame, trivia, landmarkQuiz
     case wordSearch, borderChallenge, countryNicknames
     case quotes, feed
     case srsStudy, learningPath
@@ -47,7 +47,6 @@ enum MoreSheet: Identifiable {
         case .search: "Global Search"
         case .flagGame: "Flag Game"
         case .trivia: "Trivia"
-        case .spellingBee: "Spelling Bee"
         case .landmarkQuiz: "Landmark Quiz"
         case .wordSearch: "Word Search"
         case .borderChallenge: "Border Challenge"
@@ -86,7 +85,6 @@ enum MoreSheet: Identifiable {
         case .search: "magnifyingglass"
         case .flagGame: "flag.fill"
         case .trivia: "questionmark.bubble.fill"
-        case .spellingBee: "textformat.abc"
         case .landmarkQuiz: "photo.fill"
         case .wordSearch: "character.magnify"
         case .borderChallenge: "square.dashed"
@@ -125,7 +123,6 @@ enum MoreSheet: Identifiable {
         case .search: "Search all countries & orgs"
         case .flagGame: "Match flags to countries"
         case .trivia: "True or false geography facts"
-        case .spellingBee: "Spell country names"
         case .landmarkQuiz: "Identify famous landmarks"
         case .wordSearch: "Find hidden country names"
         case .borderChallenge: "Guess by outline shape"
@@ -164,7 +161,6 @@ enum MoreSheet: Identifiable {
         case .search: DesignSystem.Color.accent
         case .flagGame: DesignSystem.Color.error
         case .trivia: DesignSystem.Color.purple
-        case .spellingBee: DesignSystem.Color.orange
         case .landmarkQuiz: DesignSystem.Color.accent
         case .wordSearch: DesignSystem.Color.indigo
         case .borderChallenge: DesignSystem.Color.warning
@@ -203,7 +199,6 @@ enum MoreSheet: Identifiable {
         case .search: "search"
         case .flagGame: "flagGame"
         case .trivia: "trivia"
-        case .spellingBee: "spellingBee"
         case .landmarkQuiz: "landmarkQuiz"
         case .wordSearch: "wordSearch"
         case .borderChallenge: "borderChallenge"
@@ -242,7 +237,6 @@ enum MoreSheet: Identifiable {
         case .search: .search
         case .flagGame: .flagGame
         case .trivia: .trivia
-        case .spellingBee: .spellingBee
         case .landmarkQuiz: .landmarkQuiz
         case .wordSearch: .wordSearch
         case .borderChallenge: .borderChallenge
