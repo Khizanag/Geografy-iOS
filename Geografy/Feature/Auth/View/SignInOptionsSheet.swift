@@ -3,21 +3,19 @@ import GeografyDesign
 import SwiftUI
 
 struct SignInOptionsSheet: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
-    @Environment(\.dismiss) private var dismiss
 
     @State private var showError = false
     @State private var errorMessage = ""
     @State private var appeared = false
 
     var body: some View {
-        scrollContent
+        extractedContent
             .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .onAppear {
-                appeared = true
-            }
+            .onAppear { appeared = true }
             .alert("Sign In Failed", isPresented: $showError) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -28,13 +26,12 @@ struct SignInOptionsSheet: View {
 
 // MARK: - Subviews
 private extension SignInOptionsSheet {
-    var scrollContent: some View {
+    var extractedContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 heroSection
                 statsRow
                 benefitsSection
-
                 actionsSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -51,24 +48,28 @@ private extension SignInOptionsSheet {
                 .opacity(appeared ? 1 : 0)
                 .scaleEffect(appeared ? 1 : 0.6)
                 .animation(.spring(response: 0.6, dampingFraction: 0.68), value: appeared)
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text("Geografy")
-                    .font(DesignSystem.Font.roundedBrand)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [DesignSystem.Color.textPrimary, DesignSystem.Color.accent],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                Text("Your world, explored.")
-                    .font(DesignSystem.Font.callout)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 12)
-            .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
+            heroText
         }
+    }
+
+    var heroText: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text("Geografy")
+                .font(DesignSystem.Font.roundedBrand)
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [DesignSystem.Color.textPrimary, DesignSystem.Color.accent],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+            Text("Your world, explored.")
+                .font(DesignSystem.Font.callout)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 12)
+        .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
     }
 
     var appIconBadge: some View {

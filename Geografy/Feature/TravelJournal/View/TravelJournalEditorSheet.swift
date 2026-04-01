@@ -5,8 +5,8 @@ import SwiftUI
 
 struct TravelJournalEditorSheet: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(TravelJournalService.self) private var journalService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(TravelJournalService.self) private var journalService
 
     @Binding var activeSheet: TravelJournalScreen.ActiveSheet?
     let countryDataService: CountryDataService
@@ -43,17 +43,10 @@ struct TravelJournalEditorSheet: View {
     }
 
     var body: some View {
-        formContent
+        extractedContent
             .navigationTitle(isEditing ? "Edit Entry" : "New Entry")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton()
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    saveButton
-                }
-            }
+            .toolbar { toolbarContent }
             .task {
                 if let entry = existingEntry {
                     loadExistingPhotos(entry.photoFileNames)
@@ -79,6 +72,16 @@ extension TravelJournalEditorSheet {
 
 // MARK: - Toolbar
 private extension TravelJournalEditorSheet {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            CircleCloseButton()
+        }
+        ToolbarItem(placement: .confirmationAction) {
+            saveButton
+        }
+    }
+
     var saveButton: some View {
         Button {
             hapticsService.impact(.medium)
@@ -98,7 +101,7 @@ private extension TravelJournalEditorSheet {
 
 // MARK: - Subviews
 private extension TravelJournalEditorSheet {
-    var formContent: some View {
+    var extractedContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 countrySection
@@ -483,7 +486,7 @@ private extension TravelJournalEditorSheet {
     }
 }
 
-// MARK: - Data
+// MARK: - Helpers
 private extension TravelJournalEditorSheet {
     var isEditing: Bool { existingEntry != nil }
 

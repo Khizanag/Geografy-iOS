@@ -2,9 +2,9 @@ import GeografyDesign
 import SwiftUI
 
 struct SettingsScreen: View {
+    @Environment(AuthService.self) private var authService
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
-    @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
 
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
@@ -16,7 +16,7 @@ struct SettingsScreen: View {
     @State private var showDeleteConfirmation = false
 
     var body: some View {
-        scrollContent
+        extractedContent
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .task { await syncNotificationStatus() }
@@ -37,7 +37,7 @@ struct SettingsScreen: View {
 
 // MARK: - Subviews
 private extension SettingsScreen {
-    var scrollContent: some View {
+    var extractedContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 premiumSection
@@ -61,64 +61,72 @@ private extension SettingsScreen {
     @ViewBuilder
     var premiumSection: some View {
         if subscriptionService.isPremium {
-            settingsGroup(header: "Subscription") {
+            activePremiumSection
+        } else {
+            upgradePremiumSection
+        }
+    }
+
+    var activePremiumSection: some View {
+        settingsGroup(header: "Subscription") {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Geografy Premium")
+                        .font(DesignSystem.Font.body)
+                        .fontWeight(.medium)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text("Active subscription")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.success)
+                }
+                Spacer()
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+
+            settingsDivider
+
+            Button {
+                Task { await subscriptionService.restorePurchases() }
+            } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
-                    SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Geografy Premium")
-                            .font(DesignSystem.Font.body)
-                            .fontWeight(.medium)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text("Active subscription")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.success)
-                    }
+                    SettingsIconBadge(systemImage: "arrow.clockwise", color: DesignSystem.Color.blue)
+                    Text("Restore Purchases")
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
                     Spacer()
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
-
-                settingsDivider
-
-                Button {
-                    Task { await subscriptionService.restorePurchases() }
-                } label: {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        SettingsIconBadge(systemImage: "arrow.clockwise", color: DesignSystem.Color.blue)
-                        Text("Restore Purchases")
-                            .font(DesignSystem.Font.body)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Spacer()
-                    }
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.vertical, DesignSystem.Spacing.sm)
-                }
-                .buttonStyle(PressButtonStyle())
             }
-        } else {
-            settingsGroup(header: "Premium") {
-                Button { coordinator.sheet(.paywall) } label: {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Upgrade to Premium")
-                                .font(DesignSystem.Font.body)
-                                .fontWeight(.medium)
-                                .foregroundStyle(DesignSystem.Color.textPrimary)
-                            Text("Unlock all quiz types & advanced stats")
-                                .font(DesignSystem.Font.caption)
-                                .foregroundStyle(DesignSystem.Color.textTertiary)
-                        }
-                        Spacer()
-                        Image(systemName: "chevron.right")
+            .buttonStyle(PressButtonStyle())
+        }
+    }
+
+    var upgradePremiumSection: some View {
+        settingsGroup(header: "Premium") {
+            Button { coordinator.sheet(.paywall) } label: {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Upgrade to Premium")
+                            .font(DesignSystem.Font.body)
+                            .fontWeight(.medium)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text("Unlock all quiz types & advanced stats")
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.vertical, DesignSystem.Spacing.sm)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
-                .buttonStyle(PressButtonStyle())
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
             }
+            .buttonStyle(PressButtonStyle())
         }
     }
 }
@@ -173,76 +181,87 @@ private extension SettingsScreen {
         }
     }
 
-    @ViewBuilder
     var authenticatedAccountSection: some View {
         let profile = authService.currentProfile
-        settingsGroup(header: "Account") {
+        return settingsGroup(header: "Account") {
+            authenticatedAccountHeader(profile: profile)
+
+            settingsDivider
+
+            signOutRow
+
+            settingsDivider
+
+            deleteAccountRow
+        }
+    }
+
+    func authenticatedAccountHeader(profile: AuthService.UserProfile?) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.15))
+                    .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
+                Image(systemName: "person.fill")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(profile?.displayName ?? "Explorer")
+                    .font(DesignSystem.Font.body)
+                    .fontWeight(.medium)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                if let email = profile?.email {
+                    Text(email)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                } else {
+                    Text("Signed in with Apple")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+            }
+            Spacer()
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+    }
+
+    var signOutRow: some View {
+        Button {
+            authService.signOut()
+        } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.accent.opacity(0.15))
-                        .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-                    Image(systemName: "person.fill")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(profile?.displayName ?? "Explorer")
-                        .font(DesignSystem.Font.body)
-                        .fontWeight(.medium)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    if let email = profile?.email {
-                        Text(email)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                    } else {
-                        Text("Signed in with Apple")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                    }
-                }
+                SettingsIconBadge(
+                    systemImage: "rectangle.portrait.and.arrow.right",
+                    color: DesignSystem.Color.warning
+                )
+                Text("Sign Out")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
                 Spacer()
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
-
-            settingsDivider
-
-            Button {
-                authService.signOut()
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    SettingsIconBadge(
-                        systemImage: "rectangle.portrait.and.arrow.right",
-                        color: DesignSystem.Color.warning
-                    )
-                    Text("Sign Out")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Spacer()
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .buttonStyle(PressButtonStyle())
-
-            settingsDivider
-
-            Button {
-                showDeleteConfirmation = true
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    SettingsIconBadge(systemImage: "trash.fill", color: DesignSystem.Color.error)
-                    Text("Delete Account")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.error)
-                    Spacer()
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .buttonStyle(PressButtonStyle())
         }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    var deleteAccountRow: some View {
+        Button {
+            showDeleteConfirmation = true
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                SettingsIconBadge(systemImage: "trash.fill", color: DesignSystem.Color.error)
+                Text("Delete Account")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.error)
+                Spacer()
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .buttonStyle(PressButtonStyle())
     }
 }
 
@@ -491,7 +510,6 @@ private struct SettingsIconBadge: View {
     }
 }
 
-// MARK: - Preview
 #Preview {
     SettingsScreen()
 }

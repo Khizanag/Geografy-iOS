@@ -4,15 +4,14 @@ import SwiftUI
 
 struct OrganizationMapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(HapticsService.self) private var hapticsService
 
     let organization: Organization
 
     @State private var mapState = MapState()
     @State private var navigateToCountry: Country?
     @Namespace private var flagNamespace
-
     @State private var showFlagPreview = false
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
@@ -21,7 +20,7 @@ struct OrganizationMapScreen: View {
     private let nonMemberColor = DesignSystem.Color.cardBackground
 
     var body: some View {
-        mainContent
+        extractedContent
             .background(DesignSystem.Color.ocean)
             .ignoresSafeArea()
             .safeAreaInset(edge: .top) {
@@ -31,18 +30,7 @@ struct OrganizationMapScreen: View {
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    if isLandscape {
-                        topContent
-                            .frame(maxWidth: 500)
-                            .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    labelsToggleButton
-                }
-            }
+            .toolbar { toolbarContent }
             .task { await loadMapData() }
             .navigationDestination(item: $navigateToCountry) { country in
                 CountryDetailScreen(country: country)
@@ -59,9 +47,9 @@ struct OrganizationMapScreen: View {
     }
 }
 
-// MARK: - Content
+// MARK: - Subviews
 private extension OrganizationMapScreen {
-    var mainContent: some View {
+    var extractedContent: some View {
         ZStack {
             GeometryReader { geometry in
                 mapCanvas(in: geometry.size)
@@ -111,39 +99,46 @@ private extension OrganizationMapScreen {
     }
 }
 
+// MARK: - Toolbar
+private extension OrganizationMapScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            if isLandscape {
+                topContent
+                    .frame(maxWidth: 500)
+                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+            }
+        }
+        ToolbarItem(placement: .primaryAction) {
+            labelsToggleButton
+        }
+    }
+
+    var labelsToggleButton: some View {
+        Button {
+            mapState.showLabels.toggle()
+            hapticsService.impact(.light)
+        } label: {
+            Text("Aa")
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
+                .padding(DesignSystem.Spacing.xs)
+                .background {
+                    if mapState.showLabels {
+                        Circle().fill(DesignSystem.Color.accent)
+                    }
+                }
+        }
+        .buttonStyle(.plain)
+    }
+}
+
 // MARK: - Org Header
 private extension OrganizationMapScreen {
     var orgHeader: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill(organization.highlightColor.opacity(0.15))
-                        .frame(width: 40, height: 40)
-                    Image(systemName: organization.icon)
-                        .font(DesignSystem.Font.iconSmall.weight(.medium))
-                        .foregroundStyle(organization.highlightColor)
-                }
-
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(organization.displayName)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                    if organization.fullName != organization.displayName {
-                        Text(organization.fullName)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(nil)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-                memberCountBadge
-            }
-
+            orgHeaderContent
             legend
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -152,6 +147,37 @@ private extension OrganizationMapScreen {
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.top, DesignSystem.Spacing.xxs)
+    }
+
+    var orgHeaderContent: some View {
+        HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(organization.highlightColor.opacity(0.15))
+                    .frame(width: 40, height: 40)
+                Image(systemName: organization.icon)
+                    .font(DesignSystem.Font.iconSmall.weight(.medium))
+                    .foregroundStyle(organization.highlightColor)
+            }
+
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text(organization.displayName)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                if organization.fullName != organization.displayName {
+                    Text(organization.fullName)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            memberCountBadge
+        }
     }
 
     var memberCountBadge: some View {
@@ -211,27 +237,6 @@ private extension OrganizationMapScreen {
             )
             .transition(.move(edge: .top).combined(with: .opacity))
         }
-    }
-}
-
-// MARK: - Controls
-private extension OrganizationMapScreen {
-    var labelsToggleButton: some View {
-        Button {
-            mapState.showLabels.toggle()
-            hapticsService.impact(.light)
-        } label: {
-            Text("Aa")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
-                .padding(DesignSystem.Spacing.xs)
-                .background {
-                    if mapState.showLabels {
-                        Circle().fill(DesignSystem.Color.accent)
-                    }
-                }
-        }
-        .buttonStyle(.plain)
     }
 }
 
@@ -365,11 +370,9 @@ private extension OrganizationMapScreen {
         )
         memberCount = memberCodes.count
 
-        // Capture value types before entering background task
         let highlightColor = organization.highlightColor
         let dimColor = nonMemberColor
 
-        // Move heavy I/O and parsing off the main thread
         let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
             guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
                   let data = try? Data(contentsOf: url) else { return [] }
