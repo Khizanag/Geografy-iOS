@@ -3,10 +3,10 @@ import SwiftUI
 
 struct NicknameQuizScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(CountryDataService.self) private var countryDataService
     @Environment(HapticsService.self) private var hapticsService
 
-    let nicknames: [CountryNickname]
-    let countryDataService: CountryDataService
+    var nicknames: [CountryNickname] = CountryNicknamesService().nicknames
 
     @State private var questions: [NicknameQuestion] = []
     @State private var currentIndex = 0
