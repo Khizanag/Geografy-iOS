@@ -11,7 +11,7 @@ public struct HistoricalEvent: Identifiable, Codable {
     public let title: String
     public let description: String
 
-    enum EventType: String, Codable, CaseIterable {
+    public enum EventType: String, Codable, CaseIterable {
         case independence
         case nameChange
         case borderChange

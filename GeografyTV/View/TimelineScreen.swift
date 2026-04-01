@@ -1,5 +1,6 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Feature_Timeline
 
 struct TimelineScreen: View {
     @State private var service = TimelineService()

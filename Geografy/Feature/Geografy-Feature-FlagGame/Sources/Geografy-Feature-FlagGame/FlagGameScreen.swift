@@ -8,7 +8,9 @@ import SwiftUI
 public struct FlagGameScreen: View {
     public init() {}
     @Environment(\.dismiss) private var dismiss
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var gameState = FlagGameState()
@@ -34,7 +36,9 @@ public struct FlagGameScreen: View {
         .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle("Flag Game")
+        #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
         .onAppear {
             startGame()
         }
@@ -194,11 +198,15 @@ private extension FlagGameScreen {
             if let target = targetCountry {
                 gameState.answeredCountries.append(target)
             }
+            #if !os(tvOS)
             hapticsService.notification(.success)
+            #endif
             AccessibilityNotification.Announcement("Correct!").post()
         } else {
             gameState.lives -= 1
+            #if !os(tvOS)
             hapticsService.notification(.error)
+            #endif
             AccessibilityNotification.Announcement("Incorrect. \(gameState.lives) lives remaining").post()
         }
 

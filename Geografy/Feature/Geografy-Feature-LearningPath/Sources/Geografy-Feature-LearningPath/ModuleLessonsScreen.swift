@@ -5,7 +5,11 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct ModuleLessonsScreen: View {
-    public init() {}
+    public init(
+        module: LearningModule
+    ) {
+        self.module = module
+    }
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(LearningPathService.self) private var learningPathService
@@ -16,7 +20,9 @@ public struct ModuleLessonsScreen: View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(module.title)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     CircleCloseButton { dismiss() }

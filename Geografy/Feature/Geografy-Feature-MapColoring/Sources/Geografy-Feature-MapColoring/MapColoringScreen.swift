@@ -5,7 +5,9 @@ import SwiftUI
 
 public struct MapColoringScreen: View {
     public init() {}
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var selectedScheme: ColoringScheme = .continent
@@ -16,7 +18,9 @@ public struct MapColoringScreen: View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Map Coloring Book")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .task {
                 visibleGroups = Set(groupedCountries.keys)
             }
@@ -59,7 +63,9 @@ private extension MapColoringScreen {
 
     func schemeChip(_ scheme: ColoringScheme) -> some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             selectedScheme = scheme
             visibleGroups = Set(groupedCountries.keys)
         } label: {
@@ -141,7 +147,9 @@ private extension MapColoringScreen {
 
     func groupHeader(_ group: String, color: Color, isVisible: Bool, count: Int) -> some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             if visibleGroups.contains(group) {
                 visibleGroups.remove(group)
             } else {
@@ -172,7 +180,9 @@ private extension MapColoringScreen {
 
     func countryRow(_ country: Country, color: Color) -> some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             selectedCountry = country
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
@@ -219,8 +229,10 @@ private extension MapColoringScreen {
         .padding(DesignSystem.Spacing.xl)
         .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle(country.name)
+        #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
         .presentationDetents([.medium])
+        #endif
     }
 }
 
@@ -302,7 +314,7 @@ private extension MapColoringScreen {
 
 // MARK: - Supporting Types
 extension MapColoringScreen {
-    enum ColoringScheme: String, CaseIterable {
+    public enum ColoringScheme: String, CaseIterable {
         case continent
         case incomeLevel
         case populationSize

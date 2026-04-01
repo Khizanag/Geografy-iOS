@@ -4,10 +4,19 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CompareCountryPicker: View {
-    public init() {}
+    public init(
+        countries: [Country],
+        excludedCountry: Country? = nil,
+        onSelect: @escaping (Country) -> Void
+    ) {
+        self.countries = countries
+        self.excludedCountry = excludedCountry
+        self.onSelect = onSelect
+    }
     @Environment(\.dismiss) private var dismiss
-    @Environment(FavoritesService.self) private var favoritesService
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     @State private var searchText = ""
 
@@ -19,7 +28,9 @@ public struct CompareCountryPicker: View {
         countryList
             .background(DesignSystem.Color.background)
             .navigationTitle("Select Country")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .searchable(text: $searchText, prompt: "Search countries")
     }
 }
@@ -42,16 +53,28 @@ private extension CompareCountryPicker {
 
     func countryButton(_ country: Country) -> some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             onSelect(country)
             dismiss()
         } label: {
-            CountryRowView(
-                country: country,
-                isFavorite: favoritesService.isFavorite(code: country.code),
-                showStats: false,
-                showContinent: true
-            )
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    FlagView(countryCode: country.code, height: 24, fixedWidth: true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(country.name)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(country.continent.displayName)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                    Spacer()
+                }
+                .padding(DesignSystem.Spacing.sm)
+            }
         }
         .buttonStyle(PressButtonStyle())
     }

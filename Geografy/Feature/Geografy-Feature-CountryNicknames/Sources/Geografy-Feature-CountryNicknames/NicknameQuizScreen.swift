@@ -6,7 +6,9 @@ public struct NicknameQuizScreen: View {
     public init() {}
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     public var nicknames: [CountryNickname] = CountryNicknamesService().nicknames
 
@@ -21,7 +23,9 @@ public struct NicknameQuizScreen: View {
         mainContent
             .background(DesignSystem.Color.background)
             .navigationTitle("Nickname Quiz")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     CircleCloseButton { dismiss() }
@@ -228,9 +232,13 @@ private extension NicknameQuizScreen {
         let isCorrect = countryCode == currentQuestion.correctCountryCode
         if isCorrect {
             score += 1
+            #if !os(tvOS)
             hapticsService.notification(.success)
+            #endif
         } else {
+            #if !os(tvOS)
             hapticsService.notification(.error)
+            #endif
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
@@ -263,7 +271,7 @@ private extension NicknameQuizScreen {
 
 // MARK: - Supporting Types
 private extension NicknameQuizScreen {
-    struct NicknameQuestion {
+    public struct NicknameQuestion {
         let nickname: String
         let options: [String]
         let correctCountryCode: String

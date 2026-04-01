@@ -6,7 +6,7 @@ public struct LandmarkQuestion: Identifiable {
     public let answerCountryCode: String
     public let category: Category
 
-    enum Category: String, CaseIterable {
+    public enum Category: String, CaseIterable {
         case monument
         case nature
         case culture

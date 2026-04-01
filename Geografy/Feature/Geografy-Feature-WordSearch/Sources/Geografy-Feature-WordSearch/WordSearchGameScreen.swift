@@ -4,11 +4,16 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct WordSearchGameScreen: View {
-    public init() {}
     @Environment(\.dismiss) private var dismiss
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     public let theme: WordSearchTheme
+
+    public init(theme: WordSearchTheme) {
+        self.theme = theme
+    }
 
     @State private var puzzle: WordSearchPuzzle?
     @State private var selectionStart: GridCoord?
@@ -196,7 +201,9 @@ private extension WordSearchGameScreen {
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                #if !os(tvOS)
                 .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
+                #endif
                 .blur(radius: isPaused ? 8 : 0)
                 .animation(.easeInOut(duration: 0.2), value: isPaused)
 
@@ -317,6 +324,7 @@ private extension WordSearchGameScreen {
     }
 }
 
+#if !os(tvOS)
 // MARK: - Gesture
 private extension WordSearchGameScreen {
     func dragGesture(cellSize: CGFloat, puzzle: WordSearchPuzzle) -> some Gesture {
@@ -341,6 +349,7 @@ private extension WordSearchGameScreen {
             }
     }
 }
+#endif
 
 // MARK: - Helpers
 private extension WordSearchGameScreen {
@@ -421,10 +430,14 @@ private extension WordSearchGameScreen {
             guard wordCells.count == cells.count else { continue }
             guard zip(wordCells, cells).allSatisfy({ $0 == $1 }) else { continue }
             foundWordIDs.insert(wordItem.id)
+            #if !os(tvOS)
             hapticsService.impact(.medium)
+            #endif
             if allFound(puzzle) {
                 timerActive = false
+                #if !os(tvOS)
                 hapticsService.notification(.success)
+                #endif
             }
             return
         }
@@ -440,13 +453,17 @@ private extension WordSearchGameScreen {
         _ = withAnimation(.easeInOut(duration: 0.3)) {
             hintRevealedIDs.insert(wordItem.id)
         }
+        #if !os(tvOS)
         hapticsService.impact(.light)
+        #endif
     }
 
     func revealAllWords() {
         timerActive = false
         isRevealed = true
+        #if !os(tvOS)
         hapticsService.impact(.light)
+        #endif
     }
 }
 

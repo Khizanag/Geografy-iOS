@@ -9,13 +9,13 @@ public struct FeedItem: Identifiable {
     public let icon: String
     public let color: Color
 
-    enum ItemType: String {
+    public enum ItemType: String {
         case fact
         case record
         case didYouKnow
         case funFact
 
-        var label: String {
+        public var label: String {
             switch self {
             case .fact: "Fact"
             case .record: "Record"

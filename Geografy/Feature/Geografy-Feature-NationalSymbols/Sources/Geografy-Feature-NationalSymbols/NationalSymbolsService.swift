@@ -3,7 +3,8 @@ import Geografy_Core_Common
 
 @Observable
 public final class NationalSymbolsService {
-    private(set) var symbols: [NationalSymbol] = NationalSymbolsService.allSymbols
+    public init() {}
+    public private(set) var symbols: [NationalSymbol] = NationalSymbolsService.allSymbols
 
     public func symbol(for countryCode: String) -> NationalSymbol? {
         symbols.first { $0.countryCode == countryCode }
@@ -13,7 +14,7 @@ public final class NationalSymbolsService {
 // MARK: - Data
 private extension NationalSymbolsService {
     // swiftlint:disable:next closure_body_length
-    static let allSymbols: [NationalSymbol] = [
+    nonisolated(unsafe) public static let allSymbols: [NationalSymbol] = [
         NationalSymbol(
             id: "US", countryCode: "US",
             animal: "Bald Eagle", flower: "Rose",

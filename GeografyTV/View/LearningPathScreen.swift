@@ -1,6 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Feature_LearningPath
 
 struct LearningPathScreen: View {
     @State private var service = LearningPathService()

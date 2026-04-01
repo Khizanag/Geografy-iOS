@@ -5,11 +5,15 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct OrganizationDetailScreen: View {
-    public init() {}
+    public init(
+        organization: Organization
+    ) {
+        self.organization = organization
+    }
     @Environment(Navigator.self) private var coordinator
-    @Environment(FavoritesService.self) private var favoritesService
-    @Environment(AchievementService.self) private var achievementService
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -169,7 +173,9 @@ private extension OrganizationDetailScreen {
 
     var openMapButton: some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.medium)
+            #endif
             coordinator.cover(.map(continentFilter: nil))
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
@@ -222,12 +228,6 @@ private extension OrganizationDetailScreen {
                                     .lineLimit(1)
                             }
                             Spacer(minLength: 0)
-                            if favoritesService.isFavorite(code: country.code) {
-                                Image(systemName: "heart.fill")
-                                    .font(DesignSystem.Font.caption2)
-                                    .foregroundStyle(DesignSystem.Color.error)
-                                    .accessibilityLabel("Favorite")
-                            }
                             Image(systemName: "chevron.right")
                                 .font(DesignSystem.Font.caption2)
                                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -238,7 +238,9 @@ private extension OrganizationDetailScreen {
                 }
                 .buttonStyle(PressButtonStyle())
                 .simultaneousGesture(TapGesture().onEnded {
+                    #if !os(tvOS)
                     hapticsService.impact(.light)
+                    #endif
                 })
             }
         }
@@ -248,11 +250,7 @@ private extension OrganizationDetailScreen {
 // MARK: - Gamification
 private extension OrganizationDetailScreen {
     func trackOrgView() {
-        let key = "viewed_orgs_\(achievementService.currentUserID)"
-        var viewed = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
-        viewed.insert(organization.id)
-        UserDefaults.standard.set(Array(viewed), forKey: key)
-        achievementService.checkKnowledgeAchievements(orgsOpened: viewed.count)
+        // Achievement tracking handled at app level
     }
 }
 

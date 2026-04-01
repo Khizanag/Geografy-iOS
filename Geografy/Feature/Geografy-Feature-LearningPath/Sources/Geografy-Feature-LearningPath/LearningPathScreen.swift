@@ -15,7 +15,9 @@ public struct LearningPathScreen: View {
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Learning Path")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear { startBlobAnimation() }
             .sheet(item: $selectedModule) { module in
                 ModuleLessonsScreen(module: module)

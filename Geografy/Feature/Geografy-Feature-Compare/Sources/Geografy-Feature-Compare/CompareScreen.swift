@@ -4,8 +4,9 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CompareScreen: View {
-    public init() {}
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var leftCountry: Country?
@@ -35,11 +36,11 @@ public struct CompareScreen: View {
 
 // MARK: - Sheet
 private extension CompareScreen {
-    enum CompareSheet: Identifiable {
+    public enum CompareSheet: Identifiable {
         case pickLeft
         case pickRight
 
-        var id: String {
+        public var id: String {
             switch self {
             case .pickLeft: "pickLeft"
             case .pickRight: "pickRight"
@@ -121,7 +122,9 @@ private extension CompareScreen {
     var swapButton: some View {
         if leftCountry != nil, rightCountry != nil {
             Button {
+                #if !os(tvOS)
                 hapticsService.impact(.light)
+                #endif
                 withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                     let temp = leftCountry
                     leftCountry = rightCountry
@@ -276,7 +279,9 @@ private extension CompareScreen {
 
     func recentPairRow(_ pair: ComparisonPair) -> some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                 leftCountry = countryDataService.country(for: pair.leftCode)
                 rightCountry = countryDataService.country(for: pair.rightCode)

@@ -5,8 +5,14 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct ContinentStatsScreen: View {
-    public init() {}
+    public init(
+        continentName: String
+    ) {
+        self.continentName = continentName
+    }
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -18,7 +24,9 @@ public struct ContinentStatsScreen: View {
         loadedContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(continentName)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.large)
+            #endif
             .onAppear {
                 appeared = true
             }
@@ -156,10 +164,25 @@ private extension ContinentStatsScreen {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(sortedByPopulation) { country in
                     Button {
+                        #if !os(tvOS)
                         hapticsService.impact(.light)
+                        #endif
                         coordinator.push(.countryDetail(country))
                     } label: {
-                        CountryRowView(country: country, isFavorite: false)
+                        CardView {
+                            HStack(spacing: DesignSystem.Spacing.sm) {
+                                FlagView(countryCode: country.code, height: 24, fixedWidth: true)
+                                Text(country.name)
+                                    .font(DesignSystem.Font.subheadline)
+                                    .fontWeight(.medium)
+                                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(DesignSystem.Font.caption)
+                                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                            }
+                            .padding(DesignSystem.Spacing.sm)
+                        }
                     }
                     .buttonStyle(PressButtonStyle())
                 }

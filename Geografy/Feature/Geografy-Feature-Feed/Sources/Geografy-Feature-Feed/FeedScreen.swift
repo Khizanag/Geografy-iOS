@@ -18,7 +18,9 @@ public struct FeedScreen: View {
         scrollContent
             .background { backgroundGradient }
             .navigationTitle("Feed")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.large)
+            #endif
             .task {
                 feedService.loadFeed()
                 appeared = true

@@ -2,6 +2,7 @@ import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Feature_Feed
 
 struct FeedScreen: View {
     let countryDataService: CountryDataService

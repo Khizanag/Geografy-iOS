@@ -1,16 +1,29 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct QuizOptionButton: View {
-    let text: String?
-    let flagCode: String?
-    let state: OptionState
-    let index: Int
-    let action: () -> Void
+public struct QuizOptionButton: View {
+    public let text: String?
+    public let flagCode: String?
+    public let state: OptionState
+    public let index: Int
+    public let action: () -> Void
+
+    public init(
+        text: String? = nil,
+        flagCode: String? = nil,
+        state: OptionState,
+        index: Int,
+        action: @escaping () -> Void
+    ) {
+        self.text = text
+        self.flagCode = flagCode
+        self.state = state
+        self.index = index
+        self.action = action
+    }
 
     @State private var shakeOffset: CGFloat = 0
 
-    var body: some View {
+    public var body: some View {
         Button(action: action) {
             content
                 .frame(maxWidth: .infinity)
@@ -28,7 +41,9 @@ struct QuizOptionButton: View {
         .shadow(color: glowColor, radius: glowRadius, y: 3)
         .offset(x: shakeOffset)
         .animation(.easeInOut(duration: 0.2), value: state)
+        #if !os(tvOS)
         .keyboardShortcut(keyForIndex, modifiers: [])
+        #endif
         .onChange(of: state) { _, newState in
             if newState == .incorrect {
                 Task { await shake() }
@@ -51,7 +66,7 @@ private extension QuizOptionButton {
 }
 
 // MARK: - OptionState
-extension QuizOptionButton {
+public extension QuizOptionButton {
     enum OptionState: Equatable {
         case `default`
         case correct

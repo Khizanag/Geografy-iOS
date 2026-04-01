@@ -9,7 +9,9 @@ public struct DistanceCalculatorScreen: View {
     public init() {}
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(CountryDataService.self) private var countryDataService
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(Navigator.self) private var coordinator
 
     @State private var originCountry: Country?
@@ -24,14 +26,18 @@ public struct DistanceCalculatorScreen: View {
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Distance Calculator")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear { blobAnimating = true }
             .sheet(isPresented: $showOriginPicker) {
                 CountryPickerSheet(
                     title: "From Country",
                     countries: countryDataService.countries
                 ) { country in
+                    #if !os(tvOS)
                     hapticsService.selection()
+                    #endif
                     originCountry = country
                     animateLine()
                 }
@@ -41,7 +47,9 @@ public struct DistanceCalculatorScreen: View {
                     title: "To Country",
                     countries: countryDataService.countries
                 ) { country in
+                    #if !os(tvOS)
                     hapticsService.selection()
+                    #endif
                     destinationCountry = country
                     animateLine()
                 }
@@ -150,7 +158,9 @@ private extension DistanceCalculatorScreen {
         return HStack {
             Spacer()
             Button {
+                #if !os(tvOS)
                 hapticsService.impact(.light)
+                #endif
                 let temp = originCountry
                 originCountry = destinationCountry
                 destinationCountry = temp
@@ -345,7 +355,7 @@ private extension DistanceCalculatorScreen {
         return formatter.string(from: NSNumber(value: value)) ?? "\(Int(value))"
     }
 
-    struct ComparisonItem {
+    public struct ComparisonItem {
         let icon: String
         let label: String
         let value: String
@@ -523,7 +533,9 @@ private struct CountryPickerSheet: View {
         extractedContent
             .searchable(text: $searchText, prompt: "Search countries…")
             .navigationTitle(title)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar { toolbarContent }
     }
 }

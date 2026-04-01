@@ -1,5 +1,6 @@
 import Foundation
 import Geografy_Core_Common
+import Geografy_Feature_NationalSymbols
 
 enum QuestionGenerator {
     #if !os(tvOS)
