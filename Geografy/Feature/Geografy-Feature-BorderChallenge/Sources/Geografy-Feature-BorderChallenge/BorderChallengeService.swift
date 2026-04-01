@@ -1,8 +1,8 @@
 import Foundation
 import Geografy_Core_Common
 
-struct BorderChallengeService {
-    enum Difficulty: String, CaseIterable {
+public struct BorderChallengeService {
+    public enum Difficulty: String, CaseIterable {
         case easy = "Easy"
         case medium = "Medium"
         case hard = "Hard"
@@ -32,7 +32,7 @@ struct BorderChallengeService {
         }
     }
 
-    func selectCountry(from countries: [Country], difficulty: Difficulty) -> Country? {
+    public func selectCountry(from countries: [Country], difficulty: Difficulty) -> Country? {
         let eligible = countries.filter { country in
             let count = CountryNeighbors.neighbors(for: country.code).count
             return difficulty.neighborRange.contains(count)
@@ -40,12 +40,12 @@ struct BorderChallengeService {
         return eligible.randomElement()
     }
 
-    func neighbors(for country: Country, in countries: [Country]) -> [Country] {
+    public func neighbors(for country: Country, in countries: [Country]) -> [Country] {
         let codes = CountryNeighbors.neighbors(for: country.code)
         return codes.compactMap { code in countries.first { $0.code == code } }
     }
 
-    func isCorrectGuess(_ input: String, for neighbors: [Country]) -> Country? {
+    public func isCorrectGuess(_ input: String, for neighbors: [Country]) -> Country? {
         let normalized = input.trimmingCharacters(in: .whitespaces).lowercased()
         guard !normalized.isEmpty else { return nil }
         return neighbors.first { country in
@@ -54,7 +54,7 @@ struct BorderChallengeService {
         }
     }
 
-    func xpEarned(found: Int, total: Int, difficulty: Difficulty) -> Int {
+    public func xpEarned(found: Int, total: Int, difficulty: Difficulty) -> Int {
         found * 10 * difficulty.xpMultiplier
     }
 }

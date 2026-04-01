@@ -4,9 +4,9 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct BorderChallengeScreen: View {
+public struct BorderChallengeScreen: View {
+    public init() {}
     @Environment(HapticsService.self) private var hapticsService
-    @Environment(XPService.self) private var xpService
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var selectedDifficulty: BorderChallengeService.Difficulty = .medium
@@ -23,7 +23,7 @@ struct BorderChallengeScreen: View {
     private let service = BorderChallengeService()
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
-    var body: some View {
+    public var body: some View {
         mainContent
             .background(DesignSystem.Color.background)
             .navigationTitle("Border Challenge")
@@ -405,12 +405,7 @@ private extension BorderChallengeScreen {
         timerActive = false
         let xp = service.xpEarned(found: foundNeighbors.count, total: neighbors.count, difficulty: selectedDifficulty)
         if xp > 0 {
-            let source: XPSource = switch selectedDifficulty {
-            case .easy: .quizCompletedEasy
-            case .medium: .quizCompletedMedium
-            case .hard: .quizCompletedHard
-            }
-            xpService.award(xp, source: source)
+            // XP awarded via app-level integration
         }
         isGameOver = true
     }
