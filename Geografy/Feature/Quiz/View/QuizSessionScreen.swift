@@ -231,26 +231,9 @@ private extension QuizSessionScreen {
 
             Spacer()
 
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: "timer")
-                    .font(DesignSystem.Font.caption)
-
-                Text("\(String(Int(arcadeTimeRemaining)))s")
-                    .font(DesignSystem.Font.monoCaption2)
-            }
-            .foregroundStyle(arcadeTimerColor)
+            QuizTimerBadge(seconds: Int(arcadeTimeRemaining), style: .compact)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    var arcadeTimerColor: Color {
-        if arcadeTimeRemaining > 20 {
-            DesignSystem.Color.success
-        } else if arcadeTimeRemaining > 10 {
-            DesignSystem.Color.warning
-        } else {
-            DesignSystem.Color.error
-        }
     }
 
     var streakBadge: some View {
@@ -277,34 +260,11 @@ private extension QuizSessionScreen {
     }
 
     var timerPill: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            timerProgressRing
-            Text("\(Int(timerRemaining))s")
-                .font(DesignSystem.Font.roundedMicro2)
-                .contentTransition(.numericText())
-        }
-        .foregroundStyle(timerColor)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 5)
-        .background(timerColor.opacity(0.15), in: Capsule())
-        .overlay(Capsule().strokeBorder(timerColor.opacity(0.3), lineWidth: 1))
-        .scaleEffect(timerRemaining <= configuration.difficulty.timerDuration * 0.25 ? 1.08 : 1.0)
+        QuizTimerBadge(
+            seconds: Int(timerRemaining),
+            totalSeconds: Int(configuration.difficulty.timerDuration)
+        )
         .opacity(timerPulseOpacity)
-        .animation(.easeInOut(duration: 0.3), value: timerRemaining)
-        .animation(.easeInOut(duration: 0.3), value: timerColor)
-    }
-
-    var timerProgressRing: some View {
-        ZStack {
-            Circle()
-                .stroke(timerColor.opacity(0.2), lineWidth: 2)
-            Circle()
-                .trim(from: 0, to: timerProgress)
-                .stroke(timerColor, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-                .rotationEffect(.degrees(-90))
-                .animation(.linear(duration: 1), value: timerProgress)
-        }
-        .frame(width: 16, height: 16)
     }
 
     @ViewBuilder
@@ -584,25 +544,9 @@ private extension QuizSessionScreen {
         return CGFloat(currentIndex) / CGFloat(questions.count)
     }
 
-    var timerProgress: CGFloat {
-        guard configuration.difficulty.timerDuration > 0 else { return 0 }
-        return timerRemaining / configuration.difficulty.timerDuration
-    }
-
     var timerPulseOpacity: Double {
         let threshold = configuration.difficulty.timerDuration * 0.4
         guard timerRemaining <= threshold else { return 1.0 }
         return timerRemaining.truncatingRemainder(dividingBy: 2) < 1 ? 0.7 : 1.0
-    }
-
-    var timerColor: Color {
-        let duration = configuration.difficulty.timerDuration
-        return if timerRemaining <= duration * 0.25 {
-            DesignSystem.Color.error
-        } else if timerRemaining <= duration * 0.5 {
-            DesignSystem.Color.warning
-        } else {
-            DesignSystem.Color.accent
-        }
     }
 }
