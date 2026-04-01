@@ -20,7 +20,6 @@ final class StreakService {
         self.xpService = xpService
         self.achievementService = achievementService
         self.currentUserID = userID
-        refreshStreak()
     }
 
     /// Activity dates for the past 7 calendar days (Mon–Sun of the current week).

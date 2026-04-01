@@ -59,10 +59,7 @@ struct GeografyApp: App {
                 }
             }
             .animation(.easeOut(duration: 0.3), value: isReady)
-            .task {
-                countryDataService.loadCountries()
-                isReady = true
-            }
+            .task { bootstrap() }
         }
         .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)
@@ -106,6 +103,18 @@ private extension GeografyApp {
             .onChange(of: xpService.totalXP) { _, xp in handleXPChange(xp) }
             .onChange(of: streakService.currentStreak) { _, streak in handleStreakChange(streak) }
             .onChange(of: travelService.visitedCodes.count) { _, count in handleVisitedChange(count) }
+    }
+}
+
+// MARK: - Bootstrap
+private extension GeografyApp {
+    func bootstrap() {
+        countryDataService.loadCountries()
+        xpService.refreshXP()
+        achievementService.refreshUnlocked()
+        achievementService.loadPinnedIDs()
+        streakService.refreshStreak()
+        isReady = true
     }
 }
 
