@@ -26,7 +26,7 @@ struct HomeComingSoonSection: View {
             "chart.bar.fill",
             "Country Compare",
             "Compare stats side by side",
-            [Color(hex: "8E44AD"), Color(hex: "3498DB")]
+            [Color(hex: "8944AB"), Color(hex: "2E7DD1")]
         ),
         (
             "clock.arrow.trianglehead.counterclockwise.rotate.90",
