@@ -12,6 +12,18 @@ struct GeographyFeaturesScreen: View {
     private let service = GeographyFeaturesService()
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Geography Features")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear { blobAnimating = true }
+    }
+}
+
+// MARK: - Subviews
+private extension GeographyFeaturesScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 typePicker
@@ -21,16 +33,8 @@ struct GeographyFeaturesScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Geography Features")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { blobAnimating = true }
     }
-}
 
-// MARK: - Subviews
-private extension GeographyFeaturesScreen {
     var typePicker: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
@@ -106,7 +110,9 @@ private extension GeographyFeaturesScreen {
         }
         .padding(DesignSystem.Spacing.sm)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Rank \(rank), \(feature.name), \(feature.measurementLabel): \(feature.formattedMeasurement)")
+        .accessibilityLabel(
+            "Rank \(rank), \(feature.name), \(feature.measurementLabel): \(feature.formattedMeasurement)"
+        )
         .accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
     }
 
@@ -191,6 +197,9 @@ private extension GeographyFeaturesScreen {
         }
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(reduceMotion ? .default : .easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? .default : .easeInOut(duration: 5).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
