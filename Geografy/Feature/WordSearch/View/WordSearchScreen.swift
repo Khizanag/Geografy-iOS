@@ -13,21 +13,8 @@ struct WordSearchScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle("Word Search")
             .closeButtonPlacementLeading()
-            .safeAreaInset(edge: .bottom) {
-                GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-                    coordinator.cover(.wordSearchGame(selectedTheme))
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
-            }
-            .toolbar {
-                ToolbarItem(placement: .secondaryAction) {
-                    Button { showGuide = true } label: {
-                        Image(systemName: "info.circle")
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
+            .safeAreaInset(edge: .bottom) { startButton }
+            .toolbar { toolbarContent }
             .sheet(isPresented: $showGuide) { wordSearchGuide }
     }
 }
@@ -108,6 +95,14 @@ private extension WordSearchScreen {
         )
     }
 
+    var startButton: some View {
+        GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
+            coordinator.cover(.wordSearchGame(selectedTheme))
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
+    }
+
     var wordSearchGuide: some View {
         GuideSheet(
             pages: [
@@ -158,6 +153,19 @@ private extension WordSearchScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             .frame(height: 180)
+        }
+    }
+}
+
+// MARK: - Toolbar
+private extension WordSearchScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .secondaryAction) {
+            Button { showGuide = true } label: {
+                Image(systemName: "info.circle")
+            }
+            .buttonStyle(.plain)
         }
     }
 }

@@ -12,6 +12,20 @@ struct WikipediaSection: View {
     }
 
     var body: some View {
+        extractedContent
+            .buttonStyle(PressButtonStyle())
+            .sheet(isPresented: $showSafari) {
+                if let url = wikipediaURL {
+                    SafariView(url: url)
+                        .ignoresSafeArea()
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension WikipediaSection {
+    var extractedContent: some View {
         Button {
             showSafari = true
         } label: {
@@ -40,18 +54,8 @@ struct WikipediaSection: View {
                 .padding(DesignSystem.Spacing.md)
             }
         }
-        .buttonStyle(PressButtonStyle())
-        .sheet(isPresented: $showSafari) {
-            if let url = wikipediaURL {
-                SafariView(url: url)
-                    .ignoresSafeArea()
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension WikipediaSection {
     var iconView: some View {
         ZStack {
             Circle()
