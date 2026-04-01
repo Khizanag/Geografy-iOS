@@ -40,7 +40,6 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
     case wordSearch
     case borderChallenge
     case landmarkQuiz
-    case challengeRoom
     case travelTracker
     case travelJournal
     case travelBucketList
@@ -81,7 +80,6 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
         case .wordSearch: "Word Search"
         case .borderChallenge: "Border Challenge"
         case .landmarkQuiz: "Landmark Quiz"
-        case .challengeRoom: "Challenge Room"
         case .travelTracker: "Travel Tracker"
         case .travelJournal: "Travel Journal"
         case .travelBucketList: "Travel Bucket List"
@@ -122,7 +120,6 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
         case .wordSearch: "character.magnify"
         case .borderChallenge: "square.dashed"
         case .landmarkQuiz: "building.columns"
-        case .challengeRoom: "trophy"
         case .travelTracker: "airplane.departure"
         case .travelJournal: "book"
         case .travelBucketList: "checklist"
@@ -153,7 +150,7 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
         switch self {
         case .dailyChallenge, .speedRun, .flashcards, .exploreGame,
              .flagGame, .trivia, .spellingBee, .wordSearch,
-             .borderChallenge, .landmarkQuiz, .challengeRoom,
+             .borderChallenge, .landmarkQuiz,
              .quizPacks, .customQuiz, .learningPath:
             .games
         case .multiplayer, .localMultiplayer, .leaderboards, .friends:

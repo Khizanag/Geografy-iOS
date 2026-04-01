@@ -483,7 +483,6 @@ private extension HomeScreen {
         case .travelBucketList: travelBucketListSection
         case .oceanExplorer: oceanExplorerSection
         case .languageExplorer: languageExplorerSection
-        case .challengeRoom: challengeRoomSection
         default: newFeatureSectionView(for: section)
         }
     }

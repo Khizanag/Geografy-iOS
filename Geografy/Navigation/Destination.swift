@@ -6,8 +6,6 @@ enum Destination: Hashable, Identifiable {
     case achievements
     case allMaps
     case borderChallenge
-    case challengeResult(ChallengeRoom)
-    case challengeRoom
     case coinStore
     case compare(preselectedCountry: Country? = nil)
     case continentOverview(Country.Continent)
@@ -87,8 +85,6 @@ enum Destination: Hashable, Identifiable {
         case .achievements: "achievements"
         case .allMaps: "allMaps"
         case .borderChallenge: "borderChallenge"
-        case .challengeResult: "challengeResult"
-        case .challengeRoom: "challengeRoom"
         case .coinStore: "coinStore"
         case .compare(let country): "compare-\(country?.code ?? "none")"
         case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
@@ -173,8 +169,6 @@ extension Destination {
         case .achievements: AchievementsScreen()
         case .allMaps: AllMapsScreen()
         case .borderChallenge: BorderChallengeScreen()
-        case .challengeResult(let room): ChallengeResultScreen(room: room, onPlayAgain: nil)
-        case .challengeRoom: ChallengeSetupScreen()
         case .coinStore: CoinStoreScreen()
         case .compare(let country): CompareScreen(preselectedCountry: country)
         case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)

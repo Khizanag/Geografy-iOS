@@ -222,17 +222,6 @@ extension HomeScreen {
     }
 }
 
-// MARK: - Challenge Room Section
-extension HomeScreen {
-    var challengeRoomSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Challenge Room")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeChallengeRoomCard { coordinator.sheet(.challengeRoom) }
-        }
-    }
-}
-
 // MARK: - Independence Timeline Section
 extension HomeScreen {
     var independenceTimelineSection: some View {

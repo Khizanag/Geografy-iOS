@@ -116,12 +116,6 @@ private extension TestChecklistService {
             "Reveal shows remaining neighbors",
             "Result screen with XP",
         ]),
-        "challengeRoom": TestChecklist(items: [
-            "Setup screen with difficulty selection",
-            "Multi-round challenge flow",
-            "Timer per round",
-            "Final result and XP",
-        ]),
         "countryNicknames": TestChecklist(items: [
             "Nickname list loads",
             "Quiz mode works",
