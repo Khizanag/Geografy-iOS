@@ -127,7 +127,7 @@ private extension CountryDetailScreen {
 
     @ToolbarContentBuilder
     var compareToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
                 coordinator.sheet(.compare(preselectedCountry: country))
@@ -220,15 +220,30 @@ private extension CountryDetailScreen {
                         )
                         .font(DesignSystem.Font.caption2)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
-                        HStack(spacing: DesignSystem.Spacing.xxs) {
-                            Text(country.allCapitals.map(\.name).joined(separator: ", "))
-                                .font(DesignSystem.Font.caption)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(DesignSystem.Color.textPrimary)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                            SpeakerButton(text: country.capital, countryCode: country.code)
-                                .scaleEffect(0.7)
+                        if country.allCapitals.count > 1 {
+                            VStack(spacing: 2) {
+                                ForEach(country.allCapitals, id: \.name) { capital in
+                                    HStack(spacing: DesignSystem.Spacing.xxs) {
+                                        Text(capital.name)
+                                            .font(DesignSystem.Font.caption)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                                        SpeakerButton(text: capital.name, countryCode: country.code)
+                                            .scaleEffect(0.7)
+                                    }
+                                }
+                            }
+                        } else {
+                            HStack(spacing: DesignSystem.Spacing.xxs) {
+                                Text(country.capital)
+                                    .font(DesignSystem.Font.caption)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.7)
+                                SpeakerButton(text: country.capital, countryCode: country.code)
+                                    .scaleEffect(0.7)
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -472,11 +487,8 @@ private extension CountryDetailScreen {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 heroSection
                 quickFactsCard
-                flagSymbolismSection
-                phrasebookSection
-                funFactsSection
-                neighborsSection(countryDataService: countryDataService)
                 travelSection
+                neighborsSection(countryDataService: countryDataService)
                 peopleSection
                 if !religionItems.isEmpty {
                     religionSection
@@ -502,6 +514,9 @@ private extension CountryDetailScreen {
                         hapticsService: hapticsService
                     )
                 }
+                flagSymbolismSection
+                phrasebookSection
+                funFactsSection
                 unescoSection
                 deepDiveSection
                 #if !os(tvOS)

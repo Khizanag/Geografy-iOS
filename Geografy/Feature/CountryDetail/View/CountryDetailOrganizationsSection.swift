@@ -24,69 +24,62 @@ extension CountryDetailScreen {
         countryDataService: CountryDataService,
         hapticsService: HapticsService
     ) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                orgRowIcon(org)
+        Button {
+            hapticsService.impact(.light)
+            navigateToOrganization(org)
+        } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    orgRowIcon(org)
 
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(org.displayName)
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    if org.fullName != org.displayName {
-                        Text(org.fullName)
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                            .fixedSize(horizontal: false, vertical: true)
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text(org.displayName)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        if org.fullName != org.displayName {
+                            Text(org.fullName)
+                                .font(DesignSystem.Font.caption2)
+                                .foregroundStyle(DesignSystem.Color.textSecondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        let memberCount = countryDataService.countries
+                            .filter { $0.organizations.contains(org.id) }.count
+                        if memberCount > 0 {
+                            Text("\(memberCount) members")
+                                .font(DesignSystem.Font.caption2)
+                                .foregroundStyle(org.highlightColor.opacity(0.8))
+                        }
                     }
-                    let memberCount = countryDataService.countries
-                        .filter { $0.organizations.contains(org.id) }.count
-                    if memberCount > 0 {
-                        Text("\(memberCount) members")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(org.highlightColor.opacity(0.8))
-                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
                 }
-
-                Spacer()
-
-                VStack(spacing: DesignSystem.Spacing.xs) {
-                    Button {
-                        navigateToOrganization(org)
-                        hapticsService.impact(.light)
-                    } label: {
-                        orgActionButton(icon: "info.circle", label: "Info", color: DesignSystem.Color.accent)
-                    }
-                    .buttonStyle(.plain)
-
-                    Button {
-                        hapticsService.impact(.light)
-                        coordinator.sheet(.organizationMap(org))
-                    } label: {
-                        orgActionButton(icon: "map", label: "Map", color: org.highlightColor)
-                    }
-                    .buttonStyle(.plain)
-                }
+                .padding(DesignSystem.Spacing.md)
+                .contentShape(Rectangle())
             }
-            .padding(DesignSystem.Spacing.md)
-            .contentShape(Rectangle())
         }
-    }
-}
-
-// MARK: - Org Action Button
-private extension CountryDetailScreen {
-    func orgActionButton(icon: String, label: String, color: Color) -> some View {
-        VStack(spacing: 2) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.iconXS.weight(.medium))
-                .foregroundStyle(color)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(color.opacity(0.8))
+        .buttonStyle(PressButtonStyle())
+        .contextMenu {
+            Button {
+                navigateToOrganization(org)
+            } label: {
+                Label("View Details", systemImage: "info.circle")
+            }
+            Button {
+                coordinator.sheet(.organizationMap(org))
+            } label: {
+                Label("View Map", systemImage: "map")
+            }
+        } preview: {
+            Text(org.displayName)
+                .font(DesignSystem.Font.headline)
+                .padding()
         }
-        .frame(width: 44, height: 40)
-        .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
     }
 }
 
