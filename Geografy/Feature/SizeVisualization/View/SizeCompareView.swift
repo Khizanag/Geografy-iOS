@@ -19,10 +19,9 @@ struct SizeCompareView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 ShareLink(item: shareText) {
-                    Image(systemName: "square.and.arrow.up")
+                    Label("Share", systemImage: "square.and.arrow.up")
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
-                .buttonStyle(.plain)
             }
         }
         .presentationDetents([.medium, .large])

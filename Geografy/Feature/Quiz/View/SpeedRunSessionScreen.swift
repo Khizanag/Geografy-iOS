@@ -86,11 +86,10 @@ private extension SpeedRunSessionScreen {
         if !isFinished {
             ToolbarItem(placement: .topBarLeading) {
                 Button { showGiveUpAlert = true } label: {
-                    Image(systemName: "flag.fill")
+                    Label("Give Up", systemImage: "flag.fill")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.error)
                 }
-                .buttonStyle(.plain)
             }
         }
     }

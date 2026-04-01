@@ -156,7 +156,7 @@ private extension TravelTrackerScreen {
                 hapticsService.impact(.light)
                 showCountryPicker = true
             } label: {
-                Image(systemName: "plus")
+                Label("Add", systemImage: "plus")
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.accent)
             }

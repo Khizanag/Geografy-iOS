@@ -113,7 +113,7 @@ private extension CountryDetailScreen {
                     favoritesService.toggle(code: country.code)
                 }
             } label: {
-                Image(systemName: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart")
+                Label("Favorite", systemImage: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart")
                     .foregroundStyle(
                         favoritesService.isFavorite(code: country.code)
                             ? DesignSystem.Color.error
@@ -121,7 +121,6 @@ private extension CountryDetailScreen {
                     )
                     .symbolEffect(.bounce, value: favoritesService.isFavorite(code: country.code))
             }
-            .buttonStyle(.plain)
         }
     }
 
@@ -132,10 +131,9 @@ private extension CountryDetailScreen {
                 hapticsService.impact(.light)
                 coordinator.sheet(.compare(preselectedCountry: country))
             } label: {
-                Image(systemName: "arrow.left.arrow.right")
+                Label("Compare", systemImage: "arrow.left.arrow.right")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
-            .buttonStyle(.plain)
         }
     }
 

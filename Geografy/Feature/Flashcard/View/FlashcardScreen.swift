@@ -21,9 +21,8 @@ struct FlashcardScreen: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button { showGuide = true } label: {
-                        Image(systemName: "info.circle")
+                        Label("Guide", systemImage: "info.circle")
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .task { loadData() }
