@@ -33,7 +33,9 @@ struct HomeScreen: View {
 
     var body: some View {
         mainFeed
+            .background { scrollableBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
+            .clipped()
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task {
@@ -179,10 +181,6 @@ private extension HomeScreen {
             .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
             .padding(.top, DesignSystem.Spacing.lg)
             .padding(.bottom, DesignSystem.Spacing.xxl)
-            .background(alignment: .top) {
-                scrollableBlobs
-                    .clipped()
-            }
         }
     }
 }
