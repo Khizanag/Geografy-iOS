@@ -11,7 +11,6 @@ public struct QuizPackBrowserScreen: View {
 
     @State private var packService = QuizPackService()
     @State private var selectedCategory: QuizPackCategory?
-    @State private var selectedPack: QuizPack?
     @State private var allPacks: [QuizPack] = []
     @State private var blobAnimating = false
     @State private var appeared = false
@@ -24,13 +23,6 @@ public struct QuizPackBrowserScreen: View {
             .navigationTitle("Quiz Packs")
             .task { loadData() }
             .onAppear { startAnimations() }
-            .sheet(item: $selectedPack) { pack in
-                QuizPackDetailScreen(
-                    pack: pack,
-                    allPacks: allPacks,
-                    packService: packService
-                )
-            }
     }
 }
 
@@ -354,7 +346,7 @@ private extension QuizPackBrowserScreen {
             return
         }
 
-        selectedPack = pack
+        coordinator.sheet(.quizPackDetail(packID: pack.id))
     }
 }
 

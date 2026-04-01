@@ -9,38 +9,50 @@ public struct QuizPackDetailScreen: View {
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(CountryDataService.self) private var countryDataService
 
-    public let pack: QuizPack
-    public let allPacks: [QuizPack]
-    public let packService: QuizPackService
+    public let packID: String
 
-    public init(
-        pack: QuizPack,
-        allPacks: [QuizPack],
-        packService: QuizPackService
-    ) {
-        self.pack = pack
-        self.allPacks = allPacks
-        self.packService = packService
+    @State private var packService = QuizPackService()
+    @State private var allPacks: [QuizPack] = []
+
+    public init(packID: String) {
+        self.packID = packID
+    }
+
+    private var pack: QuizPack? {
+        allPacks.first { $0.id == packID }
     }
 
     public var body: some View {
-        scrollContent
-            .background(DesignSystem.Color.background)
-            .navigationTitle(pack.name)
-            #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
+        Group {
+            if let pack {
+                packContent(pack)
+            } else {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+        }
+        .background(DesignSystem.Color.background)
+        .navigationTitle(pack?.name ?? "Quiz Pack")
+        #if !os(tvOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #endif
+        .task {
+            packService.loadProgress()
+            allPacks = QuizPackService.makeAllPacks(
+                countries: countryDataService.countries
+            )
+        }
     }
 }
 
 // MARK: - Content
 private extension QuizPackDetailScreen {
-    var scrollContent: some View {
+    func packContent(_ pack: QuizPack) -> some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                packHeader
-                progressOverview
-                levelsSection
+                packHeader(pack)
+                progressOverview(pack)
+                levelsSection(pack)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
@@ -51,76 +63,69 @@ private extension QuizPackDetailScreen {
 
 // MARK: - Header
 private extension QuizPackDetailScreen {
-    var packHeader: some View {
+    func packHeader(_ pack: QuizPack) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            headerIconCircle
-            headerDescription
-            headerBadges
-        }
-        .padding(.top, DesignSystem.Spacing.md)
-    }
-
-    var headerIconCircle: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            pack.gradientColors.0,
-                            pack.gradientColors.1,
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                pack.gradientColors.0,
+                                pack.gradientColors.1,
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
                     )
+                    .frame(
+                        width: DesignSystem.Size.xxxl,
+                        height: DesignSystem.Size.xxxl
+                    )
+
+                Image(systemName: pack.icon)
+                    .font(DesignSystem.Font.title)
+                    .foregroundStyle(DesignSystem.Color.onAccent)
+            }
+
+            Text(pack.description)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, DesignSystem.Spacing.lg)
+
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                infoPill(
+                    text: "\(pack.totalQuestions) questions",
+                    icon: "questionmark.circle"
                 )
-                .frame(
-                    width: DesignSystem.Size.xxxl,
-                    height: DesignSystem.Size.xxxl
+                infoPill(
+                    text: "\(pack.levelCount) levels",
+                    icon: "chart.bar.fill"
                 )
-
-            Image(systemName: pack.icon)
-                .font(DesignSystem.Font.title)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-        }
-    }
-
-    var headerDescription: some View {
-        Text(pack.description)
-            .font(DesignSystem.Font.subheadline)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, DesignSystem.Spacing.lg)
-    }
-
-    @ViewBuilder
-    var headerBadges: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            infoPill(
-                text: "\(pack.totalQuestions) questions",
-                icon: "questionmark.circle"
-            )
-            infoPill(
-                text: "\(pack.levelCount) levels",
-                icon: "chart.bar.fill"
-            )
-            if pack.isPremium {
-                PremiumBadge()
+                if pack.isPremium {
+                    PremiumBadge()
+                }
             }
         }
+        .padding(.top, DesignSystem.Spacing.md)
     }
 }
 
 // MARK: - Progress Overview
 private extension QuizPackDetailScreen {
-    var progressOverview: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+    func progressOverview(_ pack: QuizPack) -> some View {
+        let completed = packService.completedLevelCount(for: pack)
+        let stars = packService.totalStars(for: pack)
+        let maxStars = packService.maxStars(for: pack)
+
+        return HStack(spacing: DesignSystem.Spacing.sm) {
             progressStat(
-                value: "\(completedLevels)",
+                value: "\(completed)",
                 label: "Completed",
                 total: "\(pack.levelCount)"
             )
             progressStat(
-                value: "\(earnedStars)",
+                value: "\(stars)",
                 label: "Stars",
                 total: "\(maxStars)"
             )
@@ -148,51 +153,47 @@ private extension QuizPackDetailScreen {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            )
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
         )
     }
 }
 
 // MARK: - Levels Section
 private extension QuizPackDetailScreen {
-    var levelsSection: some View {
+    func levelsSection(_ pack: QuizPack) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Levels", icon: "chart.bar.fill")
-            levelsList
-        }
-    }
 
-    var levelsList: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(
-                Array(pack.levels.enumerated()),
-                id: \.element.id
-            ) { index, level in
-                levelRow(for: level, at: index)
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(
+                    Array(pack.levels.enumerated()),
+                    id: \.element.id
+                ) { index, level in
+                    let locked = isLevelLocked(at: index, in: pack)
+                    let starCount = packService.stars(for: level.id)
+
+                    Button {
+                        handleLevelTap(level, in: pack, locked: locked)
+                    } label: {
+                        QuizPackLevelCard(
+                            level: level,
+                            stars: starCount,
+                            isLocked: locked
+                        )
+                    }
+                    .buttonStyle(PressButtonStyle())
+                    .disabled(locked)
+                }
             }
         }
     }
 
-    func levelRow(
-        for level: QuizPackLevel,
-        at index: Int
-    ) -> some View {
-        let locked = isLevelLocked(at: index)
-        let starCount = packService.stars(for: level.id)
-
-        return Button { handleLevelTap(level, locked: locked) } label: {
-            QuizPackLevelCard(
-                level: level,
-                stars: starCount,
-                isLocked: locked
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-        .disabled(locked)
+    func isLevelLocked(at index: Int, in pack: QuizPack) -> Bool {
+        guard index > 0 else { return false }
+        let previousLevel = pack.levels[index - 1]
+        return packService.progress(for: previousLevel.id) == nil
     }
 }
 
@@ -208,28 +209,7 @@ private extension QuizPackDetailScreen {
         .foregroundStyle(DesignSystem.Color.textSecondary)
         .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: Capsule()
-        )
-    }
-
-    var completedLevels: Int {
-        packService.completedLevelCount(for: pack)
-    }
-
-    var earnedStars: Int {
-        packService.totalStars(for: pack)
-    }
-
-    var maxStars: Int {
-        packService.maxStars(for: pack)
-    }
-
-    func isLevelLocked(at index: Int) -> Bool {
-        guard index > 0 else { return false }
-        let previousLevel = pack.levels[index - 1]
-        return packService.progress(for: previousLevel.id) == nil
+        .background(DesignSystem.Color.cardBackground, in: Capsule())
     }
 }
 
@@ -237,6 +217,7 @@ private extension QuizPackDetailScreen {
 private extension QuizPackDetailScreen {
     func handleLevelTap(
         _ level: QuizPackLevel,
+        in pack: QuizPack,
         locked: Bool
     ) {
         guard !locked else { return }
@@ -246,7 +227,8 @@ private extension QuizPackDetailScreen {
             return
         }
 
-        let metric: ComparisonMetric = pack.category == .population ? .population : .area
+        let metric: ComparisonMetric =
+            pack.category == .population ? .population : .area
 
         let config = QuizConfiguration(
             type: pack.category.quizType,

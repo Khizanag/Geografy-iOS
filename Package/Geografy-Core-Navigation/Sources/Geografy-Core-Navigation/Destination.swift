@@ -56,6 +56,7 @@ public enum Destination: Hashable, Identifiable {
     case organizations
     case paywall
     case profile
+    case quizPackDetail(packID: String)
     case quizPacks
     case quizSession(QuizConfiguration)
     case quizSetup
@@ -132,6 +133,7 @@ public enum Destination: Hashable, Identifiable {
         case .organizations: "organizations"
         case .paywall: "paywall"
         case .profile: "profile"
+        case .quizPackDetail(let id): "quizPackDetail-\(id)"
         case .quizPacks: "quizPacks"
         case .quizSession: "quizSession"
         case .quizSetup: "quizSetup"
