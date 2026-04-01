@@ -32,12 +32,11 @@ public struct AmbientBlobsView: View {
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         .ignoresSafeArea()
-        .onAppear {
-            guard !reduceMotion else { return }
-            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
-                isAnimating = true
-            }
-        }
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: isAnimating
+        )
+        .onAppear { isAnimating = true }
     }
 }
 
