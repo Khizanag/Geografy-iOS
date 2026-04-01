@@ -10,7 +10,6 @@ final class FavoritesService {
 
     init(container: ModelContainer) {
         self.modelContext = ModelContext(container)
-        fetchEntries()
     }
 
     var favoriteCodes: Set<String> {
