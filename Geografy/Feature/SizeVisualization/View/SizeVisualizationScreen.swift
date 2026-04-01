@@ -190,6 +190,13 @@ private struct CountryRowContent: View {
     let maxValue: Double
 
     var body: some View {
+        cardContent
+    }
+}
+
+// MARK: - Subviews
+private extension CountryRowContent {
+    var cardContent: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 headerRow

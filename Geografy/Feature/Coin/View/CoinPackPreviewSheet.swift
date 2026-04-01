@@ -13,6 +13,21 @@ struct CoinPackPreviewSheet: View {
     @State private var sparkleVisible = false
 
     var body: some View {
+        mainContent
+            .padding(DesignSystem.Spacing.lg)
+            .padding(.bottom, DesignSystem.Spacing.md)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .onAppear {
+                coinAnimating = true
+                sparkleVisible = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CoinPackPreviewSheet {
+    var mainContent: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             Spacer()
             coinHero
@@ -20,19 +35,8 @@ struct CoinPackPreviewSheet: View {
             Spacer()
             buyButton
         }
-        .padding(DesignSystem.Spacing.lg)
-        .padding(.bottom, DesignSystem.Spacing.md)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .onAppear {
-            coinAnimating = true
-            sparkleVisible = true
-        }
     }
-}
 
-// MARK: - Subviews
-private extension CoinPackPreviewSheet {
     var coinHero: some View {
         ZStack {
             glowCircle

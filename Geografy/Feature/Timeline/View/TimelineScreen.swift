@@ -13,26 +13,30 @@ struct TimelineScreen: View {
     @State private var showTodaySection = true
 
     var body: some View {
-        VStack(spacing: 0) {
-            filterBar
-            eventList
-            timelineSliderSection
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Timeline")
-        .closeButtonPlacementLeading()
-        .toolbar { toolbarContent }
-        .onAppear {
-            timelineService.loadEvents()
-        }
-        .sheet(item: $selectedEvent) { event in
-            eventDetailSheet(for: event)
-        }
+        mainContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Timeline")
+            .closeButtonPlacementLeading()
+            .toolbar { toolbarContent }
+            .onAppear {
+                timelineService.loadEvents()
+            }
+            .sheet(item: $selectedEvent) { event in
+                eventDetailSheet(for: event)
+            }
     }
 }
 
 // MARK: - Subviews
 private extension TimelineScreen {
+    var mainContent: some View {
+        VStack(spacing: 0) {
+            filterBar
+            eventList
+            timelineSliderSection
+        }
+    }
+
     var filterBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {

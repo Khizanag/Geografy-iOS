@@ -20,26 +20,29 @@ struct TriviaScreen: View {
     private let service = TriviaService()
 
     var body: some View {
-        Group {
-            if questions.isEmpty {
-                loadingView
-            } else if currentIndex >= questions.count {
-                completionView
-            } else {
-                gameContent
+        contentSwitcher
+            .background { backgroundView }
+            .navigationTitle("Trivia")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                loadQuestions()
             }
-        }
-        .background { backgroundView }
-        .navigationTitle("Trivia")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            loadQuestions()
-        }
     }
 }
 
 // MARK: - Subviews
 private extension TriviaScreen {
+    @ViewBuilder
+    var contentSwitcher: some View {
+        if questions.isEmpty {
+            loadingView
+        } else if currentIndex >= questions.count {
+            completionView
+        } else {
+            gameContent
+        }
+    }
+
     var backgroundView: some View {
         DesignSystem.Color.background
             .ignoresSafeArea()

@@ -7,6 +7,16 @@ struct FeatureFlagsScreen: View {
     @State private var searchText = ""
 
     var body: some View {
+        listContent
+            .searchable(text: $searchText, prompt: "Search features...")
+            .navigationTitle("Feature Flags")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// MARK: - Subviews
+private extension FeatureFlagsScreen {
+    var listContent: some View {
         List {
             ForEach(FeatureFlag.Category.allCases, id: \.rawValue) { category in
                 let flags = filteredFlags(for: category)
@@ -25,14 +35,8 @@ struct FeatureFlagsScreen: View {
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search features...")
-        .navigationTitle("Feature Flags")
-        .navigationBarTitleDisplayMode(.inline)
     }
-}
 
-// MARK: - Subviews
-private extension FeatureFlagsScreen {
     func flagRow(_ flag: FeatureFlag) -> some View {
         Toggle(isOn: Binding(
             get: { featureFlags.isEnabled(flag) },

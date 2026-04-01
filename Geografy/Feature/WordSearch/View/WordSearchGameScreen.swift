@@ -21,22 +21,16 @@ struct WordSearchGameScreen: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        Group {
-            if let puzzle {
-                gameContent(puzzle)
-            } else {
-                ProgressView().tint(DesignSystem.Color.accent)
+        contentSwitcher
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Word Search")
+            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
+            .toolbar { toolbarContent }
+            .task { startPuzzle() }
+            .onReceive(timer) { _ in
+                guard timerActive, !isPaused else { return }
+                elapsedSeconds += 1
             }
-        }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Word Search")
-        .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
-        .toolbar { toolbarContent }
-        .task { startPuzzle() }
-        .onReceive(timer) { _ in
-            guard timerActive, !isPaused else { return }
-            elapsedSeconds += 1
-        }
     }
 }
 
@@ -75,6 +69,18 @@ private extension WordSearchGameScreen {
         let minutes = elapsedSeconds / 60
         let seconds = elapsedSeconds % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+}
+
+// MARK: - Subviews
+private extension WordSearchGameScreen {
+    @ViewBuilder
+    var contentSwitcher: some View {
+        if let puzzle {
+            gameContent(puzzle)
+        } else {
+            ProgressView().tint(DesignSystem.Color.accent)
+        }
     }
 }
 

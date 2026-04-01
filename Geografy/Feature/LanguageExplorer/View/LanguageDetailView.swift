@@ -8,6 +8,21 @@ struct LanguageDetailView: View {
     let maxSpeakers: Int
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(language.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    CircleCloseButton { dismiss() }
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension LanguageDetailView {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 headerSection
@@ -19,19 +34,8 @@ struct LanguageDetailView: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(language.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension LanguageDetailView {
     var headerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text(language.nativeName)

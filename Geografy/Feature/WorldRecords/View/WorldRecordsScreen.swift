@@ -14,6 +14,21 @@ struct WorldRecordsScreen: View {
     private let worldRecordsService = WorldRecordsService()
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("World Records")
+            .navigationBarTitleDisplayMode(.inline)
+            .task {
+                records = worldRecordsService.computeRecords(from: countryDataService.countries)
+            }
+            .onAppear { startBlobAnimation() }
+    }
+}
+
+// MARK: - Subviews
+private extension WorldRecordsScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 ForEach(WorldRecordCategory.allCases, id: \.rawValue) { category in
@@ -26,19 +41,8 @@ struct WorldRecordsScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("World Records")
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            records = worldRecordsService.computeRecords(from: countryDataService.countries)
-        }
-        .onAppear { startBlobAnimation() }
     }
-}
 
-// MARK: - Subviews
-private extension WorldRecordsScreen {
     func categorySection(category: WorldRecordCategory, records: [WorldRecord]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: category.displayName, icon: category.icon)

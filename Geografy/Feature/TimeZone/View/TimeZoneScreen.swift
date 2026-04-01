@@ -15,16 +15,13 @@ struct TimeZoneScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            tabPicker
-            tabContent
-        }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Time Zones")
-        .onAppear {
-            blobAnimating = true
-        }
+        mainContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Time Zones")
+            .onAppear {
+                blobAnimating = true
+            }
     }
 }
 
@@ -52,6 +49,13 @@ private extension TimeZoneScreen {
 
 // MARK: - Subviews
 private extension TimeZoneScreen {
+    var mainContent: some View {
+        VStack(spacing: 0) {
+            tabPicker
+            tabContent
+        }
+    }
+
     var tabPicker: some View {
         Picker("", selection: $selectedTab) {
             ForEach(TimeZoneTab.allCases, id: \.label) { tab in
@@ -156,6 +160,13 @@ private struct WorldClockView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
+        listContent
+            .listStyle(.plain)
+            .searchable(text: $searchText, prompt: "Search country…")
+            .onReceive(timer) { date in now = date }
+    }
+
+    private var listContent: some View {
         List(filteredCountries) { item in
             Button {
                 #if !os(tvOS)
@@ -167,9 +178,6 @@ private struct WorldClockView: View {
             .listRowBackground(DesignSystem.Color.cardBackground)
             .listRowSeparatorTint(DesignSystem.Color.textTertiary.opacity(0.2))
         }
-        .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "Search country…")
-        .onReceive(timer) { date in now = date }
     }
 
     private var filteredCountries: [CountryWithZone] {
@@ -237,6 +245,10 @@ private struct AllZonesView: View {
     let countries: [CountryWithZone]
 
     var body: some View {
+        scrollContent
+    }
+
+    private var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 ForEach(groupedZones, id: \.offset) { group in

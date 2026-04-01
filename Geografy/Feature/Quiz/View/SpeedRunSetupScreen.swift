@@ -13,6 +13,22 @@ struct SpeedRunSetupScreen: View {
     @State private var pulseTimer = false
 
     var body: some View {
+        scrollContent
+            .background { AmbientBlobsView(.quiz) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Speed Run")
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) { startButton }
+            .onAppear {
+                appeared = true
+                pulseTimer = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension SpeedRunSetupScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 heroSection
@@ -28,15 +44,6 @@ struct SpeedRunSetupScreen: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
-        }
-        .background { AmbientBlobsView(.quiz) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Speed Run")
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) { startButton }
-        .onAppear {
-            appeared = true
-            pulseTimer = true
         }
     }
 }

@@ -20,19 +20,25 @@ struct SearchScreen: View {
     ]
 
     var body: some View {
-        Group {
-            if query.isEmpty {
-                emptyStateContent
-            } else {
-                resultContent
+        mainContent
+            .animation(.easeInOut(duration: 0.2), value: query.isEmpty)
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Search")
+            .searchable(text: $query, prompt: "Countries, capitals, organizations…")
+            .onChange(of: query) { _, newValue in
+                scheduleSearch(query: newValue)
             }
-        }
-        .animation(.easeInOut(duration: 0.2), value: query.isEmpty)
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Search")
-        .searchable(text: $query, prompt: "Countries, capitals, organizations…")
-        .onChange(of: query) { _, newValue in
-            scheduleSearch(query: newValue)
+    }
+}
+
+// MARK: - Subviews
+private extension SearchScreen {
+    @ViewBuilder
+    var mainContent: some View {
+        if query.isEmpty {
+            emptyStateContent
+        } else {
+            resultContent
         }
     }
 }

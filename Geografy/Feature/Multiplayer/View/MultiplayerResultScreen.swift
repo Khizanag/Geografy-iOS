@@ -14,6 +14,24 @@ struct MultiplayerResultScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Match Result")
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) { actionButtons }
+            .toolbar {
+            }
+            .onAppear {
+                startBlobAnimation()
+                animateContent()
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension MultiplayerResultScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 resultHeader
@@ -25,17 +43,6 @@ struct MultiplayerResultScreen: View {
             .readableContentWidth()
             .opacity(showContent ? 1 : 0)
             .offset(y: showContent ? 0 : 20)
-        }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Match Result")
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) { actionButtons }
-        .toolbar {
-        }
-        .onAppear {
-            startBlobAnimation()
-            animateContent()
         }
     }
 }

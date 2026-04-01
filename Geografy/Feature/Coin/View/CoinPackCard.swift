@@ -8,17 +8,7 @@ struct CoinPackCard: View {
 
     var body: some View {
         Button(action: onTap) {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                tagBadge
-                coinDisplay
-                priceSection
-            }
-            .padding(DesignSystem.Spacing.md)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-            .overlay(cardBorder)
-            .geoShadow(.card)
+            cardContent
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -26,6 +16,20 @@ struct CoinPackCard: View {
 
 // MARK: - Subviews
 private extension CoinPackCard {
+    var cardContent: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            tagBadge
+            coinDisplay
+            priceSection
+        }
+        .padding(DesignSystem.Spacing.md)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .overlay(cardBorder)
+        .geoShadow(.card)
+    }
+
     var tagBadge: some View {
         Group {
             if let tagText = pack.tagText {

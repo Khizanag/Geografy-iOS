@@ -9,23 +9,27 @@ struct CoinBalanceView: View {
     @State private var glowScale: CGFloat = 1.0
 
     var body: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            coinIcon
-            balanceLabel
-            subtitle
-        }
-        .onAppear {
-            displayedBalance = coinService.balance
-            startGlowAnimation()
-        }
-        .onChange(of: coinService.balance) { _, newValue in
-            animateBalanceChange(to: newValue)
-        }
+        mainContent
+            .onAppear {
+                displayedBalance = coinService.balance
+                startGlowAnimation()
+            }
+            .onChange(of: coinService.balance) { _, newValue in
+                animateBalanceChange(to: newValue)
+            }
     }
 }
 
 // MARK: - Subviews
 private extension CoinBalanceView {
+    var mainContent: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            coinIcon
+            balanceLabel
+            subtitle
+        }
+    }
+
     var coinIcon: some View {
         ZStack {
             Circle()

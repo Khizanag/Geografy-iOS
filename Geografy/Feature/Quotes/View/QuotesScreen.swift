@@ -14,6 +14,16 @@ struct QuotesScreen: View {
     }
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Quotes")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+// MARK: - Subviews
+private extension QuotesScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 quotesOfTheDaySection
@@ -24,14 +34,8 @@ struct QuotesScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Quotes")
-        .navigationBarTitleDisplayMode(.inline)
     }
-}
 
-// MARK: - Subviews
-private extension QuotesScreen {
     var quotesOfTheDaySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Quotes of the Day", icon: "sun.max.fill")

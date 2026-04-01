@@ -18,31 +18,34 @@ struct TravelBucketListScreen: View {
     private let notesKey = "bucketList_notes"
 
     var body: some View {
-        Group {
-            if countryDataService.countries.isEmpty {
-                ProgressView().tint(DesignSystem.Color.accent)
-            } else if bucketListCountries.isEmpty {
-                emptyState
-            } else {
-                mainContent
+        contentSwitcher
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Bucket List")
+            .closeButtonPlacementLeading()
+            .toolbar { toolbarItems }
+            .onAppear { loadPersistedData() }
+            .sheet(item: $selectedCountry) { country in
+                bucketListDetailSheet(for: country)
             }
-        }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Bucket List")
-        .closeButtonPlacementLeading()
-        .toolbar { toolbarItems }
-        .onAppear { loadPersistedData() }
-        .sheet(item: $selectedCountry) { country in
-            bucketListDetailSheet(for: country)
-        }
-        .sheet(isPresented: $showShareSheet) {
-            ShareSheet(text: shareText)
-        }
+            .sheet(isPresented: $showShareSheet) {
+                ShareSheet(text: shareText)
+            }
     }
 }
 
 // MARK: - Subviews
 private extension TravelBucketListScreen {
+    @ViewBuilder
+    var contentSwitcher: some View {
+        if countryDataService.countries.isEmpty {
+            ProgressView().tint(DesignSystem.Color.accent)
+        } else if bucketListCountries.isEmpty {
+            emptyState
+        } else {
+            mainContent
+        }
+    }
+
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.md) {

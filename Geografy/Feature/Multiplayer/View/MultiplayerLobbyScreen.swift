@@ -16,6 +16,26 @@ struct MultiplayerLobbyScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Multiplayer")
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) {
+                if !isSearching {
+                    footerButton
+                }
+            }
+            .onAppear { startBlobAnimation() }
+            .fullScreenCover(isPresented: $showMatch) {
+                matchDestination
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension MultiplayerLobbyScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 ratingHeader
@@ -27,24 +47,8 @@ struct MultiplayerLobbyScreen: View {
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Multiplayer")
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) {
-            if !isSearching {
-                footerButton
-            }
-        }
-        .onAppear { startBlobAnimation() }
-        .fullScreenCover(isPresented: $showMatch) {
-            matchDestination
-        }
     }
-}
 
-// MARK: - Subviews
-private extension MultiplayerLobbyScreen {
     var ratingHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ratingBadge

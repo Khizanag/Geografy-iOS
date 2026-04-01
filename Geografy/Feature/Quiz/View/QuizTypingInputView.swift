@@ -19,17 +19,24 @@ struct QuizTypingInputView: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
+        mainContent
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
+            .onAppear { isInputFocused = true }
+            .onChange(of: showFeedback) { _, newValue in
+                if newValue { isInputFocused = false }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension QuizTypingInputView {
+    var mainContent: some View {
         VStack(spacing: 0) {
             Spacer(minLength: DesignSystem.Spacing.md)
             promptSection
             Spacer(minLength: DesignSystem.Spacing.lg)
             typingSection
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
-        .onAppear { isInputFocused = true }
-        .onChange(of: showFeedback) { _, newValue in
-            if newValue { isInputFocused = false }
         }
     }
 }

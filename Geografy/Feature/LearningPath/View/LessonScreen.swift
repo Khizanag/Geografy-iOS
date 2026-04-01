@@ -12,6 +12,29 @@ struct LessonScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(lesson.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .bottom) {
+                completeButton
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .padding(.vertical, DesignSystem.Spacing.sm)
+                    .background(.ultraThinMaterial)
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    CircleCloseButton { dismiss() }
+                }
+            }
+            .onAppear { startBlobAnimation() }
+    }
+}
+
+// MARK: - Subviews
+private extension LessonScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 lessonTypeTag
@@ -20,27 +43,8 @@ struct LessonScreen: View {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(lesson.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) {
-            completeButton
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(.ultraThinMaterial)
-        }
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
-        .onAppear { startBlobAnimation() }
     }
-}
 
-// MARK: - Subviews
-private extension LessonScreen {
     var lessonTypeTag: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: typeIcon)

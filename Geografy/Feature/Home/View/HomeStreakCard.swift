@@ -12,6 +12,21 @@ struct HomeStreakCard: View {
     @State private var isPulsing = false
 
     var body: some View {
+        cardContent
+            .onAppear {
+                if isAtRisk {
+                    isPulsing = true
+                }
+            }
+            .onChange(of: isAtRisk) { _, newValue in
+                isPulsing = newValue
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension HomeStreakCard {
+    var cardContent: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
                 streakIcon
@@ -21,19 +36,8 @@ struct HomeStreakCard: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .onAppear {
-            if isAtRisk {
-                isPulsing = true
-            }
-        }
-        .onChange(of: isAtRisk) { _, newValue in
-            isPulsing = newValue
-        }
     }
-}
 
-// MARK: - Subviews
-private extension HomeStreakCard {
     var streakIcon: some View {
         ZStack {
             Circle()

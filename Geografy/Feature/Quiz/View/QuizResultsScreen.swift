@@ -19,6 +19,21 @@ struct QuizResultsScreen: View {
     @State private var showXPBadge = false
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Results")
+            .navigationBarBackButtonHidden()
+            .safeAreaInset(edge: .bottom) {
+                actionButtons
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+            }
+            .task { processQuizResult() }
+    }
+}
+
+// MARK: - Subviews
+private extension QuizResultsScreen {
+    var scrollContent: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 scoreSection
@@ -28,19 +43,8 @@ struct QuizResultsScreen: View {
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Results")
-        .navigationBarBackButtonHidden()
-        .safeAreaInset(edge: .bottom) {
-            actionButtons
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        }
-        .task { processQuizResult() }
     }
-}
 
-// MARK: - Subviews
-private extension QuizResultsScreen {
     var scoreSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ScoreRingView(progress: result.accuracy)

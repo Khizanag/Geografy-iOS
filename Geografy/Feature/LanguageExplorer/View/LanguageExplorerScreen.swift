@@ -9,6 +9,23 @@ struct LanguageExplorerScreen: View {
     private let languageService = LanguageService()
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Language Explorer")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchQuery, prompt: "Search languages...")
+            .sheet(isPresented: $showingDetail) {
+                if let language = selectedLanguage {
+                    LanguageDetailView(language: language, maxSpeakers: languageService.maxSpeakers)
+                        .presentationDetents([.large])
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension LanguageExplorerScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 languageContent
@@ -17,21 +34,7 @@ struct LanguageExplorerScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Language Explorer")
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchQuery, prompt: "Search languages...")
-        .sheet(isPresented: $showingDetail) {
-            if let language = selectedLanguage {
-                LanguageDetailView(language: language, maxSpeakers: languageService.maxSpeakers)
-                    .presentationDetents([.large])
-            }
-        }
     }
-}
-
-// MARK: - Subviews
-private extension LanguageExplorerScreen {
 
     @ViewBuilder
     var languageContent: some View {
