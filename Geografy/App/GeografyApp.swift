@@ -6,27 +6,27 @@ import GeografyCore
 struct GeografyApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
-    @State private var hapticsService = HapticsService()
-    @State private var testingModeService = TestingModeService()
-    @State private var favoritesService: FavoritesService
-    @State private var travelService = TravelService()
-    @State private var gameCenterService = GameCenterService()
-    @State private var homeSectionOrderService = HomeSectionOrderService()
-    @State private var databaseManager: DatabaseManager
-    @State private var authService: AuthService
-    @State private var xpService: XPService
-    @State private var streakService: StreakService
     @State private var achievementService: AchievementService
+    @State private var authService: AuthService
     @State private var coinService = CoinService()
-    @State private var flashcardService = FlashcardService()
-    @State private var subscriptionService = SubscriptionService()
-    @State private var worldBankService = WorldBankService()
+    @State private var countryDataService = CountryDataService()
     @State private var currencyService = CurrencyService()
+    @State private var databaseManager: DatabaseManager
+    @State private var favoritesService: FavoritesService
+    @State private var featureFlagService = FeatureFlagService()
+    @State private var flashcardService = FlashcardService()
+    @State private var gameCenterService = GameCenterService()
+    @State private var hapticsService = HapticsService()
+    @State private var homeSectionOrderService = HomeSectionOrderService()
     @State private var learningPathService = LearningPathService()
     @State private var pronunciationService = PronunciationService()
+    @State private var streakService: StreakService
+    @State private var subscriptionService = SubscriptionService()
+    @State private var testingModeService = TestingModeService()
+    @State private var travelService = TravelService()
     @State private var widgetDataBridge = WidgetDataBridge()
-    @State private var featureFlagService = FeatureFlagService()
-    @State private var countryDataService = CountryDataService()
+    @State private var worldBankService = WorldBankService()
+    @State private var xpService: XPService
 
     init() {
         #if os(iOS)
