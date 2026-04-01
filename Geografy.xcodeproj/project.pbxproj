@@ -137,13 +137,6 @@
 				Feature/CountryProfile/View/PhraseCard.swift,
 				Feature/CultureExplorer/View/CultureDetailView.swift,
 				Feature/CultureExplorer/View/CultureExplorerScreen.swift,
-				Feature/CustomQuiz/Model/CustomQuiz.swift,
-				Feature/CustomQuiz/Service/CustomQuizService.swift,
-				Feature/CustomQuiz/View/CustomQuizBuilderScreen.swift,
-				Feature/CustomQuiz/View/CustomQuizCard.swift,
-				Feature/CustomQuiz/View/CustomQuizCountryPicker.swift,
-				Feature/CustomQuiz/View/CustomQuizLibraryScreen.swift,
-				Feature/CustomQuiz/View/CustomQuizPreviewScreen.swift,
 				Feature/DailyChallenge/View/CapitalChainView.swift,
 				Feature/DailyChallenge/View/DailyChallengeResultView.swift,
 				Feature/DailyChallenge/View/DailyChallengeScreen.swift,
@@ -290,7 +283,6 @@
 				Feature/Timeline/View/TimelineScreen.swift,
 				Feature/Timeline/View/TimelineSlider.swift,
 				Feature/Timeline/View/TimelineTodaySection.swift,
-				Feature/Travel/Model/TravelMapFilter.swift,
 				Feature/Travel/View/TravelBucketListScreen.swift,
 				Feature/Travel/View/TravelCountryPickerSheet.swift,
 				Feature/Travel/View/TravelCountryRow.swift,
@@ -307,7 +299,6 @@
 				Feature/TravelJournal/View/TravelJournalScreen.swift,
 				Feature/TravelJournal/View/TravelJournalStatsView.swift,
 				Feature/Trivia/View/TriviaScreen.swift,
-				Feature/WordSearch/Model/WordSearchPuzzle.swift,
 				Feature/WordSearch/Service/WordSearchService.swift,
 				Feature/WordSearch/View/WordSearchGameScreen.swift,
 				Feature/WordSearch/View/WordSearchScreen.swift,
@@ -315,7 +306,6 @@
 				Navigation/AppCoordinator.swift,
 				Navigation/CoordinatedNavigationStack.swift,
 				Navigation/Destination.swift,
-				Navigation/Navigator.swift,
 			);
 			target = TV000000000000000000TARG /* GeografyTV */;
 		};

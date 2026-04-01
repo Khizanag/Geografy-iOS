@@ -1,4 +1,5 @@
 import SwiftUI
+import Geografy_Core_Service
 #if !os(tvOS)
 import UIKit
 #endif

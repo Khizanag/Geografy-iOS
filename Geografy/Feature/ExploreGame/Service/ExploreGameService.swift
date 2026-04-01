@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Service
 import GeografyCore
 
 /// Manages Explore Game sessions: daily game selection and practice mode.

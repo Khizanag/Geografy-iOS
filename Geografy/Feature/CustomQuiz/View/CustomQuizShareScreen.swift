@@ -1,3 +1,4 @@
+import GeografyCore
 #if !os(tvOS)
 import GeografyDesign
 import SwiftUI

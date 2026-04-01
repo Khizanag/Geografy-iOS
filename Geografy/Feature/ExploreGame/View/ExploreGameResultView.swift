@@ -1,4 +1,5 @@
 import GeografyDesign
+import Geografy_Core_Service
 import SwiftUI
 
 /// Shows the result after a game round — score, country reveal, stats.

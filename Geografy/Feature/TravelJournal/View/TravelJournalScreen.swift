@@ -1,4 +1,5 @@
 import GeografyDesign
+import Geografy_Core_Service
 import SwiftUI
 
 struct TravelJournalScreen: View {

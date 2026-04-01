@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import Foundation
+import Geografy_Core_Service
 import GeografyCore
 
 struct SerializableQuestion: Codable, Identifiable {

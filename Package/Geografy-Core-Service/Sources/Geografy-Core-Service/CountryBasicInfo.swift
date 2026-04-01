@@ -28,7 +28,7 @@ public enum CountryBasicInfo {
 // MARK: - Data
 private extension CountryBasicInfo {
     // swiftlint:disable:next function_body_length
-    nonisolated(unsafe) static let data: [String: Info] = [
+    static let data: [String: Info] = [
         // Africa
         "AO": Info(flag: "🇦🇴", capital: "Luanda", capitalLatitude: -8.839, capitalLongitude: 13.289),
         "BF": Info(flag: "🇧🇫", capital: "Ouagadougou", capitalLatitude: 12.372, capitalLongitude: -1.524),
