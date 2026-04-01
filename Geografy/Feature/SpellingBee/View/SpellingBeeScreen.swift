@@ -183,10 +183,24 @@ private extension SpellingBeeScreen {
     }
 
     var hintButtons: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            hintButton(type: .firstLetter, icon: "textformat", label: "First Letter")
-            hintButton(type: .capital, icon: "building.columns", label: "Capital")
-            hintButton(type: .population, icon: "person.2", label: "Population")
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                hintButton(type: .firstLetter, icon: "textformat", label: "First Letter")
+                hintButton(type: .capital, icon: "building.columns", label: "Capital")
+                hintButton(type: .population, icon: "person.2", label: "Population")
+            }
+
+            Button { skipQuestion() } label: {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Image(systemName: "forward.fill")
+                        .font(DesignSystem.Font.caption)
+                    Text("Skip")
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                }
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .buttonStyle(.plain)
         }
     }
 
@@ -236,9 +250,7 @@ private extension SpellingBeeScreen {
         feedback = .none
         showCorrectAnswer = false
         roundNumber += 1
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            isInputFocused = true
-        }
+        isInputFocused = true
     }
 
     func validateInput(_ text: String) {
@@ -257,7 +269,6 @@ private extension SpellingBeeScreen {
             score += pointsEarned
             feedback = .correct
             showCorrectAnswer = true
-            isInputFocused = false
             AccessibilityNotification.Announcement("Correct! Plus \(pointsEarned) points").post()
             if autoContinue {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
@@ -267,12 +278,23 @@ private extension SpellingBeeScreen {
         } else {
             feedback = .wrong
             showCorrectAnswer = true
-            isInputFocused = false
             AccessibilityNotification.Announcement("Incorrect. The answer was \(country.name)").post()
             if autoContinue {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
                     loadNextCountry()
                 }
+            }
+        }
+    }
+
+    func skipQuestion() {
+        score = max(0, score - 100)
+        feedback = .wrong
+        showCorrectAnswer = true
+        AccessibilityNotification.Announcement("Skipped. Minus 100 points").post()
+        if autoContinue {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                loadNextCountry()
             }
         }
     }
