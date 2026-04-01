@@ -12,4 +12,12 @@ enum TravelMapFilter: String, CaseIterable {
         case .all: "All Travel"
         }
     }
+
+    var icon: String {
+        switch self {
+        case .visited: "checkmark.circle.fill"
+        case .wantToVisit: "heart.fill"
+        case .all: "globe"
+        }
+    }
 }

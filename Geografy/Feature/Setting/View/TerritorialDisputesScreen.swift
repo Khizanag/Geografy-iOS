@@ -143,11 +143,7 @@ private extension TerritorialDisputesScreen {
                     UserDefaults.standard.set(newValue, forKey: dispute.userDefaultsKey)
                 } label: {
                     let isSelected = (selections[dispute.id] ?? dispute.defaultOptionKey) == option.key
-                    if isSelected {
-                        Label(option.label, systemImage: "checkmark")
-                    } else {
-                        Text(option.label)
-                    }
+                    Label(option.label, systemImage: isSelected ? "checkmark" : "flag")
                 }
             }
         } label: {

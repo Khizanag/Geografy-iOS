@@ -68,10 +68,24 @@ private extension IndependenceTimelineScreen {
 
     var colonizerFilter: some View {
         Menu {
-            Button("All countries") { selectedColonizer = "" }
+            Button {
+                selectedColonizer = ""
+            } label: {
+                Label(
+                    "All countries",
+                    systemImage: selectedColonizer.isEmpty ? "checkmark" : "globe"
+                )
+            }
             Divider()
             ForEach(service.uniqueColonizers, id: \.self) { colonizer in
-                Button(colonizer) { selectedColonizer = colonizer }
+                Button {
+                    selectedColonizer = colonizer
+                } label: {
+                    Label(
+                        colonizer,
+                        systemImage: selectedColonizer == colonizer ? "checkmark" : "building.columns"
+                    )
+                }
             }
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
@@ -82,7 +96,7 @@ private extension IndependenceTimelineScreen {
                     .font(DesignSystem.Font.caption)
             }
             .font(DesignSystem.Font.subheadline)
-            .foregroundStyle(DesignSystem.Color.accent)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
             .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
