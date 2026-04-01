@@ -4,10 +4,13 @@ import Geografy_Core_Service
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct SizeVisualizationScreen: View {
+public struct SizeVisualizationScreen: View {
+    public init() {}
     @Environment(\.dismiss) private var dismiss
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    #if !os(tvOS)
+    @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     @State private var sortMode: SortMode = .area
     @State private var searchQuery = ""
@@ -15,11 +18,13 @@ struct SizeVisualizationScreen: View {
     @State private var selectedCountry: Country?
     @State private var showCompare = false
 
-    var body: some View {
+    public var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Size Visualization")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .searchable(text: $searchQuery, prompt: "Search countries...")
             .sheet(isPresented: $showCompare) {
                 if let selected = selectedCountry, let reference = referenceCountry {
@@ -64,7 +69,9 @@ private extension SizeVisualizationScreen {
 
     func sortChip(for mode: SortMode) -> some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.light)
+            #endif
             sortMode = mode
         } label: {
             Text(mode.displayName)
@@ -116,7 +123,9 @@ private extension SizeVisualizationScreen {
 
     func countryRow(country: Country, rank: Int) -> some View {
         Button {
+            #if !os(tvOS)
             hapticsService.impact(.medium)
+            #endif
             if referenceCountry == nil {
                 referenceCountry = country
             } else {
@@ -191,7 +200,7 @@ private struct CountryRowContent: View {
     let referenceCountry: Country?
     let maxValue: Double
 
-    var body: some View {
+    public var body: some View {
         cardContent
     }
 }

@@ -1,16 +1,16 @@
-import Geografy_Core_DesignSystem
-import Geografy_Core_Service
 import SwiftUI
 #if !os(tvOS)
 import UIKit
 #endif
 
-struct PressButtonStyle: ButtonStyle {
+public struct PressButtonStyle: ButtonStyle {
     #if !os(tvOS)
-    var feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle = .light
+    public var feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle = .light
     #endif
 
-    func makeBody(configuration: Configuration) -> some View {
+    public init() {}
+
+    public func makeBody(configuration: Configuration) -> some View {
         PressButtonBody(configuration: configuration)
     }
 }
