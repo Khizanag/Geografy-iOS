@@ -13,71 +13,75 @@ struct CountryDetailScreen: View {
     @State private var showOrganizationDetail: Organization?
 
     var body: some View {
-        List {
-            heroSection
-
-            actionsSection
-
-            statsSection
-
-            economySection
-
-            languagesSection
-
-            governmentSection
-
-            organizationsSection
-        }
-        .listStyle(.grouped)
-        .navigationTitle(country.name)
-        .fullScreenCover(isPresented: $showFlagFocus) {
-            FlagFocusView(countryCode: country.code, countryName: country.name)
-        }
-        .sheet(item: $showOrganizationDetail) { organization in
-            OrganizationSheetView(organization: organization)
-        }
+        listContent
+            .listStyle(.grouped)
+            .navigationTitle(country.name)
+            .fullScreenCover(isPresented: $showFlagFocus) {
+                FlagFocusView(countryCode: country.code, countryName: country.name)
+            }
+            .sheet(item: $showOrganizationDetail) { organization in
+                OrganizationSheetView(organization: organization)
+            }
     }
 }
 
-// MARK: - Hero
+// MARK: - Subviews
 private extension CountryDetailScreen {
+    var listContent: some View {
+        List {
+            heroSection
+            actionsSection
+            statsSection
+            economySection
+            languagesSection
+            governmentSection
+            organizationsSection
+        }
+    }
+
     var heroSection: some View {
         Section {
-            Button {
-                showFlagFocus = true
-            } label: {
-                HStack(spacing: 40) {
-                    FlagView(countryCode: country.code, height: 140)
-
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text(country.name)
-                            .font(.system(size: 48, weight: .bold))
-
-                        HStack(spacing: 12) {
-                            Text(country.flagEmoji)
-                                .font(.system(size: 36))
-
-                            Text(country.continent.displayName)
-                                .font(.system(size: 26))
-                                .foregroundStyle(.secondary)
-
-                            Text("·")
-                                .foregroundStyle(.tertiary)
-
-                            Text(country.code.uppercased())
-                                .font(.system(size: 26, weight: .semibold))
-                                .foregroundStyle(.tertiary)
-                        }
-                    }
-
-                    Spacer()
-
-                    Image(systemName: "arrow.up.left.and.arrow.down.right")
-                        .font(.system(size: 24))
-                        .foregroundStyle(.tertiary)
-                }
+            Button { showFlagFocus = true } label: {
+                heroLabel
             }
             .accessibilityLabel("View flag of \(country.name) fullscreen")
+        }
+    }
+
+    var heroLabel: some View {
+        HStack(spacing: 40) {
+            FlagView(countryCode: country.code, height: 140)
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text(country.name)
+                    .font(DesignSystem.Font.system(size: 48, weight: .bold))
+
+                heroSubtitle
+            }
+
+            Spacer()
+
+            Image(systemName: "arrow.up.left.and.arrow.down.right")
+                .font(DesignSystem.Font.system(size: 24))
+                .foregroundStyle(.tertiary)
+        }
+    }
+
+    var heroSubtitle: some View {
+        HStack(spacing: 12) {
+            Text(country.flagEmoji)
+                .font(DesignSystem.Font.system(size: 36))
+
+            Text(country.continent.displayName)
+                .font(DesignSystem.Font.system(size: 26))
+                .foregroundStyle(.secondary)
+
+            Text("·")
+                .foregroundStyle(.tertiary)
+
+            Text(country.code.uppercased())
+                .font(DesignSystem.Font.system(size: 26, weight: .semibold))
+                .foregroundStyle(.tertiary)
         }
     }
 }
@@ -86,26 +90,33 @@ private extension CountryDetailScreen {
 private extension CountryDetailScreen {
     var actionsSection: some View {
         Section {
-            Button {
-                favoritesService.toggle(code: country.code)
-            } label: {
-                Label(
-                    favoritesService.isFavorite(code: country.code) ? "Remove from Favorites" : "Add to Favorites",
-                    systemImage: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart"
-                )
-                .foregroundStyle(
-                    favoritesService.isFavorite(code: country.code) ? DesignSystem.Color.error : .primary
-                )
-            }
+            favoriteButton
+            pronounceButton
+        }
+    }
 
-            Button {
-                pronunciationService.speak(
-                    text: "\(country.name). Capital: \(country.capital).",
-                    countryCode: country.code
-                )
-            } label: {
-                Label("Pronounce Country & Capital", systemImage: "speaker.wave.2.fill")
-            }
+    var favoriteButton: some View {
+        Button {
+            favoritesService.toggle(code: country.code)
+        } label: {
+            Label(
+                favoritesService.isFavorite(code: country.code) ? "Remove from Favorites" : "Add to Favorites",
+                systemImage: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart"
+            )
+            .foregroundStyle(
+                favoritesService.isFavorite(code: country.code) ? DesignSystem.Color.error : .primary
+            )
+        }
+    }
+
+    var pronounceButton: some View {
+        Button {
+            pronunciationService.speak(
+                text: "\(country.name). Capital: \(country.capital).",
+                countryCode: country.code
+            )
+        } label: {
+            Label("Pronounce Country & Capital", systemImage: "speaker.wave.2.fill")
         }
     }
 }
@@ -172,23 +183,27 @@ private extension CountryDetailScreen {
                 Button {
                     pronunciationService.speak(text: language.name, countryCode: country.code)
                 } label: {
-                    HStack(spacing: 16) {
-                        Image(systemName: "text.bubble.fill")
-                            .font(.system(size: 20))
-                            .foregroundStyle(DesignSystem.Color.accent)
-                            .frame(width: 36)
-
-                        Text(language.name)
-                            .font(.system(size: 22))
-
-                        Spacer()
-
-                        Image(systemName: "speaker.wave.2")
-                            .font(.system(size: 22))
-                            .foregroundStyle(.tertiary)
-                    }
+                    languageRow(language)
                 }
             }
+        }
+    }
+
+    func languageRow(_ language: Country.Language) -> some View {
+        HStack(spacing: 16) {
+            Image(systemName: "text.bubble.fill")
+                .font(DesignSystem.Font.system(size: 20))
+                .foregroundStyle(DesignSystem.Color.accent)
+                .frame(width: 36)
+
+            Text(language.name)
+                .font(DesignSystem.Font.system(size: 22))
+
+            Spacer()
+
+            Image(systemName: "speaker.wave.2")
+                .font(DesignSystem.Font.system(size: 22))
+                .foregroundStyle(.tertiary)
         }
     }
 }
@@ -210,39 +225,38 @@ private extension CountryDetailScreen {
             Section("Organizations (\(country.organizations.count))") {
                 ForEach(country.organizations, id: \.self) { organizationID in
                     let organization = Organization.all.first { $0.id == organizationID }
-
-                    Button {
-                        if let organization {
-                            showOrganizationDetail = organization
-                        }
-                    } label: {
-                        HStack(spacing: 16) {
-                            Image(systemName: organization?.icon ?? "building.2")
-                                .font(.system(size: 24))
-                                .foregroundStyle(organization?.highlightColor ?? DesignSystem.Color.accent)
-                                .frame(width: 40)
-
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(organization?.displayName ?? organizationID)
-                                    .font(.system(size: 22, weight: .semibold))
-
-                                if let fullName = organization?.fullName {
-                                    Text(fullName)
-                                        .font(.system(size: 22))
-                                        .foregroundStyle(.secondary)
-                                        .lineLimit(1)
-                                }
-                            }
-
-                            Spacer()
-
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 22))
-                                .foregroundStyle(.tertiary)
-                        }
+                    Button { showOrganizationDetail = organization } label: {
+                        organizationRow(organization, id: organizationID)
                     }
                 }
             }
+        }
+    }
+
+    func organizationRow(_ organization: Organization?, id: String) -> some View {
+        HStack(spacing: 16) {
+            Image(systemName: organization?.icon ?? "building.2")
+                .font(DesignSystem.Font.system(size: 24))
+                .foregroundStyle(organization?.highlightColor ?? DesignSystem.Color.accent)
+                .frame(width: 40)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(organization?.displayName ?? id)
+                    .font(DesignSystem.Font.system(size: 22, weight: .semibold))
+
+                if let fullName = organization?.fullName {
+                    Text(fullName)
+                        .font(DesignSystem.Font.system(size: 22))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+            }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .font(DesignSystem.Font.system(size: 22))
+                .foregroundStyle(.tertiary)
         }
     }
 }
@@ -252,18 +266,18 @@ private extension CountryDetailScreen {
     func detailRow(icon: String, label: String, value: String) -> some View {
         HStack(spacing: 16) {
             Image(systemName: icon)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.accent)
                 .frame(width: 36)
 
             Text(label)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.system(size: 22))
                 .foregroundStyle(.secondary)
 
             Spacer()
 
             Text(value)
-                .font(.system(size: 22, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
         }
         .focusable()
         .accessibilityElement(children: .combine)
@@ -291,38 +305,52 @@ struct OrganizationSheetView: View {
     let organization: Organization
 
     var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack(spacing: 20) {
-                            Image(systemName: organization.icon)
-                                .font(.system(size: 40))
-                                .foregroundStyle(organization.highlightColor)
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(organization.displayName)
-                                    .font(.system(size: 32, weight: .bold))
-
-                                Text(organization.fullName)
-                                    .font(.system(size: 22))
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-
-                        Text(organization.description)
-                            .font(.system(size: 20))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-            }
+        sheetContent
             .navigationTitle(organization.displayName)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { dismiss() }
                 }
             }
+            .onExitCommand { dismiss() }
+    }
+}
+
+// MARK: - Organization Sheet Content
+private extension OrganizationSheetView {
+    var sheetContent: some View {
+        NavigationStack {
+            List {
+                Section {
+                    VStack(alignment: .leading, spacing: 16) {
+                        orgHeader
+                        orgDescription
+                    }
+                }
+            }
         }
-        .onExitCommand { dismiss() }
+    }
+
+    var orgHeader: some View {
+        HStack(spacing: 20) {
+            Image(systemName: organization.icon)
+                .font(DesignSystem.Font.system(size: 40))
+                .foregroundStyle(organization.highlightColor)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(organization.displayName)
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
+
+                Text(organization.fullName)
+                    .font(DesignSystem.Font.system(size: 22))
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    var orgDescription: some View {
+        Text(organization.description)
+            .font(DesignSystem.Font.system(size: 20))
+            .foregroundStyle(.secondary)
     }
 }
