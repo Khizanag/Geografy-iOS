@@ -13,9 +13,15 @@ let package = Package(
             targets: ["Geografy-Core-DesignSystem"]
         ),
     ],
+    dependencies: [
+        .package(path: "../Geografy-Core-Common"),
+    ],
     targets: [
         .target(
-            name: "Geografy-Core-DesignSystem"
+            name: "Geografy-Core-DesignSystem",
+            dependencies: [
+                .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
+            ]
         ),
         .testTarget(
             name: "Geografy-Core-DesignSystemTests",
