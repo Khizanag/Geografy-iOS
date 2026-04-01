@@ -59,8 +59,6 @@ private extension CountryBannerView {
             if let onMoreInfo {
                 moreInfoButton(action: onMoreInfo)
             }
-
-            dismissButton
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
@@ -123,17 +121,6 @@ private extension CountryBannerView {
         .buttonStyle(.glass)
     }
 
-    var dismissButton: some View {
-        Button(action: onDismiss) {
-            Image(systemName: "xmark")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .padding(DesignSystem.Spacing.xs)
-        }
-        .glassEffect(.regular.interactive(), in: .circle)
-        .accessibilityLabel("Dismiss banner")
-    }
 }
 
 // MARK: - Gestures
