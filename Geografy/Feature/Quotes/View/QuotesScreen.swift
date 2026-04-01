@@ -123,7 +123,7 @@ private extension QuotesScreen {
     func quoteFooter(_ quote: Quote) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if let code = quote.countryCode {
-                FlagView(countryCode: code, height: 16)
+                FlagView(countryCode: code, height: 16, fixedWidth: true)
                     .clipShape(RoundedRectangle(cornerRadius: 3))
             }
             Text("— \(quote.author)")

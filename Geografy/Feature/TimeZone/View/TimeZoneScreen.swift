@@ -188,7 +188,7 @@ private struct WorldClockView: View {
 
     private func worldClockRow(for item: CountryWithZone) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: item.country.code, height: 24)
+            FlagView(countryCode: item.country.code, height: 24, fixedWidth: true)
                 .frame(width: 36, alignment: .center)
 
             VStack(alignment: .leading, spacing: 2) {
@@ -325,7 +325,7 @@ private struct AllZonesView: View {
 
     private func zoneCountryRow(for item: CountryWithZone) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: item.country.code, height: 20)
+            FlagView(countryCode: item.country.code, height: 20, fixedWidth: true)
                 .frame(width: 32, alignment: .center)
             Text(item.country.name)
                 .font(DesignSystem.Font.subheadline)

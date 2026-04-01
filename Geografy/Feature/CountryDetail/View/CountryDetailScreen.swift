@@ -39,7 +39,7 @@ struct CountryDetailScreen: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
-                        FlagView(countryCode: country.code, height: 20)
+                        FlagView(countryCode: country.code, height: 20, fixedWidth: true)
                             .opacity(flagScrolledUp ? 1 : 0)
                             .scaleEffect(flagScrolledUp ? 1 : 0.5)
                             .frame(width: flagScrolledUp ? nil : 0, height: 20)

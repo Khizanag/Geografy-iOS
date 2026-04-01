@@ -120,7 +120,7 @@ private extension CustomQuizCountryPicker {
             toggleCountry(country.code)
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(countryCode: country.code, height: 28)
+                FlagView(countryCode: country.code, height: 28, fixedWidth: true)
                     .shadow(color: DesignSystem.Color.textPrimary.opacity(0.2), radius: 2, x: 0, y: 1)
 
                 VStack(alignment: .leading, spacing: 2) {

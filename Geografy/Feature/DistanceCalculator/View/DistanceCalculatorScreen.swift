@@ -112,7 +112,7 @@ private extension DistanceCalculatorScreen {
 
                 if let country {
                     HStack(spacing: DesignSystem.Spacing.xs) {
-                        FlagView(countryCode: country.code, height: 20)
+                        FlagView(countryCode: country.code, height: 20, fixedWidth: true)
                         Text(country.name)
                             .font(DesignSystem.Font.body)
                             .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -522,7 +522,7 @@ private struct CountryPickerSheet: View {
                 dismiss()
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: country.code, height: 24)
+                    FlagView(countryCode: country.code, height: 24, fixedWidth: true)
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text(country.name)
                             .font(DesignSystem.Font.body)

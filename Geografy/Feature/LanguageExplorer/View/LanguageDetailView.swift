@@ -134,7 +134,7 @@ private extension LanguageDetailView {
 
     func countryFlagRow(code: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.md) {
-            FlagView(countryCode: code, height: 24)
+            FlagView(countryCode: code, height: 24, fixedWidth: true)
             Text(code)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)

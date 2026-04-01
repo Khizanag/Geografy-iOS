@@ -190,7 +190,7 @@ private extension SpeedRunSessionScreen {
     func completedRow(country: Country) -> some View {
         let isFlashing = flashingCode == country.code
         return HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: country.code, height: 24)
+            FlagView(countryCode: country.code, height: 24, fixedWidth: true)
                 .frame(width: 40, alignment: .center)
             Text(country.name)
                 .font(DesignSystem.Font.body)
@@ -326,7 +326,7 @@ private extension SpeedRunSessionScreen {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(missedCountries) { country in
                     HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: country.code, height: 24)
+                        FlagView(countryCode: country.code, height: 24, fixedWidth: true)
                             .frame(width: 40, alignment: .center)
 
                         Text(country.name)

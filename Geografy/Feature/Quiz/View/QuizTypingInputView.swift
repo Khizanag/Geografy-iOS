@@ -152,7 +152,7 @@ private extension QuizTypingInputView {
                     onSubmit()
                 } label: {
                     HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: country.code, height: 20)
+                        FlagView(countryCode: country.code, height: 20, fixedWidth: true)
 
                         Text(country.name)
                             .font(DesignSystem.Font.body)
