@@ -37,20 +37,26 @@ private extension QuizSetupScreen {
 
                 if selectedType.hasComparisonMetric {
                     metricSection
+                        .transition(.opacity.combined(with: .move(edge: .top)))
                 }
 
                 if selectedType.supportedAnswerModes.count > 1 {
                     answerModeSection
+                        .transition(.opacity.combined(with: .move(edge: .top)))
                 }
 
                 regionSection
 
                 if selectedGameMode == .standard {
                     difficultySection
+                        .transition(.opacity.combined(with: .move(edge: .top)))
 
                     questionCountSection
+                        .transition(.opacity.combined(with: .move(edge: .top)))
                 }
             }
+            .animation(.easeInOut(duration: 0.3), value: selectedType)
+            .animation(.easeInOut(duration: 0.3), value: selectedGameMode)
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
@@ -110,6 +116,7 @@ private extension QuizSetupScreen {
                 Image(systemName: selectedType.icon)
                     .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .contentTransition(.symbolEffect(.replace))
             }
             .accessibilityHidden(true)
             VStack(spacing: DesignSystem.Spacing.xxs) {
@@ -117,15 +124,18 @@ private extension QuizSetupScreen {
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .contentTransition(.numericText())
                 Text(selectedType.description)
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)
+                    .contentTransition(.numericText())
             }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.md)
         .accessibilityElement(children: .combine)
+        .animation(.easeInOut(duration: 0.25), value: selectedType)
     }
 }
 
@@ -370,6 +380,7 @@ private extension QuizSetupScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
+        .animation(.easeInOut(duration: 0.2), value: selectedType)
     }
 }
 
