@@ -295,3 +295,28 @@ Repeat for every feature extraction:
 | Design Components | ~30 | ~8 | ~22 to DesignSystem | ~2 |
 | Services | ~28 | 3 | ~18 to Core-Service | ~2 |
 | Feature Packages | ~50 | 4 | ~42 | ~6 |
+
+## Final Status (2026-04-02)
+
+### Completed
+- [x] Phase 0A: 30 design components moved to Core-DesignSystem (including QuizOptionButton)
+- [x] Phase 0B: 21 services moved to Core-Service (including SwiftData services)
+- [x] Phase 1: 11 Tier A feature packages extracted
+- [x] Phase 2: 17 Tier B feature packages extracted
+- [x] Phase 3: 21 Tier C feature packages extracted
+- [x] Achievement model types (AchievementDefinition, AchievementCatalog, AchievementCategory, AchievementRarity, AchievementProgress) moved to Core-Common
+- [x] Both iOS and tvOS build clean
+
+### Package Count
+- **4 core packages**: Common, DesignSystem, Navigation, Service
+- **53 feature packages**: All features extracted
+- **51 Swift files** remain in app target (composition root)
+
+### App Target Contents (Final)
+- GeografyApp, ContentView, LaunchScreen
+- HomeScreen + 25 section cards
+- MoreScreen, MapScreen wrappers
+- AppCoordinator, Destination content mapping
+- HomeSectionOrderService, WidgetDataBridge, TestChecklistService, AppIntents
+- FavoriteToggleButton (service dependency)
+
