@@ -3,11 +3,13 @@ import GeografyDesign
 import SwiftUI
 
 struct CurrencyConverterScreen: View {
-    @Environment(CurrencyService.self) private var currencyService
-    @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(CurrencyService.self) private var currencyService
+    @Environment(HapticsService.self) private var hapticsService
+
+    let preselectedCurrencyCode: String?
 
     @State private var fromCurrency: CurrencyEntry?
     @State private var toCurrency: CurrencyEntry?
@@ -16,14 +18,12 @@ struct CurrencyConverterScreen: View {
     @State private var showToPicker = false
     @State private var blobAnimating = false
 
-    let preselectedCurrencyCode: String?
-
     init(preselectedCurrencyCode: String? = nil) {
         self.preselectedCurrencyCode = preselectedCurrencyCode
     }
 
     var body: some View {
-        scrollContent
+        extractedContent
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Currency Converter")
@@ -34,9 +34,7 @@ struct CurrencyConverterScreen: View {
                     await currencyService.fetchRates(for: from.code)
                 }
             }
-            .onAppear {
-                blobAnimating = true
-            }
+            .onAppear { blobAnimating = true }
             .sheet(isPresented: $showFromPicker) {
                 CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
                     hapticsService.selection()
@@ -55,7 +53,7 @@ struct CurrencyConverterScreen: View {
 
 // MARK: - Subviews
 private extension CurrencyConverterScreen {
-    var scrollContent: some View {
+    var extractedContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 quickChipsSection
@@ -92,7 +90,8 @@ private extension CurrencyConverterScreen {
     }
 
     func quickChip(for entry: CurrencyEntry) -> some View {
-        Button {
+        let isSelected = fromCurrency?.code == entry.code
+        return Button {
             hapticsService.impact(.light)
             fromCurrency = entry
             Task { await currencyService.fetchRates(for: entry.code) }
@@ -103,7 +102,7 @@ private extension CurrencyConverterScreen {
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
                     .foregroundStyle(
-                        fromCurrency?.code == entry.code
+                        isSelected
                             ? DesignSystem.Color.onAccent
                             : DesignSystem.Color.textPrimary
                     )
@@ -111,14 +110,14 @@ private extension CurrencyConverterScreen {
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xxs + 2)
             .background(
-                fromCurrency?.code == entry.code
+                isSelected
                     ? DesignSystem.Color.accent
                     : DesignSystem.Color.cardBackground,
                 in: Capsule()
             )
             .overlay(
                 Capsule().strokeBorder(
-                    fromCurrency?.code == entry.code
+                    isSelected
                         ? DesignSystem.Color.accent
                         : DesignSystem.Color.textTertiary.opacity(0.3),
                     lineWidth: 1
@@ -317,10 +316,7 @@ private extension CurrencyConverterScreen {
         .foregroundStyle(DesignSystem.Color.textTertiary)
         .accessibilityElement(children: .combine)
     }
-}
 
-// MARK: - Background
-private extension CurrencyConverterScreen {
     var ambientBlobs: some View {
         ZStack {
             Ellipse()
@@ -349,7 +345,10 @@ private extension CurrencyConverterScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
     }
 }
 
@@ -434,6 +433,17 @@ private struct CurrencyPickerSheet: View {
     @State private var searchText = ""
 
     var body: some View {
+        extractedContent
+            .searchable(text: $searchText, prompt: "Search currency or country…")
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+    }
+}
+
+// MARK: - Subviews
+private extension CurrencyPickerSheet {
+    var extractedContent: some View {
         List(filteredCurrencies) { entry in
             Button {
                 onSelect(entry)
@@ -454,18 +464,23 @@ private struct CurrencyPickerSheet: View {
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search currency or country…")
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") { dismiss() }
-                    .tint(DesignSystem.Color.textPrimary)
-            }
+    }
+}
+
+// MARK: - Toolbar
+private extension CurrencyPickerSheet {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button("Cancel") { dismiss() }
+                .tint(DesignSystem.Color.textPrimary)
         }
     }
+}
 
-    private var filteredCurrencies: [CurrencyEntry] {
+// MARK: - Helpers
+private extension CurrencyPickerSheet {
+    var filteredCurrencies: [CurrencyEntry] {
         guard !searchText.isEmpty else { return currencies }
         let query = searchText.lowercased()
         return currencies.filter {
