@@ -43,7 +43,6 @@
 				App/GeografyApp.swift,
 				Design/Component/AlphabetJumpIndex.swift,
 				Design/Component/CircleCloseButton.swift,
-				Design/Component/ComingSoonSheet.swift,
 				Design/Component/ComingSoonView.swift,
 				Design/Component/CountryRowView.swift,
 				Design/Component/EmptyStateView.swift,
