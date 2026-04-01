@@ -1,3 +1,4 @@
+import Geografy_Core_Navigation
 #if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_Service

@@ -1,3 +1,4 @@
+import Geografy_Core_Navigation
 import CoreSpotlight
 import Geografy_Core_Service
 import Geografy_Core_Common

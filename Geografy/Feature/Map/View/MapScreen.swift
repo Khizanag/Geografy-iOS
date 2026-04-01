@@ -1,3 +1,4 @@
+import Geografy_Core_Navigation
 import Geografy_Feature_Map
 import Geografy_Core_Service
 import Geografy_Core_Common

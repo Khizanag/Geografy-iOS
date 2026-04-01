@@ -1,3 +1,4 @@
+import Geografy_Core_Navigation
 import GameKit
 import Geografy_Core_Service
 import Geografy_Core_DesignSystem
