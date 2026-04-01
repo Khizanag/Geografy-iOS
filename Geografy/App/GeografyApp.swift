@@ -37,7 +37,9 @@ struct GeografyApp: App {
         let userID = auth.currentUserID
         let xp = XPService(db: db, userID: userID)
         let achievement = AchievementService(db: db, xpService: xp, userID: userID)
-        let streak = StreakService(db: db, xpService: xp, achievementService: achievement, userID: userID)
+        let streak = StreakService(
+            db: db, xpService: xp, achievementService: achievement, userID: userID
+        )
         let favorites = FavoritesService(container: db.container)
         _databaseManager = State(wrappedValue: db)
         _authService = State(wrappedValue: auth)
@@ -70,183 +72,142 @@ struct GeografyApp: App {
                 .environment(testingModeService)
                 .environment(featureFlagService)
                 .environment(countryDataService)
-                .task {
-                    countryDataService.loadCountries()
-                }
+                .task { countryDataService.loadCountries() }
                 .task(priority: .utility) { await authService.validateOnLaunch() }
                 .task(priority: .utility) { await subscriptionService.checkEntitlements() }
-                .task(priority: .utility) {
-                    gameCenterService.authenticatePlayer()
-                    let longestStreak = authService.currentProfile?.longestStreak
-                        ?? streakService.currentStreak
-                    if longestStreak > 0 {
-                        await gameCenterService.submitScore(
-                            longestStreak,
-                            to: GameCenterService.LeaderboardID.longestStreak
-                        )
-                    }
-                }
-                .task(priority: .background) {
-                    #if os(iOS)
-                    let granted = await NotificationService.requestPermission()
-                    if granted {
-                        NotificationService.scheduleStreakReminder()
-                        NotificationService.scheduleDailyChallengeReminder()
-                    }
-                    SpotlightIndexer.indexCountries(countryDataService.countries)
-                    #endif
-                }
-                .task(priority: .background) {
-                    widgetDataBridge.loadCountriesIfNeeded()
-                    widgetDataBridge.synchronize(
-                        streak: streakService.currentStreak,
-                        totalXP: xpService.totalXP,
-                        level: xpService.currentLevel,
-                        progressFraction: xpService.progressFraction,
-                        visitedCount: travelService.visitedCodes.count
-                    )
-                }
-                .onReceive(achievementService.unlockPublisher) { definition in
-                    Task {
-                        if let gameCenterID = definition.gameCenterID {
-                            await gameCenterService.reportAchievement(
-                                id: gameCenterID,
-                                percentComplete: 100.0
-                            )
-                        }
-                    }
-                    requestReviewIfAppropriate()
-                }
-                .onChange(of: authService.currentUserID) { _, newUserID in
-                    xpService.switchUser(id: newUserID)
-                    streakService.switchUser(id: newUserID)
-                    achievementService.switchUser(id: newUserID)
-                }
-                .onChange(of: xpService.totalXP) { _, newXP in
-                    Task {
-                        await gameCenterService.submitScore(
-                            newXP,
-                            to: GameCenterService.LeaderboardID.totalXP
-                        )
-                    }
-                    widgetDataBridge.synchronize(
-                        streak: streakService.currentStreak,
-                        totalXP: newXP,
-                        level: xpService.currentLevel,
-                        progressFraction: xpService.progressFraction,
-                        visitedCount: travelService.visitedCodes.count
-                    )
-                }
-                .onChange(of: streakService.currentStreak) { _, newStreak in
-                    let longestStreak = max(
-                        newStreak,
-                        authService.currentProfile?.longestStreak ?? 0
-                    )
-                    Task {
-                        await gameCenterService.submitScore(
-                            longestStreak,
-                            to: GameCenterService.LeaderboardID.longestStreak
-                        )
-                    }
-                    widgetDataBridge.synchronize(
-                        streak: newStreak,
-                        totalXP: xpService.totalXP,
-                        level: xpService.currentLevel,
-                        progressFraction: xpService.progressFraction,
-                        visitedCount: travelService.visitedCodes.count
-                    )
-                }
-                .onChange(of: travelService.visitedCodes.count) { _, count in
-                    Task {
-                        await gameCenterService.submitScore(
-                            count,
-                            to: GameCenterService.LeaderboardID.countriesVisited
-                        )
-                    }
-                    widgetDataBridge.synchronize(
-                        streak: streakService.currentStreak,
-                        totalXP: xpService.totalXP,
-                        level: xpService.currentLevel,
-                        progressFraction: xpService.progressFraction,
-                        visitedCount: count
-                    )
-                }
+                .task(priority: .utility) { await authenticateGameCenter() }
+                .task(priority: .background) { await setupNotificationsAndSpotlight() }
+                .task(priority: .background) { syncWidgetData() }
+                .onReceive(achievementService.unlockPublisher) { handleAchievementUnlock($0) }
+                .onChange(of: authService.currentUserID) { _, id in handleUserSwitch(id) }
+                .onChange(of: xpService.totalXP) { _, xp in handleXPChange(xp) }
+                .onChange(of: streakService.currentStreak) { _, streak in handleStreakChange(streak) }
+                .onChange(of: travelService.visitedCodes.count) { _, count in handleVisitedChange(count) }
         }
-        .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active {
-                streakService.recordDailyLogin()
-            }
-            #if os(iOS)
-            if newPhase == .background {
-                BackgroundTaskService.scheduleWidgetRefresh()
-            }
-            #endif
-        }
+        .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)
         .defaultSize(width: 1200, height: 800)
-        .commands {
-            CommandGroup(replacing: .newItem) {}
+        .commands { macCommands }
+        #endif
+    }
+}
 
-            CommandGroup(replacing: .appSettings) {
-                Button("Settings...") {
-                    NotificationCenter.default.post(name: .switchTab, object: 4)
-                }
-                .keyboardShortcut(",", modifiers: .command)
+// MARK: - Lifecycle Tasks
+private extension GeografyApp {
+    func authenticateGameCenter() async {
+        gameCenterService.authenticatePlayer()
+        let longestStreak = authService.currentProfile?.longestStreak
+            ?? streakService.currentStreak
+        if longestStreak > 0 {
+            await gameCenterService.submitScore(
+                longestStreak,
+                to: GameCenterService.LeaderboardID.longestStreak
+            )
+        }
+    }
+
+    func setupNotificationsAndSpotlight() async {
+        #if os(iOS)
+        let granted = await NotificationService.requestPermission()
+        if granted {
+            NotificationService.scheduleStreakReminder()
+            NotificationService.scheduleDailyChallengeReminder()
+        }
+        SpotlightIndexer.indexCountries(countryDataService.countries)
+        #endif
+    }
+
+    func syncWidgetData() {
+        widgetDataBridge.loadCountriesIfNeeded()
+        widgetDataBridge.synchronize(
+            streak: streakService.currentStreak,
+            totalXP: xpService.totalXP,
+            level: xpService.currentLevel,
+            progressFraction: xpService.progressFraction,
+            visitedCount: travelService.visitedCodes.count
+        )
+    }
+}
+
+// MARK: - Event Handlers
+private extension GeografyApp {
+    func handleAchievementUnlock(_ definition: AchievementDefinition) {
+        Task {
+            if let gameCenterID = definition.gameCenterID {
+                await gameCenterService.reportAchievement(
+                    id: gameCenterID,
+                    percentComplete: 100.0
+                )
             }
+        }
+        requestReviewIfAppropriate()
+    }
 
-            CommandGroup(replacing: .help) {
-                Button("Geografy Help") {
-                    if let url = URL(string: "https://github.com/Khizanag/Geografy-iOS") {
-                        UIApplication.shared.open(url)
-                    }
-                }
-            }
+    func handleUserSwitch(_ newUserID: String) {
+        xpService.switchUser(id: newUserID)
+        streakService.switchUser(id: newUserID)
+        achievementService.switchUser(id: newUserID)
+    }
 
-            CommandMenu("Quiz") {
-                Button("Start Quick Quiz") {
-                    NotificationCenter.default.post(name: .startQuiz, object: nil)
-                }
-                .keyboardShortcut("q", modifiers: [.command, .shift])
-            }
+    func handleXPChange(_ newXP: Int) {
+        Task {
+            await gameCenterService.submitScore(
+                newXP,
+                to: GameCenterService.LeaderboardID.totalXP
+            )
+        }
+        widgetDataBridge.synchronize(
+            streak: streakService.currentStreak,
+            totalXP: newXP,
+            level: xpService.currentLevel,
+            progressFraction: xpService.progressFraction,
+            visitedCount: travelService.visitedCodes.count
+        )
+    }
 
-            CommandMenu("Navigate") {
-                Button("Home") {
-                    NotificationCenter.default.post(name: .switchTab, object: 0)
-                }
-                .keyboardShortcut("1", modifiers: .command)
+    func handleStreakChange(_ newStreak: Int) {
+        let longestStreak = max(
+            newStreak,
+            authService.currentProfile?.longestStreak ?? 0
+        )
+        Task {
+            await gameCenterService.submitScore(
+                longestStreak,
+                to: GameCenterService.LeaderboardID.longestStreak
+            )
+        }
+        widgetDataBridge.synchronize(
+            streak: newStreak,
+            totalXP: xpService.totalXP,
+            level: xpService.currentLevel,
+            progressFraction: xpService.progressFraction,
+            visitedCount: travelService.visitedCodes.count
+        )
+    }
 
-                Button("Quiz") {
-                    NotificationCenter.default.post(name: .switchTab, object: 1)
-                }
-                .keyboardShortcut("2", modifiers: .command)
+    func handleVisitedChange(_ count: Int) {
+        Task {
+            await gameCenterService.submitScore(
+                count,
+                to: GameCenterService.LeaderboardID.countriesVisited
+            )
+        }
+        widgetDataBridge.synchronize(
+            streak: streakService.currentStreak,
+            totalXP: xpService.totalXP,
+            level: xpService.currentLevel,
+            progressFraction: xpService.progressFraction,
+            visitedCount: count
+        )
+    }
 
-                Button("Countries") {
-                    NotificationCenter.default.post(name: .switchTab, object: 2)
-                }
-                .keyboardShortcut("3", modifiers: .command)
-
-                Button("Maps") {
-                    NotificationCenter.default.post(name: .switchTab, object: 3)
-                }
-                .keyboardShortcut("4", modifiers: .command)
-
-                Button("More") {
-                    NotificationCenter.default.post(name: .switchTab, object: 4)
-                }
-                .keyboardShortcut("5", modifiers: .command)
-
-                Divider()
-
-                Button("Search") {
-                    NotificationCenter.default.post(name: .macOpenSearch, object: nil)
-                }
-                .keyboardShortcut("f", modifiers: .command)
-
-                Button("Random Country") {
-                    NotificationCenter.default.post(name: .macRandomCountry, object: nil)
-                }
-                .keyboardShortcut("r", modifiers: .command)
-            }
+    func handleScenePhaseChange(_ newPhase: ScenePhase) {
+        if newPhase == .active {
+            streakService.recordDailyLogin()
+        }
+        #if os(iOS)
+        if newPhase == .background {
+            BackgroundTaskService.scheduleWidgetRefresh()
         }
         #endif
     }
@@ -269,6 +230,77 @@ private extension GeografyApp {
         }
     }
 }
+
+// MARK: - Mac Commands
+#if targetEnvironment(macCatalyst)
+private extension GeografyApp {
+    @CommandsBuilder
+    var macCommands: some Commands {
+        CommandGroup(replacing: .newItem) {}
+
+        CommandGroup(replacing: .appSettings) {
+            Button("Settings...") {
+                NotificationCenter.default.post(name: .switchTab, object: 4)
+            }
+            .keyboardShortcut(",", modifiers: .command)
+        }
+
+        CommandGroup(replacing: .help) {
+            Button("Geografy Help") {
+                if let url = URL(string: "https://github.com/Khizanag/Geografy-iOS") {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
+
+        CommandMenu("Quiz") {
+            Button("Start Quick Quiz") {
+                NotificationCenter.default.post(name: .startQuiz, object: nil)
+            }
+            .keyboardShortcut("q", modifiers: [.command, .shift])
+        }
+
+        CommandMenu("Navigate") {
+            Button("Home") {
+                NotificationCenter.default.post(name: .switchTab, object: 0)
+            }
+            .keyboardShortcut("1", modifiers: .command)
+
+            Button("Quiz") {
+                NotificationCenter.default.post(name: .switchTab, object: 1)
+            }
+            .keyboardShortcut("2", modifiers: .command)
+
+            Button("Countries") {
+                NotificationCenter.default.post(name: .switchTab, object: 2)
+            }
+            .keyboardShortcut("3", modifiers: .command)
+
+            Button("Maps") {
+                NotificationCenter.default.post(name: .switchTab, object: 3)
+            }
+            .keyboardShortcut("4", modifiers: .command)
+
+            Button("More") {
+                NotificationCenter.default.post(name: .switchTab, object: 4)
+            }
+            .keyboardShortcut("5", modifiers: .command)
+
+            Divider()
+
+            Button("Search") {
+                NotificationCenter.default.post(name: .macOpenSearch, object: nil)
+            }
+            .keyboardShortcut("f", modifiers: .command)
+
+            Button("Random Country") {
+                NotificationCenter.default.post(name: .macRandomCountry, object: nil)
+            }
+            .keyboardShortcut("r", modifiers: .command)
+        }
+    }
+}
+#endif
 
 // MARK: - Notification Names
 extension Notification.Name {
