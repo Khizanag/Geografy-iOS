@@ -1,8 +1,8 @@
-import Geografy_Feature_Quotes
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct QuotesScreen: View {
+public struct QuotesScreen: View {
+    public init() {}
     @State private var quotesService = QuotesService()
     @State private var selectedCategory: QuoteCategory?
 
@@ -14,7 +14,7 @@ struct QuotesScreen: View {
         quotesService.quotesOfTheDay()
     }
 
-    var body: some View {
+    public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Quotes")
@@ -160,7 +160,9 @@ private extension QuotesScreen {
         .glassEffect(.regular.interactive(), in: .circle)
     }
 
+    @ViewBuilder
     func shareButton(_ quote: Quote) -> some View {
+        #if !os(tvOS)
         ShareLink(item: "\"\(quote.text)\"\n— \(quote.author)") {
             Image(systemName: "square.and.arrow.up")
                 .font(DesignSystem.Font.caption)
@@ -168,5 +170,6 @@ private extension QuotesScreen {
                 .padding(DesignSystem.Spacing.xs)
         }
         .glassEffect(.regular.interactive(), in: .circle)
+        #endif
     }
 }
