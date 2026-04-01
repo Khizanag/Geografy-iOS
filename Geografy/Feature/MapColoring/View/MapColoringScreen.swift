@@ -3,7 +3,6 @@ import GeografyDesign
 import SwiftUI
 
 struct MapColoringScreen: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
 

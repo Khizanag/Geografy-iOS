@@ -36,6 +36,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		727A0FDA2F7D50F1001B7073 /* Exceptions for "Geografy" folder in "Geografy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Feature/Geografy-Feature-Map",
+			);
+			target = F60718293A4B5C6D7E8F9001 /* Geografy */;
+		};
 		TV00000000000000000EXCPT /* Exceptions for "Geografy" folder in "GeografyTV" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -165,6 +172,7 @@
 				Feature/Flashcard/View/SRSStudyScreen.swift,
 				Feature/GameCenter/View/FriendsListScreen.swift,
 				Feature/GameCenter/View/LeaderboardScreen.swift,
+				"Feature/Geografy-Feature-Map",
 				Feature/GeographyFeatures/View/GeographyFeaturesScreen.swift,
 				Feature/Home/Model/HomeSection.swift,
 				Feature/Home/View/HomeBorderChallengeCard.swift,
@@ -327,6 +335,7 @@
 		A1B2C3D4E5F60718293A4B5C /* Geografy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				727A0FDA2F7D50F1001B7073 /* Exceptions for "Geografy" folder in "Geografy" target */,
 				TV00000000000000000EXCPT /* Exceptions for "Geografy" folder in "GeografyTV" target */,
 			);
 			path = Geografy;
