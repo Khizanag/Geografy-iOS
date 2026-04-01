@@ -169,10 +169,8 @@ private extension TravelBucketListScreen {
                 prepareShareText()
                 showShareSheet = true
             } label: {
-                Image(systemName: "square.and.arrow.up")
-                    .foregroundStyle(DesignSystem.Color.iconPrimary)
+                Label("Share", systemImage: "square.and.arrow.up")
             }
-            .buttonStyle(.plain)
         }
     }
 }

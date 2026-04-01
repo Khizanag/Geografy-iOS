@@ -106,22 +106,14 @@ private extension HomeScreen {
 
     var searchButton: some View {
         Button { coordinator.sheet(.search) } label: {
-            Image(systemName: "magnifyingglass")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .accessibilityLabel("Search")
+            Label("Search", systemImage: "magnifyingglass")
         }
-        .buttonStyle(.plain)
     }
 
     var friendsButton: some View {
         Button { coordinator.sheet(.friends) } label: {
-            Image(systemName: "person.2")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.iconPrimary)
-                .accessibilityLabel("Friends")
+            Label("Friends", systemImage: "person.2")
         }
-        .buttonStyle(.borderedProminent)
     }
 
     var xpIndicator: some View {
@@ -184,11 +176,8 @@ private extension HomeScreen {
 
     var editSectionsButton: some View {
         Button { coordinator.sheet(.sectionEditor) } label: {
-            Image(systemName: "slider.horizontal.3")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+            Label("Edit Sections", systemImage: "slider.horizontal.3")
         }
-        .buttonStyle(.plain)
     }
 
     var greetingLabel: String {
