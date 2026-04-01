@@ -1,7 +1,7 @@
-import SwiftUI
 import Foundation
 import Observation
 import SwiftData
+import SwiftUI
 import UIKit
 
 @Observable

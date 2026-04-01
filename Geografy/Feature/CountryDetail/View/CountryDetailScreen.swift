@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct CountryDetailScreen: View {
     @Environment(Navigator.self) var coordinator
@@ -36,20 +36,7 @@ struct CountryDetailScreen: View {
             .closeButtonPlacementLeading()
             .toolbar { favoriteToolbarItem }
             .toolbar { compareToolbarItem }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
-                        FlagView(countryCode: country.code, height: 20, fixedWidth: true)
-                            .opacity(flagScrolledUp ? 1 : 0)
-                            .scaleEffect(flagScrolledUp ? 1 : 0.5)
-                            .frame(width: flagScrolledUp ? nil : 0, height: 20)
-                            .clipped()
-                        Text(country.name)
-                            .font(DesignSystem.Font.headline)
-                    }
-                    .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
-                }
-            }
+            .toolbar { principalToolbarItem }
             .task { trackExploration() }
             .onAppear { appeared = true }
             .userActivity("com.khizanag.geografy.viewCountry") { activity in
@@ -149,6 +136,22 @@ private extension CountryDetailScreen {
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    @ToolbarContentBuilder
+    var principalToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
+                FlagView(countryCode: country.code, height: 20, fixedWidth: true)
+                    .opacity(flagScrolledUp ? 1 : 0)
+                    .scaleEffect(flagScrolledUp ? 1 : 0.5)
+                    .frame(width: flagScrolledUp ? nil : 0, height: 20)
+                    .clipped()
+                Text(country.name)
+                    .font(DesignSystem.Font.headline)
+            }
+            .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
         }
     }
 }

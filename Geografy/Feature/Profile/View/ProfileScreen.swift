@@ -1,7 +1,7 @@
-import SwiftUI
-import SwiftData
 import GeografyCore
 import GeografyDesign
+import SwiftData
+import SwiftUI
 
 struct ProfileScreen: View {
     @Environment(Navigator.self) var coordinator

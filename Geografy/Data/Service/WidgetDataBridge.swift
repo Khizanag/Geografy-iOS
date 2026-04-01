@@ -1,8 +1,8 @@
 #if !os(tvOS)
 import Foundation
+import GeografyCore
 import Observation
 import WidgetKit
-import GeografyCore
 
 @Observable
 @MainActor

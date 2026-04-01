@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct HomeBorderChallengeCard: View {
     let onTap: () -> Void

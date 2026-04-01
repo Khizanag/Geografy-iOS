@@ -1,6 +1,6 @@
 import GameKit
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct LeaderboardScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService

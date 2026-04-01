@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct TimelineScreen: View {
     @State private var service = TimelineService()

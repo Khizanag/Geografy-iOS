@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 // MARK: - Fun Facts Section
 extension CountryDetailScreen {

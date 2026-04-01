@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 /// Shows the result after a game round — score, country reveal, stats.
 struct ExploreGameResultView: View {

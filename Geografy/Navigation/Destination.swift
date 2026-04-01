@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyCore
+import SwiftUI
 
 // MARK: - Destination
 enum Destination: Hashable, Identifiable {

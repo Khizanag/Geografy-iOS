@@ -1,6 +1,6 @@
 import AVFoundation
-import GeografyCore
 import Foundation
+import GeografyCore
 
 @Observable
 @MainActor

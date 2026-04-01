@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct LaunchScreen: View {
     @State private var globeScale = 0.8

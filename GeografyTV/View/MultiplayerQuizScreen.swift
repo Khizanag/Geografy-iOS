@@ -1,8 +1,8 @@
 // swiftlint:disable file_length
 import GameController
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct MultiplayerQuizScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

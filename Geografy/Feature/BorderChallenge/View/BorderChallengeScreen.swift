@@ -1,7 +1,7 @@
-import SwiftUI
 import Accessibility
 import GeografyCore
 import GeografyDesign
+import SwiftUI
 
 struct BorderChallengeScreen: View {
     @Environment(HapticsService.self) private var hapticsService

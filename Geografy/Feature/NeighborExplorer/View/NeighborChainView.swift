@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 /// A horizontally scrollable chain of country cards showing the border-hop path.
 struct NeighborChainView: View {

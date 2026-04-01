@@ -1,7 +1,7 @@
-import SwiftUI
 import Accessibility
 import GeografyCore
 import GeografyDesign
+import SwiftUI
 
 struct SpellingBeeScreen: View {
     @Environment(CountryDataService.self) private var countryDataService

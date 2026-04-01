@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct MapLoadingView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

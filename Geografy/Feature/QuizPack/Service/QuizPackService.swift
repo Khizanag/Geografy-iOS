@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyCore
+import SwiftUI
 
 @Observable
 final class QuizPackService {

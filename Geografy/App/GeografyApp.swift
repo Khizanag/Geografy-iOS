@@ -1,6 +1,6 @@
+import GeografyCore
 import StoreKit
 import SwiftUI
-import GeografyCore
 
 @main
 struct GeografyApp: App {

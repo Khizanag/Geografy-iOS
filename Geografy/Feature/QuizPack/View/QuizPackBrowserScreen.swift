@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct QuizPackBrowserScreen: View {
     @Environment(Navigator.self) private var coordinator

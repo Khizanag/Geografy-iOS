@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct RegionSelectionBar<T: RegionSelectable>: View {
     @Environment(HapticsService.self) private var hapticsService

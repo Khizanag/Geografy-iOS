@@ -1,7 +1,7 @@
 import GameController
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct QuizSessionScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct GuidePage: Identifiable {
     let id = UUID()

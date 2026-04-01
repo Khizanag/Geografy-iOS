@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct DailyChallengeScreen: View {
     @Environment(XPService.self) private var xpService

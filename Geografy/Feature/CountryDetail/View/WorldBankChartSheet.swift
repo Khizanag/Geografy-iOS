@@ -1,6 +1,6 @@
-import SwiftUI
 import Charts
 import GeografyDesign
+import SwiftUI
 
 struct WorldBankChartSheet: View {
     let indicator: StatIndicator

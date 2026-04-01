@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 /// Displays a single clue with reveal animation.
 struct ExploreClueCard: View {

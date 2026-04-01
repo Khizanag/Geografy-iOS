@@ -1,8 +1,8 @@
 import Combine
 import Foundation
+import GeografyCore
 import Observation
 import SwiftData
-import GeografyCore
 
 @Observable
 @MainActor

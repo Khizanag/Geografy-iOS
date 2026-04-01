@@ -1,6 +1,6 @@
-import SwiftUI
-import GeografyDesign
 import GeografyCore
+import GeografyDesign
+import SwiftUI
 
 struct ZoomableOrgLogoView: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency

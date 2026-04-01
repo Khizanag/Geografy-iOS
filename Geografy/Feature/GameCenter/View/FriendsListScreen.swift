@@ -1,6 +1,6 @@
-import SwiftUI
 import GameKit
 import GeografyDesign
+import SwiftUI
 
 struct FriendsListScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService

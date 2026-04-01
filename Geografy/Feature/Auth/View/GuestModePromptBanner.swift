@@ -1,5 +1,5 @@
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct GuestModePromptBanner: View {
     @Environment(Navigator.self) private var coordinator

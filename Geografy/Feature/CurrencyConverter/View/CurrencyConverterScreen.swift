@@ -1,6 +1,6 @@
 #if !os(tvOS)
-import SwiftUI
 import GeografyDesign
+import SwiftUI
 
 struct CurrencyConverterScreen: View {
     @Environment(CurrencyService.self) private var currencyService
