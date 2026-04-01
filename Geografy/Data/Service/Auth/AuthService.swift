@@ -32,9 +32,8 @@ final class AuthService {
             self.state = .authenticating
         } else {
             let guestID = Self.resolveGuestID()
-            let profile = Self.loadOrCreateGuestProfile(id: guestID, db: db)
             self.currentUserID = guestID
-            self.state = .guest(profile)
+            self.state = .authenticating
         }
     }
 
@@ -59,8 +58,11 @@ extension AuthService {
 
         if KeychainService.load(for: .googleUserID) != nil {
             validateGoogleSessionOnLaunch()
-        } else {
+        } else if KeychainService.load(for: .appleUserID) != nil {
             await validateAppleSessionOnLaunch()
+        } else {
+            let profile = Self.loadOrCreateGuestProfile(id: currentUserID, db: db)
+            state = .guest(profile)
         }
     }
 }

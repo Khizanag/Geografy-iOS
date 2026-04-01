@@ -27,8 +27,6 @@ struct GeografyApp: App {
     @State private var widgetDataBridge = WidgetDataBridge()
     @State private var worldBankService = WorldBankService()
     @State private var xpService: XPService
-    @State private var isReady = false
-
     init() {
         #if os(iOS)
         BackgroundTaskService.registerTasks()
@@ -50,16 +48,7 @@ struct GeografyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                if isReady {
-                    contentView
-                        .transition(.opacity)
-                } else {
-                    LaunchScreen()
-                }
-            }
-            .animation(.easeOut(duration: 0.3), value: isReady)
-            .task { bootstrap() }
+            contentView
         }
         .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)
@@ -93,6 +82,7 @@ private extension GeografyApp {
             .environment(travelService)
             .environment(worldBankService)
             .environment(xpService)
+            .task { bootstrap() }
             .task(priority: .utility) { await authService.validateOnLaunch() }
             .task(priority: .utility) { await subscriptionService.checkEntitlements() }
             .task(priority: .utility) { await authenticateGameCenter() }
@@ -110,11 +100,11 @@ private extension GeografyApp {
 private extension GeografyApp {
     func bootstrap() {
         countryDataService.loadCountries()
+        favoritesService.fetchEntries()
         xpService.refreshXP()
         achievementService.refreshUnlocked()
         achievementService.loadPinnedIDs()
         streakService.refreshStreak()
-        isReady = true
     }
 }
 
