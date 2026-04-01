@@ -3,6 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "Geografy-Feature-Map",
+    platforms: [
+        .iOS(.v26),
+        .tvOS(.v26),
+    ],
     products: [
         .library(
             name: "Geografy-Feature-Map",
