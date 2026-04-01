@@ -42,11 +42,11 @@ private extension SpellingBeeScreen {
 
                     letterGrid
 
+                    inputSection
+
                     if showCorrectAnswer, !autoContinue {
                         nextButton
-                    } else {
-                        inputSection
-
+                    } else if !showCorrectAnswer {
                         hintButtons
                     }
                 }
@@ -173,11 +173,17 @@ private extension SpellingBeeScreen {
             .autocorrectionDisabled()
             .textInputAutocapitalization(.characters)
             .focused($isInputFocused)
+            .disabled(showCorrectAnswer)
             .onChange(of: typedText) { _, newValue in
-                validateInput(newValue)
+                let lettersOnly = String(newValue.filter { $0.isLetter })
+                if lettersOnly != newValue {
+                    typedText = lettersOnly
+                    return
+                }
+                validateInput(lettersOnly)
             }
             .frame(width: 1, height: 1)
-            .opacity(0)
+            .opacity(0.001)
     }
 
     var hintButtons: some View {
