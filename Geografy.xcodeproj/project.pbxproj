@@ -32,6 +32,7 @@
 /* Begin PBXFileReference section */
 		4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GeografyWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		727A15E32F7D5AF8001B7073 /* Geografy-Core-Service */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "Geografy-Core-Service"; path = "Package/Geografy-Core-Service"; sourceTree = "<group>"; };
 		E5F60718293A4B5C6D7E8F90 /* Geografy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geografy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		TV000000000000000000PROD /* GeografyTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeografyTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -376,6 +377,7 @@
 		C3D4E5F60718293A4B5C6D7E = {
 			isa = PBXGroup;
 			children = (
+				727A15E32F7D5AF8001B7073 /* Geografy-Core-Service */,
 				A1B2C3D4E5F60718293A4B5C /* Geografy */,
 				TV00000000000000000GROUP /* GeografyTV */,
 				5B6C7D8E9F0A1B2C3D4E5F6A /* GeografyWidgets */,
