@@ -8,8 +8,22 @@ public struct QuizPackCard: View {
     public let maxStars: Int
     public let isUnlocked: Bool
 
+    public init(
+        pack: QuizPack,
+        completedLevels: Int,
+        stars: Int,
+        maxStars: Int,
+        isUnlocked: Bool
+    ) {
+        self.pack = pack
+        self.completedLevels = completedLevels
+        self.stars = stars
+        self.maxStars = maxStars
+        self.isUnlocked = isUnlocked
+    }
+
     public var body: some View {
-        extractedContent
+        cardContent
             .frame(height: 160)
             .clipShape(
                 RoundedRectangle(
@@ -26,11 +40,21 @@ public struct QuizPackCard: View {
 
 // MARK: - Subviews
 private extension QuizPackCard {
-    var extractedContent: some View {
-        cardInfo
-            .overlay(alignment: .topTrailing) { backgroundIcon }
-            .background { gradient }
-            .overlay { lockedOverlayIfNeeded }
+    var cardContent: some View {
+        ZStack(alignment: .bottomLeading) {
+            gradient
+
+            backgroundIcon
+
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                premiumBadgeIfNeeded
+                Spacer(minLength: 0)
+                packTitle
+                statsRow
+            }
+            .padding(DesignSystem.Spacing.sm)
+        }
+        .overlay { lockedOverlayIfNeeded }
     }
 
     var gradient: some View {
@@ -50,31 +74,25 @@ private extension QuizPackCard {
             .foregroundStyle(
                 DesignSystem.Color.onAccent.opacity(0.08)
             )
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 20, y: -10)
             .clipped()
     }
 
-    var cardInfo: some View {
-        VStack(
-            alignment: .leading,
-            spacing: DesignSystem.Spacing.xxs
-        ) {
-            Spacer(minLength: 0)
-
-            if pack.isPremium {
-                PremiumBadge()
-            }
-
-            Text(pack.name)
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-
-            statsRow
+    @ViewBuilder
+    var premiumBadgeIfNeeded: some View {
+        if pack.isPremium {
+            PremiumBadge()
         }
-        .padding(DesignSystem.Spacing.sm)
+    }
+
+    var packTitle: some View {
+        Text(pack.name)
+            .font(DesignSystem.Font.headline)
+            .fontWeight(.bold)
+            .foregroundStyle(DesignSystem.Color.onAccent)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
     }
 
     var statsRow: some View {

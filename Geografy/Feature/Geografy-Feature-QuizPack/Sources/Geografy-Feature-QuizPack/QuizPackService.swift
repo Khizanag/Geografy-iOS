@@ -3,8 +3,10 @@ import SwiftUI
 
 @Observable
 public final class QuizPackService {
-    private(set) var progressByLevel: [String: QuizPackProgress] = [:]
+    public private(set) var progressByLevel: [String: QuizPackProgress] = [:]
     private let storageKey = "quiz_pack_progress"
+
+    public init() {}
 
     public func loadProgress() {
         guard let data = UserDefaults.standard.data(forKey: storageKey),
@@ -142,7 +144,7 @@ private extension QuizPackService {
                     icon: "building.columns.fill",
                     category: .capitals,
                     levels: levels,
-                    gradientColors: QuizPackCategory.capitals.gradientColors,
+                    gradientHex: QuizPackCategory.capitals.gradientHex,
                     isPremium: index >= 2,
                     prerequisitePackID: previousID
                 )
@@ -180,7 +182,7 @@ private extension QuizPackService {
                     countries: easyCountries,
                     questionsPerLevel: 10
                 ),
-                gradientColors: QuizPackCategory.flags.gradientColors,
+                gradientHex: QuizPackCategory.flags.gradientHex,
                 isPremium: false,
                 prerequisitePackID: nil
             ),
@@ -195,10 +197,7 @@ private extension QuizPackService {
                     countries: hardCountries,
                     questionsPerLevel: 10
                 ),
-                gradientColors: (
-                    Color(hex: "880E4F"),
-                    Color(hex: "C2185B")
-                ),
+                gradientHex: ("880E4F", "C2185B"),
                 isPremium: true,
                 prerequisitePackID: "flags_easy"
             ),
@@ -224,7 +223,7 @@ private extension QuizPackService {
                     countries: Array(sorted.prefix(60)),
                     questionsPerLevel: 10
                 ),
-                gradientColors: QuizPackCategory.population.gradientColors,
+                gradientHex: QuizPackCategory.population.gradientHex,
                 isPremium: false,
                 prerequisitePackID: nil
             ),
@@ -239,10 +238,7 @@ private extension QuizPackService {
                     countries: Array(sorted.suffix(60)),
                     questionsPerLevel: 10
                 ),
-                gradientColors: (
-                    Color(hex: "006064"),
-                    Color(hex: "00838F")
-                ),
+                gradientHex: ("006064", "00838F"),
                 isPremium: true,
                 prerequisitePackID: "population_top"
             ),
@@ -274,7 +270,7 @@ private extension QuizPackService {
                     countries: largest,
                     questionsPerLevel: 10
                 ),
-                gradientColors: QuizPackCategory.geography.gradientColors,
+                gradientHex: QuizPackCategory.geography.gradientHex,
                 isPremium: false,
                 prerequisitePackID: nil
             ),
@@ -289,10 +285,7 @@ private extension QuizPackService {
                     countries: smallest,
                     questionsPerLevel: 10
                 ),
-                gradientColors: (
-                    Color(hex: "33691E"),
-                    Color(hex: "558B2F")
-                ),
+                gradientHex: ("33691E", "558B2F"),
                 isPremium: true,
                 prerequisitePackID: "geo_largest"
             ),
@@ -307,10 +300,7 @@ private extension QuizPackService {
                     countries: landlocked,
                     questionsPerLevel: 10
                 ),
-                gradientColors: (
-                    Color(hex: "2E7D32"),
-                    Color(hex: "43A047")
-                ),
+                gradientHex: ("2E7D32", "43A047"),
                 isPremium: true,
                 prerequisitePackID: "geo_smallest"
             ),
@@ -338,7 +328,7 @@ private extension QuizPackService {
                     countries: withCurrency,
                     questionsPerLevel: 10
                 ),
-                gradientColors: QuizPackCategory.currency.gradientColors,
+                gradientHex: QuizPackCategory.currency.gradientHex,
                 isPremium: true,
                 prerequisitePackID: nil
             ),
@@ -351,7 +341,7 @@ private extension QuizPackService {
     static func makeGovernmentPacks(
         countries: [Country]
     ) -> [QuizPack] {
-        let withGov = countries.filter {
+        let withGovernment = countries.filter {
             !$0.formOfGovernment.isEmpty
         }
         return [
@@ -363,10 +353,10 @@ private extension QuizPackService {
                 category: .government,
                 levels: makeLevels(
                     packSlug: "government_types",
-                    countries: withGov,
+                    countries: withGovernment,
                     questionsPerLevel: 10
                 ),
-                gradientColors: QuizPackCategory.government.gradientColors,
+                gradientHex: QuizPackCategory.government.gradientHex,
                 isPremium: true,
                 prerequisitePackID: nil
             ),
@@ -401,7 +391,7 @@ private extension QuizPackService {
                         countries: members,
                         questionsPerLevel: 10
                     ),
-                    gradientColors: QuizPackCategory.organizations.gradientColors,
+                    gradientHex: QuizPackCategory.organizations.gradientHex,
                     isPremium: true,
                     prerequisitePackID: nil
                 )
@@ -422,6 +412,7 @@ private extension QuizPackService {
                 QuizPackLevel(
                     id: "\(packSlug)_level_\(index + 1)",
                     name: "Level \(index + 1)",
+                    levelIndex: index + 1,
                     questionCount: chunk.count,
                     countryCodes: chunk.map(\.code)
                 )

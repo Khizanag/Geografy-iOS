@@ -1,6 +1,6 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -13,13 +13,23 @@ public struct QuizPackDetailScreen: View {
     public let allPacks: [QuizPack]
     public let packService: QuizPackService
 
-    @State private var activeLevel: QuizPackLevel?
+    public init(
+        pack: QuizPack,
+        allPacks: [QuizPack],
+        packService: QuizPackService
+    ) {
+        self.pack = pack
+        self.allPacks = allPacks
+        self.packService = packService
+    }
 
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)
             .navigationTitle(pack.name)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
     }
 }
 
@@ -235,8 +245,6 @@ private extension QuizPackDetailScreen {
             coordinator.sheet(.paywall)
             return
         }
-
-        activeLevel = level
 
         let metric: ComparisonMetric = pack.category == .population ? .population : .area
 

@@ -1,5 +1,5 @@
-import Geografy_Core_Navigation
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -10,7 +10,6 @@ public struct QuizPackBrowserScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var packService = QuizPackService()
-
     @State private var selectedCategory: QuizPackCategory?
     @State private var selectedPack: QuizPack?
     @State private var allPacks: [QuizPack] = []
@@ -37,7 +36,31 @@ public struct QuizPackBrowserScreen: View {
 
 // MARK: - Content
 private extension QuizPackBrowserScreen {
+    @ViewBuilder
     var scrollContent: some View {
+        if allPacks.isEmpty {
+            loadingContent
+        } else if filteredPacks.isEmpty {
+            emptyContent
+        } else {
+            packScrollView
+        }
+    }
+
+    var loadingContent: some View {
+        ProgressView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    var emptyContent: some View {
+        ContentUnavailableView(
+            "No Packs Found",
+            systemImage: "square.grid.2x2",
+            description: Text("No quiz packs match the selected category.")
+        )
+    }
+
+    var packScrollView: some View {
         ScrollView(showsIndicators: false) {
             VStack(
                 alignment: .leading,
@@ -46,8 +69,10 @@ private extension QuizPackBrowserScreen {
                 overallProgress
                     .padding(.horizontal, DesignSystem.Spacing.md)
                     .feedSection(appeared: appeared, delay: 0.0)
+
                 categoryFilter
                     .feedSection(appeared: appeared, delay: 0.08)
+
                 packGrid
                     .feedSection(appeared: appeared, delay: 0.16)
             }
@@ -210,6 +235,7 @@ private extension QuizPackBrowserScreen {
                 icon: "square.grid.2x2"
             )
             .padding(.horizontal, DesignSystem.Spacing.md)
+
             packGridContent
         }
     }
@@ -295,7 +321,9 @@ private extension QuizPackBrowserScreen {
         }
         .ignoresSafeArea()
         .animation(
-            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            reduceMotion
+                ? nil
+                : .easeInOut(duration: 6).repeatForever(autoreverses: true),
             value: blobAnimating
         )
     }
