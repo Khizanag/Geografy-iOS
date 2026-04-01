@@ -1,7 +1,7 @@
 import SwiftUI
 
 // MARK: - Hide Close Button
-struct HideCloseButtonKey: PreferenceKey {
+public struct HideCloseButtonKey: PreferenceKey {
     static let defaultValue = false
     static func reduce(value: inout Bool, nextValue: () -> Bool) {
         value = value || nextValue()
@@ -9,7 +9,7 @@ struct HideCloseButtonKey: PreferenceKey {
 }
 
 // MARK: - Close Button Placement
-struct CloseButtonLeadingKey: PreferenceKey {
+public struct CloseButtonLeadingKey: PreferenceKey {
     static let defaultValue = false
     static func reduce(value: inout Bool, nextValue: () -> Bool) {
         value = value || nextValue()
@@ -17,7 +17,7 @@ struct CloseButtonLeadingKey: PreferenceKey {
 }
 
 // MARK: - View Modifiers
-extension View {
+public extension View {
     /// Hides the automatic close button provided by CoordinatedNavigationStack.
     func hideNavigationCloseButton(_ hidden: Bool = true) -> some View {
         preference(key: HideCloseButtonKey.self, value: hidden)

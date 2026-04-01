@@ -1,15 +1,16 @@
 import SwiftUI
-import Geografy_Core_Service
+import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 
 // MARK: - Coordinated Navigation Stack
-struct CoordinatedNavigationStack<Root: View>: View {
+public struct CoordinatedNavigationStack<Root: View>: View {
     @Environment(\.dismiss) private var dismiss
 
-    @Bindable var navigator: Navigator
-    var showCloseButton: Bool = false
-    @ViewBuilder var root: () -> Root
+    public @Bindable var navigator: Navigator
+    public var showCloseButton: Bool = false
+    public @ViewBuilder var root: () -> Root
 
-    var body: some View {
+    public var body: some View {
         NavigationStack(path: $navigator.path) {
             rootWithCloseButton
                 .navigationDestination(for: Destination.self) { destination in
@@ -45,7 +46,7 @@ private struct CloseButtonWrapper<Content: View>: View {
     @State private var hideCloseButton = false
     @State private var closeButtonLeading = false
 
-    var body: some View {
+    public var body: some View {
         content()
             .onPreferenceChange(HideCloseButtonKey.self) { hideCloseButton = $0 }
             .onPreferenceChange(CloseButtonLeadingKey.self) { closeButtonLeading = $0 }
@@ -63,7 +64,7 @@ private struct CloseButtonWrapper<Content: View>: View {
 private struct DestinationCoverView: View {
     let destination: Destination
 
-    var body: some View {
+    public var body: some View {
         CoordinatedNavigationStack(
             navigator: Navigator(),
             showCloseButton: true
@@ -77,7 +78,7 @@ private struct DestinationCoverView: View {
 private struct DestinationSheetView: View {
     let destination: Destination
 
-    var body: some View {
+    public var body: some View {
         CoordinatedNavigationStack(
             navigator: Navigator(),
             showCloseButton: true

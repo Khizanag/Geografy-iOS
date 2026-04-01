@@ -1,16 +1,16 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct CircleCloseButton: View {
+public struct CircleCloseButton: View {
     @Environment(\.dismiss) private var dismiss
 
-    private let onClose: (() -> Void)?
+    public let onClose: (() -> Void)?
 
-    init(onClose: (() -> Void)? = nil) {
+    public init(onClose: (() -> Void)? = nil) {
         self.onClose = onClose
     }
 
-    var body: some View {
+    public var body: some View {
         Button {
             if let onClose {
                 onClose()

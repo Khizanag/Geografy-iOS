@@ -2,37 +2,32 @@
 import PackageDescription
 
 let package = Package(
-    name: "Geografy-Core-Service",
+    name: "Geografy-Core-Navigation",
     platforms: [
         .iOS(.v26),
         .tvOS(.v26),
     ],
     products: [
         .library(
-            name: "Geografy-Core-Service",
-            targets: ["Geografy-Core-Service"]
+            name: "Geografy-Core-Navigation",
+            targets: ["Geografy-Core-Navigation"]
         ),
     ],
     dependencies: [
         .package(path: "../Geografy-Core-Common"),
         .package(path: "../Geografy-Core-DesignSystem"),
-        .package(path: "../Geografy-Core-Navigation"),
     ],
     targets: [
         .target(
-            name: "Geografy-Core-Service",
+            name: "Geografy-Core-Navigation",
             dependencies: [
                 .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
                 .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
-                .product(name: "Geografy-Core-Navigation", package: "Geografy-Core-Navigation"),
-            ],
-            resources: [
-                .process("Resources"),
             ]
         ),
         .testTarget(
-            name: "Geografy-Core-ServiceTests",
-            dependencies: ["Geografy-Core-Service"]
+            name: "Geografy-Core-NavigationTests",
+            dependencies: ["Geografy-Core-Navigation"]
         ),
     ],
     swiftLanguageModes: [.v6]

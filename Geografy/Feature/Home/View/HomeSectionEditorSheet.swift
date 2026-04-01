@@ -1,3 +1,4 @@
+import Geografy_Core_Navigation
 import Geografy_Core_DesignSystem
 import SwiftUI
 

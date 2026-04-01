@@ -1,3 +1,4 @@
+import Geografy_Core_Navigation
 #if os(iOS)
 import AppIntents
 import Foundation
