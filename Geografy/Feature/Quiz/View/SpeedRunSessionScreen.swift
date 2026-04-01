@@ -51,7 +51,7 @@ struct SpeedRunSessionScreen: View {
     }
 }
 
-// MARK: - Gameplay
+// MARK: - Subviews
 private extension SpeedRunSessionScreen {
     var mainContent: some View {
         Group {
@@ -117,7 +117,10 @@ private extension SpeedRunSessionScreen {
         )
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
+}
 
+// MARK: - Input & Completed List
+private extension SpeedRunSessionScreen {
     var inputField: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "magnifyingglass")
@@ -228,18 +231,22 @@ private extension SpeedRunSessionScreen {
             .padding(.vertical, DesignSystem.Spacing.lg)
         }
         .safeAreaInset(edge: .bottom) {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                GlassButton("Try Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
-                    restart()
-                }
-
-                GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
-                    dismiss()
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
+            resultsActions
         }
+    }
+
+    var resultsActions: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            GlassButton("Try Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
+                restart()
+            }
+
+            GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
+                dismiss()
+            }
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
     }
 
     var resultsHeader: some View {

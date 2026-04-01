@@ -187,7 +187,10 @@ private extension MapPuzzleScreen {
             }
         }
     }
+}
 
+// MARK: - Summary
+private extension MapPuzzleScreen {
     var summaryView: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             Spacer()
@@ -258,6 +261,33 @@ private extension MapPuzzleScreen {
     }
 }
 
+// MARK: - Actions
+private extension MapPuzzleScreen {
+    func buildQuestions() {
+        let continentCountries = countryDataService.countries.filter { $0.continent == continent }
+        guard continentCountries.count >= 4 else { return }
+
+        let shuffled = continentCountries.shuffled()
+        let questionCountries = Array(shuffled.prefix(min(10, shuffled.count)))
+
+        questions = questionCountries.map { country in
+            var options = [country]
+            let pool = continentCountries.filter { $0.code != country.code }.shuffled()
+            options += Array(pool.prefix(3))
+            options.shuffle()
+            return PuzzleQuestion(country: country, options: options)
+        }
+    }
+
+    func reset() {
+        currentIndex = 0
+        selectedOptionIndex = nil
+        correctCount = 0
+        showSummary = false
+        buildQuestions()
+    }
+}
+
 // MARK: - Helpers
 private extension MapPuzzleScreen {
     struct PuzzleQuestion {
@@ -287,29 +317,5 @@ private extension MapPuzzleScreen {
         if isCorrect { return DesignSystem.Color.success.opacity(0.12) }
         if isSelected { return DesignSystem.Color.error.opacity(0.12) }
         return .clear
-    }
-
-    func buildQuestions() {
-        let continentCountries = countryDataService.countries.filter { $0.continent == continent }
-        guard continentCountries.count >= 4 else { return }
-
-        let shuffled = continentCountries.shuffled()
-        let questionCountries = Array(shuffled.prefix(min(10, shuffled.count)))
-
-        questions = questionCountries.map { country in
-            var options = [country]
-            let pool = continentCountries.filter { $0.code != country.code }.shuffled()
-            options += Array(pool.prefix(3))
-            options.shuffle()
-            return PuzzleQuestion(country: country, options: options)
-        }
-    }
-
-    func reset() {
-        currentIndex = 0
-        selectedOptionIndex = nil
-        correctCount = 0
-        showSummary = false
-        buildQuestions()
     }
 }

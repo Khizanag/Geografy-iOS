@@ -454,7 +454,10 @@ private extension HistoricalMapScreen {
 
         return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
+}
 
+// MARK: - Helpers
+private extension HistoricalMapScreen {
     var independentCountryCount: Int {
         allShapes.count { shape in
             if let year = independenceMap[shape.id] {

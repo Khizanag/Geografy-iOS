@@ -119,43 +119,6 @@ private extension TravelTrackerScreen {
         .background { ambientBlobs }
     }
 
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [Color(hex: "00C9A7").opacity(0.18), .clear],
-                        center: .center, startRadius: 0, endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300).blur(radius: 40)
-                .offset(x: -80, y: 40)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [Color(hex: "845EC2").opacity(0.14), .clear],
-                        center: .center, startRadius: 0, endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300).blur(radius: 44)
-                .offset(x: 140, y: 100)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.10), .clear],
-                        center: .center, startRadius: 0, endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260).blur(radius: 36)
-                .offset(x: -60, y: 600)
-                .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        }
-        .allowsHitTesting(false)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
-    }
-
     var statsSection: some View {
         TravelStatsCard(
             visitedCount: travelService.visitedCodes.count,
@@ -199,26 +162,10 @@ private extension TravelTrackerScreen {
         .accessibilityLabel("View on Map")
         .accessibilityHint(currentFilterLabel)
     }
+}
 
-    var currentTravelMapFilter: TravelMapFilter {
-        if let filter = selectedFilter {
-            switch filter {
-            case .visited: .visited
-            case .wantToVisit: .wantToVisit
-            }
-        } else {
-            .all
-        }
-    }
-
-    var currentFilterLabel: String {
-        if let filter = selectedFilter {
-            "Show \(filter.label.lowercased()) countries on map"
-        } else {
-            "Show all travel countries on map"
-        }
-    }
-
+// MARK: - Filters
+private extension TravelTrackerScreen {
     var filterTabs: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
@@ -264,6 +211,17 @@ private extension TravelTrackerScreen {
         .buttonStyle(PressButtonStyle())
     }
 
+    func filteredCount(for filter: TravelStatus?) -> Int? {
+        guard let filter else { return travelService.entries.count }
+        return switch filter {
+        case .visited: travelService.visitedCodes.count
+        case .wantToVisit: travelService.wantToVisitCodes.count
+        }
+    }
+}
+
+// MARK: - Country List
+private extension TravelTrackerScreen {
     var countryList: some View {
         Group {
             if isSearching {
@@ -316,7 +274,10 @@ private extension TravelTrackerScreen {
         .buttonStyle(PressButtonStyle())
         .padding(.top, DesignSystem.Spacing.xs)
     }
+}
 
+// MARK: - Search Results
+private extension TravelTrackerScreen {
     var searchResultsList: some View {
         let results = searchResults
         return Group {
@@ -393,43 +354,58 @@ private extension TravelTrackerScreen {
             }
         }
     }
+}
 
+// MARK: - Empty States
+private extension TravelTrackerScreen {
     var emptyState: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: selectedFilter?.icon ?? "airplane.departure")
-                .font(DesignSystem.Font.displaySmall)
-                .foregroundStyle(selectedFilter?.color ?? DesignSystem.Color.textTertiary)
-                .padding(.top, DesignSystem.Spacing.xxl)
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text(emptyStateTitle)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(emptyStateSubtitle)
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .multilineTextAlignment(.center)
-            }
-            Button {
-                hapticsService.impact(.medium)
-                showCountryPicker = true
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "plus")
-                        .fontWeight(.semibold)
-                    Text("Add Country")
-                        .fontWeight(.semibold)
-                }
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .padding(.horizontal, DesignSystem.Spacing.lg)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(DesignSystem.Color.accent, in: Capsule())
-            }
-            .buttonStyle(PressButtonStyle())
-            .padding(.top, DesignSystem.Spacing.xs)
+            emptyStateIcon
+            emptyStateText
+            emptyStateButton
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xxl)
+    }
+
+    var emptyStateIcon: some View {
+        Image(systemName: selectedFilter?.icon ?? "airplane.departure")
+            .font(DesignSystem.Font.displaySmall)
+            .foregroundStyle(selectedFilter?.color ?? DesignSystem.Color.textTertiary)
+            .padding(.top, DesignSystem.Spacing.xxl)
+    }
+
+    var emptyStateText: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text(emptyStateTitle)
+                .font(DesignSystem.Font.headline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text(emptyStateSubtitle)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+        }
+    }
+
+    var emptyStateButton: some View {
+        Button {
+            hapticsService.impact(.medium)
+            showCountryPicker = true
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "plus")
+                    .fontWeight(.semibold)
+                Text("Add Country")
+                    .fontWeight(.semibold)
+            }
+            .font(DesignSystem.Font.subheadline)
+            .foregroundStyle(DesignSystem.Color.onAccent)
+            .padding(.horizontal, DesignSystem.Spacing.lg)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(DesignSystem.Color.accent, in: Capsule())
+        }
+        .buttonStyle(PressButtonStyle())
+        .padding(.top, DesignSystem.Spacing.xs)
     }
 
     var noResultsState: some View {
@@ -449,18 +425,69 @@ private extension TravelTrackerScreen {
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xxl)
     }
+}
 
-    func filteredCount(for filter: TravelStatus?) -> Int? {
-        guard let filter else { return travelService.entries.count }
-        return switch filter {
-        case .visited: travelService.visitedCodes.count
-        case .wantToVisit: travelService.wantToVisitCodes.count
+// MARK: - Background
+private extension TravelTrackerScreen {
+    var ambientBlobs: some View {
+        ZStack {
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [Color(hex: "00C9A7").opacity(0.18), .clear],
+                        center: .center, startRadius: 0, endRadius: 200
+                    )
+                )
+                .frame(width: 400, height: 300).blur(radius: 40)
+                .offset(x: -80, y: 40)
+                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [Color(hex: "845EC2").opacity(0.14), .clear],
+                        center: .center, startRadius: 0, endRadius: 180
+                    )
+                )
+                .frame(width: 360, height: 300).blur(radius: 44)
+                .offset(x: 140, y: 100)
+                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [DesignSystem.Color.accent.opacity(0.10), .clear],
+                        center: .center, startRadius: 0, endRadius: 160
+                    )
+                )
+                .frame(width: 320, height: 260).blur(radius: 36)
+                .offset(x: -60, y: 600)
+                .scaleEffect(blobAnimating ? 1.05 : 0.95)
         }
+        .allowsHitTesting(false)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
     }
 }
 
-// MARK: - Data
+// MARK: - Helpers
 private extension TravelTrackerScreen {
+    var currentTravelMapFilter: TravelMapFilter {
+        if let filter = selectedFilter {
+            switch filter {
+            case .visited: .visited
+            case .wantToVisit: .wantToVisit
+            }
+        } else {
+            .all
+        }
+    }
+
+    var currentFilterLabel: String {
+        if let filter = selectedFilter {
+            "Show \(filter.label.lowercased()) countries on map"
+        } else {
+            "Show all travel countries on map"
+        }
+    }
+
     var isSearching: Bool { !searchText.isEmpty }
 
     var emptyStateTitle: String {

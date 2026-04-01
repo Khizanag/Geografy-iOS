@@ -32,7 +32,7 @@ struct LandmarkQuizScreen: View {
     }
 }
 
-// MARK: - Quiz Content
+// MARK: - Subviews
 private extension LandmarkQuizScreen {
     @ViewBuilder
     var quizContent: some View {
@@ -146,26 +146,6 @@ private extension LandmarkQuizScreen {
             }
         }
     }
-
-    var timerColor: Color {
-        switch timeRemaining {
-        case 11...: DesignSystem.Color.success
-        case 6...10: DesignSystem.Color.warning
-        default: DesignSystem.Color.error
-        }
-    }
-
-    var progressFraction: CGFloat {
-        guard !quizService.questions.isEmpty else { return 0 }
-        return CGFloat(currentQuestionIndex) / CGFloat(quizService.questions.count)
-    }
-
-    func optionState(for countryCode: String) -> QuizOptionButton.OptionState {
-        guard selectedAnswer != nil else { return .default }
-        if countryCode == currentQuestion.answerCountryCode { return .correct }
-        if countryCode == selectedAnswer { return .incorrect }
-        return .disabled
-    }
 }
 
 // MARK: - Game Over
@@ -175,47 +155,11 @@ private extension LandmarkQuizScreen {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 Spacer(minLength: DesignSystem.Spacing.xl)
 
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.accent.opacity(0.12))
-                        .frame(width: 96, height: 96)
+                gameOverIcon
 
-                    Image(systemName: scoreGrade.icon)
-                        .font(DesignSystem.Font.displayXS)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                        .symbolEffect(.bounce)
-                }
+                gameOverText
 
-                VStack(spacing: DesignSystem.Spacing.xs) {
-                    Text(scoreGrade.title)
-                        .font(DesignSystem.Font.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                    Text(scoreGrade.subtitle)
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .multilineTextAlignment(.center)
-                }
-
-                CardView {
-                    HStack(spacing: 0) {
-                        ResultStatItem(
-                            icon: "star.fill",
-                            value: "\(score)",
-                            label: "Score",
-                            color: DesignSystem.Color.warning
-                        )
-
-                        ResultStatItem(
-                            icon: "checkmark.circle.fill",
-                            value: "\(score)/\(String(quizService.questions.count))",
-                            label: "Correct",
-                            color: DesignSystem.Color.success
-                        )
-                    }
-                    .padding(DesignSystem.Spacing.md)
-                }
+                gameOverStats
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .readableContentWidth()
@@ -229,24 +173,57 @@ private extension LandmarkQuizScreen {
         }
     }
 
-    var scoreGrade: (title: String, subtitle: String, icon: String) {
-        let total = quizService.questions.count
-        let fraction = total > 0 ? Double(score) / Double(total) : 0
-        return switch fraction {
-        case 0.8...: ("Geo Expert!", "Outstanding knowledge of world landmarks", "trophy.fill")
-        case 0.6..<0.8: ("Well Done!", "Great understanding of world geography", "star.fill")
-        case 0.4..<0.6: ("Getting There!", "Keep exploring the world", "globe")
-        default: ("Keep Learning!", "Every expert was once a beginner", "book.fill")
+    var gameOverIcon: some View {
+        ZStack {
+            Circle()
+                .fill(DesignSystem.Color.accent.opacity(0.12))
+                .frame(width: 96, height: 96)
+
+            Image(systemName: scoreGrade.icon)
+                .font(DesignSystem.Font.displayXS)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .symbolEffect(.bounce)
+        }
+    }
+
+    var gameOverText: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text(scoreGrade.title)
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+
+            Text(scoreGrade.subtitle)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+        }
+    }
+
+    var gameOverStats: some View {
+        CardView {
+            HStack(spacing: 0) {
+                ResultStatItem(
+                    icon: "star.fill",
+                    value: "\(score)",
+                    label: "Score",
+                    color: DesignSystem.Color.warning
+                )
+
+                ResultStatItem(
+                    icon: "checkmark.circle.fill",
+                    value: "\(score)/\(String(quizService.questions.count))",
+                    label: "Correct",
+                    color: DesignSystem.Color.success
+                )
+            }
+            .padding(DesignSystem.Spacing.md)
         }
     }
 }
 
 // MARK: - Actions
 private extension LandmarkQuizScreen {
-    var currentQuestion: LandmarkQuestion {
-        quizService.questions[currentQuestionIndex]
-    }
-
     func loadQuiz() {
         quizService.loadQuestions()
         prepareAnswers()
@@ -318,5 +295,43 @@ private extension LandmarkQuizScreen {
         quizService.loadQuestions()
         prepareAnswers()
         startTimer()
+    }
+}
+
+// MARK: - Helpers
+private extension LandmarkQuizScreen {
+    var currentQuestion: LandmarkQuestion {
+        quizService.questions[currentQuestionIndex]
+    }
+
+    var timerColor: Color {
+        switch timeRemaining {
+        case 11...: DesignSystem.Color.success
+        case 6...10: DesignSystem.Color.warning
+        default: DesignSystem.Color.error
+        }
+    }
+
+    var progressFraction: CGFloat {
+        guard !quizService.questions.isEmpty else { return 0 }
+        return CGFloat(currentQuestionIndex) / CGFloat(quizService.questions.count)
+    }
+
+    func optionState(for countryCode: String) -> QuizOptionButton.OptionState {
+        guard selectedAnswer != nil else { return .default }
+        if countryCode == currentQuestion.answerCountryCode { return .correct }
+        if countryCode == selectedAnswer { return .incorrect }
+        return .disabled
+    }
+
+    var scoreGrade: (title: String, subtitle: String, icon: String) {
+        let total = quizService.questions.count
+        let fraction = total > 0 ? Double(score) / Double(total) : 0
+        return switch fraction {
+        case 0.8...: ("Geo Expert!", "Outstanding knowledge of world landmarks", "trophy.fill")
+        case 0.6..<0.8: ("Well Done!", "Great understanding of world geography", "star.fill")
+        case 0.4..<0.6: ("Getting There!", "Keep exploring the world", "globe")
+        default: ("Keep Learning!", "Every expert was once a beginner", "book.fill")
+        }
     }
 }

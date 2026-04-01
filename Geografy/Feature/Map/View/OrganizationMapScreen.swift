@@ -346,18 +346,6 @@ private extension OrganizationMapScreen {
         mapState.lastOffset = mapState.offset
     }
 
-    func computeMinScale(for size: CGSize) -> CGFloat {
-        let fitWidth = size.width / MapProjection.mapWidth
-        let isLandscape = size.width > size.height
-        if isLandscape {
-            let bounds = mapState.contentBounds
-            guard bounds.height > 0 else { return fitWidth }
-            let fitContentHeight = size.height / bounds.height
-            return max(fitWidth, fitContentHeight)
-        }
-        return fitWidth
-    }
-
     func centerOnContent() {
         let bounds = mapState.contentBounds
         guard bounds.width > 0, bounds.height > 0 else { return }
@@ -408,6 +396,21 @@ private extension OrganizationMapScreen {
             centerOnContent()
             isInitialized = true
         }
+    }
+}
+
+// MARK: - Helpers
+private extension OrganizationMapScreen {
+    func computeMinScale(for size: CGSize) -> CGFloat {
+        let fitWidth = size.width / MapProjection.mapWidth
+        let isLandscape = size.width > size.height
+        if isLandscape {
+            let bounds = mapState.contentBounds
+            guard bounds.height > 0 else { return fitWidth }
+            let fitContentHeight = size.height / bounds.height
+            return max(fitWidth, fitContentHeight)
+        }
+        return fitWidth
     }
 
     func computeContentBounds(from shapes: [CountryShape]) -> CGRect {
