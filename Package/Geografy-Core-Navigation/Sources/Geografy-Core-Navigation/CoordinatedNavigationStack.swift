@@ -1,20 +1,51 @@
-import SwiftUI
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import SwiftUI
+
+// MARK: - Destination Content Provider
+public struct DestinationContentKey: EnvironmentKey {
+    public static let defaultValue: (@Sendable (Destination) -> AnyView)? = nil
+}
+
+public extension EnvironmentValues {
+    var destinationContent: (@Sendable (Destination) -> AnyView)? {
+        get { self[DestinationContentKey.self] }
+        set { self[DestinationContentKey.self] = newValue }
+    }
+}
+
+public extension View {
+    func destinationContentProvider(
+        @ViewBuilder _ provider: @Sendable @escaping (Destination) -> some View
+    ) -> some View {
+        environment(\.destinationContent, { @Sendable in AnyView(provider($0)) })
+    }
+}
 
 // MARK: - Coordinated Navigation Stack
 public struct CoordinatedNavigationStack<Root: View>: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.destinationContent) private var destinationContent
 
-    public @Bindable var navigator: Navigator
+    @Bindable public var navigator: Navigator
     public var showCloseButton: Bool = false
-    public @ViewBuilder var root: () -> Root
+    @ViewBuilder public var root: () -> Root
+
+    public init(
+        navigator: Navigator,
+        showCloseButton: Bool = false,
+        @ViewBuilder root: @escaping () -> Root
+    ) {
+        self.navigator = navigator
+        self.showCloseButton = showCloseButton
+        self.root = root
+    }
 
     public var body: some View {
         NavigationStack(path: $navigator.path) {
             rootWithCloseButton
                 .navigationDestination(for: Destination.self) { destination in
-                    destination.content
+                    destinationContent?(destination) ?? AnyView(EmptyView())
                 }
         }
         .sheet(item: $navigator.activeSheet) { destination in
@@ -46,7 +77,7 @@ private struct CloseButtonWrapper<Content: View>: View {
     @State private var hideCloseButton = false
     @State private var closeButtonLeading = false
 
-    public var body: some View {
+    var body: some View {
         content()
             .onPreferenceChange(HideCloseButtonKey.self) { hideCloseButton = $0 }
             .onPreferenceChange(CloseButtonLeadingKey.self) { closeButtonLeading = $0 }
@@ -62,28 +93,32 @@ private struct CloseButtonWrapper<Content: View>: View {
 
 // MARK: - Destination Cover View
 private struct DestinationCoverView: View {
+    @Environment(\.destinationContent) private var destinationContent
+
     let destination: Destination
 
-    public var body: some View {
+    var body: some View {
         CoordinatedNavigationStack(
             navigator: Navigator(),
             showCloseButton: true
         ) {
-            destination.content
+            destinationContent?(destination) ?? AnyView(EmptyView())
         }
     }
 }
 
 // MARK: - Destination Sheet View
 private struct DestinationSheetView: View {
+    @Environment(\.destinationContent) private var destinationContent
+
     let destination: Destination
 
-    public var body: some View {
+    var body: some View {
         CoordinatedNavigationStack(
             navigator: Navigator(),
             showCloseButton: true
         ) {
-            destination.content
+            destinationContent?(destination) ?? AnyView(EmptyView())
         }
         .presentationSizing(.form)
     }
