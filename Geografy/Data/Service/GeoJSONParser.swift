@@ -22,7 +22,7 @@ enum GeoJSONParser {
     }
 
     private static let filteredTerritories: Set<String> = [
-        "Bir Tawil", "Cyprus U.N. Buffer Zone", "Siachen Glacier",
+        "Bir Tawil", "Siachen Glacier",
         "Bajo Nuevo Bank", "Scarborough Reef", "Serranilla Bank", "Spratly Is.",
         "Southern Patagonian Ice Field", "Brazilian I.",
         "Akrotiri", "Dhekelia", "Baikonur", "USNB Guantanamo Bay",
@@ -184,7 +184,14 @@ private extension GeoJSONParser {
         return nil
     }
 
+    static let alwaysMerge: [String: String] = [
+        "Cyprus U.N. Buffer Zone": "CY",
+    ]
+
     static func resolveCountryCode(rawCode: String, name: String) -> String {
+        if let code = alwaysMerge[name] {
+            return code
+        }
         if let mergeCode = territoryMergeMap[name] {
             return mergeCode
         }
