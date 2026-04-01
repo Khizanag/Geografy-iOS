@@ -1,3 +1,4 @@
+import Geografy_Core_Service
 // swiftlint:disable file_length
 import GameController
 import Geografy_Core_Common

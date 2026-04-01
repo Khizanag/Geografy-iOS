@@ -1,3 +1,4 @@
+#if !os(tvOS)
 import Geografy_Core_Common
 import Foundation
 
@@ -61,3 +62,4 @@ private extension JSONDecoder {
         return decoder
     }()
 }
+#endif
