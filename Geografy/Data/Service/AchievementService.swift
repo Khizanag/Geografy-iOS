@@ -169,7 +169,7 @@ final class AchievementService {
 }
 
 // MARK: - Persistence
-private extension AchievementService {
+extension AchievementService {
     func unlock(_ achievementID: String) {
         guard !isUnlocked(achievementID),
               let definition = AchievementCatalog.all.first(where: { $0.id == achievementID })

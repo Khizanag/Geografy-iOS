@@ -55,7 +55,7 @@ final class StreakService {
 }
 
 // MARK: - Helpers
-private extension StreakService {
+extension StreakService {
     func refreshStreak() {
         let userID = currentUserID
         var descriptor = FetchDescriptor<StreakRecord>(
