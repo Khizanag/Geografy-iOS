@@ -30,9 +30,11 @@ private extension SectionHeaderView {
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+            #if !os(tvOS)
             if isNew {
                 NewBadge()
             }
+            #endif
         }
     }
 

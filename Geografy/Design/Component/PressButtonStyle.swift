@@ -1,5 +1,6 @@
-import SwiftUI
+import Geografy_Core_DesignSystem
 import Geografy_Core_Service
+import SwiftUI
 #if !os(tvOS)
 import UIKit
 #endif
@@ -21,7 +22,7 @@ private struct PressButtonBody: View {
     #endif
     let configuration: ButtonStyleConfiguration
 
-    var body: some View {
+    public var body: some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
             .opacity(configuration.isPressed ? 0.85 : 1.0)
