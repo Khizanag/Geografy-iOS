@@ -1,12 +1,11 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct IconButton: View {
+public struct IconButton: View {
     private let systemImage: String
     private let isActive: Bool
     private let action: () -> Void
 
-    init(
+    public init(
         systemImage: String,
         isActive: Bool = false,
         action: @escaping () -> Void
@@ -16,7 +15,7 @@ struct IconButton: View {
         self.action = action
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)
                 .font(DesignSystem.Font.headline)

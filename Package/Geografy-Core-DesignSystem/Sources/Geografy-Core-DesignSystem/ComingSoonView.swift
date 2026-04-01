@@ -1,17 +1,26 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct ComingSoonView: View {
+public struct ComingSoonView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
-    let icon: String
-    var title: String?
-    var isDismissible: Bool = false
+    public let icon: String
+    public var title: String?
+    public var isDismissible: Bool = false
 
     @State private var isAnimating = false
 
-    var body: some View {
+    public init(
+        icon: String,
+        title: String? = nil,
+        isDismissible: Bool = false
+    ) {
+        self.icon = icon
+        self.title = title
+        self.isDismissible = isDismissible
+    }
+
+    public var body: some View {
         Group {
             if isLandscape {
                 landscapeLayout

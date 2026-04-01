@@ -1,8 +1,9 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct NewBadge: View {
-    var body: some View {
+public struct NewBadge: View {
+    public init() {}
+
+    public var body: some View {
         Text("NEW")
             .font(DesignSystem.Font.caption2)
             .fontWeight(.bold)

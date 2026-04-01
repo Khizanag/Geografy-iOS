@@ -1,12 +1,16 @@
 import Geografy_Core_Common
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct LanguageBarChart: View {
-    let languages: [Country.Language]
-    let appeared: Bool
+public struct LanguageBarChart: View {
+    public let languages: [Country.Language]
+    public let appeared: Bool
 
-    var body: some View {
+    public init(languages: [Country.Language], appeared: Bool) {
+        self.languages = languages
+        self.appeared = appeared
+    }
+
+    public var body: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 headerRow

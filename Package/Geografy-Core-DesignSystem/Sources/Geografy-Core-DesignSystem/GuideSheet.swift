@@ -1,29 +1,48 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct GuidePage: Identifiable {
-    let id = UUID()
-    let title: String
-    let subtitle: String
-    let steps: [GuideStep]
+public struct GuidePage: Identifiable, Sendable {
+    public let id = UUID()
+    public let title: String
+    public let subtitle: String
+    public let steps: [GuideStep]
+
+    public init(title: String, subtitle: String, steps: [GuideStep]) {
+        self.title = title
+        self.subtitle = subtitle
+        self.steps = steps
+    }
 }
 
-struct GuideStep: Identifiable {
-    let id = UUID()
-    let icon: String
-    let title: String
-    let description: String
+public struct GuideStep: Identifiable, Sendable {
+    public let id = UUID()
+    public let icon: String
+    public let title: String
+    public let description: String
+
+    public init(icon: String, title: String, description: String) {
+        self.icon = icon
+        self.title = title
+        self.description = description
+    }
 }
 
-struct GuideSheet<Illustration: View>: View {
+public struct GuideSheet<Illustration: View>: View {
     @Environment(\.dismiss) private var dismiss
 
-    let pages: [GuidePage]
-    @ViewBuilder let illustration: (Int) -> Illustration
+    public let pages: [GuidePage]
+    public let illustration: (Int) -> Illustration
 
     @State private var currentPage = 0
 
-    var body: some View {
+    public init(
+        pages: [GuidePage],
+        @ViewBuilder illustration: @escaping (Int) -> Illustration
+    ) {
+        self.pages = pages
+        self.illustration = illustration
+    }
+
+    public var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $currentPage) {
                 ForEach(Array(pages.enumerated()), id: \.element.id) { index, page in

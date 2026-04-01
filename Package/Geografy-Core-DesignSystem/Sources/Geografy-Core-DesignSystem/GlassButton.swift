@@ -1,19 +1,18 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct GlassButton: View {
+public struct GlassButton: View {
     private let title: String
     private let systemImage: String?
     private let role: Role
     private let fullWidth: Bool
     private let action: () -> Void
 
-    enum Role {
+    public enum Role {
         case primary
         case secondary
     }
 
-    init(
+    public init(
         _ title: String,
         systemImage: String? = nil,
         role: Role = .primary,
@@ -27,7 +26,7 @@ struct GlassButton: View {
         self.action = action
     }
 
-    var body: some View {
+    public var body: some View {
         if fullWidth {
             Button(action: action) {
                 label

@@ -1,20 +1,25 @@
 import Geografy_Core_Common
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct ZoomableOrgLogoView: View {
+public struct ZoomableOrgLogoView: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
-    let url: URL
-    let organization: Organization
-    let onDismiss: () -> Void
+    public let url: URL
+    public let organization: Organization
+    public let onDismiss: () -> Void
 
     @State private var scale: CGFloat = 1.0
     @State private var lastScale: CGFloat = 1.0
     @State private var offset: CGSize = .zero
     @State private var lastOffset: CGSize = .zero
 
-    var body: some View {
+    public init(url: URL, organization: Organization, onDismiss: @escaping () -> Void) {
+        self.url = url
+        self.organization = organization
+        self.onDismiss = onDismiss
+    }
+
+    public var body: some View {
         extractedContent
             .transition(.opacity)
     }

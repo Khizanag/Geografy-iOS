@@ -1,8 +1,7 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct GeoButton: View {
-    enum Style {
+public struct GeoButton: View {
+    public enum Style {
         case primary
         case secondary
         case text
@@ -13,7 +12,7 @@ struct GeoButton: View {
     private let style: Style
     private let action: () -> Void
 
-    init(
+    public init(
         _ title: String,
         systemImage: String? = nil,
         style: Style = .primary,
@@ -25,7 +24,7 @@ struct GeoButton: View {
         self.action = action
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: action) {
             label
         }

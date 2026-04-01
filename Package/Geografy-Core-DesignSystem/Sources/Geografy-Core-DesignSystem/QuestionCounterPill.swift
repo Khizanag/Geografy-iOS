@@ -1,11 +1,15 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct QuestionCounterPill: View {
-    let current: Int
-    let total: Int
+public struct QuestionCounterPill: View {
+    public let current: Int
+    public let total: Int
 
-    var body: some View {
+    public init(current: Int, total: Int) {
+        self.current = current
+        self.total = total
+    }
+
+    public var body: some View {
         Text("\(current)/\(total)")
             .contentTransition(.numericText())
             .font(DesignSystem.Font.roundedMicro)

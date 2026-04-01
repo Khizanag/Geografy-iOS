@@ -1,12 +1,17 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct LetterGridView: View {
-    let targetText: String
-    let typedText: String
-    let isRevealed: Bool
+public struct LetterGridView: View {
+    public let targetText: String
+    public let typedText: String
+    public let isRevealed: Bool
 
-    var body: some View {
+    public init(targetText: String, typedText: String, isRevealed: Bool) {
+        self.targetText = targetText
+        self.typedText = typedText
+        self.isRevealed = isRevealed
+    }
+
+    public var body: some View {
         if isRevealed {
             revealedContent
         } else {
@@ -127,14 +132,20 @@ private extension LetterGridView {
 }
 
 // MARK: - Helper
-enum LetterGridHelper {
-    struct WordSegment {
-        let letters: [Character]
-        let letterIndices: [Int]
-        let leadingSeparator: Character?
+public enum LetterGridHelper {
+    public struct WordSegment {
+        public let letters: [Character]
+        public let letterIndices: [Int]
+        public let leadingSeparator: Character?
+
+        public init(letters: [Character], letterIndices: [Int], leadingSeparator: Character?) {
+            self.letters = letters
+            self.letterIndices = letterIndices
+            self.leadingSeparator = leadingSeparator
+        }
     }
 
-    static func splitIntoSegments(_ name: String) -> [WordSegment] {
+    public static func splitIntoSegments(_ name: String) -> [WordSegment] {
         var segments: [WordSegment] = []
         var currentLetters: [Character] = []
         var currentIndices: [Int] = []
@@ -176,7 +187,7 @@ enum LetterGridHelper {
         return segments
     }
 
-    static func lettersMatch(typed: String, target: String) -> Bool {
+    public static func lettersMatch(typed: String, target: String) -> Bool {
         let typedLetters = typed.lowercased().filter { $0.isLetter }
         let targetLetters = target.lowercased().filter { $0.isLetter }
         return typedLetters == targetLetters

@@ -1,13 +1,17 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct PulsingCirclesView: View {
+public struct PulsingCirclesView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    let icon: String
-    let isAnimating: Bool
+    public let icon: String
+    public let isAnimating: Bool
 
-    var body: some View {
+    public init(icon: String, isAnimating: Bool) {
+        self.icon = icon
+        self.isAnimating = isAnimating
+    }
+
+    public var body: some View {
         ZStack {
             circles
             iconView

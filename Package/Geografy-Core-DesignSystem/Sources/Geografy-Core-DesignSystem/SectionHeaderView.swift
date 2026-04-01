@@ -1,12 +1,21 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct SectionHeaderView: View {
-    let title: String
-    var icon: String?
-    var isNew: Bool = false
+public struct SectionHeaderView: View {
+    public let title: String
+    public var icon: String?
+    public var isNew: Bool = false
 
-    var body: some View {
+    public init(
+        title: String,
+        icon: String? = nil,
+        isNew: Bool = false
+    ) {
+        self.title = title
+        self.icon = icon
+        self.isNew = isNew
+    }
+
+    public var body: some View {
         extractedContent
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(.isHeader)

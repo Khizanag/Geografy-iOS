@@ -1,16 +1,29 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct XPProgressBar: View {
-    let currentLevelNumber: Int
-    let nextLevelNumber: Int?
-    let xpInCurrentLevel: Int
-    let xpRequiredForNextLevel: Int
-    let progressFraction: Double
+public struct XPProgressBar: View {
+    public let currentLevelNumber: Int
+    public let nextLevelNumber: Int?
+    public let xpInCurrentLevel: Int
+    public let xpRequiredForNextLevel: Int
+    public let progressFraction: Double
 
     @State private var animatedProgress: Double = 0
 
-    var body: some View {
+    public init(
+        currentLevelNumber: Int,
+        nextLevelNumber: Int?,
+        xpInCurrentLevel: Int,
+        xpRequiredForNextLevel: Int,
+        progressFraction: Double
+    ) {
+        self.currentLevelNumber = currentLevelNumber
+        self.nextLevelNumber = nextLevelNumber
+        self.xpInCurrentLevel = xpInCurrentLevel
+        self.xpRequiredForNextLevel = xpRequiredForNextLevel
+        self.progressFraction = progressFraction
+    }
+
+    public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             levelLabelsRow
             progressTrack
