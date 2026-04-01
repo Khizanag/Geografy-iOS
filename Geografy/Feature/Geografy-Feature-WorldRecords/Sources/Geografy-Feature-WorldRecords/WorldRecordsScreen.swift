@@ -22,7 +22,9 @@ public struct WorldRecordsScreen: View {
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("World Records")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .task {
                 records = worldRecordsService.computeRecords(from: countryDataService.countries)
             }

@@ -4,17 +4,19 @@ import SwiftUI
 struct LandmarkDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    let landmark: Landmark
+    public let landmark: Landmark
 
     private var accentSwiftUIColor: Color {
         Color(hex: landmark.accentColor)
     }
 
-    var body: some View {
+    public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(landmark.name)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     CircleCloseButton { dismiss() }

@@ -142,7 +142,7 @@ public struct CountryWithZone: Identifiable {
         Double(timeZone.secondsFromGMT(for: Date())) / 3600
     }
 
-    var utcOffsetLabel: String {
+    public var utcOffsetLabel: String {
         let hours = utcOffsetHours
         let sign = hours >= 0 ? "+" : ""
         if hours == Double(Int(hours)) {
@@ -161,7 +161,7 @@ private struct WorldClockView: View {
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
 
-    let countries: [CountryWithZone]
+    public let countries: [CountryWithZone]
     @State private var searchText = ""
     @State private var now = Date()
 
@@ -250,7 +250,7 @@ private struct AllZonesView: View {
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
 
-    let countries: [CountryWithZone]
+    public let countries: [CountryWithZone]
 
     public var body: some View {
         scrollContent

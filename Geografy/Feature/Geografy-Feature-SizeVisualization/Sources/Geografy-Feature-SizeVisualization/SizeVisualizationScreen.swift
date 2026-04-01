@@ -193,11 +193,11 @@ private extension SizeVisualizationScreen {
 
 // MARK: - CountryRowContent
 private struct CountryRowContent: View {
-    let country: Country
-    let rank: Int
-    let sortMode: SizeVisualizationScreen.SortMode
-    let referenceCountry: Country?
-    let maxValue: Double
+    public let country: Country
+    public let rank: Int
+    public let sortMode: SizeVisualizationScreen.SortMode
+    public let referenceCountry: Country?
+    public let maxValue: Double
 
     public var body: some View {
         cardContent

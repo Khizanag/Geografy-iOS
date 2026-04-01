@@ -1,5 +1,6 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
+import Geografy_Feature_GeographyFeatures
 
 struct GeographyFeaturesScreen: View {
     @State private var selectedType: GeographyFeatureType = .mountain

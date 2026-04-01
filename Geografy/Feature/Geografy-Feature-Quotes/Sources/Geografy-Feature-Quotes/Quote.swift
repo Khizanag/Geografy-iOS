@@ -19,7 +19,7 @@ public struct Quote: Identifiable {
     }
 }
 
-public enum QuoteCategory: String, CaseIterable {
+public enum QuoteCategory: String, Sendable, CaseIterable {
     case travel
     case exploration
     case geography

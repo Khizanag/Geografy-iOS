@@ -1,8 +1,9 @@
 import Foundation
 import Geografy_Core_Common
 
-struct TriviaService {
-    func generateQuestions(from countries: [Country]) -> [TriviaQuestion] {
+public struct TriviaService {
+    public init() {}
+    public func generateQuestions(from countries: [Country]) -> [TriviaQuestion] {
         var questions: [TriviaQuestion] = []
         questions += capitalQuestions(from: countries)
         questions += continentQuestions(from: countries)

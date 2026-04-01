@@ -1,17 +1,18 @@
 import Foundation
 
-final class LanguageService {
-    var families: [String] {
+public final class LanguageService {
+    public init() {}
+    public var families: [String] {
         Array(Set(languages.map { $0.family })).sorted()
     }
 
-    var maxSpeakers: Int { languages.map { $0.speakerCount }.max() ?? 1 }
+    public var maxSpeakers: Int { languages.map { $0.speakerCount }.max() ?? 1 }
 
-    func languages(in family: String) -> [Language] {
+    public func languages(in family: String) -> [Language] {
         languages.filter { $0.family == family }.sorted { $0.speakerCount > $1.speakerCount }
     }
 
-    func languages(matching query: String) -> [Language] {
+    public func languages(matching query: String) -> [Language] {
         guard !query.isEmpty else { return languages }
         let lowercased = query.lowercased()
         return languages.filter {
@@ -24,7 +25,7 @@ final class LanguageService {
 
 // MARK: - Data
 extension LanguageService {
-    var languages: [Language] {
+    public var languages: [Language] {
         topLanguages + regionalLanguages
     }
 }

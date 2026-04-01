@@ -1,10 +1,11 @@
 import Foundation
 import Geografy_Core_Common
 
-struct CultureService {
-    var facts: [CultureFact] { allFacts }
+public struct CultureService {
+    public init() {}
+    public var facts: [CultureFact] { allFacts }
 
-    func facts(matching query: String) -> [CultureFact] {
+    public func facts(matching query: String) -> [CultureFact] {
         guard !query.isEmpty else { return facts }
         let lowercased = query.lowercased()
         return facts.filter { fact in

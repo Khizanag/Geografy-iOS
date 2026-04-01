@@ -1,8 +1,9 @@
 import Foundation
 
 // swiftlint:disable:next type_body_length
-final class LandmarkGalleryService {
-    let landmarks: [Landmark] = [
+public final class LandmarkGalleryService {
+    public init() {}
+    public let landmarks: [Landmark] = [
         Landmark(
             id: "eiffel-tower",
             name: "Eiffel Tower",
@@ -551,7 +552,7 @@ final class LandmarkGalleryService {
         ),
     ]
 
-    func landmarks(in category: LandmarkCategory?) -> [Landmark] {
+    public func landmarks(in category: LandmarkCategory?) -> [Landmark] {
         guard let category else { return landmarks }
         return landmarks.filter { $0.category == category }
     }

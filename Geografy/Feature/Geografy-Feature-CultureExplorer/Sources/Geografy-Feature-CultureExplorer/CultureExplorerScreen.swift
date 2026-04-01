@@ -21,7 +21,9 @@ public struct CultureExplorerScreen: View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Culture Explorer")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .searchable(text: $searchQuery, prompt: "Search countries or dishes...")
             .sheet(item: $selectedProfile) { profile in
                 CultureDetailView(profile: profile)

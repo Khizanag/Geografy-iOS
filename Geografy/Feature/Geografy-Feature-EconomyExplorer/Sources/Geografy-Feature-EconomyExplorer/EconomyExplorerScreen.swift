@@ -32,7 +32,9 @@ public struct EconomyExplorerScreen: View {
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Economy Explorer")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .searchable(text: $searchText, prompt: "Search countries")
             .onAppear { blobAnimating = true }
     }

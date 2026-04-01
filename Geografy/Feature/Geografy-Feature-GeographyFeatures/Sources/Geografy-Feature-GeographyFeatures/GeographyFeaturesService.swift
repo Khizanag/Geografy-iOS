@@ -1,9 +1,10 @@
 import Foundation
 
-struct GeographyFeaturesService {
-    let features: [GeographyFeature] = mountains + rivers + deserts + lakes
+public struct GeographyFeaturesService {
+    public init() {}
+    public let features: [GeographyFeature] = mountains + rivers + deserts + lakes
 
-    func features(for type: GeographyFeatureType) -> [GeographyFeature] {
+    public func features(for type: GeographyFeatureType) -> [GeographyFeature] {
         features.filter { $0.type == type }
     }
 }

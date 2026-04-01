@@ -4,14 +4,16 @@ import SwiftUI
 struct LanguageDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    let language: Language
-    let maxSpeakers: Int
+    public let language: Language
+    public let maxSpeakers: Int
 
-    var body: some View {
+    public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(language.name)
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     CircleCloseButton { dismiss() }

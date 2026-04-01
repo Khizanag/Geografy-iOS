@@ -26,7 +26,9 @@ public struct TriviaScreen: View {
         contentSwitcher
             .background { backgroundView }
             .navigationTitle("Trivia")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .onAppear {
                 loadQuestions()
             }
@@ -88,7 +90,9 @@ private extension TriviaScreen {
             triviaCard(for: questions[currentIndex], isBack: false)
                 .offset(x: cardOffset)
                 .rotationEffect(.degrees(cardRotation))
+                #if !os(tvOS)
                 .gesture(dragGesture)
+                #endif
         }
     }
 
@@ -231,6 +235,7 @@ private extension TriviaScreen {
     }
 }
 
+#if !os(tvOS)
 // MARK: - Drag Gesture
 private extension TriviaScreen {
     var dragGesture: some Gesture {
@@ -259,6 +264,7 @@ private extension TriviaScreen {
             }
     }
 }
+#endif
 
 // MARK: - Actions
 private extension TriviaScreen {

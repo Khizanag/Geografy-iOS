@@ -1,27 +1,27 @@
 import Foundation
 
-struct Landmark: Identifiable {
-    let id: String
-    let name: String
-    let countryCode: String
-    let city: String
-    let category: LandmarkCategory
-    let description: String
-    let yearBuilt: Int?
-    let isUNESCO: Bool
-    let funFact: String
-    let symbolName: String
-    let accentColor: String
+public struct Landmark: Identifiable, Sendable {
+    public let id: String
+    public let name: String
+    public let countryCode: String
+    public let city: String
+    public let category: LandmarkCategory
+    public let description: String
+    public let yearBuilt: Int?
+    public let isUNESCO: Bool
+    public let funFact: String
+    public let symbolName: String
+    public let accentColor: String
 }
 
-enum LandmarkCategory: String, CaseIterable {
+public enum LandmarkCategory: String, Sendable, CaseIterable {
     case monument
     case nature
     case cultural
     case religious
     case modern
 
-    var icon: String {
+    public var icon: String {
         switch self {
         case .monument: "building.columns.fill"
         case .nature: "leaf.fill"
@@ -31,7 +31,7 @@ enum LandmarkCategory: String, CaseIterable {
         }
     }
 
-    var displayName: String {
+    public var displayName: String {
         switch self {
         case .monument: "Monument"
         case .nature: "Nature"

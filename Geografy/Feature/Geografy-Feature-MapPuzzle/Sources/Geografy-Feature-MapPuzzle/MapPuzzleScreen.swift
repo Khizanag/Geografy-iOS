@@ -5,10 +5,12 @@ import SwiftUI
 
 struct MapPuzzleScreen: View {
     @Environment(\.dismiss) private var dismiss
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    #endif
     @Environment(CountryDataService.self) private var countryDataService
 
-    let continent: Country.Continent
+    public let continent: Country.Continent
 
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
@@ -17,11 +19,13 @@ struct MapPuzzleScreen: View {
     @State private var correctCount = 0
     @State private var showSummary = false
 
-    var body: some View {
+    public var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("\(continent.displayName) Puzzle")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
             }
             .task {
@@ -138,9 +142,13 @@ private extension MapPuzzleScreen {
             selectedOptionIndex = index
             if isCorrect {
                 correctCount += 1
+                #if !os(tvOS)
                 hapticsService.notification(.success)
+                #endif
             } else {
+                #if !os(tvOS)
                 hapticsService.notification(.error)
+                #endif
             }
         } label: {
             CardView {

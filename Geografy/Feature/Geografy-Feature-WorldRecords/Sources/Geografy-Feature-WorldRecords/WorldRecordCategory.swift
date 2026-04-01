@@ -1,6 +1,6 @@
 import Foundation
 
-enum WorldRecordCategory: String, CaseIterable {
+public enum WorldRecordCategory: String, Sendable, CaseIterable {
     case area
     case population
     case populationDensity
@@ -9,7 +9,7 @@ enum WorldRecordCategory: String, CaseIterable {
     case languages
     case gdpPerCapita
 
-    var displayName: String {
+    public var displayName: String {
         switch self {
         case .area: "Land Area"
         case .population: "Population"
@@ -21,7 +21,7 @@ enum WorldRecordCategory: String, CaseIterable {
         }
     }
 
-    var icon: String {
+    public var icon: String {
         switch self {
         case .area: "map.fill"
         case .population: "person.3.fill"

@@ -1,8 +1,19 @@
 import Geografy_Core_Navigation
 import Geografy_Core_Service
+import Geografy_Feature_CultureExplorer
+import Geografy_Feature_EconomyExplorer
+import Geografy_Feature_GeographyFeatures
+import Geografy_Feature_IndependenceTimeline
+import Geografy_Feature_LandmarkGallery
+import Geografy_Feature_LanguageExplorer
+import Geografy_Feature_MapPuzzle
+import Geografy_Feature_OceanExplorer
 import Geografy_Feature_Quotes
 import Geografy_Feature_SizeVisualization
+import Geografy_Feature_Theme
 import Geografy_Feature_TimeZone
+import Geografy_Feature_Trivia
+import Geografy_Feature_WorldRecords
 import SwiftUI
 
 // MARK: - Content
