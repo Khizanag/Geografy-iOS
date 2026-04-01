@@ -23,8 +23,6 @@ final class AchievementService {
         self.db = db
         self.xpService = xpService
         self.currentUserID = userID
-        refreshUnlocked()
-        loadPinnedIDs()
     }
 
     func switchUser(id: String) {

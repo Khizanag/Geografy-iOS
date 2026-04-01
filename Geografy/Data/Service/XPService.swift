@@ -27,7 +27,6 @@ final class XPService {
     init(db: DatabaseManager, userID: String) {
         self.db = db
         self.currentUserID = userID
-        refreshXP()
     }
 
     func switchUser(id: String) {
