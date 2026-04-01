@@ -86,20 +86,18 @@ struct GeografyApp: App {
                         )
                     }
                 }
+                #if os(iOS)
                 .task(priority: .background) {
-                    #if os(iOS)
                     let granted = await NotificationService.requestPermission()
                     if granted {
                         NotificationService.scheduleStreakReminder()
                         NotificationService.scheduleDailyChallengeReminder()
                     }
-                    #endif
                 }
                 .task(priority: .background) {
-                    #if os(iOS)
                     SpotlightIndexer.indexCountries(countryDataService.countries)
-                    #endif
                 }
+                #endif
                 .task(priority: .background) {
                     widgetDataBridge.loadCountriesIfNeeded()
                     widgetDataBridge.synchronize(
@@ -188,8 +186,6 @@ struct GeografyApp: App {
         }
         #if targetEnvironment(macCatalyst)
         .defaultSize(width: 1200, height: 800)
-        #endif
-        #if targetEnvironment(macCatalyst)
         .commands {
             CommandGroup(replacing: .newItem) {}
 
