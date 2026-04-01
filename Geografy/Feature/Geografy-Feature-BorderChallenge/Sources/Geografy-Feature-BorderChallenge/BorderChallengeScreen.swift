@@ -1,223 +1,242 @@
-import Accessibility
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct BorderChallengeScreen: View {
     public init() {}
+
+    @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
-    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var selectedDifficulty: BorderChallengeService.Difficulty = .medium
-    @State private var challengeCountry: Country?
-    @State private var neighbors: [Country] = []
-    @State private var foundNeighbors: [Country] = []
-    @State private var guessText = ""
-    @State private var wrongGuesses: Set<String> = []
-    @State private var secondsRemaining = 90
-    @State private var timerActive = false
-    @State private var isRevealed = false
-    @State private var isGameOver = false
+    @AppStorage("bc_difficulty") private var selectedDifficulty: BorderChallengeService.Difficulty = .medium
+    @AppStorage("bc_region") private var selectedRegion: QuizRegion = .world
 
-    private let service = BorderChallengeService()
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var showGuide = false
+    @State private var showSession = false
+    @State private var appeared = false
 
     public var body: some View {
-        mainContent
-            .background(DesignSystem.Color.background)
+        scrollContent
+            .background { AmbientBlobsView(.quiz) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Border Challenge")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .task {
-                startNewChallenge()
+            .safeAreaInset(edge: .bottom) { startButton }
+            .toolbar { toolbarContent }
+            .onAppear { appeared = true }
+            .fullScreenCover(isPresented: $showSession) {
+                BorderChallengeSessionScreen(
+                    difficulty: selectedDifficulty,
+                    region: selectedRegion
+                )
             }
-            .onReceive(timer) { _ in
-                guard timerActive, !isGameOver else { return }
-                if secondsRemaining > 0 {
-                    secondsRemaining -= 1
-                } else {
-                    endGame()
-                }
+            .sheet(isPresented: $showGuide) {
+                BorderChallengeGuideSheet()
             }
     }
 }
 
-// MARK: - Main Content
+// MARK: - Subviews
 private extension BorderChallengeScreen {
-    @ViewBuilder
-    var mainContent: some View {
-        if isGameOver {
-            resultContent
-        } else if challengeCountry != nil {
-            gameContent
-        } else {
-            ProgressView().tint(DesignSystem.Color.accent)
-        }
-    }
-}
-
-// MARK: - Game Content
-private extension BorderChallengeScreen {
-    var gameContent: some View {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                difficultyPicker
-                if let country = challengeCountry {
-                    countryHeader(country)
-                }
-                progressSection
-                timerSection
-                neighborsGrid
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
+                heroSection
+                difficultySection
+                regionSection
+                bestScoresSection
+                howItWorksSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) {
-            guessField
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.bottom, DesignSystem.Spacing.md)
-        }
     }
-
-    var difficultyPicker: some View {
-        Picker("Difficulty", selection: $selectedDifficulty) {
-            ForEach(BorderChallengeService.Difficulty.allCases, id: \.self) { difficulty in
-                Text(difficulty.rawValue).tag(difficulty)
-            }
-        }
-        .pickerStyle(.segmented)
-        .onChange(of: selectedDifficulty) { _, _ in
-            startNewChallenge()
-        }
-    }
-
-    func countryHeader(_ country: Country) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                FlagView(countryCode: country.code, height: 60)
-                    .geoShadow(.subtle)
-                Text(country.name)
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .accessibilityAddTraits(.isHeader)
-                Text("Name all neighboring countries")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .padding(DesignSystem.Spacing.lg)
-            .frame(maxWidth: .infinity)
-        }
-    }
-
-    var progressSection: some View {
-        SessionProgressView(
-            progress: progressFraction,
-            current: foundNeighbors.count,
-            total: neighbors.count
-        )
-    }
-
-    var timerSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "timer")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(timerColor)
-                .accessibilityHidden(true)
-            Text(formattedTime)
-                .font(DesignSystem.Font.monoBody)
-                .foregroundStyle(timerColor)
-                .contentTransition(.numericText())
-                .accessibilityLabel("Time remaining: \(secondsRemaining) seconds")
-            Spacer()
-            if !isRevealed {
-                Button {
-                    revealAnswers()
-                } label: {
-                    Text("Reveal")
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .padding(.horizontal, DesignSystem.Spacing.sm)
-                        .padding(.vertical, DesignSystem.Spacing.xxs)
-                }
-                .glassEffect(.regular.interactive(), in: .capsule)
-            }
-        }
-    }
-
 }
 
-// MARK: - Input & Neighbors Grid
+// MARK: - Hero
 private extension BorderChallengeScreen {
-    var guessField: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            TextField("Type a neighbor...", text: $guessText)
-                .font(DesignSystem.Font.body)
+    var heroSection: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            ZStack {
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [DesignSystem.Color.accent.opacity(0.2), .clear],
+                            center: .center,
+                            startRadius: 0,
+                            endRadius: 60
+                        )
+                    )
+                    .frame(width: 120, height: 120)
+
+                Image(systemName: "map.fill")
+                    .font(DesignSystem.IconSize.hero)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .symbolEffect(.pulse, options: .repeating)
+            }
+
+            Text("Border Challenge")
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.words)
-                .onSubmit { submitGuess() }
-            Button { submitGuess() } label: {
-                Image(systemName: "arrow.up.circle.fill")
+
+            Text("Name all neighboring countries before time runs out")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, DesignSystem.Spacing.md)
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 20)
+        .animation(.easeOut(duration: 0.5), value: appeared)
+    }
+}
+
+// MARK: - Difficulty
+private extension BorderChallengeScreen {
+    var difficultySection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Difficulty")
+
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(BorderChallengeService.Difficulty.allCases, id: \.self) { difficulty in
+                    difficultyCard(difficulty)
+                }
+            }
+        }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 20)
+        .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
+    }
+
+    func difficultyCard(_ difficulty: BorderChallengeService.Difficulty) -> some View {
+        let isSelected = selectedDifficulty == difficulty
+        return Button {
+            #if !os(tvOS)
+            hapticsService.impact(.light)
+            #endif
+            selectedDifficulty = difficulty
+        } label: {
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: difficulty.icon)
                     .font(DesignSystem.Font.title2)
+                    .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
+
+                Text(difficulty.rawValue)
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+
+                Text(difficulty.subtitle)
+                    .font(DesignSystem.Font.caption2)
                     .foregroundStyle(
-                        guessText.isEmpty
-                            ? DesignSystem.Color.textTertiary
-                            : DesignSystem.Color.accent
+                        isSelected ? DesignSystem.Color.onAccent.opacity(0.8) : DesignSystem.Color.textSecondary
+                    )
+
+                Text("\(difficulty.timeLimit)s")
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(
+                        isSelected ? DesignSystem.Color.onAccent.opacity(0.9) : DesignSystem.Color.textTertiary
                     )
             }
-            .buttonStyle(.plain)
-            .disabled(guessText.trimmingCharacters(in: .whitespaces).isEmpty)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.md)
+            .background(
+                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    .strokeBorder(
+                        isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackgroundHighlighted,
+                        lineWidth: 1.5
+                    )
+            )
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-        )
+        .buttonStyle(.plain)
+        .accessibilityLabel("\(difficulty.rawValue) difficulty")
+        .accessibilityValue(isSelected ? "Selected" : "")
+        .accessibilityHint(difficulty.subtitle)
     }
+}
 
-    var neighborsGrid: some View {
-        LazyVGrid(
-            columns: [GridItem(.flexible()), GridItem(.flexible())],
-            spacing: DesignSystem.Spacing.sm
-        ) {
-            ForEach(neighbors) { neighbor in
-                neighborSlot(neighbor)
-            }
+// MARK: - Region
+private extension BorderChallengeScreen {
+    var regionSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Region")
+
+            RegionSelectionBar(
+                items: QuizRegion.allCases,
+                selectedID: selectedRegion.id,
+                onSelect: { region in
+                    selectedRegion = region
+                }
+            )
         }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 20)
+        .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
     }
+}
 
-    func neighborSlot(_ neighbor: Country) -> some View {
-        let isFound = foundNeighbors.contains(neighbor)
-        let isRevealing = isRevealed && !isFound
+// MARK: - Best Scores
+private extension BorderChallengeScreen {
+    var bestScoresSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Your Stats")
 
-        return HStack(spacing: DesignSystem.Spacing.sm) {
-            if isFound || isRevealing {
-                FlagView(countryCode: neighbor.code, height: 24, fixedWidth: true)
-            } else {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    .frame(width: 36, height: 24)
-            }
-            Text(isFound || isRevealing ? neighbor.name : "???")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(
-                    isFound
-                        ? DesignSystem.Color.success
-                        : (isRevealing ? DesignSystem.Color.warning : DesignSystem.Color.textTertiary)
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                statCard(
+                    icon: "trophy.fill",
+                    value: "\(bestScore)",
+                    label: "Best Score",
+                    color: DesignSystem.Color.warning
                 )
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-            Spacer(minLength: 0)
+                statCard(
+                    icon: "flame.fill",
+                    value: "\(gamesPlayed)",
+                    label: "Games Played",
+                    color: DesignSystem.Color.error
+                )
+                statCard(
+                    icon: "percent",
+                    value: "\(averageAccuracy)%",
+                    label: "Avg Accuracy",
+                    color: DesignSystem.Color.accent
+                )
+            }
         }
-        .padding(DesignSystem.Spacing.sm)
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 20)
+        .animation(.easeOut(duration: 0.5).delay(0.2), value: appeared)
+    }
+
+    func statCard(icon: String, value: String, label: String, color: Color) -> some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: icon)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(color)
+            Text(value)
+                .font(DesignSystem.Font.title3)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .contentTransition(.numericText())
+            Text(label)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
@@ -225,198 +244,92 @@ private extension BorderChallengeScreen {
     }
 }
 
-// MARK: - Result
+// MARK: - How It Works
 private extension BorderChallengeScreen {
-    var resultContent: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                resultHeader
-                statsCard
-                xpBadge
+    var howItWorksSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "How It Works")
+
+            VStack(spacing: DesignSystem.Spacing.xs) {
+                ruleRow(step: "1", icon: "globe.americas.fill", text: "A random country is shown with its flag")
+                ruleRow(step: "2", icon: "keyboard", text: "Type the names of its neighboring countries")
+                ruleRow(step: "3", icon: "timer", text: "Find them all before the timer runs out")
+                ruleRow(step: "4", icon: "star.fill", text: "Earn XP based on speed and accuracy")
             }
-            .padding(DesignSystem.Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) {
-            GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
-                startNewChallenge()
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
-        }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 20)
+        .animation(.easeOut(duration: 0.5).delay(0.25), value: appeared)
     }
 
-    var resultHeader: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                    .frame(width: 96, height: 96)
-                Image(systemName: resultGradeIcon)
-                    .font(DesignSystem.Font.displayXS)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .accessibilityHidden(true)
-            Text(resultGradeTitle)
-                .font(DesignSystem.Font.title2)
+    func ruleRow(step: String, icon: String, text: String) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Text(step)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.black)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+                .frame(width: 24, height: 24)
+                .background(DesignSystem.Color.accent, in: Circle())
+
+            Image(systemName: icon)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .frame(width: 24)
+
+            Text(text)
+                .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .accessibilityAddTraits(.isHeader)
-            if let country = challengeCountry {
-                Text("\(foundNeighbors.count) of \(neighbors.count) neighbors of \(country.name)")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .multilineTextAlignment(.center)
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, DesignSystem.Spacing.lg)
-    }
 
-    var statsCard: some View {
-        CardView {
-            HStack(spacing: 0) {
-                ResultStatItem(
-                    icon: "checkmark.circle.fill",
-                    value: "\(foundNeighbors.count)",
-                    label: "Found",
-                    color: DesignSystem.Color.success
-                )
-                ResultStatItem(
-                    icon: "globe",
-                    value: "\(neighbors.count)",
-                    label: "Total"
-                )
-                ResultStatItem(
-                    icon: "chart.bar.fill",
-                    value: "\(Int(progressFraction * 100))%",
-                    label: "Accuracy",
-                    color: DesignSystem.Color.indigo
-                )
-            }
-            .padding(DesignSystem.Spacing.md)
+            Spacer(minLength: 0)
         }
-    }
-
-    var xpBadge: some View {
-        let earned = service.xpEarned(
-            found: foundNeighbors.count,
-            total: neighbors.count,
-            difficulty: selectedDifficulty
+        .padding(DesignSystem.Spacing.sm)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
         )
-        return HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "star.fill")
-                .foregroundStyle(DesignSystem.Color.warning)
-                .accessibilityHidden(true)
-            Text("+\(earned) XP")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.lg)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.warning.opacity(0.12), in: Capsule())
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Earned \(earned) XP")
     }
 }
 
-// MARK: - Helpers
+// MARK: - Toolbar
 private extension BorderChallengeScreen {
-    var progressFraction: CGFloat {
-        guard !neighbors.isEmpty else { return 0 }
-        return CGFloat(foundNeighbors.count) / CGFloat(neighbors.count)
-    }
-
-    var formattedTime: String {
-        let minutes = secondsRemaining / 60
-        let seconds = secondsRemaining % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
-
-    var timerColor: Color {
-        if secondsRemaining > 30 {
-            DesignSystem.Color.success
-        } else if secondsRemaining > 10 {
-            DesignSystem.Color.warning
-        } else {
-            DesignSystem.Color.error
-        }
-    }
-
-    var resultGradeIcon: String {
-        let fraction = progressFraction
-        return switch fraction {
-        case 1.0: "trophy.fill"
-        case 0.6...: "star.fill"
-        case 0.3...: "globe"
-        default: "book.fill"
-        }
-    }
-
-    var resultGradeTitle: String {
-        let fraction = progressFraction
-        return switch fraction {
-        case 1.0: "Perfect Score!"
-        case 0.6...: "Well Done!"
-        case 0.3...: "Getting There!"
-        default: "Keep Exploring!"
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .secondaryAction) {
+            Button { showGuide = true } label: {
+                Label("Guide", systemImage: "info.circle")
+            }
         }
     }
 }
 
-// MARK: - Actions
+// MARK: - Start Button
 private extension BorderChallengeScreen {
-    func startNewChallenge() {
-        let countries = countryDataService.countries
-        guard let country = service.selectCountry(from: countries, difficulty: selectedDifficulty) else { return }
-        challengeCountry = country
-        neighbors = service.neighbors(for: country, in: countries)
-        foundNeighbors = []
-        wrongGuesses = []
-        guessText = ""
-        secondsRemaining = selectedDifficulty.timeLimit
-        isRevealed = false
-        isGameOver = false
-        timerActive = true
-    }
-
-    func submitGuess() {
-        let input = guessText.trimmingCharacters(in: .whitespaces)
-        guessText = ""
-        guard !input.isEmpty else { return }
-
-        let remaining = neighbors.filter { !foundNeighbors.contains($0) }
-        if let match = service.isCorrectGuess(input, for: remaining) {
-            foundNeighbors.append(match)
+    var startButton: some View {
+        GlassButton("Start Challenge", systemImage: "play.fill", fullWidth: true) {
             #if !os(tvOS)
-            hapticsService.notification(.success)
+            hapticsService.impact(.medium)
             #endif
-            let message = "Correct! \(match.name). \(foundNeighbors.count) of \(neighbors.count) found"
-            AccessibilityNotification.Announcement(message).post()
-            if foundNeighbors.count == neighbors.count { endGame() }
-        } else {
-            wrongGuesses.insert(input.lowercased())
-            #if !os(tvOS)
-            hapticsService.notification(.error)
-            #endif
-            AccessibilityNotification.Announcement("Incorrect guess").post()
+            showSession = true
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
+    }
+}
+
+// MARK: - Stats Helpers
+private extension BorderChallengeScreen {
+    var bestScore: Int {
+        UserDefaults.standard.integer(forKey: "bc_bestScore_\(selectedDifficulty.rawValue)")
     }
 
-    func revealAnswers() {
-        timerActive = false
-        isRevealed = true
-        #if !os(tvOS)
-        hapticsService.impact(.light)
-        #endif
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { endGame() }
+    var gamesPlayed: Int {
+        UserDefaults.standard.integer(forKey: "bc_gamesPlayed")
     }
 
-    func endGame() {
-        timerActive = false
-        let xp = service.xpEarned(found: foundNeighbors.count, total: neighbors.count, difficulty: selectedDifficulty)
-        if xp > 0 {
-            // XP awarded via app-level integration
-        }
-        isGameOver = true
+    var averageAccuracy: Int {
+        let total = UserDefaults.standard.integer(forKey: "bc_totalAccuracy")
+        let count = gamesPlayed
+        guard count > 0 else { return 0 }
+        return total / count
     }
 }

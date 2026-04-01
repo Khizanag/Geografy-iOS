@@ -30,6 +30,22 @@ public struct BorderChallengeService {
             case .hard: 120
             }
         }
+
+        public var icon: String {
+            switch self {
+            case .easy: "leaf.fill"
+            case .medium: "flame.fill"
+            case .hard: "bolt.fill"
+            }
+        }
+
+        public var subtitle: String {
+            switch self {
+            case .easy: "1–3 neighbors"
+            case .medium: "4–6 neighbors"
+            case .hard: "7+ neighbors"
+            }
+        }
     }
 
     public func selectCountry(from countries: [Country], difficulty: Difficulty) -> Country? {
