@@ -32,7 +32,7 @@ struct FlashcardScreen: View {
     }
 }
 
-// MARK: - Content
+// MARK: - Subviews
 private extension FlashcardScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {

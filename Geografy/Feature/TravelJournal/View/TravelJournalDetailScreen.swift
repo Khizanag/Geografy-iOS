@@ -41,7 +41,7 @@ struct TravelJournalDetailScreen: View {
     }
 }
 
-// MARK: - Toolbar
+// MARK: - Subviews
 private extension TravelJournalDetailScreen {
     var editButton: some View {
         Button {
@@ -52,10 +52,7 @@ private extension TravelJournalDetailScreen {
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
-}
 
-// MARK: - Subviews
-private extension TravelJournalDetailScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
@@ -183,7 +180,10 @@ private extension TravelJournalDetailScreen {
             }
         }
     }
+}
 
+// MARK: - Content Sections
+private extension TravelJournalDetailScreen {
     var photosSection: some View {
         VStack(
             alignment: .leading,
