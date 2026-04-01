@@ -1,4 +1,3 @@
-import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CircleCloseButton: View {

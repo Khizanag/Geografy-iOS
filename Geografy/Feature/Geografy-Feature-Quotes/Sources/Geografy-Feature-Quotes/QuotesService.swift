@@ -2,34 +2,35 @@ import Foundation
 import Observation
 
 @Observable
-final class QuotesService {
+@MainActor
+public final class QuotesService {
     private let favoritesKey = "geo_quotes_favorites"
 
-    private(set) var quotes: [Quote] = []
+    public private(set) var quotes: [Quote] = []
 
-    init() {
+    public init() {
         quotes = makeQuotes()
         loadFavorites()
     }
 
-    func toggleFavorite(id: String) {
+    public func toggleFavorite(id: String) {
         guard let index = quotes.firstIndex(where: { $0.id == id }) else { return }
         quotes[index].isFavorited.toggle()
         saveFavorites()
     }
 
-    func quotes(for category: QuoteCategory?) -> [Quote] {
+    public func quotes(for category: QuoteCategory?) -> [Quote] {
         guard let category else { return quotes }
         return quotes.filter { $0.category == category }
     }
 
-    func quotesOfTheDay() -> [Quote] {
+    public func quotesOfTheDay() -> [Quote] {
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
         let shuffled = quotes.sorted { a, _ in a.id.hashValue ^ dayOfYear.hashValue > 0 }
         return Array(shuffled.prefix(3))
     }
 
-    func favoriteQuotes() -> [Quote] {
+    public func favoriteQuotes() -> [Quote] {
         quotes.filter { $0.isFavorited }
     }
 }

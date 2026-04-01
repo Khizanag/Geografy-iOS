@@ -1,5 +1,6 @@
 import Geografy_Core_Navigation
 import Geografy_Core_Service
+import Geografy_Feature_Quotes
 import SwiftUI
 
 // MARK: - Content
