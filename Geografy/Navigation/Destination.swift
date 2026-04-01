@@ -113,6 +113,7 @@ extension Destination {
         case .organizations: OrganizationsScreen()
         case .paywall: PaywallScreen()
         case .profile: ProfileScreen()
+        case .quizPackDetail(let packID): QuizPackDetailScreen(packID: packID)
         case .quizPacks: QuizPackBrowserScreen()
         case .quizSession(let config): QuizSessionScreen(configuration: config)
         case .quizSetup: QuizSetupScreen()
