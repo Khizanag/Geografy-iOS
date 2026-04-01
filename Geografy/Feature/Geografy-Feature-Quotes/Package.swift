@@ -23,6 +23,9 @@ let package = Package(
             dependencies: [
                 .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
                 .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(
