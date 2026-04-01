@@ -267,11 +267,9 @@ private extension GeografyApp {
         let milestones = [3, 7, 15]
         guard let milestone = milestones.first(where: { unlocked >= $0 && lastMilestone < $0 }) else { return }
         UserDefaults.standard.set(milestone, forKey: key)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            if let scene = UIApplication.shared.connectedScenes
-                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                SKStoreReviewController.requestReview(in: scene)
-            }
+        Task {
+            try? await Task.sleep(for: .seconds(2))
+            await AppStore.requestReview()
         }
     }
 }
