@@ -9,31 +9,30 @@ struct QuizPackCard: View {
     let isUnlocked: Bool
 
     var body: some View {
-        ZStack(alignment: .bottomLeading) {
-            gradient
-            backgroundIcon
-            cardInfo
-
-            if !isUnlocked {
-                lockedOverlay
-            }
-        }
-        .frame(height: 160)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.large
+        extractedContent
+            .frame(height: 160)
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DesignSystem.CornerRadius.large
+                )
             )
-        )
-        .shadow(
-            color: pack.gradientColors.0.opacity(0.35),
-            radius: 10,
-            y: 4
-        )
+            .shadow(
+                color: pack.gradientColors.0.opacity(0.35),
+                radius: 10,
+                y: 4
+            )
     }
 }
 
 // MARK: - Subviews
 private extension QuizPackCard {
+    var extractedContent: some View {
+        cardInfo
+            .overlay(alignment: .topTrailing) { backgroundIcon }
+            .background { gradient }
+            .overlay { lockedOverlayIfNeeded }
+    }
+
     var gradient: some View {
         LinearGradient(
             colors: [
@@ -50,11 +49,6 @@ private extension QuizPackCard {
             .font(DesignSystem.IconSize.hero)
             .foregroundStyle(
                 DesignSystem.Color.onAccent.opacity(0.08)
-            )
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .topTrailing
             )
             .offset(x: 20, y: -10)
             .clipped()
@@ -96,12 +90,15 @@ private extension QuizPackCard {
         }
     }
 
-    var lockedOverlay: some View {
-        ZStack {
-            DesignSystem.Color.background.opacity(0.6)
-            Image(systemName: "lock.fill")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+    @ViewBuilder
+    var lockedOverlayIfNeeded: some View {
+        if !isUnlocked {
+            ZStack {
+                DesignSystem.Color.background.opacity(0.6)
+                Image(systemName: "lock.fill")
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
         }
     }
 }

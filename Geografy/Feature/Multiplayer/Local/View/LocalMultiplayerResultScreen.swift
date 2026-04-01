@@ -15,17 +15,7 @@ struct LocalMultiplayerResultScreen: View {
         scrollContent
             .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .onAppear {
-                appeared = true
-                guard !xpAwarded else { return }
-                xpAwarded = true
-                if isWin {
-                    xpService.award(25, source: .quizCompletedMedium)
-                    hapticsService.notification(.success)
-                } else {
-                    xpService.award(10, source: .quizCompletedEasy)
-                }
-            }
+            .onAppear { awardXPOnce() }
             .alert("Rematch?", isPresented: $coordinator.rematchRequested) {
                 Button("Accept") { coordinator.acceptRematch() }
                 Button("Decline", role: .cancel) { coordinator.declineRematch() }
@@ -143,25 +133,64 @@ private extension LocalMultiplayerResultScreen {
     }
 }
 
+// MARK: - Actions
+private extension LocalMultiplayerResultScreen {
+    func awardXPOnce() {
+        appeared = true
+        guard !xpAwarded else { return }
+        xpAwarded = true
+        if isWin {
+            xpService.award(25, source: .quizCompletedMedium)
+            hapticsService.notification(.success)
+        } else {
+            xpService.award(10, source: .quizCompletedEasy)
+        }
+    }
+}
+
 // MARK: - Helpers
 private extension LocalMultiplayerResultScreen {
     var isWin: Bool { coordinator.playerScore > coordinator.opponentScore }
     var isDraw: Bool { coordinator.playerScore == coordinator.opponentScore }
 
     var resultColor: Color {
-        if isWin { DesignSystem.Color.success } else if isDraw { DesignSystem.Color.warning } else { DesignSystem.Color.error }
+        switch resultOutcome {
+        case .win: DesignSystem.Color.success
+        case .draw: DesignSystem.Color.warning
+        case .loss: DesignSystem.Color.error
+        }
     }
 
     var resultIcon: String {
-        if isWin { "trophy.fill" } else if isDraw { "equal.circle.fill" } else { "xmark.circle.fill" }
+        switch resultOutcome {
+        case .win: "trophy.fill"
+        case .draw: "equal.circle.fill"
+        case .loss: "xmark.circle.fill"
+        }
     }
 
     var resultTitle: String {
-        if isWin { "Victory!" } else if isDraw { "It's a Draw!" } else { "Defeat" }
+        switch resultOutcome {
+        case .win: "Victory!"
+        case .draw: "It's a Draw!"
+        case .loss: "Defeat"
+        }
     }
 
     var resultSubtitle: String {
-        if isWin { "You outplayed your opponent!" } else if isDraw { "Perfectly matched!" } else { "Better luck next time!" }
+        switch resultOutcome {
+        case .win: "You outplayed your opponent!"
+        case .draw: "Perfectly matched!"
+        case .loss: "Better luck next time!"
+        }
+    }
+
+    enum ResultOutcome {
+        case win, draw, loss
+    }
+
+    var resultOutcome: ResultOutcome {
+        if isWin { .win } else if isDraw { .draw } else { .loss }
     }
 }
 #endif

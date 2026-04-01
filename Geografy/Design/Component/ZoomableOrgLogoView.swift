@@ -15,17 +15,19 @@ struct ZoomableOrgLogoView: View {
     @State private var lastOffset: CGSize = .zero
 
     var body: some View {
-        ZStack {
-            backdrop
-            logoContent
-            closeButton
-        }
-        .transition(.opacity)
+        extractedContent
+            .transition(.opacity)
     }
 }
 
 // MARK: - Subviews
 private extension ZoomableOrgLogoView {
+    var extractedContent: some View {
+        logoContent
+            .overlay(alignment: .topTrailing) { closeButton }
+            .background { backdrop }
+    }
+
     var backdrop: some View {
         Rectangle()
             .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.background) : AnyShapeStyle(.ultraThinMaterial))
@@ -63,22 +65,17 @@ private extension ZoomableOrgLogoView {
                 .onTapGesture { dismiss() }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     var closeButton: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button { onDismiss() } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(DesignSystem.Font.title)
-                        .foregroundStyle(.secondary)
-                        .padding(DesignSystem.Spacing.md)
-                }
-                .accessibilityLabel("Close")
-            }
-            Spacer()
+        Button { onDismiss() } label: {
+            Image(systemName: "xmark.circle.fill")
+                .font(DesignSystem.Font.title)
+                .foregroundStyle(.secondary)
+                .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityLabel("Close")
     }
 }
 

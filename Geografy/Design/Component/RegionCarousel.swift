@@ -3,26 +3,26 @@ import GeografyDesign
 import SwiftUI
 
 struct RegionCarousel: View {
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(HapticsService.self) private var hapticsService
 
     @Binding var selectedRegion: QuizRegion
 
     @State private var visibleRegion: QuizRegion?
 
     var body: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            carousel
-            pageIndicator
-        }
-        .onAppear { visibleRegion = selectedRegion }
+        extractedContent
+            .onAppear { visibleRegion = selectedRegion }
     }
 }
 
 // MARK: - Subviews
 private extension RegionCarousel {
-    var currentRegion: QuizRegion {
-        visibleRegion ?? selectedRegion
+    var extractedContent: some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            carousel
+            pageIndicator
+        }
     }
 
     var carousel: some View {
@@ -45,7 +45,7 @@ private extension RegionCarousel {
         .scrollTargetBehavior(.viewAligned)
         .scrollPosition(id: $visibleRegion)
         .scrollClipDisabled()
-        .contentMargins(.horizontal, DesignSystem.Spacing.md)
+        .contentMargins(.trailing, DesignSystem.Spacing.md)
         .onChange(of: visibleRegion) { _, newValue in
             guard let newValue, newValue != selectedRegion else { return }
             selectedRegion = newValue
@@ -73,6 +73,37 @@ private extension RegionCarousel {
     }
 }
 
+// MARK: - Helpers
+private extension RegionCarousel {
+    var currentRegion: QuizRegion {
+        visibleRegion ?? selectedRegion
+    }
+
+    func color(for region: QuizRegion) -> Color {
+        switch region {
+        case .world: DesignSystem.Color.accent
+        case .africa: DesignSystem.Color.warning
+        case .asia: DesignSystem.Color.error
+        case .europe: DesignSystem.Color.blue
+        case .northAmerica: DesignSystem.Color.success
+        case .southAmerica: DesignSystem.Color.orange
+        case .oceania: DesignSystem.Color.indigo
+        }
+    }
+
+    func description(for region: QuizRegion) -> String {
+        switch region {
+        case .world: "Name every country on Earth"
+        case .africa: "The most country-dense continent"
+        case .asia: "From Turkey to Japan"
+        case .europe: "From Iceland to Cyprus"
+        case .northAmerica: "US, Canada, Caribbean & Central"
+        case .southAmerica: "From Colombia to Argentina"
+        case .oceania: "Islands of the Pacific"
+        }
+    }
+}
+
 // MARK: - Region Card
 private struct RegionCard: View {
     let region: QuizRegion
@@ -82,6 +113,31 @@ private struct RegionCard: View {
     let description: String
 
     var body: some View {
+        cardContent
+            .padding(.vertical, DesignSystem.Spacing.lg)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                    .fill(DesignSystem.Color.cardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                            .strokeBorder(
+                                isSelected
+                                    ? color.opacity(0.5)
+                                    : DesignSystem.Color.cardBackgroundHighlighted,
+                                lineWidth: isSelected ? 1.5 : 1
+                            )
+                    )
+            )
+            .animation(.easeInOut(duration: 0.2), value: isSelected)
+            .hoverEffect(.highlight)
+    }
+}
+
+// MARK: - Subviews
+private extension RegionCard {
+    var cardContent: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
                 Circle()
@@ -110,51 +166,6 @@ private struct RegionCard: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .frame(height: 34)
-        }
-        .padding(.vertical, DesignSystem.Spacing.lg)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                .fill(DesignSystem.Color.cardBackground)
-                .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                        .strokeBorder(
-                            isSelected
-                                ? color.opacity(0.5)
-                                : DesignSystem.Color.cardBackgroundHighlighted,
-                            lineWidth: isSelected ? 1.5 : 1
-                        )
-                )
-        )
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
-        .hoverEffect(.highlight)
-    }
-}
-
-// MARK: - Helpers
-private extension RegionCarousel {
-    func color(for region: QuizRegion) -> Color {
-        switch region {
-        case .world: DesignSystem.Color.accent
-        case .africa: DesignSystem.Color.warning
-        case .asia: DesignSystem.Color.error
-        case .europe: DesignSystem.Color.blue
-        case .northAmerica: DesignSystem.Color.success
-        case .southAmerica: DesignSystem.Color.orange
-        case .oceania: DesignSystem.Color.indigo
-        }
-    }
-
-    func description(for region: QuizRegion) -> String {
-        switch region {
-        case .world: "Name every country on Earth"
-        case .africa: "The most country-dense continent"
-        case .asia: "From Turkey to Japan"
-        case .europe: "From Iceland to Cyprus"
-        case .northAmerica: "US, Canada, Caribbean & Central"
-        case .southAmerica: "From Colombia to Argentina"
-        case .oceania: "Islands of the Pacific"
         }
     }
 }

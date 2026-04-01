@@ -15,23 +15,25 @@ struct ZoomableFlagView: View {
     @State private var isReady = false
 
     var body: some View {
-        ZStack {
-            backdrop
-            flagContent
-            closeButton
-        }
-        .accessibilityElement(children: .contain)
-        .onAppear {
-            Task {
-                try? await Task.sleep(for: .milliseconds(400))
-                isReady = true
+        extractedContent
+            .accessibilityElement(children: .contain)
+            .onAppear {
+                Task {
+                    try? await Task.sleep(for: .milliseconds(400))
+                    isReady = true
+                }
             }
-        }
     }
 }
 
 // MARK: - Subviews
 private extension ZoomableFlagView {
+    var extractedContent: some View {
+        flagContent
+            .overlay(alignment: .topTrailing) { closeButton }
+            .background { backdrop }
+    }
+
     var backdrop: some View {
         Rectangle()
             .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.background) : AnyShapeStyle(.ultraThinMaterial))
@@ -41,19 +43,13 @@ private extension ZoomableFlagView {
     }
 
     var closeButton: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Button { onDismiss() } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(DesignSystem.Font.title)
-                        .foregroundStyle(.secondary)
-                        .padding(DesignSystem.Spacing.md)
-                }
-                .accessibilityLabel("Close")
-            }
-            Spacer()
+        Button { onDismiss() } label: {
+            Image(systemName: "xmark.circle.fill")
+                .font(DesignSystem.Font.title)
+                .foregroundStyle(.secondary)
+                .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityLabel("Close")
     }
 
     var flagContent: some View {

@@ -9,6 +9,15 @@ struct LocalMultiplayerEntryScreen: View {
     @State private var appeared = false
 
     var body: some View {
+        extractedContent
+            .animation(.easeInOut(duration: 0.3), value: coordinator.state)
+            .onAppear { appeared = true }
+    }
+}
+
+// MARK: - Subviews
+private extension LocalMultiplayerEntryScreen {
+    var extractedContent: some View {
         Group {
             switch coordinator.state {
             case .idle:
@@ -25,15 +34,8 @@ struct LocalMultiplayerEntryScreen: View {
                 disconnectedView
             }
         }
-        .animation(.easeInOut(duration: 0.3), value: coordinator.state)
-        .onAppear {
-            appeared = true
-        }
     }
-}
 
-// MARK: - Entry Content
-private extension LocalMultiplayerEntryScreen {
     var entryContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {

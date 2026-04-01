@@ -3,10 +3,10 @@ import GeografyDesign
 import SwiftUI
 
 struct TravelCountryPickerSheet: View {
-    @Environment(TravelService.self) private var travelService
-    @Environment(HapticsService.self) private var hapticsService
-    @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
+    @Environment(HapticsService.self) private var hapticsService
+    @Environment(TravelService.self) private var travelService
+    @Environment(XPService.self) private var xpService
 
     let countries: [Country]
     @Binding var isPresented: Bool
@@ -25,7 +25,7 @@ struct TravelCountryPickerSheet: View {
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "Search countries…"
             )
-            .toolbar { doneButton }
+            .toolbar { toolbarContent }
             .sheet(item: $selectedCountry) { country in
                 TravelStatusPickerSheet(
                     country: country,
@@ -41,13 +41,6 @@ struct TravelCountryPickerSheet: View {
 
 // MARK: - Subviews
 private extension TravelCountryPickerSheet {
-    var navigationTitle: String {
-        if let status = preferredStatus {
-            return "Add to \(status.label)"
-        }
-        return "Add Country"
-    }
-
     var countryList: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
@@ -129,9 +122,12 @@ private extension TravelCountryPickerSheet {
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(status.color.opacity(0.15), in: Capsule())
     }
+}
 
+// MARK: - Toolbar
+private extension TravelCountryPickerSheet {
     @ToolbarContentBuilder
-    var doneButton: some ToolbarContent {
+    var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
             Button("Done") { isPresented = false }
                 .fontWeight(.semibold)
@@ -140,8 +136,15 @@ private extension TravelCountryPickerSheet {
     }
 }
 
-// MARK: - Data
+// MARK: - Helpers
 private extension TravelCountryPickerSheet {
+    var navigationTitle: String {
+        if let status = preferredStatus {
+            return "Add to \(status.label)"
+        }
+        return "Add Country"
+    }
+
     var filteredCountries: [Country] {
         let sorted = countries.sorted { $0.name < $1.name }
         guard !searchText.isEmpty else { return sorted }
@@ -149,7 +152,7 @@ private extension TravelCountryPickerSheet {
     }
 }
 
-// MARK: - Gamification
+// MARK: - Actions
 private extension TravelCountryPickerSheet {
     func awardTravelXP(for status: TravelStatus, countryCode: String) {
         let key = "travel_xp_awarded"

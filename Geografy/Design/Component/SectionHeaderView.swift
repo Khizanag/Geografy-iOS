@@ -7,6 +7,15 @@ struct SectionHeaderView: View {
     var isNew: Bool = false
 
     var body: some View {
+        extractedContent
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isHeader)
+    }
+}
+
+// MARK: - Subviews
+private extension SectionHeaderView {
+    var extractedContent: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             if let icon {
                 Image(systemName: icon)
@@ -25,13 +34,8 @@ struct SectionHeaderView: View {
                 NewBadge()
             }
         }
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
     }
-}
 
-// MARK: - Subviews
-private extension SectionHeaderView {
     var accentBar: some View {
         RoundedRectangle(cornerRadius: 2)
             .fill(DesignSystem.Color.accent)

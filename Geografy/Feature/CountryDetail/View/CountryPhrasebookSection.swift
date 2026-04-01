@@ -56,6 +56,19 @@ private struct PhraseChip: View {
     @State private var flipped = false
 
     var body: some View {
+        extractedContent
+            .buttonStyle(PressButtonStyle())
+            .rotation3DEffect(
+                .degrees(flipped ? 180 : 0),
+                axis: (x: 0, y: 1, z: 0),
+                perspective: 0.5
+            )
+    }
+}
+
+// MARK: - Subviews
+private extension PhraseChip {
+    var extractedContent: some View {
         Button {
             withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
                 flipped.toggle()
@@ -73,17 +86,8 @@ private struct PhraseChip: View {
                 .padding(DesignSystem.Spacing.sm)
             }
         }
-        .buttonStyle(PressButtonStyle())
-        .rotation3DEffect(
-            .degrees(flipped ? 180 : 0),
-            axis: (x: 0, y: 1, z: 0),
-            perspective: 0.5
-        )
     }
-}
 
-// MARK: - PhraseChip Subviews
-private extension PhraseChip {
     var englishSide: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
             Text(phrase.english)

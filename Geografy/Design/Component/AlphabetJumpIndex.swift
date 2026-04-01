@@ -10,6 +10,17 @@ struct AlphabetJumpIndex: View {
     @State private var totalHeight: CGFloat = 0
 
     var body: some View {
+        extractedContent
+            .frame(width: 44)
+            .contentShape(Rectangle())
+            .accessibilityLabel("Alphabet index")
+            .accessibilityHint("Drag to jump to a letter")
+    }
+}
+
+// MARK: - Subviews
+private extension AlphabetJumpIndex {
+    var extractedContent: some View {
         VStack(spacing: 1) {
             ForEach(letters, id: \.self) { letter in
                 Text(letter)
@@ -49,10 +60,6 @@ struct AlphabetJumpIndex: View {
                     selectedLetter = nil
                 }
         )
-        .frame(width: 44)
-        .contentShape(Rectangle())
-        .accessibilityLabel("Alphabet index")
-        .accessibilityHint("Drag to jump to a letter")
     }
 }
 
