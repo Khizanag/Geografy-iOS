@@ -14,6 +14,7 @@ import Geografy_Feature_Theme
 import Geografy_Feature_TimeZone
 import Geografy_Feature_Trivia
 import Geografy_Feature_WorldRecords
+import Geografy_Feature_BorderChallenge
 import SwiftUI
 
 // MARK: - Content
