@@ -168,17 +168,15 @@ private extension TravelMapScreen {
 
     var filterMenu: some View {
         Menu {
-            ForEach(TravelMapFilter.allCases, id: \.self) { mapFilter in
-                Button {
-                    withAnimation { selectedFilter = mapFilter }
-                } label: {
-                    if selectedFilter == mapFilter {
-                        Label(mapFilter.displayName, systemImage: "checkmark")
-                    } else {
-                        Text(mapFilter.displayName)
-                    }
+            Picker(selection: $selectedFilter.animation()) {
+                ForEach(TravelMapFilter.allCases, id: \.self) { mapFilter in
+                    Label(mapFilter.displayName, systemImage: mapFilter.icon)
+                        .tag(mapFilter)
                 }
+            } label: {
+                Label("Filter", systemImage: "line.3.horizontal.decrease")
             }
+            .pickerStyle(.inline)
         } label: {
             Image(systemName: "line.3.horizontal.decrease")
                 .foregroundStyle(DesignSystem.Color.iconPrimary)

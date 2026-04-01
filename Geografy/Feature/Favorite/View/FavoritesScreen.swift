@@ -99,13 +99,25 @@ private extension FavoritesScreen {
                 .tag(Country.Continent?.none)
             Divider()
             ForEach(Country.Continent.allCases, id: \.self) { continent in
-                Text(continent.displayName)
+                Label(continent.displayName, systemImage: continentIcon(for: continent))
                     .tag(Country.Continent?.some(continent))
             }
         } label: {
             Label("Continent", systemImage: "globe.americas")
         }
         .pickerStyle(.menu)
+    }
+
+    func continentIcon(for continent: Country.Continent) -> String {
+        switch continent {
+        case .africa: "globe.europe.africa"
+        case .asia: "globe.asia.australia"
+        case .europe: "globe.europe.africa"
+        case .northAmerica: "globe.americas"
+        case .southAmerica: "globe.americas"
+        case .oceania: "globe.asia.australia"
+        case .antarctica: "snowflake"
+        }
     }
 
     func sortIcon(for option: FavoritesSortOption) -> String {

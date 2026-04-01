@@ -5,6 +5,13 @@ import GeografyCore
 enum OrgSortOption: String, CaseIterable {
     case alphabetical = "Name"
     case memberCount = "Members"
+
+    var icon: String {
+        switch self {
+        case .alphabetical: "textformat.abc"
+        case .memberCount: "person.2"
+        }
+    }
 }
 
 struct OrganizationsScreen: View {
@@ -17,6 +24,7 @@ struct OrganizationsScreen: View {
     var body: some View {
         scrollContent
             .navigationTitle("Organizations")
+            .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
     }
 }
@@ -27,17 +35,15 @@ private extension OrganizationsScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Menu {
-                ForEach(OrgSortOption.allCases, id: \.self) { option in
-                    Button {
-                        sortOption = option
-                    } label: {
-                        if sortOption == option {
-                            Label(option.rawValue, systemImage: "checkmark")
-                        } else {
-                            Text(option.rawValue)
-                        }
+                Picker(selection: $sortOption) {
+                    ForEach(OrgSortOption.allCases, id: \.self) { option in
+                        Label(option.rawValue, systemImage: option.icon)
+                            .tag(option)
                     }
+                } label: {
+                    Label("Sort by", systemImage: "arrow.up.arrow.down")
                 }
+                .pickerStyle(.inline)
             } label: {
                 Image(systemName: "arrow.up.arrow.down")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
