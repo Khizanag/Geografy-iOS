@@ -50,6 +50,7 @@ struct GeografyApp: App {
     var body: some Scene {
         WindowGroup {
             contentView
+                .destinationContentProvider { $0.content }
         }
         .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)

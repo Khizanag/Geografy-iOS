@@ -17,6 +17,8 @@
 		727A21522F7D6665001B7073 /* Geografy-Core-DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 727A21512F7D6665001B7073 /* Geografy-Core-DesignSystem */; };
 		727A21542F7D6665001B7073 /* Geografy-Core-Service in Frameworks */ = {isa = PBXBuildFile; productRef = 727A21532F7D6665001B7073 /* Geografy-Core-Service */; };
 		727A21562F7D66ED001B7073 /* Geografy-Feature-Map in Frameworks */ = {isa = PBXBuildFile; productRef = 727A21552F7D66ED001B7073 /* Geografy-Feature-Map */; };
+		727A30012F7D7000001B7073 /* Geografy-Core-Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 727A30002F7D7000001B7073 /* Geografy-Core-Navigation */; };
+		727A30032F7D7001001B7073 /* Geografy-Core-Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 727A30022F7D7001001B7073 /* Geografy-Core-Navigation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,7 +54,6 @@
 				App/ContentView.swift,
 				App/GeografyApp.swift,
 				Design/Component/AlphabetJumpIndex.swift,
-				Design/Component/CircleCloseButton.swift,
 				Design/Component/ComingSoonView.swift,
 				Design/Component/CountryRowView.swift,
 				Design/Component/EmptyStateView.swift,
@@ -305,7 +306,6 @@
 				Feature/WordSearch/View/WordSearchScreen.swift,
 				Feature/WorldRecords/View/WorldRecordsScreen.swift,
 				Navigation/AppCoordinator.swift,
-				Navigation/CoordinatedNavigationStack.swift,
 				Navigation/Destination.swift,
 			);
 			target = TV000000000000000000TARG /* GeografyTV */;
@@ -353,6 +353,7 @@
 				727A0FDC2F7D52E3001B7073 /* Geografy-Feature-Map in Frameworks */,
 				727A214C2F7D6582001B7073 /* Geografy-Core-Common in Frameworks */,
 				727A15E62F7D5BC5001B7073 /* Geografy-Core-Service in Frameworks */,
+				727A30012F7D7000001B7073 /* Geografy-Core-Navigation in Frameworks */,
 			);
 		};
 		TV0000000000000000FRAMWK /* Frameworks */ = {
@@ -362,6 +363,7 @@
 				727A21522F7D6665001B7073 /* Geografy-Core-DesignSystem in Frameworks */,
 				727A21502F7D6665001B7073 /* Geografy-Core-Common in Frameworks */,
 				727A21542F7D6665001B7073 /* Geografy-Core-Service in Frameworks */,
+				727A30032F7D7001001B7073 /* Geografy-Core-Navigation in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -436,6 +438,7 @@
 			packageProductDependencies = (
 				727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */,
 				727A15E52F7D5BC5001B7073 /* Geografy-Core-Service */,
+				727A30002F7D7000001B7073 /* Geografy-Core-Navigation */,
 				727A214B2F7D6582001B7073 /* Geografy-Core-Common */,
 				727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */,
 			);
@@ -462,6 +465,7 @@
 				727A214F2F7D6665001B7073 /* Geografy-Core-Common */,
 				727A21512F7D6665001B7073 /* Geografy-Core-DesignSystem */,
 				727A21532F7D6665001B7073 /* Geografy-Core-Service */,
+				727A30022F7D7001001B7073 /* Geografy-Core-Navigation */,
 				727A21552F7D66ED001B7073 /* Geografy-Feature-Map */,
 			);
 			productName = GeografyTV;
@@ -917,6 +921,14 @@
 		727A21552F7D66ED001B7073 /* Geografy-Feature-Map */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-Map";
+		};
+		727A30002F7D7000001B7073 /* Geografy-Core-Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Core-Navigation";
+		};
+		727A30022F7D7001001B7073 /* Geografy-Core-Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Core-Navigation";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

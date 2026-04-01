@@ -2,16 +2,16 @@ import SwiftUI
 
 // MARK: - Hide Close Button
 public struct HideCloseButtonKey: PreferenceKey {
-    static let defaultValue = false
-    static func reduce(value: inout Bool, nextValue: () -> Bool) {
+    public static let defaultValue = false
+    public static func reduce(value: inout Bool, nextValue: () -> Bool) {
         value = value || nextValue()
     }
 }
 
 // MARK: - Close Button Placement
 public struct CloseButtonLeadingKey: PreferenceKey {
-    static let defaultValue = false
-    static func reduce(value: inout Bool, nextValue: () -> Bool) {
+    public static let defaultValue = false
+    public static func reduce(value: inout Bool, nextValue: () -> Bool) {
         value = value || nextValue()
     }
 }
