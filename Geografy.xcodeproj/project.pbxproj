@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03FF871C3A35DF190D0E3BE1 /* Geografy-Feature-Theme in Frameworks */ = {isa = PBXBuildFile; productRef = 41E6798C2FAEDC5104A16CD3 /* Geografy-Feature-Theme */; };
 		4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6A7B8C9DAEBFC0D1E2F30415 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6A7B8C9DAEBFC0D1E2F304 /* WidgetKit.framework */; };
 		727A0FDC2F7D52E3001B7073 /* Geografy-Feature-Map in Frameworks */ = {isa = PBXBuildFile; productRef = 727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */; };
@@ -25,6 +26,7 @@
 		727A50032F7D9001001B7073 /* Geografy-Feature-TimeZone in Frameworks */ = {isa = PBXBuildFile; productRef = 727A50022F7D9001001B7073 /* Geografy-Feature-TimeZone */; };
 		727A60012F7DA000001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */ = {isa = PBXBuildFile; productRef = 727A60002F7DA000001B7073 /* Geografy-Feature-SizeVisualization */; };
 		727A60032F7DA001001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */ = {isa = PBXBuildFile; productRef = 727A60022F7DA001001B7073 /* Geografy-Feature-SizeVisualization */; };
+		B2E7640872B206CADA3E480F /* Geografy-Feature-Theme in Frameworks */ = {isa = PBXBuildFile; productRef = D35B55B7E0A3A6F30B237A51 /* Geografy-Feature-Theme */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,7 +52,21 @@
 		727A0FDA2F7D50F1001B7073 /* Exceptions for "Geografy" folder in "Geografy" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Feature/Geografy-Feature-CultureExplorer",
+				"Feature/Geografy-Feature-EconomyExplorer",
+				"Feature/Geografy-Feature-GeographyFeatures",
+				"Feature/Geografy-Feature-IndependenceTimeline",
+				"Feature/Geografy-Feature-LandmarkGallery",
+				"Feature/Geografy-Feature-LanguageExplorer",
 				"Feature/Geografy-Feature-Map",
+				"Feature/Geografy-Feature-MapPuzzle",
+				"Feature/Geografy-Feature-OceanExplorer",
+				"Feature/Geografy-Feature-Quotes",
+				"Feature/Geografy-Feature-SizeVisualization",
+				"Feature/Geografy-Feature-Theme",
+				"Feature/Geografy-Feature-TimeZone",
+				"Feature/Geografy-Feature-Trivia",
+				"Feature/Geografy-Feature-WorldRecords",
 			);
 			target = F60718293A4B5C6D7E8F9001 /* Geografy */;
 		};
@@ -115,8 +131,6 @@
 				Feature/CountryProfile/View/CountryTimelineView.swift,
 				Feature/CountryProfile/View/FunFactCard.swift,
 				Feature/CountryProfile/View/PhraseCard.swift,
-				Feature/CultureExplorer/View/CultureDetailView.swift,
-				Feature/CultureExplorer/View/CultureExplorerScreen.swift,
 				Feature/DailyChallenge/View/CapitalChainView.swift,
 				Feature/DailyChallenge/View/DailyChallengeResultView.swift,
 				Feature/DailyChallenge/View/DailyChallengeScreen.swift,
@@ -124,7 +138,6 @@
 				Feature/DailyChallenge/View/DailyChallengeShareCard.swift,
 				Feature/DailyChallenge/View/FlagSequenceView.swift,
 				Feature/DailyChallenge/View/MysteryCountryView.swift,
-				Feature/EconomyExplorer/View/EconomyExplorerScreen.swift,
 				Feature/ExploreGame/ExploreGameRules/Model/ExploreGameRules.swift,
 				Feature/ExploreGame/ExploreGameRules/View/ExploreGameRulesSheet.swift,
 				Feature/ExploreGame/View/ExploreClueCard.swift,
@@ -147,8 +160,21 @@
 				Feature/Flashcard/View/SRSStudyScreen.swift,
 				Feature/GameCenter/View/FriendsListScreen.swift,
 				Feature/GameCenter/View/LeaderboardScreen.swift,
+				"Feature/Geografy-Feature-CultureExplorer",
+				"Feature/Geografy-Feature-EconomyExplorer",
+				"Feature/Geografy-Feature-GeographyFeatures",
+				"Feature/Geografy-Feature-IndependenceTimeline",
+				"Feature/Geografy-Feature-LandmarkGallery",
+				"Feature/Geografy-Feature-LanguageExplorer",
 				"Feature/Geografy-Feature-Map",
-				Feature/GeographyFeatures/View/GeographyFeaturesScreen.swift,
+				"Feature/Geografy-Feature-MapPuzzle",
+				"Feature/Geografy-Feature-OceanExplorer",
+				"Feature/Geografy-Feature-Quotes",
+				"Feature/Geografy-Feature-SizeVisualization",
+				"Feature/Geografy-Feature-Theme",
+				"Feature/Geografy-Feature-TimeZone",
+				"Feature/Geografy-Feature-Trivia",
+				"Feature/Geografy-Feature-WorldRecords",
 				Feature/Home/Model/HomeSection.swift,
 				Feature/Home/View/HomeBorderChallengeCard.swift,
 				Feature/Home/View/HomeComingSoonSection.swift,
@@ -184,22 +210,15 @@
 				Feature/Home/View/HomeWordSearchCard.swift,
 				Feature/Home/View/HomeWorldRecordsCard.swift,
 				Feature/Home/View/MapCarouselCard.swift,
-				Feature/IndependenceTimeline/View/IndependenceTimelineScreen.swift,
-				Feature/LandmarkGallery/View/LandmarkDetailView.swift,
-				Feature/LandmarkGallery/View/LandmarkGalleryScreen.swift,
 				Feature/LandmarkQuiz/Model/LandmarkQuestion.swift,
 				Feature/LandmarkQuiz/Service/LandmarkQuizService.swift,
 				Feature/LandmarkQuiz/View/LandmarkQuizScreen.swift,
-				Feature/LanguageExplorer/View/LanguageDetailView.swift,
-				Feature/LanguageExplorer/View/LanguageExplorerScreen.swift,
 				Feature/LearningPath/View/LearningPathScreen.swift,
 				Feature/LearningPath/View/LessonScreen.swift,
 				Feature/LearningPath/View/ModuleLessonsScreen.swift,
 				Feature/Map/View/MapScreen.swift,
 				Feature/Map/View/OrganizationMapScreen.swift,
 				Feature/MapColoring/View/MapColoringScreen.swift,
-				Feature/MapPuzzle/View/MapPuzzleScreen.swift,
-				Feature/MapPuzzle/View/MapPuzzleSetupScreen.swift,
 				Feature/More/Model/MoreSheet.swift,
 				Feature/More/View/MoreScreen.swift,
 				Feature/More/View/TestChecklistSheet.swift,
@@ -219,7 +238,6 @@
 				Feature/NationalSymbols/Service/NationalSymbolsService.swift,
 				Feature/NeighborExplorer/View/NeighborChainView.swift,
 				Feature/NeighborExplorer/View/NeighborExplorerScreen.swift,
-				Feature/OceanExplorer/View/OceanExplorerScreen.swift,
 				Feature/Organization/View/OrganizationDetailScreen.swift,
 				Feature/Organization/View/OrganizationsScreen.swift,
 				Feature/Profile/View/EditProfileSheet.swift,
@@ -251,7 +269,6 @@
 				Feature/Subscription/View/FeatureComparisonSection.swift,
 				Feature/Subscription/View/PaywallScreen.swift,
 				Feature/Subscription/View/SubscriptionCard.swift,
-				Feature/Theme/View/ThemesScreen.swift,
 				Feature/Timeline/View/HistoricalMapScreen.swift,
 				Feature/Timeline/View/TimelineEventCard.swift,
 				Feature/Timeline/View/TimelineScreen.swift,
@@ -272,11 +289,9 @@
 				Feature/TravelJournal/View/TravelJournalPhotoGrid.swift,
 				Feature/TravelJournal/View/TravelJournalScreen.swift,
 				Feature/TravelJournal/View/TravelJournalStatsView.swift,
-				Feature/Trivia/View/TriviaScreen.swift,
 				Feature/WordSearch/Service/WordSearchService.swift,
 				Feature/WordSearch/View/WordSearchGameScreen.swift,
 				Feature/WordSearch/View/WordSearchScreen.swift,
-				Feature/WorldRecords/View/WorldRecordsScreen.swift,
 				Navigation/AppCoordinator.swift,
 				Navigation/Destination.swift,
 			);
@@ -329,6 +344,7 @@
 				727A40012F7D8000001B7073 /* Geografy-Feature-Quotes in Frameworks */,
 				727A50012F7D9000001B7073 /* Geografy-Feature-TimeZone in Frameworks */,
 				727A60012F7DA000001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */,
+				B2E7640872B206CADA3E480F /* Geografy-Feature-Theme in Frameworks */,
 			);
 		};
 		TV0000000000000000FRAMWK /* Frameworks */ = {
@@ -342,6 +358,7 @@
 				727A40032F7D8001001B7073 /* Geografy-Feature-Quotes in Frameworks */,
 				727A50032F7D9001001B7073 /* Geografy-Feature-TimeZone in Frameworks */,
 				727A60032F7DA001001B7073 /* Geografy-Feature-SizeVisualization in Frameworks */,
+				03FF871C3A35DF190D0E3BE1 /* Geografy-Feature-Theme in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -422,6 +439,7 @@
 				727A60002F7DA000001B7073 /* Geografy-Feature-SizeVisualization */,
 				727A214B2F7D6582001B7073 /* Geografy-Core-Common */,
 				727A214D2F7D6582001B7073 /* Geografy-Core-DesignSystem */,
+				D35B55B7E0A3A6F30B237A51 /* Geografy-Feature-Theme */,
 			);
 			productName = Geografy;
 			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
@@ -451,6 +469,7 @@
 				727A50022F7D9001001B7073 /* Geografy-Feature-TimeZone */,
 				727A60022F7DA001001B7073 /* Geografy-Feature-SizeVisualization */,
 				727A21552F7D66ED001B7073 /* Geografy-Feature-Map */,
+				41E6798C2FAEDC5104A16CD3 /* Geografy-Feature-Theme */,
 			);
 			productName = GeografyTV;
 			productReference = TV000000000000000000PROD /* GeografyTV.app */;
@@ -874,6 +893,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		41E6798C2FAEDC5104A16CD3 /* Geografy-Feature-Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Feature-Theme";
+		};
 		727A0FDB2F7D52E3001B7073 /* Geografy-Feature-Map */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-Map";
@@ -937,6 +960,10 @@
 		727A60022F7DA001001B7073 /* Geografy-Feature-SizeVisualization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-SizeVisualization";
+		};
+		D35B55B7E0A3A6F30B237A51 /* Geografy-Feature-Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Geografy-Feature-Theme";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
