@@ -26,31 +26,32 @@ private extension RegionCarousel {
     }
 
     var carousel: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(QuizRegion.allCases) { region in
-                    RegionCard(
-                        region: region,
-                        isSelected: region == currentRegion,
-                        countryCount: region.filter(countryDataService.countries).count,
-                        color: color(for: region),
-                        description: description(for: region)
-                    )
-                    .containerRelativeFrame(
-                        .horizontal,
-                        count: 5,
-                        span: 4,
-                        spacing: DesignSystem.Spacing.sm
-                    )
-                    .id(region)
+        GeometryReader { geometry in
+            let cardWidth = geometry.size.width * 0.82
+            let sidePadding = (geometry.size.width - cardWidth) / 2
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack(spacing: DesignSystem.Spacing.sm) {
+                    ForEach(QuizRegion.allCases) { region in
+                        RegionCard(
+                            region: region,
+                            isSelected: region == currentRegion,
+                            countryCount: region.filter(countryDataService.countries).count,
+                            color: color(for: region),
+                            description: description(for: region)
+                        )
+                        .frame(width: cardWidth)
+                        .id(region)
+                    }
                 }
+                .scrollTargetLayout()
+                .padding(.horizontal, sidePadding)
             }
-            .scrollTargetLayout()
+            .scrollTargetBehavior(.viewAligned)
+            .scrollPosition(id: $visibleRegion)
+            .scrollClipDisabled()
         }
-        .scrollTargetBehavior(.viewAligned)
-        .scrollPosition(id: $visibleRegion)
-        .scrollClipDisabled()
-        .contentMargins(.horizontal, DesignSystem.Spacing.md)
+        .frame(height: 220)
         .onChange(of: visibleRegion) { _, newValue in
             guard let newValue, newValue != selectedRegion else { return }
             selectedRegion = newValue
