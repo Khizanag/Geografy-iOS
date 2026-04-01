@@ -16,6 +16,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../../Package/Geografy-Core-Common"),
         .package(path: "../../../Package/Geografy-Core-DesignSystem"),
+        .package(path: "../../../Package/Geografy-Core-Service"),
     ],
     targets: [
         .target(
@@ -23,6 +24,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
                 .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
+                .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
             ]
         ),
         .testTarget(

@@ -275,7 +275,6 @@
 				Feature/Search/View/SearchScreen.swift,
 				Feature/Setting/View/SettingsScreen.swift,
 				Feature/Setting/View/TerritorialDisputesScreen.swift,
-				Feature/SizeVisualization/View/SizeVisualizationScreen.swift,
 				Feature/SpellingBee/SpellingBeeGuide/Model/SpellingBeeGuide.swift,
 				Feature/SpellingBee/SpellingBeeGuide/View/SpellingBeeGuideSheet.swift,
 				Feature/SpellingBee/View/SpellingBeeScreen.swift,
