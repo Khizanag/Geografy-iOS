@@ -1,6 +1,5 @@
 import CoreGraphics
 import Foundation
-import Geografy_Feature_Map
 import GeografyCore
 import GeografyDesign
 

@@ -17,6 +17,7 @@ struct HomeSectionEditorSheet: View {
             .environment(\.editMode, .constant(.active))
             .navigationTitle("Edit Sections")
             .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .confirmationDialog(
                 "Reset Section Order",
@@ -53,9 +54,6 @@ private extension HomeSectionEditorSheet {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            CircleCloseButton()
-        }
         ToolbarItem(placement: .confirmationAction) {
             doneButton
         }
