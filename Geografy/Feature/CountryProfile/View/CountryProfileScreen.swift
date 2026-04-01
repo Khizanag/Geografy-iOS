@@ -10,15 +10,21 @@ struct CountryProfileScreen: View {
     let profile: CountryProfile?
 
     var body: some View {
-        Group {
-            if let profile {
-                profileContent(profile)
-            } else {
-                comingSoonPlaceholder
-            }
+        mainContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle("Deep Dive")
+    }
+}
+
+// MARK: - Main Content
+private extension CountryProfileScreen {
+    @ViewBuilder
+    var mainContent: some View {
+        if let profile {
+            profileContent(profile)
+        } else {
+            comingSoonPlaceholder
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle("Deep Dive")
     }
 }
 

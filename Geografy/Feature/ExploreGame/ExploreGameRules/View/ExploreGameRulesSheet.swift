@@ -3,6 +3,22 @@ import GeografyDesign
 
 struct ExploreGameRulesSheet: View {
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("How to Play")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    CircleCloseButton()
+                }
+            }
+            .presentationDetents([.medium])
+    }
+}
+
+// MARK: - Subviews
+private extension ExploreGameRulesSheet {
+    var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 ForEach(ExploreGameRules.sections) { section in
@@ -11,20 +27,8 @@ struct ExploreGameRulesSheet: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("How to Play")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                CircleCloseButton()
-            }
-        }
-        .presentationDetents([.medium])
     }
-}
 
-// MARK: - Subviews
-private extension ExploreGameRulesSheet {
     func rulesSectionView(_ section: ExploreGameRuleSection) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: section.title, icon: section.icon)

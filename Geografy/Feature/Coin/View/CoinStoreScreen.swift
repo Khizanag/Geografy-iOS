@@ -11,6 +11,19 @@ struct CoinStoreScreen: View {
     @State private var selectedPack: CoinPack?
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Coins")
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(item: $selectedPack) { pack in
+                CoinPackPreviewSheet(pack: pack)
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CoinStoreScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 balanceSection
@@ -20,12 +33,6 @@ struct CoinStoreScreen: View {
             }
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
-        }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Coins")
-        .navigationBarTitleDisplayMode(.inline)
-        .sheet(item: $selectedPack) { pack in
-            CoinPackPreviewSheet(pack: pack)
         }
     }
 }

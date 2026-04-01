@@ -17,6 +17,20 @@ struct CountryNicknamesScreen: View {
     }
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Country Nicknames")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $searchQuery, prompt: "Search nicknames…")
+            .sheet(isPresented: $isQuizMode) {
+                NicknameQuizScreen(nicknames: nicknamesService.nicknames, countryDataService: countryDataService)
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension CountryNicknamesScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 categoryFilter
@@ -33,18 +47,7 @@ struct CountryNicknamesScreen: View {
             .padding(.top, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Country Nicknames")
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchQuery, prompt: "Search nicknames…")
-        .sheet(isPresented: $isQuizMode) {
-            NicknameQuizScreen(nicknames: nicknamesService.nicknames, countryDataService: countryDataService)
-        }
     }
-}
-
-// MARK: - Subviews
-private extension CountryNicknamesScreen {
 
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {

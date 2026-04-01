@@ -19,18 +19,24 @@ struct ChallengeGameScreen: View {
     }
 
     var body: some View {
-        Group {
-            if showingPassScreen {
-                passScreen
-            } else {
-                questionScreen
+        mainContent
+            .background { AmbientBlobsView(.quiz) }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Challenge")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
             }
-        }
-        .background { AmbientBlobsView(.quiz) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Challenge")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
+    }
+}
+
+// MARK: - Main Content
+private extension ChallengeGameScreen {
+    @ViewBuilder
+    var mainContent: some View {
+        if showingPassScreen {
+            passScreen
+        } else {
+            questionScreen
         }
     }
 }

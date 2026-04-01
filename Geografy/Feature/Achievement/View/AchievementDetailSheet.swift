@@ -12,6 +12,16 @@ struct AchievementDetailSheet: View {
     let onTogglePin: () -> Void
 
     var body: some View {
+        scrollContent
+            .navigationTitle(definition.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .presentationDetents([.fraction(0.65), .large])
+    }
+}
+
+// MARK: - Subviews
+private extension AchievementDetailSheet {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 heroSection
@@ -26,9 +36,6 @@ struct AchievementDetailSheet: View {
             }
             .padding(DesignSystem.Spacing.lg)
         }
-        .navigationTitle(definition.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .presentationDetents([.fraction(0.65), .large])
     }
 }
 

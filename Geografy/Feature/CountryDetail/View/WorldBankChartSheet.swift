@@ -26,6 +26,17 @@ struct WorldBankChartSheet: View {
     }
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background)
+            .navigationTitle(indicator.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .presentationDetents([.large])
+    }
+}
+
+// MARK: - Subviews
+private extension WorldBankChartSheet {
+    var scrollContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 headerSection
@@ -35,15 +46,8 @@ struct WorldBankChartSheet: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background)
-        .navigationTitle(indicator.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .presentationDetents([.large])
     }
-}
 
-// MARK: - Subviews
-private extension WorldBankChartSheet {
     var filteredPoints: [WorldBankService.DataPoint] {
         guard let years = selectedRange.years,
               let latest = allPoints.last else {
