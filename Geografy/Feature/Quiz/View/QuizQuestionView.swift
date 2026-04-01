@@ -14,6 +14,17 @@ struct QuizQuestionView: View {
     @State private var promptVisible = false
 
     var body: some View {
+        mainContent
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
+            .onAppear { triggerEntrance() }
+            .onChange(of: question.id) { triggerEntrance() }
+    }
+}
+
+// MARK: - Subviews
+private extension QuizQuestionView {
+    var mainContent: some View {
         VStack(spacing: 0) {
             Spacer(minLength: DesignSystem.Spacing.md)
             promptSection
@@ -23,10 +34,6 @@ struct QuizQuestionView: View {
             Spacer(minLength: DesignSystem.Spacing.lg)
             optionsSection
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
-        .onAppear { triggerEntrance() }
-        .onChange(of: question.id) { triggerEntrance() }
     }
 }
 

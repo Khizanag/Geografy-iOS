@@ -9,6 +9,22 @@ struct LearningPathScreen: View {
     @State private var blobAnimating = false
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Learning Path")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear { startBlobAnimation() }
+            .sheet(item: $selectedModule) { module in
+                ModuleLessonsScreen(module: module)
+                    .presentationDetents([.large])
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension LearningPathScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 progressHeader
@@ -17,20 +33,8 @@ struct LearningPathScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Learning Path")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { startBlobAnimation() }
-        .sheet(item: $selectedModule) { module in
-            ModuleLessonsScreen(module: module)
-                .presentationDetents([.large])
-        }
     }
-}
 
-// MARK: - Subviews
-private extension LearningPathScreen {
     var progressHeader: some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {

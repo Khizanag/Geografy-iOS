@@ -9,6 +9,21 @@ struct ModuleLessonsScreen: View {
     let module: LearningModule
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(module.title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    CircleCloseButton { dismiss() }
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension ModuleLessonsScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 moduleHeaderCard
@@ -17,19 +32,8 @@ struct ModuleLessonsScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(module.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension ModuleLessonsScreen {
     var currentModule: LearningModule {
         learningPathService.modules.first { $0.id == module.id } ?? module
     }

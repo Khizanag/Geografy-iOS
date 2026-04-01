@@ -11,6 +11,21 @@ struct LandmarkDetailView: View {
     }
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(landmark.name)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    CircleCloseButton { dismiss() }
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension LandmarkDetailView {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 heroSection
@@ -20,19 +35,8 @@ struct LandmarkDetailView: View {
             }
             .padding(.bottom, DesignSystem.Spacing.xl)
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle(landmark.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                CircleCloseButton { dismiss() }
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension LandmarkDetailView {
     var heroSection: some View {
         ZStack {
             LinearGradient(

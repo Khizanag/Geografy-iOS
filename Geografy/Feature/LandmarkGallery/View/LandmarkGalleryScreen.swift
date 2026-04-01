@@ -17,6 +17,18 @@ struct LandmarkGalleryScreen: View {
     ]
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Landmark Gallery")
+            .sheet(item: $selectedLandmark) { landmark in
+                LandmarkDetailView(landmark: landmark)
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension LandmarkGalleryScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 categoryFilter
@@ -26,16 +38,8 @@ struct LandmarkGalleryScreen: View {
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Landmark Gallery")
-        .sheet(item: $selectedLandmark) { landmark in
-            LandmarkDetailView(landmark: landmark)
-        }
     }
-}
 
-// MARK: - Subviews
-private extension LandmarkGalleryScreen {
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {

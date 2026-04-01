@@ -5,22 +5,26 @@ struct FeatureComparisonSection: View {
     @State private var appeared = false
 
     var body: some View {
+        mainContent
+            .padding(DesignSystem.Spacing.md)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            .onAppear {
+                appeared = true
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension FeatureComparisonSection {
+    var mainContent: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             columnHeaders
             Divider()
                 .background(Color.white.opacity(0.1))
             featureRows
         }
-        .padding(DesignSystem.Spacing.md)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-        .onAppear {
-            appeared = true
-        }
     }
-}
 
-// MARK: - Subviews
-private extension FeatureComparisonSection {
     var columnHeaders: some View {
         HStack {
             Text("Features")

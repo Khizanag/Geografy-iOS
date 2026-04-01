@@ -14,6 +14,21 @@ struct QuizSpellingBeeView: View {
     @FocusState private var isInputFocused: Bool
 
     var body: some View {
+        mainContent
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .onAppear { isInputFocused = true }
+            .onChange(of: showFeedback) { _, newValue in
+                if newValue { isInputFocused = false }
+            }
+            .onChange(of: typingInput) { _, _ in
+                checkAutoSubmit()
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension QuizSpellingBeeView {
+    var mainContent: some View {
         VStack(spacing: 0) {
             Spacer(minLength: DesignSystem.Spacing.md)
 
@@ -30,14 +45,6 @@ struct QuizSpellingBeeView: View {
             Spacer(minLength: DesignSystem.Spacing.sm)
 
             inputSection
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .onAppear { isInputFocused = true }
-        .onChange(of: showFeedback) { _, newValue in
-            if newValue { isInputFocused = false }
-        }
-        .onChange(of: typingInput) { _, _ in
-            checkAutoSubmit()
         }
     }
 }

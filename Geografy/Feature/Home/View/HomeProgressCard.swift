@@ -19,6 +19,23 @@ struct HomeProgressCard: View {
     @State private var animatedProgress: Double = 0
 
     var body: some View {
+        cardContent
+            .onAppear {
+                withAnimation(.spring(response: 0.8, dampingFraction: 0.7).delay(0.15)) {
+                    animatedProgress = progressFraction
+                }
+            }
+            .onChange(of: progressFraction) { _, newValue in
+                withAnimation(.spring(response: 0.8, dampingFraction: 0.7)) {
+                    animatedProgress = newValue
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension HomeProgressCard {
+    var cardContent: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 cardHeader
@@ -27,21 +44,8 @@ struct HomeProgressCard: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .onAppear {
-            withAnimation(.spring(response: 0.8, dampingFraction: 0.7).delay(0.15)) {
-                animatedProgress = progressFraction
-            }
-        }
-        .onChange(of: progressFraction) { _, newValue in
-            withAnimation(.spring(response: 0.8, dampingFraction: 0.7)) {
-                animatedProgress = newValue
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension HomeProgressCard {
     var cardHeader: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {

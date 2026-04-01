@@ -13,6 +13,23 @@ struct MapPuzzleSetupScreen: View {
     private let continents = Country.Continent.allCases.filter { $0 != .antarctica }
 
     var body: some View {
+        scrollContent
+            .background { ambientBlobs }
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Map Puzzle")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear { startBlobAnimation() }
+            .navigationDestination(isPresented: $showPuzzle) {
+                if let continent = selectedContinent {
+                    MapPuzzleScreen(continent: continent)
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension MapPuzzleSetupScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 headerSection
@@ -24,21 +41,8 @@ struct MapPuzzleSetupScreen: View {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Map Puzzle")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { startBlobAnimation() }
-        .navigationDestination(isPresented: $showPuzzle) {
-            if let continent = selectedContinent {
-                MapPuzzleScreen(continent: continent)
-            }
-        }
     }
-}
 
-// MARK: - Subviews
-private extension MapPuzzleSetupScreen {
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "puzzlepiece.fill")

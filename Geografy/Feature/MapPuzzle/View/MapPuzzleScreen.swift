@@ -17,28 +17,31 @@ struct MapPuzzleScreen: View {
     @State private var showSummary = false
 
     var body: some View {
-        Group {
-            if showSummary {
-                summaryView
-            } else if questions.isEmpty {
-                loadingView
-            } else {
-                puzzleContent
+        mainContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("\(continent.displayName) Puzzle")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
             }
-        }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("\(continent.displayName) Puzzle")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-        }
-        .task {
-            buildQuestions()
-        }
+            .task {
+                buildQuestions()
+            }
     }
 }
 
 // MARK: - Subviews
 private extension MapPuzzleScreen {
+    @ViewBuilder
+    var mainContent: some View {
+        if showSummary {
+            summaryView
+        } else if questions.isEmpty {
+            loadingView
+        } else {
+            puzzleContent
+        }
+    }
+
     var loadingView: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ProgressView()

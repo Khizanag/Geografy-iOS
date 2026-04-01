@@ -12,6 +12,22 @@ struct MapColoringScreen: View {
     @State private var selectedCountry: Country?
 
     var body: some View {
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Map Coloring Book")
+            .navigationBarTitleDisplayMode(.inline)
+            .task {
+                visibleGroups = Set(groupedCountries.keys)
+            }
+            .sheet(item: $selectedCountry) { country in
+                countryDetailPopup(country)
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension MapColoringScreen {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 schemePicker
@@ -25,20 +41,8 @@ struct MapColoringScreen: View {
             .padding(.top, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
-        .navigationTitle("Map Coloring Book")
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            visibleGroups = Set(groupedCountries.keys)
-        }
-        .sheet(item: $selectedCountry) { country in
-            countryDetailPopup(country)
-        }
     }
-}
 
-// MARK: - Subviews
-private extension MapColoringScreen {
     var schemePicker: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Color Scheme", icon: "paintpalette.fill")

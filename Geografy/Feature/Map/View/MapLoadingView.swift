@@ -9,6 +9,22 @@ struct MapLoadingView: View {
     @State private var blobAnimating = false
 
     var body: some View {
+        mainContent
+            .background { oceanBackground }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onAppear {
+                isAnimating = true
+                blobAnimating = true
+            }
+            .onReceive(Timer.publish(every: 0.4, on: .main, in: .common).autoconnect()) { _ in
+                dotPhase = (dotPhase + 1) % 3
+            }
+    }
+}
+
+// MARK: - Subviews
+private extension MapLoadingView {
+    var mainContent: some View {
         VStack(spacing: 0) {
             Spacer()
             globeSection
@@ -19,20 +35,8 @@ struct MapLoadingView: View {
             copyrightLabel
                 .padding(.bottom, DesignSystem.Spacing.xl)
         }
-        .background { oceanBackground }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            isAnimating = true
-            blobAnimating = true
-        }
-        .onReceive(Timer.publish(every: 0.4, on: .main, in: .common).autoconnect()) { _ in
-            dotPhase = (dotPhase + 1) % 3
-        }
     }
-}
 
-// MARK: - Subviews
-private extension MapLoadingView {
     var oceanBackground: some View {
         ZStack {
             DesignSystem.Color.ocean

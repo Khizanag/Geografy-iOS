@@ -11,24 +11,18 @@ struct TravelJournalScreen: View {
     @State private var appeared = false
 
     var body: some View {
-        ZStack {
-            if journalService.entries.isEmpty, !isSearching {
-                emptyState
-            } else {
-                mainContent
+        contentSwitcher
+            .navigationTitle("Travel Journal")
+            .closeButtonPlacementLeading()
+            .toolbar { addEntryButton }
+            .onAppear {
+                withAnimation(.easeOut(duration: 0.6)) {
+                    appeared = true
+                }
             }
-        }
-        .navigationTitle("Travel Journal")
-        .closeButtonPlacementLeading()
-        .toolbar { addEntryButton }
-        .onAppear {
-            withAnimation(.easeOut(duration: 0.6)) {
-                appeared = true
+            .sheet(item: $activeSheet) { sheet in
+                sheetContent(for: sheet)
             }
-        }
-        .sheet(item: $activeSheet) { sheet in
-            sheetContent(for: sheet)
-        }
     }
 }
 
@@ -69,6 +63,16 @@ private extension TravelJournalScreen {
 
 // MARK: - Subviews
 private extension TravelJournalScreen {
+    var contentSwitcher: some View {
+        ZStack {
+            if journalService.entries.isEmpty, !isSearching {
+                emptyState
+            } else {
+                mainContent
+            }
+        }
+    }
+
     var mainContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
