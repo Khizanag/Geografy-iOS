@@ -6,12 +6,22 @@ public struct QuizPackLevelCard: View {
     public let stars: Int
     public let isLocked: Bool
 
+    public init(
+        level: QuizPackLevel,
+        stars: Int,
+        isLocked: Bool
+    ) {
+        self.level = level
+        self.stars = stars
+        self.isLocked = isLocked
+    }
+
     public var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             levelNumber
             levelInfo
             Spacer(minLength: 0)
-            starDisplay
+            trailingContent
         }
         .padding(DesignSystem.Spacing.md)
         .background(DesignSystem.Color.cardBackground)
@@ -39,8 +49,13 @@ private extension QuizPackLevelCard {
                 Image(systemName: "lock.fill")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+            } else if isCompleted {
+                Image(systemName: "checkmark")
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.onAccent)
             } else {
-                Text(levelNumberText)
+                Text("\(level.levelIndex)")
                     .font(DesignSystem.Font.headline)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.onAccent)
@@ -61,7 +76,26 @@ private extension QuizPackLevelCard {
         }
     }
 
+    @ViewBuilder
+    var trailingContent: some View {
+        if isCompleted {
+            completedBadge
+        } else {
+            starDisplay
+        }
+    }
+
     var starDisplay: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            ForEach(1...3, id: \.self) { index in
+                Image(systemName: starIcon(for: index))
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(starColor(for: index))
+            }
+        }
+    }
+
+    var completedBadge: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             ForEach(1...3, id: \.self) { index in
                 Image(systemName: starIcon(for: index))
@@ -74,20 +108,18 @@ private extension QuizPackLevelCard {
 
 // MARK: - Helpers
 private extension QuizPackLevelCard {
+    var isCompleted: Bool {
+        stars > 0
+    }
+
     var circleColor: Color {
         if isLocked {
             DesignSystem.Color.cardBackgroundHighlighted
-        } else if stars > 0 {
-            DesignSystem.Color.accent
+        } else if isCompleted {
+            DesignSystem.Color.success
         } else {
-            DesignSystem.Color.cardBackgroundHighlighted
+            DesignSystem.Color.accent
         }
-    }
-
-    var levelNumberText: String {
-        let levelIndex = level.id.split(separator: "_").last
-            .flatMap { Int($0) } ?? 1
-        return "\(levelIndex)"
     }
 
     func starIcon(for index: Int) -> String {

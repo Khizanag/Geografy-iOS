@@ -5,6 +5,18 @@ public struct QuizPackProgress: Codable {
     public let stars: Int
     public let bestAccuracy: Double
     public let completedAt: Date
+
+    public init(
+        levelID: String,
+        stars: Int,
+        bestAccuracy: Double,
+        completedAt: Date
+    ) {
+        self.levelID = levelID
+        self.stars = stars
+        self.bestAccuracy = bestAccuracy
+        self.completedAt = completedAt
+    }
 }
 
 // MARK: - Star Rating
