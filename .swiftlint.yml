@@ -20,10 +20,6 @@ disabled_rules:
   - trailing_closure
   - type_name
   - non_optional_string_data_conversion
-  - multiline_arguments
-  - multiline_arguments_brackets
-  - multiline_parameters
-  - multiline_parameters_brackets
 
 # MARK: - Default rules' configurations
 
