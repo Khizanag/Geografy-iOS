@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "Geografy-Feature-DailyChallenge",
+    defaultLocalization: "en",
     platforms: [
         .iOS("26.0"),
         .tvOS("26.0"),
