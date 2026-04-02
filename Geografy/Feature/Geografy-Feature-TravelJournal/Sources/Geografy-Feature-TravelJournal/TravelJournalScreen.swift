@@ -18,6 +18,10 @@ public struct TravelJournalScreen: View {
         contentSwitcher
             .navigationTitle("Travel Journal")
             .closeButtonPlacementLeading()
+            .searchable(
+                text: $searchText,
+                prompt: "Search journal entries..."
+            )
             .toolbar { addEntryButton }
             .onAppear {
                 withAnimation(.easeOut(duration: 0.6)) {
@@ -58,7 +62,7 @@ private extension TravelJournalScreen {
             } label: {
                 Label("Add", systemImage: "plus")
                     .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
         }
     }
@@ -84,10 +88,6 @@ private extension TravelJournalScreen {
                     .opacity(appeared ? 1 : 0)
                     .offset(y: appeared ? 0 : 20)
 
-                searchBar
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 20)
-
                 entriesSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
                     .opacity(appeared ? 1 : 0)
@@ -96,6 +96,11 @@ private extension TravelJournalScreen {
             .padding(.top, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
+        }
+        .overlay {
+            if filteredEntries.isEmpty, isSearching {
+                ContentUnavailableView.search(text: searchText)
+            }
         }
     }
 
@@ -109,55 +114,8 @@ private extension TravelJournalScreen {
         )
     }
 
-    var searchBar: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .font(DesignSystem.Font.subheadline)
-            TextField(
-                "Search journal entries...",
-                text: $searchText
-            )
-            .font(DesignSystem.Font.subheadline)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .tint(DesignSystem.Color.accent)
-            .autocorrectionDisabled()
-            if !searchText.isEmpty {
-                clearSearchButton
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs + 2)
-        .background(
-            DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            )
-        )
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    var clearSearchButton: some View {
-        Button {
-            withAnimation(
-                .spring(response: 0.3, dampingFraction: 0.75)
-            ) {
-                searchText = ""
-            }
-        } label: {
-            Image(systemName: "xmark.circle.fill")
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-    }
-
     var entriesSection: some View {
-        Group {
-            if filteredEntries.isEmpty, isSearching {
-                noResultsState
-            } else {
-                timelineList
-            }
-        }
+        timelineList
     }
 
     var timelineList: some View {
@@ -213,25 +171,6 @@ private extension TravelJournalScreen {
             .padding(.top, DesignSystem.Spacing.xs)
         }
         .frame(maxWidth: .infinity)
-    }
-
-    var noResultsState: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .font(DesignSystem.Font.iconXL)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .padding(.top, DesignSystem.Spacing.xl)
-            Text("No entries found")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Try a different search term")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(
-                    DesignSystem.Color.textSecondary
-                )
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.xxl)
     }
 
     @ViewBuilder
