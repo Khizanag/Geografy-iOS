@@ -9,7 +9,14 @@ public struct Quote: Identifiable {
     public let category: QuoteCategory
     public var isFavorited: Bool
 
-    public init(id: String, text: String, author: String, countryCode: String?, category: QuoteCategory, isFavorited: Bool = false) {
+    public init(
+        id: String,
+        text: String,
+        author: String,
+        countryCode: String?,
+        category: QuoteCategory,
+        isFavorited: Bool = false
+    ) {
         self.id = id
         self.text = text
         self.author = author

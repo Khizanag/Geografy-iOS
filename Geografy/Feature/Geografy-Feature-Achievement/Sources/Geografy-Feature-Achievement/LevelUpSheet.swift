@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct LevelUpSheet: View {
@@ -122,14 +122,14 @@ private extension LevelUpSheet {
 
 // MARK: - Particle View
 private struct SparkleParticle: View {
-    public let angle: Double
-    public let distance: CGFloat
-    public let color: Color
-    public let delay: Double
+    let angle: Double
+    let distance: CGFloat
+    let color: Color
+    let delay: Double
 
     @State private var active = false
 
-    public var body: some View {
+    var body: some View {
         Circle()
             .fill(color)
             .frame(width: active ? 5 : 10, height: active ? 5 : 10)

@@ -179,6 +179,7 @@ private extension CurrencyConverterScreen {
         color: Color,
         action: @escaping () -> Void
     ) -> some View {
+        // swiftlint:disable:next closure_body_length
         Button(action: action) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Text(label)
@@ -438,13 +439,13 @@ public struct CurrencyEntry: Identifiable, Hashable {
 private struct CurrencyPickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 
-    public let title: String
-    public let currencies: [CurrencyEntry]
-    public let onSelect: (CurrencyEntry) -> Void
+    let title: String
+    let currencies: [CurrencyEntry]
+    let onSelect: (CurrencyEntry) -> Void
 
     @State private var searchText = ""
 
-    public var body: some View {
+    var body: some View {
         extractedContent
             .searchable(text: $searchText, prompt: "Search currency or country…")
             .navigationTitle(title)

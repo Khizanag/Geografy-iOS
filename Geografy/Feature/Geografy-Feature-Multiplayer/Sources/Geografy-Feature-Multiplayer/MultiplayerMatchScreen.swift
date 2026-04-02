@@ -207,6 +207,7 @@ private extension MultiplayerMatchScreen {
 // MARK: - Background
 private extension MultiplayerMatchScreen {
     var ambientBlobs: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Ellipse()
                 .fill(
@@ -318,6 +319,7 @@ private extension MultiplayerMatchScreen {
         playerIsCorrect: Bool,
         playerTimeSpent: TimeInterval
     ) {
+        // swiftlint:disable:next closure_body_length
         Task { @MainActor in
             while !opponentEngine.hasAnswered {
                 try? await Task.sleep(for: .milliseconds(100))

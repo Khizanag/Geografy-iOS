@@ -277,9 +277,9 @@ private enum BucketListSort: String, CaseIterable, Identifiable {
     case priority
     case alphabetical
 
-    public var id: String { rawValue }
+    var id: String { rawValue }
 
-    public var label: String {
+    var label: String {
         switch self {
         case .continent: "Continent"
         case .priority: "Priority"
@@ -413,12 +413,12 @@ private extension BucketListCountryDetailView {
 // MARK: - Share Sheet
 #if !os(tvOS)
 private struct ShareSheet: UIViewControllerRepresentable {
-    public let text: String
+    let text: String
 
-    public func makeUIViewController(context: Context) -> UIActivityViewController {
+    func makeUIViewController(context: Context) -> UIActivityViewController {
         UIActivityViewController(activityItems: [text], applicationActivities: nil)
     }
 
-    public func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 #endif

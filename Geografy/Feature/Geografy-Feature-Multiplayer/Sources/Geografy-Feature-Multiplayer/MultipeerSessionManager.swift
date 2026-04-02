@@ -21,7 +21,6 @@ public final class MultipeerSessionManager: NSObject, @unchecked Sendable {
         self.myPeerID = MCPeerID(displayName: UIDevice.current.name)
         super.init()
     }
-
 }
 
 // MARK: - Public API
@@ -82,7 +81,7 @@ extension MultipeerSessionManager {
 
 // MARK: - MCSessionDelegate
 extension MultipeerSessionManager: MCSessionDelegate {
-    public nonisolated func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+    nonisolated public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         nonisolated(unsafe) let peers = session.connectedPeers
         nonisolated(unsafe) let capturedPeer = peerID
         Task { @MainActor in
@@ -91,7 +90,7 @@ extension MultipeerSessionManager: MCSessionDelegate {
         }
     }
 
-    public nonisolated func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+    nonisolated public func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         guard let message = try? PeerMessage.decode(from: data) else { return }
         nonisolated(unsafe) let capturedPeer = peerID
         Task { @MainActor in
@@ -100,14 +99,36 @@ extension MultipeerSessionManager: MCSessionDelegate {
         }
     }
 
-    public nonisolated func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {}
-    public nonisolated func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {}
-    public nonisolated func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: (any Error)?) {}
+    nonisolated public func session(
+        _ session: MCSession,
+        didReceive stream: InputStream,
+        withName streamName: String,
+        fromPeer peerID: MCPeerID
+    ) {}
+
+    nonisolated public func session(
+        _ session: MCSession,
+        didStartReceivingResourceWithName resourceName: String,
+        fromPeer peerID: MCPeerID,
+        with progress: Progress
+    ) {}
+
+    nonisolated public func session(
+        _ session: MCSession,
+        didFinishReceivingResourceWithName resourceName: String,
+        fromPeer peerID: MCPeerID,
+        at localURL: URL?,
+        withError error: (any Error)?
+    ) {}
 }
 
 // MARK: - MCNearbyServiceBrowserDelegate
 extension MultipeerSessionManager: MCNearbyServiceBrowserDelegate {
-    public nonisolated func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
+    nonisolated public func browser(
+        _ browser: MCNearbyServiceBrowser,
+        foundPeer peerID: MCPeerID,
+        withDiscoveryInfo info: [String: String]?
+    ) {
         nonisolated(unsafe) let capturedPeer = peerID
         Task { @MainActor in
             if !self.discoveredPeers.contains(capturedPeer) {
@@ -116,7 +137,7 @@ extension MultipeerSessionManager: MCNearbyServiceBrowserDelegate {
         }
     }
 
-    public nonisolated func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+    nonisolated public func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         nonisolated(unsafe) let capturedPeer = peerID
         Task { @MainActor in
             self.discoveredPeers.removeAll { $0 == capturedPeer }
@@ -126,7 +147,12 @@ extension MultipeerSessionManager: MCNearbyServiceBrowserDelegate {
 
 // MARK: - MCNearbyServiceAdvertiserDelegate
 extension MultipeerSessionManager: MCNearbyServiceAdvertiserDelegate {
-    public nonisolated func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+    nonisolated public func advertiser(
+        _ advertiser: MCNearbyServiceAdvertiser,
+        didReceiveInvitationFromPeer peerID: MCPeerID,
+        withContext context: Data?,
+        invitationHandler: @escaping (Bool, MCSession?) -> Void
+    ) {
         nonisolated(unsafe) let handler = invitationHandler
         Task { @MainActor in
             let hasOpponent = !(self.session?.connectedPeers.isEmpty ?? true)

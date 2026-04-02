@@ -118,7 +118,7 @@ public enum Destination: Hashable, Identifiable {
         case .landmarkQuiz: "landmarkQuiz"
         case .languageExplorer: "languageExplorer"
         case .learningPath: "learningPath"
-        case .lesson(let module, let lesson): "lesson-\(module.id)-\(lesson.id)"
+        case let .lesson(module, lesson): "lesson-\(module.id)-\(lesson.id)"
         case .leaderboards: "leaderboards"
         case .localMultiplayer: "localMultiplayer"
         case .map(let filter): "map-\(filter?.rawValue ?? "world")"

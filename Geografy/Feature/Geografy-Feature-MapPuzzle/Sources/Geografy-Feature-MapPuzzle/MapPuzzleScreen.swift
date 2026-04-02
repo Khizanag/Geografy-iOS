@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 struct MapPuzzleScreen: View {
@@ -10,7 +10,7 @@ struct MapPuzzleScreen: View {
     #endif
     @Environment(CountryDataService.self) private var countryDataService
 
-    public let continent: Country.Continent
+    let continent: Country.Continent
 
     @State private var questions: [PuzzleQuestion] = []
     @State private var currentIndex = 0
@@ -19,7 +19,7 @@ struct MapPuzzleScreen: View {
     @State private var correctCount = 0
     @State private var showSummary = false
 
-    public var body: some View {
+    var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("\(continent.displayName) Puzzle")

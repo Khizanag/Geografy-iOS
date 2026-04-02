@@ -1,6 +1,6 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_Auth
 import Geografy_Feature_DailyChallenge
@@ -152,7 +152,6 @@ private extension HomeScreen {
             .fill(DesignSystem.Color.textTertiary.opacity(0.3))
             .frame(width: DesignSystem.Size.xxs, height: DesignSystem.Size.sm)
     }
-
 }
 
 // MARK: - Greeting
@@ -243,11 +242,13 @@ private extension HomeScreen {
     }
 
     var mapCarousel: some View {
+        // swiftlint:disable:next closure_body_length
         GeometryReader { outerGeo in
             let cardWidth = outerGeo.size.width * 0.78
             let spacing: CGFloat = DesignSystem.Spacing.sm
             let sidePadding = (outerGeo.size.width - cardWidth) / 2
 
+            // swiftlint:disable:next closure_body_length
             ScrollViewReader { _ in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: spacing) {

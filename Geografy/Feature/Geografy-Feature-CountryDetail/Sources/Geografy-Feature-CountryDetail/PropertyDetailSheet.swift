@@ -101,5 +101,4 @@ private extension PropertyDetailSheet {
             }
         }
     }
-
 }

@@ -1,6 +1,6 @@
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Feature_GeographyFeatures
+import SwiftUI
 
 struct GeographyFeaturesScreen: View {
     @State private var selectedType: GeographyFeatureType = .mountain
@@ -12,6 +12,7 @@ struct GeographyFeaturesScreen: View {
     }
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             Section {
                 Picker("Type", selection: $selectedType) {

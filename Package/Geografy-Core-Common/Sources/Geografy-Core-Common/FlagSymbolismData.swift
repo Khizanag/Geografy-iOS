@@ -1,4 +1,5 @@
 // swiftlint:disable file_length
+// swiftlint:disable line_length
 import Foundation
 
 public struct FlagColorEntry: Sendable {
@@ -43,10 +44,9 @@ public struct FlagSymbolism: Sendable {
 // swiftlint:disable:next type_body_length
 public enum FlagSymbolismData: Sendable {
     public static let data: [String: FlagSymbolism] = [
-
         // MARK: Americas
         "US": FlagSymbolism(
-            adoptedYear: 1960,
+            adoptedYear: 1_960,
             colors: [
                 FlagColorEntry(name: "Red", hex: "B22234", meaning: "Valor and hardiness"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and innocence"),
@@ -59,7 +59,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The flag has changed 27 times since 1777. The current 50-star design was adopted on July 4, 1960, after Hawaii became the 50th state."
         ),
         "CA": FlagSymbolism(
-            adoptedYear: 1965,
+            adoptedYear: 1_965,
             colors: [
                 FlagColorEntry(name: "Red", hex: "FF0000", meaning: "Sacrifice and valor"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and honesty"),
@@ -70,7 +70,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The maple leaf flag replaced the Canadian Red Ensign after a heated national debate in 1964. Prime Minister Lester Pearson championed a distinctive Canadian identity separate from British heritage."
         ),
         "MX": FlagSymbolism(
-            adoptedYear: 1968,
+            adoptedYear: 1_968,
             colors: [
                 FlagColorEntry(name: "Green", hex: "006847", meaning: "Hope and independence"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and religion"),
@@ -82,7 +82,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Mexico's coat of arms depicts the Aztec legend: the god Huitzilopochtli told his people to build a city where they saw an eagle on a nopal cactus eating a snake — that place became Tenochtitlan (modern Mexico City)."
         ),
         "BR": FlagSymbolism(
-            adoptedYear: 1889,
+            adoptedYear: 1_889,
             colors: [
                 FlagColorEntry(name: "Green", hex: "009C3B", meaning: "The vast forests and nature of Brazil"),
                 FlagColorEntry(name: "Yellow", hex: "FFDF00", meaning: "The enormous gold reserves"),
@@ -95,7 +95,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The stars on Brazil's flag are arranged to reflect the sky over Rio de Janeiro at 8:30 PM on November 15, 1889 — the precise moment the Republic was proclaimed."
         ),
         "AR": FlagSymbolism(
-            adoptedYear: 1818,
+            adoptedYear: 1_818,
             colors: [
                 FlagColorEntry(name: "Light Blue", hex: "74ACDF", meaning: "The sky and the Río de la Plata river"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and the Andes snowcaps"),
@@ -106,7 +106,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "General Manuel Belgrano created the flag based on the blue-and-white cockade worn by independence fighters. The Sun of May was added in 1818, referencing the sun that appeared through clouds on the day of the first patriot government."
         ),
         "CO": FlagSymbolism(
-            adoptedYear: 1861,
+            adoptedYear: 1_861,
             colors: [
                 FlagColorEntry(name: "Yellow", hex: "FCD116", meaning: "Sovereignty, justice, and the country's abundant gold"),
                 FlagColorEntry(name: "Blue", hex: "003087", meaning: "The sky and the two oceans bordering Colombia"),
@@ -116,7 +116,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Simón Bolívar reportedly chose yellow, blue, and red to represent 'golden' America separated by blue seas from 'bloody' Spain."
         ),
         "VE": FlagSymbolism(
-            adoptedYear: 2006,
+            adoptedYear: 2_006,
             colors: [
                 FlagColorEntry(name: "Yellow", hex: "CF142B", meaning: "Venezuela's wealth and the sun"),
                 FlagColorEntry(name: "Blue", hex: "00247D", meaning: "The Caribbean Sea and the courage of Venezuela's people"),
@@ -128,7 +128,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "President Hugo Chávez added the eighth star in 2006 to honor the province of Guayana. The flag's design has Bolivarian origins, referencing the liberation movement across South America."
         ),
         "CL": FlagSymbolism(
-            adoptedYear: 1817,
+            adoptedYear: 1_817,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The snow of the Andes Mountains"),
                 FlagColorEntry(name: "Blue", hex: "0033A0", meaning: "The sky and the Pacific Ocean"),
@@ -140,7 +140,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Chile's flag bears a strong resemblance to the Texas flag — both were likely influenced by the same revolutionary ideals of early 19th-century independence movements."
         ),
         "PE": FlagSymbolism(
-            adoptedYear: 1825,
+            adoptedYear: 1_825,
             colors: [
                 FlagColorEntry(name: "Red", hex: "D91023", meaning: "The blood of heroes who fought for independence"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and the purity of Peruvian intentions"),
@@ -153,7 +153,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "According to legend, General José de San Martín chose red and white after seeing flamingos rise from the sea at the time of his army's landing near Pisco in 1820."
         ),
         "CU": FlagSymbolism(
-            adoptedYear: 1902,
+            adoptedYear: 1_902,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "002A8F", meaning: "The three provinces of Cuba (represented by three stripes)"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The purity of the independence cause"),
@@ -165,7 +165,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Cuban flag was designed in 1849 by Venezuelan poet Miguel Teurbe Tolón and Cuban poet Narciso López. It was used by independence fighters before becoming the official national flag in 1902."
         ),
         "JM": FlagSymbolism(
-            adoptedYear: 1962,
+            adoptedYear: 1_962,
             colors: [
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "The hardships faced and overcome by the Jamaican people"),
                 FlagColorEntry(name: "Gold", hex: "FED100", meaning: "Natural wealth and the beauty of sunlight"),
@@ -175,7 +175,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Jamaica's flag is the only national flag that contains neither red, white, nor blue. The original design had black, gold, and green in horizontal stripes, but was changed to the saltire (diagonal cross) design."
         ),
         "HT": FlagSymbolism(
-            adoptedYear: 1843,
+            adoptedYear: 1_843,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "00209F", meaning: "Represents the black population"),
                 FlagColorEntry(name: "Red", hex: "D21034", meaning: "Represents the mixed-race population"),
@@ -187,7 +187,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Legend holds that Catherine Flon sewed the first Haitian flag by tearing the white stripe out of a French tricolor to symbolize the expulsion of the French and the union of blacks and mixed-race Haitians."
         ),
         "TT": FlagSymbolism(
-            adoptedYear: 1962,
+            adoptedYear: 1_962,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "Fire — the warmth of the sun, the people's energy, and the country's courage"),
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "The dedication and strength of the Trinbagonian people"),
@@ -197,7 +197,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The black stripe can also represent the unity between the two islands of Trinidad and Tobago, running diagonally across the flag as a unifying band."
         ),
         "GT": FlagSymbolism(
-            adoptedYear: 1871,
+            adoptedYear: 1_871,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "4997D0", meaning: "The Pacific and Atlantic Oceans that border Guatemala"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and purity"),
@@ -210,7 +210,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "CR": FlagSymbolism(
-            adoptedYear: 1848,
+            adoptedYear: 1_848,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "002B7F", meaning: "The sky, opportunities, and perseverance"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace, wisdom, and happiness"),
@@ -222,7 +222,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The red stripe was added in 1848 inspired by the French tricolor and the revolutionary spirit of 1848. Costa Rica's flag is unusual in that its coat of arms portrays the country as 'A Gateway to the Americas'."
         ),
         "PA": FlagSymbolism(
-            adoptedYear: 1904,
+            adoptedYear: 1_904,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace between the two major political parties"),
                 FlagColorEntry(name: "Red", hex: "D21034", meaning: "The Liberal Party"),
@@ -235,7 +235,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The flag was designed by Manuel Encarnación Amador to represent peace and prosperity after Panama's independence from Colombia in 1903. The two stars represent the hope that both political parties will keep a clean record."
         ),
         "UY": FlagSymbolism(
-            adoptedYear: 1830,
+            adoptedYear: 1_830,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and the sky"),
                 FlagColorEntry(name: "Blue", hex: "0038A8", meaning: "The rivers and the Río de la Plata"),
@@ -247,7 +247,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "BO": FlagSymbolism(
-            adoptedYear: 1851,
+            adoptedYear: 1_851,
             colors: [
                 FlagColorEntry(name: "Red", hex: "D52B1E", meaning: "Valor and the blood of national heroes"),
                 FlagColorEntry(name: "Yellow", hex: "F4C430", meaning: "Bolivia's mineral resources — the richest silver and tin mines in history"),
@@ -259,7 +259,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "PY": FlagSymbolism(
-            adoptedYear: 1842,
+            adoptedYear: 1_842,
             colors: [
                 FlagColorEntry(name: "Red", hex: "D52B1E", meaning: "Courage, patriotism, and equality"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and unity"),
@@ -271,7 +271,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Paraguay is one of only three countries whose flag has different designs on the obverse and reverse. The front shows the coat of arms, while the back shows the Treasury seal."
         ),
         "GY": FlagSymbolism(
-            adoptedYear: 1966,
+            adoptedYear: 1_966,
             colors: [
                 FlagColorEntry(name: "Green", hex: "009E49", meaning: "Agriculture and the lush forests"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The country's rivers and waterways"),
@@ -285,7 +285,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Known as 'The Golden Arrowhead,' the flag was designed by American vexillologist Whitney Smith. The arrow points forward — toward progress — framed by white rivers and a black border of endurance."
         ),
         "EC": FlagSymbolism(
-            adoptedYear: 1860,
+            adoptedYear: 1_860,
             colors: [
                 FlagColorEntry(name: "Yellow", hex: "FFD100", meaning: "Abundance of crops, fertility of the soil, and the sun"),
                 FlagColorEntry(name: "Blue", hex: "0033A0", meaning: "The sky and the ocean"),
@@ -298,7 +298,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "HN": FlagSymbolism(
-            adoptedYear: 1866,
+            adoptedYear: 1_866,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "0073CF", meaning: "The Caribbean Sea and the Pacific Ocean"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace, prosperity, and the purity of thoughts"),
@@ -309,7 +309,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "NI": FlagSymbolism(
-            adoptedYear: 1908,
+            adoptedYear: 1_908,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "003DA5", meaning: "Justice and the two oceans of Nicaragua"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Virtue and peace"),
@@ -321,7 +321,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "DO": FlagSymbolism(
-            adoptedYear: 1844,
+            adoptedYear: 1_844,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "002D62", meaning: "Liberty"),
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "The blood of heroes who died for freedom"),
@@ -334,7 +334,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Dominican flag is unique in the Caribbean — it features a Bible open to John 8:32 ('And the truth shall set you free'), making it one of the only national flags in the world with a holy book."
         ),
         "SV": FlagSymbolism(
-            adoptedYear: 1912,
+            adoptedYear: 1_912,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "0F47AF", meaning: "The Pacific and Atlantic Oceans"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and harmony"),
@@ -348,7 +348,7 @@ public enum FlagSymbolismData: Sendable {
 
         // MARK: Europe
         "GB": FlagSymbolism(
-            adoptedYear: 1801,
+            adoptedYear: 1_801,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CF142B", meaning: "St George's Cross of England — also St Patrick's Cross of Ireland"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "St Andrew's Cross of Scotland and the background of St George's Cross"),
@@ -360,7 +360,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Union Flag was first created in 1606 when James VI of Scotland became James I of England. The Irish cross was added in 1801 after the Acts of Union merged Great Britain and Ireland."
         ),
         "FR": FlagSymbolism(
-            adoptedYear: 1794,
+            adoptedYear: 1_794,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "002395", meaning: "Freedom and the revolutionary tradition"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Equality and peace"),
@@ -370,7 +370,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The tricolore was born from the French Revolution. The colors combined the blue and red of Paris (the revolutionary city) with the royal white — a unification of the old and new orders. It directly inspired dozens of other national flags worldwide."
         ),
         "DE": FlagSymbolism(
-            adoptedYear: 1949,
+            adoptedYear: 1_949,
             colors: [
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "Determination and the dark history of oppression"),
                 FlagColorEntry(name: "Red", hex: "DD0000", meaning: "Bravery, strength, and the blood of freedom"),
@@ -380,7 +380,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The black-red-gold combination dates to the early 19th-century German nationalist movement. It was used in the Weimar Republic (1919–1933), abolished under the Nazis, and restored for West Germany in 1949 — symbolizing democratic Germany."
         ),
         "IT": FlagSymbolism(
-            adoptedYear: 1948,
+            adoptedYear: 1_948,
             colors: [
                 FlagColorEntry(name: "Green", hex: "009246", meaning: "The hills and plains of Italy"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The Alpine snow"),
@@ -390,7 +390,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Italy's tricolore was inspired by the French flag during Napoleon's Italian campaigns. The green was added to the original blue-white-red French palette, said to represent Napoleon's Milanese Civic Guard uniform color."
         ),
         "ES": FlagSymbolism(
-            adoptedYear: 1981,
+            adoptedYear: 1_981,
             colors: [
                 FlagColorEntry(name: "Red", hex: "AA151B", meaning: "Valor and hardiness"),
                 FlagColorEntry(name: "Yellow", hex: "F1BF00", meaning: "Generosity and the golden wealth of Spain"),
@@ -402,7 +402,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Charles III introduced the red-yellow-red design in 1785 to distinguish Spanish ships from other vessels at sea. The yellow (gold) band is twice as wide as each red band to make it more visible."
         ),
         "PT": FlagSymbolism(
-            adoptedYear: 1911,
+            adoptedYear: 1_911,
             colors: [
                 FlagColorEntry(name: "Green", hex: "006600", meaning: "Hope and the sea voyages of the Age of Discovery"),
                 FlagColorEntry(name: "Red", hex: "FF0000", meaning: "Revolution and the bloodshed of the 1910 Republican revolution"),
@@ -414,7 +414,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The armillary sphere was used by Portuguese navigators to determine latitude at sea. It represents Portugal's pivotal role in the Age of Exploration and its far-flung maritime empire."
         ),
         "NL": FlagSymbolism(
-            adoptedYear: 1937,
+            adoptedYear: 1_937,
             colors: [
                 FlagColorEntry(name: "Red", hex: "AE1C28", meaning: "Valor and hardiness — originally a brighter orange from the House of Orange"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and honesty"),
@@ -424,7 +424,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Dutch flag was originally orange-white-blue (the colors of William of Orange) in the 16th century. The orange faded to red over centuries, and red was officially adopted in 1937. The flag heavily influenced Russia's and France's tricolors."
         ),
         "BE": FlagSymbolism(
-            adoptedYear: 1831,
+            adoptedYear: 1_831,
             colors: [
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "Strength and determination — from the arms of the Duchy of Brabant"),
                 FlagColorEntry(name: "Yellow", hex: "FAE042", meaning: "Generosity — the golden lion of Brabant"),
@@ -434,7 +434,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Belgian tricolor was inspired by the French Revolution and the colors of the Duchy of Brabant. The vertical orientation distinguishes it from similar tricolors like Germany's horizontal flag."
         ),
         "CH": FlagSymbolism(
-            adoptedYear: 1848,
+            adoptedYear: 1_848,
             colors: [
                 FlagColorEntry(name: "Red", hex: "FF0000", meaning: "The blood of federal soldiers"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity, peace, and Alpine snow"),
@@ -445,7 +445,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Switzerland is one of only two countries with a square national flag (the other is Vatican City). The white cross has been a Swiss battle symbol since the 14th century, predating the confederation itself."
         ),
         "AT": FlagSymbolism(
-            adoptedYear: 1945,
+            adoptedYear: 1_945,
             colors: [
                 FlagColorEntry(name: "Red", hex: "ED2939", meaning: "Valor and the blood of battles"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and the snowcaps of the Alps"),
@@ -454,7 +454,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Austrian legend attributes the design to Duke Leopold V after the Battle of Ptolemais (1191). His white surcoat was completely soaked in blood except where a broad belt protected it, creating a red-white-red pattern."
         ),
         "SE": FlagSymbolism(
-            adoptedYear: 1906,
+            adoptedYear: 1_906,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "006AA7", meaning: "The sky, lakes, and sea surrounding Sweden"),
                 FlagColorEntry(name: "Yellow", hex: "FECC02", meaning: "The sun and Sweden's golden fields"),
@@ -465,7 +465,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "NO": FlagSymbolism(
-            adoptedYear: 1821,
+            adoptedYear: 1_821,
             colors: [
                 FlagColorEntry(name: "Red", hex: "EF2B2D", meaning: "Courage and valor"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and honesty"),
@@ -477,7 +477,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Norway's flag incorporates the Danish cross (red with white outline) and adds a blue inner cross — representing Norway's ties to Scandinavia and democratic ideals inspired by the French Revolution."
         ),
         "DK": FlagSymbolism(
-            adoptedYear: 1370,
+            adoptedYear: 1_370,
             colors: [
                 FlagColorEntry(name: "Red", hex: "C60C30", meaning: "Courage and valor in battle"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and honesty"),
@@ -488,7 +488,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Dannebrog ('Danish cloth') is the world's oldest national flag still in continuous use. According to legend, it fell from the sky during the Battle of Lyndanisse in 1219, inspiring the Danish warriors to victory."
         ),
         "FI": FlagSymbolism(
-            adoptedYear: 1918,
+            adoptedYear: 1_918,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The snow and ice of Finland's winters"),
                 FlagColorEntry(name: "Blue", hex: "003580", meaning: "Finland's thousands of lakes and the blue sky"),
@@ -499,7 +499,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Finland adopted its flag upon declaring independence from Russia in 1917. The blue and white colors had been used in Finnish art and poetry for decades as symbols of the country's natural landscape."
         ),
         "PL": FlagSymbolism(
-            adoptedYear: 1919,
+            adoptedYear: 1_919,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and noble ideals"),
                 FlagColorEntry(name: "Red", hex: "DC143C", meaning: "Sacrifice and valor — the blood shed for Poland"),
@@ -508,7 +508,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Poland's white eagle emblem is one of the oldest in Europe, dating from the 10th century. The white and red colors derive from the arms of the Polish-Lithuanian Commonwealth."
         ),
         "GR": FlagSymbolism(
-            adoptedYear: 1978,
+            adoptedYear: 1_978,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "0D5EAF", meaning: "The sky and the sea"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The breaking waves of the sea and the purity of the independence struggle"),
@@ -520,7 +520,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The nine blue and white stripes represent the nine syllables of the revolutionary slogan 'Freedom or Death,' used during the Greek War of Independence against Ottoman rule (1821–1829)."
         ),
         "UA": FlagSymbolism(
-            adoptedYear: 1992,
+            adoptedYear: 1_992,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "005BBB", meaning: "The clear blue sky over Ukraine"),
                 FlagColorEntry(name: "Yellow", hex: "FFD500", meaning: "Golden wheat fields — Ukraine's agricultural abundance and identity"),
@@ -529,7 +529,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Ukraine's blue and yellow flag is one of the world's most recognizable bicolors. These colors were used in Ukrainian coats of arms since the medieval Principality of Galicia-Volhynia. The flag was readopted after independence from the USSR in 1991."
         ),
         "CZ": FlagSymbolism(
-            adoptedYear: 1920,
+            adoptedYear: 1_920,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "11457E", meaning: "Slovakia's mountains and rivers"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Bohemia and the purity of civic values"),
@@ -539,7 +539,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "When Czechoslovakia peacefully split into Czech Republic and Slovakia on January 1, 1993, Czech Republic kept the combined flag. Slovakia adopted a new flag without the blue triangle."
         ),
         "SK": FlagSymbolism(
-            adoptedYear: 1992,
+            adoptedYear: 1_992,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The snow-capped Carpathian Mountains"),
                 FlagColorEntry(name: "Blue", hex: "0B4EA2", meaning: "The rivers and the sky"),
@@ -552,7 +552,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "HU": FlagSymbolism(
-            adoptedYear: 1957,
+            adoptedYear: 1_957,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CE2939", meaning: "Strength and bravery of the Hungarian people"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Faithfulness and the snow of the Carpathians"),
@@ -562,7 +562,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Hungary's tricolor was adopted during the revolution of 1848–49 against Habsburg rule, inspired by the French tricolor. The colors are derived from the Hungarian coat of arms used since the 12th century."
         ),
         "RO": FlagSymbolism(
-            adoptedYear: 1989,
+            adoptedYear: 1_989,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "002B7F", meaning: "Liberty and the sky"),
                 FlagColorEntry(name: "Yellow", hex: "FCD116", meaning: "Justice and Romania's fertile lands"),
@@ -572,7 +572,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Romania's tricolor was first used in 1848 during the Wallachian Revolution, inspired by the French tricolor. Romania removed the communist coat of arms from the flag in 1989 after the fall of Ceaușescu."
         ),
         "BG": FlagSymbolism(
-            adoptedYear: 1990,
+            adoptedYear: 1_990,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace, love, and freedom"),
                 FlagColorEntry(name: "Green", hex: "00966E", meaning: "Agriculture, fertility, and the forests"),
@@ -582,7 +582,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "RS": FlagSymbolism(
-            adoptedYear: 2010,
+            adoptedYear: 2_010,
             colors: [
                 FlagColorEntry(name: "Red", hex: "C6363C", meaning: "Blood and valor"),
                 FlagColorEntry(name: "Blue", hex: "0C4076", meaning: "Liberty"),
@@ -595,7 +595,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "HR": FlagSymbolism(
-            adoptedYear: 1990,
+            adoptedYear: 1_990,
             colors: [
                 FlagColorEntry(name: "Red", hex: "FF0000", meaning: "Valor and sacrifice"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and peace"),
@@ -607,7 +607,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "SI": FlagSymbolism(
-            adoptedYear: 1991,
+            adoptedYear: 1_991,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and snow of the Alps"),
                 FlagColorEntry(name: "Blue", hex: "003DA5", meaning: "Sky and rivers"),
@@ -623,7 +623,7 @@ public enum FlagSymbolismData: Sendable {
 
         // MARK: Asia
         "JP": FlagSymbolism(
-            adoptedYear: 1870,
+            adoptedYear: 1_870,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Honesty and purity"),
                 FlagColorEntry(name: "Red", hex: "BC002D", meaning: "The sun — sincerity and warmth"),
@@ -634,7 +634,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Hinomaru has been used in Japan since at least the Edo period. The current legal specifications were defined in the Law Regarding the National Flag and Anthem (1999), standardizing the exact shade of red and proportions."
         ),
         "CN": FlagSymbolism(
-            adoptedYear: 1949,
+            adoptedYear: 1_949,
             colors: [
                 FlagColorEntry(name: "Red", hex: "DE2910", meaning: "The communist revolution and the blood of those who died for it"),
                 FlagColorEntry(name: "Yellow", hex: "FFDE00", meaning: "The golden future of China"),
@@ -646,7 +646,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Designed by Zeng Liansong in 1949, the flag was chosen from nearly 3,000 submissions. The five stars reflect Mao Zedong's vision of a united Chinese people rallying around the Communist Party."
         ),
         "IN": FlagSymbolism(
-            adoptedYear: 1947,
+            adoptedYear: 1_947,
             colors: [
                 FlagColorEntry(name: "Saffron", hex: "FF9933", meaning: "Courage, sacrifice, and the spirit of renunciation"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace, truth, and purity"),
@@ -658,7 +658,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Constituent Assembly replaced Gandhi's spinning wheel (charkha) with the Ashoka Chakra on July 22, 1947, to avoid political associations and represent a more universal Indian identity. The saffron and green also symbolize India's two major religions — Hinduism and Islam."
         ),
         "KR": FlagSymbolism(
-            adoptedYear: 1950,
+            adoptedYear: 1_950,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace, purity, and the Korean love of peace"),
                 FlagColorEntry(name: "Red", hex: "CD2E3A", meaning: "Positive cosmic forces"),
@@ -671,7 +671,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Taegukgi (Korean for 'flag') embodies Taoist philosophy. The four black trigrams are from the I Ching, representing heaven, earth, water, and fire — also standing for the four cardinal virtues: benevolence, wisdom, vitality, and justice."
         ),
         "SA": FlagSymbolism(
-            adoptedYear: 1973,
+            adoptedYear: 1_973,
             colors: [
                 FlagColorEntry(name: "Green", hex: "006C35", meaning: "Islam and prosperity"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace"),
@@ -683,7 +683,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Saudi Arabia's flag is one of only three national flags with writing on it (the others being Afghanistan and Iran). The flag is never flown at half-mast because lowering the Shahada would be considered disrespectful."
         ),
         "TR": FlagSymbolism(
-            adoptedYear: 1844,
+            adoptedYear: 1_844,
             colors: [
                 FlagColorEntry(name: "Red", hex: "E30A17", meaning: "The blood of Turkish martyrs and the setting sun"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace"),
@@ -695,7 +695,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The crescent and star were already symbols of the Ottoman Empire long before Islam. After the siege of Constantinople in 1453, they became associated with Islam across the Middle East. Various legends connect the crescent to the Byzantine city."
         ),
         "PK": FlagSymbolism(
-            adoptedYear: 1947,
+            adoptedYear: 1_947,
             colors: [
                 FlagColorEntry(name: "Green", hex: "01411C", meaning: "Islam and the Muslim majority"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and the religious minorities of Pakistan"),
@@ -707,7 +707,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The green represents Muslim majority and the white stripe the Hindu, Christian, and other minorities. The design was inspired by the flag of the All India Muslim League."
         ),
         "BD": FlagSymbolism(
-            adoptedYear: 1972,
+            adoptedYear: 1_972,
             colors: [
                 FlagColorEntry(name: "Green", hex: "006A4E", meaning: "The lush greenery of Bangladesh and the vitality of its people"),
                 FlagColorEntry(name: "Red", hex: "F42A41", meaning: "The rising sun and the blood of those who died in the Liberation War of 1971"),
@@ -718,7 +718,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Bangladesh's flag is inspired by Japan's. The red circle is slightly off-center toward the hoist side so it appears centered when the flag is flying. The original design (1971) included a yellow map of Bangladesh, which was removed in 1972."
         ),
         "ID": FlagSymbolism(
-            adoptedYear: 1945,
+            adoptedYear: 1_945,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "Courage and valor"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and peace"),
@@ -727,7 +727,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Indonesia's flag (Sang Saka Merah-Putih — 'Sacred Red and White') is nearly identical to Monaco's — both use red over white in identical proportions. The Indonesian colors derive from the Majapahit Empire's banner used over 700 years ago."
         ),
         "TH": FlagSymbolism(
-            adoptedYear: 1917,
+            adoptedYear: 1_917,
             colors: [
                 FlagColorEntry(name: "Red", hex: "A51931", meaning: "The nation and the blood of those who sacrificed for Thailand"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Religion — the purity of Buddhism"),
@@ -737,7 +737,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The blue stripe was added in 1917 by King Vajiravudh to show solidarity with the Allied Powers in World War I, who used similar colors. Thailand is the only Southeast Asian nation never colonized by Europeans."
         ),
         "VN": FlagSymbolism(
-            adoptedYear: 1955,
+            adoptedYear: 1_955,
             colors: [
                 FlagColorEntry(name: "Red", hex: "DA251D", meaning: "Revolution, the blood of the fallen, and the country's socialist spirit"),
                 FlagColorEntry(name: "Yellow", hex: "FFCD00", meaning: "The golden skin of the Vietnamese people and the future they are building"),
@@ -748,7 +748,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The red flag with a gold star was created by Nguyễn Hữu Tiến in 1940 for the Nam Kỳ uprising against French colonial rule. It became the official flag of North Vietnam in 1955 and unified Vietnam in 1975."
         ),
         "PH": FlagSymbolism(
-            adoptedYear: 1898,
+            adoptedYear: 1_898,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "0038A8", meaning: "Peace, truth, and justice"),
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "Patriotism and valor"),
@@ -761,7 +761,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Uniquely, the Philippine flag is displayed with the red stripe up during wartime and the blue stripe up during peace. It is the only national flag with this inverted-meaning tradition."
         ),
         "MY": FlagSymbolism(
-            adoptedYear: 1963,
+            adoptedYear: 1_963,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CC0001", meaning: "Courage and the willingness to sacrifice for the nation"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity and virtue"),
@@ -775,7 +775,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "SG": FlagSymbolism(
-            adoptedYear: 1959,
+            adoptedYear: 1_959,
             colors: [
                 FlagColorEntry(name: "Red", hex: "EF3340", meaning: "Universal brotherhood and equality of man"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Pervading and everlasting purity and virtue"),
@@ -787,7 +787,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Singapore's flag was designed in 1959 by a government committee. The crescent was deliberately chosen to avoid association with any particular religion — Islam had already claimed the crescent, so the five stars were added to differentiate it."
         ),
         "KZ": FlagSymbolism(
-            adoptedYear: 1992,
+            adoptedYear: 1_992,
             colors: [
                 FlagColorEntry(name: "Light Blue", hex: "00AFCA", meaning: "Peace, cultural unity, and the ethnic diversity of Kazakhstan"),
                 FlagColorEntry(name: "Yellow", hex: "FEC50C", meaning: "Wealth and the country's grain"),
@@ -800,7 +800,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The blue background represents Tengrism — the Sky God worshipped by Turkic and Mongolian peoples. Kazakhstan's flag was designed by artist Shaken Niyazbekov and is considered one of the most artistically distinctive in the world."
         ),
         "UZ": FlagSymbolism(
-            adoptedYear: 1991,
+            adoptedYear: 1_991,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "1EB53A", meaning: "The sky and water — echoing Timur's empire banner"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and purity"),
@@ -813,7 +813,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "MN": FlagSymbolism(
-            adoptedYear: 1940,
+            adoptedYear: 1_940,
             colors: [
                 FlagColorEntry(name: "Red", hex: "C4272F", meaning: "Courage, prosperity, and the communist revolutionary legacy"),
                 FlagColorEntry(name: "Blue", hex: "015197", meaning: "The eternal blue sky — the most sacred symbol in Mongolian culture"),
@@ -824,7 +824,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Soyombo symbol was created by Buddhist monk Zanabazar in 1686 and represents the independence and sovereignty of Mongolia. Each element carries deep philosophical meaning from Buddhist and Mongolian cosmology."
         ),
         "IR": FlagSymbolism(
-            adoptedYear: 1980,
+            adoptedYear: 1_980,
             colors: [
                 FlagColorEntry(name: "Green", hex: "239F40", meaning: "Growth, nature, and Islam"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and honesty"),
@@ -837,7 +837,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "After the 1979 Islamic Revolution, the lion-and-sun emblem was replaced with the Allah calligraphy. The repeating Takbir inscription was added — 11 times on each horizontal band's border — to commemorate the revolution's date."
         ),
         "IQ": FlagSymbolism(
-            adoptedYear: 2008,
+            adoptedYear: 2_008,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "Courage and the blood of the Arab nation"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Tolerance and generosity"),
@@ -849,7 +849,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "IL": FlagSymbolism(
-            adoptedYear: 1948,
+            adoptedYear: 1_948,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity, honesty, and the background of the Jewish prayer shawl (tallit)"),
                 FlagColorEntry(name: "Blue", hex: "0038B8", meaning: "Heaven, the sea of Galilee, and the stripes of the Jewish tallit"),
@@ -860,7 +860,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Israel's flag is based on the design of the Jewish prayer shawl (tallit), which features blue (or black) stripes on white cloth. The Star of David was formally adopted as a Zionist symbol in 1897."
         ),
         "JO": FlagSymbolism(
-            adoptedYear: 1928,
+            adoptedYear: 1_928,
             colors: [
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "The Abbasid Caliphate"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "The Umayyad Caliphate"),
@@ -873,7 +873,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "AE": FlagSymbolism(
-            adoptedYear: 1971,
+            adoptedYear: 1_971,
             colors: [
                 FlagColorEntry(name: "Green", hex: "00732F", meaning: "Fertility and the prosperity of the land"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and neutrality"),
@@ -884,7 +884,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The UAE's pan-Arab colors (black, white, green, red) were chosen when the seven emirates unified in 1971. Abdullah Al-Maainah designed the flag, inspired by the Arab Liberation flag."
         ),
         "QA": FlagSymbolism(
-            adoptedYear: 1971,
+            adoptedYear: 1_971,
             colors: [
                 FlagColorEntry(name: "Maroon", hex: "8D1B3D", meaning: "The bloodshed in Qatar's wars and the country's natural dye from local sea creatures"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace"),
@@ -895,7 +895,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Qatar's flag originally used red, but the intense sunlight of the Gulf faded it to the distinctive maroon color over time, which was then officially adopted. It is the only non-rectangular national flag besides Nepal."
         ),
         "LB": FlagSymbolism(
-            adoptedYear: 1943,
+            adoptedYear: 1_943,
             colors: [
                 FlagColorEntry(name: "Red", hex: "FF0000", meaning: "The blood shed for liberation"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Purity, peace, and Lebanon's snow-capped mountains"),
@@ -906,7 +906,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Cedar of God (Arz el-Rab in Arabic) has been a symbol of Lebanon since the time of the Phoenicians. The Bible mentions the cedars of Lebanon numerous times. The tree represents immortality, peace, and the country's cultural identity."
         ),
         "KW": FlagSymbolism(
-            adoptedYear: 1961,
+            adoptedYear: 1_961,
             colors: [
                 FlagColorEntry(name: "Green", hex: "007A3D", meaning: "Fertile land and prosperity"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and purity"),
@@ -917,7 +917,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "OM": FlagSymbolism(
-            adoptedYear: 1995,
+            adoptedYear: 1_995,
             colors: [
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and the Imam of Oman"),
                 FlagColorEntry(name: "Red", hex: "DB161B", meaning: "Battles against foreign invaders"),
@@ -929,7 +929,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "AF": FlagSymbolism(
-            adoptedYear: 2013,
+            adoptedYear: 2_013,
             colors: [
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "The dark past of oppression"),
                 FlagColorEntry(name: "Red", hex: "D32011", meaning: "The blood of those who died for the country"),
@@ -944,7 +944,7 @@ public enum FlagSymbolismData: Sendable {
 
         // MARK: Africa
         "ZA": FlagSymbolism(
-            adoptedYear: 1994,
+            adoptedYear: 1_994,
             colors: [
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "Black South Africans and the people's struggle"),
                 FlagColorEntry(name: "Green", hex: "007A4D", meaning: "Agriculture, natural resources, and the land"),
@@ -959,7 +959,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "South Africa's flag was designed in just one week in 1994 by State Herald Fred Brownell. It is said to be the most complex national flag in the world. The six colors represent the political parties that negotiated the end of apartheid."
         ),
         "NG": FlagSymbolism(
-            adoptedYear: 1960,
+            adoptedYear: 1_960,
             colors: [
                 FlagColorEntry(name: "Green", hex: "008751", meaning: "Nigeria's vast forests, agriculture, and natural wealth"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and unity between Nigeria's diverse peoples"),
@@ -968,7 +968,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Nigeria's simple green-white-green flag was designed by Michael Taiwo Akinkunmi, a student in London, who submitted it to a national competition in 1959. He reportedly forgot to include the red sun he designed in the middle, which was removed before selection."
         ),
         "EG": FlagSymbolism(
-            adoptedYear: 1984,
+            adoptedYear: 1_984,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "Revolution and the blood sacrificed for Egypt's independence"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace"),
@@ -980,7 +980,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Egypt's flag shares the Pan-Arab colors (red, white, black) with Iraq and Syria. The Eagle of Saladin replaced the Hawk of Quraish (from the Prophet Muhammad's tribe) in 1984, referencing the unifying Arab hero who recaptured Jerusalem."
         ),
         "ET": FlagSymbolism(
-            adoptedYear: 1996,
+            adoptedYear: 1_996,
             colors: [
                 FlagColorEntry(name: "Green", hex: "078930", meaning: "Hope for the future and the fertility of the land"),
                 FlagColorEntry(name: "Yellow", hex: "FCDD09", meaning: "Peace and justice — the church"),
@@ -994,7 +994,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Ethiopia's green, yellow, and red colors (the Pan-African colors) were adopted by many African nations after independence as a symbol of unity. Ethiopia, never colonized, is considered the 'father' of African independence movements."
         ),
         "KE": FlagSymbolism(
-            adoptedYear: 1963,
+            adoptedYear: 1_963,
             colors: [
                 FlagColorEntry(name: "Black", hex: "006600", meaning: "The African people and their heritage"),
                 FlagColorEntry(name: "Red", hex: "BB0000", meaning: "The blood shed in the struggle for independence"),
@@ -1008,7 +1008,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Kenya's flag is based on the flag of the Kenya African National Union (KANU), which led the independence movement. The Maasai shield and spears represent Kenya's cultural heritage and readiness to defend its sovereignty."
         ),
         "GH": FlagSymbolism(
-            adoptedYear: 1957,
+            adoptedYear: 1_957,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CF0921", meaning: "The blood of those who died for independence"),
                 FlagColorEntry(name: "Gold", hex: "FCD116", meaning: "Ghana's mineral wealth — particularly gold"),
@@ -1020,7 +1020,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Ghana became the first sub-Saharan African country to gain independence in 1957. The black star was taken from the flag of Marcus Garvey's Black Star Line shipping company, which symbolized the return of African diaspora to their homeland."
         ),
         "TZ": FlagSymbolism(
-            adoptedYear: 1964,
+            adoptedYear: 1_964,
             colors: [
                 FlagColorEntry(name: "Green", hex: "1EB53A", meaning: "The vegetation and the land of Tanzania"),
                 FlagColorEntry(name: "Yellow", hex: "FCD116", meaning: "Mineral wealth"),
@@ -1031,7 +1031,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Tanzania's flag was formed by combining the flags of Tanganyika (green-black-green) and Zanzibar (blue-black-green) when they merged in 1964. The diagonal band represents the union."
         ),
         "MA": FlagSymbolism(
-            adoptedYear: 1915,
+            adoptedYear: 1_915,
             colors: [
                 FlagColorEntry(name: "Red", hex: "C1272D", meaning: "Hardiness, valor, strength, and bravery"),
                 FlagColorEntry(name: "Green", hex: "006233", meaning: "Islam and peace"),
@@ -1042,7 +1042,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The red background has been used by Moroccan royalty since the 17th century. The green interlaced pentagram was added in 1915 by Sultan Moulay Youssef to distinguish Morocco's merchant vessels from others."
         ),
         "DZ": FlagSymbolism(
-            adoptedYear: 1962,
+            adoptedYear: 1_962,
             colors: [
                 FlagColorEntry(name: "Green", hex: "006233", meaning: "Islam and prosperity — the sacred color of the Prophet Muhammad"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and purity"),
@@ -1055,7 +1055,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Algeria's flag was used by the National Liberation Front (FLN) during the eight-year independence war against France (1954–1962). The star and crescent were Islamic symbols used by Algerian nationalists to differentiate their cause from French colonial symbols."
         ),
         "TN": FlagSymbolism(
-            adoptedYear: 1831,
+            adoptedYear: 1_831,
             colors: [
                 FlagColorEntry(name: "Red", hex: "E70013", meaning: "Martyrs' blood and the Ottoman heritage"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace"),
@@ -1066,7 +1066,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Tunisia's flag is one of the oldest in Africa and the Arab world. It was designed in 1827 by Husseinid Bey to distinguish Tunisian ships from the Ottoman Empire's fleet."
         ),
         "SN": FlagSymbolism(
-            adoptedYear: 1960,
+            adoptedYear: 1_960,
             colors: [
                 FlagColorEntry(name: "Green", hex: "00853F", meaning: "Islam and the hope of Senegal's people"),
                 FlagColorEntry(name: "Yellow", hex: "FDEF42", meaning: "Natural wealth and the wealth of the soil"),
@@ -1078,7 +1078,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "AO": FlagSymbolism(
-            adoptedYear: 1975,
+            adoptedYear: 1_975,
             colors: [
                 FlagColorEntry(name: "Red", hex: "CC0000", meaning: "The blood shed for independence"),
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "Africa and the African continent"),
@@ -1091,7 +1091,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Angola's flag is based on the flag of the MPLA (People's Movement for the Liberation of Angola), the dominant independence movement and ruling party since 1975. The black, red, and socialist symbols reflect the Cuban and Soviet influence on Angola's independence."
         ),
         "ZW": FlagSymbolism(
-            adoptedYear: 1980,
+            adoptedYear: 1_980,
             colors: [
                 FlagColorEntry(name: "Green", hex: "006400", meaning: "Agriculture and rural areas"),
                 FlagColorEntry(name: "Yellow", hex: "FFD200", meaning: "Mineral wealth"),
@@ -1106,7 +1106,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "The Zimbabwe Bird soapstone sculptures were found in the ruins of Great Zimbabwe, a medieval city built between the 11th and 15th centuries. They were removed by colonial settlers and became a powerful symbol of reclaimed African heritage."
         ),
         "ZM": FlagSymbolism(
-            adoptedYear: 1996,
+            adoptedYear: 1_996,
             colors: [
                 FlagColorEntry(name: "Green", hex: "198A00", meaning: "The natural resources of Zambia"),
                 FlagColorEntry(name: "Red", hex: "EF0000", meaning: "The blood of freedom fighters"),
@@ -1119,7 +1119,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "RW": FlagSymbolism(
-            adoptedYear: 2001,
+            adoptedYear: 2_001,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "20603D", meaning: "Happiness and peace"),
                 FlagColorEntry(name: "Yellow", hex: "FAD201", meaning: "Economic development"),
@@ -1131,7 +1131,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Rwanda adopted a new flag in 2001 to distance itself from the 1994 genocide. The old flag had an 'R' in the center to distinguish it from Guinea's nearly identical tricolor. The new design represents a fresh start and national unity."
         ),
         "CM": FlagSymbolism(
-            adoptedYear: 1975,
+            adoptedYear: 1_975,
             colors: [
                 FlagColorEntry(name: "Green", hex: "007A5E", meaning: "The forests and the southern vegetation"),
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "Independence, unity, and the spirit of the people"),
@@ -1143,7 +1143,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "CI": FlagSymbolism(
-            adoptedYear: 1959,
+            adoptedYear: 1_959,
             colors: [
                 FlagColorEntry(name: "Orange", hex: "F77F00", meaning: "The savanna of the north and development"),
                 FlagColorEntry(name: "White", hex: "FFFFFF", meaning: "Peace and unity between the north and south"),
@@ -1153,7 +1153,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Côte d'Ivoire's flag is almost identical to Ireland's (just with reversed colors). The orange represents the savanna in the north, while the green represents the forest in the south — united by the white of peace."
         ),
         "UG": FlagSymbolism(
-            adoptedYear: 1962,
+            adoptedYear: 1_962,
             colors: [
                 FlagColorEntry(name: "Black", hex: "000000", meaning: "The African people of Uganda"),
                 FlagColorEntry(name: "Yellow", hex: "FCDC04", meaning: "The abundant sunshine of Uganda"),
@@ -1165,7 +1165,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: nil
         ),
         "CD": FlagSymbolism(
-            adoptedYear: 2006,
+            adoptedYear: 2_006,
             colors: [
                 FlagColorEntry(name: "Sky Blue", hex: "007FFF", meaning: "Peace"),
                 FlagColorEntry(name: "Red", hex: "CE1126", meaning: "The blood of the country's martyrs"),
@@ -1179,7 +1179,7 @@ public enum FlagSymbolismData: Sendable {
 
         // MARK: Oceania
         "AU": FlagSymbolism(
-            adoptedYear: 1901,
+            adoptedYear: 1_901,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "00008B", meaning: "The sky and sea surrounding Australia"),
                 FlagColorEntry(name: "Red", hex: "CF142B", meaning: "British heritage via the Union Jack"),
@@ -1193,7 +1193,7 @@ public enum FlagSymbolismData: Sendable {
             historicalNote: "Australia's flag was chosen through a design competition in 1901, receiving 32,823 entries. Five similar designs were submitted and shared the prize. A competition for a new flag without the Union Jack is regularly debated in Australia."
         ),
         "NZ": FlagSymbolism(
-            adoptedYear: 1902,
+            adoptedYear: 1_902,
             colors: [
                 FlagColorEntry(name: "Blue", hex: "00247D", meaning: "The Pacific Ocean surrounding New Zealand"),
                 FlagColorEntry(name: "Red", hex: "CF142B", meaning: "British heritage via the Union Jack"),

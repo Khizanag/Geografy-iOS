@@ -70,7 +70,12 @@ private extension QuestionGenerator {
         case .reverseCapital:
             makeReverseCapitalQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
         case .worldRankings:
-            makeWorldRankingsQuestion(country: country, allCountries: allCountries, optionCount: optionCount, metric: comparisonMetric)
+            makeWorldRankingsQuestion(
+                country: country,
+                allCountries: allCountries,
+                optionCount: optionCount,
+                metric: comparisonMetric
+            )
         case .nationalSymbols:
             #if os(tvOS)
             nil

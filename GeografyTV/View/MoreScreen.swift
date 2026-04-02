@@ -1,11 +1,12 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
+import Geografy_Core_Service
 import SwiftUI
 
 struct MoreScreen: View {
     let countryDataService: CountryDataService
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             Section("Games") {
                 NavigationLink {
@@ -47,6 +48,7 @@ struct MoreScreen: View {
                 }
             }
 
+            // swiftlint:disable:next closure_body_length
             Section("Discover") {
                 NavigationLink {
                     EconomyScreen(countryDataService: countryDataService)

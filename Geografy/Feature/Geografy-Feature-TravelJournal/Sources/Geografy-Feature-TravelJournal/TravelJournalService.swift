@@ -4,6 +4,15 @@ import SwiftData
 import SwiftUI
 import UIKit
 
+private struct SampleEntry {
+    let code: String
+    let title: String
+    let notes: String
+    let rating: Int
+    let startOffset: Int
+    let endOffset: Int
+}
+
 @Observable
 public final class TravelJournalService {
     private(set) var entries: [TravelJournalEntry] = []
@@ -174,52 +183,59 @@ private extension TravelJournalService {
 
     func seedSampleEntries() {
         let calendar = Calendar.current
-        let samples: [(String, String, String, Int, Int, Int)] = [
-            (
-                "JP", "Tokyo & Kyoto Adventure",
-                "Explored ancient temples in Kyoto and the bustling streets of Shibuya. The food was incredible — sushi, ramen, and matcha everything!",
-                5, -45, -38
+        let samples: [SampleEntry] = [
+            SampleEntry(
+                code: "JP", title: "Tokyo & Kyoto Adventure",
+                notes: "Explored ancient temples in Kyoto and the bustling streets of Shibuya."
+                    + " The food was incredible — sushi, ramen, and matcha everything!",
+                rating: 5, startOffset: -45, endOffset: -38
             ),
-            (
-                "IT", "Italian Dream",
-                "Rome's Colosseum took my breath away. Venice canals at sunset were magical. The gelato in Florence was the best I've ever had.",
-                5, -120, -110
+            SampleEntry(
+                code: "IT", title: "Italian Dream",
+                notes: "Rome's Colosseum took my breath away."
+                    + " Venice canals at sunset were magical."
+                    + " The gelato in Florence was the best I've ever had.",
+                rating: 5, startOffset: -120, endOffset: -110
             ),
-            (
-                "GE", "Hidden Gem of the Caucasus",
-                "Tbilisi's old town charm, Kazbegi's mountain views, and the warmest hospitality I've experienced. Georgian cuisine is underrated!",
-                4, -30, -25
+            SampleEntry(
+                code: "GE", title: "Hidden Gem of the Caucasus",
+                notes: "Tbilisi's old town charm, Kazbegi's mountain views,"
+                    + " and the warmest hospitality I've experienced."
+                    + " Georgian cuisine is underrated!",
+                rating: 4, startOffset: -30, endOffset: -25
             ),
-            (
-                "BR", "Rio & Amazon",
-                "Christ the Redeemer at sunrise was unforgettable. A boat trip through the Amazon rainforest showed me wildlife I'd only seen in documentaries.",
-                4, -90, -83
+            SampleEntry(
+                code: "BR", title: "Rio & Amazon",
+                notes: "Christ the Redeemer at sunrise was unforgettable."
+                    + " A boat trip through the Amazon rainforest showed me"
+                    + " wildlife I'd only seen in documentaries.",
+                rating: 4, startOffset: -90, endOffset: -83
             ),
         ]
         let context = makeContext()
         for (index, sample) in samples.enumerated() {
             let startDate = calendar.date(
                 byAdding: .day,
-                value: sample.4,
+                value: sample.startOffset,
                 to: Date()
             ) ?? Date()
             let endDate = calendar.date(
                 byAdding: .day,
-                value: sample.5,
+                value: sample.endOffset,
                 to: Date()
             ) ?? Date()
             let entry = TravelJournalEntry(
-                countryCode: sample.0,
-                title: sample.1,
-                notes: sample.2,
-                rating: sample.3,
+                countryCode: sample.code,
+                title: sample.title,
+                notes: sample.notes,
+                rating: sample.rating,
                 startDate: startDate,
                 endDate: endDate,
                 photoFileNames: []
             )
             entry.createdAt = calendar.date(
                 byAdding: .day,
-                value: sample.4 - index,
+                value: sample.startOffset - index,
                 to: Date()
             ) ?? Date()
             context.insert(entry)

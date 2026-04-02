@@ -12,10 +12,8 @@ public enum MapColorPalette {
         // Collect unique codes preserving first-occurrence order
         var seen = Set<String>()
         var codes = [String]()
-        for shape in shapes {
-            if seen.insert(shape.id).inserted {
-                codes.append(shape.id)
-            }
+        for shape in shapes where seen.insert(shape.id).inserted {
+            codes.append(shape.id)
         }
 
         // Welsh-Powell: process high-degree countries first for optimal coloring,

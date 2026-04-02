@@ -1,6 +1,6 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -184,7 +184,6 @@ private extension SpeedRunSetupScreen {
         .offset(y: appeared ? 0 : 12)
         .animation(.easeOut(duration: 0.6).delay(0.25), value: appeared)
     }
-
 }
 
 // MARK: - Challenge Stats
@@ -244,9 +243,12 @@ private extension SpeedRunSetupScreen {
 // MARK: - Rules
 private extension SpeedRunSetupScreen {
     var rulesSection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("How It Works")
+            // swiftlint:disable:next closure_body_length
             CardView {
+                // swiftlint:disable:next closure_body_length
                 VStack(spacing: 0) {
                     ruleRow(
                         step: "1",
@@ -366,5 +368,4 @@ private extension SpeedRunSetupScreen {
         }
         return "—"
     }
-
 }

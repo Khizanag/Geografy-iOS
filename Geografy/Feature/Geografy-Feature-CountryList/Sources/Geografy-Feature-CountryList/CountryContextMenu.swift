@@ -10,6 +10,7 @@ struct CountryContextMenu: ViewModifier {
 
     func body(content: Content) -> some View {
         content
+            // swiftlint:disable:next closure_body_length
             .contextMenu {
                 Button {
                     favoritesService.toggle(code: country.code)

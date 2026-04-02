@@ -161,6 +161,7 @@ private extension CountryDetailScreen {
 // MARK: - Hero
 private extension CountryDetailScreen {
     var heroSection: some View {
+        // swiftlint:disable:next closure_body_length
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 Button {
@@ -201,7 +202,9 @@ private extension CountryDetailScreen {
 // MARK: - Quick Facts
 private extension CountryDetailScreen {
     var quickFactsCard: some View {
+        // swiftlint:disable:next closure_body_length
         CardView {
+            // swiftlint:disable:next closure_body_length
             HStack(spacing: 0) {
                 Button {
                     activeSheet = .info(
@@ -212,7 +215,9 @@ private extension CountryDetailScreen {
                             supportsMap: false
                         )
                     )
+                // swiftlint:disable:next closure_body_length
                 } label: {
+                    // swiftlint:disable:next closure_body_length
                     VStack(spacing: DesignSystem.Spacing.xxs) {
                         Image(systemName: "mappin")
                             .font(DesignSystem.Font.caption)
@@ -324,6 +329,7 @@ private extension CountryDetailScreen {
         return Button {
             hapticsService.impact(.light)
             activeSheet = .travelPicker
+        // swiftlint:disable:next closure_body_length
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
@@ -491,7 +497,9 @@ private extension CountryDetailScreen {
     }
 
     var contentScrollView: some View {
+        // swiftlint:disable:next closure_body_length
         ScrollView {
+            // swiftlint:disable:next closure_body_length
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 heroSection
                 quickFactsCard

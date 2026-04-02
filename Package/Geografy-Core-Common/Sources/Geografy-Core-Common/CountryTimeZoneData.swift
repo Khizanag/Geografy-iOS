@@ -207,7 +207,7 @@ public enum CountryTimeZoneData {
 
     static func utcOffsetHours(for countryCode: String, at date: Date = Date()) -> Double? {
         guard let zone = timeZone(for: countryCode) else { return nil }
-        return Double(zone.secondsFromGMT(for: date)) / 3600
+        return Double(zone.secondsFromGMT(for: date)) / 3_600
     }
 
     static func currentTime(for countryCode: String) -> Date? {

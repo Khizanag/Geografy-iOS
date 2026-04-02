@@ -43,7 +43,8 @@ private extension CountryDetailScreen {
                 InfoItem(
                     icon: "person.3.fill",
                     title: "Population",
-                    value: "\(country.population.formatPopulation()) people\n\(String(format: "%.1f", country.populationDensity))/km² density",
+                    value: "\(country.population.formatPopulation()) people\n"
+                        + "\(String(format: "%.1f", country.populationDensity))/km² density",
                     supportsMap: false
                 )
             )

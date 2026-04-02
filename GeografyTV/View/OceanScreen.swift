@@ -1,6 +1,6 @@
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Feature_OceanExplorer
+import SwiftUI
 
 struct OceanScreen: View {
     private let service = OceanService()

@@ -202,7 +202,7 @@ private extension DailyChallengeService {
 
             var options = [target] + Array(distractors)
             options = options.seededShuffle(
-                seed: seed &+ UInt64(stepIndex) &* 7919
+                seed: seed &+ UInt64(stepIndex) &* 7_919
             )
 
             chainSteps.append(DailyChallenge.ChainStep(
@@ -272,7 +272,7 @@ private extension DailyChallengeService {
                       byAdding: .day,
                       value: -1,
                       to: today
-                  )!
+                  ) ?? today
               )
         else {
             streak = 0
@@ -281,11 +281,11 @@ private extension DailyChallengeService {
 
         var count = 1
         for index in 1..<sortedDates.count {
-            let expected = calendar.date(
+            guard let expected = calendar.date(
                 byAdding: .day,
                 value: -1,
                 to: sortedDates[index - 1]
-            )!
+            ) else { break }
             if calendar.isDate(sortedDates[index], inSameDayAs: expected) {
                 count += 1
             } else {

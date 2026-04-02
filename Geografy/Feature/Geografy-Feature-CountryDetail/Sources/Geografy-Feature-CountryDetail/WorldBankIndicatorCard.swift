@@ -1,7 +1,7 @@
 import Charts
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Core_Service
+import SwiftUI
 
 public struct WorldBankIndicatorCard: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -182,8 +182,8 @@ private extension WorldBankIndicatorCard {
     }
 
     func lineChart(points: [WorldBankService.DataPoint]) -> some View {
-        let minYear = points.first?.year ?? 1990
-        let maxYear = points.last?.year ?? 2023
+        let minYear = points.first?.year ?? 1_990
+        let maxYear = points.last?.year ?? 2_023
         return Chart(points) { point in
             AreaMark(
                 x: .value("Year", point.year),
@@ -241,7 +241,7 @@ private extension WorldBankIndicatorCard {
 
     func footerRow(points: [WorldBankService.DataPoint]) -> some View {
         HStack {
-            Text("\(String(points.first?.year ?? 1960)) – \(String(points.last?.year ?? 2023))")
+            Text("\(String(points.first?.year ?? 1_960)) – \(String(points.last?.year ?? 2_023))")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             Spacer()
@@ -278,12 +278,12 @@ private extension WorldBankIndicatorCard {
 
     func formattedCacheAge(_ date: Date) -> String {
         let interval = Date().timeIntervalSince(date)
-        if interval < 3600 {
+        if interval < 3_600 {
             return "Just now"
-        } else if interval < 86400 {
-            return "\(Int(interval / 3600))h ago"
+        } else if interval < 86_400 {
+            return "\(Int(interval / 3_600))h ago"
         } else {
-            let days = Int(interval / 86400)
+            let days = Int(interval / 86_400)
             return "\(days)d ago"
         }
     }

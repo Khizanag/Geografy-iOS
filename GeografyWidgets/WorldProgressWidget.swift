@@ -42,7 +42,7 @@ struct WorldProgressProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<WorldProgressEntry>) -> Void) {
-        let nextMidnight = Calendar.current.startOfDay(for: .now.addingTimeInterval(86400))
+        let nextMidnight = Calendar.current.startOfDay(for: .now.addingTimeInterval(86_400))
         let timeline = Timeline(entries: [entry()], policy: .after(nextMidnight))
         completion(timeline)
     }

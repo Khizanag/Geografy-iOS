@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct SettingsScreen: View {
@@ -150,6 +150,7 @@ private extension SettingsScreen {
     }
 
     var guestAccountSection: some View {
+        // swiftlint:disable:next closure_body_length
         settingsGroup(header: "Account") {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 SettingsIconBadge(systemImage: "person.fill", color: DesignSystem.Color.textSecondary)
@@ -459,12 +460,12 @@ private extension SettingsScreen {
 
 // MARK: - Settings Row Components
 private struct SettingsToggleRow: View {
-    public let icon: String
-    public let iconColor: Color
-    public let title: String
+    let icon: String
+    let iconColor: Color
+    let title: String
     @Binding var isOn: Bool
 
-    public var body: some View {
+    var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
             Text(title)
@@ -481,11 +482,11 @@ private struct SettingsToggleRow: View {
 }
 
 private struct SettingsNavigationRow: View {
-    public let icon: String
-    public let iconColor: Color
-    public let title: String
+    let icon: String
+    let iconColor: Color
+    let title: String
 
-    public var body: some View {
+    var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
             Text(title)
@@ -503,10 +504,10 @@ private struct SettingsNavigationRow: View {
 }
 
 private struct SettingsIconBadge: View {
-    public let systemImage: String
-    public let color: Color
+    let systemImage: String
+    let color: Color
 
-    public var body: some View {
+    var body: some View {
         Image(systemName: systemImage)
             .font(DesignSystem.IconSize.medium)
             .foregroundStyle(DesignSystem.Color.onAccent)

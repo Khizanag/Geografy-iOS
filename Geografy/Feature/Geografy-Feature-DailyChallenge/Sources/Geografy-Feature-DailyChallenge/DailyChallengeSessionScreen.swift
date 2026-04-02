@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct DailyChallengeSessionScreen: View {
@@ -11,7 +11,7 @@ public struct DailyChallengeSessionScreen: View {
     public let challenge: DailyChallenge
     public let service: DailyChallengeService
 
-    @State private var score: Int = 1000
+    @State private var score: Int = 1_000
     @State private var startTime = Date()
     @State private var showQuitAlert = false
     @State private var blobAnimating = false
@@ -123,7 +123,7 @@ private extension DailyChallengeSessionScreen {
         coordinator.push(
             .dailyChallengeResult(
                 score: score,
-                maxScore: 1000,
+                maxScore: 1_000,
                 challengeType: challenge.type,
                 timeSpent: timeSpent,
                 streak: service.streak + 1

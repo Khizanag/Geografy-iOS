@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct CompareScreen: View {
@@ -174,6 +174,7 @@ private extension CompareScreen {
     }
 
     func numericCharts(left: Country, right: Country) -> some View {
+        // swiftlint:disable:next closure_body_length
         Group {
             CompareBarChart(
                 title: "Population",
@@ -338,7 +339,6 @@ private extension CompareScreen {
         let suffix = languages.count > 3 ? " +\(languages.count - 3)" : ""
         return names.joined(separator: ", ") + suffix
     }
-
 }
 
 // MARK: - Actions

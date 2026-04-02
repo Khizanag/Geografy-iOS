@@ -9,7 +9,7 @@ public struct SpacedRepetitionData: Codable {
     public var totalReviews: Int
     public var correctReviews: Int
 
-    public var masteryPercentage: Double {
+    public var proficiencyPercentage: Double {
         guard totalReviews > 0 else { return 0 }
         return Double(correctReviews) / Double(totalReviews)
     }
@@ -18,28 +18,28 @@ public struct SpacedRepetitionData: Codable {
         nextReviewDate <= Date()
     }
 
-    public var masteryLevel: MasteryLevel {
+    public var proficiencyLevel: ProficiencyLevel {
         if totalReviews == 0 { return .new }
-        if repetitions >= 5, easeFactor >= 2.2 { return .mastered }
+        if repetitions >= 5, easeFactor >= 2.2 { return .proficient }
         if repetitions >= 3 { return .familiar }
         return .learning
     }
 }
 
-// MARK: - Mastery Level
+// MARK: - Proficiency Level
 extension SpacedRepetitionData {
-    public enum MasteryLevel: String, Codable {
+    public enum ProficiencyLevel: String, Codable {
         case new
         case learning
         case familiar
-        case mastered
+        case proficient
 
         var displayName: String {
             switch self {
             case .new: "New"
             case .learning: "Learning"
             case .familiar: "Familiar"
-            case .mastered: "Mastered"
+            case .proficient: "Proficient"
             }
         }
     }
@@ -107,7 +107,7 @@ extension SpacedRepetitionData {
             byAdding: .day,
             value: max(1, Int(updated.interval.rounded())),
             to: Date()
-        ) ?? Date().addingTimeInterval(86400)
+        ) ?? Date().addingTimeInterval(86_400)
 
         return updated
     }

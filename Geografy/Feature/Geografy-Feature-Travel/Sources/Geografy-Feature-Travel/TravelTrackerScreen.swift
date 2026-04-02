@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelTrackerScreen: View {
@@ -11,7 +11,7 @@ public struct TravelTrackerScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
 
-    @State private var selectedFilter: TravelStatus? = nil
+    @State private var selectedFilter: TravelStatus?
     @State private var searchText = ""
     @State private var showCountryPicker = false
     @State private var selectedCountry: Country?
@@ -431,6 +431,7 @@ private extension TravelTrackerScreen {
     }
 
     var ambientBlobs: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Ellipse()
                 .fill(
@@ -439,7 +440,8 @@ private extension TravelTrackerScreen {
                         center: .center, startRadius: 0, endRadius: 200
                     )
                 )
-                .frame(width: 400, height: 300).blur(radius: 40)
+                .frame(width: 400, height: 300)
+                .blur(radius: 40)
                 .offset(x: -80, y: 40)
                 .scaleEffect(blobAnimating ? 1.10 : 0.90)
             Ellipse()
@@ -449,7 +451,8 @@ private extension TravelTrackerScreen {
                         center: .center, startRadius: 0, endRadius: 180
                     )
                 )
-                .frame(width: 360, height: 300).blur(radius: 44)
+                .frame(width: 360, height: 300)
+                .blur(radius: 44)
                 .offset(x: 140, y: 100)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
             Ellipse()
@@ -459,7 +462,8 @@ private extension TravelTrackerScreen {
                         center: .center, startRadius: 0, endRadius: 160
                     )
                 )
-                .frame(width: 320, height: 260).blur(radius: 36)
+                .frame(width: 320, height: 260)
+                .blur(radius: 36)
                 .offset(x: -60, y: 600)
                 .scaleEffect(blobAnimating ? 1.05 : 0.95)
         }

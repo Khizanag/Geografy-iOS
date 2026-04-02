@@ -1,6 +1,6 @@
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Feature_LanguageExplorer
+import SwiftUI
 
 struct LanguageScreen: View {
     @State private var service = LanguageService()
@@ -12,6 +12,7 @@ struct LanguageScreen: View {
     }
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             Section {
                 Picker("Family", selection: $selectedFamily) {

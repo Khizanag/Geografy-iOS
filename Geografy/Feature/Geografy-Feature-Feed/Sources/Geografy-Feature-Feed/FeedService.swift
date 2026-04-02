@@ -29,7 +29,6 @@ public final class FeedService {
 }
 
 // MARK: - Feed Data
-// swiftlint:disable closure_body_length
 private extension FeedService {
     nonisolated(unsafe) public static let allItems: [FeedItem] = [
         // MARK: Did You Know
@@ -493,4 +492,3 @@ private extension FeedService {
         ),
     ]
 }
-// swiftlint:enable closure_body_length

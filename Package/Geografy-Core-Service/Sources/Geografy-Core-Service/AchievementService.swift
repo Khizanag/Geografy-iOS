@@ -152,10 +152,10 @@ public final class AchievementService {
         updateProgress("org_all", value: orgsOpened)
     }
 
-    public func checkFlashcardAchievements(masteredCount: Int) {
-        updateProgress("flashcard_10", value: masteredCount)
-        updateProgress("flashcard_50", value: masteredCount)
-        updateProgress("flashcard_200", value: masteredCount)
+    public func checkFlashcardAchievements(proficientCount: Int) {
+        updateProgress("flashcard_10", value: proficientCount)
+        updateProgress("flashcard_50", value: proficientCount)
+        updateProgress("flashcard_200", value: proficientCount)
     }
 
     public func checkContinentAchievement(continentID: String) {

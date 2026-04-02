@@ -1,7 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Core_Service
+import SwiftUI
 
 public struct CoinStoreScreen: View {
     @Environment(\.dismiss) private var dismiss

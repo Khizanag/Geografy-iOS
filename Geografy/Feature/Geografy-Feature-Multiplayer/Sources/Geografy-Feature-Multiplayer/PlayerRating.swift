@@ -10,7 +10,7 @@ public struct PlayerRating: Sendable {
 // MARK: - Defaults
 extension PlayerRating {
     public static let initial = PlayerRating(
-        rating: 1200,
+        rating: 1_200,
         wins: 0,
         losses: 0,
         draws: 0,
@@ -29,15 +29,15 @@ extension PlayerRating {
     }
 
     public var rankTitle: String {
-        if rating >= 2000 {
+        if rating >= 2_000 {
             "Grandmaster"
-        } else if rating >= 1800 {
+        } else if rating >= 1_800 {
             "Master"
-        } else if rating >= 1600 {
+        } else if rating >= 1_600 {
             "Expert"
-        } else if rating >= 1400 {
+        } else if rating >= 1_400 {
             "Advanced"
-        } else if rating >= 1200 {
+        } else if rating >= 1_200 {
             "Intermediate"
         } else {
             "Beginner"
@@ -45,15 +45,15 @@ extension PlayerRating {
     }
 
     public var rankIcon: String {
-        if rating >= 2000 {
+        if rating >= 2_000 {
             "crown.fill"
-        } else if rating >= 1800 {
+        } else if rating >= 1_800 {
             "star.circle.fill"
-        } else if rating >= 1600 {
+        } else if rating >= 1_600 {
             "medal.fill"
-        } else if rating >= 1400 {
+        } else if rating >= 1_400 {
             "shield.fill"
-        } else if rating >= 1200 {
+        } else if rating >= 1_200 {
             "figure.walk"
         } else {
             "leaf.fill"

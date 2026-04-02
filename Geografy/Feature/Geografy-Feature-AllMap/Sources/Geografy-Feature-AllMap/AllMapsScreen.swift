@@ -1,5 +1,5 @@
-import Geografy_Core_Navigation
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -37,6 +37,7 @@ public struct AllMapsScreen: View {
 // MARK: - Background
 private extension AllMapsScreen {
     var ambientBackground: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             DesignSystem.Color.background
 
@@ -107,7 +108,7 @@ private extension AllMapsScreen {
                 )
                 .frame(width: 320, height: 260)
                 .blur(radius: 44)
-                .offset(x: -60, y: 1000)
+                .offset(x: -60, y: 1_000)
                 .scaleEffect(blobAnimating ? 1.06 : 0.94)
         }
         .ignoresSafeArea()
@@ -161,7 +162,9 @@ private extension AllMapsScreen {
 
     func mapCard(name: String, icon: String) -> some View {
         let colors = gradientColors(for: name)
+        // swiftlint:disable:next closure_body_length
         return Button { openMap(named: name) } label: {
+            // swiftlint:disable:next closure_body_length
             ZStack(alignment: .bottomLeading) {
                 LinearGradient(
                     colors: [colors.0, colors.1],

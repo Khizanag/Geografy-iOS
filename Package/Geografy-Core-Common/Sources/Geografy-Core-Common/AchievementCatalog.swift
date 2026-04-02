@@ -2,7 +2,7 @@ import Foundation
 
 public enum AchievementCatalog {
     nonisolated(unsafe) public static let all: [AchievementDefinition] =
-        explorer + quizMaster + streak + travel + knowledge
+        explorer + quizExpert + streak + travel + knowledge
         + continental + flashcard + speed + perfectScore + social
 }
 
@@ -47,41 +47,41 @@ private extension AchievementCatalog {
     ]
 }
 
-// MARK: - Quiz Master
+// MARK: - Quiz Expert
 private extension AchievementCatalog {
-    static let quizMaster: [AchievementDefinition] = [
+    static let quizExpert: [AchievementDefinition] = [
         AchievementDefinition(
             id: "quiz_1", title: "First Quiz",
             description: "Complete your first quiz",
-            category: .quizMaster, rarity: .common, iconName: "gamecontroller.fill",
+            category: .quizExpert, rarity: .common, iconName: "gamecontroller.fill",
             requirement: "Complete 1 quiz", targetValue: 1,
             xpReward: 25, gameCenterID: "geografy.achievement.first_quiz"
         ),
         AchievementDefinition(
             id: "quiz_10", title: "Quiz Fanatic",
             description: "Complete 10 quizzes",
-            category: .quizMaster, rarity: .rare, iconName: "brain.fill",
+            category: .quizExpert, rarity: .rare, iconName: "brain.fill",
             requirement: "Complete 10 quizzes", targetValue: 10,
             xpReward: 50, gameCenterID: "geografy.achievement.quiz_fanatic"
         ),
         AchievementDefinition(
             id: "quiz_50", title: "Quiz Veteran",
             description: "Complete 50 quizzes",
-            category: .quizMaster, rarity: .epic, iconName: "brain.head.profile.fill",
+            category: .quizExpert, rarity: .epic, iconName: "brain.head.profile.fill",
             requirement: "Complete 50 quizzes", targetValue: 50,
             xpReward: 100
         ),
         AchievementDefinition(
             id: "quiz_100", title: "Quiz Legend",
             description: "Complete 100 quizzes",
-            category: .quizMaster, rarity: .legendary, iconName: "trophy.fill",
+            category: .quizExpert, rarity: .legendary, iconName: "trophy.fill",
             requirement: "Complete 100 quizzes", targetValue: 100,
             xpReward: 150, gameCenterID: "geografy.achievement.quiz_legend"
         ),
         AchievementDefinition(
             id: "all_types", title: "Polymath",
             description: "Complete all quiz types at least once",
-            category: .quizMaster, rarity: .epic, iconName: "square.grid.2x2.fill",
+            category: .quizExpert, rarity: .epic, iconName: "square.grid.2x2.fill",
             requirement: "Try every quiz type", targetValue: 6,
             xpReward: 75, gameCenterID: "geografy.achievement.all_types"
         ),

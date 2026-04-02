@@ -1,7 +1,7 @@
 import AuthenticationServices
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Core_Service
+import SwiftUI
 
 public struct SignInOptionsSheet: View {
     @Environment(\.dismiss) private var dismiss
@@ -320,15 +320,23 @@ private extension SignInOptionsSheet {
 }
 
 // MARK: - Google G Logo
+private struct ArcSegment {
+    let startDeg: CGFloat
+    let endDeg: CGFloat
+    let red: Double
+    let green: Double
+    let blue: Double
+}
+
 private struct GoogleGLogo: View {
-    private static let segments: [(CGFloat, CGFloat, Double, Double, Double)] = [
-        (30, 90, 0.918, 0.263, 0.208),
-        (90, 150, 0.984, 0.737, 0.016),
-        (150, 210, 0.204, 0.659, 0.325),
-        (210, 330, 0.259, 0.522, 0.957),
+    private static let segments: [ArcSegment] = [
+        ArcSegment(startDeg: 30, endDeg: 90, red: 0.918, green: 0.263, blue: 0.208),
+        ArcSegment(startDeg: 90, endDeg: 150, red: 0.984, green: 0.737, blue: 0.016),
+        ArcSegment(startDeg: 150, endDeg: 210, red: 0.204, green: 0.659, blue: 0.325),
+        ArcSegment(startDeg: 210, endDeg: 330, red: 0.259, green: 0.522, blue: 0.957),
     ]
 
-    public var body: some View {
+    var body: some View {
         Canvas { context, size in
             let cx = size.width / 2
             let cy = size.height / 2
@@ -338,17 +346,21 @@ private struct GoogleGLogo: View {
             let center = CGPoint(x: cx, y: cy)
             let style = StrokeStyle(lineWidth: strokeW, lineCap: .butt)
 
-            for (startDeg, endDeg, rVal, gVal, bVal) in Self.segments {
+            for segment in Self.segments {
                 let arc = Path { builder in
                     builder.addArc(
                         center: center,
                         radius: midR,
-                        startAngle: .degrees(startDeg),
-                        endAngle: .degrees(endDeg),
+                        startAngle: .degrees(segment.startDeg),
+                        endAngle: .degrees(segment.endDeg),
                         clockwise: false
                     )
                 }
-                context.stroke(arc, with: .color(Color(red: rVal, green: gVal, blue: bVal)), style: style)
+                context.stroke(
+                    arc,
+                    with: .color(Color(red: segment.red, green: segment.green, blue: segment.blue)),
+                    style: style
+                )
             }
 
             var crossbar = Path()

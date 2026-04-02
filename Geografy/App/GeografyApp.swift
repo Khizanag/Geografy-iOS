@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import Geografy_Feature_Flashcard
 import Geografy_Feature_LearningPath
 import StoreKit
@@ -57,7 +57,7 @@ struct GeografyApp: App {
         }
         .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)
-        .defaultSize(width: 1200, height: 800)
+        .defaultSize(width: 1_200, height: 800)
         .commands { macCommands }
         #endif
     }

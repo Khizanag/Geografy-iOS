@@ -73,7 +73,7 @@ public final class GoogleSignInHandler: NSObject {
     private var currentSession: ASWebAuthenticationSession?
     private let presentationContext = PresentationContextProvider()
 
-    public override init() {
+    override public init() {
         super.init()
     }
 

@@ -1,9 +1,9 @@
 import AuthenticationServices
 import Foundation
 import Geografy_Core_Common
+import Geografy_Core_Service
 import Observation
 import SwiftData
-import Geografy_Core_Service
 
 @Observable
 @MainActor

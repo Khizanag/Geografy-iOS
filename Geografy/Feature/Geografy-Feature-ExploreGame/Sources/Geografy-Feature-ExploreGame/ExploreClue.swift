@@ -14,7 +14,7 @@ extension ExploreClue {
     /// Points awarded for a correct guess after revealing this clue.
     public var pointsAvailable: Int {
         switch index {
-        case 0: 1000
+        case 0: 1_000
         case 1: 800
         case 2: 600
         case 3: 400

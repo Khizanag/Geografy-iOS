@@ -87,7 +87,7 @@ private extension TestChecklistService {
             "Score tracks correctly",
             "Result screen at end",
         ]),
-"landmarkQuiz": TestChecklist(items: [
+        "landmarkQuiz": TestChecklist(items: [
             "Landmark images load",
             "Answer options display",
             "Score and progress tracking",

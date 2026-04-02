@@ -469,6 +469,6 @@ private extension WordSearchGameScreen {
 
 // MARK: - Supporting Types
 private struct GridCoord: Hashable {
-    public let row: Int
-    public let col: Int
+    let row: Int
+    let col: Int
 }

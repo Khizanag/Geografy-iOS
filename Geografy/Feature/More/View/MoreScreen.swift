@@ -1,5 +1,5 @@
-import Geografy_Core_Navigation
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -38,6 +38,7 @@ struct MoreScreen: View {
 // MARK: - Subviews
 private extension MoreScreen {
     var scrollableBlobs: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             blobEllipse(
                 BlobConfig(
@@ -71,28 +72,28 @@ private extension MoreScreen {
                 BlobConfig(
                     color: DesignSystem.Color.accent, opacity: 0.10,
                     endRadius: 200, width: 400, height: 300, blur: 40,
-                    offset: (-120, 1050), scale: blobAnimating ? 1.05 : 0.95
+                    offset: (-120, 1_050), scale: blobAnimating ? 1.05 : 0.95
                 )
             )
             blobEllipse(
                 BlobConfig(
                     color: DesignSystem.Color.indigo, opacity: 0.14,
                     endRadius: 180, width: 360, height: 280, blur: 36,
-                    offset: (140, 1400), scale: blobAnimating ? 0.90 : 1.10
+                    offset: (140, 1_400), scale: blobAnimating ? 0.90 : 1.10
                 )
             )
             blobEllipse(
                 BlobConfig(
                     color: DesignSystem.Color.blue, opacity: 0.10,
                     endRadius: 160, width: 320, height: 260, blur: 40,
-                    offset: (-80, 1800), scale: blobAnimating ? 1.08 : 0.92
+                    offset: (-80, 1_800), scale: blobAnimating ? 1.08 : 0.92
                 )
             )
             blobEllipse(
                 BlobConfig(
                     color: DesignSystem.Color.purple, opacity: 0.10,
                     endRadius: 160, width: 320, height: 280, blur: 44,
-                    offset: (120, 2200), scale: blobAnimating ? 0.94 : 1.06
+                    offset: (120, 2_200), scale: blobAnimating ? 0.94 : 1.06
                 )
             )
         }
@@ -186,6 +187,7 @@ private extension MoreScreen {
         Button {
             hapticsService.impact(.light)
             coordinator.sheet(sheet.toDestination)
+        // swiftlint:disable:next closure_body_length
         } label: {
             VStack(spacing: tileSpacing) {
                 ZStack {

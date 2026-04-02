@@ -2,8 +2,8 @@ import CoreGraphics
 import Foundation
 
 public enum MapProjection {
-    public static let mapWidth: CGFloat = 2048
-    public static let mapHeight: CGFloat = 2048
+    public static let mapWidth: CGFloat = 2_048
+    public static let mapHeight: CGFloat = 2_048
 }
 
 // MARK: - Projection

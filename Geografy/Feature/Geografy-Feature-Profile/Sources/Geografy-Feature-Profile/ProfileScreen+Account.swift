@@ -66,6 +66,7 @@ private extension ProfileScreen {
 // MARK: - Premium Banner
 extension ProfileScreen {
     public var premiumBannerSection: some View {
+        // swiftlint:disable:next closure_body_length
         Button { coordinator.sheet(.paywall) } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 ZStack {

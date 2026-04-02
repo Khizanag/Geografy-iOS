@@ -1,6 +1,6 @@
 #if !os(tvOS)
-import Geografy_Core_Common
 import Foundation
+import Geografy_Core_Common
 
 @Observable
 public final class CustomQuizService {

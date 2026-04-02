@@ -1,6 +1,6 @@
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Core_Service
+import SwiftUI
 
 public struct CoinBalanceView: View {
     @Environment(CoinService.self) private var coinService
@@ -32,6 +32,7 @@ private extension CoinBalanceView {
     }
 
     var coinIcon: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Circle()
                 .fill(

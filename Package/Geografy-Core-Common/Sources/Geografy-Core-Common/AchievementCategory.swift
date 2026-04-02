@@ -2,7 +2,7 @@ import Foundation
 
 public enum AchievementCategory: String, CaseIterable, Codable, Sendable {
     case explorer
-    case quizMaster
+    case quizExpert
     case streak
     case continental
     case flashcard
@@ -18,7 +18,7 @@ extension AchievementCategory {
     public var displayName: String {
         switch self {
         case .explorer: "Explorer"
-        case .quizMaster: "Quiz Master"
+        case .quizExpert: "Quiz Master"
         case .streak: "Streak"
         case .continental: "Continental"
         case .flashcard: "Flashcard"
@@ -33,7 +33,7 @@ extension AchievementCategory {
     public var iconName: String {
         switch self {
         case .explorer: "globe"
-        case .quizMaster: "brain.fill"
+        case .quizExpert: "brain.fill"
         case .streak: "flame.fill"
         case .continental: "map.fill"
         case .flashcard: "rectangle.on.rectangle.angled"

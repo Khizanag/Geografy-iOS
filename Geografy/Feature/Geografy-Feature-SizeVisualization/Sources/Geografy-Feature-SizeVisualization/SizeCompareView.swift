@@ -3,7 +3,6 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct SizeCompareView: View {
-
     public init(referenceCountry: Country, comparisonCountry: Country) {
         self.referenceCountry = referenceCountry
         self.comparisonCountry = comparisonCountry
@@ -191,6 +190,7 @@ private extension SizeCompareView {
 }
 
 // MARK: - Preview
+// swiftlint:disable:next closure_body_length
 #Preview {
     SizeCompareView(
         referenceCountry: Country(

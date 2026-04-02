@@ -22,7 +22,7 @@ public struct DailyChallengeResult: Identifiable, Codable {
         dateKey: String,
         challengeType: String,
         score: Int,
-        maxScore: Int = 1000,
+        maxScore: Int = 1_000,
         completedAt: Date = .now,
         timeSpentSeconds: Double
     ) {

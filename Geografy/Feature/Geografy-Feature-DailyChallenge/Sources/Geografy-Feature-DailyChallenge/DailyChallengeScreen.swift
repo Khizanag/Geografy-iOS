@@ -1,5 +1,5 @@
-import Geografy_Core_Navigation
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -369,6 +369,7 @@ private extension DailyChallengeScreen {
 // MARK: - Background
 private extension DailyChallengeScreen {
     var ambientBlobs: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Ellipse()
                 .fill(
@@ -437,7 +438,7 @@ private extension DailyChallengeScreen {
     var timeUntilMidnight: String {
         let calendar = Calendar.current
         let tomorrow = calendar.startOfDay(
-            for: calendar.date(byAdding: .day, value: 1, to: .now)!
+            for: calendar.date(byAdding: .day, value: 1, to: .now) ?? .now
         )
         let components = calendar.dateComponents(
             [.hour, .minute],

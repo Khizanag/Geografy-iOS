@@ -45,8 +45,8 @@ import Geografy_Feature_Setting
 import Geografy_Feature_SizeVisualization
 import Geografy_Feature_Subscription
 import Geografy_Feature_Theme
-import Geografy_Feature_TimeZone
 import Geografy_Feature_Timeline
+import Geografy_Feature_TimeZone
 import Geografy_Feature_Travel
 import Geografy_Feature_TravelJournal
 import Geografy_Feature_Trivia
@@ -77,7 +77,7 @@ extension Destination {
         case .customQuiz: CustomQuizLibraryScreen()
         case .customQuizShare(let quiz): CustomQuizShareScreen(quiz: quiz)
         case .dailyChallenge: DailyChallengeScreen()
-        case .dailyChallengeResult(let score, let maxScore, let type, let time, let streak):
+        case let .dailyChallengeResult(score, maxScore, type, time, streak):
             DailyChallengeResultView(
                 score: score, maxScore: maxScore, challengeType: type, timeSpent: time, streak: streak
             )
@@ -89,7 +89,7 @@ extension Destination {
         case .featureFlags: FeatureFlagsScreen()
         case .feed: FeedScreen()
         case .flagGame: FlagGameScreen()
-        case .flashcardSession(let deck, let cards): FlashcardSessionScreen(deck: deck, cards: cards)
+        case let .flashcardSession(deck, cards): FlashcardSessionScreen(deck: deck, cards: cards)
         case .friends: FriendsListScreen()
         case .geographyFeatures: GeographyFeaturesScreen()
         case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
@@ -98,7 +98,7 @@ extension Destination {
         case .landmarkQuiz: LandmarkQuizScreen()
         case .languageExplorer: LanguageExplorerScreen()
         case .learningPath: LearningPathScreen()
-        case .lesson(let module, let lesson): LessonScreen(module: module, lesson: lesson)
+        case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)
         case .leaderboards: LeaderboardScreen()
         case .localMultiplayer: LocalMultiplayerEntryScreen()
         case .map(let filter): MapScreen(continentFilter: filter?.rawValue)

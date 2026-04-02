@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct SearchScreen: View {
@@ -92,6 +92,7 @@ private extension SearchScreen {
     }
 
     func recentRow(_ recentQuery: String) -> some View {
+        // swiftlint:disable:next closure_body_length
         HStack(spacing: DesignSystem.Spacing.sm) {
             Button {
                 query = recentQuery
@@ -242,7 +243,7 @@ private extension SearchScreen {
             }
             .buttonStyle(PressButtonStyle())
 
-        case .capital(let country, let capitalName):
+        case let .capital(country, capitalName):
             Button {
                 recentService.add(query)
                 coordinator.push(.countryDetail(country))

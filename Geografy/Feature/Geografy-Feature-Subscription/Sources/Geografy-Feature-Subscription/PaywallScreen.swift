@@ -1,7 +1,7 @@
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import StoreKit
 import SwiftUI
-import Geografy_Core_Service
 
 public struct PaywallScreen: View {
     @Environment(\.dismiss) private var dismiss
@@ -103,6 +103,7 @@ private extension PaywallScreen {
     }
 
     var globeHero: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Circle()
                 .fill(DesignSystem.Color.accent.opacity(0.12))
@@ -218,6 +219,7 @@ private extension PaywallScreen {
 // MARK: - Pricing
 private extension PaywallScreen {
     var pricingSection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             Text("Choose Your Plan")
                 .font(DesignSystem.Font.headline)
@@ -376,6 +378,7 @@ private extension PaywallScreen {
     }
 
     var ambientBlobs: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Ellipse()
                 .fill(

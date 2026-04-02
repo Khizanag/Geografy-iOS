@@ -1,7 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Feature_CountryNicknames
+import SwiftUI
 
 struct NicknamesScreen: View {
     @State private var service = CountryNicknamesService()

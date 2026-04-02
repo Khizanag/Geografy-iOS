@@ -5,6 +5,7 @@ import SwiftUI
 // MARK: - Stats Grid
 extension ProfileScreen {
     public var statsGridSection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Statistics")
             LazyVGrid(
@@ -14,6 +15,7 @@ extension ProfileScreen {
                     GridItem(.flexible()),
                 ],
                 spacing: DesignSystem.Spacing.sm
+            // swiftlint:disable:next closure_body_length
             ) {
                 accuracyCard
                 statCard(

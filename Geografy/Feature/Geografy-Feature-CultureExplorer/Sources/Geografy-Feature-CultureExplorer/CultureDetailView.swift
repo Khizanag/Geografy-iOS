@@ -4,13 +4,13 @@ import SwiftUI
 struct CultureDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    public let profile: CultureProfile
+    let profile: CultureProfile
 
     private var countryName: String {
         Locale.current.localizedString(forRegionCode: profile.countryCode) ?? profile.countryCode
     }
 
-    public var body: some View {
+    var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(countryName)

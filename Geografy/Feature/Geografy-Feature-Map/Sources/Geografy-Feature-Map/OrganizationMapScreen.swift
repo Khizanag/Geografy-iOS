@@ -1,6 +1,6 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -318,21 +318,19 @@ private extension OrganizationMapScreen {
         let sortedByArea = mapState.countryShapes.sorted {
             $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
         }
-        for shape in sortedByArea {
-            if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-                if mapState.selectedCountryCode == shape.id {
-                    mapState.selectedCountryCode = nil
-                    #if !os(tvOS)
-                    hapticsService.impact(.light)
-                    #endif
-                } else {
-                    mapState.selectedCountryCode = shape.id
-                    #if !os(tvOS)
-                    hapticsService.impact(.medium)
-                    #endif
-                }
-                return
+        for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
+            if mapState.selectedCountryCode == shape.id {
+                mapState.selectedCountryCode = nil
+                #if !os(tvOS)
+                hapticsService.impact(.light)
+                #endif
+            } else {
+                mapState.selectedCountryCode = shape.id
+                #if !os(tvOS)
+                hapticsService.impact(.medium)
+                #endif
             }
+            return
         }
         mapState.selectedCountryCode = nil
     }

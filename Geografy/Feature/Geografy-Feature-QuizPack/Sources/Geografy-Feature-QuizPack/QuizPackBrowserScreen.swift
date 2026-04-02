@@ -274,6 +274,7 @@ private extension QuizPackBrowserScreen {
 // MARK: - Background
 private extension QuizPackBrowserScreen {
     var ambientBackground: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             DesignSystem.Color.background
 

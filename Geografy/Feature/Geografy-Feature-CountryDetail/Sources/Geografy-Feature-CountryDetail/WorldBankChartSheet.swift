@@ -1,7 +1,7 @@
 import Charts
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Core_Service
+import SwiftUI
 
 public struct WorldBankChartSheet: View {
     public let indicator: StatIndicator
@@ -111,8 +111,8 @@ private extension WorldBankChartSheet {
 
     var fullChart: some View {
         let points = filteredPoints
-        let minYear = points.first?.year ?? 1990
-        let maxYear = points.last?.year ?? 2023
+        let minYear = points.first?.year ?? 1_990
+        let maxYear = points.last?.year ?? 2_023
         return Chart(points) { point in
             AreaMark(
                 x: .value("Year", point.year),
@@ -171,11 +171,13 @@ private extension WorldBankChartSheet {
 
     var statsSection: some View {
         let points = filteredPoints
+        // swiftlint:disable:next closure_body_length
         return VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Summary")
             LazyVGrid(
                 columns: [GridItem(.flexible()), GridItem(.flexible())],
                 spacing: DesignSystem.Spacing.sm
+            // swiftlint:disable:next closure_body_length
             ) {
                 if let minimum = points.min(by: { $0.value < $1.value }) {
                     statCard(

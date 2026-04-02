@@ -5,7 +5,7 @@ extension AchievementCategory {
     public var themeColor: Color {
         switch self {
         case .explorer: DesignSystem.Color.blue
-        case .quizMaster: DesignSystem.Color.purple
+        case .quizExpert: DesignSystem.Color.purple
         case .streak: DesignSystem.Color.error
         case .continental: DesignSystem.Color.ocean
         case .flashcard: DesignSystem.Color.indigo

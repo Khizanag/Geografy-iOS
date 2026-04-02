@@ -1,6 +1,6 @@
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Feature_IndependenceTimeline
+import SwiftUI
 
 struct IndependenceScreen: View {
     private let service = IndependenceTimelineService()
@@ -15,6 +15,7 @@ struct IndependenceScreen: View {
     }
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             Section {
                 Picker("Era", selection: $selectedEra) {

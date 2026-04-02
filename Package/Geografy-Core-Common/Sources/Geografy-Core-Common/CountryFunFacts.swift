@@ -1,4 +1,5 @@
 // swiftlint:disable file_length
+// swiftlint:disable line_length
 import Foundation
 
 // swiftlint:disable:next type_body_length

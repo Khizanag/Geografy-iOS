@@ -124,6 +124,7 @@ private extension BorderChallengeScreen {
             hapticsService.impact(.light)
             #endif
             selectedDifficulty = difficulty
+        // swiftlint:disable:next closure_body_length
         } label: {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: difficulty.icon)
@@ -294,11 +295,19 @@ private extension BorderChallengeScreen {
 private extension BorderChallengeScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
+        #if os(tvOS)
+        ToolbarItem(placement: .automatic) {
+            Button { showGuide = true } label: {
+                Label("Guide", systemImage: "info.circle")
+            }
+        }
+        #else
         ToolbarItem(placement: .secondaryAction) {
             Button { showGuide = true } label: {
                 Label("Guide", systemImage: "info.circle")
             }
         }
+        #endif
     }
 }
 

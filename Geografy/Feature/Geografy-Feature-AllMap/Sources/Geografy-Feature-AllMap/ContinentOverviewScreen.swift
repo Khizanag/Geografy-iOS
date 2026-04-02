@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 private enum SortOption: String, CaseIterable {
@@ -142,7 +142,7 @@ private extension ContinentOverviewScreen {
                 statTile(
                     icon: "arrow.up.right.and.arrow.down.left.rectangle.fill",
                     label: "Largest Country",
-                    value: "\(largest.name) (\(Int(largest.area / 1000))K km²)",
+                    value: "\(largest.name) (\(Int(largest.area / 1_000))K km²)",
                     color: DesignSystem.Color.warning
                 )
             }
@@ -175,6 +175,7 @@ private extension ContinentOverviewScreen {
 // MARK: - Country List
 private extension ContinentOverviewScreen {
     var countryListSection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             HStack {
                 SectionHeaderView(title: "Countries", icon: "list.bullet")

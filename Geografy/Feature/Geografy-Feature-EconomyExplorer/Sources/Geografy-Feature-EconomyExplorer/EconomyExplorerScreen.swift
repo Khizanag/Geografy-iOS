@@ -65,7 +65,7 @@ private extension EconomyExplorerScreen {
             statCard(
                 icon: "dollarsign.circle.fill",
                 label: "Top GDP/capita",
-                value: rankedCountries.first?.gdpPerCapita.map { "$\(Int($0 / 1000))K" } ?? "—",
+                value: rankedCountries.first?.gdpPerCapita.map { "$\(Int($0 / 1_000))K" } ?? "—",
                 color: DesignSystem.Color.success
             )
         }

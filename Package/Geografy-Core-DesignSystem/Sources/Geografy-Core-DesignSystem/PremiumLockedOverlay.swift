@@ -12,7 +12,11 @@ public struct PremiumLockedOverlay: View {
     public var body: some View {
         ZStack {
             Rectangle()
-                .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.cardBackground) : AnyShapeStyle(.ultraThinMaterial))
+                .fill(
+                    reduceTransparency
+                        ? AnyShapeStyle(DesignSystem.Color.cardBackground)
+                        : AnyShapeStyle(.ultraThinMaterial)
+                )
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "lock.fill")
                     .font(DesignSystem.Font.title)

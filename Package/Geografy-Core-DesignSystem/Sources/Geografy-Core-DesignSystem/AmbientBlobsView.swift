@@ -232,7 +232,7 @@ public extension AmbientBlobsView {
                     BlobDescriptor(
                         color: DesignSystem.Color.accent,
                         opacity: 0.18,
-                        width: 1000,
+                        width: 1_000,
                         height: 700,
                         blur: 80,
                         endRadius: 500,

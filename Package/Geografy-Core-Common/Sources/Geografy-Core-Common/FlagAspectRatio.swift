@@ -1,13 +1,13 @@
 import Foundation
 
 public enum FlagAspectRatio {
-
     // MARK: - Lookup
     public static func ratio(for countryCode: String) -> CGFloat? {
         ratios[countryCode.uppercased()]
     }
 
     // MARK: - Data
+    // swiftlint:disable:next closure_body_length
     public static let ratios: [String: CGFloat] = {
         var map = [String: CGFloat]()
 

@@ -90,12 +90,12 @@ extension StreakService {
 
         guard let first = records.first,
               calendar.isDate(first.date, inSameDayAs: today) ||
-              calendar.isDate(first.date, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: today)!)
+              calendar.isDate(first.date, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: today) ?? today)
         else { return 0 }
 
         var streak = 1
         for index in 1..<records.count {
-            let expected = calendar.date(byAdding: .day, value: -1, to: records[index - 1].date)!
+            guard let expected = calendar.date(byAdding: .day, value: -1, to: records[index - 1].date) else { break }
             if calendar.isDate(records[index].date, inSameDayAs: expected) {
                 streak += 1
             } else {

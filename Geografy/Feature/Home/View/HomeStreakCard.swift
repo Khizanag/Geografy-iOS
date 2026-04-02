@@ -40,6 +40,7 @@ private extension HomeStreakCard {
     }
 
     var streakIcon: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Circle()
                 .fill(

@@ -4,10 +4,10 @@ import SwiftUI
 struct LanguageDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    public let language: Language
-    public let maxSpeakers: Int
+    let language: Language
+    let maxSpeakers: Int
 
-    public var body: some View {
+    var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(language.name)

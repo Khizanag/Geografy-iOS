@@ -1,8 +1,8 @@
 import Geografy_Core_Navigation
 #if !os(tvOS)
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct DistanceCalculatorScreen: View {
@@ -112,6 +112,7 @@ private extension DistanceCalculatorScreen {
         color: Color,
         action: @escaping () -> Void
     ) -> some View {
+        // swiftlint:disable:next closure_body_length
         Button(action: action) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: icon)
@@ -337,7 +338,7 @@ private extension DistanceCalculatorScreen {
     }
 
     func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
-        let earthRadius = 6371.0
+        let earthRadius = 6_371.0
         let deltaLat = (lat2 - lat1) * .pi / 180
         let deltaLon = (lon2 - lon1) * .pi / 180
         let sinLat = sin(deltaLat / 2)
@@ -393,11 +394,11 @@ private extension DistanceCalculatorScreen {
 
 // MARK: - Distance Map View
 private struct DistanceMapView: View {
-    public let originCode: String?
-    public let destinationCode: String?
-    public let lineProgress: CGFloat
+    let originCode: String?
+    let destinationCode: String?
+    let lineProgress: CGFloat
 
-    public var body: some View {
+    var body: some View {
         Canvas { context, size in
             drawBackground(in: context, size: size)
             if let origin = originCoordinate, let destination = destinationCoordinate {
@@ -523,13 +524,13 @@ private struct DistanceMapView: View {
 private struct CountryPickerSheet: View {
     @Environment(\.dismiss) private var dismiss
 
-    public let title: String
-    public let countries: [Country]
-    public let onSelect: (Country) -> Void
+    let title: String
+    let countries: [Country]
+    let onSelect: (Country) -> Void
 
     @State private var searchText = ""
 
-    public var body: some View {
+    var body: some View {
         extractedContent
             .searchable(text: $searchText, prompt: "Search countries…")
             .navigationTitle(title)

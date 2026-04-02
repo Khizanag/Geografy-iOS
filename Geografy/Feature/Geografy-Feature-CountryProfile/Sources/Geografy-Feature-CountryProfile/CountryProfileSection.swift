@@ -371,9 +371,9 @@ private extension CountryProfileSection {
 
 // MARK: - FlowLayout
 private struct FlowLayout: Layout {
-    public var spacing: CGFloat
+    var spacing: CGFloat
 
-    public func sizeThatFits(
+    func sizeThatFits(
         proposal: ProposedViewSize,
         subviews: Subviews,
         cache: inout ()
@@ -385,7 +385,7 @@ private struct FlowLayout: Layout {
         return result.size
     }
 
-    public func placeSubviews(
+    func placeSubviews(
         in bounds: CGRect,
         proposal: ProposedViewSize,
         subviews: Subviews,

@@ -4,13 +4,13 @@ import SwiftUI
 struct LandmarkDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
-    public let landmark: Landmark
+    let landmark: Landmark
 
     private var accentSwiftUIColor: Color {
         Color(hex: landmark.accentColor)
     }
 
-    public var body: some View {
+    var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(landmark.name)

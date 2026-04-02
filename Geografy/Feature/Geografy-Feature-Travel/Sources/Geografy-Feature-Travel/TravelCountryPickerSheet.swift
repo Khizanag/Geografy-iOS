@@ -11,7 +11,7 @@ public struct TravelCountryPickerSheet: View {
 
     public let countries: [Country]
     @Binding var isPresented: Bool
-    public var preferredStatus: TravelStatus? = nil
+    public var preferredStatus: TravelStatus?
 
     @State private var searchText = ""
     @State private var selectedCountry: Country?

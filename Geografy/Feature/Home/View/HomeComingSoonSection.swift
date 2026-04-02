@@ -1,12 +1,12 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 struct HomeComingSoonSection: View {
     @Environment(HapticsService.self) private var hapticsService
 
-    @AppStorage("comingSoonVotes") private var votesData: Data = Data()
+    @AppStorage("comingSoonVotes") private var votesData = Data()
     @State private var votes: [String: Int] = [:]
     @State private var votedFeature: String?
 
