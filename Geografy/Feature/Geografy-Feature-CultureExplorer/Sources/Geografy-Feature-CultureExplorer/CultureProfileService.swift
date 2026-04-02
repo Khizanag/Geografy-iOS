@@ -1,8 +1,9 @@
+// swiftlint:disable line_length
 import Foundation
 
 // swiftlint:disable:next type_body_length
 final class CultureProfileService {
-    public let profiles: [CultureProfile] = [
+    let profiles: [CultureProfile] = [
         CultureProfile(
             id: "FR",
             countryCode: "FR",
@@ -445,7 +446,7 @@ final class CultureProfileService {
         ),
     ]
 
-    public func profiles(matching query: String) -> [CultureProfile] {
+    func profiles(matching query: String) -> [CultureProfile] {
         guard !query.isEmpty else { return profiles }
         let lowercased = query.lowercased()
         return profiles.filter { profile in

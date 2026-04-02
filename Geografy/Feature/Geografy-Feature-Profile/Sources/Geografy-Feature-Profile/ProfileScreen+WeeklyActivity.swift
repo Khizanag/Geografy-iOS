@@ -40,7 +40,9 @@ private extension ProfileScreen {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(streakService.currentStreak) day streak, \(activeDaysThisWeek) of 7 days active this week")
+        .accessibilityLabel(
+            "\(streakService.currentStreak) day streak, \(activeDaysThisWeek) of 7 days active this week"
+        )
     }
 
     var weekdayCirclesRow: some View {
@@ -59,6 +61,7 @@ private extension ProfileScreen {
             calendar.startOfDay(for: date)
         )
 
+        // swiftlint:disable:next closure_body_length
         return VStack(spacing: DesignSystem.Spacing.xs) {
             ZStack {
                 Circle()

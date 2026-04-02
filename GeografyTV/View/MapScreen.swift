@@ -1,7 +1,7 @@
-import Geografy_Feature_Map
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
+import Geografy_Feature_Map
 import SwiftUI
 
 struct MapScreen: View {
@@ -90,12 +90,15 @@ private extension MapScreen {
 // MARK: - Controls Overlay
 private extension MapScreen {
     var controlsOverlay: some View {
+        // swiftlint:disable:next closure_body_length
         VStack {
             Spacer()
 
+            // swiftlint:disable:next closure_body_length
             HStack {
                 Spacer()
 
+                // swiftlint:disable:next closure_body_length
                 VStack(spacing: 12) {
                     Button {
                         withAnimation(.easeOut(duration: 0.2)) {
@@ -230,8 +233,8 @@ private extension MapScreen {
     }
 
     func selectCountryAtCenter() {
-        let centerX = CGFloat(1024)
-        let centerY = CGFloat(1024)
+        let centerX = CGFloat(1_024)
+        let centerY = CGFloat(1_024)
         let mapPoint = CGPoint(
             x: (centerX - mapState.offset.width) / mapState.scale,
             y: (centerY - mapState.offset.height) / mapState.scale
@@ -242,12 +245,10 @@ private extension MapScreen {
         }
 
         for shape in sortedShapes {
-            for polygon in shape.polygons {
-                if polygon.contains(mapPoint) {
-                    mapState.selectedCountryCode = shape.id
-                    selectedCountry = countryDataService.countries.first { $0.code == shape.id }
-                    return
-                }
+            for polygon in shape.polygons where polygon.contains(mapPoint) {
+                mapState.selectedCountryCode = shape.id
+                selectedCountry = countryDataService.countries.first { $0.code == shape.id }
+                return
             }
         }
     }
@@ -291,8 +292,8 @@ private extension MapScreen {
 
         mapState.contentBounds = CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
 
-        let screenWidth: CGFloat = 1920
-        let screenHeight: CGFloat = 1080
+        let screenWidth: CGFloat = 1_920
+        let screenHeight: CGFloat = 1_080
         let scaleX = screenWidth / (maxX - minX)
         let scaleY = screenHeight / (maxY - minY)
         let fitScale = min(scaleX, scaleY) * 0.9

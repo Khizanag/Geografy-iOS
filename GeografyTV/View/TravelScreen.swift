@@ -1,6 +1,6 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 struct TravelScreen: View {
@@ -71,7 +71,8 @@ private extension TravelScreen {
             }
 
             VStack(spacing: 4) {
-                let percentage = Int(Double(travelService.visitedCodes.count) / Double(max(countryDataService.countries.count, 1)) * 100)
+                let totalCountries = max(countryDataService.countries.count, 1)
+                let percentage = Int(Double(travelService.visitedCodes.count) / Double(totalCountries) * 100)
                 Text("\(percentage)%")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.warning)
@@ -102,13 +103,20 @@ private extension TravelScreen {
             Button {
                 travelService.set(status: .visited, for: country.code)
             } label: {
-                Label("Visited", systemImage: currentStatus == .visited ? "checkmark.circle.fill" : "airplane.departure")
+                Label(
+                    "Visited",
+                    systemImage: currentStatus == .visited ? "checkmark.circle.fill" : "airplane.departure"
+                )
             }
 
             Button {
                 travelService.set(status: .wantToVisit, for: country.code)
             } label: {
-                Label("Want to Visit", systemImage: currentStatus == .wantToVisit ? "checkmark.circle.fill" : "mappin.and.ellipse")
+                Label(
+                    "Want to Visit",
+                    systemImage: currentStatus == .wantToVisit
+                        ? "checkmark.circle.fill" : "mappin.and.ellipse"
+                )
             }
 
             if currentStatus != nil {

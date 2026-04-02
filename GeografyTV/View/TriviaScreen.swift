@@ -1,8 +1,8 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import SwiftUI
+import Geografy_Core_Service
 import Geografy_Feature_Trivia
+import SwiftUI
 
 struct TriviaScreen: View {
     let countryDataService: CountryDataService
@@ -153,7 +153,11 @@ private extension TriviaScreen {
 // MARK: - Actions
 private extension TriviaScreen {
     func startGame() {
-        questions = TriviaService().generateQuestions(from: countryDataService.countries).shuffled().prefix(15).map { $0 }
+        questions = TriviaService()
+            .generateQuestions(from: countryDataService.countries)
+            .shuffled()
+            .prefix(15)
+            .map { $0 }
         currentIndex = 0
         score = 0
         selectedAnswer = nil

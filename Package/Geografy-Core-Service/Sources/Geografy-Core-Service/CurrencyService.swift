@@ -13,7 +13,7 @@ public final class CurrencyService {
 
     private var memoryCache: [String: CachedRates] = [:]
     private let cacheDirectory: URL
-    private let cacheExpiry: TimeInterval = 24 * 3600
+    private let cacheExpiry: TimeInterval = 24 * 3_600
 
     public struct CachedRates: Codable {
         public let baseCurrency: String

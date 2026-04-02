@@ -9,8 +9,10 @@ extension CountryDetailScreen {
     }
 
     public var economySection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Economy", premium: true)
+            // swiftlint:disable:next closure_body_length
             HStack(spacing: DesignSystem.Spacing.sm) {
                 if let gdp = country.gdp {
                     economyTile(

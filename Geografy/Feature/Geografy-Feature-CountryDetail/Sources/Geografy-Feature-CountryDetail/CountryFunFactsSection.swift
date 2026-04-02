@@ -24,12 +24,12 @@ extension CountryDetailScreen {
 
 // MARK: - Tappable Fun Fact Card
 private struct TappableFunFactCard: View {
-    public let fact: String
-    public let index: Int
+    let fact: String
+    let index: Int
 
     @State private var showDetail = false
 
-    public var body: some View {
+    var body: some View {
         cardButton
             .sheet(isPresented: $showDetail) {
                 FunFactDetailSheet(fact: fact, index: index)
@@ -92,10 +92,10 @@ private extension TappableFunFactCard {
 
 // MARK: - Detail Sheet
 private struct FunFactDetailSheet: View {
-    public let fact: String
-    public let index: Int
+    let fact: String
+    let index: Int
 
-    public var body: some View {
+    var body: some View {
         sheetContent
             .navigationTitle("Fun Fact #\(index + 1)")
             .navigationBarTitleDisplayMode(.inline)

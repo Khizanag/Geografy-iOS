@@ -1,13 +1,14 @@
-import Geografy_Core_Navigation
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 struct HomeScreen: View {
     @State private var countryDataService = CountryDataService()
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         TabView {
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
@@ -206,6 +207,7 @@ private extension HomeFeedView {
 // MARK: - Quick Actions
 private extension HomeFeedView {
     var quickActionsSection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: 20) {
             Text("Quick Start")
                 .font(.system(size: 32, weight: .bold))

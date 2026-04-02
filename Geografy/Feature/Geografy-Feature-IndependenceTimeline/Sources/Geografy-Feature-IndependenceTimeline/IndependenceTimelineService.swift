@@ -32,11 +32,11 @@ public enum IndependenceEra: String, Sendable, CaseIterable, Identifiable {
 
     public func contains(year: Int) -> Bool {
         switch self {
-        case .preMoM: year < 1800
-        case .nineteenthCentury: year >= 1800 && year < 1900
-        case .earlyTwentieth: year >= 1900 && year < 1950
-        case .lateTwentieth: year >= 1950 && year < 2000
-        case .modern: year >= 2000
+        case .preMoM: year < 1_800
+        case .nineteenthCentury: year >= 1_800 && year < 1_900
+        case .earlyTwentieth: year >= 1_900 && year < 1_950
+        case .lateTwentieth: year >= 1_950 && year < 2_000
+        case .modern: year >= 2_000
         }
     }
 }

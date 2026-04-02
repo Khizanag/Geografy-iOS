@@ -222,7 +222,7 @@ public struct CountryNeighbors: Sendable {
     }
 
     public static func isIslandNation(countryCode: String) -> Bool {
-        let neighbors = data[countryCode]
-        return neighbors != nil && neighbors!.isEmpty
+        guard let neighbors = data[countryCode] else { return false }
+        return neighbors.isEmpty
     }
 }

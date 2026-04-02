@@ -54,11 +54,11 @@ extension CountryDetailScreen {
 
 // MARK: - UNESCO Site Row
 private struct UNESCOSiteRow: View {
-    public let site: UNESCOSite
+    let site: UNESCOSite
 
     @State private var expanded = false
 
-    public var body: some View {
+    var body: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
                 expanded.toggle()

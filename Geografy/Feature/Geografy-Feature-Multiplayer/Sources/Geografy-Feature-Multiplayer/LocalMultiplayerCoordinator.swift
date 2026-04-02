@@ -1,8 +1,8 @@
 import Geografy_Core_Common
 #if !os(tvOS)
+import Geografy_Core_Service
 import Geografy_Feature_Quiz
 import MultipeerConnectivity
-import Geografy_Core_Service
 import SwiftUI
 
 @MainActor
@@ -164,11 +164,11 @@ private extension LocalMultiplayerCoordinator {
         switch message {
         case .playerInfo(let name): handlePlayerInfo(name)
         case .lobbyReady: handleLobbyReady()
-        case .startMatch(let config, let serialized): handleStartMatch(config, serialized)
-        case .answerSubmitted(let index, let optionID, _): handleOpponentAnswer(index, optionID: optionID)
+        case let .startMatch(config, serialized): handleStartMatch(config, serialized)
+        case let .answerSubmitted(index, optionID, _): handleOpponentAnswer(index, optionID: optionID)
         case .timedOut(let index): handleOpponentTimeout(index)
         case .advanceToNext(let index): handleAdvance(index)
-        case .matchFinished(let hostScore, let guestScore): handleMatchFinished(hostScore, guestScore)
+        case let .matchFinished(hostScore, guestScore): handleMatchFinished(hostScore, guestScore)
         case .rematchRequest: rematchRequested = true
         case .rematchAccepted: resetForRematch()
         case .disconnecting: handleDisconnect()

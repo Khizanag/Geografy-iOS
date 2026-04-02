@@ -38,8 +38,7 @@ public extension Double {
     }
 
     func formatCurrency() -> String {
-        let formatted = NumberFormatter.currency.string(from: NSNumber(value: self)) ?? "$\(self)"
-        return formatted
+        NumberFormatter.currency.string(from: NSNumber(value: self)) ?? "$\(self)"
     }
 }
 

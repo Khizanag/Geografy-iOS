@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct FlagSequenceView: View {
@@ -96,11 +96,11 @@ private extension FlagSequenceView {
         for (index, country) in allCountries.enumerated() {
             let distractors = allCountries
                 .filter { $0.code != country.code }
-                .seededShuffle(seed: seed &+ UInt64(index) &* 7919)
+                .seededShuffle(seed: seed &+ UInt64(index) &* 7_919)
                 .prefix(3)
             var shuffledOptions = [country] + Array(distractors)
             shuffledOptions = shuffledOptions.seededShuffle(
-                seed: seed &+ UInt64(index) &* 3571
+                seed: seed &+ UInt64(index) &* 3_571
             )
             optionSets.append(shuffledOptions)
         }

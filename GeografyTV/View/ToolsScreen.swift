@@ -1,6 +1,6 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 struct ToolsScreen: View {
@@ -45,6 +45,7 @@ struct DistanceCalculatorScreen: View {
     }
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         Form {
             Section("From") {
                 Button {
@@ -110,7 +111,6 @@ struct DistanceCalculatorScreen: View {
             CountryPickerSheet(countries: countryDataService.countries) { countryB = $0 }
         }
     }
-
 }
 
 // MARK: - Currency Info

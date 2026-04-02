@@ -143,7 +143,7 @@ private extension QuizSessionScreen {
                 }
             }
         }
-        .frame(maxWidth: isFlagOptionsLayout ? 1100 : 900)
+        .frame(maxWidth: isFlagOptionsLayout ? 1_100 : 900)
     }
 
     var controllerHint: some View {

@@ -210,7 +210,7 @@ public enum StatIndicator: String, CaseIterable, Identifiable, Sendable {
     }
 
     private func formatSmallCurrency(_ value: Double) -> String {
-        if value >= 1000 { return String(format: "$%.0fK", value / 1000) }
+        if value >= 1_000 { return String(format: "$%.0fK", value / 1_000) }
         return String(format: "$%.0f", value)
     }
 
@@ -229,7 +229,7 @@ public enum StatIndicator: String, CaseIterable, Identifiable, Sendable {
             if value >= 1e6 { return "\(Int(value / 1e6))M" }
             return "\(Int(value))"
         case .gdpPerCapita:
-            if value >= 1000 { return "$\(Int(value / 1000))K" }
+            if value >= 1_000 { return "$\(Int(value / 1_000))K" }
             return "$\(Int(value))"
         case .population:
             if value >= 1e9 { return "\(Int(value / 1e9))B" }
@@ -276,7 +276,7 @@ public final class WorldBankService {
     public private(set) var loadStates: [String: LoadState] = [:]
     private var memoryCache: [String: CachedEntry] = [:]
     private let cacheDirectory: URL
-    private let cacheExpiry: TimeInterval = 30 * 24 * 3600 // 30 days
+    private let cacheExpiry: TimeInterval = 30 * 24 * 3_600 // 30 days
 
     public init() {
         let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]

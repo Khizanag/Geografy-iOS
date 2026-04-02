@@ -22,7 +22,7 @@ private struct PressButtonBody: View {
     #endif
     let configuration: ButtonStyleConfiguration
 
-    public var body: some View {
+    var body: some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
             .opacity(configuration.isPressed ? 0.85 : 1.0)

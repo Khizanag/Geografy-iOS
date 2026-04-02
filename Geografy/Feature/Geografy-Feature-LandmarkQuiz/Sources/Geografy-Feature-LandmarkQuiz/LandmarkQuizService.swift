@@ -23,7 +23,6 @@ public final class LandmarkQuizService {
 
 // MARK: - Questions Data
 private extension LandmarkQuizService {
-    // swiftlint:disable closure_body_length
     nonisolated(unsafe) public static let allQuestions: [LandmarkQuestion] = [
         // MARK: Monument
         .init(
@@ -388,5 +387,4 @@ private extension LandmarkQuizService {
             category: .sport
         ),
     ]
-    // swiftlint:enable closure_body_length
 }

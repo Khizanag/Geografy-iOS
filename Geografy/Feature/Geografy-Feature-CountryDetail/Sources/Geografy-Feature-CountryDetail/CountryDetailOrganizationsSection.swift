@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 // MARK: - Organizations
@@ -9,7 +9,10 @@ extension CountryDetailScreen {
         country.organizations.compactMap { Organization.find($0) }
     }
 
-    public func organizationsSection(countryDataService: CountryDataService, hapticsService: HapticsService) -> some View {
+    public func organizationsSection(
+        countryDataService: CountryDataService,
+        hapticsService: HapticsService
+    ) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Member Of")
             VStack(spacing: DesignSystem.Spacing.sm) {
@@ -28,6 +31,7 @@ extension CountryDetailScreen {
         Button {
             hapticsService.impact(.light)
             navigateToOrganization(org)
+        // swiftlint:disable:next closure_body_length
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {

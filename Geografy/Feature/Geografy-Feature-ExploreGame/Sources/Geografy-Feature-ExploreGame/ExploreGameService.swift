@@ -1,6 +1,6 @@
 import Foundation
-import Geografy_Core_Service
 import Geografy_Core_Common
+import Geografy_Core_Service
 
 /// Manages Explore Game sessions: daily game selection and practice mode.
 @Observable
@@ -54,7 +54,7 @@ extension ExploreGameService {
         let countries = countryDataService.countries
         guard !countries.isEmpty else { return nil }
 
-        let country = countries.randomElement()!
+        guard let country = countries.randomElement() else { return nil }
         let clues = ClueGenerator.generateClues(for: country)
 
         return ExploreGameState(

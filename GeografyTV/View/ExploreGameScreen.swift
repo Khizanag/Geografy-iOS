@@ -72,6 +72,7 @@ private extension ExploreGameScreen {
     }
 
     func cluesPanel(_ state: ExploreGameState) -> some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: 24) {
             HStack {
                 Text("Clues")
@@ -123,6 +124,7 @@ private extension ExploreGameScreen {
     }
 
     func guessPanel(_ state: ExploreGameState) -> some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: 24) {
             Text("Your Guess")
                 .font(.system(size: 32, weight: .bold))

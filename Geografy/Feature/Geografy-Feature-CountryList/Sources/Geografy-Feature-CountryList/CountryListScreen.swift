@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 // MARK: - Enums
@@ -279,6 +279,7 @@ private extension CountryListScreen {
     }
 
     func sectionHeaderLabel(key: String, count: Int) -> some View {
+        // swiftlint:disable:next closure_body_length
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()

@@ -153,7 +153,7 @@ public extension GameCenterService {
         public static let capitalExpert = "geografy.achievement.capital_expert"
         public static let orgScholar = "geografy.achievement.org_scholar"
         public static let bucketList = "geografy.achievement.bucket_list"
-        public static let masterExplorer = "geografy.achievement.master_explorer"
+        public static let expertExplorer = "geografy.achievement.master_explorer"
     }
 }
 

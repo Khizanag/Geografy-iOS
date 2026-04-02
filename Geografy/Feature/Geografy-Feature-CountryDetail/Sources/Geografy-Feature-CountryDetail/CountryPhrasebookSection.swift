@@ -52,11 +52,11 @@ private extension CountryDetailScreen {
 
 // MARK: - Phrase Chip
 private struct PhraseChip: View {
-    public let phrase: CountryPhrase
+    let phrase: CountryPhrase
 
     @State private var flipped = false
 
-    public var body: some View {
+    var body: some View {
         extractedContent
             .buttonStyle(PressButtonStyle())
             .rotation3DEffect(

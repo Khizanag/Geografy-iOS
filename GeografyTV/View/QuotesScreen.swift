@@ -1,5 +1,5 @@
-import Geografy_Feature_Quotes
 import Geografy_Core_DesignSystem
+import Geografy_Feature_Quotes
 import SwiftUI
 
 struct QuotesScreen: View {

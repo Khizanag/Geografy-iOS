@@ -1,6 +1,6 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -167,13 +167,13 @@ private extension SRSStudyScreen {
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
                 Spacer()
-                masteryBadge(for: srData.masteryLevel)
+                proficiencyBadge(for: srData.proficiencyLevel)
             }
             .padding(DesignSystem.Spacing.sm)
         }
     }
 
-    func masteryBadge(for level: SpacedRepetitionData.MasteryLevel) -> some View {
+    func proficiencyBadge(for level: SpacedRepetitionData.ProficiencyLevel) -> some View {
         Text(level.displayName)
             .font(DesignSystem.Font.caption2)
             .fontWeight(.semibold)
@@ -213,14 +213,14 @@ private extension SRSStudyScreen {
     }
 }
 
-// MARK: - MasteryLevel Badge Color
-private extension SpacedRepetitionData.MasteryLevel {
+// MARK: - ProficiencyLevel Badge Color
+private extension SpacedRepetitionData.ProficiencyLevel {
     var badgeColor: Color {
         switch self {
         case .new: DesignSystem.Color.textTertiary
         case .learning: DesignSystem.Color.warning
         case .familiar: DesignSystem.Color.blue
-        case .mastered: DesignSystem.Color.success
+        case .proficient: DesignSystem.Color.success
         }
     }
 }

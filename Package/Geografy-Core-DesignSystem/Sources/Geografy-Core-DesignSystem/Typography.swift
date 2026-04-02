@@ -74,7 +74,11 @@ public extension DesignSystem {
             .system(size: size, weight: weight)
         }
 
-        public static func system(size: CGFloat, weight: SwiftUI.Font.Weight = .regular, design: SwiftUI.Font.Design) -> SwiftUI.Font {
+        public static func system(
+            size: CGFloat,
+            weight: SwiftUI.Font.Weight = .regular,
+            design: SwiftUI.Font.Design
+        ) -> SwiftUI.Font {
             .system(size: size, weight: weight, design: design)
         }
 

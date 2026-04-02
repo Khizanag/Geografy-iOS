@@ -1,6 +1,6 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 struct CompareScreen: View {
@@ -91,7 +91,9 @@ private extension CompareScreen {
 // MARK: - Comparison Grid
 private extension CompareScreen {
     func comparisonGrid(_ a: Country, _ b: Country) -> some View {
+        // swiftlint:disable:next closure_body_length
         ScrollView {
+            // swiftlint:disable:next closure_body_length
             VStack(spacing: 16) {
                 comparisonRow(
                     label: "Capital",

@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import GameKit
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct LeaderboardScreen: View {
@@ -39,6 +39,7 @@ private extension LeaderboardScreen {
     }
 
     var statusCard: some View {
+        // swiftlint:disable:next closure_body_length
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()
@@ -80,7 +81,9 @@ private extension LeaderboardScreen {
     }
 
     func leaderboardCard(_ info: LeaderboardInfo) -> some View {
+        // swiftlint:disable:next closure_body_length
         CardView {
+            // swiftlint:disable:next closure_body_length
             VStack(spacing: DesignSystem.Spacing.md) {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     ZStack {

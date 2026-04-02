@@ -1,8 +1,8 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import SwiftUI
+import Geografy_Core_Service
 import Geografy_Feature_NeighborExplorer
+import SwiftUI
 
 struct NeighborScreen: View {
     let countryDataService: CountryDataService

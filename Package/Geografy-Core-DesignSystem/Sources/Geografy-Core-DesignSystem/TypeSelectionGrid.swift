@@ -79,6 +79,7 @@ private extension TypeSelectionGrid {
     }
 
     func cardHeader(item: T, isSelected: Bool, isLocked: Bool) -> some View {
+        // swiftlint:disable:next closure_body_length
         HStack {
             ZStack {
                 Circle()
@@ -162,7 +163,11 @@ private extension TypeSelectionGrid {
                 )
         } else {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.cardBackground) : AnyShapeStyle(.ultraThinMaterial))
+                .fill(
+                    reduceTransparency
+                        ? AnyShapeStyle(DesignSystem.Color.cardBackground)
+                        : AnyShapeStyle(.ultraThinMaterial)
+                )
                 .overlay(
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
                         .fill(DesignSystem.Color.cardBackground.opacity(0.6))

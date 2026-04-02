@@ -161,6 +161,7 @@ private extension LocalMultiplayerLobbyScreen {
     }
 
     var peerList: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Nearby Hosts")
             if coordinator.sessionManager.discoveredPeers.isEmpty {

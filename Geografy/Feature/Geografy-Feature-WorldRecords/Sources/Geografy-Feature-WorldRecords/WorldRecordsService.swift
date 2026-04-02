@@ -168,7 +168,7 @@ private extension WorldRecordsService {
         }
         let islandCount = islandNations.count
 
-        if let islandExample = islandNations.sorted(by: { $0.population > $1.population }).first {
+        if let islandExample = islandNations.max(by: { $0.population < $1.population }) {
             result.append(
                 WorldRecord(
                     category: .neighbors,
@@ -212,7 +212,8 @@ private extension WorldRecordsService {
                     countryName: shortest.name,
                     value: "\(shortest.name.count) letters",
                     unit: "letters",
-                    description: "\(shortest.name) has the shortest country name with \(shortest.name.count) characters."
+                    description: "\(shortest.name) has the shortest country name"
+                        + " with \(shortest.name.count) characters."
                 )
             )
         }

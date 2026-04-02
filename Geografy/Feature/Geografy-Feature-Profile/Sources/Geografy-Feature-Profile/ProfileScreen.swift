@@ -1,8 +1,8 @@
 #if !os(tvOS)
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftData
 import SwiftUI
 
@@ -46,6 +46,7 @@ public struct ProfileScreen: View {
 // MARK: - Scroll Content
 private extension ProfileScreen {
     var scrollContent: some View {
+        // swiftlint:disable:next closure_body_length
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 if authService.isGuest {
@@ -86,6 +87,7 @@ private extension ProfileScreen {
 // MARK: - Background
 private extension ProfileScreen {
     var ambientBlobs: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Ellipse()
                 .fill(

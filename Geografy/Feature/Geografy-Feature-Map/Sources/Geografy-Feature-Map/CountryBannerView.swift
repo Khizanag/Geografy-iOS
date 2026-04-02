@@ -120,7 +120,6 @@ private extension CountryBannerView {
         }
         .buttonStyle(.glass)
     }
-
 }
 
 // MARK: - Gestures

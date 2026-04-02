@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 struct CountryBrowserScreen: View {
@@ -42,6 +42,7 @@ struct CountryBrowserScreen: View {
 // MARK: - Grid Layout
 private extension CountryBrowserScreen {
     var gridLayout: some View {
+        // swiftlint:disable:next closure_body_length
         ScrollView {
             VStack(alignment: .leading, spacing: 40) {
                 continentPicker

@@ -1,5 +1,5 @@
-import Geografy_Core_Common
 import Foundation
+import Geografy_Core_Common
 
 public struct MultiplayerMatch: Identifiable, Hashable {
     public let id: UUID

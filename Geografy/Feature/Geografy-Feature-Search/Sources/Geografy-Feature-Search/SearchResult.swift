@@ -9,7 +9,7 @@ public enum SearchRow: Identifiable, Hashable {
     public var id: String {
         switch self {
         case .country(let country): "country-\(country.code)"
-        case .capital(let country, let capitalName): "capital-\(country.code)-\(capitalName)"
+        case let .capital(country, capitalName): "capital-\(country.code)-\(capitalName)"
         case .organization(let organization): "org-\(organization.id)"
         }
     }

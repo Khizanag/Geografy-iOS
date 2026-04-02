@@ -46,7 +46,7 @@ private extension FlagView {
         countryCode
             .uppercased()
             .unicodeScalars
-            .compactMap { UnicodeScalar(127397 + $0.value) }
+            .compactMap { UnicodeScalar(127_397 + $0.value) }
             .map { String($0) }
             .joined()
     }

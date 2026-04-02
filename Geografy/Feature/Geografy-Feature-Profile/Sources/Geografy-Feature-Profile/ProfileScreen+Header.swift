@@ -8,6 +8,7 @@ extension ProfileScreen {
         Button {
             hapticsService.impact(.medium)
             coordinator.sheet(.signIn)
+        // swiftlint:disable:next closure_body_length
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
                 ZStack {

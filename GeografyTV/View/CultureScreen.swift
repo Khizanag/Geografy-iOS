@@ -1,8 +1,8 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import SwiftUI
+import Geografy_Core_Service
 import Geografy_Feature_CultureExplorer
+import SwiftUI
 
 struct CultureScreen: View {
     let countryDataService: CountryDataService
@@ -42,6 +42,7 @@ struct CultureDetailView: View {
     let fact: CultureFact
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             Section {
                 HStack(spacing: 20) {

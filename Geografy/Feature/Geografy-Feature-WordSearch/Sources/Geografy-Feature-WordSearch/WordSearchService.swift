@@ -1,5 +1,5 @@
-import Geografy_Core_Common
 import Foundation
+import Geografy_Core_Common
 
 public struct WordSearchService {
     public let gridSize = 12
@@ -115,7 +115,7 @@ private extension WordSearchService {
         let letters = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
         for row in 0..<gridSize {
             for col in 0..<gridSize where grid[row][col] == Character(" ") {
-                grid[row][col] = letters.randomElement()!
+                grid[row][col] = letters.randomElement() ?? "A"
             }
         }
     }

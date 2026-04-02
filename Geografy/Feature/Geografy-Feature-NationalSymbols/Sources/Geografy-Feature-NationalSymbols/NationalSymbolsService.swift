@@ -13,7 +13,6 @@ public final class NationalSymbolsService {
 
 // MARK: - Data
 private extension NationalSymbolsService {
-    // swiftlint:disable:next closure_body_length
     nonisolated(unsafe) public static let allSymbols: [NationalSymbol] = [
         NationalSymbol(
             id: "US", countryCode: "US",

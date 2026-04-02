@@ -1,8 +1,8 @@
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import SwiftUI
+import Geografy_Core_Service
 import Geografy_Feature_Feed
+import SwiftUI
 
 struct FeedScreen: View {
     let countryDataService: CountryDataService
@@ -60,7 +60,9 @@ struct FeedDetailView: View {
     let countryDataService: CountryDataService
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         NavigationStack {
+            // swiftlint:disable:next closure_body_length
             List {
                 Section {
                     VStack(alignment: .leading, spacing: 16) {

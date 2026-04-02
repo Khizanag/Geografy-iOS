@@ -1,15 +1,17 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Feature_LearningPath
+import SwiftUI
 
 struct LearningPathScreen: View {
     @State private var service = LearningPathService()
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List(service.modules) { module in
             NavigationLink {
                 ModuleLessonsScreen(module: module, service: service)
+            // swiftlint:disable:next closure_body_length
             } label: {
                 HStack(spacing: 20) {
                     Image(systemName: module.icon)

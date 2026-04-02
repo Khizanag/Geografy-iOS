@@ -93,7 +93,9 @@ private extension LandmarkGalleryScreen {
         let accentColor = Color(hex: landmark.accentColor)
         return Button {
             selectedLandmark = landmark
+        // swiftlint:disable:next closure_body_length
         } label: {
+            // swiftlint:disable:next closure_body_length
             CardView {
                 VStack(spacing: DesignSystem.Spacing.sm) {
                     ZStack {

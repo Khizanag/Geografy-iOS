@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct ContinentStatsScreen: View {
@@ -82,12 +82,14 @@ private extension ContinentStatsScreen {
     }
 
     var statsGridSection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Statistics")
                 .accessibilityAddTraits(.isHeader)
             LazyVGrid(
                 columns: [GridItem(.flexible()), GridItem(.flexible())],
                 spacing: DesignSystem.Spacing.sm
+            // swiftlint:disable:next closure_body_length
             ) {
                 statTile(
                     title: "Total Population",

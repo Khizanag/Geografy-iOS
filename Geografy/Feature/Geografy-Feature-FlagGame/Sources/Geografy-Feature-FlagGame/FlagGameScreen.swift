@@ -1,8 +1,8 @@
 import Accessibility
-import Geografy_Core_Service
 import Combine
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct FlagGameScreen: View {
@@ -172,7 +172,7 @@ private extension FlagGameScreen {
         let countries = countryDataService.countries.filter { !$0.code.isEmpty }
         guard countries.count >= 4 else { return }
 
-        let target = countries.randomElement()!
+        guard let target = countries.randomElement() else { return }
         let distractors = Array(
             countries
                 .filter { $0.id != target.id }

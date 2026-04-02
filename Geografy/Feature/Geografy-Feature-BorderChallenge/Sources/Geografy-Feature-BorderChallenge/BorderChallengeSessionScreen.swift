@@ -306,7 +306,8 @@ private extension BorderChallengeSessionScreen {
             #endif
             AccessibilityNotification.Announcement(
                 "Correct! \(match.name). \(foundNeighbors.count) of \(neighbors.count) found"
-            ).post()
+            )
+            .post()
 
             if foundNeighbors.count == neighbors.count {
                 endGame()

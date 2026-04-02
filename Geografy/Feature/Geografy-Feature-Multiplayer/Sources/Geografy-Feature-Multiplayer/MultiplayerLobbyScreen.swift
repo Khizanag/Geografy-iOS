@@ -236,6 +236,7 @@ private extension MultiplayerLobbyScreen {
 // MARK: - Background
 private extension MultiplayerLobbyScreen {
     var ambientBlobs: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             Ellipse()
                 .fill(

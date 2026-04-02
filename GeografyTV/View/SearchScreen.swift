@@ -110,7 +110,7 @@ private extension SearchScreen {
                 }
             }
 
-        case .capital(let country, let capitalName):
+        case let .capital(country, capitalName):
             NavigationLink(value: country) {
                 HStack(spacing: 16) {
                     Image(systemName: "building.columns")

@@ -21,11 +21,11 @@ extension CountryDetailScreen {
 
 // MARK: - Flag Symbolism Card
 private struct FlagSymbolismCard: View {
-    public let symbolism: FlagSymbolism
+    let symbolism: FlagSymbolism
 
     @State private var expanded = false
 
-    public var body: some View {
+    var body: some View {
         CardView {
             VStack(spacing: 0) {
                 headerRow
@@ -50,6 +50,7 @@ private extension FlagSymbolismCard {
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                 expanded.toggle()
             }
+        // swiftlint:disable:next closure_body_length
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ZStack {
@@ -119,7 +120,11 @@ private extension FlagSymbolismCard {
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.sm)
-            .padding(.bottom, symbolism.emblems.isEmpty && symbolism.historicalNote == nil ? DesignSystem.Spacing.sm : 0)
+            .padding(
+                .bottom,
+                symbolism.emblems.isEmpty && symbolism.historicalNote == nil
+                    ? DesignSystem.Spacing.sm : 0
+            )
         }
     }
 

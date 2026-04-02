@@ -1,8 +1,8 @@
 import Geografy_Core_Navigation
 #if !os(tvOS)
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct TimeZoneScreen: View {
@@ -141,7 +141,7 @@ public struct CountryWithZone: Identifiable {
     public var currentTime: Date { Date() }
 
     public var utcOffsetHours: Double {
-        Double(timeZone.secondsFromGMT(for: Date())) / 3600
+        Double(timeZone.secondsFromGMT(for: Date())) / 3_600
     }
 
     public var utcOffsetLabel: String {
@@ -163,13 +163,13 @@ private struct WorldClockView: View {
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
 
-    public let countries: [CountryWithZone]
+    let countries: [CountryWithZone]
     @State private var searchText = ""
     @State private var now = Date()
 
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
-    public var body: some View {
+    var body: some View {
         listContent
             .listStyle(.plain)
             .searchable(text: $searchText, prompt: "Search country…")
@@ -252,9 +252,9 @@ private struct AllZonesView: View {
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
 
-    public let countries: [CountryWithZone]
+    let countries: [CountryWithZone]
 
-    public var body: some View {
+    var body: some View {
         scrollContent
     }
 

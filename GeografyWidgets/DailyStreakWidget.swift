@@ -31,7 +31,7 @@ struct DailyStreakProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<DailyStreakEntry>) -> Void) {
-        let nextMidnight = Calendar.current.startOfDay(for: .now.addingTimeInterval(86400))
+        let nextMidnight = Calendar.current.startOfDay(for: .now.addingTimeInterval(86_400))
         let timeline = Timeline(entries: [entry()], policy: .after(nextMidnight))
         completion(timeline)
     }

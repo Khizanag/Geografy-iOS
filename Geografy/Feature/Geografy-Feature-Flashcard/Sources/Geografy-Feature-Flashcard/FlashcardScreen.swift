@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct FlashcardScreen: View {
@@ -172,7 +172,7 @@ private extension FlashcardScreen {
             FlashcardDeckCard(
                 deck: deck,
                 cardCount: dueCardCount,
-                masteryPercentage: 0,
+                proficiencyPercentage: 0,
                 dueCount: dueCardCount
             )
         }
@@ -212,14 +212,14 @@ private extension FlashcardScreen {
 
     func deckButton(for deck: FlashcardDeck) -> some View {
         let items = cardsForDeck(deck)
-        let mastery = flashcardService.masteryPercentage(for: items)
+        let proficiency = flashcardService.proficiencyPercentage(for: items)
         let dueCount = flashcardService.dueCards(from: items).count
 
         return Button { startSession(for: deck) } label: {
             FlashcardDeckCard(
                 deck: deck,
                 cardCount: items.count,
-                masteryPercentage: mastery,
+                proficiencyPercentage: proficiency,
                 dueCount: dueCount
             )
         }
@@ -230,6 +230,7 @@ private extension FlashcardScreen {
 // MARK: - Background
 private extension FlashcardScreen {
     var ambientBackground: some View {
+        // swiftlint:disable:next closure_body_length
         ZStack {
             DesignSystem.Color.background
 

@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct MapScreen: View {
@@ -127,7 +127,6 @@ private extension MapScreen {
         }
         #endif
     }
-
 }
 
 // MARK: - Toolbar
@@ -371,7 +370,6 @@ private extension MapScreen {
         }
         return mapState.contentBounds
     }
-
 }
 
 // MARK: - Actions
@@ -389,30 +387,27 @@ private extension MapScreen {
             $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
         }
 
-        for shape in sortedByArea {
-            if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    if mapState.selectedCountryCode == shape.id {
-                        mapState.selectedCountryCode = nil
-                        #if !os(tvOS)
-                        hapticsService.impact(.light)
-                        #endif
-                    } else {
-                        mapState.selectedCountryCode = shape.id
-                        #if !os(tvOS)
-                        hapticsService.impact(.medium)
-                        #endif
-                    }
+        for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                if mapState.selectedCountryCode == shape.id {
+                    mapState.selectedCountryCode = nil
+                    #if !os(tvOS)
+                    hapticsService.impact(.light)
+                    #endif
+                } else {
+                    mapState.selectedCountryCode = shape.id
+                    #if !os(tvOS)
+                    hapticsService.impact(.medium)
+                    #endif
                 }
-                return
             }
+            return
         }
 
         withAnimation(.easeInOut(duration: 0.3)) {
             mapState.selectedCountryCode = nil
         }
     }
-
 }
 
 // MARK: - Data Loading

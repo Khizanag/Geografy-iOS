@@ -1,3 +1,4 @@
+// swiftlint:disable line_length
 import Foundation
 
 public enum EthnicityData: Sendable {

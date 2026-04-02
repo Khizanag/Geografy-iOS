@@ -1,5 +1,5 @@
-import Geografy_Core_Navigation
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import SwiftUI
 
 public struct TravelJournalStatsView: View {

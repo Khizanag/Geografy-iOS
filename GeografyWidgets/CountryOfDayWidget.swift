@@ -33,7 +33,7 @@ struct CountryOfDayProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<CountryOfDayEntry>) -> Void) {
-        let nextMidnight = Calendar.current.startOfDay(for: .now.addingTimeInterval(86400))
+        let nextMidnight = Calendar.current.startOfDay(for: .now.addingTimeInterval(86_400))
         let timeline = Timeline(entries: [entry()], policy: .after(nextMidnight))
         completion(timeline)
     }
@@ -77,6 +77,7 @@ struct CountryOfDayWidgetView: View {
 // MARK: - Subviews
 private extension CountryOfDayWidgetView {
     var smallView: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 6) {
                 Image(systemName: "globe.americas.fill")

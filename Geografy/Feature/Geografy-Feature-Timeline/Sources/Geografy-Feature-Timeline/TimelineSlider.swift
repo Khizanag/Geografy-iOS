@@ -108,11 +108,11 @@ private extension TimelineSlider {
     }
 
     var majorDecades: [Int] {
-        stride(from: 1800, through: 2020, by: 20).map { $0 }
+        stride(from: 1_800, through: 2_020, by: 20).map { $0 }
     }
 
     func decadeText(_ decade: Int) -> String {
-        "\(decade % 100 == 0 ? String(decade) : "'\(decade % 100)")"
+        "\(decade.isMultiple(of: 100) ? String(decade) : "'\(decade % 100)")"
     }
 
     func dotSize(for count: Int) -> CGFloat {

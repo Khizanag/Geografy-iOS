@@ -1,6 +1,6 @@
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Feature_LandmarkGallery
+import SwiftUI
 
 struct LandmarkScreen: View {
     @State private var selectedCategory: LandmarkCategory?
@@ -79,6 +79,7 @@ struct LandmarkDetailScreen: View {
     }
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             Section {
                 VStack(alignment: .leading, spacing: 16) {

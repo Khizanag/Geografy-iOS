@@ -35,9 +35,9 @@ public final class XPService {
     }
 
     public func award(_ amount: Int, source: XPSource, metadata: [String: String]? = nil) {
-        let metadataString: String? = metadata.map { dict in
+        let metadataString: String? = metadata.flatMap { dict in
             (try? JSONSerialization.data(withJSONObject: dict)).flatMap { String(data: $0, encoding: .utf8) }
-        } ?? nil
+        }
 
         let record = XPRecord(
             userID: currentUserID,

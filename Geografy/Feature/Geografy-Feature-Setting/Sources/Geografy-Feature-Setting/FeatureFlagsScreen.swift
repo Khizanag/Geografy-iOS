@@ -1,7 +1,7 @@
 #if !os(tvOS)
 import Geografy_Core_DesignSystem
-import SwiftUI
 import Geografy_Core_Service
+import SwiftUI
 
 public struct FeatureFlagsScreen: View {
     @Environment(FeatureFlagService.self) private var featureFlags

@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct TerritorialDisputesScreen: View {
@@ -69,7 +69,9 @@ private extension TerritorialDisputesScreen {
     }
 
     var introCard: some View {
+        // swiftlint:disable:next closure_body_length
         CardView {
+            // swiftlint:disable:next closure_body_length
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     ZStack {

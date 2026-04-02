@@ -13,7 +13,8 @@ public enum FlashcardGuide {
     public static let pages: [GuidePage] = [
         GuidePage(
             title: "Tap to Flip",
-            subtitle: "Each card has a question on the front. Tap anywhere on the card to reveal the answer on the back.",
+            subtitle: "Each card has a question on the front."
+                + " Tap anywhere on the card to reveal the answer on the back.",
             steps: [
                 GuideStep(
                     icon: "hand.tap.fill",
@@ -29,7 +30,8 @@ public enum FlashcardGuide {
         ),
         GuidePage(
             title: "Swipe to Rate",
-            subtitle: "Swipe the card to quickly rate your answer. You can even swipe right before flipping if you're sure you know it!",
+            subtitle: "Swipe the card to quickly rate your answer."
+                + " You can even swipe right before flipping if you're sure you know it!",
             steps: [
                 GuideStep(
                     icon: "arrow.right",
@@ -71,7 +73,9 @@ public enum FlashcardGuide {
         ),
         GuidePage(
             title: "Spaced Repetition",
-            subtitle: "Cards you struggle with appear more often. Cards you know are spaced further apart. This is proven to maximize long-term retention.",
+            subtitle: "Cards you struggle with appear more often."
+                + " Cards you know are spaced further apart."
+                + " This is proven to maximize long-term retention.",
             steps: [
                 GuideStep(
                     icon: "clock.arrow.circlepath",

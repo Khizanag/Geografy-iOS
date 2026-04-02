@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
-import Geografy_Core_Service
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 struct OrganizationsScreen: View {
@@ -49,6 +49,7 @@ struct OrganizationDetailScreen: View {
     }
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             Section {
                 VStack(alignment: .leading, spacing: 12) {

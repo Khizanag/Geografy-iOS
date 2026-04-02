@@ -122,6 +122,7 @@ private extension MultiplayerQuizScreen {
     func playerSlot(_ index: Int) -> some View {
         let isJoined = index < players.count
 
+        // swiftlint:disable:next closure_body_length
         return VStack(spacing: 16) {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
@@ -304,7 +305,7 @@ private extension MultiplayerQuizScreen {
                 }
             }
         }
-        .frame(maxWidth: isFlagOptionsLayout ? 1100 : 900)
+        .frame(maxWidth: isFlagOptionsLayout ? 1_100 : 900)
         .focusable(false)
     }
 
@@ -405,7 +406,9 @@ private extension MultiplayerQuizScreen {
     }
 
     var playerStatusBar: some View {
+        // swiftlint:disable:next closure_body_length
         HStack(spacing: 24) {
+            // swiftlint:disable:next closure_body_length
             ForEach(players) { player in
                 HStack(spacing: 12) {
                     Circle()
@@ -450,6 +453,7 @@ private extension MultiplayerQuizScreen {
 // MARK: - Results
 private extension MultiplayerQuizScreen {
     var resultsView: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(spacing: 48) {
             Text("Final Scores")
                 .font(.system(size: 52, weight: .bold))
@@ -549,7 +553,7 @@ private extension MultiplayerQuizScreen {
                 if timeRemaining > 0 {
                     timeRemaining -= 0.1
 
-                    if Int(timeRemaining * 10) % 10 == 0, timeRemaining <= 5, timeRemaining > 0 {
+                    if Int(timeRemaining * 10).isMultiple(of: 10), timeRemaining <= 5, timeRemaining > 0 {
                         for player in players {
                             ControllerHaptics.shared.playTimerWarning(on: player.controller)
                         }

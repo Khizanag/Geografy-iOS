@@ -1,6 +1,6 @@
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct ExploreGameScreen: View {
@@ -51,7 +51,6 @@ private extension ExploreGameScreen {
         .background { AmbientBlobsView(.standard) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
     }
-
 }
 
 // MARK: - Hero Section

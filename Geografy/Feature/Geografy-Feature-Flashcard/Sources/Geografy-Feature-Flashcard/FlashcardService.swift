@@ -1,5 +1,5 @@
-import Geografy_Core_Common
 import Foundation
+import Geografy_Core_Common
 
 @Observable
 public final class FlashcardService {
@@ -33,12 +33,12 @@ public final class FlashcardService {
         items.filter { spacedRepetitionData(for: $0.id).isDueForReview }
     }
 
-    public func masteryPercentage(for items: [FlashcardItem]) -> Double {
+    public func proficiencyPercentage(for items: [FlashcardItem]) -> Double {
         guard !items.isEmpty else { return 0 }
-        let totalMastery = items.reduce(0.0) { sum, item in
-            sum + spacedRepetitionData(for: item.id).masteryPercentage
+        let totalProficiency = items.reduce(0.0) { sum, item in
+            sum + spacedRepetitionData(for: item.id).proficiencyPercentage
         }
-        return totalMastery / Double(items.count)
+        return totalProficiency / Double(items.count)
     }
 
     public func reviewedTodayCount() -> Int {

@@ -64,6 +64,7 @@ private extension QuizPackDetailScreen {
 // MARK: - Header
 private extension QuizPackDetailScreen {
     func packHeader(_ pack: QuizPack) -> some View {
+        // swiftlint:disable:next closure_body_length
         VStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()

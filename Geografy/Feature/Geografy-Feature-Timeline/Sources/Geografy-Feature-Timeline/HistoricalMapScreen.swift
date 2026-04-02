@@ -1,8 +1,8 @@
 #if !os(tvOS)
 import Geografy_Core_Common
-import Geografy_Feature_Map
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
+import Geografy_Feature_Map
 import SwiftUI
 
 public struct HistoricalMapScreen: View {
@@ -22,7 +22,7 @@ public struct HistoricalMapScreen: View {
 
     @State private var mapState = MapState()
     @State private var timelineService = TimelineService()
-    @State private var selectedYear = 1960
+    @State private var selectedYear = 1_960
     @State private var allShapes: [CountryShape] = []
     @State private var independenceMap: [String: Int] = [:]
     @State private var selectedEvent: HistoricalEvent?
@@ -161,7 +161,7 @@ private extension HistoricalMapScreen {
                 yearHeader
                 Slider(
                     value: yearBinding,
-                    in: 1800...2025,
+                    in: 1_800...2_025,
                     step: 1
                 )
                 .tint(DesignSystem.Color.accent)
@@ -321,18 +321,16 @@ private extension HistoricalMapScreen {
                 < $1.boundingBox.width * $1.boundingBox.height
         }
 
-        for shape in sortedByArea {
-            if shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-                if mapState.selectedCountryCode == shape.id {
-                    mapState.selectedCountryCode = nil
-                } else {
-                    mapState.selectedCountryCode = shape.id
-                }
-                #if !os(tvOS)
-                hapticsService.impact(.medium)
-                #endif
-                return
+        for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
+            if mapState.selectedCountryCode == shape.id {
+                mapState.selectedCountryCode = nil
+            } else {
+                mapState.selectedCountryCode = shape.id
             }
+            #if !os(tvOS)
+            hapticsService.impact(.medium)
+            #endif
+            return
         }
 
         mapState.selectedCountryCode = nil

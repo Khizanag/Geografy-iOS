@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct OrganizationDetailScreen: View {
@@ -98,6 +98,7 @@ private extension OrganizationDetailScreen {
     }
 
     var headerCard: some View {
+        // swiftlint:disable:next closure_body_length
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 HStack(spacing: DesignSystem.Spacing.md) {
@@ -204,6 +205,7 @@ private extension OrganizationDetailScreen {
     }
 
     var memberCountriesSection: some View {
+        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text("Member Countries")
                 .font(DesignSystem.Font.title2)

@@ -28,7 +28,6 @@ public final class CountryNicknamesService {
 
 // MARK: - Data
 private extension CountryNicknamesService {
-    // swiftlint:disable:next closure_body_length
     nonisolated(unsafe) public static let allNicknames: [CountryNickname] = [
         CountryNickname(
             id: "AZ", countryCode: "AZ",

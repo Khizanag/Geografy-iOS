@@ -11,6 +11,7 @@ struct LeaderboardScreen: View {
     @State private var isLoading = true
 
     var body: some View {
+        // swiftlint:disable:next closure_body_length
         List {
             if isLoading {
                 Section {

@@ -1,5 +1,5 @@
-import Geografy_Core_Common
 import Foundation
+import Geografy_Core_Common
 
 @Observable
 public final class MultiplayerService {
@@ -62,7 +62,7 @@ extension MultiplayerService {
 // MARK: - Helpers
 private extension MultiplayerService {
     func makeOpponentRating(skillLevel: Double) -> Int {
-        let baseRating = 1000 + Int(skillLevel * 1200)
+        let baseRating = 1_000 + Int(skillLevel * 1_200)
         let jitter = Int.random(in: -100...100)
         return baseRating + jitter
     }

@@ -63,7 +63,6 @@ private extension PronunciationService {
         countryToLocale[countryCode] ?? "en-US"
     }
 
-    // swiftlint:disable:next closure_body_length
     var countryToLocale: [String: String] {
         [
             "AF": "ps-AF",

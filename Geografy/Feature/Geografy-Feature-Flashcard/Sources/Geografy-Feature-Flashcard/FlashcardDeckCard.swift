@@ -5,7 +5,7 @@ import SwiftUI
 public struct FlashcardDeckCard: View {
     public let deck: FlashcardDeck
     public let cardCount: Int
-    public let masteryPercentage: Double
+    public let proficiencyPercentage: Double
     public let dueCount: Int
 
     public var body: some View {

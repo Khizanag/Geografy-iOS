@@ -1,7 +1,7 @@
-import Geografy_Core_Navigation
 import Geografy_Core_Common
-import Geografy_Core_Service
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct TimelineScreen: View {
@@ -10,7 +10,7 @@ public struct TimelineScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var timelineService = TimelineService()
-    @State private var selectedYear = 1960
+    @State private var selectedYear = 1_960
     @State private var filter = TimelineFilter()
     @State private var selectedEvent: HistoricalEvent?
     @State private var showTodaySection = true
@@ -204,8 +204,8 @@ private extension TimelineScreen {
         CardView {
             TimelineSlider(
                 selectedYear: $selectedYear,
-                range: 1800...2025,
-                decades: timelineService.decades(in: 1800...2025),
+                range: 1_800...2_025,
+                decades: timelineService.decades(in: 1_800...2_025),
                 eventCountForDecade: { decade in
                     timelineService.eventCount(
                         forDecade: decade,

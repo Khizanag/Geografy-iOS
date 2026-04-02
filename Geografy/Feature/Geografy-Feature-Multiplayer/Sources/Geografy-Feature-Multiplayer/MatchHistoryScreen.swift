@@ -52,6 +52,7 @@ private extension MatchHistoryScreen {
     }
 
     func matchRow(_ match: MultiplayerMatch) -> some View {
+        // swiftlint:disable:next closure_body_length
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 resultIndicator(match)
