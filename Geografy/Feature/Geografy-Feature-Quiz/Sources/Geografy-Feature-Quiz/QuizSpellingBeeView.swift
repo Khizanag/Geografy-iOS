@@ -7,9 +7,11 @@ public struct QuizSpellingBeeView: View {
     public let quizType: QuizType
     public let showFeedback: Bool
     public let isCorrectAnswer: Bool
+    public let wasSkipped: Bool
     @Binding var typingInput: String
     @Binding var showFlagPreview: Bool
     public let onSubmit: () -> Void
+    public let onSkip: () -> Void
 
     @FocusState private var isInputFocused: Bool
 
@@ -17,9 +19,6 @@ public struct QuizSpellingBeeView: View {
         mainContent
             .padding(.horizontal, DesignSystem.Spacing.md)
             .onAppear { isInputFocused = true }
-            .onChange(of: showFeedback) { _, newValue in
-                if newValue { isInputFocused = false }
-            }
             .onChange(of: typingInput) { _, _ in
                 checkAutoSubmit()
             }
@@ -36,6 +35,10 @@ private extension QuizSpellingBeeView {
 
             Spacer(minLength: DesignSystem.Spacing.md)
 
+            if showFeedback {
+                feedbackIcon
+            }
+
             letterGridSection
 
             if !showFeedback {
@@ -44,7 +47,7 @@ private extension QuizSpellingBeeView {
 
             Spacer(minLength: DesignSystem.Spacing.sm)
 
-            inputSection
+            hiddenTextField
         }
     }
 }
@@ -87,8 +90,7 @@ private extension QuizSpellingBeeView {
 
     var skipButton: some View {
         Button {
-            typingInput = correctAnswerText
-            onSubmit()
+            onSkip()
         } label: {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "forward.fill")
@@ -113,7 +115,8 @@ private extension QuizSpellingBeeView {
             LetterGridView(
                 targetText: correctAnswerText,
                 typedText: typingInput,
-                isRevealed: showFeedback
+                isRevealed: showFeedback,
+                wasSkipped: wasSkipped
             )
             .padding(DesignSystem.Spacing.md)
         }
@@ -122,23 +125,35 @@ private extension QuizSpellingBeeView {
 
 // MARK: - Input
 private extension QuizSpellingBeeView {
-    var inputSection: some View {
-        VStack(spacing: 0) {
-            if showFeedback {
+    var feedbackIcon: some View {
+        Group {
+            if wasSkipped {
+                Image(systemName: "forward.fill")
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            } else {
                 Image(systemName: isCorrectAnswer ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(DesignSystem.Font.title2)
-                    .foregroundStyle(isCorrectAnswer ? DesignSystem.Color.success : DesignSystem.Color.error)
+                    .foregroundStyle(
+                        isCorrectAnswer
+                            ? DesignSystem.Color.success
+                            : DesignSystem.Color.error
+                    )
             }
-
-            TextField("", text: $typingInput)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.characters)
-                .focused($isInputFocused)
-                .disabled(showFeedback)
-                .onSubmit { onSubmit() }
-                .frame(width: 1, height: 1)
-                .opacity(0)
         }
+        .padding(.bottom, DesignSystem.Spacing.sm)
+        .transition(.scale.combined(with: .opacity))
+    }
+
+    var hiddenTextField: some View {
+        TextField("", text: $typingInput)
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.characters)
+            .focused($isInputFocused)
+            .disabled(showFeedback)
+            .onSubmit { onSubmit() }
+            .frame(width: 1, height: 1)
+            .opacity(0)
     }
 }
 

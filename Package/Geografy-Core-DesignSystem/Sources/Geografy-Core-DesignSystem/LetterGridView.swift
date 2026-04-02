@@ -4,11 +4,18 @@ public struct LetterGridView: View {
     public let targetText: String
     public let typedText: String
     public let isRevealed: Bool
+    public let wasSkipped: Bool
 
-    public init(targetText: String, typedText: String, isRevealed: Bool) {
+    public init(
+        targetText: String,
+        typedText: String,
+        isRevealed: Bool,
+        wasSkipped: Bool = false
+    ) {
         self.targetText = targetText
         self.typedText = typedText
         self.isRevealed = isRevealed
+        self.wasSkipped = wasSkipped
     }
 
     public var body: some View {
@@ -104,19 +111,23 @@ private extension LetterGridView {
     }
 
     func revealedCell(_ letter: String) -> some View {
-        ZStack {
+        let color = wasSkipped
+            ? DesignSystem.Color.textSecondary
+            : DesignSystem.Color.success
+
+        return ZStack {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                .fill(DesignSystem.Color.success.opacity(0.2))
+                .fill(color.opacity(0.2))
                 .aspectRatio(32.0 / 36.0, contentMode: .fit)
                 .overlay(
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .stroke(DesignSystem.Color.success.opacity(0.5), lineWidth: 1.5)
+                        .stroke(color.opacity(0.5), lineWidth: 1.5)
                 )
 
             Text(letter.uppercased())
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.success)
+                .foregroundStyle(color)
         }
     }
 
