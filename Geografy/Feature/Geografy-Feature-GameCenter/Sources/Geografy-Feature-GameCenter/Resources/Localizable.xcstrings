@@ -1,5 +1,172 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ XP"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld Friend%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Friend%2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მეგობარი%@"
+          }
+        }
+      }
+    },
+    "Connect your Game Center account to see your friends and compare scores." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დააკავშირე Game Center ანგარიში მეგობრების სანახავად და ქულების შესადარებლად."
+          }
+        }
+      }
+    },
+    "Connecting to Game Center..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center-თან დაკავშირება..."
+          }
+        }
+      }
+    },
+    "Finding your friends" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეგობრების მოძებნა"
+          }
+        }
+      }
+    },
+    "Friends" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეგობრები"
+          }
+        }
+      }
+    },
+    "Leaderboards" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლიდერბორდები"
+          }
+        }
+      }
+    },
+    "No Friends Yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ მეგობრები არ არის"
+          }
+        }
+      }
+    },
+    "No XP recorded" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "XP არ არის დაფიქსირებული"
+          }
+        }
+      }
+    },
+    "Only Game Center friends who also have Geografy installed will appear here." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აქ მხოლოდ Game Center-ის მეგობრები გამოჩნდებიან, ვისაც Geografy დაინსტალირებული აქვს."
+          }
+        }
+      }
+    },
+    "Open Game Center" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center-ის გახსნა"
+          }
+        }
+      }
+    },
+    "Ranked by Total XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალაგებული სულ XP-ით"
+          }
+        }
+      }
+    },
+    "Sign In" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესვლა"
+          }
+        }
+      }
+    },
+    "Sign in to Game Center" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center-ში შესვლა"
+          }
+        }
+      }
+    },
+    "View Rankings" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგების ნახვა"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

@@ -1,5 +1,86 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%lld coins/$" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მონეტა/$"
+          }
+        }
+      }
+    },
+    "Buy for %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყიდვა %@-ად"
+          }
+        }
+      }
+    },
+    "Coins" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონეტები"
+          }
+        }
+      }
+    },
+    "Complete quizzes and log in daily to earn coins" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეავსე ვიქტორინები და შედი ყოველდღიურად მონეტების მისაღებად"
+          }
+        }
+      }
+    },
+    "No transactions yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ ტრანზაქციები არ არის"
+          }
+        }
+      }
+    },
+    "See All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველას ნახვა"
+          }
+        }
+      }
+    },
+    "Your Coins" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი მონეტები"
+          }
+        }
+      }
+    },
+    "coins" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონეტები"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

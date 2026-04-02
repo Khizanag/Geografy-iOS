@@ -1,5 +1,106 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Continue as Guest" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება სტუმრად"
+          }
+        }
+      }
+    },
+    "Debug Sign In" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug შესვლა"
+          }
+        }
+      }
+    },
+    "Geografy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კარგი"
+          }
+        }
+      }
+    },
+    "Sign In Failed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესვლა ვერ მოხერხდა"
+          }
+        }
+      }
+    },
+    "Sign in" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესვლა"
+          }
+        }
+      }
+    },
+    "Sign in to save progress" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედი პროგრესის შესანახად"
+          }
+        }
+      }
+    },
+    "Sign in with Google" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google-ით შესვლა"
+          }
+        }
+      }
+    },
+    "XP, streaks & achievements sync to your account" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "XP, სერიები და მიღწევები შენს ანგარიშთან სინქრონიზდება"
+          }
+        }
+      }
+    },
+    "Your world, explored." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი მსოფლიო, აღმოჩენილი."
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

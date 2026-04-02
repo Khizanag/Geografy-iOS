@@ -1,5 +1,78 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "Double tap to collapse" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ჩასაკეცად"
+          }
+        }
+      }
+    },
+    "Double tap to expand" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება გასაშლელად"
+          }
+        }
+      }
+    },
+    "Geography Features" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფიული ობიექტები"
+          }
+        }
+      }
+    },
+    "Rank %lld, %@, %@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Rank %1$lld, %2$@, %3$@: %4$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგი %1$lld, %2$@, %3$@: %4$@"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

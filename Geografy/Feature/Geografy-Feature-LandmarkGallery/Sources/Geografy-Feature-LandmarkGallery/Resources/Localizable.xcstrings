@@ -1,5 +1,26 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Landmark Gallery" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ღირშესანიშნაობები"
+          }
+        }
+      }
+    },
+    "UNESCO" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UNESCO"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

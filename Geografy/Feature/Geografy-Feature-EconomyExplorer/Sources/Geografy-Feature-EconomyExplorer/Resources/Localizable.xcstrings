@@ -1,5 +1,52 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "#%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#%lld"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "Economy Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეკონომიკის მკვლევარი"
+          }
+        }
+      }
+    },
+    "Search countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

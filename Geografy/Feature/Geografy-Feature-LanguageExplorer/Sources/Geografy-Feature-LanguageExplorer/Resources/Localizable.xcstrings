@@ -1,5 +1,56 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%lld million speakers" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მილიონი მოსაუბრე"
+          }
+        }
+      }
+    },
+    "%lldM" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldM"
+          }
+        }
+      }
+    },
+    "Language Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენების მკვლევარი"
+          }
+        }
+      }
+    },
+    "Search languages..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენების ძიება..."
+          }
+        }
+      }
+    },
+    "native speakers" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მშობლიური მოსაუბრეები"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

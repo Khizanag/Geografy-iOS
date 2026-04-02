@@ -1,5 +1,166 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%lld independent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld დამოუკიდებელი"
+          }
+        }
+      }
+    },
+    "1800" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1800"
+          }
+        }
+      }
+    },
+    "2025" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2025"
+          }
+        }
+      }
+    },
+    "All Continents" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა კონტინენტი"
+          }
+        }
+      }
+    },
+    "All Types" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ტიპი"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Event Details" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის დეტალები"
+          }
+        }
+      }
+    },
+    "Event type: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის ტიპი: %@"
+          }
+        }
+      }
+    },
+    "Historical Map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული რუკა"
+          }
+        }
+      }
+    },
+    "Historical state unknown" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული მდგომარეობა უცნობია"
+          }
+        }
+      }
+    },
+    "Independent since %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამოუკიდებელი %@-დან"
+          }
+        }
+      }
+    },
+    "No events in %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენები %@-ში არ არის"
+          }
+        }
+      }
+    },
+    "Select Year" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წლის არჩევა"
+          }
+        }
+      }
+    },
+    "Timeline" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქრონოლოგია"
+          }
+        }
+      }
+    },
+    "Try adjusting filters or selecting a different year" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე ფილტრების შეცვლა ან სხვა წლის არჩევა"
+          }
+        }
+      }
+    },
+    "Year" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წელი"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

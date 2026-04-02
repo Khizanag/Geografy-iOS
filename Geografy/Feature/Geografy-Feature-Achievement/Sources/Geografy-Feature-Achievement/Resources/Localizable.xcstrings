@@ -1,5 +1,210 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@ of %@ completed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ of %2$@ completed"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@-დან დასრულებული"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@, %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@, %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@, %3$@"
+          }
+        }
+      }
+    },
+    "%lld percent complete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld პროცენტი დასრულებული"
+          }
+        }
+      }
+    },
+    "+%@ XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%@ XP"
+          }
+        }
+      }
+    },
+    "+%lld XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld XP"
+          }
+        }
+      }
+    },
+    "Achievement Unlocked!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღწევა განბლოკილია!"
+          }
+        }
+      }
+    },
+    "Achievements" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღწევები"
+          }
+        }
+      }
+    },
+    "Collected on %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეგროვებულია %@"
+          }
+        }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
+    "LEVEL UP!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე აიწია!"
+          }
+        }
+      }
+    },
+    "Level %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %lld"
+          }
+        }
+      }
+    },
+    "Pin to Showcase" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიტრინაზე მიმაგრება"
+          }
+        }
+      }
+    },
+    "Progress" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროგრესი"
+          }
+        }
+      }
+    },
+    "Unlocked" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განბლოკილია"
+          }
+        }
+      }
+    },
+    "Unpin from Showcase" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიტრინიდან მოხსნა"
+          }
+        }
+      }
+    },
+    "You've reached a new level" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახალ დონეზე ხარ"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

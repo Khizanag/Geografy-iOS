@@ -1,5 +1,92 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%lld hop%@ from %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld hop%2$@ from %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ნახტომი%2$@ %3$@-დან"
+          }
+        }
+      }
+    },
+    "Find Shortest Path" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უმოკლესი გზის პოვნა"
+          }
+        }
+      }
+    },
+    "How many border hops from **%@** to your destination?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რამდენი საზღვრის გადაკვეთაა **%@**-დან შენს დანიშნულებამდე?"
+          }
+        }
+      }
+    },
+    "Island nation — no land borders" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კუნძულოვანი ქვეყანა — სახმელეთო საზღვრების გარეშე"
+          }
+        }
+      }
+    },
+    "Neighbor Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეზობელი ქვეყნები"
+          }
+        }
+      }
+    },
+    "No Land Path" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სახმელეთო გზა არ არის"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კარგი"
+          }
+        }
+      }
+    },
+    "There's no land border route between these countries." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ ქვეყნებს შორის სახმელეთო საზღვრის მარშრუტი არ არის."
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

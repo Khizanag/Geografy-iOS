@@ -1,5 +1,96 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "All Words Found!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა სიტყვა ნაპოვნია!"
+          }
+        }
+      }
+    },
+    "Find hidden country names\nin a grid of letters" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე დამალული ქვეყნების სახელები\nასოების ბადეში"
+          }
+        }
+      }
+    },
+    "Guide" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სახელმძღვანელო"
+          }
+        }
+      }
+    },
+    "Pause" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაუზა"
+          }
+        }
+      }
+    },
+    "Paused" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეჩერებულია"
+          }
+        }
+      }
+    },
+    "Puzzle Complete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავსატეხი დასრულებულია"
+          }
+        }
+      }
+    },
+    "Resume" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
+    "Theme" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თემა"
+          }
+        }
+      }
+    },
+    "Word Search" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიტყვების ძიება"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

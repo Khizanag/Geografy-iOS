@@ -1,5 +1,26 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Quotes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ციტატები"
+          }
+        }
+      }
+    },
+    "— %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "— %@"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

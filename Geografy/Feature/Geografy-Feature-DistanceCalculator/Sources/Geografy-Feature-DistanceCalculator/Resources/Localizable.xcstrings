@@ -1,5 +1,112 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ kilometers" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ კილომეტრი"
+          }
+        }
+      }
+    },
+    "%@ miles" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ მილი"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Distance Calculator" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მანძილის კალკულატორი"
+          }
+        }
+      }
+    },
+    "Great Circle Distance" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დიდი წრის მანძილი"
+          }
+        }
+      }
+    },
+    "In perspective" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პერსპექტივაში"
+          }
+        }
+      }
+    },
+    "Map showing route between selected countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა არჩეულ ქვეყნებს შორის მარშრუტით"
+          }
+        }
+      }
+    },
+    "Search countries…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება…"
+          }
+        }
+      }
+    },
+    "km" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კმ"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

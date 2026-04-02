@@ -1,5 +1,454 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ has no land borders — surrounded entirely by water." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს არ აქვს სახმელეთო საზღვრები — მთლიანად წყლით არის გარშემორტყმული."
+          }
+        }
+      }
+    },
+    "%@ – %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ – %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ – %2$@"
+          }
+        }
+      }
+    },
+    "%@, pronounced %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, pronounced %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, წარმოთქმა %2$@"
+          }
+        }
+      }
+    },
+    "%@/km²" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/კმ²"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld World Heritage %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld World Heritage %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld მსოფლიო მემკვიდრეობის %2$@"
+          }
+        }
+      }
+    },
+    "%lld members" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld წევრი"
+          }
+        }
+      }
+    },
+    "(%@)" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%@)"
+          }
+        }
+      }
+    },
+    "10yr" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10წ"
+          }
+        }
+      }
+    },
+    "Adopted %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღებულია %@"
+          }
+        }
+      }
+    },
+    "All %@ Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა %@ ქვეყანა"
+          }
+        }
+      }
+    },
+    "Capital" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დედაქალაქი"
+          }
+        }
+      }
+    },
+    "Capitals (%lld)" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დედაქალაქები (%lld)"
+          }
+        }
+      }
+    },
+    "Colors & Symbols" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფერები და სიმბოლოები"
+          }
+        }
+      }
+    },
+    "Compare" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედარება"
+          }
+        }
+      }
+    },
+    "Culture, History & More" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კულტურა, ისტორია და სხვა"
+          }
+        }
+      }
+    },
+    "Data unavailable" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონაცემები მიუწვდომელია"
+          }
+        }
+      }
+    },
+    "Density" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიმჭიდროვე"
+          }
+        }
+      }
+    },
+    "Double tap to see translation" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება თარგმანის სანახავად"
+          }
+        }
+      }
+    },
+    "Explore Neighbor Chain" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეზობელი ქვეყნების ჯაჭვის შესწავლა"
+          }
+        }
+      }
+    },
+    "Explore phrases, timeline, economy and cultural highlights" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფრაზების, ქრონოლოგიის, ეკონომიკისა და კულტურული მომენტების შესწავლა"
+          }
+        }
+      }
+    },
+    "Fact #%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფაქტი #%lld"
+          }
+        }
+      }
+    },
+    "Favorite" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეული"
+          }
+        }
+      }
+    },
+    "Fun Fact #%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საინტერესო ფაქტი #%lld"
+          }
+        }
+      }
+    },
+    "Fun fact: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საინტერესო ფაქტი: %@"
+          }
+        }
+      }
+    },
+    "Island Nation" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კუნძულოვანი ქვეყანა"
+          }
+        }
+      }
+    },
+    "Latest: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უახლესი: %@"
+          }
+        }
+      }
+    },
+    "Learn more about %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტი ინფორმაცია %@-ზე"
+          }
+        }
+      }
+    },
+    "Neighbor data not available." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეზობლის მონაცემები მიუწვდომელია."
+          }
+        }
+      }
+    },
+    "No historical data" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული მონაცემები არ არის"
+          }
+        }
+      }
+    },
+    "People (live estimate)" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსახლეობა (ცოცხალი შეფასება)"
+          }
+        }
+      }
+    },
+    "Read on Wikipedia" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაიკითხე ვიკიპედიაზე"
+          }
+        }
+      }
+    },
+    "Relative density (ref: 500/km²)" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფარდობითი სიმჭიდროვე (მით: 500/კმ²)"
+          }
+        }
+      }
+    },
+    "See all phrases in Deep Dive" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ფრაზის ნახვა ღრმა ჩაძირვაში"
+          }
+        }
+      }
+    },
+    "Stats, rankings & full country list" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატისტიკა, რეიტინგები და ქვეყნების სრული სია"
+          }
+        }
+      }
+    },
+    "Tap to see translation" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე თარგმანის სანახავად"
+          }
+        }
+      }
+    },
+    "Travel Status" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსი"
+          }
+        }
+      }
+    },
+    "Travel Status: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსი: %@"
+          }
+        }
+      }
+    },
+    "View Details" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დეტალების ნახვა"
+          }
+        }
+      }
+    },
+    "View Map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის ნახვა"
+          }
+        }
+      }
+    },
+    "W" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W"
+          }
+        }
+      }
+    },
+    "Year" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წელი"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

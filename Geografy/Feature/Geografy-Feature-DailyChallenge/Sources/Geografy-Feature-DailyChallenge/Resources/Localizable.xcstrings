@@ -1,5 +1,438 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ pts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ქულა"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld / %lld points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld points"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld / %2$lld ქულა"
+          }
+        }
+      }
+    },
+    "%lld day%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld day%2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld დღე%@"
+          }
+        }
+      }
+    },
+    "%lld day%@ in a row" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld day%2$@ in a row"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld დღე%@ ზედიზედ"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Challenge Streak" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის სერია"
+          }
+        }
+      }
+    },
+    "Challenge Streak: %lld day%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Challenge Streak: %1$lld day%2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის სერია: %lld დღე%@"
+          }
+        }
+      }
+    },
+    "Challenge Streak: %lld day%@ in a row" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Challenge Streak: %1$lld day%2$@ in a row"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის სერია: %lld დღე%@ ზედიზედ"
+          }
+        }
+      }
+    },
+    "Challenge completed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევა დასრულებულია"
+          }
+        }
+      }
+    },
+    "Correct!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორია!"
+          }
+        }
+      }
+    },
+    "Daily Challenge" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყოველდღიური გამოწვევა"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Find a country in %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე ქვეყანა %@-ში"
+          }
+        }
+      }
+    },
+    "Geografy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy"
+          }
+        }
+      }
+    },
+    "Geografy Daily Challenge" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy ყოველდღიური გამოწვევა"
+          }
+        }
+      }
+    },
+    "Next Challenge" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი გამოწვევა"
+          }
+        }
+      }
+    },
+    "Next Challenge: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი გამოწვევა: %@"
+          }
+        }
+      }
+    },
+    "No challenges completed yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ გამოწვევები არ დასრულებულა"
+          }
+        }
+      }
+    },
+    "Quit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Quit Challenge?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის დატოვება?"
+          }
+        }
+      }
+    },
+    "Results" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგები"
+          }
+        }
+      }
+    },
+    "Reveal clues to narrow it down" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მინიშნებების გამოვლენა შესავიწროებლად"
+          }
+        }
+      }
+    },
+    "Score: %lld out of %lld points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Score: %1$lld out of %2$lld points"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა: %1$lld %2$lld ქულიდან"
+          }
+        }
+      }
+    },
+    "Score: %lld points" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა: %lld ქულა"
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაზიარება"
+          }
+        }
+      }
+    },
+    "Share Result" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგის გაზიარება"
+          }
+        }
+      }
+    },
+    "Start Challenge" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის დაწყება"
+          }
+        }
+      }
+    },
+    "Starting Point" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საწყისი წერტილი"
+          }
+        }
+      }
+    },
+    "Submit Guess" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვარაუდის გაგზავნა"
+          }
+        }
+      }
+    },
+    "Tap to reveal (-%lld pts)" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გამოსავლენად (-%lld ქულა)"
+          }
+        }
+      }
+    },
+    "The answer was %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხი იყო %@"
+          }
+        }
+      }
+    },
+    "Type country name..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე ქვეყნის სახელი..."
+          }
+        }
+      }
+    },
+    "Which country does this flag belong to?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელ ქვეყანას ეკუთვნის ეს დროშა?"
+          }
+        }
+      }
+    },
+    "Which country is this?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქვეყანაა ეს?"
+          }
+        }
+      }
+    },
+    "Your progress will be lost." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი დაიკარგება."
+          }
+        }
+      }
+    },
+    "out of %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld-დან"
+          }
+        }
+      }
+    },
+    "with capital: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დედაქალაქით: %@"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

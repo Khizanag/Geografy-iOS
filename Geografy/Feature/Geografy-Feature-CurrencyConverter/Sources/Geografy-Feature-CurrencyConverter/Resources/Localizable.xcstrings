@@ -1,5 +1,128 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@ %@ = %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@ = %3$@ %4$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ = %3$@ %4$@"
+          }
+        }
+      }
+    },
+    "0" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0"
+          }
+        }
+      }
+    },
+    "Amount" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თანხა"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Currency Converter" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტის კონვერტორი"
+          }
+        }
+      }
+    },
+    "Quick select" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწრაფი არჩევა"
+          }
+        }
+      }
+    },
+    "Rates updated %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კურსები განახლებულია %@"
+          }
+        }
+      }
+    },
+    "Result" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგი"
+          }
+        }
+      }
+    },
+    "Search currency or country…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტის ან ქვეყნის ძიება…"
+          }
+        }
+      }
+    },
+    "Swap" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადანაცვლება"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

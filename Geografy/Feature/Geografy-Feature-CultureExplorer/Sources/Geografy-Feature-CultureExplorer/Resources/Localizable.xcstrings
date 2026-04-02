@@ -1,5 +1,36 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Culture Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კულტურის მკვლევარი"
+          }
+        }
+      }
+    },
+    "Famous for: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცნობილია: %@"
+          }
+        }
+      }
+    },
+    "Search countries or dishes..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ან კერძების ძიება..."
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

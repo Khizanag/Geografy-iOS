@@ -1,5 +1,26 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Feed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფიდი"
+          }
+        }
+      }
+    },
+    "Learn More" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტის გაგება"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

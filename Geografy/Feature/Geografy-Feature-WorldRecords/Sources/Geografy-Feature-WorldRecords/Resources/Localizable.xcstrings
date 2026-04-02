@@ -1,5 +1,32 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@: %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@, %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@, %3$@"
+          }
+        }
+      }
+    },
+    "World Records" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო რეკორდები"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

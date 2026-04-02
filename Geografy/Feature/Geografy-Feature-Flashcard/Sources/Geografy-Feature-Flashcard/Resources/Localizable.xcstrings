@@ -1,5 +1,348 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld percent complete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld პროცენტი დასრულებული"
+          }
+        }
+      }
+    },
+    "+ %lld more" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %lld სხვა"
+          }
+        }
+      }
+    },
+    "Accuracy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიზუსტე"
+          }
+        }
+      }
+    },
+    "All caught up!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაფერი განახლებულია!"
+          }
+        }
+      }
+    },
+    "Answer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხი"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Card %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Card %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Cards" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათები"
+          }
+        }
+      }
+    },
+    "Cards per Session" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათები სესიაზე"
+          }
+        }
+      }
+    },
+    "Correct" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორი"
+          }
+        }
+      }
+    },
+    "Country Details" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნის დეტალები"
+          }
+        }
+      }
+    },
+    "Flashcards" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფლეშბარათები"
+          }
+        }
+      }
+    },
+    "Great work! Keep reviewing to improve mastery." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესანიშნავი! განაგრძე გამეორება ოსტატობის გასაუმჯობესებლად."
+          }
+        }
+      }
+    },
+    "Guide" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სახელმძღვანელო"
+          }
+        }
+      }
+    },
+    "Knew It" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიცოდი"
+          }
+        }
+      }
+    },
+    "Lisbon" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisbon"
+          }
+        }
+      }
+    },
+    "No cards are due right now.\nCome back later or study new cards in Flashcards." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლა გასახსენებელი ბარათები არ არის.\nდაბრუნდი მოგვიანებით ან შეისწავლე ახალი ბარათები ფლეშბარათებში."
+          }
+        }
+      }
+    },
+    "Quit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Quit Session?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სესიის დატოვება?"
+          }
+        }
+      }
+    },
+    "Review" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამეორება"
+          }
+        }
+      }
+    },
+    "Review cards at the optimal time\nfor long-term memory retention" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათების გამეორება ოპტიმალურ დროს\nხანგრძლივი მეხსიერებისთვის"
+          }
+        }
+      }
+    },
+    "Session Complete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სესია დასრულებულია"
+          }
+        }
+      }
+    },
+    "Spaced Repetition" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ინტერვალური გამეორება"
+          }
+        }
+      }
+    },
+    "Start Review · %lld cards" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამეორების დაწყება · %lld ბარათი"
+          }
+        }
+      }
+    },
+    "Swipe to rate" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადაასრიალე შესაფასებლად"
+          }
+        }
+      }
+    },
+    "Tap to flip" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გადასაბრუნებლად"
+          }
+        }
+      }
+    },
+    "Tap to reveal" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გამოსავლენად"
+          }
+        }
+      }
+    },
+    "What is the capital?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რა არის დედაქალაქი?"
+          }
+        }
+      }
+    },
+    "Wrong" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არასწორი"
+          }
+        }
+      }
+    },
+    "Your progress will be saved." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი შეინახება."
+          }
+        }
+      }
+    },
+    "🇵🇹" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🇵🇹"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

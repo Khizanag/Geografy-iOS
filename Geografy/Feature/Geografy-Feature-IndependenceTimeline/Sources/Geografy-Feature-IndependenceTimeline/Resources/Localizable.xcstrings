@@ -1,5 +1,46 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "All countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ქვეყანა"
+          }
+        }
+      }
+    },
+    "Independence Timeline" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამოუკიდებლობის ქრონოლოგია"
+          }
+        }
+      }
+    },
+    "No events found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "from %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-დან"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

@@ -1,5 +1,434 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა"
+          }
+        }
+      }
+    },
+    "%lld countries to name" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა დასახელებელი"
+          }
+        }
+      }
+    },
+    "%lld of %lld countries" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld countries"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld ქვეყნიდან"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
+    },
+    "%lld. %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld. %2$@, %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld. %2$@, %3$@"
+          }
+        }
+      }
+    },
+    "%llds remaining" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%llds დარჩენილია"
+          }
+        }
+      }
+    },
+    "%lld×" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld×"
+          }
+        }
+      }
+    },
+    "+%lld XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld XP"
+          }
+        }
+      }
+    },
+    "Answers" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხები"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Earned %lld XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღებულია %lld XP"
+          }
+        }
+      }
+    },
+    "Give Up" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანებება"
+          }
+        }
+      }
+    },
+    "Give Up?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანებება?"
+          }
+        }
+      }
+    },
+    "Leaderboard" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლიდერბორდი"
+          }
+        }
+      }
+    },
+    "Name every country.\nAs fast as you can." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე ყოველი ქვეყანა.\nრაც შეიძლება სწრაფად."
+          }
+        }
+      }
+    },
+    "Paused" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეჩერებულია"
+          }
+        }
+      }
+    },
+    "Personal Best" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პირადი რეკორდი"
+          }
+        }
+      }
+    },
+    "Play Again" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავიდან თამაში"
+          }
+        }
+      }
+    },
+    "Question %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Question %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვა %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Quit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Quit Quiz?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის დატოვება?"
+          }
+        }
+      }
+    },
+    "Quit Speed Run?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიჩქარის რეჟიმის დატოვება?"
+          }
+        }
+      }
+    },
+    "Quiz" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინა"
+          }
+        }
+      }
+    },
+    "Results" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგები"
+          }
+        }
+      }
+    },
+    "Resume" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
+    "Score: %lld percent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა: %lld პროცენტი"
+          }
+        }
+      }
+    },
+    "Show suggestions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემოთავაზებების ჩვენება"
+          }
+        }
+      }
+    },
+    "Skip" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოტოვება"
+          }
+        }
+      }
+    },
+    "Speed Run" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიჩქარის რეჟიმი"
+          }
+        }
+      }
+    },
+    "Speed Run · %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიჩქარის რეჟიმი · %@"
+          }
+        }
+      }
+    },
+    "Submit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგზავნა"
+          }
+        }
+      }
+    },
+    "Tap to zoom" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გასადიდებლად"
+          }
+        }
+      }
+    },
+    "Type a country name…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე ქვეყნის სახელი…"
+          }
+        }
+      }
+    },
+    "Type your answer..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე პასუხი..."
+          }
+        }
+      }
+    },
+    "You'll see your results and missed countries." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნახავ შენს შედეგებს და გამოტოვებულ ქვეყნებს."
+          }
+        }
+      }
+    },
+    "Your progress will be lost." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი დაიკარგება."
+          }
+        }
+      }
+    },
+    "🇫🇷" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🇫🇷"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

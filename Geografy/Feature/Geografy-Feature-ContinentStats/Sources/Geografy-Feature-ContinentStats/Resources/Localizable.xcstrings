@@ -1,5 +1,52 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%lld countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა"
+          }
+        }
+      }
+    },
+    "Continents" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტები"
+          }
+        }
+      }
+    },
+    "Explore aggregated statistics for each continent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტების აგრეგირებული სტატისტიკის შესწავლა"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

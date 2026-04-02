@@ -1,5 +1,66 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld questions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld კითხვა"
+          }
+        }
+      }
+    },
+    "/%@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/%@"
+          }
+        }
+      }
+    },
+    "No Packs Found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაკეტები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "No quiz packs match the selected category." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არცერთი ვიქტორინის პაკეტი არ შეესაბამება არჩეულ კატეგორიას."
+          }
+        }
+      }
+    },
+    "Quiz Packs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის პაკეტები"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

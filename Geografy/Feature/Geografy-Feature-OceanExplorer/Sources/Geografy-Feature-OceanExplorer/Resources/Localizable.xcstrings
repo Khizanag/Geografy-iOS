@@ -1,5 +1,82 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@, area: %@, average depth: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, area: %2$@, average depth: %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, ფართობი: %2$@, საშუალო სიღრმე: %3$@"
+          }
+        }
+      }
+    },
+    "Bordering Continents" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსაზღვრე კონტინენტები"
+          }
+        }
+      }
+    },
+    "Double tap to collapse" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ჩასაკეცად"
+          }
+        }
+      }
+    },
+    "Double tap to expand" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება გასაშლელად"
+          }
+        }
+      }
+    },
+    "Ocean Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ოკეანეების მკვლევარი"
+          }
+        }
+      }
+    },
+    "Type" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტიპი"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }
