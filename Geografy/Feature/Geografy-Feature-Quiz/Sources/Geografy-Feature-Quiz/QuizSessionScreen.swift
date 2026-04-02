@@ -30,6 +30,7 @@ public struct QuizSessionScreen: View {
     @State private var typingInput: String = ""
     @State private var showHint: Bool = false
     @State var typingIsCorrect: Bool = false
+    @State private var typingWasSkipped = false
     @State var currentStreak: Int = 0
     @State private var showStreakBurst = false
 
@@ -311,9 +312,11 @@ private extension QuizSessionScreen {
                     quizType: configuration.type,
                     showFeedback: showFeedback,
                     isCorrectAnswer: typingIsCorrect,
+                    wasSkipped: typingWasSkipped,
                     typingInput: $typingInput,
                     showFlagPreview: $showFlagPreview,
-                    onSubmit: { submitTypingAnswer() }
+                    onSubmit: { submitTypingAnswer() },
+                    onSkip: { skipSpellingBee() }
                 )
                 .id(question.id)
                 .transition(questionTransition)
@@ -412,6 +415,7 @@ extension QuizSessionScreen {
             typingInput = ""
             showHint = false
             typingIsCorrect = false
+            typingWasSkipped = false
             questionStartTime = Date()
             timerRemaining = configuration.difficulty.timerDuration
             if !isArcadeMode {
@@ -465,6 +469,40 @@ extension QuizSessionScreen {
         }
     }
 
+    public func skipSpellingBee() {
+        guard !showFeedback else { return }
+        timerCancellable?.cancel()
+
+        let question = questions[currentIndex]
+        let timeSpent = Date().timeIntervalSince(questionStartTime)
+
+        handleAnswerFeedback(isCorrect: false)
+
+        let answer = QuizAnswer(
+            id: UUID(),
+            question: question,
+            selectedOptionID: nil,
+            isCorrect: false,
+            timeSpent: timeSpent,
+        )
+        answers.append(answer)
+        typingIsCorrect = false
+        typingWasSkipped = true
+
+        let correctText = spellingBeeCorrectText(for: question)
+        typingInput = correctText
+
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showFeedback = true
+        }
+
+        if isArcadeMode, arcadeLives <= 0 { return }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            advanceToNext()
+        }
+    }
+
     public func finishQuiz() {
         let totalTime = Date().timeIntervalSince(startTime)
         navigateToResult = QuizResult(
@@ -497,6 +535,7 @@ extension QuizSessionScreen {
         typingInput = ""
         showHint = false
         typingIsCorrect = false
+        typingWasSkipped = false
         currentStreak = 0
         showStreakBurst = false
         startTime = Date()
@@ -526,7 +565,13 @@ extension QuizSessionScreen {
 private extension QuizSessionScreen {
     func isTypingAnswerCorrect(input: String, question: QuizQuestion) -> Bool {
         let normalizedInput = normalizeText(input)
-        return makeAcceptableAnswers(for: question).contains { normalizeText($0) == normalizedInput }
+        let lettersOnlyInput = normalizedInput.filter { $0.isLetter }
+        return makeAcceptableAnswers(for: question).contains { answer in
+            let normalizedAnswer = normalizeText(answer)
+            let lettersOnlyAnswer = normalizedAnswer.filter { $0.isLetter }
+            return normalizedAnswer == normalizedInput
+                || lettersOnlyAnswer == lettersOnlyInput
+        }
     }
 
     func normalizeText(_ string: String) -> String {
@@ -534,6 +579,14 @@ private extension QuizSessionScreen {
             .trimmingCharacters(in: .whitespaces)
             .lowercased()
             .folding(options: .diacriticInsensitive, locale: .current)
+    }
+
+    func spellingBeeCorrectText(for question: QuizQuestion) -> String {
+        if let correctOption = question.options.first(where: { $0.id == question.correctOptionID }),
+           let text = correctOption.text {
+            return text
+        }
+        return question.correctCountry.name
     }
 
     func makeAcceptableAnswers(for question: QuizQuestion) -> [String] {
