@@ -34,7 +34,7 @@ private extension TravelJournalStatsView {
                 Text("Journal Stats")
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("\(totalEntries) \(totalEntries == 1 ? "entry" : "entries") written")
+                Text("\(totalEntries) entries written")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }

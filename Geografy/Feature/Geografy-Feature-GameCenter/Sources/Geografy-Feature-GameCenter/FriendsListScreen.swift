@@ -147,7 +147,7 @@ private extension FriendsListScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(friends.count) Friend\(friends.count == 1 ? "" : "s")")
+                Text("\(friends.count) Friends")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)

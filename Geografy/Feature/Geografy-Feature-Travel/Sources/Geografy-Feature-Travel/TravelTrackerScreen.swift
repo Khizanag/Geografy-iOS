@@ -301,7 +301,7 @@ private extension TravelTrackerScreen {
 
     func searchResultsHeader(count: Int) -> some View {
         HStack {
-            Text("\(count) \(count == 1 ? "country" : "countries") found")
+            Text("\(count) countries found")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
             Spacer()

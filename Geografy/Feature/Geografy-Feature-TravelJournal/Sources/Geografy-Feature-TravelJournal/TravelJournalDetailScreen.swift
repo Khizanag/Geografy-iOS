@@ -248,8 +248,7 @@ private extension TravelJournalDetailScreen {
     }
 
     var durationText: String {
-        let days = entry.durationDays
-        return days == 1 ? "1 day" : "\(days) days"
+        "\(entry.durationDays) days"
     }
 
     var loadedPhotos: [UIImage] {

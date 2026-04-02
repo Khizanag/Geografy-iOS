@@ -103,7 +103,7 @@ private extension DailyChallengeScreen {
                     Text("Challenge Streak")
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("\(service.streak) day\(service.streak == 1 ? "" : "s")")
+                    Text("\(service.streak)-day streak")
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
@@ -112,7 +112,7 @@ private extension DailyChallengeScreen {
             .padding(DesignSystem.Spacing.md)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Challenge Streak: \(service.streak) day\(service.streak == 1 ? "" : "s")")
+        .accessibilityLabel("Challenge Streak: \(service.streak)-day streak")
     }
 
     func streakIcon(streak: Int) -> some View {

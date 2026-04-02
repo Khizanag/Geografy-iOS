@@ -171,7 +171,6 @@ private extension TravelJournalEntryCard {
 // MARK: - Helpers
 private extension TravelJournalEntryCard {
     var durationText: String {
-        let days = entry.durationDays
-        return days == 1 ? "1 day" : "\(days) days"
+        "\(entry.durationDays) days"
     }
 }

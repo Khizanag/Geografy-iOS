@@ -40,7 +40,7 @@ extension CountryDetailScreen {
             Image(systemName: "building.columns.fill")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.indigo)
-            Text("\(count) World Heritage \(count == 1 ? "Site" : "Sites")")
+            Text("\(count) World Heritage Sites")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.indigo)

@@ -138,7 +138,7 @@ private extension DailyChallengeResultView {
                     Text("Challenge Streak")
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("\(streak) day\(streak == 1 ? "" : "s") in a row")
+                    Text("\(streak)-day streak")
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
@@ -147,7 +147,7 @@ private extension DailyChallengeResultView {
             .padding(DesignSystem.Spacing.md)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Challenge Streak: \(streak) day\(streak == 1 ? "" : "s") in a row")
+        .accessibilityLabel("Challenge Streak: \(streak)-day streak")
     }
 }
 
