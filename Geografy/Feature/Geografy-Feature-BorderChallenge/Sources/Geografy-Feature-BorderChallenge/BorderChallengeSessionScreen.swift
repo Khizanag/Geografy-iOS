@@ -101,7 +101,7 @@ private extension BorderChallengeSessionScreen {
                             .font(DesignSystem.Font.title3)
                             .fontWeight(.bold)
                             .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text("\(neighbors.count) neighboring \(neighbors.count == 1 ? "country" : "countries")")
+                        Text("\(neighbors.count) neighboring countries")
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }

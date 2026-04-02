@@ -158,7 +158,7 @@ private extension DailyChallengeShareCard {
         \(challengeType.title) — \(date.formatted(date: .abbreviated, time: .omitted))
 
         Score: \(score)/\(maxScore) \(blocks)
-        Streak: \(streak) day\(streak == 1 ? "" : "s") 🔥
+        Streak: \(streak)-day streak 🔥
 
         geografy.app
         """

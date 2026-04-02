@@ -52,7 +52,7 @@ private extension FavoritesScreen {
         let total = favoritesService.favoriteCodes.count
         let shown = filteredCountries.count
         let text = searchText.isEmpty && continentFilter == nil
-            ? "\(total) \(total == 1 ? "country" : "countries")"
+            ? "\(total) countries"
             : "\(shown) of \(total)"
         return Text(text)
             .font(DesignSystem.Font.caption)

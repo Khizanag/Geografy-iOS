@@ -141,7 +141,7 @@ private extension BorderChallengeResultView {
                         .font(DesignSystem.Font.subheadline)
                         .fontWeight(.semibold)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("\(total) bordering \(total == 1 ? "country" : "countries")")
+                    Text("\(total) bordering countries")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }

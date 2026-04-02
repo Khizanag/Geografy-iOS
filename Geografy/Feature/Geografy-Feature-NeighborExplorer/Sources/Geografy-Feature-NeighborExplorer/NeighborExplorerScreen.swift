@@ -228,8 +228,7 @@ private extension NeighborExplorerScreen {
     var pathResultSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             let hops = pathResult.count - 1
-            let hopLabel = hops == 1 ? "hop" : "hops"
-            SectionHeaderView(title: "Shortest Path — \(hops) \(hopLabel)", icon: "checkmark.circle.fill")
+            SectionHeaderView(title: "Shortest Path — \(hops) hops", icon: "checkmark.circle.fill")
                 .padding(.horizontal, DesignSystem.Spacing.md)
             NeighborChainView(chain: pathResult) { selected in
                 chain = Array(pathResult.prefix(through: pathResult.firstIndex(of: selected) ?? 0))
