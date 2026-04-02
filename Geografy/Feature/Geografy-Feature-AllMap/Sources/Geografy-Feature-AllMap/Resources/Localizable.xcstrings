@@ -1,5 +1,56 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "All Maps" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა რუკა"
+          }
+        }
+      }
+    },
+    "Map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა"
+          }
+        }
+      }
+    },
+    "Open" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გახსნა"
+          }
+        }
+      }
+    },
+    "Sort by" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალაგება"
+          }
+        }
+      }
+    },
+    "Tap a region to dive into an interactive map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე რეგიონს ინტერაქტიულ რუკაში ჩასაშვებად"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

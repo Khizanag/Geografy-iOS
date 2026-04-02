@@ -1,5 +1,314 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@, %lld countries" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$lld countries"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$lld ქვეყანა"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld %@ found" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@ found"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %@ ნაპოვნია"
+          }
+        }
+      }
+    },
+    "%lld countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა"
+          }
+        }
+      }
+    },
+    "%lld countries on your bucket list" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა შენს სურვილების სიაში"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
+    },
+    "%lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        }
+      }
+    },
+    "Aa" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aa"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამატება"
+          }
+        }
+      }
+    },
+    "Add Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნის დამატება"
+          }
+        }
+      }
+    },
+    "Add a note..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენიშვნის დამატება..."
+          }
+        }
+      }
+    },
+    "Bucket List" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სურვილების სია"
+          }
+        }
+      }
+    },
+    "By Continent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტის მიხედვით"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Filter" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფილტრი"
+          }
+        }
+      }
+    },
+    "Mark countries as 'Want to Visit' in the Travel Tracker to add them here" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონიშნე ქვეყნები როგორც 'მსურს მონახულება' მოგზაურობის ტრეკერში აქ დასამატებლად"
+          }
+        }
+      }
+    },
+    "No bucket list yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სურვილების სია ჯერ ცარიელია"
+          }
+        }
+      }
+    },
+    "No countries found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "Pinch to zoom, drag to pan" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოჭიმვა გასადიდებლად, გადაათრიე გადასაადგილებლად"
+          }
+        }
+      }
+    },
+    "Remove Status" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატუსის წაშლა"
+          }
+        }
+      }
+    },
+    "Search countries…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება…"
+          }
+        }
+      }
+    },
+    "Set travel status" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსის დაყენება"
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაზიარება"
+          }
+        }
+      }
+    },
+    "Sort by" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალაგება"
+          }
+        }
+      }
+    },
+    "Travel Tracker" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის ტრეკერი"
+          }
+        }
+      }
+    },
+    "Travel map showing %lld countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის რუკა %lld ქვეყნით"
+          }
+        }
+      }
+    },
+    "Try a different spelling or search term" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა ორთოგრაფია ან საძიებო ტერმინი"
+          }
+        }
+      }
+    },
+    "View on Map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკაზე ნახვა"
+          }
+        }
+      }
+    },
+    "of world" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიოს"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

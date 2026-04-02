@@ -1,5 +1,46 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "All Done!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაფერი დასრულებულია!"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Swipe right for TRUE · Swipe left for FALSE" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადაასრიალე მარჯვნივ მართალია · გადაასრიალე მარცხნივ მცდარია"
+          }
+        }
+      }
+    },
+    "Trivia" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტრივია"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

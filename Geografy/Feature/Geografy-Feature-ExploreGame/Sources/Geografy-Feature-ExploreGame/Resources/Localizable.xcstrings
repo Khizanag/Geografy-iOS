@@ -1,5 +1,192 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ is not correct. −100 pts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ არასწორია. −100 ქულა"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld points available" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქულა ხელმისაწვდომია"
+          }
+        }
+      }
+    },
+    "%lld pts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქულა"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Clue %lld of 5 revealed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მინიშნება %lld 5-დან გამოვლენილი"
+          }
+        }
+      }
+    },
+    "Guess the country..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოიცანი ქვეყანა..."
+          }
+        }
+      }
+    },
+    "How to Play" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "როგორ ვითამაშოთ"
+          }
+        }
+      }
+    },
+    "Identify countries from progressive clues. Fewer clues = higher score!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამოიცანი ქვეყნები თანმიმდევრული მინიშნებებით. ნაკლები მინიშნება = მეტი ქულა!"
+          }
+        }
+      }
+    },
+    "Mystery Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იდუმალი ქვეყანა"
+          }
+        }
+      }
+    },
+    "Next Clue" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი მინიშნება"
+          }
+        }
+      }
+    },
+    "Quit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Quit Game?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თამაშის დატოვება?"
+          }
+        }
+      }
+    },
+    "Reveal" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოვლენა"
+          }
+        }
+      }
+    },
+    "Round Summary" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაუნდის შეჯამება"
+          }
+        }
+      }
+    },
+    "Rules" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წესები"
+          }
+        }
+      }
+    },
+    "Your progress will be lost." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი დაიკარგება."
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

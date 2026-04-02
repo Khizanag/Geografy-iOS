@@ -1,5 +1,106 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld lives remaining" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld სიცოცხლე დარჩენილია"
+          }
+        }
+      }
+    },
+    "Countries You Got Right" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები, რომლებიც სწორად გამოიცანი"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Flag Game" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროშების თამაში"
+          }
+        }
+      }
+    },
+    "Play Again" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავიდან თამაში"
+          }
+        }
+      }
+    },
+    "Round Complete!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაუნდი დასრულებულია!"
+          }
+        }
+      }
+    },
+    "Score" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა"
+          }
+        }
+      }
+    },
+    "Score: %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა: %lld"
+          }
+        }
+      }
+    },
+    "Which flag belongs to?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელ ქვეყანას ეკუთვნის ეს დროშა?"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

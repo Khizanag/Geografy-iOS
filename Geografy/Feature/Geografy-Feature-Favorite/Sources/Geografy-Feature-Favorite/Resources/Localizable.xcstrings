@@ -1,5 +1,126 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "All Continents" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა კონტინენტი"
+          }
+        }
+      }
+    },
+    "Ascending" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზრდადობით"
+          }
+        }
+      }
+    },
+    "Continent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტი"
+          }
+        }
+      }
+    },
+    "Descending" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კლებადობით"
+          }
+        }
+      }
+    },
+    "Favorites" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულები"
+          }
+        }
+      }
+    },
+    "No Favorites Yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ რჩეულები არ არის"
+          }
+        }
+      }
+    },
+    "No Results" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგები არ არის"
+          }
+        }
+      }
+    },
+    "Remove" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაშლა"
+          }
+        }
+      }
+    },
+    "Search favorites" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულების ძიება"
+          }
+        }
+      }
+    },
+    "Sort by" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალაგება"
+          }
+        }
+      }
+    },
+    "Tap the heart icon on any country to save it here." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გულის ხატულას ნებისმიერ ქვეყანაზე აქ შესანახად."
+          }
+        }
+      }
+    },
+    "Try a different search or filter." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა ძიება ან ფილტრი."
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

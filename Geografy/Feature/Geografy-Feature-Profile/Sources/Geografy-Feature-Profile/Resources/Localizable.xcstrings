@@ -1,5 +1,370 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld / %lld XP to next level" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld XP to next level"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld / %2$lld XP შემდეგ დონემდე"
+          }
+        }
+      }
+    },
+    "%lld day streak, %lld of 7 days active this week" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld day streak, %2$lld of 7 days active this week"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld-დღიანი სერია, %2$lld 7 დღიდან აქტიური ამ კვირაში"
+          }
+        }
+      }
+    },
+    "%lld percent progress" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld პროცენტი პროგრესი"
+          }
+        }
+      }
+    },
+    "%lld total XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld სულ XP"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
+    },
+    "%lld-day streak" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld-დღიანი სერია"
+          }
+        }
+      }
+    },
+    "%lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        }
+      }
+    },
+    "%lld/7 days" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/7 დღე"
+          }
+        }
+      }
+    },
+    "+%lld XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld XP"
+          }
+        }
+      }
+    },
+    "Accuracy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიზუსტე"
+          }
+        }
+      }
+    },
+    "Accuracy %lld percent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიზუსტე %lld პროცენტი"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Create an account — your XP & achievements will be linked" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შექმენი ანგარიში — შენი XP და მიღწევები დაკავშირდება"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაშლა"
+          }
+        }
+      }
+    },
+    "Delete Account" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ანგარიშის წაშლა"
+          }
+        }
+      }
+    },
+    "Display Name" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საჩვენებელი სახელი"
+          }
+        }
+      }
+    },
+    "Earn badges by playing!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოიპოვე ბეჯები თამაშით!"
+          }
+        }
+      }
+    },
+    "Edit Profile" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროფილის რედაქტირება"
+          }
+        }
+      }
+    },
+    "Enter your name" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე სახელი"
+          }
+        }
+      }
+    },
+    "Get Geografy Premium" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიიღე Geografy პრემიუმ"
+          }
+        }
+      }
+    },
+    "Guest" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტუმარი"
+          }
+        }
+      }
+    },
+    "Level %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %lld"
+          }
+        }
+      }
+    },
+    "Maximum level reached!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაქსიმალური დონე მიღწეულია!"
+          }
+        }
+      }
+    },
+    "Premium" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პრემიუმ"
+          }
+        }
+      }
+    },
+    "Profile" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროფილი"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენახვა"
+          }
+        }
+      }
+    },
+    "Save your progress" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეინახე პროგრესი"
+          }
+        }
+      }
+    },
+    "See All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველას ნახვა"
+          }
+        }
+      }
+    },
+    "Start exploring to earn achievements!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე აღმოჩენა მიღწევების მისაღებად!"
+          }
+        }
+      }
+    },
+    "Tap to change photo" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე ფოტოს შესაცვლელად"
+          }
+        }
+      }
+    },
+    "Total XP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სულ XP"
+          }
+        }
+      }
+    },
+    "Unlock all quiz types, advanced stats & more" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განბლოკე ყველა ვიქტორინის ტიპი, გაფართოებული სტატისტიკა და სხვა"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

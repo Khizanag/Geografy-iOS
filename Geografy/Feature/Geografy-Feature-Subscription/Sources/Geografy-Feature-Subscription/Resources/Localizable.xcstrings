@@ -1,5 +1,146 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Choose Your Plan" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე გეგმა"
+          }
+        }
+      }
+    },
+    "Features" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფუნქციები"
+          }
+        }
+      }
+    },
+    "Free" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უფასო"
+          }
+        }
+      }
+    },
+    "GEOGRAFY PREMIUM" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GEOGRAFY პრემიუმ"
+          }
+        }
+      }
+    },
+    "Geografy Premium" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy პრემიუმ"
+          }
+        }
+      }
+    },
+    "Master the world" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაეუფლე მსოფლიოს"
+          }
+        }
+      }
+    },
+    "Premium" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პრემიუმ"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონფიდენციალურობის პოლიტიკა"
+          }
+        }
+      }
+    },
+    "Restore Purchases" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენაძენების აღდგენა"
+          }
+        }
+      }
+    },
+    "Subscription auto-renews unless cancelled at least 24 hours before period ends." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწერა ავტომატურად განახლდება, თუ პერიოდის დასრულებამდე 24 საათით ადრე არ გაუქმდება."
+          }
+        }
+      }
+    },
+    "Terms of Service" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მომსახურების პირობები"
+          }
+        }
+      }
+    },
+    "Unlock every feature and explore geography like never before." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განბლოკე ყველა ფუნქცია და შეისწავლე გეოგრაფია, როგორც არასდროს."
+          }
+        }
+      }
+    },
+    "What's included" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რა შედის"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

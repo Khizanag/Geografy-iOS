@@ -1,5 +1,1054 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ coins" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ მონეტა"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld / %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "%lld / %lld XP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld XP"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld / %2$lld XP"
+          }
+        }
+      }
+    },
+    "%lld cards due today" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ბარათი დღეს გასახსენებელია"
+          }
+        }
+      }
+    },
+    "%lld percent to next level" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld პროცენტი შემდეგ დონემდე"
+          }
+        }
+      }
+    },
+    "30 world languages & scripts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 მსოფლიო ენა და დამწერლობა"
+          }
+        }
+      }
+    },
+    "Add to favorites" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულებში დამატება"
+          }
+        }
+      }
+    },
+    "Aggregated data per continent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აგრეგირებული მონაცემები კონტინენტების მიხედვით"
+          }
+        }
+      }
+    },
+    "All Maps" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა რუკა"
+          }
+        }
+      }
+    },
+    "All caught up!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაფერი განახლებულია!"
+          }
+        }
+      }
+    },
+    "Border Challenge" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საზღვრების გამოწვევა"
+          }
+        }
+      }
+    },
+    "COUNTRY OF THE DAY" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღის ქვეყანა"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Capitals, countries, continents & more" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დედაქალაქები, ქვეყნები, კონტინენტები და სხვა"
+          }
+        }
+      }
+    },
+    "Compare" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედარება"
+          }
+        }
+      }
+    },
+    "Compare countries by area, population & density" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების შედარება ფართობით, მოსახლეობით და სიმჭიდროვით"
+          }
+        }
+      }
+    },
+    "Compare two countries side by side" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორი ქვეყნის გვერდიგვერდ შედარება"
+          }
+        }
+      }
+    },
+    "Continent Stats" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტის სტატისტიკა"
+          }
+        }
+      }
+    },
+    "Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები"
+          }
+        }
+      }
+    },
+    "Country Comparison" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების შედარება"
+          }
+        }
+      }
+    },
+    "Country Nicknames" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების მეტსახელები"
+          }
+        }
+      }
+    },
+    "Culture Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კულტურის მკვლევარი"
+          }
+        }
+      }
+    },
+    "Daily Challenge" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყოველდღიური გამოწვევა"
+          }
+        }
+      }
+    },
+    "Destination" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანიშნულება"
+          }
+        }
+      }
+    },
+    "Discover" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აღმოაჩინე"
+          }
+        }
+      }
+    },
+    "Discover fascinating geography facts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აღმოაჩინე საინტერესო გეოგრაფიული ფაქტები"
+          }
+        }
+      }
+    },
+    "Discover what each country is called" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აღმოაჩინე როგორ ეძახიან ყოველ ქვეყანას"
+          }
+        }
+      }
+    },
+    "Dishes, music, traditions & more" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კერძები, მუსიკა, ტრადიციები და სხვა"
+          }
+        }
+      }
+    },
+    "Dive In" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩაეშვი"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Economy Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეკონომიკის მკვლევარი"
+          }
+        }
+      }
+    },
+    "Edit Sections" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სექციების რედაქტირება"
+          }
+        }
+      }
+    },
+    "Explore" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აღმოაჩინე"
+          }
+        }
+      }
+    },
+    "Explore countries by continent & more" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების შესწავლა კონტინენტების მიხედვით და სხვა"
+          }
+        }
+      }
+    },
+    "Famous landmarks around the world" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიოს ცნობილი ღირშესანიშნაობები"
+          }
+        }
+      }
+    },
+    "Feed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფიდი"
+          }
+        }
+      }
+    },
+    "Find a feature…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე ფუნქცია…"
+          }
+        }
+      }
+    },
+    "Flag Matching" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროშების შესაბამება"
+          }
+        }
+      }
+    },
+    "Friends" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეგობრები"
+          }
+        }
+      }
+    },
+    "Geografy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy"
+          }
+        }
+      }
+    },
+    "Geography Features" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფიული ობიექტები"
+          }
+        }
+      }
+    },
+    "Geography Word Search" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფიული სიტყვების ძიება"
+          }
+        }
+      }
+    },
+    "Global GDP per capita rankings" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გლობალური მშპ ერთ სულ მოსახლეზე რეიტინგები"
+          }
+        }
+      }
+    },
+    "Home" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მთავარი"
+          }
+        }
+      }
+    },
+    "Identify countries from famous clues" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ამოცნობა ცნობილი მინიშნებებით"
+          }
+        }
+      }
+    },
+    "Independence Timeline" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამოუკიდებლობის ქრონოლოგია"
+          }
+        }
+      }
+    },
+    "Landmark Gallery" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ღირშესანიშნაობები"
+          }
+        }
+      }
+    },
+    "Landmark Quiz" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ღირშესანიშნაობების ვიქტორინა"
+          }
+        }
+      }
+    },
+    "Language Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენების მკვლევარი"
+          }
+        }
+      }
+    },
+    "Learning Path" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწავლის გეზი"
+          }
+        }
+      }
+    },
+    "Level %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %lld"
+          }
+        }
+      }
+    },
+    "Lv. %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %lld"
+          }
+        }
+      }
+    },
+    "MAX" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაქს"
+          }
+        }
+      }
+    },
+    "Map Coloring Book" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის შეფერადება"
+          }
+        }
+      }
+    },
+    "Map Puzzle" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის თავსატეხი"
+          }
+        }
+      }
+    },
+    "Map carousel page %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Map carousel page %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის კარუსელი გვერდი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Maps" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკები"
+          }
+        }
+      }
+    },
+    "Match flags to countries in 60 seconds" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეუსაბამე დროშები ქვეყნებს 60 წამში"
+          }
+        }
+      }
+    },
+    "More" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სხვა"
+          }
+        }
+      }
+    },
+    "Mountains, rivers, deserts & lakes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მთები, მდინარეები, უდაბნოები და ტბები"
+          }
+        }
+      }
+    },
+    "Name all neighbors before time runs out" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე ყველა მეზობელი დროის ამოწურვამდე"
+          }
+        }
+      }
+    },
+    "No Checklist" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საკონტროლო სია არ არის"
+          }
+        }
+      }
+    },
+    "No test items defined for this feature yet." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ ფუნქციისთვის ჯერ ტესტის ელემენტები არ არის განსაზღვრული."
+          }
+        }
+      }
+    },
+    "Ocean Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ოკეანეების მკვლევარი"
+          }
+        }
+      }
+    },
+    "Oceans, seas & their secrets" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ოკეანეები, ზღვები და მათი საიდუმლოებები"
+          }
+        }
+      }
+    },
+    "Open" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გახსნა"
+          }
+        }
+      }
+    },
+    "Open Geografy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy-ს გახსნა"
+          }
+        }
+      }
+    },
+    "Open Map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის გახსნა"
+          }
+        }
+      }
+    },
+    "Opens Geografy to a specific tab." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის Geografy-ს კონკრეტულ ჩანართში."
+          }
+        }
+      }
+    },
+    "Opens the daily geography challenge." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის ყოველდღიურ გეოგრაფიულ გამოწვევას."
+          }
+        }
+      }
+    },
+    "Place countries on the map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განათავსე ქვეყნები რუკაზე"
+          }
+        }
+      }
+    },
+    "Plan your dream destinations" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაგეგმე ოცნების დანიშნულებები"
+          }
+        }
+      }
+    },
+    "Play" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თამაში"
+          }
+        }
+      }
+    },
+    "Quiz" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინა"
+          }
+        }
+      }
+    },
+    "Quotes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ციტატები"
+          }
+        }
+      }
+    },
+    "Rank" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგი"
+          }
+        }
+      }
+    },
+    "Read" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაკითხვა"
+          }
+        }
+      }
+    },
+    "Remove from favorites" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულებიდან წაშლა"
+          }
+        }
+      }
+    },
+    "Reset Section Order" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სექციების რიგის გადატვირთვა"
+          }
+        }
+      }
+    },
+    "Reset to Default" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაგულისხმევზე დაბრუნება"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ძიება"
+          }
+        }
+      }
+    },
+    "See All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველას ნახვა"
+          }
+        }
+      }
+    },
+    "Size Visualization" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზომის ვიზუალიზაცია"
+          }
+        }
+      }
+    },
+    "Spaced Repetition" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ინტერვალური გამეორება"
+          }
+        }
+      }
+    },
+    "Start Daily Challenge" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყოველდღიური გამოწვევის დაწყება"
+          }
+        }
+      }
+    },
+    "Start Quiz" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის დაწყება"
+          }
+        }
+      }
+    },
+    "Starts a quick geography quiz." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იწყებს სწრაფ გეოგრაფიულ ვიქტორინას."
+          }
+        }
+      }
+    },
+    "Swipe true or false on geography facts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადაასრიალე მართალია ან მცდარია გეოგრაფიულ ფაქტებზე"
+          }
+        }
+      }
+    },
+    "Tab" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩანართი"
+          }
+        }
+      }
+    },
+    "Test: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტესტი: %@"
+          }
+        }
+      }
+    },
+    "This will restore the default section order." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სექციების ნაგულისხმევი რიგი აღდგება."
+          }
+        }
+      }
+    },
+    "Travel Bucket List" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სურვილების სია"
+          }
+        }
+      }
+    },
+    "Trivia" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტრივია"
+          }
+        }
+      }
+    },
+    "View" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნახვა"
+          }
+        }
+      }
+    },
+    "Vote for what's next" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიეცი ხმა მომდევნო ფუნქციას"
+          }
+        }
+      }
+    },
+    "When nations gained freedom" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "როდის მოიპოვეს ქვეყნებმა თავისუფლება"
+          }
+        }
+      }
+    },
+    "Wisdom about travel & exploration" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიბრძნე მოგზაურობისა და აღმოჩენის შესახებ"
+          }
+        }
+      }
+    },
+    "Your Progress" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი"
+          }
+        }
+      }
+    },
+    "due" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესასრულებელი"
+          }
+        }
+      }
+    },
+    "💤" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        }
+      }
+    },
+    "🔥" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥"
+          }
+        }
+      }
+    },
+    "🗺️" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🗺️"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

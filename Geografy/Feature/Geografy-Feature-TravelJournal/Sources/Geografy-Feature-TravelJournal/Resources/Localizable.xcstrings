@@ -1,5 +1,232 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld %@ written" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@ written"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %@ დაწერილი"
+          }
+        }
+      }
+    },
+    "+%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამატება"
+          }
+        }
+      }
+    },
+    "Add Photos" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფოტოების დამატება"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაშლა"
+          }
+        }
+      }
+    },
+    "Delete Entry" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩანაწერის წაშლა"
+          }
+        }
+      }
+    },
+    "Edit Entry" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩანაწერის რედაქტირება"
+          }
+        }
+      }
+    },
+    "Favorite Destination" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეული დანიშნულება"
+          }
+        }
+      }
+    },
+    "Journal Stats" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღიურის სტატისტიკა"
+          }
+        }
+      }
+    },
+    "New Entry" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახალი ჩანაწერი"
+          }
+        }
+      }
+    },
+    "No entries found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩანაწერები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენახვა"
+          }
+        }
+      }
+    },
+    "Search countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება"
+          }
+        }
+      }
+    },
+    "Search journal entries..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღიურის ჩანაწერების ძიება..."
+          }
+        }
+      }
+    },
+    "Select Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნის არჩევა"
+          }
+        }
+      }
+    },
+    "Select a country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ქვეყანა"
+          }
+        }
+      }
+    },
+    "Start Your Travel Journal" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე მოგზაურობის დღიური"
+          }
+        }
+      }
+    },
+    "Travel Journal" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის დღიური"
+          }
+        }
+      }
+    },
+    "Trip title" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სათაური"
+          }
+        }
+      }
+    },
+    "Try a different search term" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა საძიებო ტერმინი"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

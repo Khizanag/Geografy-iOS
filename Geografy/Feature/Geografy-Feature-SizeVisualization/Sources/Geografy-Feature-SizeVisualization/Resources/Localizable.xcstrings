@@ -1,5 +1,86 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "Change" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეცვლა"
+          }
+        }
+      }
+    },
+    "Reference: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მითითება: %@"
+          }
+        }
+      }
+    },
+    "Search countries..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება..."
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაზიარება"
+          }
+        }
+      }
+    },
+    "Size Comparison" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზომის შედარება"
+          }
+        }
+      }
+    },
+    "Size Visualization" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზომის ვიზუალიზაცია"
+          }
+        }
+      }
+    },
+    "by land area" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფართობის მიხედვით"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

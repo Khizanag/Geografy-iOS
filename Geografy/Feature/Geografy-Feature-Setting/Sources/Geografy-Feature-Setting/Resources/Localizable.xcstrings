@@ -1,5 +1,262 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "About This Setting" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ პარამეტრის შესახებ"
+          }
+        }
+      }
+    },
+    "Active subscription" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აქტიური გამოწერა"
+          }
+        }
+      }
+    },
+    "All territorial dispute settings will be reset to their internationally recognized defaults." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტერიტორიული დავების ყველა პარამეტრი საერთაშორისოდ აღიარებულ ნაგულისხმევ მნიშვნელობებზე დაბრუნდება."
+          }
+        }
+      }
+    },
+    "All your progress, XP, and achievements will be permanently deleted." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თქვენი მთელი პროგრესი, XP და მიღწევები სამუდამოდ წაიშლება."
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Delete Account" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ანგარიშის წაშლა"
+          }
+        }
+      }
+    },
+    "Feature Flags" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფუნქციის ფლაგები"
+          }
+        }
+      }
+    },
+    "Geografy Premium" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy პრემიუმ"
+          }
+        }
+      }
+    },
+    "Geografy v%@ (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Geografy v%1$@ (%2$@)"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy v%1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "Guest" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტუმარი"
+          }
+        }
+      }
+    },
+    "Note: Abkhazia and South Ossetia are treated as Georgia." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენიშვნა: აფხაზეთი და სამხრეთ ოსეთი საქართველოს ნაწილად ითვლება."
+          }
+        }
+      }
+    },
+    "Progress is saved on this device only" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროგრესი მხოლოდ ამ მოწყობილობაზე ინახება"
+          }
+        }
+      }
+    },
+    "Reset" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადატვირთვა"
+          }
+        }
+      }
+    },
+    "Reset All to Default" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაფრის ნაგულისხმევზე დაბრუნება"
+          }
+        }
+      }
+    },
+    "Reset to Defaults" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაგულისხმევებზე დაბრუნება"
+          }
+        }
+      }
+    },
+    "Restore Purchases" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენაძენების აღდგენა"
+          }
+        }
+      }
+    },
+    "Search features..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფუნქციების ძიება..."
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პარამეტრები"
+          }
+        }
+      }
+    },
+    "Sign In with Apple" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple-ით შესვლა"
+          }
+        }
+      }
+    },
+    "Sign Out" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Signed in with Apple" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple-ით შესული"
+          }
+        }
+      }
+    },
+    "Territorial Disputes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტერიტორიული დავები"
+          }
+        }
+      }
+    },
+    "Unlock all quiz types & advanced stats" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განბლოკე ყველა ვიქტორინის ტიპი და გაფართოებული სტატისტიკა"
+          }
+        }
+      }
+    },
+    "Upgrade to Premium" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პრემიუმზე გადასვლა"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

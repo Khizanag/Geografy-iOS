@@ -1,5 +1,66 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Capital of %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს დედაქალაქი"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასუფთავება"
+          }
+        }
+      }
+    },
+    "Countries, capitals, organizations…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები, დედაქალაქები, ორგანიზაციები…"
+          }
+        }
+      }
+    },
+    "No results for \"%@\"" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"-ისთვის შედეგები არ მოიძებნა"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ძიება"
+          }
+        }
+      }
+    },
+    "Try a different search term" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა საძიებო ტერმინი"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

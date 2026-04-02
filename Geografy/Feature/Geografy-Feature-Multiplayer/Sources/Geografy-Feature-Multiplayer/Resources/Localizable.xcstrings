@@ -1,5 +1,554 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ wants a rematch!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს რევანში სურს!"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld - %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld - %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld - %lld"
+          }
+        }
+      }
+    },
+    "%lld found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ნაპოვნი"
+          }
+        }
+      }
+    },
+    "%lld questions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld კითხვა"
+          }
+        }
+      }
+    },
+    "%lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        }
+      }
+    },
+    "%lld/%lld correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld correct"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld სწორი"
+          }
+        }
+      }
+    },
+    ":" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ":"
+          }
+        }
+      }
+    },
+    "Accept" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღება"
+          }
+        }
+      }
+    },
+    "Both devices must be nearby on the same Wi-Fi or with Bluetooth enabled." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორივე მოწყობილობა ერთ Wi-Fi ქსელში ან Bluetooth-ით უნდა იყოს დაკავშირებული."
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Challenge a friend on the same network" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოუწვიე მეგობარი ერთ ქსელში"
+          }
+        }
+      }
+    },
+    "Connected" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაკავშირებულია"
+          }
+        }
+      }
+    },
+    "Decline" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უარყოფა"
+          }
+        }
+      }
+    },
+    "Difficulty" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სირთულე"
+          }
+        }
+      }
+    },
+    "Disconnected" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გათიშულია"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "GO!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე!"
+          }
+        }
+      }
+    },
+    "Get ready..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოემზადე..."
+          }
+        }
+      }
+    },
+    "Host Lobby" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლობის შექმნა"
+          }
+        }
+      }
+    },
+    "Join" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეერთება"
+          }
+        }
+      }
+    },
+    "Join Lobby" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლობიში შესვლა"
+          }
+        }
+      }
+    },
+    "Leave" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დატოვება"
+          }
+        }
+      }
+    },
+    "Local Play" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლოკალური თამაში"
+          }
+        }
+      }
+    },
+    "Match History" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩების ისტორია"
+          }
+        }
+      }
+    },
+    "Match Result" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩის შედეგი"
+          }
+        }
+      }
+    },
+    "Match Settings" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩის პარამეტრები"
+          }
+        }
+      }
+    },
+    "Multiplayer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მულტიპლეიერი"
+          }
+        }
+      }
+    },
+    "No Matches Yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ მატჩები არ არის"
+          }
+        }
+      }
+    },
+    "OPP" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OPP"
+          }
+        }
+      }
+    },
+    "Opponent answered" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგემ უპასუხა"
+          }
+        }
+      }
+    },
+    "Opponent thinking" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგე ფიქრობს"
+          }
+        }
+      }
+    },
+    "Opponent thinking..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგე ფიქრობს..."
+          }
+        }
+      }
+    },
+    "Play Nearby" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლომახლო თამაში"
+          }
+        }
+      }
+    },
+    "Play a multiplayer match to see your history here." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ითამაშე მულტიპლეიერ მატჩი ისტორიის სანახავად."
+          }
+        }
+      }
+    },
+    "Questions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვები"
+          }
+        }
+      }
+    },
+    "Quit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Quit Match?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩის დატოვება?"
+          }
+        }
+      }
+    },
+    "Rating Change" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგის ცვლილება"
+          }
+        }
+      }
+    },
+    "Ready" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მზადაა"
+          }
+        }
+      }
+    },
+    "Rematch" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რევანში"
+          }
+        }
+      }
+    },
+    "Rematch?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რევანში?"
+          }
+        }
+      }
+    },
+    "Searching for opponent..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგის ძიება..."
+          }
+        }
+      }
+    },
+    "Searching nearby..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლომახლო ძიება..."
+          }
+        }
+      }
+    },
+    "Searching..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ძიება..."
+          }
+        }
+      }
+    },
+    "The connection to your opponent was lost." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კავშირი მოწინააღმდეგესთან გაწყდა."
+          }
+        }
+      }
+    },
+    "VS" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VS"
+          }
+        }
+      }
+    },
+    "Waiting for a player to join..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოთამაშის მოლოდინში..."
+          }
+        }
+      }
+    },
+    "Waiting..." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოლოდინში..."
+          }
+        }
+      }
+    },
+    "You" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენ"
+          }
+        }
+      }
+    },
+    "Your progress will be lost." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი დაიკარგება."
+          }
+        }
+      }
+    },
+    "vs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vs"
+          }
+        }
+      }
+    },
+    "vs %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წინააღმდეგ"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

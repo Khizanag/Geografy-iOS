@@ -1,5 +1,152 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@, capital %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, capital %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, დედაქალაქი %2$@"
+          }
+        }
+      }
+    },
+    "%lld members" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld წევრი"
+          }
+        }
+      }
+    },
+    "Aa" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aa"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უკან"
+          }
+        }
+      }
+    },
+    "Country labels" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ეტიკეტები"
+          }
+        }
+      }
+    },
+    "Double tap to select a country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ქვეყნის ასარჩევად"
+          }
+        }
+      }
+    },
+    "Double tap to toggle country name labels" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ქვეყნის სახელების გადასართავად"
+          }
+        }
+      }
+    },
+    "Hidden" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამალული"
+          }
+        }
+      }
+    },
+    "Interactive world map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ინტერაქტიული მსოფლიო რუკა"
+          }
+        }
+      }
+    },
+    "Loading map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა იტვირთება"
+          }
+        }
+      }
+    },
+    "Map data © OpenStreetMap contributors · Geografy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის მონაცემები © OpenStreetMap-ის კონტრიბუტორები · Geografy"
+          }
+        }
+      }
+    },
+    "More info" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტი ინფორმაცია"
+          }
+        }
+      }
+    },
+    "Parsing geographic data" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფიული მონაცემების დამუშავება"
+          }
+        }
+      }
+    },
+    "Shown" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაჩვენებია"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

@@ -1,5 +1,116 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "#%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#%lld"
+          }
+        }
+      }
+    },
+    "Bordering Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსაზღვრე ქვეყნები"
+          }
+        }
+      }
+    },
+    "Deep Dive" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ღრმა ჩაძირვა"
+          }
+        }
+      }
+    },
+    "Fact #%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფაქტი #%lld"
+          }
+        }
+      }
+    },
+    "Global GDP Rank" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გლობალური მშპ-ს რეიტინგი"
+          }
+        }
+      }
+    },
+    "Natural Wonders" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბუნების საოცრებები"
+          }
+        }
+      }
+    },
+    "Out of ~195 countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~195 ქვეყნიდან"
+          }
+        }
+      }
+    },
+    "Premium Feature" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პრემიუმ ფუნქცია"
+          }
+        }
+      }
+    },
+    "Unlock deep dives to explore culture, history, and more." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განბლოკე ღრმა ჩაძირვა კულტურის, ისტორიისა და სხვის შესასწავლად."
+          }
+        }
+      }
+    },
+    "Unlock with Premium" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განბლოკვა პრემიუმით"
+          }
+        }
+      }
+    },
+    "• %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• %@"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

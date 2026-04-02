@@ -1,5 +1,26 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Pronounce %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წარმოთქმა"
+          }
+        }
+      }
+    },
+    "Stop pronunciation" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წარმოთქმის შეჩერება"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

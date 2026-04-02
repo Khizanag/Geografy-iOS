@@ -1,5 +1,112 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "%@ versus %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ versus %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@-ს წინააღმდეგ"
+          }
+        }
+      }
+    },
+    "Compare" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედარება"
+          }
+        }
+      }
+    },
+    "Different" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განსხვავებული"
+          }
+        }
+      }
+    },
+    "Match" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩი"
+          }
+        }
+      }
+    },
+    "Search countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება"
+          }
+        }
+      }
+    },
+    "Select Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნის არჩევა"
+          }
+        }
+      }
+    },
+    "Select two countries to compare" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ორი ქვეყანა შესადარებლად"
+          }
+        }
+      }
+    },
+    "Swap" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადანაცვლება"
+          }
+        }
+      }
+    },
+    "Tap to select" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე ასარჩევად"
+          }
+        }
+      }
+    },
+    "VS" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VS"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

@@ -1,5 +1,116 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "\"%@\"" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\""
+          }
+        }
+      }
+    },
+    "Can you match the nickname to the country?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეგიძლია მეტსახელი ქვეყანას შეუსაბამო?"
+          }
+        }
+      }
+    },
+    "Country Nicknames" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების მეტსახელები"
+          }
+        }
+      }
+    },
+    "Nickname Expert!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტსახელის ექსპერტი!"
+          }
+        }
+      }
+    },
+    "Nickname Quiz" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტსახელის ვიქტორინა"
+          }
+        }
+      }
+    },
+    "No nicknames found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტსახელები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "Quiz Me!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამომკითხე!"
+          }
+        }
+      }
+    },
+    "Search nicknames…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტსახელების ძიება…"
+          }
+        }
+      }
+    },
+    "Try a different search term or category filter." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა საძიებო ტერმინი ან კატეგორიის ფილტრი."
+          }
+        }
+      }
+    },
+    "Well Played!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კარგად ითამაშე!"
+          }
+        }
+      }
+    },
+    "Which country is known as…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქვეყანა ცნობილია როგორც…"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }
