@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "Geografy-Core-Common",
+    defaultLocalization: "en",
     platforms: [
         .iOS("26.0"),
         .tvOS("26.0"),
@@ -15,7 +16,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Geografy-Core-Common"
+            name: "Geografy-Core-Common",
+            resources: [
+                .process("Resources"),
+            ]
         ),
         .testTarget(
             name: "Geografy-Core-CommonTests",
