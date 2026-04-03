@@ -230,63 +230,71 @@ private extension FlashcardScreen {
 // MARK: - Background
 private extension FlashcardScreen {
     var ambientBackground: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
             DesignSystem.Color.background
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.accent.opacity(0.26),
-                            .clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 220
-                    )
-                )
-                .frame(width: 440, height: 320)
-                .blur(radius: 32)
-                .offset(x: -80, y: -200)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.purple.opacity(0.18),
-                            .clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 40)
-                .offset(x: 140, y: 100)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.indigo.opacity(0.12),
-                            .clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260)
-                .blur(radius: 36)
-                .offset(x: -100, y: 400)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
+            accentBlob
+            purpleBlob
+            indigoBlob
         }
         .ignoresSafeArea()
         .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+    }
+
+    var accentBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.accent.opacity(0.26),
+                        .clear,
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 220
+                )
+            )
+            .frame(width: 440, height: 320)
+            .blur(radius: 32)
+            .offset(x: -80, y: -200)
+            .scaleEffect(blobAnimating ? 1.10 : 0.90)
+    }
+
+    var purpleBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.purple.opacity(0.18),
+                        .clear,
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 180
+                )
+            )
+            .frame(width: 360, height: 300)
+            .blur(radius: 40)
+            .offset(x: 140, y: 100)
+            .scaleEffect(blobAnimating ? 0.88 : 1.10)
+    }
+
+    var indigoBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.indigo.opacity(0.12),
+                        .clear,
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 160
+                )
+            )
+            .frame(width: 320, height: 260)
+            .blur(radius: 36)
+            .offset(x: -100, y: 400)
+            .scaleEffect(blobAnimating ? 1.06 : 0.94)
     }
 }
 

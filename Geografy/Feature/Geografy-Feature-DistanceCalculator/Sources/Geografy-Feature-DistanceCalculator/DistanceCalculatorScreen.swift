@@ -112,46 +112,70 @@ private extension DistanceCalculatorScreen {
         color: Color,
         action: @escaping () -> Void
     ) -> some View {
-        // swiftlint:disable:next closure_body_length
         Button(action: action) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(color)
-                    .frame(width: 24)
-
-                if let country {
-                    HStack(spacing: DesignSystem.Spacing.xs) {
-                        FlagView(countryCode: country.code, height: 20, fixedWidth: true)
-                        Text(country.name)
-                            .font(DesignSystem.Font.body)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Spacer()
-                        Text(country.capital)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                } else {
-                    Text(placeholder)
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                    Spacer()
-                    Image(systemName: "chevron.down")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-            }
-            .padding(DesignSystem.Spacing.md)
-            .background(
-                DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .strokeBorder(color.opacity(0.25), lineWidth: 1)
+            countryPickerButtonLabel(
+                country: country,
+                placeholder: placeholder,
+                icon: icon,
+                color: color
             )
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    @ViewBuilder
+    func countryPickerButtonLabel(
+        country: Country?,
+        placeholder: String,
+        icon: String,
+        color: Color
+    ) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: icon)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(color)
+                .frame(width: 24)
+
+            if let country {
+                selectedCountryRow(country)
+            } else {
+                placeholderRow(placeholder)
+            }
+        }
+        .padding(DesignSystem.Spacing.md)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .strokeBorder(color.opacity(0.25), lineWidth: 1)
+        )
+    }
+
+    func selectedCountryRow(_ country: Country) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            FlagView(countryCode: country.code, height: 20, fixedWidth: true)
+            Text(country.name)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            Text(country.capital)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+    }
+
+    func placeholderRow(_ placeholder: String) -> some View {
+        HStack {
+            Text(placeholder)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+            Spacer()
+            Image(systemName: "chevron.down")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+        }
     }
 
     var swapButton: some View {

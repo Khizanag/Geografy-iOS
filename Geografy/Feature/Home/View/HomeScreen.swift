@@ -242,57 +242,85 @@ private extension HomeScreen {
     }
 
     var mapCarousel: some View {
-        // swiftlint:disable:next closure_body_length
         GeometryReader { outerGeo in
-            let cardWidth = outerGeo.size.width * 0.78
-            let spacing: CGFloat = DesignSystem.Spacing.sm
-            let sidePadding = (outerGeo.size.width - cardWidth) / 2
-
-            // swiftlint:disable:next closure_body_length
-            ScrollViewReader { _ in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: spacing) {
-                        ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
-                            GeometryReader { cardGeo in
-                                let midX = cardGeo.frame(in: .global).midX
-                                let screenMidX = outerGeo.size.width / 2
-                                let distance = midX - screenMidX
-                                let maxDistance = outerGeo.size.width
-                                let normalized = distance / maxDistance
-                                let scale = 1.0 - abs(normalized) * 0.12
-                                let rotation = normalized * -5
-
-                                MapCarouselCard(
-                                    mapName: map.name,
-                                    systemImage: map.icon,
-                                    compact: isLandscape
-                                ) {
-                                    openMap(named: map.name)
-                                }
-                                .scaleEffect(scale)
-                                .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))
-                                .opacity(1.0 - abs(normalized) * 0.3)
-                                .animation(.interactiveSpring(response: 0.35, dampingFraction: 0.8), value: normalized)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                            }
-                            .frame(width: cardWidth, height: carouselHeight)
-                            .id(index)
-                        }
-                    }
-                    .scrollTargetLayout()
-                    .padding(.horizontal, sidePadding)
-                    .padding(.bottom, DesignSystem.Spacing.xs)
-                }
-                .scrollTargetBehavior(.viewAligned)
-                .scrollPosition(
-                    id: .init(
-                        get: { selectedMapIndex },
-                        set: { if let newValue = $0 { selectedMapIndex = newValue } }
-                    )
-                )
-            }
+            mapCarouselContent(outerGeo: outerGeo)
         }
         .frame(height: carouselHeight + DesignSystem.Spacing.xl)
+    }
+
+    func mapCarouselContent(outerGeo: GeometryProxy) -> some View {
+        let cardWidth = outerGeo.size.width * 0.78
+        let spacing: CGFloat = DesignSystem.Spacing.sm
+        let sidePadding = (outerGeo.size.width - cardWidth) / 2
+
+        return ScrollViewReader { _ in
+            mapCarouselScrollView(
+                outerGeo: outerGeo,
+                cardWidth: cardWidth,
+                spacing: spacing,
+                sidePadding: sidePadding
+            )
+        }
+    }
+
+    func mapCarouselScrollView(
+        outerGeo: GeometryProxy,
+        cardWidth: CGFloat,
+        spacing: CGFloat,
+        sidePadding: CGFloat
+    ) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: spacing) {
+                ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
+                    mapCarouselCard(
+                        map: map,
+                        outerGeo: outerGeo,
+                        cardWidth: cardWidth
+                    )
+                    .id(index)
+                }
+            }
+            .scrollTargetLayout()
+            .padding(.horizontal, sidePadding)
+            .padding(.bottom, DesignSystem.Spacing.xs)
+        }
+        .scrollTargetBehavior(.viewAligned)
+        .scrollPosition(
+            id: .init(
+                get: { selectedMapIndex },
+                set: { if let newValue = $0 { selectedMapIndex = newValue } }
+            )
+        )
+    }
+
+    func mapCarouselCard(
+        map: (name: String, icon: String),
+        outerGeo: GeometryProxy,
+        cardWidth: CGFloat
+    ) -> some View {
+        GeometryReader { cardGeo in
+            let midX = cardGeo.frame(in: .global).midX
+            let screenMidX = outerGeo.size.width / 2
+            let distance = midX - screenMidX
+            let maxDistance = outerGeo.size.width
+            let normalized = distance / maxDistance
+            let scale = 1.0 - abs(normalized) * 0.12
+            let rotation = normalized * -5
+
+            MapCarouselCard(
+                mapName: map.name,
+                systemImage: map.icon,
+                compact: isLandscape
+            ) {
+                openMap(named: map.name)
+            }
+            .scaleEffect(scale)
+            .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))
+            .opacity(1.0 - abs(normalized) * 0.3)
+            .animation(.interactiveSpring(response: 0.35, dampingFraction: 0.8), value: normalized)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        }
+        .frame(width: cardWidth, height: carouselHeight)
     }
 
     var pageIndicator: some View {

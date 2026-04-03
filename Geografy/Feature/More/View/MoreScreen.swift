@@ -37,65 +37,56 @@ struct MoreScreen: View {
 
 // MARK: - Subviews
 private extension MoreScreen {
+    var blobConfigs: [BlobConfig] {
+        [
+            BlobConfig(
+                color: DesignSystem.Color.accent, opacity: 0.28,
+                endRadius: 220, width: 440, height: 320, blur: 32,
+                offset: (-80, -80), scale: blobAnimating ? 1.10 : 0.90
+            ),
+            BlobConfig(
+                color: DesignSystem.Color.indigo, opacity: 0.20,
+                endRadius: 180, width: 360, height: 300, blur: 40,
+                offset: (140, 80), scale: blobAnimating ? 0.88 : 1.10
+            ),
+            BlobConfig(
+                color: DesignSystem.Color.blue, opacity: 0.14,
+                endRadius: 160, width: 320, height: 260, blur: 36,
+                offset: (-100, 400), scale: blobAnimating ? 1.06 : 0.94
+            ),
+            BlobConfig(
+                color: DesignSystem.Color.purple, opacity: 0.12,
+                endRadius: 160, width: 320, height: 280, blur: 44,
+                offset: (160, 700), scale: blobAnimating ? 0.92 : 1.08
+            ),
+            BlobConfig(
+                color: DesignSystem.Color.accent, opacity: 0.10,
+                endRadius: 200, width: 400, height: 300, blur: 40,
+                offset: (-120, 1_050), scale: blobAnimating ? 1.05 : 0.95
+            ),
+            BlobConfig(
+                color: DesignSystem.Color.indigo, opacity: 0.14,
+                endRadius: 180, width: 360, height: 280, blur: 36,
+                offset: (140, 1_400), scale: blobAnimating ? 0.90 : 1.10
+            ),
+            BlobConfig(
+                color: DesignSystem.Color.blue, opacity: 0.10,
+                endRadius: 160, width: 320, height: 260, blur: 40,
+                offset: (-80, 1_800), scale: blobAnimating ? 1.08 : 0.92
+            ),
+            BlobConfig(
+                color: DesignSystem.Color.purple, opacity: 0.10,
+                endRadius: 160, width: 320, height: 280, blur: 44,
+                offset: (120, 2_200), scale: blobAnimating ? 0.94 : 1.06
+            ),
+        ]
+    }
+
     var scrollableBlobs: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.accent, opacity: 0.28,
-                    endRadius: 220, width: 440, height: 320, blur: 32,
-                    offset: (-80, -80), scale: blobAnimating ? 1.10 : 0.90
-                )
-            )
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.indigo, opacity: 0.20,
-                    endRadius: 180, width: 360, height: 300, blur: 40,
-                    offset: (140, 80), scale: blobAnimating ? 0.88 : 1.10
-                )
-            )
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.blue, opacity: 0.14,
-                    endRadius: 160, width: 320, height: 260, blur: 36,
-                    offset: (-100, 400), scale: blobAnimating ? 1.06 : 0.94
-                )
-            )
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.purple, opacity: 0.12,
-                    endRadius: 160, width: 320, height: 280, blur: 44,
-                    offset: (160, 700), scale: blobAnimating ? 0.92 : 1.08
-                )
-            )
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.accent, opacity: 0.10,
-                    endRadius: 200, width: 400, height: 300, blur: 40,
-                    offset: (-120, 1_050), scale: blobAnimating ? 1.05 : 0.95
-                )
-            )
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.indigo, opacity: 0.14,
-                    endRadius: 180, width: 360, height: 280, blur: 36,
-                    offset: (140, 1_400), scale: blobAnimating ? 0.90 : 1.10
-                )
-            )
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.blue, opacity: 0.10,
-                    endRadius: 160, width: 320, height: 260, blur: 40,
-                    offset: (-80, 1_800), scale: blobAnimating ? 1.08 : 0.92
-                )
-            )
-            blobEllipse(
-                BlobConfig(
-                    color: DesignSystem.Color.purple, opacity: 0.10,
-                    endRadius: 160, width: 320, height: 280, blur: 44,
-                    offset: (120, 2_200), scale: blobAnimating ? 0.94 : 1.06
-                )
-            )
+            ForEach(Array(blobConfigs.enumerated()), id: \.offset) { _, config in
+                blobEllipse(config)
+            }
         }
         .allowsHitTesting(false)
         .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
@@ -187,48 +178,56 @@ private extension MoreScreen {
         Button {
             hapticsService.impact(.light)
             coordinator.sheet(sheet.toDestination)
-        // swiftlint:disable:next closure_body_length
         } label: {
-            VStack(spacing: tileSpacing) {
-                ZStack {
-                    RoundedRectangle(
-                        cornerRadius: DesignSystem.CornerRadius.small
-                    )
-                    .fill(sheet.color.opacity(0.15))
-                    .frame(width: tileIconSize, height: tileIconSize)
-                    Image(systemName: sheet.icon)
-                        .font(DesignSystem.Font.system(size: tileIconFontSize))
-                        .foregroundStyle(sheet.color)
-                }
-                Text(sheet.label)
-                    .font(tileLabelFont)
-                    .fontWeight(.medium)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.65)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, DesignSystem.Spacing.xxs)
-
-                Text(sheet.subtitle)
-                    .font(tileSubtitleFont)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-                    .padding(.horizontal, DesignSystem.Spacing.xxs)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, tilePadding)
-            .glassEffect(
-                .regular,
-                in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
-            )
-            .overlay(alignment: .topTrailing) {
-                if testingModeService.isEnabled {
-                    testBadge(for: sheet)
-                }
-            }
+            gridTileLabel(for: sheet)
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    func gridTileLabel(for sheet: MoreSheet) -> some View {
+        VStack(spacing: tileSpacing) {
+            gridTileIcon(for: sheet)
+
+            Text(sheet.label)
+                .font(tileLabelFont)
+                .fontWeight(.medium)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.65)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, DesignSystem.Spacing.xxs)
+
+            Text(sheet.subtitle)
+                .font(tileSubtitleFont)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+                .padding(.horizontal, DesignSystem.Spacing.xxs)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, tilePadding)
+        .glassEffect(
+            .regular,
+            in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
+        .overlay(alignment: .topTrailing) {
+            if testingModeService.isEnabled {
+                testBadge(for: sheet)
+            }
+        }
+    }
+
+    func gridTileIcon(for sheet: MoreSheet) -> some View {
+        ZStack {
+            RoundedRectangle(
+                cornerRadius: DesignSystem.CornerRadius.small
+            )
+            .fill(sheet.color.opacity(0.15))
+            .frame(width: tileIconSize, height: tileIconSize)
+            Image(systemName: sheet.icon)
+                .font(DesignSystem.Font.system(size: tileIconFontSize))
+                .foregroundStyle(sheet.color)
+        }
     }
 
     func testBadge(for sheet: MoreSheet) -> some View {
