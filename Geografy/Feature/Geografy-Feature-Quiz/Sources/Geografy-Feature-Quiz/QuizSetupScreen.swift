@@ -7,6 +7,9 @@ import SwiftUI
 public struct QuizSetupScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
+    #if !os(tvOS)
+    @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz
     @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
@@ -93,7 +96,7 @@ private extension QuizSetupScreen {
 
     func gameModeChip(_ mode: QuizGameMode) -> some View {
         let isSelected = selectedGameMode == mode
-        return Button { selectedGameMode = mode } label: {
+        return Button { selectGameMode(mode) } label: {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: mode.icon)
                     .font(DesignSystem.Font.subheadline)
@@ -139,7 +142,7 @@ private extension QuizSetupScreen {
 
     func arcadeTimerChip(_ timer: ArcadeTimer) -> some View {
         let isSelected = selectedArcadeTimer == timer
-        return Button { selectedArcadeTimer = timer } label: {
+        return Button { selectArcadeTimer(timer) } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: timer.icon)
                     .font(DesignSystem.Font.caption)
@@ -230,7 +233,7 @@ private extension QuizSetupScreen {
 
     func modeChip(_ mode: QuizAnswerMode) -> some View {
         let isSelected = answerMode == mode
-        return Button { answerMode = mode } label: {
+        return Button { selectAnswerMode(mode) } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: mode.icon)
                     .font(DesignSystem.Font.caption)
@@ -312,7 +315,7 @@ private extension QuizSetupScreen {
 
     func metricChip(_ metric: ComparisonMetric) -> some View {
         let isSelected = comparisonMetric == metric
-        return Button { comparisonMetric = metric } label: {
+        return Button { selectMetric(metric) } label: {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: metric.icon)
                     .font(DesignSystem.Font.caption)
@@ -359,7 +362,7 @@ private extension QuizSetupScreen {
 
     func difficultyRow(_ difficulty: QuizDifficulty) -> some View {
         let isSelected = selectedDifficulty == difficulty
-        return Button { selectedDifficulty = difficulty } label: {
+        return Button { selectDifficulty(difficulty) } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     ZStack {
@@ -410,7 +413,7 @@ private extension QuizSetupScreen {
 
     func countChip(_ count: QuestionCount) -> some View {
         let isSelected = selectedCount == count
-        return Button { selectedCount = count } label: {
+        return Button { selectCount(count) } label: {
             Text(count.displayName)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(isSelected ? .bold : .regular)
@@ -433,6 +436,9 @@ private extension QuizSetupScreen {
             if selectedType.isPremium, !subscriptionService.isPremium {
                 coordinator.sheet(.paywall)
             } else {
+                #if !os(tvOS)
+                hapticsService.impact(.medium)
+                #endif
                 coordinator.cover(.quizSession(makeConfiguration()))
             }
         }
@@ -450,6 +456,42 @@ private extension QuizSetupScreen {
             .fontWeight(.semibold)
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .accessibilityAddTraits(.isHeader)
+    }
+
+    func hapticSelection() {
+        #if !os(tvOS)
+        hapticsService.selection()
+        #endif
+    }
+
+    func selectGameMode(_ mode: QuizGameMode) {
+        selectedGameMode = mode
+        hapticSelection()
+    }
+
+    func selectArcadeTimer(_ timer: ArcadeTimer) {
+        selectedArcadeTimer = timer
+        hapticSelection()
+    }
+
+    func selectAnswerMode(_ mode: QuizAnswerMode) {
+        answerMode = mode
+        hapticSelection()
+    }
+
+    func selectMetric(_ metric: ComparisonMetric) {
+        comparisonMetric = metric
+        hapticSelection()
+    }
+
+    func selectDifficulty(_ difficulty: QuizDifficulty) {
+        selectedDifficulty = difficulty
+        hapticSelection()
+    }
+
+    func selectCount(_ count: QuestionCount) {
+        selectedCount = count
+        hapticSelection()
     }
 
     func makeConfiguration() -> QuizConfiguration {
