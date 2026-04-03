@@ -11,6 +11,9 @@ public struct QuizResultsScreen: View {
     @Environment(DatabaseManager.self) private var database
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(PronunciationService.self) private var pronunciationService
+    #if !os(tvOS)
+    @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     public let result: QuizResult
     public let onPlayAgain: () -> Void
@@ -180,7 +183,12 @@ private extension QuizResultsScreen {
     }
 
     var playAgainButton: some View {
-        Button(action: onPlayAgain) {
+        Button {
+            #if !os(tvOS)
+            hapticsService.impact(.medium)
+            #endif
+            onPlayAgain()
+        } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Image(systemName: "arrow.counterclockwise")
                     .font(DesignSystem.Font.headline)
@@ -260,6 +268,14 @@ private extension QuizResultsScreen {
         achievementService.checkQuizAchievements(history: history)
 
         showXPBadge = true
+
+        #if !os(tvOS)
+        if result.accuracy >= 0.7 {
+            hapticsService.notification(.success)
+        } else {
+            hapticsService.notification(.warning)
+        }
+        #endif
 
         let announcement = "\(scoreMessage) \(result.correctCount) correct out of \(result.answers.count)"
         AccessibilityNotification.Announcement(announcement).post()

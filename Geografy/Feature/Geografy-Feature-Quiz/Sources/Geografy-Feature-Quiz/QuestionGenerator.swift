@@ -114,7 +114,13 @@ private extension QuestionGenerator {
     ) -> QuizQuestion {
         let correctID = UUID()
         let correctOption = QuizOption(id: correctID, text: country.capital, flagCode: nil)
-        let distractors = selectDistractors(for: country, from: allCountries, count: optionCount - 1)
+        let distractors = selectDistractors(
+            for: country,
+            from: allCountries,
+            count: optionCount - 1,
+            uniqueBy: \.capital,
+            excluding: country.capital
+        )
             .map { QuizOption(id: UUID(), text: $0.capital, flagCode: nil) }
         let options = ([correctOption] + distractors).shuffled()
 
@@ -244,13 +250,20 @@ private extension QuestionGenerator {
         } else {
             let correctID = UUID()
             let correctOption = QuizOption(id: correctID, text: value, flagCode: nil)
-            let distractorValues = countriesWithSymbols.shuffled().prefix(optionCount - 1).map { _, symbol in
-                switch typeName {
+            var seenValues: Set<String> = [value.lowercased()]
+            var distractorValues: [String] = []
+            for (_, symbol) in countriesWithSymbols.shuffled() {
+                let distractorValue: String = switch typeName {
                 case "animal": symbol.animal
                 case "flower": symbol.flower
                 case "sport": symbol.sport
                 default: symbol.animal
                 }
+                let key = distractorValue.lowercased()
+                guard !distractorValue.isEmpty, !seenValues.contains(key) else { continue }
+                seenValues.insert(key)
+                distractorValues.append(distractorValue)
+                if distractorValues.count >= optionCount - 1 { break }
             }
             let distractorOptions = distractorValues.map { QuizOption(id: UUID(), text: $0, flagCode: nil) }
             let options = ([correctOption] + distractorOptions).shuffled()
@@ -271,23 +284,37 @@ private extension QuestionGenerator {
 
 // MARK: - Distractor Selection
 private extension QuestionGenerator {
-    static func selectDistractors(for country: Country, from allCountries: [Country], count: Int) -> [Country] {
-        let sameContinentCountries = allCountries.filter {
-            $0.code != country.code && $0.continent == country.continent
-        }
-        let otherCountries = allCountries.filter { $0.code != country.code && $0.continent != country.continent }
+    static func selectDistractors(
+        for country: Country,
+        from allCountries: [Country],
+        count: Int,
+        uniqueBy keyPath: KeyPath<Country, String>? = nil,
+        excluding correctValue: String? = nil
+    ) -> [Country] {
+        let candidates = allCountries.filter { $0.code != country.code }
+        let sameContinentCandidates = candidates
+            .filter { $0.continent == country.continent }
+            .shuffled()
+        let otherCandidates = candidates
+            .filter { $0.continent != country.continent }
+            .shuffled()
 
         var distractors: [Country] = []
-
-        let shuffledSameContinent = sameContinentCountries.shuffled()
-        distractors.append(contentsOf: shuffledSameContinent.prefix(count))
-
-        if distractors.count < count {
-            let remaining = count - distractors.count
-            let shuffledOther = otherCountries.shuffled()
-            distractors.append(contentsOf: shuffledOther.prefix(remaining))
+        var seenValues: Set<String> = []
+        if let correctValue {
+            seenValues.insert(correctValue.lowercased())
         }
 
-        return Array(distractors.prefix(count))
+        for candidate in sameContinentCandidates + otherCandidates {
+            if let keyPath {
+                let value = candidate[keyPath: keyPath].lowercased()
+                guard !value.isEmpty, !seenValues.contains(value) else { continue }
+                seenValues.insert(value)
+            }
+            distractors.append(candidate)
+            if distractors.count >= count { break }
+        }
+
+        return distractors
     }
 }

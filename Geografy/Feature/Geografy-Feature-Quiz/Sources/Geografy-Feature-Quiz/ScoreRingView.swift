@@ -5,6 +5,7 @@ public struct ScoreRingView: View {
     public let progress: Double
 
     @State private var animatedProgress: Double = 0
+    @State private var displayPercent: Int = 0
 
     public init(progress: Double) {
         self.progress = progress
@@ -17,11 +18,7 @@ public struct ScoreRingView: View {
             percentageLabel
         }
         .frame(width: DesignSystem.Size.hero, height: DesignSystem.Size.hero)
-        .onAppear {
-            withAnimation(.easeOut(duration: 1.2)) {
-                animatedProgress = progress
-            }
-        }
+        .onAppear { startCountUp() }
     }
 }
 
@@ -49,10 +46,10 @@ private extension ScoreRingView {
     }
 
     var percentageLabel: some View {
-        Text("\(Int(animatedProgress * 100))%")
+        Text("\(displayPercent)%")
             .font(DesignSystem.Font.largeTitle)
             .foregroundStyle(ringColor)
-            .contentTransition(.numericText())
+            .contentTransition(.numericText(countsDown: false))
     }
 }
 
@@ -65,6 +62,27 @@ private extension ScoreRingView {
             DesignSystem.Color.warning
         } else {
             DesignSystem.Color.success
+        }
+    }
+
+    func startCountUp() {
+        let targetPercent = Int(progress * 100)
+        guard targetPercent > 0 else { return }
+
+        withAnimation(.easeOut(duration: 1.2)) {
+            animatedProgress = progress
+        }
+
+        let totalDuration: Double = 1.2
+        let stepCount = targetPercent
+        let interval = totalDuration / Double(stepCount)
+
+        for step in 1...stepCount {
+            DispatchQueue.main.asyncAfter(deadline: .now() + interval * Double(step)) {
+                withAnimation(.interactiveSpring(response: 0.15, dampingFraction: 0.8)) {
+                    displayPercent = step
+                }
+            }
         }
     }
 }
