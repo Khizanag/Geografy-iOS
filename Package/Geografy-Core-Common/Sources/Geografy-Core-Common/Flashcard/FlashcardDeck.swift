@@ -41,7 +41,7 @@ public extension FlashcardDeck {
             FlashcardDeck(
                 id: "europe_\(cardType.rawValue)",
                 name: "Europe",
-                icon: "globe.europe.africa",
+                icon: Country.Continent.europe.icon,
                 continentFilter: .europe,
                 cardType: cardType,
                 gradientColors: (Color(hex: "1B5E20"), Color(hex: "388E3C")),
@@ -49,7 +49,7 @@ public extension FlashcardDeck {
             FlashcardDeck(
                 id: "asia_\(cardType.rawValue)",
                 name: "Asia",
-                icon: "globe.asia.australia",
+                icon: Country.Continent.asia.icon,
                 continentFilter: .asia,
                 cardType: cardType,
                 gradientColors: (Color(hex: "B71C1C"), Color(hex: "D32F2F")),
@@ -57,7 +57,7 @@ public extension FlashcardDeck {
             FlashcardDeck(
                 id: "africa_\(cardType.rawValue)",
                 name: "Africa",
-                icon: "globe.europe.africa",
+                icon: Country.Continent.africa.icon,
                 continentFilter: .africa,
                 cardType: cardType,
                 gradientColors: (Color(hex: "E65100"), Color(hex: "FF8F00")),
@@ -65,7 +65,7 @@ public extension FlashcardDeck {
             FlashcardDeck(
                 id: "northAmerica_\(cardType.rawValue)",
                 name: "N. America",
-                icon: "globe.americas",
+                icon: Country.Continent.northAmerica.icon,
                 continentFilter: .northAmerica,
                 cardType: cardType,
                 gradientColors: (Color(hex: "004D40"), Color(hex: "00695C")),
@@ -73,7 +73,7 @@ public extension FlashcardDeck {
             FlashcardDeck(
                 id: "southAmerica_\(cardType.rawValue)",
                 name: "S. America",
-                icon: "globe.americas",
+                icon: Country.Continent.southAmerica.icon,
                 continentFilter: .southAmerica,
                 cardType: cardType,
                 gradientColors: (Color(hex: "33691E"), Color(hex: "558B2F")),
@@ -81,7 +81,7 @@ public extension FlashcardDeck {
             FlashcardDeck(
                 id: "oceania_\(cardType.rawValue)",
                 name: "Oceania",
-                icon: "globe.asia.australia",
+                icon: Country.Continent.oceania.icon,
                 continentFilter: .oceania,
                 cardType: cardType,
                 gradientColors: (Color(hex: "01579B"), Color(hex: "0277BD")),

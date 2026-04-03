@@ -29,12 +29,12 @@ extension QuizRegion: RegionSelectable {
     public var regionIcon: String {
         switch self {
         case .world: "globe"
-        case .africa: "globe.europe.africa"
-        case .asia: "globe.asia.australia"
-        case .europe: "globe.europe.africa"
-        case .northAmerica: "globe.americas"
-        case .southAmerica: "globe.americas"
-        case .oceania: "globe.asia.australia"
+        case .africa: Country.Continent.africa.icon
+        case .asia: Country.Continent.asia.icon
+        case .europe: Country.Continent.europe.icon
+        case .northAmerica: Country.Continent.northAmerica.icon
+        case .southAmerica: Country.Continent.southAmerica.icon
+        case .oceania: Country.Continent.oceania.icon
         }
     }
 }

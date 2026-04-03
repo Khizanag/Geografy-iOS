@@ -15,12 +15,12 @@ public struct AllMapsScreen: View {
 
     private let maps: [(name: String, icon: String)] = [
         ("World", "globe"),
-        ("Europe", "globe.europe.africa"),
-        ("Asia", "globe.asia.australia"),
-        ("Africa", "globe.europe.africa"),
-        ("North America", "globe.americas"),
-        ("South America", "globe.americas"),
-        ("Oceania", "globe.asia.australia"),
+        ("Europe", Country.Continent.europe.icon),
+        ("Asia", Country.Continent.asia.icon),
+        ("Africa", Country.Continent.africa.icon),
+        ("North America", Country.Continent.northAmerica.icon),
+        ("South America", Country.Continent.southAmerica.icon),
+        ("Oceania", Country.Continent.oceania.icon),
     ]
 
     public var body: some View {

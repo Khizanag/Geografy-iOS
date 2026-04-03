@@ -97,6 +97,22 @@ public extension Country {
             case .antarctica: "Antarctica"
             }
         }
+
+        public var icon: String {
+            switch self {
+            case .africa: "globe.europe.africa"
+            case .asia: "globe.asia.australia"
+            case .europe: "globe.europe.africa"
+            case .northAmerica: "globe.americas"
+            case .southAmerica: "globe.americas"
+            case .oceania: "globe.asia.australia"
+            case .antarctica: "snowflake"
+            }
+        }
+
+        public var iconFilled: String {
+            "\(icon).fill"
+        }
     }
 }
 
