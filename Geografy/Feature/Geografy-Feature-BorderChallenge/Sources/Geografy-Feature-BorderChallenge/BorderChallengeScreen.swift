@@ -124,49 +124,52 @@ private extension BorderChallengeScreen {
             hapticsService.impact(.light)
             #endif
             selectedDifficulty = difficulty
-        // swiftlint:disable:next closure_body_length
         } label: {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: difficulty.icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
-
-                Text(difficulty.rawValue)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-
-                Text(difficulty.subtitle)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(
-                        isSelected ? DesignSystem.Color.onAccent.opacity(0.8) : DesignSystem.Color.textSecondary
-                    )
-
-                Text("\(difficulty.timeLimit)s")
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(
-                        isSelected ? DesignSystem.Color.onAccent.opacity(0.9) : DesignSystem.Color.textTertiary
-                    )
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .strokeBorder(
-                        isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackgroundHighlighted,
-                        lineWidth: 1.5
-                    )
-            )
+            difficultyCardLabel(difficulty, isSelected: isSelected)
         }
         .buttonStyle(.plain)
         .accessibilityLabel("\(difficulty.rawValue) difficulty")
         .accessibilityValue(isSelected ? "Selected" : "")
         .accessibilityHint(difficulty.subtitle)
+    }
+
+    func difficultyCardLabel(_ difficulty: BorderChallengeService.Difficulty, isSelected: Bool) -> some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: difficulty.icon)
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
+
+            Text(difficulty.rawValue)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.bold)
+                .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+
+            Text(difficulty.subtitle)
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(
+                    isSelected ? DesignSystem.Color.onAccent.opacity(0.8) : DesignSystem.Color.textSecondary
+                )
+
+            Text("\(difficulty.timeLimit)s")
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(
+                    isSelected ? DesignSystem.Color.onAccent.opacity(0.9) : DesignSystem.Color.textTertiary
+                )
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.md)
+        .background(
+            isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .strokeBorder(
+                    isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackgroundHighlighted,
+                    lineWidth: 1.5
+                )
+        )
     }
 }
 

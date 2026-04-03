@@ -179,48 +179,56 @@ private extension CurrencyConverterScreen {
         color: Color,
         action: @escaping () -> Void
     ) -> some View {
-        // swiftlint:disable:next closure_body_length
         Button(action: action) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .frame(width: 50, alignment: .leading)
-
-                if let entry {
-                    HStack(spacing: DesignSystem.Spacing.xs) {
-                        FlagView(countryCode: entry.countryCode, height: 22, fixedWidth: true)
-                        VStack(alignment: .leading, spacing: 1) {
-                            Text(entry.code)
-                                .font(DesignSystem.Font.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(DesignSystem.Color.textPrimary)
-                            Text(entry.name)
-                                .font(DesignSystem.Font.caption)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                                .lineLimit(1)
-                        }
-                    }
-                } else {
-                    Text(placeholder)
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(color.opacity(0.6))
-                    .accessibilityHidden(true)
-            }
-            .padding(DesignSystem.Spacing.sm)
-            .background(
-                DesignSystem.Color.cardBackgroundHighlighted,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-            )
+            currencyPickerButtonLabel(entry: entry, placeholder: placeholder, label: label, color: color)
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    func currencyPickerButtonLabel(
+        entry: CurrencyEntry?,
+        placeholder: String,
+        label: String,
+        color: Color
+    ) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Text(label)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .frame(width: 50, alignment: .leading)
+
+            if let entry {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    FlagView(countryCode: entry.countryCode, height: 22, fixedWidth: true)
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(entry.code)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(entry.name)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                            .lineLimit(1)
+                    }
+                }
+            } else {
+                Text(placeholder)
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(color.opacity(0.6))
+                .accessibilityHidden(true)
+        }
+        .padding(DesignSystem.Spacing.sm)
+        .background(
+            DesignSystem.Color.cardBackgroundHighlighted,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
     }
 
     var amountRow: some View {

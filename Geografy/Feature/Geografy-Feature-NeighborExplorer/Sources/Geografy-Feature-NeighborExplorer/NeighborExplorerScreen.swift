@@ -80,42 +80,54 @@ private extension NeighborExplorerScreen {
 // MARK: - Neighbors Section
 private extension NeighborExplorerScreen {
     var neighborsSection: some View {
-        // swiftlint:disable:next closure_body_length
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            let current = chain.last ?? country
-            let neighborCountries = neighborCountries(for: current)
+        let current = chain.last ?? country
+        let neighbors = neighborCountries(for: current)
+        return VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(
                 title: "Neighbors of \(current.name)",
                 icon: "map.fill"
             )
             .padding(.horizontal, DesignSystem.Spacing.md)
-            if neighborCountries.isEmpty {
-                CardView {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        Image(systemName: "water.waves")
-                            .font(DesignSystem.Font.title2)
-                            .foregroundStyle(DesignSystem.Color.blue)
-                        Text("Island nation — no land borders")
-                            .font(DesignSystem.Font.subheadline)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                        Spacer(minLength: 0)
-                    }
-                    .padding(DesignSystem.Spacing.md)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-            } else {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        ForEach(neighborCountries) { neighbor in
-                            neighborChip(neighbor)
-                        }
-                    }
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.vertical, DesignSystem.Spacing.xs)
-                }
-                .scrollClipDisabled()
-            }
+            neighborsList(neighbors)
         }
+    }
+
+    @ViewBuilder
+    func neighborsList(_ neighbors: [Country]) -> some View {
+        if neighbors.isEmpty {
+            islandNationCard
+        } else {
+            neighborsScrollView(neighbors)
+        }
+    }
+
+    var islandNationCard: some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: "water.waves")
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(DesignSystem.Color.blue)
+                Text("Island nation — no land borders")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                Spacer(minLength: 0)
+            }
+            .padding(DesignSystem.Spacing.md)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
+    func neighborsScrollView(_ neighbors: [Country]) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(neighbors) { neighbor in
+                    neighborChip(neighbor)
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.xs)
+        }
+        .scrollClipDisabled()
     }
 
     func neighborChip(_ neighbor: Country) -> some View {

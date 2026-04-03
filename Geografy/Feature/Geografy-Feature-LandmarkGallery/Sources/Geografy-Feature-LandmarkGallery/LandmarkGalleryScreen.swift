@@ -93,44 +93,54 @@ private extension LandmarkGalleryScreen {
         let accentColor = Color(hex: landmark.accentColor)
         return Button {
             selectedLandmark = landmark
-        // swiftlint:disable:next closure_body_length
         } label: {
-            // swiftlint:disable:next closure_body_length
-            CardView {
-                VStack(spacing: DesignSystem.Spacing.sm) {
-                    ZStack {
-                        LinearGradient(
-                            colors: [accentColor.opacity(0.4), accentColor.opacity(0.1)],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        Image(systemName: landmark.symbolName)
-                            .font(DesignSystem.Font.displayXXS)
-                            .foregroundStyle(accentColor)
-                    }
-                    .frame(height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-                    VStack(spacing: 4) {
-                        Text(landmark.name)
-                            .font(DesignSystem.Font.caption)
-                            .fontWeight(.bold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                        HStack(spacing: 4) {
-                            FlagView(countryCode: landmark.countryCode, height: 14, fixedWidth: true)
-                                .clipShape(RoundedRectangle(cornerRadius: 2))
-                            Text(landmark.city)
-                                .font(DesignSystem.Font.caption2)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                                .lineLimit(1)
-                        }
-                    }
-                    .padding(.horizontal, DesignSystem.Spacing.xs)
-                    .padding(.bottom, DesignSystem.Spacing.xs)
-                }
-            }
+            landmarkCardLabel(landmark, accentColor: accentColor)
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    func landmarkCardLabel(_ landmark: Landmark, accentColor: Color) -> some View {
+        CardView {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                landmarkThumbnail(landmark, accentColor: accentColor)
+                landmarkInfo(landmark)
+            }
+        }
+    }
+
+    func landmarkThumbnail(_ landmark: Landmark, accentColor: Color) -> some View {
+        ZStack {
+            LinearGradient(
+                colors: [accentColor.opacity(0.4), accentColor.opacity(0.1)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            Image(systemName: landmark.symbolName)
+                .font(DesignSystem.Font.displayXXS)
+                .foregroundStyle(accentColor)
+        }
+        .frame(height: 100)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+    }
+
+    func landmarkInfo(_ landmark: Landmark) -> some View {
+        VStack(spacing: 4) {
+            Text(landmark.name)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+            HStack(spacing: 4) {
+                FlagView(countryCode: landmark.countryCode, height: 14, fixedWidth: true)
+                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                Text(landmark.city)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(1)
+            }
+        }
+        .padding(.horizontal, DesignSystem.Spacing.xs)
+        .padding(.bottom, DesignSystem.Spacing.xs)
     }
 }
