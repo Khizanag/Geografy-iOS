@@ -44,14 +44,27 @@ public struct MapCanvasView: View {
 
             for horizontalCopy in horizontalOffsets {
                 let transform = makeTransform(for: size, horizontalShift: horizontalCopy)
-                drawAllCountries(in: &context, transform: transform, visibleRect: visibleRect)
+
+                var transformedContext = context
+                transformedContext.concatenate(transform)
+
+                drawAllCountries(
+                    in: &transformedContext,
+                    transform: transform,
+                    visibleRect: visibleRect
+                )
 
                 if showLabels {
                     drawLabels(in: &context, transform: transform, visibleRect: visibleRect)
                 }
 
                 if let capitalPoint {
-                    drawCapitalPin(in: &context, at: capitalPoint, transform: transform, visibleRect: visibleRect)
+                    drawCapitalPin(
+                        in: &context,
+                        at: capitalPoint,
+                        transform: transform,
+                        visibleRect: visibleRect
+                    )
                 }
             }
         }
@@ -62,18 +75,23 @@ public struct MapCanvasView: View {
 // MARK: - Drawing
 private extension MapCanvasView {
     func drawAllCountries(
-        in context: inout GraphicsContext,
+        in transformedContext: inout GraphicsContext,
         transform: CGAffineTransform,
         visibleRect: CGRect
     ) {
         for shape in countryShapes {
-            drawCountry(shape, in: &context, transform: transform, visibleRect: visibleRect)
+            drawCountry(
+                shape,
+                in: &transformedContext,
+                transform: transform,
+                visibleRect: visibleRect
+            )
         }
     }
 
     func drawCountry(
         _ shape: CountryShape,
-        in context: inout GraphicsContext,
+        in transformedContext: inout GraphicsContext,
         transform: CGAffineTransform,
         visibleRect: CGRect
     ) {
@@ -81,24 +99,31 @@ private extension MapCanvasView {
         guard transformedBounds.intersects(visibleRect) else { return }
 
         let isSelected = shape.id == selectedCountryCode
+        let strokeWidth = 2.0 / scale
 
         for cgPath in shape.polygons {
-            var path = Path(cgPath)
-            path = path.applying(transform)
+            let path = Path(cgPath)
 
             if showDensityOverlay, let density = densityData[shape.id] {
-                context.fill(path, with: .color(densityHeatmapColor(for: density)))
+                transformedContext.fill(path, with: .color(densityHeatmapColor(for: density)))
             } else {
                 let fillColor = isSelected ? shape.color.opacity(1) : shape.color.opacity(0.85)
-                context.fill(path, with: .color(fillColor))
+                transformedContext.fill(path, with: .color(fillColor))
             }
 
             if !showDensityOverlay, let travelStatus = travelStatuses[shape.id] {
-                context.fill(path, with: .color(travelStatus.color.opacity(0.35)))
+                transformedContext.fill(
+                    path,
+                    with: .color(travelStatus.color.opacity(0.35))
+                )
             }
 
             if isSelected {
-                context.stroke(path, with: .color(DesignSystem.Color.onAccent), lineWidth: 2)
+                transformedContext.stroke(
+                    path,
+                    with: .color(DesignSystem.Color.onAccent),
+                    lineWidth: strokeWidth
+                )
             }
         }
     }
@@ -228,11 +253,6 @@ private extension MapCanvasView {
 private extension MapCanvasView {
     var horizontalOffsets: [CGFloat] {
         let mapWidthScaled = MapProjection.mapWidth * scale
-
-        guard mapWidthScaled < canvasSize.width * 1.5 else {
-            return [0]
-        }
-
         return [-mapWidthScaled, 0, mapWidthScaled]
     }
 
