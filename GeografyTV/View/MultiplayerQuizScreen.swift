@@ -24,6 +24,7 @@ struct MultiplayerQuizScreen: View {
     @State private var revealAnswers = false
     @State private var timer: Timer?
     @State private var showQuitConfirmation = false
+    @State private var controllerObservers: [any NSObjectProtocol] = []
 
     private let playerColors: [Color] = [.blue, .red, .green, .orange]
     private let playerNames = ["Player 1", "Player 2", "Player 3", "Player 4"]
@@ -633,13 +634,14 @@ private extension MultiplayerQuizScreen {
     func startControllerDiscovery() {
         scanAndRegisterControllers()
 
-        NotificationCenter.default.addObserver(
+        let token = NotificationCenter.default.addObserver(
             forName: .GCControllerDidConnect,
             object: nil,
             queue: .main
         ) { _ in
             scanAndRegisterControllers()
         }
+        controllerObservers.append(token)
     }
 
     nonisolated func scanAndRegisterControllers() {
@@ -745,7 +747,10 @@ private extension MultiplayerQuizScreen {
 
     func cleanupControllers() {
         timer?.invalidate()
-        NotificationCenter.default.removeObserver(self, name: .GCControllerDidConnect, object: nil)
+        for observer in controllerObservers {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        controllerObservers.removeAll()
 
         for controller in GCController.controllers() {
             guard let gamepad = controller.extendedGamepad else { continue }
