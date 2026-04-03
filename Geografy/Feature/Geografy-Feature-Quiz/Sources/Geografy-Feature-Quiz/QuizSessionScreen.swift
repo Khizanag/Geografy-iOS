@@ -100,6 +100,7 @@ private extension QuizSessionScreen {
         .buttonStyle(.plain)
         .disabled(showFeedback)
         .opacity(showFeedback ? 0.4 : 1)
+        .accessibilityLabel("Pause")
     }
 
     @ViewBuilder
