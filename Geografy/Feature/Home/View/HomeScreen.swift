@@ -42,7 +42,7 @@ struct HomeScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task {
-                loadDailyChallenge()
+                await loadDailyChallenge()
                 startAnimations()
             }
     }
@@ -88,7 +88,7 @@ private extension HomeScreen {
                 divider
                 coinIndicator
             }
-            .fixedSize()
+//            .fixedSize()
         }
         .buttonStyle(.glass)
     }
@@ -456,12 +456,12 @@ private extension HomeScreen {
         coordinator.cover(.mapFullScreen(continentFilter: name == "World map" ? nil : name))
     }
 
-    func loadDailyChallenge() {
+    func loadDailyChallenge() async {
         let service = DailyChallengeService(
             countryDataService: countryDataService,
             userID: xpService.currentUserID
         )
-        service.loadChallenge()
+        await service.loadChallenge()
         dailyChallengeService = service
     }
 

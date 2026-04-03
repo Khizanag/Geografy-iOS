@@ -18,7 +18,7 @@ public struct DailyChallengeScreen: View {
         contentView
             .navigationTitle("Daily Challenge")
             .navigationBarTitleDisplayMode(.inline)
-            .task { loadData() }
+            .task { await loadData() }
             .onAppear { startBlobAnimation() }
             .fullScreenCover(isPresented: $showSession) {
                 sessionCover
@@ -426,12 +426,12 @@ private extension DailyChallengeScreen {
 
 // MARK: - Actions
 private extension DailyChallengeScreen {
-    func loadData() {
+    func loadData() async {
         let challengeService = DailyChallengeService(
             countryDataService: countryDataService,
             userID: xpService.currentUserID
         )
-        challengeService.loadChallenge()
+        await challengeService.loadChallenge()
         service = challengeService
     }
 }

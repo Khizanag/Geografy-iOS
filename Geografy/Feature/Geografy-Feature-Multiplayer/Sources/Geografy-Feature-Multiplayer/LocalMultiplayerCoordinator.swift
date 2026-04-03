@@ -39,7 +39,7 @@ public final class LocalMultiplayerCoordinator {
     private var xpAwarded = false
 
     public init() {
-        countryDataService.loadCountries()
+        Task { await countryDataService.loadCountries() }
         sessionManager.onMessageReceived = { [weak self] _, message in
             self?.handleMessage(message)
         }

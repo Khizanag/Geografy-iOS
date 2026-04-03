@@ -22,8 +22,8 @@ public final class DailyChallengeService {
         self.userID = userID
     }
 
-    public func loadChallenge() {
-        countryDataService.loadCountries()
+    public func loadChallenge() async {
+        await countryDataService.loadCountries()
         let today = Date.now
         todayChallenge = generateChallenge(for: today)
         history = loadAllResults()

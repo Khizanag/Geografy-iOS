@@ -9,20 +9,26 @@ public final class CountryDataService {
 
     public init() {}
 
-    public func loadCountries() {
+    public func loadCountries() async {
         guard countries.isEmpty else { return }
+        guard let result = await Self.parseCountriesFile() else { return }
+        countries = result.countries
+        countriesByCode = result.byCode
+    }
+
+    nonisolated private static func parseCountriesFile() async -> (countries: [Country], byCode: [String: Country])? {
         guard let url = Bundle.main.url(forResource: "countries", withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
-            return
+            return nil
         }
-
         do {
             var decoded = try JSONDecoder().decode([Country].self, from: data)
             applySupplementaryCapitals(&decoded)
-            countries = decoded
-            countriesByCode = Dictionary(uniqueKeysWithValues: decoded.map { ($0.code, $0) })
+            let byCode = Dictionary(uniqueKeysWithValues: decoded.map { ($0.code, $0) })
+            return (decoded, byCode)
         } catch {
             print("Failed to decode countries: \(error)")
+            return nil
         }
     }
 
@@ -42,7 +48,7 @@ public final class CountryDataService {
 
 // MARK: - Helpers
 private extension CountryDataService {
-    func applySupplementaryCapitals(_ countries: inout [Country]) {
+    nonisolated static func applySupplementaryCapitals(_ countries: inout [Country]) {
         for index in countries.indices where countries[index].capitals == nil {
             if let supplementary = MultipleCapitalsData.data[countries[index].code] {
                 countries[index].capitals = supplementary

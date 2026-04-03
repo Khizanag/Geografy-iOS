@@ -9,8 +9,10 @@ import WidgetKit
 @MainActor
 final class WidgetDataBridge {
     private static let defaults: UserDefaults? = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
+    private static let reloadDebounceInterval: TimeInterval = 2
 
     private var countryDataService = CountryDataService()
+    private var reloadTask: Task<Void, Never>?
 
     func synchronize(
         streak: Int,
@@ -18,7 +20,7 @@ final class WidgetDataBridge {
         level: UserLevel,
         progressFraction: Double,
         visitedCount: Int
-    ) {
+    ) async {
         guard let defaults = Self.defaults else { return }
 
         defaults.set(streak, forKey: "widget_streak")
@@ -29,23 +31,35 @@ final class WidgetDataBridge {
         defaults.set(visitedCount, forKey: "widget_visited_count")
         defaults.set(197, forKey: "widget_total_countries")
 
-        writeCountryOfDayIfNeeded(to: defaults)
+        await writeCountryOfDayIfNeeded(to: defaults)
 
-        WidgetCenter.shared.reloadAllTimelines()
+        scheduleWidgetReload()
     }
 
-    func loadCountriesIfNeeded() {
+    func loadCountriesIfNeeded() async {
         if countryDataService.countries.isEmpty {
-            countryDataService.loadCountries()
+            await countryDataService.loadCountries()
+        }
+    }
+}
+
+// MARK: - Widget Reload Debounce
+private extension WidgetDataBridge {
+    func scheduleWidgetReload() {
+        reloadTask?.cancel()
+        reloadTask = Task {
+            try? await Task.sleep(for: .seconds(Self.reloadDebounceInterval))
+            guard !Task.isCancelled else { return }
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
 }
 
 // MARK: - Country of Day
 private extension WidgetDataBridge {
-    func writeCountryOfDayIfNeeded(to defaults: UserDefaults) {
+    func writeCountryOfDayIfNeeded(to defaults: UserDefaults) async {
         if countryDataService.countries.isEmpty {
-            countryDataService.loadCountries()
+            await countryDataService.loadCountries()
         }
 
         guard !countryDataService.countries.isEmpty else { return }

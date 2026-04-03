@@ -60,11 +60,10 @@ private extension PronunciationService {
     }
 
     func localeTag(for countryCode: String) -> String {
-        countryToLocale[countryCode] ?? "en-US"
+        Self.countryToLocale[countryCode] ?? "en-US"
     }
 
-    var countryToLocale: [String: String] {
-        [
+    static let countryToLocale: [String: String] = [
             "AF": "ps-AF",
             "AL": "sq-AL",
             "DZ": "ar-DZ",
@@ -267,8 +266,7 @@ private extension PronunciationService {
             "EH": "ar-MA",
             "PS": "ar-PS",
             "KR": "ko-KR",
-        ]
-    }
+    ]
 }
 
 // MARK: - SpeechDelegate
