@@ -13,6 +13,7 @@ public struct MapScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(GeoJSONCache.self) private var geoJSONCache
 
     public var continentFilter: String?
 
@@ -422,20 +423,10 @@ private extension MapScreen {
 // MARK: - Data Loading
 private extension MapScreen {
     func loadMapData() async {
-        // Capture on main thread before switching to background
-        let filter = continentFilter
-
-        // Move heavy I/O and parsing off the main thread so the loading
-        // indicator renders immediately
-        let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
-            guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
-                  let data = try? Data(contentsOf: url) else { return [] }
-            var parsed = GeoJSONParser.parse(data: data)
-            if let filter {
-                parsed = parsed.filter { $0.continent == filter }
-            }
-            return parsed
-        }.value
+        var shapes = await geoJSONCache.loadShapes()
+        if let continentFilter {
+            shapes = shapes.filter { $0.continent == continentFilter }
+        }
 
         guard !shapes.isEmpty else { return }
 
