@@ -20,8 +20,8 @@ extension QuizRegion: RegionSelectable {
         case .africa: "Africa"
         case .asia: "Asia"
         case .europe: "Europe"
-        case .northAmerica: "N. America"
-        case .southAmerica: "S. America"
+        case .northAmerica: "North America"
+        case .southAmerica: "South America"
         case .oceania: "Oceania"
         }
     }
