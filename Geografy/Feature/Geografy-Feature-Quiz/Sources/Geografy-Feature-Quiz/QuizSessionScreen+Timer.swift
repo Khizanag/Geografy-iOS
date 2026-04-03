@@ -68,10 +68,16 @@ extension QuizSessionScreen {
     public func finishArcade() {
         arcadeTimerCancellable?.cancel()
         timerCancellable?.cancel()
+        let totalTime: TimeInterval
+        if let duration = configuration.arcadeTimer.duration {
+            totalTime = duration - arcadeTimeRemaining
+        } else {
+            totalTime = Date().timeIntervalSince(startTime)
+        }
         let result = QuizResult(
             configuration: configuration,
             answers: answers,
-            totalTime: 60 - arcadeTimeRemaining,
+            totalTime: totalTime,
         )
         navigateToResult = result
     }

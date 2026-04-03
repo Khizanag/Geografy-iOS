@@ -9,6 +9,7 @@ public struct QuizConfiguration: Identifiable, Equatable, Hashable, Sendable {
     public let answerMode: QuizAnswerMode
     public let comparisonMetric: ComparisonMetric
     public let gameMode: QuizGameMode
+    public let arcadeTimer: ArcadeTimer
 
     public init(
         id: UUID = UUID(),
@@ -18,7 +19,8 @@ public struct QuizConfiguration: Identifiable, Equatable, Hashable, Sendable {
         questionCount: QuestionCount,
         answerMode: QuizAnswerMode,
         comparisonMetric: ComparisonMetric,
-        gameMode: QuizGameMode
+        gameMode: QuizGameMode,
+        arcadeTimer: ArcadeTimer = .sixty
     ) {
         self.id = id
         self.type = type
@@ -28,6 +30,7 @@ public struct QuizConfiguration: Identifiable, Equatable, Hashable, Sendable {
         self.answerMode = answerMode
         self.comparisonMetric = comparisonMetric
         self.gameMode = gameMode
+        self.arcadeTimer = arcadeTimer
     }
 }
 
@@ -100,7 +103,32 @@ public enum QuizGameMode: String, CaseIterable, Identifiable, Codable, Sendable 
     public var description: String {
         switch self {
         case .standard: "Fixed questions, your pace"
-        case .arcade: "60s timer, 3 lives, endless questions"
+        case .arcade: "3 lives, endless questions"
+        }
+    }
+}
+
+// MARK: - ArcadeTimer
+public enum ArcadeTimer: String, CaseIterable, Identifiable, Codable, Sendable {
+    case sixty = "60s"
+    case ninety = "90s"
+    case none = "No Timer"
+
+    public var id: String { rawValue }
+
+    public var icon: String {
+        switch self {
+        case .sixty: "timer"
+        case .ninety: "timer"
+        case .none: "infinity"
+        }
+    }
+
+    public var duration: TimeInterval? {
+        switch self {
+        case .sixty: 60
+        case .ninety: 90
+        case .none: nil
         }
     }
 }

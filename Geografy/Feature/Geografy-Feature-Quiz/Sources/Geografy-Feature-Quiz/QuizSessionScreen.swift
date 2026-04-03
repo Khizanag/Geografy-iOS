@@ -238,7 +238,9 @@ private extension QuizSessionScreen {
 
             Spacer()
 
-            QuizTimerBadge(seconds: Int(arcadeTimeRemaining), style: .compact)
+            if hasArcadeTimer {
+                QuizTimerBadge(seconds: Int(arcadeTimeRemaining), style: .compact)
+            }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
@@ -544,9 +546,11 @@ extension QuizSessionScreen {
         if isArcadeMode {
             arcadeLives = 3
             arcadeScore = 0
-            arcadeTimeRemaining = 60
+            arcadeTimeRemaining = configuration.arcadeTimer.duration ?? 0
             #if !os(tvOS)
-            startArcadeTimer()
+            if configuration.arcadeTimer.duration != nil {
+                startArcadeTimer()
+            }
             #endif
         } else {
             timerRemaining = configuration.difficulty.timerDuration
@@ -558,6 +562,10 @@ extension QuizSessionScreen {
 
     public var isArcadeMode: Bool {
         configuration.gameMode == .arcade
+    }
+
+    public var hasArcadeTimer: Bool {
+        configuration.arcadeTimer.duration != nil
     }
 }
 

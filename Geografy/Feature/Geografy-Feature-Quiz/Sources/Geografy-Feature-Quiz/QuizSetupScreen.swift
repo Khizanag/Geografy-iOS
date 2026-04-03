@@ -16,6 +16,7 @@ public struct QuizSetupScreen: View {
     @AppStorage("quiz_comparisonMetric") private var comparisonMetric: ComparisonMetric = .population
     @AppStorage("quiz_showAutocomplete") private var showAutocomplete = false
     @AppStorage("quiz_gameMode") private var selectedGameMode: QuizGameMode = .standard
+    @AppStorage("quiz_arcadeTimer") private var selectedArcadeTimer: ArcadeTimer = .sixty
 
     public init() {}
 
@@ -37,6 +38,11 @@ private extension QuizSetupScreen {
                 headerSection
 
                 gameModeSection
+
+                if selectedGameMode == .arcade {
+                    arcadeTimerSection
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                }
 
                 quizTypeSection
 
@@ -105,6 +111,41 @@ private extension QuizSetupScreen {
                     )
                     .lineLimit(2)
                     .minimumScaleFactor(0.7)
+            }
+            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
+            .background(
+                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    var arcadeTimerSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionTitle("Timer")
+
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(ArcadeTimer.allCases) { timer in
+                    arcadeTimerChip(timer)
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    func arcadeTimerChip(_ timer: ArcadeTimer) -> some View {
+        let isSelected = selectedArcadeTimer == timer
+        return Button { selectedArcadeTimer = timer } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: timer.icon)
+                    .font(DesignSystem.Font.caption)
+                Text(timer.rawValue)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
             }
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -421,6 +462,7 @@ private extension QuizSetupScreen {
             answerMode: effectiveAnswerMode,
             comparisonMetric: comparisonMetric,
             gameMode: selectedGameMode,
+            arcadeTimer: selectedArcadeTimer,
         )
     }
 }
