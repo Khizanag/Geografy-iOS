@@ -83,7 +83,7 @@ private extension QuizResultsScreen {
     }
 
     var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.lg) {
+        HStack(spacing: DesignSystem.Spacing.sm) {
             statItem(
                 icon: "checkmark.circle.fill",
                 value: "\(result.correctCount)",
@@ -100,6 +100,7 @@ private extension QuizResultsScreen {
                 color: DesignSystem.Color.warning
             )
         }
+        .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
@@ -114,8 +115,10 @@ private extension QuizResultsScreen {
                 Text(value)
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(DesignSystem.Spacing.md)
         }
         .accessibilityElement(children: .combine)
@@ -278,10 +281,11 @@ private extension QuizResultsScreen {
     }
 
     var formattedTime: String {
-        let minutes = Int(result.totalTime) / 60
-        let seconds = Int(result.totalTime) % 60
+        let totalSeconds = Int(result.totalTime)
+        let minutes = totalSeconds / 60
+        let seconds = totalSeconds % 60
         if minutes > 0 {
-            return "\(minutes)m \(seconds)s"
+            return String(format: "%d:%02d", minutes, seconds)
         }
         return "\(seconds)s"
     }
