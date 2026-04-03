@@ -19,7 +19,7 @@ public struct QuizSessionScreen: View {
     @State var showFeedback = false
     @State var timerRemaining: TimeInterval = 0
     @State var timerCancellable: AnyCancellable?
-    @State private var startTime = Date()
+    @State var startTime = Date()
     @State private var questionStartTime = Date()
     @State private var showQuitAlert = false
     @State private var showFlagPreview = false
