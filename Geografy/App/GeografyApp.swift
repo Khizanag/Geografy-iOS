@@ -89,12 +89,12 @@ private extension GeografyApp {
             .environment(travelService)
             .environment(worldBankService)
             .environment(xpService)
-            .task { bootstrap() }
+            .task { await bootstrap() }
             .task(priority: .utility) { await authService.validateOnLaunch() }
             .task(priority: .utility) { await subscriptionService.checkEntitlements() }
             .task(priority: .utility) { await authenticateGameCenter() }
             .task(priority: .background) { await setupNotificationsAndSpotlight() }
-            .task(priority: .background) { syncWidgetData() }
+            .task(priority: .background) { await syncWidgetData() }
             .onReceive(achievementService.unlockPublisher) { handleAchievementUnlock($0) }
             .onChange(of: authService.currentUserID) { _, id in handleUserSwitch(id) }
             .onChange(of: xpService.totalXP) { _, xp in handleXPChange(xp) }
@@ -105,8 +105,8 @@ private extension GeografyApp {
 
 // MARK: - Bootstrap
 private extension GeografyApp {
-    func bootstrap() {
-        countryDataService.loadCountries()
+    func bootstrap() async {
+        await countryDataService.loadCountries()
         favoritesService.fetchEntries()
         xpService.refreshXP()
         achievementService.refreshUnlocked()
@@ -136,13 +136,13 @@ private extension GeografyApp {
             NotificationService.scheduleStreakReminder()
             NotificationService.scheduleDailyChallengeReminder()
         }
-        SpotlightIndexer.indexCountries(countryDataService.countries)
+        SpotlightIndexer.indexCountriesIfNeeded(countryDataService.countries)
         #endif
     }
 
-    func syncWidgetData() {
-        widgetDataBridge.loadCountriesIfNeeded()
-        widgetDataBridge.synchronize(
+    func syncWidgetData() async {
+        await widgetDataBridge.loadCountriesIfNeeded()
+        await widgetDataBridge.synchronize(
             streak: streakService.currentStreak,
             totalXP: xpService.totalXP,
             level: xpService.currentLevel,
@@ -178,14 +178,14 @@ private extension GeografyApp {
                 newXP,
                 to: GameCenterService.LeaderboardID.totalXP
             )
+            await widgetDataBridge.synchronize(
+                streak: streakService.currentStreak,
+                totalXP: newXP,
+                level: xpService.currentLevel,
+                progressFraction: xpService.progressFraction,
+                visitedCount: travelService.visitedCodes.count
+            )
         }
-        widgetDataBridge.synchronize(
-            streak: streakService.currentStreak,
-            totalXP: newXP,
-            level: xpService.currentLevel,
-            progressFraction: xpService.progressFraction,
-            visitedCount: travelService.visitedCodes.count
-        )
     }
 
     func handleStreakChange(_ newStreak: Int) {
@@ -198,14 +198,14 @@ private extension GeografyApp {
                 longestStreak,
                 to: GameCenterService.LeaderboardID.longestStreak
             )
+            await widgetDataBridge.synchronize(
+                streak: newStreak,
+                totalXP: xpService.totalXP,
+                level: xpService.currentLevel,
+                progressFraction: xpService.progressFraction,
+                visitedCount: travelService.visitedCodes.count
+            )
         }
-        widgetDataBridge.synchronize(
-            streak: newStreak,
-            totalXP: xpService.totalXP,
-            level: xpService.currentLevel,
-            progressFraction: xpService.progressFraction,
-            visitedCount: travelService.visitedCodes.count
-        )
     }
 
     func handleVisitedChange(_ count: Int) {
@@ -214,14 +214,14 @@ private extension GeografyApp {
                 count,
                 to: GameCenterService.LeaderboardID.countriesVisited
             )
+            await widgetDataBridge.synchronize(
+                streak: streakService.currentStreak,
+                totalXP: xpService.totalXP,
+                level: xpService.currentLevel,
+                progressFraction: xpService.progressFraction,
+                visitedCount: count
+            )
         }
-        widgetDataBridge.synchronize(
-            streak: streakService.currentStreak,
-            totalXP: xpService.totalXP,
-            level: xpService.currentLevel,
-            progressFraction: xpService.progressFraction,
-            visitedCount: count
-        )
     }
 
     func handleScenePhaseChange(_ newPhase: ScenePhase) {

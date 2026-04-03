@@ -58,7 +58,7 @@ struct HomeScreen: View {
                 }
             }
         }
-        .task { countryDataService.loadCountries() }
+        .task { await countryDataService.loadCountries() }
     }
 }
 

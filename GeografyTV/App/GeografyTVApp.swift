@@ -58,7 +58,7 @@ struct GeografyTVApp: App {
                 .environment(pronunciationService)
                 .environment(geoJSONCache)
                 .task {
-                    countryDataService.loadCountries()
+                    await countryDataService.loadCountries()
                     gameCenterService.authenticatePlayer()
                     await subscriptionService.checkEntitlements()
                 }

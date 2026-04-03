@@ -3,6 +3,14 @@ import CoreSpotlight
 import Geografy_Core_Common
 
 public enum SpotlightIndexer {
+    private static let indexedCountKey = "spotlightIndexedCount"
+
+    public static func indexCountriesIfNeeded(_ countries: [Country]) {
+        let previousCount = UserDefaults.standard.integer(forKey: indexedCountKey)
+        guard previousCount != countries.count else { return }
+        indexCountries(countries)
+    }
+
     public static func indexCountries(_ countries: [Country]) {
         let items = countries.map { country in
             let attributes = CSSearchableItemAttributeSet(contentType: .content)
@@ -21,6 +29,7 @@ public enum SpotlightIndexer {
             )
         }
         CSSearchableIndex.default().indexSearchableItems(items)
+        UserDefaults.standard.set(countries.count, forKey: indexedCountKey)
     }
 
     public static func deleteAll() {
