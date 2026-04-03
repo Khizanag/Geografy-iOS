@@ -31,42 +31,8 @@ extension CountryDetailScreen {
         Button {
             hapticsService.impact(.light)
             navigateToOrganization(org)
-        // swiftlint:disable:next closure_body_length
         } label: {
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    orgRowIcon(org)
-
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(org.displayName)
-                            .font(DesignSystem.Font.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        if org.fullName != org.displayName {
-                            Text(org.fullName)
-                                .font(DesignSystem.Font.caption2)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        let memberCount = countryDataService.countries
-                            .filter { $0.organizations.contains(org.id) }.count
-                        if memberCount > 0 {
-                            Text("\(memberCount) members")
-                                .font(DesignSystem.Font.caption2)
-                                .foregroundStyle(org.highlightColor.opacity(0.8))
-                        }
-                    }
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .accessibilityHidden(true)
-                }
-                .padding(DesignSystem.Spacing.md)
-                .contentShape(Rectangle())
-            }
+            orgCardLabel(org, countryDataService: countryDataService)
         }
         .buttonStyle(PressButtonStyle())
         .contextMenu {
@@ -84,6 +50,46 @@ extension CountryDetailScreen {
             Text(org.displayName)
                 .font(DesignSystem.Font.headline)
                 .padding()
+        }
+    }
+
+    public func orgCardLabel(
+        _ org: Organization,
+        countryDataService: CountryDataService
+    ) -> some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                orgRowIcon(org)
+
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    Text(org.displayName)
+                        .font(DesignSystem.Font.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    if org.fullName != org.displayName {
+                        Text(org.fullName)
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    let memberCount = countryDataService.countries
+                        .filter { $0.organizations.contains(org.id) }.count
+                    if memberCount > 0 {
+                        Text("\(memberCount) members")
+                            .font(DesignSystem.Font.caption2)
+                            .foregroundStyle(org.highlightColor.opacity(0.8))
+                    }
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .accessibilityHidden(true)
+            }
+            .padding(DesignSystem.Spacing.md)
+            .contentShape(Rectangle())
         }
     }
 }
