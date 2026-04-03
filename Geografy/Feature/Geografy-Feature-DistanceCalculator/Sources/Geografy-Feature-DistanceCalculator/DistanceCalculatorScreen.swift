@@ -380,7 +380,7 @@ private extension DistanceCalculatorScreen {
         return formatter.string(from: NSNumber(value: value)) ?? "\(Int(value))"
     }
 
-    public struct ComparisonItem {
+    struct ComparisonItem {
         let icon: String
         let label: String
         let value: String

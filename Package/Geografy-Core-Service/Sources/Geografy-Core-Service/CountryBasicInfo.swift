@@ -35,7 +35,7 @@ private extension CountryBasicInfo {
         let capitalLongitude: Double
     }
 
-    nonisolated(unsafe) static let data: [String: Info] = {
+    static let data: [String: Info] = {
         guard let url = Bundle.module.url(
             forResource: "country_basic_info",
             withExtension: "json"

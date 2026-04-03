@@ -4,11 +4,11 @@ import SwiftUI
 
 // MARK: - Destination Content Provider
 public struct DestinationContentKey: EnvironmentKey {
-    public static let defaultValue: (@Sendable (Destination) -> AnyView)? = nil
+    public static let defaultValue: (@MainActor @Sendable (Destination) -> AnyView)? = nil
 }
 
 public extension EnvironmentValues {
-    var destinationContent: (@Sendable (Destination) -> AnyView)? {
+    var destinationContent: (@MainActor @Sendable (Destination) -> AnyView)? {
         get { self[DestinationContentKey.self] }
         set { self[DestinationContentKey.self] = newValue }
     }
@@ -16,9 +16,9 @@ public extension EnvironmentValues {
 
 public extension View {
     func destinationContentProvider(
-        @ViewBuilder _ provider: @Sendable @escaping (Destination) -> some View
+        @ViewBuilder _ provider: @MainActor @Sendable @escaping (Destination) -> some View
     ) -> some View {
-        environment(\.destinationContent, { @Sendable in AnyView(provider($0)) })
+        environment(\.destinationContent, { @MainActor @Sendable in AnyView(provider($0)) })
     }
 }
 
