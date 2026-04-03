@@ -228,15 +228,7 @@ private extension CountryListScreen {
     }
 
     func continentIcon(for continent: Country.Continent) -> String {
-        switch continent {
-        case .africa: "globe.europe.africa"
-        case .asia: "globe.asia.australia"
-        case .europe: "globe.europe.africa"
-        case .northAmerica: "globe.americas"
-        case .southAmerica: "globe.americas"
-        case .oceania: "globe.asia.australia"
-        case .antarctica: "snowflake"
-        }
+        continent.icon
     }
 }
 
