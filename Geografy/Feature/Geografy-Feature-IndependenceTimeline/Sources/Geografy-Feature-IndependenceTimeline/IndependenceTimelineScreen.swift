@@ -59,17 +59,21 @@ private extension IndependenceTimelineScreen {
 
     func eraChip(_ era: IndependenceEra) -> some View {
         let isSelected = selectedEra == era
-        return Text(era.rawValue)
-            .font(DesignSystem.Font.caption)
-            .fontWeight(isSelected ? .semibold : .regular)
-            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
-            .onTapGesture { selectedEra = era }
+        return Button {
+            selectedEra = era
+        } label: {
+            Text(era.rawValue)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(isSelected ? .semibold : .regular)
+                .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+                .padding(.horizontal, DesignSystem.Spacing.sm)
+                .padding(.vertical, DesignSystem.Spacing.xs)
+                .background(
+                    isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                    in: Capsule()
+                )
+        }
+        .buttonStyle(.plain)
     }
 
     var colonizerFilter: some View {

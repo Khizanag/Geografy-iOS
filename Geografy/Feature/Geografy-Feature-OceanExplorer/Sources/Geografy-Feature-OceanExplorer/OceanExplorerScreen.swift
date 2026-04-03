@@ -60,17 +60,18 @@ private extension OceanExplorerScreen {
 
     func oceanRow(_ ocean: Ocean) -> some View {
         let isExpanded = expandedOceanId == ocean.id
-        return CardView {
-            VStack(spacing: 0) {
-                summaryRow(ocean: ocean, isExpanded: isExpanded)
-                if isExpanded {
-                    detailContent(ocean: ocean)
-                }
-            }
-        }
-        .onTapGesture {
+        return Button {
             withAnimation(.spring(response: 0.35, dampingFraction: 0.82)) {
                 expandedOceanId = isExpanded ? nil : ocean.id
+            }
+        } label: {
+            CardView {
+                VStack(spacing: 0) {
+                    summaryRow(ocean: ocean, isExpanded: isExpanded)
+                    if isExpanded {
+                        detailContent(ocean: ocean)
+                    }
+                }
             }
         }
         .buttonStyle(PressButtonStyle())
