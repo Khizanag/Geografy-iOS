@@ -39,38 +39,9 @@ private extension LeaderboardScreen {
     }
 
     var statusCard: some View {
-        // swiftlint:disable:next closure_body_length
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(statusColor.opacity(0.15))
-                    .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
-                Image(systemName: statusIcon)
-                    .font(DesignSystem.Font.callout)
-                    .foregroundStyle(statusColor)
-            }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(statusTitle)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                if gameCenterService.isAuthenticated {
-                    Text(statusSubtitle)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                } else {
-                    Button {
-                        hapticsService.impact(.light)
-                        coordinator.sheet(.signIn)
-                    } label: {
-                        Text("Sign In")
-                            .font(DesignSystem.Font.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.accent)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
+            statusIconBadge
+            statusInfo
             Spacer()
             Circle()
                 .fill(statusColor)
@@ -80,60 +51,103 @@ private extension LeaderboardScreen {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
 
-    func leaderboardCard(_ info: LeaderboardInfo) -> some View {
-        // swiftlint:disable:next closure_body_length
-        CardView {
-            // swiftlint:disable:next closure_body_length
-            VStack(spacing: DesignSystem.Spacing.md) {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                            .fill(info.color.opacity(0.18))
-                            .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                        Image(systemName: info.icon)
-                            .font(DesignSystem.Font.title2)
-                            .foregroundStyle(info.color)
-                    }
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(info.title)
-                            .font(DesignSystem.Font.headline)
-                            .fontWeight(.bold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text(info.subtitle)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                            .lineLimit(2)
-                    }
-                    Spacer()
-                }
+    var statusIconBadge: some View {
+        ZStack {
+            Circle()
+                .fill(statusColor.opacity(0.15))
+                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
+            Image(systemName: statusIcon)
+                .font(DesignSystem.Font.callout)
+                .foregroundStyle(statusColor)
+        }
+    }
+
+    @ViewBuilder
+    var statusInfo: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(statusTitle)
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            if gameCenterService.isAuthenticated {
+                Text(statusSubtitle)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            } else {
                 Button {
                     hapticsService.impact(.light)
-                    GKAccessPoint.shared.trigger(
-                        leaderboardID: info.id,
-                        playerScope: .global,
-                        timeScope: .allTime
-                    ) {}
+                    coordinator.sheet(.signIn)
                 } label: {
-                    HStack(spacing: DesignSystem.Spacing.xs) {
-                        Image(systemName: "list.number")
-                            .font(DesignSystem.Font.caption)
-                        Text("View Rankings")
-                            .font(DesignSystem.Font.subheadline)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundStyle(info.color)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.xs)
-                    .background(
-                        info.color.opacity(0.12),
-                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                    )
+                    Text("Sign In")
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.accent)
                 }
-                .disabled(!gameCenterService.isAuthenticated)
-                .opacity(gameCenterService.isAuthenticated ? 1 : 0.4)
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    func leaderboardCard(_ info: LeaderboardInfo) -> some View {
+        CardView {
+            VStack(spacing: DesignSystem.Spacing.md) {
+                leaderboardCardHeader(info)
+                leaderboardCardAction(info)
             }
             .padding(DesignSystem.Spacing.md)
         }
+    }
+
+    func leaderboardCardHeader(_ info: LeaderboardInfo) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    .fill(info.color.opacity(0.18))
+                    .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
+                Image(systemName: info.icon)
+                    .font(DesignSystem.Font.title2)
+                    .foregroundStyle(info.color)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text(info.title)
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(info.subtitle)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(2)
+            }
+            Spacer()
+        }
+    }
+
+    func leaderboardCardAction(_ info: LeaderboardInfo) -> some View {
+        Button {
+            hapticsService.impact(.light)
+            GKAccessPoint.shared.trigger(
+                leaderboardID: info.id,
+                playerScope: .global,
+                timeScope: .allTime
+            ) {}
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "list.number")
+                    .font(DesignSystem.Font.caption)
+                Text("View Rankings")
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+            }
+            .foregroundStyle(info.color)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.xs)
+            .background(
+                info.color.opacity(0.12),
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            )
+        }
+        .disabled(!gameCenterService.isAuthenticated)
+        .opacity(gameCenterService.isAuthenticated ? 1 : 0.4)
     }
 
     var openGameCenterButton: some View {

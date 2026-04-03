@@ -8,41 +8,8 @@ extension ProfileScreen {
         Button {
             hapticsService.impact(.medium)
             coordinator.sheet(.signIn)
-        // swiftlint:disable:next closure_body_length
         } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.warning.opacity(0.15))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "person.crop.circle.badge.exclamationmark.fill")
-                        .font(DesignSystem.Font.iconSmall)
-                        .foregroundStyle(DesignSystem.Color.warning)
-                }
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("Save your progress")
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("Create an account — your XP & achievements will be linked")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .lineLimit(2)
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.warning)
-            }
-            .padding(DesignSystem.Spacing.md)
-            .background(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .fill(DesignSystem.Color.warning.opacity(0.08))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                            .strokeBorder(DesignSystem.Color.warning.opacity(0.30), lineWidth: 1)
-                    )
-            )
+            guestBannerLabel
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -73,6 +40,45 @@ extension ProfileScreen {
 
     public var displayName: String {
         authService.currentProfile?.displayName ?? "Explorer"
+    }
+}
+
+// MARK: - Guest Banner Label
+private extension ProfileScreen {
+    var guestBannerLabel: some View {
+        HStack(spacing: DesignSystem.Spacing.md) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.warning.opacity(0.15))
+                    .frame(width: 44, height: 44)
+                Image(systemName: "person.crop.circle.badge.exclamationmark.fill")
+                    .font(DesignSystem.Font.iconSmall)
+                    .foregroundStyle(DesignSystem.Color.warning)
+            }
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Save your progress")
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Create an account — your XP & achievements will be linked")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(2)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.warning)
+        }
+        .padding(DesignSystem.Spacing.md)
+        .background(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .fill(DesignSystem.Color.warning.opacity(0.08))
+                .overlay(
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                        .strokeBorder(DesignSystem.Color.warning.opacity(0.30), lineWidth: 1)
+                )
+        )
     }
 }
 
