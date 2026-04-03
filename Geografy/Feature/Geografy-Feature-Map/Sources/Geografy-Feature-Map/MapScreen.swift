@@ -240,9 +240,9 @@ private extension MapScreen {
                     height: mapState.lastOffset.height + value.translation.height
                 )
                 clampVerticalOffset()
+                wrapHorizontalOffset()
             }
             .onEnded { _ in
-                wrapHorizontalOffset()
                 mapState.lastOffset = mapState.offset
             }
     }
@@ -273,8 +273,10 @@ private extension MapScreen {
 
         if mapState.offset.width > halfWidth {
             mapState.offset.width -= mapWidthScaled
+            mapState.lastOffset.width -= mapWidthScaled
         } else if mapState.offset.width < -halfWidth {
             mapState.offset.width += mapWidthScaled
+            mapState.lastOffset.width += mapWidthScaled
         }
     }
 
