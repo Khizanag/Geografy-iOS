@@ -24,6 +24,7 @@ struct QuizSessionScreen: View {
     @State private var showResult = false
     @State private var showQuitConfirmation = false
     @State private var hasGameController = false
+    @State private var controllerObservers: [any NSObjectProtocol] = []
 
     var body: some View {
         ZStack {
@@ -296,7 +297,7 @@ private extension QuizSessionScreen {
     func setupGameController() {
         hasGameController = GCController.controllers().contains { $0.extendedGamepad != nil }
 
-        NotificationCenter.default.addObserver(
+        let connectToken = NotificationCenter.default.addObserver(
             forName: .GCControllerDidConnect,
             object: nil,
             queue: .main
@@ -306,8 +307,9 @@ private extension QuizSessionScreen {
                 bindControllerButtons()
             }
         }
+        controllerObservers.append(connectToken)
 
-        NotificationCenter.default.addObserver(
+        let disconnectToken = NotificationCenter.default.addObserver(
             forName: .GCControllerDidDisconnect,
             object: nil,
             queue: .main
@@ -316,13 +318,16 @@ private extension QuizSessionScreen {
                 hasGameController = GCController.controllers().contains { $0.extendedGamepad != nil }
             }
         }
+        controllerObservers.append(disconnectToken)
 
         bindControllerButtons()
     }
 
     func teardownGameController() {
-        NotificationCenter.default.removeObserver(self, name: .GCControllerDidConnect, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .GCControllerDidDisconnect, object: nil)
+        for observer in controllerObservers {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        controllerObservers.removeAll()
 
         for controller in GCController.controllers() {
             guard let gamepad = controller.extendedGamepad else { continue }
