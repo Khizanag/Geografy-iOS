@@ -12,13 +12,12 @@ public struct PaywallScreen: View {
     @State private var isProcessing = false
     @State private var appeared = false
     @State private var globePulse = false
-    @State private var blobAnimating = false
 
     public init() {}
 
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
+            .background { AmbientBlobsView(.paywall) }
             .background { backgroundGradient }
             .navigationTitle("Geografy Premium")
             #if !os(tvOS)
@@ -31,7 +30,6 @@ public struct PaywallScreen: View {
             .onAppear {
                 appeared = true
                 globePulse = true
-                blobAnimating = true
             }
     }
 }
@@ -322,7 +320,7 @@ private extension PaywallScreen {
                 if isProcessing {
                     ProgressView()
                         .progressViewStyle(.circular)
-                        .tint(.white)
+                        .tint(DesignSystem.Color.onAccent)
                 } else {
                     Image(systemName: "crown.fill")
                         .font(DesignSystem.Font.subheadline)
@@ -330,7 +328,7 @@ private extension PaywallScreen {
                 Text(isProcessing ? "Processing…" : subscribeButtonTitle)
                     .font(DesignSystem.Font.headline)
                     .fontWeight(.bold)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DesignSystem.Color.onAccent)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm + 2)
@@ -383,68 +381,12 @@ private extension PaywallScreen {
     var backgroundGradient: some View {
         LinearGradient(
             colors: [
-                Color(hex: "0B1320"),
+                DesignSystem.Color.background.opacity(0.7),
                 DesignSystem.Color.background,
             ],
             startPoint: .top,
             endPoint: .bottom
         )
         .ignoresSafeArea()
-    }
-
-    var ambientBlobs: some View {
-        ZStack {
-            accentBlob
-            blueBlob
-            indigoBlob
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(
-            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
-            value: blobAnimating
-        )
-    }
-
-    var accentBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.20), .clear],
-                    center: .center, startRadius: 0, endRadius: 200
-                )
-            )
-            .frame(width: 400, height: 300)
-            .blur(radius: 44)
-            .offset(x: -60, y: -200)
-            .scaleEffect(blobAnimating ? 1.10 : 0.90)
-    }
-
-    var blueBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
-                    center: .center, startRadius: 0, endRadius: 180
-                )
-            )
-            .frame(width: 360, height: 280)
-            .blur(radius: 48)
-            .offset(x: 140, y: 100)
-            .scaleEffect(blobAnimating ? 0.88 : 1.10)
-    }
-
-    var indigoBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.10), .clear],
-                    center: .center, startRadius: 0, endRadius: 160
-                )
-            )
-            .frame(width: 320, height: 260)
-            .blur(radius: 40)
-            .offset(x: -100, y: 600)
-            .scaleEffect(blobAnimating ? 1.06 : 0.94)
     }
 }

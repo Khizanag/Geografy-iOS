@@ -41,7 +41,7 @@ private extension LevelUpSheet {
                     .opacity(particlesVisible ? 1 : 0)
                     .animation(.easeOut(duration: 0.3).delay(0.15), value: particlesVisible)
             }
-            .background(Color.black.opacity(0.88).ignoresSafeArea())
+            .background(DesignSystem.Color.overlayScrim.ignoresSafeArea())
     }
 
     var mainContent: some View {
@@ -60,7 +60,7 @@ private extension LevelUpSheet {
                 .font(DesignSystem.IconSize.xLarge.weight(.black))
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [.yellow, .orange],
+                        colors: [DesignSystem.Color.warning, DesignSystem.Color.orange],
                         startPoint: .leading,
                         endPoint: .trailing
                     )
@@ -116,7 +116,16 @@ private extension LevelUpSheet {
 // MARK: - Helpers
 private extension LevelUpSheet {
     var sparkleColors: [Color] {
-        [.yellow, .orange, .pink, DesignSystem.Color.purple, DesignSystem.Color.blue, .green, .cyan, .red]
+        [
+            DesignSystem.Color.warning,
+            DesignSystem.Color.orange,
+            .pink,
+            DesignSystem.Color.purple,
+            DesignSystem.Color.blue,
+            DesignSystem.Color.success,
+            .cyan,
+            DesignSystem.Color.error,
+        ]
     }
 }
 

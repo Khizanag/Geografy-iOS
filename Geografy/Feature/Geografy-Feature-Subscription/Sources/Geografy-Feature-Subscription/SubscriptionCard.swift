@@ -56,7 +56,7 @@ private extension SubscriptionCard {
             .overlay {
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
                     .strokeBorder(
-                        isSelected ? DesignSystem.Color.accent : Color.white.opacity(0.10),
+                        isSelected ? DesignSystem.Color.accent : DesignSystem.Color.dividerSubtle,
                         lineWidth: isSelected ? 2 : 1
                     )
             }
@@ -71,7 +71,7 @@ private extension SubscriptionCard {
         if let badge {
             Text(badge)
                 .font(DesignSystem.Font.micro.bold())
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
                 .padding(.vertical, 3)
                 .background(badgeColor, in: Capsule())

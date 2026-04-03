@@ -22,14 +22,13 @@ public struct ProfileScreen: View {
     @State var recentQuizzes: [QuizHistoryRecord] = []
     @State var statistics: UserStatistics?
     @State var showDeleteAlert = false
-    @State private var blobAnimating = false
     @State private var appeared = false
 
     public init() {}
 
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
+            .background { AmbientBlobsView(.rich) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.large)
@@ -84,68 +83,6 @@ private extension ProfileScreen {
         .padding(.vertical, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.xxl)
         .readableContentWidth()
-    }
-}
-
-// MARK: - Background
-private extension ProfileScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            accentBlob
-            indigoBlob
-            purpleBlob
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(.easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
-    }
-
-    var accentBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 220
-                )
-            )
-            .frame(width: 440, height: 320)
-            .blur(radius: 32)
-            .offset(x: -80, y: -80)
-            .scaleEffect(blobAnimating ? 1.10 : 0.90)
-    }
-
-    var indigoBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                )
-            )
-            .frame(width: 360, height: 300)
-            .blur(radius: 40)
-            .offset(x: 140, y: 80)
-            .scaleEffect(blobAnimating ? 0.88 : 1.10)
-    }
-
-    var purpleBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.purple.opacity(0.12), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                )
-            )
-            .frame(width: 320, height: 260)
-            .blur(radius: 36)
-            .offset(x: -100, y: 600)
-            .scaleEffect(blobAnimating ? 1.06 : 0.94)
     }
 }
 
@@ -209,11 +146,9 @@ private extension ProfileScreen {
     func handleAppear() {
         fetchQuizData()
         guard !reduceMotion else {
-            blobAnimating = true
             appeared = true
             return
         }
-        blobAnimating = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             appeared = true
         }

@@ -20,7 +20,7 @@ private extension FeatureComparisonSection {
         VStack(spacing: DesignSystem.Spacing.md) {
             columnHeaders
             Divider()
-                .background(Color.white.opacity(0.1))
+                .background(DesignSystem.Color.dividerSubtle)
             featureRows
         }
     }
@@ -72,7 +72,7 @@ private extension FeatureComparisonSection {
     func checkIcon(included: Bool) -> some View {
         Image(systemName: included ? "checkmark.circle.fill" : "xmark.circle.fill")
             .font(DesignSystem.Font.callout)
-            .foregroundStyle(included ? DesignSystem.Color.success : Color.white.opacity(0.2))
+            .foregroundStyle(included ? DesignSystem.Color.success : DesignSystem.Color.textTertiary)
     }
 }
 

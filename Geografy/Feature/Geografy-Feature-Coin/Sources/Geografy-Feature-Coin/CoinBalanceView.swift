@@ -52,8 +52,8 @@ private extension CoinBalanceView {
                 )
             )
             .frame(
-                width: DesignSystem.Size.hero,
-                height: DesignSystem.Size.hero
+                width: 120,
+                height: 120
             )
             .scaleEffect(glowScale)
     }

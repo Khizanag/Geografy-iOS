@@ -246,7 +246,7 @@ private extension QuizSessionScreen {
     }
 
     var streakBadge: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "flame.fill")
                 .font(DesignSystem.Font.roundedNano)
             Text("\(currentStreak)×")

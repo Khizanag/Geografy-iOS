@@ -144,7 +144,7 @@ private extension HomeScreen {
                     .animation(.easeInOut(duration: 0.5), value: xpService.progressFraction)
             }
         }
-        .frame(width: DesignSystem.Size.hero, height: DesignSystem.Size.xs)
+        .frame(width: 120, height: DesignSystem.Size.xs)
     }
 
     var divider: some View {
