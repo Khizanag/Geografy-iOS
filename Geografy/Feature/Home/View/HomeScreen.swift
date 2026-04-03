@@ -505,10 +505,7 @@ private extension View {
     func feedSection(appeared: Bool, delay: Double) -> some View {
         self
             .opacity(appeared ? 1 : 0)
-            .transaction { transaction in
-                if appeared {
-                    transaction.animation = .easeOut(duration: 0.4).delay(delay)
-                }
-            }
+            .offset(y: appeared ? 0 : 20)
+            .animation(.easeOut(duration: 0.4).delay(delay), value: appeared)
     }
 }
