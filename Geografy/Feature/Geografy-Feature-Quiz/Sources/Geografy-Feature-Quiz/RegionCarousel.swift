@@ -37,7 +37,7 @@ private extension RegionCarousel {
             let sidePadding = (geometry.size.width - cardWidth) / 2
 
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: DesignSystem.Spacing.sm) {
+                HStack(spacing: DesignSystem.Spacing.sm) {
                     ForEach(QuizRegion.allCases) { region in
                         RegionCard(
                             region: region,

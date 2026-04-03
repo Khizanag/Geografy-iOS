@@ -62,6 +62,7 @@ private extension QuizSetupScreen {
             }
             .animation(.easeInOut(duration: 0.3), value: selectedType)
             .animation(.easeInOut(duration: 0.3), value: selectedGameMode)
+            .animation(.easeInOut(duration: 0.3), value: answerMode)
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
@@ -80,6 +81,7 @@ private extension QuizSetupScreen {
                     gameModeChip(mode)
                 }
             }
+            .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -96,12 +98,16 @@ private extension QuizSetupScreen {
 
                 Text(mode.description)
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .foregroundStyle(
+                        isSelected
+                            ? DesignSystem.Color.onAccent.opacity(0.75)
+                            : DesignSystem.Color.textSecondary
+                    )
                     .lineLimit(2)
                     .minimumScaleFactor(0.7)
             }
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .background(
@@ -175,10 +181,10 @@ private extension QuizSetupScreen {
                     modeChip(mode)
                 }
             }
+            .fixedSize(horizontal: false, vertical: true)
             answerModeNote
-                .animation(.easeInOut(duration: 0.2), value: answerMode)
-                .animation(.easeInOut(duration: 0.2), value: selectedType)
         }
+        .animation(.easeInOut(duration: 0.3), value: answerMode)
     }
 
     func modeChip(_ mode: QuizAnswerMode) -> some View {
@@ -192,8 +198,9 @@ private extension QuizSetupScreen {
                     .fontWeight(.semibold)
             }
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
+            .padding(.horizontal, DesignSystem.Spacing.xs)
             .background(
                 isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
@@ -205,28 +212,32 @@ private extension QuizSetupScreen {
     @ViewBuilder
     var answerModeNote: some View {
         if answerMode == .typing {
-            answerModeInfoRow(
-                icon: "star.fill",
-                text: "1.5× XP bonus for typing answers correctly"
-            )
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+                answerModeInfoRow(
+                    icon: "star.fill",
+                    text: "1.5× XP bonus for typing answers correctly"
+                )
 
-            Toggle(isOn: $showAutocomplete) {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "text.magnifyingglass")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                Toggle(isOn: $showAutocomplete) {
+                    HStack(spacing: DesignSystem.Spacing.xs) {
+                        Image(systemName: "text.magnifyingglass")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.accent)
 
-                    Text("Show suggestions")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text("Show suggestions")
+                            .font(DesignSystem.Font.subheadline)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                    }
                 }
+                .tint(DesignSystem.Color.accent)
             }
-            .tint(DesignSystem.Color.accent)
+            .transition(.opacity.combined(with: .move(edge: .top)))
         } else if answerMode == .spellingBee {
             answerModeInfoRow(
                 icon: "textformat.abc",
                 text: "Spell the answer letter by letter — 2× XP bonus"
             )
+            .transition(.opacity.combined(with: .move(edge: .top)))
         }
     }
 
@@ -285,7 +296,6 @@ private extension QuizSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Region")
-                .padding(.horizontal, DesignSystem.Spacing.md)
             #if !os(tvOS)
             RegionCarousel(selectedRegion: $selectedRegion)
             #endif
