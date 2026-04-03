@@ -46,92 +46,106 @@ public struct ProfileScreen: View {
 // MARK: - Scroll Content
 private extension ProfileScreen {
     var scrollContent: some View {
-        // swiftlint:disable:next closure_body_length
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                if authService.isGuest {
-                    guestBanner
-                        .profileSection(appeared: appeared, delay: 0.03)
-                }
-                headerSection
-                    .profileSection(appeared: appeared, delay: 0.06)
-                levelProgressSection
-                    .profileSection(appeared: appeared, delay: 0.10)
-                statsGridSection
-                    .profileSection(appeared: appeared, delay: 0.14)
-                weeklyActivitySection
-                    .profileSection(appeared: appeared, delay: 0.16)
-                achievementsPreviewSection
-                    .profileSection(appeared: appeared, delay: 0.20)
-                badgeShowcaseSection
-                    .profileSection(appeared: appeared, delay: 0.22)
-                if !recentQuizzes.isEmpty {
-                    quizHistorySection
-                        .profileSection(appeared: appeared, delay: 0.26)
-                }
-                if !subscriptionService.isPremium {
-                    premiumBannerSection
-                        .profileSection(appeared: appeared, delay: 0.30)
-                }
-                accountSection
-                    .profileSection(appeared: appeared, delay: 0.34)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-            .readableContentWidth()
+            scrollInnerContent
         }
+    }
+
+    var scrollInnerContent: some View {
+        VStack(spacing: DesignSystem.Spacing.xl) {
+            if authService.isGuest {
+                guestBanner
+                    .profileSection(appeared: appeared, delay: 0.03)
+            }
+            headerSection
+                .profileSection(appeared: appeared, delay: 0.06)
+            levelProgressSection
+                .profileSection(appeared: appeared, delay: 0.10)
+            statsGridSection
+                .profileSection(appeared: appeared, delay: 0.14)
+            weeklyActivitySection
+                .profileSection(appeared: appeared, delay: 0.16)
+            achievementsPreviewSection
+                .profileSection(appeared: appeared, delay: 0.20)
+            badgeShowcaseSection
+                .profileSection(appeared: appeared, delay: 0.22)
+            if !recentQuizzes.isEmpty {
+                quizHistorySection
+                    .profileSection(appeared: appeared, delay: 0.26)
+            }
+            if !subscriptionService.isPremium {
+                premiumBannerSection
+                    .profileSection(appeared: appeared, delay: 0.30)
+            }
+            accountSection
+                .profileSection(appeared: appeared, delay: 0.34)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.xxl)
+        .readableContentWidth()
     }
 }
 
 // MARK: - Background
 private extension ProfileScreen {
     var ambientBlobs: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 220
-                    )
-                )
-                .frame(width: 440, height: 320)
-                .blur(radius: 32)
-                .offset(x: -80, y: -80)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 40)
-                .offset(x: 140, y: 80)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.purple.opacity(0.12), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260)
-                .blur(radius: 36)
-                .offset(x: -100, y: 600)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
+            accentBlob
+            indigoBlob
+            purpleBlob
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
         .animation(.easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+    }
+
+    var accentBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.accent.opacity(0.22), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 220
+                )
+            )
+            .frame(width: 440, height: 320)
+            .blur(radius: 32)
+            .offset(x: -80, y: -80)
+            .scaleEffect(blobAnimating ? 1.10 : 0.90)
+    }
+
+    var indigoBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.indigo.opacity(0.18), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 180
+                )
+            )
+            .frame(width: 360, height: 300)
+            .blur(radius: 40)
+            .offset(x: 140, y: 80)
+            .scaleEffect(blobAnimating ? 0.88 : 1.10)
+    }
+
+    var purpleBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.purple.opacity(0.12), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 160
+                )
+            )
+            .frame(width: 320, height: 260)
+            .blur(radius: 36)
+            .offset(x: -100, y: 600)
+            .scaleEffect(blobAnimating ? 1.06 : 0.94)
     }
 }
 

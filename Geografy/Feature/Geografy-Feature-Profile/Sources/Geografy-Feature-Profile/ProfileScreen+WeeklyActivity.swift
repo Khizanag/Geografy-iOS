@@ -61,33 +61,8 @@ private extension ProfileScreen {
             calendar.startOfDay(for: date)
         )
 
-        // swiftlint:disable:next closure_body_length
         return VStack(spacing: DesignSystem.Spacing.xs) {
-            ZStack {
-                Circle()
-                    .fill(
-                        isActive
-                            ? DesignSystem.Color.success.opacity(0.18)
-                            : DesignSystem.Color.cardBackgroundHighlighted
-                    )
-                    .frame(width: 32, height: 32)
-
-                if isActive {
-                    Image(systemName: isToday ? "flame.fill" : "checkmark")
-                        .font(DesignSystem.Font.system(size: isToday ? 15 : 12, weight: .bold))
-                        .foregroundStyle(DesignSystem.Color.success)
-                } else {
-                    Circle()
-                        .fill(DesignSystem.Color.textTertiary.opacity(0.3))
-                        .frame(width: 8, height: 8)
-                }
-
-                if isToday {
-                    Circle()
-                        .strokeBorder(DesignSystem.Color.accent, lineWidth: 2)
-                        .frame(width: 32, height: 32)
-                }
-            }
+            weekdayIndicator(isToday: isToday, isActive: isActive)
 
             Text(shortWeekdaySymbol(for: date))
                 .font(DesignSystem.Font.caption2)
@@ -97,6 +72,34 @@ private extension ProfileScreen {
                         ? DesignSystem.Color.accent
                         : DesignSystem.Color.textTertiary
                 )
+        }
+    }
+
+    func weekdayIndicator(isToday: Bool, isActive: Bool) -> some View {
+        ZStack {
+            Circle()
+                .fill(
+                    isActive
+                        ? DesignSystem.Color.success.opacity(0.18)
+                        : DesignSystem.Color.cardBackgroundHighlighted
+                )
+                .frame(width: 32, height: 32)
+
+            if isActive {
+                Image(systemName: isToday ? "flame.fill" : "checkmark")
+                    .font(DesignSystem.Font.system(size: isToday ? 15 : 12, weight: .bold))
+                    .foregroundStyle(DesignSystem.Color.success)
+            } else {
+                Circle()
+                    .fill(DesignSystem.Color.textTertiary.opacity(0.3))
+                    .frame(width: 8, height: 8)
+            }
+
+            if isToday {
+                Circle()
+                    .strokeBorder(DesignSystem.Color.accent, lineWidth: 2)
+                    .frame(width: 32, height: 32)
+            }
         }
     }
 

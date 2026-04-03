@@ -5,69 +5,79 @@ import SwiftUI
 // MARK: - Stats Grid
 extension ProfileScreen {
     public var statsGridSection: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Statistics")
-            LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-                    GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-                    GridItem(.flexible()),
-                ],
-                spacing: DesignSystem.Spacing.sm
-            // swiftlint:disable:next closure_body_length
-            ) {
-                accuracyCard
-                statCard(
-                    icon: "checkmark.seal.fill",
-                    color: DesignSystem.Color.accent,
-                    value: "\(statistics?.perfectScores ?? 0)",
-                    label: "Perfect"
-                )
-                statCard(
-                    icon: "flame.fill",
-                    color: DesignSystem.Color.error,
-                    value: "\(statistics?.longestStreak ?? 0)",
-                    label: "Best Streak"
-                )
-                statCard(
-                    icon: "gamecontroller.fill",
-                    color: DesignSystem.Color.purple,
-                    value: "\(statistics?.totalQuizzes ?? 0)",
-                    label: "Quizzes"
-                )
-                statCard(
-                    icon: "globe.americas.fill",
-                    color: DesignSystem.Color.blue,
-                    value: "\(statistics?.countriesExplored ?? 0)",
-                    label: "Explored"
-                )
-                statCard(
-                    icon: "airplane.departure",
-                    color: DesignSystem.Color.success,
-                    value: "\(statistics?.countriesVisited ?? 0)",
-                    label: "Visited"
-                )
-                statCard(
-                    icon: "star.fill",
-                    color: DesignSystem.Color.warning,
-                    value: "\(achievementService.unlockedAchievements.count)",
-                    label: "Badges"
-                )
-                statCard(
-                    icon: "bolt.fill",
-                    color: DesignSystem.Color.orange,
-                    value: "\(streakService.currentStreak)",
-                    label: "Streak"
-                )
-                statCard(
-                    icon: "calendar.badge.checkmark",
-                    color: DesignSystem.Color.indigo,
-                    value: statistics?.formattedMemberSince ?? "—",
-                    label: "Member"
-                )
-            }
+            statsGrid
         }
+    }
+}
+
+// MARK: - Stats Grid
+private extension ProfileScreen {
+    var statsGrid: some View {
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+                GridItem(.flexible()),
+            ],
+            spacing: DesignSystem.Spacing.sm
+        ) {
+            statsGridItems
+        }
+    }
+
+    @ViewBuilder
+    var statsGridItems: some View {
+        accuracyCard
+        statCard(
+            icon: "checkmark.seal.fill",
+            color: DesignSystem.Color.accent,
+            value: "\(statistics?.perfectScores ?? 0)",
+            label: "Perfect"
+        )
+        statCard(
+            icon: "flame.fill",
+            color: DesignSystem.Color.error,
+            value: "\(statistics?.longestStreak ?? 0)",
+            label: "Best Streak"
+        )
+        statCard(
+            icon: "gamecontroller.fill",
+            color: DesignSystem.Color.purple,
+            value: "\(statistics?.totalQuizzes ?? 0)",
+            label: "Quizzes"
+        )
+        statCard(
+            icon: "globe.americas.fill",
+            color: DesignSystem.Color.blue,
+            value: "\(statistics?.countriesExplored ?? 0)",
+            label: "Explored"
+        )
+        statCard(
+            icon: "airplane.departure",
+            color: DesignSystem.Color.success,
+            value: "\(statistics?.countriesVisited ?? 0)",
+            label: "Visited"
+        )
+        statCard(
+            icon: "star.fill",
+            color: DesignSystem.Color.warning,
+            value: "\(achievementService.unlockedAchievements.count)",
+            label: "Badges"
+        )
+        statCard(
+            icon: "bolt.fill",
+            color: DesignSystem.Color.orange,
+            value: "\(streakService.currentStreak)",
+            label: "Streak"
+        )
+        statCard(
+            icon: "calendar.badge.checkmark",
+            color: DesignSystem.Color.indigo,
+            value: statistics?.formattedMemberSince ?? "—",
+            label: "Member"
+        )
     }
 }
 

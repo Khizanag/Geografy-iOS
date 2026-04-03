@@ -69,47 +69,59 @@ private extension TerritorialDisputesScreen {
     }
 
     var introCard: some View {
-        // swiftlint:disable:next closure_body_length
         CardView {
-            // swiftlint:disable:next closure_body_length
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    ZStack {
-                        Circle()
-                            .fill(DesignSystem.Color.warning.opacity(0.15))
-                            .frame(width: 40, height: 40)
-                        Image(systemName: "globe.europe.africa.fill")
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.warning)
-                    }
-                    Text("About This Setting")
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                }
-
-                Text(disclaimerText)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "info.circle.fill")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.accent.opacity(0.8))
-                    Text("Note: Abkhazia and South Ossetia are treated as Georgia.")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                .padding(DesignSystem.Spacing.xs)
-                .background(
-                    DesignSystem.Color.accent.opacity(0.08),
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                )
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(DesignSystem.Spacing.md)
+            introCardContent
         }
+    }
+
+    var introCardContent: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            introCardHeader
+            introCardDisclaimer
+            introCardNote
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(DesignSystem.Spacing.md)
+    }
+
+    var introCardHeader: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.warning.opacity(0.15))
+                    .frame(width: 40, height: 40)
+                Image(systemName: "globe.europe.africa.fill")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.warning)
+            }
+            Text("About This Setting")
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
+    }
+
+    var introCardDisclaimer: some View {
+        Text(disclaimerText)
+            .font(DesignSystem.Font.caption)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    var introCardNote: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: "info.circle.fill")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.accent.opacity(0.8))
+            Text("Note: Abkhazia and South Ossetia are treated as Georgia.")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .padding(DesignSystem.Spacing.xs)
+        .background(
+            DesignSystem.Color.accent.opacity(0.08),
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+        )
     }
 
     func regionSection(_ region: TerritorialDispute.Region, disputes: [TerritorialDispute]) -> some View {

@@ -66,46 +66,8 @@ private extension ProfileScreen {
 // MARK: - Premium Banner
 extension ProfileScreen {
     public var premiumBannerSection: some View {
-        // swiftlint:disable:next closure_body_length
         Button { coordinator.sheet(.paywall) } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.accent.opacity(0.15))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "crown.fill")
-                        .font(DesignSystem.Font.iconSmall)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Get Geografy Premium")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("Unlock all quiz types, advanced stats & more")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .padding(DesignSystem.Spacing.md)
-            .background(
-                LinearGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.12),
-                        DesignSystem.Color.accent.opacity(0.05),
-                    ],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                ),
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .strokeBorder(DesignSystem.Color.accent.opacity(0.25), lineWidth: 1)
-            }
+            premiumBannerLabel
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -126,6 +88,50 @@ extension ProfileScreen {
                     deleteAccountRow
                 }
             }
+        }
+    }
+}
+
+// MARK: - Premium Banner Label
+private extension ProfileScreen {
+    var premiumBannerLabel: some View {
+        HStack(spacing: DesignSystem.Spacing.md) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.15))
+                    .frame(width: 44, height: 44)
+                Image(systemName: "crown.fill")
+                    .font(DesignSystem.Font.iconSmall)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Get Geografy Premium")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Unlock all quiz types, advanced stats & more")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+        }
+        .padding(DesignSystem.Spacing.md)
+        .background(
+            LinearGradient(
+                colors: [
+                    DesignSystem.Color.accent.opacity(0.12),
+                    DesignSystem.Color.accent.opacity(0.05),
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            ),
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .strokeBorder(DesignSystem.Color.accent.opacity(0.25), lineWidth: 1)
         }
     }
 }

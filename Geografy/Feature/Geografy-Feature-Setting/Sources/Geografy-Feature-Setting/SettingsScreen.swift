@@ -150,43 +150,48 @@ private extension SettingsScreen {
     }
 
     var guestAccountSection: some View {
-        // swiftlint:disable:next closure_body_length
         settingsGroup(header: "Account") {
+            guestAccountHeader
+            settingsDivider
+            guestSignInRow
+        }
+    }
+
+    var guestAccountHeader: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SettingsIconBadge(systemImage: "person.fill", color: DesignSystem.Color.textSecondary)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Guest")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Progress is saved on this device only")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            Spacer()
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+    }
+
+    var guestSignInRow: some View {
+        Button {
+            coordinator.sheet(.signIn)
+        } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(systemImage: "person.fill", color: DesignSystem.Color.textSecondary)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Guest")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("Progress is saved on this device only")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
+                SettingsIconBadge(systemImage: "person.badge.plus", color: DesignSystem.Color.accent)
+                Text("Sign In with Apple")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.accent)
                 Spacer()
+                Image(systemName: "chevron.right")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
-
-            settingsDivider
-
-            Button {
-                coordinator.sheet(.signIn)
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    SettingsIconBadge(systemImage: "person.badge.plus", color: DesignSystem.Color.accent)
-                    Text("Sign In with Apple")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .buttonStyle(PressButtonStyle())
         }
+        .buttonStyle(PressButtonStyle())
     }
 
     var authenticatedAccountSection: some View {
