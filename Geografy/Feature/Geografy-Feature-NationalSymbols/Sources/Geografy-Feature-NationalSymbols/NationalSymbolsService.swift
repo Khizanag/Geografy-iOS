@@ -13,7 +13,7 @@ public final class NationalSymbolsService {
 
 // MARK: - Data
 private extension NationalSymbolsService {
-    nonisolated(unsafe) public static let allSymbols: [NationalSymbol] = [
+    static let allSymbols: [NationalSymbol] = [
         NationalSymbol(
             id: "US", countryCode: "US",
             animal: "Bald Eagle", flower: "Rose",

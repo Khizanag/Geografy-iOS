@@ -24,7 +24,7 @@ public final class MapState {
 
 // MARK: - Actions
 public extension MapState {
-    public func reset() {
+    func reset() {
         scale = 1.0
         offset = .zero
         lastScale = 1.0
@@ -32,7 +32,7 @@ public extension MapState {
         selectedCountryCode = nil
     }
 
-    public func clampOffset(in size: CGSize) {
+    func clampOffset(in size: CGSize) {
         let maxOffsetX = max(0, (MapProjection.mapWidth * scale - size.width) / 2)
         let maxOffsetY = max(0, (MapProjection.mapHeight * scale - size.height) / 2)
 

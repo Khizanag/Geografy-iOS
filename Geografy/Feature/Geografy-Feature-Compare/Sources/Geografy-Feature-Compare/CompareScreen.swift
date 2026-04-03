@@ -36,11 +36,11 @@ public struct CompareScreen: View {
 
 // MARK: - Sheet
 private extension CompareScreen {
-    public enum CompareSheet: Identifiable {
+    enum CompareSheet: Identifiable {
         case pickLeft
         case pickRight
 
-        public var id: String {
+        var id: String {
             switch self {
             case .pickLeft: "pickLeft"
             case .pickRight: "pickRight"
