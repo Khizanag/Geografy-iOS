@@ -8,6 +8,7 @@ public struct OrganizationMapScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(GeoJSONCache.self) private var geoJSONCache
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -393,15 +394,10 @@ private extension OrganizationMapScreen {
         let highlightColor = organization.highlightColor
         let dimColor = nonMemberColor
 
-        let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
-            guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
-                  let data = try? Data(contentsOf: url) else { return [] }
-            var parsed = GeoJSONParser.parse(data: data)
-            for i in parsed.indices {
-                parsed[i].color = memberCodes.contains(parsed[i].id) ? highlightColor : dimColor
-            }
-            return parsed
-        }.value
+        var shapes = await geoJSONCache.loadShapes()
+        for i in shapes.indices {
+            shapes[i].color = memberCodes.contains(shapes[i].id) ? highlightColor : dimColor
+        }
 
         guard !shapes.isEmpty else { return }
 

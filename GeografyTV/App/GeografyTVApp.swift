@@ -18,6 +18,7 @@ struct GeografyTVApp: App {
     @State private var subscriptionService = SubscriptionService()
     @State private var pronunciationService = PronunciationService()
     @State private var countryDataService = CountryDataService()
+    @State private var geoJSONCache = GeoJSONCache()
 
     init() {
         let db = DatabaseManager()
@@ -55,6 +56,7 @@ struct GeografyTVApp: App {
                 .environment(flashcardService)
                 .environment(subscriptionService)
                 .environment(pronunciationService)
+                .environment(geoJSONCache)
                 .task {
                     countryDataService.loadCountries()
                     gameCenterService.authenticatePlayer()

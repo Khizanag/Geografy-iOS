@@ -8,6 +8,7 @@ import SwiftUI
 public struct TravelMapScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(GeoJSONCache.self) private var geoJSONCache
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelService.self) private var travelService
 
@@ -242,11 +243,7 @@ private extension TravelMapScreen {
 // MARK: - Actions
 private extension TravelMapScreen {
     func loadMapData() async {
-        let shapes = await Task.detached(priority: .userInitiated) { () -> [CountryShape] in
-            guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
-                  let data = try? Data(contentsOf: url) else { return [] }
-            return GeoJSONParser.parse(data: data)
-        }.value
+        let shapes = await geoJSONCache.loadShapes()
 
         guard !shapes.isEmpty else { return }
 
