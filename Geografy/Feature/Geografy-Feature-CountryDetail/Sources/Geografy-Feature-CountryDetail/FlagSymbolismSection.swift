@@ -50,45 +50,48 @@ private extension FlagSymbolismCard {
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                 expanded.toggle()
             }
-        // swiftlint:disable:next closure_body_length
         } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.accent.opacity(0.12))
-                        .frame(width: 36, height: 36)
-                    Image(systemName: "flag.fill")
-                        .font(DesignSystem.Font.iconXS)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Colors & Symbols")
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    if let year = symbolism.adoptedYear {
-                        Text("Adopted \(String(year))")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                }
-
-                Spacer(minLength: 0)
-
-                colorSwatchRow
-
-                Image(systemName: "chevron.down")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .rotationEffect(.degrees(expanded ? 180 : 0))
-                    .animation(.spring(response: 0.35, dampingFraction: 0.8), value: expanded)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .contentShape(Rectangle())
+            headerRowLabel
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    var headerRowLabel: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            ZStack {
+                Circle()
+                    .fill(DesignSystem.Color.accent.opacity(0.12))
+                    .frame(width: 36, height: 36)
+                Image(systemName: "flag.fill")
+                    .font(DesignSystem.Font.iconXS)
+                    .foregroundStyle(DesignSystem.Color.accent)
+            }
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Colors & Symbols")
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                if let year = symbolism.adoptedYear {
+                    Text("Adopted \(String(year))")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
+            }
+
+            Spacer(minLength: 0)
+
+            colorSwatchRow
+
+            Image(systemName: "chevron.down")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .rotationEffect(.degrees(expanded ? 180 : 0))
+                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: expanded)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .contentShape(Rectangle())
     }
 
     var colorSwatchRow: some View {

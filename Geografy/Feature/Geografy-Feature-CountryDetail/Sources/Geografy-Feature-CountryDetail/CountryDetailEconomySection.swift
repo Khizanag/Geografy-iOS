@@ -9,63 +9,78 @@ extension CountryDetailScreen {
     }
 
     public var economySection: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Economy", premium: true)
-            // swiftlint:disable:next closure_body_length
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                if let gdp = country.gdp {
-                    economyTile(
-                        icon: "chart.bar.fill",
-                        label: "GDP",
-                        value: gdp.formatGDP(),
-                        color: DesignSystem.Color.accent
-                    ) {
-                        activeSheet = .info(
-                            InfoItem(
-                                icon: "chart.bar.fill",
-                                title: "GDP",
-                                value: gdp.formatGDP(),
-                                supportsMap: false
-                            )
-                        )
-                    }
-                }
-                if let perCapita = country.gdpPerCapita {
-                    economyTile(
-                        icon: "person.crop.circle",
-                        label: "Per Capita",
-                        value: perCapita.formatCurrency(),
-                        color: DesignSystem.Color.blue
-                    ) {
-                        activeSheet = .info(
-                            InfoItem(
-                                icon: "person.crop.circle.fill",
-                                title: "GDP Per Capita",
-                                value: perCapita.formatCurrency(),
-                                supportsMap: false
-                            )
-                        )
-                    }
-                }
-                if let ppp = country.gdpPPP {
-                    economyTile(
-                        icon: "chart.bar",
-                        label: "GDP PPP",
-                        value: ppp.formatGDP(),
-                        color: DesignSystem.Color.indigo
-                    ) {
-                        activeSheet = .info(
-                            InfoItem(
-                                icon: "chart.bar.fill",
-                                title: "GDP PPP",
-                                value: ppp.formatGDP(),
-                                supportsMap: false
-                            )
-                        )
-                    }
-                }
+            economyTilesRow
+        }
+    }
+
+    @ViewBuilder
+    public var economyTilesRow: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            if let gdp = country.gdp {
+                gdpTile(gdp: gdp)
             }
+            if let perCapita = country.gdpPerCapita {
+                gdpPerCapitaTile(perCapita: perCapita)
+            }
+            if let ppp = country.gdpPPP {
+                gdpPPPTile(ppp: ppp)
+            }
+        }
+    }
+
+    func gdpTile(gdp: Double) -> some View {
+        economyTile(
+            icon: "chart.bar.fill",
+            label: "GDP",
+            value: gdp.formatGDP(),
+            color: DesignSystem.Color.accent
+        ) {
+            activeSheet = .info(
+                InfoItem(
+                    icon: "chart.bar.fill",
+                    title: "GDP",
+                    value: gdp.formatGDP(),
+                    supportsMap: false
+                )
+            )
+        }
+    }
+
+    func gdpPerCapitaTile(perCapita: Double) -> some View {
+        economyTile(
+            icon: "person.crop.circle",
+            label: "Per Capita",
+            value: perCapita.formatCurrency(),
+            color: DesignSystem.Color.blue
+        ) {
+            activeSheet = .info(
+                InfoItem(
+                    icon: "person.crop.circle.fill",
+                    title: "GDP Per Capita",
+                    value: perCapita.formatCurrency(),
+                    supportsMap: false
+                )
+            )
+        }
+    }
+
+    func gdpPPPTile(ppp: Double) -> some View {
+        economyTile(
+            icon: "chart.bar",
+            label: "GDP PPP",
+            value: ppp.formatGDP(),
+            color: DesignSystem.Color.indigo
+        ) {
+            activeSheet = .info(
+                InfoItem(
+                    icon: "chart.bar.fill",
+                    title: "GDP PPP",
+                    value: ppp.formatGDP(),
+                    supportsMap: false
+                )
+            )
         }
     }
 

@@ -161,142 +161,165 @@ private extension CountryDetailScreen {
 // MARK: - Hero
 private extension CountryDetailScreen {
     var heroSection: some View {
-        // swiftlint:disable:next closure_body_length
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                Button {
-                    withAnimation(.easeInOut(duration: 0.25)) {
-                        showFlagFullScreen = true
-                    }
-                } label: {
-                    FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
-                        .opacity(flagScrolledUp ? 0 : 1)
-                        .geoShadow(.elevated)
-                        .onGeometryChange(for: Bool.self) { proxy in
-                            proxy.frame(in: .scrollView).maxY < 0
-                        } action: { isHidden in
-                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                                flagScrolledUp = isHidden
-                            }
-                        }
-                }
-                .buttonStyle(.plain)
+            heroCardContent
+        }
+    }
 
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Text(country.name)
-                        .font(DesignSystem.Font.title)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .multilineTextAlignment(.center)
-                    #if !os(tvOS)
-                    SpeakerButton(text: country.name, countryCode: country.code)
-                    #endif
+    var heroCardContent: some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    showFlagFullScreen = true
                 }
-                .frame(maxWidth: .infinity)
+            } label: {
+                FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
+                    .opacity(flagScrolledUp ? 0 : 1)
+                    .geoShadow(.elevated)
+                    .onGeometryChange(for: Bool.self) { proxy in
+                        proxy.frame(in: .scrollView).maxY < 0
+                    } action: { isHidden in
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                            flagScrolledUp = isHidden
+                        }
+                    }
+            }
+            .buttonStyle(.plain)
+
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Text(country.name)
+                    .font(DesignSystem.Font.title)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                #if !os(tvOS)
+                SpeakerButton(text: country.name, countryCode: country.code)
+                #endif
             }
             .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.xl)
         }
+        .frame(maxWidth: .infinity)
+        .padding(DesignSystem.Spacing.xl)
     }
 }
 
 // MARK: - Quick Facts
 private extension CountryDetailScreen {
     var quickFactsCard: some View {
-        // swiftlint:disable:next closure_body_length
         CardView {
-            // swiftlint:disable:next closure_body_length
-            HStack(spacing: 0) {
-                Button {
-                    activeSheet = .info(
-                        InfoItem(
-                            icon: "mappin.and.ellipse",
-                            title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
-                            value: capitalInfoValue,
-                            supportsMap: false
-                        )
-                    )
-                // swiftlint:disable:next closure_body_length
-                } label: {
-                    // swiftlint:disable:next closure_body_length
-                    VStack(spacing: DesignSystem.Spacing.xxs) {
-                        Image(systemName: "mappin")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.accent)
-                        Text(
-                            country.allCapitals.count > 1
-                                ? "Capitals (\(country.allCapitals.count))"
-                                : "Capital"
-                        )
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        if country.allCapitals.count > 1 {
-                            VStack(spacing: 2) {
-                                ForEach(country.allCapitals, id: \.name) { capital in
-                                    HStack(spacing: DesignSystem.Spacing.xxs) {
-                                        Text(capital.name)
-                                            .font(DesignSystem.Font.caption)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                                        #if !os(tvOS)
-                                        SpeakerButton(text: capital.name, countryCode: country.code)
-                                            .scaleEffect(0.7)
-                                        #endif
-                                    }
-                                }
-                            }
-                        } else {
-                            HStack(spacing: DesignSystem.Spacing.xxs) {
-                                Text(country.capital)
-                                    .font(DesignSystem.Font.caption)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.7)
-                                #if !os(tvOS)
-                                SpeakerButton(text: country.capital, countryCode: country.code)
-                                    .scaleEffect(0.7)
-                                #endif
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(PressButtonStyle())
+            quickFactsRow
+        }
+    }
 
-                Divider().frame(height: 44)
+    var quickFactsRow: some View {
+        HStack(spacing: 0) {
+            capitalButton
+            Divider().frame(height: 44)
+            areaButton
+            Divider().frame(height: 44)
+            continentButton
+        }
+        .padding(.vertical, DesignSystem.Spacing.sm)
+    }
 
-                Button {
-                    activeSheet = .info(
-                        InfoItem(
-                            icon: "map.fill",
-                            title: "Area",
-                            value: country.area.formatArea(),
-                            supportsMap: false
-                        )
-                    )
-                } label: {
-                    factChip(icon: "map", label: "Area", value: country.area.formatArea())
-                }
-                .buttonStyle(PressButtonStyle())
+    var capitalButton: some View {
+        Button {
+            activeSheet = .info(
+                InfoItem(
+                    icon: "mappin.and.ellipse",
+                    title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
+                    value: capitalInfoValue,
+                    supportsMap: false
+                )
+            )
+        } label: {
+            capitalChip
+        }
+        .buttonStyle(PressButtonStyle())
+    }
 
-                Divider().frame(height: 44)
+    var areaButton: some View {
+        Button {
+            activeSheet = .info(
+                InfoItem(
+                    icon: "map.fill",
+                    title: "Area",
+                    value: country.area.formatArea(),
+                    supportsMap: false
+                )
+            )
+        } label: {
+            factChip(icon: "map", label: "Area", value: country.area.formatArea())
+        }
+        .buttonStyle(PressButtonStyle())
+    }
 
-                Button {
-                    activeSheet = .info(
-                        InfoItem(
-                            icon: "globe.americas.fill",
-                            title: "Continent",
-                            value: country.continent.displayName,
-                            supportsMap: true,
-                            mapButtonTitle: "Open \(country.continent.displayName) Map"
-                        )
-                    )
-                } label: {
-                    factChip(icon: "globe", label: "Continent", value: country.continent.displayName)
-                }
-                .buttonStyle(PressButtonStyle())
+    var continentButton: some View {
+        Button {
+            activeSheet = .info(
+                InfoItem(
+                    icon: "globe.americas.fill",
+                    title: "Continent",
+                    value: country.continent.displayName,
+                    supportsMap: true,
+                    mapButtonTitle: "Open \(country.continent.displayName) Map"
+                )
+            )
+        } label: {
+            factChip(icon: "globe", label: "Continent", value: country.continent.displayName)
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    var capitalChip: some View {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: "mappin")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.accent)
+            Text(
+                country.allCapitals.count > 1
+                    ? "Capitals (\(country.allCapitals.count))"
+                    : "Capital"
+            )
+            .font(DesignSystem.Font.caption2)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+            if country.allCapitals.count > 1 {
+                multipleCapitalsView
+            } else {
+                singleCapitalView
             }
-            .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    var multipleCapitalsView: some View {
+        VStack(spacing: 2) {
+            ForEach(country.allCapitals, id: \.name) { capital in
+                HStack(spacing: DesignSystem.Spacing.xxs) {
+                    Text(capital.name)
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    #if !os(tvOS)
+                    SpeakerButton(text: capital.name, countryCode: country.code)
+                        .scaleEffect(0.7)
+                    #endif
+                }
+            }
+        }
+    }
+
+    var singleCapitalView: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Text(country.capital)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            #if !os(tvOS)
+            SpeakerButton(text: country.capital, countryCode: country.code)
+                .scaleEffect(0.7)
+            #endif
         }
     }
 
@@ -329,42 +352,45 @@ private extension CountryDetailScreen {
         return Button {
             hapticsService.impact(.light)
             activeSheet = .travelPicker
-        // swiftlint:disable:next closure_body_length
         } label: {
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    ZStack {
-                        Circle()
-                            .fill((currentStatus?.color ?? DesignSystem.Color.accent).opacity(0.15))
-                            .frame(width: 40, height: 40)
-                        Image(systemName: currentStatus?.icon ?? "airplane.departure")
-                            .font(DesignSystem.Font.callout)
-                            .foregroundStyle(currentStatus?.color ?? DesignSystem.Color.accent)
-                    }
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Travel Status")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                        Text(currentStatus?.label ?? "Not set")
-                            .font(DesignSystem.Font.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(
-                                currentStatus != nil
-                                    ? DesignSystem.Color.textPrimary
-                                    : DesignSystem.Color.textTertiary
-                            )
-                    }
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .accessibilityHidden(true)
-                }
-                .padding(DesignSystem.Spacing.sm)
-            }
+            travelCardLabel(status: currentStatus)
         }
         .buttonStyle(PressButtonStyle())
         .accessibilityLabel("Travel Status: \(currentStatus?.label ?? "Not set")")
+    }
+
+    func travelCardLabel(status currentStatus: TravelStatus?) -> some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ZStack {
+                    Circle()
+                        .fill((currentStatus?.color ?? DesignSystem.Color.accent).opacity(0.15))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: currentStatus?.icon ?? "airplane.departure")
+                        .font(DesignSystem.Font.callout)
+                        .foregroundStyle(currentStatus?.color ?? DesignSystem.Color.accent)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Travel Status")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                    Text(currentStatus?.label ?? "Not set")
+                        .font(DesignSystem.Font.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(
+                            currentStatus != nil
+                                ? DesignSystem.Color.textPrimary
+                                : DesignSystem.Color.textTertiary
+                        )
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .accessibilityHidden(true)
+            }
+            .padding(DesignSystem.Spacing.sm)
+        }
     }
 }
 
@@ -497,53 +523,65 @@ private extension CountryDetailScreen {
     }
 
     var contentScrollView: some View {
-        // swiftlint:disable:next closure_body_length
         ScrollView {
-            // swiftlint:disable:next closure_body_length
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-                heroSection
-                quickFactsCard
-                travelSection
-                neighborsSection(countryDataService: countryDataService)
-                peopleSection
-                if !religionItems.isEmpty {
-                    religionSection
-                }
-                if !ethnicityItems.isEmpty {
-                    ethnicitySection
-                }
-                if hasEconomyData {
-                    if subscriptionService.isPremium {
-                        economySection
-                    } else {
-                        lockedSection(title: "Economy")
-                    }
-                }
-                if subscriptionService.isPremium {
-                    governmentSection
-                    currencySection
-                    statisticsSection
-                }
-                if !memberOrganizations.isEmpty {
-                    organizationsSection(
-                        countryDataService: countryDataService,
-                        hapticsService: hapticsService
-                    )
-                }
-                flagSymbolismSection
-                phrasebookSection
-                funFactsSection
-                unescoSection
-                deepDiveSection
-                #if !os(tvOS)
-                WikipediaSection(countryName: country.name)
-                #endif
-                continentExploreSection
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-            .readableContentWidth()
+            contentStack
         }
+    }
+
+    var contentStack: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
+            topSections
+            bottomSections
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.xxl)
+        .readableContentWidth()
+    }
+
+    @ViewBuilder
+    var topSections: some View {
+        heroSection
+        quickFactsCard
+        travelSection
+        neighborsSection(countryDataService: countryDataService)
+        peopleSection
+        if !religionItems.isEmpty {
+            religionSection
+        }
+        if !ethnicityItems.isEmpty {
+            ethnicitySection
+        }
+        if hasEconomyData {
+            if subscriptionService.isPremium {
+                economySection
+            } else {
+                lockedSection(title: "Economy")
+            }
+        }
+        if subscriptionService.isPremium {
+            governmentSection
+            currencySection
+            statisticsSection
+        }
+    }
+
+    @ViewBuilder
+    var bottomSections: some View {
+        if !memberOrganizations.isEmpty {
+            organizationsSection(
+                countryDataService: countryDataService,
+                hapticsService: hapticsService
+            )
+        }
+        flagSymbolismSection
+        phrasebookSection
+        funFactsSection
+        unescoSection
+        deepDiveSection
+        #if !os(tvOS)
+        WikipediaSection(countryName: country.name)
+        #endif
+        continentExploreSection
     }
 
     func propertyDetailSheet(for item: InfoItem) -> some View {

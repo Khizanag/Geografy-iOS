@@ -171,47 +171,54 @@ private extension WorldBankChartSheet {
 
     var statsSection: some View {
         let points = filteredPoints
-        // swiftlint:disable:next closure_body_length
         return VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Summary")
-            LazyVGrid(
-                columns: [GridItem(.flexible()), GridItem(.flexible())],
-                spacing: DesignSystem.Spacing.sm
-            // swiftlint:disable:next closure_body_length
-            ) {
-                if let minimum = points.min(by: { $0.value < $1.value }) {
-                    statCard(
-                        label: "Minimum",
-                        value: indicator.format(minimum.value),
-                        detail: String(minimum.year),
-                        color: DesignSystem.Color.blue
-                    )
-                }
-                if let maximum = points.max(by: { $0.value < $1.value }) {
-                    statCard(
-                        label: "Maximum",
-                        value: indicator.format(maximum.value),
-                        detail: String(maximum.year),
-                        color: DesignSystem.Color.success
-                    )
-                }
-                if let first = points.first, let last = points.last, abs(first.value) > 0 {
-                    let change = (last.value - first.value) / abs(first.value) * 100
-                    statCard(
-                        label: "Change",
-                        value: String(format: "%+.1f%%", change),
-                        detail: "\(String(first.year))–\(String(last.year))",
-                        color: change >= 0 ? DesignSystem.Color.success : DesignSystem.Color.error
-                    )
-                }
-                statCard(
-                    label: "Data Points",
-                    value: "\(points.count)",
-                    detail: "\(points.first?.year ?? 0)–\(points.last?.year ?? 0)",
-                    color: DesignSystem.Color.accent
-                )
-            }
+            summaryGrid(for: points)
         }
+    }
+
+    func summaryGrid(for points: [WorldBankService.DataPoint]) -> some View {
+        LazyVGrid(
+            columns: [GridItem(.flexible()), GridItem(.flexible())],
+            spacing: DesignSystem.Spacing.sm
+        ) {
+            summaryGridContent(for: points)
+        }
+    }
+
+    @ViewBuilder
+    func summaryGridContent(for points: [WorldBankService.DataPoint]) -> some View {
+        if let minimum = points.min(by: { $0.value < $1.value }) {
+            statCard(
+                label: "Minimum",
+                value: indicator.format(minimum.value),
+                detail: String(minimum.year),
+                color: DesignSystem.Color.blue
+            )
+        }
+        if let maximum = points.max(by: { $0.value < $1.value }) {
+            statCard(
+                label: "Maximum",
+                value: indicator.format(maximum.value),
+                detail: String(maximum.year),
+                color: DesignSystem.Color.success
+            )
+        }
+        if let first = points.first, let last = points.last, abs(first.value) > 0 {
+            let change = (last.value - first.value) / abs(first.value) * 100
+            statCard(
+                label: "Change",
+                value: String(format: "%+.1f%%", change),
+                detail: "\(String(first.year))–\(String(last.year))",
+                color: change >= 0 ? DesignSystem.Color.success : DesignSystem.Color.error
+            )
+        }
+        statCard(
+            label: "Data Points",
+            value: "\(points.count)",
+            detail: "\(points.first?.year ?? 0)–\(points.last?.year ?? 0)",
+            color: DesignSystem.Color.accent
+        )
     }
 
     func statCard(label: String, value: String, detail: String, color: Color) -> some View {
