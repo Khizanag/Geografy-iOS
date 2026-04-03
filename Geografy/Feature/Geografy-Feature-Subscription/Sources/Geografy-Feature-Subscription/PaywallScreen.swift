@@ -103,7 +103,18 @@ private extension PaywallScreen {
     }
 
     var globeHero: some View {
-        // swiftlint:disable:next closure_body_length
+        ZStack {
+            globePulseRings
+            globeIcon
+        }
+        .frame(height: 130)
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 2.4).repeatForever(autoreverses: true),
+            value: globePulse
+        )
+    }
+
+    var globePulseRings: some View {
         ZStack {
             Circle()
                 .fill(DesignSystem.Color.accent.opacity(0.12))
@@ -115,34 +126,35 @@ private extension PaywallScreen {
                 .frame(width: 130, height: 130)
                 .scaleEffect(globePulse ? 0.92 : 1.14)
                 .blur(radius: 14)
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                DesignSystem.Color.accent.opacity(0.18),
-                                DesignSystem.Color.blue.opacity(0.12),
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 86, height: 86)
-                Image(systemName: "globe.europe.africa.fill")
-                    .font(DesignSystem.Font.displayMedium)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [DesignSystem.Color.accent, DesignSystem.Color.blue],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .scaleEffect(globePulse ? 1.07 : 0.96)
-                    .shadow(color: DesignSystem.Color.accent.opacity(0.5), radius: 18, y: 6)
-            }
         }
-        .frame(height: 130)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 2.4).repeatForever(autoreverses: true), value: globePulse)
+    }
+
+    var globeIcon: some View {
+        ZStack {
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            DesignSystem.Color.accent.opacity(0.18),
+                            DesignSystem.Color.blue.opacity(0.12),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 86, height: 86)
+            Image(systemName: "globe.europe.africa.fill")
+                .font(DesignSystem.Font.displayMedium)
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [DesignSystem.Color.accent, DesignSystem.Color.blue],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .scaleEffect(globePulse ? 1.07 : 0.96)
+                .shadow(color: DesignSystem.Color.accent.opacity(0.5), radius: 18, y: 6)
+        }
     }
 }
 
@@ -219,43 +231,46 @@ private extension PaywallScreen {
 // MARK: - Pricing
 private extension PaywallScreen {
     var pricingSection: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             Text("Choose Your Plan")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                SubscriptionCard(
-                    productID: SubscriptionService.ProductID.monthly,
-                    fallbackPrice: "$1.99",
-                    period: "per month",
-                    badge: nil,
-                    savingsNote: nil,
-                    isSelected: selectedProductID == SubscriptionService.ProductID.monthly,
-                    product: product(for: SubscriptionService.ProductID.monthly),
-                    onTap: { selectedProductID = SubscriptionService.ProductID.monthly }
-                )
-                SubscriptionCard(
-                    productID: SubscriptionService.ProductID.annual,
-                    fallbackPrice: "$19.99",
-                    period: "per year",
-                    badge: "Best Value",
-                    savingsNote: "$1.67 / mo",
-                    isSelected: selectedProductID == SubscriptionService.ProductID.annual,
-                    product: product(for: SubscriptionService.ProductID.annual),
-                    onTap: { selectedProductID = SubscriptionService.ProductID.annual }
-                )
-                SubscriptionCard(
-                    productID: SubscriptionService.ProductID.lifetime,
-                    fallbackPrice: "$49.99",
-                    period: "one time",
-                    badge: "Pay Once",
-                    savingsNote: "Forever",
-                    isSelected: selectedProductID == SubscriptionService.ProductID.lifetime,
-                    product: product(for: SubscriptionService.ProductID.lifetime),
-                    onTap: { selectedProductID = SubscriptionService.ProductID.lifetime }
-                )
-            }
+            planCards
+        }
+    }
+
+    var planCards: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            SubscriptionCard(
+                productID: SubscriptionService.ProductID.monthly,
+                fallbackPrice: "$1.99",
+                period: "per month",
+                badge: nil,
+                savingsNote: nil,
+                isSelected: selectedProductID == SubscriptionService.ProductID.monthly,
+                product: product(for: SubscriptionService.ProductID.monthly),
+                onTap: { selectedProductID = SubscriptionService.ProductID.monthly }
+            )
+            SubscriptionCard(
+                productID: SubscriptionService.ProductID.annual,
+                fallbackPrice: "$19.99",
+                period: "per year",
+                badge: "Best Value",
+                savingsNote: "$1.67 / mo",
+                isSelected: selectedProductID == SubscriptionService.ProductID.annual,
+                product: product(for: SubscriptionService.ProductID.annual),
+                onTap: { selectedProductID = SubscriptionService.ProductID.annual }
+            )
+            SubscriptionCard(
+                productID: SubscriptionService.ProductID.lifetime,
+                fallbackPrice: "$49.99",
+                period: "one time",
+                badge: "Pay Once",
+                savingsNote: "Forever",
+                isSelected: selectedProductID == SubscriptionService.ProductID.lifetime,
+                product: product(for: SubscriptionService.ProductID.lifetime),
+                onTap: { selectedProductID = SubscriptionService.ProductID.lifetime }
+            )
         }
     }
 
@@ -378,44 +393,58 @@ private extension PaywallScreen {
     }
 
     var ambientBlobs: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.20), .clear],
-                        center: .center, startRadius: 0, endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 44)
-                .offset(x: -60, y: -200)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
-                        center: .center, startRadius: 0, endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 48)
-                .offset(x: 140, y: 100)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.10), .clear],
-                        center: .center, startRadius: 0, endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260)
-                .blur(radius: 40)
-                .offset(x: -100, y: 600)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
+            accentBlob
+            blueBlob
+            indigoBlob
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(
+            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            value: blobAnimating
+        )
+    }
+
+    var accentBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.accent.opacity(0.20), .clear],
+                    center: .center, startRadius: 0, endRadius: 200
+                )
+            )
+            .frame(width: 400, height: 300)
+            .blur(radius: 44)
+            .offset(x: -60, y: -200)
+            .scaleEffect(blobAnimating ? 1.10 : 0.90)
+    }
+
+    var blueBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
+                    center: .center, startRadius: 0, endRadius: 180
+                )
+            )
+            .frame(width: 360, height: 280)
+            .blur(radius: 48)
+            .offset(x: 140, y: 100)
+            .scaleEffect(blobAnimating ? 0.88 : 1.10)
+    }
+
+    var indigoBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.indigo.opacity(0.10), .clear],
+                    center: .center, startRadius: 0, endRadius: 160
+                )
+            )
+            .frame(width: 320, height: 260)
+            .blur(radius: 40)
+            .offset(x: -100, y: 600)
+            .scaleEffect(blobAnimating ? 1.06 : 0.94)
     }
 }

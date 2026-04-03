@@ -98,41 +98,44 @@ private extension OrganizationDetailScreen {
     }
 
     var headerCard: some View {
-        // swiftlint:disable:next closure_body_length
         CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    orgLogo
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(organization.displayName)
-                            .font(DesignSystem.Font.title2)
-                            .fontWeight(.bold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        if organization.fullName != organization.displayName {
-                            Text(organization.fullName)
-                                .font(DesignSystem.Font.caption)
-                                .foregroundStyle(DesignSystem.Color.textSecondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        Text("\(memberCountries.count) member countries")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(organization.highlightColor)
-                            .padding(.horizontal, DesignSystem.Spacing.xs)
-                            .padding(.vertical, 3)
-                            .background(organization.highlightColor.opacity(0.12), in: Capsule())
-                            .accessibilityLabel("\(memberCountries.count) member countries")
+            headerCardContent
+                .padding(DesignSystem.Spacing.md)
+        }
+    }
+
+    var headerCardContent: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                orgLogo
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    Text(organization.displayName)
+                        .font(DesignSystem.Font.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    if organization.fullName != organization.displayName {
+                        Text(organization.fullName)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer(minLength: 0)
+                    Text("\(memberCountries.count) member countries")
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(organization.highlightColor)
+                        .padding(.horizontal, DesignSystem.Spacing.xs)
+                        .padding(.vertical, 3)
+                        .background(organization.highlightColor.opacity(0.12), in: Capsule())
+                        .accessibilityLabel("\(memberCountries.count) member countries")
                 }
-
-                Divider()
-
-                Text(organization.description)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
             }
-            .padding(DesignSystem.Spacing.md)
+
+            Divider()
+
+            Text(organization.description)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -205,7 +208,6 @@ private extension OrganizationDetailScreen {
     }
 
     var memberCountriesSection: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text("Member Countries")
                 .font(DesignSystem.Font.title2)
@@ -215,37 +217,41 @@ private extension OrganizationDetailScreen {
                 .accessibilityAddTraits(.isHeader)
 
             ForEach(memberCountries) { country in
-                Button { coordinator.push(.countryDetail(country)) } label: {
-                    CardView {
-                        HStack(spacing: DesignSystem.Spacing.sm) {
-                            FlagView(countryCode: country.code, height: DesignSystem.Size.md, fixedWidth: true)
-                            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                                Text(country.name)
-                                    .font(DesignSystem.Font.headline)
-                                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                                    .lineLimit(1)
-                                Text(country.capital)
-                                    .font(DesignSystem.Font.caption)
-                                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                                    .lineLimit(1)
-                            }
-                            Spacer(minLength: 0)
-                            Image(systemName: "chevron.right")
-                                .font(DesignSystem.Font.caption2)
-                                .foregroundStyle(DesignSystem.Color.textTertiary)
-                                .accessibilityHidden(true)
-                        }
-                        .padding(DesignSystem.Spacing.sm)
-                    }
-                }
-                .buttonStyle(PressButtonStyle())
-                .simultaneousGesture(TapGesture().onEnded {
-                    #if !os(tvOS)
-                    hapticsService.impact(.light)
-                    #endif
-                })
+                memberCountryRow(country)
             }
         }
+    }
+
+    func memberCountryRow(_ country: Country) -> some View {
+        Button { coordinator.push(.countryDetail(country)) } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    FlagView(countryCode: country.code, height: DesignSystem.Size.md, fixedWidth: true)
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text(country.name)
+                            .font(DesignSystem.Font.headline)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                            .lineLimit(1)
+                        Text(country.capital)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                            .lineLimit(1)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
+                }
+                .padding(DesignSystem.Spacing.sm)
+            }
+        }
+        .buttonStyle(PressButtonStyle())
+        .simultaneousGesture(TapGesture().onEnded {
+            #if !os(tvOS)
+            hapticsService.impact(.light)
+            #endif
+        })
     }
 }
 

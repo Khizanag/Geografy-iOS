@@ -82,53 +82,70 @@ private extension ContinentStatsScreen {
     }
 
     var statsGridSection: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Statistics")
                 .accessibilityAddTraits(.isHeader)
-            LazyVGrid(
-                columns: [GridItem(.flexible()), GridItem(.flexible())],
-                spacing: DesignSystem.Spacing.sm
-            // swiftlint:disable:next closure_body_length
-            ) {
-                statTile(
-                    title: "Total Population",
-                    value: totalPopulationFormatted,
-                    icon: "person.3.fill",
-                    color: DesignSystem.Color.blue
-                )
-                statTile(
-                    title: "Total Area",
-                    value: totalAreaFormatted,
-                    icon: "globe",
-                    color: DesignSystem.Color.ocean
-                )
-                statTile(
-                    title: "Avg GDP/Capita",
-                    value: avgGdpPerCapitaFormatted,
-                    icon: "dollarsign.circle.fill",
-                    color: DesignSystem.Color.warning
-                )
-                statTile(
-                    title: "Most Spoken Language",
-                    value: mostSpokenLanguage,
-                    icon: "bubble.left.fill",
-                    color: DesignSystem.Color.purple
-                )
-                statTile(
-                    title: "Largest Country",
-                    value: largestCountry?.name ?? "—",
-                    icon: "map.fill",
-                    color: DesignSystem.Color.accent
-                )
-                statTile(
-                    title: "Smallest Country",
-                    value: smallestCountry?.name ?? "—",
-                    icon: "smallcircle.filled.circle",
-                    color: DesignSystem.Color.orange
-                )
-            }
+            statsGrid
         }
+    }
+
+    var statsGrid: some View {
+        LazyVGrid(
+            columns: [GridItem(.flexible()), GridItem(.flexible())],
+            spacing: DesignSystem.Spacing.sm
+        ) {
+            populationAndAreaTiles
+            gdpAndLanguageTiles
+            sizeComparisonTiles
+        }
+    }
+
+    @ViewBuilder
+    var populationAndAreaTiles: some View {
+        statTile(
+            title: "Total Population",
+            value: totalPopulationFormatted,
+            icon: "person.3.fill",
+            color: DesignSystem.Color.blue
+        )
+        statTile(
+            title: "Total Area",
+            value: totalAreaFormatted,
+            icon: "globe",
+            color: DesignSystem.Color.ocean
+        )
+    }
+
+    @ViewBuilder
+    var gdpAndLanguageTiles: some View {
+        statTile(
+            title: "Avg GDP/Capita",
+            value: avgGdpPerCapitaFormatted,
+            icon: "dollarsign.circle.fill",
+            color: DesignSystem.Color.warning
+        )
+        statTile(
+            title: "Most Spoken Language",
+            value: mostSpokenLanguage,
+            icon: "bubble.left.fill",
+            color: DesignSystem.Color.purple
+        )
+    }
+
+    @ViewBuilder
+    var sizeComparisonTiles: some View {
+        statTile(
+            title: "Largest Country",
+            value: largestCountry?.name ?? "—",
+            icon: "map.fill",
+            color: DesignSystem.Color.accent
+        )
+        statTile(
+            title: "Smallest Country",
+            value: smallestCountry?.name ?? "—",
+            icon: "smallcircle.filled.circle",
+            color: DesignSystem.Color.orange
+        )
     }
 
     func statTile(title: String, value: String, icon: String, color: Color) -> some View {
