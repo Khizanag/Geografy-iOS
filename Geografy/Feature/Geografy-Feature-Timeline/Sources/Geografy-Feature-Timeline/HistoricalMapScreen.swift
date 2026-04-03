@@ -154,6 +154,7 @@ private extension HistoricalMapScreen {
                 .foregroundStyle(DesignSystem.Color.accent)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Event details")
     }
 
     var yearSlider: some View {
