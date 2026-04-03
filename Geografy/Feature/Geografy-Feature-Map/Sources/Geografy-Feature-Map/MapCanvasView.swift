@@ -13,6 +13,7 @@ public struct MapCanvasView: View {
     public var travelStatuses: [String: TravelStatus] = [:]
     public var densityData: [String: Double] = [:]
     public var showDensityOverlay: Bool = false
+    public var wrapsHorizontally: Bool = true
 
     public init(
         countryShapes: [CountryShape],
@@ -24,7 +25,8 @@ public struct MapCanvasView: View {
         capitalPoint: CGPoint? = nil,
         travelStatuses: [String: TravelStatus] = [:],
         densityData: [String: Double] = [:],
-        showDensityOverlay: Bool = false
+        showDensityOverlay: Bool = false,
+        wrapsHorizontally: Bool = true
     ) {
         self.countryShapes = countryShapes
         self.scale = scale
@@ -36,6 +38,7 @@ public struct MapCanvasView: View {
         self.travelStatuses = travelStatuses
         self.densityData = densityData
         self.showDensityOverlay = showDensityOverlay
+        self.wrapsHorizontally = wrapsHorizontally
     }
 
     public var body: some View {
@@ -252,6 +255,7 @@ private extension MapCanvasView {
 // MARK: - Helpers
 private extension MapCanvasView {
     var horizontalOffsets: [CGFloat] {
+        guard wrapsHorizontally else { return [0] }
         let mapWidthScaled = MapProjection.mapWidth * scale
         return [-mapWidthScaled, 0, mapWidthScaled]
     }

@@ -106,6 +106,8 @@ private extension MapScreen {
         mapCanvas(in: size)
     }
 
+    var isWorldMap: Bool { continentFilter == nil }
+
     func mapCanvas(in size: CGSize) -> some View {
         MapCanvasView(
             countryShapes: mapState.countryShapes,
@@ -115,7 +117,8 @@ private extension MapScreen {
             showLabels: mapState.showLabels,
             canvasSize: size,
             capitalPoint: selectedCapitalPoint,
-            travelStatuses: travelService.entries
+            travelStatuses: travelService.entries,
+            wrapsHorizontally: isWorldMap
         )
         .accessibilityLabel("Interactive world map")
         .accessibilityHint("Double tap to select a country")
@@ -226,7 +229,9 @@ private extension MapScreen {
                 clampVerticalOffset()
             }
             .onEnded { _ in
-                wrapHorizontalOffset()
+                if isWorldMap {
+                    wrapHorizontalOffset()
+                }
                 mapState.lastScale = mapState.scale
                 mapState.lastOffset = mapState.offset
             }
@@ -240,7 +245,9 @@ private extension MapScreen {
                     height: mapState.lastOffset.height + value.translation.height
                 )
                 clampVerticalOffset()
-                wrapHorizontalOffset()
+                if isWorldMap {
+                    wrapHorizontalOffset()
+                }
             }
             .onEnded { _ in
                 mapState.lastOffset = mapState.offset
