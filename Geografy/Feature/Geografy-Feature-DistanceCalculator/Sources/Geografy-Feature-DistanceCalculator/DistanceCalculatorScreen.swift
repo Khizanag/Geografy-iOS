@@ -7,7 +7,6 @@ import SwiftUI
 
 public struct DistanceCalculatorScreen: View {
     public init() {}
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -19,17 +18,15 @@ public struct DistanceCalculatorScreen: View {
     @State private var showOriginPicker = false
     @State private var showDestinationPicker = false
     @State private var lineProgress: CGFloat = 0
-    @State private var blobAnimating = false
 
     public var body: some View {
         extractedContent
-            .background { ambientBlobs }
+            .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Distance Calculator")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .onAppear { blobAnimating = true }
             .sheet(isPresented: $showOriginPicker) {
                 CountryPickerSheet(
                     title: "From Country",
@@ -291,44 +288,6 @@ private extension DistanceCalculatorScreen {
             .accessibilityElement(children: .combine)
             .accessibilityLabel("\(label): \(value)")
         }
-    }
-
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.20), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 320)
-                .blur(radius: 32)
-                .offset(x: -80, y: -80)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.14), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 40)
-                .offset(x: 140, y: 400)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(
-            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
-            value: blobAnimating
-        )
     }
 }
 

@@ -5,7 +5,6 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelTrackerScreen: View {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(Navigator.self) private var coordinator
@@ -16,7 +15,6 @@ public struct TravelTrackerScreen: View {
     @State private var showCountryPicker = false
     @State private var selectedCountry: Country?
     @State private var appeared = false
-    @State private var blobAnimating = false
 
     public init() {}
 
@@ -27,7 +25,6 @@ public struct TravelTrackerScreen: View {
             .searchable(text: $searchText, prompt: "Search countries…")
             .toolbar { toolbarContent }
             .onAppear {
-                blobAnimating = true
                 appeared = true
             }
             .sheet(isPresented: $showCountryPicker) {
@@ -93,7 +90,7 @@ private extension TravelTrackerScreen {
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
+        .background { AmbientBlobsView(.travel) }
     }
 
     var statsSection: some View {
@@ -428,65 +425,6 @@ private extension TravelTrackerScreen {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xxl)
-    }
-
-    var ambientBlobs: some View {
-        ambientBlobsContent
-            .allowsHitTesting(false)
-            .animation(
-                reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
-                value: blobAnimating
-            )
-    }
-
-    var ambientBlobsContent: some View {
-        ZStack {
-            tealBlob
-            purpleBlob
-            accentBlob
-        }
-    }
-
-    var tealBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [Color(hex: "00C9A7").opacity(0.18), .clear],
-                    center: .center, startRadius: 0, endRadius: 200
-                )
-            )
-            .frame(width: 400, height: 300)
-            .blur(radius: 40)
-            .offset(x: -80, y: 40)
-            .scaleEffect(blobAnimating ? 1.10 : 0.90)
-    }
-
-    var purpleBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [Color(hex: "845EC2").opacity(0.14), .clear],
-                    center: .center, startRadius: 0, endRadius: 180
-                )
-            )
-            .frame(width: 360, height: 300)
-            .blur(radius: 44)
-            .offset(x: 140, y: 100)
-            .scaleEffect(blobAnimating ? 0.88 : 1.10)
-    }
-
-    var accentBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.10), .clear],
-                    center: .center, startRadius: 0, endRadius: 160
-                )
-            )
-            .frame(width: 320, height: 260)
-            .blur(radius: 36)
-            .offset(x: -60, y: 600)
-            .scaleEffect(blobAnimating ? 1.05 : 0.95)
     }
 }
 

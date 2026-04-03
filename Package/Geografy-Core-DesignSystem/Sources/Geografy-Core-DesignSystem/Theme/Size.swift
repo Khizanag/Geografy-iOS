@@ -10,8 +10,5 @@ public extension DesignSystem {
         public static let xl: CGFloat = 44
         public static let xxl: CGFloat = 48
         public static let xxxl: CGFloat = 60
-        public static let hero: CGFloat = 120
-        public static let feature: CGFloat = 280
-        public static let section: CGFloat = 320
     }
 }

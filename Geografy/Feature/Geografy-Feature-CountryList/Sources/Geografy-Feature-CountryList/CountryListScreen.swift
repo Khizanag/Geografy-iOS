@@ -92,7 +92,7 @@ private extension CountryListScreen {
                             proxy.scrollTo(letter, anchor: .top)
                         }
                     }
-                    .padding(.trailing, 4)
+                    .padding(.trailing, DesignSystem.Spacing.xxs)
                 }
             }
         }
@@ -313,7 +313,7 @@ private extension CountryListScreen {
     }
 
     func sectionCountChevron(key: String, count: Int) -> some View {
-        HStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
             Text("\(count)")
                 .font(DesignSystem.Font.micro.weight(.semibold))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -324,8 +324,8 @@ private extension CountryListScreen {
             .font(DesignSystem.Font.nano.bold())
             .foregroundStyle(DesignSystem.Color.textTertiary)
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
+        .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
     }
 }

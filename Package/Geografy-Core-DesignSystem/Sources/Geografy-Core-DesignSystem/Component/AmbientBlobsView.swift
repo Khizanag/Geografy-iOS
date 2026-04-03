@@ -51,6 +51,9 @@ public extension AmbientBlobsView {
         case tv
         case tvQuiz
 
+        case paywall
+        case travel
+
         var blobs: [BlobDescriptor] {
             switch self {
             case .standard:
@@ -248,6 +251,74 @@ public extension AmbientBlobsView {
                         endRadius: 400,
                         offset: CGSize(width: 500, height: 200),
                         scaleRange: ScaleRange(idle: 1.08, animating: 0.92)
+                    ),
+                ]
+
+            case .paywall:
+                [
+                    BlobDescriptor(
+                        color: DesignSystem.Color.accent,
+                        opacity: 0.20,
+                        width: 400,
+                        height: 300,
+                        blur: 44,
+                        endRadius: 200,
+                        offset: CGSize(width: -60, height: -200),
+                        scaleRange: ScaleRange(idle: 0.90, animating: 1.10)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.blue,
+                        opacity: 0.14,
+                        width: 360,
+                        height: 280,
+                        blur: 48,
+                        endRadius: 180,
+                        offset: CGSize(width: 140, height: 100),
+                        scaleRange: ScaleRange(idle: 1.10, animating: 0.88)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.indigo,
+                        opacity: 0.10,
+                        width: 320,
+                        height: 260,
+                        blur: 40,
+                        endRadius: 160,
+                        offset: CGSize(width: -100, height: 600),
+                        scaleRange: ScaleRange(idle: 0.94, animating: 1.06)
+                    ),
+                ]
+
+            case .travel:
+                [
+                    BlobDescriptor(
+                        color: DesignSystem.Color.success,
+                        opacity: 0.18,
+                        width: 400,
+                        height: 300,
+                        blur: 40,
+                        endRadius: 200,
+                        offset: CGSize(width: -80, height: 40),
+                        scaleRange: ScaleRange(idle: 0.90, animating: 1.10)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.purple,
+                        opacity: 0.14,
+                        width: 360,
+                        height: 300,
+                        blur: 44,
+                        endRadius: 180,
+                        offset: CGSize(width: 140, height: 100),
+                        scaleRange: ScaleRange(idle: 1.10, animating: 0.88)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.accent,
+                        opacity: 0.10,
+                        width: 320,
+                        height: 260,
+                        blur: 36,
+                        endRadius: 160,
+                        offset: CGSize(width: -60, height: 600),
+                        scaleRange: ScaleRange(idle: 0.95, animating: 1.05)
                     ),
                 ]
             }

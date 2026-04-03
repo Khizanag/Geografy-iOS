@@ -18,7 +18,7 @@ public struct FlagFullScreenView: View {
 private extension FlagFullScreenView {
     var flagContent: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            FlagView(countryCode: countryCode, height: DesignSystem.Size.hero)
+            FlagView(countryCode: countryCode, height: 120)
                 .shadow(radius: DesignSystem.Spacing.sm)
 
             Text(countryName)

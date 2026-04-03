@@ -59,7 +59,7 @@ private extension FlagSequenceView {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
-            FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
+            FlagView(countryCode: country.code, height: 120)
                 .geoShadow(.elevated)
 
             if currentIndex < options.count {

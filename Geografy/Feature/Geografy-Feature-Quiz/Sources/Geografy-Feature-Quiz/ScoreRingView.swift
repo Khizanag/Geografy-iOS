@@ -17,7 +17,7 @@ public struct ScoreRingView: View {
             progressRing
             percentageLabel
         }
-        .frame(width: DesignSystem.Size.hero, height: DesignSystem.Size.hero)
+        .frame(width: 120, height: 120)
         .onAppear { startCountUp() }
     }
 }

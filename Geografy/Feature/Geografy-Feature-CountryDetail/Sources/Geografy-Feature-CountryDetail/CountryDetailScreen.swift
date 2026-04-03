@@ -173,7 +173,7 @@ private extension CountryDetailScreen {
                     showFlagFullScreen = true
                 }
             } label: {
-                FlagView(countryCode: country.code, height: DesignSystem.Size.hero)
+                FlagView(countryCode: country.code, height: 120)
                     .opacity(flagScrolledUp ? 0 : 1)
                     .geoShadow(.elevated)
                     .onGeometryChange(for: Bool.self) { proxy in
