@@ -52,49 +52,52 @@ private extension MatchHistoryScreen {
     }
 
     func matchRow(_ match: MultiplayerMatch) -> some View {
-        // swiftlint:disable:next closure_body_length
         CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                resultIndicator(match)
-
-                OpponentAvatarView(
-                    opponent: match.opponent,
-                    size: DesignSystem.Size.lg,
-                    showFlag: false,
-                )
-
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(match.opponent.name)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-
-                    HStack(spacing: DesignSystem.Spacing.xs) {
-                        Text(
-                            match.configuration.type.displayName
-                        )
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-
-                        Text(formattedDate(match.date))
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                    }
-                }
-
-                Spacer(minLength: 0)
-
-                VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxs) {
-                    Text("\(match.playerScore) - \(match.opponentScore)")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                    ratingChangeLabel(match.playerRatingChange)
-                }
-            }
-            .padding(DesignSystem.Spacing.sm)
+            matchRowContent(match)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
+    }
+
+    func matchRowContent(_ match: MultiplayerMatch) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            resultIndicator(match)
+
+            OpponentAvatarView(
+                opponent: match.opponent,
+                size: DesignSystem.Size.lg,
+                showFlag: false,
+            )
+
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text(match.opponent.name)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(1)
+
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Text(
+                        match.configuration.type.displayName
+                    )
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+
+                    Text(formattedDate(match.date))
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+            }
+
+            Spacer(minLength: 0)
+
+            VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxs) {
+                Text("\(match.playerScore) - \(match.opponentScore)")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+
+                ratingChangeLabel(match.playerRatingChange)
+            }
+        }
+        .padding(DesignSystem.Spacing.sm)
     }
 
     func resultIndicator(_ match: MultiplayerMatch) -> some View {

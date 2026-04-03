@@ -175,48 +175,55 @@ private extension ContinentOverviewScreen {
 // MARK: - Country List
 private extension ContinentOverviewScreen {
     var countryListSection: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack {
-                SectionHeaderView(title: "Countries", icon: "list.bullet")
-                Spacer()
-                Picker(selection: $sortBy) {
-                    ForEach(SortOption.allCases, id: \.self) { option in
-                        Label(option.rawValue, systemImage: option.icon)
-                            .tag(option)
-                    }
-                } label: {
-                    Label("Sort by", systemImage: "arrow.up.arrow.down")
+            countryListHeader
+            countryListRows
+        }
+    }
+
+    var countryListHeader: some View {
+        HStack {
+            SectionHeaderView(title: "Countries", icon: "list.bullet")
+            Spacer()
+            Picker(selection: $sortBy) {
+                ForEach(SortOption.allCases, id: \.self) { option in
+                    Label(option.rawValue, systemImage: option.icon)
+                        .tag(option)
                 }
-                .pickerStyle(.menu)
-                .tint(DesignSystem.Color.iconPrimary)
+            } label: {
+                Label("Sort by", systemImage: "arrow.up.arrow.down")
             }
-            ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
-                Button { navigateToCountry(country) } label: {
-                    CardView {
-                        HStack(spacing: DesignSystem.Spacing.sm) {
-                            FlagView(countryCode: country.code, height: 24, fixedWidth: true)
-                            Text(country.name)
-                                .font(DesignSystem.Font.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundStyle(DesignSystem.Color.textPrimary)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(DesignSystem.Font.caption)
-                                .foregroundStyle(DesignSystem.Color.textTertiary)
-                        }
-                        .padding(DesignSystem.Spacing.sm)
+            .pickerStyle(.menu)
+            .tint(DesignSystem.Color.iconPrimary)
+        }
+    }
+
+    var countryListRows: some View {
+        ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
+            Button { navigateToCountry(country) } label: {
+                CardView {
+                    HStack(spacing: DesignSystem.Spacing.sm) {
+                        FlagView(countryCode: country.code, height: 24, fixedWidth: true)
+                        Text(country.name)
+                            .font(DesignSystem.Font.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
+                    .padding(DesignSystem.Spacing.sm)
                 }
-                .buttonStyle(PressButtonStyle())
-                .opacity(appeared ? 1 : 0)
-                .offset(y: appeared ? 0 : 16)
-                .animation(
-                    .spring(response: 0.5, dampingFraction: 0.8)
-                        .delay(Double(index) * 0.03 + 0.15),
-                    value: appeared
-                )
             }
+            .buttonStyle(PressButtonStyle())
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 16)
+            .animation(
+                .spring(response: 0.5, dampingFraction: 0.8)
+                    .delay(Double(index) * 0.03 + 0.15),
+                value: appeared
+            )
         }
     }
 }

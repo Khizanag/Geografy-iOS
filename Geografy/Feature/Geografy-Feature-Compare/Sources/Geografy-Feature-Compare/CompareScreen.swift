@@ -174,46 +174,59 @@ private extension CompareScreen {
     }
 
     func numericCharts(left: Country, right: Country) -> some View {
-        // swiftlint:disable:next closure_body_length
         Group {
-            CompareBarChart(
-                title: "Population",
-                icon: "person.2.fill",
-                leftValue: Double(left.population),
-                rightValue: Double(right.population),
-                leftLabel: left.population.formatPopulation(),
-                rightLabel: right.population.formatPopulation()
-            )
+            populationChart(left: left, right: right)
+            areaChart(left: left, right: right)
+            gdpChart(left: left, right: right)
+            densityChart(left: left, right: right)
+        }
+    }
 
-            CompareBarChart(
-                title: "Area",
-                icon: "map.fill",
-                leftValue: left.area,
-                rightValue: right.area,
-                leftLabel: left.area.formatArea(),
-                rightLabel: right.area.formatArea()
-            )
+    func populationChart(left: Country, right: Country) -> some View {
+        CompareBarChart(
+            title: "Population",
+            icon: "person.2.fill",
+            leftValue: Double(left.population),
+            rightValue: Double(right.population),
+            leftLabel: left.population.formatPopulation(),
+            rightLabel: right.population.formatPopulation()
+        )
+    }
 
-            if let leftGDP = left.gdp, let rightGDP = right.gdp {
-                CompareBarChart(
-                    title: "GDP",
-                    icon: "chart.bar.fill",
-                    leftValue: leftGDP,
-                    rightValue: rightGDP,
-                    leftLabel: leftGDP.formatGDP(),
-                    rightLabel: rightGDP.formatGDP()
-                )
-            }
+    func areaChart(left: Country, right: Country) -> some View {
+        CompareBarChart(
+            title: "Area",
+            icon: "map.fill",
+            leftValue: left.area,
+            rightValue: right.area,
+            leftLabel: left.area.formatArea(),
+            rightLabel: right.area.formatArea()
+        )
+    }
 
+    @ViewBuilder
+    func gdpChart(left: Country, right: Country) -> some View {
+        if let leftGDP = left.gdp, let rightGDP = right.gdp {
             CompareBarChart(
-                title: "Density",
-                icon: "person.crop.square",
-                leftValue: left.populationDensity,
-                rightValue: right.populationDensity,
-                leftLabel: densityLabel(left.populationDensity),
-                rightLabel: densityLabel(right.populationDensity)
+                title: "GDP",
+                icon: "chart.bar.fill",
+                leftValue: leftGDP,
+                rightValue: rightGDP,
+                leftLabel: leftGDP.formatGDP(),
+                rightLabel: rightGDP.formatGDP()
             )
         }
+    }
+
+    func densityChart(left: Country, right: Country) -> some View {
+        CompareBarChart(
+            title: "Density",
+            icon: "person.crop.square",
+            leftValue: left.populationDensity,
+            rightValue: right.populationDensity,
+            leftLabel: densityLabel(left.populationDensity),
+            rightLabel: densityLabel(right.populationDensity)
+        )
     }
 
     func textMetrics(left: Country, right: Country) -> some View {

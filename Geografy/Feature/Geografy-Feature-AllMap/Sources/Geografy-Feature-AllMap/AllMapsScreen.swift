@@ -37,82 +37,96 @@ public struct AllMapsScreen: View {
 // MARK: - Background
 private extension AllMapsScreen {
     var ambientBackground: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
             DesignSystem.Color.background
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.30), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 240
-                    )
-                )
-                .frame(width: 480, height: 360)
-                .blur(radius: 36)
-                .offset(x: -100, y: -160)
-                .scaleEffect(blobAnimating ? 1.12 : 0.88)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.22), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 320)
-                .blur(radius: 44)
-                .offset(x: 160, y: 60)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 40)
-                .offset(x: -80, y: 420)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.purple.opacity(0.14), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 48)
-                .offset(x: 140, y: 700)
-                .scaleEffect(blobAnimating ? 0.90 : 1.10)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.12), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 320, height: 260)
-                .blur(radius: 44)
-                .offset(x: -60, y: 1_000)
-                .scaleEffect(blobAnimating ? 1.06 : 0.94)
+            accentTopBlob
+            indigoBlob
+            blueBlob
+            purpleBlob
+            accentBottomBlob
         }
         .ignoresSafeArea()
         .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+    }
+
+    var accentTopBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.accent.opacity(0.30), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 240
+                )
+            )
+            .frame(width: 480, height: 360)
+            .blur(radius: 36)
+            .offset(x: -100, y: -160)
+            .scaleEffect(blobAnimating ? 1.12 : 0.88)
+    }
+
+    var indigoBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.indigo.opacity(0.22), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 200
+                )
+            )
+            .frame(width: 400, height: 320)
+            .blur(radius: 44)
+            .offset(x: 160, y: 60)
+            .scaleEffect(blobAnimating ? 0.88 : 1.10)
+    }
+
+    var blueBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 180
+                )
+            )
+            .frame(width: 360, height: 280)
+            .blur(radius: 40)
+            .offset(x: -80, y: 420)
+            .scaleEffect(blobAnimating ? 1.08 : 0.92)
+    }
+
+    var purpleBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.purple.opacity(0.14), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 180
+                )
+            )
+            .frame(width: 360, height: 300)
+            .blur(radius: 48)
+            .offset(x: 140, y: 700)
+            .scaleEffect(blobAnimating ? 0.90 : 1.10)
+    }
+
+    var accentBottomBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [DesignSystem.Color.accent.opacity(0.12), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 160
+                )
+            )
+            .frame(width: 320, height: 260)
+            .blur(radius: 44)
+            .offset(x: -60, y: 1_000)
+            .scaleEffect(blobAnimating ? 1.06 : 0.94)
     }
 }
 
@@ -162,54 +176,64 @@ private extension AllMapsScreen {
 
     func mapCard(name: String, icon: String) -> some View {
         let colors = gradientColors(for: name)
-        // swiftlint:disable:next closure_body_length
         return Button { openMap(named: name) } label: {
-            // swiftlint:disable:next closure_body_length
-            ZStack(alignment: .bottomLeading) {
-                LinearGradient(
-                    colors: [colors.0, colors.1],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-
-                Image(systemName: icon)
-                    .font(DesignSystem.IconSize.hero)
-                    .foregroundStyle(.white.opacity(0.10))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                    .offset(x: 24, y: -12)
-                    .clipped()
-
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(name)
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.onAccent)
-
-                    HStack(spacing: 4) {
-                        Text("Open")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(.white.opacity(0.9))
-                        Image(systemName: "arrow.right")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(.white.opacity(0.9))
-                    }
-                    .padding(.horizontal, DesignSystem.Spacing.xs)
-                    .padding(.vertical, 4)
-                    .background(.white.opacity(0.18))
-                    .clipShape(Capsule())
-                    .overlay(Capsule().strokeBorder(.white.opacity(0.25), lineWidth: 1))
-                }
-                .padding(DesignSystem.Spacing.sm)
-            }
-            .frame(height: isWideLayout ? 180 : (isLandscape ? 130 : 160))
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-            .shadow(color: colors.0.opacity(0.50), radius: 16, y: 6)
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                    .strokeBorder(.white.opacity(0.08), lineWidth: 1)
-            )
+            mapCardLabel(name: name, icon: icon, colors: colors)
         }
         .buttonStyle(PressButtonStyle())
+    }
+
+    func mapCardLabel(name: String, icon: String, colors: (Color, Color)) -> some View {
+        ZStack(alignment: .bottomLeading) {
+            LinearGradient(
+                colors: [colors.0, colors.1],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+            mapCardBackgroundIcon(icon)
+
+            mapCardOverlay(name: name)
+        }
+        .frame(height: isWideLayout ? 180 : (isLandscape ? 130 : 160))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .shadow(color: colors.0.opacity(0.50), radius: 16, y: 6)
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                .strokeBorder(.white.opacity(0.08), lineWidth: 1)
+        )
+    }
+
+    func mapCardBackgroundIcon(_ icon: String) -> some View {
+        Image(systemName: icon)
+            .font(DesignSystem.IconSize.hero)
+            .foregroundStyle(.white.opacity(0.10))
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            .offset(x: 24, y: -12)
+            .clipped()
+    }
+
+    func mapCardOverlay(name: String) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            Text(name)
+                .font(DesignSystem.Font.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+
+            HStack(spacing: 4) {
+                Text("Open")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(.white.opacity(0.9))
+                Image(systemName: "arrow.right")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(.white.opacity(0.9))
+            }
+            .padding(.horizontal, DesignSystem.Spacing.xs)
+            .padding(.vertical, 4)
+            .background(.white.opacity(0.18))
+            .clipShape(Capsule())
+            .overlay(Capsule().strokeBorder(.white.opacity(0.25), lineWidth: 1))
+        }
+        .padding(DesignSystem.Spacing.sm)
     }
 }
 

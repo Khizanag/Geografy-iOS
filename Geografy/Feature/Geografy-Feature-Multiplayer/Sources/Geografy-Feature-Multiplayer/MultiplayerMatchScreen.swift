@@ -207,41 +207,9 @@ private extension MultiplayerMatchScreen {
 // MARK: - Background
 private extension MultiplayerMatchScreen {
     var ambientBlobs: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.accent.opacity(0.20),
-                            DesignSystem.Color.background.opacity(0),
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 420, height: 320)
-                .blur(radius: 36)
-                .offset(x: -80, y: -100)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.purple.opacity(0.16),
-                            DesignSystem.Color.background.opacity(0),
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 44)
-                .offset(x: 140, y: 60)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+            accentBlob
+            purpleBlob
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
@@ -249,6 +217,44 @@ private extension MultiplayerMatchScreen {
             reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
             value: blobAnimating
         )
+    }
+
+    var accentBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.accent.opacity(0.20),
+                        DesignSystem.Color.background.opacity(0),
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 200
+                )
+            )
+            .frame(width: 420, height: 320)
+            .blur(radius: 36)
+            .offset(x: -80, y: -100)
+            .scaleEffect(blobAnimating ? 1.10 : 0.90)
+    }
+
+    var purpleBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.purple.opacity(0.16),
+                        DesignSystem.Color.background.opacity(0),
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 180
+                )
+            )
+            .frame(width: 360, height: 300)
+            .blur(radius: 44)
+            .offset(x: 140, y: 60)
+            .scaleEffect(blobAnimating ? 0.88 : 1.10)
     }
 
     func startBlobAnimation() {
@@ -319,51 +325,63 @@ private extension MultiplayerMatchScreen {
         playerIsCorrect: Bool,
         playerTimeSpent: TimeInterval
     ) {
-        // swiftlint:disable:next closure_body_length
         Task { @MainActor in
-            while !opponentEngine.hasAnswered {
-                try? await Task.sleep(for: .milliseconds(100))
-            }
-
-            let question = questions[currentIndex]
-            let opponentIsCorrect = opponentEngine.selectedOptionID
-                == question.correctOptionID
-
-            let playerAnswer = PlayerAnswer(
-                id: UUID(),
-                selectedOptionID: playerOptionID,
-                isCorrect: playerIsCorrect,
-                timeSpent: playerTimeSpent,
+            await waitForOpponent()
+            processRoundResult(
+                playerOptionID: playerOptionID,
+                playerIsCorrect: playerIsCorrect,
+                playerTimeSpent: playerTimeSpent
             )
-
-            let opponentAnswer = PlayerAnswer(
-                id: UUID(),
-                selectedOptionID: opponentEngine.selectedOptionID,
-                isCorrect: opponentIsCorrect,
-                timeSpent: Double.random(in: 1.0...4.0),
-            )
-
-            let round = MultiplayerRound(
-                id: UUID(),
-                questionIndex: currentIndex,
-                question: question,
-                playerAnswer: playerAnswer,
-                opponentAnswer: opponentAnswer,
-            )
-
-            rounds.append(round)
-
-            if round.playerWonRound {
-                playerScore += 1
-            } else if round.opponentWonRound {
-                opponentScore += 1
-            }
-            showFeedback = true
-
             try? await Task.sleep(for: .seconds(1.5))
-
             advanceToNext()
         }
+    }
+
+    func waitForOpponent() async {
+        while !opponentEngine.hasAnswered {
+            try? await Task.sleep(for: .milliseconds(100))
+        }
+    }
+
+    func processRoundResult(
+        playerOptionID: UUID,
+        playerIsCorrect: Bool,
+        playerTimeSpent: TimeInterval
+    ) {
+        let question = questions[currentIndex]
+        let opponentIsCorrect = opponentEngine.selectedOptionID
+            == question.correctOptionID
+
+        let playerAnswer = PlayerAnswer(
+            id: UUID(),
+            selectedOptionID: playerOptionID,
+            isCorrect: playerIsCorrect,
+            timeSpent: playerTimeSpent,
+        )
+
+        let opponentAnswer = PlayerAnswer(
+            id: UUID(),
+            selectedOptionID: opponentEngine.selectedOptionID,
+            isCorrect: opponentIsCorrect,
+            timeSpent: Double.random(in: 1.0...4.0),
+        )
+
+        let round = MultiplayerRound(
+            id: UUID(),
+            questionIndex: currentIndex,
+            question: question,
+            playerAnswer: playerAnswer,
+            opponentAnswer: opponentAnswer,
+        )
+
+        rounds.append(round)
+
+        if round.playerWonRound {
+            playerScore += 1
+        } else if round.opponentWonRound {
+            opponentScore += 1
+        }
+        showFeedback = true
     }
 
     func advanceToNext() {

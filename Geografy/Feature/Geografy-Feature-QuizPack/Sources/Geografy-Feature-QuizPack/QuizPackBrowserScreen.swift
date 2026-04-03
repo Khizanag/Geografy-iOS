@@ -274,43 +274,10 @@ private extension QuizPackBrowserScreen {
 // MARK: - Background
 private extension QuizPackBrowserScreen {
     var ambientBackground: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
             DesignSystem.Color.background
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.accent.opacity(0.22),
-                            Color.clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 30)
-                .offset(x: -60, y: -180)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.purple.opacity(0.16),
-                            Color.clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 340, height: 280)
-                .blur(radius: 36)
-                .offset(x: 120, y: 120)
-                .scaleEffect(blobAnimating ? 0.90 : 1.08)
+            accentBlob
+            purpleBlob
         }
         .ignoresSafeArea()
         .animation(
@@ -319,6 +286,44 @@ private extension QuizPackBrowserScreen {
                 : .easeInOut(duration: 6).repeatForever(autoreverses: true),
             value: blobAnimating
         )
+    }
+
+    var accentBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.accent.opacity(0.22),
+                        Color.clear,
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 200
+                )
+            )
+            .frame(width: 400, height: 300)
+            .blur(radius: 30)
+            .offset(x: -60, y: -180)
+            .scaleEffect(blobAnimating ? 1.08 : 0.92)
+    }
+
+    var purpleBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.purple.opacity(0.16),
+                        Color.clear,
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 160
+                )
+            )
+            .frame(width: 340, height: 280)
+            .blur(radius: 36)
+            .offset(x: 120, y: 120)
+            .scaleEffect(blobAnimating ? 0.90 : 1.08)
     }
 }
 

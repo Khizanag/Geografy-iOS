@@ -243,50 +243,61 @@ private extension SpeedRunSetupScreen {
 // MARK: - Rules
 private extension SpeedRunSetupScreen {
     var rulesSection: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("How It Works")
-            // swiftlint:disable:next closure_body_length
-            CardView {
-                // swiftlint:disable:next closure_body_length
-                VStack(spacing: 0) {
-                    ruleRow(
-                        step: "1",
-                        icon: "keyboard",
-                        color: DesignSystem.Color.blue,
-                        title: "Type & Submit",
-                        subtitle: "Type country names one by one"
-                    )
-                    ruleDivider
-                    ruleRow(
-                        step: "2",
-                        icon: "checkmark.circle.fill",
-                        color: DesignSystem.Color.success,
-                        title: "Instant Feedback",
-                        subtitle: "Correct answers flash green"
-                    )
-                    ruleDivider
-                    ruleRow(
-                        step: "3",
-                        icon: "timer",
-                        color: DesignSystem.Color.error,
-                        title: "Race the Clock",
-                        subtitle: "Finish faster for more XP"
-                    )
-                    ruleDivider
-                    ruleRow(
-                        step: "4",
-                        icon: "trophy.fill",
-                        color: DesignSystem.Color.warning,
-                        title: "Compete",
-                        subtitle: "Best times go to Game Center"
-                    )
-                }
-            }
+            CardView { rulesCardContent }
         }
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 12)
         .animation(.easeOut(duration: 0.6).delay(0.45), value: appeared)
+    }
+
+    var rulesCardContent: some View {
+        VStack(spacing: 0) {
+            rulesFirstHalf
+            rulesSecondHalf
+        }
+    }
+
+    var rulesFirstHalf: some View {
+        Group {
+            ruleRow(
+                step: "1",
+                icon: "keyboard",
+                color: DesignSystem.Color.blue,
+                title: "Type & Submit",
+                subtitle: "Type country names one by one"
+            )
+            ruleDivider
+            ruleRow(
+                step: "2",
+                icon: "checkmark.circle.fill",
+                color: DesignSystem.Color.success,
+                title: "Instant Feedback",
+                subtitle: "Correct answers flash green"
+            )
+        }
+    }
+
+    var rulesSecondHalf: some View {
+        Group {
+            ruleDivider
+            ruleRow(
+                step: "3",
+                icon: "timer",
+                color: DesignSystem.Color.error,
+                title: "Race the Clock",
+                subtitle: "Finish faster for more XP"
+            )
+            ruleDivider
+            ruleRow(
+                step: "4",
+                icon: "trophy.fill",
+                color: DesignSystem.Color.warning,
+                title: "Compete",
+                subtitle: "Best times go to Game Center"
+            )
+        }
     }
 
     var ruleDivider: some View {

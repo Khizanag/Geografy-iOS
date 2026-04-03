@@ -79,46 +79,54 @@ private extension TypeSelectionGrid {
     }
 
     func cardHeader(item: T, isSelected: Bool, isLocked: Bool) -> some View {
-        // swiftlint:disable:next closure_body_length
         HStack {
-            ZStack {
-                Circle()
-                    .fill(
-                        isSelected
-                            ? DesignSystem.Color.onAccent.opacity(0.20)
-                            : DesignSystem.Color.accent.opacity(0.15)
-                    )
-                    .frame(width: 36, height: 36)
-                Image(systemName: item.icon)
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(
-                        isSelected
-                            ? DesignSystem.Color.onAccent
-                            : DesignSystem.Color.accent
-                    )
-            }
+            cardHeaderIcon(item: item, isSelected: isSelected)
             Spacer()
-            if isLocked {
-                Image(systemName: "lock.fill")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(
-                        isSelected
-                            ? DesignSystem.Color.onAccent.opacity(0.6)
-                            : DesignSystem.Color.textTertiary
-                    )
-                    .padding(6)
-                    .background(
-                        isSelected
-                            ? DesignSystem.Color.onAccent.opacity(0.12)
-                            : DesignSystem.Color.cardBackgroundHighlighted,
-                        in: Circle()
-                    )
-            } else if isSelected {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-                    .transition(.scale.combined(with: .opacity))
-            }
+            cardHeaderTrailing(isSelected: isSelected, isLocked: isLocked)
+        }
+    }
+
+    func cardHeaderIcon(item: T, isSelected: Bool) -> some View {
+        ZStack {
+            Circle()
+                .fill(
+                    isSelected
+                        ? DesignSystem.Color.onAccent.opacity(0.20)
+                        : DesignSystem.Color.accent.opacity(0.15)
+                )
+                .frame(width: 36, height: 36)
+            Image(systemName: item.icon)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(
+                    isSelected
+                        ? DesignSystem.Color.onAccent
+                        : DesignSystem.Color.accent
+                )
+        }
+    }
+
+    @ViewBuilder
+    func cardHeaderTrailing(isSelected: Bool, isLocked: Bool) -> some View {
+        if isLocked {
+            Image(systemName: "lock.fill")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(
+                    isSelected
+                        ? DesignSystem.Color.onAccent.opacity(0.6)
+                        : DesignSystem.Color.textTertiary
+                )
+                .padding(6)
+                .background(
+                    isSelected
+                        ? DesignSystem.Color.onAccent.opacity(0.12)
+                        : DesignSystem.Color.cardBackgroundHighlighted,
+                    in: Circle()
+                )
+        } else if isSelected {
+            Image(systemName: "checkmark.circle.fill")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+                .transition(.scale.combined(with: .opacity))
         }
     }
 

@@ -236,41 +236,9 @@ private extension MultiplayerLobbyScreen {
 // MARK: - Background
 private extension MultiplayerLobbyScreen {
     var ambientBlobs: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.accent.opacity(0.18),
-                            DesignSystem.Color.background.opacity(0),
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 40)
-                .offset(x: -60, y: -120)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.purple.opacity(0.14),
-                            DesignSystem.Color.background.opacity(0),
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 350, height: 280)
-                .blur(radius: 44)
-                .offset(x: 120, y: 80)
-                .scaleEffect(blobAnimating ? 0.90 : 1.08)
+            accentBlob
+            purpleBlob
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
@@ -278,6 +246,44 @@ private extension MultiplayerLobbyScreen {
             reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
             value: blobAnimating
         )
+    }
+
+    var accentBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.accent.opacity(0.18),
+                        DesignSystem.Color.background.opacity(0),
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 200
+                )
+            )
+            .frame(width: 400, height: 300)
+            .blur(radius: 40)
+            .offset(x: -60, y: -120)
+            .scaleEffect(blobAnimating ? 1.08 : 0.92)
+    }
+
+    var purpleBlob: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.purple.opacity(0.14),
+                        DesignSystem.Color.background.opacity(0),
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 180
+                )
+            )
+            .frame(width: 350, height: 280)
+            .blur(radius: 44)
+            .offset(x: 120, y: 80)
+            .scaleEffect(blobAnimating ? 0.90 : 1.08)
     }
 
     func startBlobAnimation() {
