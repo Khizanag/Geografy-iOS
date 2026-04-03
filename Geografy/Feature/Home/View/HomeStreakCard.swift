@@ -40,41 +40,47 @@ private extension HomeStreakCard {
     }
 
     var streakIcon: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            isAtRisk
-                                ? DesignSystem.Color.orange.opacity(0.4)
-                                : DesignSystem.Color.orange.opacity(0.25),
-                            Color.clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: isAtRisk ? 36 : 32
-                    )
-                )
-                .frame(width: 56, height: 56)
-                .scaleEffect(isPulsing ? 1.3 : 1.0)
-                .animation(
-                    isPulsing && !reduceMotion
-                        ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
-                        : .default,
-                    value: isPulsing
-                )
-
-            Text(streak > 0 ? "🔥" : "💤")
-                .font(DesignSystem.Font.iconLarge)
-                .scaleEffect(isPulsing ? 1.2 : 1.0)
-                .animation(
-                    isPulsing && !reduceMotion
-                        ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
-                        : .default,
-                    value: isPulsing
-                )
+            streakGlowCircle
+            streakEmoji
         }
+    }
+
+    var streakGlowCircle: some View {
+        Circle()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        isAtRisk
+                            ? DesignSystem.Color.orange.opacity(0.4)
+                            : DesignSystem.Color.orange.opacity(0.25),
+                        Color.clear,
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: isAtRisk ? 36 : 32
+                )
+            )
+            .frame(width: 56, height: 56)
+            .scaleEffect(isPulsing ? 1.3 : 1.0)
+            .animation(
+                isPulsing && !reduceMotion
+                    ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
+                    : .default,
+                value: isPulsing
+            )
+    }
+
+    var streakEmoji: some View {
+        Text(streak > 0 ? "🔥" : "💤")
+            .font(DesignSystem.Font.iconLarge)
+            .scaleEffect(isPulsing ? 1.2 : 1.0)
+            .animation(
+                isPulsing && !reduceMotion
+                    ? .easeInOut(duration: 1.2).repeatForever(autoreverses: true)
+                    : .default,
+                value: isPulsing
+            )
     }
 
     var streakInfo: some View {

@@ -32,44 +32,50 @@ private extension CoinBalanceView {
     }
 
     var coinIcon: some View {
-        // swiftlint:disable:next closure_body_length
         ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.warning.opacity(0.4),
-                            DesignSystem.Color.warning.opacity(0.0),
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: DesignSystem.Size.xxxl
-                    )
-                )
-                .frame(
-                    width: DesignSystem.Size.hero,
-                    height: DesignSystem.Size.hero
-                )
-                .scaleEffect(glowScale)
-
-            Image(systemName: "dollarsign.circle.fill")
-                .font(DesignSystem.IconSize.hero)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [
-                            DesignSystem.Color.warning,
-                            DesignSystem.Color.orange,
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .shadow(
-                    color: DesignSystem.Color.warning.opacity(0.5),
-                    radius: DesignSystem.Spacing.sm,
-                    y: DesignSystem.Spacing.xxs
-                )
+            coinGlowCircle
+            coinSymbol
         }
+    }
+
+    var coinGlowCircle: some View {
+        Circle()
+            .fill(
+                RadialGradient(
+                    colors: [
+                        DesignSystem.Color.warning.opacity(0.4),
+                        DesignSystem.Color.warning.opacity(0.0),
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: DesignSystem.Size.xxxl
+                )
+            )
+            .frame(
+                width: DesignSystem.Size.hero,
+                height: DesignSystem.Size.hero
+            )
+            .scaleEffect(glowScale)
+    }
+
+    var coinSymbol: some View {
+        Image(systemName: "dollarsign.circle.fill")
+            .font(DesignSystem.IconSize.hero)
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [
+                        DesignSystem.Color.warning,
+                        DesignSystem.Color.orange,
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .shadow(
+                color: DesignSystem.Color.warning.opacity(0.5),
+                radius: DesignSystem.Spacing.sm,
+                y: DesignSystem.Spacing.xxs
+            )
     }
 
     var balanceLabel: some View {

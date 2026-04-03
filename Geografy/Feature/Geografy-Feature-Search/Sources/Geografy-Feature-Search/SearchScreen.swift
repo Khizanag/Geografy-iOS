@@ -92,41 +92,47 @@ private extension SearchScreen {
     }
 
     func recentRow(_ recentQuery: String) -> some View {
-        // swiftlint:disable:next closure_body_length
         HStack(spacing: DesignSystem.Spacing.sm) {
-            Button {
-                query = recentQuery
-                scheduleSearch(query: recentQuery)
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "clock.arrow.circlepath")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                    Text(recentQuery)
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Spacer(minLength: 0)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(
-                    DesignSystem.Color.cardBackground,
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                )
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(PressButtonStyle())
-
-            Button {
-                recentService.remove(recentQuery)
-            } label: {
-                Image(systemName: "xmark")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .padding(DesignSystem.Spacing.xs)
-            }
-            .glassEffect(.regular.interactive(), in: .circle)
+            recentRowButton(recentQuery)
+            recentRowRemoveButton(recentQuery)
         }
+    }
+
+    func recentRowButton(_ recentQuery: String) -> some View {
+        Button {
+            query = recentQuery
+            scheduleSearch(query: recentQuery)
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: "clock.arrow.circlepath")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                Text(recentQuery)
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(
+                DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    func recentRowRemoveButton(_ recentQuery: String) -> some View {
+        Button {
+            recentService.remove(recentQuery)
+        } label: {
+            Image(systemName: "xmark")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .padding(DesignSystem.Spacing.xs)
+        }
+        .glassEffect(.regular.interactive(), in: .circle)
     }
 
     var trendingSection: some View {
