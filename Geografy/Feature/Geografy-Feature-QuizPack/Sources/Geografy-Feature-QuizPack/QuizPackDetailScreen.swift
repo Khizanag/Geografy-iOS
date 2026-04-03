@@ -64,29 +64,8 @@ private extension QuizPackDetailScreen {
 // MARK: - Header
 private extension QuizPackDetailScreen {
     func packHeader(_ pack: QuizPack) -> some View {
-        // swiftlint:disable:next closure_body_length
         VStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                pack.gradientColors.0,
-                                pack.gradientColors.1,
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(
-                        width: DesignSystem.Size.xxxl,
-                        height: DesignSystem.Size.xxxl
-                    )
-
-                Image(systemName: pack.icon)
-                    .font(DesignSystem.Font.title)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-            }
+            packIconCircle(pack)
 
             Text(pack.description)
                 .font(DesignSystem.Font.subheadline)
@@ -94,21 +73,49 @@ private extension QuizPackDetailScreen {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, DesignSystem.Spacing.lg)
 
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                infoPill(
-                    text: "\(pack.totalQuestions) questions",
-                    icon: "questionmark.circle"
-                )
-                infoPill(
-                    text: "\(pack.levelCount) levels",
-                    icon: "chart.bar.fill"
-                )
-                if pack.isPremium {
-                    PremiumBadge()
-                }
-            }
+            packInfoPills(pack)
         }
         .padding(.top, DesignSystem.Spacing.md)
+    }
+
+    func packIconCircle(_ pack: QuizPack) -> some View {
+        ZStack {
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            pack.gradientColors.0,
+                            pack.gradientColors.1,
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(
+                    width: DesignSystem.Size.xxxl,
+                    height: DesignSystem.Size.xxxl
+                )
+
+            Image(systemName: pack.icon)
+                .font(DesignSystem.Font.title)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+        }
+    }
+
+    func packInfoPills(_ pack: QuizPack) -> some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            infoPill(
+                text: "\(pack.totalQuestions) questions",
+                icon: "questionmark.circle"
+            )
+            infoPill(
+                text: "\(pack.levelCount) levels",
+                icon: "chart.bar.fill"
+            )
+            if pack.isPremium {
+                PremiumBadge()
+            }
+        }
     }
 }
 

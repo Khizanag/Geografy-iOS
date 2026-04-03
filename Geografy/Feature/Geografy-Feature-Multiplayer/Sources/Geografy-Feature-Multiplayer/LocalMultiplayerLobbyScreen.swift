@@ -161,45 +161,52 @@ private extension LocalMultiplayerLobbyScreen {
     }
 
     var peerList: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Nearby Hosts")
             if coordinator.sessionManager.discoveredPeers.isEmpty {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    ProgressView()
-                        .tint(DesignSystem.Color.accent)
-                    Text("Searching nearby...")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.vertical, DesignSystem.Spacing.xl)
+                searchingIndicator
             } else {
-                ForEach(coordinator.sessionManager.discoveredPeers, id: \.displayName) { peer in
-                    Button {
-                        hapticsService.impact(.light)
-                        coordinator.joinHost(peer)
-                    } label: {
-                        CardView {
-                            HStack(spacing: DesignSystem.Spacing.md) {
-                                Image(systemName: "wifi")
-                                    .font(DesignSystem.Font.headline)
-                                    .foregroundStyle(DesignSystem.Color.accent)
-                                Text(peer.displayName)
-                                    .font(DesignSystem.Font.headline)
-                                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                                Spacer()
-                                Text("Join")
-                                    .font(DesignSystem.Font.caption)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(DesignSystem.Color.accent)
-                            }
-                            .padding(DesignSystem.Spacing.md)
-                        }
+                discoveredPeerRows
+            }
+        }
+    }
+
+    var searchingIndicator: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            ProgressView()
+                .tint(DesignSystem.Color.accent)
+            Text("Searching nearby...")
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.vertical, DesignSystem.Spacing.xl)
+    }
+
+    var discoveredPeerRows: some View {
+        ForEach(coordinator.sessionManager.discoveredPeers, id: \.displayName) { peer in
+            Button {
+                hapticsService.impact(.light)
+                coordinator.joinHost(peer)
+            } label: {
+                CardView {
+                    HStack(spacing: DesignSystem.Spacing.md) {
+                        Image(systemName: "wifi")
+                            .font(DesignSystem.Font.headline)
+                            .foregroundStyle(DesignSystem.Color.accent)
+                        Text(peer.displayName)
+                            .font(DesignSystem.Font.headline)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Spacer()
+                        Text("Join")
+                            .font(DesignSystem.Font.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(DesignSystem.Color.accent)
                     }
-                    .buttonStyle(PressButtonStyle())
+                    .padding(DesignSystem.Spacing.md)
                 }
             }
+            .buttonStyle(PressButtonStyle())
         }
     }
 }

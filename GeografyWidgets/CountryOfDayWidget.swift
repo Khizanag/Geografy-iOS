@@ -77,19 +77,33 @@ struct CountryOfDayWidgetView: View {
 // MARK: - Subviews
 private extension CountryOfDayWidgetView {
     var smallView: some View {
-        // swiftlint:disable:next closure_body_length
         VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 6) {
-                Image(systemName: "globe.americas.fill")
-                    .font(.system(size: 11, weight: .semibold))
-                Text("Country of the Day")
-                    .font(.system(size: 11, weight: .semibold))
-            }
-            .foregroundStyle(WidgetColors.accent)
-            .widgetAccentable()
-
+            smallViewHeader
             Spacer(minLength: 6)
+            smallViewCountryInfo
+            Spacer(minLength: 4)
+            smallViewFunFact
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .containerBackground(for: .widget) {
+            Color(.systemBackground)
+        }
+        .widgetURL(URL(string: "geografy://home"))
+    }
 
+    var smallViewHeader: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "globe.americas.fill")
+                .font(.system(size: 11, weight: .semibold))
+            Text("Country of the Day")
+                .font(.system(size: 11, weight: .semibold))
+        }
+        .foregroundStyle(WidgetColors.accent)
+        .widgetAccentable()
+    }
+
+    var smallViewCountryInfo: some View {
+        VStack(alignment: .leading, spacing: 0) {
             Text(entry.flagEmoji)
                 .font(.system(size: 36))
 
@@ -109,20 +123,15 @@ private extension CountryOfDayWidgetView {
                     .lineLimit(1)
             }
             .foregroundStyle(.secondary)
-
-            Spacer(minLength: 4)
-
-            Text(entry.funFact)
-                .font(.system(size: 10))
-                .foregroundStyle(.tertiary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .containerBackground(for: .widget) {
-            Color(.systemBackground)
-        }
-        .widgetURL(URL(string: "geografy://home"))
+    }
+
+    var smallViewFunFact: some View {
+        Text(entry.funFact)
+            .font(.system(size: 10))
+            .foregroundStyle(.tertiary)
+            .lineLimit(2)
+            .minimumScaleFactor(0.8)
     }
 
     var inlineView: some View {

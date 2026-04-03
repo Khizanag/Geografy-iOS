@@ -190,44 +190,49 @@ private extension SizeCompareView {
 }
 
 // MARK: - Preview
-// swiftlint:disable:next closure_body_length
 #Preview {
     SizeCompareView(
-        referenceCountry: Country(
-            code: "FR",
-            name: "France",
-            capital: "Paris",
-            capitals: nil,
-            flagEmoji: "🇫🇷",
-            continent: .europe,
-            area: 551_695,
-            population: 67_750_000,
-            populationDensity: 122.8,
-            currency: Country.Currency(name: "Euro", code: "EUR"),
-            languages: [],
-            formOfGovernment: "Republic",
-            gdp: nil,
-            gdpPerCapita: nil,
-            gdpPPP: nil,
-            organizations: []
-        ),
-        comparisonCountry: Country(
-            code: "BR",
-            name: "Brazil",
-            capital: "Brasília",
-            capitals: nil,
-            flagEmoji: "🇧🇷",
-            continent: .southAmerica,
-            area: 8_515_767,
-            population: 215_313_498,
-            populationDensity: 25.3,
-            currency: Country.Currency(name: "Real", code: "BRL"),
-            languages: [],
-            formOfGovernment: "Federal Republic",
-            gdp: nil,
-            gdpPerCapita: nil,
-            gdpPPP: nil,
-            organizations: []
-        )
+        referenceCountry: .previewFrance,
+        comparisonCountry: .previewBrazil
+    )
+}
+
+private extension Country {
+    static let previewFrance = Country(
+        code: "FR",
+        name: "France",
+        capital: "Paris",
+        capitals: nil,
+        flagEmoji: "🇫🇷",
+        continent: .europe,
+        area: 551_695,
+        population: 67_750_000,
+        populationDensity: 122.8,
+        currency: Country.Currency(name: "Euro", code: "EUR"),
+        languages: [],
+        formOfGovernment: "Republic",
+        gdp: nil,
+        gdpPerCapita: nil,
+        gdpPPP: nil,
+        organizations: []
+    )
+
+    static let previewBrazil = Country(
+        code: "BR",
+        name: "Brazil",
+        capital: "Brasília",
+        capitals: nil,
+        flagEmoji: "🇧🇷",
+        continent: .southAmerica,
+        area: 8_515_767,
+        population: 215_313_498,
+        populationDensity: 25.3,
+        currency: Country.Currency(name: "Real", code: "BRL"),
+        languages: [],
+        formOfGovernment: "Federal Republic",
+        gdp: nil,
+        gdpPerCapita: nil,
+        gdpPPP: nil,
+        organizations: []
     )
 }

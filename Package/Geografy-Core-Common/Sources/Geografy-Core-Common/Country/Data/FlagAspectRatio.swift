@@ -7,8 +7,9 @@ public enum FlagAspectRatio {
     }
 
     // MARK: - Data
-    // swiftlint:disable:next closure_body_length
-    public static let ratios: [String: CGFloat] = {
+    public static let ratios: [String: CGFloat] = buildRatios()
+
+    private static func buildRatios() -> [String: CGFloat] {
         var map = [String: CGFloat]()
 
         // ── Square (1:1) ──────────────────────────────────────────────
@@ -31,6 +32,13 @@ public enum FlagAspectRatio {
         ]
         for code in oneToTwo { map[code] = 2.0 }
 
+        populateTwoToThree(&map)
+        populateSpecialRatios(&map)
+
+        return map
+    }
+
+    private static func populateTwoToThree(_ map: inout [String: CGFloat]) {
         // ── 2:3 (height:width → ratio 1.5, most common) ──────────────
         let twoToThree: [String] = [
             // Europe
@@ -57,7 +65,9 @@ public enum FlagAspectRatio {
             // Africa exception overridden below: CI, SL already in 1:2
         ]
         for code in twoToThree { map[code] = 1.5 }
+    }
 
+    private static func populateSpecialRatios(_ map: inout [String: CGFloat]) {
         // ── 3:5 (height:width → ratio 5/3 ≈ 1.667) ──────────────────
         let threeToFive: [String] = ["BH", "CR", "CU"]
         for code in threeToFive { map[code] = 5.0 / 3.0 }
@@ -87,7 +97,5 @@ public enum FlagAspectRatio {
 
         // ── KN (Saint Kitts and Nevis) — 2:3 ─────────────────────────
         map["KN"] = 1.5
-
-        return map
-    }()
+    }
 }

@@ -271,24 +271,8 @@ private extension CountryListScreen {
     }
 
     func sectionHeaderLabel(key: String, count: Int) -> some View {
-        // swiftlint:disable:next closure_body_length
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                Circle()
-                    .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
-                Text(String(key.prefix(1)).uppercased())
-                    .font(
-                        DesignSystem.Font.system(
-                            size: groupBy == .firstLetter ? 16 : 13,
-                            weight: .bold,
-                            design: .rounded
-                        )
-                    )
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .frame(width: groupBy == .firstLetter ? 36 : 30, height: groupBy == .firstLetter ? 36 : 30)
+            sectionKeyBadge(key: key)
 
             if groupBy != .firstLetter {
                 Text(key)
@@ -302,24 +286,47 @@ private extension CountryListScreen {
                 .fill(DesignSystem.Color.dividerSubtle)
                 .frame(height: 1)
 
-            HStack(spacing: 4) {
-                Text("\(count)")
-                    .font(DesignSystem.Font.micro.weight(.semibold))
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .monospacedDigit()
-                Image(
-                    systemName: expandedSections.contains(key) ? "chevron.up" : "chevron.down"
-                )
-                .font(DesignSystem.Font.nano.bold())
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
+            sectionCountChevron(key: key, count: count)
         }
         .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .frame(maxWidth: .infinity)
+    }
+
+    func sectionKeyBadge(key: String) -> some View {
+        ZStack {
+            Circle()
+                .fill(DesignSystem.Color.accent.opacity(0.12))
+            Circle()
+                .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
+            Text(String(key.prefix(1)).uppercased())
+                .font(
+                    DesignSystem.Font.system(
+                        size: groupBy == .firstLetter ? 16 : 13,
+                        weight: .bold,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(DesignSystem.Color.accent)
+        }
+        .frame(width: groupBy == .firstLetter ? 36 : 30, height: groupBy == .firstLetter ? 36 : 30)
+    }
+
+    func sectionCountChevron(key: String, count: Int) -> some View {
+        HStack(spacing: 4) {
+            Text("\(count)")
+                .font(DesignSystem.Font.micro.weight(.semibold))
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .monospacedDigit()
+            Image(
+                systemName: expandedSections.contains(key) ? "chevron.up" : "chevron.down"
+            )
+            .font(DesignSystem.Font.nano.bold())
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
     }
 }
 
