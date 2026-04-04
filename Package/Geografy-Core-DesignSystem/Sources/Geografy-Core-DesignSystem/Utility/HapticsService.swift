@@ -6,11 +6,17 @@ import Observation
 
 #if !os(iOS)
 public enum HapticImpactStyle {
-    case light, medium, heavy, soft, rigid
+    case light
+    case medium
+    case heavy
+    case soft
+    case rigid
 }
 
 public enum HapticNotificationType {
-    case success, warning, error
+    case success
+    case warning
+    case error
 }
 #else
 public typealias HapticImpactStyle = UIImpactFeedbackGenerator.FeedbackStyle

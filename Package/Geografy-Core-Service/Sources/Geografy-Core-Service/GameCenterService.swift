@@ -161,7 +161,8 @@ public extension GameCenterService {
 private extension GameCenterService {
     struct PendingSubmission: Codable {
         enum Kind: String, Codable {
-            case score, achievement
+            case score
+            case achievement
         }
         let kind: Kind
         let identifier: String

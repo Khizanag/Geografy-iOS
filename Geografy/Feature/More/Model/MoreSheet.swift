@@ -5,15 +5,35 @@ import Geografy_Core_Service
 import SwiftUI
 
 enum MoreSheet: Identifiable {
-    case profile, countries, orgs, favorites, travel
-    case dailyChallenge, compare, travelJournal, travelBucketList
-    case quizPacks, customQuiz, multiplayer, exploreGame, speedRun
-    case flagGame, trivia, landmarkQuiz
-    case wordSearch, borderChallenge, countryNicknames
-    case quotes, feed
-    case srsStudy, learningPath
+    case profile
+    case countries
+    case orgs
+    case favorites
+    case travel
+    case dailyChallenge
+    case compare
+    case travelJournal
+    case travelBucketList
+    case quizPacks
+    case customQuiz
+    case multiplayer
+    case exploreGame
+    case speedRun
+    case flagGame
+    case trivia
+    case landmarkQuiz
+    case wordSearch
+    case borderChallenge
+    case countryNicknames
+    case quotes
+    case feed
+    case srsStudy
+    case learningPath
     case timeline
-    case achievements, leaderboards, themes, settings
+    case achievements
+    case leaderboards
+    case themes
+    case settings
     case search
     case distanceCalculator
     case currencyConverter

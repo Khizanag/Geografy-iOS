@@ -2,7 +2,9 @@
 import SwiftUI
 
 public enum NavigationBarTitleDisplayModeCompat {
-    case automatic, inline, large
+    case automatic
+    case inline
+    case large
 }
 
 public extension View {

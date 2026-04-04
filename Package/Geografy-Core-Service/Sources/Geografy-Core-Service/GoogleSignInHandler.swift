@@ -230,7 +230,9 @@ private extension GoogleSignInHandler {
         let familyName: String?
 
         enum CodingKeys: String, CodingKey {
-            case sub, email, name
+            case sub
+            case email
+            case name
             case givenName = "given_name"
             case familyName = "family_name"
         }
