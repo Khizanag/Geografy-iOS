@@ -73,7 +73,7 @@ private extension QuotesService {
     }
 
     func saveFavorites() {
-        let favoriteIds = quotes.filter { $0.isFavorited }.map { $0.id }
+        let favoriteIds = quotes.filter(\.isFavorited).map(\.id)
         UserDefaults.standard.set(favoriteIds, forKey: favoritesKey)
     }
 }

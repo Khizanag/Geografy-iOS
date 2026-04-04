@@ -86,7 +86,7 @@ private extension QuotesScreen {
     }
 
     var quotesList: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
+        LazyVStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(displayedQuotes) { quote in
                 quoteCard(quote, isHighlighted: false)
             }
