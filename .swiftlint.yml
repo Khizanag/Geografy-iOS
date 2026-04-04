@@ -298,6 +298,12 @@ custom_rules:
     message: "No empty line between documentation comment and declaration"
     severity: error
 
+  one_case_per_line:
+    name: "One Enum Case Per Line"
+    regex: '^\s*case\s+[a-zA-Z_][a-zA-Z0-9_]*(?:\([^)]*\))?\s*,\s*[a-zA-Z_]'
+    message: "Each enum case must be declared on its own line"
+    severity: error
+
   no_navigation_link:
     name: "No NavigationLink"
     regex: 'NavigationLink\s*[\({]'
