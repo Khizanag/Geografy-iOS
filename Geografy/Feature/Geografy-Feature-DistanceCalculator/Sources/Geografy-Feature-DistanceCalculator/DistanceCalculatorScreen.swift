@@ -28,7 +28,7 @@ public struct DistanceCalculatorScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .sheet(isPresented: $showOriginPicker) {
-                CountryPickerSheet(
+                DistanceCountryPickerSheet(
                     title: "From Country",
                     countries: countryDataService.countries
                 ) { country in
@@ -40,7 +40,7 @@ public struct DistanceCalculatorScreen: View {
                 }
             }
             .sheet(isPresented: $showDestinationPicker) {
-                CountryPickerSheet(
+                DistanceCountryPickerSheet(
                     title: "To Country",
                     countries: countryDataService.countries
                 ) { country in
@@ -372,202 +372,6 @@ private extension DistanceCalculatorScreen {
             ComparisonItem(icon: "✈️", label: "Flight time", value: flightText),
             ComparisonItem(icon: "⚡️", label: "Light speed", value: lightText),
         ]
-    }
-}
-
-// MARK: - Distance Map View
-private struct DistanceMapView: View {
-    let originCode: String?
-    let destinationCode: String?
-    let lineProgress: CGFloat
-
-    var body: some View {
-        Canvas { context, size in
-            drawBackground(in: context, size: size)
-            if let origin = originCoordinate, let destination = destinationCoordinate {
-                drawLine(in: context, size: size, from: origin, to: destination)
-                drawDot(
-                    in: context, size: size,
-                    coordinate: origin,
-                    color: DesignSystem.Color.accent,
-                    label: originCode ?? ""
-                )
-                drawDot(
-                    in: context, size: size,
-                    coordinate: destination,
-                    color: DesignSystem.Color.error,
-                    label: destinationCode ?? ""
-                )
-            }
-        }
-        .background(DesignSystem.Color.cardBackground)
-    }
-
-    private func mapPoint(from coordinate: CapitalCoordinateService.Coordinate, in size: CGSize) -> CGPoint {
-        let padding: CGFloat = 20
-        let usableWidth = size.width - padding * 2
-        let usableHeight = size.height - padding * 2
-        let x = padding + CGFloat((coordinate.longitude + 180) / 360) * usableWidth
-        let y = padding + CGFloat((90 - coordinate.latitude) / 180) * usableHeight
-        return CGPoint(x: x, y: y)
-    }
-
-    private func drawBackground(in context: GraphicsContext, size: CGSize) {
-        let rect = CGRect(origin: .zero, size: size)
-        context.fill(Path(rect), with: .color(DesignSystem.Color.cardBackground))
-
-        var gridContext = context
-        gridContext.opacity = 0.06
-        for i in stride(from: 0, through: 6, by: 1) {
-            let x = CGFloat(i) / 6.0 * size.width
-            var path = Path()
-            path.move(to: CGPoint(x: x, y: 0))
-            path.addLine(to: CGPoint(x: x, y: size.height))
-            gridContext.stroke(path, with: .color(DesignSystem.Color.textPrimary), lineWidth: 0.5)
-        }
-        for i in stride(from: 0, through: 4, by: 1) {
-            let y = CGFloat(i) / 4.0 * size.height
-            var path = Path()
-            path.move(to: CGPoint(x: 0, y: y))
-            path.addLine(to: CGPoint(x: size.width, y: y))
-            gridContext.stroke(path, with: .color(DesignSystem.Color.textPrimary), lineWidth: 0.5)
-        }
-    }
-
-    private func drawLine(
-        in context: GraphicsContext,
-        size: CGSize,
-        from origin: CapitalCoordinateService.Coordinate,
-        to destination: CapitalCoordinateService.Coordinate
-    ) {
-        let startPoint = mapPoint(from: origin, in: size)
-        let endPoint = mapPoint(from: destination, in: size)
-        let currentEnd = CGPoint(
-            x: startPoint.x + (endPoint.x - startPoint.x) * lineProgress,
-            y: startPoint.y + (endPoint.y - startPoint.y) * lineProgress
-        )
-
-        let midX = (startPoint.x + endPoint.x) / 2
-        let midY = min(startPoint.y, endPoint.y) - 40
-        let controlPoint = CGPoint(x: midX, y: midY)
-
-        var path = Path()
-        path.move(to: startPoint)
-        path.addQuadCurve(to: currentEnd, control: controlPoint)
-
-        var shadowContext = context
-        shadowContext.opacity = 0.3
-        shadowContext.stroke(
-            path,
-            with: .color(DesignSystem.Color.accent),
-            style: StrokeStyle(lineWidth: 4, lineCap: .round)
-        )
-        context.stroke(
-            path,
-            with: .color(DesignSystem.Color.accent),
-            style: StrokeStyle(lineWidth: 2, lineCap: .round, dash: [6, 4])
-        )
-    }
-
-    private func drawDot(
-        in context: GraphicsContext,
-        size: CGSize,
-        coordinate: CapitalCoordinateService.Coordinate,
-        color: Color,
-        label: String
-    ) {
-        let point = mapPoint(from: coordinate, in: size)
-        let dotSize: CGFloat = 10
-        let dotRect = CGRect(
-            x: point.x - dotSize / 2,
-            y: point.y - dotSize / 2,
-            width: dotSize,
-            height: dotSize
-        )
-
-        context.fill(Path(ellipseIn: dotRect), with: .color(color))
-        context.fill(
-            Path(ellipseIn: dotRect.insetBy(dx: 3, dy: 3)),
-            with: .color(.white)
-        )
-    }
-
-    private var originCoordinate: CapitalCoordinateService.Coordinate? {
-        guard let code = originCode else { return nil }
-        return CapitalCoordinateService.coordinate(for: code)
-    }
-
-    private var destinationCoordinate: CapitalCoordinateService.Coordinate? {
-        guard let code = destinationCode else { return nil }
-        return CapitalCoordinateService.coordinate(for: code)
-    }
-}
-
-// MARK: - Country Picker Sheet
-private struct CountryPickerSheet: View {
-    @Environment(\.dismiss) private var dismiss
-
-    let title: String
-    let countries: [Country]
-    let onSelect: (Country) -> Void
-
-    @State private var searchText = ""
-
-    var body: some View {
-        extractedContent
-            .searchable(text: $searchText, prompt: "Search countries…")
-            .navigationTitle(title)
-            #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
-            .toolbar { toolbarContent }
-    }
-}
-
-// MARK: - Subviews
-private extension CountryPickerSheet {
-    var extractedContent: some View {
-        List(filteredCountries) { country in
-            Button {
-                onSelect(country)
-                dismiss()
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: country.code, height: 24, fixedWidth: true)
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(country.name)
-                            .font(DesignSystem.Font.body)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text(country.capital)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Toolbar
-private extension CountryPickerSheet {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel") { dismiss() }
-        }
-    }
-}
-
-// MARK: - Helpers
-private extension CountryPickerSheet {
-    var filteredCountries: [Country] {
-        let all = countries
-        guard !searchText.isEmpty else { return all }
-        let query = searchText.lowercased()
-        return all.filter {
-            $0.name.lowercased().contains(query) ||
-            $0.capital.lowercased().contains(query)
-        }
     }
 }
 #endif
