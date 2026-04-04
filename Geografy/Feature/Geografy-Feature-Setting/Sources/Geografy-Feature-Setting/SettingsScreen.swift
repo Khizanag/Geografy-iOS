@@ -2,6 +2,7 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
+import StoreKit
 import SwiftUI
 
 public struct SettingsScreen: View {
@@ -9,19 +10,27 @@ public struct SettingsScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(TestingModeService.self) private var testingModeService
+    #if !os(tvOS)
+    @Environment(HapticsService.self) private var hapticsService
+    #endif
 
     @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
     @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
+    @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
     @AppStorage("showCorrectAnswer") private var showCorrectAnswer = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
 
     @State private var showDeleteConfirmation = false
+    @State private var showSignOutConfirmation = false
+    @State private var showDeveloperTools = false
+    @State private var versionTapCount = 0
 
     public init() {}
 
     public var body: some View {
-        extractedContent
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Settings")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -39,23 +48,40 @@ public struct SettingsScreen: View {
             } message: {
                 Text("All your progress, XP, and achievements will be permanently deleted.")
             }
+            .confirmationDialog(
+                "Sign Out",
+                isPresented: $showSignOutConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Sign Out", role: .destructive) {
+                    authService.signOut()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("You can sign back in anytime to restore your progress.")
+            }
     }
 }
 
-// MARK: - Subviews
+// MARK: - Content
 private extension SettingsScreen {
-    var extractedContent: some View {
+    var scrollContent: some View {
         ScrollView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                premiumSection
+            VStack(spacing: DesignSystem.Spacing.lg) {
                 accountSection
-                appearanceSection
-                generalSection
-                mapSection
-                quizSection
-                developerSection
-                appVersionInfo
+                preferencesSection
+                soundAndHapticsSection
+                notificationsSection
+                aboutSection
+
+                if showDeveloperTools {
+                    developerSection
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                }
+
+                versionFooter
             }
+            .animation(.easeInOut(duration: 0.3), value: showDeveloperTools)
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
@@ -63,187 +89,142 @@ private extension SettingsScreen {
     }
 }
 
-// MARK: - Premium Section
+// MARK: - Account
 private extension SettingsScreen {
-    @ViewBuilder
-    var premiumSection: some View {
-        if subscriptionService.isPremium {
-            activePremiumSection
-        } else {
-            upgradePremiumSection
+    var accountSection: some View {
+        settingsGroup(header: "Account") {
+            if !authService.isGuest {
+                authenticatedRows
+            } else {
+                guestRows
+            }
         }
     }
 
-    var activePremiumSection: some View {
-        settingsGroup(header: "Subscription") {
+    var authenticatedRows: some View {
+        VStack(spacing: 0) {
+            profileRow
+            settingsDivider
+            subscriptionRow
+            settingsDivider
+            signOutRow
+            settingsDivider
+            deleteAccountRow
+        }
+    }
+
+    @ViewBuilder
+    var subscriptionRow: some View {
+        if subscriptionService.isPremium {
+            premiumStatusRow
+        } else {
+            upgradePremiumRow
+        }
+    }
+
+    var guestRows: some View {
+        VStack(spacing: 0) {
+            guestProfileRow
+
+            settingsDivider
+
+            signInRow
+        }
+    }
+
+    var profileRow: some View {
+        Button { coordinator.sheet(.profile) } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
+                ProfileAvatarView(
+                    name: authService.currentProfile?.displayName ?? "Explorer",
+                    size: DesignSystem.Size.md
+                )
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Geografy Premium")
+                    Text(authService.currentProfile?.displayName ?? "Explorer")
                         .font(DesignSystem.Font.body)
                         .fontWeight(.medium)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("Active subscription")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.success)
-                }
-                Spacer()
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-
-            settingsDivider
-
-            Button {
-                Task { await subscriptionService.restorePurchases() }
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    SettingsIconBadge(systemImage: "arrow.clockwise", color: DesignSystem.Color.blue)
-                    Text("Restore Purchases")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Spacer()
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .buttonStyle(PressButtonStyle())
-        }
-    }
-
-    var upgradePremiumSection: some View {
-        settingsGroup(header: "Premium") {
-            Button { coordinator.sheet(.paywall) } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Upgrade to Premium")
-                            .font(DesignSystem.Font.body)
-                            .fontWeight(.medium)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text("Unlock all quiz types & advanced stats")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                    }
-                    Spacer()
-                    Image(systemName: "chevron.right")
+                    Text(authService.currentProfile?.email ?? "View profile")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .buttonStyle(PressButtonStyle())
-        }
-    }
-}
-
-// MARK: - Account Section
-private extension SettingsScreen {
-    @ViewBuilder
-    var accountSection: some View {
-        if false {
-            guestAccountSection
-        } else {
-            authenticatedAccountSection
-        }
-    }
-
-    var guestAccountSection: some View {
-        settingsGroup(header: "Account") {
-            guestAccountHeader
-            settingsDivider
-            guestSignInRow
-        }
-    }
-
-    var guestAccountHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SettingsIconBadge(systemImage: "person.fill", color: DesignSystem.Color.textSecondary)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Guest")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Progress is saved on this device only")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            Spacer()
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-    }
-
-    var guestSignInRow: some View {
-        Button {
-            coordinator.sheet(.signIn)
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(systemImage: "person.badge.plus", color: DesignSystem.Color.accent)
-                Text("Sign In with Apple")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.accent)
                 Spacer()
                 Image(systemName: "chevron.right")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+            .settingsRowPadding()
         }
         .buttonStyle(PressButtonStyle())
     }
 
-    var authenticatedAccountSection: some View {
-        let profile: UserProfile? = nil
-        return settingsGroup(header: "Account") {
-            authenticatedAccountHeader(profile: profile)
-
-            settingsDivider
-
-            signOutRow
-
-            settingsDivider
-
-            deleteAccountRow
-        }
-    }
-
-    func authenticatedAccountHeader(profile: UserProfile?) -> some View {
+    var guestProfileRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.15))
-                    .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-                Image(systemName: "person.fill")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
+            SettingsIconBadge(systemImage: "person.fill", color: DesignSystem.Color.textSecondary)
             VStack(alignment: .leading, spacing: 2) {
-                Text(profile?.displayName ?? "Explorer")
+                Text("Guest")
                     .font(DesignSystem.Font.body)
                     .fontWeight(.medium)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                if let email = profile?.email {
-                    Text(email)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                } else {
-                    Text("Signed in with Apple")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
+                Text("Progress saved on this device only")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             Spacer()
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
+        .settingsRowPadding()
+    }
+
+    var signInRow: some View {
+        Button { coordinator.sheet(.signIn) } label: {
+            SettingsNavigationRow(
+                icon: "person.badge.plus",
+                iconColor: DesignSystem.Color.accent,
+                title: "Sign In"
+            )
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    var premiumStatusRow: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
+            Text("Premium")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            Text("Active")
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.success)
+        }
+        .settingsRowPadding()
+    }
+
+    var upgradePremiumRow: some View {
+        Button { coordinator.sheet(.paywall) } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Upgrade to Premium")
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text("Unlock all features")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .settingsRowPadding()
+        }
+        .buttonStyle(PressButtonStyle())
     }
 
     var signOutRow: some View {
-        Button {
-            authService.signOut()
-        } label: {
+        Button { showSignOutConfirmation = true } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 SettingsIconBadge(
                     systemImage: "rectangle.portrait.and.arrow.right",
@@ -254,16 +235,13 @@ private extension SettingsScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                 Spacer()
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+            .settingsRowPadding()
         }
         .buttonStyle(PressButtonStyle())
     }
 
     var deleteAccountRow: some View {
-        Button {
-            showDeleteConfirmation = true
-        } label: {
+        Button { showDeleteConfirmation = true } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 SettingsIconBadge(systemImage: "trash.fill", color: DesignSystem.Color.error)
                 Text("Delete Account")
@@ -271,33 +249,95 @@ private extension SettingsScreen {
                     .foregroundStyle(DesignSystem.Color.error)
                 Spacer()
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+            .settingsRowPadding()
         }
         .buttonStyle(PressButtonStyle())
     }
 }
 
-// MARK: - Sections
+// MARK: - Preferences
 private extension SettingsScreen {
-    var appearanceSection: some View {
-        settingsGroup(header: "Appearance") {
-            settingsPickerRow(
-                icon: "circle.lefthalf.filled",
-                iconColor: DesignSystem.Color.indigo,
-                title: "Theme",
-                selection: $selectedTheme,
-                options: ["Auto", "Light", "Dark"]
-            )
+    var preferencesSection: some View {
+        settingsGroup(header: "Preferences") {
+            VStack(spacing: 0) {
+                appearanceRow
+
+                settingsDivider
+
+                SettingsToggleRow(
+                    icon: "checkmark.circle.fill",
+                    iconColor: DesignSystem.Color.success,
+                    title: "Show correct answer",
+                    isOn: $showCorrectAnswer
+                )
+
+                settingsDivider
+
+                Button { coordinator.push(.territorialDisputes) } label: {
+                    SettingsNavigationRow(
+                        icon: "exclamationmark.triangle.fill",
+                        iconColor: DesignSystem.Color.warning,
+                        title: "Territorial disputes"
+                    )
+                }
+                .buttonStyle(PressButtonStyle())
+            }
         }
     }
 
-    var generalSection: some View {
-        settingsGroup(header: "General") {
+    var appearanceRow: some View {
+        settingsPickerRow(
+            icon: "circle.lefthalf.filled",
+            iconColor: DesignSystem.Color.indigo,
+            title: "Appearance",
+            selection: $selectedTheme,
+            options: ["Auto", "Light", "Dark"]
+        )
+    }
+}
+
+// MARK: - Sound & Haptics
+private extension SettingsScreen {
+    var soundAndHapticsSection: some View {
+        settingsGroup(header: "Sound & Haptics") {
+            VStack(spacing: 0) {
+                SettingsToggleRow(
+                    icon: "speaker.wave.2.fill",
+                    iconColor: DesignSystem.Color.blue,
+                    title: "Sound effects",
+                    isOn: $soundEffectsEnabled
+                )
+
+                settingsDivider
+
+                SettingsToggleRow(
+                    icon: "iphone.radiowaves.left.and.right",
+                    iconColor: DesignSystem.Color.success,
+                    title: "Haptic feedback",
+                    isOn: $hapticFeedbackEnabled
+                )
+
+                settingsDivider
+
+                SettingsToggleRow(
+                    icon: "waveform",
+                    iconColor: DesignSystem.Color.purple,
+                    title: "Pronunciation",
+                    isOn: $pronunciationEnabled
+                )
+            }
+        }
+    }
+}
+
+// MARK: - Notifications
+private extension SettingsScreen {
+    var notificationsSection: some View {
+        settingsGroup(header: "Notifications") {
             SettingsToggleRow(
                 icon: "bell.fill",
                 iconColor: DesignSystem.Color.accent,
-                title: "Notifications",
+                title: "Push notifications",
                 isOn: Binding(
                     get: { notificationsEnabled },
                     set: { newValue in
@@ -309,81 +349,157 @@ private extension SettingsScreen {
                     }
                 )
             )
-
-            settingsDivider
-
-            SettingsToggleRow(
-                icon: "iphone.radiowaves.left.and.right",
-                iconColor: DesignSystem.Color.success,
-                title: "Haptic feedback",
-                isOn: $hapticFeedbackEnabled
-            )
-
-            settingsDivider
-
-            SettingsToggleRow(
-                icon: "speaker.wave.2.fill",
-                iconColor: DesignSystem.Color.blue,
-                title: "Pronunciation",
-                isOn: $pronunciationEnabled
-            )
         }
     }
+}
 
-    var mapSection: some View {
-        settingsGroup(header: "Map") {
-            Button { coordinator.push(.territorialDisputes) } label: {
-                SettingsNavigationRow(
-                    icon: "exclamationmark.triangle.fill",
-                    iconColor: DesignSystem.Color.warning,
-                    title: "Territorial disputes"
-                )
+// MARK: - About
+private extension SettingsScreen {
+    var aboutSection: some View {
+        settingsGroup(header: "About") {
+            VStack(spacing: 0) {
+                rateAppRow
+                settingsDivider
+                shareAppRow
+                settingsDivider
+                privacyPolicyRow
+                settingsDivider
+                termsOfServiceRow
+
+                if subscriptionService.isPremium {
+                    settingsDivider
+                    restorePurchasesRow
+                }
             }
-            .buttonStyle(PressButtonStyle())
         }
     }
 
-    var quizSection: some View {
-        settingsGroup(header: "Quiz") {
-            SettingsToggleRow(
-                icon: "checkmark.circle.fill",
-                iconColor: DesignSystem.Color.success,
-                title: "Show correct answer",
-                isOn: $showCorrectAnswer
+    var privacyPolicyRow: some View {
+        Link(destination: privacyPolicyURL) {
+            SettingsExternalRow(icon: "hand.raised.fill", iconColor: DesignSystem.Color.blue, title: "Privacy Policy")
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    var termsOfServiceRow: some View {
+        Link(destination: termsOfServiceURL) {
+            SettingsExternalRow(
+                icon: "doc.text.fill",
+                iconColor: DesignSystem.Color.textSecondary,
+                title: "Terms of Service"
             )
         }
+        .buttonStyle(PressButtonStyle())
     }
 
+    var rateAppRow: some View {
+        Button {
+            #if !os(tvOS)
+            hapticsService.impact(.light)
+            #endif
+            requestReview()
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                SettingsIconBadge(systemImage: "star.fill", color: DesignSystem.Color.warning)
+                Text("Rate Geografy")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Spacer()
+                Image(systemName: "arrow.up.forward")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .settingsRowPadding()
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    var shareAppRow: some View {
+        ShareLink(item: appStoreURL) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                SettingsIconBadge(systemImage: "square.and.arrow.up", color: DesignSystem.Color.accent)
+                Text("Share Geografy")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Spacer()
+                Image(systemName: "arrow.up.forward")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .settingsRowPadding()
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+
+    var restorePurchasesRow: some View {
+        Button {
+            Task { await subscriptionService.restorePurchases() }
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                SettingsIconBadge(systemImage: "arrow.clockwise", color: DesignSystem.Color.blue)
+                Text("Restore Purchases")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Spacer()
+            }
+            .settingsRowPadding()
+        }
+        .buttonStyle(PressButtonStyle())
+    }
+}
+
+// MARK: - Developer
+private extension SettingsScreen {
     var developerSection: some View {
         settingsGroup(header: "Developer") {
-            SettingsToggleRow(
-                icon: "hammer.fill",
-                iconColor: DesignSystem.Color.orange,
-                title: "Testing Mode",
-                isOn: Binding(
-                    get: { testingModeService.isEnabled },
-                    set: { testingModeService.isEnabled = $0 }
+            VStack(spacing: 0) {
+                SettingsToggleRow(
+                    icon: "hammer.fill",
+                    iconColor: DesignSystem.Color.orange,
+                    title: "Testing Mode",
+                    isOn: Binding(
+                        get: { testingModeService.isEnabled },
+                        set: { testingModeService.isEnabled = $0 }
+                    )
                 )
-            )
 
-            Button {
-                coordinator.push(.featureFlags)
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    SettingsIconBadge(systemImage: "flag.fill", color: DesignSystem.Color.accent)
-                    Text("Feature Flags")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                settingsDivider
+
+                Button { coordinator.push(.featureFlags) } label: {
+                    SettingsNavigationRow(
+                        icon: "flag.fill",
+                        iconColor: DesignSystem.Color.accent,
+                        title: "Feature Flags"
+                    )
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
+                .buttonStyle(PressButtonStyle())
             }
-            .buttonStyle(.plain)
         }
+    }
+}
+
+// MARK: - Version Footer
+private extension SettingsScreen {
+    var versionFooter: some View {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return Button {
+            versionTapCount += 1
+            if versionTapCount >= 5, !showDeveloperTools {
+                showDeveloperTools = true
+                #if !os(tvOS)
+                hapticsService.notification(.success)
+                #endif
+            }
+        } label: {
+            Text("Geografy v\(version) (\(build))")
+                .font(DesignSystem.Font.caption2)
+                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("App version \(version)")
     }
 }
 
@@ -408,19 +524,15 @@ private extension SettingsScreen {
             .pickerStyle(.menu)
             .tint(DesignSystem.Color.textSecondary)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
+        .settingsRowPadding()
     }
 
     var settingsDivider: some View {
         Divider()
             .background(DesignSystem.Color.cardBackgroundHighlighted)
-            .padding(.leading, DesignSystem.Spacing.xxl)
+            .padding(.leading, DesignSystem.Spacing.xxl + DesignSystem.Spacing.md)
     }
-}
 
-// MARK: - Helpers
-private extension SettingsScreen {
     func settingsGroup(header: String, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text(header.uppercased())
@@ -429,25 +541,18 @@ private extension SettingsScreen {
                 .padding(.horizontal, DesignSystem.Spacing.xs)
                 .accessibilityAddTraits(.isHeader)
             CardView {
-                VStack(spacing: 0) {
-                    content()
-                }
+                content()
             }
         }
     }
+}
 
-    var appVersionInfo: some View {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
-        return Text("Geografy v\(version) (\(build))")
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, DesignSystem.Spacing.xs)
-    }
-
+// MARK: - Actions
+private extension SettingsScreen {
     func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .badge, .sound]
+        ) { granted, _ in
             DispatchQueue.main.async {
                 notificationsEnabled = granted
             }
@@ -461,68 +566,15 @@ private extension SettingsScreen {
             notificationsEnabled = false
         }
     }
-}
 
-// MARK: - Settings Row Components
-private struct SettingsToggleRow: View {
-    let icon: String
-    let iconColor: Color
-    let title: String
-    @Binding var isOn: Bool
-
-    var body: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SettingsIconBadge(systemImage: icon, color: iconColor)
-            Text(title)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Spacer()
-            Toggle("", isOn: $isOn)
-                .labelsHidden()
-                .tint(DesignSystem.Color.success)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
+    func requestReview() {
+        guard let scene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first else { return }
+        SKStoreReviewController.requestReview(in: scene)
     }
-}
 
-private struct SettingsNavigationRow: View {
-    let icon: String
-    let iconColor: Color
-    let title: String
-
-    var body: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SettingsIconBadge(systemImage: icon, color: iconColor)
-            Text(title)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Spacer()
-            Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .contentShape(Rectangle())
-    }
-}
-
-private struct SettingsIconBadge: View {
-    let systemImage: String
-    let color: Color
-
-    var body: some View {
-        Image(systemName: systemImage)
-            .font(DesignSystem.IconSize.medium)
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-            .background(color)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-            .accessibilityHidden(true)
-    }
-}
-
-#Preview {
-    SettingsScreen()
+    var appStoreURL: URL { SettingsURLs.appStore }
+    var privacyPolicyURL: URL { SettingsURLs.privacy }
+    var termsOfServiceURL: URL { SettingsURLs.terms }
 }
