@@ -14,7 +14,6 @@ struct HomeScreen: View {
     @Environment(XPService.self) private var xpService
     @Environment(StreakService.self) private var streakService
     @Environment(CoinService.self) private var coinService
-    @Environment(HomeSectionOrderService.self) private var sectionOrderService
     @Environment(FlashcardService.self) var flashcardService
 
     @Environment(Navigator.self) var coordinator
@@ -22,18 +21,7 @@ struct HomeScreen: View {
     @Environment(FeatureFlagService.self) var featureFlags
 
     @State var dailyChallengeService: DailyChallengeService?
-    @State private var selectedMapIndex = 0
     @State private var appeared = false
-
-    private let maps: [(name: String, icon: String)] = [
-        ("World map", "globe"),
-        ("Europe", Country.Continent.europe.icon),
-        ("Asia", Country.Continent.asia.icon),
-        ("Africa", Country.Continent.africa.icon),
-        ("North America", Country.Continent.northAmerica.icon),
-        ("South America", Country.Continent.southAmerica.icon),
-        ("Oceania", Country.Continent.oceania.icon),
-    ]
 
     var body: some View {
         mainFeed
@@ -57,10 +45,30 @@ private extension HomeScreen {
                     .padding(.horizontal, DesignSystem.Spacing.md)
                     .feedSection(appeared: appeared, delay: 0.05)
 
-                ForEach(Array(sectionOrderService.sections.enumerated()), id: \.element) { index, section in
-                    sectionView(for: section)
-                        .feedSection(appeared: appeared, delay: 0.08 + Double(index) * 0.04)
-                }
+                actionCardSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .feedSection(appeared: appeared, delay: 0.10)
+
+                quickStatsSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .feedSection(appeared: appeared, delay: 0.15)
+
+                spotlightSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .feedSection(appeared: appeared, delay: 0.20)
+
+                gamesSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .feedSection(appeared: appeared, delay: 0.25)
+
+                exploreSection
+                    .feedSection(appeared: appeared, delay: 0.30)
+
+                learnSection
+                    .feedSection(appeared: appeared, delay: 0.35)
+
+                worldRecordsSection
+                    .feedSection(appeared: appeared, delay: 0.40)
             }
             .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
             .padding(.top, DesignSystem.Spacing.lg)
@@ -69,8 +77,24 @@ private extension HomeScreen {
     }
 }
 
-// MARK: - Top Bar
+// MARK: - Toolbar
 private extension HomeScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            profileButton
+        }
+        ToolbarItem(placement: .principal) {
+            statsButton
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            searchButton
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            friendsButton
+        }
+    }
+
     var profileButton: some View {
         Button { coordinator.sheet(.profile) } label: {
             ProfileAvatarView(
@@ -88,9 +112,34 @@ private extension HomeScreen {
                 divider
                 coinIndicator
             }
-//            .fixedSize()
         }
         .buttonStyle(.glass)
+    }
+
+    var xpIndicator: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            xpProgressBar
+            Text("Lv. \(xpService.currentLevel.level)")
+                .font(DesignSystem.Font.caption2)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Level \(xpService.currentLevel.level)")
+        .accessibilityValue("\(Int(xpService.progressFraction * 100)) percent to next level")
+    }
+
+    var xpProgressBar: some View {
+        GeometryReader { geometryReader in
+            ZStack(alignment: .leading) {
+                Capsule().fill(DesignSystem.Color.cardBackgroundHighlighted)
+                Capsule()
+                    .fill(DesignSystem.Color.accent)
+                    .frame(width: geometryReader.size.width * xpService.progressFraction)
+                    .animation(.easeInOut(duration: 0.5), value: xpService.progressFraction)
+            }
+        }
+        .frame(width: 120, height: DesignSystem.Size.xs)
     }
 
     var coinIndicator: some View {
@@ -109,6 +158,12 @@ private extension HomeScreen {
         .accessibilityLabel("\(coinService.formattedBalance) coins")
     }
 
+    var divider: some View {
+        Rectangle()
+            .fill(DesignSystem.Color.textTertiary.opacity(0.3))
+            .frame(width: DesignSystem.Size.xxs, height: DesignSystem.Size.sm)
+    }
+
     var searchButton: some View {
         Button { coordinator.sheet(.search) } label: {
             Label("Search", systemImage: "magnifyingglass")
@@ -119,38 +174,6 @@ private extension HomeScreen {
         Button { coordinator.sheet(.friends) } label: {
             Label("Friends", systemImage: "person.2")
         }
-    }
-
-    var xpIndicator: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            xpProgressBar
-            Text("Lv. \(xpService.currentLevel.level)")
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Level \(xpService.currentLevel.level)")
-        .accessibilityValue("\(Int(xpService.progressFraction * 100)) percent to next level")
-    }
-
-    var xpProgressBar: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule().fill(DesignSystem.Color.cardBackgroundHighlighted)
-                Capsule()
-                    .fill(DesignSystem.Color.accent)
-                    .frame(width: geo.size.width * xpService.progressFraction)
-                    .animation(.easeInOut(duration: 0.5), value: xpService.progressFraction)
-            }
-        }
-        .frame(width: 120, height: DesignSystem.Size.xs)
-    }
-
-    var divider: some View {
-        Rectangle()
-            .fill(DesignSystem.Color.textTertiary.opacity(0.3))
-            .frame(width: DesignSystem.Size.xxs, height: DesignSystem.Size.sm)
     }
 }
 
@@ -172,15 +195,8 @@ private extension HomeScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
             }
             Spacer()
-            editSectionsButton
             globeBadge
                 .accessibilityHidden(true)
-        }
-    }
-
-    var editSectionsButton: some View {
-        Button { coordinator.sheet(.sectionEditor) } label: {
-            Label("Edit Sections", systemImage: "slider.horizontal.3")
         }
     }
 
@@ -205,156 +221,56 @@ private extension HomeScreen {
     }
 }
 
-// MARK: - Carousel
+// MARK: - Action Card
 private extension HomeScreen {
-    var isLandscape: Bool { verticalSizeClass == .compact }
-    var isCompactHeight: Bool { verticalSizeClass == .compact }
-    var carouselHeight: CGFloat {
-        if isLandscape { 200 } else if isCompactHeight { 240 } else { 300 }
-    }
-
-    var carouselSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
-            carouselHeader
-                .padding(.horizontal, DesignSystem.Spacing.md)
-            mapCarousel
-            pageIndicator
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        }
-    }
-
-    var carouselHeader: some View {
-        HStack {
-            SectionHeaderView(title: "Explore Maps")
-            Spacer()
-            Text("\(selectedMapIndex + 1) / \(maps.count)")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .padding(.trailing, DesignSystem.Spacing.xs)
-            Button { coordinator.push(.allMaps) } label: {
-                Text("See All")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .buttonStyle(.plain)
-        }
-    }
-
-    var mapCarousel: some View {
-        GeometryReader { outerGeo in
-            mapCarouselContent(outerGeo: outerGeo)
-        }
-        .frame(height: carouselHeight + DesignSystem.Spacing.xl)
-    }
-
-    func mapCarouselContent(outerGeo: GeometryProxy) -> some View {
-        let cardWidth = outerGeo.size.width * 0.78
-        let spacing: CGFloat = DesignSystem.Spacing.sm
-        let sidePadding = (outerGeo.size.width - cardWidth) / 2
-
-        return ScrollViewReader { _ in
-            mapCarouselScrollView(
-                outerGeo: outerGeo,
-                cardWidth: cardWidth,
-                spacing: spacing,
-                sidePadding: sidePadding
-            )
-        }
-    }
-
-    func mapCarouselScrollView(
-        outerGeo: GeometryProxy,
-        cardWidth: CGFloat,
-        spacing: CGFloat,
-        sidePadding: CGFloat
-    ) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: spacing) {
-                ForEach(Array(maps.enumerated()), id: \.offset) { index, map in
-                    mapCarouselCard(
-                        map: map,
-                        outerGeo: outerGeo,
-                        cardWidth: cardWidth
-                    )
-                    .id(index)
-                }
-            }
-            .scrollTargetLayout()
-            .padding(.horizontal, sidePadding)
-            .padding(.bottom, DesignSystem.Spacing.xs)
-        }
-        .scrollTargetBehavior(.viewAligned)
-        .scrollPosition(
-            id: .init(
-                get: { selectedMapIndex },
-                set: { if let newValue = $0 { selectedMapIndex = newValue } }
-            )
+    var actionCardSection: some View {
+        HomeActionCard(
+            dailyChallengeCompleted: dailyChallengeService?.hasCompletedToday ?? false,
+            srsCardsDue: dueReviewCount,
+            onDailyChallenge: { coordinator.sheet(.dailyChallenge) },
+            onReviewCards: { coordinator.sheet(.srsStudy) },
+            onStartQuiz: { coordinator.sheet(.quizSetup) }
         )
     }
 
-    func mapCarouselCard(
-        map: (name: String, icon: String),
-        outerGeo: GeometryProxy,
-        cardWidth: CGFloat
-    ) -> some View {
-        GeometryReader { cardGeo in
-            let midX = cardGeo.frame(in: .global).midX
-            let screenMidX = outerGeo.size.width / 2
-            let distance = midX - screenMidX
-            let maxDistance = outerGeo.size.width
-            let normalized = distance / maxDistance
-            let scale = 1.0 - abs(normalized) * 0.12
-            let rotation = normalized * -5
-
-            MapCarouselCard(
-                mapName: map.name,
-                systemImage: map.icon,
-                compact: isLandscape
-            ) {
-                openMap(named: map.name)
-            }
-            .scaleEffect(scale)
-            .rotation3DEffect(.degrees(rotation), axis: (x: 0, y: 1, z: 0))
-            .opacity(1.0 - abs(normalized) * 0.3)
-            .animation(.interactiveSpring(response: 0.35, dampingFraction: 0.8), value: normalized)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    var dueReviewCount: Int {
+        let allCards = countryDataService.countries.map {
+            FlashcardItem.make(from: $0, type: .countryToCapital)
         }
-        .frame(width: cardWidth, height: carouselHeight)
-    }
-
-    var pageIndicator: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<maps.count, id: \.self) { i in
-                Capsule()
-                    .fill(selectedMapIndex == i
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.textTertiary.opacity(0.35))
-                    .frame(width: selectedMapIndex == i ? 18 : 6, height: 6)
-                    .animation(.spring(response: 0.3, dampingFraction: 0.75), value: selectedMapIndex)
-            }
-            Spacer()
-        }
-        .padding(.top, DesignSystem.Spacing.md)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Map carousel page \(selectedMapIndex + 1) of \(maps.count)")
-        .accessibilityValue(maps[selectedMapIndex].name)
+        return flashcardService.dueCards(from: allCards).count
     }
 }
 
-// MARK: - Country Spotlight Section
+// MARK: - Quick Stats
 private extension HomeScreen {
-    func spotlightSection(_ country: Country) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Discover")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            Button { coordinator.sheet(.countryDetail(country)) } label: {
-                HomeCountrySpotlightCard(
-                    country: country,
-                    funFact: spotlightFunFact(for: country)
-                )
+    var quickStatsSection: some View {
+        HomeQuickStatsRow(
+            streakDays: streakService.currentStreak,
+            level: xpService.currentLevel.level,
+            countriesExplored: favoritesService.favoriteCodes.count,
+            onStreakTap: { coordinator.sheet(.quizSetup) },
+            onLevelTap: { coordinator.sheet(.profile) },
+            onCountriesTap: { coordinator.sheet(.countries) }
+        )
+    }
+}
+
+// MARK: - Spotlight
+private extension HomeScreen {
+    @ViewBuilder
+    var spotlightSection: some View {
+        if let country = spotlightCountry {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                SectionHeaderView(title: "Discover")
+                    .padding(.bottom, DesignSystem.Spacing.xxs)
+                Button { coordinator.sheet(.countryDetail(country)) } label: {
+                    HomeCountrySpotlightCard(
+                        country: country,
+                        funFact: spotlightFunFact(for: country)
+                    )
+                }
+                .buttonStyle(PressButtonStyle())
             }
-            .buttonStyle(PressButtonStyle())
         }
     }
 
@@ -368,92 +284,78 @@ private extension HomeScreen {
     }
 }
 
-// MARK: - Streak Section
+// MARK: - Games Grid
 private extension HomeScreen {
-    var streakSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Daily Streak")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeStreakCard(
-                streak: streakService.currentStreak,
-                isAtRisk: streakService.currentStreak > 0 && !streakService.hasPlayedToday
-            ) {
-                coordinator.sheet(.quizSetup)
-            }
-        }
-    }
-}
-
-// MARK: - Progress Section
-private extension HomeScreen {
-    var progressSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Statistics")
-                .padding(.bottom, DesignSystem.Spacing.xxs)
-            HomeProgressCard(
-                favoriteCount: favoritesService.favoriteCodes.count,
-                exploredContinents: exploredContinents,
-                currentLevel: xpService.currentLevel.level,
-                currentLevelTitle: xpService.currentLevel.title,
-                nextLevelNumber: nextLevelNumber,
-                xpInCurrentLevel: xpService.xpInCurrentLevel,
-                xpRequiredForNextLevel: xpService.xpRequiredForNextLevel,
-                progressFraction: xpService.progressFraction,
-                onFavoritesTap: { coordinator.sheet(.favorites) },
-                onCountriesTap: { coordinator.sheet(.countries) },
-                onProfileTap: { coordinator.sheet(.profile) }
-            )
-        }
-    }
-
-    var exploredContinents: Int {
-        let codes = favoritesService.favoriteCodes
-        let continents = Set(
-            countryDataService.countries
-                .filter { codes.contains($0.code) }
-                .map { $0.continent }
+    var gamesSection: some View {
+        HomeGamesGrid(
+            onGameTap: { handleGameTap($0) },
+            onSeeAll: { coordinator.sheet(.quizSetup) }
         )
-        return continents.count
     }
 
-    var nextLevelNumber: Int? {
-        let current = xpService.currentLevel
-        guard current.maxXP != Int.max else { return nil }
-        return current.level + 1
+    func handleGameTap(_ game: HomeGamesGrid.GameItem) {
+        switch game {
+        case .quiz: coordinator.sheet(.quizSetup)
+        case .flagGame: coordinator.sheet(.flagGame)
+        case .trivia: coordinator.sheet(.trivia)
+        case .mapPuzzle: coordinator.push(.mapPuzzle)
+        case .borderChallenge: coordinator.sheet(.borderChallenge)
+        case .wordSearch: coordinator.sheet(.wordSearch)
+        }
     }
 }
 
-// MARK: - Coming Soon Section
+// MARK: - Explore Carousel
 private extension HomeScreen {
-    var comingSoonSection: some View {
-        HomeComingSoonSection()
+    var exploreSection: some View {
+        HomeExploreCarousel { handleExploreTap($0) }
+    }
+
+    func handleExploreTap(_ item: HomeExploreCarousel.ExploreItem) {
+        switch item {
+        case .countries: coordinator.sheet(.countries)
+        case .compare: coordinator.sheet(.compare())
+        case .travel: coordinator.sheet(.travelTracker)
+        case .organizations: coordinator.sheet(.organizations)
+        case .timeline: coordinator.push(.independenceTimeline)
+        case .continentStats: coordinator.push(.continentPicker)
+        }
+    }
+}
+
+// MARK: - Learn Carousel
+private extension HomeScreen {
+    var learnSection: some View {
+        HomeLearnCarousel(srsCardsDue: dueReviewCount) { handleLearnTap($0) }
+    }
+
+    func handleLearnTap(_ item: HomeLearnCarousel.LearnItem) {
+        switch item {
+        case .learningPath: coordinator.sheet(.learningPath)
+        case .flashcards: coordinator.sheet(.srsStudy)
+        case .oceanExplorer: coordinator.push(.oceanExplorer)
+        case .languageExplorer: coordinator.push(.languageExplorer)
+        case .economy: coordinator.push(.economyExplorer)
+        case .culture: coordinator.push(.cultureExplorer)
+        case .geographyFeatures: coordinator.push(.geographyFeatures)
+        case .landmarks: coordinator.push(.landmarkGallery)
+        }
+    }
+}
+
+// MARK: - World Records
+private extension HomeScreen {
+    var worldRecordsSection: some View {
+        HomeWorldRecordsCard {
+            coordinator.push(.worldRecords)
+        }
     }
 }
 
 // MARK: - Helpers
 private extension HomeScreen {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            profileButton
-        }
-        ToolbarItem(placement: .principal) {
-            statsButton
-        }
-        ToolbarItem(placement: .topBarTrailing) {
-            searchButton
-        }
-        ToolbarItem(placement: .topBarTrailing) {
-            friendsButton
-        }
-    }
-
     func startAnimations() {
         appeared = true
-    }
-
-    func openMap(named name: String) {
-        coordinator.cover(.mapFullScreen(continentFilter: name == "World map" ? nil : name))
     }
 
     func loadDailyChallenge() async {
@@ -463,68 +365,6 @@ private extension HomeScreen {
         )
         await service.loadChallenge()
         dailyChallengeService = service
-    }
-
-    @ViewBuilder
-    func sectionView(for section: HomeSection) -> some View {
-        if let flag = section.featureFlag, !featureFlags.isEnabled(flag) {
-            EmptyView()
-        } else if sectionNeedsPadding(section) {
-            paddedSectionView(for: section)
-                .padding(.horizontal, DesignSystem.Spacing.md)
-        } else {
-            fullWidthSectionView(for: section)
-        }
-    }
-
-    @ViewBuilder
-    func paddedSectionView(for section: HomeSection) -> some View {
-        switch section {
-        case .guestBanner: GuestModePromptBanner()
-        case .spotlight:
-            if let country = spotlightCountry { spotlightSection(country) }
-        case .streak: streakSection
-        case .dailyChallenge: dailyChallengeSection
-        case .srsReview: srsReviewSection
-        case .progress: progressSection
-        default: gameSectionView(for: section)
-        }
-    }
-
-    @ViewBuilder
-    func gameSectionView(for section: HomeSection) -> some View {
-        switch section {
-        case .flagGame: flagGameSection
-        case .trivia: triviaSection
-        case .learningPath: learningPathSection
-        case .mapPuzzle: mapPuzzleSection
-        case .landmarkQuiz: landmarkQuizSection
-        case .feed: feedSection
-        case .continentStats: continentStatsSection
-        case .countryCompare: countryCompareSection
-        case .travelBucketList: travelBucketListSection
-        case .oceanExplorer: oceanExplorerSection
-        case .languageExplorer: languageExplorerSection
-        default: newFeatureSectionView(for: section)
-        }
-    }
-
-    @ViewBuilder
-    func fullWidthSectionView(for section: HomeSection) -> some View {
-        switch section {
-        case .carousel: carouselSection
-        case .worldRecords: worldRecordsSection
-        case .organizations: orgsSection
-        case .comingSoon: comingSoonSection
-        default: EmptyView()
-        }
-    }
-
-    func sectionNeedsPadding(_ section: HomeSection) -> Bool {
-        switch section {
-        case .carousel, .worldRecords, .organizations, .comingSoon: false
-        default: true
-        }
     }
 }
 
