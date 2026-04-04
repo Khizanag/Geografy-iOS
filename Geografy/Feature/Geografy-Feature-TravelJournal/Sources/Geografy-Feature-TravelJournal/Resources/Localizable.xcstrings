@@ -133,6 +133,7 @@
       }
     },
     "No entries found" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -223,6 +224,7 @@
       }
     },
     "Try a different search term" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

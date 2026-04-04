@@ -193,7 +193,6 @@
 			membershipExceptions = (
 				App/ContentView.swift,
 				App/GeografyApp.swift,
-				Design/Component/FavoriteToggleButton.swift,
 				"Feature/Geografy-Feature-Achievement",
 				"Feature/Geografy-Feature-AllMap",
 				"Feature/Geografy-Feature-Auth",
@@ -691,6 +690,63 @@
 			mainGroup = C3D4E5F60718293A4B5C6D7E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				F874E437D2AD9AD27B743447 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Achievement" */,
+				6BD99E261369F40C549C2289 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-AllMap" */,
+				20E753DE8F4E984D124275C2 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Auth" */,
+				899047B224DC28B4EE771A3A /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-BorderChallenge" */,
+				66C619BFDE675A332BDFE897 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Coin" */,
+				BF53F3636BA8DCE9DB8325A1 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Compare" */,
+				46558E85C4836E1E56B53E95 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-ContinentStats" */,
+				E1388C0B15FAD70A9BE166AC /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryDetail" */,
+				A88A5E1AB29DA0E18E1F3BAD /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryList" */,
+				95F4FAB0E92C77E4B7BD7431 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryNicknames" */,
+				49F4236FAC90447E98226DC9 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryProfile" */,
+				F9855801FD8687107076634B /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CultureExplorer" */,
+				DEFEF86315C4481BE01D16C7 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CurrencyConverter" */,
+				A3586E36E4EDD7D3077EA868 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CustomQuiz" */,
+				FE4B30DB191C1267D39C279F /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-DailyChallenge" */,
+				3526409F75AA9D215D0DE33F /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-DistanceCalculator" */,
+				E83B75B698E5DDF4023C216F /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-EconomyExplorer" */,
+				D69C5845EA51F15E4A281B99 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-ExploreGame" */,
+				AE4B0B8F09D9239F57E64F01 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Favorite" */,
+				29A433C6267A5DAA4D9450CE /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Feed" */,
+				6601F8AB8DF43F7871F06845 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-FlagGame" */,
+				85A950E3C892F08DCDBB5910 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Flashcard" */,
+				9B1E1AD24B9FCF80A8BC3C84 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-GameCenter" */,
+				244F32D2B850794C4FC85629 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-GeographyFeatures" */,
+				EB8E290BD74427C14FCD39E7 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-IndependenceTimeline" */,
+				2561F64B39AC8B17DDE90C99 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LandmarkGallery" */,
+				7FB15C7ADFB836A671F37405 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LandmarkQuiz" */,
+				AF4446B290ADC059F0B3776B /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LanguageExplorer" */,
+				766CC83E03BC35640315B434 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LearningPath" */,
+				165D14B9C56CD5EAB772DD83 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Map" */,
+				D413447C8ACBA612A03F8E8A /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-MapColoring" */,
+				B795DCF857507EF7F8DDD780 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-MapPuzzle" */,
+				5DB675339633295766731E61 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Multiplayer" */,
+				74E298A858DEBD3D6FF6077C /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-NationalSymbols" */,
+				1CEFC6B20C09324CF53620FA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-NeighborExplorer" */,
+				C1B9B80FDDB0569897D22428 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-OceanExplorer" */,
+				A09FF82B6C20A33DCD113BDA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Organization" */,
+				EB887D12E3171E14B47628C6 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Profile" */,
+				BA71469B21A84FB02792CC34 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Quiz" */,
+				AA985297E958E636DA8386AF /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-QuizPack" */,
+				2BBDBA3F47479EFA9ABD4F30 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Quotes" */,
+				03E9E7F3A58992591D84CBDB /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Search" */,
+				7D1BB41D4D616F819B06BC46 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Setting" */,
+				0D108F2659931EA373BCB87B /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-SizeVisualization" */,
+				C0DE5016107231A4371FEA91 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Subscription" */,
+				37D3B05CD512959383FDD7B9 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Theme" */,
+				06F7F09EF183E409E4382FCC /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-TimeZone" */,
+				CB72A57007650157DF471C97 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Timeline" */,
+				BDB5DE75746E0CE897D491C2 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Travel" */,
+				12A7AFB8DC95E075D17E3FEA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-TravelJournal" */,
+				50B1B9BF00AA8178957AECB3 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Trivia" */,
+				DE49AD22EFA5EF3AA3383037 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-WordSearch" */,
+				86569E53292D648BA4E59970 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-WorldRecords" */,
+				50E1AE95FB50D0A952EBE3B5 /* XCLocalSwiftPackageReference "Package/Geografy-Core-Common" */,
+				5CB2F332F7CD3AD9071B62E5 /* XCLocalSwiftPackageReference "Package/Geografy-Core-DesignSystem" */,
+				4DF83A0BDA38039F69861E4F /* XCLocalSwiftPackageReference "Package/Geografy-Core-Navigation" */,
+				124B4378E2A78A135BE34510 /* XCLocalSwiftPackageReference "Package/Geografy-Core-Service" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = D4E5F60718293A4B5C6D7E8F /* Products */;
@@ -1076,6 +1132,237 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		F874E437D2AD9AD27B743447 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Achievement" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Achievement;
+		};
+		6BD99E261369F40C549C2289 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-AllMap" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-AllMap;
+		};
+		20E753DE8F4E984D124275C2 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Auth" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Auth;
+		};
+		899047B224DC28B4EE771A3A /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-BorderChallenge" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-BorderChallenge;
+		};
+		66C619BFDE675A332BDFE897 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Coin" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Coin;
+		};
+		BF53F3636BA8DCE9DB8325A1 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Compare" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Compare;
+		};
+		46558E85C4836E1E56B53E95 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-ContinentStats" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-ContinentStats;
+		};
+		E1388C0B15FAD70A9BE166AC /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryDetail" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-CountryDetail;
+		};
+		A88A5E1AB29DA0E18E1F3BAD /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryList" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-CountryList;
+		};
+		95F4FAB0E92C77E4B7BD7431 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryNicknames" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-CountryNicknames;
+		};
+		49F4236FAC90447E98226DC9 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryProfile" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-CountryProfile;
+		};
+		F9855801FD8687107076634B /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CultureExplorer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-CultureExplorer;
+		};
+		DEFEF86315C4481BE01D16C7 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CurrencyConverter" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-CurrencyConverter;
+		};
+		A3586E36E4EDD7D3077EA868 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CustomQuiz" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-CustomQuiz;
+		};
+		FE4B30DB191C1267D39C279F /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-DailyChallenge" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-DailyChallenge;
+		};
+		3526409F75AA9D215D0DE33F /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-DistanceCalculator" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-DistanceCalculator;
+		};
+		E83B75B698E5DDF4023C216F /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-EconomyExplorer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-EconomyExplorer;
+		};
+		D69C5845EA51F15E4A281B99 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-ExploreGame" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-ExploreGame;
+		};
+		AE4B0B8F09D9239F57E64F01 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Favorite" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Favorite;
+		};
+		29A433C6267A5DAA4D9450CE /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Feed" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Feed;
+		};
+		6601F8AB8DF43F7871F06845 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-FlagGame" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-FlagGame;
+		};
+		85A950E3C892F08DCDBB5910 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Flashcard" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Flashcard;
+		};
+		9B1E1AD24B9FCF80A8BC3C84 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-GameCenter" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-GameCenter;
+		};
+		244F32D2B850794C4FC85629 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-GeographyFeatures" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-GeographyFeatures;
+		};
+		EB8E290BD74427C14FCD39E7 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-IndependenceTimeline" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-IndependenceTimeline;
+		};
+		2561F64B39AC8B17DDE90C99 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LandmarkGallery" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-LandmarkGallery;
+		};
+		7FB15C7ADFB836A671F37405 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LandmarkQuiz" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-LandmarkQuiz;
+		};
+		AF4446B290ADC059F0B3776B /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LanguageExplorer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-LanguageExplorer;
+		};
+		766CC83E03BC35640315B434 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-LearningPath" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-LearningPath;
+		};
+		165D14B9C56CD5EAB772DD83 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Map" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Map;
+		};
+		D413447C8ACBA612A03F8E8A /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-MapColoring" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-MapColoring;
+		};
+		B795DCF857507EF7F8DDD780 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-MapPuzzle" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-MapPuzzle;
+		};
+		5DB675339633295766731E61 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Multiplayer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Multiplayer;
+		};
+		74E298A858DEBD3D6FF6077C /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-NationalSymbols" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-NationalSymbols;
+		};
+		1CEFC6B20C09324CF53620FA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-NeighborExplorer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-NeighborExplorer;
+		};
+		C1B9B80FDDB0569897D22428 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-OceanExplorer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-OceanExplorer;
+		};
+		A09FF82B6C20A33DCD113BDA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Organization" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Organization;
+		};
+		EB887D12E3171E14B47628C6 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Profile" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Profile;
+		};
+		BA71469B21A84FB02792CC34 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Quiz" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Quiz;
+		};
+		AA985297E958E636DA8386AF /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-QuizPack" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-QuizPack;
+		};
+		2BBDBA3F47479EFA9ABD4F30 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Quotes" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Quotes;
+		};
+		03E9E7F3A58992591D84CBDB /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Search" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Search;
+		};
+		7D1BB41D4D616F819B06BC46 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Setting" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Setting;
+		};
+		0D108F2659931EA373BCB87B /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-SizeVisualization" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-SizeVisualization;
+		};
+		C0DE5016107231A4371FEA91 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Subscription" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Subscription;
+		};
+		37D3B05CD512959383FDD7B9 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Theme" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Theme;
+		};
+		06F7F09EF183E409E4382FCC /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-TimeZone" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-TimeZone;
+		};
+		CB72A57007650157DF471C97 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Timeline" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Timeline;
+		};
+		BDB5DE75746E0CE897D491C2 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Travel" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Travel;
+		};
+		12A7AFB8DC95E075D17E3FEA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-TravelJournal" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-TravelJournal;
+		};
+		50B1B9BF00AA8178957AECB3 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Trivia" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-Trivia;
+		};
+		DE49AD22EFA5EF3AA3383037 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-WordSearch" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-WordSearch;
+		};
+		86569E53292D648BA4E59970 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-WorldRecords" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Geografy/Feature/Geografy-Feature-WorldRecords;
+		};
+		50E1AE95FB50D0A952EBE3B5 /* XCLocalSwiftPackageReference "Package/Geografy-Core-Common" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Package/Geografy-Core-Common;
+		};
+		5CB2F332F7CD3AD9071B62E5 /* XCLocalSwiftPackageReference "Package/Geografy-Core-DesignSystem" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Package/Geografy-Core-DesignSystem;
+		};
+		4DF83A0BDA38039F69861E4F /* XCLocalSwiftPackageReference "Package/Geografy-Core-Navigation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Package/Geografy-Core-Navigation;
+		};
+		124B4378E2A78A135BE34510 /* XCLocalSwiftPackageReference "Package/Geografy-Core-Service" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Package/Geografy-Core-Service;
+		};
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		01C9D562C658A8CAFDF02F46 /* Geografy-Feature-Travel */ = {
