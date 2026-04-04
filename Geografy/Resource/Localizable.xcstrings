@@ -73,6 +73,36 @@
         }
       }
     },
+    "💤" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "💤"
+          }
+        }
+      }
+    },
+    "🔥" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥"
+          }
+        }
+      }
+    },
+    "🗺️" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🗺️"
+          }
+        }
+      }
+    },
     "30 world languages & scripts" : {
       "localizations" : {
         "ka" : {
@@ -84,6 +114,7 @@
       }
     },
     "Add to favorites" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -103,16 +134,6 @@
         }
       }
     },
-    "All Maps" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ყველა რუკა"
-          }
-        }
-      }
-    },
     "All caught up!" : {
       "localizations" : {
         "ka" : {
@@ -123,22 +144,22 @@
         }
       }
     },
+    "All Maps" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა რუკა"
+          }
+        }
+      }
+    },
     "Border Challenge" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "საზღვრების გამოწვევა"
-          }
-        }
-      }
-    },
-    "COUNTRY OF THE DAY" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "დღის ქვეყანა"
           }
         }
       }
@@ -233,6 +254,16 @@
         }
       }
     },
+    "COUNTRY OF THE DAY" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღის ქვეყანა"
+          }
+        }
+      }
+    },
     "Culture Explorer" : {
       "localizations" : {
         "ka" : {
@@ -319,6 +350,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "due" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესასრულებელი"
           }
         }
       }
@@ -543,12 +584,18 @@
         }
       }
     },
-    "MAX" : {
+    "Map carousel page %lld of %lld" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Map carousel page %1$lld of %2$lld"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "მაქს"
+            "value" : "რუკის კარუსელი გვერდი %1$lld %2$lld-დან"
           }
         }
       }
@@ -573,22 +620,6 @@
         }
       }
     },
-    "Map carousel page %lld of %lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Map carousel page %1$lld of %2$lld"
-          }
-        },
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "რუკის კარუსელი გვერდი %1$lld %2$lld-დან"
-          }
-        }
-      }
-    },
     "Maps" : {
       "localizations" : {
         "ka" : {
@@ -605,6 +636,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეუსაბამე დროშები ქვეყნებს 60 წამში"
+          }
+        }
+      }
+    },
+    "MAX" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაქს"
           }
         }
       }
@@ -800,6 +841,7 @@
       }
     },
     "Remove from favorites" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -1005,46 +1047,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენი პროგრესი"
-          }
-        }
-      }
-    },
-    "due" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "შესასრულებელი"
-          }
-        }
-      }
-    },
-    "💤" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💤"
-          }
-        }
-      }
-    },
-    "🔥" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🔥"
-          }
-        }
-      }
-    },
-    "🗺️" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🗺️"
           }
         }
       }
