@@ -7,7 +7,8 @@ struct HomeLearnCarousel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Learn & Grow", icon: "brain.fill")
+            SectionHeaderView(title: "Learn & Grow")
+                .padding(.horizontal, DesignSystem.Spacing.md)
 
             scrollContent
         }
@@ -56,9 +57,9 @@ extension HomeLearnCarousel {
             switch self {
             case .learningPath: DesignSystem.Color.blue
             case .flashcards: DesignSystem.Color.purple
-            case .oceanExplorer: .teal
+            case .oceanExplorer: DesignSystem.Color.blue
             case .languageExplorer: DesignSystem.Color.indigo
-            case .economy: .green
+            case .economy: DesignSystem.Color.success
             case .culture: DesignSystem.Color.orange
             case .geographyFeatures: DesignSystem.Color.blue
             case .landmarks: DesignSystem.Color.orange
