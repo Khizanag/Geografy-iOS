@@ -1,7 +1,7 @@
 import Foundation
 
 public enum AchievementCatalog {
-    nonisolated(unsafe) public static let all: [AchievementDefinition] =
+    public static let all: [AchievementDefinition] =
         explorer + quizExpert + streak + travel + knowledge
         + continental + flashcard + speed + perfectScore + social
 }
