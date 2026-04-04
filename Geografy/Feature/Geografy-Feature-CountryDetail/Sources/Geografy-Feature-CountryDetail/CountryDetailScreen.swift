@@ -9,10 +9,10 @@ import SwiftUI
 public struct CountryDetailScreen: View {
     @Environment(Navigator.self) var coordinator
     @Environment(SubscriptionService.self) var subscriptionService
-    @Environment(TravelService.self) private var travelService
+    @Environment(TravelService.self) var travelService
     @Environment(FavoritesService.self) private var favoritesService
-    @Environment(XPService.self) private var xpService
-    @Environment(AchievementService.self) private var achievementService
+    @Environment(XPService.self) var xpService
+    @Environment(AchievementService.self) var achievementService
     @Environment(HapticsService.self) var hapticsService
     @Environment(WorldBankService.self) private var worldBankService
     @Environment(PronunciationService.self) private var pronunciationService
@@ -22,8 +22,8 @@ public struct CountryDetailScreen: View {
     @State var profileService = CountryProfileService()
     @State var appeared = false
     @State var activeSheet: CountryDetailSheet?
-    @State private var showFlagFullScreen = false
-    @State private var flagScrolledUp = false
+    @State var showFlagFullScreen = false
+    @State var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
     @State var populationStartDate = Date()
 
@@ -82,30 +82,6 @@ extension CountryDetailScreen {
     }
 }
 
-// MARK: - Sheet Content
-private extension CountryDetailScreen {
-    @ViewBuilder
-    func countryDetailSheetContent(for sheet: CountryDetailSheet) -> some View {
-        switch sheet {
-        case .travelPicker:
-            TravelStatusPickerSheet(
-                country: country,
-                isPresented: Binding(
-                    get: { activeSheet != nil },
-                    set: { if !$0 { activeSheet = nil } }
-                )
-            )
-        case .info(let item):
-            propertyDetailSheet(for: item)
-        case .deepDive:
-            CountryProfileScreen(
-                country: country,
-                profile: profileService.profile(for: country.code)
-            )
-        }
-    }
-}
-
 // MARK: - Toolbar
 private extension CountryDetailScreen {
     @ToolbarContentBuilder
@@ -155,255 +131,6 @@ private extension CountryDetailScreen {
             }
             .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
         }
-    }
-}
-
-// MARK: - Hero
-private extension CountryDetailScreen {
-    var heroSection: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
-            heroCardContent
-        }
-    }
-
-    var heroCardContent: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Button {
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    showFlagFullScreen = true
-                }
-            } label: {
-                FlagView(countryCode: country.code, height: 120)
-                    .opacity(flagScrolledUp ? 0 : 1)
-                    .geoShadow(.elevated)
-                    .onGeometryChange(for: Bool.self) { proxy in
-                        proxy.frame(in: .scrollView).maxY < 0
-                    } action: { isHidden in
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                            flagScrolledUp = isHidden
-                        }
-                    }
-            }
-            .buttonStyle(.plain)
-
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Text(country.name)
-                    .font(DesignSystem.Font.title)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.center)
-                #if !os(tvOS)
-                SpeakerButton(text: country.name, countryCode: country.code)
-                #endif
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(DesignSystem.Spacing.xl)
-    }
-}
-
-// MARK: - Quick Facts
-private extension CountryDetailScreen {
-    var quickFactsCard: some View {
-        CardView {
-            quickFactsRow
-        }
-    }
-
-    var quickFactsRow: some View {
-        HStack(spacing: 0) {
-            capitalButton
-            Divider().frame(height: 44)
-            areaButton
-            Divider().frame(height: 44)
-            continentButton
-        }
-        .padding(.vertical, DesignSystem.Spacing.sm)
-    }
-
-    var capitalButton: some View {
-        Button {
-            activeSheet = .info(
-                InfoItem(
-                    icon: "mappin.and.ellipse",
-                    title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
-                    value: capitalInfoValue,
-                    supportsMap: false
-                )
-            )
-        } label: {
-            capitalChip
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    var areaButton: some View {
-        Button {
-            activeSheet = .info(
-                InfoItem(
-                    icon: "map.fill",
-                    title: "Area",
-                    value: country.area.formatArea(),
-                    supportsMap: false
-                )
-            )
-        } label: {
-            factChip(icon: "map", label: "Area", value: country.area.formatArea())
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    var continentButton: some View {
-        Button {
-            activeSheet = .info(
-                InfoItem(
-                    icon: "globe.americas.fill",
-                    title: "Continent",
-                    value: country.continent.displayName,
-                    supportsMap: true,
-                    mapButtonTitle: "Open \(country.continent.displayName) Map"
-                )
-            )
-        } label: {
-            factChip(icon: "globe", label: "Continent", value: country.continent.displayName)
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    var capitalChip: some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "mappin")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text(
-                country.allCapitals.count > 1
-                    ? "Capitals (\(country.allCapitals.count))"
-                    : "Capital"
-            )
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            if country.allCapitals.count > 1 {
-                multipleCapitalsView
-            } else {
-                singleCapitalView
-            }
-        }
-        .frame(maxWidth: .infinity)
-    }
-
-    var multipleCapitalsView: some View {
-        VStack(spacing: 2) {
-            ForEach(country.allCapitals, id: \.name) { capital in
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Text(capital.name)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    #if !os(tvOS)
-                    SpeakerButton(text: capital.name, countryCode: country.code)
-                        .scaleEffect(0.7)
-                    #endif
-                }
-            }
-        }
-    }
-
-    var singleCapitalView: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(country.capital)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-            #if !os(tvOS)
-            SpeakerButton(text: country.capital, countryCode: country.code)
-                .scaleEffect(0.7)
-            #endif
-        }
-    }
-
-    func factChip(icon: String, label: String, value: String) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .accessibilityHidden(true)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            Text(value)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .accessibilityElement(children: .combine)
-    }
-}
-
-// MARK: - Travel
-private extension CountryDetailScreen {
-    var travelSection: some View {
-        let currentStatus = travelService.status(for: country.code)
-        return Button {
-            hapticsService.impact(.light)
-            activeSheet = .travelPicker
-        } label: {
-            travelCardLabel(status: currentStatus)
-        }
-        .buttonStyle(PressButtonStyle())
-        .accessibilityLabel("Travel Status: \(currentStatus?.label ?? "Not set")")
-    }
-
-    func travelCardLabel(status currentStatus: TravelStatus?) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill((currentStatus?.color ?? DesignSystem.Color.accent).opacity(0.15))
-                        .frame(width: 40, height: 40)
-                    Image(systemName: currentStatus?.icon ?? "airplane.departure")
-                        .font(DesignSystem.Font.callout)
-                        .foregroundStyle(currentStatus?.color ?? DesignSystem.Color.accent)
-                }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Travel Status")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                    Text(currentStatus?.label ?? "Not set")
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(
-                            currentStatus != nil
-                                ? DesignSystem.Color.textPrimary
-                                : DesignSystem.Color.textTertiary
-                        )
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .accessibilityHidden(true)
-            }
-            .padding(DesignSystem.Spacing.sm)
-        }
-    }
-}
-
-// MARK: - Gamification
-private extension CountryDetailScreen {
-    func trackExploration() {
-        let key = "explored_countries_\(xpService.currentUserID)"
-        var explored = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
-        guard !explored.contains(country.code) else { return }
-        explored.insert(country.code)
-        UserDefaults.standard.set(Array(explored), forKey: key)
-        xpService.award(5, source: .countryExplored)
-        achievementService.checkExplorerAchievements(totalExplored: explored.count)
     }
 }
 
@@ -460,7 +187,7 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Helpers
-private extension CountryDetailScreen {
+extension CountryDetailScreen {
     var capitalInfoValue: String {
         country.allCapitals
             .map { capital in
@@ -582,23 +309,6 @@ private extension CountryDetailScreen {
         WikipediaSection(countryName: country.name)
         #endif
         continentExploreSection
-    }
-
-    func propertyDetailSheet(for item: InfoItem) -> some View {
-        PropertyDetailSheet(
-            icon: item.icon,
-            title: item.title,
-            value: item.value,
-            supportsMap: item.supportsMap,
-            mapButtonTitle: item.mapButtonTitle,
-            onShowMap: {
-                activeSheet = nil
-                coordinator.cover(.mapFullScreen(continentFilter: country.continent.displayName))
-            },
-            actionButtonTitle: item.actionButtonTitle,
-            actionButtonIcon: item.actionButtonIcon,
-            onAction: item.onAction
-        )
     }
 
     @ViewBuilder
