@@ -187,7 +187,9 @@ private extension LocalMultiplayerResultScreen {
     }
 
     enum ResultOutcome {
-        case win, draw, loss
+        case win
+        case draw
+        case loss
     }
 
     var resultOutcome: ResultOutcome {
