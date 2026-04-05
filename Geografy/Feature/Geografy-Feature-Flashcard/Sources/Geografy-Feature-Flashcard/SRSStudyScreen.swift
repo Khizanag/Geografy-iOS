@@ -159,7 +159,7 @@ private extension SRSStudyScreen {
         let srData = flashcardService.spacedRepetitionData(for: card.id)
         return CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(countryCode: card.countryCode, height: DesignSystem.Size.sm, fixedWidth: true)
+                FlagView(countryCode: card.countryCode, height: DesignSystem.Size.lg, fixedWidth: true)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(card.countryName)
                         .font(DesignSystem.Font.subheadline)

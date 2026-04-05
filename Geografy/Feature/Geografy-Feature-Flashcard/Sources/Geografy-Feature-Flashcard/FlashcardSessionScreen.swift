@@ -38,6 +38,7 @@ public struct FlashcardSessionScreen: View {
     public var body: some View {
         sessionContent
             .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
             .alert("Quit Session?", isPresented: $showQuitAlert) {
@@ -91,10 +92,12 @@ private extension FlashcardSessionScreen {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+        ToolbarItem(placement: .topBarTrailing) {
             Button { showGuide = true } label: {
                 Label("Guide", systemImage: "questionmark.circle")
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .buttonStyle(.plain)
         }
     }
 
