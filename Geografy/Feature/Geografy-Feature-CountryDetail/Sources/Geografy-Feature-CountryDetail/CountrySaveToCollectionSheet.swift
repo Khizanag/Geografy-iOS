@@ -3,18 +3,23 @@ import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
-struct CountrySaveToCollectionSheet: View {
+public struct CountrySaveToCollectionSheet: View {
     // MARK: - Properties
     @Environment(CollectionService.self) private var collectionService
     @Environment(HapticsService.self) private var hapticsService
-    let countryCode: String
-    let countryName: String
+    public let countryCode: String
+    public let countryName: String
+
+    public init(countryCode: String, countryName: String) {
+        self.countryCode = countryCode
+        self.countryName = countryName
+    }
 
     @State private var showNewCollection = false
     @State private var newCollectionName = ""
 
     // MARK: - Body
-    var body: some View {
+    public var body: some View {
         content
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Save to Collection")

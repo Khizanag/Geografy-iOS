@@ -4,12 +4,12 @@ import SwiftUI
 
 // MARK: - Fun Facts Section
 extension CountryDetailScreen {
-    public var funFacts: [String] {
+    var funFacts: [String] {
         CountryFunFacts.data[country.code] ?? []
     }
 
     @ViewBuilder
-    public var funFactsSection: some View {
+    var funFactsSection: some View {
         if !funFacts.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("Fun Facts")

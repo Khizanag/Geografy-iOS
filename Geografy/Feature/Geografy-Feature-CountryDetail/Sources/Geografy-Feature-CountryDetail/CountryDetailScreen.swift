@@ -28,7 +28,6 @@ public struct CountryDetailScreen: View {
     @State var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
     @State var populationStartDate = Date()
-    @State private var showSaveToCollection = false
 
     public let country: Country
 
@@ -43,10 +42,7 @@ public struct CountryDetailScreen: View {
             .background(DesignSystem.Color.background)
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
-            .toolbar { favoriteToolbarItem }
-            .toolbar { compareToolbarItem }
-            .toolbar { saveToCollectionToolbarItem }
-            .toolbar { principalToolbarItem }
+            .toolbar { toolbarContent }
             .task { trackExploration() }
             .onAppear { appeared = true }
             .userActivity("com.khizanag.geografy.viewCountry") { activity in
@@ -55,12 +51,6 @@ public struct CountryDetailScreen: View {
                 activity.userInfo = ["countryCode": country.code]
             }
             .sheet(item: $activeSheet) { sheet in countryDetailSheetContent(for: sheet) }
-            .sheet(isPresented: $showSaveToCollection) {
-                CountrySaveToCollectionSheet(
-                    countryCode: country.code,
-                    countryName: country.name
-                )
-            }
             .overlay { flagFullScreenOverlay }
     }
 }
@@ -101,7 +91,19 @@ private extension CountryDetailScreen {
     }
 
     @ToolbarContentBuilder
-    var favoriteToolbarItem: some ToolbarContent {
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
+                FlagView(countryCode: country.code, height: 20, fixedWidth: true)
+                    .opacity(flagScrolledUp ? 1 : 0)
+                    .scaleEffect(flagScrolledUp ? 1 : 0.5)
+                    .frame(width: flagScrolledUp ? nil : 0, height: 20)
+                    .clipped()
+                Text(country.name)
+                    .font(DesignSystem.Font.headline)
+            }
+            .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
+        }
         ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
@@ -115,10 +117,6 @@ private extension CountryDetailScreen {
             }
             .buttonStyle(.plain)
         }
-    }
-
-    @ToolbarContentBuilder
-    var compareToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .secondaryAction) {
             Button {
                 hapticsService.impact(.light)
@@ -126,45 +124,23 @@ private extension CountryDetailScreen {
             } label: {
                 Label("Compare", systemImage: "arrow.left.arrow.right")
             }
-            .tint(DesignSystem.Color.iconPrimary)
             .buttonStyle(.plain)
         }
-    }
-
-    @ToolbarContentBuilder
-    var saveToCollectionToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .secondaryAction) {
             Button {
                 hapticsService.impact(.light)
-                showSaveToCollection = true
+                coordinator.sheet(.saveToCollection(countryCode: country.code, countryName: country.name))
             } label: {
                 Label("Save to Collection", systemImage: "folder.badge.plus")
             }
-            .tint(DesignSystem.Color.iconPrimary)
             .buttonStyle(.plain)
-        }
-    }
-
-    @ToolbarContentBuilder
-    var principalToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .principal) {
-            HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
-                FlagView(countryCode: country.code, height: 20, fixedWidth: true)
-                    .opacity(flagScrolledUp ? 1 : 0)
-                    .scaleEffect(flagScrolledUp ? 1 : 0.5)
-                    .frame(width: flagScrolledUp ? nil : 0, height: 20)
-                    .clipped()
-                Text(country.name)
-                    .font(DesignSystem.Font.headline)
-            }
-            .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
         }
     }
 }
 
 // MARK: - Section Header
 extension CountryDetailScreen {
-    public func sectionHeader(_ title: String, premium: Bool = false) -> some View {
+    func sectionHeader(_ title: String, premium: Bool = false) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title)
             if premium, subscriptionService.isPremium {
@@ -177,39 +153,35 @@ extension CountryDetailScreen {
 
 // MARK: - Locked Content
 extension CountryDetailScreen {
-    public func lockedSection(title: String) -> some View {
+    func lockedSection(title: String) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader(title)
-            ZStack {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                    .fill(DesignSystem.Color.cardBackground)
-                    .frame(height: 80)
-                PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) })
-            }
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                .fill(DesignSystem.Color.cardBackground)
+                .frame(height: 80)
+                .overlay { PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) }) }
         }
     }
 
-    public func lockedPlaceholder(height: CGFloat) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .fill(DesignSystem.Color.cardBackground)
-                .frame(height: height)
-            PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) })
-        }
+    func lockedPlaceholder(height: CGFloat) -> some View {
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            .fill(DesignSystem.Color.cardBackground)
+            .frame(height: height)
+            .overlay { PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) }) }
     }
 }
 
 // MARK: - Navigation
 extension CountryDetailScreen {
-    public func navigateToCountry(_ country: Country) {
+    func navigateToCountry(_ country: Country) {
         coordinator.push(.countryDetail(country))
     }
 
-    public func navigateToOrganization(_ organization: Organization) {
+    func navigateToOrganization(_ organization: Organization) {
         coordinator.push(.organizationDetail(organization))
     }
 
-    public func navigateToContinent(_ continent: Country.Continent) {
+    func navigateToContinent(_ continent: Country.Continent) {
         coordinator.push(.continentOverview(continent))
     }
 }

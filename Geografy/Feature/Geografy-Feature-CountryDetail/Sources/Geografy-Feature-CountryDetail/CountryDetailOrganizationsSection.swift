@@ -5,11 +5,11 @@ import SwiftUI
 
 // MARK: - Organizations
 extension CountryDetailScreen {
-    public var memberOrganizations: [Organization] {
+    var memberOrganizations: [Organization] {
         country.organizations.compactMap { Organization.find($0) }
     }
 
-    public func organizationsSection(
+    func organizationsSection(
         countryDataService: CountryDataService,
         hapticsService: HapticsService
     ) -> some View {
@@ -23,7 +23,7 @@ extension CountryDetailScreen {
         }
     }
 
-    public func orgCard(
+    func orgCard(
         _ org: Organization,
         countryDataService: CountryDataService,
         hapticsService: HapticsService
@@ -53,7 +53,7 @@ extension CountryDetailScreen {
         }
     }
 
-    public func orgCardLabel(
+    func orgCardLabel(
         _ org: Organization,
         countryDataService: CountryDataService
     ) -> some View {

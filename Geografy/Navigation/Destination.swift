@@ -123,6 +123,7 @@ extension Destination {
         case .quizSession(let config): QuizSessionScreen(configuration: config)
         case .quizSetup: QuizSetupScreen()
         case .quotes: QuotesScreen()
+        case let .saveToCollection(code, name): CountrySaveToCollectionSheet(countryCode: code, countryName: name)
         case .search: SearchScreen()
         case .sectionEditor: HomeSectionEditorSheet(sections: HomeSection.allCases.map { $0 })
         case .settings: SettingsScreen()

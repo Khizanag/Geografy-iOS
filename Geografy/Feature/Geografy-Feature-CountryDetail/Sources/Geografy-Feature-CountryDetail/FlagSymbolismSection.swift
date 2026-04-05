@@ -4,12 +4,12 @@ import SwiftUI
 
 // MARK: - Flag Symbolism Section
 extension CountryDetailScreen {
-    public var flagSymbolism: FlagSymbolism? {
+    var flagSymbolism: FlagSymbolism? {
         FlagSymbolismData.data[country.code]
     }
 
     @ViewBuilder
-    public var flagSymbolismSection: some View {
+    var flagSymbolismSection: some View {
         if let symbolism = flagSymbolism {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("Flag Symbolism")

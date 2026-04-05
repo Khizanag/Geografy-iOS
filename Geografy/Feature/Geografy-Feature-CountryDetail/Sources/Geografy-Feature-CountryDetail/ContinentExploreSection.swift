@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - Continent Explore Section
 extension CountryDetailScreen {
-    public var continentExploreSection: some View {
+    var continentExploreSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Explore \(country.continent.displayName)", icon: "globe")
             continentCard

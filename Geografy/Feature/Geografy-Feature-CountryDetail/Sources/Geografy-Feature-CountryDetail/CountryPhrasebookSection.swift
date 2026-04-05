@@ -5,7 +5,7 @@ import SwiftUI
 // MARK: - Phrasebook Section
 extension CountryDetailScreen {
     @ViewBuilder
-    public var phrasebookSection: some View {
+    var phrasebookSection: some View {
         let phrases = profileService.profile(for: country.code)?.phrases ?? []
         if !phrases.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

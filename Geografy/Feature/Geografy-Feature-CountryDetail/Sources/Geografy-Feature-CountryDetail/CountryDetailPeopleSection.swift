@@ -4,7 +4,7 @@ import SwiftUI
 
 // MARK: - People
 extension CountryDetailScreen {
-    public var peopleSection: some View {
+    var peopleSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("People")
             populationCard
@@ -24,7 +24,7 @@ extension CountryDetailScreen {
 
 // MARK: - Helpers
 extension CountryDetailScreen {
-    public func densityColor(for fraction: Double) -> Color {
+    func densityColor(for fraction: Double) -> Color {
         if fraction > 0.7 {
             DesignSystem.Color.error
         } else if fraction > 0.4 {

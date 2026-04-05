@@ -5,7 +5,7 @@ import SwiftUI
 
 // MARK: - Neighbors Section
 extension CountryDetailScreen {
-    public func neighborsSection(countryDataService: CountryDataService) -> some View {
+    func neighborsSection(countryDataService: CountryDataService) -> some View {
         let neighborCodes = CountryNeighbors.neighbors(for: country.code)
         let isIsland = CountryNeighbors.isIslandNation(countryCode: country.code)
         let neighborCountries = neighborCodes.compactMap { countryDataService.country(for: $0) }

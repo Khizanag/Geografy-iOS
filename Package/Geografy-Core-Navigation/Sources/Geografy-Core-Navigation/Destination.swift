@@ -64,6 +64,7 @@ public enum Destination: Hashable, Identifiable {
     case quizSession(QuizConfiguration)
     case quizSetup
     case quotes
+    case saveToCollection(countryCode: String, countryName: String)
     case search
     case sectionEditor
     case settings
@@ -144,6 +145,7 @@ public enum Destination: Hashable, Identifiable {
         case .quizSession: "quizSession"
         case .quizSetup: "quizSetup"
         case .quotes: "quotes"
+        case let .saveToCollection(code, _): "saveToCollection-\(code)"
         case .search: "search"
         case .sectionEditor: "sectionEditor"
         case .settings: "settings"
