@@ -88,9 +88,15 @@ private extension HistoricalMapScreen {
     var footerOverlay: some View {
         VStack(spacing: 0) {
             selectedCountryBanner
-            yearPicker
+
+            TimelineSlider(
+                selectedYear: $selectedYear,
+                range: 1_800...2_025,
+                decades: [],
+                eventCountForDecade: { _ in 0 },
+                accessoryLabel: "\(independentCountryCount) independent"
+            )
         }
-        .padding(.bottom, DesignSystem.Spacing.xs)
     }
 
     @ViewBuilder
@@ -158,36 +164,6 @@ private extension HistoricalMapScreen {
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Event details")
-    }
-
-    var yearPicker: some View {
-        HStack(spacing: 0) {
-            Picker("Year", selection: $selectedYear) {
-                ForEach(1_800...2_025, id: \.self) { year in
-                    Text(String(year)).tag(year)
-                }
-            }
-            .pickerStyle(.wheel)
-            .frame(width: 120)
-
-            Spacer(minLength: 0)
-
-            independentCountLabel
-                .padding(.trailing, DesignSystem.Spacing.lg)
-        }
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .background(.ultraThinMaterial, in: .rect(cornerRadius: DesignSystem.CornerRadius.large))
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-    }
-
-    var independentCountLabel: some View {
-        let count = independentCountryCount
-        return Text("\(count) independent")
-            .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .contentTransition(.numericText())
-            .animation(.snappy, value: count)
     }
 }
 
