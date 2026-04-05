@@ -50,18 +50,28 @@ private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                QuizTimerBadge(seconds: elapsedSeconds, style: .compact)
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Image(systemName: "timer")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(.white)
+                Text(formattedTime)
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.bold)
+                    .monospacedDigit()
+                    .foregroundStyle(.white)
+                    .contentTransition(.numericText())
+                    .animation(.snappy, value: elapsedSeconds)
 
                 if timerActive {
                     Button {
                         isPaused.toggle()
                     } label: {
-                        Label(isPaused ? "Resume" : "Pause", systemImage: isPaused ? "play.fill" : "pause.fill")
+                        Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                            .foregroundStyle(.white)
                     }
+                    .buttonStyle(.plain)
                 }
             }
-            .fixedSize()
         }
     }
 
@@ -249,25 +259,25 @@ private extension WordSearchGameScreen {
     ) -> some View {
         let isHighlighted = isCellHighlighted(row: row, col: col)
         let isFound = isCellFound(row: row, col: col, puzzle: puzzle)
+        let isActive = isHighlighted || isFound
 
-        return ZStack {
-            Rectangle()
-                .fill(cellBackground(isHighlighted: isHighlighted, isFound: isFound))
-            Text(String(letter))
-                .font(DesignSystem.Font.system(size: max(cellSize * 0.48, 12), weight: .semibold, design: .monospaced))
-                .foregroundStyle(
-                    isHighlighted || isFound
-                        ? DesignSystem.Color.onAccent
-                        : DesignSystem.Color.textPrimary
-                )
-        }
-        .frame(width: cellSize, height: cellSize)
+        return Text(String(letter))
+            .font(DesignSystem.Font.system(size: max(cellSize * 0.48, 12), weight: .semibold, design: .monospaced))
+            .foregroundStyle(isActive ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+            .frame(width: cellSize, height: cellSize)
+            .background {
+                if isActive {
+                    Circle()
+                        .fill(cellColor(isHighlighted: isHighlighted, isFound: isFound))
+                        .padding(1)
+                }
+            }
+            .background(DesignSystem.Color.cardBackground.opacity(0.3))
     }
 
-    func cellBackground(isHighlighted: Bool, isFound: Bool) -> Color {
+    func cellColor(isHighlighted: Bool, isFound: Bool) -> Color {
         if isFound { return DesignSystem.Color.success.opacity(0.7) }
-        if isHighlighted { return DesignSystem.Color.accent }
-        return DesignSystem.Color.cardBackground.opacity(0.3)
+        return DesignSystem.Color.accent
     }
 
     func wordListSection(_ puzzle: WordSearchPuzzle) -> some View {
