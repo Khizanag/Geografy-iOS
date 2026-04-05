@@ -49,8 +49,9 @@ private extension CustomQuizLibraryScreen {
         } description: {
             Text("Create your own geography quiz by selecting countries and question types.")
         } actions: {
-            Button("Create Quiz") { showBuilder = true }
-                .buttonStyle(.borderedProminent)
+            GlassButton("Create Quiz", systemImage: "plus") {
+                showBuilder = true
+            }
         }
     }
 
@@ -110,8 +111,9 @@ private extension CustomQuizLibraryScreen {
                 showBuilder = true
             } label: {
                 Label("Add", systemImage: "plus")
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .buttonStyle(.plain)
         }
     }
 }
