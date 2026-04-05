@@ -12,6 +12,7 @@ public final class DatabaseManager {
 
     public init(inMemory: Bool = false) {
         let schema = Schema([
+            CollectionItem.self,
             FavoriteEntry.self,
             QuizHistoryRecord.self,
             StreakRecord.self,

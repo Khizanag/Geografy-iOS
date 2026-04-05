@@ -6,6 +6,7 @@ import SwiftUI
 
 enum MoreSheet: Identifiable {
     case profile
+    case collections
     case countries
     case orgs
     case favorites
@@ -44,6 +45,7 @@ enum MoreSheet: Identifiable {
     var label: String {
         switch self {
         case .profile: "Profile"
+        case .collections: "My Collections"
         case .countries: "Countries"
         case .orgs: "Organizations"
         case .favorites: "Favorites"
@@ -84,6 +86,7 @@ enum MoreSheet: Identifiable {
         case .profile: "person.fill"
         case .countries: "list.bullet"
         case .orgs: "building.2.fill"
+        case .collections: "folder.fill"
         case .favorites: "heart.fill"
         case .travel: "airplane.departure"
         case .dailyChallenge: "calendar.badge.exclamationmark"
@@ -122,6 +125,7 @@ enum MoreSheet: Identifiable {
         case .profile: "View your stats and level"
         case .countries: "Browse all 197 countries"
         case .orgs: "International organizations"
+        case .collections: "Save & organize items"
         case .favorites: "Your saved countries"
         case .travel: "Track your adventures"
         case .dailyChallenge: "New puzzle every day"
@@ -160,6 +164,7 @@ enum MoreSheet: Identifiable {
         case .profile: DesignSystem.Color.accent
         case .countries: DesignSystem.Color.blue
         case .orgs: DesignSystem.Color.indigo
+        case .collections: DesignSystem.Color.accent
         case .favorites: DesignSystem.Color.error
         case .travel: Color(hex: "00C9A7")
         case .dailyChallenge: DesignSystem.Color.orange
@@ -198,6 +203,7 @@ enum MoreSheet: Identifiable {
         case .profile: "profile"
         case .countries: "countries"
         case .orgs: "orgs"
+        case .collections: "collections"
         case .favorites: "favorites"
         case .travel: "travel"
         case .dailyChallenge: "dailyChallenge"
@@ -236,6 +242,7 @@ enum MoreSheet: Identifiable {
         case .profile: .profile
         case .countries: .countries
         case .orgs: .organizations
+        case .collections: .collections
         case .favorites: .favorites
         case .travel: .travelTracker
         case .dailyChallenge: .dailyChallenge
