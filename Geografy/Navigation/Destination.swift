@@ -62,6 +62,7 @@ extension Destination {
     @ViewBuilder
     var content: some View {
         switch self {
+        case .achievementDetail(let definition): AchievementDetailView(definition: definition)
         case .achievements: AchievementsScreen()
         case .allMaps: AllMapsScreen()
         case .borderChallenge: BorderChallengeScreen()

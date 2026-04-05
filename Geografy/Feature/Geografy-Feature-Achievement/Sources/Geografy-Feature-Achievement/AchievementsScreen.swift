@@ -1,15 +1,16 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct AchievementsScreen: View {
     // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var selectedCategory: AchievementCategory?
-    @State private var selectedAchievement: AchievementDefinition?
     @State private var appeared = false
 
     // MARK: - Init
@@ -21,19 +22,7 @@ public struct AchievementsScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle("Achievements")
             .navigationBarTitleDisplayMode(.large)
-            .onAppear {
-                appeared = true
-            }
-            .sheet(item: $selectedAchievement) { definition in
-                AchievementDetailSheet(
-                    definition: definition,
-                    isUnlocked: achievementService.isUnlocked(definition.id),
-                    progress: achievementService.progress(for: definition.id),
-                    isPinned: achievementService.isPinned(definition.id),
-                    canPin: achievementService.canPinMore,
-                    onTogglePin: { achievementService.togglePin(definition.id) }
-                )
-            }
+            .onAppear { appeared = true }
     }
 }
 
@@ -161,7 +150,7 @@ private extension AchievementsScreen {
             ForEach(Array(filteredAchievements.enumerated()), id: \.element.id) { index, definition in
                 Button {
                     hapticsService.impact(.light)
-                    selectedAchievement = definition
+                    coordinator.push(.achievementDetail(definition))
                 } label: {
                     achievementRow(definition)
                 }

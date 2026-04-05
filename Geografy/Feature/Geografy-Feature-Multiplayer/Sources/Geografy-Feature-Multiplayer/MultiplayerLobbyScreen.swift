@@ -143,21 +143,14 @@ private extension MultiplayerLobbyScreen {
             GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
                 startSearching()
             }
-            Button {
+            GlassButton(
+                "Play Nearby",
+                systemImage: "antenna.radiowaves.left.and.right",
+                role: .secondary,
+                fullWidth: true
+            ) {
                 coordinator.cover(.localMultiplayer)
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "antenna.radiowaves.left.and.right")
-                        .font(DesignSystem.Font.caption)
-                    Text("Play Nearby")
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.sm)
             }
-            .buttonStyle(.glass)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
