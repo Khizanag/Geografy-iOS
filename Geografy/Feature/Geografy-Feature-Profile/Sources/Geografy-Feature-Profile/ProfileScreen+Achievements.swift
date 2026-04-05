@@ -48,7 +48,7 @@ private extension ProfileScreen {
                 ForEach(recentUnlockedAchievements) { definition in
                     Button {
                         hapticsService.impact(.light)
-                        coordinator.push(.achievementDetail(definition))
+                        coordinator.sheet(.achievementDetail(definition))
                     } label: {
                         achievementCard(definition)
                     }
