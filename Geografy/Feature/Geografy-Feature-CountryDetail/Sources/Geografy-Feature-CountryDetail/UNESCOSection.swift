@@ -4,12 +4,12 @@ import SwiftUI
 
 // MARK: - UNESCO Section
 extension CountryDetailScreen {
-    public var unescoSites: [UNESCOSite] {
+    var unescoSites: [UNESCOSite] {
         UNESCOData.data[country.code] ?? []
     }
 
     @ViewBuilder
-    public var unescoSection: some View {
+    var unescoSection: some View {
         if !unescoSites.isEmpty {
             if subscriptionService.isPremium {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

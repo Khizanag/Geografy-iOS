@@ -4,7 +4,7 @@ import SwiftUI
 // MARK: - Deep Dive Section
 extension CountryDetailScreen {
     @ViewBuilder
-    public var deepDiveSection: some View {
+    var deepDiveSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Deep Dive", icon: "book.pages")
                 .accessibilityAddTraits(.isHeader)

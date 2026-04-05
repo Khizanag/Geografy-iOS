@@ -4,11 +4,11 @@ import SwiftUI
 
 // MARK: - Economy
 extension CountryDetailScreen {
-    public var hasEconomyData: Bool {
+    var hasEconomyData: Bool {
         country.gdp != nil || country.gdpPerCapita != nil || country.gdpPPP != nil
     }
 
-    public var economySection: some View {
+    var economySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Economy", premium: true)
             economyTilesRow
@@ -16,7 +16,7 @@ extension CountryDetailScreen {
     }
 
     @ViewBuilder
-    public var economyTilesRow: some View {
+    var economyTilesRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if let gdp = country.gdp {
                 gdpTile(gdp: gdp)
@@ -84,7 +84,7 @@ extension CountryDetailScreen {
         }
     }
 
-    public var governmentSection: some View {
+    var governmentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Government", premium: true)
             InfoTile(
@@ -104,7 +104,7 @@ extension CountryDetailScreen {
         }
     }
 
-    public var currencySection: some View {
+    var currencySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Currency", premium: true)
             InfoTile(
