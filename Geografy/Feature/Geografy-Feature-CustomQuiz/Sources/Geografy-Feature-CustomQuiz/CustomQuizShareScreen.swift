@@ -18,6 +18,7 @@ public struct CustomQuizShareScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle("Share Quiz")
             .navigationBarTitleDisplayMode(.inline)
+            .closeButtonPlacementLeading()
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {

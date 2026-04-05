@@ -20,6 +20,7 @@ public struct TravelJournalDetailScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
+            .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .confirmationDialog(
                 "Delete Entry",
