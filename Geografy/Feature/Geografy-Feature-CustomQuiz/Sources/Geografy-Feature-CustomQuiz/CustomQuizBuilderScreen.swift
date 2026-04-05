@@ -173,14 +173,14 @@ private extension CustomQuizBuilderScreen {
     }
 
     var iconPicker: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             Text("Icon")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: 48), spacing: DesignSystem.Spacing.xs)],
-                spacing: DesignSystem.Spacing.xs
+                columns: [GridItem(.adaptive(minimum: 56), spacing: DesignSystem.Spacing.sm)],
+                spacing: DesignSystem.Spacing.sm
             ) {
                 ForEach(CustomQuiz.availableIcons, id: \.self) { icon in
                     iconButton(icon)
@@ -194,23 +194,29 @@ private extension CustomQuizBuilderScreen {
         return Button {
             selectedIcon = icon
         } label: {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(
-                    isSelected ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary
-                )
-                .frame(width: 48, height: 48)
-                .background(
-                    isSelected ? DesignSystem.Color.accent.opacity(0.15) : DesignSystem.Color.cardBackground
-                )
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
-                .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-                        .strokeBorder(
-                            isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackgroundHighlighted,
-                            lineWidth: isSelected ? 2 : 1,
-                        )
-                )
+            ZStack {
+                Circle()
+                    .fill(
+                        isSelected
+                            ? DesignSystem.Color.accent.opacity(0.2)
+                            : DesignSystem.Color.cardBackground
+                    )
+                Circle()
+                    .strokeBorder(
+                        isSelected
+                            ? DesignSystem.Color.accent
+                            : DesignSystem.Color.cardBackgroundHighlighted,
+                        lineWidth: isSelected ? 2 : 1
+                    )
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.title3)
+                    .foregroundStyle(
+                        isSelected
+                            ? DesignSystem.Color.accent
+                            : DesignSystem.Color.textSecondary
+                    )
+            }
+            .frame(width: 56, height: 56)
         }
         .buttonStyle(.plain)
     }
@@ -324,7 +330,7 @@ private extension CustomQuizBuilderScreen {
     var navigationButtons: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if currentStep != .name {
-                GeoButton("Back", systemImage: "chevron.left", style: .secondary) {
+                GlassButton("Back", systemImage: "chevron.left", role: .secondary) {
                     goToPreviousStep()
                 }
             }
@@ -332,13 +338,13 @@ private extension CustomQuizBuilderScreen {
             Spacer()
 
             if currentStep == .difficulty {
-                GeoButton("Preview", systemImage: "eye.fill") {
+                GlassButton("Preview", systemImage: "eye.fill") {
                     showPreview = true
                 }
                 .opacity(canProceed ? 1 : 0.5)
                 .disabled(!canProceed)
             } else {
-                GeoButton("Next", systemImage: "chevron.right") {
+                GlassButton("Next", systemImage: "chevron.right") {
                     goToNextStep()
                 }
                 .opacity(canProceed ? 1 : 0.5)

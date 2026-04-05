@@ -121,18 +121,22 @@ private extension CustomQuizLibraryScreen {
 // MARK: - Sheets
 private extension CustomQuizLibraryScreen {
     var builderSheet: some View {
-        CustomQuizBuilderScreen(
-            countryDataService: countryDataService,
-            quizService: quizService
-        )
+        NavigationStack {
+            CustomQuizBuilderScreen(
+                countryDataService: countryDataService,
+                quizService: quizService
+            )
+        }
     }
 
     func editSheet(for quiz: CustomQuiz) -> some View {
-        CustomQuizBuilderScreen(
-            existingQuiz: quiz,
-            countryDataService: countryDataService,
-            quizService: quizService
-        )
+        NavigationStack {
+            CustomQuizBuilderScreen(
+                existingQuiz: quiz,
+                countryDataService: countryDataService,
+                quizService: quizService
+            )
+        }
     }
 }
 
