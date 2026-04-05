@@ -179,35 +179,12 @@ private extension OrganizationDetailScreen {
     }
 
     var openMapButton: some View {
-        Button {
+        GlassButton("Open Map", systemImage: "map.fill", fullWidth: true) {
             #if !os(tvOS)
             hapticsService.impact(.medium)
             #endif
             coordinator.cover(.map(continentFilter: nil))
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "map.fill")
-                    .font(DesignSystem.Font.headline)
-                Text("Open Map")
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.semibold)
-                Spacer()
-                Image(systemName: "arrow.right")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .padding(DesignSystem.Spacing.md)
-            .background(
-                LinearGradient(
-                    colors: [organization.highlightColor, organization.highlightColor.opacity(0.7)],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-            .shadow(color: organization.highlightColor.opacity(0.4), radius: 10, y: 4)
         }
-        .buttonStyle(PressButtonStyle())
     }
 
     var memberCountriesSection: some View {
