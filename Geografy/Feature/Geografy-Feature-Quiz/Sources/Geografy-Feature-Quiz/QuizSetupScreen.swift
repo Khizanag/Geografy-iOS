@@ -42,40 +42,39 @@ private extension QuizSetupScreen {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 headerSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
 
                 gameModeSection
-
-                if selectedGameMode == .arcade {
-                    arcadeTimerSection
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                }
+                    .padding(.horizontal, DesignSystem.Spacing.md)
 
                 quizTypeSection
 
                 if selectedType.hasComparisonMetric {
                     metricSection
+                        .padding(.horizontal, DesignSystem.Spacing.md)
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
 
                 if selectedType.supportedAnswerModes.count > 1 {
                     answerModeSection
+                        .padding(.horizontal, DesignSystem.Spacing.md)
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
 
                 regionSection
 
                 if selectedGameMode == .standard {
-                    difficultySection
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-
                     questionCountSection
+                        .padding(.horizontal, DesignSystem.Spacing.md)
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
+
+                timerSection
+                    .padding(.horizontal, DesignSystem.Spacing.md)
             }
             .animation(.easeInOut(duration: 0.3), value: selectedType)
             .animation(.easeInOut(duration: 0.3), value: selectedGameMode)
             .animation(.easeInOut(duration: 0.3), value: answerMode)
-            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
@@ -130,7 +129,7 @@ private extension QuizSetupScreen {
         .buttonStyle(PressButtonStyle())
     }
 
-    var arcadeTimerSection: some View {
+    var timerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Timer")
 
@@ -351,57 +350,6 @@ private extension QuizSetupScreen {
     }
 }
 
-// MARK: - Difficulty Section
-private extension QuizSetupScreen {
-    var difficultySection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Difficulty")
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(QuizDifficulty.allCases) { difficulty in
-                    difficultyRow(difficulty)
-                }
-            }
-        }
-    }
-
-    func difficultyRow(_ difficulty: QuizDifficulty) -> some View {
-        let isSelected = selectedDifficulty == difficulty
-        return Button { selectDifficulty(difficulty) } label: {
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    ZStack {
-                        Circle()
-                            .fill(DesignSystem.Color.accent.opacity(isSelected ? 0.2 : 0.08))
-                            .frame(width: 40, height: 40)
-                        Image(systemName: difficulty.icon)
-                            .font(DesignSystem.Font.subheadline)
-                            .foregroundStyle(
-                                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.textSecondary
-                            )
-                    }
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(difficulty.displayName)
-                            .font(DesignSystem.Font.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text(difficulty.subtitle(for: answerMode))
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                    Spacer()
-                    if isSelected {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(DesignSystem.Font.subheadline)
-                            .foregroundStyle(DesignSystem.Color.accent)
-                    }
-                }
-                .padding(DesignSystem.Spacing.sm)
-            }
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-}
-
 // MARK: - Question Count Section
 private extension QuizSetupScreen {
     var questionCountSection: some View {
@@ -485,11 +433,6 @@ private extension QuizSetupScreen {
 
     func selectMetric(_ metric: ComparisonMetric) {
         comparisonMetric = metric
-        hapticSelection()
-    }
-
-    func selectDifficulty(_ difficulty: QuizDifficulty) {
-        selectedDifficulty = difficulty
         hapticSelection()
     }
 
