@@ -110,9 +110,9 @@ private extension CountryDetailScreen {
                 }
             } label: {
                 Label("Favorite", systemImage: isFavorite ? "heart.fill" : "heart")
+                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
                     .symbolEffect(.bounce, value: isFavorite)
             }
-            .tint(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
             .buttonStyle(.plain)
         }
     }
