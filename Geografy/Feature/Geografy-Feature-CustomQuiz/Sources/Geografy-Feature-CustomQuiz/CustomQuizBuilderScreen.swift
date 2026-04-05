@@ -87,12 +87,17 @@ private extension CustomQuizBuilderScreen {
 // MARK: - Step Indicator
 private extension CustomQuizBuilderScreen {
     var stepIndicator: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(BuilderStep.allCases, id: \.rawValue) { step in
+        HStack(spacing: 0) {
+            ForEach(Array(BuilderStep.allCases.enumerated()), id: \.element.rawValue) { index, step in
                 stepDot(step)
+
+                if index < BuilderStep.allCases.count - 1 {
+                    stepLine(completed: step.rawValue < currentStep.rawValue)
+                }
             }
         }
         .padding(.vertical, DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     func stepDot(_ step: BuilderStep) -> some View {
@@ -104,15 +109,34 @@ private extension CustomQuizBuilderScreen {
                 .fill(
                     isActive
                         ? DesignSystem.Color.accent
-                        : isCompleted ? DesignSystem.Color.success : DesignSystem.Color.cardBackgroundHighlighted
+                        : isCompleted
+                            ? DesignSystem.Color.success
+                            : DesignSystem.Color.cardBackgroundHighlighted
                 )
                 .frame(width: 10, height: 10)
 
             Text(step.title)
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(isActive ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary)
+                .foregroundStyle(
+                    isActive
+                        ? DesignSystem.Color.accent
+                        : isCompleted
+                            ? DesignSystem.Color.success
+                            : DesignSystem.Color.textTertiary
+                )
         }
-        .frame(maxWidth: .infinity)
+    }
+
+    func stepLine(completed: Bool) -> some View {
+        Rectangle()
+            .fill(
+                completed
+                    ? DesignSystem.Color.success
+                    : DesignSystem.Color.cardBackgroundHighlighted
+            )
+            .frame(height: 2)
+            .frame(maxWidth: .infinity)
+            .padding(.bottom, DesignSystem.Spacing.lg)
     }
 }
 
@@ -369,20 +393,24 @@ private extension CustomQuizBuilderScreen {
 // MARK: - Sheets
 private extension CustomQuizBuilderScreen {
     var countryPickerSheet: some View {
-        CustomQuizCountryPicker(
-            countries: countryDataService.countries,
-            selectedCodes: $selectedCountryCodes,
-        )
+        NavigationStack {
+            CustomQuizCountryPicker(
+                countries: countryDataService.countries,
+                selectedCodes: $selectedCountryCodes,
+            )
+        }
     }
 
     var previewSheet: some View {
-        CustomQuizPreviewScreen(quiz: buildQuiz()) { quiz in
-            if existingQuiz != nil {
-                quizService.update(quiz)
-            } else {
-                quizService.save(quiz)
+        NavigationStack {
+            CustomQuizPreviewScreen(quiz: buildQuiz()) { quiz in
+                if existingQuiz != nil {
+                    quizService.update(quiz)
+                } else {
+                    quizService.save(quiz)
+                }
+                dismiss()
             }
-            dismiss()
         }
     }
 }
@@ -417,7 +445,7 @@ private extension CustomQuizBuilderScreen {
     var canProceed: Bool {
         switch currentStep {
         case .name: !quizName.trimmingCharacters(in: .whitespaces).isEmpty && !isDuplicateName
-        case .countries: selectedCountryCodes.count >= 4
+        case .countries: selectedCountryCodes.count >= 2
         case .questionTypes: !selectedQuestionTypes.isEmpty
         case .difficulty: true
         }
