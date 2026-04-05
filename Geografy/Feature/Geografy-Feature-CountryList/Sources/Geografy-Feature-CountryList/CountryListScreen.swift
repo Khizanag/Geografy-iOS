@@ -37,7 +37,7 @@ public struct CountryListScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var searchText = ""
-    @State private var groupBy: GroupOption = .firstLetter
+    @State private var groupBy: GroupOption = .none
     @State private var sortBy: SortOption = .name
     @State private var sortAscending = true
     @State private var continentFilter: Country.Continent?
@@ -153,7 +153,7 @@ private extension CountryListScreen {
     }
 
     var hasActiveFilters: Bool {
-        groupBy != .firstLetter || sortBy != .name || !sortAscending || continentFilter != nil
+        groupBy != .none || sortBy != .name || !sortAscending || continentFilter != nil
     }
 
     var displaySubmenu: some View {
@@ -170,7 +170,7 @@ private extension CountryListScreen {
     var resetButton: some View {
         Button(role: .destructive) {
             withAnimation {
-                groupBy = .firstLetter
+                groupBy = .none
                 sortBy = .name
                 sortAscending = true
                 continentFilter = nil
