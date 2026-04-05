@@ -93,20 +93,25 @@ private extension CountryDetailScreen {
                     favoritesService.toggle(code: country.code)
                 }
             } label: {
-                Label("Favorite", systemImage: favoritesService.isFavorite(code: country.code) ? "heart.fill" : "heart")
-                    .foregroundStyle(
-                        favoritesService.isFavorite(code: country.code)
-                            ? DesignSystem.Color.error
-                            : DesignSystem.Color.iconPrimary
-                    )
-                    .symbolEffect(.bounce, value: favoritesService.isFavorite(code: country.code))
+                Label(
+                    "Favorite",
+                    systemImage: favoritesService.isFavorite(code: country.code)
+                        ? "heart.fill"
+                        : "heart"
+                )
+                .foregroundStyle(DesignSystem.Color.error)
+                .symbolEffect(
+                    .bounce,
+                    value: favoritesService.isFavorite(code: country.code)
+                )
             }
+            .buttonStyle(.plain)
         }
     }
 
     @ToolbarContentBuilder
     var compareToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
+        ToolbarItem(placement: .secondaryAction) {
             Button {
                 hapticsService.impact(.light)
                 coordinator.sheet(.compare(preselectedCountry: country))
@@ -114,6 +119,7 @@ private extension CountryDetailScreen {
                 Label("Compare", systemImage: "arrow.left.arrow.right")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .buttonStyle(.plain)
         }
     }
 
