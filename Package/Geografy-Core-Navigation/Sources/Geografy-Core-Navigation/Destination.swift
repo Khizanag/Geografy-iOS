@@ -7,6 +7,8 @@ public enum Destination: Hashable, Identifiable {
     case achievements
     case allMaps
     case borderChallenge
+    case collectionDetail(String)
+    case collections
     case coinStore
     case compare(preselectedCountry: Country? = nil)
     case continentOverview(Country.Continent)
@@ -87,6 +89,8 @@ public enum Destination: Hashable, Identifiable {
         case .achievementDetail(let definition): "achievementDetail-\(definition.id)"
         case .achievements: "achievements"
         case .allMaps: "allMaps"
+        case .collectionDetail(let name): "collectionDetail-\(name)"
+        case .collections: "collections"
         case .borderChallenge: "borderChallenge"
         case .coinStore: "coinStore"
         case .compare(let country): "compare-\(country?.code ?? "none")"

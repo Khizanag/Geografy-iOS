@@ -66,6 +66,8 @@ extension Destination {
         case .achievements: AchievementsScreen()
         case .allMaps: AllMapsScreen()
         case .borderChallenge: BorderChallengeScreen()
+        case .collectionDetail(let name): CollectionDetailScreen(collectionName: name)
+        case .collections: CollectionsScreen()
         case .coinStore: CoinStoreScreen()
         case .compare(let country): CompareScreen(preselectedCountry: country)
         case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)

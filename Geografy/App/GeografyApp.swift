@@ -14,6 +14,7 @@ struct GeografyApp: App {
     @State private var achievementService: AchievementService
     @State private var authService: AuthService
     @State private var coinService = CoinService()
+    @State private var collectionService = CollectionService()
     @State private var countryDataService = CountryDataService()
     @State private var currencyService = CurrencyService()
     @State private var databaseManager: DatabaseManager
@@ -74,6 +75,7 @@ private extension GeografyApp {
             .environment(achievementService)
             .environment(authService)
             .environment(coinService)
+            .environment(collectionService)
             .environment(countryDataService)
             .environment(currencyService)
             .environment(databaseManager)
@@ -110,6 +112,7 @@ private extension GeografyApp {
     func bootstrap() async {
         await countryDataService.loadCountries()
         favoritesService.fetchEntries()
+        collectionService.configure(container: databaseManager.container)
         xpService.refreshXP()
         achievementService.refreshUnlocked()
         achievementService.loadPinnedIDs()
