@@ -12,7 +12,7 @@ extension CountryDetailScreen {
         let currentStatus = travelService.status(for: country.code)
         return Button {
             hapticsService.impact(.light)
-            activeSheet = .travelPicker
+            coordinator.sheet(.travelStatusPicker(country))
         } label: {
             travelCardLabel(status: currentStatus)
         }
@@ -21,36 +21,44 @@ extension CountryDetailScreen {
     }
 
     func travelCardLabel(status currentStatus: TravelStatus?) -> some View {
-        CardView {
+        let color = currentStatus?.color ?? DesignSystem.Color.accent
+
+        return CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill((currentStatus?.color ?? DesignSystem.Color.accent).opacity(0.15))
-                        .frame(width: 40, height: 40)
-                    Image(systemName: currentStatus?.icon ?? "airplane.departure")
-                        .font(DesignSystem.Font.callout)
-                        .foregroundStyle(currentStatus?.color ?? DesignSystem.Color.accent)
-                }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Travel Status")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                    Text(currentStatus?.label ?? "Not set")
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(
-                            currentStatus != nil
-                                ? DesignSystem.Color.textPrimary
-                                : DesignSystem.Color.textTertiary
-                        )
-                }
+                travelStatusIcon(color: color, icon: currentStatus?.icon ?? "airplane.departure")
+                travelStatusText(label: currentStatus?.label, hasStatus: currentStatus != nil)
+
                 Spacer()
+
                 Image(systemName: "chevron.right")
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
                     .accessibilityHidden(true)
             }
             .padding(DesignSystem.Spacing.sm)
+        }
+    }
+
+    func travelStatusIcon(color: Color, icon: String) -> some View {
+        Circle()
+            .fill(color.opacity(0.15))
+            .frame(width: 40, height: 40)
+            .overlay {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.callout)
+                    .foregroundStyle(color)
+            }
+    }
+
+    func travelStatusText(label: String?, hasStatus: Bool) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            Text("Travel Status")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+            Text(label ?? "Not set")
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(hasStatus ? DesignSystem.Color.textPrimary : DesignSystem.Color.textTertiary)
         }
     }
 }
@@ -60,14 +68,6 @@ extension CountryDetailScreen {
     @ViewBuilder
     func countryDetailSheetContent(for sheet: CountryDetailSheet) -> some View {
         switch sheet {
-        case .travelPicker:
-            TravelStatusPickerSheet(
-                country: country,
-                isPresented: Binding(
-                    get: { activeSheet != nil },
-                    set: { if !$0 { activeSheet = nil } }
-                )
-            )
         case .info(let item):
             propertyDetailSheet(for: item)
         case .deepDive:
