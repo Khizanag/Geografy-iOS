@@ -31,20 +31,24 @@ public struct TravelTrackerScreen: View {
                 appeared = true
             }
             .sheet(isPresented: $showCountryPicker) {
-                TravelCountryPickerSheet(
-                    countries: countryDataService.countries,
-                    isPresented: $showCountryPicker,
-                    preferredStatus: selectedFilter
-                )
+                NavigationStack {
+                    TravelCountryPickerSheet(
+                        countries: countryDataService.countries,
+                        isPresented: $showCountryPicker,
+                        preferredStatus: selectedFilter
+                    )
+                }
             }
             .sheet(item: $selectedCountry) { country in
-                TravelStatusPickerSheet(
-                    country: country,
-                    isPresented: Binding(
-                        get: { selectedCountry != nil },
-                        set: { if !$0 { selectedCountry = nil } }
+                NavigationStack {
+                    TravelStatusPickerSheet(
+                        country: country,
+                        isPresented: Binding(
+                            get: { selectedCountry != nil },
+                            set: { if !$0 { selectedCountry = nil } }
+                        )
                     )
-                )
+                }
             }
     }
 }
@@ -148,10 +152,10 @@ private extension TravelTrackerScreen {
         ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
-                coordinator.sheet(.travelBucketList)
+                coordinator.push(.travelBucketList)
             } label: {
                 Label("Bucket List", systemImage: "list.star")
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
         }
 
