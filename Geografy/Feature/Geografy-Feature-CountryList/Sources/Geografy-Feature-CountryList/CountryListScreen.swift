@@ -68,34 +68,39 @@ private extension CountryListScreen {
     var listContent: some View {
         ScrollViewReader { proxy in
             ZStack(alignment: .trailing) {
-                ScrollView {
-                    LazyVStack(spacing: DesignSystem.Spacing.xs, pinnedViews: .sectionHeaders) {
-                        if groupBy == .none {
-                            Section {
-                                flatContent
-                            }
-                        } else {
-                            groupedContent
-                        }
-                    }
-                    .padding(.leading, DesignSystem.Spacing.md)
-                    .padding(.trailing, showJumpIndex ? DesignSystem.Spacing.md + 18 : DesignSystem.Spacing.md)
-                    .padding(.bottom, DesignSystem.Spacing.xxl)
-                    .padding(.top, DesignSystem.Spacing.xs)
-                    .readableContentWidth()
-                }
-                .background(DesignSystem.Color.background)
-                .scrollDismissesKeyboard(.interactively)
+                countryScrollView
+                jumpIndex(proxy: proxy)
+            }
+        }
+    }
 
-                if showJumpIndex {
-                    AlphabetJumpIndex(letters: sectionKeys) { letter in
-                        hapticsService.selection()
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            expandedSections.insert(letter)
-                            proxy.scrollTo(letter, anchor: .top)
-                        }
-                    }
-                    .padding(.trailing, DesignSystem.Spacing.xxs)
+    var countryScrollView: some View {
+        ScrollView {
+            LazyVStack(spacing: DesignSystem.Spacing.xs, pinnedViews: .sectionHeaders) {
+                if groupBy == .none {
+                    Section { flatContent }
+                } else {
+                    groupedContent
+                }
+            }
+            .padding(.leading, DesignSystem.Spacing.md)
+            .padding(.trailing, showJumpIndex ? DesignSystem.Spacing.md + 18 : DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.top, DesignSystem.Spacing.xs)
+            .readableContentWidth()
+        }
+        .background(DesignSystem.Color.background)
+        .scrollDismissesKeyboard(.interactively)
+    }
+
+    @ViewBuilder
+    func jumpIndex(proxy: ScrollViewProxy) -> some View {
+        if showJumpIndex {
+            AlphabetJumpIndex(letters: sectionKeys) { letter in
+                hapticsService.selection()
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    expandedSections.insert(letter)
+                    proxy.scrollTo(letter, anchor: .top)
                 }
             }
         }
