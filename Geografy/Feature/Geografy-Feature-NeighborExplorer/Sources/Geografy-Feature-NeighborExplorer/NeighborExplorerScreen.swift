@@ -181,7 +181,7 @@ private extension NeighborExplorerScreen {
             ForEach(
                 countryDataService.countries
                     .filter { $0.code != country.code && $0.continent != .antarctica }
-                    .sorted { $0.name < $1.name }
+                    .sorted(by: \.name)
             ) { destination in
                 Button(destination.name) {
                     destinationCode = destination.code

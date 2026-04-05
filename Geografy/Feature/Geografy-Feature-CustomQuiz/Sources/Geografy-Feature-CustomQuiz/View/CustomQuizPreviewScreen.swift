@@ -70,7 +70,7 @@ private extension CustomQuizPreviewScreen {
     var selectedCountries: [Country] {
         countryDataService.countries
             .filter { quiz.countryCodes.contains($0.code) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     var moreCountriesLabel: some View {

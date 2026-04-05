@@ -55,7 +55,7 @@ private extension CustomQuizDetailSheet {
 
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(
-                    grouped.keys.sorted { $0.displayName < $1.displayName },
+                    grouped.keys.sorted(by: \.displayName),
                     id: \.self
                 ) { continent in
                     continentRow(continent, count: grouped[continent]?.count ?? 0)

@@ -210,7 +210,7 @@ private extension QuizPackService {
     static func makePopulationPacks(
         countries: [Country]
     ) -> [QuizPack] {
-        let sorted = countries.sorted { $0.population > $1.population }
+        let sorted = countries.sorted(by: \.population, descending: true)
         return [
             QuizPack(
                 id: "population_top",
@@ -251,7 +251,7 @@ private extension QuizPackService {
     static func makeGeographyPacks(
         countries: [Country]
     ) -> [QuizPack] {
-        let bySizeDesc = countries.sorted { $0.area > $1.area }
+        let bySizeDesc = countries.sorted(by: \.area, descending: true)
         let largest = Array(bySizeDesc.prefix(50))
         let smallest = Array(bySizeDesc.suffix(50))
         let landlocked = countries.filter {

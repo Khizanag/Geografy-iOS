@@ -147,6 +147,6 @@ private extension CountryBrowserScreen {
             }
         }
 
-        return countries.sorted { $0.name < $1.name }
+        return countries.sorted(by: \.name)
     }
 }

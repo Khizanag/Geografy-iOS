@@ -39,7 +39,7 @@ private extension ContinentStatsScreen {
     var continentCountries: [Country] {
         countryDataService.countries
             .filter { $0.continent == selectedContinent }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     var statsGrid: some View {

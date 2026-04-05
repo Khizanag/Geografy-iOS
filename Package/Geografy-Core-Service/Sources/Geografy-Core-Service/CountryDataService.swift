@@ -38,7 +38,7 @@ public final class CountryDataService {
 
     public func countryOfTheDay(for date: Date = .now) -> Country? {
         guard !countries.isEmpty else { return nil }
-        let sorted = countries.sorted { $0.code < $1.code }
+        let sorted = countries.sorted(by: \.code)
         let year = Calendar.current.component(.year, from: date)
         let dayOfYear = (Calendar.current.ordinality(of: .day, in: .year, for: date) ?? 1) - 1
         let shuffled = sorted.seededShuffle(seed: UInt64(year) &* 2_654_435_761)

@@ -201,12 +201,12 @@ struct CountryPickerSheet: View {
 
     private var filteredCountries: [Country] {
         guard !searchText.isEmpty else {
-            return countries.sorted { $0.name < $1.name }
+            return countries.sorted(by: \.name)
         }
         let query = searchText.lowercased()
         return countries
             .filter { $0.name.lowercased().contains(query) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     var body: some View {

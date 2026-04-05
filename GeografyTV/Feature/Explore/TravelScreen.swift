@@ -11,7 +11,7 @@ struct TravelScreen: View {
     @State private var selectedFilter: TravelFilter = .all
 
     private var displayedCountries: [Country] {
-        let countries = countryDataService.countries.sorted { $0.name < $1.name }
+        let countries = countryDataService.countries.sorted(by: \.name)
         switch selectedFilter {
         case .all:
             return countries

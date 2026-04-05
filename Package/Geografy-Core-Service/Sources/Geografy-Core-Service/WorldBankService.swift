@@ -398,6 +398,6 @@ private extension WorldBankService {
             guard let value = doubleValue else { return nil }
             return DataPoint(year: year, value: value)
         }
-        .sorted { $0.year < $1.year }
+        .sorted(by: \.year)
     }
 }

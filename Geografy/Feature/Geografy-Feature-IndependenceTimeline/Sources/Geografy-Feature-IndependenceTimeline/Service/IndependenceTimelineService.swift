@@ -6,13 +6,13 @@ public struct IndependenceTimelineService {
 
     public func events(for era: IndependenceEra) -> [IndependenceEvent] {
         independenceEvents.filter { era.contains(year: $0.year) }
-            .sorted { $0.year < $1.year }
+            .sorted(by: \.year)
     }
 
     public func events(independenceFrom country: String) -> [IndependenceEvent] {
-        guard !country.isEmpty else { return independenceEvents.sorted { $0.year < $1.year } }
+        guard !country.isEmpty else { return independenceEvents.sorted(by: \.year) }
         return independenceEvents.filter { $0.independenceFrom == country }
-            .sorted { $0.year < $1.year }
+            .sorted(by: \.year)
     }
 
     public var uniqueColonizers: [String] {

@@ -284,7 +284,7 @@ private struct AllZonesView: View {
             dict[offset, default: []].append(item)
         }
         return dict.map { ZoneGroup(offset: $0.key, countries: $0.value.sorted { $0.country.name < $1.country.name }) }
-            .sorted { $0.offset < $1.offset }
+            .sorted(by: \.offset)
     }
 
     private func zoneGroup(offset: Double, countries: [CountryWithZone]) -> some View {

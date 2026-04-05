@@ -21,7 +21,7 @@ public struct WorldRecordsService {
 // MARK: - Helpers
 private extension WorldRecordsService {
     func areaRecords(from countries: [Country]) -> [WorldRecord] {
-        let sorted = countries.sorted { $0.area > $1.area }
+        let sorted = countries.sorted(by: \.area, descending: true)
         var result: [WorldRecord] = []
 
         if let largest = sorted.first {
@@ -61,7 +61,7 @@ private extension WorldRecordsService {
     }
 
     func populationRecords(from countries: [Country]) -> [WorldRecord] {
-        let sorted = countries.sorted { $0.population > $1.population }
+        let sorted = countries.sorted(by: \.population, descending: true)
         var result: [WorldRecord] = []
 
         if let mostPopulous = sorted.first {
@@ -105,7 +105,7 @@ private extension WorldRecordsService {
 
     func populationDensityRecords(from countries: [Country]) -> [WorldRecord] {
         let filtered = countries.filter { $0.populationDensity > 0 }
-        let sorted = filtered.sorted { $0.populationDensity > $1.populationDensity }
+        let sorted = filtered.sorted(by: \.populationDensity, descending: true)
         var result: [WorldRecord] = []
 
         if let densest = sorted.first {
@@ -247,7 +247,7 @@ private extension WorldRecordsService {
             guard let value = country.gdpPerCapita, value > 0 else { return nil }
             return (country: country, gdpPerCapita: value)
         }
-        let sorted = withGDP.sorted { $0.gdpPerCapita > $1.gdpPerCapita }
+        let sorted = withGDP.sorted(by: \.gdpPerCapita, descending: true)
         var result: [WorldRecord] = []
 
         if let richest = sorted.first {

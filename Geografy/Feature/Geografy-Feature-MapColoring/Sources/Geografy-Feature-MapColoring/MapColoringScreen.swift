@@ -246,7 +246,7 @@ private extension MapColoringScreen {
             let key = groupKey(for: country)
             groups[key, default: []].append(country)
         }
-        return groups.mapValues { $0.sorted { $0.name < $1.name } }
+        return groups.mapValues { $0.sorted(by: \.name) }
     }
 
     func groupKey(for country: Country) -> String {

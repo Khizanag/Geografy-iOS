@@ -220,7 +220,7 @@ private extension ContinentStatsScreen {
     }
 
     var sortedByPopulation: [Country] {
-        continentCountries.sorted { $0.population > $1.population }
+        continentCountries.sorted(by: \.population, descending: true)
     }
 
     var totalPopulation: Int {

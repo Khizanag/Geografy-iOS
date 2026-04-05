@@ -8,11 +8,11 @@ struct TimelineScreen: View {
 
     private var displayedEvents: [HistoricalEvent] {
         guard let selectedType else {
-            return service.events.sorted { $0.year > $1.year }
+            return service.events.sorted(by: \.year, descending: true)
         }
         return service.events
             .filter { $0.type == selectedType }
-            .sorted { $0.year > $1.year }
+            .sorted(by: \.year, descending: true)
     }
 
     var body: some View {

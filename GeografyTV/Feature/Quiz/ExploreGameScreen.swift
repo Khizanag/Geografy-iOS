@@ -233,7 +233,7 @@ private extension ExploreGameScreen {
         let lowercased = query.lowercased()
         suggestions = countryDataService.countries
             .filter { $0.name.lowercased().contains(lowercased) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     func submitGuess(_ name: String) {

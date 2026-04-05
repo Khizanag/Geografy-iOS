@@ -116,7 +116,7 @@ private extension ProfileScreen {
 private extension ProfileScreen {
     var recentUnlockedAchievements: [AchievementDefinition] {
         achievementService.unlockedAchievements
-            .sorted { $0.unlockedAt > $1.unlockedAt }
+            .sorted(by: \.unlockedAt, descending: true)
             .prefix(6)
             .compactMap { unlocked in
                 AchievementCatalog.all.first { $0.id == unlocked.id }

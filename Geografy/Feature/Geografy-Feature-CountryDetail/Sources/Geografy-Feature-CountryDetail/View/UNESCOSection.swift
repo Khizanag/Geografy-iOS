@@ -17,7 +17,7 @@ extension CountryDetailScreen {
                     unescoBadge
                     CardView {
                         VStack(spacing: 0) {
-                            let sorted = unescoSites.sorted { $0.yearInscribed < $1.yearInscribed }
+                            let sorted = unescoSites.sorted(by: \.yearInscribed)
                             ForEach(Array(sorted.enumerated()), id: \.offset) { index, site in
                                 UNESCOSiteRow(site: site)
                                 if index < sorted.count - 1 {

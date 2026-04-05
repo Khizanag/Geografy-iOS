@@ -11,7 +11,7 @@ extension CountryDetailScreen {
             if !country.languages.isEmpty {
                 if subscriptionService.isPremium {
                     LanguageBarChart(
-                        languages: country.languages.sorted { $0.percentage > $1.percentage },
+                        languages: country.languages.sorted(by: \.percentage, descending: true),
                         appeared: true
                     )
                 } else {

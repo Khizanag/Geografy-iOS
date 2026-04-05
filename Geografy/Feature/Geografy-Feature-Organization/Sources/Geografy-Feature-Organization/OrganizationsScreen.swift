@@ -172,7 +172,7 @@ private extension OrganizationsScreen {
     var sortedOrgs: [Organization] {
         switch sortOption {
         case .alphabetical:
-            Organization.all.sorted { $0.displayName < $1.displayName }
+            Organization.all.sorted(by: \.displayName)
         case .memberCount:
             Organization.all.sorted { memberCount(for: $0) > memberCount(for: $1) }
         }

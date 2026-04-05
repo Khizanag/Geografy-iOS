@@ -61,7 +61,7 @@ private extension DailyChallengeService {
 
         let countries = countryDataService.countries
             .filter { $0.continent != .antarctica }
-            .sorted { $0.code < $1.code }
+            .sorted(by: \.code)
         let shuffled = countries.seededShuffle(seed: seed)
 
         let content: DailyChallenge.ChallengeContent = switch type {

@@ -74,7 +74,7 @@ private extension LanguageBarChart {
 // MARK: - Helpers
 private extension LanguageBarChart {
     var sortedLanguages: [Country.Language] {
-        languages.sorted { $0.percentage > $1.percentage }
+        languages.sorted(by: \.percentage, descending: true)
     }
 
     func barColor(for index: Int) -> Color {

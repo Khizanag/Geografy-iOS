@@ -408,7 +408,7 @@ private extension CurrencyConverterScreen {
                 countryCode: country.code
             )
         }
-        .sorted { $0.code < $1.code }
+        .sorted(by: \.code)
     }
 
     var quickCurrencies: [CurrencyEntry] {

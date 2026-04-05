@@ -195,7 +195,7 @@ extension TravelTrackerScreen {
     var searchResults: [Country] {
         countryDataService.countries
             .filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     var filteredCountries: [Country] {
@@ -207,7 +207,7 @@ extension TravelTrackerScreen {
         }
         return countryDataService.countries
             .filter { codes.contains($0.code) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     var continentBreakdown: [(name: String, visited: Int, total: Int)] {
