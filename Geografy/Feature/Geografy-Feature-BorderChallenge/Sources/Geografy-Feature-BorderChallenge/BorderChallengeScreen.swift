@@ -2,6 +2,7 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
+import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct BorderChallengeScreen: View {
@@ -41,7 +42,14 @@ public struct BorderChallengeScreen: View {
                 )
             }
             .sheet(isPresented: $showGuide) {
-                BorderChallengeGuideSheet()
+                NavigationStack {
+                    BorderChallengeGuideSheet()
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                CircleCloseButton { showGuide = false }
+                            }
+                        }
+                }
             }
     }
 }
@@ -183,14 +191,11 @@ private extension BorderChallengeScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
+                .padding(.horizontal, DesignSystem.Spacing.md)
 
-            RegionSelectionBar(
-                items: QuizRegion.allCases,
-                selectedID: selectedRegion.id,
-                onSelect: { region in
-                    selectedRegion = region
-                }
-            )
+            #if !os(tvOS)
+            RegionCarousel(selectedRegion: $selectedRegion)
+            #endif
         }
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)
@@ -310,10 +315,12 @@ private extension BorderChallengeScreen {
             }
         }
         #else
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: .topBarTrailing) {
             Button { showGuide = true } label: {
                 Label("Guide", systemImage: "info.circle")
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .buttonStyle(.plain)
         }
         #endif
     }
