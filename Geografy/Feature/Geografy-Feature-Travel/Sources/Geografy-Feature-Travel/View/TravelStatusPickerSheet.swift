@@ -5,18 +5,17 @@ import SwiftUI
 
 public struct TravelStatusPickerSheet: View {
     // MARK: - Properties
+    @Environment(\.dismiss) private var dismiss
     @Environment(TravelService.self) private var travelService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
 
     public let country: Country
-    @Binding public var isPresented: Bool
 
     // MARK: - Init
-    public init(country: Country, isPresented: Binding<Bool>) {
+    public init(country: Country) {
         self.country = country
-        _isPresented = isPresented
     }
 
     // MARK: - Body
@@ -77,7 +76,7 @@ private extension TravelStatusPickerSheet {
             if !isSelected {
                 awardTravelXP(for: status)
                 checkTravelAchievements()
-                isPresented = false
+                dismiss()
             }
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {

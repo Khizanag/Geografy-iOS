@@ -70,13 +70,11 @@ extension CountryDetailScreen {
     }
 
     enum CountryDetailSheet: Identifiable {
-        case travelPicker
         case info(InfoItem)
         case deepDive
 
         var id: String {
             switch self {
-            case .travelPicker: "travelPicker"
             case .info(let item): "info-\(item.id)"
             case .deepDive: "deepDive"
             }
