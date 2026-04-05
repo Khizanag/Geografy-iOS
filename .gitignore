@@ -18,8 +18,8 @@ build/
 *.xcscmblueprint
 
 # Swift Package Manager
-.build/
-.swiftpm/
+**/.build/
+**/.swiftpm/
 
 # macOS
 .DS_Store
