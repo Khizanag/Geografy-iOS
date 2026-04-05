@@ -206,7 +206,7 @@ private extension MoreScreen {
                 .minimumScaleFactor(0.6)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding(.vertical, tilePadding)
         .glassEffect(
             .regular,

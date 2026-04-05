@@ -18,6 +18,7 @@ public struct CountryNicknamesScreen: View {
     @State private var searchQuery = ""
     @State private var selectedCategory: NicknameCategory?
     @State private var expandedNicknameID: String?
+    @Namespace private var chipNamespace
 
     private var filteredNicknames: [CountryNickname] {
         nicknamesService.filteredNicknames(query: searchQuery, category: selectedCategory)
@@ -77,10 +78,15 @@ private extension CountryNicknamesScreen {
     }
 
     func filterChip(label: String, icon: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
+        Button {
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                action()
+            }
+        } label: {
             HStack(spacing: 4) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.caption)
+                    .symbolEffect(.bounce, value: isSelected)
                 Text(label)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -88,10 +94,14 @@ private extension CountryNicknamesScreen {
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
+            .background {
+                if isSelected {
+                    Capsule()
+                        .fill(DesignSystem.Color.accent)
+                        .matchedGeometryEffect(id: "chipBackground", in: chipNamespace)
+                }
+            }
+            .background(DesignSystem.Color.cardBackground, in: Capsule())
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -170,7 +180,7 @@ private extension CountryNicknamesScreen {
 
     func nicknameCardHeader(_ nickname: CountryNickname, countryName: String, isExpanded: Bool) -> some View {
         HStack(spacing: DesignSystem.Spacing.md) {
-            FlagView(countryCode: nickname.countryCode, height: 36)
+            FlagView(countryCode: nickname.countryCode, height: 36, fixedWidth: true)
                 .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
             VStack(alignment: .leading, spacing: 2) {
                 Text("\"\(nickname.nickname)\"")
