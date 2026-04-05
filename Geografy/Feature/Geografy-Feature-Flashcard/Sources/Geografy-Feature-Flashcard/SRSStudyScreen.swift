@@ -10,19 +10,22 @@ public struct SRSStudyScreen: View {
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var appeared = false
-
     // MARK: - Init
     public init() {}
 
     // MARK: - Body
     public var body: some View {
         contentView
+            .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Review")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                appeared = true
+            .safeAreaInset(edge: .bottom) {
+                if !dueCards.isEmpty {
+                    startReviewButton
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                        .padding(.bottom, DesignSystem.Spacing.md)
+                }
             }
     }
 }
@@ -34,14 +37,14 @@ private extension SRSStudyScreen {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 headerSection
                 statsRow
+
                 if dueCards.isEmpty {
                     allCaughtUpSection
                 } else {
-                    startReviewButton
                     dueCountriesSection
                 }
             }
-            .padding(DesignSystem.Spacing.md)
+            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.lg)
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
@@ -58,17 +61,17 @@ private extension SRSStudyScreen {
                     .font(DesignSystem.Font.largeTitle)
                     .foregroundStyle(DesignSystem.Color.purple)
             }
+
             Text("Spaced Repetition")
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+
             Text("Review cards at the optimal time\nfor long-term memory retention")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 16)
     }
 
     var statsRow: some View {
@@ -92,10 +95,14 @@ private extension SRSStudyScreen {
                 color: DesignSystem.Color.warning
             )
         }
-        .opacity(appeared ? 1 : 0)
     }
 
-    func statCard(value: String, label: String, icon: String, color: Color) -> some View {
+    func statCard(
+        value: String,
+        label: String,
+        icon: String,
+        color: Color
+    ) -> some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: icon)
@@ -106,7 +113,6 @@ private extension SRSStudyScreen {
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .contentTransition(.numericText())
-                    .animation(.easeInOut(duration: 0.3), value: value)
                 Text(label)
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -117,35 +123,28 @@ private extension SRSStudyScreen {
     }
 
     var startReviewButton: some View {
-        Button {
+        GlassButton(
+            "Start Review · \(dueCards.count) cards",
+            systemImage: "play.fill",
+            fullWidth: true
+        ) {
             coordinator.cover(
                 .flashcardSession(
                     deck: .makeDueForReviewDeck(cardType: .countryToCapital),
                     cards: dueCards
                 )
             )
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "play.fill")
-                Text("Start Review · \(dueCards.count) cards")
-                    .fontWeight(.semibold)
-            }
-            .font(DesignSystem.Font.headline)
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.purple)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         }
-        .buttonStyle(PressButtonStyle())
     }
 
     var dueCountriesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Due Countries")
+
             ForEach(dueCards.prefix(5)) { card in
                 dueCardRow(card)
             }
+
             if dueCards.count > 5 {
                 Text("+ \(dueCards.count - 5) more")
                     .font(DesignSystem.Font.caption)
@@ -159,7 +158,12 @@ private extension SRSStudyScreen {
         let srData = flashcardService.spacedRepetitionData(for: card.id)
         return CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(countryCode: card.countryCode, height: DesignSystem.Size.lg, fixedWidth: true)
+                FlagView(
+                    countryCode: card.countryCode,
+                    height: DesignSystem.Size.lg,
+                    fixedWidth: true
+                )
+
                 VStack(alignment: .leading, spacing: 2) {
                     Text(card.countryName)
                         .font(DesignSystem.Font.subheadline)
@@ -169,22 +173,25 @@ private extension SRSStudyScreen {
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
+
                 Spacer()
+
                 proficiencyBadge(for: srData.proficiencyLevel)
             }
             .padding(DesignSystem.Spacing.sm)
         }
     }
 
-    func proficiencyBadge(for level: SpacedRepetitionData.ProficiencyLevel) -> some View {
+    func proficiencyBadge(
+        for level: SpacedRepetitionData.ProficiencyLevel
+    ) -> some View {
         Text(level.displayName)
             .font(DesignSystem.Font.caption2)
             .fontWeight(.semibold)
             .foregroundStyle(level.badgeColor)
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, 3)
-            .background(level.badgeColor.opacity(0.15))
-            .clipShape(Capsule())
+            .background(level.badgeColor.opacity(0.15), in: Capsule())
     }
 
     var allCaughtUpSection: some View {
@@ -192,23 +199,27 @@ private extension SRSStudyScreen {
             Image(systemName: "checkmark.seal.fill")
                 .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.success)
+
             Text("All caught up!")
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("No cards are due right now.\nCome back later or study new cards in Flashcards.")
+
+            Text("No cards are due right now.\nCome back later or study new cards.")
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
         }
-        .padding(DesignSystem.Spacing.xl)
+        .padding(.vertical, DesignSystem.Spacing.xxl)
     }
 }
 
 // MARK: - Helpers
 private extension SRSStudyScreen {
     var allCards: [FlashcardItem] {
-        countryDataService.countries.map { FlashcardItem.make(from: $0, type: .countryToCapital) }
+        countryDataService.countries.map {
+            FlashcardItem.make(from: $0, type: .countryToCapital)
+        }
     }
 
     var dueCards: [FlashcardItem] {
@@ -216,7 +227,7 @@ private extension SRSStudyScreen {
     }
 }
 
-// MARK: - ProficiencyLevel Badge Color
+// MARK: - Badge Color
 private extension SpacedRepetitionData.ProficiencyLevel {
     var badgeColor: Color {
         switch self {
