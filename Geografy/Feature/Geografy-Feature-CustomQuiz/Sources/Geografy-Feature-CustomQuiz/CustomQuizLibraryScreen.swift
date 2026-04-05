@@ -15,6 +15,7 @@ public struct CustomQuizLibraryScreen: View {
     @State private var showBuilder = false
     @State private var editingQuiz: CustomQuiz?
     @State private var quizToDelete: CustomQuiz?
+    @State private var selectedQuiz: CustomQuiz?
 
     // MARK: - Init
     public init() {}
@@ -28,6 +29,7 @@ public struct CustomQuizLibraryScreen: View {
             .toolbar { toolbarContent }
             .sheet(isPresented: $showBuilder) { builderSheet }
             .sheet(item: $editingQuiz) { quiz in editSheet(for: quiz) }
+            .sheet(item: $selectedQuiz) { quiz in detailSheet(for: quiz) }
             .alert("Delete Quiz?", isPresented: deleteAlertBinding) { deleteAlertActions }
     }
 }
@@ -72,9 +74,13 @@ private extension CustomQuizLibraryScreen {
 // MARK: - Quiz Row
 private extension CustomQuizLibraryScreen {
     func quizRow(_ quiz: CustomQuiz) -> some View {
-        CustomQuizCard(quiz: quiz)
-            .contextMenu { contextMenuItems(for: quiz) }
-            .buttonStyle(PressButtonStyle())
+        Button {
+            selectedQuiz = quiz
+        } label: {
+            CustomQuizCard(quiz: quiz)
+        }
+        .contextMenu { contextMenuItems(for: quiz) }
+        .buttonStyle(PressButtonStyle())
     }
 
     func contextMenuItems(for quiz: CustomQuiz) -> some View {
@@ -121,22 +127,45 @@ private extension CustomQuizLibraryScreen {
 // MARK: - Sheets
 private extension CustomQuizLibraryScreen {
     var builderSheet: some View {
-        NavigationStack {
-            CustomQuizBuilderScreen(
-                countryDataService: countryDataService,
-                quizService: quizService
-            )
-        }
+        CustomQuizBuilderScreen(
+            countryDataService: countryDataService,
+            quizService: quizService
+        )
     }
 
     func editSheet(for quiz: CustomQuiz) -> some View {
-        NavigationStack {
-            CustomQuizBuilderScreen(
-                existingQuiz: quiz,
-                countryDataService: countryDataService,
-                quizService: quizService
-            )
-        }
+        CustomQuizBuilderScreen(
+            existingQuiz: quiz,
+            countryDataService: countryDataService,
+            quizService: quizService
+        )
+    }
+
+    func detailSheet(for quiz: CustomQuiz) -> some View {
+        CustomQuizDetailSheet(
+            quiz: quiz,
+            onEdit: {
+                selectedQuiz = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    editingQuiz = quiz
+                }
+            },
+            onPlay: {
+                selectedQuiz = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    let config = QuizConfiguration(
+                        type: quiz.questionTypes.first ?? .flagQuiz,
+                        region: .world,
+                        difficulty: .medium,
+                        questionCount: .fifteen,
+                        answerMode: .multipleChoice,
+                        comparisonMetric: .population,
+                        gameMode: .classic,
+                    )
+                    coordinator.push(.quizSession(config))
+                }
+            },
+        )
     }
 }
 

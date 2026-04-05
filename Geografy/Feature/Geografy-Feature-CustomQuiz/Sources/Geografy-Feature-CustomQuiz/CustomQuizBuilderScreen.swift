@@ -16,7 +16,6 @@ public struct CustomQuizBuilderScreen: View {
     @State private var selectedIcon = CustomQuiz.availableIcons[0]
     @State private var selectedCountryCodes: Set<String> = []
     @State private var selectedQuestionTypes: Set<QuizType> = [.flagQuiz]
-    @State private var selectedDifficulty: QuizDifficulty = .easy
     @State private var showCountryPicker = false
     @State private var showPreview = false
 
@@ -61,14 +60,12 @@ private extension CustomQuizBuilderScreen {
         case name
         case countries
         case questionTypes
-        case difficulty
 
         var title: String {
             switch self {
             case .name: "Name"
             case .countries: "Countries"
             case .questionTypes: "Questions"
-            case .difficulty: "Difficulty"
             }
         }
 
@@ -77,7 +74,6 @@ private extension CustomQuizBuilderScreen {
             case .name: "pencil"
             case .countries: "globe"
             case .questionTypes: "list.bullet"
-            case .difficulty: "speedometer"
             }
         }
     }
@@ -103,7 +99,6 @@ private extension CustomQuizBuilderScreen {
                 case .name: nameStep
                 case .countries: countriesStep
                 case .questionTypes: questionTypesStep
-                case .difficulty: difficultyStep
                 }
             }
             .padding(DesignSystem.Spacing.md)
@@ -272,36 +267,6 @@ private extension CustomQuizBuilderScreen {
     }
 }
 
-// MARK: - Difficulty Step
-private extension CustomQuizBuilderScreen {
-    var difficultyStep: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-            stepHeader(title: "Set Difficulty", subtitle: "Choose how challenging the quiz should be")
-
-            Picker("Difficulty", selection: $selectedDifficulty) {
-                ForEach(QuizDifficulty.allCases) { difficulty in
-                    Text(difficulty.displayName).tag(difficulty)
-                }
-            }
-            .pickerStyle(.segmented)
-
-            difficultyDetail
-        }
-    }
-
-    var difficultyDetail: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: selectedDifficulty.icon)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text(selectedDifficulty.subtitle)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .animation(.easeInOut(duration: 0.2), value: selectedDifficulty)
-    }
-}
-
 // MARK: - Navigation Buttons
 private extension CustomQuizBuilderScreen {
     var navigationButtons: some View {
@@ -314,7 +279,7 @@ private extension CustomQuizBuilderScreen {
 
             Spacer()
 
-            if currentStep == .difficulty {
+            if currentStep == .questionTypes {
                 GlassButton("Preview", systemImage: "eye.fill") {
                     showPreview = true
                 }
@@ -336,24 +301,20 @@ private extension CustomQuizBuilderScreen {
 // MARK: - Sheets
 private extension CustomQuizBuilderScreen {
     var countryPickerSheet: some View {
-        NavigationStack {
-            CustomQuizCountryPicker(
-                countries: countryDataService.countries,
-                selectedCodes: $selectedCountryCodes,
-            )
-        }
+        CustomQuizCountryPicker(
+            countries: countryDataService.countries,
+            selectedCodes: $selectedCountryCodes,
+        )
     }
 
     var previewSheet: some View {
-        NavigationStack {
-            CustomQuizPreviewScreen(quiz: buildQuiz()) { quiz in
-                if existingQuiz != nil {
-                    quizService.update(quiz)
-                } else {
-                    quizService.save(quiz)
-                }
-                dismiss()
+        CustomQuizPreviewScreen(quiz: buildQuiz()) { quiz in
+            if existingQuiz != nil {
+                quizService.update(quiz)
+            } else {
+                quizService.save(quiz)
             }
+            dismiss()
         }
     }
 }
@@ -390,7 +351,6 @@ private extension CustomQuizBuilderScreen {
         case .name: !quizName.trimmingCharacters(in: .whitespaces).isEmpty && !isDuplicateName
         case .countries: !selectedCountryCodes.isEmpty
         case .questionTypes: !selectedQuestionTypes.isEmpty
-        case .difficulty: true
         }
     }
 
@@ -430,7 +390,6 @@ private extension CustomQuizBuilderScreen {
             updated.icon = selectedIcon
             updated.countryCodes = Array(selectedCountryCodes)
             updated.questionTypes = Array(selectedQuestionTypes)
-            updated.difficulty = selectedDifficulty
             return updated
         }
         return .makeNew(
@@ -438,7 +397,7 @@ private extension CustomQuizBuilderScreen {
             icon: selectedIcon,
             countryCodes: Array(selectedCountryCodes),
             questionTypes: Array(selectedQuestionTypes),
-            difficulty: selectedDifficulty,
+            difficulty: .medium,
         )
     }
 
@@ -448,7 +407,6 @@ private extension CustomQuizBuilderScreen {
         selectedIcon = quiz.icon
         selectedCountryCodes = Set(quiz.countryCodes)
         selectedQuestionTypes = Set(quiz.questionTypes)
-        selectedDifficulty = quiz.difficulty
     }
 }
 #endif

@@ -63,8 +63,8 @@ private extension CustomQuizCard {
                 icon: "globe",
             )
             statPill(
-                text: quiz.difficulty.displayName,
-                icon: quiz.difficulty.icon,
+                text: "\(quiz.questionTypes.count) types",
+                icon: "list.bullet",
             )
         }
     }
