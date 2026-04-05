@@ -107,8 +107,8 @@ private extension QuizQuestionView {
     func textPrompt(_ text: String, subject: String?) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Text(text)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
             if let subject {
