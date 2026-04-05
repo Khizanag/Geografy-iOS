@@ -1,6 +1,5 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_CountryList
 import SwiftUI
@@ -15,8 +14,6 @@ public struct TravelBucketListScreen: View {
     @State private var priorities: [String: BucketListPriority] = [:]
     @State private var notes: [String: String] = [:]
     @State private var selectedCountry: Country?
-    @State private var showShareSheet = false
-    @State private var shareText = ""
 
     private let prioritiesKey = "bucketList_priorities"
     private let notesKey = "bucketList_notes"
@@ -35,11 +32,6 @@ public struct TravelBucketListScreen: View {
             .sheet(item: $selectedCountry) { country in
                 bucketListDetailSheet(for: country)
             }
-            #if !os(tvOS)
-            .sheet(isPresented: $showShareSheet) {
-                ShareSheet(text: shareText)
-            }
-            #endif
     }
 }
 
@@ -60,7 +52,6 @@ private extension TravelBucketListScreen {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.md) {
                 summaryHeader
-                sortPicker
                 countrySections
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -91,15 +82,6 @@ private extension TravelBucketListScreen {
         }
         .padding(.top, DesignSystem.Spacing.sm)
         .accessibilityElement(children: .combine)
-    }
-
-    var sortPicker: some View {
-        Picker("Sort by", selection: $selectedSort) {
-            ForEach(BucketListSort.allCases) { sort in
-                Text(sort.label).tag(sort)
-            }
-        }
-        .pickerStyle(.segmented)
     }
 
     var countrySections: some View {
@@ -135,21 +117,11 @@ private extension TravelBucketListScreen {
     }
 
     var emptyState: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: "heart.slash")
-                .font(DesignSystem.Font.displaySmall)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Text("No bucket list yet")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+        ContentUnavailableView {
+            Label("No Bucket List Yet", systemImage: "heart.slash")
+        } description: {
             Text("Mark countries as 'Want to Visit' in the Travel Tracker to add them here")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.lg)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     @ViewBuilder
@@ -173,15 +145,31 @@ private extension TravelBucketListScreen {
 private extension TravelBucketListScreen {
     @ToolbarContentBuilder
     var toolbarItems: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
-            Button {
-                hapticsService.impact(.light)
-                prepareShareText()
-                showShareSheet = true
+        ToolbarItem(placement: .secondaryAction) {
+            Menu {
+                Picker(selection: $selectedSort) {
+                    ForEach(BucketListSort.allCases) { sort in
+                        Label(sort.label, systemImage: sort.icon)
+                            .tag(sort)
+                    }
+                } label: {
+                    Label("Sort by", systemImage: "arrow.up.arrow.down")
+                }
+                .pickerStyle(.inline)
             } label: {
-                Label("Share", systemImage: "square.and.arrow.up")
+                Label("Sort", systemImage: "arrow.up.arrow.down")
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
         }
+
+        #if !os(tvOS)
+        ToolbarItem(placement: .primaryAction) {
+            ShareLink(item: shareableText) {
+                Label("Share", systemImage: "square.and.arrow.up")
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
+            }
+        }
+        #endif
     }
 }
 
@@ -264,13 +252,15 @@ private extension TravelBucketListScreen {
         UserDefaults.standard.set(data, forKey: notesKey)
     }
 
-    func prepareShareText() {
-        let lines = bucketListCountries.sorted { $0.name < $1.name }.map { country in
-            let priority = priorities[country.code] ?? .someday
-            return "\(priority.emoji) \(country.flagEmoji) \(country.name)"
-        }
+    var shareableText: String {
+        let lines = bucketListCountries
+            .sorted { $0.name < $1.name }
+            .map { country in
+                let priority = priorities[country.code] ?? .someday
+                return "\(priority.emoji) \(country.flagEmoji) \(country.name)"
+            }
         let header = "My Travel Bucket List (\(bucketListCountries.count) countries):\n\n"
-        shareText = header + lines.joined(separator: "\n")
+        return header + lines.joined(separator: "\n")
     }
 }
 
@@ -287,6 +277,14 @@ private enum BucketListSort: String, CaseIterable, Identifiable {
         case .continent: "Continent"
         case .priority: "Priority"
         case .alphabetical: "A–Z"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .continent: "globe"
+        case .priority: "star"
+        case .alphabetical: "textformat.abc"
         }
     }
 }
@@ -308,7 +306,7 @@ public enum BucketListPriority: String, CaseIterable, Codable {
         switch self {
         case .dream: "⭐"
         case .planningSoon: "📅"
-        case .someday: "💭"
+        case .someday: "🌍"
         }
     }
 }
@@ -414,16 +412,3 @@ private extension BucketListCountryDetailView {
         }
     }
 }
-
-// MARK: - Share Sheet
-#if !os(tvOS)
-private struct ShareSheet: UIViewControllerRepresentable {
-    let text: String
-
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: [text], applicationActivities: nil)
-    }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
-}
-#endif
