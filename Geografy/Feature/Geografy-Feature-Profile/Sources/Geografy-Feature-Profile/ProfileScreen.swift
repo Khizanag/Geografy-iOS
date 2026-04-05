@@ -66,8 +66,6 @@ private extension ProfileScreen {
                 .profileSection(appeared: appeared, delay: 0.16)
             achievementsPreviewSection
                 .profileSection(appeared: appeared, delay: 0.20)
-            badgeShowcaseSection
-                .profileSection(appeared: appeared, delay: 0.22)
             if !recentQuizzes.isEmpty {
                 quizHistorySection
                     .profileSection(appeared: appeared, delay: 0.26)
