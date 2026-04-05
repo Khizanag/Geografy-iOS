@@ -10,10 +10,10 @@ import SwiftUI
 struct HomeScreen: View {
     // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
-    @Environment(AuthService.self) private var authService
-    @Environment(FavoritesService.self) private var favoritesService
-    @Environment(XPService.self) private var xpService
-    @Environment(StreakService.self) private var streakService
+    @Environment(AuthService.self) var authService
+    @Environment(FavoritesService.self) var favoritesService
+    @Environment(XPService.self) var xpService
+    @Environment(StreakService.self) var streakService
     @Environment(CoinService.self) private var coinService
     @Environment(FlashcardService.self) var flashcardService
 
