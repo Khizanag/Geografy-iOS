@@ -151,8 +151,7 @@ extension HomeScreen {
     }
 
     func spotlightFunFact(for country: Country) -> String? {
-        let facts = CountryFunFacts.data[country.code] ?? []
-        return facts.first
+        CountryFunFacts.data[country.code]?.first
     }
 }
 
