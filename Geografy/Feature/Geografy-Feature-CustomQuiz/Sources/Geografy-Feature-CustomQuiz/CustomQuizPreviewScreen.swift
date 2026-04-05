@@ -31,7 +31,6 @@ private extension CustomQuizPreviewScreen {
                 headerCard
                 countriesSection
                 questionTypesSection
-                difficultySection
             }
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
@@ -114,35 +113,6 @@ private extension CustomQuizPreviewScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(DesignSystem.Color.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-    }
-}
-
-// MARK: - Difficulty Section
-private extension CustomQuizPreviewScreen {
-    var difficultySection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Difficulty", icon: "speedometer")
-
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: quiz.difficulty.icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.accent)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(quiz.difficulty.displayName)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text(quiz.difficulty.subtitle)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-
-                Spacer(minLength: 0)
-            }
-            .padding(DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-        }
     }
 }
 
