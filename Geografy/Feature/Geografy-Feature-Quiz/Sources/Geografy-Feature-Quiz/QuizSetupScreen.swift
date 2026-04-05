@@ -237,12 +237,13 @@ private extension QuizSetupScreen {
     func modeChip(_ mode: QuizAnswerMode) -> some View {
         let isSelected = answerMode == mode
         return Button { selectAnswerMode(mode) } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: mode.icon)
                     .font(DesignSystem.Font.caption)
                 Text(mode.displayName)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
             }
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
