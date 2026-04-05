@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "·" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    },
     "%lld" : {
       "localizations" : {
         "ka" : {
@@ -112,6 +122,7 @@
       }
     },
     "Difficulty" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -127,6 +138,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "e.g. European Capitals" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაგ. ევროპული დედაქალაქები"
           }
         }
       }
@@ -267,26 +288,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინის გაზიარება"
-          }
-        }
-      }
-    },
-    "e.g. European Capitals" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "მაგ. ევროპული დედაქალაქები"
-          }
-        }
-      }
-    },
-    "·" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "·"
           }
         }
       }
