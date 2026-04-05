@@ -224,15 +224,9 @@ private extension TriviaScreen {
     }
 
     var completionDoneButton: some View {
-        Button { dismiss() } label: {
-            Text("Done")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
+        GlassButton("Done", fullWidth: true) {
+            dismiss()
         }
-        .buttonStyle(.glass)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.xl)
     }
