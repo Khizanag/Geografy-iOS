@@ -220,7 +220,6 @@ private extension SignInOptionsSheet {
             }
             continueAsGuestButton
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 16)
