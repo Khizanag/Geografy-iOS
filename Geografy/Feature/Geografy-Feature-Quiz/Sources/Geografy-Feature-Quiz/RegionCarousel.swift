@@ -60,7 +60,7 @@ private extension RegionCarousel {
             .scrollPosition(id: $visibleRegion)
             .scrollClipDisabled()
         }
-        .frame(height: 220)
+        .frame(height: 180)
         .onChange(of: visibleRegion) { _, newValue in
             guard let newValue, newValue != selectedRegion else { return }
             selectedRegion = newValue
@@ -129,7 +129,7 @@ private struct RegionCard: View {
 
     var body: some View {
         cardContent
-            .padding(.vertical, DesignSystem.Spacing.lg)
+            .padding(.vertical, DesignSystem.Spacing.md)
             .padding(.horizontal, DesignSystem.Spacing.md)
             .frame(maxWidth: .infinity)
             .background(
