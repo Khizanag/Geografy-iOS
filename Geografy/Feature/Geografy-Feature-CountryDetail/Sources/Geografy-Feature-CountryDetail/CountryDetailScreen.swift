@@ -12,6 +12,7 @@ public struct CountryDetailScreen: View {
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) var travelService
     @Environment(FavoritesService.self) private var favoritesService
+    @Environment(CollectionService.self) private var collectionService
     @Environment(XPService.self) var xpService
     @Environment(AchievementService.self) var achievementService
     @Environment(HapticsService.self) var hapticsService
@@ -27,6 +28,7 @@ public struct CountryDetailScreen: View {
     @State var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
     @State var populationStartDate = Date()
+    @State private var showSaveToCollection = false
 
     public let country: Country
 
@@ -43,6 +45,7 @@ public struct CountryDetailScreen: View {
             .closeButtonPlacementLeading()
             .toolbar { favoriteToolbarItem }
             .toolbar { compareToolbarItem }
+            .toolbar { saveToCollectionToolbarItem }
             .toolbar { principalToolbarItem }
             .task { trackExploration() }
             .onAppear { appeared = true }
@@ -52,6 +55,12 @@ public struct CountryDetailScreen: View {
                 activity.userInfo = ["countryCode": country.code]
             }
             .sheet(item: $activeSheet) { sheet in countryDetailSheetContent(for: sheet) }
+            .sheet(isPresented: $showSaveToCollection) {
+                CountrySaveToCollectionSheet(
+                    countryCode: country.code,
+                    countryName: country.name
+                )
+            }
             .overlay { flagFullScreenOverlay }
     }
 }
@@ -116,6 +125,20 @@ private extension CountryDetailScreen {
                 coordinator.sheet(.compare(preselectedCountry: country))
             } label: {
                 Label("Compare", systemImage: "arrow.left.arrow.right")
+            }
+            .tint(DesignSystem.Color.iconPrimary)
+            .buttonStyle(.plain)
+        }
+    }
+
+    @ToolbarContentBuilder
+    var saveToCollectionToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .secondaryAction) {
+            Button {
+                hapticsService.impact(.light)
+                showSaveToCollection = true
+            } label: {
+                Label("Save to Collection", systemImage: "folder.badge.plus")
             }
             .tint(DesignSystem.Color.iconPrimary)
             .buttonStyle(.plain)
