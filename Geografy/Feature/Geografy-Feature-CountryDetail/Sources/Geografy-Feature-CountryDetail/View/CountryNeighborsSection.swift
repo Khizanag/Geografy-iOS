@@ -104,7 +104,7 @@ private extension CountryDetailScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
-                    .frame(width: 72, height: 32, alignment: .top)
+                    .frame(width: 72, height: 32)
             }
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, DesignSystem.Spacing.sm)
