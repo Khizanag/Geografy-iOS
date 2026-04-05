@@ -33,11 +33,11 @@ extension HomeLearnCarousel {
             switch self {
             case .learningPath: "Learning Path"
             case .flashcards: "Flashcards"
-            case .oceanExplorer: "Ocean Explorer"
-            case .languageExplorer: "Language Explorer"
+            case .oceanExplorer: "Oceans"
+            case .languageExplorer: "Languages"
             case .economy: "Economy"
             case .culture: "Culture"
-            case .geographyFeatures: "Geography Features"
+            case .geographyFeatures: "Geography"
             case .landmarks: "Landmarks"
             }
         }
@@ -55,16 +55,16 @@ extension HomeLearnCarousel {
             }
         }
 
-        var color: Color {
+        var gradientColors: (Color, Color) {
             switch self {
-            case .learningPath: DesignSystem.Color.blue
-            case .flashcards: DesignSystem.Color.purple
-            case .oceanExplorer: DesignSystem.Color.blue
-            case .languageExplorer: DesignSystem.Color.indigo
-            case .economy: DesignSystem.Color.success
-            case .culture: DesignSystem.Color.orange
-            case .geographyFeatures: DesignSystem.Color.blue
-            case .landmarks: DesignSystem.Color.orange
+            case .learningPath: (Color(hex: "1A73E8"), Color(hex: "0D47A1"))
+            case .flashcards: (Color(hex: "8944AB"), Color(hex: "6A1B9A"))
+            case .oceanExplorer: (Color(hex: "0288D1"), Color(hex: "01579B"))
+            case .languageExplorer: (Color(hex: "5C6BC0"), Color(hex: "3949AB"))
+            case .economy: (Color(hex: "43A047"), Color(hex: "2E7D32"))
+            case .culture: (Color(hex: "FF8F00"), Color(hex: "E65100"))
+            case .geographyFeatures: (Color(hex: "00838F"), Color(hex: "006064"))
+            case .landmarks: (Color(hex: "D84315"), Color(hex: "BF360C"))
             }
         }
     }
@@ -77,49 +77,49 @@ private extension HomeLearnCarousel {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(LearnItem.allCases, id: \.self) { item in
                     Button { onItemTap(item) } label: {
-                        itemCard(for: item)
+                        learnCard(item)
                     }
                     .buttonStyle(PressButtonStyle())
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.top, DesignSystem.Spacing.xs)
+            .padding(.vertical, DesignSystem.Spacing.xs)
         }
         .scrollClipDisabled()
     }
 
-    func itemCard(for item: LearnItem) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                iconCircle(for: item)
+    func learnCard(_ item: LearnItem) -> some View {
+        let (primary, secondary) = item.gradientColors
 
-                Text(item.name)
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .frame(height: 32)
-            }
-            .padding(DesignSystem.Spacing.sm)
-            .frame(width: 130, height: 110)
+        return ZStack(alignment: .bottomLeading) {
+            LinearGradient(
+                colors: [primary, secondary],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+            Image(systemName: item.icon)
+                .font(DesignSystem.IconSize.xxLarge)
+                .foregroundStyle(.white.opacity(0.1))
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .offset(x: 8, y: -8)
+                .clipped()
+
+            Text(item.name)
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+                .lineLimit(2)
+                .padding(DesignSystem.Spacing.sm)
         }
+        .frame(width: 140, height: 100)
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .shadow(color: primary.opacity(0.3), radius: 6, y: 4)
         .overlay(alignment: .topTrailing) {
             if item == .flashcards, srsCardsDue > 0 {
                 dueBadge
             }
         }
-    }
-
-    func iconCircle(for item: LearnItem) -> some View {
-        Circle()
-            .fill(item.color.opacity(0.15))
-            .frame(width: 36, height: 36)
-            .overlay {
-                Image(systemName: item.icon)
-                    .font(DesignSystem.Font.iconSmall)
-                    .foregroundStyle(item.color)
-            }
     }
 
     var dueBadge: some View {
