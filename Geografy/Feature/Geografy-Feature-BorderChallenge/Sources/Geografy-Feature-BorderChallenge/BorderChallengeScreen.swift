@@ -29,6 +29,7 @@ public struct BorderChallengeScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
+            .closeButtonPlacementLeading()
             .safeAreaInset(edge: .bottom) { startButton }
             .toolbar { toolbarContent }
             .onAppear { appeared = true }

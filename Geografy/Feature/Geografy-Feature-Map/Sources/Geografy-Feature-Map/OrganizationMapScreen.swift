@@ -42,6 +42,7 @@ public struct OrganizationMapScreen: View {
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
+            .closeButtonPlacementLeading()
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
             .task { await loadMapData() }
