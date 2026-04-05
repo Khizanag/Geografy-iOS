@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AchievementDefinition: Identifiable, Equatable, Sendable {
+public struct AchievementDefinition: Identifiable, Equatable, Hashable, Sendable {
     public let id: String
     public let title: String
     public let description: String

@@ -17,9 +17,9 @@ public struct AchievementDetailSheet: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
+            .background(DesignSystem.Color.background)
             .navigationTitle(definition.title)
             .navigationBarTitleDisplayMode(.inline)
-            .presentationDetents([.fraction(0.65), .large])
     }
 }
 

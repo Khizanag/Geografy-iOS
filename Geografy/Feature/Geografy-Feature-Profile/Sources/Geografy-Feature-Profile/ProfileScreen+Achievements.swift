@@ -46,7 +46,13 @@ private extension ProfileScreen {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(recentUnlockedAchievements) { definition in
-                    achievementCard(definition)
+                    Button {
+                        hapticsService.impact(.light)
+                        coordinator.push(.achievementDetail(definition))
+                    } label: {
+                        achievementCard(definition)
+                    }
+                    .buttonStyle(PressButtonStyle())
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)

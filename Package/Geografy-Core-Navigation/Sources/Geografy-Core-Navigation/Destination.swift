@@ -3,6 +3,7 @@ import SwiftUI
 
 // MARK: - Destination
 public enum Destination: Hashable, Identifiable {
+    case achievementDetail(AchievementDefinition)
     case achievements
     case allMaps
     case borderChallenge
@@ -83,6 +84,7 @@ public enum Destination: Hashable, Identifiable {
 
     public var id: String {
         switch self {
+        case .achievementDetail(let definition): "achievementDetail-\(definition.id)"
         case .achievements: "achievements"
         case .allMaps: "allMaps"
         case .borderChallenge: "borderChallenge"

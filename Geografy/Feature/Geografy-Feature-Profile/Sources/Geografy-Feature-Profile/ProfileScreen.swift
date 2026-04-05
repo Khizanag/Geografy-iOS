@@ -23,6 +23,7 @@ public struct ProfileScreen: View {
     @State var recentQuizzes: [QuizHistoryRecord] = []
     @State var statistics: UserStatistics?
     @State var showDeleteAlert = false
+    @State var selectedAchievement: AchievementDefinition?
     @State private var appeared = false
 
     // MARK: - Init
