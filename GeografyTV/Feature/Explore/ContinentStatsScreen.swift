@@ -46,14 +46,18 @@ private extension ContinentStatsScreen {
         let countries = continentCountries
         let totalPopulation = countries.reduce(0) { $0 + $1.population }
         let totalArea = countries.reduce(0.0) { $0 + $1.area }
-        let avgGDP = countries.compactMap(\.gdpPerCapita).reduce(0.0, +)
+        let averageGDP = countries.compactMap(\.gdpPerCapita).reduce(0.0, +)
             / max(Double(countries.compactMap(\.gdpPerCapita).count), 1)
 
         return Group {
             statRow(label: "Countries", value: "\(countries.count)", icon: "flag.fill")
             statRow(label: "Total Population", value: totalPopulation.formatted(), icon: "person.3.fill")
-            statRow(label: "Total Area", value: "\(totalArea.formatted()) km²", icon: "map.fill")
-            statRow(label: "Avg GDP per Capita", value: "$\(Int(avgGDP).formatted())", icon: "chart.bar.fill")
+            statRow(label: "Total Area", value: "\(totalArea.formatted()) km\u{00B2}", icon: "map.fill")
+            statRow(
+                label: "Avg GDP per Capita",
+                value: "$\(Int(averageGDP).formatted())",
+                icon: "chart.bar.fill"
+            )
             statRow(
                 label: "Languages",
                 value: "\(Set(countries.flatMap(\.languages).map(\.name)).count)",
@@ -63,19 +67,19 @@ private extension ContinentStatsScreen {
     }
 
     func statRow(label: String, value: String, icon: String) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: icon)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.system(size: 22))
                 .foregroundStyle(DesignSystem.Color.accent)
                 .frame(width: 36)
 
             Text(label)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
 
             Spacer()
 
             Text(value)
-                .font(.system(size: 20, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
@@ -84,20 +88,20 @@ private extension ContinentStatsScreen {
 // MARK: - Country Row
 private extension ContinentStatsScreen {
     func countryRow(_ country: Country) -> some View {
-        HStack(spacing: 20) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             FlagView(countryCode: country.code, height: 36)
 
             Text(country.name)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
 
             Spacer()
 
             Text(country.capital)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.system(size: 22))
                 .foregroundStyle(.secondary)
 
             Text(country.population.formatted())
-                .font(.system(size: 22, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .frame(width: 120, alignment: .trailing)
         }

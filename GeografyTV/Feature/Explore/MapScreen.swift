@@ -49,7 +49,7 @@ struct MapScreen: View {
 // MARK: - Map Content
 private extension MapScreen {
     var mapContent: some View {
-        GeometryReader { geometry in
+        GeometryReader { geometryReader in
             ZStack {
                 Color.black.ignoresSafeArea()
 
@@ -59,7 +59,7 @@ private extension MapScreen {
                     offset: mapState.offset,
                     selectedCountryCode: mapState.selectedCountryCode,
                     showLabels: mapState.showLabels,
-                    canvasSize: geometry.size,
+                    canvasSize: geometryReader.size,
                     travelStatuses: travelService.entries,
                 )
 
@@ -100,14 +100,14 @@ private extension MapScreen {
                 Spacer()
 
                 // swiftlint:disable:next closure_body_length
-                VStack(spacing: 12) {
+                VStack(spacing: DesignSystem.Spacing.sm) {
                     Button {
                         withAnimation(.easeOut(duration: 0.2)) {
                             mapState.scale = min(mapState.scale * (1 + zoomStep), 20.0)
                         }
                     } label: {
                         Image(systemName: "plus")
-                            .font(.system(size: 24, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 24, weight: .bold))
                             .frame(width: 52, height: 52)
                     }
                     .buttonStyle(.bordered)
@@ -118,7 +118,7 @@ private extension MapScreen {
                         }
                     } label: {
                         Image(systemName: "minus")
-                            .font(.system(size: 24, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 24, weight: .bold))
                             .frame(width: 52, height: 52)
                     }
                     .buttonStyle(.bordered)
@@ -127,7 +127,7 @@ private extension MapScreen {
                         mapState.showLabels.toggle()
                     } label: {
                         Image(systemName: mapState.showLabels ? "textformat" : "textformat.slash")
-                            .font(.system(size: 20))
+                            .font(DesignSystem.Font.system(size: 20))
                             .frame(width: 52, height: 52)
                     }
                     .buttonStyle(.bordered)
@@ -139,12 +139,12 @@ private extension MapScreen {
                         }
                     } label: {
                         Image(systemName: "arrow.counterclockwise")
-                            .font(.system(size: 20))
+                            .font(DesignSystem.Font.system(size: 20))
                             .frame(width: 52, height: 52)
                     }
                     .buttonStyle(.bordered)
                 }
-                .padding(24)
+                .padding(DesignSystem.Spacing.lg)
             }
         }
     }
@@ -154,16 +154,16 @@ private extension MapScreen {
 private extension MapScreen {
     func countryBanner(_ country: Country) -> some View {
         VStack {
-            HStack(spacing: 24) {
+            HStack(spacing: DesignSystem.Spacing.lg) {
                 FlagView(countryCode: country.code, height: 60)
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(country.name)
-                        .font(.system(size: 28, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 28, weight: .bold))
                         .foregroundStyle(.white)
 
                     Text(country.capital)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(.white.opacity(0.7))
                 }
 
@@ -173,12 +173,15 @@ private extension MapScreen {
                     showCountryDetail = true
                 } label: {
                     Label("Details", systemImage: "info.circle")
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                 }
                 .buttonStyle(.bordered)
             }
-            .padding(24)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
+            .padding(DesignSystem.Spacing.lg)
+            .background(
+                .ultraThinMaterial,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+            )
             .padding(.horizontal, 80)
             .padding(.top, 40)
 
@@ -190,12 +193,12 @@ private extension MapScreen {
 // MARK: - Loading
 private extension MapScreen {
     var loadingView: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: DesignSystem.Spacing.lg) {
             ProgressView()
                 .scaleEffect(2)
 
-            Text("Loading World Map…")
-                .font(.system(size: 28))
+            Text("Loading World Map\u{2026}")
+                .font(DesignSystem.Font.system(size: 28))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

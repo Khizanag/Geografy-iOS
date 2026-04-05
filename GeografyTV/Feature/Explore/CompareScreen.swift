@@ -12,7 +12,7 @@ struct CompareScreen: View {
     @State private var showPickerB = false
 
     var body: some View {
-        VStack(spacing: 48) {
+        VStack(spacing: DesignSystem.Spacing.xxl) {
             slotsRow
 
             if let countryA, let countryB {
@@ -45,7 +45,7 @@ private extension CompareScreen {
             }
 
             Image(systemName: "arrow.left.arrow.right")
-                .font(.system(size: 36))
+                .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
 
             countrySlot(country: countryB, label: "Country B") {
@@ -56,33 +56,36 @@ private extension CompareScreen {
 
     func countrySlot(country: Country?, label: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            VStack(spacing: 16) {
+            VStack(spacing: DesignSystem.Spacing.md) {
                 if let country {
                     FlagView(countryCode: country.code, height: 80)
 
                     Text(country.name)
-                        .font(.system(size: 24, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 24, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                 } else {
                     Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 48))
+                        .font(DesignSystem.Font.system(size: 48))
                         .foregroundStyle(DesignSystem.Color.accent)
 
                     Text(label)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
             }
             .frame(maxWidth: .infinity)
             .frame(height: 160)
-            .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 20))
+            .background(
+                DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+            )
         }
         .buttonStyle(.card)
     }
 
     var emptyPrompt: some View {
         Text("Select two countries to compare")
-            .font(.system(size: 24))
+            .font(DesignSystem.Font.system(size: 24))
             .foregroundStyle(DesignSystem.Color.textTertiary)
             .frame(maxHeight: .infinity)
     }
@@ -90,45 +93,45 @@ private extension CompareScreen {
 
 // MARK: - Comparison Grid
 private extension CompareScreen {
-    func comparisonGrid(_ a: Country, _ b: Country) -> some View {
+    func comparisonGrid(_ firstCountry: Country, _ secondCountry: Country) -> some View {
         // swiftlint:disable:next closure_body_length
         ScrollView {
             // swiftlint:disable:next closure_body_length
-            VStack(spacing: 16) {
+            VStack(spacing: DesignSystem.Spacing.md) {
                 comparisonRow(
                     label: "Capital",
                     icon: "building.columns",
-                    valueA: a.capital,
-                    valueB: b.capital
+                    valueA: firstCountry.capital,
+                    valueB: secondCountry.capital
                 )
                 comparisonRow(
                     label: "Population",
                     icon: "person.3",
-                    valueA: a.population.formatted(),
-                    valueB: b.population.formatted(),
-                    highlightHigher: Double(a.population) > Double(b.population)
+                    valueA: firstCountry.population.formatted(),
+                    valueB: secondCountry.population.formatted(),
+                    highlightHigher: Double(firstCountry.population) > Double(secondCountry.population)
                 )
                 comparisonRow(
                     label: "Area",
                     icon: "map",
-                    valueA: "\(a.area.formatted()) km²",
-                    valueB: "\(b.area.formatted()) km²",
-                    highlightHigher: a.area > b.area
+                    valueA: "\(firstCountry.area.formatted()) km\u{00B2}",
+                    valueB: "\(secondCountry.area.formatted()) km\u{00B2}",
+                    highlightHigher: firstCountry.area > secondCountry.area
                 )
                 comparisonRow(
                     label: "Currency",
                     icon: "dollarsign.circle",
-                    valueA: a.currency.name,
-                    valueB: b.currency.name
+                    valueA: firstCountry.currency.name,
+                    valueB: secondCountry.currency.name
                 )
                 comparisonRow(
                     label: "Continent",
                     icon: "globe",
-                    valueA: a.continent.displayName,
-                    valueB: b.continent.displayName
+                    valueA: firstCountry.continent.displayName,
+                    valueB: secondCountry.continent.displayName
                 )
 
-                if let gdpA = a.gdpPerCapita, let gdpB = b.gdpPerCapita {
+                if let gdpA = firstCountry.gdpPerCapita, let gdpB = secondCountry.gdpPerCapita {
                     comparisonRow(
                         label: "GDP per Capita",
                         icon: "chart.bar",
@@ -150,7 +153,7 @@ private extension CompareScreen {
     ) -> some View {
         HStack(spacing: 0) {
             Text(valueA)
-                .font(.system(size: 22, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                 .foregroundStyle(
                     highlightHigher == true
                         ? DesignSystem.Color.accent
@@ -158,19 +161,19 @@ private extension CompareScreen {
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
 
-            VStack(spacing: 4) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: icon)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
 
                 Text(label)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(width: 140)
 
             Text(valueB)
-                .font(.system(size: 22, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                 .foregroundStyle(
                     highlightHigher == false
                         ? DesignSystem.Color.accent
@@ -178,9 +181,12 @@ private extension CompareScreen {
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.vertical, 16)
-        .padding(.horizontal, 24)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 12))
+        .padding(.vertical, DesignSystem.Spacing.md)
+        .padding(.horizontal, DesignSystem.Spacing.lg)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
     }
 }
 
@@ -210,16 +216,16 @@ struct CountryPickerSheet: View {
                     onSelect(country)
                     dismiss()
                 } label: {
-                    HStack(spacing: 16) {
+                    HStack(spacing: DesignSystem.Spacing.md) {
                         FlagView(countryCode: country.code, height: 36)
 
                         Text(country.name)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
 
                         Spacer()
 
                         Text(country.continent.displayName)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(.secondary)
                     }
                 }

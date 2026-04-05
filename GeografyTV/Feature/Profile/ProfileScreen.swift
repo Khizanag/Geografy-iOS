@@ -42,42 +42,42 @@ struct ProfileScreen: View {
 // MARK: - Subviews
 private extension ProfileScreen {
     var levelRow: some View {
-        HStack(spacing: 24) {
-            VStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text("\(xpService.currentLevel.level)")
-                    .font(.system(size: 52, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 52, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.accent)
 
                 Text(xpService.currentLevel.title)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
 
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 ProgressView(value: xpService.progressFraction)
                     .tint(DesignSystem.Color.accent)
 
                 Text("\(xpService.xpInCurrentLevel) / \(xpService.xpRequiredForNextLevel) XP")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
         }
     }
 
     func statRow(label: String, value: String, icon: String) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: icon)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.system(size: 22))
                 .foregroundStyle(DesignSystem.Color.accent)
                 .frame(width: 36)
 
             Text(label)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
 
             Spacer()
 
             Text(value)
-                .font(.system(size: 20, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }

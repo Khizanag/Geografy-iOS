@@ -45,19 +45,19 @@ struct SearchScreen: View {
             ))
         }
 
-        let matchingOrgs = Organization.all
+        let matchingOrganizations = Organization.all
             .filter {
                 $0.displayName.lowercased().contains(query) ||
                 $0.fullName.lowercased().contains(query)
             }
             .prefix(10)
             .map { SearchRow.organization($0) }
-        if !matchingOrgs.isEmpty {
+        if !matchingOrganizations.isEmpty {
             sections.append(SearchResultSection(
                 id: "organizations",
                 title: "Organizations",
                 icon: "building.2.fill",
-                rows: Array(matchingOrgs)
+                rows: Array(matchingOrganizations)
             ))
         }
 
@@ -96,52 +96,52 @@ private extension SearchScreen {
         switch row {
         case .country(let country):
             NavigationLink(value: country) {
-                HStack(spacing: 16) {
+                HStack(spacing: DesignSystem.Spacing.md) {
                     FlagView(countryCode: country.code, height: 36)
 
                     Text(country.name)
-                        .font(.system(size: 20))
+                        .font(DesignSystem.Font.system(size: 20))
 
                     Spacer()
 
                     Text(country.continent.displayName)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
             }
 
         case let .capital(country, capitalName):
             NavigationLink(value: country) {
-                HStack(spacing: 16) {
+                HStack(spacing: DesignSystem.Spacing.md) {
                     Image(systemName: "building.columns")
-                        .font(.system(size: 20))
+                        .font(DesignSystem.Font.system(size: 20))
                         .foregroundStyle(DesignSystem.Color.accent)
                         .frame(width: 36)
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(capitalName)
-                            .font(.system(size: 20, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 20, weight: .semibold))
 
                         Text(country.name)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(.secondary)
                     }
                 }
             }
 
         case .organization(let organization):
-            HStack(spacing: 16) {
+            HStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: organization.icon)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
                     .foregroundStyle(organization.highlightColor)
                     .frame(width: 36)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(organization.displayName)
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 20, weight: .semibold))
 
                     Text(organization.fullName)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                 }

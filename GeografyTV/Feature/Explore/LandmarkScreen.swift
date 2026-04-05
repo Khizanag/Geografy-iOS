@@ -40,21 +40,21 @@ struct LandmarkScreen: View {
 // MARK: - Row
 private extension LandmarkScreen {
     func landmarkRow(_ landmark: Landmark) -> some View {
-        HStack(spacing: 20) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             Image(systemName: landmark.symbolName)
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.system(size: 28))
                 .foregroundStyle(Color(hex: landmark.accentColor))
                 .frame(width: 44)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(landmark.name)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
-                HStack(spacing: 8) {
+                HStack(spacing: DesignSystem.Spacing.xs) {
                     FlagView(countryCode: landmark.countryCode, height: 20)
 
                     Text(landmark.city)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -63,7 +63,7 @@ private extension LandmarkScreen {
 
             if landmark.isUNESCO {
                 Image(systemName: "star.fill")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.warning)
             }
         }
@@ -82,27 +82,27 @@ struct LandmarkDetailScreen: View {
         // swiftlint:disable:next closure_body_length
         List {
             Section {
-                VStack(alignment: .leading, spacing: 16) {
-                    HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+                    HStack(spacing: DesignSystem.Spacing.md) {
                         Image(systemName: landmark.symbolName)
-                            .font(.system(size: 44))
+                            .font(DesignSystem.Font.system(size: 44))
                             .foregroundStyle(accentSwiftUIColor)
 
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                             Text(landmark.name)
-                                .font(.system(size: 32, weight: .bold))
+                                .font(DesignSystem.Font.system(size: 32, weight: .bold))
 
-                            HStack(spacing: 8) {
+                            HStack(spacing: DesignSystem.Spacing.xs) {
                                 FlagView(countryCode: landmark.countryCode, height: 24)
                                 Text(landmark.city)
-                                    .font(.system(size: 20))
+                                    .font(DesignSystem.Font.system(size: 20))
                                     .foregroundStyle(.secondary)
                             }
                         }
                     }
 
                     Text(landmark.description)
-                        .font(.system(size: 20))
+                        .font(DesignSystem.Font.system(size: 20))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -132,7 +132,7 @@ struct LandmarkDetailScreen: View {
 
             Section("Fun Fact") {
                 Text(landmark.funFact)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
             }
         }
         .navigationTitle(landmark.name)

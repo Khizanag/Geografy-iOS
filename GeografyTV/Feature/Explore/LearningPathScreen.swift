@@ -13,9 +13,9 @@ struct LearningPathScreen: View {
                 ModuleLessonsScreen(module: module, service: service)
             // swiftlint:disable:next closure_body_length
             } label: {
-                HStack(spacing: 20) {
+                HStack(spacing: DesignSystem.Spacing.lg) {
                     Image(systemName: module.icon)
-                        .font(.system(size: 28))
+                        .font(DesignSystem.Font.system(size: 28))
                         .foregroundStyle(
                             module.isUnlocked
                                 ? DesignSystem.Color.accent
@@ -25,10 +25,10 @@ struct LearningPathScreen: View {
 
                     VStack(alignment: .leading, spacing: 6) {
                         Text(module.title)
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                         Text(module.description)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
 
@@ -42,11 +42,11 @@ struct LearningPathScreen: View {
 
                     if module.isCompleted {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 24))
+                            .font(DesignSystem.Font.iconMedium)
                             .foregroundStyle(DesignSystem.Color.success)
                     } else if !module.isUnlocked {
                         Image(systemName: "lock.fill")
-                            .font(.system(size: 20))
+                            .font(DesignSystem.Font.system(size: 20))
                             .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
                 }
@@ -64,21 +64,21 @@ struct ModuleLessonsScreen: View {
 
     var body: some View {
         List(module.lessons) { lesson in
-            HStack(spacing: 20) {
+            HStack(spacing: DesignSystem.Spacing.lg) {
                 Image(systemName: lesson.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .font(.system(size: 24))
+                    .font(DesignSystem.Font.iconMedium)
                     .foregroundStyle(
                         lesson.isCompleted
                             ? DesignSystem.Color.success
                             : DesignSystem.Color.textTertiary
                     )
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(lesson.title)
-                        .font(.system(size: 22, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                     Text(lesson.type.rawValue.capitalized)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
 

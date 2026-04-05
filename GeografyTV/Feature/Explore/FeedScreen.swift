@@ -15,23 +15,23 @@ struct FeedScreen: View {
             Button {
                 selectedItem = item
             } label: {
-                HStack(spacing: 24) {
+                HStack(spacing: DesignSystem.Spacing.lg) {
                     Image(systemName: item.icon)
-                        .font(.system(size: 32))
+                        .font(DesignSystem.Font.system(size: 32))
                         .foregroundStyle(item.color)
                         .frame(width: 50)
 
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                         Text(item.type.label)
-                            .font(.system(size: 22, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .bold))
                             .foregroundStyle(item.color)
                             .textCase(.uppercase)
 
                         Text(item.title)
-                            .font(.system(size: 26, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 26, weight: .bold))
 
                         Text(item.body)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
                     }
@@ -65,15 +65,15 @@ struct FeedDetailView: View {
             // swiftlint:disable:next closure_body_length
             List {
                 Section {
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack(spacing: 16) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+                        HStack(spacing: DesignSystem.Spacing.md) {
                             Image(systemName: item.icon)
-                                .font(.system(size: 40))
+                                .font(DesignSystem.Font.system(size: 40))
                                 .foregroundStyle(item.color)
 
-                            VStack(alignment: .leading, spacing: 4) {
+                            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                                 Text(item.type.label)
-                                    .font(.system(size: 20, weight: .bold))
+                                    .font(DesignSystem.Font.system(size: 20, weight: .bold))
                                     .foregroundStyle(item.color)
                                     .textCase(.uppercase)
 
@@ -84,27 +84,27 @@ struct FeedDetailView: View {
                         }
 
                         Text(item.title)
-                            .font(.system(size: 36, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 36, weight: .bold))
                     }
                 }
 
                 Section {
                     Text(item.body)
-                        .font(.system(size: 24))
+                        .font(DesignSystem.Font.system(size: 24))
                 }
 
                 if let code = item.countryCode,
                    let country = countryDataService.countries.first(where: { $0.code == code }) {
                     Section("Related Country") {
-                        HStack(spacing: 16) {
+                        HStack(spacing: DesignSystem.Spacing.md) {
                             FlagView(countryCode: country.code, height: 44)
 
-                            VStack(alignment: .leading, spacing: 4) {
+                            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                                 Text(country.name)
-                                    .font(.system(size: 24, weight: .semibold))
+                                    .font(DesignSystem.Font.system(size: 24, weight: .semibold))
 
-                                Text("\(country.capital) · \(country.continent.displayName)")
-                                    .font(.system(size: 20))
+                                Text("\(country.capital) \u{00B7} \(country.continent.displayName)")
+                                    .font(DesignSystem.Font.system(size: 20))
                                     .foregroundStyle(.secondary)
                             }
                         }

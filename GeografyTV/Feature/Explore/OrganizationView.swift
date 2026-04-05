@@ -18,14 +18,14 @@ private extension OrganizationView {
         List {
             Section {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
-                    orgHeader
-                    orgDescription
+                    header
+                    description
                 }
             }
         }
     }
 
-    var orgHeader: some View {
+    var header: some View {
         HStack(spacing: DesignSystem.Spacing.lg) {
             Image(systemName: organization.icon)
                 .font(DesignSystem.Font.system(size: 40))
@@ -42,7 +42,7 @@ private extension OrganizationView {
         }
     }
 
-    var orgDescription: some View {
+    var description: some View {
         Text(organization.description)
             .font(DesignSystem.Font.system(size: 20))
             .foregroundStyle(.secondary)

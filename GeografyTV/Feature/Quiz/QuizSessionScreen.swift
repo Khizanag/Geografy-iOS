@@ -36,8 +36,8 @@ struct QuizSessionScreen: View {
             } else if let question = currentQuestion {
                 questionView(question)
             } else {
-                ProgressView("Loading…")
-                    .font(.system(size: 28))
+                ProgressView("Loading\u{2026}")
+                    .font(DesignSystem.Font.system(size: 28))
             }
         }
         .task { generateQuestions() }
@@ -62,7 +62,7 @@ struct QuizSessionScreen: View {
 // MARK: - Question View
 private extension QuizSessionScreen {
     func questionView(_ question: QuizQuestion) -> some View {
-        VStack(spacing: 48) {
+        VStack(spacing: DesignSystem.Spacing.xxl) {
             headerBar
 
             promptSection(question)
@@ -77,53 +77,48 @@ private extension QuizSessionScreen {
     }
 
     var headerBar: some View {
-        HStack(spacing: 20) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             Text("\(currentIndex + 1) / \(questions.count)")
-                .font(.system(size: 24, weight: .bold))
+                .font(DesignSystem.Font.system(size: 24, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            GeometryReader { geometry in
+            GeometryReader { geometryReader in
                 ZStack(alignment: .leading) {
                     Capsule()
                         .fill(DesignSystem.Color.cardBackground)
 
                     Capsule()
                         .fill(DesignSystem.Color.accent)
-                        .frame(width: geometry.size.width * progress)
+                        .frame(width: geometryReader.size.width * progress)
                         .animation(.easeInOut(duration: 0.3), value: progress)
                 }
             }
             .frame(height: 10)
 
             Text("\(correctCount) correct")
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .focusable(false)
     }
 
-    var isFlagOptionsLayout: Bool {
-        currentQuestion?.options.contains { $0.flagCode != nil && $0.text == nil } ?? false
-    }
-
-    var isFlagPromptLayout: Bool {
-        currentQuestion?.promptFlag != nil
-    }
-
     func promptSection(_ question: QuizQuestion) -> some View {
-        VStack(spacing: 20) {
+        VStack(spacing: DesignSystem.Spacing.lg) {
             if let flagCode = question.promptFlag {
-                FlagView(countryCode: flagCode, height: isFlagPromptLayout && !isFlagOptionsLayout ? 220 : 140)
+                FlagView(
+                    countryCode: flagCode,
+                    height: isFlagPromptLayout && !isFlagOptionsLayout ? 220 : 140
+                )
             }
 
-            HStack(spacing: 8) {
+            HStack(spacing: DesignSystem.Spacing.xs) {
                 Text(question.promptText)
-                    .font(.system(size: 36, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 36, weight: .semibold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 if let subject = question.promptSubject {
                     Text(subject)
-                        .font(.system(size: 36, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 36, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
             }
@@ -133,14 +128,17 @@ private extension QuizSessionScreen {
 
     func optionsGrid(_ question: QuizQuestion) -> some View {
         LazyVGrid(
-            columns: [GridItem(.flexible(), spacing: 24), GridItem(.flexible(), spacing: 24)],
-            spacing: 24
+            columns: [
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.lg),
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.lg),
+            ],
+            spacing: DesignSystem.Spacing.lg
         ) {
             ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
                 if isFlagOptionsLayout {
-                    tvFlagOptionButton(option, question: question, index: index)
+                    flagOptionButton(option, question: question, index: index)
                 } else {
-                    tvOptionButton(option, question: question, index: index)
+                    optionButton(option, question: question, index: index)
                 }
             }
         }
@@ -148,11 +146,11 @@ private extension QuizSessionScreen {
     }
 
     var controllerHint: some View {
-        HStack(spacing: 24) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             ForEach(Array(GamepadButton.allCases.enumerated()), id: \.element) { index, button in
                 if let question = currentQuestion, index < question.options.count {
                     Label(button.label, systemImage: button.icon)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
             }
@@ -160,15 +158,10 @@ private extension QuizSessionScreen {
         .focusable(false)
     }
 
-    func tvOptionButton(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
+    func optionButton(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
         let isCorrect = option.id == question.correctOptionID
         let isSelected = selectedOptionID == option.id
-        let backgroundColor: Color = {
-            guard showFeedback else { return DesignSystem.Color.cardBackground }
-            if isCorrect { return DesignSystem.Color.success.opacity(0.3) }
-            if isSelected { return DesignSystem.Color.error.opacity(0.3) }
-            return DesignSystem.Color.cardBackground
-        }()
+        let backgroundColor = optionBackgroundColor(isCorrect: isCorrect, isSelected: isSelected)
         let gamepadButton = GamepadButton.allCases.indices.contains(index)
             ? GamepadButton.allCases[index]
             : nil
@@ -177,10 +170,10 @@ private extension QuizSessionScreen {
             guard !showFeedback else { return }
             selectOption(option, question: question)
         } label: {
-            HStack(spacing: 16) {
+            HStack(spacing: DesignSystem.Spacing.md) {
                 if hasGameController, let gamepadButton {
                     Image(systemName: gamepadButton.icon)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(gamepadButton.color)
                         .frame(width: 32)
                 }
@@ -190,38 +183,36 @@ private extension QuizSessionScreen {
                 }
 
                 Text(option.text ?? "")
-                    .font(.system(size: 26, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 26, weight: .semibold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Spacer()
 
                 if showFeedback, isCorrect {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 28))
+                        .font(DesignSystem.Font.system(size: 28))
                         .foregroundStyle(DesignSystem.Color.success)
                 } else if showFeedback, isSelected, !isCorrect {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 28))
+                        .font(DesignSystem.Font.system(size: 28))
                         .foregroundStyle(DesignSystem.Color.error)
                 }
             }
-            .padding(24)
-            .background(backgroundColor, in: RoundedRectangle(cornerRadius: 16))
+            .padding(DesignSystem.Spacing.lg)
+            .background(
+                backgroundColor,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            )
         }
         .buttonStyle(.card)
         .disabled(showFeedback)
         .accessibilityLabel(option.text ?? "Option \(index + 1)")
     }
 
-    func tvFlagOptionButton(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
+    func flagOptionButton(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
         let isCorrect = option.id == question.correctOptionID
         let isSelected = selectedOptionID == option.id
-        let backgroundColor: Color = {
-            guard showFeedback else { return DesignSystem.Color.cardBackground }
-            if isCorrect { return DesignSystem.Color.success.opacity(0.3) }
-            if isSelected { return DesignSystem.Color.error.opacity(0.3) }
-            return DesignSystem.Color.cardBackground
-        }()
+        let backgroundColor = optionBackgroundColor(isCorrect: isCorrect, isSelected: isSelected)
         let gamepadButton = GamepadButton.allCases.indices.contains(index)
             ? GamepadButton.allCases[index]
             : nil
@@ -230,27 +221,34 @@ private extension QuizSessionScreen {
             guard !showFeedback else { return }
             selectOption(option, question: question)
         } label: {
-            VStack(spacing: 16) {
+            VStack(spacing: DesignSystem.Spacing.md) {
                 if let flagCode = option.flagCode {
                     FlagView(countryCode: flagCode, height: 100)
                 }
 
                 if hasGameController, let gamepadButton {
                     Image(systemName: gamepadButton.icon)
-                        .font(.system(size: 20))
+                        .font(DesignSystem.Font.system(size: 20))
                         .foregroundStyle(gamepadButton.color)
                 }
 
                 if showFeedback {
-                    Image(systemName: isCorrect ? "checkmark.circle.fill" : (isSelected ? "xmark.circle.fill" : ""))
-                        .font(.system(size: 28))
-                        .foregroundStyle(isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error)
-                        .opacity(isCorrect || isSelected ? 1 : 0)
+                    Image(
+                        systemName: isCorrect
+                            ? "checkmark.circle.fill"
+                            : (isSelected ? "xmark.circle.fill" : "")
+                    )
+                    .font(DesignSystem.Font.system(size: 28))
+                    .foregroundStyle(isCorrect ? DesignSystem.Color.success : DesignSystem.Color.error)
+                    .opacity(isCorrect || isSelected ? 1 : 0)
                 }
             }
             .frame(maxWidth: .infinity)
             .frame(height: 180)
-            .background(backgroundColor, in: RoundedRectangle(cornerRadius: 20))
+            .background(
+                backgroundColor,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+            )
         }
         .buttonStyle(.card)
         .disabled(showFeedback)
@@ -342,22 +340,18 @@ private extension QuizSessionScreen {
         for controller in GCController.controllers() {
             guard let gamepad = controller.extendedGamepad else { continue }
 
-            // L1 → Option 1 (top-left)
             gamepad.leftShoulder.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 0) }
             }
 
-            // R1 → Option 2 (top-right)
             gamepad.rightShoulder.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 1) }
             }
 
-            // L2 → Option 3 (bottom-left)
             gamepad.leftTrigger.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 2) }
             }
 
-            // R2 → Option 4 (bottom-right)
             gamepad.rightTrigger.pressedChangedHandler = { _, _, pressed in
                 if pressed { handleGamepadPress(index: 3) }
             }
@@ -382,27 +376,27 @@ private extension QuizSessionScreen {
     var resultView: some View {
         VStack(spacing: 40) {
             Image(systemName: resultIcon)
-                .font(.system(size: 80))
+                .font(DesignSystem.Font.displayXL)
                 .foregroundStyle(resultColor)
 
             Text(resultMessage)
-                .font(.system(size: 48, weight: .bold))
+                .font(DesignSystem.Font.system(size: 48, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text("\(correctCount) / \(questions.count) correct")
-                .font(.system(size: 32))
+                .font(DesignSystem.Font.system(size: 32))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
 
             Text("\(Int(accuracy * 100))%")
-                .font(.system(size: 28, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 28, weight: .semibold))
                 .foregroundStyle(resultColor)
 
-            HStack(spacing: 32) {
+            HStack(spacing: DesignSystem.Spacing.xl) {
                 Button {
                     resetQuiz()
                 } label: {
                     Label("Play Again", systemImage: "arrow.counterclockwise")
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 24, weight: .semibold))
                 }
                 .buttonStyle(.bordered)
 
@@ -410,11 +404,32 @@ private extension QuizSessionScreen {
                     dismiss()
                 } label: {
                     Label("Done", systemImage: "checkmark")
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 24, weight: .semibold))
                 }
                 .buttonStyle(.bordered)
             }
         }
+    }
+}
+
+// MARK: - Helpers
+private extension QuizSessionScreen {
+    var currentQuestion: QuizQuestion? {
+        guard currentIndex < questions.count else { return nil }
+        return questions[currentIndex]
+    }
+
+    var progress: CGFloat {
+        guard !questions.isEmpty else { return 0 }
+        return CGFloat(currentIndex) / CGFloat(questions.count)
+    }
+
+    var isFlagOptionsLayout: Bool {
+        currentQuestion?.options.contains { $0.flagCode != nil && $0.text == nil } ?? false
+    }
+
+    var isFlagPromptLayout: Bool {
+        currentQuestion?.promptFlag != nil
     }
 
     var accuracy: Double {
@@ -441,20 +456,17 @@ private extension QuizSessionScreen {
         if accuracy >= 0.5 { return "Good Effort!" }
         return "Keep Practicing!"
     }
+
+    func optionBackgroundColor(isCorrect: Bool, isSelected: Bool) -> Color {
+        guard showFeedback else { return DesignSystem.Color.cardBackground }
+        if isCorrect { return DesignSystem.Color.success.opacity(0.3) }
+        if isSelected { return DesignSystem.Color.error.opacity(0.3) }
+        return DesignSystem.Color.cardBackground
+    }
 }
 
 // MARK: - Actions
 private extension QuizSessionScreen {
-    var currentQuestion: QuizQuestion? {
-        guard currentIndex < questions.count else { return nil }
-        return questions[currentIndex]
-    }
-
-    var progress: CGFloat {
-        guard !questions.isEmpty else { return 0 }
-        return CGFloat(currentIndex) / CGFloat(questions.count)
-    }
-
     func generateQuestions() {
         let filteredCountries = region.filter(countryDataService.countries)
         questions = QuestionGenerator.generate(

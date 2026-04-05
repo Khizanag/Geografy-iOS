@@ -15,18 +15,18 @@ struct OrganizationsScreen: View {
                     countryDataService: countryDataService
                 )
             } label: {
-                HStack(spacing: 20) {
+                HStack(spacing: DesignSystem.Spacing.lg) {
                     Image(systemName: organization.icon)
-                        .font(.system(size: 24))
+                        .font(DesignSystem.Font.iconMedium)
                         .foregroundStyle(organization.highlightColor)
                         .frame(width: 40)
 
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text(organization.displayName)
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                         Text(organization.fullName)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
                     }
@@ -52,24 +52,24 @@ struct OrganizationDetailScreen: View {
         // swiftlint:disable:next closure_body_length
         List {
             Section {
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                    HStack(spacing: DesignSystem.Spacing.md) {
                         Image(systemName: organization.icon)
-                            .font(.system(size: 36))
+                            .font(DesignSystem.Font.iconXL)
                             .foregroundStyle(organization.highlightColor)
 
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                             Text(organization.displayName)
-                                .font(.system(size: 28, weight: .bold))
+                                .font(DesignSystem.Font.system(size: 28, weight: .bold))
 
                             Text(organization.fullName)
-                                .font(.system(size: 20))
+                                .font(DesignSystem.Font.system(size: 20))
                                 .foregroundStyle(.secondary)
                         }
                     }
 
                     Text(organization.description)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -77,16 +77,16 @@ struct OrganizationDetailScreen: View {
             Section("Members (\(memberCountries.count))") {
                 ForEach(memberCountries) { country in
                     NavigationLink(value: country) {
-                        HStack(spacing: 16) {
+                        HStack(spacing: DesignSystem.Spacing.md) {
                             FlagView(countryCode: country.code, height: 36)
 
                             Text(country.name)
-                                .font(.system(size: 20))
+                                .font(DesignSystem.Font.system(size: 20))
 
                             Spacer()
 
                             Text(country.capital)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(.secondary)
                         }
                     }

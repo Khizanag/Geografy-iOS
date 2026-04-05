@@ -26,13 +26,13 @@ struct LanguageScreen: View {
 
             Section("\(displayedLanguages.count) languages") {
                 ForEach(displayedLanguages) { language in
-                    HStack(spacing: 20) {
-                        VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: DesignSystem.Spacing.lg) {
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                             Text(language.name)
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                             Text(language.nativeName)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(.secondary)
                         }
 
@@ -40,11 +40,11 @@ struct LanguageScreen: View {
 
                         VStack(alignment: .trailing, spacing: 2) {
                             Text("\(language.speakerCount)M speakers")
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                                 .foregroundStyle(DesignSystem.Color.accent)
 
                             Text(language.family)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(DesignSystem.Color.textTertiary)
                         }
                     }

@@ -37,15 +37,15 @@ private extension ExploreGameScreen {
     var startView: some View {
         VStack(spacing: 40) {
             Image(systemName: "questionmark.circle.fill")
-                .font(.system(size: 80))
+                .font(DesignSystem.Font.displayXL)
                 .foregroundStyle(DesignSystem.Color.accent)
 
             Text("Mystery Country")
-                .font(.system(size: 48, weight: .bold))
+                .font(DesignSystem.Font.system(size: 48, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text("Guess the country from progressive clues.\nFewer clues = more points!")
-                .font(.system(size: 24))
+                .font(DesignSystem.Font.system(size: 24))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
@@ -53,7 +53,7 @@ private extension ExploreGameScreen {
                 startNewGame()
             } label: {
                 Label("Start Game", systemImage: "play.fill")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 28, weight: .bold))
             }
             .buttonStyle(.bordered)
         }
@@ -73,40 +73,43 @@ private extension ExploreGameScreen {
 
     func cluesPanel(_ state: ExploreGameState) -> some View {
         // swiftlint:disable:next closure_body_length
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
             HStack {
                 Text("Clues")
-                    .font(.system(size: 32, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Spacer()
 
                 Text("\(state.currentPointsAvailable) pts")
-                    .font(.system(size: 24, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 24, weight: .semibold))
                     .foregroundStyle(DesignSystem.Color.accent)
             }
             .focusable(false)
 
             ForEach(state.revealedClues) { clue in
-                HStack(spacing: 16) {
+                HStack(spacing: DesignSystem.Spacing.md) {
                     Image(systemName: clue.icon)
-                        .font(.system(size: 24))
+                        .font(DesignSystem.Font.iconMedium)
                         .foregroundStyle(DesignSystem.Color.accent)
                         .frame(width: 36)
 
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text(clue.title)
-                            .font(.system(size: 20, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                             .foregroundStyle(DesignSystem.Color.textPrimary)
 
                         Text(clue.detail)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
-                .padding(16)
+                .padding(DesignSystem.Spacing.md)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 12))
+                .background(
+                    DesignSystem.Color.cardBackground,
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                )
                 .focusable(false)
             }
 
@@ -125,14 +128,14 @@ private extension ExploreGameScreen {
 
     func guessPanel(_ state: ExploreGameState) -> some View {
         // swiftlint:disable:next closure_body_length
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
             Text("Your Guess")
-                .font(.system(size: 32, weight: .bold))
+                .font(DesignSystem.Font.system(size: 32, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .focusable(false)
 
-            TextField("Type country name…", text: $guessText)
-                .font(.system(size: 22))
+            TextField("Type country name\u{2026}", text: $guessText)
+                .font(DesignSystem.Font.system(size: 22))
                 .onChange(of: guessText) { _, newValue in
                     updateSuggestions(newValue)
                 }
@@ -142,11 +145,11 @@ private extension ExploreGameScreen {
                     Button {
                         submitGuess(country.name)
                     } label: {
-                        HStack(spacing: 16) {
+                        HStack(spacing: DesignSystem.Spacing.md) {
                             FlagView(countryCode: country.code, height: 30)
 
                             Text(country.name)
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                         }
                     }
                 }
@@ -155,7 +158,7 @@ private extension ExploreGameScreen {
 
             if !state.guessHistory.isEmpty {
                 Text("Wrong guesses: \(state.wrongGuessCount)")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
                     .focusable(false)
             }
@@ -182,20 +185,20 @@ private extension ExploreGameScreen {
             FlagView(countryCode: state.targetCountry.code, height: 120)
 
             Text(state.targetCountry.name)
-                .font(.system(size: 48, weight: .bold))
+                .font(DesignSystem.Font.system(size: 48, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             if state.outcome == .guessedCorrectly {
                 Label("Correct!", systemImage: "checkmark.circle.fill")
-                    .font(.system(size: 32, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.success)
 
-                Text("\(state.finalScore) points · \(state.revealedClueCount) clues used")
-                    .font(.system(size: 24))
+                Text("\(state.finalScore) points \u{00B7} \(state.revealedClueCount) clues used")
+                    .font(DesignSystem.Font.system(size: 24))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             } else {
                 Label("Revealed", systemImage: "eye.fill")
-                    .font(.system(size: 32, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
 
@@ -203,7 +206,7 @@ private extension ExploreGameScreen {
                 startNewGame()
             } label: {
                 Label("Play Again", systemImage: "arrow.counterclockwise")
-                    .font(.system(size: 24, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 24, weight: .semibold))
             }
             .buttonStyle(.bordered)
         }

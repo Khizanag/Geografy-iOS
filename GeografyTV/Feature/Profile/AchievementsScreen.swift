@@ -44,27 +44,27 @@ struct AchievementsScreen: View {
 // MARK: - Subviews
 private extension AchievementsScreen {
     var levelCard: some View {
-        HStack(spacing: 24) {
-            VStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text("\(xpService.currentLevel.level)")
-                    .font(.system(size: 44, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 44, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.accent)
 
                 Text(xpService.currentLevel.title)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
 
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                 Text("\(xpService.totalXP) XP")
-                    .font(.system(size: 24, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 24, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 ProgressView(value: xpService.progressFraction)
                     .tint(DesignSystem.Color.accent)
 
                 Text("\(xpService.xpRequiredForNextLevel - xpService.xpInCurrentLevel) XP to next level")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
         }
@@ -73,15 +73,15 @@ private extension AchievementsScreen {
     func achievementRow(_ achievement: AchievementDefinition) -> some View {
         let isUnlocked = achievementService.isUnlocked(achievement.id)
 
-        return HStack(spacing: 20) {
+        return HStack(spacing: DesignSystem.Spacing.lg) {
             Image(systemName: achievement.iconName)
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.system(size: 28))
                 .foregroundStyle(isUnlocked ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary)
                 .frame(width: 44)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(achievement.title)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                     .foregroundStyle(
                         isUnlocked
                             ? DesignSystem.Color.textPrimary
@@ -89,7 +89,7 @@ private extension AchievementsScreen {
                     )
 
                 Text(achievement.description)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
 
@@ -97,11 +97,11 @@ private extension AchievementsScreen {
 
             if isUnlocked {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 24))
+                    .font(DesignSystem.Font.iconMedium)
                     .foregroundStyle(DesignSystem.Color.success)
             } else {
                 Image(systemName: "lock.fill")
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
         }

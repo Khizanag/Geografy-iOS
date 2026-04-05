@@ -83,11 +83,11 @@ struct DistanceCalculatorScreen: View {
                 Section("Comparison") {
                     HStack {
                         Text(pair.0.name)
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                         Image(systemName: "arrow.left.arrow.right")
                             .foregroundStyle(DesignSystem.Color.accent)
                         Text(pair.1.name)
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                     }
 
                     HStack {
@@ -119,21 +119,21 @@ struct CurrencyInfoScreen: View {
 
     var body: some View {
         List(countryDataService.countries.sorted { $0.currency.code < $1.currency.code }) { country in
-            HStack(spacing: 20) {
+            HStack(spacing: DesignSystem.Spacing.lg) {
                 FlagView(countryCode: country.code, height: 32)
 
                 Text(country.name)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
 
                 Spacer()
 
                 VStack(alignment: .trailing, spacing: 2) {
                     Text(country.currency.code)
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                         .foregroundStyle(DesignSystem.Color.accent)
 
                     Text(country.currency.name)
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -148,16 +148,16 @@ struct TimeZoneScreen: View {
 
     var body: some View {
         List(countryDataService.countries.sorted { $0.name < $1.name }) { country in
-            HStack(spacing: 20) {
+            HStack(spacing: DesignSystem.Spacing.lg) {
                 FlagView(countryCode: country.code, height: 32)
 
                 Text(country.name)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
 
                 Spacer()
 
                 Text(country.capital)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(.secondary)
             }
         }

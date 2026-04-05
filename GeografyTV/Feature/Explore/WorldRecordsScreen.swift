@@ -43,22 +43,22 @@ struct WorldRecordsScreen: View {
 // MARK: - Subviews
 private extension WorldRecordsScreen {
     func recordRow(_ record: WorldRecord) -> some View {
-        HStack(spacing: 24) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             FlagView(countryCode: record.countryCode, height: 50)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(record.title)
-                    .font(.system(size: 22, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 22, weight: .bold))
 
                 Text(record.countryName)
-                    .font(.system(size: 20))
+                    .font(DesignSystem.Font.system(size: 20))
                     .foregroundStyle(.secondary)
             }
 
             Spacer()
 
             Text(record.value)
-                .font(.system(size: 22, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
