@@ -18,7 +18,6 @@ public struct SettingsScreen: View {
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
     @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
     @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
-    @AppStorage("showCorrectAnswer") private var showCorrectAnswer = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
 
     @State private var showDeleteConfirmation = false
@@ -261,15 +260,6 @@ private extension SettingsScreen {
         settingsGroup(header: "Preferences") {
             VStack(spacing: 0) {
                 appearanceRow
-
-                settingsDivider
-
-                SettingsToggleRow(
-                    icon: "checkmark.circle.fill",
-                    iconColor: DesignSystem.Color.success,
-                    title: "Show correct answer",
-                    isOn: $showCorrectAnswer
-                )
 
                 settingsDivider
 
