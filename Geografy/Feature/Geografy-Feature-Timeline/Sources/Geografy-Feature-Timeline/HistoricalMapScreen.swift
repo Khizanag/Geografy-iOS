@@ -35,12 +35,12 @@ public struct HistoricalMapScreen: View {
     public var body: some View {
         mapLayer
             .background(DesignSystem.Color.ocean)
-            .ignoresSafeArea(edges: .top)
+            .ignoresSafeArea()
             .navigationTitle("Historical Map")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .safeAreaInset(edge: .bottom) { sliderSection }
+            .overlay(alignment: .bottom) { footerOverlay }
             .toolbarBackground(.clear, for: .navigationBar)
             .task { await loadData() }
             .onAppear { selectedYear = initialYear }
@@ -85,11 +85,12 @@ private extension HistoricalMapScreen {
         }
     }
 
-    var sliderSection: some View {
+    var footerOverlay: some View {
         VStack(spacing: 0) {
             selectedCountryBanner
-            yearSlider
+            yearPicker
         }
+        .padding(.bottom, DesignSystem.Spacing.xs)
     }
 
     @ViewBuilder
@@ -159,35 +160,25 @@ private extension HistoricalMapScreen {
         .accessibilityLabel("Event details")
     }
 
-    var yearSlider: some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                yearHeader
-                Slider(
-                    value: yearBinding,
-                    in: 1_800...2_025,
-                    step: 1
-                )
-                .tint(DesignSystem.Color.accent)
-                rangeLabels
+    var yearPicker: some View {
+        HStack(spacing: 0) {
+            Picker("Year", selection: $selectedYear) {
+                ForEach(1_800...2_025, id: \.self) { year in
+                    Text(String(year)).tag(year)
+                }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.bottom, DesignSystem.Spacing.xs)
-    }
+            .pickerStyle(.wheel)
+            .frame(width: 120)
 
-    var yearHeader: some View {
-        HStack {
-            Text(String(selectedYear))
-                .font(DesignSystem.Font.title)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .contentTransition(.numericText())
-                .animation(.snappy, value: selectedYear)
             Spacer(minLength: 0)
+
             independentCountLabel
+                .padding(.trailing, DesignSystem.Spacing.lg)
         }
+        .padding(.vertical, DesignSystem.Spacing.xs)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .background(.ultraThinMaterial, in: .rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .padding(.horizontal, DesignSystem.Spacing.sm)
     }
 
     var independentCountLabel: some View {
@@ -197,18 +188,6 @@ private extension HistoricalMapScreen {
             .foregroundStyle(DesignSystem.Color.textSecondary)
             .contentTransition(.numericText())
             .animation(.snappy, value: count)
-    }
-
-    var rangeLabels: some View {
-        HStack {
-            Text("1800")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Spacer(minLength: 0)
-            Text("2025")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
     }
 }
 
@@ -477,13 +456,6 @@ private extension HistoricalMapScreen {
                 true
             }
         }
-    }
-
-    var yearBinding: Binding<Double> {
-        Binding(
-            get: { Double(selectedYear) },
-            set: { selectedYear = Int($0) }
-        )
     }
 }
 
