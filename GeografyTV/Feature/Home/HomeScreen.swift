@@ -69,9 +69,6 @@ struct HomeFeedView: View {
 
     let countryDataService: CountryDataService
 
-    @State private var selectedTab = 1
-    @State private var selectedTab2 = 2
-
     var body: some View {
         ScrollView {
             VStack(spacing: 60) {
@@ -97,17 +94,17 @@ struct HomeFeedView: View {
 // MARK: - Hero
 private extension HomeFeedView {
     var heroSection: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: DesignSystem.Spacing.lg) {
             Image(systemName: "globe.americas.fill")
-                .font(.system(size: 80))
+                .font(DesignSystem.Font.displayXL)
                 .foregroundStyle(DesignSystem.Color.accent)
 
             Text("Geografy")
-                .font(.system(size: 56, weight: .bold))
+                .font(DesignSystem.Font.system(size: 56, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text("Explore the world from your living room")
-                .font(.system(size: 28))
+                .font(DesignSystem.Font.system(size: 28))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .padding(.vertical, 40)
@@ -118,21 +115,21 @@ private extension HomeFeedView {
 private extension HomeFeedView {
     var statsRow: some View {
         HStack(spacing: 40) {
-            tvStatCard(
+            statCard(
                 icon: "star.fill",
                 value: "Level \(xpService.currentLevel.level)",
                 label: xpService.currentLevel.title,
                 color: DesignSystem.Color.accent
             )
 
-            tvStatCard(
+            statCard(
                 icon: "flame.fill",
                 value: "\(streakService.currentStreak)",
                 label: "Day Streak",
                 color: DesignSystem.Color.orange
             )
 
-            tvStatCard(
+            statCard(
                 icon: "globe",
                 value: "\(countryDataService.countries.count)",
                 label: "Countries",
@@ -141,23 +138,26 @@ private extension HomeFeedView {
         }
     }
 
-    func tvStatCard(icon: String, value: String, label: String, color: Color) -> some View {
-        VStack(spacing: 12) {
+    func statCard(icon: String, value: String, label: String, color: Color) -> some View {
+        VStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: icon)
-                .font(.system(size: 36))
+                .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(color)
 
             Text(value)
-                .font(.system(size: 32, weight: .bold))
+                .font(DesignSystem.Font.system(size: 32, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text(label)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(32)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 20))
+        .padding(DesignSystem.Spacing.xl)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+        )
     }
 }
 
@@ -166,33 +166,36 @@ private extension HomeFeedView {
     @ViewBuilder
     var spotlightSection: some View {
         if let country = spotlightCountry {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 Text("Country of the Day")
-                    .font(.system(size: 32, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 NavigationLink(value: country) {
-                    HStack(spacing: 32) {
+                    HStack(spacing: DesignSystem.Spacing.xl) {
                         FlagView(countryCode: country.code, height: 80)
 
-                        VStack(alignment: .leading, spacing: 8) {
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                             Text(country.name)
-                                .font(.system(size: 36, weight: .bold))
+                                .font(DesignSystem.Font.system(size: 36, weight: .bold))
                                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
                             Text("\(country.capital) · \(country.continent.displayName)")
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(DesignSystem.Color.textSecondary)
                         }
 
                         Spacer()
 
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 24))
+                            .font(DesignSystem.Font.iconMedium)
                             .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
-                    .padding(32)
-                    .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 20))
+                    .padding(DesignSystem.Spacing.xl)
+                    .background(
+                        DesignSystem.Color.cardBackground,
+                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+                    )
                 }
                 .buttonStyle(CardButtonStyle())
             }
@@ -208,14 +211,14 @@ private extension HomeFeedView {
 private extension HomeFeedView {
     var quickActionsSection: some View {
         // swiftlint:disable:next closure_body_length
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
             Text("Quick Start")
-                .font(.system(size: 32, weight: .bold))
+                .font(DesignSystem.Font.system(size: 32, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            HStack(spacing: 32) {
+            HStack(spacing: DesignSystem.Spacing.xl) {
                 NavigationLink(value: QuickAction.quiz) {
-                    tvActionCardLabel(
+                    actionCardLabel(
                         icon: "gamecontroller.fill",
                         title: "Start Quiz",
                         subtitle: "Test your knowledge",
@@ -225,7 +228,7 @@ private extension HomeFeedView {
                 .buttonStyle(CardButtonStyle())
 
                 NavigationLink(value: QuickAction.countries) {
-                    tvActionCardLabel(
+                    actionCardLabel(
                         icon: "globe",
                         title: "Browse Countries",
                         subtitle: "Explore 197 nations",
@@ -235,7 +238,7 @@ private extension HomeFeedView {
                 .buttonStyle(CardButtonStyle())
 
                 NavigationLink(value: QuickAction.randomCountry) {
-                    tvActionCardLabel(
+                    actionCardLabel(
                         icon: "shuffle",
                         title: "Random Country",
                         subtitle: "Discover something new",
@@ -259,23 +262,26 @@ private extension HomeFeedView {
         }
     }
 
-    func tvActionCardLabel(icon: String, title: String, subtitle: String, color: Color) -> some View {
-        VStack(spacing: 16) {
+    func actionCardLabel(icon: String, title: String, subtitle: String, color: Color) -> some View {
+        VStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: icon)
-                .font(.system(size: 44))
+                .font(DesignSystem.Font.system(size: 44))
                 .foregroundStyle(color)
 
             Text(title)
-                .font(.system(size: 24, weight: .bold))
+                .font(DesignSystem.Font.system(size: 24, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text(subtitle)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.system(size: 22))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
         .padding(40)
-        .background(DesignSystem.Color.cardBackground, in: RoundedRectangle(cornerRadius: 20))
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+        )
     }
 }
 

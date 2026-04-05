@@ -20,22 +20,22 @@ struct NeighborScreen: View {
                     Button {
                         selectedCountry = country
                     } label: {
-                        HStack(spacing: 16) {
+                        HStack(spacing: DesignSystem.Spacing.md) {
                             FlagView(countryCode: country.code, height: 32)
 
                             Text(country.name)
-                                .font(.system(size: 20))
+                                .font(DesignSystem.Font.system(size: 20))
 
                             Spacer()
 
                             let count = CountryNeighbors.data[country.code]?.count ?? 0
                             if count > 0 {
                                 Text("\(count) neighbors")
-                                    .font(.system(size: 22))
+                                    .font(DesignSystem.Font.system(size: 22))
                                     .foregroundStyle(.secondary)
                             } else {
                                 Text("Island")
-                                    .font(.system(size: 22))
+                                    .font(DesignSystem.Font.system(size: 22))
                                     .foregroundStyle(.tertiary)
                             }
                         }
@@ -56,7 +56,7 @@ private extension NeighborScreen {
         }
         .sorted { $0.name < $1.name }
 
-        return Section("\(country.name) — \(neighbors.count) neighbors") {
+        return Section("\(country.name) \u{2014} \(neighbors.count) neighbors") {
             if neighbors.isEmpty {
                 Text("\(country.name) is an island nation with no land borders")
                     .foregroundStyle(.secondary)
@@ -65,16 +65,16 @@ private extension NeighborScreen {
                     Button {
                         selectedCountry = neighbor
                     } label: {
-                        HStack(spacing: 16) {
+                        HStack(spacing: DesignSystem.Spacing.md) {
                             FlagView(countryCode: neighbor.code, height: 36)
 
                             Text(neighbor.name)
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                             Spacer()
 
                             Text(neighbor.capital)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(.secondary)
                         }
                     }

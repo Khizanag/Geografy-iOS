@@ -3,9 +3,9 @@ import Geografy_Feature_IndependenceTimeline
 import SwiftUI
 
 struct IndependenceScreen: View {
-    private let service = IndependenceTimelineService()
-
     @State private var selectedEra: IndependenceEra?
+
+    private let service = IndependenceTimelineService()
 
     private var displayedEvents: [IndependenceEvent] {
         guard let selectedEra else {
@@ -29,15 +29,15 @@ struct IndependenceScreen: View {
 
             Section("\(displayedEvents.count) countries") {
                 ForEach(displayedEvents) { event in
-                    HStack(spacing: 20) {
+                    HStack(spacing: DesignSystem.Spacing.lg) {
                         FlagView(countryCode: event.countryCode, height: 32)
 
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                             Text(event.countryName)
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                             Text(event.description)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(.secondary)
                                 .lineLimit(1)
                         }
@@ -46,12 +46,12 @@ struct IndependenceScreen: View {
 
                         VStack(alignment: .trailing, spacing: 2) {
                             Text("\(event.year)")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(DesignSystem.Font.system(size: 20, weight: .bold))
                                 .foregroundStyle(DesignSystem.Color.accent)
 
                             if !event.independenceFrom.isEmpty {
                                 Text("from \(event.independenceFrom)")
-                                    .font(.system(size: 22))
+                                    .font(DesignSystem.Font.system(size: 22))
                                     .foregroundStyle(DesignSystem.Color.textTertiary)
                             }
                         }

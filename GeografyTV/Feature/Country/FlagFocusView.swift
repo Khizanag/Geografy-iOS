@@ -41,10 +41,10 @@ struct FlagFocusView: View {
 // MARK: - Subviews
 private extension FlagFocusView {
     var flagContent: some View {
-        GeometryReader { geometry in
+        GeometryReader { geometryReader in
             let aspectRatio = FlagAspectRatio.ratio(for: countryCode) ?? 1.5
-            let maxHeight = geometry.size.height * 0.7
-            let maxWidth = geometry.size.width * 0.8
+            let maxHeight = geometryReader.size.height * 0.7
+            let maxWidth = geometryReader.size.width * 0.8
             let heightFromWidth = maxWidth / aspectRatio
             let targetHeight = min(heightFromWidth, maxHeight)
 
@@ -63,14 +63,14 @@ private extension FlagFocusView {
 
     var countryLabel: some View {
         Text(countryName)
-            .font(.system(size: 44, weight: .bold))
+            .font(DesignSystem.Font.system(size: 44, weight: .bold))
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .opacity(appeared ? 1.0 : 0)
     }
 
     var dismissHint: some View {
         Text("Press Menu to close")
-            .font(.system(size: 20))
+            .font(DesignSystem.Font.system(size: 20))
             .foregroundStyle(DesignSystem.Color.textTertiary)
             .opacity(appeared ? 0.6 : 0)
     }

@@ -11,6 +11,7 @@ struct CountryDetailScreen: View {
     let country: Country
 
     @State private var showFlagFocus = false
+
     var body: some View {
         listContent
             .listStyle(.grouped)
@@ -48,7 +49,7 @@ private extension CountryDetailScreen {
         HStack(spacing: 40) {
             FlagView(countryCode: country.code, height: 140)
 
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 Text(country.name)
                     .font(DesignSystem.Font.system(size: 48, weight: .bold))
 
@@ -58,13 +59,13 @@ private extension CountryDetailScreen {
             Spacer()
 
             Image(systemName: "arrow.up.left.and.arrow.down.right")
-                .font(DesignSystem.Font.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(.tertiary)
         }
     }
 
     var heroSubtitle: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: DesignSystem.Spacing.sm) {
             Text(country.flagEmoji)
                 .font(DesignSystem.Font.system(size: 36))
 
@@ -132,11 +133,11 @@ private extension CountryDetailScreen {
             }
 
             detailRow(icon: "person.3.fill", label: "Population", value: country.population.formatted())
-            detailRow(icon: "map.fill", label: "Area", value: "\(country.area.formatted()) km²")
+            detailRow(icon: "map.fill", label: "Area", value: "\(country.area.formatted()) km\u{00B2}")
             detailRow(
                 icon: "person.2.fill",
                 label: "Density",
-                value: String(format: "%.1f per km²", country.populationDensity)
+                value: String(format: "%.1f per km\u{00B2}", country.populationDensity)
             )
         }
     }
@@ -186,7 +187,7 @@ private extension CountryDetailScreen {
     }
 
     func languageRow(_ language: Country.Language) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: "text.bubble.fill")
                 .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.accent)
@@ -236,9 +237,9 @@ private extension CountryDetailScreen {
     }
 
     func organizationRow(_ organization: Organization?, id: String) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: organization?.icon ?? "building.2")
-                .font(DesignSystem.Font.system(size: 24))
+                .font(DesignSystem.Font.iconMedium)
                 .foregroundStyle(organization?.highlightColor ?? DesignSystem.Color.accent)
                 .frame(width: 40)
 
@@ -266,7 +267,7 @@ private extension CountryDetailScreen {
 // MARK: - Helpers
 private extension CountryDetailScreen {
     func detailRow(icon: String, label: String, value: String) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: DesignSystem.Spacing.md) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.accent)

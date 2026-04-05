@@ -36,21 +36,21 @@ struct EconomyScreen: View {
 
             Section("\(rankedCountries.count) countries") {
                 ForEach(Array(rankedCountries.enumerated()), id: \.element.id) { rank, country in
-                    HStack(spacing: 20) {
+                    HStack(spacing: DesignSystem.Spacing.lg) {
                         Text("#\(rank + 1)")
-                            .font(.system(size: 20, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 20, weight: .bold))
                             .foregroundStyle(rank < 3 ? DesignSystem.Color.accent : .secondary)
                             .frame(width: 50, alignment: .leading)
 
                         FlagView(countryCode: country.code, height: 32)
 
                         Text(country.name)
-                            .font(.system(size: 20))
+                            .font(DesignSystem.Font.system(size: 20))
 
                         Spacer()
 
                         Text(formattedValue(country))
-                            .font(.system(size: 20, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                             .foregroundStyle(DesignSystem.Color.accent)
                     }
                 }
@@ -79,10 +79,10 @@ private extension EconomyScreen {
     func formattedValue(_ country: Country) -> String {
         switch sortMetric {
         case .gdpPerCapita:
-            guard let value = country.gdpPerCapita else { return "—" }
+            guard let value = country.gdpPerCapita else { return "\u{2014}" }
             return "$\(Int(value).formatted())"
         case .gdpTotal:
-            guard let value = country.gdp else { return "—" }
+            guard let value = country.gdp else { return "\u{2014}" }
             if value >= 1_000_000_000_000 { return String(format: "$%.1fT", value / 1_000_000_000_000) }
             if value >= 1_000_000_000 { return String(format: "$%.1fB", value / 1_000_000_000) }
             return String(format: "$%.0fM", value / 1_000_000)

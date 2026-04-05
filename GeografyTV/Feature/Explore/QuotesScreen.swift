@@ -25,14 +25,14 @@ struct QuotesScreen: View {
 
             Section {
                 ForEach(filteredQuotes) { quote in
-                    VStack(alignment: .leading, spacing: 12) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                         Text("\u{201C}\(quote.text)\u{201D}")
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .italic()
 
-                        HStack(spacing: 12) {
-                            Text("— \(quote.author)")
-                                .font(.system(size: 22, weight: .semibold))
+                        HStack(spacing: DesignSystem.Spacing.sm) {
+                            Text("\u{2014} \(quote.author)")
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                                 .foregroundStyle(.secondary)
 
                             if let code = quote.countryCode {
@@ -40,7 +40,7 @@ struct QuotesScreen: View {
                             }
                         }
                     }
-                    .padding(.vertical, 8)
+                    .padding(.vertical, DesignSystem.Spacing.xs)
                 }
             }
         }

@@ -26,37 +26,43 @@ struct OceanScreen: View {
 // MARK: - Subviews
 private extension OceanScreen {
     func oceanRow(_ ocean: Ocean) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 16) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            HStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: ocean.icon)
-                    .font(.system(size: 28))
+                    .font(DesignSystem.Font.system(size: 28))
                     .foregroundStyle(DesignSystem.Color.accent)
 
                 Text(ocean.name)
-                    .font(.system(size: 24, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 24, weight: .bold))
 
                 Spacer()
 
-                Text("\(Int(ocean.area).formatted()) km²")
-                    .font(.system(size: 20, weight: .semibold))
+                Text("\(Int(ocean.area).formatted()) km\u{00B2}")
+                    .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                     .foregroundStyle(DesignSystem.Color.accent)
             }
 
-            HStack(spacing: 32) {
-                Label("Avg depth: \(Int(ocean.averageDepth).formatted())m", systemImage: "arrow.down")
-                    .font(.system(size: 22))
-                    .foregroundStyle(.secondary)
+            HStack(spacing: DesignSystem.Spacing.xl) {
+                Label(
+                    "Avg depth: \(Int(ocean.averageDepth).formatted())m",
+                    systemImage: "arrow.down"
+                )
+                .font(DesignSystem.Font.system(size: 22))
+                .foregroundStyle(.secondary)
 
-                Label("Max depth: \(Int(ocean.maxDepth).formatted())m", systemImage: "arrow.down.to.line")
-                    .font(.system(size: 22))
-                    .foregroundStyle(.secondary)
+                Label(
+                    "Max depth: \(Int(ocean.maxDepth).formatted())m",
+                    systemImage: "arrow.down.to.line"
+                )
+                .font(DesignSystem.Font.system(size: 22))
+                .foregroundStyle(.secondary)
             }
 
             Text(ocean.funFact)
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.system(size: 22))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .lineLimit(2)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, DesignSystem.Spacing.xxs)
     }
 }

@@ -52,32 +52,32 @@ struct TravelScreen: View {
 private extension TravelScreen {
     var statsRow: some View {
         HStack(spacing: 40) {
-            VStack(spacing: 4) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text("\(travelService.visitedCodes.count)")
-                    .font(.system(size: 32, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.success)
                 Text("Visited")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(.secondary)
             }
 
-            VStack(spacing: 4) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text("\(travelService.wantToVisitCodes.count)")
-                    .font(.system(size: 32, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.accent)
                 Text("Want to Visit")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(.secondary)
             }
 
-            VStack(spacing: 4) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
                 let totalCountries = max(countryDataService.countries.count, 1)
                 let percentage = Int(Double(travelService.visitedCodes.count) / Double(totalCountries) * 100)
                 Text("\(percentage)%")
-                    .font(.system(size: 32, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.warning)
                 Text("World Covered")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(.secondary)
             }
         }
@@ -85,11 +85,11 @@ private extension TravelScreen {
     }
 
     func countryRow(_ country: Country) -> some View {
-        HStack(spacing: 20) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             FlagView(countryCode: country.code, height: 36)
 
             Text(country.name)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
 
             Spacer()
 
@@ -128,11 +128,14 @@ private extension TravelScreen {
             }
         } label: {
             Text(currentStatus?.rawValue.capitalized ?? "Not Set")
-                .font(.system(size: 22))
+                .font(DesignSystem.Font.system(size: 22))
                 .foregroundStyle(statusColor(currentStatus))
         }
     }
+}
 
+// MARK: - Helpers
+private extension TravelScreen {
     func statusColor(_ status: TravelStatus?) -> Color {
         switch status {
         case .visited: DesignSystem.Color.success

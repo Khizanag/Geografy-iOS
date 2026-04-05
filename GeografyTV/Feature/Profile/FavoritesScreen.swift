@@ -31,17 +31,17 @@ struct FavoritesScreen: View {
 // MARK: - Subviews
 private extension FavoritesScreen {
     var emptyState: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: DesignSystem.Spacing.lg) {
             Image(systemName: "heart.slash")
-                .font(.system(size: 60))
+                .font(DesignSystem.Font.system(size: 60))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
 
             Text("No favorites yet")
-                .font(.system(size: 28, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 28, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
 
             Text("Browse countries and tap the heart to save them here")
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
                 .multilineTextAlignment(.center)
         }
@@ -51,22 +51,22 @@ private extension FavoritesScreen {
     var countryList: some View {
         List(favoriteCountries) { country in
             NavigationLink(value: country) {
-                HStack(spacing: 20) {
+                HStack(spacing: DesignSystem.Spacing.lg) {
                     FlagView(countryCode: country.code, height: 44)
 
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text(country.name)
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
-                        Text("\(country.capital) · \(country.continent.displayName)")
-                            .font(.system(size: 22))
+                        Text("\(country.capital) \u{00B7} \(country.continent.displayName)")
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(.secondary)
                     }
 
                     Spacer()
 
                     Text(country.population.formatted())
-                        .font(.system(size: 22))
+                        .font(DesignSystem.Font.system(size: 22))
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
             }

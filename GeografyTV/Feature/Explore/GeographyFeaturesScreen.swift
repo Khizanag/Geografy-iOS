@@ -25,18 +25,18 @@ struct GeographyFeaturesScreen: View {
 
             Section("\(displayedFeatures.count) features") {
                 ForEach(displayedFeatures) { feature in
-                    HStack(spacing: 20) {
+                    HStack(spacing: DesignSystem.Spacing.lg) {
                         Image(systemName: selectedType.icon)
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.accent)
                             .frame(width: 36)
 
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                             Text(feature.name)
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                             Text(feature.description)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(.secondary)
                                 .lineLimit(2)
                         }
@@ -45,11 +45,11 @@ struct GeographyFeaturesScreen: View {
 
                         VStack(alignment: .trailing, spacing: 2) {
                             Text(feature.measurementLabel)
-                                .font(.system(size: 20, weight: .bold))
+                                .font(DesignSystem.Font.system(size: 20, weight: .bold))
                                 .foregroundStyle(DesignSystem.Color.accent)
 
                             Text(feature.measurementUnit)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(DesignSystem.Color.textTertiary)
                         }
                     }

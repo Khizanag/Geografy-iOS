@@ -89,16 +89,16 @@ extension MultiplayerQuizScreen {
 // MARK: - Lobby
 private extension MultiplayerQuizScreen {
     var lobbyView: some View {
-        VStack(spacing: 48) {
+        VStack(spacing: DesignSystem.Spacing.xxl) {
             Text("Multiplayer Quiz")
-                .font(.system(size: 52, weight: .bold))
+                .font(DesignSystem.Font.system(size: 52, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Text("Connect controllers and press any button to join")
-                .font(.system(size: 26))
+                .font(DesignSystem.Font.system(size: 26))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
 
-            HStack(spacing: 32) {
+            HStack(spacing: DesignSystem.Spacing.xl) {
                 ForEach(0..<4, id: \.self) { index in
                     playerSlot(index)
                 }
@@ -109,12 +109,12 @@ private extension MultiplayerQuizScreen {
                     startGame()
                 } label: {
                     Label("Start Game", systemImage: "play.fill")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 28, weight: .bold))
                 }
                 .buttonStyle(.bordered)
             } else {
                 Text("Need at least 2 players")
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
         }
@@ -124,9 +124,9 @@ private extension MultiplayerQuizScreen {
         let isJoined = index < players.count
 
         // swiftlint:disable:next closure_body_length
-        return VStack(spacing: 16) {
+        return VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
                     .fill(
                         isJoined
                             ? playerColors[index].opacity(0.2)
@@ -135,34 +135,34 @@ private extension MultiplayerQuizScreen {
                     .frame(width: 200, height: 220)
 
                 if isJoined {
-                    VStack(spacing: 12) {
+                    VStack(spacing: DesignSystem.Spacing.sm) {
                         Image(systemName: "gamecontroller.fill")
-                            .font(.system(size: 48))
+                            .font(DesignSystem.Font.system(size: 48))
                             .foregroundStyle(playerColors[index])
 
                         Text(playerNames[index])
-                            .font(.system(size: 22, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .bold))
                             .foregroundStyle(DesignSystem.Color.textPrimary)
 
                         Text("Ready")
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.success)
                     }
                 } else {
-                    VStack(spacing: 12) {
+                    VStack(spacing: DesignSystem.Spacing.sm) {
                         Image(systemName: "gamecontroller")
-                            .font(.system(size: 48))
+                            .font(DesignSystem.Font.system(size: 48))
                             .foregroundStyle(DesignSystem.Color.textTertiary)
 
                         Text("Press to Join")
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
                 }
             }
 
             if isJoined {
-                RoundedRectangle(cornerRadius: 4)
+                RoundedRectangle(cornerRadius: DesignSystem.Spacing.xxs)
                     .fill(playerColors[index])
                     .frame(height: 4)
             }
@@ -179,7 +179,7 @@ private extension MultiplayerQuizScreen {
     }
 
     func gameView(_ question: QuizQuestion) -> some View {
-        VStack(spacing: 32) {
+        VStack(spacing: DesignSystem.Spacing.xl) {
             headerBar
 
             promptSection(question)
@@ -193,23 +193,23 @@ private extension MultiplayerQuizScreen {
     }
 
     var headerBar: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
                 HStack {
                     Text("Q\(currentIndex + 1) / \(questions.count)")
-                        .font(.system(size: 24, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 24, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.textPrimary)
 
                     Spacer()
 
-                    HStack(spacing: 16) {
+                    HStack(spacing: DesignSystem.Spacing.md) {
                         ForEach(players) { player in
-                            HStack(spacing: 8) {
+                            HStack(spacing: DesignSystem.Spacing.xs) {
                                 Circle()
                                     .fill(player.color)
                                     .frame(width: 14, height: 14)
                                 Text("\(player.score)")
-                                    .font(.system(size: 22, weight: .bold))
+                                    .font(DesignSystem.Font.system(size: 22, weight: .bold))
                                     .foregroundStyle(DesignSystem.Color.textPrimary)
                             }
                         }
@@ -225,14 +225,17 @@ private extension MultiplayerQuizScreen {
     }
 
     var progressBar: some View {
-        GeometryReader { geometry in
+        GeometryReader { geometryReader in
             ZStack(alignment: .leading) {
                 Capsule()
                     .fill(DesignSystem.Color.cardBackground)
 
                 Capsule()
                     .fill(DesignSystem.Color.accent)
-                    .frame(width: geometry.size.width * CGFloat(currentIndex) / CGFloat(max(questions.count, 1)))
+                    .frame(
+                        width: geometryReader.size.width * CGFloat(currentIndex)
+                            / CGFloat(max(questions.count, 1))
+                    )
                     .animation(.easeInOut(duration: 0.3), value: currentIndex)
             }
         }
@@ -252,7 +255,7 @@ private extension MultiplayerQuizScreen {
                 .rotationEffect(.degrees(-90))
 
             Text("\(Int(timeRemaining))")
-                .font(.system(size: 24, weight: .bold))
+                .font(DesignSystem.Font.system(size: 24, weight: .bold))
                 .foregroundStyle(timerColor)
         }
     }
@@ -272,19 +275,22 @@ private extension MultiplayerQuizScreen {
     }
 
     func promptSection(_ question: QuizQuestion) -> some View {
-        VStack(spacing: 16) {
+        VStack(spacing: DesignSystem.Spacing.md) {
             if let flagCode = question.promptFlag {
-                FlagView(countryCode: flagCode, height: isFlagPromptLayout && !isFlagOptionsLayout ? 180 : 120)
+                FlagView(
+                    countryCode: flagCode,
+                    height: isFlagPromptLayout && !isFlagOptionsLayout ? 180 : 120
+                )
             }
 
-            HStack(spacing: 8) {
+            HStack(spacing: DesignSystem.Spacing.xs) {
                 Text(question.promptText)
-                    .font(.system(size: 34, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 34, weight: .semibold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 if let subject = question.promptSubject {
                     Text(subject)
-                        .font(.system(size: 34, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 34, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
             }
@@ -295,8 +301,11 @@ private extension MultiplayerQuizScreen {
 
     func optionsSection(_ question: QuizQuestion) -> some View {
         LazyVGrid(
-            columns: [GridItem(.flexible(), spacing: 24), GridItem(.flexible(), spacing: 24)],
-            spacing: 24
+            columns: [
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.lg),
+                GridItem(.flexible(), spacing: DesignSystem.Spacing.lg),
+            ],
+            spacing: DesignSystem.Spacing.lg
         ) {
             ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
                 if isFlagOptionsLayout {
@@ -312,20 +321,19 @@ private extension MultiplayerQuizScreen {
 
     func optionCard(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
         let isCorrect = option.id == question.correctOptionID
-        let gamepadButton = GamepadButton.allCases.indices.contains(index) ? GamepadButton.allCases[index] : nil
+        let gamepadButton = GamepadButton.allCases.indices.contains(index)
+            ? GamepadButton.allCases[index]
+            : nil
         let playersWhoChose = players.filter { $0.currentAnswer == option.id }
+        let backgroundColor = multiplayerOptionColor(
+            isCorrect: isCorrect,
+            hasPlayerSelections: !playersWhoChose.isEmpty
+        )
 
-        let backgroundColor: Color = {
-            guard revealAnswers else { return DesignSystem.Color.cardBackground.opacity(0.6) }
-            if isCorrect { return DesignSystem.Color.success.opacity(0.4) }
-            if !playersWhoChose.isEmpty { return DesignSystem.Color.error.opacity(0.3) }
-            return DesignSystem.Color.cardBackground.opacity(0.4)
-        }()
-
-        return HStack(spacing: 16) {
+        return HStack(spacing: DesignSystem.Spacing.md) {
             if let gamepadButton {
                 Image(systemName: gamepadButton.icon)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(gamepadButton.color)
                     .frame(width: 36)
             }
@@ -335,7 +343,7 @@ private extension MultiplayerQuizScreen {
             }
 
             Text(option.text ?? "")
-                .font(.system(size: 24, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 24, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             Spacer()
@@ -343,11 +351,11 @@ private extension MultiplayerQuizScreen {
             if revealAnswers {
                 if isCorrect {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 26))
+                        .font(DesignSystem.Font.system(size: 26))
                         .foregroundStyle(DesignSystem.Color.success)
                 }
 
-                HStack(spacing: 4) {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
                     ForEach(playersWhoChose) { player in
                         Circle()
                             .fill(player.color)
@@ -356,42 +364,44 @@ private extension MultiplayerQuizScreen {
                 }
             }
         }
-        .padding(20)
-        .background(backgroundColor, in: RoundedRectangle(cornerRadius: 16))
+        .padding(DesignSystem.Spacing.lg)
+        .background(
+            backgroundColor,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+        )
     }
 
     func flagOptionCard(_ option: QuizOption, question: QuizQuestion, index: Int) -> some View {
         let isCorrect = option.id == question.correctOptionID
-        let gamepadButton = GamepadButton.allCases.indices.contains(index) ? GamepadButton.allCases[index] : nil
+        let gamepadButton = GamepadButton.allCases.indices.contains(index)
+            ? GamepadButton.allCases[index]
+            : nil
         let playersWhoChose = players.filter { $0.currentAnswer == option.id }
+        let backgroundColor = multiplayerOptionColor(
+            isCorrect: isCorrect,
+            hasPlayerSelections: !playersWhoChose.isEmpty
+        )
 
-        let backgroundColor: Color = {
-            guard revealAnswers else { return DesignSystem.Color.cardBackground.opacity(0.6) }
-            if isCorrect { return DesignSystem.Color.success.opacity(0.4) }
-            if !playersWhoChose.isEmpty { return DesignSystem.Color.error.opacity(0.3) }
-            return DesignSystem.Color.cardBackground.opacity(0.4)
-        }()
-
-        return VStack(spacing: 12) {
+        return VStack(spacing: DesignSystem.Spacing.sm) {
             if let flagCode = option.flagCode {
                 FlagView(countryCode: flagCode, height: 90)
             }
 
             if let gamepadButton {
                 Image(systemName: gamepadButton.icon)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(gamepadButton.color)
             }
 
             if revealAnswers {
-                HStack(spacing: 8) {
+                HStack(spacing: DesignSystem.Spacing.xs) {
                     if isCorrect {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 22))
+                            .font(DesignSystem.Font.system(size: 22))
                             .foregroundStyle(DesignSystem.Color.success)
                     }
 
-                    HStack(spacing: 4) {
+                    HStack(spacing: DesignSystem.Spacing.xxs) {
                         ForEach(playersWhoChose) { player in
                             Circle()
                                 .fill(player.color)
@@ -403,27 +413,30 @@ private extension MultiplayerQuizScreen {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 160)
-        .background(backgroundColor, in: RoundedRectangle(cornerRadius: 20))
+        .background(
+            backgroundColor,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+        )
     }
 
     var playerStatusBar: some View {
         // swiftlint:disable:next closure_body_length
-        HStack(spacing: 24) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             // swiftlint:disable:next closure_body_length
             ForEach(players) { player in
-                HStack(spacing: 12) {
+                HStack(spacing: DesignSystem.Spacing.sm) {
                     Circle()
                         .fill(player.color)
                         .frame(width: 18, height: 18)
 
                     Text(player.name)
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 20, weight: .semibold))
                         .foregroundStyle(DesignSystem.Color.textPrimary)
 
                     if revealAnswers {
                         let isCorrect = player.currentAnswer == currentQuestion?.correctOptionID
                         Image(systemName: player.hasAnswered ? (isCorrect ? "checkmark" : "xmark") : "minus")
-                            .font(.system(size: 22, weight: .bold))
+                            .font(DesignSystem.Font.system(size: 22, weight: .bold))
                             .foregroundStyle(
                                 !player.hasAnswered
                                     ? DesignSystem.Color.textTertiary
@@ -431,7 +444,7 @@ private extension MultiplayerQuizScreen {
                             )
                     } else {
                         Image(systemName: player.hasAnswered ? "checkmark.circle.fill" : "ellipsis.circle")
-                            .font(.system(size: 20))
+                            .font(DesignSystem.Font.system(size: 20))
                             .foregroundStyle(
                                 player.hasAnswered
                                     ? DesignSystem.Color.success
@@ -439,11 +452,11 @@ private extension MultiplayerQuizScreen {
                             )
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
+                .padding(.horizontal, DesignSystem.Spacing.lg)
+                .padding(.vertical, DesignSystem.Spacing.sm)
                 .background(
                     DesignSystem.Color.cardBackground.opacity(0.4),
-                    in: RoundedRectangle(cornerRadius: 12)
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
                 )
             }
         }
@@ -455,48 +468,48 @@ private extension MultiplayerQuizScreen {
 private extension MultiplayerQuizScreen {
     var resultsView: some View {
         // swiftlint:disable:next closure_body_length
-        VStack(spacing: 48) {
+        VStack(spacing: DesignSystem.Spacing.xxl) {
             Text("Final Scores")
-                .font(.system(size: 52, weight: .bold))
+                .font(DesignSystem.Font.system(size: 52, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
             let ranked = players.sorted { $0.score > $1.score }
 
             ForEach(Array(ranked.enumerated()), id: \.element.id) { rank, player in
-                HStack(spacing: 24) {
+                HStack(spacing: DesignSystem.Spacing.lg) {
                     Text(rankMedal(rank))
-                        .font(.system(size: 48))
+                        .font(DesignSystem.Font.system(size: 48))
 
                     Circle()
                         .fill(player.color)
                         .frame(width: 24, height: 24)
 
                     Text(player.name)
-                        .font(.system(size: 32, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 32, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.textPrimary)
 
                     Spacer()
 
                     Text("\(player.score) / \(questions.count)")
-                        .font(.system(size: 32, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 32, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.accent)
                 }
-                .padding(24)
+                .padding(DesignSystem.Spacing.lg)
                 .background(
                     rank == 0
                         ? player.color.opacity(0.15)
                         : DesignSystem.Color.cardBackground.opacity(0.4),
-                    in: RoundedRectangle(cornerRadius: 16)
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
                 )
                 .frame(maxWidth: 700)
             }
 
-            HStack(spacing: 32) {
+            HStack(spacing: DesignSystem.Spacing.xl) {
                 Button {
                     restartGame()
                 } label: {
                     Label("Play Again", systemImage: "arrow.counterclockwise")
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 24, weight: .semibold))
                 }
                 .buttonStyle(.bordered)
 
@@ -505,7 +518,7 @@ private extension MultiplayerQuizScreen {
                     dismiss()
                 } label: {
                     Label("Done", systemImage: "checkmark")
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(DesignSystem.Font.system(size: 24, weight: .semibold))
                 }
                 .buttonStyle(.bordered)
             }
@@ -515,11 +528,21 @@ private extension MultiplayerQuizScreen {
 
     func rankMedal(_ rank: Int) -> String {
         switch rank {
-        case 0: "🥇"
-        case 1: "🥈"
-        case 2: "🥉"
+        case 0: "\u{1F947}"
+        case 1: "\u{1F948}"
+        case 2: "\u{1F949}"
         default: "  "
         }
+    }
+}
+
+// MARK: - Helpers
+private extension MultiplayerQuizScreen {
+    func multiplayerOptionColor(isCorrect: Bool, hasPlayerSelections: Bool) -> Color {
+        guard revealAnswers else { return DesignSystem.Color.cardBackground.opacity(0.6) }
+        if isCorrect { return DesignSystem.Color.success.opacity(0.4) }
+        if hasPlayerSelections { return DesignSystem.Color.error.opacity(0.3) }
+        return DesignSystem.Color.cardBackground.opacity(0.4)
     }
 }
 

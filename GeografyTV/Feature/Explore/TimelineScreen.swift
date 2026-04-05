@@ -50,20 +50,20 @@ struct TimelineScreen: View {
 // MARK: - Subviews
 private extension TimelineScreen {
     func eventRow(_ event: HistoricalEvent) -> some View {
-        HStack(spacing: 20) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             Text(event.formattedDate)
-                .font(.system(size: 20, weight: .bold))
+                .font(DesignSystem.Font.system(size: 20, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.accent)
                 .frame(width: 160, alignment: .leading)
 
             FlagView(countryCode: event.countryCode, height: 28)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(event.title)
-                    .font(.system(size: 20, weight: .semibold))
+                    .font(DesignSystem.Font.system(size: 20, weight: .semibold))
 
                 Text(event.description)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
             }
@@ -71,7 +71,7 @@ private extension TimelineScreen {
             Spacer()
 
             Image(systemName: event.type.icon)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
     }

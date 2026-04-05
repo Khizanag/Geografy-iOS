@@ -48,30 +48,30 @@ private extension CountryBrowserScreen {
                 continentPicker
 
                 LazyVGrid(
-                    columns: [GridItem(.adaptive(minimum: 220), spacing: 32)],
-                    spacing: 32
+                    columns: [GridItem(.adaptive(minimum: 220), spacing: DesignSystem.Spacing.xl)],
+                    spacing: DesignSystem.Spacing.xl
                 ) {
                     ForEach(filteredCountries) { country in
                         NavigationLink(value: country) {
-                            VStack(spacing: 16) {
+                            VStack(spacing: DesignSystem.Spacing.md) {
                                 FlagView(countryCode: country.code, height: 80)
 
                                 Text(country.name)
-                                    .font(.system(size: 22, weight: .semibold))
+                                    .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                                     .foregroundStyle(DesignSystem.Color.textPrimary)
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
 
                                 Text(country.capital)
-                                    .font(.system(size: 22))
+                                    .font(DesignSystem.Font.system(size: 22))
                                     .foregroundStyle(DesignSystem.Color.textSecondary)
                                     .lineLimit(1)
                             }
                             .frame(maxWidth: .infinity)
-                            .padding(24)
+                            .padding(DesignSystem.Spacing.lg)
                             .background(
                                 DesignSystem.Color.cardBackground,
-                                in: RoundedRectangle(cornerRadius: 16)
+                                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
                             )
                         }
                         .buttonStyle(CardButtonStyle())
@@ -95,22 +95,22 @@ private extension CountryBrowserScreen {
             Section("\(filteredCountries.count) countries") {
                 ForEach(filteredCountries) { country in
                     NavigationLink(value: country) {
-                        HStack(spacing: 20) {
+                        HStack(spacing: DesignSystem.Spacing.lg) {
                             FlagView(countryCode: country.code, height: 44)
 
-                            VStack(alignment: .leading, spacing: 4) {
+                            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                                 Text(country.name)
-                                    .font(.system(size: 22, weight: .semibold))
+                                    .font(DesignSystem.Font.system(size: 22, weight: .semibold))
 
                                 Text(country.capital)
-                                    .font(.system(size: 22))
+                                    .font(DesignSystem.Font.system(size: 22))
                                     .foregroundStyle(.secondary)
                             }
 
                             Spacer()
 
                             Text(country.continent.displayName)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
                                 .foregroundStyle(.tertiary)
                         }
                     }
@@ -120,7 +120,7 @@ private extension CountryBrowserScreen {
     }
 }
 
-// MARK: - Shared
+// MARK: - Helpers
 private extension CountryBrowserScreen {
     var continentPicker: some View {
         Picker("Continent", selection: $selectedContinent) {

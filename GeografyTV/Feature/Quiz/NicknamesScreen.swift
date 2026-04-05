@@ -36,15 +36,15 @@ struct NicknamesScreen: View {
 // MARK: - Subviews
 private extension NicknamesScreen {
     func nicknameRow(_ nickname: CountryNickname) -> some View {
-        HStack(spacing: 24) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             FlagView(countryCode: nickname.countryCode, height: 44)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(nickname.nickname)
-                    .font(.system(size: 22, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 22, weight: .bold))
 
                 Text(nickname.reason)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
             }
@@ -52,7 +52,7 @@ private extension NicknamesScreen {
             Spacer()
 
             Image(systemName: nickname.category.icon)
-                .font(.system(size: 20))
+                .font(DesignSystem.Font.system(size: 20))
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
     }

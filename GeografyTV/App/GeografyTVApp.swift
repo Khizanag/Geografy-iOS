@@ -21,19 +21,19 @@ struct GeografyTVApp: App {
     @State private var geoJSONCache = GeoJSONCache()
 
     init() {
-        let db = DatabaseManager()
-        let auth = AuthService(db: db)
+        let database = DatabaseManager()
+        let auth = AuthService(db: database)
         let userID = auth.currentUserID
-        let xp = XPService(db: db, userID: userID)
-        let achievement = AchievementService(db: db, xpService: xp, userID: userID)
+        let xp = XPService(db: database, userID: userID)
+        let achievement = AchievementService(db: database, xpService: xp, userID: userID)
         let streak = StreakService(
-            db: db,
+            db: database,
             xpService: xp,
             achievementService: achievement,
-            userID: userID
+            userID: userID,
         )
-        let favorites = FavoritesService(container: db.container)
-        _databaseManager = State(wrappedValue: db)
+        let favorites = FavoritesService(container: database.container)
+        _databaseManager = State(wrappedValue: database)
         _authService = State(wrappedValue: auth)
         _xpService = State(wrappedValue: xp)
         _achievementService = State(wrappedValue: achievement)

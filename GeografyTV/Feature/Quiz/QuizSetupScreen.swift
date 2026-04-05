@@ -17,7 +17,7 @@ struct QuizSetupScreen: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 48) {
+            VStack(spacing: DesignSystem.Spacing.xxl) {
                 quizTypeSection
 
                 difficultySection
@@ -55,19 +55,19 @@ struct QuizSetupScreen: View {
 // MARK: - Quiz Type
 private extension QuizSetupScreen {
     var quizTypeSection: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
             Text("Choose Your Quiz")
-                .font(.system(size: 32, weight: .bold))
+                .font(DesignSystem.Font.system(size: 32, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .focusable(false)
 
             LazyVGrid(
                 columns: [
-                    GridItem(.flexible(), spacing: 20),
-                    GridItem(.flexible(), spacing: 20),
-                    GridItem(.flexible(), spacing: 20),
+                    GridItem(.flexible(), spacing: DesignSystem.Spacing.lg),
+                    GridItem(.flexible(), spacing: DesignSystem.Spacing.lg),
+                    GridItem(.flexible(), spacing: DesignSystem.Spacing.lg),
                 ],
-                spacing: 20
+                spacing: DesignSystem.Spacing.lg
             ) {
                 ForEach(QuizType.allCases) { type in
                     quizTypeCard(type)
@@ -85,36 +85,36 @@ private extension QuizSetupScreen {
                 selectedType = type
             }
         } label: {
-            VStack(spacing: 16) {
+            VStack(spacing: DesignSystem.Spacing.md) {
                 ZStack {
                     Circle()
                         .fill(color.opacity(isSelected ? 0.3 : 0.15))
                         .frame(width: 64, height: 64)
 
                     Image(systemName: type.icon)
-                        .font(.system(size: 28))
+                        .font(DesignSystem.Font.system(size: 28))
                         .foregroundStyle(color)
                 }
 
                 Text(type.displayName)
-                    .font(.system(size: 22, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 22, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Text(type.description)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
                     .frame(height: 44)
             }
             .frame(maxWidth: .infinity)
-            .padding(24)
+            .padding(DesignSystem.Spacing.lg)
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
                     .fill(DesignSystem.Color.cardBackground.opacity(isSelected ? 0.8 : 0.4))
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
                     .stroke(isSelected ? color : .clear, lineWidth: 3)
             )
         }
@@ -138,13 +138,13 @@ private extension QuizSetupScreen {
 // MARK: - Difficulty
 private extension QuizSetupScreen {
     var difficultySection: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
             Text("Difficulty")
-                .font(.system(size: 32, weight: .bold))
+                .font(DesignSystem.Font.system(size: 32, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .focusable(false)
 
-            HStack(spacing: 20) {
+            HStack(spacing: DesignSystem.Spacing.lg) {
                 ForEach(QuizDifficulty.allCases) { difficulty in
                     difficultyCard(difficulty)
                 }
@@ -163,26 +163,26 @@ private extension QuizSetupScreen {
         } label: {
             VStack(spacing: 14) {
                 Image(systemName: difficulty.icon)
-                    .font(.system(size: 36))
+                    .font(DesignSystem.Font.iconXL)
                     .foregroundStyle(color)
 
                 Text(difficulty.displayName)
-                    .font(.system(size: 24, weight: .bold))
+                    .font(DesignSystem.Font.system(size: 24, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
                 Text(difficulty.subtitle)
-                    .font(.system(size: 22))
+                    .font(DesignSystem.Font.system(size: 22))
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 28)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, DesignSystem.Spacing.lg)
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
                     .fill(DesignSystem.Color.cardBackground.opacity(isSelected ? 0.8 : 0.4))
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
                     .stroke(isSelected ? color : .clear, lineWidth: 3)
             )
         }
@@ -203,7 +203,7 @@ private extension QuizSetupScreen {
 // MARK: - Settings
 private extension QuizSetupScreen {
     var settingsSection: some View {
-        HStack(spacing: 24) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             settingsCard(title: "Region", icon: "globe") {
                 Picker("Region", selection: $selectedRegion) {
                     ForEach(QuizRegion.allCases) { region in
@@ -231,9 +231,9 @@ private extension QuizSetupScreen {
         icon: String,
         @ViewBuilder content: () -> Content
     ) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             Label(title, systemImage: icon)
-                .font(.system(size: 22, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
 
             content()
@@ -242,7 +242,7 @@ private extension QuizSetupScreen {
         .padding(28)
         .background(
             DesignSystem.Color.cardBackground.opacity(0.4),
-            in: RoundedRectangle(cornerRadius: 20)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
         )
     }
 }
@@ -250,34 +250,34 @@ private extension QuizSetupScreen {
 // MARK: - Start Buttons
 private extension QuizSetupScreen {
     var startButton: some View {
-        HStack(spacing: 32) {
+        HStack(spacing: DesignSystem.Spacing.xl) {
             Button {
                 showQuiz = true
             } label: {
-                HStack(spacing: 16) {
+                HStack(spacing: DesignSystem.Spacing.md) {
                     Image(systemName: "play.fill")
-                        .font(.system(size: 28))
+                        .font(DesignSystem.Font.system(size: 28))
 
                     Text("Solo")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 28, weight: .bold))
                 }
                 .frame(maxWidth: 300)
-                .padding(.vertical, 20)
+                .padding(.vertical, DesignSystem.Spacing.lg)
             }
             .buttonStyle(.bordered)
 
             Button {
                 showMultiplayer = true
             } label: {
-                HStack(spacing: 16) {
+                HStack(spacing: DesignSystem.Spacing.md) {
                     Image(systemName: "person.2.fill")
-                        .font(.system(size: 28))
+                        .font(DesignSystem.Font.system(size: 28))
 
                     Text("Multiplayer")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(DesignSystem.Font.system(size: 28, weight: .bold))
                 }
                 .frame(maxWidth: 300)
-                .padding(.vertical, 20)
+                .padding(.vertical, DesignSystem.Spacing.lg)
             }
             .buttonStyle(.bordered)
         }

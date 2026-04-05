@@ -15,7 +15,7 @@ struct LeaderboardScreen: View {
         List {
             if isLoading {
                 Section {
-                    ProgressView("Loading leaderboard…")
+                    ProgressView("Loading leaderboard\u{2026}")
                 }
             } else if players.isEmpty {
                 Section {
@@ -31,19 +31,19 @@ struct LeaderboardScreen: View {
 
                 Section("Top Players") {
                     ForEach(Array(players.enumerated()), id: \.element.player.gamePlayerID) { _, entry in
-                        HStack(spacing: 20) {
+                        HStack(spacing: DesignSystem.Spacing.lg) {
                             Text("#\(entry.rank)")
-                                .font(.system(size: 22, weight: .bold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .bold))
                                 .foregroundStyle(rankColor(entry.rank))
                                 .frame(width: 60, alignment: .leading)
 
                             Text(entry.player.displayName)
-                                .font(.system(size: 22))
+                                .font(DesignSystem.Font.system(size: 22))
 
                             Spacer()
 
                             Text(entry.formattedScore)
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(DesignSystem.Font.system(size: 22, weight: .semibold))
                                 .foregroundStyle(DesignSystem.Color.accent)
                         }
                     }
@@ -58,18 +58,18 @@ struct LeaderboardScreen: View {
 // MARK: - Subviews
 private extension LeaderboardScreen {
     func playerRow(_ entry: GKLeaderboard.Entry) -> some View {
-        HStack(spacing: 20) {
+        HStack(spacing: DesignSystem.Spacing.lg) {
             Text("#\(entry.rank)")
-                .font(.system(size: 24, weight: .bold))
+                .font(DesignSystem.Font.system(size: 24, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.accent)
 
             Text(entry.player.displayName)
-                .font(.system(size: 24, weight: .semibold))
+                .font(DesignSystem.Font.system(size: 24, weight: .semibold))
 
             Spacer()
 
             Text(entry.formattedScore)
-                .font(.system(size: 24, weight: .bold))
+                .font(DesignSystem.Font.system(size: 24, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.accent)
         }
     }
