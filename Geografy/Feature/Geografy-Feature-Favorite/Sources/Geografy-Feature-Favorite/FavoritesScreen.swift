@@ -64,44 +64,55 @@ private extension FavoritesScreen {
 
     var optionsMenu: some View {
         Menu {
-            sortSection
+            sortBySubmenu
             Divider()
-            continentSection
+            continentSubmenu
+            Divider()
+            resetButton
         } label: {
-            let hasActiveFilter = continentFilter != nil || sortBy != .dateAdded
-            Image(
-                systemName: hasActiveFilter
+            Label(
+                "Filter",
+                systemImage: hasActiveFilters
                     ? "line.3.horizontal.decrease.circle.fill"
                     : "line.3.horizontal.decrease"
             )
-            .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
+        .tint(DesignSystem.Color.onAccent)
     }
 
-    var sortSection: some View {
-        Group {
+    var hasActiveFilters: Bool {
+        sortBy != .dateAdded || sortAscending || continentFilter != nil
+    }
+
+    var sortBySubmenu: some View {
+        Menu {
             Picker(selection: $sortBy) {
                 ForEach(FavoritesSortOption.allCases, id: \.self) { option in
                     Label(option.rawValue, systemImage: sortIcon(for: option))
                         .tag(option)
                 }
             } label: {
-                Label("Sort by", systemImage: "arrow.up.arrow.down")
+                Label("Field", systemImage: "textformat")
             }
-            .pickerStyle(.menu)
+            .pickerStyle(.inline)
 
-            Button {
-                sortAscending.toggle()
+            Divider()
+
+            Picker(selection: $sortAscending) {
+                Label("Ascending", systemImage: "arrow.up")
+                    .tag(true)
+                Label("Descending", systemImage: "arrow.down")
+                    .tag(false)
             } label: {
-                Label(
-                    sortAscending ? "Ascending" : "Descending",
-                    systemImage: sortAscending ? "arrow.up" : "arrow.down"
-                )
+                Label("Direction", systemImage: "arrow.up.arrow.down")
             }
+            .pickerStyle(.inline)
+        } label: {
+            Label("Sort by", systemImage: "arrow.up.arrow.down")
         }
     }
 
-    var continentSection: some View {
+    var continentSubmenu: some View {
         Picker(selection: $continentFilter) {
             Label("All Continents", systemImage: "globe")
                 .tag(Country.Continent?.none)
@@ -114,6 +125,20 @@ private extension FavoritesScreen {
             Label("Continent", systemImage: "globe.americas")
         }
         .pickerStyle(.menu)
+    }
+
+    var resetButton: some View {
+        Button(role: .destructive) {
+            withAnimation {
+                sortBy = .dateAdded
+                sortAscending = false
+                continentFilter = nil
+                searchText = ""
+            }
+        } label: {
+            Label("Reset All", systemImage: "arrow.counterclockwise")
+                .foregroundStyle(DesignSystem.Color.error)
+        }
     }
 
     func continentIcon(for continent: Country.Continent) -> String {
