@@ -208,25 +208,9 @@ private extension NeighborExplorerScreen {
     }
 
     var findPathButton: some View {
-        Button {
+        GlassButton("Find Shortest Path", systemImage: "arrow.triangle.branch", fullWidth: true) {
             findShortestPath()
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                if isSearchingPath {
-                    ProgressView()
-                        .tint(DesignSystem.Color.onAccent)
-                } else {
-                    Image(systemName: "arrow.triangle.branch")
-                }
-                Text("Find Shortest Path")
-                    .fontWeight(.semibold)
-            }
-            .font(DesignSystem.Font.subheadline)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .buttonStyle(.glass)
         .disabled(destinationCode.isEmpty || isSearchingPath)
     }
 

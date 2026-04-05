@@ -251,18 +251,9 @@ private extension DailyChallengeScreen {
     }
 
     var startChallengeButton: some View {
-        Button { showSession = true } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "play.fill")
-                    .font(DesignSystem.Font.headline)
-                Text("Start Challenge")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+        GlassButton("Start Challenge", systemImage: "play.fill", fullWidth: true) {
+            showSession = true
         }
-        .buttonStyle(.glass)
     }
 }
 

@@ -212,25 +212,13 @@ private extension ExploreGameSessionScreen {
     var actionButtons: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if gameState.hasMoreClues {
-                Button { revealNextClue() } label: {
-                    Label("Next Clue", systemImage: "lightbulb.fill")
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, DesignSystem.Spacing.xs)
+                GlassButton("Next Clue", systemImage: "lightbulb.fill", fullWidth: true) {
+                    revealNextClue()
                 }
-                .buttonStyle(.glass)
             }
-            Button { revealAnswer() } label: {
-                Label("Reveal", systemImage: "eye.fill")
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.xs)
+            GlassButton("Reveal", systemImage: "eye.fill", role: .secondary, fullWidth: true) {
+                revealAnswer()
             }
-            .buttonStyle(.glass)
         }
     }
 }

@@ -154,22 +154,10 @@ private extension LeaderboardScreen {
     }
 
     var openGameCenterButton: some View {
-        Button {
+        GlassButton("Open Game Center", systemImage: "gamecontroller.fill", fullWidth: true) {
             hapticsService.impact(.medium)
             GKAccessPoint.shared.trigger(state: .dashboard) {}
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "gamecontroller.fill")
-                    .font(DesignSystem.Font.subheadline)
-                Text("Open Game Center")
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
         }
-        .buttonStyle(.glass)
         .disabled(!gameCenterService.isAuthenticated)
         .opacity(gameCenterService.isAuthenticated ? 1 : 0.4)
         .padding(.top, DesignSystem.Spacing.xs)

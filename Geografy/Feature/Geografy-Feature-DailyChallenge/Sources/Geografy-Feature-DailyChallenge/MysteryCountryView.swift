@@ -176,14 +176,9 @@ private extension MysteryCountryView {
                 )
                 .autocorrectionDisabled()
 
-            Button { submitGuess() } label: {
-                Text("Submit Guess")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.sm)
+            GlassButton("Submit Guess", fullWidth: true) {
+                submitGuess()
             }
-            .buttonStyle(.glass)
             .disabled(guess.trimmingCharacters(
                 in: .whitespacesAndNewlines
             ).isEmpty)

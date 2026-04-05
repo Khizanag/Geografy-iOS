@@ -178,17 +178,9 @@ private extension QuizSessionScreen {
     }
 
     var resumeButton: some View {
-        Button { togglePause() } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "play.fill")
-                Text("Resume")
-            }
-            .font(DesignSystem.Font.headline)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(width: 200)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+        GlassButton("Resume", systemImage: "play.fill") {
+            togglePause()
         }
-        .buttonStyle(.glass)
     }
 }
 
