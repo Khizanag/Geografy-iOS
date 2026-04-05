@@ -279,13 +279,21 @@ private extension SettingsScreen {
     }
 
     var appearanceRow: some View {
-        settingsPickerRow(
-            icon: "circle.lefthalf.filled",
-            iconColor: DesignSystem.Color.indigo,
-            title: "Appearance",
-            selection: $selectedTheme,
-            options: ["Auto", "Light", "Dark"]
-        )
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SettingsIconBadge(systemImage: "circle.lefthalf.filled", color: DesignSystem.Color.indigo)
+            Text("Appearance")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            Picker("", selection: $selectedTheme) {
+                Label("Auto", systemImage: "circle.lefthalf.filled").tag("Auto")
+                Label("Light", systemImage: "sun.max.fill").tag("Light")
+                Label("Dark", systemImage: "moon.fill").tag("Dark")
+            }
+            .pickerStyle(.menu)
+            .tint(DesignSystem.Color.textSecondary)
+        }
+        .settingsRowPadding()
     }
 }
 

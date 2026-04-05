@@ -83,7 +83,6 @@ private extension SignInOptionsSheet {
             DesignSystem.Color.accent.opacity(0.35)
                 .frame(width: 110, height: 110)
                 .blur(radius: 40)
-                .clipShape(Rectangle())
 
             RoundedRectangle(cornerRadius: 24)
                 .fill(
