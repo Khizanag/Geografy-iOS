@@ -13,7 +13,6 @@ public struct HistoricalMapScreen: View {
         self.initialYear = initialYear
     }
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService

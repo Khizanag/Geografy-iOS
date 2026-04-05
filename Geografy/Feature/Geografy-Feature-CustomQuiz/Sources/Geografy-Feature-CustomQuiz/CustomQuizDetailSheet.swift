@@ -6,7 +6,6 @@ import SwiftUI
 
 struct CustomQuizDetailSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
 
     let quiz: CustomQuiz

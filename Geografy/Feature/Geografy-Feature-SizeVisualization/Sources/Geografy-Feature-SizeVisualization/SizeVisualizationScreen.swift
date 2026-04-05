@@ -7,7 +7,6 @@ public struct SizeVisualizationScreen: View {
     // MARK: - Init
     public init() {}
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService

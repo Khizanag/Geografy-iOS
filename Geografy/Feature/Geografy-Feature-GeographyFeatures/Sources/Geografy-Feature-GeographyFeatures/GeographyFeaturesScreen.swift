@@ -3,7 +3,6 @@ import SwiftUI
 
 public struct GeographyFeaturesScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedType: GeographyFeatureType = .mountain

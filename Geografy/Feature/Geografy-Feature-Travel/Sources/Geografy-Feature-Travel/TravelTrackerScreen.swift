@@ -32,24 +32,20 @@ public struct TravelTrackerScreen: View {
                 appeared = true
             }
             .sheet(isPresented: $showCountryPicker) {
-                NavigationStack {
-                    TravelCountryPickerSheet(
-                        countries: countryDataService.countries,
-                        isPresented: $showCountryPicker,
-                        preferredStatus: selectedFilter
-                    )
-                }
+                TravelCountryPickerSheet(
+                    countries: countryDataService.countries,
+                    isPresented: $showCountryPicker,
+                    preferredStatus: selectedFilter
+                )
             }
             .sheet(item: $selectedCountry) { country in
-                NavigationStack {
-                    TravelStatusPickerSheet(
-                        country: country,
-                        isPresented: Binding(
-                            get: { selectedCountry != nil },
-                            set: { if !$0 { selectedCountry = nil } }
-                        )
+                TravelStatusPickerSheet(
+                    country: country,
+                    isPresented: Binding(
+                        get: { selectedCountry != nil },
+                        set: { if !$0 { selectedCountry = nil } }
                     )
-                }
+                )
             }
     }
 }

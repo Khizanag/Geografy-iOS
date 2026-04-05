@@ -8,7 +8,6 @@ public struct FeedScreen: View {
     // MARK: - Init
     public init() {}
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -25,6 +24,7 @@ public struct FeedScreen: View {
             .navigationBarTitleDisplayMode(.large)
             #endif
             .task {
+                guard !appeared else { return }
                 feedService.loadFeed()
                 appeared = true
             }

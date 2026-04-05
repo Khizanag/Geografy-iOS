@@ -314,8 +314,6 @@ public enum BucketListPriority: String, CaseIterable, Codable {
 // MARK: - Bucket List Country Detail View
 public struct BucketListCountryDetailView: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
-
     public let country: Country
     @Binding var priority: BucketListPriority
     @Binding var note: String

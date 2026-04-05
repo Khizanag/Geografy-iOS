@@ -6,7 +6,6 @@ import SwiftUI
 
 public struct MapScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService

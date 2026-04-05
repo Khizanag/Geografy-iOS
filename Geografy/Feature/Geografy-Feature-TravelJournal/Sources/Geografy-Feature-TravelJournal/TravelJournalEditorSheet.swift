@@ -7,7 +7,6 @@ import SwiftUI
 
 public struct TravelJournalEditorSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelJournalService.self) var journalService
 

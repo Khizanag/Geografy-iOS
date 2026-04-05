@@ -7,7 +7,6 @@ public struct FriendsListScreen: View {
     // MARK: - Properties
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var friends: [GKPlayer] = []

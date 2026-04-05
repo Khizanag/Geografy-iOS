@@ -5,7 +5,6 @@ import SwiftUI
 
 public struct MapPuzzleSetupScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedContinent: Country.Continent?

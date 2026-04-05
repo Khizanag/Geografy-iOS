@@ -5,7 +5,6 @@ import SwiftUI
 
 public struct CoinStoreScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(CoinService.self) private var coinService
 
     @State private var showAllTransactions = false

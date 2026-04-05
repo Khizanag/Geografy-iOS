@@ -5,7 +5,6 @@ import SwiftUI
 
 struct MapPuzzleScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif

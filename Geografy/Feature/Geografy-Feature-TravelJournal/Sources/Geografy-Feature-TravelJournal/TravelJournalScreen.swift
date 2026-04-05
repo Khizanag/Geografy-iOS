@@ -181,10 +181,8 @@ private extension TravelJournalScreen {
     func sheetContent(
         for sheet: ActiveSheet
     ) -> some View {
-        NavigationStack {
-            sheetView(for: sheet)
-                .environment(journalService)
-        }
+        sheetView(for: sheet)
+            .environment(journalService)
     }
 
     @ViewBuilder

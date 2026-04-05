@@ -42,9 +42,7 @@ public struct BorderChallengeScreen: View {
                 )
             }
             .sheet(isPresented: $showGuide) {
-                NavigationStack {
-                    BorderChallengeGuideSheet()
-                }
+                BorderChallengeGuideSheet()
             }
     }
 }
