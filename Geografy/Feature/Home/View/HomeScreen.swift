@@ -22,7 +22,6 @@ struct HomeScreen: View {
     @Environment(FeatureFlagService.self) var featureFlags
 
     @State var dailyChallengeService: DailyChallengeService?
-    @State private var appeared = false
 
     // MARK: - Body
     var body: some View {
@@ -31,10 +30,7 @@ struct HomeScreen: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
-            .task {
-                await loadDailyChallenge()
-                startAnimations()
-            }
+            .task { await loadDailyChallenge() }
     }
 }
 
@@ -45,32 +41,24 @@ private extension HomeScreen {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 greetingSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .feedSection(appeared: appeared, delay: 0.05)
 
                 actionCardSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .feedSection(appeared: appeared, delay: 0.10)
 
                 quickStatsSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .feedSection(appeared: appeared, delay: 0.15)
 
                 spotlightSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .feedSection(appeared: appeared, delay: 0.20)
 
                 gamesSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .feedSection(appeared: appeared, delay: 0.25)
 
                 exploreSection
-                    .feedSection(appeared: appeared, delay: 0.30)
 
                 learnSection
-                    .feedSection(appeared: appeared, delay: 0.35)
 
                 worldRecordsSection
-                    .feedSection(appeared: appeared, delay: 0.40)
             }
             .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
             .padding(.top, DesignSystem.Spacing.lg)
@@ -356,10 +344,6 @@ private extension HomeScreen {
 
 // MARK: - Helpers
 private extension HomeScreen {
-    func startAnimations() {
-        appeared = true
-    }
-
     func loadDailyChallenge() async {
         let service = DailyChallengeService(
             countryDataService: countryDataService,
@@ -367,15 +351,5 @@ private extension HomeScreen {
         )
         await service.loadChallenge()
         dailyChallengeService = service
-    }
-}
-
-// MARK: - Feed Section Modifier
-private extension View {
-    func feedSection(appeared: Bool, delay: Double) -> some View {
-        self
-            .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 20)
-            .animation(.easeOut(duration: 0.4).delay(delay), value: appeared)
     }
 }
