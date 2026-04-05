@@ -22,6 +22,7 @@ struct HomeScreen: View {
     @Environment(FeatureFlagService.self) var featureFlags
 
     @State var dailyChallengeService: DailyChallengeService?
+    @State private var collectionItem: (id: String, type: CollectionItem.ItemType, name: String)?
 
     // MARK: - Body
     var body: some View {
@@ -31,6 +32,15 @@ struct HomeScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await loadDailyChallenge() }
+            .sheet(isPresented: collectionSheetBinding) {
+                if let item = collectionItem {
+                    SaveToCollectionSheet(
+                        itemID: item.id,
+                        itemType: item.type,
+                        itemName: item.name
+                    )
+                }
+            }
     }
 }
 
@@ -260,6 +270,17 @@ private extension HomeScreen {
                     )
                 }
                 .buttonStyle(PressButtonStyle())
+                .contextMenu {
+                    Button {
+                        collectionItem = (
+                            id: country.code,
+                            type: .country,
+                            name: country.name
+                        )
+                    } label: {
+                        Label("Save to Collection", systemImage: "folder.badge.plus")
+                    }
+                }
             }
         }
     }
@@ -344,6 +365,13 @@ private extension HomeScreen {
 
 // MARK: - Helpers
 private extension HomeScreen {
+    var collectionSheetBinding: Binding<Bool> {
+        Binding(
+            get: { collectionItem != nil },
+            set: { if !$0 { collectionItem = nil } }
+        )
+    }
+
     func loadDailyChallenge() async {
         let service = DailyChallengeService(
             countryDataService: countryDataService,
