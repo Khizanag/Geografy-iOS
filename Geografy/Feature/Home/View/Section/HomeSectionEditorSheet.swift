@@ -4,7 +4,7 @@ import SwiftUI
 
 struct HomeSectionEditorSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(HomeSectionOrderService.self) private var orderService
 
     @State private var sections: [HomeSection]
@@ -66,7 +66,7 @@ private extension HomeSectionEditorSheet {
     var doneButton: some View {
         Button {
             orderService.reorder(to: sections)
-            dismiss()
+            coordinator.dismiss()
         } label: {
             Text("Done")
                 .font(DesignSystem.Font.subheadline)

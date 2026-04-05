@@ -1,11 +1,12 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct CoinPackPreviewSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(CoinService.self) private var coinService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -160,7 +161,7 @@ private extension CoinPackPreviewSheet {
     var buyButton: some View {
         Button {
             coinService.earn(pack.coins, reason: .purchase)
-            dismiss()
+            coordinator.dismiss()
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "bag.fill")

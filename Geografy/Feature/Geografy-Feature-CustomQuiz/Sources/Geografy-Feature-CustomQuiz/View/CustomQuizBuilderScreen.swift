@@ -1,12 +1,13 @@
 #if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct CustomQuizBuilderScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     public let existingQuiz: CustomQuiz?
     public let countryDataService: CountryDataService
     public let quizService: CustomQuizService
@@ -314,7 +315,7 @@ private extension CustomQuizBuilderScreen {
             } else {
                 quizService.save(quiz)
             }
-            dismiss()
+            coordinator.dismiss()
         }
     }
 }

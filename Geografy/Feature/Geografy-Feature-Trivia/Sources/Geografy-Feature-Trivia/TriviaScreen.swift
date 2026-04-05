@@ -1,10 +1,11 @@
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct TriviaScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var questions: [TriviaQuestion] = []
@@ -225,7 +226,7 @@ private extension TriviaScreen {
 
     var completionDoneButton: some View {
         GlassButton("Done", fullWidth: true) {
-            dismiss()
+            coordinator.dismiss()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.xl)

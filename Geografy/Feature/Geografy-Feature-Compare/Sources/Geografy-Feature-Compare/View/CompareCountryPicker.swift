@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -15,7 +16,7 @@ public struct CompareCountryPicker: View {
         self.onSelect = onSelect
     }
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -60,7 +61,7 @@ private extension CompareCountryPicker {
             hapticsService.impact(.light)
             #endif
             onSelect(country)
-            dismiss()
+            coordinator.dismiss()
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {

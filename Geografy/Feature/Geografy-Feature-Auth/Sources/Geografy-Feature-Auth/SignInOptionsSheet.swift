@@ -1,11 +1,12 @@
 import AuthenticationServices
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct SignInOptionsSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
 
@@ -233,7 +234,7 @@ private extension SignInOptionsSheet {
                 switch result {
                 case .success(let authorization):
                     authService.handleAppleSignIn(authorization)
-                    dismiss()
+                    coordinator.dismiss()
                 case .failure(let error):
                     let nsError = error as NSError
                     if nsError.code != ASAuthorizationError.canceled.rawValue {
@@ -256,7 +257,7 @@ private extension SignInOptionsSheet {
                 await authService.signInWithGoogle()
                 switch authService.state {
                 case .authenticated:
-                    dismiss()
+                    coordinator.dismiss()
                 case .error(let error):
                     errorMessage = error.localizedDescription
                     showError = true
@@ -283,7 +284,7 @@ private extension SignInOptionsSheet {
     }
 
     var continueAsGuestButton: some View {
-        Button { dismiss() } label: {
+        Button { coordinator.dismiss() } label: {
             Text("Continue as Guest")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -295,7 +296,7 @@ private extension SignInOptionsSheet {
     var debugSignInButton: some View {
         Button {
             authService.debugSignIn()
-            dismiss()
+            coordinator.dismiss()
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "hammer.fill")

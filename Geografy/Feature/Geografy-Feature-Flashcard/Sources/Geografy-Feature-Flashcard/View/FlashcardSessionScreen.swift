@@ -7,7 +7,6 @@ import SwiftUI
 
 public struct FlashcardSessionScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(GameCenterService.self) private var gameCenterService
@@ -104,7 +103,7 @@ private extension FlashcardSessionScreen {
     @ViewBuilder
     var quitAlertActions: some View {
         Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { dismiss() }
+        Button("Quit", role: .destructive) { coordinator.dismiss() }
     }
 }
 
@@ -270,7 +269,7 @@ private extension FlashcardSessionScreen {
     }
 
     var doneButton: some View {
-        GlassButton("Done", systemImage: "checkmark", fullWidth: true) { dismiss() }
+        GlassButton("Done", systemImage: "checkmark", fullWidth: true) { coordinator.dismiss() }
     }
 }
 

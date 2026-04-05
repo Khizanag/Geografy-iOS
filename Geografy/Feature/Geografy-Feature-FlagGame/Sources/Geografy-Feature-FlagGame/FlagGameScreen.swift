@@ -2,6 +2,7 @@ import Accessibility
 import Combine
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -9,7 +10,7 @@ public struct FlagGameScreen: View {
     // MARK: - Init
     public init() {}
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -30,7 +31,7 @@ public struct FlagGameScreen: View {
                     score: gameState.score,
                     answeredCountries: gameState.answeredCountries,
                     onPlayAgain: restartGame,
-                    onDismiss: { dismiss() }
+                    onDismiss: { coordinator.dismiss() }
                 )
             } else {
                 gameContent

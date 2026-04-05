@@ -1,12 +1,13 @@
 import Accessibility
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 struct BorderChallengeSessionScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -51,7 +52,7 @@ struct BorderChallengeSessionScreen: View {
                         showResult = false
                         startChallenge()
                     },
-                    onDone: { dismiss() }
+                    onDone: { coordinator.dismiss() }
                 )
             }
     }
@@ -266,7 +267,7 @@ private extension BorderChallengeSessionScreen {
     @ToolbarContentBuilder
     var sessionToolbar: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Quit") { dismiss() }
+            Button("Quit") { coordinator.dismiss() }
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
@@ -278,7 +279,7 @@ private extension BorderChallengeSessionScreen {
         let countries = region.filter(countryDataService.countries)
 
         guard let country = service.selectCountry(from: countries, difficulty: difficulty) else {
-            dismiss()
+            coordinator.dismiss()
             return
         }
 

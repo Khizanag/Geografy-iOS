@@ -1,11 +1,12 @@
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import StoreKit
 import SwiftUI
 
 public struct PaywallScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -314,7 +315,7 @@ private extension PaywallScreen {
                     await subscriptionService.purchase(selectedProduct)
                     isProcessing = false
                     if subscriptionService.isPremium {
-                        dismiss()
+                        coordinator.dismiss()
                     }
                 }
             }
