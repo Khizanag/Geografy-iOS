@@ -1,12 +1,13 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct MultiplayerMatchScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -39,7 +40,7 @@ public struct MultiplayerMatchScreen: View {
                 MultiplayerResultScreen(
                     match: match,
                     onRematch: { startRematch() },
-                    onDone: { dismiss() },
+                    onDone: { coordinator.dismiss() },
                 )
             }
             .alert("Quit Match?", isPresented: $showQuitAlert) {
@@ -66,7 +67,7 @@ private extension MultiplayerMatchScreen {
     @ViewBuilder
     var quitAlertActions: some View {
         Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { dismiss() }
+        Button("Quit", role: .destructive) { coordinator.dismiss() }
     }
 }
 

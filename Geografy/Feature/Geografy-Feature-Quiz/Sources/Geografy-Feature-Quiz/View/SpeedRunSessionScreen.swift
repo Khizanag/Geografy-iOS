@@ -1,12 +1,13 @@
 import Combine
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct SpeedRunSessionScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
@@ -248,7 +249,7 @@ private extension SpeedRunSessionScreen {
             }
 
             GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
-                dismiss()
+                coordinator.dismiss()
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -354,7 +355,7 @@ private extension SpeedRunSessionScreen {
 
     var quitAlertActions: some View {
         Group {
-            Button("Quit", role: .destructive) { dismiss() }
+            Button("Quit", role: .destructive) { coordinator.dismiss() }
             Button("Continue", role: .cancel) {}
         }
     }

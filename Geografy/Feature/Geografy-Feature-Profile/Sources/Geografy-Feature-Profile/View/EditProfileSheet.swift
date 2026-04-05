@@ -1,14 +1,14 @@
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct EditProfileSheet: View {
     // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
     @Environment(AuthService.self) private var authService
     @Environment(DatabaseManager.self) private var database
     @Environment(HapticsService.self) private var hapticsService
-
-    @Environment(\.dismiss) private var dismiss
 
     @State private var displayName: String = ""
     @State private var isSaving = false
@@ -79,7 +79,7 @@ private extension EditProfileSheet {
     }
 
     var cancelButton: some View {
-        Button("Cancel") { dismiss() }
+        Button("Cancel") { coordinator.dismiss() }
             .buttonStyle(.plain)
     }
 
@@ -104,6 +104,6 @@ private extension EditProfileSheet {
             profile.displayName = trimmed
             try? database.mainContext.save()
         }
-        dismiss()
+        coordinator.dismiss()
     }
 }

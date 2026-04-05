@@ -1,11 +1,12 @@
 #if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import SwiftUI
 
 public struct CustomQuizCountryPicker: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
 
     public let countries: [Country]
     @Binding var selectedCodes: Set<String>
@@ -155,7 +156,7 @@ private extension CustomQuizCountryPicker {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            Button("Done") { dismiss() }
+            Button("Done") { coordinator.dismiss() }
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)
         }

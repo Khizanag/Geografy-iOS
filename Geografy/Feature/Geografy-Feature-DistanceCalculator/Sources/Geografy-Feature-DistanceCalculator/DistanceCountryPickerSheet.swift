@@ -6,7 +6,7 @@ import SwiftUI
 
 struct DistanceCountryPickerSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
 
     let title: String
     let countries: [Country]
@@ -32,7 +32,7 @@ private extension DistanceCountryPickerSheet {
         List(filteredCountries) { country in
             Button {
                 onSelect(country)
-                dismiss()
+                coordinator.dismiss()
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: country.code, height: 24, fixedWidth: true)
@@ -55,7 +55,7 @@ private extension DistanceCountryPickerSheet {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel") { dismiss() }
+            Button("Cancel") { coordinator.dismiss() }
         }
     }
 }

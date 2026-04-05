@@ -1,11 +1,12 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelStatusPickerSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
@@ -76,7 +77,7 @@ private extension TravelStatusPickerSheet {
             if !isSelected {
                 awardTravelXP(for: status)
                 checkTravelAchievements()
-                dismiss()
+                coordinator.dismiss()
             }
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
@@ -105,7 +106,7 @@ private extension TravelStatusPickerSheet {
         Button {
             hapticsService.impact(.light)
             travelService.set(status: nil, for: country.code)
-            dismiss()
+            coordinator.dismiss()
         } label: {
             Text("Remove Status")
                 .font(DesignSystem.Font.subheadline)

@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -9,8 +10,8 @@ public struct CurrencyConverterScreen: View {
         self.preselectedCurrencyCode = preselectedCurrencyCode
     }
     // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(CurrencyService.self) private var currencyService
     #if !os(tvOS)
@@ -448,7 +449,7 @@ public struct CurrencyEntry: Identifiable, Hashable {
 
 // MARK: - Currency Picker Sheet
 private struct CurrencyPickerSheet: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(Navigator.self) private var coordinator
 
     let title: String
     let currencies: [CurrencyEntry]
@@ -473,7 +474,7 @@ private extension CurrencyPickerSheet {
         List(filteredCurrencies) { entry in
             Button {
                 onSelect(entry)
-                dismiss()
+                coordinator.dismiss()
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: entry.countryCode, height: 24, fixedWidth: true)
@@ -498,7 +499,7 @@ private extension CurrencyPickerSheet {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel") { dismiss() }
+            Button("Cancel") { coordinator.dismiss() }
                 .tint(DesignSystem.Color.textPrimary)
         }
     }
