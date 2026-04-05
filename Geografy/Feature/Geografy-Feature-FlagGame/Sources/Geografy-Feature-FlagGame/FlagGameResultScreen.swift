@@ -128,25 +128,13 @@ private extension FlagGameResultScreen {
 
     var actionButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            Button(action: onPlayAgain) {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "arrow.clockwise")
-                    Text("Play Again")
-                        .fontWeight(.bold)
-                }
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.md)
+            GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
+                onPlayAgain()
             }
-            .buttonStyle(.glass)
 
-            Button(action: onDismiss) {
-                Text("Done")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
+                onDismiss()
             }
-            .buttonStyle(.plain)
         }
     }
 }

@@ -185,40 +185,18 @@ private extension QuizResultsScreen {
     }
 
     var playAgainButton: some View {
-        Button {
+        GlassButton("Play Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
             #if !os(tvOS)
             hapticsService.impact(.medium)
             #endif
             onPlayAgain()
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "arrow.counterclockwise")
-                    .font(DesignSystem.Font.headline)
-
-                Text("Play Again")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .buttonStyle(.glass)
     }
 
     var doneButton: some View {
-        Button { onDone() } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "checkmark")
-                    .font(DesignSystem.Font.headline)
-
-                Text("Done")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+        GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
+            onDone()
         }
-        .buttonStyle(.glass)
     }
 }
 

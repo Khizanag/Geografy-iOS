@@ -243,33 +243,15 @@ private extension MultiplayerResultScreen {
     }
 
     var rematchButton: some View {
-        Button(action: onRematch) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "arrow.counterclockwise")
-                    .font(DesignSystem.Font.headline)
-                Text("Rematch")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
+        GlassButton("Rematch", systemImage: "arrow.counterclockwise", fullWidth: true) {
+            onRematch()
         }
-        .buttonStyle(.glass)
     }
 
     var doneButton: some View {
-        Button { onDone() } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "checkmark")
-                    .font(DesignSystem.Font.headline)
-                Text("Done")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
+        GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
+            onDone()
         }
-        .buttonStyle(.glass)
     }
 }
 

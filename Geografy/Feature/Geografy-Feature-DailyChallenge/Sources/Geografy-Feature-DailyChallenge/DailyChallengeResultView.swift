@@ -166,33 +166,15 @@ private extension DailyChallengeResultView {
     }
 
     var shareButton: some View {
-        Button { showShareCard = true } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "square.and.arrow.up")
-                    .font(DesignSystem.Font.headline)
-                Text("Share Result")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+        GlassButton("Share Result", systemImage: "square.and.arrow.up", fullWidth: true) {
+            showShareCard = true
         }
-        .buttonStyle(.glass)
     }
 
     var doneButton: some View {
-        Button { coordinator.dismiss() } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "checkmark")
-                    .font(DesignSystem.Font.headline)
-                Text("Done")
-                    .font(DesignSystem.Font.headline)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
+        GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
+            coordinator.dismiss()
         }
-        .buttonStyle(.glass)
     }
 
     var shareCardSheet: some View {
