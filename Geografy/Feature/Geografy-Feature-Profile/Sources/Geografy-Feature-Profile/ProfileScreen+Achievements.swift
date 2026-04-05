@@ -7,25 +7,8 @@ import SwiftUI
 extension ProfileScreen {
     public var achievementsPreviewSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack {
-                SectionHeaderView(title: "Achievements")
-                Spacer()
-                Button {
-                    hapticsService.impact(.light)
-                    coordinator.sheet(.achievements)
-                } label: {
-                    HStack(spacing: 4) {
-                        Text("\(achievementService.unlockedAchievements.count)/\(AchievementCatalog.all.count)")
-                            .font(DesignSystem.Font.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                        Image(systemName: "chevron.right")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
-                    }
-                }
-                .buttonStyle(.plain)
-            }
+            achievementsHeader
+
             if recentUnlockedAchievements.isEmpty {
                 emptyAchievementsView
             } else {
@@ -35,13 +18,35 @@ extension ProfileScreen {
     }
 }
 
-// MARK: - Achievements Subviews
+// MARK: - Subviews
 private extension ProfileScreen {
+    var achievementsHeader: some View {
+        HStack {
+            SectionHeaderView(title: "Achievements")
+            Spacer()
+            Button {
+                hapticsService.impact(.light)
+                coordinator.sheet(.achievements)
+            } label: {
+                HStack(spacing: 4) {
+                    Text("\(achievementService.unlockedAchievements.count)/\(AchievementCatalog.all.count)")
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                    Image(systemName: "chevron.right")
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
     var achievementsScrollRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(recentUnlockedAchievements) { definition in
-                    miniAchievementCard(definition)
+                    achievementCard(definition)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -60,22 +65,31 @@ private extension ProfileScreen {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(DesignSystem.Spacing.md)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(
+            .ultraThinMaterial,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
     }
 
-    func miniAchievementCard(_ definition: AchievementDefinition) -> some View {
+    func achievementCard(_ definition: AchievementDefinition) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             ZStack {
                 Circle()
-                    .fill(achievementColor(for: definition.category).opacity(0.18))
+                    .fill(definition.category.themeColor.opacity(0.18))
                     .frame(width: 52, height: 52)
+
                 Circle()
-                    .stroke(achievementColor(for: definition.category).opacity(0.3), lineWidth: 1.5)
+                    .strokeBorder(
+                        definition.rarity.borderGradient,
+                        lineWidth: definition.rarity.borderWidth
+                    )
                     .frame(width: 52, height: 52)
+
                 Image(systemName: definition.iconName)
                     .font(DesignSystem.Font.iconDefault)
-                    .foregroundStyle(achievementColor(for: definition.category))
+                    .foregroundStyle(definition.category.themeColor)
             }
+
             Text(definition.title)
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
@@ -85,18 +99,22 @@ private extension ProfileScreen {
                 .frame(width: 76)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(
+            .ultraThinMaterial,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        )
     }
+}
 
+// MARK: - Helpers
+private extension ProfileScreen {
     var recentUnlockedAchievements: [AchievementDefinition] {
         achievementService.unlockedAchievements
             .sorted { $0.unlockedAt > $1.unlockedAt }
             .prefix(6)
-            .compactMap { unlocked in AchievementCatalog.all.first { $0.id == unlocked.id } }
-    }
-
-    func achievementColor(for category: AchievementCategory) -> Color {
-        category.themeColor
+            .compactMap { unlocked in
+                AchievementCatalog.all.first { $0.id == unlocked.id }
+            }
     }
 }
 #endif
