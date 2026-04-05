@@ -203,23 +203,24 @@ private extension WordSearchGameScreen {
                         HStack(spacing: 0) {
                             ForEach(0..<service.gridSize, id: \.self) { col in
                                 gridCell(
-                                    row: row,
-                                    col: col,
                                     letter: puzzle.grid[row][col],
-                                    cellSize: computedCellSize,
-                                    puzzle: puzzle
+                                    cellSize: computedCellSize
                                 )
                             }
                         }
                     }
                 }
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
-                #if !os(tvOS)
-                .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
-                #endif
-                .blur(radius: isPaused ? 8 : 0)
-                .animation(.easeInOut(duration: 0.2), value: isPaused)
 
+                wordCapsules(puzzle: puzzle, cellSize: computedCellSize)
+                selectionCapsule(cellSize: computedCellSize)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            #if !os(tvOS)
+            .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
+            #endif
+            .blur(radius: isPaused ? 8 : 0)
+            .animation(.easeInOut(duration: 0.2), value: isPaused)
+            .overlay {
                 if isPaused {
                     pauseOverlay
                         .transition(.opacity)
@@ -250,34 +251,76 @@ private extension WordSearchGameScreen {
             }
     }
 
-    func gridCell(
-        row: Int,
-        col: Int,
-        letter: Character,
-        cellSize: CGFloat,
-        puzzle: WordSearchPuzzle
-    ) -> some View {
-        let isHighlighted = isCellHighlighted(row: row, col: col)
-        let isFound = isCellFound(row: row, col: col, puzzle: puzzle)
-        let isActive = isHighlighted || isFound
-
-        return Text(String(letter))
+    func gridCell(letter: Character, cellSize: CGFloat) -> some View {
+        Text(String(letter))
             .font(DesignSystem.Font.system(size: max(cellSize * 0.48, 12), weight: .semibold, design: .monospaced))
-            .foregroundStyle(isActive ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
             .frame(width: cellSize, height: cellSize)
-            .background {
-                if isActive {
-                    Circle()
-                        .fill(cellColor(isHighlighted: isHighlighted, isFound: isFound))
-                        .padding(1)
-                }
-            }
             .background(DesignSystem.Color.cardBackground.opacity(0.3))
     }
 
-    func cellColor(isHighlighted: Bool, isFound: Bool) -> Color {
-        if isFound { return DesignSystem.Color.success.opacity(0.7) }
-        return DesignSystem.Color.accent
+    func wordCapsules(puzzle: WordSearchPuzzle, cellSize: CGFloat) -> some View {
+        ForEach(puzzle.words) { wordItem in
+            let isUserFound = foundWordIDs.contains(wordItem.id)
+            let isHintRevealed = hintRevealedIDs.contains(wordItem.id)
+            if isUserFound || isRevealed || isHintRevealed {
+                let cells = wordCoversCells(wordItem)
+                if let first = cells.first, let last = cells.last {
+                    wordCapsuleShape(
+                        from: first,
+                        to: last,
+                        cellSize: cellSize,
+                        color: isUserFound
+                            ? DesignSystem.Color.success.opacity(0.5)
+                            : DesignSystem.Color.warning.opacity(0.4)
+                    )
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    func selectionCapsule(cellSize: CGFloat) -> some View {
+        if let start = selectionStart, let end = selectionEnd {
+            wordCapsuleShape(
+                from: start,
+                to: end,
+                cellSize: cellSize,
+                color: DesignSystem.Color.accent.opacity(0.5)
+            )
+        }
+    }
+
+    func wordCapsuleShape(
+        from start: GridCoord,
+        to end: GridCoord,
+        cellSize: CGFloat,
+        color: Color
+    ) -> some View {
+        let startCenter = cellCenter(start, cellSize: cellSize)
+        let endCenter = cellCenter(end, cellSize: cellSize)
+        let dx = endCenter.x - startCenter.x
+        let dy = endCenter.y - startCenter.y
+        let length = sqrt(dx * dx + dy * dy) + cellSize * 0.85
+        let angle = atan2(dy, dx)
+        let midpoint = CGPoint(
+            x: (startCenter.x + endCenter.x) / 2,
+            y: (startCenter.y + endCenter.y) / 2
+        )
+
+        return Capsule()
+            .fill(color)
+            .frame(width: length, height: cellSize * 0.75)
+            .rotationEffect(.radians(angle))
+            .position(midpoint)
+            .allowsHitTesting(false)
+    }
+
+    func cellCenter(_ coord: GridCoord, cellSize: CGFloat) -> CGPoint {
+        CGPoint(
+            x: CGFloat(coord.col) * cellSize + cellSize / 2,
+            y: CGFloat(coord.row) * cellSize + cellSize / 2
+        )
     }
 
     func wordListSection(_ puzzle: WordSearchPuzzle) -> some View {
@@ -394,21 +437,6 @@ private extension WordSearchGameScreen {
         isRevealed = false
         puzzle = service.makePuzzle(theme: theme)
         timerActive = true
-    }
-
-    func isCellHighlighted(row: Int, col: Int) -> Bool {
-        guard let start = selectionStart, let end = selectionEnd else { return false }
-        return selectedCells(from: start, to: end).contains(GridCoord(row: row, col: col))
-    }
-
-    func isCellFound(row: Int, col: Int, puzzle: WordSearchPuzzle) -> Bool {
-        let coord = GridCoord(row: row, col: col)
-        return puzzle.words.contains { wordItem in
-            guard foundWordIDs.contains(wordItem.id) || isRevealed || hintRevealedIDs.contains(wordItem.id) else {
-                return false
-            }
-            return wordCoversCells(wordItem).contains(coord)
-        }
     }
 
     func selectedCells(from start: GridCoord, to end: GridCoord) -> [GridCoord] {
