@@ -105,7 +105,7 @@ private extension TravelStatusPickerSheet {
         Button {
             hapticsService.impact(.light)
             travelService.set(status: nil, for: country.code)
-            isPresented = false
+            dismiss()
         } label: {
             Text("Remove Status")
                 .font(DesignSystem.Font.subheadline)

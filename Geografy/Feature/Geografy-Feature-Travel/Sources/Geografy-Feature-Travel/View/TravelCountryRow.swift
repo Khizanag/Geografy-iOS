@@ -19,7 +19,7 @@ public struct TravelCountryRow: View {
         }
         .buttonStyle(PressButtonStyle())
         .sheet(isPresented: $showPicker) {
-            TravelStatusPickerSheet(country: country, isPresented: $showPicker)
+            TravelStatusPickerSheet(country: country)
         }
     }
 }

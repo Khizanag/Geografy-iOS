@@ -137,6 +137,7 @@ extension Destination {
         case .timeZones: TimeZoneScreen()
         case .travelBucketList: TravelBucketListScreen()
         case .travelJournal: TravelJournalScreen()
+        case .travelStatusPicker(let country): TravelStatusPickerSheet(country: country)
         case .travelMap(let filter): TravelMapScreen(filter: filter)
         case .travelTracker: TravelTrackerScreen()
         case .trivia: TriviaScreen()

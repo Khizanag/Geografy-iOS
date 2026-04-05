@@ -37,13 +37,7 @@ public struct TravelCountryPickerSheet: View {
             #endif
             .toolbar { toolbarContent }
             .sheet(item: $selectedCountry) { country in
-                TravelStatusPickerSheet(
-                    country: country,
-                    isPresented: Binding(
-                        get: { selectedCountry != nil },
-                        set: { if !$0 { selectedCountry = nil } }
-                    )
-                )
+                TravelStatusPickerSheet(country: country)
             }
             .presentationDetents([.large])
     }
