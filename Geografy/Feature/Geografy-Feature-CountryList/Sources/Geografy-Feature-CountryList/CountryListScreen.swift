@@ -166,7 +166,6 @@ private extension CountryListScreen {
             }
         } label: {
             Label("Reset All", systemImage: "arrow.counterclockwise")
-                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 
