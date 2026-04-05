@@ -145,21 +145,23 @@ private extension CustomQuizLibraryScreen {
             quiz: quiz,
             onEdit: {
                 selectedQuiz = nil
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                Task {
+                    try? await Task.sleep(for: .milliseconds(400))
                     editingQuiz = quiz
                 }
             },
             onPlay: {
                 selectedQuiz = nil
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                Task {
+                    try? await Task.sleep(for: .milliseconds(400))
                     let config = QuizConfiguration(
                         type: quiz.questionTypes.first ?? .flagQuiz,
                         region: .world,
                         difficulty: .medium,
-                        questionCount: .fifteen,
+                        questionCount: .ten,
                         answerMode: .multipleChoice,
                         comparisonMetric: .population,
-                        gameMode: .classic,
+                        gameMode: .standard,
                     )
                     coordinator.push(.quizSession(config))
                 }
