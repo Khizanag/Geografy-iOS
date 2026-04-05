@@ -60,7 +60,7 @@ private extension RegionCarousel {
             .scrollPosition(id: $visibleRegion)
             .scrollClipDisabled()
         }
-        .frame(height: 180)
+        .frame(height: 190)
         .onChange(of: visibleRegion) { _, newValue in
             guard let newValue, newValue != selectedRegion else { return }
             selectedRegion = newValue

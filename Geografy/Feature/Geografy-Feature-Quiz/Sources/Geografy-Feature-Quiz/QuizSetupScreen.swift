@@ -201,6 +201,7 @@ private extension QuizSetupScreen {
     var quizTypeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Quiz Type")
+                .padding(.horizontal, DesignSystem.Spacing.md)
             TypeSelectionGrid(
                 items: QuizType.allCases.map { $0 },
                 selectedIDs: [selectedType.id],
@@ -343,6 +344,7 @@ private extension QuizSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionTitle("Region")
+                .padding(.horizontal, DesignSystem.Spacing.md)
             #if !os(tvOS)
             RegionCarousel(selectedRegion: $selectedRegion)
             #endif
