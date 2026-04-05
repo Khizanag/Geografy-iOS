@@ -39,13 +39,7 @@ public struct TravelTrackerScreen: View {
                 )
             }
             .sheet(item: $selectedCountry) { country in
-                TravelStatusPickerSheet(
-                    country: country,
-                    isPresented: Binding(
-                        get: { selectedCountry != nil },
-                        set: { if !$0 { selectedCountry = nil } }
-                    )
-                )
+                TravelStatusPickerSheet(country: country)
             }
     }
 }
