@@ -66,7 +66,7 @@ private extension ProfileScreen {
 // MARK: - Premium Banner
 extension ProfileScreen {
     public var premiumBannerSection: some View {
-        Button { coordinator.sheet(.paywall) } label: {
+        Button { coordinator.push(.paywall) } label: {
             premiumBannerLabel
         }
         .buttonStyle(PressButtonStyle())
@@ -141,7 +141,7 @@ private extension ProfileScreen {
     var signInRow: some View {
         Button {
             hapticsService.impact(.medium)
-            coordinator.sheet(.signIn)
+            coordinator.push(.signIn)
         } label: {
             accountRowLabel(
                 icon: "person.badge.plus.fill",
