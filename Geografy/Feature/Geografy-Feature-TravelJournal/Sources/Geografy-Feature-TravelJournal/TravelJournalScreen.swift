@@ -184,11 +184,6 @@ private extension TravelJournalScreen {
         NavigationStack {
             sheetView(for: sheet)
                 .environment(journalService)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        CircleCloseButton { activeSheet = nil }
-                    }
-                }
         }
     }
 

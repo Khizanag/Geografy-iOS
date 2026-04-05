@@ -79,9 +79,6 @@ extension TravelJournalEditorSheet {
 private extension TravelJournalEditorSheet {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            CircleCloseButton()
-        }
         ToolbarItem(placement: .confirmationAction) {
             saveButton
         }

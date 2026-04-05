@@ -37,7 +37,6 @@ public struct CustomQuizBuilderScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
             .onAppear { loadExistingQuiz() }
             .sheet(isPresented: $showCountryPicker) { countryPickerSheet }
             .sheet(isPresented: $showPreview) { previewSheet }
@@ -331,16 +330,6 @@ private extension CustomQuizBuilderScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
-    }
-}
-
-// MARK: - Toolbar
-private extension CustomQuizBuilderScreen {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            CircleCloseButton()
-        }
     }
 }
 

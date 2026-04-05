@@ -44,11 +44,6 @@ public struct BorderChallengeScreen: View {
             .sheet(isPresented: $showGuide) {
                 NavigationStack {
                     BorderChallengeGuideSheet()
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                CircleCloseButton { showGuide = false }
-                            }
-                        }
                 }
             }
     }

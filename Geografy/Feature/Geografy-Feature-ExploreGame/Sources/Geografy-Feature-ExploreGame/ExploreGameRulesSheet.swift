@@ -8,11 +8,6 @@ public struct ExploreGameRulesSheet: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("How to Play")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    CircleCloseButton()
-                }
-            }
             .presentationDetents([.medium])
     }
 }

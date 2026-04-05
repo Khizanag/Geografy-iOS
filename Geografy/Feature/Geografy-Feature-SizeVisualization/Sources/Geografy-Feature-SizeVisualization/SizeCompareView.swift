@@ -9,8 +9,6 @@ public struct SizeCompareView: View {
         self.comparisonCountry = comparisonCountry
     }
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
-
     public let referenceCountry: Country
     public let comparisonCountry: Country
 
@@ -22,9 +20,6 @@ public struct SizeCompareView: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    CircleCloseButton { dismiss() }
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     ShareLink(item: shareText) {
                         Label("Share", systemImage: "square.and.arrow.up")

@@ -3,8 +3,6 @@ import SwiftUI
 
 struct CultureDetailView: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
-
     let profile: CultureProfile
 
     private var countryName: String {
@@ -19,11 +17,6 @@ struct CultureDetailView: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
     }
 }
 

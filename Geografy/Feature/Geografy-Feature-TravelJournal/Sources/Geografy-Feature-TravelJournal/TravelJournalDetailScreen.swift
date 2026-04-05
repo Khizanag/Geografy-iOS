@@ -45,9 +45,6 @@ public struct TravelJournalDetailScreen: View {
 private extension TravelJournalDetailScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            CircleCloseButton()
-        }
         ToolbarItem(placement: .primaryAction) {
             editButton
         }
