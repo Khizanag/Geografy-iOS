@@ -90,34 +90,32 @@ private extension CountryDetailScreen {
 
     @ToolbarContentBuilder
     var favoriteToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }
             } label: {
-                Image(systemName: isFavorite ? "heart.fill" : "heart")
-                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
+                Label("Favorite", systemImage: isFavorite ? "heart.fill" : "heart")
                     .symbolEffect(.bounce, value: isFavorite)
             }
+            .tint(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
             .buttonStyle(.plain)
-            .accessibilityLabel("Favorite")
         }
     }
 
     @ToolbarContentBuilder
     var compareToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+        ToolbarItem(placement: .secondaryAction) {
             Button {
                 hapticsService.impact(.light)
                 coordinator.sheet(.compare(preselectedCountry: country))
             } label: {
-                Image(systemName: "arrow.left.arrow.right")
-                    .foregroundStyle(DesignSystem.Color.iconPrimary)
+                Label("Compare", systemImage: "arrow.left.arrow.right")
             }
+            .tint(DesignSystem.Color.iconPrimary)
             .buttonStyle(.plain)
-            .accessibilityLabel("Compare")
         }
     }
 
