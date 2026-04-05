@@ -78,7 +78,6 @@ private extension TerritorialDisputesScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             introCardHeader
             introCardDisclaimer
-            introCardNote
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(DesignSystem.Spacing.md)
@@ -106,22 +105,6 @@ private extension TerritorialDisputesScreen {
             .font(DesignSystem.Font.caption)
             .foregroundStyle(DesignSystem.Color.textSecondary)
             .fixedSize(horizontal: false, vertical: true)
-    }
-
-    var introCardNote: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "info.circle.fill")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.accent.opacity(0.8))
-            Text("Note: Abkhazia and South Ossetia are treated as Georgia.")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .padding(DesignSystem.Spacing.xs)
-        .background(
-            DesignSystem.Color.accent.opacity(0.08),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
-        )
     }
 
     func regionSection(_ region: TerritorialDispute.Region, disputes: [TerritorialDispute]) -> some View {
