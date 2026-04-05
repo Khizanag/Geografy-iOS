@@ -173,7 +173,7 @@ private extension ExploreGameScreen {
                 statTile(
                     icon: "gamecontroller.fill",
                     title: "Games Played",
-                    value: "\(gameService?.statistics.gamesPlayed)"
+                    value: "\(gameService?.statistics.gamesPlayed ?? 0)"
                 )
                 statTile(
                     icon: "star.fill",
@@ -183,12 +183,12 @@ private extension ExploreGameScreen {
                 statTile(
                     icon: "flame.fill",
                     title: "Current Streak",
-                    value: "\(gameService?.statistics.currentStreak)"
+                    value: "\(gameService?.statistics.currentStreak ?? 0)"
                 )
                 statTile(
                     icon: "trophy.fill",
                     title: "Best Streak",
-                    value: "\(gameService?.statistics.bestStreak)"
+                    value: "\(gameService?.statistics.bestStreak ?? 0)"
                 )
             }
         }

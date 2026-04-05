@@ -274,7 +274,7 @@ private extension NicknameQuizScreen {
 
 // MARK: - Supporting Types
 private extension NicknameQuizScreen {
-    public struct NicknameQuestion {
+    struct NicknameQuestion {
         let nickname: String
         let options: [String]
         let correctCountryCode: String

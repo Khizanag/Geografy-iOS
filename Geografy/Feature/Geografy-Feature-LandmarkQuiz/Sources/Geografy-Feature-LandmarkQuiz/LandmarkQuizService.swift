@@ -22,7 +22,7 @@ public final class LandmarkQuizService {
 }
 
 // MARK: - Questions Data
-private extension LandmarkQuizService {
+extension LandmarkQuizService {
     nonisolated(unsafe) public static let allQuestions: [LandmarkQuestion] = [
         // MARK: Monument
         .init(

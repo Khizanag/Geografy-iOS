@@ -29,7 +29,7 @@ public final class FeedService {
 }
 
 // MARK: - Feed Data
-private extension FeedService {
+extension FeedService {
     nonisolated(unsafe) public static let allItems: [FeedItem] = [
         // MARK: Did You Know
         .init(

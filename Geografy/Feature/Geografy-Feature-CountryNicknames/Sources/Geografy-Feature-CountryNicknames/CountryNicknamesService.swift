@@ -27,7 +27,7 @@ public final class CountryNicknamesService {
 }
 
 // MARK: - Data
-private extension CountryNicknamesService {
+extension CountryNicknamesService {
     nonisolated(unsafe) public static let allNicknames: [CountryNickname] = [
         CountryNickname(
             id: "AZ", countryCode: "AZ",

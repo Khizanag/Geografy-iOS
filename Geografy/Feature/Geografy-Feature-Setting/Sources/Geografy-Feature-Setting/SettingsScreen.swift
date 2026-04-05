@@ -564,7 +564,7 @@ private extension SettingsScreen {
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .first else { return }
-        SKStoreReviewController.requestReview(in: scene)
+        AppStore.requestReview(in: scene)
     }
 
     var appStoreURL: URL { SettingsURLs.appStore }
