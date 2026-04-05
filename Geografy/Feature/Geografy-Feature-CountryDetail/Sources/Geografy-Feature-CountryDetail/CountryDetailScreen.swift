@@ -84,42 +84,40 @@ extension CountryDetailScreen {
 
 // MARK: - Toolbar
 private extension CountryDetailScreen {
+    var isFavorite: Bool {
+        favoritesService.isFavorite(code: country.code)
+    }
+
     @ToolbarContentBuilder
     var favoriteToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .primaryAction) {
+        ToolbarItem(placement: .topBarTrailing) {
             Button {
                 hapticsService.impact(.light)
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }
             } label: {
-                Label(
-                    "Favorite",
-                    systemImage: favoritesService.isFavorite(code: country.code)
-                        ? "heart.fill"
-                        : "heart"
-                )
-                .foregroundStyle(DesignSystem.Color.error)
-                .symbolEffect(
-                    .bounce,
-                    value: favoritesService.isFavorite(code: country.code)
-                )
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
+                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
+                    .symbolEffect(.bounce, value: isFavorite)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Favorite")
         }
     }
 
     @ToolbarContentBuilder
     var compareToolbarItem: some ToolbarContent {
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: .topBarTrailing) {
             Button {
                 hapticsService.impact(.light)
                 coordinator.sheet(.compare(preselectedCountry: country))
             } label: {
-                Label("Compare", systemImage: "arrow.left.arrow.right")
+                Image(systemName: "arrow.left.arrow.right")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Compare")
         }
     }
 
