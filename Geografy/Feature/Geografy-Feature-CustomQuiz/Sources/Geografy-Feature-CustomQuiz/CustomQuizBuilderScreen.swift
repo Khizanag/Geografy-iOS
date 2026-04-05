@@ -87,56 +87,10 @@ private extension CustomQuizBuilderScreen {
 // MARK: - Step Indicator
 private extension CustomQuizBuilderScreen {
     var stepIndicator: some View {
-        HStack(spacing: 0) {
-            ForEach(Array(BuilderStep.allCases.enumerated()), id: \.element.rawValue) { index, step in
-                stepDot(step)
-
-                if index < BuilderStep.allCases.count - 1 {
-                    stepLine(completed: step.rawValue < currentStep.rawValue)
-                }
-            }
-        }
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    func stepDot(_ step: BuilderStep) -> some View {
-        let isActive = step == currentStep
-        let isCompleted = step.rawValue < currentStep.rawValue
-
-        return VStack(spacing: DesignSystem.Spacing.xxs) {
-            Circle()
-                .fill(
-                    isActive
-                        ? DesignSystem.Color.accent
-                        : isCompleted
-                            ? DesignSystem.Color.success
-                            : DesignSystem.Color.cardBackgroundHighlighted
-                )
-                .frame(width: 10, height: 10)
-
-            Text(step.title)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(
-                    isActive
-                        ? DesignSystem.Color.accent
-                        : isCompleted
-                            ? DesignSystem.Color.success
-                            : DesignSystem.Color.textTertiary
-                )
-        }
-    }
-
-    func stepLine(completed: Bool) -> some View {
-        Rectangle()
-            .fill(
-                completed
-                    ? DesignSystem.Color.success
-                    : DesignSystem.Color.cardBackgroundHighlighted
-            )
-            .frame(height: 2)
-            .frame(maxWidth: .infinity)
-            .padding(.bottom, DesignSystem.Spacing.lg)
+        StepProgressBar(
+            steps: BuilderStep.allCases.map(\.title),
+            currentStep: currentStep.rawValue
+        )
     }
 }
 
@@ -384,7 +338,7 @@ private extension CustomQuizBuilderScreen {
 private extension CustomQuizBuilderScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+        ToolbarItem(placement: .topBarTrailing) {
             CircleCloseButton()
         }
     }
@@ -445,7 +399,7 @@ private extension CustomQuizBuilderScreen {
     var canProceed: Bool {
         switch currentStep {
         case .name: !quizName.trimmingCharacters(in: .whitespaces).isEmpty && !isDuplicateName
-        case .countries: selectedCountryCodes.count >= 2
+        case .countries: !selectedCountryCodes.isEmpty
         case .questionTypes: !selectedQuestionTypes.isEmpty
         case .difficulty: true
         }
