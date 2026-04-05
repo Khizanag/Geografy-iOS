@@ -188,10 +188,20 @@ private extension QuestionGenerator {
         let correctID = UUID()
         let correctOption = QuizOption(id: correctID, text: country.name, flagCode: nil)
         let correctValue = metric.value(for: country)
-        let smallerCountries = allCountries.filter {
-            $0.code != country.code && metric.value(for: $0) < correctValue && metric.value(for: $0) > 0
+        let others = allCountries.filter {
+            $0.code != country.code && metric.value(for: $0) > 0
         }
-        let distractors = Array(smallerCountries.shuffled().prefix(optionCount - 1))
+        let smallerCountries = others
+            .filter { metric.value(for: $0) < correctValue }
+            .shuffled()
+        let largerCountries = others
+            .filter { metric.value(for: $0) >= correctValue }
+            .shuffled()
+        var distractors = Array(smallerCountries.prefix(optionCount - 1))
+        if distractors.count < optionCount - 1 {
+            let remaining = optionCount - 1 - distractors.count
+            distractors += Array(largerCountries.prefix(remaining))
+        }
         let distractorOptions = distractors.map { QuizOption(id: UUID(), text: $0.name, flagCode: nil) }
         let options = ([correctOption] + distractorOptions).shuffled()
 

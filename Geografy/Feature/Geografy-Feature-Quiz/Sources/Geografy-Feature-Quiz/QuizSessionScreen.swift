@@ -215,11 +215,11 @@ private extension QuizSessionScreen {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 ForEach(0..<3, id: \.self) { index in
                     Image(systemName: index < arcadeLives ? "heart.fill" : "heart")
-                        .font(DesignSystem.Font.caption)
+                        .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(
                             index < arcadeLives
                                 ? DesignSystem.Color.error
-                                : DesignSystem.Color.textTertiary
+                                : DesignSystem.Color.error.opacity(0.3)
                         )
                 }
             }
