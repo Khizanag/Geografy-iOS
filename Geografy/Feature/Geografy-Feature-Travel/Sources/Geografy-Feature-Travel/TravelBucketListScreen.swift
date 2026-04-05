@@ -6,6 +6,7 @@ import Geografy_Feature_CountryList
 import SwiftUI
 
 public struct TravelBucketListScreen: View {
+    // MARK: - Properties
     @Environment(TravelService.self) private var travelService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
@@ -20,8 +21,10 @@ public struct TravelBucketListScreen: View {
     private let prioritiesKey = "bucketList_priorities"
     private let notesKey = "bucketList_notes"
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         contentSwitcher
             .background(DesignSystem.Color.background.ignoresSafeArea())
@@ -312,12 +315,14 @@ public enum BucketListPriority: String, CaseIterable, Codable {
 
 // MARK: - Bucket List Country Detail View
 public struct BucketListCountryDetailView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     public let country: Country
     @Binding var priority: BucketListPriority
     @Binding var note: String
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

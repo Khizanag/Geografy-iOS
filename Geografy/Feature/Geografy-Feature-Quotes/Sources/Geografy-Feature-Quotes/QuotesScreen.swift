@@ -2,7 +2,9 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct QuotesScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @State private var quotesService = QuotesService()
     @State private var selectedCategory: QuoteCategory?
 
@@ -14,6 +16,7 @@ public struct QuotesScreen: View {
         quotesService.quotesOfTheDay()
     }
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

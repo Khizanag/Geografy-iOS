@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CompareCountryPicker: View {
+    // MARK: - Init
     public init(
         countries: [Country],
         excludedCountry: Country? = nil,
@@ -13,6 +14,7 @@ public struct CompareCountryPicker: View {
         self.excludedCountry = excludedCountry
         self.onSelect = onSelect
     }
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -24,6 +26,7 @@ public struct CompareCountryPicker: View {
     public let excludedCountry: Country?
     public let onSelect: (Country) -> Void
 
+    // MARK: - Body
     public var body: some View {
         countryList
             .background(DesignSystem.Color.background)

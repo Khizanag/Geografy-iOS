@@ -2,10 +2,12 @@ import Geografy_Core_Common
 import SwiftUI
 
 public struct FlagView: View {
+    // MARK: - Properties
     let countryCode: String
     var height: CGFloat = DesignSystem.Size.md
     var fixedWidth: Bool = false
 
+    // MARK: - Init
     public init(
         countryCode: String,
         height: CGFloat = DesignSystem.Size.md,
@@ -16,6 +18,7 @@ public struct FlagView: View {
         self.fixedWidth = fixedWidth
     }
 
+    // MARK: - Body
     public var body: some View {
         flagImage
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2))

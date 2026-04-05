@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CountryRowView: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(PronunciationService.self) private var pronunciationService
 
@@ -16,6 +17,7 @@ public struct CountryRowView: View {
     public var showSpeaker: Bool = false
     public var onFavoriteTap: (() -> Void)?
 
+    // MARK: - Init
     public init(
         country: Country,
         isFavorite: Bool,
@@ -36,6 +38,7 @@ public struct CountryRowView: View {
         self.onFavoriteTap = onFavoriteTap
     }
 
+    // MARK: - Body
     public var body: some View {
         HStack(spacing: 0) {
             accentStripe

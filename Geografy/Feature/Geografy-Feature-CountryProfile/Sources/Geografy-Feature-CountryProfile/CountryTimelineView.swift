@@ -2,8 +2,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CountryTimelineView: View {
+    // MARK: - Properties
     public let events: [CountryTimelineEvent]
 
+    // MARK: - Body
     public var body: some View {
         timelineContent
     }

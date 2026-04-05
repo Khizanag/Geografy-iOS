@@ -3,10 +3,12 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CompareCountrySlot: View {
+    // MARK: - Properties
     public let country: Country?
     public let label: String
     public let onTap: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         Button(action: onTap) {
             CardView {

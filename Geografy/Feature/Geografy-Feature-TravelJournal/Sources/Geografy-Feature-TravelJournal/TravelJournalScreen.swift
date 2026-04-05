@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelJournalScreen: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -12,8 +13,10 @@ public struct TravelJournalScreen: View {
     @State private var searchText = ""
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         contentSwitcher
             .navigationTitle("Travel Journal")

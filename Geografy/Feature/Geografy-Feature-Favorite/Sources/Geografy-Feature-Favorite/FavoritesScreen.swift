@@ -12,6 +12,7 @@ public enum FavoritesSortOption: String, CaseIterable {
 }
 
 public struct FavoritesScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
@@ -22,8 +23,10 @@ public struct FavoritesScreen: View {
     @State private var sortAscending = false
     @State private var continentFilter: Country.Continent?
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         Group {
             if filteredCountries.isEmpty {

@@ -7,6 +7,7 @@ import Geografy_Feature_Travel
 import SwiftUI
 
 public struct CountryDetailScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) var coordinator
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) var travelService
@@ -29,10 +30,12 @@ public struct CountryDetailScreen: View {
 
     public let country: Country
 
+    // MARK: - Init
     public init(country: Country) {
         self.country = country
     }
 
+    // MARK: - Body
     public var body: some View {
         contentScrollView
             .background(DesignSystem.Color.background)

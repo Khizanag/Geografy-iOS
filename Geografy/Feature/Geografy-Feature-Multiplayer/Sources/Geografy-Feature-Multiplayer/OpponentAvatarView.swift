@@ -2,10 +2,12 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct OpponentAvatarView: View {
+    // MARK: - Properties
     public let opponent: MockOpponent
     public let size: CGFloat
     public let showFlag: Bool
 
+    // MARK: - Init
     public init(
         opponent: MockOpponent,
         size: CGFloat = DesignSystem.Size.xl,
@@ -16,6 +18,7 @@ public struct OpponentAvatarView: View {
         self.showFlag = showFlag
     }
 
+    // MARK: - Body
     public var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ProfileAvatarView(name: opponent.name, size: size)

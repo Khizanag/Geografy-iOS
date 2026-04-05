@@ -4,14 +4,17 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TerritorialDisputesScreen: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var selections: [String: String] = [:]
     @State private var showingResetAlert = false
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

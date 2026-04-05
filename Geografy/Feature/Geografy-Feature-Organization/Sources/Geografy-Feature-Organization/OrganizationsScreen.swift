@@ -17,7 +17,9 @@ public enum OrgSortOption: String, CaseIterable {
 }
 
 public struct OrganizationsScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -26,6 +28,7 @@ public struct OrganizationsScreen: View {
 
     @State private var sortOption: OrgSortOption = .alphabetical
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .navigationTitle("Organizations")

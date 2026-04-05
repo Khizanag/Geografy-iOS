@@ -2,14 +2,17 @@ import Geografy_Core_Common
 import SwiftUI
 
 public struct LanguageBarChart: View {
+    // MARK: - Properties
     public let languages: [Country.Language]
     public let appeared: Bool
 
+    // MARK: - Init
     public init(languages: [Country.Language], appeared: Bool) {
         self.languages = languages
         self.appeared = appeared
     }
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

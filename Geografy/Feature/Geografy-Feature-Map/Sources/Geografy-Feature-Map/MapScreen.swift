@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct MapScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(Navigator.self) private var coordinator
@@ -17,6 +18,7 @@ public struct MapScreen: View {
 
     public var continentFilter: String?
 
+    // MARK: - Init
     public init(continentFilter: String? = nil) {
         self.continentFilter = continentFilter
     }
@@ -28,6 +30,7 @@ public struct MapScreen: View {
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background(DesignSystem.Color.ocean)

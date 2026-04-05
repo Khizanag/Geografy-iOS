@@ -5,17 +5,20 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CountryProfileScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
 
     public let country: Country
     public let profile: CountryProfile?
 
+    // MARK: - Init
     public init(country: Country, profile: CountryProfile?) {
         self.country = country
         self.profile = profile
     }
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background(DesignSystem.Color.background)

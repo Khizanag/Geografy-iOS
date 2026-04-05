@@ -5,7 +5,9 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FeedScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
@@ -14,6 +16,7 @@ public struct FeedScreen: View {
     @State private var appeared = false
     @State private var isRefreshing = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { backgroundGradient }

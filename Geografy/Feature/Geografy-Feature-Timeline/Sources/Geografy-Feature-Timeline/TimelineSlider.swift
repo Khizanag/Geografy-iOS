@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct TimelineSlider: View {
+    // MARK: - Properties
     @Binding var selectedYear: Int
     public let range: ClosedRange<Int>
     public let decades: [Int]
@@ -10,6 +11,7 @@ public struct TimelineSlider: View {
 
     @State private var showYearPicker = false
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             yearLabel

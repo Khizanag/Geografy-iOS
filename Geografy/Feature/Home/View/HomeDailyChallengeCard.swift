@@ -2,10 +2,12 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeDailyChallengeCard: View {
+    // MARK: - Properties
     let streak: Int
     let hasCompletedToday: Bool
     let onTap: () -> Void
 
+    // MARK: - Body
     var body: some View {
         Button { onTap() } label: {
             CardView {

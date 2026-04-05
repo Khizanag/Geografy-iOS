@@ -5,12 +5,15 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct WordSearchScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
 
     @State private var selectedTheme: WordSearchTheme = .capitals
     @State private var showGuide = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

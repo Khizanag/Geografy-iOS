@@ -4,9 +4,11 @@ import SwiftUI
 
 /// A horizontally scrollable chain of country cards showing the border-hop path.
 public struct NeighborChainView: View {
+    // MARK: - Properties
     public let chain: [Country]
     public let onSelectCountry: (Country) -> Void
 
+    // MARK: - Body
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {

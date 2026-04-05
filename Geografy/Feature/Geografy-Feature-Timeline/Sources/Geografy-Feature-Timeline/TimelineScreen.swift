@@ -5,7 +5,9 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TimelineScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -15,6 +17,7 @@ public struct TimelineScreen: View {
     @State private var selectedEvent: HistoricalEvent?
     @State private var showTodaySection = true
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background(DesignSystem.Color.background)

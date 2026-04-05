@@ -28,6 +28,7 @@ public enum LevelBadgeSize {
 }
 
 public struct LevelBadgeView: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let level: UserLevel
@@ -36,6 +37,7 @@ public struct LevelBadgeView: View {
 
     @State private var glowPulse = false
 
+    // MARK: - Init
     public init(
         level: UserLevel,
         size: LevelBadgeSize = .small,
@@ -46,6 +48,7 @@ public struct LevelBadgeView: View {
         self.animated = animated
     }
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             badgeCircle

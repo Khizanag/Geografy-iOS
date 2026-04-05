@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct QuizPackDetailScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(CountryDataService.self) private var countryDataService
@@ -14,6 +15,7 @@ public struct QuizPackDetailScreen: View {
     @State private var packService = QuizPackService()
     @State private var allPacks: [QuizPack] = []
 
+    // MARK: - Init
     public init(packID: String) {
         self.packID = packID
     }
@@ -22,6 +24,7 @@ public struct QuizPackDetailScreen: View {
         allPacks.first { $0.id == packID }
     }
 
+    // MARK: - Body
     public var body: some View {
         Group {
             if let pack {

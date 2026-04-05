@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct QuizQuestionView: View {
+    // MARK: - Properties
     public let question: QuizQuestion
     public let quizType: QuizType
     public let selectedOptionID: UUID?
@@ -14,6 +15,7 @@ public struct QuizQuestionView: View {
     @State private var optionsVisible = false
     @State private var promptVisible = false
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .padding(.horizontal, DesignSystem.Spacing.md)

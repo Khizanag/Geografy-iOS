@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct IndependenceTimelineScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Navigator.self) private var coordinator
@@ -15,8 +16,10 @@ public struct IndependenceTimelineScreen: View {
 
     private let service = IndependenceTimelineService()
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

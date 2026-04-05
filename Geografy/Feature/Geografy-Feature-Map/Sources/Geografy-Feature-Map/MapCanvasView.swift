@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct MapCanvasView: View {
+    // MARK: - Properties
     public let countryShapes: [CountryShape]
     public let scale: CGFloat
     public let offset: CGSize
@@ -15,6 +16,7 @@ public struct MapCanvasView: View {
     public var showDensityOverlay: Bool = false
     public var wrapsHorizontally: Bool = true
 
+    // MARK: - Init
     public init(
         countryShapes: [CountryShape],
         scale: CGFloat,
@@ -41,6 +43,7 @@ public struct MapCanvasView: View {
         self.wrapsHorizontally = wrapsHorizontally
     }
 
+    // MARK: - Body
     public var body: some View {
         Canvas { context, size in
             let visibleRect = CGRect(origin: .zero, size: size)

@@ -1,11 +1,13 @@
 import SwiftUI
 
 public struct ResultStatItem: View {
+    // MARK: - Properties
     public let icon: String
     public let value: String
     public let label: String
     public var color: Color = DesignSystem.Color.accent
 
+    // MARK: - Init
     public init(
         icon: String,
         value: String,
@@ -18,6 +20,7 @@ public struct ResultStatItem: View {
         self.color = color
     }
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: icon)

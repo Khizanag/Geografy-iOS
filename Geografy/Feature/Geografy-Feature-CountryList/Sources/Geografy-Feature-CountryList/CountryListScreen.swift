@@ -30,6 +30,7 @@ public enum SortOption: String, CaseIterable {
 
 // MARK: - CountryListScreen
 public struct CountryListScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
@@ -46,8 +47,10 @@ public struct CountryListScreen: View {
     @State private var showArea = true
     @State private var showPopulation = true
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         listContent
             .navigationTitle("Countries")

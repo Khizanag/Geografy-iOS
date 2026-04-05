@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct QuizPackBrowserScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(CountryDataService.self) private var countryDataService
@@ -15,8 +16,10 @@ public struct QuizPackBrowserScreen: View {
     @State private var blobAnimating = false
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBackground }

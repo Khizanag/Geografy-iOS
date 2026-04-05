@@ -7,6 +7,7 @@ import SwiftData
 import SwiftUI
 
 public struct ProfileScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) var coordinator
     @Environment(SubscriptionService.self) var subscriptionService
     @Environment(AuthService.self) var authService
@@ -24,8 +25,10 @@ public struct ProfileScreen: View {
     @State var showDeleteAlert = false
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { AmbientBlobsView(.rich) }

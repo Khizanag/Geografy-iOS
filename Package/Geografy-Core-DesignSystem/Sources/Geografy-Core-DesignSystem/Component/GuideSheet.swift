@@ -27,6 +27,7 @@ public struct GuideStep: Identifiable, Sendable {
 }
 
 public struct GuideSheet<Illustration: View>: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     public let pages: [GuidePage]
@@ -34,6 +35,7 @@ public struct GuideSheet<Illustration: View>: View {
 
     @State private var currentPage = 0
 
+    // MARK: - Init
     public init(
         pages: [GuidePage],
         @ViewBuilder illustration: @escaping (Int) -> Illustration
@@ -42,6 +44,7 @@ public struct GuideSheet<Illustration: View>: View {
         self.illustration = illustration
     }
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $currentPage) {

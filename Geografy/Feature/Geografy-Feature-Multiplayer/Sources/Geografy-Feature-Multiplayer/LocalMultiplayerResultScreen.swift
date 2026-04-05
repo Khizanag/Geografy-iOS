@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct LocalMultiplayerResultScreen: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(XPService.self) private var xpService
 
@@ -12,6 +13,7 @@ public struct LocalMultiplayerResultScreen: View {
     @State private var appeared = false
     @State private var xpAwarded = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { AmbientBlobsView(.standard) }

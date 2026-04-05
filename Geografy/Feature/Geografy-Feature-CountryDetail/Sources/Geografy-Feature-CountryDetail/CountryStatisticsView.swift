@@ -3,12 +3,14 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CountryStatisticsView: View {
+    // MARK: - Properties
     @Environment(WorldBankService.self) private var worldBankService
 
     public let countryCode: String
 
     @State private var selectedCategory: StatCategory = .economy
 
+    // MARK: - Body
     public var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             categoryPicker

@@ -1,16 +1,19 @@
 import SwiftUI
 
 public struct PulsingCirclesView: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let icon: String
     public let isAnimating: Bool
 
+    // MARK: - Init
     public init(icon: String, isAnimating: Bool) {
         self.icon = icon
         self.isAnimating = isAnimating
     }
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             circles

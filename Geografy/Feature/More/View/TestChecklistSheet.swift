@@ -2,11 +2,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct TestChecklistSheet: View {
+    // MARK: - Properties
     let title: String
     let checklist: TestChecklist?
 
     @State private var checked: Set<Int> = []
 
+    // MARK: - Body
     var body: some View {
         Group {
             if let checklist {

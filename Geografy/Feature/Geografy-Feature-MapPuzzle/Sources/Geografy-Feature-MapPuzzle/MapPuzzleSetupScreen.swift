@@ -4,6 +4,7 @@ import Geografy_Core_Navigation
 import SwiftUI
 
 public struct MapPuzzleSetupScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -13,8 +14,10 @@ public struct MapPuzzleSetupScreen: View {
 
     private let continents = Country.Continent.allCases.filter { $0 != .antarctica }
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

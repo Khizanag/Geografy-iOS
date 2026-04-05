@@ -4,11 +4,14 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FeatureFlagsScreen: View {
+    // MARK: - Properties
     @Environment(FeatureFlagService.self) private var featureFlags
     @State private var searchText = ""
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         listContent
             .searchable(text: $searchText, prompt: "Search features...")

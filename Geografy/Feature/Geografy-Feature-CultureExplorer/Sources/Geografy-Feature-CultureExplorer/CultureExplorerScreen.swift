@@ -2,11 +2,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CultureExplorerScreen: View {
+    // MARK: - Properties
     @State private var searchQuery = ""
     @State private var selectedProfile: CultureProfile?
 
     private let service = CultureProfileService()
 
+    // MARK: - Init
     public init() {}
 
     private var filteredProfiles: [CultureProfile] {
@@ -17,6 +19,7 @@ public struct CultureExplorerScreen: View {
         { code in Locale.current.localizedString(forRegionCode: code) ?? code }
     }
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

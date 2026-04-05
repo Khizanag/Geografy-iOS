@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CoinPackPreviewSheet: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CoinService.self) private var coinService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -13,6 +14,7 @@ public struct CoinPackPreviewSheet: View {
     @State private var coinAnimating = false
     @State private var sparkleVisible = false
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .padding(DesignSystem.Spacing.lg)

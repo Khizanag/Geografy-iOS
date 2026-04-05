@@ -3,6 +3,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct HomeStreakCard: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -12,6 +13,7 @@ struct HomeStreakCard: View {
 
     @State private var isPulsing = false
 
+    // MARK: - Body
     var body: some View {
         cardContent
             .onAppear {

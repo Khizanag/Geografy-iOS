@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct CultureDetailView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     let profile: CultureProfile
@@ -10,6 +11,7 @@ struct CultureDetailView: View {
         Locale.current.localizedString(forRegionCode: profile.countryCode) ?? profile.countryCode
     }
 
+    // MARK: - Body
     var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

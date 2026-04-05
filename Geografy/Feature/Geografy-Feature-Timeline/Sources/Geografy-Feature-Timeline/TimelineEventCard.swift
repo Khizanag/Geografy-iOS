@@ -3,9 +3,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct TimelineEventCard: View {
+    // MARK: - Properties
     public let event: HistoricalEvent
     public let country: Country?
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {

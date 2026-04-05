@@ -3,11 +3,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct TravelStatsCard: View {
+    // MARK: - Properties
     public let visitedCount: Int
     public let wantToVisitCount: Int
     public let totalCountries: Int
     public let continentBreakdown: [(name: String, visited: Int, total: Int)]
 
+    // MARK: - Body
     public var body: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.lg) {

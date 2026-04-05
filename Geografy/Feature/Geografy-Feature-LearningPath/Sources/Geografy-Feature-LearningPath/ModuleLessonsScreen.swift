@@ -5,17 +5,20 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct ModuleLessonsScreen: View {
+    // MARK: - Init
     public init(
         module: LearningModule
     ) {
         self.module = module
     }
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(LearningPathService.self) private var learningPathService
 
     public let module: LearningModule
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

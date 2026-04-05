@@ -3,6 +3,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TriviaScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -20,8 +21,10 @@ public struct TriviaScreen: View {
 
     private let service = TriviaService()
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         contentSwitcher
             .background { backgroundView }

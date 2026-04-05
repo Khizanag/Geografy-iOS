@@ -2,10 +2,12 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct LaunchScreen: View {
+    // MARK: - Properties
     @State private var globeScale = 0.8
     @State private var globeOpacity = 0.0
     @State private var titleOpacity = 0.0
 
+    // MARK: - Body
     var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelCountryPickerSheet: View {
+    // MARK: - Properties
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelService.self) private var travelService
@@ -16,6 +17,7 @@ public struct TravelCountryPickerSheet: View {
     @State private var searchText = ""
     @State private var selectedCountry: Country?
 
+    // MARK: - Body
     public var body: some View {
         countryList
             .background(DesignSystem.Color.background.ignoresSafeArea())

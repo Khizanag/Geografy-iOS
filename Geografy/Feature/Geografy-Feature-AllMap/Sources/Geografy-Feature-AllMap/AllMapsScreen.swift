@@ -5,7 +5,9 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct AllMapsScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
@@ -24,6 +26,7 @@ public struct AllMapsScreen: View {
         ("Oceania", Country.Continent.oceania.icon),
     ]
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBackground }

@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelCountryRow: View {
+    // MARK: - Properties
     @Environment(TravelService.self) private var travelService
 
     public let country: Country
@@ -11,6 +12,7 @@ public struct TravelCountryRow: View {
 
     @State private var showPicker = false
 
+    // MARK: - Body
     public var body: some View {
         Button { showPicker = true } label: {
             rowContent

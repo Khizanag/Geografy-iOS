@@ -2,12 +2,14 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct TravelJournalEntryCard: View {
+    // MARK: - Properties
     @Environment(TravelJournalService.self) private var journalService
 
     public let entry: TravelJournalEntry
     public let countryName: String
     public let onTap: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         Button(action: onTap) {
             cardContent

@@ -3,6 +3,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct HomeProgressCard: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     let favoriteCount: Int
@@ -19,6 +20,7 @@ struct HomeProgressCard: View {
 
     @State private var animatedProgress: Double = 0
 
+    // MARK: - Body
     var body: some View {
         cardContent
             .onAppear {

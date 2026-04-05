@@ -2,6 +2,7 @@ import Geografy_Core_Common
 import SwiftUI
 
 public struct ZoomableFlagView: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let countryCode: String
@@ -13,11 +14,13 @@ public struct ZoomableFlagView: View {
     @State private var lastOffset: CGSize = .zero
     @State private var isReady = false
 
+    // MARK: - Init
     public init(countryCode: String, onDismiss: @escaping () -> Void) {
         self.countryCode = countryCode
         self.onDismiss = onDismiss
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .accessibilityElement(children: .contain)

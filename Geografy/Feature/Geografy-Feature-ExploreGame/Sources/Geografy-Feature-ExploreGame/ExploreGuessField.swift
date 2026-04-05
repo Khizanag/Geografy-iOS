@@ -4,6 +4,7 @@ import SwiftUI
 
 /// Search field with autocomplete for guessing a country.
 public struct ExploreGuessField: View {
+    // MARK: - Properties
     @State private var query = ""
     @FocusState private var isFocused: Bool
 
@@ -11,6 +12,7 @@ public struct ExploreGuessField: View {
     public let onSearch: (String) -> Void
     public let onSubmit: (Country) -> Void
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             if !filteredSuggestions.isEmpty, isFocused {

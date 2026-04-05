@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct BorderChallengeGuideSheet: View {
+    // MARK: - Body
     var body: some View {
         GuideSheet(pages: Self.pages) { illustration in
             illustrationView(illustration)

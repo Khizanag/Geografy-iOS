@@ -6,6 +6,7 @@ import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct MultiplayerLobbyScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -19,10 +20,12 @@ public struct MultiplayerLobbyScreen: View {
     @State private var showMatch = false
     @State private var blobAnimating = false
 
+    // MARK: - Init
     public init(multiplayerService: MultiplayerService) {
         self.multiplayerService = multiplayerService
     }
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

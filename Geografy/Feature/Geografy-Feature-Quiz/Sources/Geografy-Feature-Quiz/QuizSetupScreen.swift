@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct QuizSetupScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
     #if !os(tvOS)
@@ -21,8 +22,10 @@ public struct QuizSetupScreen: View {
     @AppStorage("quiz_gameMode") private var selectedGameMode: QuizGameMode = .standard
     @AppStorage("quiz_arcadeTimer") private var selectedArcadeTimer: ArcadeTimer = .sixty
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { AmbientBlobsView(.quiz) }

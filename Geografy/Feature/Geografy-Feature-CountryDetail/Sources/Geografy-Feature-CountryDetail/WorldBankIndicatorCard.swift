@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct WorldBankIndicatorCard: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let indicator: StatIndicator
@@ -13,6 +14,7 @@ public struct WorldBankIndicatorCard: View {
     @State private var pulseOpacity: Double = 0.5
     @State private var showFullChart = false
 
+    // MARK: - Body
     public var body: some View {
         Button { showFullChart = true } label: {
             CardView {

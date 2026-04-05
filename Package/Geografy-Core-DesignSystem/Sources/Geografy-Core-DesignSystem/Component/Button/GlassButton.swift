@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct GlassButton: View {
+    // MARK: - Properties
     private let title: String
     private let systemImage: String?
     private let role: Role
@@ -12,6 +13,7 @@ public struct GlassButton: View {
         case secondary
     }
 
+    // MARK: - Init
     public init(
         _ title: String,
         systemImage: String? = nil,
@@ -26,6 +28,7 @@ public struct GlassButton: View {
         self.action = action
     }
 
+    // MARK: - Body
     public var body: some View {
         if fullWidth {
             Button(action: action) {

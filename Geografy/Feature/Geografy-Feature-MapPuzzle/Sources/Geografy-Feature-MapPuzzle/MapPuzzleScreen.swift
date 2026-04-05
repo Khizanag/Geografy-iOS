@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct MapPuzzleScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -19,6 +20,7 @@ struct MapPuzzleScreen: View {
     @State private var correctCount = 0
     @State private var showSummary = false
 
+    // MARK: - Body
     var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

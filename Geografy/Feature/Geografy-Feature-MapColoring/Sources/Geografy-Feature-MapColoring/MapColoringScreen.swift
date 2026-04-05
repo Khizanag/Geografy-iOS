@@ -4,8 +4,10 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct MapColoringScreen: View {
+    // MARK: - Init
     public init() {}
     #if !os(tvOS)
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
@@ -14,6 +16,7 @@ public struct MapColoringScreen: View {
     @State private var visibleGroups: Set<String> = []
     @State private var selectedCountry: Country?
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

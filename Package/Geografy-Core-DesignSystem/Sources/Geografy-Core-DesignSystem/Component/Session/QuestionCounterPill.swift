@@ -1,14 +1,17 @@
 import SwiftUI
 
 public struct QuestionCounterPill: View {
+    // MARK: - Properties
     public let current: Int
     public let total: Int
 
+    // MARK: - Init
     public init(current: Int, total: Int) {
         self.current = current
         self.total = total
     }
 
+    // MARK: - Body
     public var body: some View {
         Text("\(current)/\(total)")
             .contentTransition(.numericText())

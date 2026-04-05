@@ -4,13 +4,16 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct GuestModePromptBanner: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(AuthService.self) private var authService
 
     @AppStorage("guestBannerDismissed") private var isDismissed = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         if authService.isGuest, !isDismissed {
             bannerContent

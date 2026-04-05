@@ -2,12 +2,14 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct SpellingBeeGuideSheet: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var animating = false
 
     private let illustrations = SpellingBeeIllustration.allCases
 
+    // MARK: - Body
     public var body: some View {
         GuideSheet(pages: SpellingBeeGuide.pages) { index in
             illustrationView(for: illustrations[index])

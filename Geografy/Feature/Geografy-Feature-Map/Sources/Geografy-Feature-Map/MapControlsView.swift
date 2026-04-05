@@ -3,9 +3,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct MapControlsView: View {
+    // MARK: - Properties
     @Binding public var showLabels: Bool
     public let onBack: () -> Void
 
+    // MARK: - Init
     public init(
         showLabels: Binding<Bool>,
         onBack: @escaping () -> Void
@@ -14,6 +16,7 @@ public struct MapControlsView: View {
         self.onBack = onBack
     }
 
+    // MARK: - Body
     public var body: some View {
         VStack {
             HStack {

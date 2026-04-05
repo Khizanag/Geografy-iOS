@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct MysteryCountryView: View {
+    // MARK: - Properties
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(HapticsService.self) private var hapticsService
 
@@ -16,6 +17,7 @@ public struct MysteryCountryView: View {
 
     public let onFinish: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         if horizontalSizeClass == .regular {
             regularLayout

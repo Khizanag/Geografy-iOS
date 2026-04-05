@@ -1,12 +1,14 @@
 import SwiftUI
 
 public struct QuizOptionButton: View {
+    // MARK: - Properties
     public let text: String?
     public let flagCode: String?
     public let state: OptionState
     public let index: Int
     public let action: () -> Void
 
+    // MARK: - Init
     public init(
         text: String? = nil,
         flagCode: String? = nil,
@@ -23,6 +25,7 @@ public struct QuizOptionButton: View {
 
     @State private var shakeOffset: CGFloat = 0
 
+    // MARK: - Body
     public var body: some View {
         Button(action: action) {
             content

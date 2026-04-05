@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct HomeComingSoonSection: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     @AppStorage("comingSoonVotes") private var votesData = Data()
@@ -37,6 +38,7 @@ struct HomeComingSoonSection: View {
         ),
     ]
 
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader

@@ -2,11 +2,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FlashcardStatsView: View {
+    // MARK: - Properties
     public let cardsReviewed: Int
     public let correctCount: Int
     public let totalCards: Int
     public let averageThinkingTime: TimeInterval
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             headerSection

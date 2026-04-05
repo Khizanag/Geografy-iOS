@@ -24,6 +24,7 @@ public extension View {
 
 // MARK: - Coordinated Navigation Stack
 public struct CoordinatedNavigationStack<Root: View>: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.destinationContent) private var destinationContent
 
@@ -31,6 +32,7 @@ public struct CoordinatedNavigationStack<Root: View>: View {
     public var showCloseButton: Bool = false
     @ViewBuilder public var root: () -> Root
 
+    // MARK: - Init
     public init(
         navigator: Navigator,
         showCloseButton: Bool = false,
@@ -41,6 +43,7 @@ public struct CoordinatedNavigationStack<Root: View>: View {
         self.root = root
     }
 
+    // MARK: - Body
     public var body: some View {
         NavigationStack(path: $navigator.path) {
             rootWithCloseButton
@@ -120,6 +123,5 @@ private struct DestinationSheetView: View {
         ) {
             destinationContent?(destination) ?? AnyView(EmptyView())
         }
-        .presentationSizing(.form)
     }
 }

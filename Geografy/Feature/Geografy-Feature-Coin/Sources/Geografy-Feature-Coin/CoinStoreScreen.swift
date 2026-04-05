@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CoinStoreScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CoinService.self) private var coinService
 
@@ -11,8 +12,10 @@ public struct CoinStoreScreen: View {
     @State private var earnInfoExpanded = false
     @State private var selectedPack: CoinPack?
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

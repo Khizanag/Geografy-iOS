@@ -5,12 +5,14 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct ContinentStatsScreen: View {
+    // MARK: - Init
     public init(
         continentName: String
     ) {
         self.continentName = continentName
     }
     #if !os(tvOS)
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(Navigator.self) private var coordinator
@@ -20,6 +22,7 @@ public struct ContinentStatsScreen: View {
 
     public let continentName: String
 
+    // MARK: - Body
     public var body: some View {
         loadedContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

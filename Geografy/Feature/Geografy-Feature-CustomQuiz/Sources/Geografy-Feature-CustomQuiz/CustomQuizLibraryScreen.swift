@@ -6,6 +6,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CustomQuizLibraryScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
@@ -15,8 +16,10 @@ public struct CustomQuizLibraryScreen: View {
     @State private var editingQuiz: CustomQuiz?
     @State private var quizToDelete: CustomQuiz?
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         content
             .background(DesignSystem.Color.background)

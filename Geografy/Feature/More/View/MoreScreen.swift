@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct MoreScreen: View {
+    // MARK: - Properties
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
@@ -16,6 +17,7 @@ struct MoreScreen: View {
 
     private let testChecklistService = TestChecklistService()
 
+    // MARK: - Body
     var body: some View {
         itemList
             .background(DesignSystem.Color.background.ignoresSafeArea())

@@ -1,12 +1,14 @@
 import SwiftUI
 
 public struct EmptyStateView: View {
+    // MARK: - Properties
     public let icon: String
     public let title: String
     public let subtitle: String
     public var actionTitle: String?
     public var action: (() -> Void)?
 
+    // MARK: - Init
     public init(
         icon: String,
         title: String,
@@ -21,6 +23,7 @@ public struct EmptyStateView: View {
         self.action = action
     }
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             iconCircle

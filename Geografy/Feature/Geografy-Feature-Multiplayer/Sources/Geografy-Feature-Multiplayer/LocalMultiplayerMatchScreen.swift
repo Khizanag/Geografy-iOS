@@ -5,6 +5,7 @@ import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct LocalMultiplayerMatchScreen: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     @Bindable var coordinator: LocalMultiplayerCoordinator
@@ -12,6 +13,7 @@ public struct LocalMultiplayerMatchScreen: View {
     @State private var selectedOptionID: UUID?
     @State private var answerStartTime = Date()
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: 0) {
             scoreBar

@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FlagGameResultScreen: View {
+    // MARK: - Init
     public init(
         score: Int,
         answeredCountries: [Country],
@@ -14,11 +15,13 @@ public struct FlagGameResultScreen: View {
         self.onPlayAgain = onPlayAgain
         self.onDismiss = onDismiss
     }
+    // MARK: - Properties
     public let score: Int
     public let answeredCountries: [Country]
     public let onPlayAgain: () -> Void
     public let onDismiss: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xl) {
             Spacer()

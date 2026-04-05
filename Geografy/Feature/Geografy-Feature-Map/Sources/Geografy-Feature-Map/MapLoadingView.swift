@@ -2,14 +2,17 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct MapLoadingView: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var isAnimating = false
     @State private var dotPhase = 0
     @State private var blobAnimating = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background { oceanBackground }

@@ -3,6 +3,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct EditProfileSheet: View {
+    // MARK: - Properties
     @Environment(AuthService.self) private var authService
     @Environment(DatabaseManager.self) private var database
     @Environment(HapticsService.self) private var hapticsService
@@ -12,8 +13,10 @@ public struct EditProfileSheet: View {
     @State private var displayName: String = ""
     @State private var isSaving = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         formContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

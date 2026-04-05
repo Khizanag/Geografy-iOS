@@ -3,12 +3,14 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CoinBalanceView: View {
+    // MARK: - Properties
     @Environment(CoinService.self) private var coinService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var displayedBalance = 0
     @State private var glowScale: CGFloat = 1.0
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .onAppear {

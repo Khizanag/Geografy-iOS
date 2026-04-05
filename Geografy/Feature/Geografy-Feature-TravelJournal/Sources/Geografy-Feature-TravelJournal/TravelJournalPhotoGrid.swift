@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct TravelJournalPhotoGrid: View {
+    // MARK: - Properties
     public let images: [UIImage]
     public var isReadOnly = false
     public var onDelete: ((Int) -> Void)?
@@ -15,6 +16,7 @@ public struct TravelJournalPhotoGrid: View {
         ),
     ]
 
+    // MARK: - Body
     public var body: some View {
         LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.xs) {
             ForEach(images.indices, id: \.self) { index in

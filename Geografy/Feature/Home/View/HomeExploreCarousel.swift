@@ -3,8 +3,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeExploreCarousel: View {
+    // MARK: - Properties
     let onItemTap: (ExploreItem) -> Void
 
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader

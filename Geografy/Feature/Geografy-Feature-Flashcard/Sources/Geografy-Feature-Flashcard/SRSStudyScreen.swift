@@ -5,14 +5,17 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct SRSStudyScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         contentView
             .background(DesignSystem.Color.background.ignoresSafeArea())

@@ -6,12 +6,14 @@ import Geografy_Feature_CountryList
 import SwiftUI
 
 public struct CustomQuizPreviewScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
 
     public let quiz: CustomQuiz
     public let onSave: (CustomQuiz) -> Void
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

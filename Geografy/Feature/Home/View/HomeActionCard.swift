@@ -2,12 +2,14 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeActionCard: View {
+    // MARK: - Properties
     let dailyChallengeCompleted: Bool
     let srsCardsDue: Int
     let onDailyChallenge: () -> Void
     let onReviewCards: () -> Void
     let onStartQuiz: () -> Void
 
+    // MARK: - Body
     var body: some View {
         Button { action.handler() } label: {
             cardContent

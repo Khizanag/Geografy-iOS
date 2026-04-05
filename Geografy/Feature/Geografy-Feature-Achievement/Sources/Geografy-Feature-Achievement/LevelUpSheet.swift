@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct LevelUpSheet: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let newLevel: UserLevel
@@ -13,11 +14,13 @@ public struct LevelUpSheet: View {
     @State private var contentOpacity: Double = 0
     @State private var particlesVisible = false
 
+    // MARK: - Init
     public init(newLevel: UserLevel, onDismiss: @escaping () -> Void) {
         self.newLevel = newLevel
         self.onDismiss = onDismiss
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .onAppear {

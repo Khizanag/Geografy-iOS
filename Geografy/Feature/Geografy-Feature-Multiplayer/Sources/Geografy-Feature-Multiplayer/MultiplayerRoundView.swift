@@ -4,6 +4,7 @@ import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct MultiplayerRoundView: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let question: QuizQuestion
@@ -15,6 +16,7 @@ public struct MultiplayerRoundView: View {
     public let opponentSelectedOptionID: UUID?
     public let onSelectOption: (UUID) -> Void
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             questionPrompt

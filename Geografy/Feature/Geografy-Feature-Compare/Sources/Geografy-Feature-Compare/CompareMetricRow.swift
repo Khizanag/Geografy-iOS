@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CompareMetricRow: View {
+    // MARK: - Properties
     public let title: String
     public let icon: String
     public let leftValue: String
@@ -9,6 +10,7 @@ public struct CompareMetricRow: View {
     public var match: Bool?
     public var footer: String?
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.xs) {

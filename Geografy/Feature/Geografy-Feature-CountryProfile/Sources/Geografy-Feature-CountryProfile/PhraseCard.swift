@@ -2,8 +2,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct PhraseCard: View {
+    // MARK: - Properties
     public let phrase: CountryPhrase
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {

@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeQuickStatsRow: View {
+    // MARK: - Properties
     let streakDays: Int
     let level: Int
     let countriesExplored: Int
@@ -9,6 +10,7 @@ struct HomeQuickStatsRow: View {
     let onLevelTap: () -> Void
     let onCountriesTap: () -> Void
 
+    // MARK: - Body
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             statPill(

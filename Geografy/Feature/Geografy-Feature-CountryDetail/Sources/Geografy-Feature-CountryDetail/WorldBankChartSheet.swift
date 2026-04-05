@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct WorldBankChartSheet: View {
+    // MARK: - Properties
     public let indicator: StatIndicator
     public let allPoints: [WorldBankService.DataPoint]
 
@@ -26,6 +27,7 @@ public struct WorldBankChartSheet: View {
         }
     }
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

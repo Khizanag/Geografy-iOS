@@ -6,6 +6,7 @@ import Geografy_Feature_Map
 import SwiftUI
 
 public struct TravelMapScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
@@ -21,11 +22,13 @@ public struct TravelMapScreen: View {
     @State private var selectedFilter: TravelMapFilter
     @State private var showLabels = false
 
+    // MARK: - Init
     public init(filter: TravelMapFilter) {
         self.filter = filter
         self._selectedFilter = State(initialValue: filter)
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .background(DesignSystem.Color.ocean)

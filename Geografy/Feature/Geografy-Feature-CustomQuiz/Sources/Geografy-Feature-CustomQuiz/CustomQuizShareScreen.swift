@@ -4,12 +4,15 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CustomQuizShareScreen: View {
+    // MARK: - Properties
     public let quiz: CustomQuiz
 
+    // MARK: - Init
     public init(quiz: CustomQuiz) {
         self.quiz = quiz
     }
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

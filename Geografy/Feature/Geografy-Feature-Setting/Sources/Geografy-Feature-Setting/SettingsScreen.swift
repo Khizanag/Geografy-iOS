@@ -6,6 +6,7 @@ import StoreKit
 import SwiftUI
 
 public struct SettingsScreen: View {
+    // MARK: - Properties
     @Environment(AuthService.self) private var authService
     @Environment(Navigator.self) private var coordinator
     @Environment(SubscriptionService.self) private var subscriptionService
@@ -25,8 +26,10 @@ public struct SettingsScreen: View {
     @State private var showDeveloperTools = false
     @State private var versionTapCount = 0
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

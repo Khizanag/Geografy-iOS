@@ -4,8 +4,10 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct BorderChallengeScreen: View {
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -18,6 +20,7 @@ public struct BorderChallengeScreen: View {
     @State private var showSession = false
     @State private var appeared = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { AmbientBlobsView(.quiz) }

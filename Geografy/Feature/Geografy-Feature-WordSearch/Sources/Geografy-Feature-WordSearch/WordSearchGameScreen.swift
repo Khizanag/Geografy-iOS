@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct WordSearchGameScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -11,6 +12,7 @@ public struct WordSearchGameScreen: View {
 
     public let theme: WordSearchTheme
 
+    // MARK: - Init
     public init(theme: WordSearchTheme) {
         self.theme = theme
     }
@@ -28,6 +30,7 @@ public struct WordSearchGameScreen: View {
     private let service = WordSearchService()
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
+    // MARK: - Body
     public var body: some View {
         contentSwitcher
             .background(DesignSystem.Color.background)

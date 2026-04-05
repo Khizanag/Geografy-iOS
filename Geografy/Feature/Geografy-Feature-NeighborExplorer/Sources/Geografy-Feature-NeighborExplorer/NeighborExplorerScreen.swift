@@ -4,11 +4,13 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct NeighborExplorerScreen: View {
+    // MARK: - Init
     public init(
         country: Country
     ) {
         self.country = country
     }
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -22,6 +24,7 @@ public struct NeighborExplorerScreen: View {
     @State private var showNoPathAlert = false
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         contentView
             .navigationTitle("Neighbor Explorer")

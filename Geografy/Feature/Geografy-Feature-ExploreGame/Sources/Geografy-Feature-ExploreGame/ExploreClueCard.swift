@@ -3,9 +3,11 @@ import SwiftUI
 
 /// Displays a single clue with reveal animation.
 public struct ExploreClueCard: View {
+    // MARK: - Properties
     public let clue: ExploreClue
     public let isLatest: Bool
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             cardContent

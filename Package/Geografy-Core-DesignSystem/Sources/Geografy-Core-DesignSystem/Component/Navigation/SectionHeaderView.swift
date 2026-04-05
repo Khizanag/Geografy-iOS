@@ -1,10 +1,12 @@
 import SwiftUI
 
 public struct SectionHeaderView: View {
+    // MARK: - Properties
     public let title: String
     public var icon: String?
     public var isNew: Bool = false
 
+    // MARK: - Init
     public init(
         title: String,
         icon: String? = nil,
@@ -15,6 +17,7 @@ public struct SectionHeaderView: View {
         self.isNew = isNew
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .accessibilityElement(children: .combine)

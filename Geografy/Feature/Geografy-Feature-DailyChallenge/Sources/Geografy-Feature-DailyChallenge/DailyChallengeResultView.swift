@@ -7,6 +7,7 @@ import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct DailyChallengeResultView: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -20,6 +21,7 @@ public struct DailyChallengeResultView: View {
     @State private var showShareCard = false
     @State private var blobAnimating = false
 
+    // MARK: - Init
     public init(
         score: Int,
         maxScore: Int,
@@ -34,6 +36,7 @@ public struct DailyChallengeResultView: View {
         self.streak = streak
     }
 
+    // MARK: - Body
     public var body: some View {
         resultContent
             .navigationTitle("Results")

@@ -2,8 +2,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FeatureComparisonSection: View {
+    // MARK: - Properties
     @State private var appeared = false
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .padding(DesignSystem.Spacing.md)

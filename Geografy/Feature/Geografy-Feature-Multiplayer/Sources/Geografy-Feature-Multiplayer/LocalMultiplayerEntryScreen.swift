@@ -4,13 +4,16 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct LocalMultiplayerEntryScreen: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var coordinator = LocalMultiplayerCoordinator()
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .animation(.easeInOut(duration: 0.3), value: coordinator.state)

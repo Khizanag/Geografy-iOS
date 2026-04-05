@@ -3,11 +3,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FlashcardDeckCard: View {
+    // MARK: - Properties
     public let deck: FlashcardDeck
     public let cardCount: Int
     public let proficiencyPercentage: Double
     public let dueCount: Int
 
+    // MARK: - Body
     public var body: some View {
         ZStack(alignment: .bottomLeading) {
             gradient

@@ -3,9 +3,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeCountrySpotlightCard: View {
+    // MARK: - Properties
     let country: Country
     let funFact: String?
 
+    // MARK: - Body
     var body: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {

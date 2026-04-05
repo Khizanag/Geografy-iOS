@@ -13,11 +13,13 @@ enum SettingsURLs {
 
 // MARK: - Toggle Row
 struct SettingsToggleRow: View {
+    // MARK: - Properties
     let icon: String
     let iconColor: Color
     let title: String
     @Binding var isOn: Bool
 
+    // MARK: - Body
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
@@ -35,10 +37,12 @@ struct SettingsToggleRow: View {
 
 // MARK: - Navigation Row
 struct SettingsNavigationRow: View {
+    // MARK: - Properties
     let icon: String
     let iconColor: Color
     let title: String
 
+    // MARK: - Body
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
@@ -57,10 +61,12 @@ struct SettingsNavigationRow: View {
 
 // MARK: - External Link Row
 struct SettingsExternalRow: View {
+    // MARK: - Properties
     let icon: String
     let iconColor: Color
     let title: String
 
+    // MARK: - Body
     var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: icon, color: iconColor)
@@ -79,9 +85,11 @@ struct SettingsExternalRow: View {
 
 // MARK: - Icon Badge
 struct SettingsIconBadge: View {
+    // MARK: - Properties
     let systemImage: String
     let color: Color
 
+    // MARK: - Body
     var body: some View {
         Image(systemName: systemImage)
             .font(DesignSystem.IconSize.medium)

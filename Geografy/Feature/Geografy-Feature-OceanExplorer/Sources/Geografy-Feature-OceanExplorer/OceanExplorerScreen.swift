@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct OceanExplorerScreen: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedSegment = 0
@@ -12,8 +13,10 @@ public struct OceanExplorerScreen: View {
     private let oceanService = OceanService()
     private let segments = ["Oceans", "Seas"]
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

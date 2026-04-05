@@ -5,11 +5,13 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct OrganizationDetailScreen: View {
+    // MARK: - Init
     public init(
         organization: Organization
     ) {
         self.organization = organization
     }
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -22,6 +24,7 @@ public struct OrganizationDetailScreen: View {
     @State private var showLogoZoom = false
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBackground }

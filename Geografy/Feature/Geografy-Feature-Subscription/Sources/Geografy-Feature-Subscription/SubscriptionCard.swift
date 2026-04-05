@@ -3,6 +3,7 @@ import StoreKit
 import SwiftUI
 
 public struct SubscriptionCard: View {
+    // MARK: - Properties
     public let productID: String
     public let fallbackPrice: String
     public let period: String
@@ -12,6 +13,7 @@ public struct SubscriptionCard: View {
     public let product: Product?
     public let onTap: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         Button(action: onTap) {
             cardContent

@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct RegionSelectionBar<T: RegionSelectable>: View {
     #if !os(tvOS)
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     #endif
 
@@ -10,6 +11,7 @@ public struct RegionSelectionBar<T: RegionSelectable>: View {
     public let selectedID: T.ID
     public let onSelect: (T) -> Void
 
+    // MARK: - Init
     public init(
         items: [T],
         selectedID: T.ID,
@@ -20,6 +22,7 @@ public struct RegionSelectionBar<T: RegionSelectable>: View {
         self.onSelect = onSelect
     }
 
+    // MARK: - Body
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {

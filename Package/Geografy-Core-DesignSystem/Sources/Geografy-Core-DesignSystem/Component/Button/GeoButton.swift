@@ -7,11 +7,13 @@ public struct GeoButton: View {
         case text
     }
 
+    // MARK: - Properties
     private let title: String
     private let systemImage: String?
     private let style: Style
     private let action: () -> Void
 
+    // MARK: - Init
     public init(
         _ title: String,
         systemImage: String? = nil,
@@ -24,6 +26,7 @@ public struct GeoButton: View {
         self.action = action
     }
 
+    // MARK: - Body
     public var body: some View {
         Button(action: action) {
             label

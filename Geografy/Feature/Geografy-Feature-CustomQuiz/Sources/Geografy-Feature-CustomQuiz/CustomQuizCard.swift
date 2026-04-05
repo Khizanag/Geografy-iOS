@@ -4,8 +4,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CustomQuizCard: View {
+    // MARK: - Properties
     public let quiz: CustomQuiz
 
+    // MARK: - Body
     public var body: some View {
         ZStack(alignment: .bottomLeading) {
             gradient

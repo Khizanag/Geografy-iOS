@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct EconomyExplorerScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -12,6 +13,7 @@ public struct EconomyExplorerScreen: View {
     @State private var searchText = ""
     @State private var blobAnimating = false
 
+    // MARK: - Init
     public init() {}
 
     private var rankedCountries: [Country] {
@@ -27,6 +29,7 @@ public struct EconomyExplorerScreen: View {
         }
     }
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

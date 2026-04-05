@@ -2,8 +2,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct MatchHistoryScreen: View {
+    // MARK: - Properties
     public let multiplayerService: MultiplayerService
 
+    // MARK: - Body
     public var body: some View {
         Group {
             if multiplayerService.matchHistory.isEmpty {

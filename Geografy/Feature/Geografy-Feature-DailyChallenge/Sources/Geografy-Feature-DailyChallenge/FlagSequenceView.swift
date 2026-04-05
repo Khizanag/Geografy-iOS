@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FlagSequenceView: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let content: DailyChallenge.FlagSequenceContent
@@ -19,6 +20,7 @@ public struct FlagSequenceView: View {
     @State private var showFeedback = false
     @State private var correctCount = 0
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             SessionProgressView(
