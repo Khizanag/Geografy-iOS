@@ -65,7 +65,9 @@ private extension QuotesScreen {
                     }
                 }
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
         }
+        .scrollClipDisabled()
     }
 
     func filterChip(label: String, icon: String, isSelected: Bool, action: @escaping () -> Void) -> some View {

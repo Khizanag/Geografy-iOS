@@ -53,11 +53,14 @@ private extension FeedCard {
     var saveButton: some View {
         Button(action: onSave) {
             Image(systemName: isSaved ? "heart.fill" : "heart")
-                .font(DesignSystem.Font.subheadline)
+                .font(DesignSystem.Font.title3)
                 .foregroundStyle(isSaved ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
+                .symbolEffect(.bounce, value: isSaved)
+                .scaleEffect(isSaved ? 1.0 : 0.9)
                 .animation(.spring(response: 0.3, dampingFraction: 0.5), value: isSaved)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(isSaved ? "Remove from saved" : "Save")
     }
 
     var cardBody: some View {
