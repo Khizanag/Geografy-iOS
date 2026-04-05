@@ -62,13 +62,49 @@ private extension WordSearchScreen {
     var themeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Theme")
-            Picker("Theme", selection: $selectedTheme) {
+            VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(WordSearchTheme.allCases, id: \.self) { theme in
-                    Label(theme.rawValue, systemImage: theme.icon).tag(theme)
+                    themeRow(theme)
                 }
             }
-            .pickerStyle(.segmented)
         }
+    }
+
+    func themeRow(_ theme: WordSearchTheme) -> some View {
+        let isSelected = selectedTheme == theme
+        return Button {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                selectedTheme = theme
+            }
+        } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: theme.icon)
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
+                    .frame(width: 28)
+                Text(theme.rawValue)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(isSelected ? .semibold : .regular)
+                    .foregroundStyle(
+                        isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary
+                    )
+                Spacer(minLength: 0)
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.onAccent)
+                        .transition(.scale.combined(with: .opacity))
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .background(
+                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            )
+        }
+        .buttonStyle(PressButtonStyle())
     }
 
     var howItWorksSection: some View {
@@ -174,10 +210,12 @@ private extension WordSearchScreen {
             }
         }
         #else
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: .topBarTrailing) {
             Button { showGuide = true } label: {
-                Label("Guide", systemImage: "info.circle")
+                Image(systemName: "info.circle")
+                    .foregroundStyle(.white)
             }
+            .buttonStyle(.plain)
         }
         #endif
     }
