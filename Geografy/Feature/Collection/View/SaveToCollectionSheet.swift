@@ -5,7 +5,6 @@ import SwiftUI
 
 struct SaveToCollectionSheet: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(CollectionService.self) private var collectionService
     @Environment(HapticsService.self) private var hapticsService
 
@@ -18,20 +17,13 @@ struct SaveToCollectionSheet: View {
 
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            content
-                .background(DesignSystem.Color.background.ignoresSafeArea())
-                .navigationTitle("Save to Collection")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Done") { dismiss() }
-                    }
-                }
-                .alert("New Collection", isPresented: $showNewCollection) {
-                    newCollectionAlert
-                }
-        }
+        content
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Save to Collection")
+            .navigationBarTitleDisplayMode(.inline)
+            .alert("New Collection", isPresented: $showNewCollection) {
+                newCollectionAlert
+            }
     }
 }
 

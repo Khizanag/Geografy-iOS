@@ -31,31 +31,29 @@ struct BorderChallengeSessionScreen: View {
 
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            mainContent
-                .background(DesignSystem.Color.background.ignoresSafeArea())
-                .navigationTitle(challengeCountry?.name ?? "Border Challenge")
-                #if !os(tvOS)
-                .navigationBarTitleDisplayMode(.inline)
-                #endif
-                .toolbar { sessionToolbar }
-                .task { startChallenge() }
-                .onReceive(timer) { _ in tickTimer() }
-                .sheet(isPresented: $showResult) {
-                    BorderChallengeResultView(
-                        country: challengeCountry,
-                        found: foundNeighbors.count,
-                        total: neighbors.count,
-                        difficulty: difficulty,
-                        secondsUsed: totalTime - secondsRemaining,
-                        onPlayAgain: {
-                            showResult = false
-                            startChallenge()
-                        },
-                        onDone: { dismiss() }
-                    )
-                }
-        }
+        mainContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle(challengeCountry?.name ?? "Border Challenge")
+            #if !os(tvOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar { sessionToolbar }
+            .task { startChallenge() }
+            .onReceive(timer) { _ in tickTimer() }
+            .sheet(isPresented: $showResult) {
+                BorderChallengeResultView(
+                    country: challengeCountry,
+                    found: foundNeighbors.count,
+                    total: neighbors.count,
+                    difficulty: difficulty,
+                    secondsUsed: totalTime - secondsRemaining,
+                    onPlayAgain: {
+                        showResult = false
+                        startChallenge()
+                    },
+                    onDone: { dismiss() }
+                )
+            }
     }
 }
 

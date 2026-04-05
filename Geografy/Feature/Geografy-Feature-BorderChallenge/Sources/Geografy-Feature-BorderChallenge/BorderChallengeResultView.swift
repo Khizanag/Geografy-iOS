@@ -4,8 +4,6 @@ import SwiftUI
 
 struct BorderChallengeResultView: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
-
     let country: Country?
     let found: Int
     let total: Int
@@ -16,20 +14,18 @@ struct BorderChallengeResultView: View {
 
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            scrollContent
-                .background(DesignSystem.Color.background.ignoresSafeArea())
-                .navigationTitle("Results")
-                #if !os(tvOS)
-                .navigationBarTitleDisplayMode(.inline)
-                #endif
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Done") { onDone() }
-                    }
+        scrollContent
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Results")
+            #if !os(tvOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { onDone() }
                 }
-                .safeAreaInset(edge: .bottom) { actionButtons }
-        }
+            }
+            .safeAreaInset(edge: .bottom) { actionButtons }
     }
 }
 

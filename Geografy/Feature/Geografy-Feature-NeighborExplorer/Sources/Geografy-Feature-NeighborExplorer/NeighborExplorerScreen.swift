@@ -11,7 +11,6 @@ public struct NeighborExplorerScreen: View {
         self.country = country
     }
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 

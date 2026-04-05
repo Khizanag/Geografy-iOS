@@ -58,18 +58,16 @@ private extension CompareScreen {
         case .pickRight: leftCountry
         }
 
-        NavigationStack {
-            CompareCountryPicker(
-                countries: countryDataService.countries,
-                excludedCountry: excluded
-            ) { selected in
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
-                    switch sheet {
-                    case .pickLeft: leftCountry = selected
-                    case .pickRight: rightCountry = selected
-                    }
-                    saveIfBothSelected()
+        CompareCountryPicker(
+            countries: countryDataService.countries,
+            excludedCountry: excluded
+        ) { selected in
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                switch sheet {
+                case .pickLeft: leftCountry = selected
+                case .pickRight: rightCountry = selected
                 }
+                saveIfBothSelected()
             }
         }
     }

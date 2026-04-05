@@ -4,7 +4,6 @@ import SwiftUI
 
 public struct MultiplayerResultScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let match: MultiplayerMatch

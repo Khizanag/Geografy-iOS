@@ -7,7 +7,6 @@ import SwiftUI
 
 public struct TravelMapScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
     @Environment(HapticsService.self) private var hapticsService

@@ -5,7 +5,6 @@ import SwiftUI
 
 public struct TravelJournalDetailScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(TravelJournalService.self) private var journalService
 
     public let entry: TravelJournalEntry

@@ -6,7 +6,6 @@ import SwiftUI
 
 public struct IndependenceTimelineScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Navigator.self) private var coordinator
 

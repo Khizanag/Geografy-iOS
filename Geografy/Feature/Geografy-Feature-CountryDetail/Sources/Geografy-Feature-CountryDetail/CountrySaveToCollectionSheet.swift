@@ -7,8 +7,6 @@ struct CountrySaveToCollectionSheet: View {
     // MARK: - Properties
     @Environment(CollectionService.self) private var collectionService
     @Environment(HapticsService.self) private var hapticsService
-    @Environment(\.dismiss) private var dismiss
-
     let countryCode: String
     let countryName: String
 
@@ -17,20 +15,13 @@ struct CountrySaveToCollectionSheet: View {
 
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            content
-                .background(DesignSystem.Color.background.ignoresSafeArea())
-                .navigationTitle("Save to Collection")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Done") { dismiss() }
-                    }
-                }
-                .alert("New Collection", isPresented: $showNewCollection) {
-                    newCollectionAlert
-                }
-        }
+        content
+            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .navigationTitle("Save to Collection")
+            .navigationBarTitleDisplayMode(.inline)
+            .alert("New Collection", isPresented: $showNewCollection) {
+                newCollectionAlert
+            }
     }
 }
 

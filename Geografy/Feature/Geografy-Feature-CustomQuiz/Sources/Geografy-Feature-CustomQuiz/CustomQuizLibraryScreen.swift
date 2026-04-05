@@ -7,7 +7,6 @@ import SwiftUI
 
 public struct CustomQuizLibraryScreen: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
