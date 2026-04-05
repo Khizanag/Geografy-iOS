@@ -8,58 +8,45 @@ public struct TimelineSlider: View {
     public let range: ClosedRange<Int>
     public let decades: [Int]
     public let eventCountForDecade: (Int) -> Int
-
-    @State private var showYearPicker = false
+    public var accessoryLabel: String?
 
     // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            yearLabel
+            yearHeader
             sliderControl
             decadeMarkers
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
-        .sheet(isPresented: $showYearPicker) { yearPickerSheet }
+        .background(.ultraThinMaterial, in: .rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .padding(.horizontal, DesignSystem.Spacing.sm)
+        .padding(.bottom, DesignSystem.Spacing.xs)
     }
 }
 
 // MARK: - Subviews
 private extension TimelineSlider {
-    var yearLabel: some View {
-        Button { showYearPicker = true } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Text(String(selectedYear))
-                    .font(DesignSystem.Font.title)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .contentTransition(.numericText())
-                Image(systemName: "chevron.up.chevron.down")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+    var yearHeader: some View {
+        HStack {
+            Picker("Year", selection: $selectedYear) {
+                ForEach(Array(stride(from: range.upperBound, through: range.lowerBound, by: -1)), id: \.self) { year in
+                    Text(String(year)).tag(year)
+                }
             }
-        }
-        .buttonStyle(.plain)
-        .animation(.snappy, value: selectedYear)
-    }
+            .pickerStyle(.wheel)
+            .frame(width: 120, height: 100)
 
-    var yearPickerSheet: some View {
-        Picker("Year", selection: $selectedYear) {
-            ForEach(range.reversed(), id: \.self) { year in
-                Text(String(year)).tag(year)
+            Spacer(minLength: 0)
+
+            if let accessoryLabel {
+                Text(accessoryLabel)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .contentTransition(.numericText())
+                    .animation(.snappy, value: accessoryLabel)
             }
         }
-        .pickerStyle(.wheel)
-        .navigationTitle("Select Year")
-        #if !os(tvOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done") { showYearPicker = false }
-                    .fontWeight(.semibold)
-            }
-        }
-        .presentationDetents([.medium])
     }
 
     var sliderControl: some View {

@@ -39,8 +39,8 @@ private extension TimelineScreen {
         VStack(spacing: 0) {
             filterBar
             eventList
-            timelineSliderSection
         }
+        .overlay(alignment: .bottom) { timelineSliderSection }
     }
 
     var filterBar: some View {
@@ -204,22 +204,18 @@ private extension TimelineScreen {
     @ViewBuilder
     var timelineSliderSection: some View {
         #if !os(tvOS)
-        CardView {
-            TimelineSlider(
-                selectedYear: $selectedYear,
-                range: 1_800...2_025,
-                decades: timelineService.decades(in: 1_800...2_025),
-                eventCountForDecade: { decade in
-                    timelineService.eventCount(
-                        forDecade: decade,
-                        filter: filter,
-                        countries: countryDataService.countries
-                    )
-                }
-            )
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.bottom, DesignSystem.Spacing.xs)
+        TimelineSlider(
+            selectedYear: $selectedYear,
+            range: 1_800...2_025,
+            decades: timelineService.decades(in: 1_800...2_025),
+            eventCountForDecade: { decade in
+                timelineService.eventCount(
+                    forDecade: decade,
+                    filter: filter,
+                    countries: countryDataService.countries
+                )
+            }
+        )
         #endif
     }
 }
