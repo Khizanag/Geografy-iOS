@@ -83,7 +83,9 @@ private extension HomeLearnCarousel {
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.top, DesignSystem.Spacing.xs)
         }
+        .scrollClipDisabled()
     }
 
     func itemCard(for item: LearnItem) -> some View {
