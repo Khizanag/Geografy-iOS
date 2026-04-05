@@ -366,7 +366,7 @@ extension FeedService {
             body: "There are 44 landlocked countries in the world, with no access to the sea. " +
                 "Kazakhstan is the world's largest landlocked country, bigger than Western Europe.",
             countryCode: "KZ",
-            icon: "land.below.water",
+            icon: "globe.americas.fill",
             color: .brown
         ),
         .init(
@@ -427,7 +427,7 @@ extension FeedService {
                 "Southern (recognised in 2000), and Arctic (smallest). " +
                 "The Pacific alone is larger than all land combined.",
             countryCode: nil,
-            icon: "water.waves.and.arrow.trianglehead.up.fill",
+            icon: "water.waves",
             color: .blue
         ),
         .init(
