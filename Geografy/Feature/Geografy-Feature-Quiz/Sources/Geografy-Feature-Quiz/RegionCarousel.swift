@@ -14,11 +14,11 @@ public struct RegionCarousel: View {
 
     public init(selectedRegion: Binding<QuizRegion>) {
         _selectedRegion = selectedRegion
+        _visibleRegion = State(wrappedValue: selectedRegion.wrappedValue)
     }
 
     public var body: some View {
         extractedContent
-            .onAppear { visibleRegion = selectedRegion }
     }
 }
 

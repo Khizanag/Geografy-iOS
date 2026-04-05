@@ -8,6 +8,7 @@ import SwiftUI
 
 @main
 struct GeografyApp: App {
+    // MARK: - Properties
     @Environment(\.scenePhase) private var scenePhase
 
     @State private var achievementService: AchievementService
@@ -22,7 +23,6 @@ struct GeografyApp: App {
     @State private var gameCenterService = GameCenterService()
     @State private var geoJSONCache = GeoJSONCache()
     @State private var hapticsService = HapticsService()
-    @State private var homeSectionOrderService = HomeSectionOrderService()
     @State private var learningPathService = LearningPathService()
     @State private var pronunciationService = PronunciationService()
     @State private var streakService: StreakService
@@ -32,18 +32,20 @@ struct GeografyApp: App {
     @State private var widgetDataBridge = WidgetDataBridge()
     @State private var worldBankService = WorldBankService()
     @State private var xpService: XPService
+
+    // MARK: - Init
     init() {
         #if os(iOS)
         BackgroundTaskService.registerTasks()
         #endif
-        let db = DatabaseManager()
-        let auth = AuthService(db: db)
+        let database = DatabaseManager()
+        let auth = AuthService(db: database)
         let userID = auth.currentUserID
-        let xp = XPService(db: db, userID: userID)
-        let achievement = AchievementService(db: db, xpService: xp, userID: userID)
-        let streak = StreakService(db: db, xpService: xp, achievementService: achievement, userID: userID)
-        let favorites = FavoritesService(container: db.container)
-        _databaseManager = State(wrappedValue: db)
+        let xp = XPService(db: database, userID: userID)
+        let achievement = AchievementService(db: database, xpService: xp, userID: userID)
+        let streak = StreakService(db: database, xpService: xp, achievementService: achievement, userID: userID)
+        let favorites = FavoritesService(container: database.container)
+        _databaseManager = State(wrappedValue: database)
         _authService = State(wrappedValue: auth)
         _xpService = State(wrappedValue: xp)
         _achievementService = State(wrappedValue: achievement)
@@ -51,6 +53,7 @@ struct GeografyApp: App {
         _favoritesService = State(wrappedValue: favorites)
     }
 
+    // MARK: - Body
     var body: some Scene {
         WindowGroup {
             contentView
@@ -80,7 +83,6 @@ private extension GeografyApp {
             .environment(gameCenterService)
             .environment(geoJSONCache)
             .environment(hapticsService)
-            .environment(homeSectionOrderService)
             .environment(learningPathService)
             .environment(pronunciationService)
             .environment(streakService)
@@ -142,13 +144,7 @@ private extension GeografyApp {
 
     func syncWidgetData() async {
         await widgetDataBridge.loadCountriesIfNeeded()
-        await widgetDataBridge.synchronize(
-            streak: streakService.currentStreak,
-            totalXP: xpService.totalXP,
-            level: xpService.currentLevel,
-            progressFraction: xpService.progressFraction,
-            visitedCount: travelService.visitedCodes.count
-        )
+        await synchronizeWidgetData()
     }
 }
 
@@ -178,13 +174,7 @@ private extension GeografyApp {
                 newXP,
                 to: GameCenterService.LeaderboardID.totalXP
             )
-            await widgetDataBridge.synchronize(
-                streak: streakService.currentStreak,
-                totalXP: newXP,
-                level: xpService.currentLevel,
-                progressFraction: xpService.progressFraction,
-                visitedCount: travelService.visitedCodes.count
-            )
+            await synchronizeWidgetData()
         }
     }
 
@@ -198,13 +188,7 @@ private extension GeografyApp {
                 longestStreak,
                 to: GameCenterService.LeaderboardID.longestStreak
             )
-            await widgetDataBridge.synchronize(
-                streak: newStreak,
-                totalXP: xpService.totalXP,
-                level: xpService.currentLevel,
-                progressFraction: xpService.progressFraction,
-                visitedCount: travelService.visitedCodes.count
-            )
+            await synchronizeWidgetData()
         }
     }
 
@@ -214,13 +198,7 @@ private extension GeografyApp {
                 count,
                 to: GameCenterService.LeaderboardID.countriesVisited
             )
-            await widgetDataBridge.synchronize(
-                streak: streakService.currentStreak,
-                totalXP: xpService.totalXP,
-                level: xpService.currentLevel,
-                progressFraction: xpService.progressFraction,
-                visitedCount: count
-            )
+            await synchronizeWidgetData()
         }
     }
 
@@ -233,6 +211,19 @@ private extension GeografyApp {
             BackgroundTaskService.scheduleWidgetRefresh()
         }
         #endif
+    }
+}
+
+// MARK: - Widget Sync
+private extension GeografyApp {
+    func synchronizeWidgetData() async {
+        await widgetDataBridge.synchronize(
+            streak: streakService.currentStreak,
+            totalXP: xpService.totalXP,
+            level: xpService.currentLevel,
+            progressFraction: xpService.progressFraction,
+            visitedCount: travelService.visitedCodes.count
+        )
     }
 }
 
@@ -284,43 +275,29 @@ private extension GeografyApp {
         }
 
         CommandMenu("Navigate") {
-            Button("Home") {
-                NotificationCenter.default.post(name: .switchTab, object: 0)
-            }
+            navigateMenuItems
+        }
+    }
+
+    @ViewBuilder
+    var navigateMenuItems: some View {
+        Button("Home") { NotificationCenter.default.post(name: .switchTab, object: 0) }
             .keyboardShortcut("1", modifiers: .command)
-
-            Button("Quiz") {
-                NotificationCenter.default.post(name: .switchTab, object: 1)
-            }
+        Button("Quiz") { NotificationCenter.default.post(name: .switchTab, object: 1) }
             .keyboardShortcut("2", modifiers: .command)
-
-            Button("Countries") {
-                NotificationCenter.default.post(name: .switchTab, object: 2)
-            }
+        Button("Countries") { NotificationCenter.default.post(name: .switchTab, object: 2) }
             .keyboardShortcut("3", modifiers: .command)
-
-            Button("Maps") {
-                NotificationCenter.default.post(name: .switchTab, object: 3)
-            }
+        Button("Maps") { NotificationCenter.default.post(name: .switchTab, object: 3) }
             .keyboardShortcut("4", modifiers: .command)
-
-            Button("More") {
-                NotificationCenter.default.post(name: .switchTab, object: 4)
-            }
+        Button("More") { NotificationCenter.default.post(name: .switchTab, object: 4) }
             .keyboardShortcut("5", modifiers: .command)
 
-            Divider()
+        Divider()
 
-            Button("Search") {
-                NotificationCenter.default.post(name: .macOpenSearch, object: nil)
-            }
+        Button("Search") { NotificationCenter.default.post(name: .macOpenSearch, object: nil) }
             .keyboardShortcut("f", modifiers: .command)
-
-            Button("Random Country") {
-                NotificationCenter.default.post(name: .macRandomCountry, object: nil)
-            }
+        Button("Random Country") { NotificationCenter.default.post(name: .macRandomCountry, object: nil) }
             .keyboardShortcut("r", modifiers: .command)
-        }
     }
 }
 #endif
