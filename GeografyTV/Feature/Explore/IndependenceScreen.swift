@@ -9,9 +9,9 @@ struct IndependenceScreen: View {
 
     private var displayedEvents: [IndependenceEvent] {
         guard let selectedEra else {
-            return service.events.sorted { $0.year > $1.year }
+            return service.events.sorted(by: \.year, descending: true)
         }
-        return service.events(for: selectedEra).sorted { $0.year > $1.year }
+        return service.events(for: selectedEra).sorted(by: \.year, descending: true)
     }
 
     var body: some View {

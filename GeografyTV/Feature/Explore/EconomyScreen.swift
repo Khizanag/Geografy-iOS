@@ -20,7 +20,7 @@ struct EconomyScreen: View {
                 .sorted { ($0.gdp ?? 0) > ($1.gdp ?? 0) }
         case .population:
             countryDataService.countries
-                .sorted { $0.population > $1.population }
+                .sorted(by: \.population, descending: true)
         }
     }
 

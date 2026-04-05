@@ -150,7 +150,7 @@ private extension TravelCountryPickerSheet {
     }
 
     var filteredCountries: [Country] {
-        let sorted = countries.sorted { $0.name < $1.name }
+        let sorted = countries.sorted(by: \.name)
         guard !searchText.isEmpty else { return sorted }
         return sorted.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
     }

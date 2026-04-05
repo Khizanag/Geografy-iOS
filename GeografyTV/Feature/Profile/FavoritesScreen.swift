@@ -12,7 +12,7 @@ struct FavoritesScreen: View {
     private var favoriteCountries: [Country] {
         countryDataService.countries
             .filter { favoritesService.isFavorite(code: $0.code) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     var body: some View {

@@ -402,7 +402,7 @@ extension TravelJournalEditorSheet {
     var filteredCountries: [Country] {
         let countries = countryDataService.countries
         guard !countrySearchText.isEmpty else {
-            return countries.sorted { $0.name < $1.name }
+            return countries.sorted(by: \.name)
         }
         return countries
             .filter {
@@ -410,7 +410,7 @@ extension TravelJournalEditorSheet {
                     countrySearchText
                 )
             }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 }
 #endif

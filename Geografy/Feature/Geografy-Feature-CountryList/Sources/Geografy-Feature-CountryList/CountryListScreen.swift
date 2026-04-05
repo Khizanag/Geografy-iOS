@@ -440,6 +440,6 @@ private extension CountryListScreen {
 
         return grouped
             .map { (key: $0.key, countries: $0.value) }
-            .sorted { $0.key < $1.key }
+            .sorted(by: \.key)
     }
 }

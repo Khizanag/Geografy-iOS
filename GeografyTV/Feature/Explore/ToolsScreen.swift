@@ -147,7 +147,7 @@ struct TimeZoneScreen: View {
     let countryDataService: CountryDataService
 
     var body: some View {
-        List(countryDataService.countries.sorted { $0.name < $1.name }) { country in
+        List(countryDataService.countries.sorted(by: \.name)) { country in
             HStack(spacing: DesignSystem.Spacing.lg) {
                 FlagView(countryCode: country.code, height: 32)
 

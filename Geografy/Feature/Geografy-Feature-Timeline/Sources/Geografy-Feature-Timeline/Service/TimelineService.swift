@@ -50,7 +50,7 @@ extension TimelineService {
     public func todayEvents(countries: [Country]) -> [HistoricalEvent] {
         events
             .filter(\.matchesToday)
-            .sorted { $0.year < $1.year }
+            .sorted(by: \.year)
     }
 
     public func decades(in range: ClosedRange<Int>) -> [Int] {

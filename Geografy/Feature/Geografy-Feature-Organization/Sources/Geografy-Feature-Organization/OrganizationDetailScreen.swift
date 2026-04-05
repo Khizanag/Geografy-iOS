@@ -247,6 +247,6 @@ private extension OrganizationDetailScreen {
     var memberCountries: [Country] {
         countryDataService.countries
             .filter { $0.organizations.contains(organization.id) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 }

@@ -473,7 +473,7 @@ private extension MultiplayerQuizScreen {
                 .font(DesignSystem.Font.system(size: 52, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            let ranked = players.sorted { $0.score > $1.score }
+            let ranked = players.sorted(by: \.score, descending: true)
 
             ForEach(Array(ranked.enumerated()), id: \.element.id) { rank, player in
                 HStack(spacing: DesignSystem.Spacing.lg) {

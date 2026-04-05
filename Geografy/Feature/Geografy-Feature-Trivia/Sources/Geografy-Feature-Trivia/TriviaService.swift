@@ -64,7 +64,7 @@ private extension TriviaService {
     }
 
     func sizeQuestions(from countries: [Country]) -> [TriviaQuestion] {
-        let sorted = countries.sorted { $0.area > $1.area }
+        let sorted = countries.sorted(by: \.area, descending: true)
         var questions: [TriviaQuestion] = []
 
         if let largest = sorted.first {
@@ -88,7 +88,7 @@ private extension TriviaService {
             )
         }
 
-        let popSorted = countries.sorted { $0.population > $1.population }
+        let popSorted = countries.sorted(by: \.population, descending: true)
         if let mostPopulous = popSorted.first {
             let pop = mostPopulous.population.formatted()
             questions.append(

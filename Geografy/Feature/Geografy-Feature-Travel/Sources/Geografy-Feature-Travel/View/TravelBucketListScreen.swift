@@ -192,16 +192,16 @@ private extension TravelBucketListScreen {
         case .priority:
             return groupedByPriority
         case .alphabetical:
-            return [("A – Z", bucketListCountries.sorted { $0.name < $1.name })]
+            return [("A – Z", bucketListCountries.sorted(by: \.name))]
         }
     }
 
     var groupedByContinent: [(title: String, countries: [Country])] {
-        let continents = Array(Set(bucketListCountries.map(\.continent))).sorted { $0.displayName < $1.displayName }
+        let continents = Array(Set(bucketListCountries.map(\.continent))).sorted(by: \.displayName)
         return continents.map { continent in
             let countries = bucketListCountries
                 .filter { $0.continent == continent }
-                .sorted { $0.name < $1.name }
+                .sorted(by: \.name)
             return (title: continent.displayName, countries: countries)
         }
     }
@@ -210,7 +210,7 @@ private extension TravelBucketListScreen {
         BucketListPriority.allCases.compactMap { priority in
             let countries = bucketListCountries
                 .filter { (priorities[$0.code] ?? .someday) == priority }
-                .sorted { $0.name < $1.name }
+                .sorted(by: \.name)
             guard !countries.isEmpty else { return nil }
             return (title: priority.label, countries: countries)
         }
@@ -254,7 +254,7 @@ private extension TravelBucketListScreen {
 
     var shareableText: String {
         let lines = bucketListCountries
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
             .map { country in
                 let priority = priorities[country.code] ?? .someday
                 return "\(priority.emoji) \(country.flagEmoji) \(country.name)"

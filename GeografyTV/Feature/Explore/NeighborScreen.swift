@@ -16,7 +16,7 @@ struct NeighborScreen: View {
             }
 
             Section("Choose a Country") {
-                ForEach(countryDataService.countries.sorted { $0.name < $1.name }) { country in
+                ForEach(countryDataService.countries.sorted(by: \.name)) { country in
                     Button {
                         selectedCountry = country
                     } label: {
@@ -54,7 +54,7 @@ private extension NeighborScreen {
         let neighbors = neighborCodes.compactMap { code in
             countryDataService.countries.first { $0.code == code }
         }
-        .sorted { $0.name < $1.name }
+        .sorted(by: \.name)
 
         return Section("\(country.name) \u{2014} \(neighbors.count) neighbors") {
             if neighbors.isEmpty {

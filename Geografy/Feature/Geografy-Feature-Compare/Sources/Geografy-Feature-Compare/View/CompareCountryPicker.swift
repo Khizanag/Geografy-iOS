@@ -97,6 +97,6 @@ private extension CompareCountryPicker {
             }
         }
 
-        return result.sorted { $0.name < $1.name }
+        return result.sorted(by: \.name)
     }
 }

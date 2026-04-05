@@ -348,7 +348,7 @@ private extension CompareScreen {
 
     func languagesSummary(_ languages: [Country.Language]) -> String {
         let names = languages
-            .sorted { $0.percentage > $1.percentage }
+            .sorted(by: \.percentage, descending: true)
             .prefix(3)
             .map(\.name)
         if names.isEmpty { return "N/A" }

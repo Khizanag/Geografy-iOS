@@ -9,7 +9,7 @@ public final class LanguageService {
     public var maxSpeakers: Int { languages.map { $0.speakerCount }.max() ?? 1 }
 
     public func languages(in family: String) -> [Language] {
-        languages.filter { $0.family == family }.sorted { $0.speakerCount > $1.speakerCount }
+        languages.filter { $0.family == family }.sorted(by: \.speakerCount, descending: true)
     }
 
     public func languages(matching query: String) -> [Language] {

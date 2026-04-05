@@ -466,7 +466,7 @@ private extension SpeedRunSessionScreen {
     var missedCountries: [Country] {
         targetCountries
             .filter { !completedCodes.contains($0.code) }
-            .sorted { $0.name < $1.name }
+            .sorted(by: \.name)
     }
 
     var completedCountries: [Country] {
