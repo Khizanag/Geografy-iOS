@@ -108,26 +108,36 @@ private extension HomeGamesGrid {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     iconCircle(for: game)
 
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(game.name)
-                            .font(DesignSystem.Font.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .lineLimit(1)
-
-                        if game.isNew {
-                            NewBadge()
-                        }
-                    }
+                    Text(game.name)
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                        .lineLimit(1)
 
                     Spacer(minLength: 0)
                 }
                 .padding(.horizontal, DesignSystem.Spacing.sm)
                 .frame(height: 52)
             }
+            .overlay(alignment: .topTrailing) {
+                if game.isNew {
+                    newTag
+                }
+            }
         }
         .buttonStyle(PressButtonStyle())
         .accessibilityLabel(game.name)
+    }
+
+    var newTag: some View {
+        Text("NEW")
+            .font(DesignSystem.Font.caption2)
+            .fontWeight(.bold)
+            .foregroundStyle(DesignSystem.Color.onAccent)
+            .padding(.horizontal, DesignSystem.Spacing.xxs)
+            .padding(.vertical, 2)
+            .background(DesignSystem.Color.accent, in: Capsule())
+            .offset(x: -DesignSystem.Spacing.xs, y: DesignSystem.Spacing.xs)
     }
 
     func iconCircle(for game: GameItem) -> some View {
