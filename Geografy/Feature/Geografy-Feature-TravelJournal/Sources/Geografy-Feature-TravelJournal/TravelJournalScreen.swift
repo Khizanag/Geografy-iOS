@@ -67,6 +67,7 @@ private extension TravelJournalScreen {
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .buttonStyle(.plain)
         }
     }
 }
@@ -180,6 +181,19 @@ private extension TravelJournalScreen {
     func sheetContent(
         for sheet: ActiveSheet
     ) -> some View {
+        NavigationStack {
+            sheetView(for: sheet)
+                .environment(journalService)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        CircleCloseButton { activeSheet = nil }
+                    }
+                }
+        }
+    }
+
+    @ViewBuilder
+    func sheetView(for sheet: ActiveSheet) -> some View {
         switch sheet {
         case .newEntry:
             #if !os(tvOS)
@@ -187,7 +201,6 @@ private extension TravelJournalScreen {
                 activeSheet: $activeSheet,
                 countryDataService: countryDataService
             )
-            .environment(journalService)
             #else
             EmptyView()
             #endif
@@ -198,7 +211,6 @@ private extension TravelJournalScreen {
                 activeSheet: $activeSheet,
                 countryDataService: countryDataService
             )
-            .environment(journalService)
             #else
             EmptyView()
             #endif
@@ -208,7 +220,6 @@ private extension TravelJournalScreen {
                 activeSheet: $activeSheet,
                 countryDataService: countryDataService
             )
-            .environment(journalService)
         }
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Language: Identifiable {
+public struct Language: Identifiable, Hashable {
     public let id: String // ISO 639-1 code
     public let name: String
     public let nativeName: String
