@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CountryBannerView: View {
+    // MARK: - Properties
     public let countryCode: String
     public let name: String
     public let flag: String
@@ -14,6 +15,7 @@ public struct CountryBannerView: View {
 
     @State private var dragOffset: CGFloat = 0
 
+    // MARK: - Init
     public init(
         countryCode: String,
         name: String,
@@ -36,6 +38,7 @@ public struct CountryBannerView: View {
         self.onDismiss = onDismiss
     }
 
+    // MARK: - Body
     public var body: some View {
         bannerCard
             #if !os(tvOS)

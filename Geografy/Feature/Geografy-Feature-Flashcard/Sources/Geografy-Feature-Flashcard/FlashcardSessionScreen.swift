@@ -6,6 +6,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FlashcardSessionScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
@@ -27,11 +28,13 @@ public struct FlashcardSessionScreen: View {
     @State private var cardShownAt: Date = .now
     @State private var thinkingTimes: [TimeInterval] = []
 
+    // MARK: - Init
     public init(deck: FlashcardDeck, cards: [FlashcardItem]) {
         self.deck = deck
         self.cards = cards
     }
 
+    // MARK: - Body
     public var body: some View {
         sessionContent
             .navigationBarTitleDisplayMode(.inline)

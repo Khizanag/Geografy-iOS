@@ -1,8 +1,10 @@
 import SwiftUI
 
 public struct PremiumBadge: View {
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "crown.fill")

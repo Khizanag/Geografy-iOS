@@ -4,9 +4,11 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CurrencyConverterScreen: View {
+    // MARK: - Init
     public init(preselectedCurrencyCode: String? = nil) {
         self.preselectedCurrencyCode = preselectedCurrencyCode
     }
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
@@ -24,6 +26,7 @@ public struct CurrencyConverterScreen: View {
     @State private var showToPicker = false
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .background { ambientBlobs }

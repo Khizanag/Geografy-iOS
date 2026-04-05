@@ -3,9 +3,11 @@ import Geografy_Feature_LearningPath
 import SwiftUI
 
 struct HomeLearningPathCard: View {
+    // MARK: - Properties
     @Environment(LearningPathService.self) private var learningPathService
     let onTap: () -> Void
 
+    // MARK: - Body
     var body: some View {
         Button { onTap() } label: {
             CardView {

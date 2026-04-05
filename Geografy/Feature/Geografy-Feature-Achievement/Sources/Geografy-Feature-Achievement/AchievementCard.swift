@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct AchievementCard: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let definition: AchievementDefinition
@@ -11,6 +12,7 @@ public struct AchievementCard: View {
     public let unlockedAt: Date?
     public let onTap: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         Button {
             hapticsService.impact(.light)

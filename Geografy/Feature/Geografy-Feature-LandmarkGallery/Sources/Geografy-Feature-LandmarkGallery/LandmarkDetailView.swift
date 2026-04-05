@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct LandmarkDetailView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     let landmark: Landmark
@@ -10,6 +11,7 @@ struct LandmarkDetailView: View {
         Color(hex: landmark.accentColor)
     }
 
+    // MARK: - Body
     var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

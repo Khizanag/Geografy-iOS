@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelTrackerScreen: View {
+    // MARK: - Properties
     @Environment(CountryDataService.self) var countryDataService
     @Environment(HapticsService.self) var hapticsService
     @Environment(Navigator.self) private var coordinator
@@ -16,8 +17,10 @@ public struct TravelTrackerScreen: View {
     @State var selectedCountry: Country?
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .navigationTitle("Travel Tracker")

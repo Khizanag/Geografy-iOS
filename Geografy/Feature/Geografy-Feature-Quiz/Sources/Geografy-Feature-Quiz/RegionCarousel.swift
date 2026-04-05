@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct RegionCarousel: View {
+    // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(HapticsService.self) private var hapticsService
 
@@ -12,11 +13,13 @@ public struct RegionCarousel: View {
 
     @State private var visibleRegion: QuizRegion?
 
+    // MARK: - Init
     public init(selectedRegion: Binding<QuizRegion>) {
         _selectedRegion = selectedRegion
         _visibleRegion = State(wrappedValue: selectedRegion.wrappedValue)
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
     }

@@ -6,6 +6,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct QuizSessionScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) var hapticsService
     @Environment(CountryDataService.self) var countryDataService
@@ -40,10 +41,12 @@ public struct QuizSessionScreen: View {
     @State var arcadeTimeRemaining: TimeInterval = 60
     @State var arcadeTimerCancellable: AnyCancellable?
 
+    // MARK: - Init
     public init(configuration: QuizConfiguration) {
         self.configuration = configuration
     }
 
+    // MARK: - Body
     public var body: some View {
         quizContent
             .navigationTitle(configuration.type.displayName)

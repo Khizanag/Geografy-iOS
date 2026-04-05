@@ -5,13 +5,16 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct ContinentPickerScreen: View {
+    // MARK: - Init
     public init() {}
     #if !os(tvOS)
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FlashcardCardView: View {
+    // MARK: - Properties
     @Environment(PronunciationService.self) private var pronunciationService
 
     public let card: FlashcardItem
@@ -12,6 +13,7 @@ public struct FlashcardCardView: View {
     public var swipeColor: Color = .clear
     public var swipeOpacity: Double = 0
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             frontSide

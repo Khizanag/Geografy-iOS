@@ -21,11 +21,13 @@ private enum SortOption: String, CaseIterable {
 }
 
 public struct ContinentOverviewScreen: View {
+    // MARK: - Init
     public init(
         continent: Country.Continent
     ) {
         self.continent = continent
     }
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -34,6 +36,7 @@ public struct ContinentOverviewScreen: View {
     @State private var sortBy: SortOption = .name
     @State private var appeared = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

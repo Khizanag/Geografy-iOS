@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct DailyChallengeScreen: View {
+    // MARK: - Properties
     @Environment(XPService.self) private var xpService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -12,8 +13,10 @@ public struct DailyChallengeScreen: View {
     @State private var showSession = false
     @State private var blobAnimating = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         contentView
             .navigationTitle("Daily Challenge")

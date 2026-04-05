@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct SearchScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryService
 
@@ -21,8 +22,10 @@ public struct SearchScreen: View {
         "Australia", "India", "Egypt", "United Nations", "Canada",
     ]
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .animation(.easeInOut(duration: 0.2), value: query.isEmpty)

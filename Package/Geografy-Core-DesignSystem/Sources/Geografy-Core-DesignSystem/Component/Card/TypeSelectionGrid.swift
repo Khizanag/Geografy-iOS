@@ -2,6 +2,7 @@ import Geografy_Core_Common
 import SwiftUI
 
 public struct TypeSelectionGrid<T: SelectableType>: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -12,6 +13,7 @@ public struct TypeSelectionGrid<T: SelectableType>: View {
     public let onSelect: (T) -> Void
     public var isLocked: (T) -> Bool = { _ in false }
 
+    // MARK: - Init
     public init(
         items: [T],
         selectedIDs: Set<T.ID>,
@@ -24,6 +26,7 @@ public struct TypeSelectionGrid<T: SelectableType>: View {
         self.isLocked = isLocked
     }
 
+    // MARK: - Body
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {

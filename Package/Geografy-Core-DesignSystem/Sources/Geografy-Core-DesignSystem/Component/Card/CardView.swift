@@ -1,10 +1,12 @@
 import SwiftUI
 
 public struct CardView<Content: View>: View {
+    // MARK: - Properties
     private let cornerRadius: CGFloat
     private let shadow: DesignSystem.Shadow?
     private let content: Content
 
+    // MARK: - Init
     public init(
         cornerRadius: CGFloat = DesignSystem.CornerRadius.medium,
         shadow: DesignSystem.Shadow? = nil,
@@ -15,6 +17,7 @@ public struct CardView<Content: View>: View {
         self.content = content()
     }
 
+    // MARK: - Body
     public var body: some View {
         content
             .background(DesignSystem.Color.cardBackground)

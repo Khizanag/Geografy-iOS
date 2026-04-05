@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct QuizTypingInputView: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let question: QuizQuestion
@@ -19,6 +20,7 @@ public struct QuizTypingInputView: View {
 
     @FocusState private var isInputFocused: Bool
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .padding(.horizontal, DesignSystem.Spacing.md)

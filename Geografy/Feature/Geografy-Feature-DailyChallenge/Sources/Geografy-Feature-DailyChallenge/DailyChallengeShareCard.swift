@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct DailyChallengeShareCard: View {
+    // MARK: - Properties
     public let score: Int
     public let maxScore: Int
     public let challengeType: DailyChallengeType
@@ -11,6 +12,7 @@ public struct DailyChallengeShareCard: View {
 
     @State private var renderedImage: Image?
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .padding(DesignSystem.Spacing.md)

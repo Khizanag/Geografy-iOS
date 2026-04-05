@@ -2,14 +2,17 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct LanguageExplorerScreen: View {
+    // MARK: - Properties
     @State private var searchQuery = ""
     @State private var selectedLanguage: Language?
     @State private var showingDetail = false
 
     private let languageService = LanguageService()
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

@@ -2,11 +2,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct MapCarouselCard: View {
+    // MARK: - Properties
     private let mapName: String
     private let systemImage: String
     private let compact: Bool
     private let onOpenMap: () -> Void
 
+    // MARK: - Init
     init(mapName: String, systemImage: String, compact: Bool = false, onOpenMap: @escaping () -> Void) {
         self.mapName = mapName
         self.systemImage = systemImage
@@ -14,6 +16,7 @@ struct MapCarouselCard: View {
         self.onOpenMap = onOpenMap
     }
 
+    // MARK: - Body
     var body: some View {
         if compact {
             compactCard

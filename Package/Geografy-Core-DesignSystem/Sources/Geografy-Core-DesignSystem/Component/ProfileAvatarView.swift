@@ -1,14 +1,17 @@
 import SwiftUI
 
 public struct ProfileAvatarView: View {
+    // MARK: - Properties
     public let name: String
     public let size: CGFloat
 
+    // MARK: - Init
     public init(name: String, size: CGFloat) {
         self.name = name
         self.size = size
     }
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             Circle()

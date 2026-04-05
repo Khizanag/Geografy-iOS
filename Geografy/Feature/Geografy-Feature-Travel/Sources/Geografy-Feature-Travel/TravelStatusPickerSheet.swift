@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelStatusPickerSheet: View {
+    // MARK: - Properties
     @Environment(TravelService.self) private var travelService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
@@ -12,11 +13,13 @@ public struct TravelStatusPickerSheet: View {
     public let country: Country
     @Binding public var isPresented: Bool
 
+    // MARK: - Init
     public init(country: Country, isPresented: Binding<Bool>) {
         self.country = country
         _isPresented = isPresented
     }
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: 0) {
             header

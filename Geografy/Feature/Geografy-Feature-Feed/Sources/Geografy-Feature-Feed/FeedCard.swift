@@ -3,12 +3,14 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FeedCard: View {
+    // MARK: - Properties
     public let item: FeedItem
     public let isSaved: Bool
     public let country: Country?
     public let onSave: () -> Void
     public let onCountryTap: (Country) -> Void
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

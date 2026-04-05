@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct InfoCardPopup: View {
+    // MARK: - Properties
     private let icon: String
     private let title: String
     private let value: String
@@ -11,6 +12,7 @@ public struct InfoCardPopup: View {
 
     @State private var appeared = false
 
+    // MARK: - Init
     public init(
         icon: String,
         title: String,
@@ -27,6 +29,7 @@ public struct InfoCardPopup: View {
         self.onShowMap = onShowMap
     }
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             backdrop

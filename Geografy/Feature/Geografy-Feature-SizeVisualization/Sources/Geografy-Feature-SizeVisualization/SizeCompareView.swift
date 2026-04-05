@@ -3,15 +3,18 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct SizeCompareView: View {
+    // MARK: - Init
     public init(referenceCountry: Country, comparisonCountry: Country) {
         self.referenceCountry = referenceCountry
         self.comparisonCountry = comparisonCountry
     }
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     public let referenceCountry: Country
     public let comparisonCountry: Country
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

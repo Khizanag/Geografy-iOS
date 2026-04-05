@@ -6,11 +6,13 @@ import Geografy_Feature_Map
 import SwiftUI
 
 public struct HistoricalMapScreen: View {
+    // MARK: - Init
     public init(
         initialYear: Int
     ) {
         self.initialYear = initialYear
     }
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     #if !os(tvOS)
@@ -30,6 +32,7 @@ public struct HistoricalMapScreen: View {
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
 
+    // MARK: - Body
     public var body: some View {
         mapLayer
             .background(DesignSystem.Color.ocean)

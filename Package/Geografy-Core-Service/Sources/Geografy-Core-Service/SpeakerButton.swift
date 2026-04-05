@@ -3,11 +3,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct SpeakerButton: View {
+    // MARK: - Properties
     @Environment(PronunciationService.self) private var pronunciationService
 
     public let text: String
     public let countryCode: String
 
+    // MARK: - Init
     public init(text: String, countryCode: String) {
         self.text = text
         self.countryCode = countryCode
@@ -17,6 +19,7 @@ public struct SpeakerButton: View {
         pronunciationService.isCurrentlySpeaking(text: text)
     }
 
+    // MARK: - Body
     public var body: some View {
         Button {
             if isActivelySpeaking {

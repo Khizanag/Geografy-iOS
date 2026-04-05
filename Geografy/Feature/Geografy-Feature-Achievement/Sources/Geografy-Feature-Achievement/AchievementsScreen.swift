@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct AchievementsScreen: View {
+    // MARK: - Properties
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
 
@@ -11,8 +12,10 @@ public struct AchievementsScreen: View {
     @State private var selectedAchievement: AchievementDefinition?
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

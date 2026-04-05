@@ -3,12 +3,14 @@ import Geografy_Core_Navigation
 import SwiftUI
 
 public struct TravelJournalStatsView: View {
+    // MARK: - Properties
     public let totalEntries: Int
     public let totalPhotos: Int
     public let uniqueCountries: Int
     public let averageRating: Double
     public let favoriteCountryCode: String?
 
+    // MARK: - Body
     public var body: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
             VStack(spacing: DesignSystem.Spacing.md) {

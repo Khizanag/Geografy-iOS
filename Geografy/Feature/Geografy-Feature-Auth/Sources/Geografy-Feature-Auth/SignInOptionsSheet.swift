@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct SignInOptionsSheet: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
@@ -12,8 +13,10 @@ public struct SignInOptionsSheet: View {
     @State private var errorMessage = ""
     @State private var appeared = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .background { AmbientBlobsView(.standard) }

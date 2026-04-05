@@ -6,10 +6,12 @@ import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct LocalMultiplayerLobbyScreen: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { AmbientBlobsView(.standard) }

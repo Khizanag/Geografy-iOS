@@ -1,10 +1,12 @@
 import SwiftUI
 
 public struct IconButton: View {
+    // MARK: - Properties
     private let systemImage: String
     private let isActive: Bool
     private let action: () -> Void
 
+    // MARK: - Init
     public init(
         systemImage: String,
         isActive: Bool = false,
@@ -15,6 +17,7 @@ public struct IconButton: View {
         self.action = action
     }
 
+    // MARK: - Body
     public var body: some View {
         Button(action: action) {
             Image(systemName: systemImage)

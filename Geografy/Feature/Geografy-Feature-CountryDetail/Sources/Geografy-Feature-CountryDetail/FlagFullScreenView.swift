@@ -2,11 +2,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FlagFullScreenView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     public let countryCode: String
     public let countryName: String
 
+    // MARK: - Body
     public var body: some View {
         flagContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

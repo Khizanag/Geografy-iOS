@@ -3,8 +3,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CoinTransactionRow: View {
+    // MARK: - Properties
     public let transaction: CoinTransaction
 
+    // MARK: - Body
     public var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             iconCircle

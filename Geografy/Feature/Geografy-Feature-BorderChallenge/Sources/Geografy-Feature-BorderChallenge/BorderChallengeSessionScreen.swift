@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct BorderChallengeSessionScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
@@ -28,6 +29,7 @@ struct BorderChallengeSessionScreen: View {
     private let service = BorderChallengeService()
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             mainContent

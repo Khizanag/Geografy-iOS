@@ -2,11 +2,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct LanguageDetailView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     let language: Language
     let maxSpeakers: Int
 
+    // MARK: - Body
     var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

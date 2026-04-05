@@ -6,10 +6,12 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct DistanceMapView: View {
+    // MARK: - Properties
     let originCode: String?
     let destinationCode: String?
     let lineProgress: CGFloat
 
+    // MARK: - Body
     var body: some View {
         Canvas { context, size in
             drawBackground(in: context, size: size)

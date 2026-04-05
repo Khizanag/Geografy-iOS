@@ -4,6 +4,7 @@ import StoreKit
 import SwiftUI
 
 public struct PaywallScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -13,8 +14,10 @@ public struct PaywallScreen: View {
     @State private var appeared = false
     @State private var globePulse = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { AmbientBlobsView(.paywall) }

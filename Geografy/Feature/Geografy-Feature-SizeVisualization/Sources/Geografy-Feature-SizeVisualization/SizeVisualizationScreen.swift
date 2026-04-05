@@ -4,7 +4,9 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct SizeVisualizationScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
@@ -17,6 +19,7 @@ public struct SizeVisualizationScreen: View {
     @State private var selectedCountry: Country?
     @State private var showCompare = false
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

@@ -2,11 +2,13 @@ import Geografy_Core_Common
 import SwiftUI
 
 public struct PercentageBarChart: View {
+    // MARK: - Properties
     public let title: String?
     public let icon: String?
     public let items: [PercentageItem]
     public let appeared: Bool
 
+    // MARK: - Init
     public init(
         title: String? = nil,
         icon: String? = nil,
@@ -19,6 +21,7 @@ public struct PercentageBarChart: View {
         self.appeared = appeared
     }
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

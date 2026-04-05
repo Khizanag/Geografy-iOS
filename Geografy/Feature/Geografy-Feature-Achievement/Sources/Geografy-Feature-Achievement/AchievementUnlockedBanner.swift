@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct AchievementUnlockedBanner: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let achievement: AchievementDefinition
@@ -11,11 +12,13 @@ public struct AchievementUnlockedBanner: View {
 
     @State private var slideOffset: CGFloat = -160
 
+    // MARK: - Init
     public init(achievement: AchievementDefinition, onDismiss: @escaping () -> Void) {
         self.achievement = achievement
         self.onDismiss = onDismiss
     }
 
+    // MARK: - Body
     public var body: some View {
         bannerContent
             .offset(y: slideOffset)

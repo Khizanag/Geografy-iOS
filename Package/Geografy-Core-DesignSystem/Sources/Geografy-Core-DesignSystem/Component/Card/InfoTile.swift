@@ -1,11 +1,13 @@
 import SwiftUI
 
 public struct InfoTile: View {
+    // MARK: - Properties
     private let icon: String
     private let title: String
     private let value: String
     private let onTap: () -> Void
 
+    // MARK: - Init
     public init(
         icon: String,
         title: String,
@@ -18,6 +20,7 @@ public struct InfoTile: View {
         self.onTap = onTap
     }
 
+    // MARK: - Body
     public var body: some View {
         Button(action: onTap) {
             CardView {

@@ -8,6 +8,7 @@ import Geografy_Feature_Flashcard
 import SwiftUI
 
 struct HomeScreen: View {
+    // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(AuthService.self) private var authService
     @Environment(FavoritesService.self) private var favoritesService
@@ -23,6 +24,7 @@ struct HomeScreen: View {
     @State var dailyChallengeService: DailyChallengeService?
     @State private var appeared = false
 
+    // MARK: - Body
     var body: some View {
         mainFeed
             .background { AmbientBlobsView(.rich) }

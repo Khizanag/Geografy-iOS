@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct MultiplayerResultScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -13,6 +14,7 @@ public struct MultiplayerResultScreen: View {
     @State private var showContent = false
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

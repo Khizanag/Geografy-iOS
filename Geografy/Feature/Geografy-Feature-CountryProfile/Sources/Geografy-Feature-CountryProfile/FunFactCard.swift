@@ -2,9 +2,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct FunFactCard: View {
+    // MARK: - Properties
     public let fact: CountryFunFact
     public let index: Int
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {

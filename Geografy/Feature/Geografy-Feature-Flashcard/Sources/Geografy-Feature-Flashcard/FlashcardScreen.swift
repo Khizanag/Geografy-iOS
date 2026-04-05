@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FlashcardScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(CountryDataService.self) private var countryDataService
@@ -16,6 +17,7 @@ public struct FlashcardScreen: View {
     @State private var appeared = false
     @State private var showGuide = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBackground }

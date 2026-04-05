@@ -2,15 +2,18 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct ScoreRingView: View {
+    // MARK: - Properties
     public let progress: Double
 
     @State private var animatedProgress: Double = 0
     @State private var displayPercent: Int = 0
 
+    // MARK: - Init
     public init(progress: Double) {
         self.progress = progress
     }
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             backgroundRing

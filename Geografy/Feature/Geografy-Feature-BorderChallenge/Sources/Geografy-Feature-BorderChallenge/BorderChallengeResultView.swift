@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct BorderChallengeResultView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     let country: Country?
@@ -13,6 +14,7 @@ struct BorderChallengeResultView: View {
     let onPlayAgain: () -> Void
     let onDone: () -> Void
 
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             scrollContent

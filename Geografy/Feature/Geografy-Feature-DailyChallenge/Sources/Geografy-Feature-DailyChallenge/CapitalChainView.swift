@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CapitalChainView: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let content: DailyChallenge.CapitalChainContent
@@ -17,6 +18,7 @@ public struct CapitalChainView: View {
     @State private var showFeedback = false
     @State private var correctCount = 0
 
+    // MARK: - Body
     public var body: some View {
         ScrollView {
             VStack(spacing: DesignSystem.Spacing.lg) {

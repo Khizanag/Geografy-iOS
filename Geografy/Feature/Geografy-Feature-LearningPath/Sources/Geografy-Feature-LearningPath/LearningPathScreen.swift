@@ -3,13 +3,16 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct LearningPathScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedModule: LearningModule?
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

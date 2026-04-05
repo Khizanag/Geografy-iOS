@@ -6,8 +6,10 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TimeZoneScreen: View {
+    // MARK: - Init
     public init() {}
     #if !os(tvOS)
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator: Navigator?
     #endif
     #if !os(tvOS)
@@ -19,6 +21,7 @@ public struct TimeZoneScreen: View {
     @State private var selectedTab: TimeZoneTab = .worldClock
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background { ambientBlobs }

@@ -1,16 +1,19 @@
 import SwiftUI
 
 public struct AmbientBlobsView: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let preset: Preset
 
     @State private var isAnimating = false
 
+    // MARK: - Init
     public init(_ preset: Preset = .standard) {
         self.preset = preset
     }
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             ForEach(Array(preset.blobs.enumerated()), id: \.offset) { _, blob in

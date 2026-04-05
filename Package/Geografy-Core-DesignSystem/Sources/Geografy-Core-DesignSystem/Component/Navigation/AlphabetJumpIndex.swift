@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct AlphabetJumpIndex: View {
+    // MARK: - Properties
     public let letters: [String]
     public let onSelect: (String) -> Void
 
@@ -8,6 +9,7 @@ public struct AlphabetJumpIndex: View {
     @State private var selectedLetter: String?
     @State private var totalHeight: CGFloat = 0
 
+    // MARK: - Init
     public init(
         letters: [String],
         onSelect: @escaping (String) -> Void
@@ -16,6 +18,7 @@ public struct AlphabetJumpIndex: View {
         self.onSelect = onSelect
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .frame(width: 44)

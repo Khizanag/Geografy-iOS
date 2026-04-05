@@ -6,6 +6,7 @@ import SwiftData
 import SwiftUI
 
 public struct QuizResultsScreen: View {
+    // MARK: - Properties
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
     @Environment(DatabaseManager.self) private var database
@@ -22,6 +23,7 @@ public struct QuizResultsScreen: View {
     @State private var xpEarned = 0
     @State private var showXPBadge = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background)

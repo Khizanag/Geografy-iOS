@@ -2,9 +2,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeSRSReviewCard: View {
+    // MARK: - Properties
     let dueCount: Int
     let onStartReview: () -> Void
 
+    // MARK: - Body
     var body: some View {
         Button(action: onStartReview) {
             CardView {

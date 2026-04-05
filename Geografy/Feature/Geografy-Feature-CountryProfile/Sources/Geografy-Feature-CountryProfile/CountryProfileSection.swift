@@ -2,8 +2,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CountryProfileSection: View {
+    // MARK: - Properties
     public let profile: CountryProfile
 
+    // MARK: - Body
     public var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
             funFactsSection

@@ -3,9 +3,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CoinPackCard: View {
+    // MARK: - Properties
     public let pack: CoinPack
     public let onTap: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         Button(action: onTap) {
             cardContent

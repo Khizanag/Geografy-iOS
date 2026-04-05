@@ -2,11 +2,13 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct LandmarkGalleryScreen: View {
+    // MARK: - Properties
     @State private var selectedCategory: LandmarkCategory?
     @State private var selectedLandmark: Landmark?
 
     private let service = LandmarkGalleryService()
 
+    // MARK: - Init
     public init() {}
 
     private var displayedLandmarks: [Landmark] {
@@ -18,6 +20,7 @@ public struct LandmarkGalleryScreen: View {
         GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
     ]
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

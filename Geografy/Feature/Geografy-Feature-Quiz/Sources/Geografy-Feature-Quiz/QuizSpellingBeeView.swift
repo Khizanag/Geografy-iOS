@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct QuizSpellingBeeView: View {
+    // MARK: - Properties
     public let question: QuizQuestion
     public let quizType: QuizType
     public let showFeedback: Bool
@@ -15,6 +16,7 @@ public struct QuizSpellingBeeView: View {
 
     @FocusState private var isInputFocused: Bool
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .padding(.horizontal, DesignSystem.Spacing.md)

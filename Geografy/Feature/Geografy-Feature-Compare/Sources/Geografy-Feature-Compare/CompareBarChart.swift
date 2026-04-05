@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct CompareBarChart: View {
+    // MARK: - Properties
     public let title: String
     public let icon: String
     public let leftValue: Double
@@ -11,6 +12,7 @@ public struct CompareBarChart: View {
 
     @State private var appeared = false
 
+    // MARK: - Body
     public var body: some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {

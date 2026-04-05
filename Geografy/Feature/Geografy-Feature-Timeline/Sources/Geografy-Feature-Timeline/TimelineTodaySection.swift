@@ -3,9 +3,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct TimelineTodaySection: View {
+    // MARK: - Properties
     public let events: [HistoricalEvent]
     public let countries: [Country]
 
+    // MARK: - Body
     public var body: some View {
         if !events.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {

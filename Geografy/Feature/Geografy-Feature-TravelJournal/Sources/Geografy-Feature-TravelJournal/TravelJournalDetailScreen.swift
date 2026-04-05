@@ -3,6 +3,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct TravelJournalDetailScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(TravelJournalService.self) private var journalService
 
@@ -12,6 +13,7 @@ public struct TravelJournalDetailScreen: View {
 
     @State private var showDeleteConfirmation = false
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .navigationTitle(entry.title)

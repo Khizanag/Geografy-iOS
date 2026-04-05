@@ -6,7 +6,9 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FlagGameScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -20,6 +22,7 @@ public struct FlagGameScreen: View {
     @State private var showFeedback = false
     @State private var timerCancellable: AnyCancellable?
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             if gameState.isFinished {

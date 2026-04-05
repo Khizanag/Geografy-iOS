@@ -3,16 +3,19 @@ import Geografy_Core_Navigation
 import SwiftUI
 
 struct HomeSectionEditorSheet: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(HomeSectionOrderService.self) private var orderService
 
     @State private var sections: [HomeSection]
     @State private var showResetConfirmation = false
 
+    // MARK: - Init
     init(sections: [HomeSection]) {
         _sections = State(wrappedValue: sections)
     }
 
+    // MARK: - Body
     var body: some View {
         sectionList
             .environment(\.editMode, .constant(.active))

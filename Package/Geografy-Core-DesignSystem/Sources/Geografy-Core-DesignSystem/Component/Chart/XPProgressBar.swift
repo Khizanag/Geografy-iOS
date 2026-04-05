@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct XPProgressBar: View {
+    // MARK: - Properties
     public let currentLevelNumber: Int
     public let nextLevelNumber: Int?
     public let xpInCurrentLevel: Int
@@ -9,6 +10,7 @@ public struct XPProgressBar: View {
 
     @State private var animatedProgress: Double = 0
 
+    // MARK: - Init
     public init(
         currentLevelNumber: Int,
         nextLevelNumber: Int?,
@@ -23,6 +25,7 @@ public struct XPProgressBar: View {
         self.progressFraction = progressFraction
     }
 
+    // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
             levelLabelsRow

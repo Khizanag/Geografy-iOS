@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct ComingSoonView: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.verticalSizeClass) private var verticalSizeClass
 
@@ -10,6 +11,7 @@ public struct ComingSoonView: View {
 
     @State private var isAnimating = false
 
+    // MARK: - Init
     public init(
         icon: String,
         title: String? = nil,
@@ -20,6 +22,7 @@ public struct ComingSoonView: View {
         self.isDismissible = isDismissible
     }
 
+    // MARK: - Body
     public var body: some View {
         Group {
             if isLandscape {

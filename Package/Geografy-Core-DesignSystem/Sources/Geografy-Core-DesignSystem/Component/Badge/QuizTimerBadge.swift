@@ -1,10 +1,12 @@
 import SwiftUI
 
 public struct QuizTimerBadge: View {
+    // MARK: - Properties
     public let seconds: Int
     public var totalSeconds: Int?
     public var style: Style = .pill
 
+    // MARK: - Init
     public init(
         seconds: Int,
         totalSeconds: Int? = nil,
@@ -15,6 +17,7 @@ public struct QuizTimerBadge: View {
         self.style = style
     }
 
+    // MARK: - Body
     public var body: some View {
         badgeContent
             .foregroundStyle(timerColor)

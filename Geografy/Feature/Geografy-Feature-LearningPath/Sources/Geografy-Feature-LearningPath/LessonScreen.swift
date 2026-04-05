@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct LessonScreen: View {
+    // MARK: - Init
     public init(
         module: LearningModule,
         lesson: Lesson
@@ -10,6 +11,7 @@ public struct LessonScreen: View {
         self.module = module
         self.lesson = lesson
     }
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -19,6 +21,7 @@ public struct LessonScreen: View {
 
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

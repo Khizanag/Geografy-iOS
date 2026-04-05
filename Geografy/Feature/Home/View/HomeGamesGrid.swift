@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeGamesGrid: View {
+    // MARK: - Properties
     let onGameTap: (GameItem) -> Void
     let onSeeAll: () -> Void
 
@@ -10,6 +11,7 @@ struct HomeGamesGrid: View {
         GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
     ]
 
+    // MARK: - Body
     var body: some View {
         content
     }

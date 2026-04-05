@@ -2,8 +2,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeSizeVisualizationCard: View {
+    // MARK: - Properties
     let onTap: () -> Void
 
+    // MARK: - Body
     var body: some View {
         Button { onTap() } label: {
             CardView {

@@ -4,6 +4,7 @@ import SwiftUI
 
 /// Shows the result after a game round — score, country reveal, stats.
 public struct ExploreGameResultView: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let result: ExploreGameResult
@@ -13,6 +14,7 @@ public struct ExploreGameResultView: View {
     @State private var scoreAnimated = false
     @State private var contentVisible = false
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

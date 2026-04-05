@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct DailyChallengeSessionScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(GameCenterService.self) private var gameCenterService
 
@@ -22,6 +23,7 @@ public struct DailyChallengeSessionScreen: View {
     @State private var currentFlagIndex = 0
     @State private var currentChainStep = 0
 
+    // MARK: - Body
     public var body: some View {
         challengeContent
             .navigationTitle(challenge.type.title)

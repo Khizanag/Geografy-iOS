@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct AchievementDetailSheet: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     public let definition: AchievementDefinition
@@ -13,6 +14,7 @@ public struct AchievementDetailSheet: View {
     public let canPin: Bool
     public let onTogglePin: () -> Void
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .navigationTitle(definition.title)

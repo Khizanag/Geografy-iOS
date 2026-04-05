@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct ExploreGameRulesSheet: View {
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

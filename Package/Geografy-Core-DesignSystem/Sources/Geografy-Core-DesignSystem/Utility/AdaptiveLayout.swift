@@ -83,6 +83,7 @@ public extension View {
 }
 
 public struct AdaptiveGrid<Content: View>: View {
+    // MARK: - Properties
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     let compactMinimum: CGFloat
@@ -90,6 +91,7 @@ public struct AdaptiveGrid<Content: View>: View {
     let spacing: CGFloat
     @ViewBuilder let content: () -> Content
 
+    // MARK: - Init
     public init(
         compactMinimum: CGFloat = 100,
         regularMinimum: CGFloat = 140,
@@ -102,6 +104,7 @@ public struct AdaptiveGrid<Content: View>: View {
         self.content = content
     }
 
+    // MARK: - Body
     public var body: some View {
         LazyVGrid(
             columns: [

@@ -1,14 +1,17 @@
 import SwiftUI
 
 public struct PremiumLockedOverlay: View {
+    // MARK: - Properties
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let onUnlock: () -> Void
 
+    // MARK: - Init
     public init(onUnlock: @escaping () -> Void) {
         self.onUnlock = onUnlock
     }
 
+    // MARK: - Body
     public var body: some View {
         ZStack {
             Rectangle()

@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CustomQuizBuilderScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     public let existingQuiz: CustomQuiz?
     public let countryDataService: CountryDataService
@@ -19,6 +20,7 @@ public struct CustomQuizBuilderScreen: View {
     @State private var showCountryPicker = false
     @State private var showPreview = false
 
+    // MARK: - Init
     public init(
         existingQuiz: CustomQuiz? = nil,
         countryDataService: CountryDataService,
@@ -29,6 +31,7 @@ public struct CustomQuizBuilderScreen: View {
         self.quizService = quizService
     }
 
+    // MARK: - Body
     public var body: some View {
         formContent
             .background(DesignSystem.Color.background)

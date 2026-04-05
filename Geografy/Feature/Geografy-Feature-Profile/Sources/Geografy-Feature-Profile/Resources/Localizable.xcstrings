@@ -79,16 +79,6 @@
         }
       }
     },
-    "%lld%%" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld%%"
-          }
-        }
-      }
-    },
     "%lld-day streak" : {
       "localizations" : {
         "ka" : {
@@ -121,6 +111,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld/7 დღე"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
           }
         }
       }
@@ -206,6 +206,7 @@
       }
     },
     "Earn badges by playing!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -316,6 +317,7 @@
       }
     },
     "See All" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

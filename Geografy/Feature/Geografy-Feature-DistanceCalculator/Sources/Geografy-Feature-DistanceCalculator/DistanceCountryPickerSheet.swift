@@ -5,6 +5,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct DistanceCountryPickerSheet: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
 
     let title: String
@@ -13,6 +14,7 @@ struct DistanceCountryPickerSheet: View {
 
     @State private var searchText = ""
 
+    // MARK: - Body
     var body: some View {
         extractedContent
             .searchable(text: $searchText, prompt: "Search countries…")

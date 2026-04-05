@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct SpeedRunSetupScreen: View {
+    // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
@@ -15,8 +16,10 @@ public struct SpeedRunSetupScreen: View {
     @State private var appeared = false
     @State private var pulseTimer = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { AmbientBlobsView(.quiz) }

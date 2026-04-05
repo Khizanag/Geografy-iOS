@@ -2,6 +2,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct PropertyDetailSheet: View {
+    // MARK: - Properties
     public let icon: String
     public let title: String
     public let value: String
@@ -12,6 +13,7 @@ public struct PropertyDetailSheet: View {
     public var actionButtonIcon: String?
     public var onAction: (() -> Void)?
 
+    // MARK: - Body
     public var body: some View {
         sheetContent
             .frame(maxWidth: .infinity)

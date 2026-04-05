@@ -5,7 +5,9 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CountryNicknamesScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -21,6 +23,7 @@ public struct CountryNicknamesScreen: View {
         nicknamesService.filteredNicknames(query: searchQuery, category: selectedCategory)
     }
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())

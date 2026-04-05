@@ -2,10 +2,12 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct QuizPackLevelCard: View {
+    // MARK: - Properties
     public let level: QuizPackLevel
     public let stars: Int
     public let isLocked: Bool
 
+    // MARK: - Init
     public init(
         level: QuizPackLevel,
         stars: Int,
@@ -16,6 +18,7 @@ public struct QuizPackLevelCard: View {
         self.isLocked = isLocked
     }
 
+    // MARK: - Body
     public var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             levelNumber

@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct WorldRecordsScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
@@ -15,8 +16,10 @@ public struct WorldRecordsScreen: View {
 
     private let worldRecordsService = WorldRecordsService()
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         scrollContent
             .background { ambientBlobs }

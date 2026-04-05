@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct SpeedRunSessionScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
@@ -26,10 +27,12 @@ public struct SpeedRunSessionScreen: View {
 
     @FocusState private var isInputFocused: Bool
 
+    // MARK: - Init
     public init(region: QuizRegion) {
         self.region = region
     }
 
+    // MARK: - Body
     public var body: some View {
         mainContent
             .background { AmbientBlobsView(.quiz) }

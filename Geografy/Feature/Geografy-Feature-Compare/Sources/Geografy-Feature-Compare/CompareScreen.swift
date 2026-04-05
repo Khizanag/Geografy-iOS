@@ -5,6 +5,7 @@ import SwiftUI
 
 public struct CompareScreen: View {
     #if !os(tvOS)
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
@@ -16,10 +17,12 @@ public struct CompareScreen: View {
 
     private let preselectedCountry: Country?
 
+    // MARK: - Init
     public init(preselectedCountry: Country? = nil) {
         self.preselectedCountry = preselectedCountry
     }
 
+    // MARK: - Body
     public var body: some View {
         contentScrollView
             .background(DesignSystem.Color.background)

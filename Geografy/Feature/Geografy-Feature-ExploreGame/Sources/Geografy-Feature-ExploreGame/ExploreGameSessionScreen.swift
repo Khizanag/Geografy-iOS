@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct ExploreGameSessionScreen: View {
+    // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var gameState: ExploreGameState
@@ -18,6 +19,7 @@ public struct ExploreGameSessionScreen: View {
     private let gameService: ExploreGameService
     private let onDismiss: () -> Void
 
+    // MARK: - Init
     public init(
         initialState: ExploreGameState,
         gameService: ExploreGameService,
@@ -28,6 +30,7 @@ public struct ExploreGameSessionScreen: View {
         self.onDismiss = onDismiss
     }
 
+    // MARK: - Body
     public var body: some View {
         sessionContent
             .navigationTitle("Mystery Country")

@@ -1,8 +1,10 @@
 import SwiftUI
 
 public struct NewBadge: View {
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         Text("NEW")
             .font(DesignSystem.Font.caption2)

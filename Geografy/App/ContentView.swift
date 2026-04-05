@@ -10,6 +10,7 @@ import Geografy_Feature_Quiz
 import SwiftUI
 
 struct ContentView: View {
+    // MARK: - Properties
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
     @Environment(CountryDataService.self) private var countryDataService
@@ -21,6 +22,7 @@ struct ContentView: View {
     @State private var currentBannerAchievement: AchievementDefinition?
     @State private var bannerQueue: [AchievementDefinition] = []
 
+    // MARK: - Body
     var body: some View {
         mainContent
             .tint(DesignSystem.Color.accent)

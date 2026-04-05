@@ -3,8 +3,10 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct LocalMultiplayerCountdownView: View {
+    // MARK: - Properties
     public let coordinator: LocalMultiplayerCoordinator
 
+    // MARK: - Body
     public var body: some View {
         countdownContent
             .frame(maxWidth: .infinity, maxHeight: .infinity)

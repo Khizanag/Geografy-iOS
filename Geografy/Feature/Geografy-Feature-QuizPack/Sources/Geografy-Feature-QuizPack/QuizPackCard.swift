@@ -2,12 +2,14 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct QuizPackCard: View {
+    // MARK: - Properties
     public let pack: QuizPack
     public let completedLevels: Int
     public let stars: Int
     public let maxStars: Int
     public let isUnlocked: Bool
 
+    // MARK: - Init
     public init(
         pack: QuizPack,
         completedLevels: Int,
@@ -22,6 +24,7 @@ public struct QuizPackCard: View {
         self.isUnlocked = isUnlocked
     }
 
+    // MARK: - Body
     public var body: some View {
         cardContent
             .frame(height: 160)

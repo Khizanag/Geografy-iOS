@@ -5,6 +5,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct OrganizationMapScreen: View {
+    // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
@@ -15,6 +16,7 @@ public struct OrganizationMapScreen: View {
 
     public let organization: Organization
 
+    // MARK: - Init
     public init(organization: Organization) {
         self.organization = organization
     }
@@ -29,6 +31,7 @@ public struct OrganizationMapScreen: View {
 
     private let nonMemberColor = DesignSystem.Color.cardBackground
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .background(DesignSystem.Color.ocean)

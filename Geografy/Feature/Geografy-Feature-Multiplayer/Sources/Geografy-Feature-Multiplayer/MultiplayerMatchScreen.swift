@@ -5,6 +5,7 @@ import Geografy_Feature_Quiz
 import SwiftUI
 
 public struct MultiplayerMatchScreen: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
@@ -27,6 +28,7 @@ public struct MultiplayerMatchScreen: View {
     @State private var completedMatch: MultiplayerMatch?
     @State private var blobAnimating = false
 
+    // MARK: - Body
     public var body: some View {
         matchContent
             .navigationBarTitleDisplayMode(.inline)

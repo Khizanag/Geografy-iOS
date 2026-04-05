@@ -2,9 +2,11 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeLearnCarousel: View {
+    // MARK: - Properties
     let srsCardsDue: Int
     let onItemTap: (LearnItem) -> Void
 
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Learn & Grow")

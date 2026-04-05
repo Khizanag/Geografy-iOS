@@ -6,7 +6,9 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct DistanceCalculatorScreen: View {
+    // MARK: - Init
     public init() {}
+    // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -19,6 +21,7 @@ public struct DistanceCalculatorScreen: View {
     @State private var showDestinationPicker = false
     @State private var lineProgress: CGFloat = 0
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .background { AmbientBlobsView(.standard) }

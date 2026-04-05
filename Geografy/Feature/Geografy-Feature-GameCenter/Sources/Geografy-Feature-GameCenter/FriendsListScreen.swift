@@ -4,6 +4,7 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct FriendsListScreen: View {
+    // MARK: - Properties
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.dismiss) private var dismiss
@@ -15,8 +16,10 @@ public struct FriendsListScreen: View {
     @State private var isLoading = true
     @State private var animating = false
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         content
             .background { AmbientBlobsView(.standard) }

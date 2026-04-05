@@ -4,13 +4,16 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct ExploreGameScreen: View {
+    // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var gameService: ExploreGameService?
     @State private var activeSession: ExploreGameState?
 
+    // MARK: - Init
     public init() {}
 
+    // MARK: - Body
     public var body: some View {
         screenContent
             .onAppear {

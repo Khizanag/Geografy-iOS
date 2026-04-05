@@ -12,8 +12,10 @@ private struct WorldRecordTile: Identifiable {
 }
 
 struct HomeWorldRecordsCard: View {
+    // MARK: - Properties
     let onSeeAll: (() -> Void)?
 
+    // MARK: - Init
     init(onSeeAll: (() -> Void)? = nil) {
         self.onSeeAll = onSeeAll
     }
@@ -63,6 +65,7 @@ struct HomeWorldRecordsCard: View {
         ),
     ]
 
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader

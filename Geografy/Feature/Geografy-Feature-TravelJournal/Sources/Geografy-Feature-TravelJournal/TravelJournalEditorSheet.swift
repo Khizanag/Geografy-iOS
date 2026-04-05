@@ -6,6 +6,7 @@ import PhotosUI
 import SwiftUI
 
 public struct TravelJournalEditorSheet: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelJournalService.self) var journalService
@@ -26,6 +27,7 @@ public struct TravelJournalEditorSheet: View {
 
     let existingEntry: TravelJournalEntry?
 
+    // MARK: - Init
     public init(
         entry: TravelJournalEntry? = nil,
         activeSheet: Binding<TravelJournalScreen.ActiveSheet?>,
@@ -44,6 +46,7 @@ public struct TravelJournalEditorSheet: View {
         }
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .navigationTitle(isEditing ? "Edit Entry" : "New Entry")

@@ -3,14 +3,17 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 public struct WikipediaSection: View {
+    // MARK: - Properties
     private let countryName: String
 
     @State private var showSafari = false
 
+    // MARK: - Init
     public init(countryName: String) {
         self.countryName = countryName
     }
 
+    // MARK: - Body
     public var body: some View {
         extractedContent
             .buttonStyle(PressButtonStyle())

@@ -1,11 +1,13 @@
 import SwiftUI
 
 public struct LetterGridView: View {
+    // MARK: - Properties
     public let targetText: String
     public let typedText: String
     public let isRevealed: Bool
     public let wasSkipped: Bool
 
+    // MARK: - Init
     public init(
         targetText: String,
         typedText: String,
@@ -18,6 +20,7 @@ public struct LetterGridView: View {
         self.wasSkipped = wasSkipped
     }
 
+    // MARK: - Body
     public var body: some View {
         if isRevealed {
             revealedContent

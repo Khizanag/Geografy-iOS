@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct HomeOrgsCard: View {
+    // MARK: - Properties
     let onOrgTap: (Organization) -> Void
     let onSeeAll: () -> Void
 
@@ -11,6 +12,7 @@ struct HomeOrgsCard: View {
             .compactMap { Organization.find($0) }
     }()
 
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader
