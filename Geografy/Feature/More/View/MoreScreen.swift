@@ -179,7 +179,7 @@ private extension MoreScreen {
     func gridTile(for sheet: MoreSheet) -> some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.sheet(sheet.toDestination)
+            coordinator.cover(sheet.toDestination)
         } label: {
             gridTileLabel(for: sheet)
         }
