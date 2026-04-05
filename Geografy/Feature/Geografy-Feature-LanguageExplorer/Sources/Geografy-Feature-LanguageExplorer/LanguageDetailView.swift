@@ -3,8 +3,6 @@ import SwiftUI
 
 struct LanguageDetailView: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
-
     let language: Language
     let maxSpeakers: Int
 
@@ -16,11 +14,6 @@ struct LanguageDetailView: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
     }
 }
 

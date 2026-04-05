@@ -12,7 +12,6 @@ public struct ModuleLessonsScreen: View {
         self.module = module
     }
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(Navigator.self) private var coordinator
     @Environment(LearningPathService.self) private var learningPathService
 
@@ -26,11 +25,6 @@ public struct ModuleLessonsScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
     }
 }
 

@@ -3,8 +3,6 @@ import SwiftUI
 
 struct LandmarkDetailView: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
-
     let landmark: Landmark
 
     private var accentSwiftUIColor: Color {
@@ -19,11 +17,6 @@ struct LandmarkDetailView: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
     }
 }
 

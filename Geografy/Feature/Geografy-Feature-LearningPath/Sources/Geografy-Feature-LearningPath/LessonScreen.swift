@@ -36,11 +36,6 @@ public struct LessonScreen: View {
                     .padding(.vertical, DesignSystem.Spacing.sm)
                     .background(.ultraThinMaterial)
             }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
             .onAppear { startBlobAnimation() }
     }
 }

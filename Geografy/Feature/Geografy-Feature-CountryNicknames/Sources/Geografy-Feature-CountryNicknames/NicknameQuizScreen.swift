@@ -6,7 +6,6 @@ public struct NicknameQuizScreen: View {
     // MARK: - Init
     public init() {}
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
     @Environment(CountryDataService.self) private var countryDataService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -29,11 +28,6 @@ public struct NicknameQuizScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { dismiss() }
-                }
-            }
             .task { buildQuestions() }
     }
 }
