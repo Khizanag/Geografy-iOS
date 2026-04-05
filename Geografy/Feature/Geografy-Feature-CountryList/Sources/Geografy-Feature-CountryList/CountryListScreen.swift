@@ -111,24 +111,8 @@ private extension CountryListScreen {
 private extension CountryListScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
-        #if !os(tvOS)
-        ToolbarItem(placement: .secondaryAction) {
-            sortOrderButton
-        }
-        #endif
         ToolbarItem(placement: .primaryAction) {
             filterMenu
-        }
-    }
-
-    var sortOrderButton: some View {
-        Button {
-            sortAscending.toggle()
-        } label: {
-            Label(
-                sortAscending ? "Sort Ascending" : "Sort Descending",
-                systemImage: sortAscending ? "arrow.up" : "arrow.down"
-            )
         }
     }
 
@@ -182,6 +166,7 @@ private extension CountryListScreen {
             }
         } label: {
             Label("Reset All", systemImage: "arrow.counterclockwise")
+                .foregroundStyle(DesignSystem.Color.error)
         }
     }
 
@@ -198,15 +183,31 @@ private extension CountryListScreen {
     }
 
     var sortBySubmenu: some View {
-        Picker(selection: $sortBy) {
-            ForEach(SortOption.allCases, id: \.self) { option in
-                Label(option.rawValue, systemImage: option.icon)
-                    .tag(option)
+        Menu {
+            Picker(selection: $sortBy) {
+                ForEach(SortOption.allCases, id: \.self) { option in
+                    Label(option.rawValue, systemImage: option.icon)
+                        .tag(option)
+                }
+            } label: {
+                Label("Field", systemImage: "textformat")
             }
+            .pickerStyle(.inline)
+
+            Divider()
+
+            Picker(selection: $sortAscending) {
+                Label("Ascending", systemImage: "arrow.up")
+                    .tag(true)
+                Label("Descending", systemImage: "arrow.down")
+                    .tag(false)
+            } label: {
+                Label("Direction", systemImage: "arrow.up.arrow.down")
+            }
+            .pickerStyle(.inline)
         } label: {
             Label("Sort by", systemImage: "arrow.up.arrow.down")
         }
-        .pickerStyle(.menu)
     }
 
     var continentFilterSubmenu: some View {

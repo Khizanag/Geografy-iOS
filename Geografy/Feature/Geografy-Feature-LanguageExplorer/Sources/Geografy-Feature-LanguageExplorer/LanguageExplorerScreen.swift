@@ -5,7 +5,6 @@ public struct LanguageExplorerScreen: View {
     // MARK: - Properties
     @State private var searchQuery = ""
     @State private var selectedLanguage: Language?
-    @State private var showingDetail = false
 
     private let languageService = LanguageService()
 
@@ -21,11 +20,8 @@ public struct LanguageExplorerScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .searchable(text: $searchQuery, prompt: "Search languages...")
-            .sheet(isPresented: $showingDetail) {
-                if let language = selectedLanguage {
-                    LanguageDetailView(language: language, maxSpeakers: languageService.maxSpeakers)
-                        .presentationDetents([.large])
-                }
+            .navigationDestination(item: $selectedLanguage) { language in
+                LanguageDetailView(language: language, maxSpeakers: languageService.maxSpeakers)
             }
     }
 }
@@ -86,7 +82,6 @@ private extension LanguageExplorerScreen {
     func languageRow(_ language: Language) -> some View {
         Button {
             selectedLanguage = language
-            showingDetail = true
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {

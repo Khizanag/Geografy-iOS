@@ -351,6 +351,86 @@ private extension LanguageService {
                 script: "Latin / Arabic",
                 funFact: "Hausa is the dominant language of West Africa and a key trade tongue across the Sahel region."
             ),
+            Language(
+                id: "ka",
+                name: "Georgian",
+                nativeName: "ქართული",
+                speakerCount: 4,
+                countries: ["GE"],
+                family: "Kartvelian",
+                script: "Georgian (Mkhedruli)",
+                funFact: "Georgian has its own unique alphabet with 33 letters, unrelated to any other writing system."
+            ),
+            Language(
+                id: "sw",
+                name: "Swahili",
+                nativeName: "Kiswahili",
+                speakerCount: 100,
+                countries: ["TZ", "KE", "UG", "RW", "CD"],
+                family: "Niger-Congo",
+                script: "Latin",
+                funFact: "Swahili is the most widely spoken African language and a lingua franca across East Africa."
+            ),
+            Language(
+                id: "el",
+                name: "Greek",
+                nativeName: "Ελληνικά",
+                speakerCount: 13,
+                countries: ["GR", "CY"],
+                family: "Indo-European",
+                script: "Greek",
+                funFact: "Greek has been written for 3,400+ years — the longest documented history of any language."
+            ),
+            Language(
+                id: "he",
+                name: "Hebrew",
+                nativeName: "עברית",
+                speakerCount: 9,
+                countries: ["IL"],
+                family: "Afro-Asiatic",
+                script: "Hebrew",
+                funFact: "Hebrew was revived from a liturgical to a living national language in the 20th century."
+            ),
+            Language(
+                id: "hu",
+                name: "Hungarian",
+                nativeName: "Magyar",
+                speakerCount: 13,
+                countries: ["HU"],
+                family: "Uralic",
+                script: "Latin",
+                funFact: "Hungarian is unrelated to its neighbors — it arrived in Europe from the Ural Mountains."
+            ),
+            Language(
+                id: "fi",
+                name: "Finnish",
+                nativeName: "Suomi",
+                speakerCount: 5,
+                countries: ["FI"],
+                family: "Uralic",
+                script: "Latin",
+                funFact: "Finnish has 15 cases and no grammatical gender — one pronoun covers he, she, and it."
+            ),
+            Language(
+                id: "am",
+                name: "Amharic",
+                nativeName: "አማርኛ",
+                speakerCount: 32,
+                countries: ["ET"],
+                family: "Afro-Asiatic",
+                script: "Ge'ez (Ethiopic)",
+                funFact: "Amharic uses the Ge'ez script with 231 characters — each consonant has 7 vowel forms."
+            ),
+            Language(
+                id: "ro",
+                name: "Romanian",
+                nativeName: "Română",
+                speakerCount: 24,
+                countries: ["RO", "MD"],
+                family: "Indo-European",
+                script: "Latin",
+                funFact: "Romanian is the closest living language to Latin, preserving more grammar than any other."
+            ),
         ]
     }
 }
