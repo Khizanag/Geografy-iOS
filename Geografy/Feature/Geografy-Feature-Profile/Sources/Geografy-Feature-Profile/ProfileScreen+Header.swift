@@ -7,7 +7,7 @@ extension ProfileScreen {
     public var guestBanner: some View {
         Button {
             hapticsService.impact(.medium)
-            coordinator.sheet(.signIn)
+            coordinator.push(.signIn)
         } label: {
             guestBannerLabel
         }
@@ -32,7 +32,7 @@ extension ProfileScreen {
     public var editButton: some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.sheet(.editProfile)
+            coordinator.push(.editProfile)
         } label: {
             Image(systemName: "pencil")
         }

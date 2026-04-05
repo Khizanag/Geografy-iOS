@@ -26,7 +26,7 @@ private extension ProfileScreen {
             Spacer()
             Button {
                 hapticsService.impact(.light)
-                coordinator.sheet(.achievements)
+                coordinator.push(.achievements)
             } label: {
                 HStack(spacing: 4) {
                     Text("\(achievementService.unlockedAchievements.count)/\(AchievementCatalog.all.count)")
@@ -96,7 +96,7 @@ private extension ProfileScreen {
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .frame(width: 76)
+                .frame(width: 76, height: 32, alignment: .top)
         }
         .padding(DesignSystem.Spacing.sm)
         .background(

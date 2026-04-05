@@ -175,7 +175,7 @@ private extension SettingsScreen {
     }
 
     var signInRow: some View {
-        Button { coordinator.sheet(.signIn) } label: {
+        Button { coordinator.push(.signIn) } label: {
             SettingsNavigationRow(
                 icon: "person.badge.plus",
                 iconColor: DesignSystem.Color.accent,
