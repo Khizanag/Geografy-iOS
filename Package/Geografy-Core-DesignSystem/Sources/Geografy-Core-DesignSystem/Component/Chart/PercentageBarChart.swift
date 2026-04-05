@@ -2,14 +2,14 @@ import Geografy_Core_Common
 import SwiftUI
 
 public struct PercentageBarChart: View {
-    public let title: String
-    public let icon: String
+    public let title: String?
+    public let icon: String?
     public let items: [PercentageItem]
     public let appeared: Bool
 
     public init(
-        title: String,
-        icon: String,
+        title: String? = nil,
+        icon: String? = nil,
         items: [PercentageItem],
         appeared: Bool
     ) {
@@ -22,7 +22,9 @@ public struct PercentageBarChart: View {
     public var body: some View {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                headerRow
+                if let title, let icon {
+                    headerRow(title: title, icon: icon)
+                }
                 ForEach(Array(items.enumerated()), id: \.element.name) { index, item in
                     itemRow(item: item, index: index)
                 }
@@ -34,7 +36,7 @@ public struct PercentageBarChart: View {
 
 // MARK: - Subviews
 private extension PercentageBarChart {
-    var headerRow: some View {
+    func headerRow(title: String, icon: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.headline)

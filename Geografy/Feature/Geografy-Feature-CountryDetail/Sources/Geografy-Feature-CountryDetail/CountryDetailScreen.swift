@@ -216,8 +216,6 @@ extension CountryDetailScreen {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("Religion", premium: true)
                 PercentageBarChart(
-                    title: "Religion",
-                    icon: "hands.sparkles",
                     items: religionItems.sorted { $0.percentage > $1.percentage },
                     appeared: true
                 )
@@ -233,8 +231,6 @@ extension CountryDetailScreen {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("Ethnicity", premium: true)
                 PercentageBarChart(
-                    title: "Ethnicity",
-                    icon: "person.2",
                     items: ethnicityItems.sorted { $0.percentage > $1.percentage },
                     appeared: true
                 )
