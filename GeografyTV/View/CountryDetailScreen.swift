@@ -11,17 +11,12 @@ struct CountryDetailScreen: View {
     let country: Country
 
     @State private var showFlagFocus = false
-    @State private var showOrganizationDetail: Organization?
-
     var body: some View {
         listContent
             .listStyle(.grouped)
             .navigationTitle(country.name)
             .fullScreenCover(isPresented: $showFlagFocus) {
                 FlagFocusView(countryCode: country.code, countryName: country.name)
-            }
-            .sheet(item: $showOrganizationDetail) { organization in
-                OrganizationSheetView(organization: organization)
             }
     }
 }
@@ -226,7 +221,13 @@ private extension CountryDetailScreen {
             Section("Organizations (\(country.organizations.count))") {
                 ForEach(country.organizations, id: \.self) { organizationID in
                     let organization = Organization.all.first { $0.id == organizationID }
-                    Button { showOrganizationDetail = organization } label: {
+                    if let organization {
+                        NavigationLink {
+                            OrganizationView(organization: organization)
+                        } label: {
+                            organizationRow(organization, id: organizationID)
+                        }
+                    } else {
                         organizationRow(organization, id: organizationID)
                     }
                 }
@@ -296,62 +297,5 @@ private extension CountryDetailScreen {
             return String(format: "$%.1fM", value / 1_000_000)
         }
         return "$\(Int(value).formatted())"
-    }
-}
-
-// MARK: - Organization Sheet
-struct OrganizationSheetView: View {
-    @Environment(\.dismiss) private var dismiss
-
-    let organization: Organization
-
-    var body: some View {
-        sheetContent
-            .navigationTitle(organization.displayName)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") { dismiss() }
-                }
-            }
-            .onExitCommand { dismiss() }
-    }
-}
-
-// MARK: - Organization Sheet Content
-private extension OrganizationSheetView {
-    var sheetContent: some View {
-        NavigationStack {
-            List {
-                Section {
-                    VStack(alignment: .leading, spacing: 16) {
-                        orgHeader
-                        orgDescription
-                    }
-                }
-            }
-        }
-    }
-
-    var orgHeader: some View {
-        HStack(spacing: 20) {
-            Image(systemName: organization.icon)
-                .font(DesignSystem.Font.system(size: 40))
-                .foregroundStyle(organization.highlightColor)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(organization.displayName)
-                    .font(DesignSystem.Font.system(size: 32, weight: .bold))
-
-                Text(organization.fullName)
-                    .font(DesignSystem.Font.system(size: 22))
-                    .foregroundStyle(.secondary)
-            }
-        }
-    }
-
-    var orgDescription: some View {
-        Text(organization.description)
-            .font(DesignSystem.Font.system(size: 20))
-            .foregroundStyle(.secondary)
     }
 }
