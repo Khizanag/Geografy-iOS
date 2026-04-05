@@ -25,6 +25,7 @@ public struct OceanExplorerScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
+            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
             .onAppear { startBlobAnimation() }
     }
 }
