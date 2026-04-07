@@ -279,7 +279,6 @@
 				Feature/Home/View/Card/Social/HomeOrgsCard.swift,
 				Feature/Home/View/Card/Social/HomeTravelBucketListCard.swift,
 				Feature/Home/View/HomeScreen.swift,
-				"Feature/Home/View/HomeScreen+NewSections.swift",
 				Feature/Home/View/Section/HomeComingSoonSection.swift,
 				Feature/Home/View/Section/HomeSectionEditorSheet.swift,
 				Feature/More/Model/MoreSheet.swift,
