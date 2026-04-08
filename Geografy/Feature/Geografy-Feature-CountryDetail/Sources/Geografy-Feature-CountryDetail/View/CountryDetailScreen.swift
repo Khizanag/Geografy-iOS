@@ -102,6 +102,7 @@ private extension CountryDetailScreen {
             }
             .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
         }
+
         ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
@@ -115,6 +116,7 @@ private extension CountryDetailScreen {
             }
             .buttonStyle(.plain)
         }
+
         ToolbarItem(placement: .secondaryAction) {
             Button {
                 hapticsService.impact(.light)
@@ -124,6 +126,7 @@ private extension CountryDetailScreen {
             }
             .buttonStyle(.plain)
         }
+
         ToolbarItem(placement: .secondaryAction) {
             Button {
                 hapticsService.impact(.light)
