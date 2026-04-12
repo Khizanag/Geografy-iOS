@@ -16,12 +16,14 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Geografy-Core-Common"),
+        .package(path: "../Geografy-Core-DesignSystem"),
     ],
     targets: [
         .target(
             name: "Geografy-Core-Quiz",
             dependencies: [
                 .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
+                .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
             ]
         ),
         .testTarget(
