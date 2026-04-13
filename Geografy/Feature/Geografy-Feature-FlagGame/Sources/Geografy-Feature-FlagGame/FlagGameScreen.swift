@@ -21,6 +21,8 @@ public struct FlagGameScreen: View {
     @State private var options: [Country] = []
     @State private var selectedAnswer: Country?
     @State private var showFeedback = false
+    @State private var feedbackWasCorrect = false
+    @State private var feedbackTrigger = 0
     @State private var timerCancellable: AnyCancellable?
 
     // MARK: - Body
@@ -36,6 +38,8 @@ public struct FlagGameScreen: View {
             } else {
                 gameContent
             }
+
+            feedbackOverlay
         }
         .background { AmbientBlobsView(.quiz) }
         .background(DesignSystem.Color.background.ignoresSafeArea())
@@ -69,11 +73,11 @@ private extension FlagGameScreen {
     var scoreAndLivesBar: some View {
         ZStack {
             VStack(spacing: DesignSystem.Spacing.xxs) {
-                Text("\(gameState.score)")
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .contentTransition(.numericText())
+                NumericTicker(
+                    gameState.score,
+                    font: DesignSystem.Font.title2,
+                    color: DesignSystem.Color.textPrimary
+                )
 
                 Text("Score")
                     .font(DesignSystem.Font.caption2)
@@ -87,13 +91,11 @@ private extension FlagGameScreen {
 
                 HStack(spacing: DesignSystem.Spacing.xxs) {
                     ForEach(0..<3, id: \.self) { index in
-                        Image(systemName: index < gameState.lives ? "heart.fill" : "heart")
+                        let alive = index < gameState.lives
+                        Image(systemName: alive ? "heart.fill" : "heart")
                             .font(DesignSystem.Font.caption)
-                            .foregroundStyle(
-                                index < gameState.lives
-                                    ? DesignSystem.Color.error
-                                    : DesignSystem.Color.textTertiary
-                            )
+                            .foregroundStyle(alive ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
+                            .geoEffect(.streakIncrement(count: gameState.lives))
                     }
                 }
                 .accessibilityElement(children: .ignore)
@@ -149,6 +151,37 @@ private extension FlagGameScreen {
     }
 }
 
+// MARK: - Feedback overlay
+private extension FlagGameScreen {
+    @ViewBuilder
+    var feedbackOverlay: some View {
+        if showFeedback {
+            VStack {
+                Spacer()
+
+                if feedbackWasCorrect {
+                    GeoLottieView(.checkmarkSuccess, loopMode: .playOnce) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(DesignSystem.Font.displayXXS)
+                            .foregroundStyle(DesignSystem.Color.success)
+                    }
+                    .frame(width: 120, height: 120)
+                } else {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(DesignSystem.Font.displayXXS)
+                        .foregroundStyle(DesignSystem.Color.error)
+                        .geoEffect(.wrongShake(trigger: feedbackTrigger))
+                }
+
+                Spacer()
+            }
+            .allowsHitTesting(false)
+            .transition(.scale.combined(with: .opacity))
+            .accessibilityHidden(true)
+        }
+    }
+}
+
 // MARK: - Helpers
 private extension FlagGameScreen {
     func optionState(for country: Country) -> QuizOptionButton.OptionState {
@@ -193,9 +226,13 @@ private extension FlagGameScreen {
     func handleAnswer(_ country: Country) {
         guard !showFeedback else { return }
         selectedAnswer = country
-        showFeedback = true
-
         let isCorrect = country.id == targetCountry?.id
+        feedbackWasCorrect = isCorrect
+        feedbackTrigger += 1
+
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+            showFeedback = true
+        }
 
         if isCorrect {
             gameState.score += 10
@@ -205,21 +242,32 @@ private extension FlagGameScreen {
             #if !os(tvOS)
             hapticsService.notification(.success)
             #endif
+            SoundService.shared.play(.correct)
             AccessibilityNotification.Announcement("Correct!").post()
         } else {
             gameState.lives -= 1
             #if !os(tvOS)
             hapticsService.notification(.error)
             #endif
+            SoundService.shared.play(.wrong)
             AccessibilityNotification.Announcement("Incorrect. \(gameState.lives) lives remaining").post()
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+        // Advance sooner (0.55s) with a smooth spring so the UI never freezes.
+        // Correct answers fade through quickly; wrong answers pause slightly
+        // longer so the user sees the correct flag highlighted.
+        let delay = isCorrect ? 0.55 : 0.75
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            withAnimation(.easeOut(duration: 0.2)) {
+                showFeedback = false
+            }
             if !gameState.isActive {
                 timerCancellable?.cancel()
                 gameState.isFinished = true
             } else {
-                loadNextQuestion()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    loadNextQuestion()
+                }
             }
         }
     }

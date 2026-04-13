@@ -24,6 +24,11 @@ public enum SoundEffect: String, CaseIterable, Sendable {
 @Observable
 @MainActor
 public final class SoundService {
+    /// Shared instance. SoundService caches AVAudioPlayer instances per effect,
+    /// so a single shared player is both thread-correct (MainActor-isolated)
+    /// and avoids redundant allocation on every screen.
+    public static let shared = SoundService()
+
     public init() {
         #if canImport(AVFoundation)
         configureAudioSession()
