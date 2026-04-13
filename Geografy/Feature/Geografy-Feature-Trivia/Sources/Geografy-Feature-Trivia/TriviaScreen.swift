@@ -1,5 +1,6 @@
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
+import Geografy_Core_Quiz
 import Geografy_Core_Service
 import SwiftUI
 
@@ -9,10 +10,15 @@ public struct TriviaScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var questions: [TriviaQuestion] = []
-    @State private var currentIndex = 0
-    @State private var streak = 0
-    @State private var totalAnswered = 0
-    @State private var totalCorrect = 0
+    @State private var session = QuizSession(
+        configuration: QuizSession.Configuration(
+            totalQuestions: 30,
+            initialLives: 0,
+            xpPerCorrect: 10,
+            streakBonusEvery: 3,
+            timePerQuestion: nil
+        )
+    )
     @State private var cardOffset: CGFloat = 0
     @State private var cardRotation: Double = 0
     @State private var swipeHint: SwipeHint = .none
@@ -45,8 +51,8 @@ private extension TriviaScreen {
     var contentSwitcher: some View {
         if questions.isEmpty {
             loadingView
-        } else if currentIndex >= questions.count {
-            completionView
+        } else if case .complete(let summary) = session.state {
+            completionView(summary: summary)
         } else {
             gameContent
         }
@@ -81,22 +87,28 @@ private extension TriviaScreen {
     }
 
     var streakAndProgressBar: some View {
-        SessionProgressView(progress: progress, current: currentIndex + 1, total: questions.count)
+        SessionProgressView(
+            progress: progress,
+            current: session.questionIndex + 1,
+            total: questions.count
+        )
     }
 
     var cardStack: some View {
         ZStack {
-            if currentIndex + 1 < questions.count {
-                triviaCard(for: questions[currentIndex + 1], isBack: true)
+            if session.questionIndex + 1 < questions.count {
+                triviaCard(for: questions[session.questionIndex + 1], isBack: true)
                     .scaleEffect(0.92)
                     .offset(y: 12)
             }
-            triviaCard(for: questions[currentIndex], isBack: false)
-                .offset(x: cardOffset)
-                .rotationEffect(.degrees(cardRotation))
-                #if !os(tvOS)
-                .gesture(dragGesture)
-                #endif
+            if session.questionIndex < questions.count {
+                triviaCard(for: questions[session.questionIndex], isBack: false)
+                    .offset(x: cardOffset)
+                    .rotationEffect(.degrees(cardRotation))
+                    #if !os(tvOS)
+                    .gesture(dragGesture)
+                    #endif
+            }
         }
     }
 
@@ -178,58 +190,12 @@ private extension TriviaScreen {
 
 // MARK: - Completion
 private extension TriviaScreen {
-    var completionView: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-
-            Image(systemName: "checkmark.seal.fill")
-                .font(DesignSystem.Font.display)
-                .foregroundStyle(DesignSystem.Color.success)
-
-            Text("All Done!")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            completionStats
-
-            Spacer()
-
-            completionDoneButton
-        }
-    }
-
-    var completionStats: some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.xl) {
-                completionStat(value: "\(totalCorrect)/\(totalAnswered)", label: "Correct")
-                Divider().frame(height: 40)
-                completionStat(value: "\(streak)", label: "Best Streak")
-            }
-            .padding(DesignSystem.Spacing.lg)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    func completionStat(value: String, label: String) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-    }
-
-    var completionDoneButton: some View {
-        GlassButton("Done", fullWidth: true) {
-            coordinator.dismiss()
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.xl)
+    func completionView(summary: QuizResultSummary) -> some View {
+        QuizResultScreen(
+            summary: summary,
+            onRetry: retry,
+            onContinue: coordinator.dismiss
+        )
     }
 }
 
@@ -268,24 +234,31 @@ private extension TriviaScreen {
 private extension TriviaScreen {
     func loadQuestions() {
         let generated = service.generateQuestions(from: countryDataService.countries)
-        questions = Array(generated.prefix(30))
+        let pool = Array(generated.prefix(30))
+        questions = pool
+        session = QuizSession(
+            configuration: QuizSession.Configuration(
+                totalQuestions: pool.count,
+                initialLives: 0,
+                xpPerCorrect: 10,
+                streakBonusEvery: 3,
+                timePerQuestion: nil
+            )
+        )
+        session.start()
+    }
+
+    func retry() {
+        loadQuestions()
     }
 
     func commitAnswer(answeredTrue: Bool) {
-        guard currentIndex < questions.count else { return }
+        guard session.questionIndex < questions.count else { return }
         isAnimating = true
-        let question = questions[currentIndex]
+        let question = questions[session.questionIndex]
         let isCorrect = answeredTrue == question.isTrue
         lastAnswerWasCorrect = isCorrect
-        totalAnswered += 1
-
-        if isCorrect {
-            totalCorrect += 1
-            streak += 1
-        } else {
-            streak = 0
-        }
-
+        session.submitAnswer(isCorrect: isCorrect)
         showExplanation = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
@@ -295,7 +268,7 @@ private extension TriviaScreen {
                 cardRotation = answeredTrue ? 20 : -20
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                currentIndex += 1
+                session.advance()
                 cardOffset = 0
                 cardRotation = 0
                 swipeHint = .none
@@ -311,7 +284,7 @@ private extension TriviaScreen {
 private extension TriviaScreen {
     var progress: CGFloat {
         guard !questions.isEmpty else { return 0 }
-        return CGFloat(currentIndex) / CGFloat(questions.count)
+        return CGFloat(session.questionIndex) / CGFloat(questions.count)
     }
 
     var trueOpacity: Double {
