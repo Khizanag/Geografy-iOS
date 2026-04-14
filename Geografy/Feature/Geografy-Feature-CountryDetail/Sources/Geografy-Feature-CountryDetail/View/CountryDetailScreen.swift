@@ -266,6 +266,7 @@ extension CountryDetailScreen {
     var topSections: some View {
         heroSection
         quickFactsCard
+        travelEssentialsSection
         travelSection
         neighborsSection(countryDataService: countryDataService)
         peopleSection
