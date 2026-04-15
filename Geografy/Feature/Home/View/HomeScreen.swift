@@ -27,7 +27,7 @@ struct HomeScreen: View {
     // MARK: - Body
     var body: some View {
         mainFeed
-            .background { AmbientBlobsView(.rich) }
+            .background { MetalAmbientView(preset: .standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }

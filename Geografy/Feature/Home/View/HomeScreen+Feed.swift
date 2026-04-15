@@ -12,24 +12,32 @@ extension HomeScreen {
             VStack(spacing: DesignSystem.Spacing.xl) {
                 greetingSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
+                    .phaseEntrance(index: 0)
 
                 actionCardSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
+                    .phaseEntrance(index: 1)
 
                 quickStatsSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
+                    .phaseEntrance(index: 2)
 
                 spotlightSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
+                    .phaseEntrance(index: 3)
 
                 gamesSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
+                    .phaseEntrance(index: 4)
 
                 exploreSection
+                    .phaseEntrance(index: 5)
 
                 learnSection
+                    .phaseEntrance(index: 6)
 
                 worldRecordsSection
+                    .phaseEntrance(index: 7)
             }
             .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
             .padding(.top, DesignSystem.Spacing.lg)
