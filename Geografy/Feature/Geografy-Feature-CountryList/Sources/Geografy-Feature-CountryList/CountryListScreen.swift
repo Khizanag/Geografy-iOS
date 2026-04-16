@@ -37,6 +37,7 @@ public struct CountryListScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var searchText = ""
+    @State private var debouncedSearchText = ""
     @State private var groupBy: GroupOption = .none
     @State private var sortBy: SortOption = .name
     @State private var sortAscending = true
@@ -56,10 +57,24 @@ public struct CountryListScreen: View {
             .navigationTitle("Countries")
             .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
+            .overlay { searchEmptyOverlay }
             .toolbar { toolbarContent }
             .onAppear { expandedSections = Set(sectionKeys) }
             .onChange(of: groupBy) { expandedSections = Set(sectionKeys) }
             .onChange(of: countryDataService.countries.count) { expandedSections = Set(sectionKeys) }
+            .task(id: searchText) {
+                try? await Task.sleep(for: .milliseconds(250))
+                if !Task.isCancelled {
+                    debouncedSearchText = searchText
+                }
+            }
+    }
+
+    @ViewBuilder
+    private var searchEmptyOverlay: some View {
+        if !debouncedSearchText.isEmpty, filteredCountries.isEmpty {
+            ContentUnavailableView.search(text: debouncedSearchText)
+        }
     }
 }
 
@@ -382,7 +397,7 @@ private extension CountryListScreen {
 // MARK: - Helpers
 private extension CountryListScreen {
     var showJumpIndex: Bool {
-        groupBy == .firstLetter && !sectionKeys.isEmpty && searchText.isEmpty
+        groupBy == .firstLetter && !sectionKeys.isEmpty && debouncedSearchText.isEmpty
     }
 
     var filteredCountries: [Country] {
@@ -392,8 +407,8 @@ private extension CountryListScreen {
             countries = countries.filter { $0.continent == continentFilter }
         }
 
-        if !searchText.isEmpty {
-            let query = searchText.lowercased()
+        if !debouncedSearchText.isEmpty {
+            let query = debouncedSearchText.lowercased()
             countries = countries.filter {
                 $0.name.lowercased().contains(query) ||
                 $0.allCapitals.contains { $0.name.lowercased().contains(query) } ||
