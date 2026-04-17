@@ -21,7 +21,7 @@ public struct PaywallScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { AmbientBlobsView(.paywall) }
+            .background { MetalAmbientView(preset: .hero) }
             .background { backgroundGradient }
             .navigationTitle("Geografy Premium")
             #if !os(tvOS)
@@ -315,6 +315,7 @@ private extension PaywallScreen {
                     await subscriptionService.purchase(selectedProduct)
                     isProcessing = false
                     if subscriptionService.isPremium {
+                        SoundService.shared.play(.unlock)
                         coordinator.dismiss()
                     }
                 }
