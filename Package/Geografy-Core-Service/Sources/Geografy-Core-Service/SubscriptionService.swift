@@ -1,3 +1,4 @@
+import Foundation
 import Geografy_Core_Common
 import Observation
 import StoreKit
@@ -12,10 +13,10 @@ public final class SubscriptionService {
         public static let all = [monthly, annual, lifetime]
     }
 
-    #if DEBUG
-    /// Enable premium for testing. Set to `true` to unlock all features.
-    private static let debugPremiumOverride = true
-    #endif
+    /// UserDefaults key backing the DEBUG-only developer-menu toggle used to
+    /// simulate a premium entitlement without a real StoreKit purchase.
+    /// Release builds ignore this key entirely.
+    public static let debugPremiumUserDefaultsKey = "debug.premium"
 
     public private(set) var products: [Product] = []
     public private(set) var purchasedProductIDs: Set<String> = []
@@ -24,7 +25,7 @@ public final class SubscriptionService {
 
     public var isPremium: Bool {
         #if DEBUG
-        if Self.debugPremiumOverride { return true }
+        if UserDefaults.standard.bool(forKey: Self.debugPremiumUserDefaultsKey) { return true }
         #endif
         return !purchasedProductIDs.isEmpty
     }
