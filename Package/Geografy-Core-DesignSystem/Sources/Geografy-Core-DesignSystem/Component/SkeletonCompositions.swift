@@ -7,7 +7,7 @@ public struct FeedCardSkeleton: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SkeletonView(.rectangle(cornerRadius: DesignSystem.CornerRadius.md))
+            SkeletonView(.rectangle(cornerRadius: DesignSystem.CornerRadius.medium))
                 .frame(height: DesignSystem.Size.Card.regular)
 
             SkeletonLine(widthFraction: 0.7, height: 18)
@@ -22,7 +22,7 @@ public struct FeedCardSkeleton: View {
         }
         .padding(DesignSystem.Spacing.md)
         .background(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.lg, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                 .fill(DesignSystem.Color.cardBackground)
         )
     }
@@ -54,7 +54,7 @@ public struct DetailHeroSkeleton: View {
 
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            SkeletonView(.rectangle(cornerRadius: DesignSystem.CornerRadius.lg))
+            SkeletonView(.rectangle(cornerRadius: DesignSystem.CornerRadius.large))
                 .frame(height: DesignSystem.Size.Flag.hero)
 
             VStack(spacing: 8) {
@@ -64,7 +64,7 @@ public struct DetailHeroSkeleton: View {
 
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(0..<3, id: \.self) { _ in
-                    SkeletonView(.rectangle(cornerRadius: DesignSystem.CornerRadius.md))
+                    SkeletonView(.rectangle(cornerRadius: DesignSystem.CornerRadius.medium))
                         .frame(height: 72)
                 }
             }
@@ -94,7 +94,7 @@ public struct ProfileHeaderSkeleton: View {
                     .padding(DesignSystem.Spacing.sm)
                     .frame(maxWidth: .infinity)
                     .background(
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous)
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                             .fill(DesignSystem.Color.cardBackground)
                     )
                 }
