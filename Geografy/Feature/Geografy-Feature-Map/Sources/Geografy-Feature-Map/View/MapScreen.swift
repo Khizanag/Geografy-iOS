@@ -400,7 +400,7 @@ private extension MapScreen {
         }
 
         for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-            withAnimation(.easeInOut(duration: 0.3)) {
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.78)) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil
                     #if !os(tvOS)
@@ -409,8 +409,9 @@ private extension MapScreen {
                 } else {
                     mapState.selectedCountryCode = shape.id
                     #if !os(tvOS)
-                    hapticsService.impact(.medium)
+                    hapticsService.selection()
                     #endif
+                    SoundService.shared.play(.tap)
                 }
             }
             return
