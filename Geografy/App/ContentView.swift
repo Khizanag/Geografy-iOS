@@ -133,7 +133,6 @@ private extension ContentView {
                 }
             }
         }
-        .tabViewStyle(.sidebarAdaptable)
     }
 }
 
