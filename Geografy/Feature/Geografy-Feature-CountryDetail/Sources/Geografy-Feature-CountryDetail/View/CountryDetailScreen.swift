@@ -154,21 +154,62 @@ extension CountryDetailScreen {
 
 // MARK: - Locked Content
 extension CountryDetailScreen {
+    var premiumMonthlyPriceDisplay: String? {
+        subscriptionService.products.first { $0.id == SubscriptionService.ProductID.monthly }?.displayPrice
+    }
+
     func lockedSection(title: String) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader(title)
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-                .fill(DesignSystem.Color.cardBackground)
-                .frame(height: 80)
-                .overlay { PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) }) }
+            LockedSectionPeek(
+                title: "Premium preview",
+                subtitle: "Unlock \(title.lowercased()) + advanced stats and ad-free experience",
+                price: premiumMonthlyPriceDisplay,
+                onUnlock: { coordinator.sheet(.paywall) },
+                content: {
+                    lockedPreviewContent
+                        .frame(height: 140)
+                        .padding(DesignSystem.Spacing.md)
+                }
+            )
         }
     }
 
     func lockedPlaceholder(height: CGFloat) -> some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
-            .fill(DesignSystem.Color.cardBackground)
-            .frame(height: height)
-            .overlay { PremiumLockedOverlay(onUnlock: { coordinator.sheet(.paywall) }) }
+        LockedSectionPeek(
+            title: "Premium",
+            subtitle: "Unlock to reveal",
+            price: premiumMonthlyPriceDisplay,
+            onUnlock: { coordinator.sheet(.paywall) },
+            content: {
+                lockedPreviewContent
+                    .frame(height: height)
+                    .padding(DesignSystem.Spacing.sm)
+            }
+        )
+    }
+
+    /// Generic chart-like preview shown behind the blur. Hints at the kind of
+    /// data that becomes visible once premium is unlocked without having to
+    /// know which specific section is locked.
+    private var lockedPreviewContent: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            ForEach(0..<3, id: \.self) { index in
+                lockedPreviewBar(index: index)
+            }
+        }
+    }
+
+    private func lockedPreviewBar(index: Int) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Circle()
+                .fill(DesignSystem.Color.mapColors[index % DesignSystem.Color.mapColors.count])
+                .frame(width: DesignSystem.Size.Icon.sm, height: DesignSystem.Size.Icon.sm)
+            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                .fill(DesignSystem.Color.Gradient.aurora)
+                .frame(height: 14)
+                .opacity(0.85 - Double(index) * 0.2)
+        }
     }
 }
 
