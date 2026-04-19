@@ -103,6 +103,7 @@ extension Destination {
         case .landmarkQuiz: LandmarkQuizScreen()
         case .languageExplorer: LanguageExplorerScreen()
         case .learningPath: LearningPathScreen()
+        case .learningModule(let module): ModuleLessonsScreen(module: module)
         case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)
         case .leaderboards: LeaderboardScreen()
         case .localMultiplayer: LocalMultiplayerEntryScreen()

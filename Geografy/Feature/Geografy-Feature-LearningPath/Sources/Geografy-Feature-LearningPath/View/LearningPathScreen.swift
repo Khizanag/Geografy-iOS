@@ -1,15 +1,16 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import SwiftUI
 
 public struct LearningPathScreen: View {
     // MARK: - Init
     public init() {}
     // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var selectedModule: LearningModule?
     @State private var blobAnimating = false
 
     // MARK: - Body
@@ -22,10 +23,6 @@ public struct LearningPathScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .onAppear { startBlobAnimation() }
-            .sheet(item: $selectedModule) { module in
-                ModuleLessonsScreen(module: module)
-                    .presentationDetents([.large])
-            }
     }
 }
 
@@ -101,7 +98,7 @@ private extension LearningPathScreen {
     func moduleCard(module: LearningModule) -> some View {
         Button {
             if module.isUnlocked {
-                selectedModule = module
+                coordinator.sheet(.learningModule(module))
             }
         } label: {
             CardView {
