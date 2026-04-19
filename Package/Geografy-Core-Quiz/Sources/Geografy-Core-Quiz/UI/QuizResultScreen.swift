@@ -119,7 +119,7 @@ private extension QuizResultScreen {
         }
         .padding(DesignSystem.Spacing.md)
         .background(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .fill(DesignSystem.Color.cardBackground)
         )
     }
@@ -160,14 +160,14 @@ private extension QuizResultScreen {
         .frame(maxWidth: .infinity)
         .padding(DesignSystem.Spacing.md)
         .background(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .fill(DesignSystem.Color.cardBackground)
         )
     }
 
     var headline: String {
         guard summary.completed else { return "Game over" }
-        switch summary.accuracy {
+        return switch summary.accuracy {
         case 0.9...:    "Outstanding"
         case 0.7..<0.9: "Great job"
         case 0.5..<0.7: "Well done"

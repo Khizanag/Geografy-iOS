@@ -42,7 +42,7 @@ public struct AnswerButton<Label: View>: View {
                 .padding(.vertical, DesignSystem.Spacing.sm)
                 .background(background)
                 .overlay(border)
-                .contentShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous))
+                .contentShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }
         .buttonStyle(.plain)
         .disabled(feedback != .none)
@@ -59,13 +59,13 @@ private extension AnswerButton {
     }
 
     var background: some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous)
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             .fill(backgroundTint)
     }
 
     @ViewBuilder
     var border: some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous)
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             .strokeBorder(borderTint, lineWidth: feedback == .none ? 1 : 2)
     }
 
@@ -89,7 +89,7 @@ private extension AnswerButton {
 
     var scale: CGFloat {
         guard !reduceMotion else { return 1 }
-        switch feedback {
+        return switch feedback {
         case .correct: 1.02
         case .wrong:   0.98
         default:       1.0

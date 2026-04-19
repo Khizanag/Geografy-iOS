@@ -185,7 +185,7 @@ private extension OnboardingFlow {
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
             .background(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                     .fill(isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground)
             )
         }
@@ -226,7 +226,7 @@ private extension OnboardingFlow {
             .padding(DesignSystem.Spacing.md)
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
             .background(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.md, style: .continuous)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                     .fill(isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground)
             )
         }
