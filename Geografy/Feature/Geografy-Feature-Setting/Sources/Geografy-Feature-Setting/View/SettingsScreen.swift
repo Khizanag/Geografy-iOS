@@ -360,8 +360,10 @@ private extension SettingsScreen {
         settingsGroup(header: "About") {
             VStack(spacing: 0) {
                 rateAppRow
+                #if !os(tvOS)
                 settingsDivider
                 shareAppRow
+                #endif
                 settingsDivider
                 privacyPolicyRow
                 settingsDivider
@@ -415,6 +417,7 @@ private extension SettingsScreen {
         .buttonStyle(PressButtonStyle())
     }
 
+    #if !os(tvOS)
     var shareAppRow: some View {
         ShareLink(item: appStoreURL) {
             HStack(spacing: DesignSystem.Spacing.sm) {
@@ -431,6 +434,7 @@ private extension SettingsScreen {
         }
         .buttonStyle(PressButtonStyle())
     }
+    #endif
 
     var restorePurchasesRow: some View {
         Button {
@@ -569,10 +573,12 @@ private extension SettingsScreen {
     }
 
     func requestReview() {
+        #if !os(tvOS)
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .first else { return }
         AppStore.requestReview(in: scene)
+        #endif
     }
 
     var appStoreURL: URL { SettingsURLs.appStore }

@@ -145,7 +145,7 @@ private extension TravelBucketListScreen {
 private extension TravelBucketListScreen {
     @ToolbarContentBuilder
     var toolbarItems: some ToolbarContent {
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: sortPlacement) {
             Menu {
                 Picker(selection: $selectedSort) {
                     ForEach(BucketListSort.allCases) { sort in
@@ -169,6 +169,14 @@ private extension TravelBucketListScreen {
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
         }
+        #endif
+    }
+
+    var sortPlacement: ToolbarItemPlacement {
+        #if os(tvOS)
+        .primaryAction
+        #else
+        .secondaryAction
         #endif
     }
 }

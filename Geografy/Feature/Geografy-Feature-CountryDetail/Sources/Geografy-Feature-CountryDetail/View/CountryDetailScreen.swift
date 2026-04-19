@@ -117,7 +117,7 @@ private extension CountryDetailScreen {
             .buttonStyle(.plain)
         }
 
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: secondaryActionPlacement) {
             Button {
                 hapticsService.impact(.light)
                 coordinator.sheet(.compare(preselectedCountry: country))
@@ -127,7 +127,7 @@ private extension CountryDetailScreen {
             .buttonStyle(.plain)
         }
 
-        ToolbarItem(placement: .secondaryAction) {
+        ToolbarItem(placement: secondaryActionPlacement) {
             Button {
                 hapticsService.impact(.light)
                 coordinator.sheet(.saveToCollection(countryCode: country.code, countryName: country.name))
@@ -136,6 +136,14 @@ private extension CountryDetailScreen {
             }
             .buttonStyle(.plain)
         }
+    }
+
+    var secondaryActionPlacement: ToolbarItemPlacement {
+        #if os(tvOS)
+        .primaryAction
+        #else
+        .secondaryAction
+        #endif
     }
 }
 

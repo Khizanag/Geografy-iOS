@@ -44,7 +44,7 @@ public struct LockedSectionPeek<Content: View>: View {
             blurredContent
             overlay
         }
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.lg, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
     }
 }
 
@@ -109,7 +109,7 @@ private extension LockedSectionPeek {
     @ViewBuilder
     var dimmer: some View {
         if reduceTransparency {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.lg, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                 .fill(DesignSystem.Color.cardBackground)
         } else {
             LinearGradient(
