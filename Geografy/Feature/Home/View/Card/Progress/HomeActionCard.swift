@@ -78,14 +78,17 @@ private extension HomeActionCard {
     }
 
     var gradientBackground: some View {
-        LinearGradient(
-            colors: [
-                action.color.opacity(0.15),
-                action.color.opacity(0.05),
-            ],
-            startPoint: .leading,
-            endPoint: .trailing
-        )
+        ZStack {
+            DesignSystem.Color.cardBackground
+            LinearGradient(
+                colors: [
+                    action.color.opacity(0.22),
+                    action.color.opacity(0.08),
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        }
     }
 }
 

@@ -35,23 +35,27 @@ public struct MetalAmbientView: View {
     }
 
     public var body: some View {
-        if reduceMotion {
-            AmbientBlobsView(reducedMotionBlobPreset)
-        } else {
-            TimelineView(.animation(minimumInterval: 1.0 / 60.0, paused: false)) { context in
-                let time = context.date.timeIntervalSinceReferenceDate
-                GeometryReader { geometry in
-                    Rectangle()
-                        .fill(DesignSystem.Color.Gradient.aurora)
-                        .colorEffect(ShaderLibrary.bundle(.module).aurora(
-                            .float2(Float(geometry.size.width), Float(geometry.size.height)),
-                            .float(Float(time))
-                        ))
-                        .opacity(opacity)
+        Group {
+            if reduceMotion {
+                AmbientBlobsView(reducedMotionBlobPreset)
+            } else {
+                TimelineView(.animation(minimumInterval: 1.0 / 60.0, paused: false)) { context in
+                    let time = context.date.timeIntervalSinceReferenceDate
+                    GeometryReader { geometry in
+                        Rectangle()
+                            .fill(DesignSystem.Color.Gradient.aurora)
+                            .colorEffect(ShaderLibrary.bundle(.module).aurora(
+                                .float2(Float(geometry.size.width), Float(geometry.size.height)),
+                                .float(Float(time))
+                            ))
+                            .opacity(opacity)
+                    }
                 }
             }
-            .accessibilityHidden(true)
         }
+        .ignoresSafeArea()
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 }
 
