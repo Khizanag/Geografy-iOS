@@ -44,6 +44,7 @@ public enum Destination: Hashable, Identifiable {
     case landmarkQuiz
     case languageExplorer
     case learningPath
+    case learningModule(LearningModule)
     case lesson(LearningModule, Lesson)
     case leaderboards
     case localMultiplayer
@@ -126,6 +127,7 @@ public enum Destination: Hashable, Identifiable {
         case .landmarkQuiz: "landmarkQuiz"
         case .languageExplorer: "languageExplorer"
         case .learningPath: "learningPath"
+        case .learningModule(let module): "learningModule-\(module.id)"
         case let .lesson(module, lesson): "lesson-\(module.id)-\(lesson.id)"
         case .leaderboards: "leaderboards"
         case .localMultiplayer: "localMultiplayer"
