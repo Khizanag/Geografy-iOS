@@ -62,10 +62,13 @@ public struct MetalAmbientView: View {
 // MARK: - Helpers
 private extension MetalAmbientView {
     var opacity: Double {
+        // Deliberately low — the shader is a subtle ambient layer, not a fill.
+        // Anything above ~0.5 drowns text that sits directly on the background
+        // (paywall hero subtitle, onboarding body, feature-comparison table).
         switch preset {
-        case .standard: 0.7
-        case .quiz:     0.85
-        case .hero:     1.0
+        case .standard: 0.35
+        case .quiz:     0.42
+        case .hero:     0.50
         }
     }
 
