@@ -28,7 +28,6 @@ public enum Destination: Hashable, Identifiable {
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
     case friends
     case historicalMap(initialYear: Int)
-    case independenceTimeline
     case learningPath
     case learningModule(LearningModule)
     case lesson(LearningModule, Lesson)
@@ -92,7 +91,6 @@ public enum Destination: Hashable, Identifiable {
         case .flashcardSession: "flashcardSession"
         case .friends: "friends"
         case .historicalMap(let year): "historicalMap-\(year)"
-        case .independenceTimeline: "independenceTimeline"
         case .learningPath: "learningPath"
         case .learningModule(let module): "learningModule-\(module.id)"
         case let .lesson(module, lesson): "lesson-\(module.id)-\(lesson.id)"

@@ -81,12 +81,6 @@ struct MoreScreen: View {
                 } label: {
                     Label("Timeline", systemImage: "clock.fill")
                 }
-
-                NavigationLink {
-                    IndependenceScreen()
-                } label: {
-                    Label("Independence", systemImage: "flag.fill")
-                }
             }
 
             Section("Content") {

@@ -15,7 +15,6 @@ import Geografy_Feature_Favorite
 import Geografy_Feature_Feed
 import Geografy_Feature_Flashcard
 import Geografy_Feature_GameCenter
-import Geografy_Feature_IndependenceTimeline
 import Geografy_Feature_LearningPath
 import Geografy_Feature_Map
 import Geografy_Feature_MapColoring
@@ -73,7 +72,6 @@ extension Destination {
         case let .flashcardSession(deck, cards): FlashcardSessionScreen(deck: deck, cards: cards)
         case .friends: FriendsListScreen()
         case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
-        case .independenceTimeline: IndependenceTimelineScreen()
         case .learningPath: LearningPathScreen()
         case .learningModule(let module): ModuleLessonsScreen(module: module)
         case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)

@@ -196,7 +196,7 @@ extension HomeScreen {
         case .compare: coordinator.sheet(.compare())
         case .travel: coordinator.sheet(.travelTracker)
         case .organizations: coordinator.sheet(.organizations)
-        case .timeline: coordinator.push(.independenceTimeline)
+        case .timeline: coordinator.push(.timeline)
         case .continentStats: coordinator.push(.continentPicker)
         }
     }
