@@ -116,8 +116,13 @@ private extension WorldBankChartSheet {
         let points = filteredPoints
         let minYear = points.first?.year ?? 1_990
         let maxYear = points.last?.year ?? 2_023
-        return Chart(points) { point in
-            marks(for: point)
+        return Chart {
+            ForEach(points) { point in
+                marks(for: point)
+            }
+            if let selectedPoint {
+                selectionMarks(for: selectedPoint)
+            }
         }
         .chartXScale(domain: minYear...maxYear)
         #if !os(tvOS)
@@ -129,7 +134,7 @@ private extension WorldBankChartSheet {
                     .gesture(scrubGesture(proxy: proxy, geometry: geometry, points: points))
             }
         }
-        .sensoryFeedback(.selection, trigger: selectedPoint?.year)
+        .sensoryFeedback(.impact(weight: .light, intensity: 0.5), trigger: selectedPoint?.year) { _, new in new != nil }
         #endif
         .chartXAxis {
             AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 5)) { value in
@@ -259,18 +264,19 @@ private extension WorldBankChartSheet {
         .foregroundStyle(DesignSystem.Color.accent)
         .lineStyle(StrokeStyle(lineWidth: 2.5))
         .interpolationMethod(.catmullRom)
+    }
 
-        if point.year == selectedPoint?.year {
-            RuleMark(x: .value("Year", point.year))
-                .foregroundStyle(DesignSystem.Color.textSecondary.opacity(0.6))
-                .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 4]))
-            PointMark(
-                x: .value("Year", point.year),
-                y: .value(indicator.title, point.value)
-            )
-            .foregroundStyle(DesignSystem.Color.accent)
-            .symbolSize(100)
-        }
+    @ChartContentBuilder
+    func selectionMarks(for point: WorldBankService.DataPoint) -> some ChartContent {
+        RuleMark(x: .value("Year", point.year))
+            .foregroundStyle(DesignSystem.Color.textSecondary.opacity(0.6))
+            .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 4]))
+        PointMark(
+            x: .value("Year", point.year),
+            y: .value(indicator.title, point.value)
+        )
+        .foregroundStyle(DesignSystem.Color.accent)
+        .symbolSize(100)
     }
 
     #if !os(tvOS)
@@ -287,7 +293,7 @@ private extension WorldBankChartSheet {
                 selectPoint(atX: drag.location.x, proxy: proxy, geometry: geometry, points: points)
             }
             .onEnded { _ in
-                withAnimation(.easeOut(duration: 0.2)) { selectedPoint = nil }
+                selectedPoint = nil
             }
     }
 
@@ -301,7 +307,8 @@ private extension WorldBankChartSheet {
               let year: Int = proxy.value(atX: locationX - geometry[plotFrame].origin.x) else { return }
         let nearest = points.min { abs($0.year - year) < abs($1.year - year) }
         guard nearest?.year != selectedPoint?.year else { return }
-        withAnimation(.snappy(duration: 0.15)) { selectedPoint = nearest }
+        // No animation: animated marks re-enter from the chart origin on every move.
+        selectedPoint = nearest
     }
 
     #endif
