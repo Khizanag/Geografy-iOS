@@ -199,6 +199,7 @@ private extension MapScreen {
                     }
                 },
                 onMoreInfo: country.map { selected in { coordinator.push(.countryDetail(selected)) } },
+                isCompact: isLandscape,
                 onDismiss: { withAnimation(.easeInOut(duration: 0.3)) { mapState.selectedCountryCode = nil } }
             )
             .transition(.move(edge: .bottom).combined(with: .opacity))

@@ -15,6 +15,7 @@ public struct CountryBannerView: View {
     public let onFlagTap: (() -> Void)?
     public let onMoreInfo: (() -> Void)?
     public let onDismiss: () -> Void
+    public let isCompact: Bool
 
     @State private var dragOffset: CGFloat = 0
 
@@ -28,6 +29,7 @@ public struct CountryBannerView: View {
         isFlagHidden: Bool,
         onFlagTap: (() -> Void)?,
         onMoreInfo: (() -> Void)?,
+        isCompact: Bool = false,
         onDismiss: @escaping () -> Void
     ) {
         self.countryCode = countryCode
@@ -39,6 +41,7 @@ public struct CountryBannerView: View {
         self.onFlagTap = onFlagTap
         self.onMoreInfo = onMoreInfo
         self.onDismiss = onDismiss
+        self.isCompact = isCompact
     }
 
     // MARK: - Body
@@ -55,7 +58,7 @@ public struct CountryBannerView: View {
 // MARK: - Subviews
 private extension CountryBannerView {
     var bannerCard: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
+        HStack(spacing: DesignSystem.Spacing.sm) {
             flagButton
 
             infoSection
@@ -66,16 +69,16 @@ private extension CountryBannerView {
                 moreInfoButton(action: onMoreInfo)
             }
         }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
-        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.leading, DesignSystem.Spacing.md)
+        .padding(.trailing, Self.buttonInset)
+        .frame(height: barHeight)
+        .glassEffect(.regular, in: .capsule)
+        .padding(.horizontal, isCompact ? 0 : Self.tabBarSideInset)
     }
 
     var flagButton: some View {
         Button { onFlagTap?() } label: {
-            FlagView(countryCode: countryCode, height: DesignSystem.Size.xl, fixedWidth: true)
+            FlagView(countryCode: countryCode, height: flagHeight, fixedWidth: true)
                 .matchedGeometryEffect(id: countryCode, in: namespace)
                 .opacity(isFlagHidden ? 0 : 1)
         }
@@ -84,48 +87,64 @@ private extension CountryBannerView {
     }
 
     var infoSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+        VStack(alignment: .leading, spacing: isCompact ? 0 : DesignSystem.Spacing.xxs / 2) {
             Text(name)
-                .font(DesignSystem.Font.headline)
+                .font(isCompact ? DesignSystem.Font.subheadline : DesignSystem.Font.headline)
+                .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
 
-            capitalLabel
+            if !capital.isEmpty {
+                capitalLabel
+            }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(name), capital \(capital)")
+        .accessibilityLabel(capital.isEmpty ? name : "\(name), capital \(capital)")
     }
 
     var capitalLabel: some View {
-        HStack(alignment: .top, spacing: DesignSystem.Spacing.xxs) {
+        HStack(alignment: .center, spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "star.fill")
-                .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.accent)
-                .padding(.top, 2)
+                .imageScale(.small)
                 .accessibilityHidden(true)
-
             Text(capital)
-                .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
         }
+        .font(isCompact ? DesignSystem.Font.caption2 : DesignSystem.Font.caption)
     }
 
     func moreInfoButton(action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Text("More info")
-                    .font(DesignSystem.Font.caption)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
                 Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption2)
+                    .font(DesignSystem.Font.caption)
+                    .fontWeight(.bold)
+                    .accessibilityHidden(true)
             }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
+            .foregroundStyle(DesignSystem.Color.onAccent)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .frame(height: barHeight - Self.buttonInset * 2)
+            .background(DesignSystem.Color.accent, in: Capsule())
             .fixedSize()
         }
-        .buttonStyle(.glass)
+        .buttonStyle(PressButtonStyle())
     }
+}
+
+// MARK: - Metrics
+private extension CountryBannerView {
+    // The floating tab bar's side inset and height, so the banner reads as part of it.
+    static let tabBarSideInset: CGFloat = 21
+    static let buttonInset: CGFloat = DesignSystem.Spacing.xs
+
+    var barHeight: CGFloat { isCompact ? DesignSystem.Size.xl : DesignSystem.Size.xxxl }
+    var flagHeight: CGFloat { isCompact ? DesignSystem.Size.Icon.lg : DesignSystem.Size.md }
 }
 
 // MARK: - Gestures

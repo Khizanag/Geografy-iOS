@@ -260,6 +260,7 @@ private extension OrganizationMapScreen {
                     }
                 },
                 onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
+                isCompact: isLandscape,
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
             .transition(.move(edge: .bottom).combined(with: .opacity))
