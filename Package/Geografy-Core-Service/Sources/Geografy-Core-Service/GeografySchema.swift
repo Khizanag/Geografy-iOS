@@ -21,13 +21,22 @@ public enum GeografySchemaV1: VersionedSchema {
     }
 }
 
+/// Adds `SavedCollection`, so a collection can exist before anything is saved into it.
+public enum GeografySchemaV2: VersionedSchema {
+    public static let versionIdentifier = Schema.Version(2, 0, 0)
+
+    public static var models: [any PersistentModel.Type] {
+        GeografySchemaV1.models + [SavedCollection.self]
+    }
+}
+
 // MARK: - Migration Plan
 public enum GeografyMigrationPlan: SchemaMigrationPlan {
     public static var schemas: [any VersionedSchema.Type] {
-        [GeografySchemaV1.self]
+        [GeografySchemaV1.self, GeografySchemaV2.self]
     }
 
     public static var stages: [MigrationStage] {
-        []
+        [.lightweight(fromVersion: GeografySchemaV1.self, toVersion: GeografySchemaV2.self)]
     }
 }

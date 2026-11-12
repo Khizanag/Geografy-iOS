@@ -8,6 +8,7 @@ import SwiftData
 public final class CollectionService {
     // MARK: - Properties
     public private(set) var items: [CollectionItem] = []
+    public private(set) var savedCollections: [SavedCollection] = []
     private var modelContext: ModelContext?
 
     // MARK: - Init
@@ -22,7 +23,7 @@ public final class CollectionService {
 // MARK: - Queries
 public extension CollectionService {
     var collectionNames: [String] {
-        Array(Set(items.map(\.collectionName))).sorted()
+        Array(Set(items.map(\.collectionName) + savedCollections.map(\.name))).sorted()
     }
 
     /// Whether a new collection can take this name: not blank, and not already used in any letter case.
@@ -110,19 +111,31 @@ public extension CollectionService {
         }
     }
 
+    /// Creates an empty collection. Does nothing when the name isn't available.
+    func createCollection(named name: String) {
+        guard isAvailableName(name) else { return }
+        modelContext?.insert(SavedCollection(name: name))
+        save()
+        fetchItems()
+    }
+
     func deleteCollection(_ name: String) {
-        let toDelete = items.filter { $0.collectionName == name }
-        for item in toDelete {
+        for item in items where item.collectionName == name {
             modelContext?.delete(item)
+        }
+        for collection in savedCollections where collection.name == name {
+            modelContext?.delete(collection)
         }
         save()
         fetchItems()
     }
 
     func renameCollection(from oldName: String, to newName: String) {
-        let toRename = items.filter { $0.collectionName == oldName }
-        for item in toRename {
+        for item in items where item.collectionName == oldName {
             item.collectionName = newName
+        }
+        for collection in savedCollections where collection.name == oldName {
+            collection.name = newName
         }
         save()
         fetchItems()
@@ -137,6 +150,7 @@ private extension CollectionService {
             sortBy: [SortDescriptor(\CollectionItem.addedAt, order: .reverse)]
         )
         items = (try? modelContext.fetch(descriptor)) ?? []
+        savedCollections = (try? modelContext.fetch(FetchDescriptor<SavedCollection>())) ?? []
     }
 
     func save() {

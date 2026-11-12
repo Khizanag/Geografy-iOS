@@ -24,7 +24,8 @@ struct CollectionsScreen: View {
                 placeholder: "Collection name",
                 confirmTitle: "Create",
                 isValid: collectionService.isAvailableName
-            ) { _ in
+            ) { name in
+                collectionService.createCollection(named: name)
                 hapticsService.impact(.medium)
             }
             .confirmationDialog(
