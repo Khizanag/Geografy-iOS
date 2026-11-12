@@ -58,9 +58,14 @@ private extension CompareScreen {
         case .pickRight: leftCountry
         }
 
-        CompareCountryPicker(
-            countries: countryDataService.countries,
-            excludedCountry: excluded
+        let current: Country? = switch sheet {
+        case .pickLeft: leftCountry
+        case .pickRight: rightCountry
+        }
+
+        CountryPicker(
+            countries: countryDataService.countries.filter { $0.code != excluded?.code },
+            selectedCode: current?.code
         ) { selected in
             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                 switch sheet {

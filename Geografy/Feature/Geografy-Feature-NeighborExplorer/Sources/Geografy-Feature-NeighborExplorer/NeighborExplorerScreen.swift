@@ -21,6 +21,7 @@ public struct NeighborExplorerScreen: View {
     @State private var pathResult: [Country] = []
     @State private var isSearchingPath = false
     @State private var showNoPathAlert = false
+    @State private var showDestinationPicker = false
     @State private var blobAnimating = false
 
     // MARK: - Body
@@ -177,26 +178,21 @@ private extension NeighborExplorerScreen {
     }
 
     var destinationPicker: some View {
-        Menu {
-            ForEach(
-                countryDataService.countries
-                    .filter { $0.code != country.code && $0.continent != .antarctica }
-                    .sorted(by: \.name)
-            ) { destination in
-                Button(destination.name) {
-                    destinationCode = destination.code
-                    pathResult = []
+        Button { showDestinationPicker = true } label: {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                if let destination {
+                    FlagView(countryCode: destination.code, height: 20, fixedWidth: true)
                 }
-            }
-        } label: {
-            HStack {
-                Text(destinationName)
+                Text(destination?.name ?? "Select destination country")
                     .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .foregroundStyle(
+                        destination == nil ? DesignSystem.Color.textSecondary : DesignSystem.Color.textPrimary
+                    )
                 Spacer()
-                Image(systemName: "chevron.up.chevron.down")
+                Image(systemName: "chevron.right")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .accessibilityHidden(true)
             }
             .padding(DesignSystem.Spacing.sm)
             .background(
@@ -204,7 +200,21 @@ private extension NeighborExplorerScreen {
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
             )
         }
-        .tint(DesignSystem.Color.iconPrimary)
+        .buttonStyle(PressButtonStyle())
+        .accessibilityLabel("Destination")
+        .accessibilityValue(destination?.name ?? "None")
+        .sheet(isPresented: $showDestinationPicker) {
+            CountryPicker(
+                "Destination",
+                countries: countryDataService.countries.filter {
+                    $0.code != country.code && $0.continent != .antarctica
+                },
+                selectedCode: destination?.code
+            ) { selected in
+                destinationCode = selected.code
+                pathResult = []
+            }
+        }
     }
 
     var findPathButton: some View {
@@ -214,11 +224,8 @@ private extension NeighborExplorerScreen {
         .disabled(destinationCode.isEmpty || isSearchingPath)
     }
 
-    var destinationName: String {
-        guard !destinationCode.isEmpty,
-              let destination = countryDataService.country(for: destinationCode)
-        else { return "Select destination country" }
-        return destination.name
+    var destination: Country? {
+        destinationCode.isEmpty ? nil : countryDataService.country(for: destinationCode)
     }
 }
 
