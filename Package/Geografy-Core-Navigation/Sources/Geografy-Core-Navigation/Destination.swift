@@ -31,7 +31,6 @@ public enum Destination: Hashable, Identifiable {
     case economyExplorer
     case exploreGame
     case favorites
-    case featureFlags
     case feed
     case flagGame
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
@@ -65,7 +64,6 @@ public enum Destination: Hashable, Identifiable {
     case quotes
     case saveToCollection(countryCode: String, countryName: String)
     case search
-    case sectionEditor
     case settings
     case signIn
     case speedRunSession(region: QuizRegion)
@@ -112,7 +110,6 @@ public enum Destination: Hashable, Identifiable {
         case .economyExplorer: "economyExplorer"
         case .exploreGame: "exploreGame"
         case .favorites: "favorites"
-        case .featureFlags: "featureFlags"
         case .feed: "feed"
         case .flagGame: "flagGame"
         case .flashcardSession: "flashcardSession"
@@ -146,7 +143,6 @@ public enum Destination: Hashable, Identifiable {
         case .quotes: "quotes"
         case let .saveToCollection(code, _): "saveToCollection-\(code)"
         case .search: "search"
-        case .sectionEditor: "sectionEditor"
         case .settings: "settings"
         case .signIn: "signIn"
         case .speedRunSession(let region): "speedRunSession-\(region.rawValue)"

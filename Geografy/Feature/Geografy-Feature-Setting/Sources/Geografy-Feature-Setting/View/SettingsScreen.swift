@@ -397,17 +397,6 @@ private extension SettingsScreen {
                         set: { testingModeService.isEnabled = $0 }
                     )
                 )
-
-                settingsDivider
-
-                Button { coordinator.push(.featureFlags) } label: {
-                    SettingsNavigationRow(
-                        icon: "flag.fill",
-                        iconColor: DesignSystem.Color.accent,
-                        title: "Feature Flags"
-                    )
-                }
-                .buttonStyle(PressButtonStyle())
             }
         }
     }

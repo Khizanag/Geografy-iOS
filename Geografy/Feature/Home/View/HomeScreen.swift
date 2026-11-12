@@ -18,7 +18,6 @@ struct HomeScreen: View {
 
     @Environment(Navigator.self) var coordinator
     @Environment(CountryDataService.self) var countryDataService
-    @Environment(FeatureFlagService.self) var featureFlags
 
     @State var dailyChallengeService: DailyChallengeService?
     @State var collectionItem: (id: String, type: CollectionItem.ItemType, name: String)?
