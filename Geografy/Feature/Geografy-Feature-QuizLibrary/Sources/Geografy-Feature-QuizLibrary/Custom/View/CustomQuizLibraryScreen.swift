@@ -22,7 +22,7 @@ public struct CustomQuizLibraryScreen: View {
     // MARK: - Body
     public var body: some View {
         content
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .sheet(isPresented: $showBuilder) { builderSheet }

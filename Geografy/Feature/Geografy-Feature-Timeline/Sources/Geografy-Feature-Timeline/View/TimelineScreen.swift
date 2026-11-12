@@ -20,7 +20,7 @@ public struct TimelineScreen: View {
     // MARK: - Body
     public var body: some View {
         mainContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Timeline")
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
@@ -245,7 +245,7 @@ private extension TimelineScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background)
+        .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 
     func detailHeader(for event: HistoricalEvent) -> some View {

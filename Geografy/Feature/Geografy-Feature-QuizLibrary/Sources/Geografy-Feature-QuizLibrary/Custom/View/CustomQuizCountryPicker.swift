@@ -17,7 +17,7 @@ public struct CustomQuizCountryPicker: View {
     // MARK: - Body
     public var body: some View {
         listContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Select Countries")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }

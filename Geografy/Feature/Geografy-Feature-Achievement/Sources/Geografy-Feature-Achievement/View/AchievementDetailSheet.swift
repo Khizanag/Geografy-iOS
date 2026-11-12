@@ -17,7 +17,7 @@ public struct AchievementDetailSheet: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(definition.title)
             .navigationBarTitleDisplayMode(.inline)
     }

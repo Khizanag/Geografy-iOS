@@ -190,7 +190,7 @@ private extension HistoricalMapScreen {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background)
+        .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 
     func eventHeader(for event: HistoricalEvent) -> some View {

@@ -30,7 +30,7 @@ public struct CompareCountryPicker: View {
     // MARK: - Body
     public var body: some View {
         countryList
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Select Country")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

@@ -19,7 +19,7 @@ public struct AchievementsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Achievements")
             .navigationBarTitleDisplayMode(.large)
             .onAppear { appeared = true }

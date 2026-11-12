@@ -32,7 +32,7 @@ public struct ComingSoonView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(DesignSystem.Color.background)
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle(title ?? "")
         .onAppear {
             isAnimating = true

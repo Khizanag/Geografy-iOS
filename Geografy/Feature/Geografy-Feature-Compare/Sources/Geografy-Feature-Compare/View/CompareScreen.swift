@@ -25,7 +25,7 @@ public struct CompareScreen: View {
     // MARK: - Body
     public var body: some View {
         contentScrollView
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Compare")
             .onAppear {
                 loadRecentPairs()

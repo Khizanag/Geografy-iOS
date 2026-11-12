@@ -103,7 +103,7 @@ private extension CountryListScreen {
             .padding(.top, DesignSystem.Spacing.xs)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background)
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .scrollDismissesKeyboard(.interactively)
     }
 

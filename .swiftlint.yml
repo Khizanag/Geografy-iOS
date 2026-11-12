@@ -331,3 +331,10 @@ custom_rules:
     regex: '\.presentationDragIndicator\('
     message: "Do not use .presentationDragIndicator"
     severity: error
+
+  screen_background_under_keyboard:
+    name: "Screen Background Under Keyboard"
+    regex: '\.background\(DesignSystem\.Color\.background\)'
+    message: "Use .background(DesignSystem.Color.background.ignoresSafeArea()) so the background reaches under the keyboard"
+    severity: error
+    excluded: "GeografyTV/"

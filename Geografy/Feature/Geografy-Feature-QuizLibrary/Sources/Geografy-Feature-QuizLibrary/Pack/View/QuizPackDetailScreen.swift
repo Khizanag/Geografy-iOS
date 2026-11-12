@@ -33,7 +33,7 @@ public struct QuizPackDetailScreen: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .background(DesignSystem.Color.background)
+        .background(DesignSystem.Color.background.ignoresSafeArea())
         .navigationTitle(pack?.name ?? "Quiz Pack")
         #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)

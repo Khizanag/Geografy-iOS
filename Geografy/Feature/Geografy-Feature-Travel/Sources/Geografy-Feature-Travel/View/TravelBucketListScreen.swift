@@ -329,7 +329,7 @@ public struct BucketListCountryDetailView: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(country.name)
             .navigationBarTitleDisplayMode(.inline)
     }

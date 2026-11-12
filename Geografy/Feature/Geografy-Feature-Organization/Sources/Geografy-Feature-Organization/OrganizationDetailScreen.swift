@@ -28,7 +28,7 @@ public struct OrganizationDetailScreen: View {
     public var body: some View {
         scrollContent
             .background { ambientBackground }
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(organization.displayName)
             .closeButtonPlacementLeading()
             .task { trackOrgView() }

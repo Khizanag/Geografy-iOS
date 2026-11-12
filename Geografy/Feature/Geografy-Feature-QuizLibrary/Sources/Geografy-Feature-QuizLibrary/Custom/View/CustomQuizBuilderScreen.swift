@@ -34,7 +34,7 @@ public struct CustomQuizBuilderScreen: View {
     // MARK: - Body
     public var body: some View {
         formContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { loadExistingQuiz() }

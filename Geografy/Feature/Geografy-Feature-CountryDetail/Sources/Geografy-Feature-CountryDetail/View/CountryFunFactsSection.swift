@@ -122,6 +122,6 @@ private extension FunFactDetailSheet {
             .padding(DesignSystem.Spacing.lg)
             .frame(maxWidth: .infinity)
         }
-        .background(DesignSystem.Color.background)
+        .background(DesignSystem.Color.background.ignoresSafeArea())
     }
 }

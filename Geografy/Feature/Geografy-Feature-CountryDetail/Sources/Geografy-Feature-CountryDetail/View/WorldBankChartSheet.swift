@@ -32,7 +32,7 @@ public struct WorldBankChartSheet: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(indicator.title)
             .navigationBarTitleDisplayMode(.inline)
             .presentationDetents([.large])

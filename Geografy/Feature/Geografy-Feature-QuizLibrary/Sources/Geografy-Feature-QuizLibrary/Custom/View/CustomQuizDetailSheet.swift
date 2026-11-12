@@ -15,7 +15,7 @@ struct CustomQuizDetailSheet: View {
     // MARK: - Body
     var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle(quiz.name)
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) { playButton }
