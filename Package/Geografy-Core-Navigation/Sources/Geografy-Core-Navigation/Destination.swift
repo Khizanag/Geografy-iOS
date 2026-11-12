@@ -9,7 +9,6 @@ public enum Destination: Hashable, Identifiable {
     case borderChallenge
     case collectionDetail(String)
     case collections
-    case coinStore
     case compare(preselectedCountry: Country? = nil)
     case continentOverview(Country.Continent)
     case continentPicker
@@ -94,7 +93,6 @@ public enum Destination: Hashable, Identifiable {
         case .collectionDetail(let name): "collectionDetail-\(name)"
         case .collections: "collections"
         case .borderChallenge: "borderChallenge"
-        case .coinStore: "coinStore"
         case .compare(let country): "compare-\(country?.code ?? "none")"
         case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
         case .continentPicker: "continentPicker"

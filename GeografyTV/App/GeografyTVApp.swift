@@ -13,7 +13,6 @@ struct GeografyTVApp: App {
     @State private var favoritesService: FavoritesService
     @State private var travelService = TravelService()
     @State private var gameCenterService = GameCenterService()
-    @State private var coinService = CoinService()
     @State private var flashcardService = FlashcardService()
     @State private var entitlementService = EntitlementService()
     @State private var pronunciationService = PronunciationService()
@@ -52,7 +51,6 @@ struct GeografyTVApp: App {
                 .environment(favoritesService)
                 .environment(travelService)
                 .environment(gameCenterService)
-                .environment(coinService)
                 .environment(flashcardService)
                 .environment(entitlementService)
                 .environment(pronunciationService)

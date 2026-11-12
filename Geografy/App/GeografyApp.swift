@@ -13,7 +13,6 @@ struct GeografyApp: App {
 
     @State private var achievementService: AchievementService
     @State private var authService: AuthService
-    @State private var coinService = CoinService()
     @State private var collectionService = CollectionService()
     @State private var countryDataService = CountryDataService()
     @State private var currencyService = CurrencyService()
@@ -74,7 +73,6 @@ private extension GeografyApp {
         ContentView()
             .environment(achievementService)
             .environment(authService)
-            .environment(coinService)
             .environment(collectionService)
             .environment(countryDataService)
             .environment(currencyService)

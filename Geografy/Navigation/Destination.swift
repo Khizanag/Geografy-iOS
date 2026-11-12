@@ -4,7 +4,6 @@ import Geografy_Feature_Achievement
 import Geografy_Feature_AllMap
 import Geografy_Feature_Auth
 import Geografy_Feature_BorderChallenge
-import Geografy_Feature_Coin
 import Geografy_Feature_Compare
 import Geografy_Feature_ContinentStats
 import Geografy_Feature_CountryDetail
@@ -67,7 +66,6 @@ extension Destination {
         case .borderChallenge: BorderChallengeScreen()
         case .collectionDetail(let name): CollectionDetailScreen(collectionName: name)
         case .collections: CollectionsScreen()
-        case .coinStore: CoinStoreScreen()
         case .compare(let country): CompareScreen(preselectedCountry: country)
         case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)
         case .continentPicker: ContinentPickerScreen()

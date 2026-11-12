@@ -65,7 +65,6 @@ private extension TestChecklistService {
         ]),
         "quizPacks": TestChecklist(items: [
             "Pack list loads with progress",
-            "Locked packs show premium badge",
             "Starting a pack opens quiz session",
             "Completion updates pack progress",
         ]),
@@ -206,7 +205,6 @@ private extension TestChecklistService {
         "themes": TestChecklist(items: [
             "Theme list loads",
             "Selecting theme applies it",
-            "Premium themes show lock",
         ]),
         "settings": TestChecklist(items: [
             "All settings sections load",

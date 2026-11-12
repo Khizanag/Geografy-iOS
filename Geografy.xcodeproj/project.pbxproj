@@ -23,7 +23,6 @@
 		1A08A7C60301067376424A15 /* Geografy-Feature-LanguageExplorer in Frameworks */ = {isa = PBXBuildFile; productRef = B7FCA965BDD6C6DEB844DAC2 /* Geografy-Feature-LanguageExplorer */; };
 		1CE1F0B4696E2A21C8AB7FF5 /* Geografy-Feature-CurrencyConverter in Frameworks */ = {isa = PBXBuildFile; productRef = C7D84F00BC6C2FCADC09744C /* Geografy-Feature-CurrencyConverter */; };
 		2483DC10188AF39A03524F85 /* Geografy-Feature-FlagGame in Frameworks */ = {isa = PBXBuildFile; productRef = E3EA580FB4A163866770CC15 /* Geografy-Feature-FlagGame */; };
-		25340837B51E8E06799DB646 /* Geografy-Feature-Coin in Frameworks */ = {isa = PBXBuildFile; productRef = 074ACC48B554FBD789DE678E /* Geografy-Feature-Coin */; };
 		28F2A1C564F83FD78FE2DA58 /* Geografy-Feature-QuizPack in Frameworks */ = {isa = PBXBuildFile; productRef = 51C430D88175BFFBA3F11FEA /* Geografy-Feature-QuizPack */; };
 		2C2B6AF53A4BEA35D09146D3 /* Geografy-Feature-CustomQuiz in Frameworks */ = {isa = PBXBuildFile; productRef = 6AB96379ED972293B138BED8 /* Geografy-Feature-CustomQuiz */; };
 		2DEC24A92439BA5E6BC1E5C7 /* Geografy-Feature-WorldRecords in Frameworks */ = {isa = PBXBuildFile; productRef = 9DE107E6699ED8CC7FC03368 /* Geografy-Feature-WorldRecords */; };
@@ -98,7 +97,6 @@
 		B2E7640872B206CADA3E480F /* Geografy-Feature-Theme in Frameworks */ = {isa = PBXBuildFile; productRef = D35B55B7E0A3A6F30B237A51 /* Geografy-Feature-Theme */; };
 		B85E1733274F8DA817AE59F8 /* Geografy-Feature-Organization in Frameworks */ = {isa = PBXBuildFile; productRef = 610F8DF982E8E3357F7A103B /* Geografy-Feature-Organization */; };
 		B887F97C8D71699B391E90E1 /* Geografy-Feature-Achievement in Frameworks */ = {isa = PBXBuildFile; productRef = 9392C9357D47337A345C8D10 /* Geografy-Feature-Achievement */; };
-		BA5940DDEC1671A8B81EE683 /* Geografy-Feature-Coin in Frameworks */ = {isa = PBXBuildFile; productRef = 1C517559A464517EA487FB0D /* Geografy-Feature-Coin */; };
 		BAB773CFBA9026B164862A6F /* Geografy-Feature-CultureExplorer in Frameworks */ = {isa = PBXBuildFile; productRef = E559400AA9C7BF191E1D5274 /* Geografy-Feature-CultureExplorer */; };
 		BE96771EBA4A4AE4B5DAA4BF /* Geografy-Feature-Travel in Frameworks */ = {isa = PBXBuildFile; productRef = 01C9D562C658A8CAFDF02F46 /* Geografy-Feature-Travel */; };
 		BF9753D10245341A46AA15D0 /* Geografy-Feature-ContinentStats in Frameworks */ = {isa = PBXBuildFile; productRef = E58E3A3B11B9BDD71A410488 /* Geografy-Feature-ContinentStats */; };
@@ -150,7 +148,6 @@
 				"Feature/Geografy-Feature-Achievement",
 				"Feature/Geografy-Feature-Auth",
 				"Feature/Geografy-Feature-BorderChallenge",
-				"Feature/Geografy-Feature-Coin",
 				"Feature/Geografy-Feature-CountryDetail",
 				"Feature/Geografy-Feature-CountryList",
 				"Feature/Geografy-Feature-CountryProfile",
@@ -196,7 +193,6 @@
 				"Feature/Geografy-Feature-AllMap",
 				"Feature/Geografy-Feature-Auth",
 				"Feature/Geografy-Feature-BorderChallenge",
-				"Feature/Geografy-Feature-Coin",
 				"Feature/Geografy-Feature-Compare",
 				"Feature/Geografy-Feature-ContinentStats",
 				"Feature/Geografy-Feature-CountryDetail",
@@ -368,7 +364,6 @@
 				AFA12B60656FCE3D735A6DB2 /* Geografy-Feature-NationalSymbols in Frameworks */,
 				A6CD350BACCC62204737A0B9 /* Geografy-Feature-AllMap in Frameworks */,
 				AD66D5356B9736683715F9E9 /* Geografy-Feature-Timeline in Frameworks */,
-				25340837B51E8E06799DB646 /* Geografy-Feature-Coin in Frameworks */,
 				0D4D3743FF8230A25D83255A /* Geografy-Feature-Auth in Frameworks */,
 				A2A2111111111111A2A21111 /* Geografy-Feature-Onboarding in Frameworks */,
 				46CE6DF21909A83D22926EF5 /* Geografy-Feature-GameCenter in Frameworks */,
@@ -430,7 +425,6 @@
 				CEBDF9088B435E2DE89FF15F /* Geografy-Feature-NationalSymbols in Frameworks */,
 				600DB6EEFE659D5DA2D30982 /* Geografy-Feature-AllMap in Frameworks */,
 				D4BAFAAB99ED70ED2F428FB7 /* Geografy-Feature-Timeline in Frameworks */,
-				BA5940DDEC1671A8B81EE683 /* Geografy-Feature-Coin in Frameworks */,
 				AD0D41A61D60E2BE19903514 /* Geografy-Feature-Auth in Frameworks */,
 				F8F711823A6CDEA1136BC2FE /* Geografy-Feature-GameCenter in Frameworks */,
 				9F19A6554B543D690EEC79A5 /* Geografy-Feature-Search in Frameworks */,
@@ -558,7 +552,6 @@
 				BAA0AC361B6859CA1E259AE8 /* Geografy-Feature-NationalSymbols */,
 				62ACE4CA33A4B85B5299F571 /* Geografy-Feature-AllMap */,
 				8E0CCFB9D56323BD6F31BA50 /* Geografy-Feature-Timeline */,
-				074ACC48B554FBD789DE678E /* Geografy-Feature-Coin */,
 				881D510CB99F9921BAACE89A /* Geografy-Feature-Auth */,
 				A2A2222222222222A2A22222 /* Geografy-Feature-Onboarding */,
 				62C87650D748F39D0F3AB37A /* Geografy-Feature-GameCenter */,
@@ -636,7 +629,6 @@
 				11A18A3F25D0806C18C2194A /* Geografy-Feature-NationalSymbols */,
 				5E68CA6EBA7204000993E46C /* Geografy-Feature-AllMap */,
 				ED1CBE87CB3FEFD1DA0ABD52 /* Geografy-Feature-Timeline */,
-				1C517559A464517EA487FB0D /* Geografy-Feature-Coin */,
 				379D72AEB900B75A4EAA39A5 /* Geografy-Feature-Auth */,
 				E44857B9CD6D35AADF86D5CA /* Geografy-Feature-GameCenter */,
 				203DD8D729285EAF5B49BB0C /* Geografy-Feature-Search */,
@@ -696,7 +688,6 @@
 				6BD99E261369F40C549C2289 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-AllMap" */,
 				20E753DE8F4E984D124275C2 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Auth" */,
 				899047B224DC28B4EE771A3A /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-BorderChallenge" */,
-				66C619BFDE675A332BDFE897 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Coin" */,
 				BF53F3636BA8DCE9DB8325A1 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Compare" */,
 				46558E85C4836E1E56B53E95 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-ContinentStats" */,
 				E1388C0B15FAD70A9BE166AC /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-CountryDetail" */,
@@ -1219,10 +1210,6 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Geografy/Feature/Geografy-Feature-FlagGame";
 		};
-		66C619BFDE675A332BDFE897 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Coin" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "Geografy/Feature/Geografy-Feature-Coin";
-		};
 		6BD99E261369F40C549C2289 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-AllMap" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Geografy/Feature/Geografy-Feature-AllMap";
@@ -1370,10 +1357,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-Travel";
 		};
-		074ACC48B554FBD789DE678E /* Geografy-Feature-Coin */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Geografy-Feature-Coin";
-		};
 		096B9AE0F391DA1CC34EA0BA /* Geografy-Feature-CountryList */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-CountryList";
@@ -1397,10 +1380,6 @@
 		1A35EC901AAA5E589FE286B6 /* Geografy-Feature-WorldRecords */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-WorldRecords";
-		};
-		1C517559A464517EA487FB0D /* Geografy-Feature-Coin */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Geografy-Feature-Coin";
 		};
 		1EE4CEF3B2000DF7DDED6B14 /* Geografy-Feature-Multiplayer */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -14,7 +14,6 @@ struct HomeScreen: View {
     @Environment(FavoritesService.self) var favoritesService
     @Environment(XPService.self) var xpService
     @Environment(StreakService.self) var streakService
-    @Environment(CoinService.self) private var coinService
     @Environment(FlashcardService.self) var flashcardService
 
     @Environment(Navigator.self) var coordinator
@@ -73,12 +72,8 @@ private extension HomeScreen {
     }
 
     var statsButton: some View {
-        Button { coordinator.sheet(.coinStore) } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                xpIndicator
-                divider
-                coinIndicator
-            }
+        Button { coordinator.sheet(.profile) } label: {
+            xpIndicator
         }
         .buttonStyle(.glass)
     }
@@ -107,28 +102,6 @@ private extension HomeScreen {
             }
         }
         .frame(width: 120, height: DesignSystem.Size.xs)
-    }
-
-    var coinIndicator: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "dollarsign.circle.fill")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.warning)
-                .accessibilityHidden(true)
-            Text(coinService.formattedBalance)
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .contentTransition(.numericText())
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(coinService.formattedBalance) coins")
-    }
-
-    var divider: some View {
-        Rectangle()
-            .fill(DesignSystem.Color.textTertiary.opacity(0.3))
-            .frame(width: DesignSystem.Size.xxs, height: DesignSystem.Size.sm)
     }
 
     var searchButton: some View {
