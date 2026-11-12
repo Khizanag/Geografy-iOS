@@ -23,7 +23,6 @@ extension HomeExploreCarousel {
         case travel
         case organizations
         case timeline
-        case continentStats
 
         var name: String {
             switch self {
@@ -32,7 +31,6 @@ extension HomeExploreCarousel {
             case .travel: "Travel"
             case .organizations: "Organizations"
             case .timeline: "Timeline"
-            case .continentStats: "Continent Stats"
             }
         }
 
@@ -43,7 +41,6 @@ extension HomeExploreCarousel {
             case .travel: "airplane"
             case .organizations: "building.2.fill"
             case .timeline: "calendar.badge.clock"
-            case .continentStats: "chart.bar.xaxis.ascending"
             }
         }
 
@@ -54,7 +51,6 @@ extension HomeExploreCarousel {
             case .travel: (Color(hex: "4DABF7"), Color(hex: "1A73E8"))
             case .organizations: (Color(hex: "8944AB"), Color(hex: "6A1B9A"))
             case .timeline: (Color(hex: "FF8F00"), Color(hex: "E65100"))
-            case .continentStats: (Color(hex: "43A047"), Color(hex: "2E7D32"))
             }
         }
     }

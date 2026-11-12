@@ -9,8 +9,6 @@ public enum Destination: Hashable, Identifiable {
     case collectionDetail(String)
     case compare(preselectedCountry: Country? = nil)
     case continentOverview(Country.Continent)
-    case continentPicker
-    case continentStats(String)
     case countries
     case countryDetail(Country)
     case currencyConverter(preselectedCode: String? = nil)
@@ -73,8 +71,6 @@ public enum Destination: Hashable, Identifiable {
         case .collectionDetail(let name): "collectionDetail-\(name)"
         case .compare(let country): "compare-\(country?.code ?? "none")"
         case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
-        case .continentPicker: "continentPicker"
-        case .continentStats(let name): "continentStats-\(name)"
         case .countries: "countries"
         case .countryDetail(let country): "countryDetail-\(country.code)"
         case .currencyConverter(let code): "currencyConverter-\(code ?? "none")"

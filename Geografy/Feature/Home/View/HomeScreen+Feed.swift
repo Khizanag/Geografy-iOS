@@ -197,7 +197,6 @@ extension HomeScreen {
         case .travel: coordinator.sheet(.travelTracker)
         case .organizations: coordinator.sheet(.organizations)
         case .timeline: coordinator.push(.timeline)
-        case .continentStats: coordinator.push(.continentPicker)
         }
     }
 }

@@ -97,6 +97,26 @@ private extension ContinentOverviewScreen {
     var mostPopulousCountry: Country? {
         countries.first
     }
+
+    var smallestCountry: Country? {
+        countries.filter { $0.area > 0 }.min { $0.area < $1.area }
+    }
+
+    var averageGDPPerCapita: Double? {
+        let values = countries.compactMap(\.gdpPerCapita)
+        guard !values.isEmpty else { return nil }
+        return values.reduce(0, +) / Double(values.count)
+    }
+
+    var mostSpokenLanguage: String? {
+        var weights: [String: Double] = [:]
+        for country in countries {
+            for language in country.languages {
+                weights[language.name, default: 0] += language.percentage
+            }
+        }
+        return weights.max { $0.value < $1.value }?.key
+    }
 }
 
 // MARK: - Subviews
@@ -121,34 +141,68 @@ private extension ContinentOverviewScreen {
             columns: [GridItem(.flexible()), GridItem(.flexible())],
             spacing: DesignSystem.Spacing.sm
         ) {
+            sizeTiles
+            profileTiles
+        }
+    }
+
+    @ViewBuilder
+    var sizeTiles: some View {
+        statTile(
+            icon: "flag.fill",
+            label: "Countries",
+            value: "\(countries.count)",
+            color: DesignSystem.Color.accent
+        )
+        statTile(
+            icon: "person.3.fill",
+            label: "Total Population",
+            value: totalPopulation.formatPopulation(),
+            color: DesignSystem.Color.blue
+        )
+        if totalArea > 0 {
             statTile(
-                icon: "flag.fill",
-                label: "Countries",
-                value: "\(countries.count)",
-                color: DesignSystem.Color.accent
+                icon: "map.fill",
+                label: "Total Area",
+                value: "\(Int(totalArea / 1_000_000))M km²",
+                color: DesignSystem.Color.success
             )
+        }
+        if let largest = largestCountry {
             statTile(
-                icon: "person.3.fill",
-                label: "Total Population",
-                value: totalPopulation.formatPopulation(),
-                color: DesignSystem.Color.blue
+                icon: "arrow.up.right.and.arrow.down.left.rectangle.fill",
+                label: "Largest Country",
+                value: "\(largest.name) (\(Int(largest.area / 1_000))K km²)",
+                color: DesignSystem.Color.warning
             )
-            if totalArea > 0 {
-                statTile(
-                    icon: "map.fill",
-                    label: "Total Area",
-                    value: "\(Int(totalArea / 1_000_000))M km²",
-                    color: DesignSystem.Color.success
-                )
-            }
-            if let largest = largestCountry {
-                statTile(
-                    icon: "arrow.up.right.and.arrow.down.left.rectangle.fill",
-                    label: "Largest Country",
-                    value: "\(largest.name) (\(Int(largest.area / 1_000))K km²)",
-                    color: DesignSystem.Color.warning
-                )
-            }
+        }
+    }
+
+    @ViewBuilder
+    var profileTiles: some View {
+        if let smallest = smallestCountry {
+            statTile(
+                icon: "smallcircle.filled.circle",
+                label: "Smallest Country",
+                value: smallest.name,
+                color: DesignSystem.Color.orange
+            )
+        }
+        if let average = averageGDPPerCapita {
+            statTile(
+                icon: "dollarsign.circle.fill",
+                label: "Avg GDP per Capita",
+                value: average.formatted(.currency(code: "USD").precision(.fractionLength(0))),
+                color: DesignSystem.Color.purple
+            )
+        }
+        if let language = mostSpokenLanguage {
+            statTile(
+                icon: "bubble.left.fill",
+                label: "Most Spoken Language",
+                value: language,
+                color: DesignSystem.Color.indigo
+            )
         }
     }
 

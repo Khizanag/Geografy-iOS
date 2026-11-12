@@ -1,10 +1,8 @@
 import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_Achievement
-import Geografy_Feature_AllMap
 import Geografy_Feature_Auth
 import Geografy_Feature_Compare
-import Geografy_Feature_ContinentStats
 import Geografy_Feature_CountryDetail
 import Geografy_Feature_CountryList
 import Geografy_Feature_CurrencyConverter
@@ -51,8 +49,6 @@ extension Destination {
         case .collectionDetail(let name): CollectionDetailScreen(collectionName: name)
         case .compare(let country): CompareScreen(preselectedCountry: country)
         case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)
-        case .continentPicker: ContinentPickerScreen()
-        case .continentStats(let name): ContinentStatsScreen(continentName: name)
         case .countries: CountryListScreen()
         case .countryDetail(let country): CountryDetailScreen(country: country)
         case .currencyConverter(let code): CurrencyConverterScreen(preselectedCurrencyCode: code)
