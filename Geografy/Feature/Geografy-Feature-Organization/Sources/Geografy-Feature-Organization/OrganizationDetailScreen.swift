@@ -227,11 +227,6 @@ private extension OrganizationDetailScreen {
             }
         }
         .buttonStyle(PressButtonStyle())
-        .simultaneousGesture(TapGesture().onEnded {
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
-        })
     }
 }
 

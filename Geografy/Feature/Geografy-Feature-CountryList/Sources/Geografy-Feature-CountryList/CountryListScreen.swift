@@ -360,7 +360,6 @@ private extension CountryListScreen {
         let isFavorite = favoritesService.isFavorite(code: country.code)
         return Button {
             coordinator.push(.countryDetail(country))
-            hapticsService.impact(.light)
         } label: {
             CountryRowView(
                 country: country,
@@ -373,9 +372,6 @@ private extension CountryListScreen {
             )
         }
         .buttonStyle(PressButtonStyle())
-        .simultaneousGesture(TapGesture().onEnded {
-            hapticsService.impact(.light)
-        })
         #if !os(tvOS)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button {
