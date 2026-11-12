@@ -40,7 +40,7 @@ public struct CountryPicker: View {
                 )
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(role: .close) { dismiss() }
+                        CircleCloseButton { dismiss() }
                     }
                 }
                 .screenBackground()
