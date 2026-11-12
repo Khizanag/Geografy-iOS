@@ -130,14 +130,19 @@ private extension TravelJournalService {
     static let logger = Logger(subsystem: "com.khizanag.geografy", category: "TravelJournal")
 
     static func makeContainer(isStoredInMemoryOnly: Bool) -> ModelContainer {
-        let schema = Schema([TravelJournalEntry.self])
+        let schema = Schema(versionedSchema: TravelJournalSchemaV1.self)
         do {
             let configuration = ModelConfiguration(
                 "TravelJournal",
                 schema: schema,
-                isStoredInMemoryOnly: isStoredInMemoryOnly
+                isStoredInMemoryOnly: isStoredInMemoryOnly,
+                cloudKitDatabase: .none
             )
-            return try ModelContainer(for: schema, configurations: [configuration])
+            return try ModelContainer(
+                for: schema,
+                migrationPlan: TravelJournalMigrationPlan.self,
+                configurations: [configuration]
+            )
         } catch {
             logger.error("Journal store failed to open, using memory: \(error.localizedDescription)")
             return makeInMemoryContainer(schema: schema)
@@ -145,10 +150,11 @@ private extension TravelJournalService {
     }
 
     static func makeInMemoryContainer(schema: Schema) -> ModelContainer {
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
         do {
             return try ModelContainer(for: schema, configurations: [configuration])
         } catch {
+            // An in-memory store with a schema that just compiled cannot fail to open.
             fatalError("In-memory journal store failed to open: \(error)")
         }
     }
