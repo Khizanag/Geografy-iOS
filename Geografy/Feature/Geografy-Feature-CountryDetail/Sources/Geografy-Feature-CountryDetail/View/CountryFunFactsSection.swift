@@ -5,7 +5,9 @@ import SwiftUI
 // MARK: - Fun Facts Section
 extension CountryDetailScreen {
     var funFacts: [String] {
-        CountryFunFacts.data[country.code] ?? []
+        let curated = CountryFunFacts.data[country.code] ?? []
+        let profileFacts = profileService.profile(for: country.code)?.funFacts.map(\.text) ?? []
+        return curated + profileFacts.filter { !curated.contains($0) }
     }
 
     @ViewBuilder

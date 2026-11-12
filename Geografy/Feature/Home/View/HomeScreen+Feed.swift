@@ -213,9 +213,6 @@ extension HomeScreen {
         case .learningPath: coordinator.sheet(.learningPath)
         case .flashcards: coordinator.sheet(.srsStudy)
         case .oceanExplorer: coordinator.push(.oceanExplorer)
-        case .languageExplorer: coordinator.push(.languageExplorer)
-        case .economy: coordinator.push(.economyExplorer)
-        case .culture: coordinator.push(.cultureExplorer)
         case .geographyFeatures: coordinator.push(.geographyFeatures)
         case .landmarks: coordinator.push(.landmarkGallery)
         }

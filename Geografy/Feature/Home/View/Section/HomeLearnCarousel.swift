@@ -23,9 +23,6 @@ extension HomeLearnCarousel {
         case learningPath
         case flashcards
         case oceanExplorer
-        case languageExplorer
-        case economy
-        case culture
         case geographyFeatures
         case landmarks
 
@@ -34,9 +31,6 @@ extension HomeLearnCarousel {
             case .learningPath: "Learning Path"
             case .flashcards: "Flashcards"
             case .oceanExplorer: "Oceans"
-            case .languageExplorer: "Languages"
-            case .economy: "Economy"
-            case .culture: "Culture"
             case .geographyFeatures: "Geography"
             case .landmarks: "Landmarks"
             }
@@ -47,9 +41,6 @@ extension HomeLearnCarousel {
             case .learningPath: "graduationcap.fill"
             case .flashcards: "rectangle.on.rectangle.angled"
             case .oceanExplorer: "water.waves"
-            case .languageExplorer: "character.book.closed.fill"
-            case .economy: "chart.line.uptrend.xyaxis"
-            case .culture: "music.note.house.fill"
             case .geographyFeatures: "mountain.2.fill"
             case .landmarks: "photo.on.rectangle.angled"
             }
@@ -60,9 +51,6 @@ extension HomeLearnCarousel {
             case .learningPath: (Color(hex: "1A73E8"), Color(hex: "0D47A1"))
             case .flashcards: (Color(hex: "8944AB"), Color(hex: "6A1B9A"))
             case .oceanExplorer: (Color(hex: "0288D1"), Color(hex: "01579B"))
-            case .languageExplorer: (Color(hex: "5C6BC0"), Color(hex: "3949AB"))
-            case .economy: (Color(hex: "43A047"), Color(hex: "2E7D32"))
-            case .culture: (Color(hex: "FF8F00"), Color(hex: "E65100"))
             case .geographyFeatures: (Color(hex: "00838F"), Color(hex: "006064"))
             case .landmarks: (Color(hex: "D84315"), Color(hex: "BF360C"))
             }

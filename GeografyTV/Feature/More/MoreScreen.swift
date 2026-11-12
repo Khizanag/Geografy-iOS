@@ -22,18 +22,6 @@ struct MoreScreen: View {
                 } label: {
                     Label("Learning Path", systemImage: "book.fill")
                 }
-
-                NavigationLink {
-                    CultureScreen(countryDataService: countryDataService)
-                } label: {
-                    Label("Culture Explorer", systemImage: "music.note")
-                }
-
-                NavigationLink {
-                    LanguageScreen()
-                } label: {
-                    Label("Languages", systemImage: "text.bubble.fill")
-                }
             }
 
             // swiftlint:disable:next closure_body_length

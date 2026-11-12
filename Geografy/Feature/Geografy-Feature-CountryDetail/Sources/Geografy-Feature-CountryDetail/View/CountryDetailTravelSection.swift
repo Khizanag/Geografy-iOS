@@ -2,7 +2,6 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
-import Geografy_Feature_CountryProfile
 import Geografy_Feature_Travel
 import SwiftUI
 
@@ -70,11 +69,6 @@ extension CountryDetailScreen {
         switch sheet {
         case .info(let item):
             propertyDetailSheet(for: item)
-        case .deepDive:
-            CountryProfileScreen(
-                country: country,
-                profile: profileService.profile(for: country.code)
-            )
         }
     }
 

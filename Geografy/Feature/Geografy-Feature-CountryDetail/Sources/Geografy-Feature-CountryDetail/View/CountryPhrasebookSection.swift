@@ -1,5 +1,4 @@
 import Geografy_Core_DesignSystem
-import Geografy_Feature_CountryProfile
 import SwiftUI
 
 // MARK: - Phrasebook Section
@@ -12,7 +11,6 @@ extension CountryDetailScreen {
                 SectionHeaderView(title: "Language Corner", icon: "character.bubble")
                     .accessibilityAddTraits(.isHeader)
                 phrasesScrollRow(phrases: phrases)
-                learnMoreButton
             }
         }
     }
@@ -23,30 +21,13 @@ private extension CountryDetailScreen {
     func phrasesScrollRow(phrases: [CountryPhrase]) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(phrases.prefix(5)) { phrase in
+                ForEach(phrases) { phrase in
                     PhraseChip(phrase: phrase)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
         .padding(.horizontal, -DesignSystem.Spacing.md)
-    }
-
-    var learnMoreButton: some View {
-        Button {
-            activeSheet = .deepDive
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Text("See all phrases in Deep Dive")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                Image(systemName: "arrow.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .buttonStyle(.plain)
     }
 }
 

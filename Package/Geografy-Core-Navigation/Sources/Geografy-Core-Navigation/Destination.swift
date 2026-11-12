@@ -14,7 +14,6 @@ public enum Destination: Hashable, Identifiable {
     case continentStats(String)
     case countries
     case countryDetail(Country)
-    case cultureExplorer
     case currencyConverter(preselectedCode: String? = nil)
     case customQuiz
     case customQuizShare(CustomQuiz)
@@ -25,7 +24,6 @@ public enum Destination: Hashable, Identifiable {
     )
     case editProfile
     case distanceCalculator
-    case economyExplorer
     case favorites
     case feed
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
@@ -34,7 +32,6 @@ public enum Destination: Hashable, Identifiable {
     case historicalMap(initialYear: Int)
     case independenceTimeline
     case landmarkGallery
-    case languageExplorer
     case learningPath
     case learningModule(LearningModule)
     case lesson(LearningModule, Lesson)
@@ -89,7 +86,6 @@ public enum Destination: Hashable, Identifiable {
         case .continentStats(let name): "continentStats-\(name)"
         case .countries: "countries"
         case .countryDetail(let country): "countryDetail-\(country.code)"
-        case .cultureExplorer: "cultureExplorer"
         case .currencyConverter(let code): "currencyConverter-\(code ?? "none")"
         case .customQuiz: "customQuiz"
         case .customQuizShare(let quiz): "customQuizShare-\(quiz.id)"
@@ -97,7 +93,6 @@ public enum Destination: Hashable, Identifiable {
         case .dailyChallengeResult: "dailyChallengeResult"
         case .editProfile: "editProfile"
         case .distanceCalculator: "distanceCalculator"
-        case .economyExplorer: "economyExplorer"
         case .favorites: "favorites"
         case .feed: "feed"
         case .flashcardSession: "flashcardSession"
@@ -106,7 +101,6 @@ public enum Destination: Hashable, Identifiable {
         case .historicalMap(let year): "historicalMap-\(year)"
         case .independenceTimeline: "independenceTimeline"
         case .landmarkGallery: "landmarkGallery"
-        case .languageExplorer: "languageExplorer"
         case .learningPath: "learningPath"
         case .learningModule(let module): "learningModule-\(module.id)"
         case let .lesson(module, lesson): "lesson-\(module.id)-\(lesson.id)"

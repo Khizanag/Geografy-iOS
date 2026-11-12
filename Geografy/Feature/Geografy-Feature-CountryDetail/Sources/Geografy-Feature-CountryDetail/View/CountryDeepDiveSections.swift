@@ -1,16 +1,13 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-public struct CountryProfileSection: View {
+struct CountryDeepDiveSections: View {
     // MARK: - Properties
-    public let profile: CountryProfile
+    let profile: CountryProfile
 
     // MARK: - Body
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-            funFactsSection
-            cultureSection
-            languageCornerSection
             geographySection
             timelineSection
             economySnapshotSection
@@ -18,125 +15,11 @@ public struct CountryProfileSection: View {
     }
 }
 
-// MARK: - Fun Facts
-private extension CountryProfileSection {
-    var funFactsSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Fun Facts", icon: "sparkles")
-            ForEach(
-                Array(profile.funFacts.enumerated()),
-                id: \.element.id
-            ) { index, fact in
-                FunFactCard(fact: fact, index: index)
-            }
-        }
-    }
-}
-
-// MARK: - Culture
-private extension CountryProfileSection {
-    var cultureSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Culture Highlights", icon: "theatermasks")
-            cultureGrid
-        }
-    }
-
-    var cultureGrid: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible()),
-            ],
-            spacing: DesignSystem.Spacing.sm
-        ) {
-            cultureTile(
-                icon: "fork.knife",
-                title: "Traditional Food",
-                items: profile.culture.traditionalFood
-            )
-            cultureTile(
-                icon: "music.note",
-                title: "Music",
-                detail: profile.culture.music
-            )
-            cultureTile(
-                icon: "paintpalette",
-                title: "Art",
-                detail: profile.culture.art
-            )
-            cultureTile(
-                icon: "party.popper",
-                title: "Festivals",
-                items: profile.culture.festivals
-            )
-        }
-    }
-
-    func cultureTile(
-        icon: String,
-        title: String,
-        detail: String? = nil,
-        items: [String]? = nil
-    ) -> some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-                cultureIcon(icon)
-                Text(title)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                if let detail {
-                    Text(detail)
-                        .font(DesignSystem.Font.footnote)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(4)
-                }
-                if let items {
-                    itemsList(items)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(DesignSystem.Spacing.sm)
-        }
-    }
-
-    func cultureIcon(_ name: String) -> some View {
-        Image(systemName: name)
-            .font(DesignSystem.Font.headline)
-            .foregroundStyle(DesignSystem.Color.accent)
-    }
-
-    func itemsList(_ items: [String]) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            ForEach(items, id: \.self) { item in
-                Text("• \(item)")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
-        }
-    }
-}
-
-// MARK: - Language Corner
-private extension CountryProfileSection {
-    var languageCornerSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(
-                title: "Language Corner",
-                icon: "character.bubble"
-            )
-            ForEach(profile.phrases) { phrase in
-                PhraseCard(phrase: phrase)
-            }
-        }
-    }
-}
-
 // MARK: - Geography Deep Dive
-private extension CountryProfileSection {
+private extension CountryDeepDiveSections {
     var geographySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Geography Deep Dive", icon: "mountain.2")
+            SectionHeaderView(title: "Geography", icon: "mountain.2")
             geographyCards
         }
     }
@@ -153,8 +36,9 @@ private extension CountryProfileSection {
                 title: "Terrain",
                 value: profile.geography.terrain
             )
-            naturalWondersCard
-            borderingCountriesCard
+            if !profile.geography.naturalWonders.isEmpty {
+                naturalWondersCard
+            }
         }
     }
 
@@ -225,58 +109,10 @@ private extension CountryProfileSection {
                 in: Capsule()
             )
     }
-
-    @ViewBuilder
-    var borderingCountriesCard: some View {
-        if !profile.geography.borderingCountries.isEmpty {
-            CardView {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-                    borderingHeader
-                    borderingFlow
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(DesignSystem.Spacing.md)
-            }
-        }
-    }
-
-    var borderingHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text("Bordering Countries")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-    }
-
-    var borderingFlow: some View {
-        FlowLayout(spacing: DesignSystem.Spacing.xs) {
-            ForEach(
-                profile.geography.borderingCountries,
-                id: \.self
-            ) { name in
-                borderChip(name)
-            }
-        }
-    }
-
-    func borderChip(_ name: String) -> some View {
-        Text(name)
-            .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
-            .background(
-                DesignSystem.Color.cardBackgroundHighlighted,
-                in: Capsule()
-            )
-    }
 }
 
 // MARK: - Timeline
-private extension CountryProfileSection {
+private extension CountryDeepDiveSections {
     var timelineSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(
@@ -289,7 +125,7 @@ private extension CountryProfileSection {
 }
 
 // MARK: - Economy Snapshot
-private extension CountryProfileSection {
+private extension CountryDeepDiveSections {
     var economySnapshotSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Economy Snapshot", icon: "chart.bar")

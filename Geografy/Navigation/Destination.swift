@@ -7,12 +7,10 @@ import Geografy_Feature_Compare
 import Geografy_Feature_ContinentStats
 import Geografy_Feature_CountryDetail
 import Geografy_Feature_CountryList
-import Geografy_Feature_CultureExplorer
 import Geografy_Feature_CurrencyConverter
 import Geografy_Feature_CustomQuiz
 import Geografy_Feature_DailyChallenge
 import Geografy_Feature_DistanceCalculator
-import Geografy_Feature_EconomyExplorer
 import Geografy_Feature_Favorite
 import Geografy_Feature_Feed
 import Geografy_Feature_Flashcard
@@ -20,7 +18,6 @@ import Geografy_Feature_GameCenter
 import Geografy_Feature_GeographyFeatures
 import Geografy_Feature_IndependenceTimeline
 import Geografy_Feature_LandmarkGallery
-import Geografy_Feature_LanguageExplorer
 import Geografy_Feature_LearningPath
 import Geografy_Feature_Map
 import Geografy_Feature_MapColoring
@@ -65,7 +62,6 @@ extension Destination {
         case .continentStats(let name): ContinentStatsScreen(continentName: name)
         case .countries: CountryListScreen()
         case .countryDetail(let country): CountryDetailScreen(country: country)
-        case .cultureExplorer: CultureExplorerScreen()
         case .currencyConverter(let code): CurrencyConverterScreen(preselectedCurrencyCode: code)
         case .customQuiz: CustomQuizLibraryScreen()
         case .customQuizShare(let quiz): CustomQuizShareScreen(quiz: quiz)
@@ -76,7 +72,6 @@ extension Destination {
             )
         case .editProfile: EditProfileSheet()
         case .distanceCalculator: DistanceCalculatorScreen()
-        case .economyExplorer: EconomyExplorerScreen()
         case .favorites: FavoritesScreen()
         case .feed: FeedScreen()
         case let .flashcardSession(deck, cards): FlashcardSessionScreen(deck: deck, cards: cards)
@@ -85,7 +80,6 @@ extension Destination {
         case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
         case .independenceTimeline: IndependenceTimelineScreen()
         case .landmarkGallery: LandmarkGalleryScreen()
-        case .languageExplorer: LanguageExplorerScreen()
         case .learningPath: LearningPathScreen()
         case .learningModule(let module): ModuleLessonsScreen(module: module)
         case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)
