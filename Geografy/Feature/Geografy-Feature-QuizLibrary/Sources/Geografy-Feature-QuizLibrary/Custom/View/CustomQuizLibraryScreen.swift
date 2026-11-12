@@ -23,7 +23,6 @@ public struct CustomQuizLibraryScreen: View {
     public var body: some View {
         content
             .background(DesignSystem.Color.background)
-            .navigationTitle("My Quizzes")
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .sheet(isPresented: $showBuilder) { builderSheet }

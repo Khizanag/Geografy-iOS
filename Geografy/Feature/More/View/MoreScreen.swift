@@ -253,7 +253,7 @@ private extension MoreScreen {
     var playItems: [MoreSheet] {
         [
             .dailyChallenge, .speedRun,
-            .multiplayer, .quizPacks, .customQuiz,
+            .multiplayer, .quizPacks,
             .wordSearch,
         ]
     }

@@ -8,7 +8,6 @@ import Geografy_Feature_ContinentStats
 import Geografy_Feature_CountryDetail
 import Geografy_Feature_CountryList
 import Geografy_Feature_CurrencyConverter
-import Geografy_Feature_CustomQuiz
 import Geografy_Feature_DailyChallenge
 import Geografy_Feature_DistanceCalculator
 import Geografy_Feature_Favorite
@@ -25,7 +24,7 @@ import Geografy_Feature_NeighborExplorer
 import Geografy_Feature_Organization
 import Geografy_Feature_Profile
 import Geografy_Feature_Quiz
-import Geografy_Feature_QuizPack
+import Geografy_Feature_QuizLibrary
 import Geografy_Feature_Quotes
 import Geografy_Feature_Search
 import Geografy_Feature_Setting
@@ -57,7 +56,6 @@ extension Destination {
         case .countries: CountryListScreen()
         case .countryDetail(let country): CountryDetailScreen(country: country)
         case .currencyConverter(let code): CurrencyConverterScreen(preselectedCurrencyCode: code)
-        case .customQuiz: CustomQuizLibraryScreen()
         case .customQuizShare(let quiz): CustomQuizShareScreen(quiz: quiz)
         case .dailyChallenge: DailyChallengeScreen()
         case let .dailyChallengeResult(score, maxScore, type, time, streak):
@@ -87,7 +85,7 @@ extension Destination {
         case .organizations: OrganizationsScreen()
         case .profile: ProfileScreen()
         case .quizPackDetail(let packID): QuizPackDetailScreen(packID: packID)
-        case .quizPacks: QuizPackBrowserScreen()
+        case .quizLibrary(let tab): QuizLibraryScreen(tab: tab)
         case .quizSession(let config): QuizSessionScreen(configuration: config)
         case .quizSetup: QuizSetupScreen()
         case .quotes: QuotesScreen()

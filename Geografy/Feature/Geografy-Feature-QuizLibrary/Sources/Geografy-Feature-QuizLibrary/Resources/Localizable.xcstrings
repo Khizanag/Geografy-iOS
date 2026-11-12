@@ -1,22 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "·" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "·"
-          }
-        }
-      }
-    },
     "%lld" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld questions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld კითხვა"
           }
         }
       }
@@ -37,6 +37,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "+ %lld სხვა ქვეყანა"
+          }
+        }
+      }
+    },
+    "/%@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/%@"
           }
         }
       }
@@ -142,16 +152,6 @@
         }
       }
     },
-    "e.g. European Capitals" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "მაგ. ევროპული დედაქალაქები"
-          }
-        }
-      }
-    },
     "Edit" : {
       "localizations" : {
         "ka" : {
@@ -212,6 +212,26 @@
         }
       }
     },
+    "No Packs Found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაკეტები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "No quiz packs match the selected category." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არცერთი ვიქტორინის პაკეტი არ შეესაბამება არჩეულ კატეგორიას."
+          }
+        }
+      }
+    },
     "None" : {
       "localizations" : {
         "ka" : {
@@ -238,6 +258,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინის სახელი"
+          }
+        }
+      }
+    },
+    "Quiz Packs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის პაკეტები"
           }
         }
       }
@@ -288,6 +318,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინის გაზიარება"
+          }
+        }
+      }
+    },
+    "e.g. European Capitals" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაგ. ევროპული დედაქალაქები"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
           }
         }
       }

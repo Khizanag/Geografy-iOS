@@ -22,7 +22,6 @@ public struct QuizPackBrowserScreen: View {
     public var body: some View {
         scrollContent
             .background { ambientBackground }
-            .navigationTitle("Quiz Packs")
             .task { loadData() }
             .onAppear { startAnimations() }
     }

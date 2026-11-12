@@ -14,7 +14,6 @@ public enum Destination: Hashable, Identifiable {
     case countries
     case countryDetail(Country)
     case currencyConverter(preselectedCode: String? = nil)
-    case customQuiz
     case customQuizShare(CustomQuiz)
     case dailyChallenge
     case dailyChallengeResult(
@@ -44,7 +43,7 @@ public enum Destination: Hashable, Identifiable {
     case organizations
     case profile
     case quizPackDetail(packID: String)
-    case quizPacks
+    case quizLibrary(QuizLibraryTab)
     case quizSession(QuizConfiguration)
     case quizSetup
     case quotes
@@ -79,7 +78,6 @@ public enum Destination: Hashable, Identifiable {
         case .countries: "countries"
         case .countryDetail(let country): "countryDetail-\(country.code)"
         case .currencyConverter(let code): "currencyConverter-\(code ?? "none")"
-        case .customQuiz: "customQuiz"
         case .customQuizShare(let quiz): "customQuizShare-\(quiz.id)"
         case .dailyChallenge: "dailyChallenge"
         case .dailyChallengeResult: "dailyChallengeResult"
@@ -106,7 +104,7 @@ public enum Destination: Hashable, Identifiable {
         case .organizations: "organizations"
         case .profile: "profile"
         case .quizPackDetail(let id): "quizPackDetail-\(id)"
-        case .quizPacks: "quizPacks"
+        case .quizLibrary(let tab): "quizLibrary-\(tab.rawValue)"
         case .quizSession: "quizSession"
         case .quizSetup: "quizSetup"
         case .quotes: "quotes"

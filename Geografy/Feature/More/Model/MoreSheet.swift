@@ -13,7 +13,6 @@ enum MoreSheet: Identifiable {
     case dailyChallenge
     case compare
     case quizPacks
-    case customQuiz
     case multiplayer
     case speedRun
     case wordSearch
@@ -42,8 +41,7 @@ enum MoreSheet: Identifiable {
         case .travel: "Travel"
         case .dailyChallenge: "Daily Challenge"
         case .compare: "Compare Countries"
-        case .quizPacks: "Quiz Packs"
-        case .customQuiz: "Custom Quizzes"
+        case .quizPacks: "Quiz Library"
         case .multiplayer: "Multiplayer"
         case .speedRun: "Speed Run"
         case .distanceCalculator: "Distance Calculator"
@@ -73,7 +71,6 @@ enum MoreSheet: Identifiable {
         case .dailyChallenge: "calendar.badge.exclamationmark"
         case .compare: "arrow.left.arrow.right"
         case .quizPacks: "square.stack.fill"
-        case .customQuiz: "pencil.and.list.clipboard"
         case .multiplayer: "person.2.fill"
         case .speedRun: "timer"
         case .distanceCalculator: "ruler"
@@ -102,8 +99,7 @@ enum MoreSheet: Identifiable {
         case .travel: "Countries visited and your trip journal"
         case .dailyChallenge: "New puzzle every day"
         case .compare: "Side-by-side country stats"
-        case .quizPacks: "Themed quiz progression"
-        case .customQuiz: "Build your own quizzes"
+        case .quizPacks: "Themed packs and your own quizzes"
         case .multiplayer: "Challenge opponents"
         case .speedRun: "Name all countries, race the clock"
         case .distanceCalculator: "Great circle distance between capitals"
@@ -133,7 +129,6 @@ enum MoreSheet: Identifiable {
         case .dailyChallenge: DesignSystem.Color.orange
         case .compare: DesignSystem.Color.blue
         case .quizPacks: DesignSystem.Color.purple
-        case .customQuiz: DesignSystem.Color.accent
         case .multiplayer: DesignSystem.Color.error
         case .speedRun: DesignSystem.Color.error
         case .distanceCalculator: DesignSystem.Color.blue
@@ -163,7 +158,6 @@ enum MoreSheet: Identifiable {
         case .dailyChallenge: "dailyChallenge"
         case .compare: "compare"
         case .quizPacks: "quizPacks"
-        case .customQuiz: "customQuiz"
         case .multiplayer: "multiplayer"
         case .speedRun: "speedRun"
         case .distanceCalculator: "distanceCalculator"
@@ -192,8 +186,7 @@ enum MoreSheet: Identifiable {
         case .travel: .travelTracker
         case .dailyChallenge: .dailyChallenge
         case .compare: .compare()
-        case .quizPacks: .quizPacks
-        case .customQuiz: .customQuiz
+        case .quizPacks: .quizLibrary(.packs)
         case .multiplayer: .multiplayer
         case .speedRun: .speedRunSetup
         case .distanceCalculator: .distanceCalculator
