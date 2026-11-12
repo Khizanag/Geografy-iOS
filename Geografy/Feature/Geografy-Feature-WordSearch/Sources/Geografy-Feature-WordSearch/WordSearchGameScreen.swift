@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct WordSearchGameScreen: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -179,7 +179,7 @@ private extension WordSearchGameScreen {
     var resultFooter: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             GlassButton("Close", systemImage: "xmark", fullWidth: true) {
-                coordinator.dismiss()
+                dismiss()
             }
             GlassButton("Try Again", systemImage: "arrow.clockwise", fullWidth: true) {
                 startPuzzle()

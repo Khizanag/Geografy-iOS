@@ -5,7 +5,7 @@ import SwiftUI
 
 public struct EditProfileSheet: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(AuthService.self) private var authService
     @Environment(DatabaseManager.self) private var database
     @Environment(HapticsService.self) private var hapticsService
@@ -79,7 +79,7 @@ private extension EditProfileSheet {
     }
 
     var cancelButton: some View {
-        Button("Cancel") { coordinator.dismiss() }
+        Button("Cancel") { dismiss() }
             .buttonStyle(.plain)
     }
 
@@ -104,6 +104,6 @@ private extension EditProfileSheet {
             profile.displayName = trimmed
             try? database.mainContext.save()
         }
-        coordinator.dismiss()
+        dismiss()
     }
 }

@@ -7,6 +7,7 @@ import SwiftUI
 public struct DailyChallengeSessionScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(GameCenterService.self) private var gameCenterService
 
     public let challenge: DailyChallenge
@@ -30,7 +31,7 @@ public struct DailyChallengeSessionScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .alert("Quit Challenge?", isPresented: $showQuitAlert) {
                 Button("Cancel", role: .cancel) {}
-                Button("Quit", role: .destructive) { coordinator.dismiss() }
+                Button("Quit", role: .destructive) { dismiss() }
             } message: {
                 Text("Your progress will be lost.")
             }

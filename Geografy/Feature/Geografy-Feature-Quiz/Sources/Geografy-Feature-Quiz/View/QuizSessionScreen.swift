@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct QuizSessionScreen: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) var hapticsService
     @Environment(CountryDataService.self) var countryDataService
 
@@ -112,7 +112,7 @@ private extension QuizSessionScreen {
     @ViewBuilder
     var quitAlertActions: some View {
         Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { coordinator.dismiss() }
+        Button("Quit", role: .destructive) { dismiss() }
     }
 
     func resultsDestination(for result: QuizResult) -> some View {
@@ -122,7 +122,7 @@ private extension QuizSessionScreen {
                 navigateToResult = nil
                 loadQuiz()
             },
-            onDone: { coordinator.dismiss() }
+            onDone: { dismiss() }
         )
     }
 

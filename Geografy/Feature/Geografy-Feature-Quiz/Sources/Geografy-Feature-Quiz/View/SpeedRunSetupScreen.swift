@@ -7,6 +7,7 @@ import SwiftUI
 public struct SpeedRunSetupScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -347,7 +348,7 @@ private extension SpeedRunSetupScreen {
     var startButton: some View {
         GlassButton("Start Speed Run", systemImage: "bolt.fill", fullWidth: true) {
             hapticsService.impact(.medium)
-            coordinator.dismiss()
+            dismiss()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 coordinator.cover(
                     .speedRunSession(region: selectedRegion)

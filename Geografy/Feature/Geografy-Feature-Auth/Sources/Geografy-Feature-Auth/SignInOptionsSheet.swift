@@ -6,7 +6,7 @@ import SwiftUI
 
 public struct SignInOptionsSheet: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
 
@@ -236,7 +236,7 @@ private extension SignInOptionsSheet {
                 switch result {
                 case .success(let authorization):
                     authService.handleAppleSignIn(authorization)
-                    coordinator.dismiss()
+                    dismiss()
                 case .failure(let error):
                     let nsError = error as NSError
                     if nsError.code != ASAuthorizationError.canceled.rawValue {
@@ -259,7 +259,7 @@ private extension SignInOptionsSheet {
                 await authService.signInWithGoogle()
                 switch authService.state {
                 case .authenticated:
-                    coordinator.dismiss()
+                    dismiss()
                 case .error(let error):
                     errorMessage = error.localizedDescription
                     showError = true
@@ -286,7 +286,7 @@ private extension SignInOptionsSheet {
     }
 
     var continueAsGuestButton: some View {
-        Button { coordinator.dismiss() } label: {
+        Button { dismiss() } label: {
             Text("Continue as Guest")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -299,7 +299,7 @@ private extension SignInOptionsSheet {
     var debugSignInButton: some View {
         Button {
             authService.debugSignIn()
-            coordinator.dismiss()
+            dismiss()
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "hammer.fill")

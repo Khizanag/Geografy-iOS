@@ -13,7 +13,7 @@ public struct LessonScreen: View {
         self.lesson = lesson
     }
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -82,7 +82,7 @@ private extension LessonScreen {
     var completeButton: some View {
         GlassButton(lesson.isCompleted ? "Already Completed" : "Mark as Complete", fullWidth: true) {
             learningPathService.completeLesson(moduleID: module.id, lessonID: lesson.id)
-            coordinator.dismiss()
+            dismiss()
         }
         .disabled(lesson.isCompleted)
         .opacity(lesson.isCompleted ? 0.5 : 1)

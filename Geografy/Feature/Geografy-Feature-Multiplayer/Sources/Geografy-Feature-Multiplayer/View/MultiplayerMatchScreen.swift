@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct MultiplayerMatchScreen: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -40,7 +40,7 @@ public struct MultiplayerMatchScreen: View {
                 MultiplayerResultScreen(
                     match: match,
                     onRematch: { startRematch() },
-                    onDone: { coordinator.dismiss() },
+                    onDone: { dismiss() },
                 )
             }
             .alert("Quit Match?", isPresented: $showQuitAlert) {
@@ -67,7 +67,7 @@ private extension MultiplayerMatchScreen {
     @ViewBuilder
     var quitAlertActions: some View {
         Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { coordinator.dismiss() }
+        Button("Quit", role: .destructive) { dismiss() }
     }
 }
 

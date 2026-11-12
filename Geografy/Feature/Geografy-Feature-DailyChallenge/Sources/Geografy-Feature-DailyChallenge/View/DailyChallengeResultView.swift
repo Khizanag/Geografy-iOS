@@ -8,7 +8,7 @@ import SwiftUI
 
 public struct DailyChallengeResultView: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let score: Int
@@ -173,7 +173,7 @@ private extension DailyChallengeResultView {
 
     var doneButton: some View {
         GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
-            coordinator.dismiss()
+            dismiss()
         }
     }
 

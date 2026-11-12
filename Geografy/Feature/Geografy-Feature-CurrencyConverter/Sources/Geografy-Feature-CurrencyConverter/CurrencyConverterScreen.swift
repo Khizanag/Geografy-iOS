@@ -10,7 +10,6 @@ public struct CurrencyConverterScreen: View {
         self.preselectedCurrencyCode = preselectedCurrencyCode
     }
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(CurrencyService.self) private var currencyService
@@ -449,7 +448,7 @@ public struct CurrencyEntry: Identifiable, Hashable {
 
 // MARK: - Currency Picker Sheet
 private struct CurrencyPickerSheet: View {
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
 
     let title: String
     let currencies: [CurrencyEntry]
@@ -474,7 +473,7 @@ private extension CurrencyPickerSheet {
         List(filteredCurrencies) { entry in
             Button {
                 onSelect(entry)
-                coordinator.dismiss()
+                dismiss()
             } label: {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: entry.countryCode, height: 24, fixedWidth: true)
@@ -499,7 +498,7 @@ private extension CurrencyPickerSheet {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel") { coordinator.dismiss() }
+            Button("Cancel") { dismiss() }
                 .tint(DesignSystem.Color.textPrimary)
         }
     }

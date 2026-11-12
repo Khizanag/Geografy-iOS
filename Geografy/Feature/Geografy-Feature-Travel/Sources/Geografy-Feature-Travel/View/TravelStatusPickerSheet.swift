@@ -6,7 +6,7 @@ import SwiftUI
 
 public struct TravelStatusPickerSheet: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(TravelService.self) private var travelService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
@@ -77,7 +77,7 @@ private extension TravelStatusPickerSheet {
             if !isSelected {
                 awardTravelXP(for: status)
                 checkTravelAchievements()
-                coordinator.dismiss()
+                dismiss()
             }
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
@@ -106,7 +106,7 @@ private extension TravelStatusPickerSheet {
         Button {
             hapticsService.impact(.light)
             travelService.set(status: nil, for: country.code)
-            coordinator.dismiss()
+            dismiss()
         } label: {
             Text("Remove Status")
                 .font(DesignSystem.Font.subheadline)

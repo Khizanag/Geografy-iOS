@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct CustomQuizBuilderScreen: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     public let existingQuiz: CustomQuiz?
     public let countryDataService: CountryDataService
     public let quizService: CustomQuizService
@@ -315,7 +315,7 @@ private extension CustomQuizBuilderScreen {
             } else {
                 quizService.save(quiz)
             }
-            coordinator.dismiss()
+            dismiss()
         }
     }
 }

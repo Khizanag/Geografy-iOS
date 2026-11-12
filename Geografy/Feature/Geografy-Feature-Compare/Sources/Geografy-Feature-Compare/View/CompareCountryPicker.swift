@@ -16,7 +16,7 @@ public struct CompareCountryPicker: View {
         self.onSelect = onSelect
     }
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -61,7 +61,7 @@ private extension CompareCountryPicker {
             hapticsService.impact(.light)
             #endif
             onSelect(country)
-            coordinator.dismiss()
+            dismiss()
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {

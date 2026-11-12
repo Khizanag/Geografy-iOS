@@ -28,23 +28,38 @@ public struct CoordinatedNavigationStack<Root: View>: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.destinationContent) private var destinationContent
 
-    @Bindable public var navigator: Navigator
+    // Owned here so it survives re-renders; a navigator built inline in a parent's body would be
+    // replaced on every update, dropping any sheet, cover, or push it was presenting.
+    @State private var ownedNavigator = Navigator()
+    private let providedNavigator: Navigator?
     public var showCloseButton: Bool = false
     @ViewBuilder public var root: () -> Root
 
     // MARK: - Init
+    /// Drives the stack with a navigator the caller keeps alive, such as a tab's.
     public init(
         navigator: Navigator,
         showCloseButton: Bool = false,
         @ViewBuilder root: @escaping () -> Root
     ) {
-        self.navigator = navigator
+        self.providedNavigator = navigator
+        self.showCloseButton = showCloseButton
+        self.root = root
+    }
+
+    /// Drives the stack with its own navigator, for sheets and covers.
+    public init(
+        showCloseButton: Bool = false,
+        @ViewBuilder root: @escaping () -> Root
+    ) {
+        self.providedNavigator = nil
         self.showCloseButton = showCloseButton
         self.root = root
     }
 
     // MARK: - Body
     public var body: some View {
+        @Bindable var navigator = providedNavigator ?? ownedNavigator
         NavigationStack(path: $navigator.path) {
             rootWithCloseButton
                 .navigationDestination(for: Destination.self) { destination in
@@ -101,10 +116,7 @@ private struct DestinationCoverView: View {
     let destination: Destination
 
     var body: some View {
-        CoordinatedNavigationStack(
-            navigator: Navigator(),
-            showCloseButton: true
-        ) {
+        CoordinatedNavigationStack(showCloseButton: true) {
             destinationContent?(destination) ?? AnyView(EmptyView())
         }
     }
@@ -117,10 +129,7 @@ private struct DestinationSheetView: View {
     let destination: Destination
 
     var body: some View {
-        CoordinatedNavigationStack(
-            navigator: Navigator(),
-            showCloseButton: true
-        ) {
+        CoordinatedNavigationStack(showCloseButton: true) {
             destinationContent?(destination) ?? AnyView(EmptyView())
         }
     }

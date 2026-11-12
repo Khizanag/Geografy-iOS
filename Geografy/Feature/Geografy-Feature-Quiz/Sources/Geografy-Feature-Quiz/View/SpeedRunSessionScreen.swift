@@ -7,7 +7,7 @@ import SwiftUI
 
 public struct SpeedRunSessionScreen: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
@@ -249,7 +249,7 @@ private extension SpeedRunSessionScreen {
             }
 
             GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
-                coordinator.dismiss()
+                dismiss()
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -355,7 +355,7 @@ private extension SpeedRunSessionScreen {
 
     var quitAlertActions: some View {
         Group {
-            Button("Quit", role: .destructive) { coordinator.dismiss() }
+            Button("Quit", role: .destructive) { dismiss() }
             Button("Continue", role: .cancel) {}
         }
     }

@@ -6,7 +6,7 @@ import SwiftUI
 
 public struct CustomQuizCountryPicker: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
+    @Environment(\.dismiss) private var dismiss
 
     public let countries: [Country]
     @Binding var selectedCodes: Set<String>
@@ -156,7 +156,7 @@ private extension CustomQuizCountryPicker {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            Button("Done") { coordinator.dismiss() }
+            Button("Done") { dismiss() }
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
