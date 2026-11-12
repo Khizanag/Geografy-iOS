@@ -205,6 +205,7 @@
 				Feature/More/Model/MoreSheet.swift,
 				Feature/More/View/MoreScreen.swift,
 				Feature/More/View/TestChecklistSheet.swift,
+				Feature/Saved/SavedScreen.swift,
 				Navigation/AppCoordinator.swift,
 				Navigation/Destination.swift,
 			);

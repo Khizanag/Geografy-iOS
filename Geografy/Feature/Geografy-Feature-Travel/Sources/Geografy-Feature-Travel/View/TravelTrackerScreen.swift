@@ -143,7 +143,7 @@ private extension TravelTrackerScreen {
         ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
-                coordinator.push(.travelBucketList)
+                coordinator.push(.saved(.wantToVisit))
             } label: {
                 Label("Bucket List", systemImage: "list.star")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)

@@ -25,7 +25,6 @@ public struct TravelBucketListScreen: View {
     public var body: some View {
         contentSwitcher
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Bucket List")
             .closeButtonPlacementLeading()
             .toolbar { toolbarItems }
             .onAppear { loadPersistedData() }

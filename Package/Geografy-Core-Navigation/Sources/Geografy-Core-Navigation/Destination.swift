@@ -7,7 +7,6 @@ public enum Destination: Hashable, Identifiable {
     case achievements
     case allMaps
     case collectionDetail(String)
-    case collections
     case compare(preselectedCountry: Country? = nil)
     case continentOverview(Country.Continent)
     case continentPicker
@@ -24,7 +23,7 @@ public enum Destination: Hashable, Identifiable {
     )
     case editProfile
     case distanceCalculator
-    case favorites
+    case saved(SavedTab)
     case feed
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
     case friends
@@ -61,7 +60,6 @@ public enum Destination: Hashable, Identifiable {
     case themes
     case timeline
     case timeZones
-    case travelBucketList
     case travelJournal
     case travelStatusPicker(Country)
     case travelMap(TravelMapFilter)
@@ -76,7 +74,6 @@ public enum Destination: Hashable, Identifiable {
         case .achievements: "achievements"
         case .allMaps: "allMaps"
         case .collectionDetail(let name): "collectionDetail-\(name)"
-        case .collections: "collections"
         case .compare(let country): "compare-\(country?.code ?? "none")"
         case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
         case .continentPicker: "continentPicker"
@@ -90,7 +87,7 @@ public enum Destination: Hashable, Identifiable {
         case .dailyChallengeResult: "dailyChallengeResult"
         case .editProfile: "editProfile"
         case .distanceCalculator: "distanceCalculator"
-        case .favorites: "favorites"
+        case .saved(let tab): "saved-\(tab.rawValue)"
         case .feed: "feed"
         case .flashcardSession: "flashcardSession"
         case .friends: "friends"
@@ -127,7 +124,6 @@ public enum Destination: Hashable, Identifiable {
         case .themes: "themes"
         case .timeline: "timeline"
         case .timeZones: "timeZones"
-        case .travelBucketList: "travelBucketList"
         case .travelJournal: "travelJournal"
         case .travelStatusPicker(let country): "travelStatusPicker-\(country.code)"
         case .travelMap: "travelMap"

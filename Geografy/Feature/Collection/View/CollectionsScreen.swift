@@ -19,8 +19,6 @@ struct CollectionsScreen: View {
         content
             .background { AmbientBlobsView(.standard) }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("My Collections")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .alert("New Collection", isPresented: $showNewCollection) {
                 newCollectionAlert

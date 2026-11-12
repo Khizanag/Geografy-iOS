@@ -6,7 +6,6 @@ import SwiftUI
 
 enum MoreSheet: Identifiable {
     case profile
-    case collections
     case countries
     case orgs
     case favorites
@@ -14,7 +13,6 @@ enum MoreSheet: Identifiable {
     case dailyChallenge
     case compare
     case travelJournal
-    case travelBucketList
     case quizPacks
     case customQuiz
     case multiplayer
@@ -39,10 +37,9 @@ enum MoreSheet: Identifiable {
     var label: String {
         switch self {
         case .profile: "Profile"
-        case .collections: "My Collections"
         case .countries: "Countries"
         case .orgs: "Organizations"
-        case .favorites: "Favorites"
+        case .favorites: "Saved"
         case .travel: "Travel Tracker"
         case .dailyChallenge: "Daily Challenge"
         case .compare: "Compare Countries"
@@ -65,7 +62,6 @@ enum MoreSheet: Identifiable {
         case .feed: "Feed"
         case .srsStudy: "SRS Review"
         case .learningPath: "Learning Path"
-        case .travelBucketList: "Bucket List"
         }
     }
 
@@ -74,7 +70,6 @@ enum MoreSheet: Identifiable {
         case .profile: "person.fill"
         case .countries: "list.bullet"
         case .orgs: "building.2.fill"
-        case .collections: "folder.fill"
         case .favorites: "heart.fill"
         case .travel: "airplane.departure"
         case .dailyChallenge: "calendar.badge.exclamationmark"
@@ -98,7 +93,6 @@ enum MoreSheet: Identifiable {
         case .feed: "newspaper.fill"
         case .srsStudy: "brain.fill"
         case .learningPath: "graduationcap.fill"
-        case .travelBucketList: "checklist"
         }
     }
 
@@ -107,8 +101,7 @@ enum MoreSheet: Identifiable {
         case .profile: "View your stats and level"
         case .countries: "Browse all 197 countries"
         case .orgs: "International organizations"
-        case .collections: "Save & organize items"
-        case .favorites: "Your saved countries"
+        case .favorites: "Favorites, places to visit, collections"
         case .travel: "Track your adventures"
         case .dailyChallenge: "New puzzle every day"
         case .compare: "Side-by-side country stats"
@@ -131,7 +124,6 @@ enum MoreSheet: Identifiable {
         case .feed: "Curated geography news"
         case .srsStudy: "Spaced repetition review"
         case .learningPath: "Guided geography curriculum"
-        case .travelBucketList: "Countries you dream of visiting"
         }
     }
 
@@ -140,7 +132,6 @@ enum MoreSheet: Identifiable {
         case .profile: DesignSystem.Color.accent
         case .countries: DesignSystem.Color.blue
         case .orgs: DesignSystem.Color.indigo
-        case .collections: DesignSystem.Color.accent
         case .favorites: DesignSystem.Color.error
         case .travel: Color(hex: "00C9A7")
         case .dailyChallenge: DesignSystem.Color.orange
@@ -164,7 +155,6 @@ enum MoreSheet: Identifiable {
         case .feed: DesignSystem.Color.blue
         case .srsStudy: DesignSystem.Color.accent
         case .learningPath: DesignSystem.Color.success
-        case .travelBucketList: Color(hex: "00C9A7")
         }
     }
 
@@ -173,7 +163,6 @@ enum MoreSheet: Identifiable {
         case .profile: "profile"
         case .countries: "countries"
         case .orgs: "orgs"
-        case .collections: "collections"
         case .favorites: "favorites"
         case .travel: "travel"
         case .dailyChallenge: "dailyChallenge"
@@ -197,7 +186,6 @@ enum MoreSheet: Identifiable {
         case .feed: "feed"
         case .srsStudy: "srsStudy"
         case .learningPath: "learningPath"
-        case .travelBucketList: "travelBucketList"
         }
     }
 
@@ -206,8 +194,7 @@ enum MoreSheet: Identifiable {
         case .profile: .profile
         case .countries: .countries
         case .orgs: .organizations
-        case .collections: .collections
-        case .favorites: .favorites
+        case .favorites: .saved(.favorites)
         case .travel: .travelTracker
         case .dailyChallenge: .dailyChallenge
         case .compare: .compare()
@@ -230,7 +217,6 @@ enum MoreSheet: Identifiable {
         case .feed: .feed
         case .srsStudy: .srsStudy
         case .learningPath: .learningPath
-        case .travelBucketList: .travelBucketList
         }
     }
 }
