@@ -148,7 +148,7 @@ private extension CountryListScreen {
                     : "line.3.horizontal.decrease"
             )
         }
-        .tint(DesignSystem.Color.onAccent)
+        .tint(DesignSystem.Color.iconPrimary)
     }
 
     var hasActiveFilters: Bool {

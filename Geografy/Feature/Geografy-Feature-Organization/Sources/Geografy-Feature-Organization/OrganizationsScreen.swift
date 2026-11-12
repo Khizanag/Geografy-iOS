@@ -55,9 +55,8 @@ private extension OrganizationsScreen {
                 .pickerStyle(.inline)
             } label: {
                 Label("Sort", systemImage: "arrow.up.arrow.down")
-                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
-            .tint(DesignSystem.Color.onAccent)
+            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 }
