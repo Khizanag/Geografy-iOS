@@ -11,7 +11,6 @@ public struct DailyChallengeScreen: View {
 
     @State private var service: DailyChallengeService?
     @State private var showSession = false
-    @State private var blobAnimating = false
 
     // MARK: - Init
     public init() {}
@@ -22,7 +21,6 @@ public struct DailyChallengeScreen: View {
             .navigationTitle("Daily Challenge")
             .navigationBarTitleDisplayMode(.inline)
             .task { await loadData() }
-            .onAppear { startBlobAnimation() }
             .fullScreenCover(isPresented: $showSession) {
                 sessionCover
             }
@@ -46,8 +44,7 @@ private extension DailyChallengeScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.standard)
     }
 
     var sessionCover: some View {
@@ -357,64 +354,6 @@ private extension DailyChallengeScreen {
             }
         }
         .frame(width: DesignSystem.Size.lg)
-    }
-}
-
-// MARK: - Background
-private extension DailyChallengeScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            accentBlob
-            indigoBlob
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
-    }
-
-    var accentBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.22),
-                        .clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                )
-            )
-            .frame(width: 420, height: 320)
-            .blur(radius: 36)
-            .offset(x: -80, y: -100)
-            .scaleEffect(blobAnimating ? 1.10 : 0.90)
-    }
-
-    var indigoBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [
-                        DesignSystem.Color.indigo.opacity(0.18),
-                        .clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                )
-            )
-            .frame(width: 360, height: 300)
-            .blur(radius: 44)
-            .offset(x: 140, y: 300)
-            .scaleEffect(blobAnimating ? 0.88 : 1.10)
-    }
-
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }
 

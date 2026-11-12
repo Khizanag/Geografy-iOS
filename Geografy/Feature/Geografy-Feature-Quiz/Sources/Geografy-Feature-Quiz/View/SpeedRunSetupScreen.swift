@@ -23,8 +23,7 @@ public struct SpeedRunSetupScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { AmbientBlobsView(.quiz) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.quiz)
             .navigationTitle("Speed Run")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) { startButton }

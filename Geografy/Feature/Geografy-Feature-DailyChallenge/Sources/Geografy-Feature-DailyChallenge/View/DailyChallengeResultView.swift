@@ -19,7 +19,6 @@ public struct DailyChallengeResultView: View {
 
     @State private var animatedScore: Int = 0
     @State private var showShareCard = false
-    @State private var blobAnimating = false
 
     // MARK: - Init
     public init(
@@ -62,8 +61,7 @@ private extension DailyChallengeResultView {
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
         .safeAreaInset(edge: .bottom) { actionButtons }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.standard)
     }
 }
 
@@ -185,39 +183,6 @@ private extension DailyChallengeResultView {
             streak: streak,
             date: .now
         )
-    }
-}
-
-// MARK: - Background
-private extension DailyChallengeResultView {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            DesignSystem.Color.accent.opacity(0.22),
-                            .clear,
-                        ],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 420, height: 320)
-                .blur(radius: 36)
-                .offset(x: -80, y: -60)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
-        .onAppear {
-            blobAnimating = true
-        }
     }
 }
 

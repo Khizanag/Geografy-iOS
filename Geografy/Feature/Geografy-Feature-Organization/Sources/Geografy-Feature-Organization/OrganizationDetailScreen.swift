@@ -22,17 +22,14 @@ public struct OrganizationDetailScreen: View {
     public let organization: Organization
 
     @State private var showLogoZoom = false
-    @State private var blobAnimating = false
 
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBackground }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.tinted(organization.highlightColor))
             .navigationTitle(organization.displayName)
             .closeButtonPlacementLeading()
             .task { trackOrgView() }
-            .onAppear { blobAnimating = true }
             .overlay {
                 if showLogoZoom, let urlString = organization.logoURL, let url = URL(string: urlString) {
                     ZoomableOrgLogoView(url: url, organization: organization) {
@@ -40,48 +37,6 @@ public struct OrganizationDetailScreen: View {
                     }
                 }
             }
-    }
-}
-
-// MARK: - Background
-private extension OrganizationDetailScreen {
-    var ambientBackground: some View {
-        ZStack {
-            DesignSystem.Color.background
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [organization.highlightColor.opacity(0.15), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 30)
-                .offset(x: -60, y: -180)
-                .scaleEffect(blobAnimating ? 1.08 : 0.94)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.10), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 160
-                    )
-                )
-                .frame(width: 300, height: 260)
-                .blur(radius: 40)
-                .offset(x: 120, y: 260)
-                .scaleEffect(blobAnimating ? 0.92 : 1.06)
-        }
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
     }
 }
 

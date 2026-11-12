@@ -8,7 +8,6 @@ public struct OceanExplorerScreen: View {
 
     @State private var selectedSegment = 0
     @State private var expandedOceanId: String?
-    @State private var blobAnimating = false
 
     private let oceanService = OceanService()
     private let segments = ["Oceans", "Seas"]
@@ -19,9 +18,7 @@ public struct OceanExplorerScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .onAppear { startBlobAnimation() }
+            .screenBackground(.tinted(DesignSystem.Color.blue))
     }
 }
 
@@ -219,37 +216,10 @@ private extension OceanExplorerScreen {
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
         )
     }
-
-    var ambientBlobs: some View {
-        ZStack {
-            RadialGradient(
-                colors: [DesignSystem.Color.blue.opacity(0.18), .clear],
-                center: .topLeading,
-                startRadius: 0,
-                endRadius: 300
-            )
-            RadialGradient(
-                colors: [DesignSystem.Color.indigo.opacity(0.14), .clear],
-                center: .bottomTrailing,
-                startRadius: 0,
-                endRadius: 280
-            )
-        }
-        .ignoresSafeArea()
-        .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(
-            nil,
-            value: blobAnimating
-        )
-    }
 }
 
 // MARK: - Helpers
 private extension OceanExplorerScreen {
-    func startBlobAnimation() {
-        blobAnimating = true
-    }
-
     func formatArea(_ area: Double) -> String {
         let millions = area / 1_000_000
         return String(format: "%.1fM km²", millions)

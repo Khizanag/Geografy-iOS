@@ -20,8 +20,7 @@ public struct SignInOptionsSheet: View {
     // MARK: - Body
     public var body: some View {
         extractedContent
-            .background { AmbientBlobsView(.standard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .onAppear { appeared = true }
             .alert("Sign In Failed", isPresented: $showError) {
                 Button("OK", role: .cancel) {}

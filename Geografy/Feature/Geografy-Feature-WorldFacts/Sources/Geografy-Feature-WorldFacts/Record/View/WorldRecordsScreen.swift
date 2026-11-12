@@ -11,7 +11,6 @@ public struct WorldRecordsScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var records: [WorldRecord] = []
-    @State private var blobAnimating = false
 
     private let worldRecordsService = WorldRecordsService()
 
@@ -21,12 +20,10 @@ public struct WorldRecordsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .task {
                 records = worldRecordsService.computeRecords(from: countryDataService.countries)
             }
-            .onAppear { startBlobAnimation() }
     }
 }
 
@@ -119,37 +116,5 @@ private extension WorldRecordsScreen {
                 .foregroundStyle(DesignSystem.Color.accent)
                 .fontWeight(.semibold)
         }
-    }
-
-    var ambientBlobs: some View {
-        ZStack {
-            blobEllipse(color: DesignSystem.Color.accent, opacity: 0.25, offset: (-100, -200), animates: blobAnimating)
-            blobEllipse(color: DesignSystem.Color.indigo, opacity: 0.20, offset: (160, 300), animates: !blobAnimating)
-        }
-        .allowsHitTesting(false)
-        .animation(nil, value: blobAnimating)
-    }
-
-    func blobEllipse(color: Color, opacity: Double, offset: (CGFloat, CGFloat), animates: Bool) -> some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [color.opacity(opacity), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                )
-            )
-            .frame(width: 400, height: 320)
-            .blur(radius: 40)
-            .offset(x: offset.0, y: offset.1)
-            .scaleEffect(animates ? 1.08 : 0.92)
-    }
-}
-
-// MARK: - Actions
-private extension WorldRecordsScreen {
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }

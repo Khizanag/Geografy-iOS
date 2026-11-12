@@ -16,8 +16,7 @@ public struct LeaderboardScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { AmbientBlobsView(.leaderboard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.leaderboard)
             .navigationTitle("Leaderboards")
             .navigationBarTitleDisplayMode(.large)
     }

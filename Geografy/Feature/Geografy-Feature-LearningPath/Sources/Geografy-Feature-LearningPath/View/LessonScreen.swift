@@ -20,13 +20,10 @@ public struct LessonScreen: View {
     public let module: LearningModule
     public let lesson: Lesson
 
-    @State private var blobAnimating = false
-
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .navigationTitle(lesson.title)
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -37,7 +34,6 @@ public struct LessonScreen: View {
                     .padding(.vertical, DesignSystem.Spacing.sm)
                     .background(.ultraThinMaterial)
             }
-            .onAppear { startBlobAnimation() }
     }
 }
 
@@ -87,32 +83,6 @@ private extension LessonScreen {
         .disabled(lesson.isCompleted)
         .opacity(lesson.isCompleted ? 0.5 : 1)
     }
-
-    var ambientBlobs: some View {
-        ZStack {
-            blobEllipse(color: DesignSystem.Color.accent, opacity: 0.20, offset: (100, -180), animates: blobAnimating)
-            blobEllipse(color: DesignSystem.Color.indigo, opacity: 0.18, offset: (-120, 250), animates: !blobAnimating)
-        }
-        .allowsHitTesting(false)
-        .animation(nil, value: blobAnimating)
-    }
-
-    func blobEllipse(color: Color, opacity: Double, offset: (CGFloat, CGFloat), animates: Bool) -> some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [color.opacity(opacity), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                )
-            )
-            .frame(width: 360, height: 280)
-            .blur(radius: 36)
-            .offset(x: offset.0, y: offset.1)
-            .scaleEffect(animates ? 1.08 : 0.92)
-    }
-
     var typeIcon: String {
         switch lesson.type {
         case .reading: "book.fill"
@@ -127,12 +97,5 @@ private extension LessonScreen {
         case .quiz: "Quiz"
         case .matching: "Matching"
         }
-    }
-}
-
-// MARK: - Actions
-private extension LessonScreen {
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }

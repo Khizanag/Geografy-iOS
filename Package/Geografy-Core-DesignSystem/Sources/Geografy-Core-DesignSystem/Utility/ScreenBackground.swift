@@ -15,4 +15,14 @@ public extension View {
     func screenBackground() -> some View {
         screenBackground { DesignSystem.Color.background }
     }
+
+    /// The app background with ambient color blobs, filling the whole screen.
+    func screenBackground(_ preset: AmbientBlobsView.Preset) -> some View {
+        screenBackground {
+            ZStack {
+                DesignSystem.Color.background
+                AmbientBlobsView(preset)
+            }
+        }
+    }
 }

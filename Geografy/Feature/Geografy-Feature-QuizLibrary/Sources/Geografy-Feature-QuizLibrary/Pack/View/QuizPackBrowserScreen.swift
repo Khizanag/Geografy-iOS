@@ -12,7 +12,6 @@ public struct QuizPackBrowserScreen: View {
     @State private var packService = QuizPackService()
     @State private var selectedCategory: QuizPackCategory?
     @State private var allPacks: [QuizPack] = []
-    @State private var blobAnimating = false
     @State private var appeared = false
 
     // MARK: - Init
@@ -21,7 +20,7 @@ public struct QuizPackBrowserScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBackground }
+            .screenBackground(.subtle)
             .task { loadData() }
             .onAppear { startAnimations() }
     }
@@ -272,60 +271,6 @@ private extension QuizPackBrowserScreen {
     }
 }
 
-// MARK: - Background
-private extension QuizPackBrowserScreen {
-    var ambientBackground: some View {
-        ZStack {
-            DesignSystem.Color.background
-            accentBlob
-            purpleBlob
-        }
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
-    }
-
-    var accentBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.22),
-                        Color.clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                )
-            )
-            .frame(width: 400, height: 300)
-            .blur(radius: 30)
-            .offset(x: -60, y: -180)
-            .scaleEffect(blobAnimating ? 1.08 : 0.92)
-    }
-
-    var purpleBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [
-                        DesignSystem.Color.purple.opacity(0.16),
-                        Color.clear,
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 160
-                )
-            )
-            .frame(width: 340, height: 280)
-            .blur(radius: 36)
-            .offset(x: 120, y: 120)
-            .scaleEffect(blobAnimating ? 0.90 : 1.08)
-    }
-}
-
 // MARK: - Actions
 private extension QuizPackBrowserScreen {
     func loadData() {
@@ -336,7 +281,6 @@ private extension QuizPackBrowserScreen {
     }
 
     func startAnimations() {
-        blobAnimating = true
         appeared = true
     }
 

@@ -11,18 +11,14 @@ public struct LearningPathScreen: View {
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var blobAnimating = false
-
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .navigationTitle("Learning Path")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .onAppear { startBlobAnimation() }
     }
 }
 
@@ -181,31 +177,6 @@ private extension LearningPathScreen {
         .frame(width: 36, height: 36)
         .animation(.easeOut(duration: 0.5), value: fraction)
     }
-
-    var ambientBlobs: some View {
-        ZStack {
-            blobEllipse(color: DesignSystem.Color.accent, opacity: 0.20, offset: (-100, -200), animates: blobAnimating)
-            blobEllipse(color: DesignSystem.Color.indigo, opacity: 0.18, offset: (160, 400), animates: !blobAnimating)
-        }
-        .allowsHitTesting(false)
-        .animation(nil, value: blobAnimating)
-    }
-
-    func blobEllipse(color: Color, opacity: Double, offset: (CGFloat, CGFloat), animates: Bool) -> some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [color.opacity(opacity), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                )
-            )
-            .frame(width: 400, height: 320)
-            .blur(radius: 40)
-            .offset(x: offset.0, y: offset.1)
-            .scaleEffect(animates ? 1.08 : 0.92)
-    }
 }
 
 // MARK: - Helpers
@@ -224,9 +195,5 @@ private extension LearningPathScreen {
         let completedLessons = learningPathService.modules.flatMap { $0.lessons }.filter { $0.isCompleted }.count
         guard totalLessons > 0 else { return 0 }
         return Double(completedLessons) / Double(totalLessons)
-    }
-
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }

@@ -10,8 +10,7 @@ public struct LocalMultiplayerCountdownView: View {
     public var body: some View {
         countdownContent
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background { AmbientBlobsView(.standard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
     }
 }
 

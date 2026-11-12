@@ -9,7 +9,6 @@ public struct MapPuzzleSetupScreen: View {
 
     @State private var selectedContinent: Country.Continent?
     @State private var showPuzzle = false
-    @State private var blobAnimating = false
 
     private let continents = Country.Continent.allCases.filter { $0 != .antarctica }
 
@@ -19,13 +18,11 @@ public struct MapPuzzleSetupScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.subtle)
             .navigationTitle("Map Puzzle")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .onAppear { startBlobAnimation() }
             .navigationDestination(isPresented: $showPuzzle) {
                 if let continent = selectedContinent {
                     MapPuzzleScreen(continent: continent)
@@ -118,32 +115,6 @@ private extension MapPuzzleSetupScreen {
         }
         .padding(.top, DesignSystem.Spacing.sm)
     }
-
-    var ambientBlobs: some View {
-        ZStack {
-            blobEllipse(color: DesignSystem.Color.accent, opacity: 0.22, offset: (-100, -200), animates: blobAnimating)
-            blobEllipse(color: DesignSystem.Color.purple, opacity: 0.18, offset: (160, 300), animates: !blobAnimating)
-        }
-        .allowsHitTesting(false)
-        .animation(nil, value: blobAnimating)
-    }
-
-    func blobEllipse(color: Color, opacity: Double, offset: (CGFloat, CGFloat), animates: Bool) -> some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [color.opacity(opacity), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                )
-            )
-            .frame(width: 400, height: 320)
-            .blur(radius: 40)
-            .offset(x: offset.0, y: offset.1)
-            .scaleEffect(animates ? 1.08 : 0.92)
-    }
-
     func continentIcon(_ continent: Country.Continent) -> String {
         switch continent {
         case .africa: "sun.max.fill"
@@ -154,12 +125,5 @@ private extension MapPuzzleSetupScreen {
         case .oceania: "water.waves"
         case .antarctica: "snowflake"
         }
-    }
-}
-
-// MARK: - Actions
-private extension MapPuzzleSetupScreen {
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }

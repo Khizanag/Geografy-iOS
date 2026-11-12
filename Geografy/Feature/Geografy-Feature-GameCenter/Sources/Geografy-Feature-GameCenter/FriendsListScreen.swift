@@ -21,8 +21,7 @@ public struct FriendsListScreen: View {
     // MARK: - Body
     public var body: some View {
         content
-            .background { AmbientBlobsView(.standard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.large)
             .task { await loadData() }

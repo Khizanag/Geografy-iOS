@@ -52,8 +52,7 @@ private extension LocalMultiplayerEntryScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.lg)
         }
-        .background { AmbientBlobsView(.standard) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.standard)
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -192,8 +191,7 @@ private extension LocalMultiplayerEntryScreen {
             Spacer()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .background { AmbientBlobsView(.standard) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.standard)
     }
 }
 #endif

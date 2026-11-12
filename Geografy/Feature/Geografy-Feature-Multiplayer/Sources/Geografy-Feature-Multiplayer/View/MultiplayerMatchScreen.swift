@@ -27,14 +27,12 @@ public struct MultiplayerMatchScreen: View {
     @State private var opponentEngine = MockOpponentEngine()
     @State private var showQuitAlert = false
     @State private var completedMatch: MultiplayerMatch?
-    @State private var blobAnimating = false
 
     // MARK: - Body
     public var body: some View {
         matchContent
             .navigationBarTitleDisplayMode(.inline)
             .task { loadMatch() }
-            .onAppear { startBlobAnimation() }
             .onDisappear { opponentEngine.cancelPendingAnswer() }
             .fullScreenCover(item: $completedMatch) { match in
                 MultiplayerResultScreen(
@@ -60,8 +58,7 @@ private extension MultiplayerMatchScreen {
             questionContent
             Spacer(minLength: 0)
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.subtle)
     }
 
     @ViewBuilder
@@ -204,64 +201,6 @@ private extension MultiplayerMatchScreen {
                 removal: .move(edge: .leading).combined(with: .opacity)
             ))
         }
-    }
-}
-
-// MARK: - Background
-private extension MultiplayerMatchScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            accentBlob
-            purpleBlob
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
-    }
-
-    var accentBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.20),
-                        DesignSystem.Color.background.opacity(0),
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                )
-            )
-            .frame(width: 420, height: 320)
-            .blur(radius: 36)
-            .offset(x: -80, y: -100)
-            .scaleEffect(blobAnimating ? 1.10 : 0.90)
-    }
-
-    var purpleBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [
-                        DesignSystem.Color.purple.opacity(0.16),
-                        DesignSystem.Color.background.opacity(0),
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                )
-            )
-            .frame(width: 360, height: 300)
-            .blur(radius: 44)
-            .offset(x: 140, y: 60)
-            .scaleEffect(blobAnimating ? 0.88 : 1.10)
-    }
-
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }
 

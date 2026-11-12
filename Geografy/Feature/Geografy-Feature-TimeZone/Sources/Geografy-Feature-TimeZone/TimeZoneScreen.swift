@@ -20,16 +20,13 @@ public struct TimeZoneScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedTab: TimeZoneTab = .worldClock
-    @State private var blobAnimating = false
 
     // MARK: - Body
     public var body: some View {
         mainContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.tinted(DesignSystem.Color.indigo))
             .navigationTitle("Time Zones")
             .onAppear {
-                blobAnimating = true
             }
     }
 }
@@ -85,37 +82,6 @@ private extension TimeZoneScreen {
         case .allZones:
             AllZonesView(countries: countriesWithZones)
         }
-    }
-
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.20), .clear],
-                        center: .center, startRadius: 0, endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 36)
-                .offset(x: -80, y: -60)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.purple.opacity(0.14), .clear],
-                        center: .center, startRadius: 0, endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 40)
-                .offset(x: 140, y: 400)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(nil, value: blobAnimating)
     }
 }
 

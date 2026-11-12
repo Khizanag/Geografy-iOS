@@ -24,8 +24,7 @@ public struct DistanceCalculatorScreen: View {
     // MARK: - Body
     public var body: some View {
         extractedContent
-            .background { AmbientBlobsView(.standard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .navigationTitle("Distance Calculator")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

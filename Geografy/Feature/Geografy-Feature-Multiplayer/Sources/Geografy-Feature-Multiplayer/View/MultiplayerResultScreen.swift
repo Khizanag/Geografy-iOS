@@ -11,20 +11,17 @@ public struct MultiplayerResultScreen: View {
     public let onDone: () -> Void
 
     @State private var showContent = false
-    @State private var blobAnimating = false
 
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.tinted(resultColor))
             .navigationTitle("Match Result")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) { actionButtons }
             .toolbar {
             }
             .onAppear {
-                startBlobAnimation()
                 animateContent()
             }
     }
@@ -251,51 +248,6 @@ private extension MultiplayerResultScreen {
         GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
             onDone()
         }
-    }
-}
-
-// MARK: - Background
-private extension MultiplayerResultScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [resultColor.opacity(0.20), DesignSystem.Color.background.opacity(0)],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 220
-                    )
-                )
-                .frame(width: 420, height: 340)
-                .blur(radius: 40)
-                .offset(x: -40, y: -80)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.purple.opacity(0.14), DesignSystem.Color.background.opacity(0)],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 44)
-                .offset(x: 100, y: 120)
-                .scaleEffect(blobAnimating ? 0.90 : 1.08)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
-    }
-
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }
 

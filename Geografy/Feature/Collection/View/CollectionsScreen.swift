@@ -17,8 +17,7 @@ struct CollectionsScreen: View {
     // MARK: - Body
     var body: some View {
         content
-            .background { AmbientBlobsView(.standard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .toolbar { toolbarContent }
             .alert("New Collection", isPresented: $showNewCollection) {
                 newCollectionAlert

@@ -24,13 +24,11 @@ public struct CurrencyConverterScreen: View {
     @State private var amountText = "1"
     @State private var showFromPicker = false
     @State private var showToPicker = false
-    @State private var blobAnimating = false
 
     // MARK: - Body
     public var body: some View {
         extractedContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .navigationTitle("Currency Converter")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -41,7 +39,6 @@ public struct CurrencyConverterScreen: View {
                     await currencyService.fetchRates(for: from.code)
                 }
             }
-            .onAppear { blobAnimating = true }
             .sheet(isPresented: $showFromPicker) {
                 CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
                     #if !os(tvOS)
@@ -342,40 +339,6 @@ private extension CurrencyConverterScreen {
         }
         .foregroundStyle(DesignSystem.Color.textTertiary)
         .accessibilityElement(children: .combine)
-    }
-
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.success.opacity(0.18), .clear],
-                        center: .center, startRadius: 0, endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 320)
-                .blur(radius: 32)
-                .offset(x: -80, y: -60)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
-
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.14), .clear],
-                        center: .center, startRadius: 0, endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 300)
-                .blur(radius: 40)
-                .offset(x: 140, y: 380)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
     }
 }
 

@@ -11,8 +11,6 @@ public struct AllMapsScreen: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var blobAnimating = false
-
     private let continentMaps: [(name: String, icon: String)] = [
         ("Europe", Country.Continent.europe.icon),
         ("Asia", Country.Continent.asia.icon),
@@ -28,8 +26,7 @@ public struct AllMapsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground { ambientBackground }
-            .onAppear { blobAnimating = true }
+            .screenBackground(.hero)
     }
 }
 
@@ -227,70 +224,5 @@ private extension AllMapsScreen {
         case "Oceania": (Color(hex: "01579B"), Color(hex: "0277BD"))
         default: (Color(hex: "1A237E"), Color(hex: "3949AB"))
         }
-    }
-}
-
-// MARK: - Background
-private extension AllMapsScreen {
-    var ambientBackground: some View {
-        ZStack {
-            DesignSystem.Color.background
-            accentTopBlob
-            indigoBlob
-            blueBlob
-        }
-        .ignoresSafeArea()
-        .animation(
-            nil,
-            value: blobAnimating
-        )
-    }
-
-    var accentTopBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.accent.opacity(0.30), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 240
-                )
-            )
-            .frame(width: 480, height: 360)
-            .blur(radius: 36)
-            .offset(x: -100, y: -160)
-            .scaleEffect(blobAnimating ? 1.12 : 0.88)
-    }
-
-    var indigoBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.indigo.opacity(0.22), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 200
-                )
-            )
-            .frame(width: 400, height: 320)
-            .blur(radius: 44)
-            .offset(x: 160, y: 60)
-            .scaleEffect(blobAnimating ? 0.88 : 1.10)
-    }
-
-    var blueBlob: some View {
-        Ellipse()
-            .fill(
-                RadialGradient(
-                    colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 180
-                )
-            )
-            .frame(width: 360, height: 280)
-            .blur(radius: 40)
-            .offset(x: -80, y: 420)
-            .scaleEffect(blobAnimating ? 1.08 : 0.92)
     }
 }

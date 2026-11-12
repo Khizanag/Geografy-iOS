@@ -23,7 +23,6 @@ public struct NeighborExplorerScreen: View {
     @State private var isSearchingPath = false
     @State private var showNoPathAlert = false
     @State private var showDestinationPicker = false
-    @State private var blobAnimating = false
 
     // MARK: - Body
     public var body: some View {
@@ -35,7 +34,6 @@ public struct NeighborExplorerScreen: View {
             .task {
                 chain = [country]
             }
-            .onAppear { startBlobAnimation() }
             .alert("No Land Path", isPresented: $showNoPathAlert) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -59,8 +57,7 @@ private extension NeighborExplorerScreen {
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
-        .background { ambientBlobs }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.standard)
     }
 }
 
@@ -244,47 +241,6 @@ private extension NeighborExplorerScreen {
                 pathResult = []
             }
         }
-    }
-}
-
-// MARK: - Background
-private extension NeighborExplorerScreen {
-    var ambientBlobs: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.success.opacity(0.2), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 320)
-                .blur(radius: 40)
-                .offset(x: -80, y: -80)
-                .scaleEffect(blobAnimating ? 1.08 : 0.92)
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.indigo.opacity(0.16), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 48)
-                .offset(x: 140, y: 320)
-                .scaleEffect(blobAnimating ? 0.90 : 1.08)
-        }
-        .allowsHitTesting(false)
-        .ignoresSafeArea()
-        .animation(nil, value: blobAnimating)
-    }
-
-    func startBlobAnimation() {
-        blobAnimating = true
     }
 }
 

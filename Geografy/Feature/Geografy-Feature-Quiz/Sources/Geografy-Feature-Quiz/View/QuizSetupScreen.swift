@@ -26,8 +26,7 @@ public struct QuizSetupScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { AmbientBlobsView(.quiz) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.quiz)
             .navigationTitle("Quiz")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) { startButton }

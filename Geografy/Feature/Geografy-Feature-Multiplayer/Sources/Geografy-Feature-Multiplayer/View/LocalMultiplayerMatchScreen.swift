@@ -20,8 +20,7 @@ public struct LocalMultiplayerMatchScreen: View {
             progressBar
             questionContent
         }
-        .background { AmbientBlobsView(.quiz) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.quiz)
         .onChange(of: coordinator.currentIndex) {
             selectedOptionID = nil
             answerStartTime = Date()

@@ -31,8 +31,7 @@ public struct ProfileScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { AmbientBlobsView(.rich) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.rich)
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.large)
             .toolbar { toolbarContent }

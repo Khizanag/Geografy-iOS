@@ -68,8 +68,7 @@ private extension FlashcardSessionScreen {
             ratingSection
         }
         .padding(.top, DesignSystem.Spacing.sm)
-        .background { AmbientBlobsView(.rich) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.rich)
     }
 
     var resultsContent: some View {

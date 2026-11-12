@@ -16,8 +16,7 @@ public struct SRSStudyScreen: View {
     // MARK: - Body
     public var body: some View {
         contentView
-            .background { AmbientBlobsView(.standard) }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground(.standard)
             .navigationTitle("Review")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {

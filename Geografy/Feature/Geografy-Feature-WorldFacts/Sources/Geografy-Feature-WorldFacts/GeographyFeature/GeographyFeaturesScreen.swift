@@ -7,7 +7,6 @@ public struct GeographyFeaturesScreen: View {
 
     @State private var selectedType: GeographyFeatureType = .mountain
     @State private var expandedFeatureId: String?
-    @State private var blobAnimating = false
 
     private let service = GeographyFeaturesService()
 
@@ -17,9 +16,7 @@ public struct GeographyFeaturesScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBlobs }
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .onAppear { blobAnimating = true }
+            .screenBackground(.tinted(DesignSystem.Color.blue))
     }
 }
 
@@ -183,28 +180,5 @@ private extension GeographyFeaturesScreen {
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.bottom, DesignSystem.Spacing.sm)
         }
-    }
-
-    var ambientBlobs: some View {
-        ZStack {
-            RadialGradient(
-                colors: [DesignSystem.Color.blue.opacity(0.16), .clear],
-                center: .topLeading,
-                startRadius: 0,
-                endRadius: 300
-            )
-            RadialGradient(
-                colors: [DesignSystem.Color.indigo.opacity(0.12), .clear],
-                center: .bottomTrailing,
-                startRadius: 0,
-                endRadius: 280
-            )
-        }
-        .ignoresSafeArea()
-        .scaleEffect(blobAnimating ? 1.05 : 0.95)
-        .animation(
-            nil,
-            value: blobAnimating
-        )
     }
 }

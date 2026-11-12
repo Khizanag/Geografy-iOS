@@ -46,8 +46,7 @@ private extension DailyChallengeSessionScreen {
 
             challengeRouter
         }
-        .background { AmbientBlobsView(.quiz) }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground(.quiz)
     }
 
     var scoreBanner: some View {

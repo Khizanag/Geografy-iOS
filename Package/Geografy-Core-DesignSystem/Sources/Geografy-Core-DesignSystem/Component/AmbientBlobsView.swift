@@ -53,9 +53,35 @@ public extension AmbientBlobsView {
 
         case hero
         case travel
+        /// A screen's own color — an organization's brand, a win or loss — over a purple wash.
+        case tinted(Color)
 
         var blobs: [BlobDescriptor] {
             switch self {
+            case .tinted(let color):
+                [
+                    BlobDescriptor(
+                        color: color,
+                        opacity: 0.20,
+                        width: 400,
+                        height: 300,
+                        blur: 36,
+                        endRadius: 200,
+                        offset: CGSize(width: -80, height: -100),
+                        scaleRange: ScaleRange(idle: 0.90, animating: 1.10)
+                    ),
+                    BlobDescriptor(
+                        color: DesignSystem.Color.purple,
+                        opacity: 0.14,
+                        width: 360,
+                        height: 300,
+                        blur: 44,
+                        endRadius: 180,
+                        offset: CGSize(width: 140, height: 60),
+                        scaleRange: ScaleRange(idle: 1.10, animating: 0.88)
+                    ),
+                ]
+
             case .standard:
                 [
                     BlobDescriptor(
