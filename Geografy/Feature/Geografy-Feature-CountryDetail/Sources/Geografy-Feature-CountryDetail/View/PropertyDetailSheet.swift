@@ -28,7 +28,7 @@ private extension PropertyDetailSheet {
     var sheetContent: some View {
         VStack(spacing: 0) {
             VStack(spacing: DesignSystem.Spacing.lg) {
-                iconHeader
+                SheetIconHeader(icon: icon)
                     .padding(.top, DesignSystem.Spacing.lg)
 
                 VStack(spacing: DesignSystem.Spacing.xs) {
@@ -78,8 +78,14 @@ private extension PropertyDetailSheet {
             .padding(.bottom, DesignSystem.Spacing.lg)
         }
     }
+}
 
-    var iconHeader: some View {
+// MARK: - Sheet Icon Header
+/// The glowing icon that tops the country detail info sheets.
+struct SheetIconHeader: View {
+    let icon: String
+
+    var body: some View {
         ZStack {
             Circle()
                 .fill(
@@ -104,5 +110,6 @@ private extension PropertyDetailSheet {
                     .foregroundStyle(DesignSystem.Color.accent)
             }
         }
+        .accessibilityHidden(true)
     }
 }

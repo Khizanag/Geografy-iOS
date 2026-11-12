@@ -35,7 +35,6 @@ private struct TappableFunFactCard: View {
         cardButton
             .sheet(isPresented: $showDetail) {
                 FunFactDetailSheet(fact: fact, index: index)
-                    .presentationDetents([.medium])
             }
     }
 }
@@ -97,31 +96,36 @@ private struct FunFactDetailSheet: View {
     let fact: String
     let index: Int
 
+    @State private var contentHeight: CGFloat = 300
+
     var body: some View {
-        sheetContent
-            .navigationTitle("Fun Fact #\(index + 1)")
-            .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-// MARK: - Sheet Content
-private extension FunFactDetailSheet {
-    var sheetContent: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                Image(systemName: "lightbulb.fill")
-                    .font(DesignSystem.Font.displayXS)
-                    .foregroundStyle(DesignSystem.Color.warning)
-
-                Text(fact)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .padding(DesignSystem.Spacing.lg)
-            .frame(maxWidth: .infinity)
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            SheetIconHeader(icon: "lightbulb.fill")
+            factText
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .padding(.top, DesignSystem.Spacing.lg)
+        .padding(.bottom, DesignSystem.Spacing.xl)
+        .frame(maxWidth: .infinity)
+        .fixedSize(horizontal: false, vertical: true)
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { contentHeight = $0 }
+        .presentationDetents([.height(contentHeight)])
+    }
+
+    var factText: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text("Fun Fact #\(index + 1)")
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .textCase(.uppercase)
+                .kerning(1.5)
+            Text(fact)
+                .font(DesignSystem.Font.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, DesignSystem.Spacing.xl)
     }
 }
