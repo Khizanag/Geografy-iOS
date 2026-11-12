@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -33,7 +34,11 @@ public struct CompareScreen: View {
                     leftCountry = preselected
                 }
             }
-            .sheet(item: $activeSheet) { sheetContent(for: $0) }
+            .sheet(item: $activeSheet) { sheet in
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    sheetContent(for: sheet)
+                }
+            }
     }
 }
 

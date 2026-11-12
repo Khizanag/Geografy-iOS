@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -204,15 +205,17 @@ private extension NeighborExplorerScreen {
         .accessibilityLabel("Destination")
         .accessibilityValue(destination?.name ?? "None")
         .sheet(isPresented: $showDestinationPicker) {
-            CountryPicker(
-                "Destination",
-                countries: countryDataService.countries.filter {
-                    $0.code != country.code && $0.continent != .antarctica
-                },
-                selectedCode: destination?.code
-            ) { selected in
-                destinationCode = selected.code
-                pathResult = []
+            CoordinatedNavigationStack(showCloseButton: true) {
+                CountryPicker(
+                    "Destination",
+                    countries: countryDataService.countries.filter {
+                        $0.code != country.code && $0.continent != .antarctica
+                    },
+                    selectedCode: destination?.code
+                ) { selected in
+                    destinationCode = selected.code
+                    pathResult = []
+                }
             }
         }
     }

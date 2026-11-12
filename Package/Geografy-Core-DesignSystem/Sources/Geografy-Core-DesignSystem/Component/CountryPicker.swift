@@ -1,7 +1,9 @@
 import Geografy_Core_Common
 import SwiftUI
 
-/// A searchable, A–Z indexed sheet for choosing one country.
+/// A searchable, A–Z indexed list for choosing one country.
+///
+/// Present it inside `CoordinatedNavigationStack(showCloseButton: true)` for the shared title bar and close button.
 public struct CountryPicker: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
@@ -29,23 +31,16 @@ public struct CountryPicker: View {
 
     // MARK: - Body
     public var body: some View {
-        NavigationStack {
-            countryList
-                .navigationTitle(title)
-                .navigationBarTitleDisplayMode(.inline)
-                .searchable(
-                    text: $searchText,
-                    placement: .navigationBarDrawer(displayMode: .always),
-                    prompt: "Name, capital, or code"
-                )
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        CircleCloseButton { dismiss() }
-                    }
-                }
-                .screenBackground()
-        }
-        .presentationDetents([.large])
+        countryList
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(
+                text: $searchText,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Name, capital, or code"
+            )
+            .screenBackground()
+            .presentationDetents([.large])
     }
 }
 
