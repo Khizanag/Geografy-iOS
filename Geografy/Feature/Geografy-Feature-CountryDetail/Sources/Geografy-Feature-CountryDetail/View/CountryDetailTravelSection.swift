@@ -80,13 +80,26 @@ extension CountryDetailScreen {
             supportsMap: item.supportsMap,
             mapButtonTitle: item.mapButtonTitle,
             onShowMap: {
-                activeSheet = nil
-                coordinator.cover(.mapFullScreen(continentFilter: country.continent.displayName))
+                dismissSheet {
+                    coordinator.cover(.mapFullScreen(continentFilter: country.continent.displayName))
+                }
             },
             actionButtonTitle: item.actionButtonTitle,
             actionButtonIcon: item.actionButtonIcon,
-            onAction: item.onAction
+            onAction: item.onAction.map { action in { dismissSheet(then: action) } }
         )
+    }
+
+    // A screen presents one sheet at a time, so anything the sheet opens has to wait until it is gone.
+    func dismissSheet(then action: @escaping () -> Void) {
+        afterSheetDismiss = action
+        activeSheet = nil
+    }
+
+    func runAfterSheetDismiss() {
+        let action = afterSheetDismiss
+        afterSheetDismiss = nil
+        action?()
     }
 }
 

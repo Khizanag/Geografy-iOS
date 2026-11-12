@@ -22,6 +22,7 @@ public struct CountryDetailScreen: View {
     @State var profileService = CountryProfileService()
     @State var appeared = false
     @State var activeSheet: CountryDetailSheet?
+    @State var afterSheetDismiss: (() -> Void)?
     @State var showFlagFullScreen = false
     @State var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
@@ -48,7 +49,9 @@ public struct CountryDetailScreen: View {
                 activity.isEligibleForHandoff = true
                 activity.userInfo = ["countryCode": country.code]
             }
-            .sheet(item: $activeSheet) { sheet in countryDetailSheetContent(for: sheet) }
+            .sheet(item: $activeSheet, onDismiss: runAfterSheetDismiss) { sheet in
+                countryDetailSheetContent(for: sheet)
+            }
             .overlay { flagFullScreenOverlay }
     }
 }
