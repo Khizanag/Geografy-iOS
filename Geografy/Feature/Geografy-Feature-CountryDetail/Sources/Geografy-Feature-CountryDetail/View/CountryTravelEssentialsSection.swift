@@ -4,9 +4,9 @@ import SwiftUI
 
 // MARK: - Travel Essentials
 /// Practical, traveller-focused facts that appear on every country detail
-/// screen regardless of premium status: timezone, dialing code, demonym,
-/// driving side, internet TLD. Countries without curated data fall back to
-/// "Not available" so the layout never collapses.
+/// screen: timezone, dialing code, demonym, driving side, internet TLD.
+/// Countries without curated data fall back to "Not available" so the layout
+/// never collapses.
 extension CountryDetailScreen {
     @ViewBuilder
     var travelEssentialsSection: some View {
@@ -15,7 +15,7 @@ extension CountryDetailScreen {
 
         if essentials != nil || timeZoneDisplay != nil {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                sectionHeader("Travel Essentials", premium: false)
+                sectionHeader("Travel Essentials")
                 CardView {
                     travelEssentialsList(essentials: essentials, timeZoneDisplay: timeZoneDisplay)
                         .padding(DesignSystem.Spacing.sm)

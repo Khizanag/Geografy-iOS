@@ -9,7 +9,6 @@ import SwiftUI
 public struct CountryDetailScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) var coordinator
-    @Environment(SubscriptionService.self) var subscriptionService
     @Environment(TravelService.self) var travelService
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(CollectionService.self) private var collectionService
@@ -149,75 +148,9 @@ private extension CountryDetailScreen {
 
 // MARK: - Section Header
 extension CountryDetailScreen {
-    func sectionHeader(_ title: String, premium: Bool = false) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: title)
-            if premium, subscriptionService.isPremium {
-                PremiumBadge()
-            }
-        }
-        .accessibilityAddTraits(.isHeader)
-    }
-}
-
-// MARK: - Locked Content
-extension CountryDetailScreen {
-    var premiumMonthlyPriceDisplay: String? {
-        subscriptionService.products.first { $0.id == SubscriptionService.ProductID.monthly }?.displayPrice
-    }
-
-    func lockedSection(title: String) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader(title)
-            LockedSectionPeek(
-                title: "Premium preview",
-                subtitle: "Unlock \(title.lowercased()) + advanced stats and ad-free experience",
-                price: premiumMonthlyPriceDisplay,
-                onUnlock: { coordinator.sheet(.paywall) },
-                content: {
-                    lockedPreviewContent
-                        .frame(height: 140)
-                        .padding(DesignSystem.Spacing.md)
-                }
-            )
-        }
-    }
-
-    func lockedPlaceholder(height: CGFloat) -> some View {
-        LockedSectionPeek(
-            title: "Premium",
-            subtitle: "Unlock to reveal",
-            price: premiumMonthlyPriceDisplay,
-            onUnlock: { coordinator.sheet(.paywall) },
-            content: {
-                lockedPreviewContent
-                    .frame(height: height)
-                    .padding(DesignSystem.Spacing.sm)
-            }
-        )
-    }
-
-    /// Generic chart-like preview shown behind the blur. Hints at the kind of
-    /// data that becomes visible once premium is unlocked without having to
-    /// know which specific section is locked.
-    private var lockedPreviewContent: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            ForEach(0..<3, id: \.self) { index in
-                lockedPreviewBar(index: index)
-            }
-        }
-    }
-
-    private func lockedPreviewBar(index: Int) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Circle()
-                .fill(DesignSystem.Color.mapColors[index % DesignSystem.Color.mapColors.count])
-                .frame(width: DesignSystem.Size.Icon.sm, height: DesignSystem.Size.Icon.sm)
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .fill(DesignSystem.Color.Gradient.aurora)
-                .frame(height: 14)
-                .opacity(0.85 - Double(index) * 0.2)
-        }
+    func sectionHeader(_ title: String) -> some View {
+        SectionHeaderView(title: title)
+            .accessibilityAddTraits(.isHeader)
     }
 }
 
@@ -258,39 +191,29 @@ extension CountryDetailScreen {
         EthnicityData.data[country.code] ?? []
     }
 
-    @ViewBuilder
     var religionSection: some View {
-        if subscriptionService.isPremium {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                sectionHeader("Religion", premium: true)
-                PercentageBarChart(
-                    items: religionItems.sorted(by: \.percentage, descending: true),
-                    appeared: true
-                )
-            }
-        } else {
-            lockedSection(title: "Religion")
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionHeader("Religion")
+            PercentageBarChart(
+                items: religionItems.sorted(by: \.percentage, descending: true),
+                appeared: true
+            )
         }
     }
 
-    @ViewBuilder
     var ethnicitySection: some View {
-        if subscriptionService.isPremium {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                sectionHeader("Ethnicity", premium: true)
-                PercentageBarChart(
-                    items: ethnicityItems.sorted(by: \.percentage, descending: true),
-                    appeared: true
-                )
-            }
-        } else {
-            lockedSection(title: "Ethnicity")
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            sectionHeader("Ethnicity")
+            PercentageBarChart(
+                items: ethnicityItems.sorted(by: \.percentage, descending: true),
+                appeared: true
+            )
         }
     }
 
     var statisticsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Statistics", premium: true)
+            sectionHeader("Statistics")
             CountryStatisticsView(countryCode: country.code)
         }
     }
@@ -326,17 +249,11 @@ extension CountryDetailScreen {
             ethnicitySection
         }
         if hasEconomyData {
-            if subscriptionService.isPremium {
-                economySection
-            } else {
-                lockedSection(title: "Economy")
-            }
+            economySection
         }
-        if subscriptionService.isPremium {
-            governmentSection
-            currencySection
-            statisticsSection
-        }
+        governmentSection
+        currencySection
+        statisticsSection
     }
 
     @ViewBuilder

@@ -68,13 +68,6 @@ extension QuizType: SelectableType {
         Self.descriptions[self] ?? ""
     }
 
-    public var isPremium: Bool {
-        switch self {
-        case .reverseFlag, .reverseCapital: true
-        default: false
-        }
-    }
-
     public var supportedAnswerModes: [QuizAnswerMode] {
         switch self {
         case .flagQuiz, .capitalQuiz, .reverseCapital:

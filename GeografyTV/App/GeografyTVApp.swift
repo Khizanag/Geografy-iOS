@@ -16,6 +16,7 @@ struct GeografyTVApp: App {
     @State private var coinService = CoinService()
     @State private var flashcardService = FlashcardService()
     @State private var subscriptionService = SubscriptionService()
+    @State private var entitlementService = EntitlementService()
     @State private var pronunciationService = PronunciationService()
     @State private var countryDataService = CountryDataService()
     @State private var geoJSONCache = GeoJSONCache()
@@ -55,6 +56,7 @@ struct GeografyTVApp: App {
                 .environment(coinService)
                 .environment(flashcardService)
                 .environment(subscriptionService)
+                .environment(entitlementService)
                 .environment(pronunciationService)
                 .environment(geoJSONCache)
                 .task {

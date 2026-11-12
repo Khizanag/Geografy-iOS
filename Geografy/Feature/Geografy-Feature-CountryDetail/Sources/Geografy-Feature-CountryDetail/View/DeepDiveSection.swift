@@ -46,13 +46,10 @@ private extension CountryDetailScreen {
 
     var deepDiveText: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Text("Culture, History & More")
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                PremiumBadge()
-            }
+            Text("Culture, History & More")
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
             Text("Explore phrases, timeline, economy and cultural highlights")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)

@@ -6,7 +6,6 @@ import SwiftUI
 public struct QuizPackBrowserScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
-    @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -349,12 +348,6 @@ private extension QuizPackBrowserScreen {
         unlocked: Bool
     ) {
         guard unlocked else { return }
-
-        if pack.isPremium, !subscriptionService.isPremium {
-            coordinator.sheet(.paywall)
-            return
-        }
-
         coordinator.sheet(.quizPackDetail(packID: pack.id))
     }
 }

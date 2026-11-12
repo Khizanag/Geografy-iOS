@@ -145,7 +145,6 @@ private extension QuizPackService {
                     category: .capitals,
                     levels: levels,
                     gradientHex: QuizPackCategory.capitals.gradientHex,
-                    isPremium: index >= 2,
                     prerequisitePackID: previousID
                 )
             }
@@ -183,7 +182,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: QuizPackCategory.flags.gradientHex,
-                isPremium: false,
                 prerequisitePackID: nil
             ),
             QuizPack(
@@ -198,7 +196,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: ("880E4F", "C2185B"),
-                isPremium: true,
                 prerequisitePackID: "flags_easy"
             ),
         ]
@@ -224,7 +221,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: QuizPackCategory.population.gradientHex,
-                isPremium: false,
                 prerequisitePackID: nil
             ),
             QuizPack(
@@ -239,7 +235,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: ("006064", "00838F"),
-                isPremium: true,
                 prerequisitePackID: "population_top"
             ),
         ]
@@ -271,7 +266,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: QuizPackCategory.geography.gradientHex,
-                isPremium: false,
                 prerequisitePackID: nil
             ),
             QuizPack(
@@ -286,7 +280,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: ("33691E", "558B2F"),
-                isPremium: true,
                 prerequisitePackID: "geo_largest"
             ),
             QuizPack(
@@ -301,7 +294,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: ("2E7D32", "43A047"),
-                isPremium: true,
                 prerequisitePackID: "geo_smallest"
             ),
         ]
@@ -329,7 +321,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: QuizPackCategory.currency.gradientHex,
-                isPremium: true,
                 prerequisitePackID: nil
             ),
         ]
@@ -357,7 +348,6 @@ private extension QuizPackService {
                     questionsPerLevel: 10
                 ),
                 gradientHex: QuizPackCategory.government.gradientHex,
-                isPremium: true,
                 prerequisitePackID: nil
             ),
         ]
@@ -392,7 +382,6 @@ private extension QuizPackService {
                         questionsPerLevel: 10
                     ),
                     gradientHex: QuizPackCategory.organizations.gradientHex,
-                    isPremium: true,
                     prerequisitePackID: nil
                 )
             }

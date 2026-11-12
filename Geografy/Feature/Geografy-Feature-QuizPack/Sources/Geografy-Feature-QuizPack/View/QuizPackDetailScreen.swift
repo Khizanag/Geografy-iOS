@@ -7,7 +7,6 @@ import SwiftUI
 public struct QuizPackDetailScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
-    @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(CountryDataService.self) private var countryDataService
 
     public let packID: String
@@ -115,9 +114,6 @@ private extension QuizPackDetailScreen {
                 text: "\(pack.levelCount) levels",
                 icon: "chart.bar.fill"
             )
-            if pack.isPremium {
-                PremiumBadge()
-            }
         }
     }
 }
@@ -232,11 +228,6 @@ private extension QuizPackDetailScreen {
         locked: Bool
     ) {
         guard !locked else { return }
-
-        if pack.isPremium, !subscriptionService.isPremium {
-            coordinator.sheet(.paywall)
-            return
-        }
 
         let metric: ComparisonMetric =
             pack.category == .population ? .population : .area

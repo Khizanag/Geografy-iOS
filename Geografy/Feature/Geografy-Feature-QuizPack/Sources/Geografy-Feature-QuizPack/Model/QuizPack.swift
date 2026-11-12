@@ -8,7 +8,6 @@ public struct QuizPack: Identifiable, Hashable {
     public let category: QuizPackCategory
     public let levels: [QuizPackLevel]
     public let gradientHex: (String, String)
-    public let isPremium: Bool
     public let prerequisitePackID: String?
 
     public init(
@@ -19,7 +18,6 @@ public struct QuizPack: Identifiable, Hashable {
         category: QuizPackCategory,
         levels: [QuizPackLevel],
         gradientHex: (String, String),
-        isPremium: Bool,
         prerequisitePackID: String?
     ) {
         self.id = id
@@ -29,7 +27,6 @@ public struct QuizPack: Identifiable, Hashable {
         self.category = category
         self.levels = levels
         self.gradientHex = gradientHex
-        self.isPremium = isPremium
         self.prerequisitePackID = prerequisitePackID
     }
 

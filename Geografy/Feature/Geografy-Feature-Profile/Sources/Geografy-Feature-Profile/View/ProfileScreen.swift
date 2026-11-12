@@ -9,7 +9,6 @@ import SwiftUI
 public struct ProfileScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) var coordinator
-    @Environment(SubscriptionService.self) var subscriptionService
     @Environment(AuthService.self) var authService
     @Environment(XPService.self) var xpService
     @Environment(StreakService.self) var streakService
@@ -73,10 +72,6 @@ private extension ProfileScreen {
             if !recentQuizzes.isEmpty {
                 quizHistorySection
                     .profileSection(appeared: appeared, delay: 0.26)
-            }
-            if !subscriptionService.isPremium {
-                premiumBannerSection
-                    .profileSection(appeared: appeared, delay: 0.30)
             }
             accountSection
                 .profileSection(appeared: appeared, delay: 0.34)

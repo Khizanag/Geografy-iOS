@@ -9,7 +9,6 @@ public struct SettingsScreen: View {
     // MARK: - Properties
     @Environment(AuthService.self) private var authService
     @Environment(Navigator.self) private var coordinator
-    @Environment(SubscriptionService.self) private var subscriptionService
     @Environment(TestingModeService.self) private var testingModeService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -107,20 +106,9 @@ private extension SettingsScreen {
         VStack(spacing: 0) {
             profileRow
             settingsDivider
-            subscriptionRow
-            settingsDivider
             signOutRow
             settingsDivider
             deleteAccountRow
-        }
-    }
-
-    @ViewBuilder
-    var subscriptionRow: some View {
-        if subscriptionService.isPremium {
-            premiumStatusRow
-        } else {
-            upgradePremiumRow
         }
     }
 
@@ -184,43 +172,6 @@ private extension SettingsScreen {
                 iconColor: DesignSystem.Color.accent,
                 title: "Sign In"
             )
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    var premiumStatusRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
-            Text("Premium")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Spacer()
-            Text("Active")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.success)
-        }
-        .settingsRowPadding()
-    }
-
-    var upgradePremiumRow: some View {
-        Button { coordinator.sheet(.paywall) } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(systemImage: "crown.fill", color: DesignSystem.Color.accent)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Upgrade to Premium")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("Unlock all features")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .settingsRowPadding()
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -368,11 +319,6 @@ private extension SettingsScreen {
                 privacyPolicyRow
                 settingsDivider
                 termsOfServiceRow
-
-                if subscriptionService.isPremium {
-                    settingsDivider
-                    restorePurchasesRow
-                }
             }
         }
     }
@@ -435,22 +381,6 @@ private extension SettingsScreen {
         .buttonStyle(PressButtonStyle())
     }
     #endif
-
-    var restorePurchasesRow: some View {
-        Button {
-            Task { await subscriptionService.restorePurchases() }
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(systemImage: "arrow.clockwise", color: DesignSystem.Color.blue)
-                Text("Restore Purchases")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer()
-            }
-            .settingsRowPadding()
-        }
-        .buttonStyle(PressButtonStyle())
-    }
 }
 
 // MARK: - Developer

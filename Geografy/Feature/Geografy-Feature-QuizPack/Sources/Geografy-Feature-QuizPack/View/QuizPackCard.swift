@@ -50,7 +50,6 @@ private extension QuizPackCard {
             backgroundIcon
 
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                premiumBadgeIfNeeded
                 Spacer(minLength: 0)
                 packTitle
                 statsRow
@@ -80,13 +79,6 @@ private extension QuizPackCard {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 20, y: -10)
             .clipped()
-    }
-
-    @ViewBuilder
-    var premiumBadgeIfNeeded: some View {
-        if pack.isPremium {
-            PremiumBadge()
-        }
     }
 
     var packTitle: some View {

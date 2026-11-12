@@ -11,25 +11,21 @@ extension CountryDetailScreen {
     @ViewBuilder
     var unescoSection: some View {
         if !unescoSites.isEmpty {
-            if subscriptionService.isPremium {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                    sectionHeader("UNESCO Heritage Sites", premium: true)
-                    unescoBadge
-                    CardView {
-                        VStack(spacing: 0) {
-                            let sorted = unescoSites.sorted(by: \.yearInscribed)
-                            ForEach(Array(sorted.enumerated()), id: \.offset) { index, site in
-                                UNESCOSiteRow(site: site)
-                                if index < sorted.count - 1 {
-                                    Divider()
-                                        .padding(.leading, 60)
-                                }
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                sectionHeader("UNESCO Heritage Sites")
+                unescoBadge
+                CardView {
+                    VStack(spacing: 0) {
+                        let sorted = unescoSites.sorted(by: \.yearInscribed)
+                        ForEach(Array(sorted.enumerated()), id: \.offset) { index, site in
+                            UNESCOSiteRow(site: site)
+                            if index < sorted.count - 1 {
+                                Divider()
+                                    .padding(.leading, 60)
                             }
                         }
                     }
                 }
-            } else {
-                lockedSection(title: "UNESCO Heritage Sites")
             }
         }
     }

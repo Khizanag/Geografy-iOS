@@ -11,19 +11,16 @@ public struct TypeSelectionGrid<T: SelectableType>: View {
     public let items: [T]
     public let selectedIDs: Set<T.ID>
     public let onSelect: (T) -> Void
-    public var isLocked: (T) -> Bool = { _ in false }
 
     // MARK: - Init
     public init(
         items: [T],
         selectedIDs: Set<T.ID>,
-        onSelect: @escaping (T) -> Void,
-        isLocked: @escaping (T) -> Bool = { _ in false }
+        onSelect: @escaping (T) -> Void
     ) {
         self.items = items
         self.selectedIDs = selectedIDs
         self.onSelect = onSelect
-        self.isLocked = isLocked
     }
 
     // MARK: - Body
@@ -44,7 +41,6 @@ public struct TypeSelectionGrid<T: SelectableType>: View {
 private extension TypeSelectionGrid {
     func typeCard(_ item: T) -> some View {
         let isSelected = selectedIDs.contains(item.id)
-        let locked = isLocked(item)
 
         return Button {
             #if !os(tvOS)
@@ -52,17 +48,17 @@ private extension TypeSelectionGrid {
             #endif
             onSelect(item)
         } label: {
-            cardContent(item: item, isSelected: isSelected, isLocked: locked)
+            cardContent(item: item, isSelected: isSelected)
         }
         .buttonStyle(.plain)
         .accessibilityLabel("\(item.displayName), \(item.description)")
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
-        .accessibilityHint(locked ? "Premium feature, locked" : "Double tap to select")
+        .accessibilityHint("Double tap to select")
     }
 
-    func cardContent(item: T, isSelected: Bool, isLocked: Bool) -> some View {
+    func cardContent(item: T, isSelected: Bool) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            cardHeader(item: item, isSelected: isSelected, isLocked: isLocked)
+            cardHeader(item: item, isSelected: isSelected)
 
             Spacer(minLength: 0)
 
@@ -81,11 +77,11 @@ private extension TypeSelectionGrid {
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
 
-    func cardHeader(item: T, isSelected: Bool, isLocked: Bool) -> some View {
+    func cardHeader(item: T, isSelected: Bool) -> some View {
         HStack {
             cardHeaderIcon(item: item, isSelected: isSelected)
             Spacer()
-            cardHeaderTrailing(isSelected: isSelected, isLocked: isLocked)
+            cardHeaderTrailing(isSelected: isSelected)
         }
     }
 
@@ -109,23 +105,8 @@ private extension TypeSelectionGrid {
     }
 
     @ViewBuilder
-    func cardHeaderTrailing(isSelected: Bool, isLocked: Bool) -> some View {
-        if isLocked {
-            Image(systemName: "lock.fill")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(
-                    isSelected
-                        ? DesignSystem.Color.onAccent.opacity(0.6)
-                        : DesignSystem.Color.textTertiary
-                )
-                .padding(6)
-                .background(
-                    isSelected
-                        ? DesignSystem.Color.onAccent.opacity(0.12)
-                        : DesignSystem.Color.cardBackgroundHighlighted,
-                    in: Circle()
-                )
-        } else if isSelected {
+    func cardHeaderTrailing(isSelected: Bool) -> some View {
+        if isSelected {
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.onAccent)

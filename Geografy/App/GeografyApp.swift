@@ -18,6 +18,7 @@ struct GeografyApp: App {
     @State private var countryDataService = CountryDataService()
     @State private var currencyService = CurrencyService()
     @State private var databaseManager: DatabaseManager
+    @State private var entitlementService = EntitlementService()
     @State private var favoritesService: FavoritesService
     @State private var featureFlagService = FeatureFlagService()
     @State private var flashcardService = FlashcardService()
@@ -79,6 +80,7 @@ private extension GeografyApp {
             .environment(countryDataService)
             .environment(currencyService)
             .environment(databaseManager)
+            .environment(entitlementService)
             .environment(favoritesService)
             .environment(featureFlagService)
             .environment(flashcardService)

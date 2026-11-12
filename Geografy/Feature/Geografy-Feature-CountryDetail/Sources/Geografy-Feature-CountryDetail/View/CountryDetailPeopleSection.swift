@@ -9,14 +9,10 @@ extension CountryDetailScreen {
             sectionHeader("People")
             populationCard
             if !country.languages.isEmpty {
-                if subscriptionService.isPremium {
-                    LanguageBarChart(
-                        languages: country.languages.sorted(by: \.percentage, descending: true),
-                        appeared: true
-                    )
-                } else {
-                    lockedPlaceholder(height: 80)
-                }
+                LanguageBarChart(
+                    languages: country.languages.sorted(by: \.percentage, descending: true),
+                    appeared: true
+                )
             }
         }
     }

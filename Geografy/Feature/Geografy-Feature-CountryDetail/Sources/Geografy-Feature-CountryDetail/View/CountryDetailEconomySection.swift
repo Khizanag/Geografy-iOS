@@ -10,7 +10,7 @@ extension CountryDetailScreen {
 
     var economySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Economy", premium: true)
+            sectionHeader("Economy")
             economyTilesRow
         }
     }
@@ -86,7 +86,7 @@ extension CountryDetailScreen {
 
     var governmentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Government", premium: true)
+            sectionHeader("Government")
             InfoTile(
                 icon: "building.columns",
                 title: "Form of Government",
@@ -106,7 +106,7 @@ extension CountryDetailScreen {
 
     var currencySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionHeader("Currency", premium: true)
+            sectionHeader("Currency")
             InfoTile(
                 icon: "dollarsign.circle",
                 title: country.currency.name,

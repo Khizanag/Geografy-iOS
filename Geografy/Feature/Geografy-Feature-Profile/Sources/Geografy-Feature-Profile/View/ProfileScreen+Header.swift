@@ -121,9 +121,6 @@ private extension ProfileScreen {
                 } else {
                     LevelBadgeView(level: xpService.currentLevel, size: .small, animated: true)
                 }
-                if subscriptionService.isPremium {
-                    premiumPill
-                }
             }
         }
     }
@@ -136,20 +133,6 @@ private extension ProfileScreen {
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, 3)
             .background(DesignSystem.Color.warning.opacity(0.15), in: Capsule())
-    }
-
-    var premiumPill: some View {
-        HStack(spacing: 3) {
-            Image(systemName: "crown.fill")
-                .font(DesignSystem.Font.nano)
-            Text("Premium")
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-        }
-        .foregroundStyle(DesignSystem.Color.accent)
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .padding(.vertical, 3)
-        .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
     }
 }
 #endif

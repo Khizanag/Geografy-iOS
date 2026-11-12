@@ -1,13 +1,11 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
-import Geografy_Core_Service
 import SwiftUI
 
 public struct QuizSetupScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
-    @Environment(SubscriptionService.self) private var subscriptionService
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -205,14 +203,7 @@ private extension QuizSetupScreen {
             TypeSelectionGrid(
                 items: QuizType.allCases.map { $0 },
                 selectedIDs: [selectedType.id],
-                onSelect: { type in
-                    if type.isPremium, !subscriptionService.isPremium {
-                        coordinator.sheet(.paywall)
-                    } else {
-                        selectedType = type
-                    }
-                },
-                isLocked: { $0.isPremium && !subscriptionService.isPremium }
+                onSelect: { selectedType = $0 }
             )
         }
     }
@@ -387,14 +378,10 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var startButton: some View {
         GlassButton("Start \(selectedType.displayName)", systemImage: "play.fill", fullWidth: true) {
-            if selectedType.isPremium, !subscriptionService.isPremium {
-                coordinator.sheet(.paywall)
-            } else {
-                #if !os(tvOS)
-                hapticsService.impact(.medium)
-                #endif
-                coordinator.cover(.quizSession(makeConfiguration()))
-            }
+            #if !os(tvOS)
+            hapticsService.impact(.medium)
+            #endif
+            coordinator.cover(.quizSession(makeConfiguration()))
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
