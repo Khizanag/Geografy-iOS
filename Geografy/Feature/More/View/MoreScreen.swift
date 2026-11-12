@@ -140,6 +140,7 @@ private extension MoreScreen {
                 .background(alignment: .top) { scrollableBlobs }
             }
         }
+        .scrollEdgeEffectStyle(.soft, for: .top)
     }
 
     var isSearching: Bool {
