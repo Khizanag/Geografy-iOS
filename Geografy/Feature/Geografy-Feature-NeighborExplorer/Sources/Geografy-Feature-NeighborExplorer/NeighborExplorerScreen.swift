@@ -204,6 +204,7 @@ private extension NeighborExplorerScreen {
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
             )
         }
+        .tint(DesignSystem.Color.iconPrimary)
     }
 
     var findPathButton: some View {

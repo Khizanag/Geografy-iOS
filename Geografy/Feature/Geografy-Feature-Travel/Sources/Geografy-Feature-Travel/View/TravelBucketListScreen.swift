@@ -159,6 +159,7 @@ private extension TravelBucketListScreen {
                 Label("Sort", systemImage: "arrow.up.arrow.down")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .tint(DesignSystem.Color.iconPrimary)
         }
 
         #if !os(tvOS)

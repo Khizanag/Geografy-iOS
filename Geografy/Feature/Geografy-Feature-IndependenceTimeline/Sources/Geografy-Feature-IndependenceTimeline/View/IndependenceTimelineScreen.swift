@@ -113,6 +113,7 @@ private extension IndependenceTimelineScreen {
             .padding(.vertical, DesignSystem.Spacing.xs)
             .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
         }
+        .tint(DesignSystem.Color.iconPrimary)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
