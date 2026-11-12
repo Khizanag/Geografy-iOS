@@ -75,7 +75,7 @@ private extension CountryBannerView {
 
     var flagButton: some View {
         Button { onFlagTap?() } label: {
-            FlagView(countryCode: countryCode, height: DesignSystem.Size.xl)
+            FlagView(countryCode: countryCode, height: DesignSystem.Size.xl, fixedWidth: true)
                 .matchedGeometryEffect(id: countryCode, in: namespace)
                 .opacity(isFlagHidden ? 0 : 1)
         }
