@@ -10,13 +10,14 @@ public struct WorldBankIndicatorCard: View {
     public let indicator: StatIndicator
     public let state: WorldBankService.LoadState?
     public let cacheAge: Date?
+    public let onRetry: () -> Void
 
     @State private var pulseOpacity: Double = 0.5
     @State private var showFullChart = false
 
     // MARK: - Body
     public var body: some View {
-        Button { showFullChart = true } label: {
+        Button(action: handleTap) {
             CardView {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                     cardHeader
@@ -26,10 +27,47 @@ public struct WorldBankIndicatorCard: View {
             }
         }
         .buttonStyle(PressButtonStyle())
+        .allowsHitTesting(tapAction != nil)
+        .accessibilityHint(accessibilityHintText)
         .sheet(isPresented: $showFullChart) {
-            if case .loaded(let points) = state {
+            if let points = chartPoints {
                 WorldBankChartSheet(indicator: indicator, allPoints: points)
             }
+        }
+    }
+}
+
+// MARK: - Actions
+private extension WorldBankIndicatorCard {
+    enum TapAction {
+        case openChart
+        case retry
+    }
+
+    var chartPoints: [WorldBankService.DataPoint]? {
+        guard case .loaded(let points) = state, !points.isEmpty else { return nil }
+        return points
+    }
+
+    var tapAction: TapAction? {
+        if chartPoints != nil { return .openChart }
+        if case .failed = state { return .retry }
+        return nil
+    }
+
+    var accessibilityHintText: Text {
+        switch tapAction {
+        case .openChart: Text("Opens the full chart")
+        case .retry: Text("Tries loading the data again")
+        case nil: Text("")
+        }
+    }
+
+    func handleTap() {
+        switch tapAction {
+        case .openChart: showFullChart = true
+        case .retry: onRetry()
+        case nil: break
         }
     }
 }
@@ -99,6 +137,10 @@ private extension WorldBankIndicatorCard {
                 Text("Data unavailable")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
+                Text("Tap to retry")
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.accent)
             }
             Spacer()
         }

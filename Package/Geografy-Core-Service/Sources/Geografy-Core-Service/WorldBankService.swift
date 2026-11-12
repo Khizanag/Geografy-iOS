@@ -285,12 +285,11 @@ public final class WorldBankService {
         cacheDirectory = directory
     }
 
-    public func prefetchAll(for countryCode: String) async {
+    public func fetch(_ indicators: [StatIndicator], for countryCode: String) async {
         await withTaskGroup(of: Void.self) { group in
-            for indicator in StatIndicator.allCases {
-                let ind = indicator
+            for indicator in indicators {
                 group.addTask { [self] in
-                    await self.fetch(ind, for: countryCode)
+                    await fetch(indicator, for: countryCode)
                 }
             }
         }

@@ -16,8 +16,8 @@ public struct CountryStatisticsView: View {
             categoryPicker
             indicatorCards
         }
-        .task {
-            await worldBankService.prefetchAll(for: countryCode)
+        .task(id: selectedCategory) {
+            await worldBankService.fetch(selectedCategory.indicators, for: countryCode)
         }
     }
 }
@@ -72,7 +72,8 @@ private extension CountryStatisticsView {
                 WorldBankIndicatorCard(
                     indicator: indicator,
                     state: worldBankService.state(for: indicator, countryCode: countryCode),
-                    cacheAge: worldBankService.cacheAge(for: indicator, countryCode: countryCode)
+                    cacheAge: worldBankService.cacheAge(for: indicator, countryCode: countryCode),
+                    onRetry: { Task { await worldBankService.fetch(indicator, for: countryCode) } }
                 )
             }
         }
