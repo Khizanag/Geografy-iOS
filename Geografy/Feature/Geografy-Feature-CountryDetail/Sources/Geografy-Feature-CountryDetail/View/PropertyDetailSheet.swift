@@ -17,6 +17,8 @@ public struct PropertyDetailSheet: View {
     public var body: some View {
         sheetContent
             .frame(maxWidth: .infinity)
+            // Buttons sit the same distance from the sheet's bottom edge as from its sides.
+            .ignoresSafeArea(.container, edges: hasButtons ? .bottom : [])
             .presentationDetents([.height(hasButtons ? 360 : 300)])
     }
 }
@@ -73,7 +75,7 @@ private extension PropertyDetailSheet {
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.lg)
-            .padding(.bottom, DesignSystem.Spacing.xl)
+            .padding(.bottom, DesignSystem.Spacing.lg)
         }
     }
 
