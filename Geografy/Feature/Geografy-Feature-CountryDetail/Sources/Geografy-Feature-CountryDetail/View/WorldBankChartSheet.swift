@@ -10,6 +10,8 @@ public struct WorldBankChartSheet: View {
 
     @State private var selectedRange: TimeRange = .thirtyYears
     @State private var selectedPoint: WorldBankService.DataPoint?
+    // Outlives the selection so the pointer fades out in place instead of vanishing mid-move.
+    @State private var pointerPoint: WorldBankService.DataPoint?
 
     enum TimeRange: String, CaseIterable {
         case tenYears = "10Y"
@@ -120,18 +122,18 @@ private extension WorldBankChartSheet {
             ForEach(points) { point in
                 marks(for: point)
             }
-            if let selectedPoint {
-                selectionMarks(for: selectedPoint)
-            }
         }
         .chartXScale(domain: minYear...maxYear)
         #if !os(tvOS)
         .chartOverlay { proxy in
             GeometryReader { geometry in
-                Rectangle()
-                    .fill(.clear)
-                    .contentShape(Rectangle())
-                    .gesture(scrubGesture(proxy: proxy, geometry: geometry, points: points))
+                ZStack {
+                    Rectangle()
+                        .fill(.clear)
+                        .contentShape(Rectangle())
+                        .gesture(scrubGesture(proxy: proxy, geometry: geometry, points: points))
+                    pointer(proxy: proxy, geometry: geometry)
+                }
             }
         }
         .sensoryFeedback(.impact(weight: .light, intensity: 0.5), trigger: selectedPoint?.year) { _, new in new != nil }
@@ -266,19 +268,6 @@ private extension WorldBankChartSheet {
         .interpolationMethod(.catmullRom)
     }
 
-    @ChartContentBuilder
-    func selectionMarks(for point: WorldBankService.DataPoint) -> some ChartContent {
-        RuleMark(x: .value("Year", point.year))
-            .foregroundStyle(DesignSystem.Color.textSecondary.opacity(0.6))
-            .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 4]))
-        PointMark(
-            x: .value("Year", point.year),
-            y: .value(indicator.title, point.value)
-        )
-        .foregroundStyle(DesignSystem.Color.accent)
-        .symbolSize(100)
-    }
-
     #if !os(tvOS)
     // A short hold before scrubbing keeps vertical scrolling working over the chart.
     func scrubGesture(
@@ -293,7 +282,7 @@ private extension WorldBankChartSheet {
                 selectPoint(atX: drag.location.x, proxy: proxy, geometry: geometry, points: points)
             }
             .onEnded { _ in
-                selectedPoint = nil
+                withAnimation(.easeOut(duration: 0.2)) { selectedPoint = nil }
             }
     }
 
@@ -306,9 +295,44 @@ private extension WorldBankChartSheet {
         guard let plotFrame = proxy.plotFrame,
               let year: Int = proxy.value(atX: locationX - geometry[plotFrame].origin.x) else { return }
         let nearest = points.min { abs($0.year - year) < abs($1.year - year) }
-        guard nearest?.year != selectedPoint?.year else { return }
-        // No animation: animated marks re-enter from the chart origin on every move.
+        guard let nearest, nearest.year != selectedPoint?.year else { return }
+        let isFirstSelection = selectedPoint == nil
         selectedPoint = nearest
+        if isFirstSelection {
+            pointerPoint = nearest
+        } else {
+            withAnimation(.snappy(duration: 0.2)) { pointerPoint = nearest }
+        }
+    }
+
+    @ViewBuilder
+    func pointer(proxy: ChartProxy, geometry: GeometryProxy) -> some View {
+        if let pointerPoint,
+           let plotFrame = proxy.plotFrame,
+           let pointX = proxy.position(forX: pointerPoint.year),
+           let pointY = proxy.position(forY: pointerPoint.value) {
+            let plot = geometry[plotFrame]
+            ZStack(alignment: .topLeading) {
+                Path { path in
+                    path.move(to: .zero)
+                    path.addLine(to: CGPoint(x: 0, y: plot.height))
+                }
+                .stroke(
+                    DesignSystem.Color.textSecondary.opacity(0.6),
+                    style: StrokeStyle(lineWidth: 1, dash: [4, 4])
+                )
+                .frame(width: 1, height: plot.height)
+                .position(x: plot.minX + pointX, y: plot.midY)
+                Circle()
+                    .fill(DesignSystem.Color.accent)
+                    .stroke(DesignSystem.Color.background, lineWidth: 2)
+                    .frame(width: 12, height: 12)
+                    .position(x: plot.minX + pointX, y: plot.minY + pointY)
+            }
+            .opacity(selectedPoint == nil ? 0 : 1)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+        }
     }
 
     #endif
