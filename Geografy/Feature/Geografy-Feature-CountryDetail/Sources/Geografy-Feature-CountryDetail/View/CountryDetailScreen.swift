@@ -38,7 +38,7 @@ public struct CountryDetailScreen: View {
     // MARK: - Body
     public var body: some View {
         contentScrollView
-            .background(DesignSystem.Color.background)
+            .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
@@ -116,33 +116,38 @@ private extension CountryDetailScreen {
             .buttonStyle(.plain)
         }
 
-        ToolbarItem(placement: secondaryActionPlacement) {
-            Button {
-                hapticsService.impact(.light)
-                coordinator.sheet(.compare(preselectedCountry: country))
+        #if os(tvOS)
+        ToolbarItem(placement: .primaryAction) { compareButton }
+        ToolbarItem(placement: .primaryAction) { saveToCollectionButton }
+        #else
+        ToolbarItem(placement: .primaryAction) {
+            Menu {
+                compareButton
+                saveToCollectionButton
             } label: {
-                Label("Compare", systemImage: "arrow.left.arrow.right")
+                Label("More", systemImage: "ellipsis")
             }
-            .buttonStyle(.plain)
+            .tint(DesignSystem.Color.iconPrimary)
         }
+        #endif
+    }
 
-        ToolbarItem(placement: secondaryActionPlacement) {
-            Button {
-                hapticsService.impact(.light)
-                coordinator.sheet(.saveToCollection(countryCode: country.code, countryName: country.name))
-            } label: {
-                Label("Save to Collection", systemImage: "folder.badge.plus")
-            }
-            .buttonStyle(.plain)
+    var compareButton: some View {
+        Button {
+            hapticsService.impact(.light)
+            coordinator.sheet(.compare(preselectedCountry: country))
+        } label: {
+            Label("Compare", systemImage: "arrow.left.arrow.right")
         }
     }
 
-    var secondaryActionPlacement: ToolbarItemPlacement {
-        #if os(tvOS)
-        .primaryAction
-        #else
-        .secondaryAction
-        #endif
+    var saveToCollectionButton: some View {
+        Button {
+            hapticsService.impact(.light)
+            coordinator.sheet(.saveToCollection(countryCode: country.code, countryName: country.name))
+        } label: {
+            Label("Save to Collection", systemImage: "folder.badge.plus")
+        }
     }
 }
 
