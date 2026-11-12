@@ -23,8 +23,8 @@ public struct SizeCompareView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     ShareLink(item: shareText) {
                         Label("Share", systemImage: "square.and.arrow.up")
-                            .foregroundStyle(DesignSystem.Color.accent)
                     }
+                    .tint(DesignSystem.Color.iconPrimary)
                 }
             }
             .presentationDetents([.medium, .large])

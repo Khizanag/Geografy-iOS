@@ -97,6 +97,7 @@ private extension SpeedRunSessionScreen {
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.error)
                 }
+                .tint(DesignSystem.Color.iconPrimary)
             }
         }
     }

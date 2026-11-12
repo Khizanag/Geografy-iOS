@@ -116,6 +116,7 @@ private extension CountryDetailScreen {
                     .symbolEffect(.bounce, value: isFavorite)
             }
             .buttonStyle(.plain)
+            .tint(DesignSystem.Color.iconPrimary)
         }
 
         #if os(tvOS)

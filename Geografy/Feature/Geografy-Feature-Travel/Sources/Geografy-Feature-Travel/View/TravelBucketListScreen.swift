@@ -168,6 +168,7 @@ private extension TravelBucketListScreen {
                 Label("Share", systemImage: "square.and.arrow.up")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .tint(DesignSystem.Color.iconPrimary)
         }
         #endif
     }

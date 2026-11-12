@@ -148,6 +148,7 @@ private extension TravelTrackerScreen {
                 Label("Bucket List", systemImage: "list.star")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .tint(DesignSystem.Color.iconPrimary)
         }
 
         ToolbarItem(placement: .primaryAction) {

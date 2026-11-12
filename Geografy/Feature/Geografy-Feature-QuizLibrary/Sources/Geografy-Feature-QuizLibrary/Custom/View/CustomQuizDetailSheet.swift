@@ -195,6 +195,7 @@ private extension CustomQuizDetailSheet {
                 Label("Edit", systemImage: "pencil")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
+            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 }

@@ -328,6 +328,7 @@ private extension TimelineScreen {
                 Label("Historical Map", systemImage: "map.fill")
             }
             .buttonStyle(.plain)
+            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 }

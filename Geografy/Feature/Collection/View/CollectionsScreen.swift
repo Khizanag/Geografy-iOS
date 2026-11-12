@@ -166,6 +166,7 @@ private extension CollectionsScreen {
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
+            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 }
