@@ -72,10 +72,12 @@ extension CountryDetailScreen {
 
     enum CountryDetailSheet: Identifiable {
         case info(InfoItem)
+        case travelStatus
 
         var id: String {
             switch self {
             case .info(let item): "info-\(item.id)"
+            case .travelStatus: "travelStatus"
             }
         }
     }

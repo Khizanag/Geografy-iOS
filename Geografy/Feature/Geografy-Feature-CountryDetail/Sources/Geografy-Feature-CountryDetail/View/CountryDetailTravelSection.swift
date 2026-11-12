@@ -11,7 +11,7 @@ extension CountryDetailScreen {
         let currentStatus = travelService.status(for: country.code)
         return Button {
             hapticsService.impact(.light)
-            coordinator.sheet(.travelStatusPicker(country))
+            activeSheet = .travelStatus
         } label: {
             travelCardLabel(status: currentStatus)
         }
@@ -69,6 +69,8 @@ extension CountryDetailScreen {
         switch sheet {
         case .info(let item):
             propertyDetailSheet(for: item)
+        case .travelStatus:
+            TravelStatusPickerSheet(country: country)
         }
     }
 

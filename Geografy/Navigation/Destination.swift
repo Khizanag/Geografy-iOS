@@ -96,7 +96,6 @@ extension Destination {
         case .themes: ThemesScreen()
         case .timeline: TimelineScreen()
         case .timeZones: TimeZoneScreen()
-        case .travelStatusPicker(let country): TravelStatusPickerSheet(country: country)
         case .travelMap(let filter): TravelMapScreen(filter: filter)
         case .travelTracker: TravelScreen()
         case .wordSearch: WordSearchScreen()

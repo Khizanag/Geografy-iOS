@@ -56,7 +56,6 @@ public enum Destination: Hashable, Identifiable {
     case themes
     case timeline
     case timeZones
-    case travelStatusPicker(Country)
     case travelMap(TravelMapFilter)
     case travelTracker
     case wordSearch
@@ -115,7 +114,6 @@ public enum Destination: Hashable, Identifiable {
         case .themes: "themes"
         case .timeline: "timeline"
         case .timeZones: "timeZones"
-        case .travelStatusPicker(let country): "travelStatusPicker-\(country.code)"
         case .travelMap: "travelMap"
         case .travelTracker: "travelTracker"
         case .wordSearch: "wordSearch"
