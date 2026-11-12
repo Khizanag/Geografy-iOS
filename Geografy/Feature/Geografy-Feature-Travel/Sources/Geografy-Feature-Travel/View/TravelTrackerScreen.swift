@@ -31,11 +31,12 @@ public struct TravelTrackerScreen: View {
                 appeared = true
             }
             .sheet(isPresented: $showCountryPicker) {
-                TravelCountryPickerSheet(
-                    countries: countryDataService.countries,
-                    isPresented: $showCountryPicker,
-                    preferredStatus: selectedFilter
-                )
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    TravelCountryPickerSheet(
+                        countries: countryDataService.countries,
+                        preferredStatus: selectedFilter
+                    )
+                }
             }
             .sheet(item: $selectedCountry) { country in
                 TravelStatusPickerSheet(country: country)

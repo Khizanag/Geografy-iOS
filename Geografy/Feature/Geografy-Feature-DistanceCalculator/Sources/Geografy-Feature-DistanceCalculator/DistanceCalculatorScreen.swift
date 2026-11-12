@@ -31,27 +31,27 @@ public struct DistanceCalculatorScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .sheet(isPresented: $showOriginPicker) {
-                DistanceCountryPickerSheet(
-                    title: "From Country",
-                    countries: countryDataService.countries
-                ) { country in
-                    #if !os(tvOS)
-                    hapticsService.selection()
-                    #endif
-                    originCountry = country
-                    animateLine()
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    CountryPicker(
+                        "From Country",
+                        countries: countryDataService.countries,
+                        selectedCode: originCountry?.code
+                    ) { country in
+                        originCountry = country
+                        animateLine()
+                    }
                 }
             }
             .sheet(isPresented: $showDestinationPicker) {
-                DistanceCountryPickerSheet(
-                    title: "To Country",
-                    countries: countryDataService.countries
-                ) { country in
-                    #if !os(tvOS)
-                    hapticsService.selection()
-                    #endif
-                    destinationCountry = country
-                    animateLine()
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    CountryPicker(
+                        "To Country",
+                        countries: countryDataService.countries,
+                        selectedCode: destinationCountry?.code
+                    ) { country in
+                        destinationCountry = country
+                        animateLine()
+                    }
                 }
             }
     }

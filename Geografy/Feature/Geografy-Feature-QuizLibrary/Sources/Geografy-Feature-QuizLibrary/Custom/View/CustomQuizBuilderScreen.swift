@@ -302,10 +302,13 @@ private extension CustomQuizBuilderScreen {
 // MARK: - Sheets
 private extension CustomQuizBuilderScreen {
     var countryPickerSheet: some View {
-        CustomQuizCountryPicker(
-            countries: countryDataService.countries,
-            selectedCodes: $selectedCountryCodes,
-        )
+        CoordinatedNavigationStack(showCloseButton: true) {
+            CountryPicker(
+                "Select Countries",
+                countries: countryDataService.countries.filter { $0.continent != .antarctica },
+                selection: $selectedCountryCodes
+            )
+        }
     }
 
     var previewSheet: some View {

@@ -3,113 +3,51 @@ import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
+/// Adds countries to the travel lists, built on the shared `CountryPicker`.
 public struct TravelCountryPickerSheet: View {
     // MARK: - Properties
     @Environment(AchievementService.self) private var achievementService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelService.self) private var travelService
     @Environment(XPService.self) private var xpService
 
     public let countries: [Country]
-    @Binding var isPresented: Bool
-    public var preferredStatus: TravelStatus?
+    public let preferredStatus: TravelStatus?
 
-    @State private var searchText = ""
-    @State private var selectedCountry: Country?
+    @State private var statusCountry: Country?
+
+    // MARK: - Init
+    public init(countries: [Country], preferredStatus: TravelStatus?) {
+        self.countries = countries
+        self.preferredStatus = preferredStatus
+    }
 
     // MARK: - Body
     public var body: some View {
-        countryList
-            .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle(navigationTitle)
-            .navigationBarTitleDisplayMode(.inline)
-            #if os(tvOS)
-            .searchable(
-                text: $searchText,
-                prompt: "Search countries…"
-            )
-            #else
-            .searchable(
-                text: $searchText,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "Search countries…"
-            )
-            #endif
-            .toolbar { toolbarContent }
-            .sheet(item: $selectedCountry) { country in
-                TravelStatusPickerSheet(country: country)
-            }
-            .presentationDetents([.large])
+        CountryPicker(
+            LocalizedStringKey(navigationTitle),
+            countries: countries,
+            checkedCodes: checkedCodes,
+            onSelect: select
+        ) { country in
+            trailingView(travelService.status(for: country.code))
+        }
+        .sheet(item: $statusCountry) { country in
+            TravelStatusPickerSheet(country: country)
+        }
     }
 }
 
 // MARK: - Subviews
 private extension TravelCountryPickerSheet {
-    var countryList: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(filteredCountries) { country in
-                    pickerRow(country)
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-        }
-    }
-
-    func pickerRow(_ country: Country) -> some View {
-        let currentStatus = travelService.status(for: country.code)
-        let isAlreadyInList = preferredStatus != nil && currentStatus == preferredStatus
-        return Button {
-            hapticsService.impact(.light)
-            if let status = preferredStatus {
-                guard !isAlreadyInList else { return }
-                travelService.set(status: status, for: country.code)
-                awardTravelXP(for: status, countryCode: country.code)
-                checkTravelAchievements()
-            } else {
-                selectedCountry = country
-            }
-        } label: {
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: country.code, height: 36)
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                        .frame(width: 54)
-                    countryInfo(country)
-                    Spacer(minLength: 0)
-                    trailingView(currentStatus, isAlreadyInList: isAlreadyInList)
-                }
-                .padding(DesignSystem.Spacing.sm)
-            }
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    func countryInfo(_ country: Country) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(country.name)
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(country.continent.displayName)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-    }
-
     @ViewBuilder
-    func trailingView(_ status: TravelStatus?, isAlreadyInList: Bool) -> some View {
-        if isAlreadyInList {
-            Image(systemName: "checkmark.circle.fill")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(preferredStatus?.color ?? DesignSystem.Color.accent)
-        } else if let status {
+    func trailingView(_ status: TravelStatus?) -> some View {
+        if let status {
             statusBadge(status)
         } else {
             Image(systemName: "plus.circle")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
+                .accessibilityHidden(true)
         }
     }
 
@@ -128,18 +66,6 @@ private extension TravelCountryPickerSheet {
     }
 }
 
-// MARK: - Toolbar
-private extension TravelCountryPickerSheet {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .confirmationAction) {
-            Button("Done") { isPresented = false }
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
-    }
-}
-
 // MARK: - Helpers
 private extension TravelCountryPickerSheet {
     var navigationTitle: String {
@@ -149,10 +75,20 @@ private extension TravelCountryPickerSheet {
         return "Add Country"
     }
 
-    var filteredCountries: [Country] {
-        let sorted = countries.sorted(by: \.name)
-        guard !searchText.isEmpty else { return sorted }
-        return sorted.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    var checkedCodes: Set<String> {
+        guard let preferredStatus else { return [] }
+        return Set(countries.map(\.code).filter { travelService.status(for: $0) == preferredStatus })
+    }
+
+    func select(_ country: Country) {
+        guard let status = preferredStatus else {
+            statusCountry = country
+            return
+        }
+        guard travelService.status(for: country.code) != status else { return }
+        travelService.set(status: status, for: country.code)
+        awardTravelXP(for: status, countryCode: country.code)
+        checkTravelAchievements()
     }
 }
 
