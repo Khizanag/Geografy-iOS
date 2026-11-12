@@ -44,30 +44,7 @@ private extension NeighborChainView {
         Button {
             onSelectCountry(country)
         } label: {
-            CardView(cornerRadius: DesignSystem.CornerRadius.large) {
-                VStack(spacing: DesignSystem.Spacing.xs) {
-                    FlagView(countryCode: country.code, height: 36)
-                        .geoShadow(.subtle)
-                    Text(country.name)
-                        .font(DesignSystem.Font.caption2)
-                        .fontWeight(isFirst ? .bold : .semibold)
-                        .foregroundStyle(
-                            isFirst ? DesignSystem.Color.accent : DesignSystem.Color.textPrimary
-                        )
-                        .lineLimit(2)
-                        .multilineTextAlignment(.center)
-                        .frame(width: 68)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.xs)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
-                    .strokeBorder(
-                        isFirst ? DesignSystem.Color.accent.opacity(0.5) : .clear,
-                        lineWidth: 1.5
-                    )
-            )
+            CountryFlagTile(country: country, isHighlighted: isFirst)
         }
         .buttonStyle(PressButtonStyle())
     }

@@ -93,21 +93,7 @@ private extension CountryDetailScreen {
     }
 
     func neighborChip(country: Country) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                FlagView(countryCode: country.code, height: 40)
-                    .geoShadow(.subtle)
-                Text(country.name)
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.center)
-                    .frame(width: 72, height: 32)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-        }
+        CountryFlagTile(country: country)
     }
 
     var exploreNeighborsButton: some View {
