@@ -9,8 +9,10 @@ extension CountryDetailScreen {
             sectionHeader("People")
             populationCard
             if !country.languages.isEmpty {
-                LanguageBarChart(
-                    languages: country.languages.sorted(by: \.percentage, descending: true),
+                PercentageBarChart(
+                    title: "Languages",
+                    icon: "globe",
+                    items: country.languages.map { PercentageItem(name: $0.name, percentage: $0.percentage) },
                     appeared: true
                 )
             }
