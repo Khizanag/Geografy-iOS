@@ -4,6 +4,9 @@ import SwiftUI
 
 public struct SpeakerButton: View {
     // MARK: - Properties
+    /// The button's width and height, for layouts that balance it.
+    public static let size: CGFloat = 32
+
     @Environment(PronunciationService.self) private var pronunciationService
 
     public let text: String
@@ -36,7 +39,7 @@ public struct SpeakerButton: View {
                         : DesignSystem.Color.textSecondary
                 )
                 .symbolEffect(.variableColor.iterative.reversing, isActive: isActivelySpeaking)
-                .frame(width: 32, height: 32)
+                .frame(width: Self.size, height: Self.size)
         }
         .glassEffect(.regular.interactive(), in: .circle)
         .buttonStyle(.plain)

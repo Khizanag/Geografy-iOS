@@ -31,14 +31,16 @@ extension CountryDetailScreen {
             }
             .buttonStyle(.plain)
 
+            // An empty slot the button's width on the left keeps the name centered under the flag.
             HStack(spacing: DesignSystem.Spacing.xs) {
+                Color.clear
+                    .frame(width: SpeakerButton.size, height: SpeakerButton.size)
+                    .accessibilityHidden(true)
                 Text(country.name)
                     .font(DesignSystem.Font.title)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
-                #if !os(tvOS)
                 SpeakerButton(text: country.name, countryCode: country.code)
-                #endif
             }
             .frame(maxWidth: .infinity)
         }
