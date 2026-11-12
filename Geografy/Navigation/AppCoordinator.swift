@@ -3,41 +3,43 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
+enum AppTab: Int, Hashable {
+    case explore
+    case play
+    case learn
+    case profile
+}
+
 @Observable
 final class AppCoordinator {
-    var selectedTab = 0
+    var selectedTab: AppTab = .explore
 
-    let homeNavigator = Navigator()
-    let quizNavigator = Navigator()
-    let countriesNavigator = Navigator()
-    let allMapsNavigator = Navigator()
-    let moreNavigator = Navigator()
+    let exploreNavigator = Navigator()
+    let playNavigator = Navigator()
+    let learnNavigator = Navigator()
+    let profileNavigator = Navigator()
 
-    func navigator(for tab: Int) -> Navigator {
+    func navigator(for tab: AppTab) -> Navigator {
         switch tab {
-        case 0: homeNavigator
-        case 1: quizNavigator
-        case 2: countriesNavigator
-        case 3: allMapsNavigator
-        case 4: moreNavigator
-        default: homeNavigator
+        case .explore: exploreNavigator
+        case .play: playNavigator
+        case .learn: learnNavigator
+        case .profile: profileNavigator
         }
-    }
-
-    func switchTab(to tab: Int) {
-        selectedTab = tab
     }
 
     func handleDeepLink(_ url: URL) {
         guard url.scheme == "geografy" else { return }
         switch url.host {
-        case "home": selectedTab = 0
-        case "quiz": selectedTab = 1
-        case "countries": selectedTab = 2
-        case "maps": selectedTab = 3
-        case "more": selectedTab = 4
-        case "streak", "profile": selectedTab = 0; homeNavigator.sheet(.profile)
-        case "progress": selectedTab = 0; homeNavigator.sheet(.leaderboards)
+        case "home", "countries", "maps": selectedTab = .explore
+        case "quiz": selectedTab = .play
+        case "more": selectedTab = .profile
+        case "streak", "profile":
+            selectedTab = .profile
+            profileNavigator.push(.profile)
+        case "progress":
+            selectedTab = .profile
+            profileNavigator.push(.leaderboards)
         default: break
         }
     }
@@ -47,7 +49,7 @@ final class AppCoordinator {
         guard identifier.hasPrefix("country-") else { return }
         let code = String(identifier.dropFirst("country-".count))
         guard let country = countryDataService.country(for: code) else { return }
-        selectedTab = 0
-        homeNavigator.sheet(.countryDetail(country))
+        selectedTab = .explore
+        exploreNavigator.push(.countryDetail(country))
     }
 }

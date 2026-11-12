@@ -252,7 +252,7 @@ private extension GeografyApp {
 
         CommandGroup(replacing: .appSettings) {
             Button("Settings...") {
-                NotificationCenter.default.post(name: .switchTab, object: 4)
+                NotificationCenter.default.post(name: .switchTab, object: AppTab.profile.rawValue)
             }
             .keyboardShortcut(",", modifiers: .command)
         }
@@ -279,16 +279,14 @@ private extension GeografyApp {
 
     @ViewBuilder
     var navigateMenuItems: some View {
-        Button("Home") { NotificationCenter.default.post(name: .switchTab, object: 0) }
+        Button("Explore") { NotificationCenter.default.post(name: .switchTab, object: AppTab.explore.rawValue) }
             .keyboardShortcut("1", modifiers: .command)
-        Button("Quiz") { NotificationCenter.default.post(name: .switchTab, object: 1) }
+        Button("Play") { NotificationCenter.default.post(name: .switchTab, object: AppTab.play.rawValue) }
             .keyboardShortcut("2", modifiers: .command)
-        Button("Countries") { NotificationCenter.default.post(name: .switchTab, object: 2) }
+        Button("Learn") { NotificationCenter.default.post(name: .switchTab, object: AppTab.learn.rawValue) }
             .keyboardShortcut("3", modifiers: .command)
-        Button("Maps") { NotificationCenter.default.post(name: .switchTab, object: 3) }
+        Button("Profile") { NotificationCenter.default.post(name: .switchTab, object: AppTab.profile.rawValue) }
             .keyboardShortcut("4", modifiers: .command)
-        Button("More") { NotificationCenter.default.post(name: .switchTab, object: 4) }
-            .keyboardShortcut("5", modifiers: .command)
 
         Divider()
 

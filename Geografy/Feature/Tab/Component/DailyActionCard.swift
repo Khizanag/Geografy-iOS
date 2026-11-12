@@ -1,7 +1,7 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct HomeActionCard: View {
+struct DailyActionCard: View {
     // MARK: - Properties
     let dailyChallengeCompleted: Bool
     let srsCardsDue: Int
@@ -23,7 +23,7 @@ struct HomeActionCard: View {
 }
 
 // MARK: - Subviews
-private extension HomeActionCard {
+private extension DailyActionCard {
     var cardContent: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
             iconCircle
@@ -93,7 +93,7 @@ private extension HomeActionCard {
 }
 
 // MARK: - Action Resolution
-private extension HomeActionCard {
+private extension DailyActionCard {
     struct ActionConfig {
         let icon: String
         let title: String

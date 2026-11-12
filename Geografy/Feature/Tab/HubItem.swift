@@ -4,8 +4,15 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
-enum MoreSheet: Identifiable {
+enum HubItem: Identifiable {
     case profile
+    case quiz
+    case trueOrFalse
+    case neighbors
+    case mysteryCountry
+    case mapPuzzle
+    case worldFacts
+    case friends
     case countries
     case orgs
     case favorites
@@ -35,6 +42,13 @@ enum MoreSheet: Identifiable {
     var label: String {
         switch self {
         case .profile: "Profile"
+        case .quiz: "Quiz"
+        case .trueOrFalse: "True or False"
+        case .neighbors: "Neighbors"
+        case .mysteryCountry: "Mystery Country"
+        case .mapPuzzle: "Map Puzzle"
+        case .worldFacts: "World Facts"
+        case .friends: "Friends"
         case .countries: "Countries"
         case .orgs: "Organizations"
         case .favorites: "Saved"
@@ -56,7 +70,7 @@ enum MoreSheet: Identifiable {
         case .wordSearch: "Word Search"
         case .quotes: "Quotes"
         case .feed: "Feed"
-        case .srsStudy: "SRS Review"
+        case .srsStudy: "Flashcards"
         case .learningPath: "Learning Path"
         }
     }
@@ -64,6 +78,13 @@ enum MoreSheet: Identifiable {
     var icon: String {
         switch self {
         case .profile: "person.fill"
+        case .quiz: "gamecontroller.fill"
+        case .trueOrFalse: "questionmark.bubble.fill"
+        case .neighbors: "square.dashed"
+        case .mysteryCountry: "magnifyingglass"
+        case .mapPuzzle: "puzzlepiece.fill"
+        case .worldFacts: "globe.europe.africa.fill"
+        case .friends: "person.2.fill"
         case .countries: "list.bullet"
         case .orgs: "building.2.fill"
         case .favorites: "heart.fill"
@@ -93,6 +114,13 @@ enum MoreSheet: Identifiable {
     var subtitle: String {
         switch self {
         case .profile: "View your stats and level"
+        case .quiz: "Flags, capitals, and more"
+        case .trueOrFalse: "Is the statement right?"
+        case .neighbors: "Which country shares a border?"
+        case .mysteryCountry: "Guess from clues"
+        case .mapPuzzle: "Place countries on the map"
+        case .worldFacts: "Records, oceans, landmarks"
+        case .friends: "Game Center friends"
         case .countries: "Browse all 197 countries"
         case .orgs: "International organizations"
         case .favorites: "Favorites, places to visit, collections"
@@ -122,6 +150,13 @@ enum MoreSheet: Identifiable {
     var color: Color {
         switch self {
         case .profile: DesignSystem.Color.accent
+        case .quiz: DesignSystem.Color.accent
+        case .trueOrFalse: DesignSystem.Color.blue
+        case .neighbors: DesignSystem.Color.error
+        case .mysteryCountry: DesignSystem.Color.orange
+        case .mapPuzzle: DesignSystem.Color.purple
+        case .worldFacts: DesignSystem.Color.ocean
+        case .friends: DesignSystem.Color.indigo
         case .countries: DesignSystem.Color.blue
         case .orgs: DesignSystem.Color.indigo
         case .favorites: DesignSystem.Color.error
@@ -151,6 +186,13 @@ enum MoreSheet: Identifiable {
     var testKey: String {
         switch self {
         case .profile: "profile"
+        case .quiz: "quiz"
+        case .trueOrFalse: "trueOrFalse"
+        case .neighbors: "neighbors"
+        case .mysteryCountry: "mysteryCountry"
+        case .mapPuzzle: "mapPuzzle"
+        case .worldFacts: "worldFacts"
+        case .friends: "friends"
         case .countries: "countries"
         case .orgs: "orgs"
         case .favorites: "favorites"
@@ -180,6 +222,13 @@ enum MoreSheet: Identifiable {
     var toDestination: Destination {
         switch self {
         case .profile: .profile
+        case .quiz: .quizSetup
+        case .trueOrFalse: .quizSession(.quickPlay(.trueOrFalse))
+        case .neighbors: .quizSession(.quickPlay(.neighbors))
+        case .mysteryCountry: .quizSession(.quickPlay(.mysteryCountry))
+        case .mapPuzzle: .mapPuzzle
+        case .worldFacts: .worldFacts(.records)
+        case .friends: .friends
         case .countries: .countries
         case .orgs: .organizations
         case .favorites: .saved(.favorites)

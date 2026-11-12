@@ -29,7 +29,6 @@ public struct AllMapsScreen: View {
     public var body: some View {
         scrollContent
             .background { ambientBackground }
-            .navigationTitle("All Maps")
             .onAppear { blobAnimating = true }
     }
 }

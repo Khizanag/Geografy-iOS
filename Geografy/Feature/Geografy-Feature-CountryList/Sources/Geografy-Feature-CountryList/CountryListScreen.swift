@@ -54,7 +54,6 @@ public struct CountryListScreen: View {
     // MARK: - Body
     public var body: some View {
         listContent
-            .navigationTitle("Countries")
             .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
             .overlay { searchEmptyOverlay }

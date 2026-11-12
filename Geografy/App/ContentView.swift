@@ -34,20 +34,22 @@ struct ContentView: View {
                 if currentBannerAchievement == nil { showNextBanner() }
             }
             .onReceive(NotificationCenter.default.publisher(for: .switchTab)) { notification in
-                if let tab = notification.object as? Int {
+                if let rawValue = notification.object as? Int, let tab = AppTab(rawValue: rawValue) {
                     appCoordinator.selectedTab = tab
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .startQuiz)) { _ in
-                appCoordinator.selectedTab = 1
+                appCoordinator.selectedTab = .play
+                appCoordinator.playNavigator.push(.quizSetup)
             }
             .onReceive(NotificationCenter.default.publisher(for: .startDailyChallenge)) { _ in
-                appCoordinator.selectedTab = 0
-                appCoordinator.homeNavigator.sheet(.dailyChallenge)
+                appCoordinator.selectedTab = .play
+                appCoordinator.playNavigator.push(.dailyChallenge)
             }
             #if targetEnvironment(macCatalyst)
             .onReceive(NotificationCenter.default.publisher(for: .macOpenSearch)) { _ in
-                appCoordinator.homeNavigator.sheet(.search)
+                appCoordinator.selectedTab = .explore
+                appCoordinator.exploreNavigator.push(.search)
             }
             #endif
             .onOpenURL { appCoordinator.handleDeepLink($0) }
@@ -103,33 +105,27 @@ private extension ContentView {
 
     var tabContent: some View {
         TabView(selection: $appCoordinator.selectedTab) {
-            Tab("Home", systemImage: "house.fill", value: 0) {
-                CoordinatedNavigationStack(navigator: appCoordinator.homeNavigator) {
-                    HomeScreen()
+            Tab("Explore", systemImage: "globe.europe.africa.fill", value: AppTab.explore) {
+                CoordinatedNavigationStack(navigator: appCoordinator.exploreNavigator) {
+                    ExploreScreen()
                 }
             }
 
-            Tab("Quiz", systemImage: "gamecontroller.fill", value: 1) {
-                CoordinatedNavigationStack(navigator: appCoordinator.quizNavigator) {
-                    QuizSetupScreen()
+            Tab("Play", systemImage: "gamecontroller.fill", value: AppTab.play) {
+                CoordinatedNavigationStack(navigator: appCoordinator.playNavigator) {
+                    PlayScreen()
                 }
             }
 
-            Tab("Countries", systemImage: "globe", value: 2) {
-                CoordinatedNavigationStack(navigator: appCoordinator.countriesNavigator) {
-                    CountryListScreen()
+            Tab("Learn", systemImage: "book.fill", value: AppTab.learn) {
+                CoordinatedNavigationStack(navigator: appCoordinator.learnNavigator) {
+                    LearnScreen()
                 }
             }
 
-            Tab("All Maps", systemImage: "map.fill", value: 3) {
-                CoordinatedNavigationStack(navigator: appCoordinator.allMapsNavigator) {
-                    AllMapsScreen()
-                }
-            }
-
-            Tab("More", systemImage: "ellipsis", value: 4) {
-                CoordinatedNavigationStack(navigator: appCoordinator.moreNavigator) {
-                    MoreScreen()
+            Tab("Profile", systemImage: "person.crop.circle.fill", value: AppTab.profile) {
+                CoordinatedNavigationStack(navigator: appCoordinator.profileNavigator) {
+                    ProfileTabScreen()
                 }
             }
         }

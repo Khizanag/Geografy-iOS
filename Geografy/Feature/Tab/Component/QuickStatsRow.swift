@@ -1,7 +1,7 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct HomeQuickStatsRow: View {
+struct QuickStatsRow: View {
     // MARK: - Properties
     let streakDays: Int
     let level: Int
@@ -41,7 +41,7 @@ struct HomeQuickStatsRow: View {
 }
 
 // MARK: - Subviews
-private extension HomeQuickStatsRow {
+private extension QuickStatsRow {
     func statPill(
         icon: String,
         value: String,

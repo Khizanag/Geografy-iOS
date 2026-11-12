@@ -2,7 +2,7 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-struct HomeCountrySpotlightCard: View {
+struct CountrySpotlightCard: View {
     // MARK: - Properties
     let country: Country
     let funFact: String?
@@ -29,7 +29,7 @@ struct HomeCountrySpotlightCard: View {
 }
 
 // MARK: - Subviews
-private extension HomeCountrySpotlightCard {
+private extension CountrySpotlightCard {
     var headerBadge: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "star.fill")
@@ -134,7 +134,7 @@ private extension HomeCountrySpotlightCard {
 }
 
 // MARK: - Helpers
-private extension HomeCountrySpotlightCard {
+private extension CountrySpotlightCard {
     func statCell(icon: String, value: String, label: String) -> some View {
         VStack(spacing: 3) {
             Image(systemName: icon)

@@ -3,7 +3,8 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
-struct MoreScreen: View {
+/// A tab root: an optional header above titled grids of feature tiles.
+struct HubScreen<Header: View>: View {
     // MARK: - Properties
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(Navigator.self) private var coordinator
@@ -12,8 +13,11 @@ struct MoreScreen: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var blobAnimating = false
-    @State private var searchText = ""
-    @State private var testChecklistSheet: MoreSheet?
+    @State private var testChecklistSheet: HubItem?
+
+    let title: String
+    let sections: [HubSection]
+    @ViewBuilder let header: () -> Header
 
     private let testChecklistService = TestChecklistService()
 
@@ -21,24 +25,31 @@ struct MoreScreen: View {
     var body: some View {
         itemList
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("More")
+            .navigationTitle(title)
             .navigationBarTitleDisplayMode(.large)
-            .searchable(text: $searchText, prompt: "Find a feature…")
             .onAppear {
                 blobAnimating = true
             }
-            .sheet(item: $testChecklistSheet) { sheet in
+            .sheet(item: $testChecklistSheet) { item in
                 TestChecklistSheet(
-                    title: sheet.label,
-                    checklist: testChecklistService.checklist(for: sheet.testKey)
+                    title: item.label,
+                    checklist: testChecklistService.checklist(for: item.testKey)
                 )
                 .presentationDetents([.medium])
             }
     }
 }
 
+// MARK: - Section
+struct HubSection: Identifiable {
+    let title: String
+    let items: [HubItem]
+
+    var id: String { title }
+}
+
 // MARK: - Subviews
-private extension MoreScreen {
+private extension HubScreen {
     var blobConfigs: [BlobConfig] {
         [
             BlobConfig(
@@ -123,50 +134,21 @@ private extension MoreScreen {
 
     var itemList: some View {
         ScrollView(showsIndicators: false) {
-            if isSearching {
-                searchResults
-                    .readableContentWidth()
-            } else {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                    hubSection(title: "You", items: youItems)
-                    hubSection(title: "Play", items: playItems)
-                    hubSection(title: "Explore", items: exploreItems)
-                    hubSection(title: "Travel", items: travelItems)
-                    hubSection(title: "App", items: appItems)
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                header()
+                ForEach(sections) { section in
+                    hubSection(title: section.title, items: section.items)
                 }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .readableContentWidth()
-                .background(alignment: .top) { scrollableBlobs }
             }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .readableContentWidth()
+            .background(alignment: .top) { scrollableBlobs }
         }
         .scrollEdgeEffectStyle(.soft, for: .top)
     }
 
-    var isSearching: Bool {
-        !searchText.trimmingCharacters(in: .whitespaces).isEmpty
-    }
-
-    var filteredItems: [MoreSheet] {
-        let query = searchText.lowercased()
-        let allItems = youItems + playItems + exploreItems + travelItems + appItems
-        return allItems.filter {
-            $0.label.lowercased().contains(query) ||
-            $0.subtitle.lowercased().contains(query)
-        }
-    }
-
-    var searchResults: some View {
-        AdaptiveGrid(compactMinimum: 100, regularMinimum: 150) {
-            ForEach(filteredItems, id: \.id) { sheet in
-                gridTile(for: sheet)
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-    }
-
-    func hubSection(title: String, items: [MoreSheet]) -> some View {
+    func hubSection(title: String, items: [HubItem]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title)
             AdaptiveGrid(compactMinimum: 100, regularMinimum: 150) {
@@ -177,17 +159,17 @@ private extension MoreScreen {
         }
     }
 
-    func gridTile(for sheet: MoreSheet) -> some View {
+    func gridTile(for sheet: HubItem) -> some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.cover(sheet.toDestination)
+            open(sheet.toDestination)
         } label: {
             gridTileLabel(for: sheet)
         }
         .buttonStyle(PressButtonStyle())
     }
 
-    func gridTileLabel(for sheet: MoreSheet) -> some View {
+    func gridTileLabel(for sheet: HubItem) -> some View {
         VStack(spacing: tileSpacing) {
             gridTileIcon(for: sheet)
 
@@ -220,7 +202,7 @@ private extension MoreScreen {
         }
     }
 
-    func gridTileIcon(for sheet: MoreSheet) -> some View {
+    func gridTileIcon(for sheet: HubItem) -> some View {
         ZStack {
             RoundedRectangle(
                 cornerRadius: DesignSystem.CornerRadius.small
@@ -233,7 +215,7 @@ private extension MoreScreen {
         }
     }
 
-    func testBadge(for sheet: MoreSheet) -> some View {
+    func testBadge(for sheet: HubItem) -> some View {
         Button {
             testChecklistSheet = sheet
         } label: {
@@ -246,38 +228,22 @@ private extension MoreScreen {
         .buttonStyle(.plain)
         .offset(x: 4, y: -4)
     }
+}
 
-    var youItems: [MoreSheet] {
-        [.profile, .favorites]
-    }
-
-    var playItems: [MoreSheet] {
-        [
-            .dailyChallenge, .speedRun,
-            .multiplayer, .quizPacks,
-            .wordSearch,
-        ]
-    }
-
-    var exploreItems: [MoreSheet] {
-        [
-            .search, .compare, .distanceCalculator,
-            .currencyConverter, .timeZones, .timeline,
-            .orgs, .quotes, .feed, .learningPath,
-        ]
-    }
-
-    var travelItems: [MoreSheet] {
-        [.travel]
-    }
-
-    var appItems: [MoreSheet] {
-        [.achievements, .leaderboards, .srsStudy, .themes, .settings]
+// MARK: - Navigation
+private extension HubScreen {
+    // Games run full screen; everything else opens inside the tab.
+    func open(_ destination: Destination) {
+        if case .quizSession = destination {
+            coordinator.cover(destination)
+        } else {
+            coordinator.push(destination)
+        }
     }
 }
 
 // MARK: - Adaptive Tile Sizing
-private extension MoreScreen {
+private extension HubScreen {
     var isWide: Bool { sizeClass == .regular }
 
     var tileIconSize: CGFloat { isWide ? 52 : 36 }
