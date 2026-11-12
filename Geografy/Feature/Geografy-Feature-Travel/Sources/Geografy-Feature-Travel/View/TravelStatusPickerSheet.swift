@@ -33,7 +33,6 @@ public struct TravelStatusPickerSheet: View {
         .padding(.top, DesignSystem.Spacing.sm)
         .padding(.bottom, DesignSystem.Spacing.md)
         .presentationDetents([.height(hasExistingStatus ? 240 : 200)])
-        .presentationCornerRadius(DesignSystem.CornerRadius.extraLarge)
     }
 }
 
