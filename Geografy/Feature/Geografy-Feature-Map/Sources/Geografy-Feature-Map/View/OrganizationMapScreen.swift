@@ -44,6 +44,7 @@ public struct OrganizationMapScreen: View {
             .safeAreaInset(edge: .bottom) {
                 if !isLandscape {
                     bannerOverlay
+                        .padding(.bottom, DesignSystem.Spacing.xs)
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
@@ -130,7 +131,7 @@ private extension OrganizationMapScreen {
         ToolbarItem(placement: .principal) {
             if isLandscape {
                 landscapeHeader
-                    .frame(maxWidth: 500)
+                    .frame(width: CountryBannerView.landscapeWidth)
                     .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
         }

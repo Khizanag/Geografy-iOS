@@ -3,6 +3,9 @@ import SwiftUI
 
 public struct CountryBannerView: View {
     // MARK: - Properties
+    /// Fixed so the banner keeps one width as the selected country changes; fits beside the toolbar buttons on the smallest landscape iPhone.
+    public static let landscapeWidth: CGFloat = 460
+
     public let countryCode: String
     public let name: String
     public let flag: String
@@ -68,7 +71,6 @@ private extension CountryBannerView {
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.xs)
     }
 
     var flagButton: some View {

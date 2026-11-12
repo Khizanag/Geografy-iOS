@@ -42,6 +42,7 @@ public struct MapScreen: View {
             .safeAreaInset(edge: .bottom) {
                 if !isLandscape {
                     bannerOverlay
+                        .padding(.bottom, DesignSystem.Spacing.xs)
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
@@ -142,7 +143,7 @@ private extension MapScreen {
         ToolbarItem(placement: .principal) {
             if isLandscape {
                 bannerOverlay
-                    .frame(maxWidth: 500)
+                    .frame(width: CountryBannerView.landscapeWidth)
                     .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
         }
