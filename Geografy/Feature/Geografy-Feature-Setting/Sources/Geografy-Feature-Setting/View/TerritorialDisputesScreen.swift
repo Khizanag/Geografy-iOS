@@ -17,10 +17,9 @@ public struct TerritorialDisputesScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Territorial Disputes")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarColorScheme(.dark, for: .navigationBar)
             .onAppear {
                 loadSelections()
                 appeared = true
