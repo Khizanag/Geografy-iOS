@@ -35,26 +35,37 @@ public struct LevelUpSheet: View {
 // MARK: - Subviews
 private extension LevelUpSheet {
     var extractedContent: some View {
-        mainContent
-            .scaleEffect(contentScale)
-            .opacity(contentOpacity)
-            .animation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.05), value: contentScale)
-            .background {
-                particleLayer
-                    .opacity(particlesVisible ? 1 : 0)
-                    .animation(.easeOut(duration: 0.3).delay(0.15), value: particlesVisible)
-            }
-            .background(DesignSystem.Color.overlayScrim.ignoresSafeArea())
+        ZStack {
+            DesignSystem.Color.overlayScrim
+                .ignoresSafeArea()
+
+            particleLayer
+                .opacity(particlesVisible ? 1 : 0)
+                .animation(.easeOut(duration: 0.3).delay(0.15), value: particlesVisible)
+
+            card
+                .scaleEffect(contentScale)
+                .opacity(contentOpacity)
+                .animation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.05), value: contentScale)
+        }
     }
 
-    var mainContent: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
+    var card: some View {
+        VStack(spacing: DesignSystem.Spacing.lg) {
             levelUpHeadline
             LevelBadgeView(level: newLevel, size: .large, animated: true)
             levelDetails
             continueButton
         }
-        .padding(.horizontal, DesignSystem.Spacing.xxl)
+        .padding(DesignSystem.Spacing.lg)
+        .frame(maxWidth: 360)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
+        )
+        .padding(.horizontal, DesignSystem.Spacing.lg)
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
     }
 
     var levelUpHeadline: some View {
@@ -74,16 +85,12 @@ private extension LevelUpSheet {
         }
     }
 
+    // The badge already shows the level's title, so only the number goes here.
     var levelDetails: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            Text("Level \(newLevel.level)")
-                .font(DesignSystem.Font.title)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(newLevel.title)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
+        Text("Level \(newLevel.level)")
+            .font(DesignSystem.Font.title)
+            .fontWeight(.bold)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
     }
 
     var continueButton: some View {
@@ -96,8 +103,7 @@ private extension LevelUpSheet {
                 .foregroundStyle(DesignSystem.Color.onAccent)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(DesignSystem.Color.accent)
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .background(DesignSystem.Color.accent, in: Capsule())
         }
         .buttonStyle(PressButtonStyle())
     }
