@@ -273,10 +273,10 @@ extension CountryDetailScreen {
         if let profile = profileService.profile(for: country.code) {
             CountryDeepDiveSections(profile: profile)
         }
+        continentExploreSection
         #if !os(tvOS)
         WikipediaSection(countryName: country.name)
         #endif
-        continentExploreSection
     }
 
     @ViewBuilder
