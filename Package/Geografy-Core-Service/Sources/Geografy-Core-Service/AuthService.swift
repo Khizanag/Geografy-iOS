@@ -216,8 +216,7 @@ private extension AuthService {
 
     func validateAppleSessionOnLaunch() async {
         let userID = currentUserID
-        let credentialState = await fetchAppleCredentialState(userID: userID)
-        switch credentialState {
+        switch await AppleCredentialCheck.resolve(userID: userID) {
         case .authorized:
             if let profile = fetchProfile(id: userID) {
                 state = .authenticated(profile)
@@ -225,12 +224,16 @@ private extension AuthService {
                 KeychainService.delete(for: .appleUserID)
                 transitionToGuest()
             }
-        case .revoked, .notFound, .transferred:
+        case .revoked:
             KeychainService.delete(for: .appleUserID)
             transitionToGuest()
-        @unknown default:
-            KeychainService.delete(for: .appleUserID)
-            transitionToGuest()
+        case .unknown:
+            // Keep the Keychain ID so the next launch checks again.
+            if let profile = fetchProfile(id: userID) {
+                state = .authenticated(profile)
+            } else {
+                transitionToGuest()
+            }
         }
     }
 
@@ -379,24 +382,5 @@ private extension AuthService {
         for profile in profiles { db.mainContext.delete(profile) }
 
         try? db.mainContext.save()
-    }
-
-    func fetchAppleCredentialState(userID: String) async -> ASAuthorizationAppleIDProvider.CredentialState {
-        await withTaskGroup(of: ASAuthorizationAppleIDProvider.CredentialState.self) { group in
-            group.addTask {
-                await withCheckedContinuation { continuation in
-                    ASAuthorizationAppleIDProvider().getCredentialState(forUserID: userID) { state, _ in
-                        continuation.resume(returning: state)
-                    }
-                }
-            }
-            group.addTask {
-                try? await Task.sleep(for: .seconds(5))
-                return .notFound
-            }
-            let result = await group.next() ?? .notFound
-            group.cancelAll()
-            return result
-        }
     }
 }
