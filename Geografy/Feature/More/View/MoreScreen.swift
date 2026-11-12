@@ -252,11 +252,9 @@ private extension MoreScreen {
 
     var playItems: [MoreSheet] {
         [
-            .dailyChallenge, .exploreGame, .speedRun,
+            .dailyChallenge, .speedRun,
             .multiplayer, .quizPacks, .customQuiz,
-            .flagGame, .trivia,
-            .borderChallenge, .wordSearch,
-            .countryNicknames,
+            .wordSearch,
         ]
     }
 

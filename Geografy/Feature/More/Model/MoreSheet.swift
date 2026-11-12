@@ -18,14 +18,8 @@ enum MoreSheet: Identifiable {
     case quizPacks
     case customQuiz
     case multiplayer
-    case exploreGame
     case speedRun
-    case flagGame
-    case trivia
-    case landmarkQuiz
     case wordSearch
-    case borderChallenge
-    case countryNicknames
     case quotes
     case feed
     case srsStudy
@@ -56,7 +50,6 @@ enum MoreSheet: Identifiable {
         case .quizPacks: "Quiz Packs"
         case .customQuiz: "Custom Quizzes"
         case .multiplayer: "Multiplayer"
-        case .exploreGame: "Mystery Country"
         case .speedRun: "Speed Run"
         case .distanceCalculator: "Distance Calculator"
         case .currencyConverter: "Currency Converter"
@@ -67,12 +60,7 @@ enum MoreSheet: Identifiable {
         case .themes: "Themes"
         case .settings: "Settings"
         case .search: "Global Search"
-        case .flagGame: "Flag Game"
-        case .trivia: "Trivia"
-        case .landmarkQuiz: "Landmark Quiz"
         case .wordSearch: "Word Search"
-        case .borderChallenge: "Border Challenge"
-        case .countryNicknames: "Country Nicknames"
         case .quotes: "Quotes"
         case .feed: "Feed"
         case .srsStudy: "SRS Review"
@@ -95,7 +83,6 @@ enum MoreSheet: Identifiable {
         case .quizPacks: "square.stack.fill"
         case .customQuiz: "pencil.and.list.clipboard"
         case .multiplayer: "person.2.fill"
-        case .exploreGame: "magnifyingglass"
         case .speedRun: "timer"
         case .distanceCalculator: "ruler"
         case .currencyConverter: "dollarsign.arrow.circlepath"
@@ -106,12 +93,7 @@ enum MoreSheet: Identifiable {
         case .themes: "paintbrush.fill"
         case .settings: "gearshape.fill"
         case .search: "magnifyingglass"
-        case .flagGame: "flag.fill"
-        case .trivia: "questionmark.bubble.fill"
-        case .landmarkQuiz: "photo.fill"
         case .wordSearch: "character.magnify"
-        case .borderChallenge: "square.dashed"
-        case .countryNicknames: "tag.fill"
         case .quotes: "quote.bubble.fill"
         case .feed: "newspaper.fill"
         case .srsStudy: "brain.fill"
@@ -134,7 +116,6 @@ enum MoreSheet: Identifiable {
         case .quizPacks: "Themed quiz progression"
         case .customQuiz: "Build your own quizzes"
         case .multiplayer: "Challenge opponents"
-        case .exploreGame: "Guess from clues"
         case .speedRun: "Name all countries, race the clock"
         case .distanceCalculator: "Great circle distance between capitals"
         case .currencyConverter: "Live exchange rates, 160+ currencies"
@@ -145,12 +126,7 @@ enum MoreSheet: Identifiable {
         case .themes: "Customize your experience"
         case .settings: "App preferences"
         case .search: "Search all countries & orgs"
-        case .flagGame: "Match flags to countries"
-        case .trivia: "True or false geography facts"
-        case .landmarkQuiz: "Identify famous landmarks"
         case .wordSearch: "Find hidden country names"
-        case .borderChallenge: "Guess by outline shape"
-        case .countryNicknames: "Informal country names"
         case .quotes: "Geography quotes & facts"
         case .feed: "Curated geography news"
         case .srsStudy: "Spaced repetition review"
@@ -173,7 +149,6 @@ enum MoreSheet: Identifiable {
         case .quizPacks: DesignSystem.Color.purple
         case .customQuiz: DesignSystem.Color.accent
         case .multiplayer: DesignSystem.Color.error
-        case .exploreGame: DesignSystem.Color.warning
         case .speedRun: DesignSystem.Color.error
         case .distanceCalculator: DesignSystem.Color.blue
         case .currencyConverter: DesignSystem.Color.success
@@ -184,12 +159,7 @@ enum MoreSheet: Identifiable {
         case .themes: DesignSystem.Color.indigo
         case .settings: DesignSystem.Color.textSecondary
         case .search: DesignSystem.Color.accent
-        case .flagGame: DesignSystem.Color.error
-        case .trivia: DesignSystem.Color.purple
-        case .landmarkQuiz: DesignSystem.Color.accent
         case .wordSearch: DesignSystem.Color.indigo
-        case .borderChallenge: DesignSystem.Color.warning
-        case .countryNicknames: DesignSystem.Color.purple
         case .quotes: DesignSystem.Color.indigo
         case .feed: DesignSystem.Color.blue
         case .srsStudy: DesignSystem.Color.accent
@@ -212,7 +182,6 @@ enum MoreSheet: Identifiable {
         case .quizPacks: "quizPacks"
         case .customQuiz: "customQuiz"
         case .multiplayer: "multiplayer"
-        case .exploreGame: "exploreGame"
         case .speedRun: "speedRun"
         case .distanceCalculator: "distanceCalculator"
         case .currencyConverter: "currencyConverter"
@@ -223,12 +192,7 @@ enum MoreSheet: Identifiable {
         case .themes: "themes"
         case .settings: "settings"
         case .search: "search"
-        case .flagGame: "flagGame"
-        case .trivia: "trivia"
-        case .landmarkQuiz: "landmarkQuiz"
         case .wordSearch: "wordSearch"
-        case .borderChallenge: "borderChallenge"
-        case .countryNicknames: "countryNicknames"
         case .quotes: "quotes"
         case .feed: "feed"
         case .srsStudy: "srsStudy"
@@ -251,7 +215,6 @@ enum MoreSheet: Identifiable {
         case .quizPacks: .quizPacks
         case .customQuiz: .customQuiz
         case .multiplayer: .multiplayer
-        case .exploreGame: .exploreGame
         case .speedRun: .speedRunSetup
         case .distanceCalculator: .distanceCalculator
         case .currencyConverter: .currencyConverter()
@@ -262,12 +225,7 @@ enum MoreSheet: Identifiable {
         case .themes: .themes
         case .settings: .settings
         case .search: .search
-        case .flagGame: .flagGame
-        case .trivia: .trivia
-        case .landmarkQuiz: .landmarkQuiz
         case .wordSearch: .wordSearch
-        case .borderChallenge: .borderChallenge
-        case .countryNicknames: .countryNicknames
         case .quotes: .quotes
         case .feed: .feed
         case .srsStudy: .srsStudy

@@ -175,10 +175,10 @@ extension HomeScreen {
     func handleGameTap(_ game: HomeGamesGrid.GameItem) {
         switch game {
         case .quiz: coordinator.sheet(.quizSetup)
-        case .flagGame: coordinator.sheet(.flagGame)
-        case .trivia: coordinator.sheet(.trivia)
+        case .trueOrFalse: coordinator.cover(.quizSession(.quickPlay(.trueOrFalse)))
         case .mapPuzzle: coordinator.push(.mapPuzzle)
-        case .borderChallenge: coordinator.sheet(.borderChallenge)
+        case .neighbors: coordinator.cover(.quizSession(.quickPlay(.neighbors)))
+        case .mysteryCountry: coordinator.cover(.quizSession(.quickPlay(.mysteryCountry)))
         case .wordSearch: coordinator.sheet(.wordSearch)
         }
     }

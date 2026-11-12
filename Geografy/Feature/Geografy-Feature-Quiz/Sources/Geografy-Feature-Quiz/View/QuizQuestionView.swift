@@ -63,7 +63,8 @@ private extension QuizQuestionView {
             flagPrompt
         case .reverseFlag:
             textPrompt(question.promptText, subject: question.promptSubject)
-        case .capitalQuiz, .reverseCapital, .worldRankings, .nationalSymbols:
+        case .capitalQuiz, .reverseCapital, .worldRankings, .nationalSymbols, .landmarks, .nicknames, .trueOrFalse,
+             .neighbors, .mysteryCountry:
             textPrompt(question.promptText, subject: question.promptSubject)
         }
     }
@@ -120,8 +121,37 @@ private extension QuizQuestionView {
                     .lineLimit(3)
                     .padding(.horizontal, DesignSystem.Spacing.xs)
             }
+
+            if !question.promptDetails.isEmpty {
+                promptDetailsList
+            }
+
+            if showFeedback, let explanation = question.explanation {
+                Text(explanation)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .transition(.opacity)
+            }
         }
         .padding(.vertical, DesignSystem.Spacing.xl)
+        .animation(.easeInOut(duration: 0.2), value: showFeedback)
+    }
+
+    var promptDetailsList: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+            ForEach(question.promptDetails, id: \.self) { detail in
+                Text(detail)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+            }
+        }
+        .padding(DesignSystem.Spacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+        )
     }
 }
 

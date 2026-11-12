@@ -3,28 +3,23 @@ import Geografy_Core_Service
 import Geografy_Feature_Achievement
 import Geografy_Feature_AllMap
 import Geografy_Feature_Auth
-import Geografy_Feature_BorderChallenge
 import Geografy_Feature_Compare
 import Geografy_Feature_ContinentStats
 import Geografy_Feature_CountryDetail
 import Geografy_Feature_CountryList
-import Geografy_Feature_CountryNicknames
 import Geografy_Feature_CultureExplorer
 import Geografy_Feature_CurrencyConverter
 import Geografy_Feature_CustomQuiz
 import Geografy_Feature_DailyChallenge
 import Geografy_Feature_DistanceCalculator
 import Geografy_Feature_EconomyExplorer
-import Geografy_Feature_ExploreGame
 import Geografy_Feature_Favorite
 import Geografy_Feature_Feed
-import Geografy_Feature_FlagGame
 import Geografy_Feature_Flashcard
 import Geografy_Feature_GameCenter
 import Geografy_Feature_GeographyFeatures
 import Geografy_Feature_IndependenceTimeline
 import Geografy_Feature_LandmarkGallery
-import Geografy_Feature_LandmarkQuiz
 import Geografy_Feature_LanguageExplorer
 import Geografy_Feature_LearningPath
 import Geografy_Feature_Map
@@ -47,7 +42,6 @@ import Geografy_Feature_Timeline
 import Geografy_Feature_TimeZone
 import Geografy_Feature_Travel
 import Geografy_Feature_TravelJournal
-import Geografy_Feature_Trivia
 import Geografy_Feature_WordSearch
 import Geografy_Feature_WorldRecords
 import SwiftUI
@@ -63,7 +57,6 @@ extension Destination {
         case .achievementDetail(let definition): AchievementDetailView(definition: definition)
         case .achievements: AchievementsScreen()
         case .allMaps: AllMapsScreen()
-        case .borderChallenge: BorderChallengeScreen()
         case .collectionDetail(let name): CollectionDetailScreen(collectionName: name)
         case .collections: CollectionsScreen()
         case .compare(let country): CompareScreen(preselectedCountry: country)
@@ -72,8 +65,6 @@ extension Destination {
         case .continentStats(let name): ContinentStatsScreen(continentName: name)
         case .countries: CountryListScreen()
         case .countryDetail(let country): CountryDetailScreen(country: country)
-        case .countryNicknames: CountryNicknamesScreen()
-        case .countryNicknameQuiz: NicknameQuizScreen()
         case .cultureExplorer: CultureExplorerScreen()
         case .currencyConverter(let code): CurrencyConverterScreen(preselectedCurrencyCode: code)
         case .customQuiz: CustomQuizLibraryScreen()
@@ -86,17 +77,14 @@ extension Destination {
         case .editProfile: EditProfileSheet()
         case .distanceCalculator: DistanceCalculatorScreen()
         case .economyExplorer: EconomyExplorerScreen()
-        case .exploreGame: ExploreGameScreen()
         case .favorites: FavoritesScreen()
         case .feed: FeedScreen()
-        case .flagGame: FlagGameScreen()
         case let .flashcardSession(deck, cards): FlashcardSessionScreen(deck: deck, cards: cards)
         case .friends: FriendsListScreen()
         case .geographyFeatures: GeographyFeaturesScreen()
         case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
         case .independenceTimeline: IndependenceTimelineScreen()
         case .landmarkGallery: LandmarkGalleryScreen()
-        case .landmarkQuiz: LandmarkQuizScreen()
         case .languageExplorer: LanguageExplorerScreen()
         case .learningPath: LearningPathScreen()
         case .learningModule(let module): ModuleLessonsScreen(module: module)
@@ -135,7 +123,6 @@ extension Destination {
         case .travelStatusPicker(let country): TravelStatusPickerSheet(country: country)
         case .travelMap(let filter): TravelMapScreen(filter: filter)
         case .travelTracker: TravelTrackerScreen()
-        case .trivia: TriviaScreen()
         case .wordSearch: WordSearchScreen()
         case .wordSearchGame(let theme): WordSearchGameScreen(theme: theme)
         case .worldRecords: WorldRecordsScreen()

@@ -1,7 +1,6 @@
 import Foundation
 import Geografy_Core_Common
 import Geografy_Core_Service
-import Geografy_Feature_ExploreGame
 import Observation
 
 @Observable
@@ -95,7 +94,7 @@ private extension DailyChallengeService {
         from shuffled: [Country]
     ) -> DailyChallenge.MysteryCountryContent {
         let target = shuffled[0]
-        let clues = buildClues(for: target)
+        let clues = buildClues(for: target, in: shuffled)
         return DailyChallenge.MysteryCountryContent(
             targetCountry: target,
             clues: clues
@@ -103,11 +102,14 @@ private extension DailyChallengeService {
     }
 
     func buildClues(
-        for country: Country
+        for country: Country,
+        in countries: [Country]
     ) -> [DailyChallenge.MysteryClue] {
-        let neighborNames = ClueGenerator.borderCountryNames(
-            for: country.code
-        )
+        let neighborCodes = Set(CountryNeighbors.neighbors(for: country.code))
+        let neighborNames = countries
+            .filter { neighborCodes.contains($0.code) }
+            .map(\.name)
+            .sorted()
         let neighborsValue = neighborNames.isEmpty
             ? "Island nation"
             : neighborNames.joined(separator: ", ")

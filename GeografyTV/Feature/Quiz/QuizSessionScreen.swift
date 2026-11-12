@@ -123,6 +123,12 @@ private extension QuizSessionScreen {
                 }
             }
             .multilineTextAlignment(.center)
+
+            ForEach(question.promptDetails, id: \.self) { detail in
+                Text(detail)
+                    .font(DesignSystem.Font.system(size: 28, weight: .medium))
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
         }
     }
 

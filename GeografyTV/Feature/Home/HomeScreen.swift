@@ -37,12 +37,6 @@ struct HomeScreen: View {
                 }
             }
 
-            Tab("Explore", systemImage: "questionmark.circle") {
-                NavigationStack {
-                    ExploreGameScreen(countryDataService: countryDataService)
-                }
-            }
-
             Tab("Search", systemImage: "magnifyingglass") {
                 NavigationStack {
                     SearchScreen(countryDataService: countryDataService)

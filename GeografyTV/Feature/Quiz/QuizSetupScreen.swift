@@ -131,6 +131,11 @@ private extension QuizSetupScreen {
         case .reverseCapital: DesignSystem.Color.indigo
         case .worldRankings: DesignSystem.Color.success
         case .nationalSymbols: DesignSystem.Color.warning
+        case .landmarks: DesignSystem.Color.accent
+        case .nicknames: DesignSystem.Color.purple
+        case .trueOrFalse: DesignSystem.Color.blue
+        case .neighbors: DesignSystem.Color.error
+        case .mysteryCountry: DesignSystem.Color.orange
         }
     }
 }

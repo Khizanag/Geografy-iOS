@@ -6,7 +6,6 @@ public enum Destination: Hashable, Identifiable {
     case achievementDetail(AchievementDefinition)
     case achievements
     case allMaps
-    case borderChallenge
     case collectionDetail(String)
     case collections
     case compare(preselectedCountry: Country? = nil)
@@ -15,8 +14,6 @@ public enum Destination: Hashable, Identifiable {
     case continentStats(String)
     case countries
     case countryDetail(Country)
-    case countryNicknames
-    case countryNicknameQuiz
     case cultureExplorer
     case currencyConverter(preselectedCode: String? = nil)
     case customQuiz
@@ -29,17 +26,14 @@ public enum Destination: Hashable, Identifiable {
     case editProfile
     case distanceCalculator
     case economyExplorer
-    case exploreGame
     case favorites
     case feed
-    case flagGame
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
     case friends
     case geographyFeatures
     case historicalMap(initialYear: Int)
     case independenceTimeline
     case landmarkGallery
-    case landmarkQuiz
     case languageExplorer
     case learningPath
     case learningModule(LearningModule)
@@ -78,7 +72,6 @@ public enum Destination: Hashable, Identifiable {
     case travelStatusPicker(Country)
     case travelMap(TravelMapFilter)
     case travelTracker
-    case trivia
     case wordSearch
     case wordSearchGame(WordSearchTheme)
     case worldRecords
@@ -90,15 +83,12 @@ public enum Destination: Hashable, Identifiable {
         case .allMaps: "allMaps"
         case .collectionDetail(let name): "collectionDetail-\(name)"
         case .collections: "collections"
-        case .borderChallenge: "borderChallenge"
         case .compare(let country): "compare-\(country?.code ?? "none")"
         case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
         case .continentPicker: "continentPicker"
         case .continentStats(let name): "continentStats-\(name)"
         case .countries: "countries"
         case .countryDetail(let country): "countryDetail-\(country.code)"
-        case .countryNicknames: "countryNicknames"
-        case .countryNicknameQuiz: "countryNicknameQuiz"
         case .cultureExplorer: "cultureExplorer"
         case .currencyConverter(let code): "currencyConverter-\(code ?? "none")"
         case .customQuiz: "customQuiz"
@@ -108,17 +98,14 @@ public enum Destination: Hashable, Identifiable {
         case .editProfile: "editProfile"
         case .distanceCalculator: "distanceCalculator"
         case .economyExplorer: "economyExplorer"
-        case .exploreGame: "exploreGame"
         case .favorites: "favorites"
         case .feed: "feed"
-        case .flagGame: "flagGame"
         case .flashcardSession: "flashcardSession"
         case .friends: "friends"
         case .geographyFeatures: "geographyFeatures"
         case .historicalMap(let year): "historicalMap-\(year)"
         case .independenceTimeline: "independenceTimeline"
         case .landmarkGallery: "landmarkGallery"
-        case .landmarkQuiz: "landmarkQuiz"
         case .languageExplorer: "languageExplorer"
         case .learningPath: "learningPath"
         case .learningModule(let module): "learningModule-\(module.id)"
@@ -157,7 +144,6 @@ public enum Destination: Hashable, Identifiable {
         case .travelStatusPicker(let country): "travelStatusPicker-\(country.code)"
         case .travelMap: "travelMap"
         case .travelTracker: "travelTracker"
-        case .trivia: "trivia"
         case .wordSearch: "wordSearch"
         case .wordSearchGame(let theme): "wordSearchGame-\(theme.rawValue)"
         case .worldRecords: "worldRecords"

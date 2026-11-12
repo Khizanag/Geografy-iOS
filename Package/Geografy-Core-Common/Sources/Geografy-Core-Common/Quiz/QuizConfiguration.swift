@@ -33,3 +33,19 @@ public struct QuizConfiguration: Identifiable, Equatable, Hashable, Sendable {
         self.arcadeTimer = arcadeTimer
     }
 }
+
+// MARK: - Quick Play
+public extension QuizConfiguration {
+    /// Ten world questions with no timer, for one-tap entry points that skip setup.
+    static func quickPlay(_ type: QuizType) -> QuizConfiguration {
+        QuizConfiguration(
+            type: type,
+            region: .world,
+            difficulty: .easy,
+            questionCount: .ten,
+            answerMode: .multipleChoice,
+            comparisonMetric: .population,
+            gameMode: .standard
+        )
+    }
+}

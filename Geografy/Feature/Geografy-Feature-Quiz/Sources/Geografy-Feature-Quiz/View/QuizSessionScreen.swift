@@ -14,6 +14,7 @@ public struct QuizSessionScreen: View {
     public let configuration: QuizConfiguration
 
     @State var questions: [QuizQuestion] = []
+    @State var hasLoadedQuestions = false
     @State var currentIndex = 0
     @State var answers: [QuizAnswer] = []
     @State var selectedOptionID: UUID?
@@ -321,6 +322,12 @@ private extension QuizSessionScreen {
                 .id(question.id)
                 .transition(questionTransition)
             }
+        } else if hasLoadedQuestions, questions.isEmpty {
+            ContentUnavailableView(
+                "No Questions",
+                systemImage: "globe",
+                description: Text("This quiz has no questions for the selected region. Try World.")
+            )
         }
     }
 

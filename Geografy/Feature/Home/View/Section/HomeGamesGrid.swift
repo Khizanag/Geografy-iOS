@@ -21,19 +21,19 @@ struct HomeGamesGrid: View {
 extension HomeGamesGrid {
     enum GameItem: String, CaseIterable {
         case quiz
-        case flagGame
-        case trivia
+        case trueOrFalse
         case mapPuzzle
-        case borderChallenge
+        case neighbors
+        case mysteryCountry
         case wordSearch
 
         var name: String {
             switch self {
             case .quiz: "Quiz"
-            case .flagGame: "Flag Game"
-            case .trivia: "Trivia"
+            case .trueOrFalse: "True or False"
             case .mapPuzzle: "Map Puzzle"
-            case .borderChallenge: "Border Challenge"
+            case .neighbors: "Neighbors"
+            case .mysteryCountry: "Mystery Country"
             case .wordSearch: "Word Search"
             }
         }
@@ -41,10 +41,10 @@ extension HomeGamesGrid {
         var icon: String {
             switch self {
             case .quiz: "gamecontroller.fill"
-            case .flagGame: "flag.fill"
-            case .trivia: "questionmark.bubble.fill"
+            case .trueOrFalse: "questionmark.bubble.fill"
             case .mapPuzzle: "puzzlepiece.fill"
-            case .borderChallenge: "square.dashed"
+            case .neighbors: "square.dashed"
+            case .mysteryCountry: "magnifyingglass"
             case .wordSearch: "character.magnify"
             }
         }
@@ -52,10 +52,10 @@ extension HomeGamesGrid {
         var color: Color {
             switch self {
             case .quiz: DesignSystem.Color.accent
-            case .flagGame: DesignSystem.Color.orange
-            case .trivia: DesignSystem.Color.blue
+            case .trueOrFalse: DesignSystem.Color.blue
             case .mapPuzzle: DesignSystem.Color.purple
-            case .borderChallenge: DesignSystem.Color.error
+            case .neighbors: DesignSystem.Color.error
+            case .mysteryCountry: DesignSystem.Color.orange
             case .wordSearch: DesignSystem.Color.indigo
             }
         }

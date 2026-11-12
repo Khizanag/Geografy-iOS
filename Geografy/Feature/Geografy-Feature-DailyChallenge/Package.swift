@@ -19,7 +19,6 @@ let package = Package(
         .package(path: "../../../Package/Geografy-Core-DesignSystem"),
         .package(path: "../../../Package/Geografy-Core-Navigation"),
         .package(path: "../../../Package/Geografy-Core-Service"),
-        .package(path: "../Geografy-Feature-ExploreGame"),
         .package(path: "../Geografy-Feature-Quiz"),
     ],
     targets: [
@@ -30,7 +29,6 @@ let package = Package(
                 .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
                 .product(name: "Geografy-Core-Navigation", package: "Geografy-Core-Navigation"),
                 .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
-                .product(name: "Geografy-Feature-ExploreGame", package: "Geografy-Feature-ExploreGame"),
                 .product(name: "Geografy-Feature-Quiz", package: "Geografy-Feature-Quiz"),
             ]
         ),

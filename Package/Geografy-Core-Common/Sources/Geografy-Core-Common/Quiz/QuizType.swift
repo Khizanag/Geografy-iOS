@@ -7,6 +7,11 @@ public enum QuizType: String, CaseIterable, Identifiable, Codable, Sendable {
     case reverseCapital
     case worldRankings
     case nationalSymbols
+    case landmarks
+    case nicknames
+    case trueOrFalse
+    case neighbors
+    case mysteryCountry
 
     public var id: String { rawValue }
 }
@@ -20,6 +25,11 @@ private extension QuizType {
         .reverseCapital: "Reverse Capital",
         .worldRankings: "World Rankings",
         .nationalSymbols: "National Symbols",
+        .landmarks: "Landmarks",
+        .nicknames: "Nicknames",
+        .trueOrFalse: "True or False",
+        .neighbors: "Neighbors",
+        .mysteryCountry: "Mystery Country",
     ]
 
     static let icons: [QuizType: String] = [
@@ -29,6 +39,11 @@ private extension QuizType {
         .reverseCapital: "building.2.fill",
         .worldRankings: "chart.bar.fill",
         .nationalSymbols: "leaf.fill",
+        .landmarks: "photo.fill",
+        .nicknames: "tag.fill",
+        .trueOrFalse: "questionmark.bubble.fill",
+        .neighbors: "square.dashed",
+        .mysteryCountry: "magnifyingglass",
     ]
 
     static let emojis: [QuizType: String] = [
@@ -38,6 +53,11 @@ private extension QuizType {
         .reverseCapital: "🏙️",
         .worldRankings: "📊",
         .nationalSymbols: "🦅",
+        .landmarks: "🗽",
+        .nicknames: "🏷️",
+        .trueOrFalse: "✅",
+        .neighbors: "🧭",
+        .mysteryCountry: "🔍",
     ]
 
     static let descriptions: [QuizType: String] = [
@@ -47,6 +67,11 @@ private extension QuizType {
         .reverseCapital: "Identify the country by its capital",
         .worldRankings: "Pick the biggest or smallest by metric",
         .nationalSymbols: "Animals, flowers, sports & mottos of nations",
+        .landmarks: "Name the country behind a famous landmark",
+        .nicknames: "Match informal nicknames to countries",
+        .trueOrFalse: "Decide whether a geography statement is true",
+        .neighbors: "Pick the country that shares a border",
+        .mysteryCountry: "Name the country from a set of clues",
     ]
 }
 
@@ -72,7 +97,8 @@ extension QuizType: SelectableType {
         switch self {
         case .flagQuiz, .capitalQuiz, .reverseCapital:
             [.multipleChoice, .typing, .spellingBee]
-        case .reverseFlag, .nationalSymbols, .worldRankings:
+        case .reverseFlag, .nationalSymbols, .worldRankings, .landmarks, .nicknames, .trueOrFalse, .neighbors,
+             .mysteryCountry:
             [.multipleChoice]
         }
     }

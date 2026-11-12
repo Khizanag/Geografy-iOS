@@ -44,10 +44,21 @@ private extension QuestionGenerator {
             return countries.filter { symbolsService.symbol(for: $0.code) != nil }
         }
         #endif
-        if type == .worldRankings {
+        switch type {
+        case .worldRankings:
             return countries.filter { comparisonMetric.value(for: $0) > 0 }
+        case .landmarks:
+            return countries.filter { LandmarkHints.data[$0.code] != nil }
+        case .nicknames:
+            return countries.filter { CountryNicknames.data[$0.code] != nil }
+        case .neighbors:
+            let codes = Set(countries.map(\.code))
+            return countries.filter { country in
+                CountryNeighbors.neighbors(for: country.code).contains { codes.contains($0) }
+            }
+        default:
+            return countries
         }
-        return countries
     }
 }
 
@@ -82,6 +93,16 @@ private extension QuestionGenerator {
             #else
             makeNationalSymbolsQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
             #endif
+        case .landmarks:
+            makeLandmarkQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
+        case .nicknames:
+            makeNicknameQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
+        case .trueOrFalse:
+            makeTrueOrFalseQuestion(country: country, allCountries: allCountries)
+        case .neighbors:
+            makeNeighborQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
+        case .mysteryCountry:
+            makeMysteryCountryQuestion(country: country, allCountries: allCountries, optionCount: optionCount)
         }
     }
 
@@ -293,15 +314,16 @@ private extension QuestionGenerator {
 }
 
 // MARK: - Distractor Selection
-private extension QuestionGenerator {
+extension QuestionGenerator {
     static func selectDistractors(
         for country: Country,
         from allCountries: [Country],
         count: Int,
         uniqueBy keyPath: KeyPath<Country, String>? = nil,
-        excluding correctValue: String? = nil
+        excluding correctValue: String? = nil,
+        excludingCodes: Set<String> = []
     ) -> [Country] {
-        let candidates = allCountries.filter { $0.code != country.code }
+        let candidates = allCountries.filter { $0.code != country.code && !excludingCodes.contains($0.code) }
         let sameContinentCandidates = candidates
             .filter { $0.continent == country.continent }
             .shuffled()

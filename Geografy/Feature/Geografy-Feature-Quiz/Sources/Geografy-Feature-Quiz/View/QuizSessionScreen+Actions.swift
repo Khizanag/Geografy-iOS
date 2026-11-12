@@ -189,6 +189,7 @@ extension QuizSessionScreen {
     }
 
     public func loadQuiz() {
+        hasLoadedQuestions = true
         let pool = configuration.region.filter(countryDataService.countries)
         let optionCount = max(configuration.difficulty.optionCount, 4)
         guard pool.count >= optionCount else { return }

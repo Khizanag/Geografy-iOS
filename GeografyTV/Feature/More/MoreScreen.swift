@@ -10,21 +10,9 @@ struct MoreScreen: View {
         List {
             Section("Games") {
                 NavigationLink {
-                    TriviaScreen(countryDataService: countryDataService)
-                } label: {
-                    Label("True or False", systemImage: "brain.fill")
-                }
-
-                NavigationLink {
                     CompareScreen(countryDataService: countryDataService)
                 } label: {
                     Label("Compare Countries", systemImage: "arrow.left.arrow.right")
-                }
-
-                NavigationLink {
-                    NicknamesScreen()
-                } label: {
-                    Label("Country Nicknames", systemImage: "quote.bubble.fill")
                 }
             }
 
