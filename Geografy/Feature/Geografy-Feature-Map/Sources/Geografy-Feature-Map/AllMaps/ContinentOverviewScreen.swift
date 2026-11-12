@@ -242,16 +242,12 @@ private extension ContinentOverviewScreen {
         HStack {
             SectionHeaderView(title: "Countries", icon: "list.bullet")
             Spacer()
-            Picker(selection: $sortBy) {
+            MenuPicker("Sort by", selection: $sortBy, selectedTitle: Text(sortBy.rawValue)) {
                 ForEach(SortOption.allCases, id: \.self) { option in
                     Label(option.rawValue, systemImage: option.icon)
                         .tag(option)
                 }
-            } label: {
-                Label("Sort by", systemImage: "arrow.up.arrow.down")
             }
-            .pickerStyle(.menu)
-            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 

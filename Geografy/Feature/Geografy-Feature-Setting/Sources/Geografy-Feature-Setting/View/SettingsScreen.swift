@@ -236,13 +236,15 @@ private extension SettingsScreen {
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
             Spacer()
-            Picker("", selection: $selectedTheme) {
+            MenuPicker(
+                "Appearance",
+                selection: $selectedTheme,
+                selectedTitle: Text(LocalizedStringKey(selectedTheme))
+            ) {
                 Label("Auto", systemImage: "circle.lefthalf.filled").tag("Auto")
                 Label("Light", systemImage: "sun.max.fill").tag("Light")
                 Label("Dark", systemImage: "moon.fill").tag("Dark")
             }
-            .pickerStyle(.menu)
-            .tint(DesignSystem.Color.iconPrimary)
         }
         .settingsRowPadding()
     }
