@@ -236,7 +236,7 @@ private extension CompareScreen {
         Group {
             CompareMetricRow(
                 title: "Capital",
-                icon: "mappin.and.ellipse",
+                icon: "star.fill",
                 leftValue: left.capital,
                 rightValue: right.capital
             )

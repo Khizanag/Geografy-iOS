@@ -88,7 +88,7 @@ private extension CountrySpotlightCard {
     var statsStrip: some View {
         HStack(spacing: 0) {
             statCell(
-                icon: "mappin.and.ellipse",
+                icon: "star.fill",
                 value: country.capital,
                 label: "Capital"
             )

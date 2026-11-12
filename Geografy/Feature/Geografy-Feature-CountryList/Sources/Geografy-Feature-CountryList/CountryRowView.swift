@@ -107,7 +107,7 @@ private extension CountryRowView {
 
     var capitalLabel: some View {
         HStack(spacing: 3) {
-            Image(systemName: "mappin.and.ellipse")
+            Image(systemName: "star.fill")
                 .font(DesignSystem.Font.pico.bold())
                 .foregroundStyle(DesignSystem.Color.accent)
             Text(country.allCapitals.map(\.name).joined(separator: " · "))

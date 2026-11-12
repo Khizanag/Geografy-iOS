@@ -29,7 +29,7 @@ private extension CountryDetailScreen {
         Button {
             activeSheet = .info(
                 InfoItem(
-                    icon: "mappin.and.ellipse",
+                    icon: "star.fill",
                     title: country.allCapitals.count > 1 ? "Capitals" : "Capital",
                     value: capitalInfoValue,
                     supportsMap: false
@@ -79,7 +79,7 @@ private extension CountryDetailScreen {
 private extension CountryDetailScreen {
     var capitalChip: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "mappin")
+            Image(systemName: "star.fill")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.accent)
             Text(
