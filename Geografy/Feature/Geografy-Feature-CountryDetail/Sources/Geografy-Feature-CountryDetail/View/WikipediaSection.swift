@@ -29,9 +29,7 @@ public struct WikipediaSection: View {
 // MARK: - Subviews
 private extension WikipediaSection {
     var extractedContent: some View {
-        Button {
-            showSafari = true
-        } label: {
+        Button(action: openWikipedia) {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     iconView
@@ -67,6 +65,20 @@ private extension WikipediaSection {
             Text("W")
                 .font(DesignSystem.Font.serifBody)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
+    }
+}
+
+// MARK: - Actions
+private extension WikipediaSection {
+    // Universal links open the Wikipedia app when it is installed; otherwise read in the in-app browser.
+    func openWikipedia() {
+        guard let url = wikipediaURL else { return }
+        Task {
+            let openedInApp = await UIApplication.shared.open(url, options: [.universalLinksOnly: true])
+            if !openedInApp {
+                showSafari = true
+            }
         }
     }
 }
