@@ -14,11 +14,6 @@ public protocol AnalyticsProvider: Sendable {
 /// Catalog of tracked events. Adding a case here is the first step to wiring
 /// a new analytics point — concrete providers receive the typed event.
 public enum AnalyticsEvent: Sendable, Equatable {
-    case paywallShown(context: String?)
-    case paywallPlanSelected(productID: String)
-    case paywallPurchaseStarted(productID: String)
-    case paywallPurchaseCompleted(productID: String)
-    case paywallDismissed(context: String?)
     case quizStarted(kind: String)
     case quizCompleted(kind: String, correct: Int, total: Int, bestStreak: Int)
     case onboardingCompleted(continent: String?, goal: String)
@@ -28,11 +23,6 @@ public enum AnalyticsEvent: Sendable, Equatable {
 
     public var name: String {
         switch self {
-        case .paywallShown: "paywall_shown"
-        case .paywallPlanSelected: "paywall_plan_selected"
-        case .paywallPurchaseStarted: "paywall_purchase_started"
-        case .paywallPurchaseCompleted: "paywall_purchase_completed"
-        case .paywallDismissed: "paywall_dismissed"
         case .quizStarted: "quiz_started"
         case .quizCompleted: "quiz_completed"
         case .onboardingCompleted: "onboarding_completed"

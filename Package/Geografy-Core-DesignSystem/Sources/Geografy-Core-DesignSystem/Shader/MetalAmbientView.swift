@@ -22,7 +22,7 @@ public struct MetalAmbientView: View {
         case standard
         /// Quiz screens — punchier saturation.
         case quiz
-        /// Paywall / hero surfaces — brightest, most saturated.
+        /// Hero surfaces such as onboarding — brightest, most saturated.
         case hero
     }
 
@@ -63,8 +63,8 @@ public struct MetalAmbientView: View {
 private extension MetalAmbientView {
     var opacity: Double {
         // Deliberately low — the shader is a subtle ambient layer, not a fill.
-        // Anything above ~0.5 drowns text that sits directly on the background
-        // (paywall hero subtitle, onboarding body, feature-comparison table).
+        // Anything above ~0.5 drowns text that sits directly on the background,
+        // such as the onboarding body.
         switch preset {
         case .standard: 0.35
         case .quiz:     0.42
@@ -76,7 +76,7 @@ private extension MetalAmbientView {
         switch preset {
         case .standard: .standard
         case .quiz:     .quiz
-        case .hero:     .paywall
+        case .hero:     .hero
         }
     }
 }

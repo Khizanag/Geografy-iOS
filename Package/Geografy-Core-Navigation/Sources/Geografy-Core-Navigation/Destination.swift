@@ -58,7 +58,6 @@ public enum Destination: Hashable, Identifiable {
     case organizationDetail(Organization)
     case organizationMap(Organization)
     case organizations
-    case paywall
     case profile
     case quizPackDetail(packID: String)
     case quizPacks
@@ -141,7 +140,6 @@ public enum Destination: Hashable, Identifiable {
         case .organizationDetail(let org): "orgDetail-\(org.id)"
         case .organizationMap(let org): "orgMap-\(org.id)"
         case .organizations: "organizations"
-        case .paywall: "paywall"
         case .profile: "profile"
         case .quizPackDetail(let id): "quizPackDetail-\(id)"
         case .quizPacks: "quizPacks"

@@ -15,7 +15,6 @@ struct GeografyTVApp: App {
     @State private var gameCenterService = GameCenterService()
     @State private var coinService = CoinService()
     @State private var flashcardService = FlashcardService()
-    @State private var subscriptionService = SubscriptionService()
     @State private var entitlementService = EntitlementService()
     @State private var pronunciationService = PronunciationService()
     @State private var countryDataService = CountryDataService()
@@ -55,14 +54,12 @@ struct GeografyTVApp: App {
                 .environment(gameCenterService)
                 .environment(coinService)
                 .environment(flashcardService)
-                .environment(subscriptionService)
                 .environment(entitlementService)
                 .environment(pronunciationService)
                 .environment(geoJSONCache)
                 .task {
                     await countryDataService.loadCountries()
                     gameCenterService.authenticatePlayer()
-                    await subscriptionService.checkEntitlements()
                 }
         }
     }

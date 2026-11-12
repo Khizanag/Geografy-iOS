@@ -43,7 +43,6 @@ import Geografy_Feature_Quotes
 import Geografy_Feature_Search
 import Geografy_Feature_Setting
 import Geografy_Feature_SizeVisualization
-import Geografy_Feature_Subscription
 import Geografy_Feature_Theme
 import Geografy_Feature_Timeline
 import Geografy_Feature_TimeZone
@@ -117,7 +116,6 @@ extension Destination {
         case .organizationDetail(let org): OrganizationDetailScreen(organization: org)
         case .organizationMap(let org): OrganizationMapScreen(organization: org)
         case .organizations: OrganizationsScreen()
-        case .paywall: PaywallScreen()
         case .profile: ProfileScreen()
         case .quizPackDetail(let packID): QuizPackDetailScreen(packID: packID)
         case .quizPacks: QuizPackBrowserScreen()

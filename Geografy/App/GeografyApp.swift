@@ -28,7 +28,6 @@ struct GeografyApp: App {
     @State private var learningPathService = LearningPathService()
     @State private var pronunciationService = PronunciationService()
     @State private var streakService: StreakService
-    @State private var subscriptionService = SubscriptionService()
     @State private var testingModeService = TestingModeService()
     @State private var travelService = TravelService()
     @State private var widgetDataBridge = WidgetDataBridge()
@@ -90,14 +89,12 @@ private extension GeografyApp {
             .environment(learningPathService)
             .environment(pronunciationService)
             .environment(streakService)
-            .environment(subscriptionService)
             .environment(testingModeService)
             .environment(travelService)
             .environment(worldBankService)
             .environment(xpService)
             .task { await bootstrap() }
             .task(priority: .utility) { await authService.validateOnLaunch() }
-            .task(priority: .utility) { await subscriptionService.checkEntitlements() }
             .task(priority: .utility) { await authenticateGameCenter() }
             .task(priority: .background) { await setupNotificationsAndSpotlight() }
             .task(priority: .background) { await syncWidgetData() }

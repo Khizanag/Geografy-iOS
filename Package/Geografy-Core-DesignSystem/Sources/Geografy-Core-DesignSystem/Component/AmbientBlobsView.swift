@@ -54,7 +54,7 @@ public extension AmbientBlobsView {
         case tv
         case tvQuiz
 
-        case paywall
+        case hero
         case travel
 
         var blobs: [BlobDescriptor] {
@@ -257,7 +257,7 @@ public extension AmbientBlobsView {
                     ),
                 ]
 
-            case .paywall:
+            case .hero:
                 [
                     BlobDescriptor(
                         color: DesignSystem.Color.accent,
