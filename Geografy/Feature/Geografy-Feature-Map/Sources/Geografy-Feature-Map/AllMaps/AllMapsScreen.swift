@@ -28,7 +28,7 @@ public struct AllMapsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { ambientBackground }
+            .screenBackground { ambientBackground }
             .onAppear { blobAnimating = true }
     }
 }

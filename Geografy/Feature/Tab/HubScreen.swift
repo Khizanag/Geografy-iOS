@@ -57,8 +57,13 @@ private extension HubScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
         }
-        .background { AmbientBlobsView(.standard) }
         .scrollEdgeEffectStyle(.soft, for: .top)
+        .screenBackground {
+            ZStack {
+                DesignSystem.Color.background
+                AmbientBlobsView(.standard)
+            }
+        }
     }
 
     func hubSection(title: String, items: [HubItem]) -> some View {
