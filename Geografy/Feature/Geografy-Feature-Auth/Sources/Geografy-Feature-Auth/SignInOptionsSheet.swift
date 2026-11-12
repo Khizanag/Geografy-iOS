@@ -215,9 +215,11 @@ private extension SignInOptionsSheet {
         VStack(spacing: DesignSystem.Spacing.sm) {
             appleSignInButton
             googleSignInButton
+            #if DEBUG
             if testingModeService.isEnabled {
                 debugSignInButton
             }
+            #endif
             continueAsGuestButton
         }
         .padding(.bottom, DesignSystem.Spacing.md)
@@ -293,6 +295,7 @@ private extension SignInOptionsSheet {
         }
     }
 
+    #if DEBUG
     var debugSignInButton: some View {
         Button {
             authService.debugSignIn()
@@ -319,6 +322,7 @@ private extension SignInOptionsSheet {
         }
         .buttonStyle(PressButtonStyle())
     }
+    #endif
 }
 
 // MARK: - Google G Logo
