@@ -261,7 +261,7 @@ private extension WorldBankIndicatorCard {
             AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 3)) { value in
                 AxisGridLine()
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.2))
-                AxisValueLabel(centered: true) {
+                AxisValueLabel {
                     if let year = value.as(Int.self) {
                         Text(String(year))
                             .font(DesignSystem.Font.caption2)
@@ -317,7 +317,7 @@ private extension WorldBankIndicatorCard {
             values.append(current)
             current += step
         }
-        if values.last != maxYear {
+        if let last = values.last, maxYear - last >= step / 2 {
             values.append(maxYear)
         }
         return values

@@ -142,7 +142,7 @@ private extension WorldBankChartSheet {
             AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 5)) { value in
                 AxisGridLine()
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.15))
-                AxisValueLabel(centered: true) {
+                AxisValueLabel {
                     if let year = value.as(Int.self) {
                         Text(String(year))
                             .font(DesignSystem.Font.caption2)
@@ -347,7 +347,7 @@ private extension WorldBankChartSheet {
             values.append(current)
             current += step
         }
-        if values.last != maxYear {
+        if let last = values.last, maxYear - last >= step / 2 {
             values.append(maxYear)
         }
         return values
