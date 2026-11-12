@@ -116,7 +116,6 @@ private extension CountryDetailScreen {
                     .symbolEffect(.bounce, value: isFavorite)
             }
             .buttonStyle(.plain)
-            .tint(DesignSystem.Color.iconPrimary)
         }
 
         #if os(tvOS)
@@ -130,7 +129,6 @@ private extension CountryDetailScreen {
             } label: {
                 Label("More", systemImage: "ellipsis")
             }
-            .tint(DesignSystem.Color.iconPrimary)
         }
         #endif
     }

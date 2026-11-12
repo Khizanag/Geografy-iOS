@@ -87,7 +87,6 @@ private extension TimelineScreen {
                 isActive: filter.continent != nil
             )
         }
-        .tint(DesignSystem.Color.iconPrimary)
     }
 
     var eventTypeMenu: some View {
@@ -119,7 +118,6 @@ private extension TimelineScreen {
                 isActive: filter.eventType != nil
             )
         }
-        .tint(DesignSystem.Color.iconPrimary)
     }
 
     var clearFilterButton: some View {
@@ -328,7 +326,6 @@ private extension TimelineScreen {
                 Label("Historical Map", systemImage: "map.fill")
             }
             .buttonStyle(.plain)
-            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 }

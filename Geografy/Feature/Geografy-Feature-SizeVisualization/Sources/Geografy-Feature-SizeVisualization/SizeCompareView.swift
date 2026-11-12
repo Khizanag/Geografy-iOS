@@ -24,7 +24,6 @@ public struct SizeCompareView: View {
                     ShareLink(item: shareText) {
                         Label("Share", systemImage: "square.and.arrow.up")
                     }
-                    .tint(DesignSystem.Color.iconPrimary)
                 }
             }
             .presentationDetents([.medium, .large])

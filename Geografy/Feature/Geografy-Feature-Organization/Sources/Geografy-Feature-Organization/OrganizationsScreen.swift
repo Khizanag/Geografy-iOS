@@ -56,7 +56,6 @@ private extension OrganizationsScreen {
             } label: {
                 Label("Sort", systemImage: "arrow.up.arrow.down")
             }
-            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 }

@@ -27,7 +27,6 @@ public struct CustomQuizShareScreen: View {
                     } label: {
                         Label("Copy", systemImage: "doc.on.doc")
                     }
-                    .tint(DesignSystem.Color.iconPrimary)
                 }
             }
     }

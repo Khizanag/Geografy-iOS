@@ -73,6 +73,9 @@ public struct CoordinatedNavigationStack<Root: View>: View {
             DestinationCoverView(destination: destination)
         }
         .environment(navigator)
+        // Icons, menus, and alerts default to the label color; controls that should carry the
+        // accent (switches, sliders, progress, prominent buttons) set it themselves.
+        .tint(DesignSystem.Color.iconPrimary)
     }
 }
 

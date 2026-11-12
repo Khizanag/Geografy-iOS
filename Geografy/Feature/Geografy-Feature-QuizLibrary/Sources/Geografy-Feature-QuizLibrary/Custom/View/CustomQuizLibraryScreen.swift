@@ -104,7 +104,6 @@ private extension CustomQuizLibraryScreen {
             }
             .tint(DesignSystem.Color.error)
         }
-        .tint(DesignSystem.Color.iconPrimary)
     }
 }
 
@@ -120,7 +119,6 @@ private extension CustomQuizLibraryScreen {
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
-            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 }

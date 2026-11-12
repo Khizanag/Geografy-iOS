@@ -22,7 +22,6 @@ struct ExploreScreen: View {
                     Button { coordinator.push(.search) } label: {
                         Label("Search", systemImage: "magnifyingglass")
                     }
-                    .tint(DesignSystem.Color.iconPrimary)
                 }
             }
     }

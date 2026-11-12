@@ -76,7 +76,6 @@ private extension FavoritesScreen {
                     : "line.3.horizontal.decrease"
             )
         }
-        .tint(DesignSystem.Color.iconPrimary)
     }
 
     var hasActiveFilters: Bool {

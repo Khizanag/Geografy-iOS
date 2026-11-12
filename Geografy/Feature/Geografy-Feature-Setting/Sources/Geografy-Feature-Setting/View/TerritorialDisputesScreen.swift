@@ -150,7 +150,6 @@ private extension TerritorialDisputesScreen {
         } label: {
             disputeRowLabel(dispute)
         }
-        .tint(DesignSystem.Color.iconPrimary)
         .buttonStyle(.plain)
     }
 

@@ -12,9 +12,7 @@ struct CountryContextMenu: ViewModifier {
     func body(content: Content) -> some View {
         content
             .contextMenu {
-                // Menu icons take the label color, not the app's accent tint.
                 contextMenuContent
-                    .tint(DesignSystem.Color.iconPrimary)
             }
     }
 

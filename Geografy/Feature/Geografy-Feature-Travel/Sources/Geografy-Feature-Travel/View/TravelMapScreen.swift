@@ -158,7 +158,6 @@ private extension TravelMapScreen {
             Image(systemName: "line.3.horizontal.decrease")
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
-        .tint(DesignSystem.Color.iconPrimary)
     }
 }
 

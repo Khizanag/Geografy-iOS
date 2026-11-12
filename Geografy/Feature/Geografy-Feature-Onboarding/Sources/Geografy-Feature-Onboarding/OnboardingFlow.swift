@@ -163,6 +163,7 @@ private extension OnboardingFlow {
 
             Toggle("Daily reminders", isOn: $notificationsOptIn)
                 .toggleStyle(.switch)
+                .tint(DesignSystem.Color.accent)
                 .padding(.horizontal, DesignSystem.Spacing.md)
         }
     }

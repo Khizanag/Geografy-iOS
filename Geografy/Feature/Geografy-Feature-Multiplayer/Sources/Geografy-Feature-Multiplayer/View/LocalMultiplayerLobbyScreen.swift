@@ -100,7 +100,6 @@ private extension LocalMultiplayerLobbyScreen {
                     }
                 }
                 .pickerStyle(.menu)
-                .tint(DesignSystem.Color.iconPrimary)
             }
         }
     }

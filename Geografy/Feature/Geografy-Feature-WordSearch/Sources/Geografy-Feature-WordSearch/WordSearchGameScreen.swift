@@ -73,7 +73,6 @@ private extension WordSearchGameScreen {
                     .buttonStyle(.plain)
                 }
             }
-            .tint(DesignSystem.Color.iconPrimary)
         }
     }
 

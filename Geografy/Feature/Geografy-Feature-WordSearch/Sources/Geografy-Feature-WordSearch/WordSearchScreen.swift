@@ -208,7 +208,6 @@ private extension WordSearchScreen {
             Button { showGuide = true } label: {
                 Label("Guide", systemImage: "info.circle")
             }
-            .tint(DesignSystem.Color.iconPrimary)
         }
         #else
         ToolbarItem(placement: .topBarTrailing) {
@@ -217,7 +216,6 @@ private extension WordSearchScreen {
                     .foregroundStyle(.white)
             }
             .buttonStyle(.plain)
-            .tint(DesignSystem.Color.iconPrimary)
         }
         #endif
     }

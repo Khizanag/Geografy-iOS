@@ -52,7 +52,6 @@ public struct ContinentOverviewScreen: View {
                         Label("Map", systemImage: "map.fill")
                             .foregroundStyle(DesignSystem.Color.iconPrimary)
                     }
-                    .tint(DesignSystem.Color.iconPrimary)
                 }
             }
             .onAppear {
