@@ -6,7 +6,7 @@ import SwiftUI
 // MARK: - Hero
 extension CountryDetailScreen {
     var heroSection: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
+        CardView {
             heroCardContent
         }
     }

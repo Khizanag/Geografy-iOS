@@ -45,9 +45,9 @@ public struct CountryRowView: View {
             contentRow
         }
         .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
                 .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
         )
         .hoverEffect(.lift)
@@ -65,14 +65,6 @@ private extension CountryRowView {
         let color = DesignSystem.Color.mapColors[codeValue % DesignSystem.Color.mapColors.count]
         return color
             .frame(width: 3)
-            .clipShape(
-                UnevenRoundedRectangle(
-                    topLeadingRadius: DesignSystem.CornerRadius.medium,
-                    bottomLeadingRadius: DesignSystem.CornerRadius.medium,
-                    bottomTrailingRadius: 0,
-                    topTrailingRadius: 0
-                )
-            )
     }
 
     var contentRow: some View {

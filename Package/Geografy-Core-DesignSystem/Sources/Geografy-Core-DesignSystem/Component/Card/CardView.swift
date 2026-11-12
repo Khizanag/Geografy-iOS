@@ -8,7 +8,7 @@ public struct CardView<Content: View>: View {
 
     // MARK: - Init
     public init(
-        cornerRadius: CGFloat = DesignSystem.CornerRadius.medium,
+        cornerRadius: CGFloat = DesignSystem.CornerRadius.extraLarge,
         shadow: DesignSystem.Shadow? = nil,
         @ViewBuilder content: () -> Content
     ) {
@@ -21,7 +21,7 @@ public struct CardView<Content: View>: View {
     public var body: some View {
         content
             .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .optionalShadow(shadow)
     }
 }

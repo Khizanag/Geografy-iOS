@@ -82,7 +82,7 @@ private extension TravelJournalDetailScreen {
     }
 
     var headerSection: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
                 countryRow
                 ratingRow

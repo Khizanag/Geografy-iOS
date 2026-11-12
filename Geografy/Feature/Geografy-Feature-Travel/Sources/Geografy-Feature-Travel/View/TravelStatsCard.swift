@@ -11,7 +11,7 @@ public struct TravelStatsCard: View {
 
     // MARK: - Body
     public var body: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.extraLarge) {
+        CardView {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 heroStats
                 statsPills
