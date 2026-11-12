@@ -25,9 +25,8 @@ private extension CountryDetailScreen {
                     PhraseChip(phrase: phrase)
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
-        .padding(.horizontal, -DesignSystem.Spacing.md)
+        .scrollClipDisabled()
     }
 }
 

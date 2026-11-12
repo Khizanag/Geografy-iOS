@@ -55,9 +55,8 @@ private extension ProfileScreen {
                     .buttonStyle(PressButtonStyle())
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
-        .padding(.horizontal, -DesignSystem.Spacing.md)
+        .scrollClipDisabled()
     }
 
     var emptyAchievementsView: some View {

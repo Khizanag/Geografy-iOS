@@ -89,7 +89,6 @@ private extension CountryDetailScreen {
             }
             .padding(.vertical, DesignSystem.Spacing.xs)
         }
-        .contentMargins(.horizontal, DesignSystem.Spacing.md)
         .scrollClipDisabled()
     }
 

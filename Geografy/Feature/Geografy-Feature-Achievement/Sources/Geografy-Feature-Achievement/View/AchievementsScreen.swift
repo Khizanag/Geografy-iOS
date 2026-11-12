@@ -117,10 +117,8 @@ private extension AchievementsScreen {
                     }
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.xxs)
         }
-        .padding(.horizontal, -DesignSystem.Spacing.md)
         .scrollClipDisabled()
     }
 

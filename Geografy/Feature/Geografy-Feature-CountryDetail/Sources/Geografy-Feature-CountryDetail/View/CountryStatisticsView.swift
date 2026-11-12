@@ -32,7 +32,7 @@ private extension CountryStatisticsView {
                 }
             }
         }
-        .contentMargins(.horizontal, DesignSystem.Spacing.md, for: .scrollContent)
+        .scrollClipDisabled()
     }
 
     func categoryTab(_ category: StatCategory) -> some View {

@@ -143,16 +143,19 @@ private extension CurrencyConverterScreen {
     var converterCard: some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
-                fromPickerRow
-                amountRow
+                Group {
+                    fromPickerRow
+                    amountRow
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
                 Divider()
-                    .padding(.horizontal, -DesignSystem.Spacing.md)
                 swapRow
+                    .padding(.horizontal, DesignSystem.Spacing.md)
                 Divider()
-                    .padding(.horizontal, -DesignSystem.Spacing.md)
                 toPickerRow
+                    .padding(.horizontal, DesignSystem.Spacing.md)
             }
-            .padding(DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.md)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
