@@ -261,7 +261,7 @@ private extension WorldBankIndicatorCard {
             AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 3)) { value in
                 AxisGridLine()
                     .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.2))
-                AxisValueLabel {
+                AxisValueLabel(anchor: .top) {
                     if let year = value.as(Int.self) {
                         Text(String(year))
                             .font(DesignSystem.Font.caption2)
