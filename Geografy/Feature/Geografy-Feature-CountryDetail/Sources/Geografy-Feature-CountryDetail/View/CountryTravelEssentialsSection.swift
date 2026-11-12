@@ -26,72 +26,72 @@ extension CountryDetailScreen {
 }
 
 // MARK: - Essential rows
+private struct TravelEssential: Identifiable {
+    let icon: String
+    let label: String
+    let value: String
+    var accessibility: String?
+
+    var id: String { label }
+}
+
 private extension CountryDetailScreen {
-    @ViewBuilder
     func travelEssentialsList(
         essentials: CountryTravelData.Essentials?,
         timeZoneDisplay: String?
     ) -> some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            timezoneRow(timeZoneDisplay)
-            callingCodeRow(essentials?.callingCode)
-            demonymRow(essentials?.demonym)
-            drivingSideRow(essentials?.drivingSide)
-            internetTLDRow(essentials?.internetTLD)
+        let rows = travelEssentials(essentials: essentials, timeZoneDisplay: timeZoneDisplay)
+        return VStack(spacing: DesignSystem.Spacing.sm) {
+            ForEach(rows) { row in
+                travelEssentialRow(
+                    icon: row.icon,
+                    label: row.label,
+                    value: row.value,
+                    accessibility: row.accessibility
+                )
+                if row.id != rows.last?.id {
+                    Divider()
+                }
+            }
         }
     }
 
-    @ViewBuilder
-    func timezoneRow(_ display: String?) -> some View {
-        if let display {
-            travelEssentialRow(
-                icon: "clock",
-                label: "Timezone",
-                value: display,
-                accessibility: "Timezone \(accessibleUTC(display))"
+    func travelEssentials(
+        essentials: CountryTravelData.Essentials?,
+        timeZoneDisplay: String?
+    ) -> [TravelEssential] {
+        var rows: [TravelEssential] = []
+        if let timeZoneDisplay {
+            rows.append(
+                TravelEssential(
+                    icon: "clock",
+                    label: "Timezone",
+                    value: timeZoneDisplay,
+                    accessibility: "Timezone \(accessibleUTC(timeZoneDisplay))"
+                )
             )
-            Divider()
         }
-    }
-
-    @ViewBuilder
-    func callingCodeRow(_ code: String?) -> some View {
-        if let code {
-            travelEssentialRow(
-                icon: "phone.fill",
-                label: "Dialing code",
-                value: code,
-                accessibility: "Dialing code \(code)"
+        if let code = essentials?.callingCode {
+            rows.append(
+                TravelEssential(
+                    icon: "phone.fill",
+                    label: "Dialing code",
+                    value: code,
+                    accessibility: "Dialing code \(code)"
+                )
             )
-            Divider()
         }
-    }
-
-    @ViewBuilder
-    func demonymRow(_ demonym: String?) -> some View {
-        if let demonym {
-            travelEssentialRow(icon: "person.2.fill", label: "Demonym", value: demonym)
-            Divider()
+        if let demonym = essentials?.demonym {
+            rows.append(TravelEssential(icon: "person.2.fill", label: "Demonym", value: demonym))
         }
-    }
-
-    @ViewBuilder
-    func drivingSideRow(_ side: CountryTravelData.DrivingSide?) -> some View {
-        if let side {
-            travelEssentialRow(
-                icon: "steeringwheel",
-                label: "Driving side",
-                value: side == .left ? "Left" : "Right"
-            )
-            Divider()
+        if let side = essentials?.drivingSide {
+            let value = side == .left ? "Left" : "Right"
+            rows.append(TravelEssential(icon: "steeringwheel", label: "Driving side", value: value))
         }
-    }
-
-    @ViewBuilder
-    func internetTLDRow(_ tld: String?) -> some View {
-        if let tld {
-            travelEssentialRow(icon: "globe", label: "Internet TLD", value: tld)
+        if let tld = essentials?.internetTLD {
+            rows.append(TravelEssential(icon: "globe", label: "Internet TLD", value: tld))
         }
+        return rows
     }
 
     func travelEssentialRow(
