@@ -428,6 +428,7 @@ private extension MapScreen {
 // MARK: - Data Loading
 private extension MapScreen {
     func loadMapData() async {
+        let wasPreloaded = geoJSONCache.isLoaded
         var shapes = await geoJSONCache.loadShapes()
         if let continentFilter {
             shapes = shapes.filter { $0.continent == continentFilter }
@@ -437,7 +438,7 @@ private extension MapScreen {
 
         mapState.contentBounds = computeContentBounds(from: shapes)
 
-        withAnimation(.easeOut(duration: 0.3)) {
+        withAnimation(wasPreloaded ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
         }
 

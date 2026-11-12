@@ -90,6 +90,7 @@ private extension GeografyApp {
             .environment(worldBankService)
             .environment(xpService)
             .task { await bootstrap() }
+            .task(priority: .utility) { await geoJSONCache.preload() }
             .task(priority: .utility) { await authService.validateOnLaunch() }
             .task(priority: .utility) { await authenticateGameCenter() }
             .task(priority: .background) { await setupNotificationsAndSpotlight() }

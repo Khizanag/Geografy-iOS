@@ -11,6 +11,11 @@ public final class GeoJSONCache {
 
     public init() {}
 
+    /// Parses the world map ahead of time so the Map tab opens without a wait.
+    public func preload() async {
+        _ = await loadShapes()
+    }
+
     public func loadShapes() async -> [CountryShape] {
         if isLoaded { return shapes }
 
