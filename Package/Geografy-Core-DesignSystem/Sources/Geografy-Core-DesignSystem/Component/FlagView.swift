@@ -22,7 +22,7 @@ public struct FlagView: View {
     public var body: some View {
         flagImage
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2))
-            .frame(width: fixedWidth ? height * 1.6 : nil, alignment: .center)
+            .frame(width: fixedWidth ? slotWidth : nil, height: fixedWidth ? height : nil, alignment: .center)
             .accessibilityLabel("Flag of \(countryCode.uppercased())")
     }
 }
@@ -36,13 +36,27 @@ private extension FlagView {
         if let uiImage = UIImage(named: assetName) {
             let ratio = FlagAspectRatio.ratio(for: countryCode)
                 ?? (uiImage.size.width / uiImage.size.height)
+            let size = fittedSize(ratio: ratio)
             Image(uiImage: uiImage)
                 .resizable()
-                .frame(width: height * ratio, height: height)
+                .frame(width: size.width, height: size.height)
         } else {
             Text(fallbackEmoji)
                 .font(DesignSystem.Font.title)
         }
+    }
+
+    /// The width reserved for each flag when `fixedWidth` is on, so a list's text lines up.
+    var slotWidth: CGFloat { height * 1.6 }
+
+    // A fixed-width slot fits wide flags (2:1 and wider) to its width instead of letting them
+    // spill past it; flags that fit keep the full height.
+    func fittedSize(ratio: CGFloat) -> CGSize {
+        let naturalWidth = height * ratio
+        guard fixedWidth, naturalWidth > slotWidth else {
+            return CGSize(width: naturalWidth, height: height)
+        }
+        return CGSize(width: slotWidth, height: slotWidth / ratio)
     }
 
     var fallbackEmoji: String {

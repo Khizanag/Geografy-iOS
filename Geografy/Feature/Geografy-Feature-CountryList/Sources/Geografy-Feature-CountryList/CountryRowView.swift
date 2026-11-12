@@ -72,7 +72,6 @@ private extension CountryRowView {
             if showFlag {
                 FlagView(countryCode: country.code, height: 36, fixedWidth: true)
                     .geoShadow(.subtle)
-                    .frame(width: 56, alignment: .center)
             }
 
             VStack(alignment: .leading, spacing: 3) {
