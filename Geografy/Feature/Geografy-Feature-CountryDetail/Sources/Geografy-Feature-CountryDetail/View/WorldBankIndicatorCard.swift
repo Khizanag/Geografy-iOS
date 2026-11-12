@@ -1,5 +1,6 @@
 import Charts
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -31,7 +32,9 @@ public struct WorldBankIndicatorCard: View {
         .accessibilityHint(accessibilityHintText)
         .sheet(isPresented: $showFullChart) {
             if let points = chartPoints {
-                WorldBankChartSheet(indicator: indicator, allPoints: points)
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    WorldBankChartSheet(indicator: indicator, allPoints: points)
+                }
             }
         }
     }

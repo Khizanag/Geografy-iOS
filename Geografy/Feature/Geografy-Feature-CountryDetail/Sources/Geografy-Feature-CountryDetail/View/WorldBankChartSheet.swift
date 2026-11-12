@@ -63,12 +63,13 @@ private extension WorldBankChartSheet {
 
     var headerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            if let latest = allPoints.last {
-                Text(indicator.format(latest.value))
+            if let shown = selectedPoint ?? allPoints.last {
+                Text(indicator.format(shown.value))
                     .font(DesignSystem.Font.roundedTitle)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .contentTransition(.numericText())
                 HStack(spacing: DesignSystem.Spacing.xs) {
-                    Text("Latest: \(String(latest.year))")
+                    Text(selectedPoint == nil ? "Latest: \(String(shown.year))" : String(shown.year))
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                     Text("·")
@@ -116,31 +117,20 @@ private extension WorldBankChartSheet {
         let minYear = points.first?.year ?? 1_990
         let maxYear = points.last?.year ?? 2_023
         return Chart(points) { point in
-            AreaMark(
-                x: .value("Year", point.year),
-                y: .value(indicator.title, point.value)
-            )
-            .foregroundStyle(
-                LinearGradient(
-                    colors: [
-                        DesignSystem.Color.accent.opacity(0.3),
-                        DesignSystem.Color.accent.opacity(0.0),
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .interpolationMethod(.catmullRom)
-
-            LineMark(
-                x: .value("Year", point.year),
-                y: .value(indicator.title, point.value)
-            )
-            .foregroundStyle(DesignSystem.Color.accent)
-            .lineStyle(StrokeStyle(lineWidth: 2.5))
-            .interpolationMethod(.catmullRom)
+            marks(for: point)
         }
         .chartXScale(domain: minYear...maxYear)
+        #if !os(tvOS)
+        .chartOverlay { proxy in
+            GeometryReader { geometry in
+                Rectangle()
+                    .fill(.clear)
+                    .contentShape(Rectangle())
+                    .gesture(scrubGesture(proxy: proxy, geometry: geometry, points: points))
+            }
+        }
+        .sensoryFeedback(.selection, trigger: selectedPoint?.year)
+        #endif
         .chartXAxis {
             AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 5)) { value in
                 AxisGridLine()
@@ -243,6 +233,78 @@ private extension WorldBankChartSheet {
         .background(DesignSystem.Color.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
     }
+
+    @ChartContentBuilder
+    func marks(for point: WorldBankService.DataPoint) -> some ChartContent {
+        AreaMark(
+            x: .value("Year", point.year),
+            y: .value(indicator.title, point.value)
+        )
+        .foregroundStyle(
+            LinearGradient(
+                colors: [
+                    DesignSystem.Color.accent.opacity(0.3),
+                    DesignSystem.Color.accent.opacity(0.0),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+        .interpolationMethod(.catmullRom)
+
+        LineMark(
+            x: .value("Year", point.year),
+            y: .value(indicator.title, point.value)
+        )
+        .foregroundStyle(DesignSystem.Color.accent)
+        .lineStyle(StrokeStyle(lineWidth: 2.5))
+        .interpolationMethod(.catmullRom)
+
+        if point.year == selectedPoint?.year {
+            RuleMark(x: .value("Year", point.year))
+                .foregroundStyle(DesignSystem.Color.textSecondary.opacity(0.6))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 4]))
+            PointMark(
+                x: .value("Year", point.year),
+                y: .value(indicator.title, point.value)
+            )
+            .foregroundStyle(DesignSystem.Color.accent)
+            .symbolSize(100)
+        }
+    }
+
+    #if !os(tvOS)
+    // A short hold before scrubbing keeps vertical scrolling working over the chart.
+    func scrubGesture(
+        proxy: ChartProxy,
+        geometry: GeometryProxy,
+        points: [WorldBankService.DataPoint]
+    ) -> some Gesture {
+        LongPressGesture(minimumDuration: 0.2)
+            .sequenced(before: DragGesture(minimumDistance: 0))
+            .onChanged { value in
+                guard case .second(true, let drag?) = value else { return }
+                selectPoint(atX: drag.location.x, proxy: proxy, geometry: geometry, points: points)
+            }
+            .onEnded { _ in
+                withAnimation(.easeOut(duration: 0.2)) { selectedPoint = nil }
+            }
+    }
+
+    func selectPoint(
+        atX locationX: CGFloat,
+        proxy: ChartProxy,
+        geometry: GeometryProxy,
+        points: [WorldBankService.DataPoint]
+    ) {
+        guard let plotFrame = proxy.plotFrame,
+              let year: Int = proxy.value(atX: locationX - geometry[plotFrame].origin.x) else { return }
+        let nearest = points.min { abs($0.year - year) < abs($1.year - year) }
+        guard nearest?.year != selectedPoint?.year else { return }
+        withAnimation(.snappy(duration: 0.15)) { selectedPoint = nearest }
+    }
+
+    #endif
 
     func chartXValues(min minYear: Int, max maxYear: Int, count: Int) -> [Int] {
         guard maxYear > minYear else { return [minYear] }
