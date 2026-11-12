@@ -267,7 +267,7 @@ private extension MoreScreen {
     }
 
     var travelItems: [MoreSheet] {
-        [.travel, .travelJournal]
+        [.travel]
     }
 
     var appItems: [MoreSheet] {

@@ -34,7 +34,6 @@ import Geografy_Feature_Theme
 import Geografy_Feature_Timeline
 import Geografy_Feature_TimeZone
 import Geografy_Feature_Travel
-import Geografy_Feature_TravelJournal
 import Geografy_Feature_WordSearch
 import Geografy_Feature_WorldFacts
 import SwiftUI
@@ -103,10 +102,9 @@ extension Destination {
         case .themes: ThemesScreen()
         case .timeline: TimelineScreen()
         case .timeZones: TimeZoneScreen()
-        case .travelJournal: TravelJournalScreen()
         case .travelStatusPicker(let country): TravelStatusPickerSheet(country: country)
         case .travelMap(let filter): TravelMapScreen(filter: filter)
-        case .travelTracker: TravelTrackerScreen()
+        case .travelTracker: TravelScreen()
         case .wordSearch: WordSearchScreen()
         case .wordSearchGame(let theme): WordSearchGameScreen(theme: theme)
         case .worldFacts(let topic): WorldFactsScreen(topic: topic)

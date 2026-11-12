@@ -1,4 +1,4 @@
-@testable import Geografy_Feature_TravelJournal
+@testable import Geografy_Feature_Travel
 import Testing
 
 @MainActor

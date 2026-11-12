@@ -14,7 +14,6 @@
 		0A6210B941DE7A441D73543F /* Geografy-Feature-Organization in Frameworks */ = {isa = PBXBuildFile; productRef = FEFF6ECC5EC8AC8C988FF387 /* Geografy-Feature-Organization */; };
 		0D4D3743FF8230A25D83255A /* Geografy-Feature-Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 881D510CB99F9921BAACE89A /* Geografy-Feature-Auth */; };
 		0E88C9A49DA7172C6C4E10AD /* Geografy-Feature-Flashcard in Frameworks */ = {isa = PBXBuildFile; productRef = 431705B314DEE39D9836BBC5 /* Geografy-Feature-Flashcard */; };
-		10F8B70D95E2679F3D8506DB /* Geografy-Feature-TravelJournal in Frameworks */ = {isa = PBXBuildFile; productRef = 09C93E61D8C4FA5BC6437773 /* Geografy-Feature-TravelJournal */; };
 		145EBE58332021BD9911872B /* Geografy-Feature-Flashcard in Frameworks */ = {isa = PBXBuildFile; productRef = 568665204B9CB8D427D597E1 /* Geografy-Feature-Flashcard */; };
 		18E1E1AD7D200A6AEE5377C4 /* Geografy-Feature-CountryList in Frameworks */ = {isa = PBXBuildFile; productRef = 4E1359C0A837D686E19161EE /* Geografy-Feature-CountryList */; };
 		1CE1F0B4696E2A21C8AB7FF5 /* Geografy-Feature-CurrencyConverter in Frameworks */ = {isa = PBXBuildFile; productRef = C7D84F00BC6C2FCADC09744C /* Geografy-Feature-CurrencyConverter */; };
@@ -32,7 +31,6 @@
 		46CE6DF21909A83D22926EF5 /* Geografy-Feature-GameCenter in Frameworks */ = {isa = PBXBuildFile; productRef = 62C87650D748F39D0F3AB37A /* Geografy-Feature-GameCenter */; };
 		4C0BBEC57054284A9938616F /* Geografy-Feature-DistanceCalculator in Frameworks */ = {isa = PBXBuildFile; productRef = 372438E14DEF2A6802AB706B /* Geografy-Feature-DistanceCalculator */; };
 		4E5F6A7B8C9DAEBFC0D1E2F3 /* GeografyWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4A5B6C7D8E9F0A1B2C3D4E5F /* GeografyWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		5196AB10A68A9EE2C2DDDC7E /* Geografy-Feature-TravelJournal in Frameworks */ = {isa = PBXBuildFile; productRef = 7637924EC9058AED235451ED /* Geografy-Feature-TravelJournal */; };
 		57479CFA8531A994855875BE /* Geografy-Feature-NeighborExplorer in Frameworks */ = {isa = PBXBuildFile; productRef = E81D3048A19647C1A55F6B16 /* Geografy-Feature-NeighborExplorer */; };
 		59FA169CD16669306548173A /* Geografy-Feature-WordSearch in Frameworks */ = {isa = PBXBuildFile; productRef = 3B230AEBA50089029639871A /* Geografy-Feature-WordSearch */; };
 		5EC2D3283CC6B87C1042315F /* Geografy-Feature-Compare in Frameworks */ = {isa = PBXBuildFile; productRef = B18292974843FC8324C286C6 /* Geografy-Feature-Compare */; };
@@ -140,7 +138,6 @@
 				"Feature/Geografy-Feature-Theme",
 				"Feature/Geografy-Feature-TimeZone",
 				"Feature/Geografy-Feature-Travel",
-				"Feature/Geografy-Feature-TravelJournal",
 				"Feature/Geografy-Feature-WorldFacts",
 			);
 			target = F60718293A4B5C6D7E8F9001 /* Geografy */;
@@ -185,7 +182,6 @@
 				"Feature/Geografy-Feature-Timeline",
 				"Feature/Geografy-Feature-TimeZone",
 				"Feature/Geografy-Feature-Travel",
-				"Feature/Geografy-Feature-TravelJournal",
 				"Feature/Geografy-Feature-WordSearch",
 				"Feature/Geografy-Feature-WorldFacts",
 				Feature/Home/View/Card/Explore/HomeCountrySpotlightCard.swift,
@@ -285,7 +281,6 @@
 				DB6AAC16C16EC2B6674D50A7 /* Geografy-Feature-Quiz in Frameworks */,
 				6FA965F421BB497501E4217B /* Geografy-Feature-Multiplayer in Frameworks */,
 				BE96771EBA4A4AE4B5DAA4BF /* Geografy-Feature-Travel in Frameworks */,
-				5196AB10A68A9EE2C2DDDC7E /* Geografy-Feature-TravelJournal in Frameworks */,
 				07295B99038EA7B8CA07B34D /* Geografy-Feature-CountryDetail in Frameworks */,
 				8FAD7F1A4F7F8BF893DBA8EA /* Geografy-Feature-Profile in Frameworks */,
 			);
@@ -331,7 +326,6 @@
 				E85F8877742EA2842E42D0F5 /* Geografy-Feature-Quiz in Frameworks */,
 				2E8EFA6B3779828C4231D156 /* Geografy-Feature-Multiplayer in Frameworks */,
 				34987D2729FEEE0DDDB7272C /* Geografy-Feature-Travel in Frameworks */,
-				10F8B70D95E2679F3D8506DB /* Geografy-Feature-TravelJournal in Frameworks */,
 				D99BBCBBDF73F7AD123C9179 /* Geografy-Feature-CountryDetail in Frameworks */,
 				05427941C2F156E173413E3A /* Geografy-Feature-Profile in Frameworks */,
 			);
@@ -445,7 +439,6 @@
 				3179417A10A213221BB5B42E /* Geografy-Feature-Quiz */,
 				1EE4CEF3B2000DF7DDED6B14 /* Geografy-Feature-Multiplayer */,
 				01C9D562C658A8CAFDF02F46 /* Geografy-Feature-Travel */,
-				7637924EC9058AED235451ED /* Geografy-Feature-TravelJournal */,
 				7120923C1B798FC8EC87A5CB /* Geografy-Feature-CountryDetail */,
 				EB62CABE55CDB420D3A0EB65 /* Geografy-Feature-Profile */,
 			);
@@ -507,7 +500,6 @@
 				431982BB19395CC3549CBC15 /* Geografy-Feature-Quiz */,
 				8944AF401AA00F03F20103E2 /* Geografy-Feature-Multiplayer */,
 				22C63C434FA81B8ACF16FD71 /* Geografy-Feature-Travel */,
-				09C93E61D8C4FA5BC6437773 /* Geografy-Feature-TravelJournal */,
 				9677FC3FE5B3542709AC47AF /* Geografy-Feature-CountryDetail */,
 				AD71FE005C3A03C2C7D1ECBE /* Geografy-Feature-Profile */,
 			);
@@ -580,7 +572,6 @@
 				06F7F09EF183E409E4382FCC /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-TimeZone" */,
 				CB72A57007650157DF471C97 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Timeline" */,
 				BDB5DE75746E0CE897D491C2 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Travel" */,
-				12A7AFB8DC95E075D17E3FEA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-TravelJournal" */,
 				DE49AD22EFA5EF3AA3383037 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-WordSearch" */,
 				86569E53292D648BA4E59970 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-WorldFacts" */,
 				50E1AE95FB50D0A952EBE3B5 /* XCLocalSwiftPackageReference "Package/Geografy-Core-Common" */,
@@ -986,10 +977,6 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Package/Geografy-Core-Service";
 		};
-		12A7AFB8DC95E075D17E3FEA /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-TravelJournal" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "Geografy/Feature/Geografy-Feature-TravelJournal";
-		};
 		165D14B9C56CD5EAB772DD83 /* XCLocalSwiftPackageReference "Geografy/Feature/Geografy-Feature-Map" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "Geografy/Feature/Geografy-Feature-Map";
@@ -1152,10 +1139,6 @@
 		096B9AE0F391DA1CC34EA0BA /* Geografy-Feature-CountryList */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-CountryList";
-		};
-		09C93E61D8C4FA5BC6437773 /* Geografy-Feature-TravelJournal */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Geografy-Feature-TravelJournal";
 		};
 		11A18A3F25D0806C18C2194A /* Geografy-Feature-NationalSymbols */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1348,10 +1331,6 @@
 		75FB6E34221A62108FB55D5F /* Geografy-Feature-MapColoring */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-MapColoring";
-		};
-		7637924EC9058AED235451ED /* Geografy-Feature-TravelJournal */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Geografy-Feature-TravelJournal";
 		};
 		8475DBC371F51FD44AFF3550 /* Geografy-Feature-NeighborExplorer */ = {
 			isa = XCSwiftPackageProductDependency;

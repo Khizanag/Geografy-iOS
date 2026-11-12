@@ -12,7 +12,6 @@ enum MoreSheet: Identifiable {
     case travel
     case dailyChallenge
     case compare
-    case travelJournal
     case quizPacks
     case customQuiz
     case multiplayer
@@ -40,10 +39,9 @@ enum MoreSheet: Identifiable {
         case .countries: "Countries"
         case .orgs: "Organizations"
         case .favorites: "Saved"
-        case .travel: "Travel Tracker"
+        case .travel: "Travel"
         case .dailyChallenge: "Daily Challenge"
         case .compare: "Compare Countries"
-        case .travelJournal: "Travel Journal"
         case .quizPacks: "Quiz Packs"
         case .customQuiz: "Custom Quizzes"
         case .multiplayer: "Multiplayer"
@@ -74,7 +72,6 @@ enum MoreSheet: Identifiable {
         case .travel: "airplane.departure"
         case .dailyChallenge: "calendar.badge.exclamationmark"
         case .compare: "arrow.left.arrow.right"
-        case .travelJournal: "book.fill"
         case .quizPacks: "square.stack.fill"
         case .customQuiz: "pencil.and.list.clipboard"
         case .multiplayer: "person.2.fill"
@@ -102,10 +99,9 @@ enum MoreSheet: Identifiable {
         case .countries: "Browse all 197 countries"
         case .orgs: "International organizations"
         case .favorites: "Favorites, places to visit, collections"
-        case .travel: "Track your adventures"
+        case .travel: "Countries visited and your trip journal"
         case .dailyChallenge: "New puzzle every day"
         case .compare: "Side-by-side country stats"
-        case .travelJournal: "Photos, notes & memories"
         case .quizPacks: "Themed quiz progression"
         case .customQuiz: "Build your own quizzes"
         case .multiplayer: "Challenge opponents"
@@ -136,7 +132,6 @@ enum MoreSheet: Identifiable {
         case .travel: Color(hex: "00C9A7")
         case .dailyChallenge: DesignSystem.Color.orange
         case .compare: DesignSystem.Color.blue
-        case .travelJournal: Color(hex: "00C9A7")
         case .quizPacks: DesignSystem.Color.purple
         case .customQuiz: DesignSystem.Color.accent
         case .multiplayer: DesignSystem.Color.error
@@ -167,7 +162,6 @@ enum MoreSheet: Identifiable {
         case .travel: "travel"
         case .dailyChallenge: "dailyChallenge"
         case .compare: "compare"
-        case .travelJournal: "travelJournal"
         case .quizPacks: "quizPacks"
         case .customQuiz: "customQuiz"
         case .multiplayer: "multiplayer"
@@ -198,7 +192,6 @@ enum MoreSheet: Identifiable {
         case .travel: .travelTracker
         case .dailyChallenge: .dailyChallenge
         case .compare: .compare()
-        case .travelJournal: .travelJournal
         case .quizPacks: .quizPacks
         case .customQuiz: .customQuiz
         case .multiplayer: .multiplayer

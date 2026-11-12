@@ -19,7 +19,6 @@ public struct TravelJournalScreen: View {
     // MARK: - Body
     public var body: some View {
         contentSwitcher
-            .navigationTitle("Travel Journal")
             .closeButtonPlacementLeading()
             .searchable(
                 text: $searchText,

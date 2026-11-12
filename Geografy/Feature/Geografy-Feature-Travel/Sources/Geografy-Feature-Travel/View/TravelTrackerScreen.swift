@@ -24,7 +24,6 @@ public struct TravelTrackerScreen: View {
     public var body: some View {
         extractedContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Travel Tracker")
             .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search countries…")
             .toolbar { toolbarContent }
