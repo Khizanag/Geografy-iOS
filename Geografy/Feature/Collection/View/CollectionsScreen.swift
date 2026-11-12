@@ -11,7 +11,6 @@ struct CollectionsScreen: View {
     @Environment(HapticsService.self) private var hapticsService
 
     @State private var showNewCollection = false
-    @State private var newCollectionName = ""
     @State private var collectionToDelete: String?
 
     // MARK: - Body
@@ -19,8 +18,14 @@ struct CollectionsScreen: View {
         content
             .screenBackground(.standard)
             .toolbar { toolbarContent }
-            .alert("New Collection", isPresented: $showNewCollection) {
-                newCollectionAlert
+            .nameEntryAlert(
+                "New Collection",
+                isPresented: $showNewCollection,
+                placeholder: "Collection name",
+                confirmTitle: "Create",
+                isValid: collectionService.isAvailableName
+            ) { _ in
+                hapticsService.impact(.medium)
             }
             .confirmationDialog(
                 "Delete Collection",
@@ -166,18 +171,6 @@ private extension CollectionsScreen {
 
 // MARK: - Alerts
 private extension CollectionsScreen {
-    @ViewBuilder
-    var newCollectionAlert: some View {
-        TextField("Collection name", text: $newCollectionName)
-        Button("Cancel", role: .cancel) { newCollectionName = "" }
-        Button("Create") {
-            let name = newCollectionName.trimmingCharacters(in: .whitespaces)
-            guard !name.isEmpty else { return }
-            hapticsService.impact(.medium)
-            newCollectionName = ""
-        }
-    }
-
     var deleteDialogBinding: Binding<Bool> {
         Binding(
             get: { collectionToDelete != nil },

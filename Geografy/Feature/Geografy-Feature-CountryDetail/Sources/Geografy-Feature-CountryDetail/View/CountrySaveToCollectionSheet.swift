@@ -16,7 +16,6 @@ public struct CountrySaveToCollectionSheet: View {
     }
 
     @State private var showNewCollection = false
-    @State private var newCollectionName = ""
 
     // MARK: - Body
     public var body: some View {
@@ -24,8 +23,15 @@ public struct CountrySaveToCollectionSheet: View {
             .background(DesignSystem.Color.background.ignoresSafeArea())
             .navigationTitle("Save to Collection")
             .navigationBarTitleDisplayMode(.inline)
-            .alert("New Collection", isPresented: $showNewCollection) {
-                newCollectionAlert
+            .nameEntryAlert(
+                "New Collection",
+                isPresented: $showNewCollection,
+                placeholder: "Collection name",
+                confirmTitle: "Create & Save",
+                isValid: collectionService.isAvailableName
+            ) { name in
+                collectionService.add(itemID: countryCode, type: .country, to: name)
+                hapticsService.notification(.success)
             }
     }
 }
@@ -138,22 +144,6 @@ private extension CountrySaveToCollectionSheet {
             fullWidth: true
         ) {
             showNewCollection = true
-        }
-    }
-}
-
-// MARK: - New Collection Alert
-private extension CountrySaveToCollectionSheet {
-    @ViewBuilder
-    var newCollectionAlert: some View {
-        TextField("Collection name", text: $newCollectionName)
-        Button("Cancel", role: .cancel) { newCollectionName = "" }
-        Button("Create & Save") {
-            let name = newCollectionName.trimmingCharacters(in: .whitespaces)
-            guard !name.isEmpty else { return }
-            collectionService.add(itemID: countryCode, type: .country, to: name)
-            hapticsService.notification(.success)
-            newCollectionName = ""
         }
     }
 }

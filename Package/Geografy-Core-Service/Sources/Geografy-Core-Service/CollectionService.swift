@@ -25,6 +25,11 @@ public extension CollectionService {
         Array(Set(items.map(\.collectionName))).sorted()
     }
 
+    /// Whether a new collection can take this name: not blank, and not already used in any letter case.
+    func isAvailableName(_ name: String) -> Bool {
+        !name.isEmpty && !collectionNames.contains { $0.caseInsensitiveCompare(name) == .orderedSame }
+    }
+
     func items(in collection: String) -> [CollectionItem] {
         items.filter { $0.collectionName == collection }
     }
