@@ -202,7 +202,7 @@ extension CountryDetailScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Religion")
             PercentageBarChart(
-                items: religionItems.sorted(by: \.percentage, descending: true),
+                items: religionItems,
                 appeared: true
             )
         }
@@ -212,7 +212,7 @@ extension CountryDetailScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Ethnicity")
             PercentageBarChart(
-                items: ethnicityItems.sorted(by: \.percentage, descending: true),
+                items: ethnicityItems,
                 appeared: true
             )
         }

@@ -1,6 +1,8 @@
 import Geografy_Core_Common
 import SwiftUI
 
+/// Ranked share bars. Every bar uses one color — length carries the value — and the catch-all "Other" row
+/// always comes last in a neutral color.
 public struct PercentageBarChart: View {
     // MARK: - Properties
     public let title: String?
@@ -28,7 +30,7 @@ public struct PercentageBarChart: View {
                 if let title, let icon {
                     headerRow(title: title, icon: icon)
                 }
-                ForEach(Array(items.enumerated()), id: \.element.name) { index, item in
+                ForEach(Array(rankedItems.enumerated()), id: \.element.name) { index, item in
                     itemRow(item: item, index: index)
                 }
             }
@@ -64,8 +66,8 @@ private extension PercentageBarChart {
                     Capsule()
                         .fill(DesignSystem.Color.cardBackgroundHighlighted)
                     Capsule()
-                        .fill(barColor(for: index))
-                        .frame(width: geo.size.width * min(appeared ? item.percentage / 100 : 0, 1))
+                        .fill(barColor(for: item))
+                        .frame(width: barWidth(for: item, in: geo.size))
                         .animation(
                             .spring(response: 0.6, dampingFraction: 0.7)
                                 .delay(0.3 + Double(index) * 0.08),
@@ -77,7 +79,7 @@ private extension PercentageBarChart {
 
             Text(String(format: "%.0f%%", item.percentage))
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .frame(width: DesignSystem.Spacing.xl, alignment: .trailing)
         }
     }
@@ -85,8 +87,23 @@ private extension PercentageBarChart {
 
 // MARK: - Helpers
 private extension PercentageBarChart {
-    func barColor(for index: Int) -> Color {
-        let opacity = max(1.0 - Double(index) * 0.15, 0.3)
-        return DesignSystem.Color.accent.opacity(opacity)
+    var rankedItems: [PercentageItem] {
+        let ranked = items.sorted(by: \.percentage, descending: true)
+        return ranked.filter { !isCatchAll($0) } + ranked.filter(isCatchAll)
+    }
+
+    func isCatchAll(_ item: PercentageItem) -> Bool {
+        item.name == "Other" || item.name.hasPrefix("Other (")
+    }
+
+    func barColor(for item: PercentageItem) -> Color {
+        isCatchAll(item) ? DesignSystem.Color.textTertiary : DesignSystem.Color.accent
+    }
+
+    // A nonzero share never shrinks below a dot, so 1% rows stay visible.
+    func barWidth(for item: PercentageItem, in size: CGSize) -> CGFloat {
+        guard appeared, item.percentage > 0 else { return 0 }
+        let share = size.width * min(item.percentage / 100, 1)
+        return max(share, size.height)
     }
 }
