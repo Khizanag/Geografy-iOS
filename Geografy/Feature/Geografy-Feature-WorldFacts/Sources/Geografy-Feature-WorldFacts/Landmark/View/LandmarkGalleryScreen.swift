@@ -24,7 +24,6 @@ public struct LandmarkGalleryScreen: View {
     public var body: some View {
         scrollContent
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Landmark Gallery")
             .sheet(item: $selectedLandmark) { landmark in
                 LandmarkDetailView(landmark: landmark)
             }

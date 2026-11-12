@@ -1,0 +1,180 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@, area: %@, average depth: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, area: %2$@, average depth: %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, ფართობი: %2$@, საშუალო სიღრმე: %3$@"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%@: %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@, %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@, %3$@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "Bordering Continents" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსაზღვრე კონტინენტები"
+          }
+        }
+      }
+    },
+    "Double tap to collapse" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ჩასაკეცად"
+          }
+        }
+      }
+    },
+    "Double tap to expand" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება გასაშლელად"
+          }
+        }
+      }
+    },
+    "Geography Features" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფიული ობიექტები"
+          }
+        }
+      }
+    },
+    "Landmark Gallery" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ღირშესანიშნაობები"
+          }
+        }
+      }
+    },
+    "Ocean Explorer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ოკეანეების მკვლევარი"
+          }
+        }
+      }
+    },
+    "Rank %lld, %@, %@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Rank %1$lld, %2$@, %3$@: %4$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგი %1$lld, %2$@, %3$@: %4$@"
+          }
+        }
+      }
+    },
+    "Type" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტიპი"
+          }
+        }
+      }
+    },
+    "UNESCO" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UNESCO"
+          }
+        }
+      }
+    },
+    "World Records" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო რეკორდები"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

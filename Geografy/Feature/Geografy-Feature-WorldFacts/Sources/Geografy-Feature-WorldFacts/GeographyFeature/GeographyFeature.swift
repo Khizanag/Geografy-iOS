@@ -5,7 +5,6 @@ public enum GeographyFeatureType: String, Sendable, CaseIterable {
     case river
     case desert
     case lake
-    case island
 
     public var displayName: String {
         switch self {
@@ -13,7 +12,6 @@ public enum GeographyFeatureType: String, Sendable, CaseIterable {
         case .river: "Rivers"
         case .desert: "Deserts"
         case .lake: "Lakes"
-        case .island: "Islands"
         }
     }
 
@@ -23,7 +21,6 @@ public enum GeographyFeatureType: String, Sendable, CaseIterable {
         case .river: "water.waves"
         case .desert: "sun.max.fill"
         case .lake: "drop.fill"
-        case .island: "globe"
         }
     }
 }

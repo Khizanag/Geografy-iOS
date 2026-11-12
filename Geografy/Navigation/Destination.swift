@@ -15,9 +15,7 @@ import Geografy_Feature_Favorite
 import Geografy_Feature_Feed
 import Geografy_Feature_Flashcard
 import Geografy_Feature_GameCenter
-import Geografy_Feature_GeographyFeatures
 import Geografy_Feature_IndependenceTimeline
-import Geografy_Feature_LandmarkGallery
 import Geografy_Feature_LearningPath
 import Geografy_Feature_Map
 import Geografy_Feature_MapColoring
@@ -25,7 +23,6 @@ import Geografy_Feature_MapPuzzle
 import Geografy_Feature_Multiplayer
 import Geografy_Feature_NationalSymbols
 import Geografy_Feature_NeighborExplorer
-import Geografy_Feature_OceanExplorer
 import Geografy_Feature_Organization
 import Geografy_Feature_Profile
 import Geografy_Feature_Quiz
@@ -40,7 +37,7 @@ import Geografy_Feature_TimeZone
 import Geografy_Feature_Travel
 import Geografy_Feature_TravelJournal
 import Geografy_Feature_WordSearch
-import Geografy_Feature_WorldRecords
+import Geografy_Feature_WorldFacts
 import SwiftUI
 
 // MARK: - Content
@@ -76,10 +73,8 @@ extension Destination {
         case .feed: FeedScreen()
         case let .flashcardSession(deck, cards): FlashcardSessionScreen(deck: deck, cards: cards)
         case .friends: FriendsListScreen()
-        case .geographyFeatures: GeographyFeaturesScreen()
         case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
         case .independenceTimeline: IndependenceTimelineScreen()
-        case .landmarkGallery: LandmarkGalleryScreen()
         case .learningPath: LearningPathScreen()
         case .learningModule(let module): ModuleLessonsScreen(module: module)
         case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)
@@ -91,7 +86,6 @@ extension Destination {
         case .mapPuzzle: MapPuzzleSetupScreen()
         case .multiplayer: MultiplayerLobbyScreen(multiplayerService: Self.multiplayerService)
         case .neighborExplorer(let country): NeighborExplorerScreen(country: country)
-        case .oceanExplorer: OceanExplorerScreen()
         case .organizationDetail(let org): OrganizationDetailScreen(organization: org)
         case .organizationMap(let org): OrganizationMapScreen(organization: org)
         case .organizations: OrganizationsScreen()
@@ -119,7 +113,7 @@ extension Destination {
         case .travelTracker: TravelTrackerScreen()
         case .wordSearch: WordSearchScreen()
         case .wordSearchGame(let theme): WordSearchGameScreen(theme: theme)
-        case .worldRecords: WorldRecordsScreen()
+        case .worldFacts(let topic): WorldFactsScreen(topic: topic)
         }
     }
 }

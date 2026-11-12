@@ -28,10 +28,8 @@ public enum Destination: Hashable, Identifiable {
     case feed
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
     case friends
-    case geographyFeatures
     case historicalMap(initialYear: Int)
     case independenceTimeline
-    case landmarkGallery
     case learningPath
     case learningModule(LearningModule)
     case lesson(LearningModule, Lesson)
@@ -43,7 +41,6 @@ public enum Destination: Hashable, Identifiable {
     case mapPuzzle
     case multiplayer
     case neighborExplorer(Country)
-    case oceanExplorer
     case organizationDetail(Organization)
     case organizationMap(Organization)
     case organizations
@@ -71,7 +68,7 @@ public enum Destination: Hashable, Identifiable {
     case travelTracker
     case wordSearch
     case wordSearchGame(WordSearchTheme)
-    case worldRecords
+    case worldFacts(WorldFactsTopic)
 
     public var id: String {
         switch self {
@@ -97,10 +94,8 @@ public enum Destination: Hashable, Identifiable {
         case .feed: "feed"
         case .flashcardSession: "flashcardSession"
         case .friends: "friends"
-        case .geographyFeatures: "geographyFeatures"
         case .historicalMap(let year): "historicalMap-\(year)"
         case .independenceTimeline: "independenceTimeline"
-        case .landmarkGallery: "landmarkGallery"
         case .learningPath: "learningPath"
         case .learningModule(let module): "learningModule-\(module.id)"
         case let .lesson(module, lesson): "lesson-\(module.id)-\(lesson.id)"
@@ -112,7 +107,6 @@ public enum Destination: Hashable, Identifiable {
         case .mapPuzzle: "mapPuzzle"
         case .multiplayer: "multiplayer"
         case .neighborExplorer(let country): "neighborExplorer-\(country.code)"
-        case .oceanExplorer: "oceanExplorer"
         case .organizationDetail(let org): "orgDetail-\(org.id)"
         case .organizationMap(let org): "orgMap-\(org.id)"
         case .organizations: "organizations"
@@ -140,7 +134,7 @@ public enum Destination: Hashable, Identifiable {
         case .travelTracker: "travelTracker"
         case .wordSearch: "wordSearch"
         case .wordSearchGame(let theme): "wordSearchGame-\(theme.rawValue)"
-        case .worldRecords: "worldRecords"
+        case .worldFacts(let topic): "worldFacts-\(topic.rawValue)"
         }
     }
 }

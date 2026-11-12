@@ -19,10 +19,6 @@ public struct GeographyFeaturesScreen: View {
         scrollContent
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .navigationTitle("Geography Features")
-            #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
             .onAppear { blobAnimating = true }
     }
 }

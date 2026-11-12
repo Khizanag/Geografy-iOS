@@ -1,5 +1,5 @@
 import Geografy_Core_DesignSystem
-import Geografy_Feature_GeographyFeatures
+import Geografy_Feature_WorldFacts
 import SwiftUI
 
 struct GeographyFeaturesScreen: View {

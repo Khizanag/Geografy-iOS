@@ -1,7 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Service
-import Geografy_Feature_WorldRecords
+import Geografy_Feature_WorldFacts
 import SwiftUI
 
 struct WorldRecordsScreen: View {

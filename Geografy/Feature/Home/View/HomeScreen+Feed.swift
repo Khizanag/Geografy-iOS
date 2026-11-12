@@ -212,9 +212,9 @@ extension HomeScreen {
         switch item {
         case .learningPath: coordinator.sheet(.learningPath)
         case .flashcards: coordinator.sheet(.srsStudy)
-        case .oceanExplorer: coordinator.push(.oceanExplorer)
-        case .geographyFeatures: coordinator.push(.geographyFeatures)
-        case .landmarks: coordinator.push(.landmarkGallery)
+        case .oceanExplorer: coordinator.push(.worldFacts(.oceans))
+        case .geographyFeatures: coordinator.push(.worldFacts(.features))
+        case .landmarks: coordinator.push(.worldFacts(.landmarks))
         }
     }
 }
@@ -223,7 +223,7 @@ extension HomeScreen {
 extension HomeScreen {
     var worldRecordsSection: some View {
         HomeWorldRecordsCard {
-            coordinator.push(.worldRecords)
+            coordinator.push(.worldFacts(.records))
         }
     }
 }
