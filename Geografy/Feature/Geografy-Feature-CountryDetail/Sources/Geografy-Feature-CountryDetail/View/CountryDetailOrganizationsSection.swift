@@ -41,11 +41,13 @@ extension CountryDetailScreen {
             } label: {
                 Label("View Details", systemImage: "info.circle")
             }
+            .tint(DesignSystem.Color.iconPrimary)
             Button {
                 coordinator.sheet(.organizationMap(org))
             } label: {
                 Label("View Map", systemImage: "map")
             }
+            .tint(DesignSystem.Color.iconPrimary)
         } preview: {
             Text(org.displayName)
                 .font(DesignSystem.Font.headline)

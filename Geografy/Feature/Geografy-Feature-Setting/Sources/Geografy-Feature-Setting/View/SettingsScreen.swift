@@ -242,7 +242,7 @@ private extension SettingsScreen {
                 Label("Dark", systemImage: "moon.fill").tag("Dark")
             }
             .pickerStyle(.menu)
-            .tint(DesignSystem.Color.textSecondary)
+            .tint(DesignSystem.Color.iconPrimary)
         }
         .settingsRowPadding()
     }

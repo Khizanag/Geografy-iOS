@@ -1,4 +1,5 @@
 import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
@@ -10,7 +11,11 @@ struct CountryContextMenu: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .contextMenu { contextMenuContent }
+            .contextMenu {
+                // Menu icons take the label color, not the app's accent tint.
+                contextMenuContent
+                    .tint(DesignSystem.Color.iconPrimary)
+            }
     }
 
     @ViewBuilder
@@ -48,6 +53,7 @@ struct CountryContextMenu: ViewModifier {
             } label: {
                 Label("Clear Travel Status", systemImage: "xmark.circle")
             }
+            .tint(DesignSystem.Color.error)
         }
 
         #if targetEnvironment(macCatalyst)

@@ -112,6 +112,7 @@ private extension CollectionsScreen {
             } label: {
                 Label("Delete", systemImage: "trash")
             }
+            .tint(DesignSystem.Color.error)
         }
     }
 
