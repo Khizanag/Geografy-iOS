@@ -37,7 +37,6 @@ public struct WordSearchGameScreen: View {
         contentSwitcher
             .background(DesignSystem.Color.background)
             .navigationTitle("Word Search")
-            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
             .toolbar { toolbarContent }
             .task { startPuzzle() }
             .onReceive(timer) { _ in

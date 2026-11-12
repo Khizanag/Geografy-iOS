@@ -21,7 +21,6 @@ public struct OceanExplorerScreen: View {
         scrollContent
             .background { ambientBlobs }
             .background(DesignSystem.Color.background.ignoresSafeArea())
-            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
             .onAppear { startBlobAnimation() }
     }
 }

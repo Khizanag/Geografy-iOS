@@ -20,7 +20,6 @@ public struct TerritorialDisputesScreen: View {
             .background(DesignSystem.Color.background)
             .navigationTitle("Territorial Disputes")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(DesignSystem.Color.background, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .onAppear {
                 loadSelections()
