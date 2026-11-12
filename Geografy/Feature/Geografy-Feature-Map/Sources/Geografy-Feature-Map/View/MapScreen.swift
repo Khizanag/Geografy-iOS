@@ -39,7 +39,7 @@ public struct MapScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .closeButtonPlacementLeading()
-            .safeAreaInset(edge: .top) {
+            .safeAreaInset(edge: .bottom) {
                 if !isLandscape {
                     bannerOverlay
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
@@ -200,7 +200,7 @@ private extension MapScreen {
                 onMoreInfo: country.map { selected in { coordinator.push(.countryDetail(selected)) } },
                 onDismiss: { withAnimation(.easeInOut(duration: 0.3)) { mapState.selectedCountryCode = nil } }
             )
-            .transition(.move(edge: .top).combined(with: .opacity))
+            .transition(.move(edge: .bottom).combined(with: .opacity))
         }
     }
 }

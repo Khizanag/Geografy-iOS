@@ -42,8 +42,8 @@ public struct CountryBannerView: View {
     public var body: some View {
         bannerCard
             #if !os(tvOS)
-            .offset(y: min(dragOffset, 0))
-            .opacity(1 + Double(min(dragOffset, 0)) / 100)
+            .offset(y: max(dragOffset, 0))
+            .opacity(1 - Double(max(dragOffset, 0)) / 100)
             .gesture(swipeToDismiss)
             #endif
     }
@@ -68,6 +68,7 @@ private extension CountryBannerView {
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
         .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.xs)
     }
 
     var flagButton: some View {
@@ -134,9 +135,9 @@ private extension CountryBannerView {
                 dragOffset = value.translation.height
             }
             .onEnded { value in
-                if value.translation.height < -30 {
+                if value.translation.height > 30 {
                     withAnimation(.easeOut(duration: 0.2)) {
-                        dragOffset = -200
+                        dragOffset = 200
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         onDismiss()

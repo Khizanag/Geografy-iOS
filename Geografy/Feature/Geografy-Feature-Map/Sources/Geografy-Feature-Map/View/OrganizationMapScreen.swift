@@ -38,7 +38,12 @@ public struct OrganizationMapScreen: View {
             .ignoresSafeArea()
             .safeAreaInset(edge: .top) {
                 if !isLandscape {
-                    topContent
+                    orgHeader
+                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                if !isLandscape {
+                    bannerOverlay
                         .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
@@ -85,7 +90,7 @@ private extension OrganizationMapScreen {
 
     var isLandscape: Bool { verticalSizeClass == .compact }
 
-    var topContent: some View {
+    var landscapeHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             orgHeader
             bannerOverlay
@@ -124,7 +129,7 @@ private extension OrganizationMapScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
             if isLandscape {
-                topContent
+                landscapeHeader
                     .frame(maxWidth: 500)
                     .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
@@ -256,7 +261,7 @@ private extension OrganizationMapScreen {
                 onMoreInfo: country != nil ? { navigateToCountry = country } : nil,
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
-            .transition(.move(edge: .top).combined(with: .opacity))
+            .transition(.move(edge: .bottom).combined(with: .opacity))
         }
     }
 }
