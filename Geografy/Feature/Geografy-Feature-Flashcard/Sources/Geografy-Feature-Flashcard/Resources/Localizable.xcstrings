@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%@: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -114,6 +115,7 @@
       }
     },
     "Cards" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -124,6 +126,7 @@
       }
     },
     "Cards per Session" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -154,6 +157,7 @@
       }
     },
     "Flashcards" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

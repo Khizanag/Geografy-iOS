@@ -12,6 +12,7 @@
       }
     },
     "Debug Sign In" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -41,6 +42,17 @@
         }
       }
     },
+    "Sign in" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესვლა"
+          }
+        }
+      }
+    },
     "Sign In Failed" : {
       "localizations" : {
         "ka" : {
@@ -51,17 +63,8 @@
         }
       }
     },
-    "Sign in" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "შესვლა"
-          }
-        }
-      }
-    },
     "Sign in to save progress" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -82,6 +85,7 @@
       }
     },
     "XP, streaks & achievements sync to your account" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

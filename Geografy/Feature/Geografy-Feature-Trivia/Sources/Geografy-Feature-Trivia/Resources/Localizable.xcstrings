@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "All Done!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -12,6 +13,7 @@
       }
     },
     "Done" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

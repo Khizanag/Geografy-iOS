@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    ":" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ":"
+          }
+        }
+      }
+    },
     "%@ wants a rematch!" : {
       "localizations" : {
         "ka" : {
@@ -22,6 +32,7 @@
       }
     },
     "%lld - %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -85,16 +96,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld/%lld სწორი"
-          }
-        }
-      }
-    },
-    ":" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":"
           }
         }
       }
@@ -189,22 +190,22 @@
         }
       }
     },
-    "GO!" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "დაიწყე!"
-          }
-        }
-      }
-    },
     "Get ready..." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "მოემზადე..."
+          }
+        }
+      }
+    },
+    "GO!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე!"
           }
         }
       }
@@ -260,6 +261,7 @@
       }
     },
     "Match History" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -300,6 +302,7 @@
       }
     },
     "No Matches Yet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -349,22 +352,23 @@
         }
       }
     },
+    "Play a multiplayer match to see your history here." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ითამაშე მულტიპლეიერ მატჩი ისტორიის სანახავად."
+          }
+        }
+      }
+    },
     "Play Nearby" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ახლომახლო თამაში"
-          }
-        }
-      }
-    },
-    "Play a multiplayer match to see your history here." : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ითამაშე მულტიპლეიერ მატჩი ისტორიის სანახავად."
           }
         }
       }
@@ -479,12 +483,32 @@
         }
       }
     },
+    "vs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vs"
+          }
+        }
+      }
+    },
     "VS" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "VS"
+          }
+        }
+      }
+    },
+    "vs %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წინააღმდეგ"
           }
         }
       }
@@ -525,26 +549,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენი პროგრესი დაიკარგება."
-          }
-        }
-      }
-    },
-    "vs" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "vs"
-          }
-        }
-      }
-    },
-    "vs %@" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@-ს წინააღმდეგ"
           }
         }
       }

@@ -114,6 +114,7 @@
       }
     },
     "🇫🇷" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

@@ -34,6 +34,7 @@
       }
     },
     "%@, %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -135,22 +136,22 @@
         }
       }
     },
-    "LEVEL UP!" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "დონე აიწია!"
-          }
-        }
-      }
-    },
     "Level %lld" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დონე %lld"
+          }
+        }
+      }
+    },
+    "LEVEL UP!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე აიწია!"
           }
         }
       }

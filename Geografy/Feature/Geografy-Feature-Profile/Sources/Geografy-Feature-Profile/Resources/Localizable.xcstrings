@@ -237,6 +237,7 @@
       }
     },
     "Get Geografy Premium" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -277,6 +278,7 @@
       }
     },
     "Premium" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -358,6 +360,7 @@
       }
     },
     "Unlock all quiz types, advanced stats & more" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
