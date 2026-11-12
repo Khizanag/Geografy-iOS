@@ -44,9 +44,7 @@ extension QuizSessionScreen {
 
         if isArcadeMode, arcadeLives <= 0 { return }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-            advanceToNext()
-        }
+        scheduleTransition(after: .seconds(1.3)) { advanceToNext() }
     }
 
     public func handleAnswerFeedback(isCorrect: Bool) {
@@ -68,11 +66,9 @@ extension QuizSessionScreen {
             if isArcadeMode {
                 arcadeLives -= 1
                 if arcadeLives <= 0 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        #if !os(tvOS)
-                        finishArcade()
-                        #endif
-                    }
+                    #if !os(tvOS)
+                    scheduleTransition(after: .seconds(1)) { finishArcade() }
+                    #endif
                 }
             }
         }
@@ -135,9 +131,7 @@ extension QuizSessionScreen {
 
         if isArcadeMode, arcadeLives <= 0 { return }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            advanceToNext()
-        }
+        scheduleTransition(after: .seconds(1.5)) { advanceToNext() }
     }
 
     public func skipSpellingBee() {
@@ -169,8 +163,19 @@ extension QuizSessionScreen {
 
         if isArcadeMode, arcadeLives <= 0 { return }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            advanceToNext()
+        scheduleTransition(after: .seconds(1.5)) { advanceToNext() }
+    }
+
+    // A stored task, unlike asyncAfter, is cancelled when the session disappears.
+    func scheduleTransition(after delay: Duration, perform action: @escaping @MainActor () -> Void) {
+        pendingTransition?.cancel()
+        pendingTransition = Task {
+            do {
+                try await Task.sleep(for: delay)
+            } catch {
+                return
+            }
+            action()
         }
     }
 

@@ -46,9 +46,7 @@ extension QuizSessionScreen {
             showFeedback = true
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-            advanceToNext()
-        }
+        scheduleTransition(after: .seconds(1.3)) { advanceToNext() }
     }
 
     public func startArcadeTimer() {

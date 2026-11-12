@@ -20,6 +20,7 @@ public struct QuizSessionScreen: View {
     @State var showFeedback = false
     @State var timerRemaining: TimeInterval = 0
     @State var timerCancellable: AnyCancellable?
+    @State var pendingTransition: Task<Void, Never>?
     @State var startTime = Date()
     @State var questionStartTime = Date()
     @State private var showQuitAlert = false
@@ -56,6 +57,7 @@ public struct QuizSessionScreen: View {
             .onDisappear {
                 timerCancellable?.cancel()
                 arcadeTimerCancellable?.cancel()
+                pendingTransition?.cancel()
             }
             .navigationDestination(item: $navigateToResult) { result in
                 resultsDestination(for: result)
