@@ -111,6 +111,12 @@ private extension ContentView {
                 }
             }
 
+            Tab("Map", systemImage: "map.fill", value: AppTab.map) {
+                CoordinatedNavigationStack(navigator: appCoordinator.mapNavigator) {
+                    MapScreen()
+                }
+            }
+
             Tab("Play", systemImage: "gamecontroller.fill", value: AppTab.play) {
                 CoordinatedNavigationStack(navigator: appCoordinator.playNavigator) {
                     PlayScreen()

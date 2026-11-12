@@ -5,6 +5,7 @@ import SwiftUI
 
 enum AppTab: Int, Hashable {
     case explore
+    case map
     case play
     case learn
     case profile
@@ -15,6 +16,7 @@ final class AppCoordinator {
     var selectedTab: AppTab = .explore
 
     let exploreNavigator = Navigator()
+    let mapNavigator = Navigator()
     let playNavigator = Navigator()
     let learnNavigator = Navigator()
     let profileNavigator = Navigator()
@@ -22,6 +24,7 @@ final class AppCoordinator {
     func navigator(for tab: AppTab) -> Navigator {
         switch tab {
         case .explore: exploreNavigator
+        case .map: mapNavigator
         case .play: playNavigator
         case .learn: learnNavigator
         case .profile: profileNavigator
@@ -31,7 +34,8 @@ final class AppCoordinator {
     func handleDeepLink(_ url: URL) {
         guard url.scheme == "geografy" else { return }
         switch url.host {
-        case "home", "countries", "maps": selectedTab = .explore
+        case "home", "countries": selectedTab = .explore
+        case "map", "maps": selectedTab = .map
         case "quiz": selectedTab = .play
         case "more": selectedTab = .profile
         case "streak", "profile":
