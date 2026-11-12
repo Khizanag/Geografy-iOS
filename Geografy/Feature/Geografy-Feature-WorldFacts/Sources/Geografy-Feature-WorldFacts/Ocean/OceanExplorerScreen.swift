@@ -238,7 +238,7 @@ private extension OceanExplorerScreen {
         .ignoresSafeArea()
         .scaleEffect(blobAnimating ? 1.05 : 0.95)
         .animation(
-            reduceMotion ? .default : .easeInOut(duration: 4).repeatForever(autoreverses: true),
+            nil,
             value: blobAnimating
         )
     }

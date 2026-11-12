@@ -94,7 +94,7 @@ private extension LessonScreen {
             blobEllipse(color: DesignSystem.Color.indigo, opacity: 0.18, offset: (-120, 250), animates: !blobAnimating)
         }
         .allowsHitTesting(false)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(nil, value: blobAnimating)
     }
 
     func blobEllipse(color: Color, opacity: Double, offset: (CGFloat, CGFloat), animates: Bool) -> some View {

@@ -79,7 +79,7 @@ private extension OrganizationDetailScreen {
         }
         .ignoresSafeArea()
         .animation(
-            reduceMotion ? nil : .easeInOut(duration: 5).repeatForever(autoreverses: true),
+            nil,
             value: blobAnimating
         )
     }

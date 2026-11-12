@@ -241,7 +241,7 @@ private extension AllMapsScreen {
         }
         .ignoresSafeArea()
         .animation(
-            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
+            nil,
             value: blobAnimating
         )
     }

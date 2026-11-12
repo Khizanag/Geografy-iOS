@@ -1,12 +1,12 @@
 import SwiftUI
 
+/// A static backdrop of soft color blobs.
+///
+/// It's rendered once into a single layer and doesn't animate: blurred shapes that change every
+/// frame make the screens on top of them stutter while scrolling.
 public struct AmbientBlobsView: View {
     // MARK: - Properties
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     private let preset: Preset
-
-    @State private var isAnimating = false
 
     // MARK: - Init
     public init(_ preset: Preset = .standard) {
@@ -29,17 +29,14 @@ public struct AmbientBlobsView: View {
                     .frame(width: blob.width, height: blob.height)
                     .blur(radius: blob.blur)
                     .offset(x: blob.offset.width, y: blob.offset.height)
-                    .scaleEffect(isAnimating ? blob.scaleRange.animating : blob.scaleRange.idle)
+                    .scaleEffect(blob.scaleRange.idle)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .ignoresSafeArea()
+        .drawingGroup()
         .allowsHitTesting(false)
         .accessibilityHidden(true)
-        .ignoresSafeArea()
-        .animation(
-            reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true),
-            value: isAnimating
-        )
-        .onAppear { isAnimating = true }
     }
 }
 

@@ -115,7 +115,7 @@ private extension TimeZoneScreen {
         }
         .allowsHitTesting(false)
         .ignoresSafeArea()
-        .animation(reduceMotion ? nil : .easeInOut(duration: 6).repeatForever(autoreverses: true), value: blobAnimating)
+        .animation(nil, value: blobAnimating)
     }
 }
 
