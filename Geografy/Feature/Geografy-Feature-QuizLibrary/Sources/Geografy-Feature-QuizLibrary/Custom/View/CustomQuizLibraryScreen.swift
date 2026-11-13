@@ -114,7 +114,7 @@ private extension CustomQuizLibraryScreen {
             } label: {
                 Label("Delete", systemImage: "trash")
             }
-            .tint(DesignSystem.Color.error)
+            .tint(DesignSystem.Color.destructive)
         }
     }
 }

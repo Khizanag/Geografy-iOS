@@ -51,7 +51,7 @@ struct CountryContextMenu: ViewModifier {
             } label: {
                 Label("Clear Travel Status", systemImage: "xmark.circle")
             }
-            .tint(DesignSystem.Color.error)
+            .tint(DesignSystem.Color.destructive)
         }
 
         #if targetEnvironment(macCatalyst)

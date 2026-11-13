@@ -137,7 +137,7 @@ private extension FavoritesScreen {
             Label("Reset All", systemImage: "arrow.counterclockwise")
         }
         // The menu tints icons with the primary color; a destructive item keeps its icon red.
-        .tint(DesignSystem.Color.error)
+        .tint(DesignSystem.Color.destructive)
     }
 
     func continentIcon(for continent: Country.Continent) -> String {

@@ -181,7 +181,7 @@ private extension CountryListScreen {
             Label("Reset All", systemImage: "arrow.counterclockwise")
         }
         // The menu tints icons with the primary color; a destructive item keeps its icon red.
-        .tint(DesignSystem.Color.error)
+        .tint(DesignSystem.Color.destructive)
     }
 
     var groupBySubmenu: some View {
