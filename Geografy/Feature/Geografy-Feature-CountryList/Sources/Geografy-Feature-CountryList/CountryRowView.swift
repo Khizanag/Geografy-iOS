@@ -92,18 +92,7 @@ private extension CountryRowView {
                 if isStacked {
                     stackedTopLine
                 }
-                // The continent rides on the name line, clear of the heart and of the stats below.
-                nameLineLayout {
-                    Text(country.name)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(isStacked ? nil : 2)
-                        .layoutPriority(1)
-                    if showContinent {
-                        continentBadge
-                            .fixedSize()
-                    }
-                }
+                nameLine
 
                 if showCapital {
                     capitalLabel
@@ -152,29 +141,83 @@ private extension CountryRowView {
             .geoShadow(.subtle)
     }
 
-    var nameLineLayout: AnyLayout {
-        isStacked
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: DesignSystem.Spacing.xxs))
-            : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs))
-    }
-
-    var statsRow: some View {
-        let layout = isStacked
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: DesignSystem.Spacing.xxs))
-            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xxs))
-        return layout {
-            if showArea {
-                stat(icon: "map", value: country.area.formatArea())
+    // The continent rides beside the name while both fit on one line; a long name gets the full width
+    // and the badge moves under it, so the name never truncates.
+    @ViewBuilder
+    var nameLine: some View {
+        if isStacked || !showContinent {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                nameText
+                if showContinent {
+                    continentBadge
+                }
             }
-            if showArea, showPopulation, !isStacked {
-                Text("·")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            if showPopulation {
-                stat(icon: "person.2", value: country.population.formatPopulation())
+        } else {
+            ViewThatFits(in: .horizontal) {
+                HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
+                    nameText
+                        .fixedSize()
+                    continentBadge
+                        .fixedSize()
+                }
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    nameText
+                    continentBadge
+                        .fixedSize()
+                }
             }
         }
+    }
+
+    var nameText: some View {
+        Text(country.name)
+            .font(DesignSystem.Font.headline)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    // Side by side when both fit on one line; otherwise each stat takes its own line, never breaking mid-value.
+    @ViewBuilder
+    var statsRow: some View {
+        if isStacked {
+            statsColumn
+        } else {
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
+                    if showArea {
+                        areaStat
+                    }
+                    if showArea, showPopulation {
+                        Text("·")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    }
+                    if showPopulation {
+                        populationStat
+                    }
+                }
+                statsColumn
+            }
+        }
+    }
+
+    var statsColumn: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            if showArea {
+                areaStat
+            }
+            if showPopulation {
+                populationStat
+            }
+        }
+    }
+
+    var areaStat: some View {
+        stat(icon: "map", value: country.area.formatArea())
+    }
+
+    var populationStat: some View {
+        stat(icon: "person.2", value: country.population.formatPopulation())
     }
 
     func stat(icon: String, value: String) -> some View {
@@ -182,6 +225,7 @@ private extension CountryRowView {
             Image(systemName: icon)
                 .accessibilityHidden(true)
             Text(value)
+                .fixedSize(horizontal: !isStacked, vertical: false)
         }
         .font(DesignSystem.Font.caption2)
         .foregroundStyle(DesignSystem.Color.textSecondary)
