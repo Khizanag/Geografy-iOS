@@ -70,7 +70,7 @@ extension Destination {
         case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)
         case .leaderboards: LeaderboardScreen()
         case .localMultiplayer: LocalMultiplayerEntryScreen()
-        case .map(let filter): MapScreen(continentFilter: filter?.rawValue)
+        case .map(let filter): MapScreen(continentFilter: filter?.displayName)
         case .mapColoring: MapColoringScreen()
         case .mapFullScreen(let filter): MapScreen(continentFilter: filter)
         case .mapPuzzle: MapPuzzleSetupScreen()
