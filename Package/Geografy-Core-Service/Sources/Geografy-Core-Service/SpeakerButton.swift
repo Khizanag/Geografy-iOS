@@ -4,18 +4,33 @@ import SwiftUI
 
 public struct SpeakerButton: View {
     // MARK: - Properties
-    /// The button's width and height, for layouts that balance it.
-    public static let size: CGFloat = 32
+    /// The regular button's width and height, for layouts that balance it.
+    nonisolated public static let size: CGFloat = 32
+
+    public enum Size {
+        case regular
+        /// For tight spots such as a fact tile's corner.
+        case compact
+
+        var diameter: CGFloat {
+            switch self {
+            case .regular: SpeakerButton.size
+            case .compact: 24
+            }
+        }
+    }
 
     @Environment(PronunciationService.self) private var pronunciationService
 
     public let text: String
     public let countryCode: String
+    public let buttonSize: Size
 
     // MARK: - Init
-    public init(text: String, countryCode: String) {
+    public init(text: String, countryCode: String, size: Size = .regular) {
         self.text = text
         self.countryCode = countryCode
+        self.buttonSize = size
     }
 
     private var isActivelySpeaking: Bool {
@@ -39,7 +54,7 @@ public struct SpeakerButton: View {
                         : DesignSystem.Color.textSecondary
                 )
                 .symbolEffect(.variableColor.iterative.reversing, isActive: isActivelySpeaking)
-                .frame(width: Self.size, height: Self.size)
+                .frame(width: buttonSize.diameter, height: buttonSize.diameter)
         }
         .glassEffect(.regular.interactive(), in: .circle)
         .buttonStyle(.plain)

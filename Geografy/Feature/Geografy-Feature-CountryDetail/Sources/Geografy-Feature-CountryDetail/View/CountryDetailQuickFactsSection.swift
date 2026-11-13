@@ -14,9 +14,14 @@ extension CountryDetailScreen {
     var quickFactsRow: some View {
         HStack(spacing: 0) {
             capitalButton
-            Divider().frame(height: 44)
+                // Outside the column's button, so pronouncing doesn't also open the capital sheet.
+                .overlay(alignment: .topTrailing) {
+                    SpeakerButton(text: country.capital, countryCode: country.code, size: .compact)
+                        .padding(.trailing, DesignSystem.Spacing.xs)
+                }
+            Divider().frame(height: 56)
             areaButton
-            Divider().frame(height: 44)
+            Divider().frame(height: 56)
             continentButton
         }
         .padding(.vertical, DesignSystem.Spacing.sm)
@@ -36,7 +41,7 @@ private extension CountryDetailScreen {
                 )
             )
         } label: {
-            capitalChip
+            factChip(icon: "star.fill", label: capitalLabel, value: capitalNames)
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -77,57 +82,12 @@ private extension CountryDetailScreen {
 
 // MARK: - Chips
 private extension CountryDetailScreen {
-    var capitalChip: some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "star.fill")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text(
-                country.allCapitals.count > 1
-                    ? "Capitals (\(country.allCapitals.count))"
-                    : "Capital"
-            )
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            if country.allCapitals.count > 1 {
-                multipleCapitalsView
-            } else {
-                singleCapitalView
-            }
-        }
-        .frame(maxWidth: .infinity)
+    var capitalLabel: String {
+        country.allCapitals.count > 1 ? "Capitals" : "Capital"
     }
 
-    var multipleCapitalsView: some View {
-        VStack(spacing: 2) {
-            ForEach(country.allCapitals, id: \.name) { capital in
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Text(capital.name)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    #if !os(tvOS)
-                    SpeakerButton(text: capital.name, countryCode: country.code)
-                        .scaleEffect(0.7)
-                    #endif
-                }
-            }
-        }
-    }
-
-    var singleCapitalView: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(country.capital)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-            #if !os(tvOS)
-            SpeakerButton(text: country.capital, countryCode: country.code)
-                .scaleEffect(0.7)
-            #endif
-        }
+    var capitalNames: String {
+        country.allCapitals.map(\.name).joined(separator: ", ")
     }
 
     func factChip(icon: String, label: String, value: String) -> some View {
@@ -139,14 +99,17 @@ private extension CountryDetailScreen {
             Text(label)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+            // Two lines reserved in every column, so the three stay the same height and stay aligned.
             Text(value)
-                .font(DesignSystem.Font.caption)
+                .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .multilineTextAlignment(.center)
+                .lineLimit(2, reservesSpace: true)
+                .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.xs)
         .accessibilityElement(children: .combine)
     }
