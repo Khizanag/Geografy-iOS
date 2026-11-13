@@ -8,7 +8,7 @@ public struct WorldRecordsScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var records: [WorldRecord] = []
 
@@ -32,7 +32,7 @@ public struct WorldRecordsScreen: View {
 private extension WorldRecordsScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
+            VStack(spacing: DesignSystem.Spacing.lg) {
                 ForEach(WorldRecordCategory.allCases, id: \.rawValue) { category in
                     let categoryRecords = records.filter { $0.category == category }
                     if !categoryRecords.isEmpty {
@@ -48,61 +48,65 @@ private extension WorldRecordsScreen {
     func categorySection(category: WorldRecordCategory, records: [WorldRecord]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: category.displayName, icon: category.icon)
-                .padding(.horizontal, DesignSystem.Spacing.md)
 
-            VStack(spacing: DesignSystem.Spacing.sm) {
+            // A category's extremes sit side by side, so "largest" and "smallest" read as one fact.
+            let layout = dynamicTypeSize.isAccessibilitySize
+                ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
+                : AnyLayout(HStackLayout(alignment: .top, spacing: DesignSystem.Spacing.sm))
+            layout {
                 ForEach(records) { record in
-                    recordRow(record)
+                    recordTile(record)
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
+            .fixedSize(horizontal: false, vertical: true)
         }
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
-    func recordRow(_ record: WorldRecord) -> some View {
+    func recordTile(_ record: WorldRecord) -> some View {
         let country = countryDataService.country(for: record.countryCode)
         return Button {
-            if let found = country {
-                coordinator.push(.countryDetail(found))
+            if let country {
+                coordinator.push(.countryDetail(country))
             }
         } label: {
             CardView {
-                recordRowContent(record: record, country: country)
+                recordTileContent(record)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .padding(DesignSystem.Spacing.md)
             }
         }
         .buttonStyle(PressButtonStyle())
         .disabled(country == nil)
-    }
-
-    func recordRowContent(record: WorldRecord, country: Country?) -> some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            IconBadge(record.category.icon, size: .medium)
-            recordInfo(record: record)
-            Spacer()
-            if let country {
-                FlagView(countryCode: country.code, height: 28)
-            }
-        }
-        .padding(DesignSystem.Spacing.md)
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(record.title): \(record.countryName), \(record.value)")
+        .accessibilityAddTraits(.isButton)
     }
 
-    func recordInfo(record: WorldRecord) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+    func recordTileContent(_ record: WorldRecord) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             Text(record.title)
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+
+            FlagView(countryCode: record.countryCode, height: DesignSystem.Size.Flag.compact)
+                .geoShadow(.subtle)
+                .padding(.vertical, DesignSystem.Spacing.xxs)
+
             Text(record.countryName)
                 .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
+                .lineLimit(2)
+
+            Spacer(minLength: 0)
+
             Text(record.value)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
         }
     }
 }

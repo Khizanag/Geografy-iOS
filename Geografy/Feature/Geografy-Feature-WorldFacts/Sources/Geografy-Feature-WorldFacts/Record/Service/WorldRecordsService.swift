@@ -25,17 +25,14 @@ private extension WorldRecordsService {
         var result: [WorldRecord] = []
 
         if let largest = sorted.first {
-            let formattedArea = NumberFormatter.localizedString(
-                from: NSNumber(value: largest.area),
-                number: .decimal
-            )
+            let formattedArea = largest.area.formatArea()
             result.append(
                 WorldRecord(
                     category: .area,
                     title: "Largest Country",
                     countryCode: largest.code,
                     countryName: largest.name,
-                    value: "\(formattedArea) km²",
+                    value: formattedArea,
                     unit: "km²",
                     description: "\(largest.name) is the largest country in the world by land area."
                 )
@@ -43,14 +40,14 @@ private extension WorldRecordsService {
         }
 
         if let smallest = sorted.last {
-            let formattedArea = String(format: "%.2f", smallest.area)
+            let formattedArea = String(format: "%.2f km²", smallest.area)
             result.append(
                 WorldRecord(
                     category: .area,
                     title: "Smallest Country",
                     countryCode: smallest.code,
                     countryName: smallest.name,
-                    value: "\(formattedArea) km²",
+                    value: formattedArea,
                     unit: "km²",
                     description: "\(smallest.name) is the smallest country in the world by land area."
                 )
@@ -65,10 +62,7 @@ private extension WorldRecordsService {
         var result: [WorldRecord] = []
 
         if let mostPopulous = sorted.first {
-            let formatted = NumberFormatter.localizedString(
-                from: NSNumber(value: mostPopulous.population),
-                number: .decimal
-            )
+            let formatted = mostPopulous.population.formatPopulation()
             result.append(
                 WorldRecord(
                     category: .population,
@@ -83,10 +77,7 @@ private extension WorldRecordsService {
         }
 
         if let leastPopulous = sorted.last {
-            let formatted = NumberFormatter.localizedString(
-                from: NSNumber(value: leastPopulous.population),
-                number: .decimal
-            )
+            let formatted = leastPopulous.population.formatPopulation()
             result.append(
                 WorldRecord(
                     category: .population,
