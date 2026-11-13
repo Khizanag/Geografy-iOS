@@ -8,47 +8,71 @@ public struct SearchScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryService
-
-    @AppStorage("search_topAligned") private var topAligned = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var query = ""
-    @State private var sections: [SearchResultSection] = []
-    @State private var isSearching = false
+    @State private var scope: SearchScope = .all
     @State private var recentService = RecentSearchesService()
-    @State private var searchTask: Task<Void, Never>?
     @State private var hasFocusedOnOpen = false
     @FocusState private var isSearchFocused: Bool
-
-    private let trendingQueries = [
-        "United States", "China", "Japan", "Brazil", "France",
-        "Australia", "India", "Egypt", "United Nations", "Canada",
-    ]
 
     // MARK: - Init
     public init() {}
 
     // MARK: - Body
     public var body: some View {
-        mainContent
-            .animation(.easeInOut(duration: 0.2), value: query.isEmpty)
+        content
+            .animation(reduceMotion ? nil : .smooth(duration: 0.2), value: results)
             .screenBackground()
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)
-            // Always shown: this screen starts scrolled to the bottom, which would tuck a collapsible field away.
             .searchable(
                 text: $query,
                 placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "Countries, capitals, organizations…"
+                prompt: "Countries, capitals, organizations"
             )
+            .searchScopes($scope, activation: .onSearchPresentation) {
+                ForEach(SearchScope.allCases) { scope in
+                    Text(scope.title).tag(scope)
+                }
+            }
             .searchFocused($isSearchFocused)
             .onAppear(perform: focusSearchOnFirstOpen)
-            .onChange(of: query) { _, newValue in
-                scheduleSearch(query: newValue)
-            }
     }
 }
 
-// MARK: - Focus
+// MARK: - Subviews
+private extension SearchScreen {
+    @ViewBuilder
+    var content: some View {
+        if trimmedQuery.isEmpty {
+            SearchSuggestionsView(
+                recentService: recentService,
+                onSearch: { query = $0 },
+                onOpen: open
+            )
+        } else if results.isEmpty {
+            ContentUnavailableView.search(text: trimmedQuery)
+        } else {
+            SearchResultsView(results: results, query: trimmedQuery, onOpen: open)
+        }
+    }
+}
+
+// MARK: - Data
+private extension SearchScreen {
+    var trimmedQuery: String {
+        query.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    // Local data, so results update on every keystroke with no debounce or spinner.
+    var results: SearchResults {
+        SearchEngine(countries: countryService.countries, organizations: Organization.all)
+            .results(for: trimmedQuery, scope: scope)
+    }
+}
+
+// MARK: - Actions
 private extension SearchScreen {
     // Opening Search means the person is about to type. Coming back from a result keeps the keyboard down.
     func focusSearchOnFirstOpen() {
@@ -56,391 +80,14 @@ private extension SearchScreen {
         hasFocusedOnOpen = true
         isSearchFocused = true
     }
-}
 
-// MARK: - Subviews
-private extension SearchScreen {
-    @ViewBuilder
-    var mainContent: some View {
-        if query.isEmpty {
-            emptyStateContent
-        } else {
-            resultContent
-        }
-    }
-}
-
-// MARK: - Empty State
-private extension SearchScreen {
-    var emptyStateContent: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                if !topAligned {
-                    Spacer(minLength: 0)
-                }
-                if !recentService.queries.isEmpty {
-                    recentSearchesSection
-                }
-                trendingSection
-                if topAligned {
-                    Spacer(minLength: 0)
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .readableContentWidth()
-            .containerRelativeFrame(.vertical, alignment: topAligned ? .top : .bottom)
-        }
-        .defaultScrollAnchor(topAligned ? .top : .bottom)
-    }
-
-    var recentSearchesSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack {
-                SectionHeaderView(title: "Recent", icon: "clock")
-                Spacer()
-                Button("Clear") {
-                    recentService.clearAll()
-                }
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
-            }
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(recentService.queries, id: \.self) { recentQuery in
-                    recentRow(recentQuery)
-                }
-            }
-        }
-    }
-
-    func recentRow(_ recentQuery: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            recentRowButton(recentQuery)
-            recentRowRemoveButton(recentQuery)
-        }
-    }
-
-    func recentRowButton(_ recentQuery: String) -> some View {
-        Button {
-            query = recentQuery
-            scheduleSearch(query: recentQuery)
-        } label: {
-            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "clock.arrow.circlepath")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .accessibilityHidden(true)
-                    Text(recentQuery)
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Spacer(minLength: 0)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    func recentRowRemoveButton(_ recentQuery: String) -> some View {
-        Button {
-            recentService.remove(recentQuery)
-        } label: {
-            Image(systemName: "xmark")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .padding(DesignSystem.Spacing.xs)
-        }
-        .glassEffect(.regular.interactive(), in: .circle)
-        .accessibilityLabel("Remove \(recentQuery) from recent searches")
-    }
-
-    var trendingSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Popular Searches", icon: "flame.fill")
-            LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: 130), spacing: DesignSystem.Spacing.xs)],
-                spacing: DesignSystem.Spacing.xs
-            ) {
-                ForEach(trendingQueries, id: \.self) { trending in
-                    Button {
-                        query = trending
-                        scheduleSearch(query: trending)
-                    } label: {
-                        Text(trending)
-                            .font(DesignSystem.Font.caption)
-                            .fontWeight(.medium)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .lineLimit(1)
-                            .padding(.horizontal, DesignSystem.Spacing.sm)
-                            .padding(.vertical, DesignSystem.Spacing.xs)
-                            .frame(maxWidth: .infinity)
-                            .background(DesignSystem.Color.cardBackground)
-                            .clipShape(Capsule())
-                            .overlay(Capsule().strokeBorder(DesignSystem.Color.accent.opacity(0.2), lineWidth: 1))
-                    }
-                    .buttonStyle(PressButtonStyle())
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Results
-private extension SearchScreen {
-    @ViewBuilder
-    var resultContent: some View {
-        if isSearching {
-            LoadingView()
-        } else if sections.isEmpty {
-            ContentUnavailableView.search(text: query)
-        } else {
-            resultsList
-        }
-    }
-
-    var resultsList: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                if !topAligned {
-                    Spacer(minLength: 0)
-                }
-                ForEach(sections) { section in
-                    resultSection(section)
-                }
-                if topAligned {
-                    Spacer(minLength: 0)
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .containerRelativeFrame(.vertical, alignment: topAligned ? .top : .bottom)
-        }
-        .defaultScrollAnchor(topAligned ? .top : .bottom)
-    }
-
-    func resultSection(_ section: SearchResultSection) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: section.title, icon: section.icon)
-            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-                VStack(spacing: 0) {
-                    ForEach(section.rows) { row in
-                        resultRow(row)
-                        if row != section.rows.last {
-                            Divider()
-                                .padding(
-                                    .leading,
-                                    DesignSystem.Spacing.md + DesignSystem.Size.lg + DesignSystem.Spacing.sm
-                                )
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @ViewBuilder
-    func resultRow(_ row: SearchRow) -> some View {
+    func open(_ row: SearchRow) {
+        recentService.add(trimmedQuery.isEmpty ? row.title : trimmedQuery)
         switch row {
-        case .country(let country):
-            Button {
-                recentService.add(query)
-                coordinator.push(.countryDetail(country))
-            } label: {
-                countryRowContent(country)
-            }
-            .buttonStyle(PressButtonStyle())
-
-        case let .capital(country, capitalName):
-            Button {
-                recentService.add(query)
-                coordinator.push(.countryDetail(country))
-            } label: {
-                capitalRowContent(country: country, capitalName: capitalName)
-            }
-            .buttonStyle(PressButtonStyle())
-
+        case .country(let country), .capital(let country, _):
+            coordinator.push(.countryDetail(country))
         case .organization(let organization):
-            Button {
-                recentService.add(query)
-                coordinator.push(.organizationDetail(organization))
-            } label: {
-                organizationRowContent(organization)
-            }
-            .buttonStyle(PressButtonStyle())
+            coordinator.push(.organizationDetail(organization))
         }
-    }
-}
-
-// MARK: - Row Content
-private extension SearchScreen {
-    func countryRowContent(_ country: Country) -> some View {
-        CountryListRow(country: country, subtitle: country.continent.displayName) {
-            RowChevron()
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-    }
-
-    func capitalRowContent(country: Country, capitalName: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            IconBadge("building.2.fill", color: DesignSystem.Color.blue, size: .small)
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(capitalName)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Capital of \(country.name)")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            Spacer(minLength: 0)
-            RowChevron()
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .contentShape(Rectangle())
-    }
-
-    func organizationRowContent(_ organization: Organization) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            IconBadge(organization.icon, color: organization.highlightColor, size: .small)
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(organization.fullName)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(organization.displayName)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            Spacer(minLength: 0)
-            RowChevron()
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .contentShape(Rectangle())
-    }
-}
-
-// MARK: - Search Logic
-private extension SearchScreen {
-    func scheduleSearch(query: String) {
-        searchTask?.cancel()
-
-        let trimmed = query.trimmingCharacters(in: .whitespaces)
-        guard !trimmed.isEmpty else {
-            sections = []
-            isSearching = false
-            return
-        }
-
-        isSearching = true
-
-        searchTask = Task {
-            try? await Task.sleep(nanoseconds: 300_000_000)
-            guard !Task.isCancelled else { return }
-
-            let results = performSearch(query: trimmed)
-
-            await MainActor.run {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    sections = results
-                    isSearching = false
-                }
-            }
-        }
-    }
-
-    func performSearch(query: String) -> [SearchResultSection] {
-        let normalized = query.folding(
-            options: [.caseInsensitive, .diacriticInsensitive],
-            locale: .current
-        )
-
-        let countryMatches = matchingCountries(normalized: normalized)
-        let capitalMatches = matchingCapitals(normalized: normalized, excludingCountries: countryMatches)
-        let orgMatches = matchingOrganizations(normalized: normalized)
-
-        return buildSections(
-            countries: countryMatches,
-            capitals: capitalMatches,
-            organizations: orgMatches
-        )
-    }
-
-    func matchingCountries(normalized: String) -> [Country] {
-        countryService.countries.filter {
-            $0.name.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: .current)
-                .contains(normalized)
-        }
-    }
-
-    func matchingCapitals(normalized: String, excludingCountries: [Country]) -> [(Country, String)] {
-        countryService.countries.flatMap { country in
-            guard !excludingCountries.contains(where: { $0.code == country.code }) else {
-                return [(Country, String)]()
-            }
-            return country.allCapitals.compactMap { capital in
-                let normalizedCapital = capital.name.folding(
-                    options: [.caseInsensitive, .diacriticInsensitive],
-                    locale: .current
-                )
-                return normalizedCapital.contains(normalized) ? (country, capital.name) : nil
-            }
-        }
-    }
-
-    func matchingOrganizations(normalized: String) -> [Organization] {
-        Organization.all.filter {
-            let foldingOptions: String.CompareOptions = [.caseInsensitive, .diacriticInsensitive]
-            let normalizedFull = $0.fullName.folding(options: foldingOptions, locale: .current)
-            let normalizedDisplay = $0.displayName.folding(options: foldingOptions, locale: .current)
-            return normalizedFull.contains(normalized) || normalizedDisplay.contains(normalized)
-        }
-    }
-
-    func buildSections(
-        countries: [Country],
-        capitals: [(Country, String)],
-        organizations: [Organization]
-    ) -> [SearchResultSection] {
-        var result: [SearchResultSection] = []
-
-        if !countries.isEmpty {
-            result.append(
-                SearchResultSection(
-                    id: "countries",
-                    title: "Countries",
-                    icon: "globe",
-                    rows: countries.prefix(8).map { .country($0) }
-                )
-            )
-        }
-
-        if !capitals.isEmpty {
-            result.append(
-                SearchResultSection(
-                    id: "capitals",
-                    title: "Capitals",
-                    icon: "building.2.fill",
-                    rows: capitals.prefix(6).map { .capital(country: $0.0, capitalName: $0.1) }
-                )
-            )
-        }
-
-        if !organizations.isEmpty {
-            result.append(
-                SearchResultSection(
-                    id: "organizations",
-                    title: "Organizations",
-                    icon: "building.columns.fill",
-                    rows: organizations.prefix(5).map { .organization($0) }
-                )
-            )
-        }
-
-        return result
     }
 }
