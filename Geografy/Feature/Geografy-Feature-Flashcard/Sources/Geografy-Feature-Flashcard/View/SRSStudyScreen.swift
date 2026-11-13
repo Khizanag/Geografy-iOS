@@ -168,13 +168,7 @@ private extension SRSStudyScreen {
     func proficiencyBadge(
         for level: SpacedRepetitionData.ProficiencyLevel
     ) -> some View {
-        Text(level.displayName)
-            .font(DesignSystem.Font.caption2)
-            .fontWeight(.semibold)
-            .foregroundStyle(level.badgeColor)
-            .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, 3)
-            .background(level.badgeColor.opacity(0.15), in: Capsule())
+        InfoPill(level.displayName, style: .tinted(level.badgeColor))
     }
 
     var allCaughtUpSection: some View {

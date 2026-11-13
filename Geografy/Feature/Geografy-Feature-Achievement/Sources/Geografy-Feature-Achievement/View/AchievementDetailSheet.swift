@@ -83,19 +83,11 @@ private extension AchievementDetailSheet {
     }
 
     var rarityBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: rarityIcon)
-                .font(DesignSystem.Font.caption2)
-                .accessibilityHidden(true)
-
-            Text(definition.rarity.displayName.uppercased())
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.bold)
-        }
-        .foregroundStyle(definition.rarity.borderColor)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(definition.rarity.borderColor.opacity(0.15), in: Capsule())
+        InfoPill(
+            definition.rarity.displayName.uppercased(),
+            systemImage: rarityIcon,
+            style: .tinted(definition.rarity.borderColor)
+        )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Rarity")
         .accessibilityValue(definition.rarity.displayName)

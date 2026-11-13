@@ -123,13 +123,7 @@ private extension ProfileScreen {
     }
 
     var guestPill: some View {
-        Text("Guest")
-            .font(DesignSystem.Font.caption2)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.warning)
-            .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, 3)
-            .background(DesignSystem.Color.warning.opacity(0.15), in: Capsule())
+        InfoPill("Guest", style: .tinted(DesignSystem.Color.warning))
     }
 }
 #endif

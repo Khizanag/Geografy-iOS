@@ -37,16 +37,6 @@ private extension TravelCountryRow {
     }
 
     var statusBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: status.icon)
-                .font(DesignSystem.Font.nano)
-            Text(status.shortLabel)
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-        }
-        .foregroundStyle(status.color)
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(status.color.opacity(0.15), in: Capsule())
+        InfoPill(status.shortLabel, systemImage: status.icon, style: .tinted(status.color))
     }
 }
