@@ -55,7 +55,6 @@ public struct MapScreen: View {
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar { toolbarContent }
             .task { await loadMapData() }
             .overlay {

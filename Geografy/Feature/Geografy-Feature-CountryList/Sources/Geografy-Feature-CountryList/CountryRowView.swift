@@ -58,7 +58,7 @@ public struct CountryRowView: View {
         .hoverEffect(.lift)
         .countryContextMenu(country)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(country.name), \(country.continent.displayName)")
+        .accessibilityLabel(accessibilityLabel)
         .accessibilityHint("Double tap to view details")
         .accessibilityValue(isFavorite ? "Favorite" : "")
         .accessibilityActions {
@@ -90,8 +90,8 @@ private extension CountryRowView {
             }
 
             VStack(alignment: .leading, spacing: 3) {
-                if showFlag, isStacked {
-                    flag
+                if isStacked {
+                    stackedTopLine
                 }
                 // The continent rides on the name line, clear of the heart and of the stats below.
                 nameLineLayout {
@@ -117,9 +117,22 @@ private extension CountryRowView {
 
             Spacer(minLength: 0)
 
-            favoriteIcon
+            if !isStacked {
+                favoriteIcon
+            }
         }
         .padding(DesignSystem.Spacing.sm)
+    }
+
+    // Stacked rows put the heart beside the flag, so the name below gets the row's full width.
+    var stackedTopLine: some View {
+        HStack(alignment: .top) {
+            if showFlag {
+                flag
+            }
+            Spacer(minLength: 0)
+            favoriteIcon
+        }
     }
 
     var capitalLabel: some View {
@@ -127,6 +140,7 @@ private extension CountryRowView {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.pico.bold())
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(country.allCapitals.map(\.name).joined(separator: " · "))
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -201,6 +215,14 @@ private extension CountryRowView {
 
 // MARK: - Actions
 private extension CountryRowView {
+    var accessibilityLabel: String {
+        var parts = [country.name, country.continent.displayName]
+        if showCapital {
+            parts.append("Capital \(country.allCapitals.map(\.name).formatted(.list(type: .and)))")
+        }
+        return parts.joined(separator: ", ")
+    }
+
     var favoriteActionLabel: String {
         isFavorite ? "Remove from Favorites" : "Add to Favorites"
     }

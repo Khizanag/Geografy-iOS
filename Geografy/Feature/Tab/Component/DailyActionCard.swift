@@ -3,6 +3,8 @@ import SwiftUI
 
 struct DailyActionCard: View {
     // MARK: - Properties
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     let dailyChallengeCompleted: Bool
     let srsCardsDue: Int
     let onDailyChallenge: () -> Void
@@ -24,12 +26,22 @@ struct DailyActionCard: View {
 
 // MARK: - Subviews
 private extension DailyActionCard {
+    // At accessibility sizes the icon sits above the text, so the title gets the card's full width.
+    @ViewBuilder
     var cardContent: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            iconCircle
-            textContent
-            Spacer()
-            chevron
+        if dynamicTypeSize.isAccessibilitySize {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                iconCircle
+                textContent
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                iconCircle
+                textContent
+                Spacer()
+                chevron
+            }
         }
     }
 
@@ -54,6 +66,7 @@ private extension DailyActionCard {
                 .foregroundStyle(action.color)
                 .symbolRenderingMode(.hierarchical)
         }
+        .accessibilityHidden(true)
     }
 
     var textContent: some View {
@@ -66,7 +79,7 @@ private extension DailyActionCard {
             Text(action.subtitle)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(2)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
         }
     }
 
@@ -75,6 +88,7 @@ private extension DailyActionCard {
             .font(DesignSystem.Font.iconSmall)
             .fontWeight(.semibold)
             .foregroundStyle(action.color.opacity(0.6))
+            .accessibilityHidden(true)
     }
 
     var gradientBackground: some View {

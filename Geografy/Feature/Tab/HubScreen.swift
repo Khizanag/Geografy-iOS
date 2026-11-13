@@ -71,7 +71,8 @@ private extension HubScreen {
             SectionHeaderView(title: title)
             GlassEffectContainer {
                 AdaptiveGrid(
-                    compactMinimum: dynamicTypeSize.isAccessibilitySize ? 160 : 100,
+                    // One tile per row at accessibility sizes, so labels wrap whole words.
+                    compactMinimum: dynamicTypeSize.isAccessibilitySize ? 300 : 100,
                     regularMinimum: dynamicTypeSize.isAccessibilitySize ? 240 : 150
                 ) {
                     ForEach(items, id: \.id) { sheet in
@@ -100,7 +101,7 @@ private extension HubScreen {
                 .font(tileLabelFont)
                 .fontWeight(.medium)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(3)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
                 .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
@@ -108,7 +109,7 @@ private extension HubScreen {
             Text(sheet.subtitle)
                 .font(tileSubtitleFont)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(2)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                 .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)

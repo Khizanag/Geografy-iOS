@@ -4,9 +4,6 @@ import SwiftUI
 
 public struct SpeakerButton: View {
     // MARK: - Properties
-    /// The regular button's width and height, for layouts that balance it.
-    nonisolated public static let size: CGFloat = 32
-
     public enum Size {
         case regular
         /// For tight spots such as a fact tile's corner.
@@ -14,23 +11,32 @@ public struct SpeakerButton: View {
 
         var diameter: CGFloat {
             switch self {
-            case .regular: SpeakerButton.size
+            case .regular: 32
             case .compact: 24
             }
         }
     }
+
+    // The glyph stops growing at xxxLarge, so the circle stops there too.
+    private static let maximumScale: CGFloat = 1.6
 
     @Environment(PronunciationService.self) private var pronunciationService
 
     public let text: String
     public let countryCode: String
     public let buttonSize: Size
+    @ScaledMetric private var diameter: CGFloat
 
     // MARK: - Init
     public init(text: String, countryCode: String, size: Size = .regular) {
         self.text = text
         self.countryCode = countryCode
         self.buttonSize = size
+        _diameter = ScaledMetric(wrappedValue: size.diameter, relativeTo: .caption2)
+    }
+
+    private var circleDiameter: CGFloat {
+        min(diameter, buttonSize.diameter * Self.maximumScale)
     }
 
     private var isActivelySpeaking: Bool {
@@ -54,7 +60,8 @@ public struct SpeakerButton: View {
                         : DesignSystem.Color.textSecondary
                 )
                 .symbolEffect(.variableColor.iterative.reversing, isActive: isActivelySpeaking)
-                .frame(width: buttonSize.diameter, height: buttonSize.diameter)
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+                .frame(width: circleDiameter, height: circleDiameter)
         }
         .glassEffect(.regular.interactive(), in: .circle)
         .buttonStyle(.plain)

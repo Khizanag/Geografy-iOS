@@ -31,20 +31,37 @@ extension CountryDetailScreen {
             }
             .buttonStyle(.plain)
 
-            // An empty slot the button's width on the left keeps the name centered under the flag.
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Color.clear
-                    .frame(width: SpeakerButton.size, height: SpeakerButton.size)
-                    .accessibilityHidden(true)
-                Text(country.name)
-                    .font(DesignSystem.Font.title)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.center)
-                SpeakerButton(text: country.name, countryCode: country.code)
-            }
-            .frame(maxWidth: .infinity)
+            heroNameRow
+                .frame(maxWidth: .infinity)
         }
         .frame(maxWidth: .infinity)
         .padding(DesignSystem.Spacing.xl)
+    }
+
+    // At accessibility sizes the name gets the full width and the speaker sits below it.
+    @ViewBuilder
+    var heroNameRow: some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            VStack(spacing: DesignSystem.Spacing.sm) {
+                heroName
+                SpeakerButton(text: country.name, countryCode: country.code)
+            }
+        } else {
+            // A hidden twin of the button on the left keeps the name centered under the flag.
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                SpeakerButton(text: country.name, countryCode: country.code)
+                    .hidden()
+                    .accessibilityHidden(true)
+                heroName
+                SpeakerButton(text: country.name, countryCode: country.code)
+            }
+        }
+    }
+
+    var heroName: some View {
+        Text(country.name)
+            .font(DesignSystem.Font.title)
+            .foregroundStyle(DesignSystem.Color.textPrimary)
+            .multilineTextAlignment(.center)
     }
 }

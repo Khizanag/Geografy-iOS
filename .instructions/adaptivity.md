@@ -9,7 +9,7 @@ Check each rule on the simulator before calling UI work finished. The **Check** 
 Every screen works in Light and Dark, and with the in-app theme override.
 
 - Colors come from `DesignSystem.Color` tokens backed by asset colors with light and dark variants. No raw `Color.white`, `.black`, `Color(hex:)`, or `Color.red` for chrome. Data palettes (flags, continents, brands) are the exception and live in one place.
-- Never force a color scheme on a screen or bar. The always-dark map screens are the only exception.
+- Never force a color scheme on a screen or bar. The map's ocean follows the appearance, so its bar must too.
 
 **Check:** Settings › Appearance, or `xcrun simctl ui <device> appearance dark`.
 
