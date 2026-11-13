@@ -9,6 +9,9 @@ struct MapPuzzleScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    @ScaledMetric(relativeTo: .largeTitle) private var summaryIconSize: CGFloat = 64
 
     let continent: Country.Continent
 
@@ -83,7 +86,9 @@ private extension MapPuzzleScreen {
             }
             ProgressView(value: Double(currentIndex), total: Double(questions.count))
                 .tint(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
         }
+        .accessibilityElement(children: .combine)
     }
 
     var questionCard: some View {
@@ -94,12 +99,14 @@ private extension MapPuzzleScreen {
 
                 FlagView(countryCode: question.country.code, height: 60)
                     .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
+                    .accessibilityHidden(true)
 
                 Text(question.country.name)
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
+                    .accessibilityAddTraits(.isHeader)
 
                 Text("Select the correct region on the map")
                     .font(DesignSystem.Font.caption)
@@ -135,16 +142,19 @@ private extension MapPuzzleScreen {
                 #if !os(tvOS)
                 hapticsService.notification(.success)
                 #endif
+                AccessibilityNotification.Announcement("Correct.").post()
             } else {
                 #if !os(tvOS)
                 hapticsService.notification(.error)
                 #endif
+                AccessibilityNotification.Announcement("Incorrect. The answer is \(question.country.name).").post()
             }
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: option.code, height: 22)
                         .clipShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
+                        .accessibilityHidden(true)
                     Text(option.name)
                         .font(DesignSystem.Font.caption)
                         .fontWeight(.semibold)
@@ -164,6 +174,8 @@ private extension MapPuzzleScreen {
         }
         .buttonStyle(PressButtonStyle())
         .disabled(revealed)
+        .accessibilityLabel(option.name)
+        .accessibilityValue(optionAccessibilityValue(isSelected: isSelected, isCorrect: isCorrect, revealed: revealed))
     }
 
     func resultIcon(isSelected: Bool, isCorrect: Bool) -> some View {
@@ -177,6 +189,7 @@ private extension MapPuzzleScreen {
             }
         }
         .font(DesignSystem.Font.callout)
+        .accessibilityHidden(true)
     }
 
     var nextButton: some View {
@@ -203,13 +216,18 @@ private extension MapPuzzleScreen {
             restartButton
         }
         .padding(DesignSystem.Spacing.md)
+        .onAppear {
+            let announcement = "\(summaryTitle) You got \(correctCount) out of \(questions.count) correct."
+            AccessibilityNotification.Announcement(announcement).post()
+        }
     }
 
     var summaryIcon: some View {
         let isPassing = correctCount >= questions.count / 2
         return Image(systemName: isPassing ? "star.fill" : "arrow.clockwise.circle.fill")
-            .font(DesignSystem.Font.display)
+            .font(DesignSystem.Font.system(size: summaryIconSize, weight: .bold))
             .foregroundStyle(isPassing ? DesignSystem.Color.warning : DesignSystem.Color.accent)
+            .accessibilityHidden(true)
     }
 
     var summaryText: some View {
@@ -218,6 +236,7 @@ private extension MapPuzzleScreen {
                 .font(DesignSystem.Font.title)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text("You got \(correctCount) out of \(questions.count) correct")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -226,11 +245,14 @@ private extension MapPuzzleScreen {
     }
 
     var scoreCard: some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.lg) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.md))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.lg))
+        let incorrectCount = questions.count - correctCount
+        return CardView {
+            layout {
                 scoreStatView(value: "\(correctCount)", label: "Correct", color: DesignSystem.Color.success)
                 Divider()
-                let incorrectCount = questions.count - correctCount
                 scoreStatView(value: "\(incorrectCount)", label: "Incorrect", color: DesignSystem.Color.error)
                 Divider()
                 scoreStatView(
@@ -254,6 +276,9 @@ private extension MapPuzzleScreen {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
     }
 
     var restartButton: some View {
@@ -312,6 +337,13 @@ private extension MapPuzzleScreen {
         if isCorrect { return DesignSystem.Color.success }
         if isSelected { return DesignSystem.Color.error }
         return DesignSystem.Color.textSecondary
+    }
+
+    func optionAccessibilityValue(isSelected: Bool, isCorrect: Bool, revealed: Bool) -> String {
+        guard revealed else { return "" }
+        if isCorrect { return isSelected ? "Your answer, correct" : "Correct answer" }
+        if isSelected { return "Your answer, incorrect" }
+        return ""
     }
 
     func optionBackground(isSelected: Bool, isCorrect: Bool, revealed: Bool) -> Color {

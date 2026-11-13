@@ -6,6 +6,7 @@ import SwiftUI
 public struct MapPuzzleSetupScreen: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
 
     @State private var selectedContinent: Country.Continent?
     @State private var showPuzzle = false
@@ -53,10 +54,12 @@ private extension MapPuzzleSetupScreen {
                 .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .padding(.bottom, DesignSystem.Spacing.xs)
+                .accessibilityHidden(true)
             Text("Choose a Region")
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text("Pick a continent and guess where countries belong on the map.")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -74,7 +77,8 @@ private extension MapPuzzleSetupScreen {
     }
 
     func continentCard(_ continent: Country.Continent) -> some View {
-        Button {
+        let isSelected = selectedContinent == continent
+        return Button {
             selectedContinent = continent
         } label: {
             CardView {
@@ -86,6 +90,7 @@ private extension MapPuzzleSetupScreen {
                                 ? DesignSystem.Color.onAccent
                                 : DesignSystem.Color.accent
                         )
+                        .accessibilityHidden(true)
                     Text(continent.displayName)
                         .font(DesignSystem.Font.subheadline)
                         .fontWeight(.semibold)
@@ -103,10 +108,23 @@ private extension MapPuzzleSetupScreen {
                         ? DesignSystem.Color.accent
                         : DesignSystem.Color.cardBackground
                 )
+                .overlay(alignment: .topTrailing) { selectedBadge(isSelected: isSelected) }
             }
         }
         .buttonStyle(PressButtonStyle())
-        .animation(.spring(response: 0.3, dampingFraction: 0.75), value: selectedContinent)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.75), value: selectedContinent)
+    }
+
+    @ViewBuilder
+    func selectedBadge(isSelected: Bool) -> some View {
+        if isSelected, differentiateWithoutColor {
+            Image(systemName: "checkmark.circle.fill")
+                .font(DesignSystem.Font.iconXS)
+                .foregroundStyle(DesignSystem.Color.onAccent)
+                .padding(DesignSystem.Spacing.xs)
+                .accessibilityHidden(true)
+        }
     }
 
     var startButton: some View {
