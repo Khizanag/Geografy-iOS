@@ -36,16 +36,12 @@ struct SearchSuggestionsView: View {
 private extension SearchSuggestionsView {
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack {
-                SectionHeaderView(title: "Recent")
-                Spacer()
-                Button("Clear") {
+            SectionHeaderView(
+                title: "Recent",
+                action: SectionHeaderAction("Clear", accessibilityLabel: "Clear recent searches") {
                     recentService.clearAll()
                 }
-                .buttonStyle(.glass)
-                .controlSize(.small)
-                .accessibilityLabel("Clear recent searches")
-            }
+            )
             .padding(.horizontal, DesignSystem.Spacing.md)
 
             // One swipeable line keeps recents compact, so Popular stays in view.

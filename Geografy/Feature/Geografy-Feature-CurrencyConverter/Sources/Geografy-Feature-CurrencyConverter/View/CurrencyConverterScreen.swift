@@ -114,14 +114,14 @@ private extension CurrencyConverterScreen {
 
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack {
-                SectionHeaderView(title: "Recent")
-                Spacer(minLength: DesignSystem.Spacing.sm)
-                Button("Clear", action: clearRecents)
-                    .buttonStyle(.glass)
-                    .controlSize(.small)
-                    .accessibilityLabel("Clear recent conversions")
-            }
+            SectionHeaderView(
+                title: "Recent",
+                action: SectionHeaderAction(
+                    "Clear",
+                    accessibilityLabel: "Clear recent conversions",
+                    perform: clearRecents
+                )
+            )
             CurrencyPairList(pairs: recentEntryPairs, onSelect: open)
         }
     }
