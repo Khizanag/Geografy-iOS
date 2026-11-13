@@ -16,6 +16,8 @@ public struct SearchScreen: View {
     @State private var isSearching = false
     @State private var recentService = RecentSearchesService()
     @State private var searchTask: Task<Void, Never>?
+    @State private var hasFocusedOnOpen = false
+    @FocusState private var isSearchFocused: Bool
 
     private let trendingQueries = [
         "United States", "China", "Japan", "Brazil", "France",
@@ -32,10 +34,27 @@ public struct SearchScreen: View {
             .screenBackground()
             .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $query, prompt: "Countries, capitals, organizations…")
+            // Always shown: this screen starts scrolled to the bottom, which would tuck a collapsible field away.
+            .searchable(
+                text: $query,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Countries, capitals, organizations…"
+            )
+            .searchFocused($isSearchFocused)
+            .onAppear(perform: focusSearchOnFirstOpen)
             .onChange(of: query) { _, newValue in
                 scheduleSearch(query: newValue)
             }
+    }
+}
+
+// MARK: - Focus
+private extension SearchScreen {
+    // Opening Search means the person is about to type. Coming back from a result keeps the keyboard down.
+    func focusSearchOnFirstOpen() {
+        guard !hasFocusedOnOpen else { return }
+        hasFocusedOnOpen = true
+        isSearchFocused = true
     }
 }
 
