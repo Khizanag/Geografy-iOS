@@ -16,7 +16,8 @@ public final class AchievementService {
 
     private let db: DatabaseManager
     private let xpService: XPService
-    private let progressKey = "achievement_progress_v2"
+    // Progress belongs to one user, like unlocks do, so signing in or switching users never shows someone else's.
+    private var progressKey: String { "achievement_progress_v3_\(currentUserID)" }
     private let pinnedKey = "achievement_pinned"
 
     public init(db: DatabaseManager, xpService: XPService, userID: String) {
@@ -73,7 +74,8 @@ public final class AchievementService {
         entry.currentValue = max(entry.currentValue, value)
         entry.targetValue = target
 
-        if entry.currentValue >= target, !entry.isUnlocked {
+        // The stored flag can disagree with this user's unlocks, so the unlock records decide.
+        if entry.currentValue >= target, !isUnlocked(achievementID) {
             entry.isUnlocked = true
             entry.unlockedAt = Date.now
             unlock(achievementID)
