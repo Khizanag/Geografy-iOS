@@ -50,9 +50,7 @@ private extension TravelJournalPhotoGrid {
                     .frame(minWidth: 80, minHeight: 80)
                     .aspectRatio(1, contentMode: .fill)
                     .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: DesignSystem.CornerRadius.small
-                        )
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                     )
 
                 if !isReadOnly {

@@ -124,14 +124,7 @@ private extension OrganizationDetailScreen {
     }
 
     var orgLogoFallback: some View {
-        ZStack {
-            Circle()
-                .fill(organization.highlightColor.opacity(0.15))
-                .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
-            Image(systemName: organization.icon)
-                .font(DesignSystem.IconSize.large)
-                .foregroundStyle(organization.highlightColor)
-        }
+        IconBadge(organization.icon, color: organization.highlightColor, size: .large)
     }
 
     var openMapButton: some View {
@@ -145,12 +138,8 @@ private extension OrganizationDetailScreen {
 
     var memberCountriesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            Text("Member Countries")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+            SectionHeaderView(title: "Member Countries")
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
-                .accessibilityAddTraits(.isHeader)
 
             ForEach(memberCountries) { country in
                 memberCountryRow(country)
@@ -161,23 +150,8 @@ private extension OrganizationDetailScreen {
     func memberCountryRow(_ country: Country) -> some View {
         Button { coordinator.push(.countryDetail(country)) } label: {
             CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: country.code, height: DesignSystem.Size.md, fixedWidth: true)
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(country.name)
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .lineLimit(1)
-                        Text(country.capital)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                            .lineLimit(1)
-                    }
-                    Spacer(minLength: 0)
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .accessibilityHidden(true)
+                CountryListRow(country: country, subtitle: country.capital) {
+                    RowChevron()
                 }
                 .padding(DesignSystem.Spacing.sm)
             }

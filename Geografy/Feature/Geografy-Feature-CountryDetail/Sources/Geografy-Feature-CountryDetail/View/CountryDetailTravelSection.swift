@@ -24,29 +24,15 @@ extension CountryDetailScreen {
 
         return CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                travelStatusIcon(color: color, icon: currentStatus?.icon ?? "airplane.departure")
+                IconBadge(currentStatus?.icon ?? "airplane.departure", color: color, size: .small)
                 travelStatusText(label: currentStatus?.label, hasStatus: currentStatus != nil)
 
                 Spacer()
 
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .accessibilityHidden(true)
+                RowChevron()
             }
             .padding(DesignSystem.Spacing.sm)
         }
-    }
-
-    func travelStatusIcon(color: Color, icon: String) -> some View {
-        Circle()
-            .fill(color.opacity(0.15))
-            .frame(width: 40, height: 40)
-            .overlay {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.callout)
-                    .foregroundStyle(color)
-            }
     }
 
     func travelStatusText(label: String?, hasStatus: Bool) -> some View {

@@ -103,9 +103,7 @@ private extension CollectionsScreen {
 
                     typeIcons(typeCounts: typeCounts)
 
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                    RowChevron()
                 }
                 .padding(DesignSystem.Spacing.md)
             }
@@ -127,15 +125,9 @@ private extension CollectionsScreen {
         let primaryType = typeCounts
             .max(by: { $0.value < $1.value })?.key ?? .country
 
-        return ZStack {
-            Circle()
-                .fill(DesignSystem.Color.accent.opacity(0.15))
-                .frame(width: 44, height: 44)
-            Image(systemName: "folder.fill")
-                .font(DesignSystem.Font.title3)
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
-        .accessibilityLabel(primaryType.displayName)
+        return IconBadge("folder.fill")
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(primaryType.displayName)
     }
 
     func typeIcons(

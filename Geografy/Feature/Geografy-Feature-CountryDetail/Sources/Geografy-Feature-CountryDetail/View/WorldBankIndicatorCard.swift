@@ -87,13 +87,7 @@ private extension WorldBankIndicatorCard {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
             Spacer()
-            Text(indicator.unit)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .padding(.horizontal, DesignSystem.Spacing.xxs)
-                .padding(.vertical, 2)
-                .background(DesignSystem.Color.cardBackgroundHighlighted)
-                .clipShape(Capsule())
+            InfoPill(indicator.unit)
         }
     }
 

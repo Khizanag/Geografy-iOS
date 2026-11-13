@@ -17,28 +17,15 @@ private extension CountryDetailScreen {
         Button { navigateToContinent(country.continent) } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
-                    continentIcon
+                    IconBadge("globe", color: DesignSystem.Color.blue)
                     continentCardText
                     Spacer(minLength: 0)
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                    RowChevron()
                 }
                 .padding(DesignSystem.Spacing.md)
             }
         }
         .buttonStyle(PressButtonStyle())
-    }
-
-    var continentIcon: some View {
-        ZStack {
-            Circle()
-                .fill(DesignSystem.Color.blue.opacity(0.12))
-                .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
-            Image(systemName: "globe")
-                .font(DesignSystem.Font.iconSmall.weight(.medium))
-                .foregroundStyle(DesignSystem.Color.blue)
-        }
     }
 
     var continentCardText: some View {

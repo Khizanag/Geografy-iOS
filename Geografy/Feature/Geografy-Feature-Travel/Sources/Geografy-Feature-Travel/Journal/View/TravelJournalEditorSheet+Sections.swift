@@ -24,11 +24,7 @@ extension TravelJournalEditorSheet {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     countrySelectorContent
                     Spacer(minLength: 0)
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(
-                            DesignSystem.Color.textTertiary
-                        )
+                    RowChevron()
                 }
                 .padding(DesignSystem.Spacing.sm)
             }
@@ -66,17 +62,13 @@ extension TravelJournalEditorSheet {
             spacing: DesignSystem.Spacing.xs
         ) {
             SectionHeaderView(title: "Title", icon: "pencil")
-            TextField("Trip title", text: $title)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .tint(DesignSystem.Color.accent)
-                .padding(DesignSystem.Spacing.sm)
-                .background(
-                    DesignSystem.Color.cardBackground,
-                    in: RoundedRectangle(
-                        cornerRadius: DesignSystem.CornerRadius.medium
-                    )
-                )
+            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+                TextField("Trip title", text: $title)
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .tint(DesignSystem.Color.accent)
+                    .padding(DesignSystem.Spacing.sm)
+            }
         }
     }
 
@@ -97,31 +89,27 @@ extension TravelJournalEditorSheet {
         label: String,
         date: Binding<Date>
     ) -> some View {
-        VStack(
-            alignment: .leading,
-            spacing: DesignSystem.Spacing.xxs
-        ) {
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(
-                    DesignSystem.Color.textSecondary
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(
+                alignment: .leading,
+                spacing: DesignSystem.Spacing.xxs
+            ) {
+                Text(label)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(
+                        DesignSystem.Color.textSecondary
+                    )
+                DatePicker(
+                    "",
+                    selection: date,
+                    displayedComponents: .date
                 )
-            DatePicker(
-                "",
-                selection: date,
-                displayedComponents: .date
-            )
-            .labelsHidden()
-            .tint(DesignSystem.Color.accent)
+                .labelsHidden()
+                .tint(DesignSystem.Color.accent)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(DesignSystem.Spacing.sm)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            )
-        )
     }
 
     var ratingSection: some View {
@@ -138,34 +126,30 @@ extension TravelJournalEditorSheet {
     }
 
     var ratingPicker: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ForEach(1...5, id: \.self) { star in
-                Button {
-                    withAnimation(
-                        .spring(response: 0.3, dampingFraction: 0.6)
-                    ) {
-                        rating = star
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                ForEach(1...5, id: \.self) { star in
+                    Button {
+                        withAnimation(
+                            .spring(response: 0.3, dampingFraction: 0.6)
+                        ) {
+                            rating = star
+                        }
+                    } label: {
+                        Image(
+                            systemName: star <= rating
+                                ? "star.fill"
+                                : "star"
+                        )
+                        .font(DesignSystem.Font.iconLarge)
+                        .foregroundStyle(DesignSystem.Color.warning)
+                        .scaleEffect(star <= rating ? 1.1 : 1.0)
                     }
-                } label: {
-                    Image(
-                        systemName: star <= rating
-                            ? "star.fill"
-                            : "star"
-                    )
-                    .font(DesignSystem.Font.iconLarge)
-                    .foregroundStyle(DesignSystem.Color.warning)
-                    .scaleEffect(star <= rating ? 1.1 : 1.0)
                 }
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
+            .padding(DesignSystem.Spacing.sm)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            )
-        )
     }
 
     var notesSection: some View {
@@ -182,19 +166,15 @@ extension TravelJournalEditorSheet {
     }
 
     var notesEditor: some View {
-        TextEditor(text: $notes)
-            .font(DesignSystem.Font.body)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .tint(DesignSystem.Color.accent)
-            .scrollContentBackground(.hidden)
-            .frame(minHeight: 120)
-            .padding(DesignSystem.Spacing.sm)
-            .background(
-                DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.medium
-                )
-            )
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            TextEditor(text: $notes)
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .tint(DesignSystem.Color.accent)
+                .scrollContentBackground(.hidden)
+                .frame(minHeight: 120)
+                .padding(DesignSystem.Spacing.sm)
+        }
     }
 
     var photosSection: some View {

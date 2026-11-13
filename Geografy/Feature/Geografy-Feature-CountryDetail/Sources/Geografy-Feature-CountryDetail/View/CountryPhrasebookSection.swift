@@ -9,7 +9,6 @@ extension CountryDetailScreen {
         if !phrases.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 SectionHeaderView(title: "Language Corner", icon: "character.bubble")
-                    .accessibilityAddTraits(.isHeader)
                 phrasesScrollRow(phrases: phrases)
             }
         }

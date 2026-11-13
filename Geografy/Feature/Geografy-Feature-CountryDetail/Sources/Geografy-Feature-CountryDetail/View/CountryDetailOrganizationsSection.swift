@@ -83,10 +83,7 @@ extension CountryDetailScreen {
 
                 Spacer()
 
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .accessibilityHidden(true)
+                RowChevron()
             }
             .padding(DesignSystem.Spacing.md)
             .contentShape(Rectangle())

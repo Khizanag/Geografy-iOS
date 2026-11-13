@@ -121,17 +121,7 @@ private extension TravelJournalDetailScreen {
     }
 
     var durationBadge: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "clock")
-                .font(DesignSystem.Font.caption2)
-            Text(durationText)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-        }
-        .foregroundStyle(DesignSystem.Color.accent)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
+        InfoPill(durationText, systemImage: "clock", style: .accent)
     }
 
     var dateRow: some View {

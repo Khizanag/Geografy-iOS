@@ -36,34 +36,15 @@ private extension CountryStatisticsView {
     }
 
     func categoryTab(_ category: StatCategory) -> some View {
-        Button {
+        SelectableChip(
+            category.title,
+            systemImage: category.icon,
+            isSelected: selectedCategory == category
+        ) {
             withAnimation(.easeInOut(duration: 0.2)) {
                 selectedCategory = category
             }
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: category.icon)
-                    .font(DesignSystem.Font.caption2)
-                    .accessibilityHidden(true)
-                Text(category.title)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(selectedCategory == category ? .semibold : .regular)
-            }
-            .foregroundStyle(
-                selectedCategory == category
-                    ? DesignSystem.Color.onAccent
-                    : DesignSystem.Color.textSecondary
-            )
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                selectedCategory == category
-                    ? DesignSystem.Color.accent
-                    : DesignSystem.Color.cardBackground
-            )
-            .clipShape(Capsule())
         }
-        .buttonStyle(.plain)
     }
 
     var indicatorCards: some View {

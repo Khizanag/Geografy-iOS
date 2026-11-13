@@ -43,12 +43,12 @@ public struct CountryRowView: View {
 
     // MARK: - Body
     public var body: some View {
-        HStack(spacing: 0) {
-            accentStripe
-            contentRow
+        CardView {
+            HStack(spacing: 0) {
+                accentStripe
+                contentRow
+            }
         }
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
                 .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
@@ -144,12 +144,7 @@ private extension CountryRowView {
     }
 
     var continentBadge: some View {
-        Text(country.continent.displayName)
-            .font(DesignSystem.Font.nano.weight(.semibold))
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
-            .background(DesignSystem.Color.cardBackgroundHighlighted, in: Capsule())
+        InfoPill(country.continent.displayName)
     }
 
     @ViewBuilder

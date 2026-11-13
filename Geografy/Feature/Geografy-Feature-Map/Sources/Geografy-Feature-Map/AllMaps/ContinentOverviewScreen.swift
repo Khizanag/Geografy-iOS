@@ -255,16 +255,8 @@ private extension ContinentOverviewScreen {
         ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
             Button { navigateToCountry(country) } label: {
                 CardView {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: country.code, height: 24, fixedWidth: true)
-                        Text(country.name)
-                            .font(DesignSystem.Font.subheadline)
-                            .fontWeight(.medium)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    CountryListRow(country: country) {
+                        RowChevron()
                     }
                     .padding(DesignSystem.Spacing.sm)
                 }

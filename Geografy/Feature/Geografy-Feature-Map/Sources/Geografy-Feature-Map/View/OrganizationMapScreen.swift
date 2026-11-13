@@ -178,14 +178,7 @@ private extension OrganizationMapScreen {
 
     var orgHeaderContent: some View {
         HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(organization.highlightColor.opacity(0.15))
-                    .frame(width: 40, height: 40)
-                Image(systemName: organization.icon)
-                    .font(DesignSystem.Font.iconSmall.weight(.medium))
-                    .foregroundStyle(organization.highlightColor)
-            }
+            IconBadge(organization.icon, color: organization.highlightColor, size: .small)
 
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(organization.displayName)

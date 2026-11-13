@@ -131,12 +131,7 @@ private extension TravelStatsCard {
 
     var continentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            Text("By Continent")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .textCase(.uppercase)
-                .kerning(0.8)
+            EyebrowLabel("By Continent")
             ForEach(continentBreakdown, id: \.name) { item in
                 continentRow(item)
             }
@@ -145,7 +140,7 @@ private extension TravelStatsCard {
 
     func continentRow(_ item: (name: String, visited: Int, total: Int)) -> some View {
         let fraction = item.total > 0 ? Double(item.visited) / Double(item.total) : 0.0
-        return VStack(spacing: 4) {
+        return VStack(spacing: DesignSystem.Spacing.xxs) {
             HStack {
                 Text(item.name)
                     .font(DesignSystem.Font.caption)

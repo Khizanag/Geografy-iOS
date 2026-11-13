@@ -114,14 +114,7 @@ private extension OrganizationsScreen {
     }
 
     func orgLogoFallback(_ org: Organization) -> some View {
-        ZStack {
-            Circle()
-                .fill(org.highlightColor.opacity(0.15))
-                .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
-            Image(systemName: org.icon)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(org.highlightColor)
-        }
+        IconBadge(org.icon, color: org.highlightColor)
     }
 
     func orgInfo(_ org: Organization) -> some View {
@@ -154,10 +147,7 @@ private extension OrganizationsScreen {
                 .padding(.vertical, DesignSystem.Spacing.xxs)
                 .background(org.highlightColor.opacity(0.12), in: Capsule())
                 .accessibilityLabel("\(memberCount(for: org)) members")
-            Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .accessibilityHidden(true)
+            RowChevron()
         }
     }
 }
