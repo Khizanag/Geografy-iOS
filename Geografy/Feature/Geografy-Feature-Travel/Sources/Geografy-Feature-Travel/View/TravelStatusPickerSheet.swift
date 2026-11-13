@@ -12,6 +12,10 @@ public struct TravelStatusPickerSheet: View {
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    // The sheet is as tall as its content; this is only the first guess before it's measured.
+    @State private var contentHeight: CGFloat = 320
 
     public let country: Country
 
@@ -22,93 +26,151 @@ public struct TravelStatusPickerSheet: View {
 
     // MARK: - Body
     public var body: some View {
-        VStack(spacing: 0) {
-            header
-            Divider().padding(.horizontal, DesignSystem.Spacing.md)
-            statusOptions
-            if hasExistingStatus {
-                Divider().padding(.horizontal, DesignSystem.Spacing.md)
-                clearButton
+        ScrollView {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                header
+                statusOptions
+                if hasExistingStatus {
+                    removeButton
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.top, DesignSystem.Spacing.xl)
+            .padding(.bottom, DesignSystem.Spacing.md)
+            .onGeometryChange(for: CGFloat.self) { proxy in
+                proxy.size.height
+            } action: { height in
+                contentHeight = height
             }
         }
-        .padding(.top, DesignSystem.Spacing.sm)
-        .padding(.bottom, DesignSystem.Spacing.md)
-        .presentationDetents(
-            dynamicTypeSize.isAccessibilitySize ? [.large] : [.height(hasExistingStatus ? 240 : 200)]
-        )
+        .scrollBounceBehavior(.basedOnSize)
+        .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.height(contentHeight)])
+        .animation(reduceMotion ? nil : .smooth(duration: 0.25), value: currentStatus)
     }
 }
 
 // MARK: - Subviews
 private extension TravelStatusPickerSheet {
+    var currentStatus: TravelStatus? {
+        travelService.status(for: country.code)
+    }
+
     var hasExistingStatus: Bool {
-        travelService.status(for: country.code) != nil
+        currentStatus != nil
     }
 
     var header: some View {
-        CountryListRow(country: country, subtitle: "Set travel status")
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.sm)
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            FlagView(countryCode: country.code, height: 56)
+                .geoShadow(.elevated)
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Text(country.name)
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .multilineTextAlignment(.center)
+                Text("Travel status")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 
     var statusOptions: some View {
-        VStack(spacing: 0) {
-            ForEach(TravelStatus.allCases) { status in
-                statusRow(status)
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
+        return GlassEffectContainer(spacing: DesignSystem.Spacing.sm) {
+            layout {
+                ForEach(TravelStatus.allCases) { status in
+                    statusTile(status)
+                }
             }
         }
     }
 
-    func statusRow(_ status: TravelStatus) -> some View {
-        let isSelected = travelService.status(for: country.code) == status
+    func statusTile(_ status: TravelStatus) -> some View {
+        let isSelected = currentStatus == status
+        let shape = RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
         return Button {
-            hapticsService.impact(.medium)
-            travelService.set(status: isSelected ? nil : status, for: country.code)
-            if !isSelected {
-                awardTravelXP(for: status)
-                checkTravelAchievements()
-                dismiss()
-            }
+            select(status, isSelected: isSelected)
         } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
+            VStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: status.icon)
-                    .font(DesignSystem.Font.iconSmall)
+                    .font(DesignSystem.Font.title)
                     .foregroundStyle(status.color)
-                    .frame(width: 24)
+                    .symbolEffect(.bounce, value: reduceMotion ? false : isSelected)
                     .accessibilityHidden(true)
                 Text(status.label)
-                    .font(DesignSystem.Font.body)
+                    .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer()
+                Text(status.detail)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.md)
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            // The checkmark says "selected" without relying on the tint's color.
+            .overlay(alignment: .topTrailing) {
                 if isSelected {
-                    Image(systemName: "checkmark")
-                        .font(DesignSystem.Font.iconXS.weight(.semibold))
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(DesignSystem.Font.headline)
                         .foregroundStyle(status.color)
+                        .padding(DesignSystem.Spacing.sm)
+                        .transition(.scale.combined(with: .opacity))
                         .accessibilityHidden(true)
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .contentShape(Rectangle())
+            .contentShape(shape)
         }
-        .buttonStyle(PressButtonStyle())
+        .buttonStyle(.plain)
+        .glassEffect(
+            isSelected ? .regular.tint(status.color.opacity(0.3)).interactive() : .regular.interactive(),
+            in: shape
+        )
         .accessibilityAddTraits(isSelected ? .isSelected : [])
-        .accessibilityHint(isSelected ? "Double tap to clear this status" : "Double tap to set this status")
+        .accessibilityHint(isSelected ? "Clears this status" : "Sets this status")
     }
 
-    var clearButton: some View {
-        Button {
+    var removeButton: some View {
+        Button(role: .destructive) {
             hapticsService.impact(.light)
             travelService.set(status: nil, for: country.code)
             dismiss()
         } label: {
-            Text("Remove Status")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.error)
+            Label("Remove Status", systemImage: "xmark")
+                .font(DesignSystem.Font.subheadline.weight(.semibold))
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
+        .buttonStyle(.glass)
+        .controlSize(.large)
+        .tint(DesignSystem.Color.destructive)
+    }
+}
+
+// MARK: - Actions
+private extension TravelStatusPickerSheet {
+    func select(_ status: TravelStatus, isSelected: Bool) {
+        hapticsService.impact(.light)
+        travelService.set(status: isSelected ? nil : status, for: country.code)
+        guard !isSelected else { return }
+        awardTravelXP(for: status)
+        checkTravelAchievements()
+        dismiss()
+    }
+}
+
+// MARK: - Status Copy
+private extension TravelStatus {
+    var detail: String {
+        switch self {
+        case .visited: "I've been there"
+        case .wantToVisit: "It's on my list"
+        }
     }
 }
 
