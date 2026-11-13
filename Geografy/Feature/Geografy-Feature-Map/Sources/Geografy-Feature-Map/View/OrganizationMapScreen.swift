@@ -210,16 +210,9 @@ private extension OrganizationMapScreen {
     }
 
     var memberCountBadge: some View {
-        Text("\(memberCount) members")
-            .font(DesignSystem.Font.caption2)
-            .fontWeight(.semibold)
-            .foregroundStyle(organization.highlightColor)
+        InfoPill("\(memberCount) members", style: .tinted(organization.highlightColor))
             .lineLimit(1)
             .fixedSize(horizontal: true, vertical: false)
-            .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
-            .background(organization.highlightColor.opacity(0.15))
-            .clipShape(Capsule())
     }
 
     var legend: some View {

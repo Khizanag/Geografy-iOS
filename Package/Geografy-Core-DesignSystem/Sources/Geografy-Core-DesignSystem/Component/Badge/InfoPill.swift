@@ -8,11 +8,16 @@ public struct InfoPill: View {
         case onColor
         /// On the app background or a plain card.
         case neutral
+        /// In a color that carries meaning, such as an organization's color or a site type's.
+        case tinted(Color)
+
         /// Calls attention, in the accent color.
-        case accent
+        public static var accent: Style { .tinted(DesignSystem.Color.accent) }
     }
 
     // MARK: - Properties
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
     private let title: String
     private let systemImage: String?
     private let style: Style
@@ -39,6 +44,12 @@ public struct InfoPill: View {
         .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(background, in: Capsule())
+        .overlay {
+            // A faint tint alone can vanish at increased contrast, so the pill gets an edge.
+            if colorSchemeContrast == .increased {
+                Capsule().strokeBorder(DesignSystem.Color.dividerSubtle)
+            }
+        }
     }
 }
 
@@ -48,7 +59,7 @@ private extension InfoPill {
         switch style {
         case .onColor: DesignSystem.Color.onAccent
         case .neutral: DesignSystem.Color.textSecondary
-        case .accent: DesignSystem.Color.accent
+        case .tinted(let color): color
         }
     }
 
@@ -56,7 +67,7 @@ private extension InfoPill {
         switch style {
         case .onColor: DesignSystem.Color.onAccent.opacity(0.18)
         case .neutral: DesignSystem.Color.cardBackgroundHighlighted
-        case .accent: DesignSystem.Color.accent.opacity(0.15)
+        case .tinted(let color): color.opacity(0.15)
         }
     }
 }

@@ -31,26 +31,11 @@ extension CountryDetailScreen {
     }
 
     private var unescoBadge: some View {
-        let count = unescoSites.count
-        return HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "building.columns.fill")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.indigo)
-                .accessibilityHidden(true)
-            Text("\(count) World Heritage Sites")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.indigo)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.indigo.opacity(0.12))
-        .clipShape(Capsule())
-        .overlay {
-            if colorSchemeContrast == .increased {
-                Capsule().strokeBorder(DesignSystem.Color.dividerSubtle)
-            }
-        }
+        InfoPill(
+            "\(unescoSites.count) World Heritage Sites",
+            systemImage: "building.columns.fill",
+            style: .tinted(DesignSystem.Color.indigo)
+        )
     }
 }
 
@@ -59,7 +44,6 @@ private struct UNESCOSiteRow: View {
     let site: UNESCOSite
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     @State private var expanded = false
 
@@ -118,19 +102,7 @@ private extension UNESCOSiteRow {
 
     var metaRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            Text(site.type.rawValue)
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.medium)
-                .foregroundStyle(siteTypeColor)
-                .padding(.horizontal, 6)
-                .padding(.vertical, 2)
-                .background(siteTypeColor.opacity(0.12))
-                .clipShape(Capsule())
-                .overlay {
-                    if colorSchemeContrast == .increased {
-                        Capsule().strokeBorder(DesignSystem.Color.dividerSubtle)
-                    }
-                }
+            InfoPill(site.type.rawValue, style: .tinted(siteTypeColor))
             Text(String(site.yearInscribed))
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
