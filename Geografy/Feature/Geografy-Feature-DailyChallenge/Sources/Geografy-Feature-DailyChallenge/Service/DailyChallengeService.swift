@@ -25,7 +25,7 @@ public final class DailyChallengeService {
         await countryDataService.loadCountries()
         let today = Date.now
         todayChallenge = generateChallenge(for: today)
-        history = loadAllResults()
+        history = Self.results(for: userID, in: loadAllResults())
         todayResult = history.first {
             $0.dateKey == DailyChallengeResult.dateKey()
         }
@@ -46,8 +46,13 @@ public final class DailyChallengeService {
         persistResults(allResults)
 
         todayResult = result
-        history = allResults
+        history = Self.results(for: userID, in: allResults)
         computeStreak()
+    }
+
+    /// One file holds every account's results on this device, so history and streaks keep only the signed-in user's.
+    nonisolated static func results(for userID: String, in results: [DailyChallengeResult]) -> [DailyChallengeResult] {
+        results.filter { $0.userID == userID }
     }
 }
 

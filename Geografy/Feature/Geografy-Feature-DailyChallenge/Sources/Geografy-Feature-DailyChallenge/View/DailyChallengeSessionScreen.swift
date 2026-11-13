@@ -128,7 +128,7 @@ private extension DailyChallengeSessionScreen {
                 maxScore: 1_000,
                 challengeType: challenge.type,
                 timeSpent: timeSpent,
-                streak: service.streak + 1
+                streak: service.streak
             )
         )
     }
