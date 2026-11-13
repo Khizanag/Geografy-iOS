@@ -156,7 +156,7 @@ private extension CountryListScreen {
     var displaySubmenu: some View {
         Menu {
             Toggle(isOn: $showFlag) { Label("Flag", systemImage: "flag.fill") }
-            Toggle(isOn: $showCapital) { Label("Capital", systemImage: "mappin") }
+            Toggle(isOn: $showCapital) { Label("Capital", systemImage: "star") }
             Toggle(isOn: $showArea) { Label("Area", systemImage: "map") }
             Toggle(isOn: $showPopulation) { Label("Population", systemImage: "person.2") }
         } label: {
@@ -365,7 +365,8 @@ private extension CountryListScreen {
                 isFavorite: isFavorite,
                 showFlag: showFlag,
                 showCapital: showCapital,
-                showStats: showArea || showPopulation,
+                showArea: showArea,
+                showPopulation: showPopulation,
                 showContinent: true,
                 onFavoriteTap: { favoritesService.toggle(code: country.code) }
             )

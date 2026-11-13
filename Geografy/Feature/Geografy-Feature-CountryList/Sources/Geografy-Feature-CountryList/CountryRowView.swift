@@ -12,7 +12,8 @@ public struct CountryRowView: View {
     public let isFavorite: Bool
     public var showFlag: Bool = true
     public var showCapital: Bool = true
-    public var showStats: Bool = true
+    public var showArea: Bool = true
+    public var showPopulation: Bool = true
     public var showContinent: Bool = true
     public var showSpeaker: Bool = false
     public var onFavoriteTap: (() -> Void)?
@@ -23,7 +24,8 @@ public struct CountryRowView: View {
         isFavorite: Bool,
         showFlag: Bool = true,
         showCapital: Bool = true,
-        showStats: Bool = true,
+        showArea: Bool = true,
+        showPopulation: Bool = true,
         showContinent: Bool = true,
         showSpeaker: Bool = false,
         onFavoriteTap: (() -> Void)? = nil
@@ -32,7 +34,8 @@ public struct CountryRowView: View {
         self.isFavorite = isFavorite
         self.showFlag = showFlag
         self.showCapital = showCapital
-        self.showStats = showStats
+        self.showArea = showArea
+        self.showPopulation = showPopulation
         self.showContinent = showContinent
         self.showSpeaker = showSpeaker
         self.onFavoriteTap = onFavoriteTap
@@ -84,7 +87,7 @@ private extension CountryRowView {
                     capitalLabel
                 }
 
-                if showStats {
+                if showArea || showPopulation {
                     statsRow
                 }
             }
@@ -119,28 +122,28 @@ private extension CountryRowView {
 
     var statsRow: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
-            HStack(spacing: 3) {
-                Image(systemName: "map")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                Text(country.area.formatArea())
-                    .font(DesignSystem.Font.caption2)
+            if showArea {
+                stat(icon: "map", value: country.area.formatArea())
+            }
+            if showArea, showPopulation {
+                Text("·")
+                    .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
-
-            Text("·")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-
-            HStack(spacing: 3) {
-                Image(systemName: "person.2")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                Text(country.population.formatPopulation())
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            if showPopulation {
+                stat(icon: "person.2", value: country.population.formatPopulation())
             }
         }
+    }
+
+    func stat(icon: String, value: String) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: icon)
+                .accessibilityHidden(true)
+            Text(value)
+        }
+        .font(DesignSystem.Font.caption2)
+        .foregroundStyle(DesignSystem.Color.textTertiary)
     }
 
     var continentBadge: some View {

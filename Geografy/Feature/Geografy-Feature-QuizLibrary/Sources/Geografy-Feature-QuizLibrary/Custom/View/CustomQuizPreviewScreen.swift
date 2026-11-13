@@ -55,7 +55,8 @@ private extension CustomQuizPreviewScreen {
                     CountryRowView(
                         country: country,
                         isFavorite: false,
-                        showStats: false,
+                        showArea: false,
+                        showPopulation: false,
                         showContinent: true,
                     )
                 }
