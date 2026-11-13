@@ -189,7 +189,7 @@ private extension FriendsListScreen {
 
     var addFriendsButton: some View {
         GlassButton("Add Friends in Game Center", systemImage: "person.badge.plus", fullWidth: true) {
-            hapticsService.impact(.medium)
+            hapticsService.impact(.light)
             GKAccessPoint.shared.trigger(state: .localPlayerFriendsList) {}
         }
     }

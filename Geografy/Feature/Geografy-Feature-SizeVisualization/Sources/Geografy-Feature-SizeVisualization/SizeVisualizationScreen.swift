@@ -118,9 +118,6 @@ private extension SizeVisualizationScreen {
 
     func countryRow(country: Country, rank: Int) -> some View {
         Button {
-            #if !os(tvOS)
-            hapticsService.impact(.medium)
-            #endif
             if referenceCountry == nil {
                 referenceCountry = country
             } else {

@@ -86,7 +86,7 @@ private extension TravelJournalEditorSheet {
 
     var saveButton: some View {
         Button {
-            hapticsService.impact(.medium)
+            hapticsService.notification(.success)
             saveEntry()
         } label: {
             Text("Save")

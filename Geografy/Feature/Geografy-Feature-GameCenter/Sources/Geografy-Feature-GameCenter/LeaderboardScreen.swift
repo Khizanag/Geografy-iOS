@@ -153,7 +153,7 @@ private extension LeaderboardScreen {
 
     var openGameCenterButton: some View {
         GlassButton("Open Game Center", systemImage: "gamecontroller.fill", fullWidth: true) {
-            hapticsService.impact(.medium)
+            hapticsService.impact(.light)
             GKAccessPoint.shared.trigger(state: .dashboard) {}
         }
         .disabled(!gameCenterService.isAuthenticated)

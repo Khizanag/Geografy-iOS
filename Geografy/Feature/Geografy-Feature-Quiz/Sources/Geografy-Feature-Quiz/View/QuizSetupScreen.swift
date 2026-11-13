@@ -369,7 +369,7 @@ private extension QuizSetupScreen {
     var startButton: some View {
         GlassButton("Start \(selectedType.displayName)", systemImage: "play.fill", fullWidth: true) {
             #if !os(tvOS)
-            hapticsService.impact(.medium)
+            hapticsService.impact(.light)
             #endif
             coordinator.cover(.quizSession(makeConfiguration()))
         }

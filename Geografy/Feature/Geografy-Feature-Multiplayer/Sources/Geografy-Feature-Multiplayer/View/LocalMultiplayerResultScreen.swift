@@ -118,7 +118,7 @@ private extension LocalMultiplayerResultScreen {
     var actionButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             GlassButton("Rematch", systemImage: "arrow.2.squarepath", fullWidth: true) {
-                hapticsService.impact(.medium)
+                hapticsService.impact(.light)
                 coordinator.requestRematch()
             }
 

@@ -313,7 +313,7 @@ private extension HistoricalMapScreen {
                 mapState.selectedCountryCode = shape.id
             }
             #if !os(tvOS)
-            hapticsService.impact(.medium)
+            hapticsService.selection()
             #endif
             return
         }

@@ -186,7 +186,7 @@ private extension QuizResultsScreen {
     var playAgainButton: some View {
         GlassButton("Play Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
             #if !os(tvOS)
-            hapticsService.impact(.medium)
+            hapticsService.impact(.light)
             #endif
             onPlayAgain()
         }

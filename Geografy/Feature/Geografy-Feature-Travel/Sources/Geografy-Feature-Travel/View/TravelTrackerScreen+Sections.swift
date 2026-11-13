@@ -78,7 +78,7 @@ extension TravelTrackerScreen {
             Text(emptyStateSubtitle)
         } actions: {
             GlassButton("Add Country", systemImage: "plus") {
-                hapticsService.impact(.medium)
+                hapticsService.impact(.light)
                 showCountryPicker = true
             }
         }

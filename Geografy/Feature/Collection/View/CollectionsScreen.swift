@@ -26,7 +26,7 @@ struct CollectionsScreen: View {
                 isValid: collectionService.isAvailableName
             ) { name in
                 collectionService.createCollection(named: name)
-                hapticsService.impact(.medium)
+                hapticsService.notification(.success)
             }
             .confirmationDialog(
                 "Delete Collection",

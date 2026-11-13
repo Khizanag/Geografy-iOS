@@ -6,7 +6,6 @@ import SwiftUI
 extension ProfileScreen {
     public var guestBanner: some View {
         Button {
-            hapticsService.impact(.medium)
             coordinator.push(.signIn)
         } label: {
             guestBannerLabel

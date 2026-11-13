@@ -536,9 +536,6 @@ private extension WordSearchGameScreen {
             guard wordCells.count == cells.count else { continue }
             guard zip(wordCells, cells).allSatisfy({ $0 == $1 }) else { continue }
             foundWordIDs.insert(wordItem.id)
-            #if !os(tvOS)
-            hapticsService.impact(.medium)
-            #endif
             if allFound(puzzle) {
                 timerActive = false
                 #if !os(tvOS)
@@ -547,6 +544,9 @@ private extension WordSearchGameScreen {
                 let announcement = "Found \(wordItem.word). All words found in \(formattedTime)."
                 AccessibilityNotification.Announcement(announcement).post()
             } else {
+                #if !os(tvOS)
+                hapticsService.impact(.medium)
+                #endif
                 let announcement = "Found \(wordItem.word). \(foundWordIDs.count) of \(puzzle.words.count)."
                 AccessibilityNotification.Announcement(announcement).post()
             }

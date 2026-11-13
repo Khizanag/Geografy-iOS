@@ -5,7 +5,6 @@ import SwiftUI
 
 public struct LocalMultiplayerEntryScreen: View {
     // MARK: - Properties
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var coordinator = LocalMultiplayerCoordinator()
@@ -92,7 +91,6 @@ private extension LocalMultiplayerEntryScreen {
                 icon: "wifi",
                 color: DesignSystem.Color.accent
             ) {
-                hapticsService.impact(.medium)
                 coordinator.startHosting()
             }
 
@@ -102,7 +100,6 @@ private extension LocalMultiplayerEntryScreen {
                 icon: "magnifyingglass",
                 color: DesignSystem.Color.blue
             ) {
-                hapticsService.impact(.medium)
                 coordinator.startBrowsing()
             }
         }

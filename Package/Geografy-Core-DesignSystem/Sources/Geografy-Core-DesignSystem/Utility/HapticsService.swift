@@ -23,6 +23,11 @@ public typealias HapticImpactStyle = UIImpactFeedbackGenerator.FeedbackStyle
 public typealias HapticNotificationType = UINotificationFeedbackGenerator.FeedbackType
 #endif
 
+/// Plays the app's haptics. One rule keeps them consistent:
+/// - Taps are `.light`. Buttons styled with `PressButtonStyle` already play it on press, so don't add another.
+/// - Picking an item on a map or in a list is `selection()`.
+/// - Saving or finishing something is `notification(.success)`; a wrong answer is `notification(.error)`.
+/// - `.medium` and heavier are for game moments only, such as finding a word.
 @Observable
 @MainActor
 public final class HapticsService {

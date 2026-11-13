@@ -130,7 +130,7 @@ private extension OrganizationDetailScreen {
     var openMapButton: some View {
         GlassButton("Open Map", systemImage: "map.fill", fullWidth: true) {
             #if !os(tvOS)
-            hapticsService.impact(.medium)
+            hapticsService.impact(.light)
             #endif
             coordinator.cover(.map(continentFilter: nil))
         }

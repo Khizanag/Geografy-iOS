@@ -143,7 +143,7 @@ private extension TravelJournalScreen {
                 "Add First Entry",
                 systemImage: "plus"
             ) {
-                hapticsService.impact(.medium)
+                hapticsService.impact(.light)
                 activeSheet = .newEntry
             }
         }

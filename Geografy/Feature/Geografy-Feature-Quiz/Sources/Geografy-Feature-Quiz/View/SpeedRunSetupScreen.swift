@@ -330,7 +330,7 @@ private extension SpeedRunSetupScreen {
 private extension SpeedRunSetupScreen {
     var startButton: some View {
         GlassButton("Start Speed Run", systemImage: "bolt.fill", fullWidth: true) {
-            hapticsService.impact(.medium)
+            hapticsService.impact(.light)
             dismiss()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 coordinator.cover(

@@ -86,7 +86,6 @@ extension ProfileScreen {
 private extension ProfileScreen {
     var signInRow: some View {
         Button {
-            hapticsService.impact(.medium)
             coordinator.push(.signIn)
         } label: {
             accountRowLabel(
@@ -100,7 +99,6 @@ private extension ProfileScreen {
 
     var signOutRow: some View {
         Button {
-            hapticsService.impact(.medium)
             authService.signOut()
         } label: {
             accountRowLabel(
@@ -114,7 +112,6 @@ private extension ProfileScreen {
 
     var deleteAccountRow: some View {
         Button {
-            hapticsService.impact(.heavy)
             showDeleteAlert = true
         } label: {
             accountRowLabel(

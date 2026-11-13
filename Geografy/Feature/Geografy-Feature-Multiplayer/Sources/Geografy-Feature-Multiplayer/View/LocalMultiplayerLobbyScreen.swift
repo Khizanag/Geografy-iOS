@@ -231,7 +231,7 @@ private extension LocalMultiplayerLobbyScreen {
             }
 
             GlassButton("I'm Ready", systemImage: "hand.thumbsup.fill", fullWidth: true) {
-                hapticsService.impact(.medium)
+                hapticsService.impact(.light)
                 coordinator.markReady()
             }
         }
@@ -242,7 +242,7 @@ private extension LocalMultiplayerLobbyScreen {
 private extension LocalMultiplayerLobbyScreen {
     var startButton: some View {
         GlassButton("Start Match", systemImage: "play.fill", fullWidth: true) {
-            hapticsService.impact(.heavy)
+            hapticsService.impact(.light)
             coordinator.startMatch()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)

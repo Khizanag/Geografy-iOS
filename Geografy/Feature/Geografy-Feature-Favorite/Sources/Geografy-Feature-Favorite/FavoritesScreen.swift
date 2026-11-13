@@ -190,7 +190,7 @@ private extension FavoritesScreen {
 
     func removeButton(for country: Country) -> some View {
         Button(role: .destructive) {
-            hapticsService.impact(.medium)
+            hapticsService.impact(.light)
             withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
                 favoritesService.toggle(code: country.code)
             }

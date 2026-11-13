@@ -208,7 +208,7 @@ private extension TerritorialDisputesScreen {
     }
 
     func resetToDefaults() {
-        hapticsService.impact(.medium)
+        hapticsService.impact(.light)
         for dispute in TerritorialDispute.all {
             UserDefaults.standard.set(dispute.defaultOptionKey, forKey: dispute.userDefaultsKey)
             selections[dispute.id] = dispute.defaultOptionKey
