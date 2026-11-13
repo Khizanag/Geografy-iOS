@@ -9,7 +9,8 @@ public extension View {
         tabs: [Tab],
         tabTitle: @escaping (Tab) -> String
     ) -> some View {
-        safeAreaInset(edge: .top) {
+        // A bar, not a plain inset, so content scrolling under it fades the way it does under the navigation bar.
+        safeAreaBar(edge: .top) {
             SegmentedTabPicker(title: title, selection: selection, tabs: tabs, tabTitle: tabTitle)
         }
         .screenBackground()
