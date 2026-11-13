@@ -4,7 +4,7 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
-enum HubItem: Identifiable {
+enum HubItem: Identifiable, CaseIterable {
     case profile
     case quiz
     case trueOrFalse

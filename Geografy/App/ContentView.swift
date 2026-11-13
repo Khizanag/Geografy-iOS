@@ -53,6 +53,9 @@ struct ContentView: View {
             }
             #endif
             .onOpenURL { appCoordinator.handleDeepLink($0) }
+            #if DEBUG
+            .task { appCoordinator.openHubItemFromLaunchArguments() }
+            #endif
             .onContinueUserActivity(CSSearchableItemActionType) { activity in
                 if let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
                     appCoordinator.handleSpotlightActivity(

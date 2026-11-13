@@ -48,6 +48,16 @@ final class AppCoordinator {
         }
     }
 
+    #if DEBUG
+    /// Launching with `-openHub <testKey>` opens that hub screen, so UI checks don't need to tap through tabs.
+    func openHubItemFromLaunchArguments() {
+        guard let key = UserDefaults.standard.string(forKey: "openHub"),
+              let item = HubItem.allCases.first(where: { $0.testKey == key }) else { return }
+        selectedTab = .learn
+        learnNavigator.push(item.toDestination)
+    }
+    #endif
+
     @MainActor
     func handleSpotlightActivity(_ identifier: String, countryDataService: CountryDataService) {
         guard identifier.hasPrefix("country-") else { return }
