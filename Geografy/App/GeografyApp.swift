@@ -23,11 +23,11 @@ struct GeografyApp: App {
     @State private var gameCenterService = GameCenterService()
     @State private var geoJSONCache = GeoJSONCache()
     @State private var hapticsService = HapticsService()
-    @State private var learningPathService = LearningPathService()
+    @State private var learningPathService: LearningPathService
     @State private var pronunciationService = PronunciationService()
     @State private var streakService: StreakService
     @State private var testingModeService = TestingModeService()
-    @State private var travelService = TravelService()
+    @State private var travelService: TravelService
     @State private var widgetDataBridge = WidgetDataBridge()
     @State private var worldBankService = WorldBankService()
     @State private var xpService: XPService
@@ -40,6 +40,8 @@ struct GeografyApp: App {
         let database = DatabaseManager()
         let auth = AuthService(db: database)
         let userID = auth.currentUserID
+        // Before any store loads, so each one reads the signed-in user's data.
+        UserScope.activate(userID)
         let xp = XPService(db: database, userID: userID)
         let achievement = AchievementService(db: database, xpService: xp, userID: userID)
         let streak = StreakService(db: database, xpService: xp, achievementService: achievement, userID: userID)
@@ -50,6 +52,8 @@ struct GeografyApp: App {
         _achievementService = State(wrappedValue: achievement)
         _streakService = State(wrappedValue: streak)
         _favoritesService = State(wrappedValue: favorites)
+        _learningPathService = State(wrappedValue: LearningPathService())
+        _travelService = State(wrappedValue: TravelService())
     }
 
     // MARK: - Body
@@ -108,6 +112,7 @@ private extension GeografyApp {
     func bootstrap() async {
         await countryDataService.loadCountries()
         favoritesService.fetchEntries()
+        flashcardService.loadData()
         collectionService.configure(container: databaseManager.container)
         xpService.refreshXP()
         achievementService.refreshUnlocked()
@@ -162,6 +167,10 @@ private extension GeografyApp {
     }
 
     func handleUserSwitch(_ newUserID: String) {
+        UserScope.activate(newUserID)
+        travelService.reload()
+        learningPathService.reload()
+        flashcardService.loadData()
         xpService.switchUser(id: newUserID)
         streakService.switchUser(id: newUserID)
         achievementService.switchUser(id: newUserID)

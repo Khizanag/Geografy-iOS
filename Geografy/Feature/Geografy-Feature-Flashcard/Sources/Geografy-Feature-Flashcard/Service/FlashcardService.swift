@@ -8,12 +8,14 @@ public final class FlashcardService {
 
     public init() {}
 
+    /// Loads the active user's review history; call again after the user changes.
     public func loadData() {
-        guard let data = UserDefaults.standard.data(forKey: storageKey),
+        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
               let decoded = try? JSONDecoder().decode(
                   [String: SpacedRepetitionData].self,
                   from: data
               ) else {
+            spacedRepetitionStore = [:]
             return
         }
         spacedRepetitionStore = decoded
@@ -83,6 +85,6 @@ private extension FlashcardService {
         guard let encoded = try? JSONEncoder().encode(spacedRepetitionStore) else {
             return
         }
-        UserDefaults.standard.set(encoded, forKey: storageKey)
+        UserDefaults.standard.set(encoded, forKey: UserScope.key(storageKey))
     }
 }

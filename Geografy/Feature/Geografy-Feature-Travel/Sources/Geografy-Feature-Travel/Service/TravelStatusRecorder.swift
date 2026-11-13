@@ -26,11 +26,11 @@ struct TravelStatusRecorder {
 // MARK: - Helpers
 private extension TravelStatusRecorder {
     func awardXPOnce(for status: TravelStatus, countryCode: String) {
-        var awarded = Set(UserDefaults.standard.stringArray(forKey: Self.awardedKey) ?? [])
+        var awarded = Set(UserDefaults.standard.stringArray(forKey: UserScope.key(Self.awardedKey)) ?? [])
         let entryKey = "\(countryCode):\(status.rawValue)"
         guard !awarded.contains(entryKey) else { return }
         awarded.insert(entryKey)
-        UserDefaults.standard.set(Array(awarded), forKey: Self.awardedKey)
+        UserDefaults.standard.set(Array(awarded), forKey: UserScope.key(Self.awardedKey))
         switch status {
         case .visited:
             xpService.award(20, source: .travelVisited)

@@ -8,6 +8,11 @@ public final class LearningPathService {
     private let storageKey = "learningPath.progress"
 
     public init() {
+        reload()
+    }
+
+    /// Loads the active user's progress; call after the user changes.
+    public func reload() {
         modules = makeModules()
         loadProgress()
     }
@@ -41,12 +46,12 @@ private extension LearningPathService {
             [moduleID: Dictionary(uniqueKeysWithValues: lessons)]
         }
         if let data = try? JSONEncoder().encode(encoded) {
-            UserDefaults.standard.set(data, forKey: storageKey)
+            UserDefaults.standard.set(data, forKey: UserScope.key(storageKey))
         }
     }
 
     func loadProgress() {
-        guard let data = UserDefaults.standard.data(forKey: storageKey),
+        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
               let encoded = try? JSONDecoder().decode([[String: [String: Bool]]].self, from: data)
         else { return }
 

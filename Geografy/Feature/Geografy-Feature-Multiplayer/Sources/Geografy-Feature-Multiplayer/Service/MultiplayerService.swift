@@ -7,9 +7,13 @@ public final class MultiplayerService {
     private(set) var matchHistory: [MultiplayerMatch] = []
 
     private let userDefaultsKey = "com.khizanag.geografy.multiplayerRating"
-    private let historyKey = "com.khizanag.geografy.matchHistory"
 
     public init() {
+        loadRating()
+    }
+
+    /// Reloads the active user's rating; the lobby calls it on appear, so a user switch shows the right one.
+    public func reload() {
         loadRating()
     }
 }
@@ -69,12 +73,16 @@ private extension MultiplayerService {
 
     func loadRating() {
         let defaults = UserDefaults.standard
-        guard defaults.object(forKey: userDefaultsKey) != nil else { return }
+        // The rating key is the one that's always written, so its presence means a saved rating exists.
+        guard defaults.object(forKey: key("rating")) != nil else {
+            playerRating = .initial
+            return
+        }
 
-        let rating = defaults.integer(forKey: "\(userDefaultsKey).rating")
-        let wins = defaults.integer(forKey: "\(userDefaultsKey).wins")
-        let losses = defaults.integer(forKey: "\(userDefaultsKey).losses")
-        let draws = defaults.integer(forKey: "\(userDefaultsKey).draws")
+        let rating = defaults.integer(forKey: key("rating"))
+        let wins = defaults.integer(forKey: key("wins"))
+        let losses = defaults.integer(forKey: key("losses"))
+        let draws = defaults.integer(forKey: key("draws"))
 
         playerRating = PlayerRating(
             rating: rating,
@@ -86,9 +94,13 @@ private extension MultiplayerService {
 
     func saveRating() {
         let defaults = UserDefaults.standard
-        defaults.set(playerRating.rating, forKey: "\(userDefaultsKey).rating")
-        defaults.set(playerRating.wins, forKey: "\(userDefaultsKey).wins")
-        defaults.set(playerRating.losses, forKey: "\(userDefaultsKey).losses")
-        defaults.set(playerRating.draws, forKey: "\(userDefaultsKey).draws")
+        defaults.set(playerRating.rating, forKey: key("rating"))
+        defaults.set(playerRating.wins, forKey: key("wins"))
+        defaults.set(playerRating.losses, forKey: key("losses"))
+        defaults.set(playerRating.draws, forKey: key("draws"))
+    }
+
+    func key(_ field: String) -> String {
+        UserScope.key("\(userDefaultsKey).\(field)")
     }
 }

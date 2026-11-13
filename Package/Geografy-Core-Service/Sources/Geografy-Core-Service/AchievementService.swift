@@ -210,10 +210,10 @@ extension AchievementService {
     }
 
     public func loadPinnedIDs() {
-        pinnedIDs = UserDefaults.standard.stringArray(forKey: pinnedKey) ?? []
+        pinnedIDs = UserDefaults.standard.stringArray(forKey: UserScope.key(pinnedKey)) ?? []
     }
 
     public func savePinnedIDs() {
-        UserDefaults.standard.set(pinnedIDs, forKey: pinnedKey)
+        UserDefaults.standard.set(pinnedIDs, forKey: UserScope.key(pinnedKey))
     }
 }

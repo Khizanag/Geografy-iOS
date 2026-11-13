@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 
 @Observable
 public final class RecentSearchesService {
@@ -8,7 +9,7 @@ public final class RecentSearchesService {
     private let maxCount = 10
 
     public init() {
-        queries = UserDefaults.standard.stringArray(forKey: storageKey) ?? []
+        queries = UserDefaults.standard.stringArray(forKey: UserScope.key(storageKey)) ?? []
     }
 
     public func add(_ query: String) {
@@ -35,6 +36,6 @@ public final class RecentSearchesService {
 // MARK: - Persistence
 private extension RecentSearchesService {
     func persist() {
-        UserDefaults.standard.set(queries, forKey: storageKey)
+        UserDefaults.standard.set(queries, forKey: UserScope.key(storageKey))
     }
 }

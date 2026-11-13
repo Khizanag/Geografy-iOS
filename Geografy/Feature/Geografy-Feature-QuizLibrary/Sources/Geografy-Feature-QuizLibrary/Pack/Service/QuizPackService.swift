@@ -9,7 +9,7 @@ public final class QuizPackService {
     public init() {}
 
     public func loadProgress() {
-        guard let data = UserDefaults.standard.data(forKey: storageKey),
+        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
               let decoded = try? JSONDecoder().decode(
                   [String: QuizPackProgress].self,
                   from: data
@@ -87,7 +87,7 @@ private extension QuizPackService {
         ) else {
             return
         }
-        UserDefaults.standard.set(encoded, forKey: storageKey)
+        UserDefaults.standard.set(encoded, forKey: UserScope.key(storageKey))
     }
 }
 

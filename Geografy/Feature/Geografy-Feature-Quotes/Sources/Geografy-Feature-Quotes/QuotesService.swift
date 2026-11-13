@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 import Observation
 
 @Observable
@@ -66,7 +67,7 @@ private extension QuotesService {
 // MARK: - Persistence
 private extension QuotesService {
     func loadFavorites() {
-        let favoriteIds = Set(UserDefaults.standard.stringArray(forKey: favoritesKey) ?? [])
+        let favoriteIds = Set(UserDefaults.standard.stringArray(forKey: UserScope.key(favoritesKey)) ?? [])
         for index in quotes.indices {
             quotes[index].isFavorited = favoriteIds.contains(quotes[index].id)
         }
@@ -74,6 +75,6 @@ private extension QuotesService {
 
     func saveFavorites() {
         let favoriteIds = quotes.filter(\.isFavorited).map(\.id)
-        UserDefaults.standard.set(favoriteIds, forKey: favoritesKey)
+        UserDefaults.standard.set(favoriteIds, forKey: UserScope.key(favoritesKey))
     }
 }

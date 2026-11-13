@@ -8,7 +8,7 @@ public final class CustomQuizService {
     private let storageKey = "custom_quizzes"
 
     public func loadQuizzes() {
-        guard let data = UserDefaults.standard.data(forKey: storageKey),
+        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
               let decoded = try? JSONDecoder.iso8601.decode(
                   [CustomQuiz].self,
                   from: data
@@ -50,7 +50,7 @@ private extension CustomQuizService {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         guard let data = try? encoder.encode(quizzes) else { return }
-        UserDefaults.standard.set(data, forKey: storageKey)
+        UserDefaults.standard.set(data, forKey: UserScope.key(storageKey))
     }
 }
 

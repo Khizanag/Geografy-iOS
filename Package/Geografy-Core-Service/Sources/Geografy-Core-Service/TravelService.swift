@@ -9,12 +9,12 @@ public final class TravelService {
     private let storageKey = "travel_tracker_entries"
 
     public init() {
-        guard let data = UserDefaults.standard.data(forKey: storageKey),
-              let raw = try? JSONDecoder().decode([String: String].self, from: data) else {
-            entries = [:]
-            return
-        }
-        entries = raw.compactMapValues { TravelStatus(rawValue: $0) }
+        entries = Self.loadEntries(storageKey: storageKey)
+    }
+
+    /// Loads the active user's entries; call after the user changes.
+    public func reload() {
+        entries = Self.loadEntries(storageKey: storageKey)
     }
 
     public func set(status: TravelStatus?, for code: String) {
@@ -43,6 +43,14 @@ public final class TravelService {
 private extension TravelService {
     func persist() {
         guard let data = try? JSONEncoder().encode(entries) else { return }
-        UserDefaults.standard.set(data, forKey: storageKey)
+        UserDefaults.standard.set(data, forKey: UserScope.key(storageKey))
+    }
+
+    static func loadEntries(storageKey: String) -> [String: TravelStatus] {
+        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
+              let raw = try? JSONDecoder().decode([String: String].self, from: data) else {
+            return [:]
+        }
+        return raw.compactMapValues { TravelStatus(rawValue: $0) }
     }
 }

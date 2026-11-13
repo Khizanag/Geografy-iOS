@@ -241,11 +241,11 @@ private extension TravelBucketListScreen {
     }
 
     func loadPersistedData() {
-        if let priorityData = UserDefaults.standard.data(forKey: prioritiesKey),
+        if let priorityData = UserDefaults.standard.data(forKey: UserScope.key(prioritiesKey)),
            let decoded = try? JSONDecoder().decode([String: String].self, from: priorityData) {
             priorities = decoded.compactMapValues { BucketListPriority(rawValue: $0) }
         }
-        if let notesData = UserDefaults.standard.data(forKey: notesKey),
+        if let notesData = UserDefaults.standard.data(forKey: UserScope.key(notesKey)),
            let decoded = try? JSONDecoder().decode([String: String].self, from: notesData) {
             notes = decoded
         }
@@ -254,12 +254,12 @@ private extension TravelBucketListScreen {
     func persistPriorities() {
         let raw = priorities.mapValues(\.rawValue)
         guard let data = try? JSONEncoder().encode(raw) else { return }
-        UserDefaults.standard.set(data, forKey: prioritiesKey)
+        UserDefaults.standard.set(data, forKey: UserScope.key(prioritiesKey))
     }
 
     func persistNotes() {
         guard let data = try? JSONEncoder().encode(notes) else { return }
-        UserDefaults.standard.set(data, forKey: notesKey)
+        UserDefaults.standard.set(data, forKey: UserScope.key(notesKey))
     }
 
     var shareableText: String {

@@ -377,11 +377,11 @@ private extension CompareScreen {
 
     func saveRecentPairs() {
         guard let data = try? JSONEncoder().encode(recentPairs) else { return }
-        UserDefaults.standard.set(data, forKey: "compare_recent_pairs")
+        UserDefaults.standard.set(data, forKey: UserScope.key("compare_recent_pairs"))
     }
 
     func loadRecentPairs() {
-        guard let data = UserDefaults.standard.data(forKey: "compare_recent_pairs"),
+        guard let data = UserDefaults.standard.data(forKey: UserScope.key("compare_recent_pairs")),
               let decoded = try? JSONDecoder().decode([ComparisonPair].self, from: data) else {
             return
         }

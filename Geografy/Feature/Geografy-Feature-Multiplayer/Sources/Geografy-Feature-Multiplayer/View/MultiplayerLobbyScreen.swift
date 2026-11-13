@@ -38,6 +38,7 @@ public struct MultiplayerLobbyScreen: View {
             .fullScreenCover(isPresented: $showMatch) {
                 matchDestination
             }
+            .onAppear { multiplayerService.reload() }
     }
 }
 
