@@ -22,17 +22,19 @@ public struct IconBadge: View {
             }
         }
 
-        var font: Font {
+        var iconPoints: CGFloat {
             switch self {
-            case .small: DesignSystem.Font.iconXS
-            case .medium: DesignSystem.Font.iconSmall
-            case .large: DesignSystem.Font.iconMedium
-            case .hero: DesignSystem.Font.iconXL
+            case .small: 14
+            case .medium: 18
+            case .large: 24
+            case .hero: 36
             }
         }
     }
 
     // MARK: - Properties
+    @ScaledMetric(relativeTo: .body) private var textScale: CGFloat = 1
+
     private let systemImage: String
     private let color: Color
     private let size: Size
@@ -47,11 +49,15 @@ public struct IconBadge: View {
     // MARK: - Body
     public var body: some View {
         Image(systemName: systemImage)
-            .font(size.font)
-            .fontWeight(.semibold)
+            .font(.system(size: size.iconPoints * scale, weight: .semibold))
             .foregroundStyle(color)
-            .frame(width: size.diameter, height: size.diameter)
+            .frame(width: size.diameter * scale, height: size.diameter * scale)
             .background(color.opacity(0.15), in: Circle())
             .accessibilityHidden(true)
+    }
+
+    // Grows with Text Size, capped so a badge never crowds out the text beside it.
+    private var scale: CGFloat {
+        min(textScale, 1.6)
     }
 }

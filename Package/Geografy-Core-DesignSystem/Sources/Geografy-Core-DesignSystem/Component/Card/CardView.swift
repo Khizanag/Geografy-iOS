@@ -2,6 +2,8 @@ import SwiftUI
 
 public struct CardView<Content: View>: View {
     // MARK: - Properties
+    @Environment(\.colorSchemeContrast) private var contrast
+
     private let cornerRadius: CGFloat
     private let shadow: DesignSystem.Shadow?
     private let content: Content
@@ -22,6 +24,13 @@ public struct CardView<Content: View>: View {
         content
             .background(DesignSystem.Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .overlay {
+                // At increased contrast a card needs an edge, not just a fill a shade off the background.
+                if contrast == .increased {
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
+                }
+            }
             .optionalShadow(shadow)
     }
 }

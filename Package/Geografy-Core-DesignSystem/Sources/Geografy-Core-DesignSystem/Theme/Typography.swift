@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 public extension DesignSystem {
     enum Font {
@@ -14,10 +15,10 @@ public extension DesignSystem {
         public static let footnote: SwiftUI.Font = .footnote
         public static let caption: SwiftUI.Font = .caption
         public static let caption2: SwiftUI.Font = .caption2
-        // Intentionally fixed: decorative labels below system minimum
-        public static let micro: SwiftUI.Font = .system(size: 10, weight: .regular)
-        public static let nano: SwiftUI.Font = .system(size: 9, weight: .regular)
-        public static let pico: SwiftUI.Font = .system(size: 8, weight: .regular)
+        // Smaller than caption2, still scaled with Text Size from caption2's metrics.
+        public static var micro: SwiftUI.Font { scaled(10, relativeTo: .caption2) }
+        public static var nano: SwiftUI.Font { scaled(9, relativeTo: .caption2) }
+        public static var pico: SwiftUI.Font { scaled(8, relativeTo: .caption2) }
 
         // MARK: - Display (hero/splash — intentionally fixed for decorative scores/numbers)
         public static let displayXL: SwiftUI.Font = .system(size: 80, weight: .bold)
@@ -28,14 +29,14 @@ public extension DesignSystem {
         public static let displayXS: SwiftUI.Font = .system(size: 44, weight: .bold)
         public static let displayXXS: SwiftUI.Font = .system(size: 40, weight: .bold)
 
-        // MARK: - Icon (SF Symbol sizing — intentionally fixed for consistent icon layouts)
-        public static let iconXL: SwiftUI.Font = .system(size: 36)
-        public static let iconLarge: SwiftUI.Font = .system(size: 28)
-        public static let iconMedium: SwiftUI.Font = .system(size: 24)
-        public static let iconDefault: SwiftUI.Font = .system(size: 22)
-        public static let iconSmall: SwiftUI.Font = .system(size: 18)
-        public static let iconXS: SwiftUI.Font = .system(size: 14)
-        public static let iconXXS: SwiftUI.Font = .system(size: 10)
+        // MARK: - Icon (SF Symbol sizing — scaled with Text Size so icons keep pace with the text beside them)
+        public static var iconXL: SwiftUI.Font { scaled(36) }
+        public static var iconLarge: SwiftUI.Font { scaled(28) }
+        public static var iconMedium: SwiftUI.Font { scaled(24) }
+        public static var iconDefault: SwiftUI.Font { scaled(22) }
+        public static var iconSmall: SwiftUI.Font { scaled(18) }
+        public static var iconXS: SwiftUI.Font { scaled(14) }
+        public static var iconXXS: SwiftUI.Font { scaled(10) }
 
         // MARK: - Rounded (game scores, XP, level badges)
         public static let roundedHero: SwiftUI.Font = .system(size: 56, weight: .black, design: .rounded)
@@ -88,6 +89,11 @@ public extension DesignSystem {
             weight: SwiftUI.Font.Weight = .regular
         ) -> SwiftUI.Font {
             .system(style, design: design, weight: weight)
+        }
+
+        // MARK: - Scaling
+        private static func scaled(_ size: CGFloat, relativeTo style: UIFont.TextStyle = .body) -> SwiftUI.Font {
+            .system(size: UIFontMetrics(forTextStyle: style).scaledValue(for: size))
         }
     }
 }

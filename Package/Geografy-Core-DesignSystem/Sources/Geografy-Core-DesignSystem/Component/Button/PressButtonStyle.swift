@@ -17,6 +17,7 @@ public struct PressButtonStyle: ButtonStyle {
 
 // MARK: - Body
 private struct PressButtonBody: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -24,7 +25,7 @@ private struct PressButtonBody: View {
 
     var body: some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .scaleEffect(configuration.isPressed && !reduceMotion ? 0.97 : 1.0)
             .opacity(configuration.isPressed ? 0.85 : 1.0)
             .animation(.spring(response: 0.25, dampingFraction: 0.7), value: configuration.isPressed)
             .hoverEffect(.lift)

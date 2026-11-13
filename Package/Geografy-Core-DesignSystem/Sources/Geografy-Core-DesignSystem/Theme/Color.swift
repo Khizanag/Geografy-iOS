@@ -32,7 +32,7 @@ public extension DesignSystem {
         public static let orange = SwiftUI.Color("GeoOrange")
 
         // Semantic tokens for adaptive borders, overlays, and scrim
-        public static let dividerSubtle = SwiftUI.Color.primary.opacity(0.06)
+        public static let dividerSubtle = SwiftUI.Color("DividerSubtle")
         public static let overlayScrim = SwiftUI.Color.primary.opacity(0.4)
 
         // 8 perceptually distinct hues, each ~45° apart on the color wheel,

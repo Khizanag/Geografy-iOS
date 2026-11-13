@@ -3,6 +3,8 @@ import SwiftUI
 /// A capsule filter chip: accent when selected, card-colored otherwise.
 public struct SelectableChip<Icon: View>: View {
     // MARK: - Properties
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
+
     private let title: String
     private let isSelected: Bool
     private let action: () -> Void
@@ -25,6 +27,10 @@ public struct SelectableChip<Icon: View>: View {
     public var body: some View {
         Button(action: action) {
             HStack(spacing: DesignSystem.Spacing.xxs) {
+                if isSelected, differentiateWithoutColor {
+                    Image(systemName: "checkmark")
+                        .accessibilityHidden(true)
+                }
                 icon
                 Text(title)
             }
