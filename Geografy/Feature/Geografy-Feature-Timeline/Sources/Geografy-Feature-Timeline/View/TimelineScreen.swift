@@ -180,7 +180,6 @@ private extension TimelineScreen {
             emptyStateView
         } else {
             SectionHeaderView(title: "\(String(selectedYear)) Events")
-                .accessibilityAddTraits(.isHeader)
             ForEach(yearEvents) { event in
                 Button {
                     selectedEvent = event
@@ -269,25 +268,14 @@ private extension TimelineScreen {
     }
 
     func detailEventTypePill(for event: HistoricalEvent) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: event.type.icon)
-                .accessibilityHidden(true)
-            Text(event.type.displayName)
-        }
-        .font(DesignSystem.Font.caption)
-        .foregroundStyle(DesignSystem.Color.onAccent)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.accent)
-        .clipShape(Capsule())
-        .accessibilityElement(children: .combine)
+        InfoPill(event.type.displayName, systemImage: event.type.icon, style: .accent)
+            .accessibilityElement(children: .combine)
         .accessibilityLabel("Event type: \(event.type.displayName)")
     }
 
     func detailDescription(for event: HistoricalEvent) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "About")
-                .accessibilityAddTraits(.isHeader)
             Text(event.description)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -297,19 +285,10 @@ private extension TimelineScreen {
     func detailCountryInfo(country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Country", icon: "globe")
-                .accessibilityAddTraits(.isHeader)
             Button { coordinator.push(.countryDetail(country)) } label: {
                 CardView {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: country.code, height: 24, fixedWidth: true)
-                        Text(country.name)
-                            .font(DesignSystem.Font.subheadline)
-                            .fontWeight(.medium)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                    CountryListRow(country: country) {
+                        RowChevron()
                     }
                     .padding(DesignSystem.Spacing.sm)
                 }

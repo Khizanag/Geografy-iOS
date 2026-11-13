@@ -173,10 +173,7 @@ private extension NeighborExplorerScreen {
                         destination == nil ? DesignSystem.Color.textSecondary : DesignSystem.Color.textPrimary
                     )
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .accessibilityHidden(true)
+                RowChevron()
             }
             .padding(DesignSystem.Spacing.sm)
             .background(
