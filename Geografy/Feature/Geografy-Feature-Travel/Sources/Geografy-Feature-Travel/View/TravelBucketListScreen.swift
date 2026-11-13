@@ -111,8 +111,9 @@ private extension TravelBucketListScreen {
     }
 
     func priorityBadge(_ priority: BucketListPriority) -> some View {
-        Text(priority.emoji)
-            .font(DesignSystem.Font.title3)
+        Image(systemName: priority.icon)
+            .font(DesignSystem.Font.headline)
+            .foregroundStyle(priority.color)
             .frame(width: 32, height: 32)
             .accessibilityLabel(priority.label)
     }
@@ -311,6 +312,23 @@ public enum BucketListPriority: String, CaseIterable, Codable {
         }
     }
 
+    public var icon: String {
+        switch self {
+        case .dream: "star.fill"
+        case .planningSoon: "calendar"
+        case .someday: "globe.europe.africa.fill"
+        }
+    }
+
+    public var color: Color {
+        switch self {
+        case .dream: DesignSystem.Color.warning
+        case .planningSoon: DesignSystem.Color.blue
+        case .someday: DesignSystem.Color.textSecondary
+        }
+    }
+
+    /// For the shared plain-text list, where an emoji reads better than a symbol name.
     public var emoji: String {
         switch self {
         case .dream: "⭐"
@@ -388,8 +406,10 @@ private extension BucketListCountryDetailView {
     func priorityCard(_ option: BucketListPriority, isSelected: Bool) -> some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                Text(option.emoji)
-                    .font(DesignSystem.Font.iconDefault)
+                Image(systemName: option.icon)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(option.color)
+                    .frame(width: DesignSystem.Size.lg)
                     .accessibilityHidden(true)
                 Text(option.label)
                     .font(DesignSystem.Font.subheadline)

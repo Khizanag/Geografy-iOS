@@ -38,18 +38,6 @@ extension QuizPackCategory {
         }
     }
 
-    public var emoji: String {
-        switch self {
-        case .capitals: "🏛️"
-        case .flags: "🚩"
-        case .population: "👥"
-        case .geography: "🗺️"
-        case .currency: "💰"
-        case .government: "⚖️"
-        case .organizations: "🌐"
-        }
-    }
-
     public var quizType: QuizType {
         switch self {
         case .capitals: .capitalQuiz

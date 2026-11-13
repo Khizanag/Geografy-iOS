@@ -154,8 +154,8 @@ private extension QuizPackBrowserScreen {
         SelectableChip("All", isSelected: selectedCategory == nil) {
             selectedCategory = nil
         } icon: {
-            Text(verbatim: "🌍")
-                .font(DesignSystem.Font.subheadline)
+            Image(systemName: "square.grid.2x2")
+                .accessibilityHidden(true)
         }
     }
 
@@ -166,8 +166,8 @@ private extension QuizPackBrowserScreen {
         return SelectableChip(category.displayName, isSelected: isSelected) {
             selectedCategory = category
         } icon: {
-            Text(verbatim: category.emoji)
-                .font(DesignSystem.Font.subheadline)
+            Image(systemName: category.icon)
+                .accessibilityHidden(true)
         }
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isSelected)
     }
