@@ -19,6 +19,8 @@ public extension DesignSystem {
         public static let onAccent = SwiftUI.Color("OnAccent")
 
         public static let ocean = SwiftUI.Color("Ocean")
+        /// Land that isn't highlighted on a map, such as non-members or countries not yet independent.
+        public static let mapLandMuted = SwiftUI.Color("MapLandMuted")
 
         public static let success = SwiftUI.Color("Success")
         public static let warning = SwiftUI.Color("Warning")

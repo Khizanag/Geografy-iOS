@@ -403,7 +403,7 @@ private extension HistoricalMapScreen {
     }
 
     func applyColorsForYear(shapes: [CountryShape]) {
-        let dimmedColor = SwiftUI.Color(hex: "3A3A3A")
+        let dimmedColor = DesignSystem.Color.mapLandMuted
 
         let colored = shapes
             .map { shape -> CountryShape in

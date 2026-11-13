@@ -30,7 +30,7 @@ public struct OrganizationMapScreen: View {
     @State private var isInitialized = false
     @State private var memberCount = 0
 
-    private let nonMemberColor = DesignSystem.Color.cardBackground
+    private let nonMemberColor = DesignSystem.Color.mapLandMuted
 
     // MARK: - Body
     public var body: some View {

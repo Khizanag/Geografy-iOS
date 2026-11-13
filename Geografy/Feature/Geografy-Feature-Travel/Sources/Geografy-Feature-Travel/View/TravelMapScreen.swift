@@ -12,7 +12,6 @@ public struct TravelMapScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelService.self) private var travelService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let filter: TravelMapFilter
 
@@ -229,14 +228,12 @@ private extension TravelMapScreen {
             .map { shape in
                 var modified = shape
                 if !travelCodes.contains(shape.id) {
-                    modified.color = reduceTransparency ? Self.untrackedColor : Self.untrackedColor.opacity(0.5)
+                    modified.color = DesignSystem.Color.mapLandMuted
                     modified.name = ""
                 }
                 return modified
             }
     }
-
-    static let untrackedColor = Color(hex: "1A1A2E")
 
     var filterIcon: String {
         switch selectedFilter {

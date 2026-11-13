@@ -160,7 +160,7 @@ enum HubItem: Identifiable {
         case .countries: DesignSystem.Color.blue
         case .orgs: DesignSystem.Color.indigo
         case .favorites: DesignSystem.Color.error
-        case .travel: Color(hex: "00C9A7")
+        case .travel: TravelStatus.visited.color
         case .dailyChallenge: DesignSystem.Color.orange
         case .compare: DesignSystem.Color.blue
         case .quizPacks: DesignSystem.Color.purple
