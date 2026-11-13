@@ -420,6 +420,11 @@ private extension SpeedRunSessionScreen {
         isInputFocused = false
         hapticsService.notification(.success)
 
+        // Only a run that names every country counts as a personal best.
+        if completedCodes.count == targetCountries.count {
+            SpeedRunRecords.record(elapsedTime, for: region)
+        }
+
         let earned = calculateXP()
         xpEarned = earned
         xpService.award(earned, source: .speedRunCompleted)

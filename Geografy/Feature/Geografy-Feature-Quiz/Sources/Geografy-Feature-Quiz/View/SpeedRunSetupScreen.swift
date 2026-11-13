@@ -343,13 +343,9 @@ private extension SpeedRunSetupScreen {
     }
 
     var personalBestText: String {
-        let key = "speedrun_best_\(selectedRegion.rawValue)"
-        let best = UserDefaults.standard.double(forKey: UserScope.key(key))
-        if best > 0 {
-            let minutes = Int(best) / 60
-            let seconds = Int(best) % 60
-            return "\(minutes):\(String(format: "%02d", seconds))"
-        }
-        return "—"
+        guard let best = SpeedRunRecords.bestTime(for: selectedRegion) else { return "—" }
+        let minutes = Int(best) / 60
+        let seconds = Int(best) % 60
+        return "\(minutes):\(String(format: "%02d", seconds))"
     }
 }
