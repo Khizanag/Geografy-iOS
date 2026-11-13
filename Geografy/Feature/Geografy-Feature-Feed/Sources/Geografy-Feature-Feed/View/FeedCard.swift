@@ -38,19 +38,7 @@ private extension FeedCard {
     }
 
     var categoryChip: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: item.icon)
-                .font(DesignSystem.Font.caption2.weight(.semibold))
-                .foregroundStyle(item.color)
-                .accessibilityHidden(true)
-            Text(item.type.label)
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-                .foregroundStyle(item.color)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(item.color.opacity(0.15), in: Capsule())
+        InfoPill(item.type.label, systemImage: item.icon, style: .tinted(item.color))
     }
 
     var saveButton: some View {

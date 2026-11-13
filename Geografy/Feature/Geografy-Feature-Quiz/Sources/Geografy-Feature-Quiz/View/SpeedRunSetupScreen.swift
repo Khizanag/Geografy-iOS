@@ -112,18 +112,11 @@ private extension SpeedRunSetupScreen {
     }
 
     var countryCountBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "flag.fill")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.error)
-            Text("\(countryCount) countries to name")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.error)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs + 2)
-        .background(DesignSystem.Color.error.opacity(0.12), in: Capsule())
+        InfoPill(
+            "\(countryCount) countries to name",
+            systemImage: "flag.fill",
+            style: .tinted(DesignSystem.Color.error)
+        )
         .contentTransition(.numericText())
         .animation(.easeInOut(duration: 0.3), value: selectedRegion)
     }

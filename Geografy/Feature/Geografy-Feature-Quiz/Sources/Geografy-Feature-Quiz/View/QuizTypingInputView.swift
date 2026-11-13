@@ -235,19 +235,8 @@ private extension QuizTypingInputView {
     }
 
     var correctAnswerLabel: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: "checkmark")
-                .font(DesignSystem.Font.caption2)
-                .accessibilityHidden(true)
-            Text(correctAnswerText)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-        }
-        .foregroundStyle(DesignSystem.Color.success)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(DesignSystem.Color.success.opacity(0.15), in: Capsule())
-        .accessibilityElement(children: .combine)
+        InfoPill(correctAnswerText, systemImage: "checkmark", style: .tinted(DesignSystem.Color.success))
+            .accessibilityElement(children: .combine)
         .accessibilityLabel("Correct answer: \(correctAnswerText)")
     }
 

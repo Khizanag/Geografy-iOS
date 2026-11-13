@@ -77,40 +77,20 @@ private extension LandmarkDetailView {
     }
 
     var categoryBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: landmark.category.icon)
-            Text(landmark.category.displayName)
-        }
-        .font(DesignSystem.Font.caption)
-        .fontWeight(.semibold)
-        .foregroundStyle(accentSwiftUIColor)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(accentSwiftUIColor.opacity(0.15), in: Capsule())
+        InfoPill(
+            landmark.category.displayName,
+            systemImage: landmark.category.icon,
+            style: .tinted(accentSwiftUIColor)
+        )
     }
 
     var unescooBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "checkmark.seal.fill")
-            Text("UNESCO")
-        }
-        .font(DesignSystem.Font.caption)
-        .fontWeight(.semibold)
-        .foregroundStyle(DesignSystem.Color.blue)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.blue.opacity(0.12), in: Capsule())
+        InfoPill("UNESCO", systemImage: "checkmark.seal.fill", style: .tinted(DesignSystem.Color.blue))
     }
 
     func yearBadge(_ year: Int) -> some View {
         let displayYear = year < 0 ? "\(String(abs(year))) BC" : "\(String(year)) AD"
-        return Text(displayYear)
-            .font(DesignSystem.Font.caption)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
-            .background(DesignSystem.Color.cardBackground, in: Capsule())
+        return InfoPill(displayYear)
     }
 
     var descriptionSection: some View {

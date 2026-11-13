@@ -136,16 +136,10 @@ private extension OrganizationsScreen {
 
     func orgTrailing(_ org: Organization) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            Text("\(memberCount(for: org))")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(org.highlightColor)
+            InfoPill("\(memberCount(for: org))", style: .tinted(org.highlightColor))
                 .monospacedDigit()
                 .lineLimit(1)
                 .fixedSize()
-                .padding(.horizontal, DesignSystem.Spacing.sm)
-                .padding(.vertical, DesignSystem.Spacing.xxs)
-                .background(org.highlightColor.opacity(0.12), in: Capsule())
                 .accessibilityLabel("\(memberCount(for: org)) members")
             RowChevron()
         }

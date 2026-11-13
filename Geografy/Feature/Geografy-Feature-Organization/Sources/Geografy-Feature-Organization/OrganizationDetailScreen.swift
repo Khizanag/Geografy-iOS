@@ -78,13 +78,11 @@ private extension OrganizationDetailScreen {
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
-                    Text("\(memberCountries.count) member countries")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(organization.highlightColor)
-                        .padding(.horizontal, DesignSystem.Spacing.xs)
-                        .padding(.vertical, 3)
-                        .background(organization.highlightColor.opacity(0.12), in: Capsule())
-                        .accessibilityLabel("\(memberCountries.count) member countries")
+                    InfoPill(
+                        "\(memberCountries.count) member countries",
+                        style: .tinted(organization.highlightColor)
+                    )
+                    .accessibilityLabel("\(memberCountries.count) member countries")
                 }
                 Spacer(minLength: 0)
             }
