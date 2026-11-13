@@ -6,6 +6,8 @@ struct ContinentOutline: @unchecked Sendable {
     let continent: Country.Continent
     let path: CGPath
     let viewport: CGRect
+    /// Each country's own path, keyed by country code, so one can be highlighted on the continent.
+    var countryPaths: [String: CGPath] = [:]
 }
 
 // MARK: - Building
@@ -14,13 +16,17 @@ extension ContinentOutline {
     init?(continent: Country.Continent, shapes: [CountryShape]) {
         guard let viewport = Self.viewport(for: continent) else { return nil }
         let path = CGMutablePath()
+        var countryPaths: [String: CGPath] = [:]
         for shape in shapes where shape.continent == continent.displayName {
+            let countryPath = CGMutablePath()
             for polygon in shape.polygons {
                 path.addPath(polygon)
+                countryPath.addPath(polygon)
             }
+            countryPaths[shape.id] = countryPath
         }
         guard !path.isEmpty else { return nil }
-        self.init(continent: continent, path: path, viewport: viewport)
+        self.init(continent: continent, path: path, viewport: viewport, countryPaths: countryPaths)
     }
 
     static func outlines(

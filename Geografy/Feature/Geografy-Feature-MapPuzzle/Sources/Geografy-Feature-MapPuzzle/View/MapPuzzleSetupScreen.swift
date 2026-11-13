@@ -51,7 +51,7 @@ private extension MapPuzzleSetupScreen {
     var header: some View {
         GameIntroHeader(
             title: "Map Puzzle",
-            subtitle: "Find each country among four from the same region.",
+            subtitle: "Name the country highlighted on the map.",
             systemImage: "puzzlepiece.fill",
             color: gameColor,
             facts: headerFacts

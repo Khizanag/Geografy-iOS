@@ -37,6 +37,20 @@ struct ContinentOutlineTests {
         #expect(outline.path.boundingBoxOfPath == CGRect(x: 1_000, y: 500, width: 70, height: 40))
     }
 
+    @Test("Keeps each country's own path, only for countries on the continent")
+    func keepsCountryPaths() throws {
+        let shapes = [
+            makeShape(id: "FR", continent: "Europe", rect: CGRect(x: 1_000, y: 500, width: 10, height: 10)),
+            makeShape(id: "DE", continent: "Europe", rect: CGRect(x: 1_050, y: 520, width: 20, height: 20)),
+            makeShape(id: "EG", continent: "Africa", rect: CGRect(x: 1_000, y: 900, width: 50, height: 50)),
+        ]
+
+        let outline = try #require(ContinentOutline(continent: .europe, shapes: shapes))
+
+        #expect(Set(outline.countryPaths.keys) == ["FR", "DE"])
+        #expect(outline.countryPaths["DE"]?.boundingBoxOfPath == CGRect(x: 1_050, y: 520, width: 20, height: 20))
+    }
+
     @Test("No outline when no shape is on the continent")
     func noMatchingShapes() {
         let shapes = [makeShape(continent: "Africa", rect: CGRect(x: 1_000, y: 900, width: 50, height: 50))]
@@ -86,9 +100,9 @@ struct ContinentOutlineTests {
 
 // MARK: - Helpers
 private extension ContinentOutlineTests {
-    func makeShape(continent: String, rect: CGRect) -> CountryShape {
+    func makeShape(id: String = UUID().uuidString, continent: String, rect: CGRect) -> CountryShape {
         CountryShape(
-            id: UUID().uuidString,
+            id: id,
             name: continent,
             continent: continent,
             polygons: [CGPath(rect: rect, transform: nil)],

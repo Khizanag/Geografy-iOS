@@ -9,9 +9,11 @@ struct MapPuzzleScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(GeoJSONCache.self) private var geoJSONCache
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @ScaledMetric(relativeTo: .largeTitle) private var summaryIconSize: CGFloat = 64
+    @ScaledMetric(relativeTo: .body) private var mapHeight: CGFloat = 220
 
     let continent: Country.Continent
 
@@ -21,6 +23,10 @@ struct MapPuzzleScreen: View {
     @State private var showResult = false
     @State private var correctCount = 0
     @State private var showSummary = false
+    @State private var outline: ContinentOutline?
+    @State private var hasLoaded = false
+
+    private let gameColor = DesignSystem.Color.purple
 
     // MARK: - Body
     var body: some View {
@@ -33,7 +39,7 @@ struct MapPuzzleScreen: View {
             .toolbar {
             }
             .task {
-                buildQuestions()
+                await loadMap()
             }
     }
 }
@@ -45,7 +51,15 @@ private extension MapPuzzleScreen {
         if showSummary {
             summaryView
         } else if questions.isEmpty {
-            loadingView
+            if hasLoaded {
+                ContentUnavailableView(
+                    "Map Unavailable",
+                    systemImage: "map",
+                    description: Text("This region's map couldn't be loaded.")
+                )
+            } else {
+                loadingView
+            }
         } else {
             puzzleContent
         }
@@ -82,39 +96,55 @@ private extension MapPuzzleScreen {
                 Text("\(correctCount) correct")
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.success)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             ProgressView(value: Double(currentIndex), total: Double(questions.count))
-                .tint(DesignSystem.Color.accent)
+                .tint(gameColor)
                 .accessibilityHidden(true)
         }
         .accessibilityElement(children: .combine)
     }
 
+    /// The country is shown only by its place on the map; its name and flag appear after answering.
     var questionCard: some View {
         let question = questions[currentIndex]
         return CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
-                EyebrowLabel("Which region is…")
+                EyebrowLabel("Which country is this?")
 
-                FlagView(countryCode: question.country.code, height: 60)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
-                    .accessibilityHidden(true)
+                if let outline {
+                    ContinentOutlineView(
+                        outline: outline,
+                        fill: DesignSystem.Color.textTertiary.opacity(0.5),
+                        highlight: ContinentOutlineView.Highlight(countryCode: question.country.code, color: gameColor)
+                    )
+                    .frame(height: mapHeight)
+                }
 
-                Text(question.country.name)
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .multilineTextAlignment(.center)
-                    .accessibilityAddTraits(.isHeader)
-
-                Text("Select the correct region on the map")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                if selectedOptionIndex != nil {
+                    HStack(spacing: DesignSystem.Spacing.xs) {
+                        FlagView(countryCode: question.country.code, height: DesignSystem.Size.Flag.inline)
+                            .accessibilityHidden(true)
+                        Text(question.country.name)
+                            .font(DesignSystem.Font.headline)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                    }
+                    .accessibilityElement(children: .combine)
+                } else {
+                    Text("Pick the highlighted country")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
             }
             .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.lg)
+            .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            selectedOptionIndex == nil
+                ? "Which country is highlighted on the map of \(continent.displayName)?"
+                : "The highlighted country is \(question.country.name)."
+        )
     }
 
     var optionsGrid: some View {
@@ -152,9 +182,7 @@ private extension MapPuzzleScreen {
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: option.code, height: 22)
-                        .clipShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
-                        .accessibilityHidden(true)
+                    // Names only: a flag would turn the map question into a flag question.
                     Text(option.name)
                         .font(DesignSystem.Font.caption)
                         .fontWeight(.semibold)
@@ -193,7 +221,7 @@ private extension MapPuzzleScreen {
     }
 
     var nextButton: some View {
-        GeoButton(currentIndex + 1 < questions.count ? "Next Question" : "See Results") {
+        GlassButton(currentIndex + 1 < questions.count ? "Next Question" : "See Results", fullWidth: true) {
             if currentIndex + 1 < questions.count {
                 currentIndex += 1
                 selectedOptionIndex = nil
@@ -226,7 +254,7 @@ private extension MapPuzzleScreen {
         let isPassing = correctCount >= questions.count / 2
         return Image(systemName: isPassing ? "star.fill" : "arrow.clockwise.circle.fill")
             .font(DesignSystem.Font.system(size: summaryIconSize, weight: .bold))
-            .foregroundStyle(isPassing ? DesignSystem.Color.warning : DesignSystem.Color.accent)
+            .foregroundStyle(isPassing ? DesignSystem.Color.warning : gameColor)
             .accessibilityHidden(true)
     }
 
@@ -258,7 +286,7 @@ private extension MapPuzzleScreen {
                 scoreStatView(
                     value: "\(Int((Double(correctCount) / Double(questions.count)) * 100))%",
                     label: "Accuracy",
-                    color: DesignSystem.Color.accent
+                    color: gameColor
                 )
             }
             .padding(DesignSystem.Spacing.md)
@@ -282,7 +310,7 @@ private extension MapPuzzleScreen {
     }
 
     var restartButton: some View {
-        GeoButton("Play Again") {
+        GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
             reset()
         }
     }
@@ -290,8 +318,21 @@ private extension MapPuzzleScreen {
 
 // MARK: - Actions
 private extension MapPuzzleScreen {
+    func loadMap() async {
+        if outline == nil {
+            let shapes = await geoJSONCache.loadShapes()
+            outline = ContinentOutline(continent: continent, shapes: shapes)
+        }
+        buildQuestions()
+        hasLoaded = true
+    }
+
+    /// Only countries drawn on the continent's map can be asked about.
     func buildQuestions() {
-        let continentCountries = countryDataService.countries.filter { $0.continent == continent }
+        guard let mappedCodes = outline.map({ Set($0.countryPaths.keys) }) else { return }
+        let continentCountries = countryDataService.countries.filter {
+            $0.continent == continent && mappedCodes.contains($0.code)
+        }
         let questionCount = MapPuzzleRules.questionCount(forCountryCount: continentCountries.count)
         guard questionCount > 0 else { return }
 
