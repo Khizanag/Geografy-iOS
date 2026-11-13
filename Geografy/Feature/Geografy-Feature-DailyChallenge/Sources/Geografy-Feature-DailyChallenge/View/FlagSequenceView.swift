@@ -60,9 +60,11 @@ private extension FlagSequenceView {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
 
             FlagView(countryCode: country.code, height: 120)
                 .geoShadow(.elevated)
+                .accessibilityLabel("Mystery flag")
 
             if currentIndex < options.count {
                 optionsGrid(options: options[currentIndex], correct: country)
@@ -117,9 +119,11 @@ private extension FlagSequenceView {
         if isCorrect {
             correctCount += 1
             hapticsService.notification(.success)
+            AccessibilityNotification.Announcement("Correct.").post()
         } else {
             score = max(0, score - 200)
             hapticsService.impact(.light)
+            AccessibilityNotification.Announcement("Incorrect. The answer is \(correct.name).").post()
         }
 
         showFeedback = true

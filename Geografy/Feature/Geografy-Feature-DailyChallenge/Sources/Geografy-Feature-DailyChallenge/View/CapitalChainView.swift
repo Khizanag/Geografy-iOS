@@ -6,6 +6,7 @@ import SwiftUI
 public struct CapitalChainView: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.colorSchemeContrast) private var contrast
 
     public let content: DailyChallenge.CapitalChainContent
 
@@ -42,12 +43,13 @@ private extension CapitalChainView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 Text("Starting Point")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(
                         countryCode: content.startingCountry.code,
                         height: DesignSystem.Size.md
                     )
+                    .accessibilityHidden(true)
                     VStack(alignment: .leading) {
                         Text(content.startingCapital)
                             .font(DesignSystem.Font.headline)
@@ -57,6 +59,7 @@ private extension CapitalChainView {
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
+                .accessibilityElement(children: .combine)
                 progressDots
             }
             .frame(maxWidth: .infinity)
@@ -66,19 +69,29 @@ private extension CapitalChainView {
 
     var progressDots: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
+            // Completed steps are filled dots and upcoming ones are rings, so progress reads without color.
             ForEach(0..<content.chainSteps.count, id: \.self) { index in
-                Circle()
-                    .fill(
-                        index < currentStep
-                            ? DesignSystem.Color.accent
-                            : DesignSystem.Color.cardBackgroundHighlighted
-                    )
-                    .frame(
-                        width: DesignSystem.Spacing.xs,
-                        height: DesignSystem.Spacing.xs
-                    )
+                Group {
+                    if index < currentStep {
+                        Circle().fill(DesignSystem.Color.accent)
+                    } else {
+                        Circle().strokeBorder(
+                            contrast == .increased
+                                ? DesignSystem.Color.textSecondary
+                                : DesignSystem.Color.cardBackgroundHighlighted,
+                            lineWidth: 1.5
+                        )
+                    }
+                }
+                .frame(
+                    width: DesignSystem.Spacing.xs,
+                    height: DesignSystem.Spacing.xs
+                )
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Progress")
+        .accessibilityValue("Step \(min(currentStep + 1, content.chainSteps.count)) of \(content.chainSteps.count)")
     }
 }
 
@@ -90,6 +103,7 @@ private extension CapitalChainView {
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
 
             Text("with capital: \(step.expectedCountry.capital)")
                 .font(DesignSystem.Font.subheadline)
@@ -110,6 +124,7 @@ private extension CapitalChainView {
                 ) {
                     selectOption(option, step: step)
                 }
+                .accessibilityLabel(option.name)
             }
         }
     }
@@ -128,9 +143,12 @@ private extension CapitalChainView {
         if isCorrect {
             correctCount += 1
             hapticsService.notification(.success)
+            AccessibilityNotification.Announcement("Correct.").post()
         } else {
             score = max(0, score - 250)
             hapticsService.impact(.light)
+            let announcement = "Incorrect. The answer is \(step.expectedCountry.name)."
+            AccessibilityNotification.Announcement(announcement).post()
         }
 
         showFeedback = true
