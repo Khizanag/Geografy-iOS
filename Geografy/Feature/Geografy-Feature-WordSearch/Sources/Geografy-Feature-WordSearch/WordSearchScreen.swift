@@ -203,17 +203,14 @@ private extension WordSearchScreen {
         #if os(tvOS)
         ToolbarItem(placement: .automatic) {
             Button { showGuide = true } label: {
-                Label("Guide", systemImage: "info.circle")
+                Label("Guide", systemImage: "questionmark.circle")
             }
         }
         #else
         ToolbarItem(placement: .topBarTrailing) {
             Button { showGuide = true } label: {
-                Image(systemName: "info.circle")
-                    .foregroundStyle(DesignSystem.Color.iconPrimary)
+                Label("Guide", systemImage: "questionmark.circle")
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Guide")
         }
         #endif
     }
