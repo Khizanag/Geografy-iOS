@@ -38,20 +38,7 @@ extension TravelTrackerScreen {
             selectedCountry = country
         } label: {
             CardView {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(countryCode: country.code, height: 36)
-                        .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
-                        .frame(width: 54)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(country.name)
-                            .font(DesignSystem.Font.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text(country.continent.displayName)
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                    }
-                    Spacer(minLength: 0)
+                CountryListRow(country: country, subtitle: country.continent.displayName) {
                     searchRowTrailing(status)
                 }
                 .padding(DesignSystem.Spacing.sm)
@@ -63,7 +50,7 @@ extension TravelTrackerScreen {
     @ViewBuilder
     func searchRowTrailing(_ status: TravelStatus?) -> some View {
         if let status {
-            HStack(spacing: 4) {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: status.icon)
                     .font(DesignSystem.Font.nano)
                 Text(status.shortLabel)
@@ -85,71 +72,26 @@ extension TravelTrackerScreen {
 // MARK: - Empty States
 extension TravelTrackerScreen {
     var emptyState: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            emptyStateIcon
-            emptyStateText
-            emptyStateButton
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.xxl)
-    }
-
-    var emptyStateIcon: some View {
-        Image(systemName: selectedFilter?.icon ?? "airplane.departure")
-            .font(DesignSystem.Font.displaySmall)
-            .foregroundStyle(selectedFilter?.color ?? DesignSystem.Color.textTertiary)
-            .padding(.top, DesignSystem.Spacing.xxl)
-    }
-
-    var emptyStateText: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            Text(emptyStateTitle)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+        ContentUnavailableView {
+            Label(emptyStateTitle, systemImage: selectedFilter?.icon ?? "airplane.departure")
+        } description: {
             Text(emptyStateSubtitle)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-    }
-
-    var emptyStateButton: some View {
-        Button {
-            hapticsService.impact(.medium)
-            showCountryPicker = true
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "plus")
-                    .fontWeight(.semibold)
-                Text("Add Country")
-                    .fontWeight(.semibold)
+        } actions: {
+            GlassButton("Add Country", systemImage: "plus") {
+                hapticsService.impact(.medium)
+                showCountryPicker = true
             }
-            .font(DesignSystem.Font.subheadline)
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .padding(.horizontal, DesignSystem.Spacing.lg)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.accent, in: Capsule())
         }
-        .buttonStyle(PressButtonStyle())
-        .padding(.top, DesignSystem.Spacing.xs)
+        .padding(.top, DesignSystem.Spacing.xxl)
     }
 
     var noResultsState: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .font(DesignSystem.Font.iconXL)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .padding(.top, DesignSystem.Spacing.xl)
-            Text("No countries found")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Try a different spelling or search term")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.xxl)
+        ContentUnavailableView(
+            "No countries found",
+            systemImage: "magnifyingglass",
+            description: Text("Try a different spelling or search term")
+        )
+        .padding(.top, DesignSystem.Spacing.xl)
     }
 }
 

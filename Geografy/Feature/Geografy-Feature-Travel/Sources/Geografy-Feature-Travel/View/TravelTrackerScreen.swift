@@ -49,15 +49,10 @@ private extension TravelTrackerScreen {
     @ViewBuilder
     var extractedContent: some View {
         if countryDataService.countries.isEmpty {
-            loadingView
+            LoadingView()
         } else {
             mainContent
         }
-    }
-
-    var loadingView: some View {
-        ProgressView()
-            .tint(DesignSystem.Color.accent)
     }
 
     var mainContent: some View {
@@ -122,10 +117,7 @@ private extension TravelTrackerScreen {
 
                     Spacer()
 
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .accessibilityHidden(true)
+                    RowChevron()
                 }
                 .padding(DesignSystem.Spacing.md)
             }

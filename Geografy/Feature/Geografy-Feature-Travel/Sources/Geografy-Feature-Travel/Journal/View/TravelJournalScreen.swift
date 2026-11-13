@@ -141,31 +141,11 @@ private extension TravelJournalScreen {
     }
 
     var emptyState: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: "book.closed.fill")
-                .font(DesignSystem.Font.displaySmall)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .padding(.top, DesignSystem.Spacing.xxl)
-                .accessibilityHidden(true)
-
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text("Start Your Travel Journal")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(
-                        DesignSystem.Color.textPrimary
-                    )
-                Text(
-                    "Capture memories from your travels "
-                        + "with photos, notes, and ratings"
-                )
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(
-                    DesignSystem.Color.textSecondary
-                )
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.xl)
-            }
-
+        ContentUnavailableView {
+            Label("Start Your Travel Journal", systemImage: "book.closed.fill")
+        } description: {
+            Text("Capture memories from your travels with photos, notes, and ratings")
+        } actions: {
             GeoButton(
                 "Add First Entry",
                 systemImage: "plus"
@@ -173,9 +153,7 @@ private extension TravelJournalScreen {
                 hapticsService.impact(.medium)
                 activeSheet = .newEntry
             }
-            .padding(.top, DesignSystem.Spacing.xs)
         }
-        .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder

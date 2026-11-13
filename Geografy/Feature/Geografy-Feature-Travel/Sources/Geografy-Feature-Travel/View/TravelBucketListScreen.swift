@@ -42,7 +42,7 @@ private extension TravelBucketListScreen {
     @ViewBuilder
     var contentSwitcher: some View {
         if countryDataService.countries.isEmpty {
-            ProgressView().tint(DesignSystem.Color.accent)
+            LoadingView()
         } else if bucketListCountries.isEmpty {
             emptyState
         } else {

@@ -28,35 +28,16 @@ public struct TravelCountryRow: View {
 private extension TravelCountryRow {
     var rowContent: some View {
         CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(countryCode: country.code, height: 36)
-                    .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
-                    .frame(width: 54)
-                countryInfo
-                Spacer(minLength: 0)
+            CountryListRow(country: country, subtitle: country.continent.displayName) {
                 statusBadge
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                RowChevron()
             }
             .padding(DesignSystem.Spacing.sm)
         }
     }
 
-    var countryInfo: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(country.name)
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(country.continent.displayName)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-    }
-
     var statusBadge: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: status.icon)
                 .font(DesignSystem.Font.nano)
             Text(status.shortLabel)

@@ -43,21 +43,9 @@ private extension TravelStatusPickerSheet {
     }
 
     var header: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: country.code, height: 28)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(country.name)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Set travel status")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            Spacer()
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.sm)
+        CountryListRow(country: country, subtitle: "Set travel status")
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.sm)
     }
 
     var statusOptions: some View {

@@ -52,7 +52,7 @@ private extension TravelCountryPickerSheet {
     }
 
     func statusBadge(_ status: TravelStatus) -> some View {
-        HStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: status.icon)
                 .font(DesignSystem.Font.nano)
             Text(status.shortLabel)

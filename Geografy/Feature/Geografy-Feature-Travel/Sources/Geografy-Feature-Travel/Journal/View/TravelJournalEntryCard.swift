@@ -107,9 +107,7 @@ private extension TravelJournalEntryCard {
             height: DesignSystem.Size.xxl
         )
         .clipShape(
-            RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.small
-            )
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
     }
 
@@ -124,9 +122,7 @@ private extension TravelJournalEntryCard {
             )
             .background(
                 DesignSystem.Color.cardBackgroundHighlighted,
-                in: RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.small
-                )
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
             )
     }
 
@@ -147,20 +143,7 @@ private extension TravelJournalEntryCard {
     }
 
     var photoCountBadge: some View {
-        HStack(spacing: 3) {
-            Image(systemName: "photo")
-                .font(DesignSystem.Font.nano)
-            Text("\(entry.photoFileNames.count)")
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-        }
-        .foregroundStyle(DesignSystem.Color.accent)
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .padding(.vertical, 2)
-        .background(
-            DesignSystem.Color.accent.opacity(0.12),
-            in: Capsule()
-        )
+        InfoPill("\(entry.photoFileNames.count)", systemImage: "photo", style: .accent)
     }
 
     var durationBadge: some View {
