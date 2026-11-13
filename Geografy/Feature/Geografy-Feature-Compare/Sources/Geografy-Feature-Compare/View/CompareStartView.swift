@@ -68,14 +68,15 @@ private extension CompareStartView {
     }
 
     func header(title: String) -> some View {
-        HStack {
-            SectionHeaderView(title: title)
-            Spacer(minLength: DesignSystem.Spacing.sm)
-            Button("Shuffle", systemImage: "shuffle", action: onShuffle)
-                .buttonStyle(.glass)
-                .controlSize(.small)
-                .accessibilityLabel("Pick at random")
-        }
+        SectionHeaderView(
+            title: title,
+            action: SectionHeaderAction(
+                "Shuffle",
+                systemImage: "shuffle",
+                accessibilityLabel: "Pick at random",
+                perform: onShuffle
+            )
+        )
     }
 }
 

@@ -93,14 +93,14 @@ private extension CompareScreen {
 
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack {
-                SectionHeaderView(title: "Recent")
-                Spacer(minLength: DesignSystem.Spacing.sm)
-                Button("Clear", action: clearRecents)
-                    .buttonStyle(.glass)
-                    .controlSize(.small)
-                    .accessibilityLabel("Clear recent comparisons")
-            }
+            SectionHeaderView(
+                title: "Recent",
+                action: SectionHeaderAction(
+                    "Clear",
+                    accessibilityLabel: "Clear recent comparisons",
+                    perform: clearRecents
+                )
+            )
             RowListCard(
                 Array(recentPairs.prefix(Self.recentLimit)),
                 dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth)
