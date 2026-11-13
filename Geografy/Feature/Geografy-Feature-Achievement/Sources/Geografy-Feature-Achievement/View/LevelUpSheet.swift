@@ -6,6 +6,7 @@ import SwiftUI
 public struct LevelUpSheet: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let newLevel: UserLevel
     public let onDismiss: () -> Void
@@ -27,7 +28,9 @@ public struct LevelUpSheet: View {
                 hapticsService.notification(.success)
                 contentScale = 1.0
                 contentOpacity = 1.0
-                particlesVisible = true
+                particlesVisible = !reduceMotion
+                let announcement = "Level up! You've reached level \(newLevel.level)."
+                AccessibilityNotification.Announcement(announcement).post()
             }
     }
 }
@@ -39,14 +42,20 @@ private extension LevelUpSheet {
             DesignSystem.Color.overlayScrim
                 .ignoresSafeArea()
 
-            particleLayer
-                .opacity(particlesVisible ? 1 : 0)
-                .animation(.easeOut(duration: 0.3).delay(0.15), value: particlesVisible)
+            if !reduceMotion {
+                particleLayer
+                    .opacity(particlesVisible ? 1 : 0)
+                    .animation(.easeOut(duration: 0.3).delay(0.15), value: particlesVisible)
+                    .accessibilityHidden(true)
+            }
 
             card
-                .scaleEffect(contentScale)
+                .scaleEffect(reduceMotion ? 1 : contentScale)
                 .opacity(contentOpacity)
-                .animation(.spring(response: 0.5, dampingFraction: 0.65).delay(0.05), value: contentScale)
+                .animation(
+                    reduceMotion ? .easeOut(duration: 0.2) : .spring(response: 0.5, dampingFraction: 0.65).delay(0.05),
+                    value: contentScale
+                )
         }
     }
 
@@ -70,6 +79,7 @@ private extension LevelUpSheet {
         VStack(spacing: DesignSystem.Spacing.xs) {
             Text("LEVEL UP!")
                 .font(DesignSystem.IconSize.xLarge.weight(.black))
+                .accessibilityAddTraits(.isHeader)
                 .foregroundStyle(
                     LinearGradient(
                         colors: [DesignSystem.Color.warning, DesignSystem.Color.orange],

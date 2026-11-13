@@ -9,6 +9,7 @@ public struct AchievementsScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedCategory: AchievementCategory?
     @State private var appeared = false
@@ -134,12 +135,13 @@ private extension AchievementsScreen {
                 }
                 .buttonStyle(PressButtonStyle())
                 .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 16)
-                    .animation(
-                        .spring(response: 0.5, dampingFraction: 0.8)
-                            .delay(Double(index) * 0.03),
-                        value: appeared
-                    )
+                .offset(y: appeared || reduceMotion ? 0 : 16)
+                .animation(
+                    reduceMotion
+                        ? nil
+                        : .spring(response: 0.5, dampingFraction: 0.8).delay(Double(index) * 0.03),
+                    value: appeared
+                )
             }
         }
     }

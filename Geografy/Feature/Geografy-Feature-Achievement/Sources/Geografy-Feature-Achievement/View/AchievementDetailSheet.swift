@@ -79,12 +79,14 @@ private extension AchievementDetailSheet {
                     isUnlocked ? definition.category.themeColor : DesignSystem.Color.textTertiary
                 )
         }
+        .accessibilityHidden(true)
     }
 
     var rarityBadge: some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: rarityIcon)
                 .font(DesignSystem.Font.caption2)
+                .accessibilityHidden(true)
 
             Text(definition.rarity.displayName.uppercased())
                 .font(DesignSystem.Font.caption2)
@@ -94,6 +96,9 @@ private extension AchievementDetailSheet {
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(definition.rarity.borderColor.opacity(0.15), in: Capsule())
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Rarity")
+        .accessibilityValue(definition.rarity.displayName)
     }
 
     var rarityIcon: String {
@@ -120,6 +125,7 @@ private extension AchievementDetailSheet {
                     Image(systemName: "target")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(definition.category.themeColor)
+                        .accessibilityHidden(true)
 
                     Text(definition.requirement)
                         .font(DesignSystem.Font.subheadline)
@@ -129,20 +135,27 @@ private extension AchievementDetailSheet {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm)
             }
+            .accessibilityElement(children: .combine)
 
             if definition.xpReward > 0 {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "star.fill")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.warning)
-
-                    Text("+\(String(definition.xpReward)) XP")
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                }
+                xpRewardRow
             }
         }
+    }
+
+    var xpRewardRow: some View {
+        HStack(spacing: DesignSystem.Spacing.xs) {
+            Image(systemName: "star.fill")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.warning)
+                .accessibilityHidden(true)
+
+            Text("+\(String(definition.xpReward)) XP")
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -162,6 +175,7 @@ private extension AchievementDetailSheet {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "checkmark.seal.fill")
                     .foregroundStyle(DesignSystem.Color.success)
+                    .accessibilityHidden(true)
 
                 Text("Unlocked")
                     .font(DesignSystem.Font.headline)
@@ -183,6 +197,7 @@ private extension AchievementDetailSheet {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(DesignSystem.Color.success.opacity(0.3), lineWidth: 1)
         )
+        .accessibilityElement(children: .combine)
     }
 
     var progressView: some View {
@@ -191,6 +206,7 @@ private extension AchievementDetailSheet {
                 HStack(spacing: DesignSystem.Spacing.xs) {
                     Image(systemName: "chart.bar.fill")
                         .foregroundStyle(definition.category.themeColor)
+                        .accessibilityHidden(true)
 
                     Text("Progress")
                         .font(DesignSystem.Font.headline)
@@ -207,6 +223,7 @@ private extension AchievementDetailSheet {
             .padding(DesignSystem.Spacing.md)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -219,6 +236,7 @@ private extension AchievementDetailSheet {
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: isPinned ? "pin.slash.fill" : "pin.fill")
+                    .accessibilityHidden(true)
 
                 Text(isPinned ? "Unpin from Showcase" : "Pin to Showcase")
                     .fontWeight(.semibold)
