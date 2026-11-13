@@ -48,11 +48,13 @@ private extension TimelineScreen {
 
     var filterBar: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                continentMenu
-                eventTypeMenu
-                if filter.isActive {
-                    clearFilterButton
+            GlassEffectContainer(spacing: DesignSystem.Spacing.xs) {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    continentMenu
+                    eventTypeMenu
+                    if filter.isActive {
+                        clearFilterButton
+                    }
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -63,98 +65,79 @@ private extension TimelineScreen {
 
     var continentMenu: some View {
         Menu {
-            Button {
-                filter.continent = nil
-            } label: {
-                Label(
-                    "All Continents",
-                    systemImage: filter.continent == nil
-                        ? "checkmark" : "globe"
-                )
-            }
-            ForEach(selectableContinents, id: \.self) { continent in
-                Button {
-                    filter.continent = continent
-                } label: {
-                    Label(
-                        continent.displayName,
-                        systemImage: filter.continent == continent
-                            ? "checkmark" : "globe"
-                    )
+            Picker("Continent", selection: $filter.continent) {
+                Label("All Continents", systemImage: "globe")
+                    .tag(Country.Continent?.none)
+                ForEach(selectableContinents, id: \.self) { continent in
+                    Text(continent.displayName)
+                        .tag(Optional(continent))
                 }
             }
         } label: {
-            filterChip(
+            filterLabel(
                 title: filter.continent?.displayName ?? "Continent",
                 icon: "globe",
                 isActive: filter.continent != nil
             )
         }
+        .accessibilityLabel("Continent")
+        .accessibilityValue(filter.continent?.displayName ?? "All")
     }
 
     var eventTypeMenu: some View {
         Menu {
-            Button {
-                filter.eventType = nil
-            } label: {
-                Label(
-                    "All Types",
-                    systemImage: filter.eventType == nil
-                        ? "checkmark" : "list.bullet"
-                )
-            }
-            ForEach(HistoricalEvent.EventType.allCases, id: \.self) { type in
-                Button {
-                    filter.eventType = type
-                } label: {
-                    Label(
-                        type.displayName,
-                        systemImage: filter.eventType == type
-                            ? "checkmark" : type.icon
-                    )
+            Picker("Event Type", selection: $filter.eventType) {
+                Label("All Types", systemImage: "list.bullet")
+                    .tag(HistoricalEvent.EventType?.none)
+                ForEach(HistoricalEvent.EventType.allCases, id: \.self) { type in
+                    Label(type.displayName, systemImage: type.icon)
+                        .tag(Optional(type))
                 }
             }
         } label: {
-            filterChip(
+            filterLabel(
                 title: filter.eventType?.displayName ?? "Event Type",
                 icon: "line.3.horizontal.decrease",
                 isActive: filter.eventType != nil
             )
         }
+        .accessibilityLabel("Event type")
+        .accessibilityValue(filter.eventType?.displayName ?? "All")
     }
 
     var clearFilterButton: some View {
         Button {
             withAnimation(reduceMotion ? nil : .default) { filter = TimelineFilter() }
         } label: {
-            Image(systemName: "xmark.circle.fill")
-                .font(DesignSystem.Font.subheadline)
+            Image(systemName: "xmark")
+                .font(DesignSystem.Font.caption.weight(.semibold))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .frame(width: 36, height: 36)
+                .contentShape(Circle())
         }
+        .buttonStyle(.plain)
+        .glassEffect(.regular.interactive(), in: .circle)
         .accessibilityLabel("Clear Filters")
     }
 
-    func filterChip(title: String, icon: String, isActive: Bool) -> some View {
+    /// A glass capsule that takes the accent tint while its filter is on.
+    func filterLabel(title: String, icon: String, isActive: Bool) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: icon)
-                .font(DesignSystem.Font.caption)
                 .accessibilityHidden(true)
             Text(title)
-                .font(DesignSystem.Font.caption)
+            Image(systemName: "chevron.down")
+                .font(DesignSystem.Font.caption2.weight(.semibold))
+                .accessibilityHidden(true)
         }
+        .font(DesignSystem.Font.subheadline.weight(.medium))
+        .foregroundStyle(DesignSystem.Color.textPrimary)
         .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(
-            isActive
-                ? DesignSystem.Color.accent.opacity(0.2)
-                : DesignSystem.Color.cardBackground
+        .frame(minHeight: 36)
+        .glassEffect(
+            isActive ? .regular.tint(DesignSystem.Color.accent.opacity(0.45)) : .regular,
+            in: .capsule
         )
-        .foregroundStyle(
-            isActive
-                ? DesignSystem.Color.accent
-                : DesignSystem.Color.textSecondary
-        )
-        .clipShape(Capsule())
     }
 
     var eventList: some View {
