@@ -21,11 +21,18 @@ public struct SessionProgressBar: View {
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Progress")
             .accessibilityValue("\(Int(progress * 100)) percent")
-            .onChange(of: progress) {
-                withAnimation(reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.6)) {
-                    animatedProgress = progress
-                }
-            }
+            // Bars that appear part-way through, such as achievement progress, fill on appear too.
+            .onAppear(perform: syncProgress)
+            .onChange(of: progress, syncProgress)
+    }
+}
+
+// MARK: - Actions
+private extension SessionProgressBar {
+    func syncProgress() {
+        withAnimation(reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.6)) {
+            animatedProgress = progress
+        }
     }
 }
 
