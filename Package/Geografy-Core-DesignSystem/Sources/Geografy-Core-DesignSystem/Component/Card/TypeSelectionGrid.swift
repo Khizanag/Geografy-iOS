@@ -117,9 +117,6 @@ private extension TypeSelectionGrid {
 
     func cardLabels(item: T, isSelected: Bool) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            Text(item.emoji)
-                .font(DesignSystem.Font.iconDefault)
-
             Text(item.displayName)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.bold)
