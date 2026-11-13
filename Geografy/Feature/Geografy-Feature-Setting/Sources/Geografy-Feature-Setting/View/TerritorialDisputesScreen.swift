@@ -116,21 +116,25 @@ private extension TerritorialDisputesScreen {
 
     func disputeRow(_ dispute: TerritorialDispute) -> some View {
         Menu {
-            ForEach(dispute.options, id: \.key) { option in
-                Button {
-                    hapticsService.impact(.light)
-                    let newValue = option.key
-                    selections[dispute.id] = newValue
-                    UserDefaults.standard.set(newValue, forKey: dispute.userDefaultsKey)
-                } label: {
-                    let isSelected = (selections[dispute.id] ?? dispute.defaultOptionKey) == option.key
-                    Label(option.label, systemImage: isSelected ? "checkmark" : "flag")
+            Picker(dispute.name, selection: selectionBinding(for: dispute)) {
+                ForEach(dispute.options, id: \.key) { option in
+                    Text(option.label).tag(option.key)
                 }
             }
         } label: {
             disputeRowLabel(dispute)
         }
         .buttonStyle(.plain)
+    }
+
+    func selectionBinding(for dispute: TerritorialDispute) -> Binding<String> {
+        Binding {
+            selections[dispute.id] ?? dispute.defaultOptionKey
+        } set: { newValue in
+            hapticsService.selection()
+            selections[dispute.id] = newValue
+            UserDefaults.standard.set(newValue, forKey: dispute.userDefaultsKey)
+        }
     }
 
     func disputeRowLabel(_ dispute: TerritorialDispute) -> some View {
