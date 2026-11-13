@@ -13,7 +13,7 @@ public struct TravelScreen: View {
     // MARK: - Body
     public var body: some View {
         tabContent
-            .safeAreaInset(edge: .top) { tabPicker }
+            .segmentedTabs("Travel", selection: $tab, tabs: Tab.allCases) { $0.title }
             .navigationTitle("Travel")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -41,17 +41,6 @@ private extension TravelScreen {
 
 // MARK: - Subviews
 private extension TravelScreen {
-    var tabPicker: some View {
-        Picker("Travel", selection: $tab) {
-            ForEach(Tab.allCases) { tab in
-                Text(tab.title).tag(tab)
-            }
-        }
-        .pickerStyle(.segmented)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-    }
-
     @ViewBuilder
     var tabContent: some View {
         switch tab {

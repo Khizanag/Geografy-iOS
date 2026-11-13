@@ -17,7 +17,7 @@ struct SavedScreen: View {
     // MARK: - Body
     var body: some View {
         tabContent
-            .safeAreaInset(edge: .top) { tabPicker }
+            .segmentedTabs("Saved", selection: $tab, tabs: SavedTab.allCases) { $0.title }
             .navigationTitle("Saved")
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
@@ -26,17 +26,6 @@ struct SavedScreen: View {
 
 // MARK: - Subviews
 private extension SavedScreen {
-    var tabPicker: some View {
-        Picker("Saved", selection: $tab) {
-            ForEach(SavedTab.allCases) { tab in
-                Text(tab.title).tag(tab)
-            }
-        }
-        .pickerStyle(.segmented)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-    }
-
     @ViewBuilder
     var tabContent: some View {
         switch tab {

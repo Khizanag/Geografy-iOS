@@ -15,7 +15,7 @@ public struct QuizLibraryScreen: View {
     // MARK: - Body
     public var body: some View {
         tabContent
-            .safeAreaInset(edge: .top) { tabPicker }
+            .segmentedTabs("Quiz Library", selection: $tab, tabs: Self.availableTabs) { $0.title }
             .navigationTitle("Quiz Library")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -32,17 +32,6 @@ private extension QuizLibraryScreen {
     #else
     static let availableTabs = QuizLibraryTab.allCases
     #endif
-
-    var tabPicker: some View {
-        Picker("Quiz Library", selection: $tab) {
-            ForEach(Self.availableTabs) { tab in
-                Text(tab.title).tag(tab)
-            }
-        }
-        .pickerStyle(.segmented)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-    }
 
     @ViewBuilder
     var tabContent: some View {

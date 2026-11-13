@@ -14,7 +14,7 @@ struct ExploreScreen: View {
     // MARK: - Body
     var body: some View {
         modeContent
-            .safeAreaInset(edge: .top) { modePicker }
+            .segmentedTabs("View", selection: $mode, tabs: Mode.allCases) { $0.title }
             .navigationTitle("Explore")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
@@ -46,17 +46,6 @@ private extension ExploreScreen {
 
 // MARK: - Subviews
 private extension ExploreScreen {
-    var modePicker: some View {
-        Picker("View", selection: $mode) {
-            ForEach(Mode.allCases) { mode in
-                Text(mode.title).tag(mode)
-            }
-        }
-        .pickerStyle(.segmented)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-    }
-
     @ViewBuilder
     var modeContent: some View {
         switch mode {
