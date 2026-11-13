@@ -18,6 +18,8 @@ public struct CountryDetailScreen: View {
     @Environment(PronunciationService.self) private var pronunciationService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    @Environment(\.colorSchemeContrast) var colorSchemeContrast
 
     @State var profileService = CountryProfileService()
     @State var appeared = false
@@ -95,25 +97,28 @@ private extension CountryDetailScreen {
             HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
                 FlagView(countryCode: country.code, height: 20, fixedWidth: true)
                     .opacity(flagScrolledUp ? 1 : 0)
-                    .scaleEffect(flagScrolledUp ? 1 : 0.5)
+                    .scaleEffect(flagScrolledUp || reduceMotion ? 1 : 0.5)
                     .frame(width: flagScrolledUp ? nil : 0, height: 20)
                     .clipped()
                 Text(country.name)
                     .font(DesignSystem.Font.headline)
             }
-            .animation(.easeInOut(duration: 0.2), value: flagScrolledUp)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: flagScrolledUp)
         }
 
         ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }
             } label: {
-                Label("Favorite", systemImage: isFavorite ? "heart.fill" : "heart")
-                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
-                    .symbolEffect(.bounce, value: isFavorite)
+                Label(
+                    isFavorite ? "Remove from Favorites" : "Add to Favorites",
+                    systemImage: isFavorite ? "heart.fill" : "heart"
+                )
+                .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.iconPrimary)
+                .symbolEffect(.bounce, value: reduceMotion ? false : isFavorite)
             }
             .buttonStyle(.plain)
         }
@@ -288,7 +293,7 @@ extension CountryDetailScreen {
     var flagFullScreenOverlay: some View {
         if showFlagFullScreen {
             ZoomableFlagView(countryCode: country.code) {
-                withAnimation(.easeInOut(duration: 0.25)) {
+                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
                     showFlagFullScreen = false
                 }
             }

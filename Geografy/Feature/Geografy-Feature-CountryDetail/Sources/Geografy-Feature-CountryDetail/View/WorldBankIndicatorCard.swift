@@ -7,6 +7,7 @@ import SwiftUI
 public struct WorldBankIndicatorCard: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     public let indicator: StatIndicator
     public let state: WorldBankService.LoadState?
@@ -82,6 +83,7 @@ private extension WorldBankIndicatorCard {
             Image(systemName: indicator.icon)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(indicator.title)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
@@ -130,10 +132,11 @@ private extension WorldBankIndicatorCard {
             Spacer()
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "exclamationmark.circle")
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .accessibilityHidden(true)
                 Text("Data unavailable")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
                 Text("Tap to retry")
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
@@ -141,7 +144,7 @@ private extension WorldBankIndicatorCard {
             }
             Spacer()
         }
-        .frame(height: 90)
+        .frame(minHeight: 90)
     }
 
     var emptyView: some View {
@@ -149,14 +152,15 @@ private extension WorldBankIndicatorCard {
             Spacer()
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "chart.xyaxis.line")
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .accessibilityHidden(true)
                 Text("No historical data")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             Spacer()
         }
-        .frame(height: 90)
+        .frame(minHeight: 90)
     }
 
     func loadedView(points: [WorldBankService.DataPoint]) -> some View {
@@ -179,17 +183,24 @@ private extension WorldBankIndicatorCard {
 // MARK: - Loaded Subviews
 private extension WorldBankIndicatorCard {
     func latestValueRow(points: [WorldBankService.DataPoint]) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.sm) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: DesignSystem.Spacing.xs))
+            : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.sm))
+        return layout {
             if let latest = points.last {
-                Text(indicator.format(latest.value))
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("(\(String(latest.year)))")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.sm) {
+                    Text(indicator.format(latest.value))
+                        .font(DesignSystem.Font.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text("(\(String(latest.year)))")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
             }
-            Spacer()
+            if !dynamicTypeSize.isAccessibilitySize {
+                Spacer()
+            }
             trendBadge(points: points)
         }
     }
@@ -204,10 +215,17 @@ private extension WorldBankIndicatorCard {
             let isGood = isPositive == indicator.higherIsBetter
             let color = isGood ? DesignSystem.Color.success : DesignSystem.Color.error
 
+            let changeText = String(format: "%.0f%%", abs(change))
+            let verdict = isGood ? "better" : "worse"
+
             HStack(spacing: 3) {
                 Image(systemName: isPositive ? "arrow.up.right" : "arrow.down.right")
                     .font(DesignSystem.Font.nano.bold())
-                Text(String(format: "%.0f%%", abs(change)))
+                    .accessibilityHidden(true)
+                Text(changeText)
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.semibold)
+                Text(verdict)
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
                 Text("10yr")
@@ -219,6 +237,10 @@ private extension WorldBankIndicatorCard {
             .padding(.vertical, 3)
             .background(color.opacity(0.12))
             .clipShape(Capsule())
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(
+                "\(isPositive ? "Up" : "Down") \(changeText) over 10 years, \(verdict)"
+            )
         }
     }
 
@@ -254,12 +276,12 @@ private extension WorldBankIndicatorCard {
         .chartXAxis {
             AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 3)) { value in
                 AxisGridLine()
-                    .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.2))
+                    .foregroundStyle(DesignSystem.Color.dividerSubtle)
                 AxisValueLabel(anchor: .top) {
                     if let year = value.as(Int.self) {
                         Text(String(year))
                             .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
             }
@@ -267,33 +289,39 @@ private extension WorldBankIndicatorCard {
         .chartYAxis {
             AxisMarks(values: .automatic(desiredCount: 3)) { value in
                 AxisGridLine()
-                    .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.2))
+                    .foregroundStyle(DesignSystem.Color.dividerSubtle)
                 AxisValueLabel {
                     if let doubleValue = value.as(Double.self) {
                         Text(indicator.formatAxisValue(doubleValue))
                             .font(DesignSystem.Font.nano)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
             }
         }
         .frame(height: 100)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(indicator.title) chart")
+        .accessibilityValue(chartSummary(points: points))
     }
 
     func footerRow(points: [WorldBankService.DataPoint]) -> some View {
         HStack {
             Text("\(String(points.first?.year ?? 1_960)) – \(String(points.last?.year ?? 2_023))")
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
             Spacer()
             if let age = cacheAge {
                 HStack(spacing: 3) {
                     Image(systemName: "arrow.clockwise")
                         .font(DesignSystem.Font.pico)
+                        .accessibilityHidden(true)
                     Text(formattedCacheAge(age))
                 }
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Updated \(formattedCacheAge(age))")
             }
         }
     }
@@ -315,6 +343,12 @@ private extension WorldBankIndicatorCard {
             values.append(maxYear)
         }
         return values
+    }
+
+    func chartSummary(points: [WorldBankService.DataPoint]) -> String {
+        guard let first = points.first, let last = points.last else { return "" }
+        return "From \(indicator.format(first.value)) in \(String(first.year)) "
+            + "to \(indicator.format(last.value)) in \(String(last.year))"
     }
 
     func formattedCacheAge(_ date: Date) -> String {

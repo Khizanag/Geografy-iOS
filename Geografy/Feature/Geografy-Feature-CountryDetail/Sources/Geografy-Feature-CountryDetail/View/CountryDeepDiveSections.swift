@@ -5,6 +5,9 @@ struct CountryDeepDiveSections: View {
     // MARK: - Properties
     let profile: CountryProfile
 
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
@@ -135,11 +138,12 @@ private extension CountryDeepDiveSections {
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                     Text("Out of ~195 countries")
                         .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
                 Spacer()
             }
             .padding(DesignSystem.Spacing.md)
+            .accessibilityElement(children: .combine)
         }
     }
 
@@ -148,16 +152,25 @@ private extension CountryDeepDiveSections {
             .font(DesignSystem.Font.title2)
             .fontWeight(.bold)
             .foregroundStyle(DesignSystem.Color.accent)
+            .padding(DesignSystem.Spacing.xs)
             .frame(
-                width: DesignSystem.Size.xxl,
-                height: DesignSystem.Size.xxl
+                minWidth: DesignSystem.Size.xxl,
+                minHeight: DesignSystem.Size.xxl
             )
             .background(DesignSystem.Color.accent.opacity(0.1))
-            .clipShape(Circle())
+            .clipShape(Capsule())
+            .overlay {
+                if colorSchemeContrast == .increased {
+                    Capsule().strokeBorder(DesignSystem.Color.dividerSubtle)
+                }
+            }
     }
 
     var economyDetailsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
+        return layout {
             economyListTile(
                 icon: "building.2",
                 title: "Major Industries",
@@ -181,6 +194,7 @@ private extension CountryDeepDiveSections {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
                 Text(title)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
