@@ -66,7 +66,7 @@ private extension GeographyFeaturesScreen {
     func featureRow(feature: GeographyFeature, rank: Int) -> some View {
         let isExpanded = expandedFeatureId == feature.id
         return Button {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.82)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
                 expandedFeatureId = isExpanded ? nil : feature.id
             }
         } label: {

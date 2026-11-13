@@ -17,13 +17,13 @@ public struct ProfileScreen: View {
     @Environment(FavoritesService.self) var favoritesService
     @Environment(DatabaseManager.self) var database
     @Environment(HapticsService.self) var hapticsService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     @State var recentQuizzes: [QuizHistoryRecord] = []
     @State var statistics: UserStatistics?
     @State var showDeleteAlert = false
     @State var selectedAchievement: AchievementDefinition?
-    @State private var appeared = false
 
     // MARK: - Init
     public init() {}
@@ -40,7 +40,7 @@ public struct ProfileScreen: View {
             } message: {
                 deleteAlertMessage
             }
-            .onAppear { handleAppear() }
+            .onAppear { fetchQuizData() }
     }
 }
 
@@ -56,24 +56,24 @@ private extension ProfileScreen {
         VStack(spacing: DesignSystem.Spacing.xl) {
             if authService.isGuest {
                 guestBanner
-                    .profileSection(appeared: appeared, delay: 0.03)
+                    .phaseEntrance(index: 0)
             }
             headerSection
-                .profileSection(appeared: appeared, delay: 0.06)
+                .phaseEntrance(index: 1)
             levelProgressSection
-                .profileSection(appeared: appeared, delay: 0.10)
+                .phaseEntrance(index: 2)
             statsGridSection
-                .profileSection(appeared: appeared, delay: 0.14)
+                .phaseEntrance(index: 3)
             weeklyActivitySection
-                .profileSection(appeared: appeared, delay: 0.16)
+                .phaseEntrance(index: 4)
             achievementsPreviewSection
-                .profileSection(appeared: appeared, delay: 0.20)
+                .phaseEntrance(index: 5)
             if !recentQuizzes.isEmpty {
                 quizHistorySection
-                    .profileSection(appeared: appeared, delay: 0.26)
+                    .phaseEntrance(index: 6)
             }
             accountSection
-                .profileSection(appeared: appeared, delay: 0.34)
+                .phaseEntrance(index: 7)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.md)
@@ -137,27 +137,6 @@ private extension ProfileScreen {
             "This will permanently delete your account, XP, achievements, "
             + "and quiz history. This action cannot be undone."
         )
-    }
-
-    func handleAppear() {
-        fetchQuizData()
-        guard !reduceMotion else {
-            appeared = true
-            return
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            appeared = true
-        }
-    }
-}
-
-// MARK: - Profile Section Modifier
-private extension View {
-    func profileSection(appeared: Bool, delay: Double) -> some View {
-        self
-            .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 14)
-            .animation(.easeOut(duration: 0.45).delay(delay), value: appeared)
     }
 }
 #endif

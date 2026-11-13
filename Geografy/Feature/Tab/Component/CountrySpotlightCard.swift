@@ -4,6 +4,10 @@ import SwiftUI
 
 struct CountrySpotlightCard: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     let country: Country
     let funFact: String?
 
@@ -25,6 +29,7 @@ struct CountrySpotlightCard: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -35,6 +40,7 @@ private extension CountrySpotlightCard {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.micro)
                 .foregroundStyle(DesignSystem.Color.warning)
+                .accessibilityHidden(true)
             EyebrowLabel("Country of the Day")
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
@@ -49,18 +55,21 @@ private extension CountrySpotlightCard {
         FlagView(countryCode: country.code, height: 72)
             .geoShadow(.elevated)
             .background {
-                Ellipse()
-                    .fill(
-                        RadialGradient(
-                            colors: [continentColor.opacity(0.3), .clear],
-                            center: .center,
-                            startRadius: 0,
-                            endRadius: 60,
+                if !reduceTransparency {
+                    Ellipse()
+                        .fill(
+                            RadialGradient(
+                                colors: [continentColor.opacity(0.3), .clear],
+                                center: .center,
+                                startRadius: 0,
+                                endRadius: 60,
+                            )
                         )
-                    )
-                    .frame(width: 140, height: 100)
-                    .blur(radius: 20)
+                        .frame(width: 140, height: 100)
+                        .blur(radius: 20)
+                }
             }
+            .accessibilityHidden(true)
     }
 
     var nameSection: some View {
@@ -82,19 +91,23 @@ private extension CountrySpotlightCard {
     }
 
     var statsStrip: some View {
-        HStack(spacing: 0) {
+        let isStacked = dynamicTypeSize.isAccessibilitySize
+        let layout = isStacked
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
+            : AnyLayout(HStackLayout(spacing: 0))
+        return layout {
             statCell(
                 icon: "star.fill",
                 value: country.capital,
                 label: "Capital"
             )
-            Divider().frame(height: 32)
+            statDivider(isStacked: isStacked)
             statCell(
                 icon: "person.2.fill",
                 value: country.population.formatPopulation(),
                 label: "Population"
             )
-            Divider().frame(height: 32)
+            statDivider(isStacked: isStacked)
             statCell(
                 icon: "map.fill",
                 value: country.area.formatArea(),
@@ -106,6 +119,21 @@ private extension CountrySpotlightCard {
             DesignSystem.Color.cardBackgroundHighlighted,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
+        .overlay {
+            if colorSchemeContrast == .increased {
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+                    .strokeBorder(DesignSystem.Color.dividerSubtle)
+            }
+        }
+    }
+
+    @ViewBuilder
+    func statDivider(isStacked: Bool) -> some View {
+        if isStacked {
+            Divider()
+        } else {
+            Divider().frame(height: 32)
+        }
     }
 
     func funFactRow(_ fact: String) -> some View {
@@ -114,6 +142,7 @@ private extension CountrySpotlightCard {
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.warning)
                 .padding(.top, 2)
+                .accessibilityHidden(true)
             Text(fact)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -136,17 +165,21 @@ private extension CountrySpotlightCard {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(value)
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .multilineTextAlignment(.center)
             Text(label)
                 .font(DesignSystem.Font.nano)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(label): \(value)")
     }
 
     var continentColor: Color {

@@ -83,6 +83,7 @@ private extension SizeVisualizationScreen {
     func referenceRow(_ country: Country) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: country.code, height: 20, fixedWidth: true)
+                .accessibilityHidden(true)
             Text("Reference: \(country.name)")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.medium)
@@ -93,6 +94,7 @@ private extension SizeVisualizationScreen {
             }
             .font(DesignSystem.Font.caption)
             .foregroundStyle(DesignSystem.Color.accent)
+            .accessibilityLabel("Change reference country")
         }
         .padding(DesignSystem.Spacing.sm)
         .background(
@@ -135,6 +137,9 @@ private extension SizeVisualizationScreen {
             )
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityHint(
+            referenceCountry == nil ? "Sets this country as the reference" : "Compares with the reference country"
+        )
     }
 }
 
@@ -218,14 +223,16 @@ private extension CountryRowContent {
             Text("\(rank)")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .frame(width: 24, alignment: .leading)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .frame(minWidth: 24, alignment: .leading)
+                .accessibilityLabel("Rank \(rank)")
             FlagView(countryCode: country.code, height: 24)
+                .accessibilityHidden(true)
             Text(country.name)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
+                .lineLimit(2)
             Spacer()
             Text(formattedValue)
                 .font(DesignSystem.Font.caption)
@@ -245,6 +252,7 @@ private extension CountryRowContent {
             }
         }
         .frame(height: 6)
+        .accessibilityHidden(true)
     }
 
     func comparisonRow(reference: Country) -> some View {
@@ -255,7 +263,7 @@ private extension CountryRowContent {
             : String(format: "%.1fx smaller than %@", 1.0 / multiplier, reference.name)
         return Text(text)
             .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
     }
 
     var currentValue: Double {

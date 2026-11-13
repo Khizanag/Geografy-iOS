@@ -4,6 +4,8 @@ import SwiftUI
 
 public struct FeedCard: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     public let item: FeedItem
     public let isSaved: Bool
     public let country: Country?
@@ -40,6 +42,7 @@ private extension FeedCard {
             Image(systemName: item.icon)
                 .font(DesignSystem.Font.caption2.weight(.semibold))
                 .foregroundStyle(item.color)
+                .accessibilityHidden(true)
             Text(item.type.label)
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.semibold)
@@ -55,12 +58,13 @@ private extension FeedCard {
             Image(systemName: isSaved ? "heart.fill" : "heart")
                 .font(DesignSystem.Font.title3)
                 .foregroundStyle(isSaved ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
-                .symbolEffect(.bounce, value: isSaved)
-                .scaleEffect(isSaved ? 1.0 : 0.9)
-                .animation(.spring(response: 0.3, dampingFraction: 0.5), value: isSaved)
+                .symbolEffect(.bounce, value: reduceMotion ? false : isSaved)
+                .scaleEffect(isSaved || reduceMotion ? 1.0 : 0.9)
+                .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.5), value: isSaved)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(isSaved ? "Remove from saved" : "Save")
+        .accessibilityAddTraits(isSaved ? .isSelected : [])
     }
 
     var cardBody: some View {
@@ -81,6 +85,7 @@ private extension FeedCard {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: country.code, height: 24)
                     .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
+                    .accessibilityHidden(true)
                 Text(country.name)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -93,6 +98,7 @@ private extension FeedCard {
                 Image(systemName: "chevron.right")
                     .font(DesignSystem.Font.micro.weight(.semibold))
                     .foregroundStyle(item.color)
+                    .accessibilityHidden(true)
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)

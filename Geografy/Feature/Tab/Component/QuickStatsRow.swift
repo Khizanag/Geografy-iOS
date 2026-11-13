@@ -3,6 +3,8 @@ import SwiftUI
 
 struct QuickStatsRow: View {
     // MARK: - Properties
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     let streakDays: Int
     let level: Int
     let countriesExplored: Int
@@ -12,7 +14,10 @@ struct QuickStatsRow: View {
 
     // MARK: - Body
     var body: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
+        return layout {
             statPill(
                 icon: "flame.fill",
                 value: "\(streakDays)",
@@ -56,6 +61,7 @@ private extension QuickStatsRow {
                         Image(systemName: icon)
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(color)
+                            .accessibilityHidden(true)
 
                         Text(value)
                             .font(DesignSystem.Font.caption.weight(.semibold))
@@ -64,7 +70,7 @@ private extension QuickStatsRow {
 
                     Text(label)
                         .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, DesignSystem.Spacing.xs)

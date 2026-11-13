@@ -112,6 +112,7 @@ private extension SearchScreen {
                     Image(systemName: "clock.arrow.circlepath")
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
                     Text(recentQuery)
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -135,6 +136,7 @@ private extension SearchScreen {
                 .padding(DesignSystem.Spacing.xs)
         }
         .glassEffect(.regular.interactive(), in: .circle)
+        .accessibilityLabel("Remove \(recentQuery) from recent searches")
     }
 
     var trendingSection: some View {

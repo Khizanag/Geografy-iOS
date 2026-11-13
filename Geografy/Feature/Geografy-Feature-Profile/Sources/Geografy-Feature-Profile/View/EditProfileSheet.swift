@@ -9,6 +9,7 @@ public struct EditProfileSheet: View {
     @Environment(AuthService.self) private var authService
     @Environment(DatabaseManager.self) private var database
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
 
     @State private var displayName: String = ""
     @State private var isSaving = false
@@ -52,14 +53,16 @@ private extension EditProfileSheet {
                 .geoShadow(.elevated)
             Text("Tap to change photo")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
+        .accessibilityHidden(true)
     }
 
     var nameField: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             EyebrowLabel("Display Name")
+                .accessibilityHidden(true)
             TextField("Enter your name", text: $displayName)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -68,8 +71,15 @@ private extension EditProfileSheet {
                     cornerRadius: DesignSystem.CornerRadius.medium,
                     style: .continuous
                 ))
+                .overlay {
+                    if colorSchemeContrast == .increased {
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+                            .strokeBorder(DesignSystem.Color.dividerSubtle)
+                    }
+                }
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.words)
+                .accessibilityLabel("Display name")
         }
     }
 
@@ -79,6 +89,7 @@ private extension EditProfileSheet {
         }
         .buttonStyle(.plain)
         .fontWeight(.semibold)
+        .accessibilityHint("Saves your display name")
         .disabled(displayName.trimmingCharacters(in: .whitespaces).isEmpty || isSaving)
     }
 }

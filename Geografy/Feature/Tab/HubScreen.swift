@@ -10,6 +10,9 @@ struct HubScreen<Header: View>: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TestingModeService.self) private var testingModeService
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    @ScaledMetric(relativeTo: .caption) private var iconScale: CGFloat = 1
 
     @State private var testChecklistSheet: HubItem?
 
@@ -67,7 +70,10 @@ private extension HubScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title)
             GlassEffectContainer {
-                AdaptiveGrid(compactMinimum: 100, regularMinimum: 150) {
+                AdaptiveGrid(
+                    compactMinimum: dynamicTypeSize.isAccessibilitySize ? 160 : 100,
+                    regularMinimum: dynamicTypeSize.isAccessibilitySize ? 240 : 150
+                ) {
                     ForEach(items, id: \.id) { sheet in
                         gridTile(for: sheet)
                     }
@@ -94,16 +100,17 @@ private extension HubScreen {
                 .font(tileLabelFont)
                 .fontWeight(.medium)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.65)
+                .lineLimit(3)
+                .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
 
             Text(sheet.subtitle)
                 .font(tileSubtitleFont)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .multilineTextAlignment(.center)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -130,6 +137,7 @@ private extension HubScreen {
                 .font(DesignSystem.Font.system(size: tileIconFontSize))
                 .foregroundStyle(sheet.color)
         }
+        .accessibilityHidden(true)
     }
 
     func testBadge(for sheet: HubItem) -> some View {
@@ -143,6 +151,7 @@ private extension HubScreen {
                 .background(DesignSystem.Color.orange, in: Circle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Test checklist for \(sheet.label)")
         .offset(x: 4, y: -4)
     }
 }
@@ -163,9 +172,9 @@ private extension HubScreen {
 private extension HubScreen {
     var isWide: Bool { sizeClass == .regular }
 
-    var tileIconSize: CGFloat { isWide ? 52 : 36 }
+    var tileIconSize: CGFloat { (isWide ? 52 : 36) * iconScale }
 
-    var tileIconFontSize: CGFloat { isWide ? 22 : 14 }
+    var tileIconFontSize: CGFloat { (isWide ? 22 : 14) * iconScale }
 
     var tileLabelFont: Font { isWide ? DesignSystem.Font.subheadline : DesignSystem.Font.caption }
 

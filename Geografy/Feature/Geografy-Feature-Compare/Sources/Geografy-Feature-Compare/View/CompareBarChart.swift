@@ -10,6 +10,8 @@ public struct CompareBarChart: View {
     public let leftLabel: String
     public let rightLabel: String
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var appeared = false
 
     // MARK: - Body
@@ -23,6 +25,9 @@ public struct CompareBarChart: View {
             .padding(DesignSystem.Spacing.md)
         }
         .onAppear { appeared = true }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title)
+        .accessibilityValue(accessibilitySummary)
     }
 }
 
@@ -33,6 +38,7 @@ private extension CompareBarChart {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(title)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -56,14 +62,14 @@ private extension CompareBarChart {
             Text(leftLabel)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
             Spacer(minLength: 0)
             Text(rightLabel)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
         }
     }
 
@@ -87,7 +93,7 @@ private extension CompareBarChart {
     func leftBar(totalWidth: CGFloat) -> some View {
         let fraction = barFraction(value: leftValue)
         let barWidth = max(
-            totalWidth * 0.5 * (appeared ? fraction : 0),
+            totalWidth * 0.5 * (appeared || reduceMotion ? fraction : 0),
             DesignSystem.Spacing.xxs
         )
         return HStack(spacing: 0) {
@@ -96,7 +102,7 @@ private extension CompareBarChart {
                 .fill(DesignSystem.Color.blue)
                 .frame(width: barWidth)
                 .animation(
-                    .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
+                    reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
                     value: appeared
                 )
         }
@@ -106,7 +112,7 @@ private extension CompareBarChart {
     func rightBar(totalWidth: CGFloat) -> some View {
         let fraction = barFraction(value: rightValue)
         let barWidth = max(
-            totalWidth * 0.5 * (appeared ? fraction : 0),
+            totalWidth * 0.5 * (appeared || reduceMotion ? fraction : 0),
             DesignSystem.Spacing.xxs
         )
         return HStack(spacing: 0) {
@@ -114,7 +120,7 @@ private extension CompareBarChart {
                 .fill(DesignSystem.Color.orange)
                 .frame(width: barWidth)
                 .animation(
-                    .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
+                    reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
                     value: appeared
                 )
             Spacer(minLength: 0)
@@ -137,5 +143,12 @@ private extension CompareBarChart {
         guard smaller > 0 else { return "N/A" }
         let ratio = larger / smaller
         return String(format: "%.1fx", ratio)
+    }
+
+    var accessibilitySummary: String {
+        let summary = "First country \(leftLabel), second country \(rightLabel)"
+        guard leftValue != rightValue else { return summary }
+        let leader = leftValue > rightValue ? "First" : "Second"
+        return "\(summary). \(leader) country is larger by \(winnerRatio)"
     }
 }

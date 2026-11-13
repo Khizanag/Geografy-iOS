@@ -111,6 +111,7 @@ private extension QuotesScreen {
             if let code = quote.countryCode {
                 FlagView(countryCode: code, height: 16, fixedWidth: true)
                     .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
+                    .accessibilityHidden(true)
             }
             Text("— \(quote.author)")
                 .font(DesignSystem.Font.caption)
@@ -118,6 +119,7 @@ private extension QuotesScreen {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
             Spacer()
             IconBadge(quote.category.icon, size: .small)
+                .accessibilityHidden(true)
             favoriteButton(quote)
             shareButton(quote)
         }
@@ -135,6 +137,8 @@ private extension QuotesScreen {
                 .padding(DesignSystem.Spacing.xs)
         }
         .glassEffect(.regular.interactive(), in: .circle)
+        .accessibilityLabel(quote.isFavorited ? "Remove from favorites" : "Add to favorites")
+        .accessibilityAddTraits(quote.isFavorited ? .isSelected : [])
     }
 
     @ViewBuilder
@@ -147,6 +151,7 @@ private extension QuotesScreen {
                 .padding(DesignSystem.Spacing.xs)
         }
         .glassEffect(.regular.interactive(), in: .circle)
+        .accessibilityLabel("Share quote")
         #endif
     }
 }
