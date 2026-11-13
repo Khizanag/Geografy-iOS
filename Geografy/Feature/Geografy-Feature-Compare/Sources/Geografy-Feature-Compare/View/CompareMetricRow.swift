@@ -8,7 +8,8 @@ public struct CompareMetricRow: View {
     public let leftValue: String
     public let rightValue: String
     public var match: Bool?
-    public var footer: String?
+    /// What both countries have, such as shared memberships, listed as pills under the values.
+    public var sharedItems: [String]?
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -18,7 +19,7 @@ public struct CompareMetricRow: View {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 headerRow
                 valuesRow
-                footerRow
+                sharedItemsRow
             }
             .padding(DesignSystem.Spacing.md)
         }
@@ -34,7 +35,7 @@ private extension CompareMetricRow {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .accessibilityHidden(true)
             Text(title)
                 .font(DesignSystem.Font.headline)
@@ -51,16 +52,16 @@ private extension CompareMetricRow {
             : AnyLayout(HStackLayout(alignment: .top))
         return layout {
             Text(leftValue)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.leading)
                 .lineLimit(isStacked ? nil : 2)
                 .minimumScaleFactor(0.8)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(rightValue)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(isStacked ? .leading : .trailing)
                 .lineLimit(isStacked ? nil : 2)
                 .minimumScaleFactor(0.8)
@@ -68,35 +69,34 @@ private extension CompareMetricRow {
         }
     }
 
+    /// Only a shared value is worth a badge; "Different" on every other row is noise.
     @ViewBuilder
     var matchBadge: some View {
-        if let match {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: match ? "checkmark" : "xmark")
-                    .font(DesignSystem.Font.nano.bold())
-                Text(match ? "Match" : "Different")
-                    .font(DesignSystem.Font.caption2)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(match ? DesignSystem.Color.success : DesignSystem.Color.textSecondary)
-            .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, 2)
-            .background(
-                (match ? DesignSystem.Color.success : DesignSystem.Color.textSecondary)
-                    .opacity(0.12),
-                in: Capsule()
-            )
+        if match == true {
+            InfoPill("Same", systemImage: "equal")
+        } else if let sharedItems, !sharedItems.isEmpty {
+            InfoPill("\(sharedItems.count) shared")
         }
     }
 
     @ViewBuilder
-    var footerRow: some View {
-        if let footer {
-            Text(footer)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(3)
-                .frame(maxWidth: .infinity, alignment: .leading)
+    var sharedItemsRow: some View {
+        if let sharedItems {
+            Group {
+                if sharedItems.isEmpty {
+                    Text("None in common")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                } else {
+                    FlowLayout(spacing: DesignSystem.Spacing.xs) {
+                        ForEach(sharedItems, id: \.self) { item in
+                            InfoPill(item)
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, DesignSystem.Spacing.xs)
         }
     }
 }
@@ -105,11 +105,11 @@ private extension CompareMetricRow {
 private extension CompareMetricRow {
     var accessibilitySummary: String {
         var parts = ["First country \(leftValue)", "second country \(rightValue)"]
-        if let match {
-            parts.append(match ? "Match" : "Different")
+        if match == true {
+            parts.append("Same")
         }
-        if let footer {
-            parts.append(footer)
+        if let sharedItems {
+            parts.append(sharedItems.isEmpty ? "None in common" : "Shared: \(sharedItems.joined(separator: ", "))")
         }
         return parts.joined(separator: ", ")
     }

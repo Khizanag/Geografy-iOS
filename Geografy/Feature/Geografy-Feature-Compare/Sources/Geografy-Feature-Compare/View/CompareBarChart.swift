@@ -37,7 +37,7 @@ private extension CompareBarChart {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .accessibilityHidden(true)
             Text(title)
                 .font(DesignSystem.Font.headline)
@@ -58,32 +58,28 @@ private extension CompareBarChart {
     }
 
     var labelsRow: some View {
-        HStack {
-            Text(leftLabel)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-            Spacer(minLength: 0)
-            Text(rightLabel)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
+        HStack(alignment: .firstTextBaseline) {
+            valueLabel(leftLabel, side: .left)
+            Spacer(minLength: DesignSystem.Spacing.sm)
+            valueLabel(rightLabel, side: .right)
         }
     }
 
+    func valueLabel(_ text: String, side: CompareSide) -> some View {
+        Text(text)
+            .font(DesignSystem.Font.subheadline)
+            .fontWeight(.semibold)
+            .foregroundStyle(side.color)
+            .multilineTextAlignment(side == .left ? .leading : .trailing)
+            .lineLimit(2)
+            .minimumScaleFactor(0.8)
+    }
+
+    /// How many times larger the leader is, in the leader's color.
     @ViewBuilder
     var winnerBadge: some View {
         if leftValue != rightValue {
-            let ratio = winnerRatio
-            Text(ratio)
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .padding(.horizontal, DesignSystem.Spacing.xs)
-                .padding(.vertical, 2)
-                .background(DesignSystem.Color.accent, in: Capsule())
+            InfoPill(winnerRatio, style: .tinted(leaderSide.color))
         }
     }
 }
@@ -99,7 +95,7 @@ private extension CompareBarChart {
         return HStack(spacing: 0) {
             Spacer(minLength: 0)
             Capsule()
-                .fill(DesignSystem.Color.blue)
+                .fill(CompareSide.left.color)
                 .frame(width: barWidth)
                 .animation(
                     reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
@@ -117,7 +113,7 @@ private extension CompareBarChart {
         )
         return HStack(spacing: 0) {
             Capsule()
-                .fill(DesignSystem.Color.orange)
+                .fill(CompareSide.right.color)
                 .frame(width: barWidth)
                 .animation(
                     reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
@@ -137,12 +133,17 @@ private extension CompareBarChart {
         return value / maxValue
     }
 
+    var leaderSide: CompareSide {
+        leftValue > rightValue ? .left : .right
+    }
+
     var winnerRatio: String {
         let larger = max(leftValue, rightValue)
         let smaller = min(leftValue, rightValue)
         guard smaller > 0 else { return "N/A" }
         let ratio = larger / smaller
-        return String(format: "%.1fx", ratio)
+        // Same fixed format as the app's other figures, so decimals never switch to commas.
+        return String(format: ratio >= 10 ? "%.0f×" : "%.1f×", ratio)
     }
 
     var accessibilitySummary: String {

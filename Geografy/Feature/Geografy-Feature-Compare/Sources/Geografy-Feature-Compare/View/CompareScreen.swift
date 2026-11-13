@@ -5,19 +5,23 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct CompareScreen: View {
-    #if !os(tvOS)
     // MARK: - Properties
+    #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var leftCountry: Country?
     @State private var rightCountry: Country?
-    @State private var activeSheet: CompareSheet?
+    @State private var pickingSide: CompareSide?
     @State private var recentPairs: [ComparisonPair] = []
 
     private let preselectedCountry: Country?
+
+    private static let recentLimit = 5
+    private static let recentStorageKey = "compare_recent_pairs"
 
     // MARK: - Init
     public init(preselectedCountry: Country? = nil) {
@@ -26,375 +30,215 @@ public struct CompareScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        contentScrollView
-            .screenBackground()
-            .navigationTitle("Compare")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                loadRecentPairs()
-                if let preselected = preselectedCountry, leftCountry == nil {
-                    leftCountry = preselected
-                }
-            }
-            .sheet(item: $activeSheet) { sheet in
-                CoordinatedNavigationStack(showCloseButton: true) {
-                    sheetContent(for: sheet)
-                }
-            }
-    }
-}
-
-// MARK: - Sheet
-private extension CompareScreen {
-    enum CompareSheet: Identifiable {
-        case pickLeft
-        case pickRight
-
-        var id: String {
-            switch self {
-            case .pickLeft: "pickLeft"
-            case .pickRight: "pickRight"
-            }
-        }
-    }
-
-    @ViewBuilder
-    func sheetContent(for sheet: CompareSheet) -> some View {
-        let excluded: Country? = switch sheet {
-        case .pickLeft: rightCountry
-        case .pickRight: leftCountry
-        }
-
-        let current: Country? = switch sheet {
-        case .pickLeft: leftCountry
-        case .pickRight: rightCountry
-        }
-
-        CountryPicker(
-            countries: countryDataService.countries.filter { $0.code != excluded?.code },
-            selectedCode: current?.code
-        ) { selected in
-            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
-                switch sheet {
-                case .pickLeft: leftCountry = selected
-                case .pickRight: rightCountry = selected
-                }
-                saveIfBothSelected()
-            }
-        }
-    }
-}
-
-// MARK: - Subviews
-private extension CompareScreen {
-    var contentScrollView: some View {
         ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                slotsRow
-                swapButton
-                if let left = leftCountry, let right = rightCountry {
-                    metricsSection(left: left, right: right)
-                } else {
-                    emptyPrompt
-                }
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                matchupHeader
+                content
                 if !recentPairs.isEmpty {
                     recentSection
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.top, DesignSystem.Spacing.xs)
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }
-    }
-
-    var slotsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            CompareCountrySlot(
-                country: leftCountry,
-                label: "Country A"
-            ) {
-                activeSheet = .pickLeft
-            }
-
-            vsLabel
-
-            CompareCountrySlot(
-                country: rightCountry,
-                label: "Country B"
-            ) {
-                activeSheet = .pickRight
+        .screenBackground()
+        .navigationTitle("Compare")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: setUp)
+        .sheet(item: $pickingSide) { side in
+            CoordinatedNavigationStack(showCloseButton: true) {
+                picker(for: side)
             }
         }
     }
+}
 
-    var vsLabel: some View {
-        Text("VS")
-            .font(DesignSystem.Font.headline)
-            .foregroundStyle(DesignSystem.Color.accent)
+// MARK: - Matchup
+private extension CompareScreen {
+    var isStacked: Bool { dynamicTypeSize.isAccessibilitySize }
+
+    var matchupHeader: some View {
+        let layout = isStacked
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xs))
+        return layout {
+            slot(for: .left)
+            centerControl
+            slot(for: .right)
+        }
+        .fixedSize(horizontal: false, vertical: true)
     }
 
+    func slot(for side: CompareSide) -> some View {
+        CompareCountrySlot(
+            country: country(on: side),
+            side: side,
+            onPick: { pickingSide = side },
+            onClear: { setCountry(nil, on: side) }
+        )
+    }
+
+    /// "VS" until both are picked, then a glass button that swaps them.
     @ViewBuilder
-    var swapButton: some View {
+    var centerControl: some View {
         if leftCountry != nil, rightCountry != nil {
-            Button {
-                #if !os(tvOS)
-                hapticsService.impact(.light)
-                #endif
-                withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
-                    let temp = leftCountry
-                    leftCountry = rightCountry
-                    rightCountry = temp
-                }
-            } label: {
-                Label("Swap", systemImage: "arrow.left.arrow.right")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .padding(.horizontal, DesignSystem.Spacing.sm)
-                    .padding(.vertical, DesignSystem.Spacing.xxs)
+            Button(action: swapCountries) {
+                Image(systemName: isStacked ? "arrow.up.arrow.down" : "arrow.left.arrow.right")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
+                    .glassEffect(.regular.interactive(), in: .circle)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Swap countries")
+        } else {
+            Text("VS")
+                .font(DesignSystem.Font.caption)
+                .fontWeight(.bold)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
+                .glassEffect(.regular, in: .circle)
+                .accessibilityHidden(true)
         }
-    }
-
-    var emptyPrompt: some View {
-        ContentUnavailableView(
-            "No Comparison Yet",
-            systemImage: "arrow.triangle.swap",
-            description: Text("Select two countries to compare")
-        )
     }
 }
 
-// MARK: - Metrics
+// MARK: - Content
 private extension CompareScreen {
-    func metricsSection(left: Country, right: Country) -> some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Comparison")
-
-            numericCharts(left: left, right: right)
-            textMetrics(left: left, right: right)
-            commonOrganizationsRow(left: left, right: right)
-        }
-    }
-
-    func numericCharts(left: Country, right: Country) -> some View {
-        Group {
-            populationChart(left: left, right: right)
-            areaChart(left: left, right: right)
-            gdpChart(left: left, right: right)
-            densityChart(left: left, right: right)
-        }
-    }
-
-    func populationChart(left: Country, right: Country) -> some View {
-        CompareBarChart(
-            title: "Population",
-            icon: "person.2.fill",
-            leftValue: Double(left.population),
-            rightValue: Double(right.population),
-            leftLabel: left.population.formatPopulation(),
-            rightLabel: right.population.formatPopulation()
-        )
-    }
-
-    func areaChart(left: Country, right: Country) -> some View {
-        CompareBarChart(
-            title: "Area",
-            icon: "map.fill",
-            leftValue: left.area,
-            rightValue: right.area,
-            leftLabel: left.area.formatArea(),
-            rightLabel: right.area.formatArea()
-        )
-    }
-
     @ViewBuilder
-    func gdpChart(left: Country, right: Country) -> some View {
-        if let leftGDP = left.gdp, let rightGDP = right.gdp {
-            CompareBarChart(
-                title: "GDP",
-                icon: "chart.bar.fill",
-                leftValue: leftGDP,
-                rightValue: rightGDP,
-                leftLabel: leftGDP.formatGDP(),
-                rightLabel: rightGDP.formatGDP()
+    var content: some View {
+        if let leftCountry, let rightCountry {
+            CompareMetricsView(left: leftCountry, right: rightCountry)
+        } else {
+            CompareStartView(
+                leftCountry: leftCountry,
+                rightCountry: rightCountry,
+                countries: countryDataService.countries,
+                onChoose: { country, side in setCountry(country, on: side) },
+                onChoosePair: open,
+                onShuffle: shuffle
             )
         }
     }
 
-    func densityChart(left: Country, right: Country) -> some View {
-        CompareBarChart(
-            title: "Density",
-            icon: "person.crop.square",
-            leftValue: left.populationDensity,
-            rightValue: right.populationDensity,
-            leftLabel: densityLabel(left.populationDensity),
-            rightLabel: densityLabel(right.populationDensity)
-        )
-    }
-
-    func textMetrics(left: Country, right: Country) -> some View {
-        Group {
-            CompareMetricRow(
-                title: "Capital",
-                icon: "star.fill",
-                leftValue: left.capital,
-                rightValue: right.capital
-            )
-
-            CompareMetricRow(
-                title: "Continent",
-                icon: "globe.americas.fill",
-                leftValue: left.continent.displayName,
-                rightValue: right.continent.displayName,
-                match: left.continent == right.continent
-            )
-
-            CompareMetricRow(
-                title: "Currency",
-                icon: "dollarsign.circle.fill",
-                leftValue: "\(left.currency.name) (\(left.currency.code))",
-                rightValue: "\(right.currency.name) (\(right.currency.code))",
-                match: left.currency.code == right.currency.code
-            )
-
-            CompareMetricRow(
-                title: "Languages",
-                icon: "globe",
-                leftValue: languagesSummary(left.languages),
-                rightValue: languagesSummary(right.languages)
-            )
-        }
-    }
-
-    func commonOrganizationsRow(left: Country, right: Country) -> some View {
-        let common = Set(left.organizations).intersection(Set(right.organizations))
-        let summary = common.isEmpty
-            ? "None"
-            : common.sorted().joined(separator: ", ")
-        return CompareMetricRow(
-            title: "Common Orgs",
-            icon: "building.2.fill",
-            leftValue: "\(left.organizations.count) memberships",
-            rightValue: "\(right.organizations.count) memberships",
-            footer: "\(common.count) in common: \(summary)"
-        )
-    }
-}
-
-// MARK: - Recent Comparisons
-private extension CompareScreen {
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Recent")
-
-            ForEach(recentPairs) { pair in
-                recentPairRow(pair)
+            HStack {
+                SectionHeaderView(title: "Recent")
+                Spacer(minLength: DesignSystem.Spacing.sm)
+                Button("Clear", action: clearRecents)
+                    .buttonStyle(.glass)
+                    .controlSize(.small)
+                    .accessibilityLabel("Clear recent comparisons")
             }
-        }
-    }
-
-    func recentPairRow(_ pair: ComparisonPair) -> some View {
-        Button {
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
-            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
-                leftCountry = countryDataService.country(for: pair.leftCode)
-                rightCountry = countryDataService.country(for: pair.rightCode)
-            }
-        } label: {
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    HStack(spacing: DesignSystem.Spacing.xs) {
-                        FlagView(countryCode: pair.leftCode, height: 24)
-                        Text(pair.leftName)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-
-                    Text("VS")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .fixedSize()
-
-                    HStack(spacing: DesignSystem.Spacing.xs) {
-                        Text(pair.rightName)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                        FlagView(countryCode: pair.rightCode, height: 24)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            CompareRowList(
+                items: Array(recentPairs.prefix(Self.recentLimit)),
+                leadingWidth: CompareRowLayout.pairWidth
+            ) { pair in
+                CompareMatchupRow(pair: pair) {
+                    open(pair)
                 }
-                .padding(DesignSystem.Spacing.sm)
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel("\(pair.leftName) versus \(pair.rightName)")
             }
         }
-        .buttonStyle(PressButtonStyle())
-    }
-}
-
-// MARK: - Helpers
-private extension CompareScreen {
-    func densityLabel(_ value: Double) -> String {
-        String(format: "%.1f/km\u{00B2}", value)
     }
 
-    func languagesSummary(_ languages: [Country.Language]) -> String {
-        let names = languages
-            .sorted(by: \.percentage, descending: true)
-            .prefix(3)
-            .map(\.name)
-        if names.isEmpty { return "N/A" }
-        let suffix = languages.count > 3 ? " +\(languages.count - 3)" : ""
-        return names.joined(separator: ", ") + suffix
+    func picker(for side: CompareSide) -> some View {
+        let otherCode = country(on: side == .left ? .right : .left)?.code
+        return CountryPicker(
+            countries: countryDataService.countries.filter { $0.code != otherCode },
+            selectedCode: country(on: side)?.code
+        ) { selected in
+            setCountry(selected, on: side)
+        }
     }
 }
 
 // MARK: - Actions
 private extension CompareScreen {
+    func setUp() {
+        loadRecentPairs()
+        if let preselectedCountry, leftCountry == nil {
+            leftCountry = preselectedCountry
+        }
+    }
+
+    func country(on side: CompareSide) -> Country? {
+        switch side {
+        case .left: leftCountry
+        case .right: rightCountry
+        }
+    }
+
+    func setCountry(_ country: Country?, on side: CompareSide) {
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            switch side {
+            case .left: leftCountry = country
+            case .right: rightCountry = country
+            }
+        }
+        saveIfBothSelected()
+    }
+
+    func open(_ pair: ComparisonPair) {
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            leftCountry = countryDataService.country(for: pair.leftCode)
+            rightCountry = countryDataService.country(for: pair.rightCode)
+        }
+        saveIfBothSelected()
+    }
+
+    func swapCountries() {
+        #if !os(tvOS)
+        hapticsService.impact(.light)
+        #endif
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            (leftCountry, rightCountry) = (rightCountry, leftCountry)
+        }
+    }
+
+    /// Fills whichever slots are empty with random countries.
+    func shuffle() {
+        let pool = countryDataService.countries
+        let left = leftCountry ?? pool.filter { $0.code != rightCountry?.code }.randomElement()
+        let right = rightCountry ?? pool.filter { $0.code != left?.code }.randomElement()
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            leftCountry = left
+            rightCountry = right
+        }
+        saveIfBothSelected()
+    }
+
+    func clearRecents() {
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
+            recentPairs = []
+        }
+        saveRecentPairs()
+    }
+}
+
+// MARK: - Recents
+private extension CompareScreen {
     func saveIfBothSelected() {
-        guard let left = leftCountry, let right = rightCountry else { return }
-        let pair = ComparisonPair(
-            leftCode: left.code,
-            leftName: left.name,
-            rightCode: right.code,
-            rightName: right.name
-        )
-        recentPairs.removeAll { $0.leftCode == pair.leftCode && $0.rightCode == pair.rightCode }
-        recentPairs.removeAll { $0.leftCode == pair.rightCode && $0.rightCode == pair.leftCode }
+        guard let leftCountry, let rightCountry else { return }
+        let pair = ComparisonPair(left: leftCountry, right: rightCountry)
+        recentPairs.removeAll { $0.matches(pair) }
         recentPairs.insert(pair, at: 0)
-        if recentPairs.count > 10 { recentPairs = Array(recentPairs.prefix(10)) }
+        recentPairs = Array(recentPairs.prefix(Self.recentLimit))
         saveRecentPairs()
     }
 
     func saveRecentPairs() {
         guard let data = try? JSONEncoder().encode(recentPairs) else { return }
-        UserDefaults.standard.set(data, forKey: UserScope.key("compare_recent_pairs"))
+        UserDefaults.standard.set(data, forKey: UserScope.key(Self.recentStorageKey))
     }
 
     func loadRecentPairs() {
-        guard let data = UserDefaults.standard.data(forKey: UserScope.key("compare_recent_pairs")),
+        guard let data = UserDefaults.standard.data(forKey: UserScope.key(Self.recentStorageKey)),
               let decoded = try? JSONDecoder().decode([ComparisonPair].self, from: data) else {
             return
         }
         recentPairs = decoded
     }
-}
-
-// MARK: - ComparisonPair
-public struct ComparisonPair: Identifiable, Codable {
-    public var id: String { "\(leftCode)-\(rightCode)" }
-
-    public let leftCode: String
-    public let leftName: String
-    public let rightCode: String
-    public let rightName: String
 }
