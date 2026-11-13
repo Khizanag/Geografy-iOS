@@ -3,7 +3,7 @@ import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
-/// What Search shows before anything is typed: recent searches, then popular places as glass chips.
+/// What Search shows before anything is typed: recent searches and popular places, both as glass chips.
 struct SearchSuggestionsView: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryService
@@ -14,7 +14,7 @@ struct SearchSuggestionsView: View {
 
     private static let popularCountryCodes = ["US", "CN", "JP", "BR", "FR", "AU", "IN", "EG", "CA"]
     private static let popularOrganizationIDs = ["UN"]
-    private static let recentLimit = 5
+    private static let recentLimit = 8
 
     // MARK: - Body
     var body: some View {
@@ -25,7 +25,7 @@ struct SearchSuggestionsView: View {
                 }
                 popularSection
             }
-            .padding(DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
         .scrollDismissesKeyboard(.immediately)
@@ -46,55 +46,49 @@ private extension SearchSuggestionsView {
                 .controlSize(.small)
                 .accessibilityLabel("Clear recent searches")
             }
-            CardView(cornerRadius: DesignSystem.CornerRadius.large) {
-                VStack(spacing: 0) {
-                    let recents = Array(recentService.queries.prefix(Self.recentLimit))
-                    ForEach(recents, id: \.self) { recentQuery in
-                        recentRow(recentQuery)
-                        if recentQuery != recents.last {
-                            Divider()
-                                .padding(.leading, DesignSystem.Spacing.md + DesignSystem.Size.lg)
+            .padding(.horizontal, DesignSystem.Spacing.md)
+
+            // One swipeable line keeps recents compact, so Popular stays in view.
+            ScrollView(.horizontal) {
+                GlassEffectContainer {
+                    HStack(spacing: DesignSystem.Spacing.xs) {
+                        ForEach(recentService.queries.prefix(Self.recentLimit), id: \.self) { recentQuery in
+                            recentChip(recentQuery)
                         }
                     }
                 }
             }
+            .scrollIndicators(.hidden)
+            .scrollClipDisabled()
+            .contentMargins(.horizontal, DesignSystem.Spacing.md, for: .scrollContent)
         }
     }
 
-    func recentRow(_ recentQuery: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Button {
-                onSearch(recentQuery)
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    Image(systemName: "clock.arrow.circlepath")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                        .frame(width: DesignSystem.Size.lg)
-                        .accessibilityHidden(true)
-                    Text(recentQuery)
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Spacer(minLength: 0)
-                }
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(PressButtonStyle())
-            .accessibilityHint("Searches again")
-
-            Button {
-                recentService.remove(recentQuery)
-            } label: {
-                Image(systemName: "xmark")
-                    .font(DesignSystem.Font.caption.weight(.semibold))
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .frame(minWidth: 44, minHeight: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Remove \(recentQuery)")
+    func recentChip(_ recentQuery: String) -> some View {
+        let row = resolvedRow(for: recentQuery)
+        return SearchChip(title: row?.chipTitle ?? recentQuery, row: row) {
+            onSearch(recentQuery)
         }
-        .padding(.leading, DesignSystem.Spacing.md)
+        .contextMenu {
+            Button("Remove", systemImage: "xmark", role: .destructive) {
+                recentService.remove(recentQuery)
+            }
+        }
+        .accessibilityHint("Searches again")
+        .accessibilityActions {
+            Button("Remove") { recentService.remove(recentQuery) }
+        }
+    }
+
+    /// The place a recent search names exactly, so its chip can show that place's flag.
+    func resolvedRow(for recentQuery: String) -> SearchRow? {
+        let engine = SearchEngine(countries: countryService.countries, organizations: Organization.all)
+        guard let topHit = engine.results(for: recentQuery, scope: .all).topHit else { return nil }
+        let isExactName = topHit.title.compare(
+            recentQuery,
+            options: [.caseInsensitive, .diacriticInsensitive]
+        ) == .orderedSame
+        return isExactName ? topHit : nil
     }
 }
 
@@ -106,34 +100,15 @@ private extension SearchSuggestionsView {
             GlassEffectContainer {
                 FlowLayout(spacing: DesignSystem.Spacing.xs) {
                     ForEach(popularRows) { row in
-                        popularChip(row)
+                        SearchChip(title: row.chipTitle, row: row) {
+                            onOpen(row)
+                        }
+                        .accessibilityHint("Opens \(row.kindTitle.lowercased())")
                     }
                 }
             }
         }
-    }
-
-    func popularChip(_ row: SearchRow) -> some View {
-        Button {
-            onOpen(row)
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                SearchRowSymbol(row: row, size: .chip)
-                Text(row.title)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
-            .padding(.leading, DesignSystem.Spacing.xs)
-            .padding(.trailing, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .frame(minHeight: 44)
-            .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
-        .glassEffect(.regular.interactive(), in: .capsule)
-        .accessibilityLabel(row.title)
-        .accessibilityHint("Opens \(row.kindTitle.lowercased())")
+        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
     var popularRows: [SearchRow] {
@@ -142,5 +117,44 @@ private extension SearchSuggestionsView {
         }
         let organizations = Self.popularOrganizationIDs.compactMap(Organization.find).map(SearchRow.organization)
         return countries + organizations
+    }
+}
+
+// MARK: - Chip
+/// A glass capsule with a flag or symbol and a name; the one chip style Search uses.
+private struct SearchChip: View {
+    let title: String
+    let row: SearchRow?
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                if let row {
+                    SearchRowSymbol(row: row, size: .chip)
+                } else {
+                    Image(systemName: "magnifyingglass")
+                        .font(DesignSystem.Font.subheadline.weight(.semibold))
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .frame(width: SearchRowSymbol.Size.chip.width)
+                        .accessibilityHidden(true)
+                }
+                Text(title)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .fixedSize()
+            }
+            .padding(.leading, DesignSystem.Spacing.xs)
+            .padding(.trailing, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xs)
+            .frame(minHeight: 44)
+            .glassEffect(.regular, in: .capsule)
+            .contentShape(.contextMenuPreview, Capsule())
+            .contentShape(Capsule())
+        }
+        // Not interactive glass: it swallows the long press that opens a chip's menu.
+        .buttonStyle(PressButtonStyle())
+        .accessibilityLabel(title)
     }
 }

@@ -71,6 +71,12 @@ extension SearchRow {
         }
     }
 
+    /// The name a compact chip shows: an organization's short name once its full name gets long.
+    var chipTitle: String {
+        guard case .organization(let organization) = self, organization.fullName.count > 20 else { return title }
+        return organization.displayName
+    }
+
     var kindTitle: String {
         switch self {
         case .country: "Country"

@@ -81,8 +81,9 @@ private extension SearchScreen {
         isSearchFocused = true
     }
 
+    // Recents keep the place that was opened, not the half-typed query, so each chip can show its flag.
     func open(_ row: SearchRow) {
-        recentService.add(trimmedQuery.isEmpty ? row.title : trimmedQuery)
+        recentService.add(row.title)
         switch row {
         case .country(let country), .capital(let country, _):
             coordinator.push(.countryDetail(country))
