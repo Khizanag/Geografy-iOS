@@ -18,7 +18,7 @@ public final class DatabaseManager {
     }
 
     init(storeURL: URL?, inMemory: Bool) {
-        let schema = Schema(versionedSchema: GeografySchemaV2.self)
+        let schema = Schema(versionedSchema: GeografySchemaV3.self)
         do {
             container = try ModelContainer(
                 for: schema,

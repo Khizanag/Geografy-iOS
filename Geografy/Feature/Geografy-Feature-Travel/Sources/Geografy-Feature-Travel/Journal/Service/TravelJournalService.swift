@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 import Observation
 import OSLog
 import SwiftData
@@ -9,6 +10,8 @@ import UIKit
 @Observable
 public final class TravelJournalService {
     private(set) var entries: [TravelJournalEntry] = []
+    /// The user whose journal this shows; read once, as the service lives only as long as its screen.
+    let userID: String
 
     private let context: ModelContext
 
@@ -16,12 +19,14 @@ public final class TravelJournalService {
         self.init(isStoredInMemoryOnly: false)
     }
 
-    init(isStoredInMemoryOnly: Bool) {
-        context = ModelContext(Self.makeContainer(isStoredInMemoryOnly: isStoredInMemoryOnly))
+    init(isStoredInMemoryOnly: Bool, storeURL: URL? = nil, userID: String = UserScope.currentUserID) {
+        self.userID = userID
+        context = ModelContext(Self.makeContainer(isStoredInMemoryOnly: isStoredInMemoryOnly, storeURL: storeURL))
         loadEntries()
     }
 
     public func addEntry(_ entry: TravelJournalEntry) {
+        entry.userID = userID
         context.insert(entry)
         saveContext()
         loadEntries()
@@ -129,14 +134,13 @@ private extension TravelJournalService {
 
     static let logger = Logger(subsystem: "com.khizanag.geografy", category: "TravelJournal")
 
-    static func makeContainer(isStoredInMemoryOnly: Bool) -> ModelContainer {
-        let schema = Schema(versionedSchema: TravelJournalSchemaV1.self)
+    static func makeContainer(isStoredInMemoryOnly: Bool, storeURL: URL?) -> ModelContainer {
+        let schema = Schema(versionedSchema: TravelJournalSchemaV2.self)
         do {
-            let configuration = ModelConfiguration(
-                "TravelJournal",
+            let configuration = makeConfiguration(
                 schema: schema,
                 isStoredInMemoryOnly: isStoredInMemoryOnly,
-                cloudKitDatabase: .none
+                storeURL: storeURL
             )
             return try ModelContainer(
                 for: schema,
@@ -147,6 +151,18 @@ private extension TravelJournalService {
             logger.error("Journal store failed to open, using memory: \(error.localizedDescription)")
             return makeInMemoryContainer(schema: schema)
         }
+    }
+
+    static func makeConfiguration(schema: Schema, isStoredInMemoryOnly: Bool, storeURL: URL?) -> ModelConfiguration {
+        if let storeURL {
+            return ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)
+        }
+        return ModelConfiguration(
+            "TravelJournal",
+            schema: schema,
+            isStoredInMemoryOnly: isStoredInMemoryOnly,
+            cloudKitDatabase: .none
+        )
     }
 
     static func makeInMemoryContainer(schema: Schema) -> ModelContainer {
@@ -167,8 +183,12 @@ private extension TravelJournalService {
         }
     }
 
+    /// Loads this user's entries, first giving them any saved before the journal was per user.
     func loadEntries() {
+        claimUnownedEntries()
+        let userID = self.userID
         let descriptor = FetchDescriptor<TravelJournalEntry>(
+            predicate: #Predicate { $0.userID == userID },
             sortBy: [
                 SortDescriptor(\.startDate, order: .reverse),
             ]
@@ -177,6 +197,21 @@ private extension TravelJournalService {
             entries = try context.fetch(descriptor)
         } catch {
             Self.logger.error("Journal fetch failed: \(error.localizedDescription)")
+        }
+    }
+
+    func claimUnownedEntries() {
+        guard !userID.isEmpty else { return }
+        let descriptor = FetchDescriptor<TravelJournalEntry>(predicate: #Predicate { $0.userID.isEmpty })
+        do {
+            let unowned = try context.fetch(descriptor)
+            guard !unowned.isEmpty else { return }
+            for entry in unowned {
+                entry.userID = userID
+            }
+            saveContext()
+        } catch {
+            Self.logger.error("Journal claim failed: \(error.localizedDescription)")
         }
     }
 

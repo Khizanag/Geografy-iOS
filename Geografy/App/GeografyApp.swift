@@ -45,7 +45,7 @@ struct GeografyApp: App {
         let xp = XPService(db: database, userID: userID)
         let achievement = AchievementService(db: database, xpService: xp, userID: userID)
         let streak = StreakService(db: database, xpService: xp, achievementService: achievement, userID: userID)
-        let favorites = FavoritesService(container: database.container)
+        let favorites = FavoritesService(container: database.container, userID: userID)
         _databaseManager = State(wrappedValue: database)
         _authService = State(wrappedValue: auth)
         _xpService = State(wrappedValue: xp)
@@ -168,6 +168,8 @@ private extension GeografyApp {
 
     func handleUserSwitch(_ newUserID: String) {
         UserScope.activate(newUserID)
+        favoritesService.switchUser(id: newUserID)
+        collectionService.switchUser(id: newUserID)
         travelService.reload()
         learningPathService.reload()
         flashcardService.loadData()
