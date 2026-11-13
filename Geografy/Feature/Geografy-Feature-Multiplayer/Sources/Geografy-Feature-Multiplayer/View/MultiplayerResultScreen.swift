@@ -4,13 +4,13 @@ import SwiftUI
 
 public struct MultiplayerResultScreen: View {
     // MARK: - Properties
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    @ScaledMetric(relativeTo: .largeTitle) private var scoreFontSize: CGFloat = 40
 
     public let match: MultiplayerMatch
     public let onRematch: () -> Void
     public let onDone: () -> Void
-
-    @State private var showContent = false
 
     // MARK: - Body
     public var body: some View {
@@ -22,7 +22,7 @@ public struct MultiplayerResultScreen: View {
             .toolbar {
             }
             .onAppear {
-                animateContent()
+                announceResult()
             }
     }
 }
@@ -39,8 +39,7 @@ private extension MultiplayerResultScreen {
             }
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
-            .opacity(showContent ? 1 : 0)
-            .offset(y: showContent ? 0 : 20)
+            .phaseEntrance()
         }
     }
 }
@@ -56,6 +55,7 @@ private extension MultiplayerResultScreen {
 
     var resultIcon: some View {
         IconBadge(resultSystemImage, color: resultColor, size: .hero)
+            .accessibilityHidden(true)
     }
 
     var resultTitle: some View {
@@ -63,6 +63,7 @@ private extension MultiplayerResultScreen {
             Text(match.resultLabel)
                 .font(DesignSystem.Font.largeTitle)
                 .foregroundStyle(resultColor)
+                .accessibilityAddTraits(.isHeader)
 
             Text("vs \(match.opponent.name)")
                 .font(DesignSystem.Font.subheadline)
@@ -74,7 +75,10 @@ private extension MultiplayerResultScreen {
 // MARK: - Score Comparison
 private extension MultiplayerResultScreen {
     var scoreComparison: some View {
-        HStack(spacing: DesignSystem.Spacing.lg) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.md))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.lg))
+        return layout {
             playerScoreCard
             vsLabel
             opponentScoreCard
@@ -90,24 +94,32 @@ private extension MultiplayerResultScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
 
                 Text("\(match.playerScore)")
-                    .font(DesignSystem.Font.roundedLarge)
+                    .font(DesignSystem.Font.system(size: scoreFontSize, weight: .bold, design: .rounded))
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
 
                 Text(
                     "\(match.playerCorrectCount)/\(match.totalQuestions) correct"
                 )
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("You")
+        .accessibilityValue(
+            "\(match.playerScore) points, \(match.playerCorrectCount) of \(match.totalQuestions) correct"
+        )
     }
 
     var vsLabel: some View {
         Text("VS")
             .font(DesignSystem.Font.roundedCaption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+            .accessibilityHidden(true)
     }
 
     var opponentScoreCard: some View {
@@ -119,18 +131,25 @@ private extension MultiplayerResultScreen {
                     .lineLimit(1)
 
                 Text("\(match.opponentScore)")
-                    .font(DesignSystem.Font.roundedLarge)
+                    .font(DesignSystem.Font.system(size: scoreFontSize, weight: .bold, design: .rounded))
                     .foregroundStyle(DesignSystem.Color.purple)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
 
                 Text(
                     "\(match.opponentCorrectCount)/\(match.totalQuestions) correct"
                 )
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(match.opponent.name)
+        .accessibilityValue(
+            "\(match.opponentScore) points, \(match.opponentCorrectCount) of \(match.totalQuestions) correct"
+        )
     }
 }
 
@@ -142,6 +161,7 @@ private extension MultiplayerResultScreen {
                 Image(systemName: "chart.line.uptrend.xyaxis")
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Rating Change")
@@ -157,6 +177,7 @@ private extension MultiplayerResultScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 }
@@ -182,11 +203,13 @@ private extension MultiplayerResultScreen {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Text("\(index)")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .frame(width: DesignSystem.Spacing.lg)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .frame(minWidth: DesignSystem.Spacing.lg)
+                    .accessibilityLabel("Round \(index)")
 
                 if let flagCode = round.question.promptFlag {
                     FlagView(countryCode: flagCode, height: DesignSystem.Spacing.lg)
+                        .accessibilityHidden(true)
                 }
 
                 Text(round.question.correctCountry.name)
@@ -200,6 +223,7 @@ private extension MultiplayerResultScreen {
             }
             .padding(DesignSystem.Spacing.sm)
         }
+        .accessibilityElement(children: .combine)
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
@@ -211,6 +235,7 @@ private extension MultiplayerResultScreen {
                     width: DesignSystem.Spacing.xs,
                     height: DesignSystem.Spacing.xs
                 )
+                .accessibilityHidden(true)
 
             Text(roundResultLabel(round))
                 .font(DesignSystem.Font.caption)
@@ -245,8 +270,10 @@ private extension MultiplayerResultScreen {
 
 // MARK: - Actions
 private extension MultiplayerResultScreen {
-    func animateContent() {
-        showContent = true
+    func announceResult() {
+        let scores = "You \(match.playerScore), \(match.opponent.name) \(match.opponentScore)."
+        let announcement = "\(match.resultLabel) \(scores) \(ratingChangeText)."
+        AccessibilityNotification.Announcement(announcement).post()
     }
 }
 

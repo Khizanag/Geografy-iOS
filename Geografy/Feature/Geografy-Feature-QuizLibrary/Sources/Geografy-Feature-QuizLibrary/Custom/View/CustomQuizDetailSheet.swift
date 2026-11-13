@@ -7,6 +7,7 @@ import SwiftUI
 struct CustomQuizDetailSheet: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     let quiz: CustomQuiz
     let onEdit: () -> Void
@@ -76,6 +77,7 @@ private extension CustomQuizDetailSheet {
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.accent)
                     .frame(width: 24)
+                    .accessibilityHidden(true)
 
                 Text(continent.displayName)
                     .font(DesignSystem.Font.subheadline)
@@ -91,6 +93,9 @@ private extension CustomQuizDetailSheet {
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(continent.displayName)
+        .accessibilityValue("\(count) countries")
     }
 }
 
@@ -115,6 +120,7 @@ private extension CustomQuizDetailSheet {
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.accent)
                     .frame(width: 28)
+                    .accessibilityHidden(true)
 
                 Text(type.displayName)
                     .font(DesignSystem.Font.subheadline)
@@ -130,7 +136,10 @@ private extension CustomQuizDetailSheet {
 // MARK: - Info
 private extension CustomQuizDetailSheet {
     var infoSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
+        return layout {
             infoPill(
                 value: "\(quiz.countryCodes.count)",
                 label: "Countries",
@@ -155,6 +164,7 @@ private extension CustomQuizDetailSheet {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
 
                 Text(value)
                     .font(DesignSystem.Font.headline)
@@ -163,11 +173,14 @@ private extension CustomQuizDetailSheet {
 
                 Text(label)
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
     }
 }
 

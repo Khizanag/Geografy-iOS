@@ -20,6 +20,8 @@ public struct QuizResultsScreen: View {
     public let onPlayAgain: () -> Void
     public let onDone: () -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var xpEarned = 0
     @State private var showXPBadge = false
 
@@ -55,7 +57,6 @@ private extension QuizResultsScreen {
     var scoreSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ScoreRingView(progress: result.accuracy)
-                .accessibilityLabel("Score: \(Int(result.accuracy * 100)) percent")
 
             Text(scoreMessage)
                 .font(DesignSystem.Font.title2)
@@ -76,9 +77,9 @@ private extension QuizResultsScreen {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.xs)
                 .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
-                .transition(.scale(scale: 0.7).combined(with: .opacity))
+                .transition(reduceMotion ? .opacity : .scale(scale: 0.7).combined(with: .opacity))
                 .animation(
-                    .spring(response: 0.5, dampingFraction: 0.7).delay(0.5),
+                    reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.7).delay(0.5),
                     value: showXPBadge
                 )
                 .accessibilityElement(children: .combine)

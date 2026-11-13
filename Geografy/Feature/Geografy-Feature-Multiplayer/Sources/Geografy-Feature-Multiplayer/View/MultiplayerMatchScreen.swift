@@ -78,6 +78,9 @@ private extension MultiplayerMatchScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.xs)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Score")
+        .accessibilityValue("You \(playerScore), \(opponent.name) \(opponentScore)")
     }
 
     var playerSide: some View {
@@ -157,12 +160,15 @@ private extension MultiplayerMatchScreen {
                     )
                     .frame(width: geometryReader.size.width * progress)
                     .animation(
-                        .spring(response: 0.4, dampingFraction: 0.8),
+                        reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.8),
                         value: progress
                     )
             }
         }
         .frame(height: 6)
+        .accessibilityElement()
+        .accessibilityLabel("Progress")
+        .accessibilityValue("Question \(currentIndex + 1) of \(questions.count)")
     }
 }
 
@@ -184,10 +190,14 @@ private extension MultiplayerMatchScreen {
                 onSelectOption: { selectOption($0) }
             )
             .id(question.id)
-            .transition(.asymmetric(
-                insertion: .move(edge: .trailing).combined(with: .opacity),
-                removal: .move(edge: .leading).combined(with: .opacity)
-            ))
+            .transition(
+                reduceMotion
+                    ? .opacity
+                    : .asymmetric(
+                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                        removal: .move(edge: .leading).combined(with: .opacity)
+                    )
+            )
         }
     }
 }
@@ -312,6 +322,16 @@ private extension MultiplayerMatchScreen {
             opponentScore += 1
         }
         showFeedback = true
+        announceRound(question: question, playerIsCorrect: playerIsCorrect, opponentIsCorrect: opponentIsCorrect)
+    }
+
+    func announceRound(question: QuizQuestion, playerIsCorrect: Bool, opponentIsCorrect: Bool) {
+        let answer = question.options.first { $0.id == question.correctOptionID }?.text
+            ?? question.correctCountry.name
+        let playerPart = playerIsCorrect ? "Correct." : "Incorrect. The answer is \(answer)."
+        let opponentPart = opponentIsCorrect ? "\(opponent.name) was right." : "\(opponent.name) was wrong."
+        let announcement = "\(playerPart) \(opponentPart) You \(playerScore), \(opponent.name) \(opponentScore)."
+        AccessibilityNotification.Announcement(announcement).post()
     }
 
     func advanceToNext() {

@@ -6,6 +6,8 @@ public struct LocalMultiplayerCountdownView: View {
     // MARK: - Properties
     public let coordinator: LocalMultiplayerCoordinator
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     // MARK: - Body
     public var body: some View {
         countdownContent
@@ -29,11 +31,16 @@ private extension LocalMultiplayerCountdownView {
                             : DesignSystem.Color.accent
                     )
                     .contentTransition(.numericText())
-                    .animation(.spring(response: 0.4, dampingFraction: 0.6), value: remaining)
+                    .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.6), value: remaining)
 
                 Text("Get ready...")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(remaining > 0 ? "Get ready, \(remaining)" : "Go!")
+            .onChange(of: remaining) { _, newValue in
+                AccessibilityNotification.Announcement(newValue > 0 ? "\(newValue)" : "Go!").post()
             }
         }
     }

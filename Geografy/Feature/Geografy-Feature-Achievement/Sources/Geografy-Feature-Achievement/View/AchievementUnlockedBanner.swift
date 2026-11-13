@@ -6,6 +6,8 @@ import SwiftUI
 public struct AchievementUnlockedBanner: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
 
     public let achievement: AchievementDefinition
     public let onDismiss: () -> Void
@@ -21,14 +23,17 @@ public struct AchievementUnlockedBanner: View {
     // MARK: - Body
     public var body: some View {
         bannerContent
-            .offset(y: slideOffset)
+            .offset(y: reduceMotion ? 0 : slideOffset)
             .onAppear {
                 hapticsService.impact(.light)
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                withAnimation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.7)) {
                     slideOffset = 0
                 }
+                let announcement = "Achievement unlocked: \(achievement.title). Plus \(achievement.xpReward) XP."
+                AccessibilityNotification.Announcement(announcement).post()
                 Task {
-                    try? await Task.sleep(for: .seconds(3))
+                    // VoiceOver needs time to finish the announcement before the banner leaves.
+                    try? await Task.sleep(for: .seconds(voiceOverEnabled ? 6 : 3))
                     dismiss()
                 }
             }
@@ -40,6 +45,7 @@ private extension AchievementUnlockedBanner {
     var bannerContent: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             IconBadge(achievement.iconName, color: categoryColor, size: .medium)
+                .accessibilityHidden(true)
             textContent
             Spacer()
             xpBadge
@@ -58,6 +64,10 @@ private extension AchievementUnlockedBanner {
         .onTapGesture {
             dismiss()
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityHint("Dismisses the banner")
+        .accessibilityAction { dismiss() }
     }
 
     var textContent: some View {
@@ -91,6 +101,10 @@ private extension AchievementUnlockedBanner {
 // MARK: - Actions
 private extension AchievementUnlockedBanner {
     func dismiss() {
+        guard !reduceMotion else {
+            onDismiss()
+            return
+        }
         withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
             slideOffset = -160
         }

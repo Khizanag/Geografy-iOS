@@ -12,6 +12,10 @@ public struct QuizQuestionView: View {
     @Binding var showFlagPreview: Bool
     public let onSelectOption: (UUID) -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     @State private var optionsVisible = false
     @State private var promptVisible = false
 
@@ -32,8 +36,8 @@ private extension QuizQuestionView {
             Spacer(minLength: DesignSystem.Spacing.md)
             promptSection
                 .opacity(promptVisible ? 1 : 0)
-                .scaleEffect(promptVisible ? 1 : 0.94)
-                .animation(.spring(response: 0.45, dampingFraction: 0.8), value: promptVisible)
+                .scaleEffect(promptVisible || reduceMotion ? 1 : 0.94)
+                .animation(reduceMotion ? nil : .spring(response: 0.45, dampingFraction: 0.8), value: promptVisible)
             Spacer(minLength: DesignSystem.Spacing.lg)
             optionsSection
         }
@@ -43,6 +47,11 @@ private extension QuizQuestionView {
 // MARK: - Entrance
 private extension QuizQuestionView {
     func triggerEntrance() {
+        guard !reduceMotion else {
+            promptVisible = true
+            optionsVisible = true
+            return
+        }
         optionsVisible = false
         promptVisible = false
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8).delay(0.05)) {
@@ -74,11 +83,13 @@ private extension QuizQuestionView {
             if let flagCode = question.promptFlag {
                 Button { showFlagPreview = true } label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                            .fill(DesignSystem.Color.accent.opacity(0.12))
-                            .blur(radius: 24)
-                            .padding(.horizontal, DesignSystem.Spacing.md)
-                            .padding(.vertical, DesignSystem.Spacing.xs)
+                        if !reduceTransparency {
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
+                                .fill(DesignSystem.Color.accent.opacity(0.12))
+                                .blur(radius: 24)
+                                .padding(.horizontal, DesignSystem.Spacing.md)
+                                .padding(.vertical, DesignSystem.Spacing.xs)
+                        }
 
                         FlagView(countryCode: flagCode, height: 200)
                             .clipShape(
@@ -88,14 +99,10 @@ private extension QuizQuestionView {
                     }
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Mystery flag")
+                .accessibilityHint("Opens the flag full screen")
 
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Image(systemName: "arrow.up.left.and.arrow.down.right")
-                        .font(DesignSystem.Font.nano)
-                    Text("Tap to zoom")
-                        .font(DesignSystem.Font.caption2)
-                }
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                zoomHint
             }
 
             Text(question.promptText)
@@ -104,6 +111,17 @@ private extension QuizQuestionView {
                 .multilineTextAlignment(.center)
                 .padding(.top, DesignSystem.Spacing.xxs)
         }
+    }
+
+    var zoomHint: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: "arrow.up.left.and.arrow.down.right")
+                .font(DesignSystem.Font.nano)
+            Text("Tap to zoom")
+                .font(DesignSystem.Font.caption2)
+        }
+        .foregroundStyle(DesignSystem.Color.textSecondary)
+        .accessibilityHidden(true)
     }
 
     func textPrompt(_ text: String, subject: String?) -> some View {
@@ -118,8 +136,9 @@ private extension QuizQuestionView {
                     .font(DesignSystem.Font.roundedHeadline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(3)
+                    .minimumScaleFactor(0.8)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
+                    .accessibilityAddTraits(.isHeader)
                     .padding(.horizontal, DesignSystem.Spacing.xs)
             }
 
@@ -136,7 +155,7 @@ private extension QuizQuestionView {
             }
         }
         .padding(.vertical, DesignSystem.Spacing.xl)
-        .animation(.easeInOut(duration: 0.2), value: showFeedback)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: showFeedback)
     }
 
     var promptDetailsList: some View {
@@ -176,12 +195,14 @@ private extension QuizQuestionView {
                     action: { onSelectOption(option.id) }
                 )
                 .opacity(optionsVisible ? 1 : 0)
-                .offset(y: optionsVisible ? 0 : 18)
+                .offset(y: optionsVisible || reduceMotion ? 0 : 18)
                 .animation(
-                    .spring(response: 0.42, dampingFraction: 0.82)
-                        .delay(0.06 * Double(index)),
+                    reduceMotion
+                        ? nil
+                        : .spring(response: 0.42, dampingFraction: 0.82).delay(0.06 * Double(index)),
                     value: optionsVisible
                 )
+                .accessibilityValue(optionAccessibilityValue(for: option))
             }
         }
     }
@@ -203,12 +224,15 @@ private extension QuizQuestionView {
                     action: { onSelectOption(option.id) }
                 )
                 .opacity(optionsVisible ? 1 : 0)
-                .scaleEffect(optionsVisible ? 1 : 0.88)
+                .scaleEffect(optionsVisible || reduceMotion ? 1 : 0.88)
                 .animation(
-                    .spring(response: 0.42, dampingFraction: 0.78)
-                        .delay(0.07 * Double(index)),
+                    reduceMotion
+                        ? nil
+                        : .spring(response: 0.42, dampingFraction: 0.78).delay(0.07 * Double(index)),
                     value: optionsVisible
                 )
+                .accessibilityLabel("Flag \(index + 1)")
+                .accessibilityValue(optionAccessibilityValue(for: option))
             }
         }
     }
@@ -231,5 +255,13 @@ private extension QuizQuestionView {
             return .incorrect
         }
         return .disabled
+    }
+
+    func optionAccessibilityValue(for option: QuizOption) -> String {
+        switch optionState(for: option) {
+        case .correct: "Correct answer"
+        case .incorrect: "Your answer, incorrect"
+        case .default, .disabled: ""
+        }
     }
 }

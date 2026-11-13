@@ -20,6 +20,10 @@ public struct QuizTypingInputView: View {
 
     @FocusState private var isInputFocused: Bool
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     // MARK: - Body
     public var body: some View {
         mainContent
@@ -61,11 +65,13 @@ private extension QuizTypingInputView {
             if let flagCode = question.promptFlag {
                 Button { showFlagPreview = true } label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                            .fill(DesignSystem.Color.accent.opacity(0.12))
-                            .blur(radius: 24)
-                            .padding(.horizontal, DesignSystem.Spacing.md)
-                            .padding(.vertical, DesignSystem.Spacing.xs)
+                        if !reduceTransparency {
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
+                                .fill(DesignSystem.Color.accent.opacity(0.12))
+                                .blur(radius: 24)
+                                .padding(.horizontal, DesignSystem.Spacing.md)
+                                .padding(.vertical, DesignSystem.Spacing.xs)
+                        }
 
                         FlagView(countryCode: flagCode, height: 200)
                             .clipShape(
@@ -75,14 +81,10 @@ private extension QuizTypingInputView {
                     }
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Mystery flag")
+                .accessibilityHint("Opens the flag full screen")
 
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Image(systemName: "arrow.up.left.and.arrow.down.right")
-                        .font(DesignSystem.Font.nano)
-                    Text("Tap to zoom")
-                        .font(DesignSystem.Font.caption2)
-                }
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                zoomHint
             }
 
             Text(question.promptText)
@@ -93,11 +95,22 @@ private extension QuizTypingInputView {
         }
     }
 
+    var zoomHint: some View {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
+            Image(systemName: "arrow.up.left.and.arrow.down.right")
+                .font(DesignSystem.Font.nano)
+            Text("Tap to zoom")
+                .font(DesignSystem.Font.caption2)
+        }
+        .foregroundStyle(DesignSystem.Color.textSecondary)
+        .accessibilityHidden(true)
+    }
+
     func textPrompt(_ text: String, subject: String?) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             Text(text)
                 .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
             if let subject {
@@ -105,8 +118,9 @@ private extension QuizTypingInputView {
                     .font(DesignSystem.Font.roundedHeadline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(3)
+                    .minimumScaleFactor(0.8)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
+                    .accessibilityAddTraits(.isHeader)
                     .padding(.horizontal, DesignSystem.Spacing.xs)
             }
         }
@@ -122,7 +136,7 @@ private extension QuizTypingInputView {
 
             if showFeedback, !isCorrectAnswer {
                 correctAnswerLabel
-                    .transition(.scale(scale: 0.9).combined(with: .opacity))
+                    .transition(reduceMotion ? .opacity : .scale(scale: 0.9).combined(with: .opacity))
             }
 
             if showAutocomplete, !filteredSuggestions.isEmpty, isInputFocused, !showFeedback {
@@ -182,9 +196,9 @@ private extension QuizTypingInputView {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.md)
         .background(inputBackground)
-        .animation(.easeInOut(duration: 0.3), value: showFeedback)
-        .animation(.easeInOut(duration: 0.3), value: isCorrectAnswer)
-        .animation(.easeInOut(duration: 0.2), value: isInputFocused)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: showFeedback)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: isCorrectAnswer)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isInputFocused)
     }
 
     @ViewBuilder
@@ -193,7 +207,8 @@ private extension QuizTypingInputView {
             Image(systemName: isCorrectAnswer ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(isCorrectAnswer ? DesignSystem.Color.success : DesignSystem.Color.error)
-                .transition(.scale.combined(with: .opacity))
+                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+                .accessibilityLabel(isCorrectAnswer ? "Correct" : "Incorrect")
         } else if !typingInput.isEmpty {
             Button {
                 typingInput = ""
@@ -202,8 +217,11 @@ private extension QuizTypingInputView {
                 Image(systemName: "xmark.circle.fill")
                     .font(DesignSystem.Font.callout)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Clear answer")
         }
     }
 
@@ -220,6 +238,7 @@ private extension QuizTypingInputView {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "checkmark")
                 .font(DesignSystem.Font.caption2)
+                .accessibilityHidden(true)
             Text(correctAnswerText)
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
@@ -228,6 +247,8 @@ private extension QuizTypingInputView {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.xs)
         .background(DesignSystem.Color.success.opacity(0.15), in: Capsule())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Correct answer: \(correctAnswerText)")
     }
 
     var controlsRow: some View {
@@ -240,7 +261,7 @@ private extension QuizTypingInputView {
 
     var hintButton: some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
                 showHint.toggle()
             }
             hapticsService.selection()
@@ -248,6 +269,7 @@ private extension QuizTypingInputView {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: showHint ? "lightbulb.fill" : "lightbulb")
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
                 Text(showHint ? hintText : "Hint")
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.medium)
@@ -260,6 +282,8 @@ private extension QuizTypingInputView {
         .glassEffect(.regular.interactive(), in: .capsule)
         .disabled(showFeedback)
         .opacity(showFeedback ? 0.4 : 1)
+        .accessibilityLabel(showHint ? "Hint: \(hintText)" : "Hint")
+        .accessibilityHint(showHint ? "" : "Shows the first letters of the answer")
     }
 
     var submitButton: some View {
@@ -270,6 +294,7 @@ private extension QuizTypingInputView {
                     .fontWeight(.bold)
                 Image(systemName: "arrow.right")
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
             }
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .padding(.horizontal, DesignSystem.Spacing.md)

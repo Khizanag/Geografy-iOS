@@ -16,6 +16,9 @@ public struct QuizSpellingBeeView: View {
 
     @FocusState private var isInputFocused: Bool
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     // MARK: - Body
     public var body: some View {
         mainContent
@@ -65,6 +68,8 @@ private extension QuizSpellingBeeView {
                         .geoShadow(.elevated)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Mystery flag")
+                .accessibilityHint("Opens the flag full screen")
 
                 Text(question.promptText)
                     .font(DesignSystem.Font.subheadline)
@@ -78,8 +83,9 @@ private extension QuizSpellingBeeView {
                         .font(DesignSystem.Font.roundedBody)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
                         .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
-                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                        .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                        .accessibilityAddTraits(.isHeader)
                 }
 
                 Text(question.promptText)
@@ -97,6 +103,7 @@ private extension QuizSpellingBeeView {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: "forward.fill")
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
 
                 Text("Skip")
                     .font(DesignSystem.Font.caption)
@@ -107,6 +114,7 @@ private extension QuizSpellingBeeView {
             .padding(.vertical, DesignSystem.Spacing.xxs)
         }
         .glassEffect(.regular.interactive(), in: .capsule)
+        .accessibilityHint("Reveals the answer and counts it as wrong")
     }
 }
 
@@ -122,6 +130,12 @@ private extension QuizSpellingBeeView {
             )
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Answer, \(correctAnswerText.filter(\.isLetter).count) letters")
+        .accessibilityValue(showFeedback ? correctAnswerText : typingInput)
+        .accessibilityHint(showFeedback ? "" : "Double-tap to type your answer")
+        .accessibilityAddTraits(showFeedback ? [] : .isButton)
+        .accessibilityAction { isInputFocused = true }
     }
 }
 
@@ -133,6 +147,7 @@ private extension QuizSpellingBeeView {
                 Image(systemName: "forward.fill")
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .accessibilityLabel("Skipped")
             } else {
                 Image(systemName: isCorrectAnswer ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(DesignSystem.Font.title2)
@@ -141,10 +156,11 @@ private extension QuizSpellingBeeView {
                             ? DesignSystem.Color.success
                             : DesignSystem.Color.error
                     )
+                    .accessibilityLabel(isCorrectAnswer ? "Correct" : "Incorrect")
             }
         }
         .padding(.bottom, DesignSystem.Spacing.sm)
-        .transition(.scale.combined(with: .opacity))
+        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
     }
 
     var hiddenTextField: some View {

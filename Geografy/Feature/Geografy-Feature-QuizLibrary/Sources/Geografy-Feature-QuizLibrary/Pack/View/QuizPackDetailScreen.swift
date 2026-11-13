@@ -101,6 +101,7 @@ private extension QuizPackDetailScreen {
                 .font(DesignSystem.Font.title)
                 .foregroundStyle(DesignSystem.Color.onAccent)
         }
+        .accessibilityHidden(true)
     }
 
     func packInfoPills(_ pack: QuizPack) -> some View {
@@ -146,7 +147,7 @@ private extension QuizPackDetailScreen {
                         .foregroundStyle(DesignSystem.Color.accent)
                     Text("/\(total)")
                         .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
                 Text(label)
                     .font(DesignSystem.Font.caption)
@@ -155,6 +156,9 @@ private extension QuizPackDetailScreen {
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue("\(value) of \(total)")
     }
 }
 

@@ -8,6 +8,8 @@ import SwiftUI
 public struct CustomQuizBuilderScreen: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
     public let existingQuiz: CustomQuiz?
     public let countryDataService: CountryDataService
     public let quizService: CustomQuizService
@@ -154,6 +156,7 @@ private extension CustomQuizBuilderScreen {
             Text("Icon")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
 
             LazyVGrid(
                 columns: [GridItem(.adaptive(minimum: 56), spacing: DesignSystem.Spacing.sm)],
@@ -194,8 +197,28 @@ private extension CustomQuizBuilderScreen {
                     )
             }
             .frame(width: 56, height: 56)
+            .overlay(alignment: .topTrailing) { selectedIconBadge(isSelected: isSelected) }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(iconAccessibilityLabel(icon))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    @ViewBuilder
+    func selectedIconBadge(isSelected: Bool) -> some View {
+        if isSelected, differentiateWithoutColor {
+            Image(systemName: "checkmark.circle.fill")
+                .font(DesignSystem.Font.iconXS)
+                .foregroundStyle(DesignSystem.Color.accent)
+                .background(DesignSystem.Color.background, in: Circle())
+        }
+    }
+
+    func iconAccessibilityLabel(_ icon: String) -> String {
+        icon
+            .split(separator: ".")
+            .filter { $0 != "fill" }
+            .joined(separator: " ")
     }
 }
 
@@ -251,6 +274,9 @@ private extension CustomQuizBuilderScreen {
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(continent.displayName)
+        .accessibilityValue("\(count) countries")
     }
 }
 
@@ -334,6 +360,7 @@ private extension CustomQuizBuilderScreen {
             Text(title)
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text(subtitle)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -369,7 +396,7 @@ private extension CustomQuizBuilderScreen {
               nextIndex < BuilderStep.allCases.count else {
             return
         }
-        withAnimation { currentStep = BuilderStep.allCases[nextIndex] }
+        withAnimation(reduceMotion ? nil : .default) { currentStep = BuilderStep.allCases[nextIndex] }
     }
 
     func goToPreviousStep() {
@@ -378,7 +405,7 @@ private extension CustomQuizBuilderScreen {
               previousIndex >= 0 else {
             return
         }
-        withAnimation { currentStep = BuilderStep.allCases[previousIndex] }
+        withAnimation(reduceMotion ? nil : .default) { currentStep = BuilderStep.allCases[previousIndex] }
     }
 
     func toggleQuestionType(_ type: QuizType) {

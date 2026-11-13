@@ -9,6 +9,9 @@ public struct QuizPackCard: View {
     public let maxStars: Int
     public let isUnlocked: Bool
 
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     // MARK: - Init
     public init(
         pack: QuizPack,
@@ -27,7 +30,7 @@ public struct QuizPackCard: View {
     // MARK: - Body
     public var body: some View {
         cardContent
-            .frame(height: 160)
+            .frame(minHeight: 160)
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: DesignSystem.CornerRadius.large,
@@ -39,6 +42,9 @@ public struct QuizPackCard: View {
                 radius: 10,
                 y: 4
             )
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(pack.name)
+            .accessibilityValue(accessibilityValue)
     }
 }
 
@@ -80,6 +86,7 @@ private extension QuizPackCard {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 20, y: -10)
             .clipped()
+            .accessibilityHidden(true)
     }
 
     var packTitle: some View {
@@ -87,7 +94,7 @@ private extension QuizPackCard {
             .font(DesignSystem.Font.headline)
             .fontWeight(.bold)
             .foregroundStyle(DesignSystem.Color.onAccent)
-            .lineLimit(1)
+            .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
             .minimumScaleFactor(0.8)
     }
 
@@ -110,11 +117,25 @@ private extension QuizPackCard {
     var lockedOverlayIfNeeded: some View {
         if !isUnlocked {
             ZStack {
-                DesignSystem.Color.background.opacity(0.6)
-                Image(systemName: "lock.fill")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                DesignSystem.Color.background.opacity(reduceTransparency ? 1 : 0.6)
+                VStack(spacing: DesignSystem.Spacing.xs) {
+                    Image(systemName: "lock.fill")
+                        .font(DesignSystem.Font.title2)
+                    // A solid overlay covers the card, so the name moves onto it.
+                    if reduceTransparency {
+                        Text(pack.name)
+                            .font(DesignSystem.Font.headline)
+                            .multilineTextAlignment(.center)
+                    }
+                }
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .padding(DesignSystem.Spacing.sm)
             }
         }
+    }
+
+    var accessibilityValue: String {
+        let progress = "\(completedLevels) of \(pack.levelCount) levels, \(stars) of \(maxStars) stars"
+        return isUnlocked ? progress : "Locked, \(progress)"
     }
 }

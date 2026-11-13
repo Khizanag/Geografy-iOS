@@ -59,13 +59,13 @@ private extension QuizPackBrowserScreen {
             ) {
                 overallProgress
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .feedSection(appeared: appeared, delay: 0.0)
+                    .feedSection(appeared: appeared, delay: 0.0, reduceMotion: reduceMotion)
 
                 categoryFilter
-                    .feedSection(appeared: appeared, delay: 0.08)
+                    .feedSection(appeared: appeared, delay: 0.08, reduceMotion: reduceMotion)
 
                 packGrid
-                    .feedSection(appeared: appeared, delay: 0.16)
+                    .feedSection(appeared: appeared, delay: 0.16, reduceMotion: reduceMotion)
             }
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
@@ -109,6 +109,7 @@ private extension QuizPackBrowserScreen {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(color)
+                    .accessibilityHidden(true)
                 Text(value)
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
@@ -120,6 +121,7 @@ private extension QuizPackBrowserScreen {
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -167,7 +169,7 @@ private extension QuizPackBrowserScreen {
             Text(verbatim: category.emoji)
                 .font(DesignSystem.Font.subheadline)
         }
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isSelected)
     }
 }
 
@@ -275,13 +277,14 @@ private extension QuizPackBrowserScreen {
 private extension View {
     func feedSection(
         appeared: Bool,
-        delay: Double
+        delay: Double,
+        reduceMotion: Bool
     ) -> some View {
         self
             .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 20)
+            .offset(y: appeared || reduceMotion ? 0 : 20)
             .animation(
-                .easeOut(duration: 0.5).delay(delay),
+                reduceMotion ? nil : .easeOut(duration: 0.5).delay(delay),
                 value: appeared
             )
     }

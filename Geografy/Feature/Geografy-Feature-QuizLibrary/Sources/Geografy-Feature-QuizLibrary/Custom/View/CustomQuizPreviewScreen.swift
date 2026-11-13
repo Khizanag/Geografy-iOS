@@ -104,6 +104,7 @@ private extension CustomQuizPreviewScreen {
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.accent)
                     .frame(width: 28)
+                    .accessibilityHidden(true)
 
                 Text(type.displayName)
                     .font(DesignSystem.Font.subheadline)

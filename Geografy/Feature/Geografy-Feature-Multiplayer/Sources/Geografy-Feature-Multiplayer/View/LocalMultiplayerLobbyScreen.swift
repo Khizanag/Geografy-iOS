@@ -8,6 +8,7 @@ import SwiftUI
 public struct LocalMultiplayerLobbyScreen: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
@@ -56,6 +57,7 @@ private extension LocalMultiplayerLobbyScreen {
             Circle()
                 .fill(coordinator.opponent != nil ? DesignSystem.Color.success : DesignSystem.Color.warning)
                 .frame(width: DesignSystem.Spacing.xs, height: DesignSystem.Spacing.xs)
+                .accessibilityHidden(true)
             Text(coordinator.opponent != nil ? "Connected" : "Searching...")
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
@@ -114,6 +116,7 @@ private extension LocalMultiplayerLobbyScreen {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
                 IconBadge("person.fill", color: DesignSystem.Color.blue, size: .medium)
+                    .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(opponent.displayName)
@@ -135,10 +138,12 @@ private extension LocalMultiplayerLobbyScreen {
                     Image(systemName: "checkmark.circle.fill")
                         .font(DesignSystem.Font.title2)
                         .foregroundStyle(DesignSystem.Color.success)
+                        .accessibilityHidden(true)
                 }
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
     }
 
     var waitingSection: some View {
@@ -149,6 +154,7 @@ private extension LocalMultiplayerLobbyScreen {
                 PulsingCirclesView(icon: "antenna.radiowaves.left.and.right", isAnimating: true)
                     .scaleEffect(0.6)
                     .frame(height: 160)
+                    .accessibilityHidden(true)
                 Text("Waiting for a player to join...")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -183,6 +189,7 @@ private extension LocalMultiplayerLobbyScreen {
                         Image(systemName: "wifi")
                             .font(DesignSystem.Font.headline)
                             .foregroundStyle(DesignSystem.Color.accent)
+                            .accessibilityHidden(true)
                         Text(peer.displayName)
                             .font(DesignSystem.Font.headline)
                             .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -196,6 +203,7 @@ private extension LocalMultiplayerLobbyScreen {
                 }
             }
             .buttonStyle(PressButtonStyle())
+            .accessibilityLabel("Join \(peer.displayName)")
         }
     }
 }

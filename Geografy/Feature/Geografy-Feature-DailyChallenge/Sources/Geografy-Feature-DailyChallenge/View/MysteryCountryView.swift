@@ -70,9 +70,11 @@ private extension MysteryCountryView {
             Image(systemName: "questionmark.circle.fill")
                 .font(DesignSystem.Font.displaySmall)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text("Which country is this?")
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text("Reveal clues to narrow it down")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -97,23 +99,35 @@ private extension MysteryCountryView {
         clue: DailyChallenge.MysteryClue,
         isRevealed: Bool
     ) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                clueIcon(clue: clue)
-                clueText(clue: clue, isRevealed: isRevealed)
-                Spacer()
-                if !isRevealed {
-                    Image(systemName: "eye.slash")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-            }
-            .padding(DesignSystem.Spacing.sm)
-        }
-        .onTapGesture {
+        Button {
             guard !isRevealed, !guessSubmitted else { return }
-            revealClue(cost: clue.pointCost)
+            revealClue(clue)
+        } label: {
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    clueIcon(clue: clue)
+                    clueText(clue: clue, isRevealed: isRevealed)
+                    Spacer()
+                    if !isRevealed {
+                        Image(systemName: "eye.slash")
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                            .accessibilityHidden(true)
+                    }
+                }
+                .padding(DesignSystem.Spacing.sm)
+            }
         }
+        .buttonStyle(.plain)
+        .accessibilityLabel(isRevealed ? clue.label : "Reveal \(clue.label) clue")
+        .accessibilityValue(isRevealed ? clueSpokenValue(clue) : "")
+        .accessibilityHint(isRevealed || guessSubmitted ? "" : "Costs \(clue.pointCost) points")
+        .accessibilityRemoveTraits(isRevealed || guessSubmitted ? .isButton : [])
+    }
+
+    // A flag clue reads as "Flag": FlagView's own label spells the country code, which would give the answer away.
+    func clueSpokenValue(_ clue: DailyChallenge.MysteryClue) -> String {
+        clue.label == "Flag" ? "Flag shown" : clue.value
     }
 
     func clueIcon(clue: DailyChallenge.MysteryClue) -> some View {
@@ -121,6 +135,7 @@ private extension MysteryCountryView {
             .font(DesignSystem.Font.headline)
             .foregroundStyle(DesignSystem.Color.accent)
             .frame(width: DesignSystem.Size.md)
+            .accessibilityHidden(true)
     }
 
     @ViewBuilder
@@ -131,7 +146,7 @@ private extension MysteryCountryView {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
             Text(clue.label)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
             if isRevealed {
                 if clue.label == "Flag" {
                     FlagView(countryCode: clue.value, height: 32)
@@ -176,6 +191,7 @@ private extension MysteryCountryView {
                     )
                 )
                 .autocorrectionDisabled()
+                .accessibilityLabel("Your guess")
 
             GlassButton("Submit Guess", fullWidth: true) {
                 submitGuess()
@@ -193,6 +209,7 @@ private extension MysteryCountryView {
                     countryCode: target.code,
                     height: DesignSystem.Size.xxl
                 )
+                .accessibilityHidden(true)
                 Text(target.name)
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
@@ -208,14 +225,16 @@ private extension MysteryCountryView {
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
 // MARK: - Actions
 private extension MysteryCountryView {
-    func revealClue(cost: Int) {
-        score = max(0, score - cost)
+    func revealClue(_ clue: DailyChallenge.MysteryClue) {
+        score = max(0, score - clue.pointCost)
         revealedClueCount += 1
+        AccessibilityNotification.Announcement("\(clue.label): \(clueSpokenValue(clue)).").post()
     }
 
     func submitGuess() {
@@ -224,6 +243,8 @@ private extension MysteryCountryView {
             score = max(0, score - 200)
         }
         hapticsService.notification(isCorrect ? .success : .error)
+        let announcement = isCorrect ? "Correct! It's \(target.name)." : "Incorrect. The answer was \(target.name)."
+        AccessibilityNotification.Announcement(announcement).post()
         onFinish()
     }
 

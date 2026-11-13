@@ -30,6 +30,9 @@ public struct QuizPackLevelCard: View {
             .padding(DesignSystem.Spacing.md)
         }
         .opacity(isLocked ? 0.5 : 1.0)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Level \(level.levelIndex), \(level.name)")
+        .accessibilityValue(accessibilityValue)
     }
 }
 
@@ -109,6 +112,13 @@ private extension QuizPackLevelCard {
 private extension QuizPackLevelCard {
     var isCompleted: Bool {
         stars > 0
+    }
+
+    var accessibilityValue: String {
+        let questions = "\(level.questionCount) questions"
+        if isLocked { return "Locked, \(questions)" }
+        if isCompleted { return "Completed, \(stars) of 3 stars, \(questions)" }
+        return questions
     }
 
     var circleColor: Color {

@@ -7,6 +7,8 @@ public struct LocalMultiplayerResultScreen: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(XPService.self) private var xpService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
@@ -44,24 +46,28 @@ private extension LocalMultiplayerResultScreen {
     var resultHeader: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             IconBadge(resultIcon, color: resultColor, size: .hero)
-                .symbolEffect(.bounce, value: appeared)
+                .symbolEffect(.bounce, value: reduceMotion ? false : appeared)
+                .accessibilityHidden(true)
 
             Text(resultTitle)
                 .font(DesignSystem.Font.title)
                 .fontWeight(.black)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
 
             Text(resultSubtitle)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .frame(maxWidth: .infinity)
-        .opacity(appeared ? 1 : 0)
-        .scaleEffect(appeared ? 1 : 0.8)
+        .phaseEntrance()
     }
 
     var scoreComparison: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.md))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.md))
+        return layout {
             scoreCard(
                 label: "You",
                 score: coordinator.playerScore,
@@ -71,7 +77,8 @@ private extension LocalMultiplayerResultScreen {
             )
             Text("vs")
                 .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
             scoreCard(
                 label: coordinator.opponent?.displayName ?? "Opponent",
                 score: coordinator.opponentScore,
@@ -80,9 +87,7 @@ private extension LocalMultiplayerResultScreen {
                 isWinner: coordinator.opponentScore > coordinator.playerScore
             )
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 16)
-        .animation(.easeOut(duration: 0.5).delay(0.2), value: appeared)
+        .phaseEntrance(index: 1, stagger: 0.2)
     }
 
     func scoreCard(label: String, score: Int, total: Int, color: Color, isWinner: Bool) -> some View {
@@ -92,6 +97,7 @@ private extension LocalMultiplayerResultScreen {
                     Image(systemName: "crown.fill")
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.warning)
+                        .accessibilityHidden(true)
                 }
                 Text("\(score)/\(total)")
                     .font(DesignSystem.Font.roundedBody)
@@ -104,6 +110,9 @@ private extension LocalMultiplayerResultScreen {
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue(isWinner ? "\(score) of \(total), winner" : "\(score) of \(total)")
     }
 
     var actionButtons: some View {
@@ -118,13 +127,12 @@ private extension LocalMultiplayerResultScreen {
             } label: {
                 Text("Leave")
                     .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, DesignSystem.Spacing.xs)
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .animation(.easeOut(duration: 0.5).delay(0.4), value: appeared)
+        .phaseEntrance(index: 2, stagger: 0.2)
     }
 }
 
@@ -134,6 +142,10 @@ private extension LocalMultiplayerResultScreen {
         appeared = true
         guard !xpAwarded else { return }
         xpAwarded = true
+        let opponentName = coordinator.opponent?.displayName ?? "Opponent"
+        let scores = "You \(coordinator.playerScore), \(opponentName) \(coordinator.opponentScore)."
+        let announcement = "\(resultTitle) \(scores)"
+        AccessibilityNotification.Announcement(announcement).post()
         if isWin {
             xpService.award(25, source: .quizCompletedMedium)
             hapticsService.notification(.success)
