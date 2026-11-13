@@ -14,9 +14,6 @@ public struct TravelStatusPickerSheet: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    // The sheet is as tall as its content; this is only the first guess before it's measured.
-    @State private var contentHeight: CGFloat = 320
-
     public let country: Country
 
     // MARK: - Init
@@ -26,25 +23,17 @@ public struct TravelStatusPickerSheet: View {
 
     // MARK: - Body
     public var body: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                header
-                statusOptions
-                if hasExistingStatus {
-                    removeButton
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.top, DesignSystem.Spacing.xl)
-            .padding(.bottom, DesignSystem.Spacing.md)
-            .onGeometryChange(for: CGFloat.self) { proxy in
-                proxy.size.height
-            } action: { height in
-                contentHeight = height
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            header
+            statusOptions
+            if hasExistingStatus {
+                removeButton
             }
         }
-        .scrollBounceBehavior(.basedOnSize)
-        .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.height(contentHeight)])
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.top, DesignSystem.Spacing.xl)
+        .padding(.bottom, DesignSystem.Spacing.md)
+        .fittedSheet()
         .animation(reduceMotion ? nil : .smooth(duration: 0.25), value: currentStatus)
     }
 }

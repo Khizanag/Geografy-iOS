@@ -89,8 +89,6 @@ private struct FunFactDetailSheet: View {
     let fact: String
     let index: Int
 
-    @State private var contentHeight: CGFloat = 300
-
     var body: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             SheetIconHeader(icon: "lightbulb.fill")
@@ -99,9 +97,7 @@ private struct FunFactDetailSheet: View {
         .padding(.top, DesignSystem.Spacing.lg)
         .padding(.bottom, DesignSystem.Spacing.xl)
         .frame(maxWidth: .infinity)
-        .fixedSize(horizontal: false, vertical: true)
-        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { contentHeight = $0 }
-        .presentationDetents([.height(contentHeight)])
+        .fittedSheet()
     }
 
     var factText: some View {
