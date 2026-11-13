@@ -1,3 +1,4 @@
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
@@ -5,9 +6,8 @@ import SwiftUI
 
 public struct DailyChallengeScreen: View {
     // MARK: - Properties
-    @Environment(XPService.self) private var xpService
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(XPService.self) private var xpService
 
     @State private var service: DailyChallengeService?
     @State private var showSession = false
@@ -17,9 +17,11 @@ public struct DailyChallengeScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        contentView
+        scrollContent
+            .screenBackground()
             .navigationTitle("Daily Challenge")
             .navigationBarTitleDisplayMode(.inline)
+            .safeAreaBar(edge: .bottom) { startBar }
             .task { await loadData() }
             .fullScreenCover(isPresented: $showSession) {
                 sessionCover
@@ -27,24 +29,65 @@ public struct DailyChallengeScreen: View {
     }
 }
 
-// MARK: - Content
+// MARK: - Subviews
 private extension DailyChallengeScreen {
-    var contentView: some View {
+    var scrollContent: some View {
         ScrollView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                challengeHeader
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                header
                 if let service {
-                    streakSection(service: service)
-                    todayChallengeCard(service: service)
-                    countdownSection
-                    historySection(service: service)
+                    loadedSections(service: service)
+                } else {
+                    ProgressView()
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, DesignSystem.Spacing.xl)
                 }
             }
-            .padding(.vertical, DesignSystem.Spacing.lg)
-            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .screenBackground()
+    }
+
+    var header: some View {
+        GameIntroHeader(
+            title: "Daily Challenge",
+            subtitle: Date.now.formatted(.dateTime.weekday(.wide).month(.wide).day()),
+            systemImage: "calendar.badge.clock",
+            color: DesignSystem.Color.orange,
+            facts: headerFacts
+        )
+    }
+
+    @ViewBuilder
+    func loadedSections(service: DailyChallengeService) -> some View {
+        if let challenge = service.todayChallenge {
+            DailyChallengeTodayCard(challenge: challenge, result: service.todayResult)
+        }
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Streak")
+            DailyChallengeStreakCard(streak: streak(for: service))
+        }
+        DailyChallengeHistorySection(results: sortedHistory(for: service))
+    }
+
+    @ViewBuilder
+    var startBar: some View {
+        if let service, service.todayChallenge != nil, !service.hasCompletedToday {
+            Button {
+                showSession = true
+            } label: {
+                Label("Start Challenge", systemImage: "play.fill")
+                    .font(DesignSystem.Font.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, DesignSystem.Spacing.xxs)
+            }
+            .buttonStyle(.glassProminent)
+            .tint(DesignSystem.Color.orange)
+            .controlSize(.large)
+            .accessibilityHint("Opens today's challenge")
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
+        }
     }
 
     var sessionCover: some View {
@@ -56,250 +99,6 @@ private extension DailyChallengeScreen {
                 )
             }
         }
-    }
-}
-
-// MARK: - Header
-private extension DailyChallengeScreen {
-    var challengeHeader: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            IconBadge("calendar.badge.clock", size: .large)
-            Text("Daily Challenge")
-                .font(DesignSystem.Font.title)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .accessibilityAddTraits(.isHeader)
-            Text(formattedDate)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .padding(.bottom, DesignSystem.Spacing.sm)
-    }
-}
-
-// MARK: - Streak Section
-private extension DailyChallengeScreen {
-    func streakSection(service: DailyChallengeService) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                IconBadge("flame.fill", color: DesignSystem.Color.orange, size: .medium)
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text("Challenge Streak")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("\(service.streak)-day streak")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                Spacer()
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Challenge Streak: \(service.streak)-day streak")
-    }
-}
-
-// MARK: - Today's Challenge Card
-private extension DailyChallengeScreen {
-    func todayChallengeCard(service: DailyChallengeService) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Today's Challenge")
-            if let challenge = service.todayChallenge {
-                challengeCardContent(
-                    challenge: challenge,
-                    completed: service.hasCompletedToday,
-                    result: service.todayResult
-                )
-            }
-        }
-    }
-
-    func challengeCardContent(
-        challenge: DailyChallenge,
-        completed: Bool,
-        result: DailyChallengeResult?
-    ) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                challengeTypeRow(challenge: challenge)
-                if completed, let result {
-                    completedResultRow(result: result)
-                } else {
-                    startChallengeButton
-                }
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    func challengeTypeRow(challenge: DailyChallenge) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            IconBadge(challenge.type.iconName, color: DesignSystem.Color.indigo, size: .medium)
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(challenge.type.title)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(challenge.type.subtitle)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(2)
-            }
-            Spacer()
-        }
-    }
-
-    func completedResultRow(result: DailyChallengeResult) -> some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            resultStat(
-                label: "Score",
-                value: "\(result.score)/\(result.maxScore)",
-                color: DesignSystem.Color.accent
-            )
-            resultStat(
-                label: "Time",
-                value: formatTime(result.timeSpentSeconds),
-                color: DesignSystem.Color.warning
-            )
-            completedBadge
-        }
-    }
-
-    func resultStat(
-        label: String,
-        value: String,
-        color: Color
-    ) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(value)
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(color)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(label): \(value)")
-    }
-
-    var completedBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "checkmark.circle.fill")
-                .font(DesignSystem.Font.caption)
-                .accessibilityHidden(true)
-            Text("Done")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-        }
-        .foregroundStyle(DesignSystem.Color.success)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(
-            DesignSystem.Color.success.opacity(0.15),
-            in: Capsule()
-        )
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Challenge completed")
-    }
-
-    var startChallengeButton: some View {
-        GlassButton("Start Challenge", systemImage: "play.fill", fullWidth: true) {
-            showSession = true
-        }
-    }
-}
-
-// MARK: - Countdown
-private extension DailyChallengeScreen {
-    var countdownSection: some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "clock")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text("Next Challenge")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text(timeUntilMidnight)
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                Spacer()
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Next Challenge: \(timeUntilMidnight)")
-    }
-}
-
-// MARK: - History Section
-private extension DailyChallengeScreen {
-    func historySection(service: DailyChallengeService) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "History")
-            if service.history.isEmpty {
-                emptyHistoryView
-            } else {
-                ForEach(service.history) { result in
-                    historyRow(result: result)
-                }
-            }
-        }
-    }
-
-    var emptyHistoryView: some View {
-        CardView {
-            ContentUnavailableView("No challenges completed yet", systemImage: "calendar")
-        }
-    }
-
-    func historyRow(result: DailyChallengeResult) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                historyDateLabel(dateKey: result.dateKey)
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text(
-                        result.challengeType.replacingOccurrences(
-                            of: "([a-z])([A-Z])",
-                            with: "$1 $2",
-                            options: .regularExpression
-                        ).capitalized
-                    )
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-                    Text(formatTime(result.timeSpentSeconds))
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                Spacer()
-                Text("\(result.score)")
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(scoreColor(for: result))
-            }
-            .padding(DesignSystem.Spacing.sm)
-        }
-    }
-
-    func historyDateLabel(dateKey: String) -> some View {
-        VStack(spacing: 0) {
-            let parts = dateKey.split(separator: "-")
-            if parts.count == 3 {
-                Text(String(parts[2]))
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                Text(monthAbbreviation(from: String(parts[1])))
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-        }
-        .frame(width: DesignSystem.Size.lg)
     }
 }
 
@@ -317,49 +116,29 @@ private extension DailyChallengeScreen {
 
 // MARK: - Helpers
 private extension DailyChallengeScreen {
-    var formattedDate: String {
-        Date.now.formatted(date: .abbreviated, time: .omitted)
-    }
-
-    var timeUntilMidnight: String {
-        let calendar = Calendar.current
-        let tomorrow = calendar.startOfDay(
-            for: calendar.date(byAdding: .day, value: 1, to: .now) ?? .now
-        )
-        let components = calendar.dateComponents(
-            [.hour, .minute],
-            from: .now,
-            to: tomorrow
-        )
-        let hours = components.hour ?? 0
-        let minutes = components.minute ?? 0
-        return "\(hours)h \(minutes)m remaining"
-    }
-
-    func formatTime(_ seconds: Double) -> String {
-        let minutes = Int(seconds) / 60
-        let secs = Int(seconds) % 60
-        if minutes > 0 {
-            return "\(minutes)m \(secs)s"
+    var headerFacts: [GameIntroHeader.Fact] {
+        guard let service, !service.history.isEmpty else {
+            let gameCount = DailyChallengeType.allCases.count
+            return [
+                GameIntroHeader.Fact("New every day", systemImage: "calendar"),
+                GameIntroHeader.Fact("\(gameCount) rotating games", systemImage: "square.stack"),
+            ]
         }
-        return "\(secs)s"
+        let streak = streak(for: service)
+        return [
+            GameIntroHeader.Fact("\(streak.current)-day streak", systemImage: "flame.fill"),
+            GameIntroHeader.Fact("Best streak \(streak.best)", systemImage: "trophy.fill"),
+            GameIntroHeader.Fact("\(streak.completedCount) completed", systemImage: "checkmark.seal.fill"),
+        ]
     }
 
-    func scoreColor(for result: DailyChallengeResult) -> Color {
-        if result.accuracy >= 0.7 {
-            DesignSystem.Color.success
-        } else if result.accuracy >= 0.4 {
-            DesignSystem.Color.warning
-        } else {
-            DesignSystem.Color.error
-        }
+    func streak(for service: DailyChallengeService) -> DailyChallengeStreak {
+        DailyChallengeStreak(dateKeys: service.history.map(\.dateKey))
     }
 
-    func monthAbbreviation(from monthString: String) -> String {
-        guard let month = Int(monthString), (1...12).contains(month) else {
-            return monthString
+    func sortedHistory(for service: DailyChallengeService) -> [DailyChallengeResult] {
+        service.history.sorted { lhs, rhs in
+            lhs.dateKey == rhs.dateKey ? lhs.completedAt > rhs.completedAt : lhs.dateKey > rhs.dateKey
         }
-        let formatter = DateFormatter()
-        return formatter.shortMonthSymbols[month - 1].uppercased()
     }
 }
