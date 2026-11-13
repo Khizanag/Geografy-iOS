@@ -270,7 +270,7 @@ private extension TimelineScreen {
 
     func detailCountryInfo(country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            SectionHeaderView(title: "Country", icon: "globe")
+            SectionHeaderView(title: "Country")
             Button { coordinator.push(.countryDetail(country)) } label: {
                 CardView {
                     CountryListRow(country: country) {

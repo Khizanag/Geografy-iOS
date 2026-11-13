@@ -287,7 +287,7 @@ private extension CompareScreen {
 private extension CompareScreen {
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Recent", icon: "clock")
+            SectionHeaderView(title: "Recent")
 
             ForEach(recentPairs) { pair in
                 recentPairRow(pair)

@@ -180,10 +180,7 @@ private extension QuizPackBrowserScreen {
             alignment: .leading,
             spacing: DesignSystem.Spacing.sm
         ) {
-            SectionHeaderView(
-                title: "Packs",
-                icon: "square.grid.2x2"
-            )
+            SectionHeaderView(title: "Packs")
             .padding(.horizontal, DesignSystem.Spacing.md)
 
             packGridContent
