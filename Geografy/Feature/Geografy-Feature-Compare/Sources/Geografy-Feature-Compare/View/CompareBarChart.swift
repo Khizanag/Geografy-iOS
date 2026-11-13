@@ -65,7 +65,7 @@ private extension CompareBarChart {
         }
     }
 
-    func valueLabel(_ text: String, side: CompareSide) -> some View {
+    func valueLabel(_ text: String, side: PairSide) -> some View {
         Text(text)
             .font(DesignSystem.Font.subheadline)
             .fontWeight(.semibold)
@@ -95,7 +95,7 @@ private extension CompareBarChart {
         return HStack(spacing: 0) {
             Spacer(minLength: 0)
             Capsule()
-                .fill(CompareSide.left.color)
+                .fill(PairSide.left.color)
                 .frame(width: barWidth)
                 .animation(
                     reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
@@ -113,7 +113,7 @@ private extension CompareBarChart {
         )
         return HStack(spacing: 0) {
             Capsule()
-                .fill(CompareSide.right.color)
+                .fill(PairSide.right.color)
                 .frame(width: barWidth)
                 .animation(
                     reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7).delay(0.2),
@@ -133,7 +133,7 @@ private extension CompareBarChart {
         return value / maxValue
     }
 
-    var leaderSide: CompareSide {
+    var leaderSide: PairSide {
         leftValue > rightValue ? .left : .right
     }
 

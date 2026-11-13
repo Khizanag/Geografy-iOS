@@ -11,11 +11,10 @@ public struct CompareScreen: View {
     #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var leftCountry: Country?
     @State private var rightCountry: Country?
-    @State private var pickingSide: CompareSide?
+    @State private var pickingSide: PairSide?
     @State private var recentPairs: [ComparisonPair] = []
 
     private let preselectedCountry: Country?
@@ -57,51 +56,20 @@ public struct CompareScreen: View {
 
 // MARK: - Matchup
 private extension CompareScreen {
-    var isStacked: Bool { dynamicTypeSize.isAccessibilitySize }
-
     var matchupHeader: some View {
-        let layout = isStacked
-            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
-            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xs))
-        return layout {
-            slot(for: .left)
-            centerControl
-            slot(for: .right)
-        }
-        .fixedSize(horizontal: false, vertical: true)
-    }
-
-    func slot(for side: CompareSide) -> some View {
-        CompareCountrySlot(
-            country: country(on: side),
-            side: side,
-            onPick: { pickingSide = side },
-            onClear: { setCountry(nil, on: side) }
+        PairSelector(
+            left: leftCountry.map(slotItem),
+            right: rightCountry.map(slotItem),
+            roles: (left: "First country", right: "Second country"),
+            placeholder: "Choose a country",
+            onPick: { pickingSide = $0 },
+            onClear: { setCountry(nil, on: $0) },
+            onSwap: swapCountries
         )
     }
 
-    /// "VS" until both are picked, then a glass button that swaps them.
-    @ViewBuilder
-    var centerControl: some View {
-        if leftCountry != nil, rightCountry != nil {
-            Button(action: swapCountries) {
-                Image(systemName: isStacked ? "arrow.up.arrow.down" : "arrow.left.arrow.right")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                    .glassEffect(.regular.interactive(), in: .circle)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Swap countries")
-        } else {
-            Text("VS")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                .glassEffect(.regular, in: .circle)
-                .accessibilityHidden(true)
-        }
+    func slotItem(_ country: Country) -> PairSlotItem {
+        PairSlotItem(flagCode: country.code, title: country.name, subtitle: country.continent.displayName)
     }
 }
 
@@ -133,9 +101,9 @@ private extension CompareScreen {
                     .controlSize(.small)
                     .accessibilityLabel("Clear recent comparisons")
             }
-            CompareRowList(
-                items: Array(recentPairs.prefix(Self.recentLimit)),
-                leadingWidth: CompareRowLayout.pairWidth
+            RowListCard(
+                Array(recentPairs.prefix(Self.recentLimit)),
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth)
             ) { pair in
                 CompareMatchupRow(pair: pair) {
                     open(pair)
@@ -144,8 +112,8 @@ private extension CompareScreen {
         }
     }
 
-    func picker(for side: CompareSide) -> some View {
-        let otherCode = country(on: side == .left ? .right : .left)?.code
+    func picker(for side: PairSide) -> some View {
+        let otherCode = country(on: side.other)?.code
         return CountryPicker(
             countries: countryDataService.countries.filter { $0.code != otherCode },
             selectedCode: country(on: side)?.code
@@ -164,14 +132,14 @@ private extension CompareScreen {
         }
     }
 
-    func country(on side: CompareSide) -> Country? {
+    func country(on side: PairSide) -> Country? {
         switch side {
         case .left: leftCountry
         case .right: rightCountry
         }
     }
 
-    func setCountry(_ country: Country?, on side: CompareSide) {
+    func setCountry(_ country: Country?, on side: PairSide) {
         withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
             switch side {
             case .left: leftCountry = country

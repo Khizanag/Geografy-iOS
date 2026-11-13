@@ -8,7 +8,7 @@ struct CompareStartView: View {
     let leftCountry: Country?
     let rightCountry: Country?
     let countries: [Country]
-    let onChoose: (Country, CompareSide) -> Void
+    let onChoose: (Country, PairSide) -> Void
     let onChoosePair: (ComparisonPair) -> Void
     let onShuffle: () -> Void
 
@@ -32,14 +32,23 @@ struct CompareStartView: View {
 
 // MARK: - Sections
 private extension CompareStartView {
-    func suggestionsSection(for picked: Country, filling side: CompareSide) -> some View {
+    func suggestionsSection(for picked: Country, filling side: PairSide) -> some View {
         let suggestions = CompareSuggestions.suggestions(for: picked, among: countries)
         return VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             header(title: "Compare With")
-            CompareRowList(items: suggestions, leadingWidth: CompareRowLayout.flagWidth) { suggestion in
-                CompareSuggestionRow(suggestion: suggestion) {
+            RowListCard(
+                suggestions,
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
+            ) { suggestion in
+                Button {
                     onChoose(suggestion.country, side)
+                } label: {
+                    CountryListRow(country: suggestion.country, subtitle: suggestion.reason.title) {
+                        RowChevron()
+                    }
+                    .rowListCardRow()
                 }
+                .buttonStyle(PressButtonStyle())
             }
         }
     }
@@ -47,7 +56,10 @@ private extension CompareStartView {
     var popularSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             header(title: "Popular Matchups")
-            CompareRowList(items: popularPairs, leadingWidth: CompareRowLayout.pairWidth) { pair in
+            RowListCard(
+                popularPairs,
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagPairWidth)
+            ) { pair in
                 CompareMatchupRow(pair: pair) {
                     onChoosePair(pair)
                 }
