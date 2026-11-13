@@ -15,12 +15,12 @@ extension ProfileScreen {
 // MARK: - Stats Grid
 private extension ProfileScreen {
     var statsGrid: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-                GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
-                GridItem(.flexible()),
-            ],
+        let columnCount = dynamicTypeSize.isAccessibilitySize ? 2 : 3
+        return LazyVGrid(
+            columns: Array(
+                repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.sm),
+                count: columnCount
+            ),
             spacing: DesignSystem.Spacing.sm
         ) {
             statsGridItems
@@ -98,14 +98,11 @@ private extension ProfileScreen {
                     .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
                     .frame(width: 36, height: 36)
                     .rotationEffect(.degrees(-90))
-                Text("\(percentage)")
-                    .font(DesignSystem.Font.roundedPico)
-                    .foregroundStyle(color)
             }
             Text("\(percentage)%")
                 .font(DesignSystem.Font.roundedFootnote)
                 .foregroundStyle(color)
-                .minimumScaleFactor(0.6)
+                .minimumScaleFactor(0.8)
                 .lineLimit(1)
             Text("Accuracy")
                 .font(DesignSystem.Font.caption2)
@@ -137,8 +134,9 @@ private extension ProfileScreen {
             Text(value)
                 .font(DesignSystem.Font.roundedFootnote)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .minimumScaleFactor(0.6)
-                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
             Text(label)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)

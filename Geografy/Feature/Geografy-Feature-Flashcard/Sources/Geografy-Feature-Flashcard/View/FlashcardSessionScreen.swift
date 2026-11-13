@@ -13,6 +13,7 @@ public struct FlashcardSessionScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let deck: FlashcardDeck
     public let cards: [FlashcardItem]
@@ -22,6 +23,7 @@ public struct FlashcardSessionScreen: View {
     @State private var showResults = false
     @State private var correctCount = 0
     @State private var dragOffset: CGSize = .zero
+    @State private var cardOpacity: Double = 1
     @State private var showQuitAlert = false
 
     @State private var showGuide = false
@@ -86,7 +88,10 @@ private extension FlashcardSessionScreen {
             .readableContentWidth()
         }
         .screenBackground()
-        .onAppear { submitFlashcardAccuracy() }
+        .onAppear {
+            submitFlashcardAccuracy()
+            announceResults()
+        }
     }
 
     @ToolbarContentBuilder
@@ -129,13 +134,16 @@ private extension FlashcardSessionScreen {
                     swipeColor: swipeTintColor,
                     swipeOpacity: swipeTintOpacity
                 )
-                .animation(.spring(response: 0.4, dampingFraction: 0.8), value: isFlipped)
+                .accessibilityAction(named: "I knew it") { rateFromAccessibility(knewIt: true) }
+                .accessibilityAction(named: "Review again") { rateFromAccessibility(knewIt: false) }
+                .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.8), value: isFlipped)
+                .opacity(cardOpacity)
                 .frame(
                     width: max(geometry.size.width - DesignSystem.Spacing.xl * 2, 0),
                     height: max(geometry.size.height * 0.85, 0)
                 )
                 .offset(dragOffset)
-                .rotationEffect(.degrees(dragRotation))
+                .rotationEffect(.degrees(reduceMotion ? 0 : dragRotation))
                 .gesture(swipeGesture)
                 .overlay(alignment: .bottomTrailing) { swipeHintRight }
                 .overlay(alignment: .bottomLeading) { swipeHintLeft }
@@ -194,7 +202,7 @@ private extension FlashcardSessionScreen {
                     showSwipeFeedback(.knewIt)
                     flyOffAndAdvance(direction: .right, result: .easy)
                 } else {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                    withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
                         dragOffset = .zero
                     }
                 }
@@ -211,7 +219,7 @@ private extension FlashcardSessionScreen {
                 ratingButtons
                 countryInfoButton
             }
-            .transition(.move(edge: .bottom).combined(with: .opacity))
+            .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
             .padding(.bottom, DesignSystem.Spacing.md)
         } else {
             Spacer(minLength: 0)
@@ -305,29 +313,7 @@ private extension FlashcardSessionScreen {
     }
 
     func advanceToNext(exitRight: Bool = false) {
-        let exitX: CGFloat = exitRight ? 400 : -400
-
-        withAnimation(.easeIn(duration: 0.2)) {
-            dragOffset = CGSize(width: exitX, height: 0)
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-            if currentIndex + 1 < cards.count {
-                var transaction = Transaction()
-                transaction.disablesAnimations = true
-                withTransaction(transaction) {
-                    currentIndex += 1
-                    isFlipped = false
-                    cardShownAt = .now
-                    dragOffset = CGSize(width: 400, height: 0)
-                }
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                    dragOffset = .zero
-                }
-            } else {
-                showResults = true
-            }
-        }
+        exitCard(towards: exitRight ? 400 : -400, duration: 0.2, delay: 0.35)
     }
 
     func handleSwipeEnd(translation: CGFloat) {
@@ -340,39 +326,68 @@ private extension FlashcardSessionScreen {
             showSwipeFeedback(.wrong)
             flyOffAndAdvance(direction: .left, result: .again)
         } else {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
                 dragOffset = .zero
             }
         }
     }
 
     func flyOffAndAdvance(direction: SwipeDirection, result: FlashcardReviewResult) {
-        let offscreenX: CGFloat = direction == .right ? 500 : -500
-
-        withAnimation(.easeIn(duration: 0.25)) {
-            dragOffset = CGSize(width: offscreenX, height: 0)
-        }
-
         flashcardService.recordReview(cardID: currentCard.id, result: result)
         if result != .again { correctCount += 1 }
+        exitCard(towards: direction == .right ? 500 : -500, duration: 0.25, delay: 0.4)
+    }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            if currentIndex + 1 < cards.count {
-                var transaction = Transaction()
-                transaction.disablesAnimations = true
-                withTransaction(transaction) {
-                    currentIndex += 1
-                    isFlipped = false
-                    cardShownAt = .now
-                    dragOffset = CGSize(width: 400, height: 0)
-                }
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                    dragOffset = .zero
-                }
-            } else {
-                showResults = true
+    func exitCard(towards offscreenX: CGFloat, duration: Double, delay: Double) {
+        if reduceMotion {
+            dragOffset = .zero
+            withAnimation(.easeOut(duration: 0.15)) { cardOpacity = 0 }
+        } else {
+            withAnimation(.easeIn(duration: duration)) {
+                dragOffset = CGSize(width: offscreenX, height: 0)
             }
         }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + (reduceMotion ? 0.15 : delay)) {
+            showNextCard()
+        }
+    }
+
+    func showNextCard() {
+        guard currentIndex + 1 < cards.count else {
+            showResults = true
+            return
+        }
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            currentIndex += 1
+            isFlipped = false
+            cardShownAt = .now
+            dragOffset = reduceMotion ? .zero : CGSize(width: 400, height: 0)
+        }
+        if reduceMotion {
+            withAnimation(.easeIn(duration: 0.15)) { cardOpacity = 1 }
+        } else {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                dragOffset = .zero
+            }
+        }
+    }
+
+    func rateFromAccessibility(knewIt: Bool) {
+        if knewIt {
+            showSwipeFeedback(isFlipped ? .correct : .knewIt)
+            flyOffAndAdvance(direction: .right, result: isFlipped ? .good : .easy)
+        } else {
+            showSwipeFeedback(.wrong)
+            flyOffAndAdvance(direction: .left, result: .again)
+        }
+    }
+
+    func announceResults() {
+        let message = "Session complete. \(correctCount) of \(cards.count) cards correct."
+        AccessibilityNotification.Announcement(message).post()
     }
 
     enum SwipeDirection { case left, right }

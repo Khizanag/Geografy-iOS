@@ -11,6 +11,8 @@ public struct LearningPathScreen: View {
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    @ScaledMetric(relativeTo: .caption2) private var ringSize: CGFloat = 36
+
     // MARK: - Body
     public var body: some View {
         scrollContent
@@ -58,6 +60,9 @@ private extension LearningPathScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Your Journey, \(completedModulesCount) of \(totalModulesCount) modules complete")
+        .accessibilityValue("\(Int((overallProgressFraction * 100).rounded())) percent of lessons complete")
         .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
@@ -104,6 +109,7 @@ private extension LearningPathScreen {
         .buttonStyle(PressButtonStyle())
         .disabled(!module.isUnlocked)
         .opacity(module.isUnlocked ? 1 : 0.55)
+        .accessibilityValue(moduleStatus(module))
     }
 
     func moduleCardContent(module: LearningModule) -> some View {
@@ -122,6 +128,7 @@ private extension LearningPathScreen {
             color: module.isUnlocked ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary,
             size: .medium
         )
+        .accessibilityHidden(true)
     }
 
     func moduleInfo(module: LearningModule) -> some View {
@@ -130,7 +137,7 @@ private extension LearningPathScreen {
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
+                .lineLimit(2)
             Text(module.description)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -146,12 +153,12 @@ private extension LearningPathScreen {
                     .foregroundStyle(DesignSystem.Color.success)
             } else if module.isUnlocked {
                 progressRingView(fraction: module.progressFraction)
-                    .frame(width: 36, height: 36)
             }
             Text("\(module.completedCount)/\(module.totalCount)")
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
+        .accessibilityHidden(true)
     }
 
     func progressRingView(fraction: Double) -> some View {
@@ -163,13 +170,20 @@ private extension LearningPathScreen {
                 .stroke(DesignSystem.Color.accent, style: StrokeStyle(lineWidth: 3, lineCap: .round))
                 .rotationEffect(.degrees(-90))
         }
-        .frame(width: 36, height: 36)
-        .animation(.easeOut(duration: 0.5), value: fraction)
+        .frame(width: ringSize, height: ringSize)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.5), value: fraction)
+        .accessibilityHidden(true)
     }
 }
 
 // MARK: - Helpers
 private extension LearningPathScreen {
+    func moduleStatus(_ module: LearningModule) -> String {
+        if module.isCompleted { return "Completed" }
+        if !module.isUnlocked { return "Locked" }
+        return "\(module.completedCount) of \(module.totalCount) lessons complete"
+    }
+
     var completedModulesCount: Int {
         learningPathService.modules.filter { $0.isCompleted }.count
     }

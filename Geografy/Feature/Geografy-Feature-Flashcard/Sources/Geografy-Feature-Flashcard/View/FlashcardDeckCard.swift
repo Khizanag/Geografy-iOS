@@ -16,11 +16,12 @@ public struct FlashcardDeckCard: View {
             backgroundIcon
             cardInfo
         }
-        .frame(height: 150)
+        .frame(minHeight: 150)
         .clipShape(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
         )
         .geoShadow(.card)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -41,6 +42,7 @@ private extension FlashcardDeckCard {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 24, y: -12)
             .clipped()
+            .accessibilityHidden(true)
     }
 
     var cardInfo: some View {
@@ -51,7 +53,7 @@ private extension FlashcardDeckCard {
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.onAccent)
-                .lineLimit(1)
+                .lineLimit(2)
 
             statsRow
         }

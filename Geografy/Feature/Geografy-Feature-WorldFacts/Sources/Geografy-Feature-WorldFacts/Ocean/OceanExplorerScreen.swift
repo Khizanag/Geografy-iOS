@@ -57,7 +57,7 @@ private extension OceanExplorerScreen {
     func oceanRow(_ ocean: Ocean) -> some View {
         let isExpanded = expandedOceanId == ocean.id
         return Button {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.82)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.82)) {
                 expandedOceanId = isExpanded ? nil : ocean.id
             }
         } label: {

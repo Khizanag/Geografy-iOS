@@ -10,6 +10,7 @@ public struct CompareScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var leftCountry: Country?
     @State private var rightCountry: Country?
@@ -73,7 +74,7 @@ private extension CompareScreen {
             countries: countryDataService.countries.filter { $0.code != excluded?.code },
             selectedCode: current?.code
         ) { selected in
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
                 switch sheet {
                 case .pickLeft: leftCountry = selected
                 case .pickRight: rightCountry = selected
@@ -139,7 +140,7 @@ private extension CompareScreen {
                 #if !os(tvOS)
                 hapticsService.impact(.light)
                 #endif
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
                     let temp = leftCountry
                     leftCountry = rightCountry
                     rightCountry = temp
@@ -299,7 +300,7 @@ private extension CompareScreen {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
                 leftCountry = countryDataService.country(for: pair.leftCode)
                 rightCountry = countryDataService.country(for: pair.rightCode)
             }

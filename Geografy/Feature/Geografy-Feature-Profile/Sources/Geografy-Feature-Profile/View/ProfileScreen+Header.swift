@@ -36,6 +36,7 @@ extension ProfileScreen {
         } label: {
             Image(systemName: "pencil")
         }
+        .accessibilityLabel("Edit profile")
     }
 
     public var displayName: String {

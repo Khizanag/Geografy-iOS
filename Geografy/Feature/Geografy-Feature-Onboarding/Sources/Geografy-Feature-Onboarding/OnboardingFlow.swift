@@ -54,6 +54,8 @@ public struct OnboardingFlow: View {
     @AppStorage("onboarding.goal") private var goalRaw = Goal.casual.rawValue
     @AppStorage("onboarding.notificationsOptIn") private var notificationsOptIn = false
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     @State private var step = 0
 
     private let onComplete: () -> Void
@@ -68,9 +70,10 @@ public struct OnboardingFlow: View {
                 .ignoresSafeArea()
 
             VStack {
-                steps
-
-                Spacer()
+                ScrollView {
+                    steps
+                }
+                .scrollBounceBehavior(.basedOnSize)
 
                 controls
             }
@@ -99,11 +102,14 @@ private extension OnboardingFlow {
                     .foregroundStyle(DesignSystem.Color.onAccent)
             }
             .frame(width: 200, height: 200)
+            .accessibilityHidden(true)
 
             Text("Learn the world, one flag at a time.")
-                .font(DesignSystem.Font.roundedHero)
+                .font(DesignSystem.Font.roundedHeadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.8)
+                .accessibilityAddTraits(.isHeader)
 
             Text("Quizzes, maps, and stories for every country.")
                 .font(DesignSystem.Font.callout)
@@ -116,15 +122,20 @@ private extension OnboardingFlow {
     var continentStep: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             Text("Where are you from?")
-                .font(DesignSystem.Font.roundedTitle)
+                .font(DesignSystem.Font.textStyle(.largeTitle, design: .rounded, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
 
             Text("We'll put your region first on the home feed.")
                 .font(DesignSystem.Font.callout)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
-            LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: DesignSystem.Spacing.sm) {
+            LazyVGrid(
+                columns: Array(repeating: .init(.flexible()), count: dynamicTypeSize.isAccessibilitySize ? 1 : 2),
+                spacing: DesignSystem.Spacing.sm
+            ) {
                 ForEach(Country.Continent.allCases, id: \.self) { continent in
                     continentChip(continent)
                 }
@@ -135,8 +146,9 @@ private extension OnboardingFlow {
     var goalStep: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             Text("Pick a goal")
-                .font(DesignSystem.Font.roundedTitle)
+                .font(DesignSystem.Font.textStyle(.largeTitle, design: .rounded, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
 
             VStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(Goal.allCases) { goal in
@@ -151,10 +163,13 @@ private extension OnboardingFlow {
             Image(systemName: "bell.badge")
                 .font(DesignSystem.Font.displayXS)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
 
             Text("Stay on your streak")
-                .font(DesignSystem.Font.roundedTitle)
+                .font(DesignSystem.Font.textStyle(.largeTitle, design: .rounded, weight: .bold))
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
 
             Text("A daily nudge keeps your streak alive. You can change this in Settings at any time.")
                 .font(DesignSystem.Font.callout)
@@ -179,8 +194,10 @@ private extension OnboardingFlow {
             VStack(spacing: 6) {
                 Image(systemName: continent.icon)
                     .font(DesignSystem.Font.iconLarge)
+                    .accessibilityHidden(true)
                 Text(continent.displayName)
                     .font(DesignSystem.Font.callout)
+                    .multilineTextAlignment(.center)
             }
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity)
@@ -189,6 +206,15 @@ private extension OnboardingFlow {
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                     .fill(isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground)
             )
+            .overlay(alignment: .topTrailing) {
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(DesignSystem.Font.callout)
+                        .foregroundStyle(DesignSystem.Color.onAccent)
+                        .padding(DesignSystem.Spacing.xs)
+                        .accessibilityHidden(true)
+                }
+            }
         }
         .buttonStyle(.plain)
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
@@ -204,6 +230,7 @@ private extension OnboardingFlow {
                     .font(DesignSystem.Font.iconLarge)
                     .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
                     .frame(width: DesignSystem.Size.Avatar.md)
+                    .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(goal.title)
@@ -222,6 +249,7 @@ private extension OnboardingFlow {
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(DesignSystem.Color.onAccent)
+                        .accessibilityHidden(true)
                 }
             }
             .padding(DesignSystem.Spacing.md)

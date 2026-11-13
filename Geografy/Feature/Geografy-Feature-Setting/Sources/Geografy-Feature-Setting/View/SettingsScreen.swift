@@ -10,6 +10,7 @@ public struct SettingsScreen: View {
     @Environment(AuthService.self) private var authService
     @Environment(Navigator.self) private var coordinator
     @Environment(TestingModeService.self) private var testingModeService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -77,7 +78,7 @@ private extension SettingsScreen {
 
                 if showDeveloperTools {
                     developerSection
-                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                        .transition(reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .bottom)))
                 }
 
                 versionFooter

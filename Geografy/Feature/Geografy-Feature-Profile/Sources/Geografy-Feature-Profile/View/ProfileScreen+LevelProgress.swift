@@ -40,7 +40,10 @@ private extension ProfileScreen {
                 )
                 .frame(width: 64, height: 64)
                 .rotationEffect(.degrees(-90))
-                .animation(.spring(response: 0.6, dampingFraction: 0.8), value: xpService.progressFraction)
+                .animation(
+                    reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.8),
+                    value: xpService.progressFraction
+                )
 
             Text("\(xpService.currentLevel.level)")
                 .font(DesignSystem.Font.roundedSubheadline)

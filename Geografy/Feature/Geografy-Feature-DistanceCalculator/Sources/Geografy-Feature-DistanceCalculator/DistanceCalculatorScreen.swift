@@ -10,6 +10,7 @@ public struct DistanceCalculatorScreen: View {
     public init() {}
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -162,11 +163,12 @@ private extension DistanceCalculatorScreen {
         HStack {
             Text(placeholder)
                 .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
             Spacer()
             Image(systemName: "chevron.down")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
+                .accessibilityHidden(true)
         }
     }
 
@@ -188,6 +190,7 @@ private extension DistanceCalculatorScreen {
                     .foregroundStyle(hasCountry ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary)
                     .background(DesignSystem.Color.background, in: Circle())
             }
+            .accessibilityLabel("Swap origin and destination")
             .disabled(!hasCountry)
             Spacer()
         }
@@ -200,10 +203,11 @@ private extension DistanceCalculatorScreen {
 
                 HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                     Text(formatDistance(distance, inKm: true))
-                        .font(DesignSystem.Font.roundedLarge)
+                        .font(DesignSystem.Font.textStyle(.largeTitle, design: .rounded, weight: .bold))
                         .foregroundStyle(DesignSystem.Color.accent)
                         .contentTransition(.numericText())
-                        .animation(.spring(response: 0.4), value: distance)
+                        .animation(reduceMotion ? nil : .spring(response: 0.4), value: distance)
+                        .minimumScaleFactor(0.8)
 
                     Text("km")
                         .font(DesignSystem.Font.title2)
@@ -216,7 +220,7 @@ private extension DistanceCalculatorScreen {
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .contentTransition(.numericText())
-                    .animation(.spring(response: 0.4), value: distance)
+                    .animation(reduceMotion ? nil : .spring(response: 0.4), value: distance)
             }
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.lg)
@@ -284,7 +288,7 @@ private extension DistanceCalculatorScreen {
     func animateLine() {
         guard originCountry != nil, destinationCountry != nil else { return }
         lineProgress = 0
-        withAnimation(.easeInOut(duration: 1.2)) {
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 1.2)) {
             lineProgress = 1
         }
     }

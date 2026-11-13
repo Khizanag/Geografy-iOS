@@ -43,11 +43,13 @@ private extension LeaderboardScreen {
     var statusCard: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             IconBadge(statusIcon, color: statusColor, size: .small)
+                .accessibilityHidden(true)
             statusInfo
             Spacer()
-            Circle()
-                .fill(statusColor)
-                .frame(width: DesignSystem.Spacing.xs, height: DesignSystem.Spacing.xs)
+            Image(systemName: gameCenterService.isAuthenticated ? "checkmark.circle.fill" : "xmark.circle")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(gameCenterService.isAuthenticated ? statusColor : DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
         }
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(
@@ -102,6 +104,7 @@ private extension LeaderboardScreen {
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(info.color)
             }
+            .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(info.title)
                     .font(DesignSystem.Font.headline)
@@ -114,6 +117,8 @@ private extension LeaderboardScreen {
             }
             Spacer()
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 
     func leaderboardCardAction(_ info: LeaderboardInfo) -> some View {
@@ -128,6 +133,7 @@ private extension LeaderboardScreen {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "list.number")
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
                 Text("View Rankings")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -140,6 +146,7 @@ private extension LeaderboardScreen {
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
             )
         }
+        .accessibilityLabel("View \(info.title) rankings")
         .disabled(!gameCenterService.isAuthenticated)
         .opacity(gameCenterService.isAuthenticated ? 1 : 0.4)
     }

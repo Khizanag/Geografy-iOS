@@ -62,7 +62,7 @@ private extension ProfileScreen {
         )
 
         return VStack(spacing: DesignSystem.Spacing.xs) {
-            weekdayIndicator(isToday: isToday, isActive: isActive)
+            WeekdayIndicator(isToday: isToday, isActive: isActive)
 
             Text(shortWeekdaySymbol(for: date))
                 .font(DesignSystem.Font.caption2)
@@ -70,37 +70,16 @@ private extension ProfileScreen {
                 .foregroundStyle(
                     isToday
                         ? DesignSystem.Color.accent
-                        : DesignSystem.Color.textTertiary
+                        : DesignSystem.Color.textSecondary
                 )
         }
-    }
-
-    func weekdayIndicator(isToday: Bool, isActive: Bool) -> some View {
-        ZStack {
-            Circle()
-                .fill(
-                    isActive
-                        ? DesignSystem.Color.success.opacity(0.18)
-                        : DesignSystem.Color.cardBackgroundHighlighted
-                )
-                .frame(width: 32, height: 32)
-
-            if isActive {
-                Image(systemName: isToday ? "flame.fill" : "checkmark")
-                    .font(DesignSystem.Font.system(size: isToday ? 15 : 12, weight: .bold))
-                    .foregroundStyle(DesignSystem.Color.success)
-            } else {
-                Circle()
-                    .fill(DesignSystem.Color.textTertiary.opacity(0.3))
-                    .frame(width: 8, height: 8)
-            }
-
-            if isToday {
-                Circle()
-                    .strokeBorder(DesignSystem.Color.accent, lineWidth: 2)
-                    .frame(width: 32, height: 32)
-            }
-        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(date.formatted(.dateTime.weekday(.wide)))
+        .accessibilityValue(
+            [isActive ? "Active" : "Missed", isToday ? "Today" : nil]
+                .compactMap(\.self)
+                .joined(separator: ", ")
+        )
     }
 
     var pastSevenDays: [Date] {
@@ -118,6 +97,42 @@ private extension ProfileScreen {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEE"
         return String(formatter.string(from: date).prefix(2))
+    }
+}
+
+// MARK: - Weekday Indicator
+private struct WeekdayIndicator: View {
+    // MARK: - Properties
+    @ScaledMetric(relativeTo: .caption2) private var diameter: CGFloat = 32
+
+    let isToday: Bool
+    let isActive: Bool
+
+    // MARK: - Body
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(
+                    isActive
+                        ? DesignSystem.Color.success.opacity(0.18)
+                        : DesignSystem.Color.cardBackgroundHighlighted
+                )
+
+            Image(systemName: symbolName)
+                .font(isToday ? DesignSystem.Font.subheadline.bold() : DesignSystem.Font.caption.bold())
+                .foregroundStyle(isActive ? DesignSystem.Color.success : DesignSystem.Color.textSecondary)
+
+            if isToday {
+                Circle()
+                    .strokeBorder(DesignSystem.Color.accent, lineWidth: 2)
+            }
+        }
+        .frame(width: diameter, height: diameter)
+    }
+
+    private var symbolName: String {
+        guard isActive else { return "minus" }
+        return isToday ? "flame.fill" : "checkmark"
     }
 }
 #endif

@@ -10,6 +10,8 @@ public struct CompareMetricRow: View {
     public var match: Bool?
     public var footer: String?
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     // MARK: - Body
     public var body: some View {
         CardView {
@@ -20,6 +22,9 @@ public struct CompareMetricRow: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title)
+        .accessibilityValue(accessibilitySummary)
     }
 }
 
@@ -30,6 +35,7 @@ private extension CompareMetricRow {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(title)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -39,22 +45,26 @@ private extension CompareMetricRow {
     }
 
     var valuesRow: some View {
-        HStack(alignment: .top) {
+        let isStacked = dynamicTypeSize.isAccessibilitySize
+        let layout = isStacked
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: DesignSystem.Spacing.xs))
+            : AnyLayout(HStackLayout(alignment: .top))
+        return layout {
             Text(leftValue)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.leading)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
+                .lineLimit(isStacked ? nil : 2)
+                .minimumScaleFactor(0.8)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(rightValue)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.trailing)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
-                .frame(maxWidth: .infinity, alignment: .trailing)
+                .multilineTextAlignment(isStacked ? .leading : .trailing)
+                .lineLimit(isStacked ? nil : 2)
+                .minimumScaleFactor(0.8)
+                .frame(maxWidth: .infinity, alignment: isStacked ? .leading : .trailing)
         }
     }
 
@@ -68,11 +78,11 @@ private extension CompareMetricRow {
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
             }
-            .foregroundStyle(match ? DesignSystem.Color.success : DesignSystem.Color.textTertiary)
+            .foregroundStyle(match ? DesignSystem.Color.success : DesignSystem.Color.textSecondary)
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, 2)
             .background(
-                (match ? DesignSystem.Color.success : DesignSystem.Color.textTertiary)
+                (match ? DesignSystem.Color.success : DesignSystem.Color.textSecondary)
                     .opacity(0.12),
                 in: Capsule()
             )
@@ -84,9 +94,23 @@ private extension CompareMetricRow {
         if let footer {
             Text(footer)
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .lineLimit(3)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+}
+
+// MARK: - Accessibility
+private extension CompareMetricRow {
+    var accessibilitySummary: String {
+        var parts = ["First country \(leftValue)", "second country \(rightValue)"]
+        if let match {
+            parts.append(match ? "Match" : "Different")
+        }
+        if let footer {
+            parts.append(footer)
+        }
+        return parts.joined(separator: ", ")
     }
 }

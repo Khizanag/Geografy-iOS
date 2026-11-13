@@ -9,10 +9,11 @@ public struct SignInOptionsSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var showError = false
     @State private var errorMessage = ""
-    @State private var appeared = false
 
     // MARK: - Init
     public init() {}
@@ -21,7 +22,6 @@ public struct SignInOptionsSheet: View {
     public var body: some View {
         extractedContent
             .screenBackground()
-            .onAppear { appeared = true }
             .alert("Sign In Failed", isPresented: $showError) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -51,17 +51,17 @@ private extension SignInOptionsSheet {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             appIconBadge
-                .opacity(appeared ? 1 : 0)
-                .scaleEffect(appeared ? 1 : 0.6)
-                .animation(.spring(response: 0.6, dampingFraction: 0.68), value: appeared)
+                .phaseEntrance(index: 0)
             heroText
+                .phaseEntrance(index: 1)
         }
     }
 
     var heroText: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             Text("Geografy")
-                .font(DesignSystem.Font.roundedBrand)
+                .font(DesignSystem.Font.roundedHeadline)
+                .minimumScaleFactor(0.8)
                 .foregroundStyle(
                     LinearGradient(
                         colors: [DesignSystem.Color.textPrimary, DesignSystem.Color.accent],
@@ -73,16 +73,17 @@ private extension SignInOptionsSheet {
                 .font(DesignSystem.Font.callout)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 12)
-        .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 
     var appIconBadge: some View {
         ZStack {
-            DesignSystem.Color.accent.opacity(0.35)
-                .frame(width: 110, height: 110)
-                .blur(radius: 40)
+            if !reduceTransparency {
+                DesignSystem.Color.accent.opacity(0.35)
+                    .frame(width: 110, height: 110)
+                    .blur(radius: 40)
+            }
 
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
                 .fill(
@@ -110,20 +111,22 @@ private extension SignInOptionsSheet {
                 )
         }
         .frame(width: 110, height: 110)
+        .accessibilityHidden(true)
     }
 }
 
 // MARK: - Stats Row
 private extension SignInOptionsSheet {
     var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
+        return layout {
             statPill(value: "197", label: "Countries", icon: "flag.fill", color: DesignSystem.Color.accent)
             statPill(value: "7", label: "Continents", icon: "globe.americas", color: DesignSystem.Color.blue)
             statPill(value: "∞", label: "Adventures", icon: "star.fill", color: DesignSystem.Color.indigo)
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 16)
-        .animation(.easeOut(duration: 0.5).delay(0.2), value: appeared)
+        .phaseEntrance(index: 2)
     }
 
     func statPill(value: String, label: String, icon: String, color: Color) -> some View {
@@ -132,17 +135,19 @@ private extension SignInOptionsSheet {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.footnote)
                     .foregroundStyle(color)
+                    .accessibilityHidden(true)
                 Text(value)
                     .font(DesignSystem.Font.roundedCaption)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .minimumScaleFactor(0.8)
                 Text(label)
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -151,7 +156,8 @@ private extension SignInOptionsSheet {
     var benefitsSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(Array(benefits.enumerated()), id: \.offset) { index, benefit in
-                benefitRow(benefit, delay: Double(index) * 0.06)
+                benefitRow(benefit)
+                    .phaseEntrance(index: 3 + index)
             }
         }
     }
@@ -172,8 +178,7 @@ private extension SignInOptionsSheet {
     }
 
     func benefitRow(
-        _ benefit: (icon: String, color: Color, title: String, subtitle: String),
-        delay: Double
+        _ benefit: (icon: String, color: Color, title: String, subtitle: String)
     ) -> some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
             HStack(spacing: DesignSystem.Spacing.md) {
@@ -191,9 +196,7 @@ private extension SignInOptionsSheet {
             }
             .padding(DesignSystem.Spacing.sm)
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 20)
-        .animation(.easeOut(duration: 0.5).delay(0.25 + delay), value: appeared)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -211,9 +214,7 @@ private extension SignInOptionsSheet {
             continueAsGuestButton
         }
         .padding(.bottom, DesignSystem.Spacing.md)
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 16)
-        .animation(.easeOut(duration: 0.5).delay(0.6), value: appeared)
+        .phaseEntrance(index: 8)
     }
 
     var appleSignInButton: some View {
@@ -260,12 +261,13 @@ private extension SignInOptionsSheet {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 GoogleGLogo()
                     .frame(width: 22, height: 22)
+                    .accessibilityHidden(true)
                 Text("Sign in with Google")
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(Color(white: 0.18))
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 50)
+            .frame(minHeight: 50)
             .background(DesignSystem.Color.onAccent)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
             .geoShadow(.subtle)
@@ -277,7 +279,7 @@ private extension SignInOptionsSheet {
         Button { dismiss() } label: {
             Text("Continue as Guest")
                 .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, DesignSystem.Spacing.xs)
         }
@@ -292,6 +294,7 @@ private extension SignInOptionsSheet {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "hammer.fill")
                     .font(DesignSystem.Font.footnote)
+                    .accessibilityHidden(true)
                 Text("Debug Sign In")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)

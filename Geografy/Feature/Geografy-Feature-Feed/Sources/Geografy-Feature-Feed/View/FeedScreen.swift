@@ -10,6 +10,7 @@ public struct FeedScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var feedService = FeedService()
     @State private var appeared = false
@@ -40,9 +41,9 @@ private extension FeedScreen {
                     feedCard(for: item)
                         .padding(.horizontal, DesignSystem.Spacing.md)
                         .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 24)
+                        .offset(y: appeared || reduceMotion ? 0 : 24)
                         .animation(
-                            .easeOut(duration: 0.4).delay(Double(index) * 0.03),
+                            reduceMotion ? nil : .easeOut(duration: 0.4).delay(Double(index) * 0.03),
                             value: appeared
                         )
                 }

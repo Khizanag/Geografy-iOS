@@ -26,6 +26,9 @@ public struct SRSStudyScreen: View {
                         .padding(.bottom, DesignSystem.Spacing.md)
                 }
             }
+            .onChange(of: dueCards.count) { _, newCount in
+                announceDueCount(newCount)
+            }
     }
 }
 
@@ -100,6 +103,7 @@ private extension SRSStudyScreen {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(color)
+                    .accessibilityHidden(true)
                 Text(value)
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
@@ -112,6 +116,9 @@ private extension SRSStudyScreen {
             .frame(maxWidth: .infinity)
             .padding(DesignSystem.Spacing.sm)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
     }
 
     var startReviewButton: some View {
@@ -189,6 +196,11 @@ private extension SRSStudyScreen {
 
     var dueCards: [FlashcardItem] {
         flashcardService.dueCards(from: allCards)
+    }
+
+    func announceDueCount(_ count: Int) {
+        let message = count == 0 ? "All caught up. No cards are due." : "\(count) cards due for review."
+        AccessibilityNotification.Announcement(message).post()
     }
 }
 

@@ -8,6 +8,8 @@ public struct FriendsListScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
 
+    @ScaledMetric(relativeTo: .caption2) private var rankBadgeSize: CGFloat = DesignSystem.Size.md
+
     @State private var friends: [GKPlayer] = []
     @State private var avatars: [String: Image] = [:]
     @State private var xpScores: [String: Int] = [:]
@@ -83,6 +85,7 @@ private extension FriendsListScreen {
     var friendsHeader: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             IconBadge("person.2.fill", size: .small)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(friends.count) Friends")
                     .font(DesignSystem.Font.subheadline)
@@ -94,6 +97,7 @@ private extension FriendsListScreen {
             }
             Spacer()
         }
+        .accessibilityElement(children: .combine)
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(
             cornerRadius: DesignSystem.CornerRadius.medium,
@@ -106,12 +110,13 @@ private extension FriendsListScreen {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 rankBadge(rank)
                 avatarView(for: player)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(player.displayName)
                         .font(DesignSystem.Font.headline)
                         .fontWeight(.semibold)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
+                        .lineLimit(2)
                     if let score = xpScores[player.gamePlayerID] {
                         Text("\(score.formatted()) XP")
                             .font(DesignSystem.Font.caption)
@@ -120,16 +125,18 @@ private extension FriendsListScreen {
                     } else {
                         Text("No XP recorded")
                             .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textTertiary)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
                     }
                 }
                 Spacer(minLength: 0)
                 if let score = xpScores[player.gamePlayerID] {
                     InfoPill(abbreviatedScore(score), systemImage: "bolt.fill", style: .accent)
+                        .accessibilityHidden(true)
                 }
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -139,12 +146,19 @@ private extension FriendsListScreen {
         ZStack {
             Circle()
                 .fill(rankColor(rank).opacity(0.15))
-                .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
+            if rank <= 3 {
+                Circle()
+                    .strokeBorder(rankColor(rank), lineWidth: 1.5)
+            }
             Text("\(rank)")
                 .font(DesignSystem.Font.caption2)
                 .fontWeight(.black)
                 .foregroundStyle(rankColor(rank))
+                .minimumScaleFactor(0.8)
         }
+        .frame(width: rankBadgeSize, height: rankBadgeSize)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Rank \(rank)")
     }
 
     func avatarView(for player: GKPlayer) -> some View {
@@ -196,7 +210,7 @@ private extension FriendsListScreen {
         case 1: DesignSystem.Color.warning
         case 2: DesignSystem.Color.textSecondary
         case 3: DesignSystem.Color.accent
-        default: DesignSystem.Color.textTertiary
+        default: DesignSystem.Color.textSecondary
         }
     }
 

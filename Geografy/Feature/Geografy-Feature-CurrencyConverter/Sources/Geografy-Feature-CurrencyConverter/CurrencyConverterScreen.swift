@@ -171,7 +171,7 @@ private extension CurrencyConverterScreen {
             Text(label)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: 50, alignment: .leading)
+                .frame(minWidth: 50, alignment: .leading)
 
             if let entry {
                 HStack(spacing: DesignSystem.Spacing.xs) {
@@ -212,13 +212,14 @@ private extension CurrencyConverterScreen {
             Text("Amount")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: 50, alignment: .leading)
+                .frame(minWidth: 50, alignment: .leading)
 
             TextField("0", text: $amountText)
                 .keyboardType(.decimalPad)
                 .font(DesignSystem.Font.roundedSubheadline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.leading)
+                .accessibilityLabel("Amount")
 
             if let code = fromCurrency?.code {
                 Text(code)
@@ -272,12 +273,12 @@ private extension CurrencyConverterScreen {
 
             HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                 Text(formatAmount(converted))
-                    .font(DesignSystem.Font.roundedXL)
+                    .font(DesignSystem.Font.textStyle(.largeTitle, design: .rounded, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.accent)
                     .contentTransition(.numericText())
-                    .animation(.spring(response: 0.4), value: converted)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(1)
+                    .animation(reduceMotion ? nil : .spring(response: 0.4), value: converted)
+                    .minimumScaleFactor(0.8)
+                    .lineLimit(2)
 
                 Text(toEntry.code)
                     .font(DesignSystem.Font.title2)
@@ -305,7 +306,7 @@ private extension CurrencyConverterScreen {
             Text("Rates updated \(date.formatted(.relative(presentation: .named)))")
                 .font(DesignSystem.Font.caption2)
         }
-        .foregroundStyle(DesignSystem.Color.textTertiary)
+        .foregroundStyle(DesignSystem.Color.textSecondary)
         .accessibilityElement(children: .combine)
     }
 }

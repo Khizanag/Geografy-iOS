@@ -12,6 +12,8 @@ public struct MapColoringScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var selectedScheme: ColoringScheme = .continent
     @State private var visibleGroups: Set<String> = []
@@ -81,10 +83,10 @@ private extension MapColoringScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Legend", icon: "info.circle.fill")
             LazyVGrid(
-                columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible()),
-                ],
+                columns: Array(
+                    repeating: GridItem(.flexible()),
+                    count: dynamicTypeSize.isAccessibilitySize ? 1 : 2
+                ),
                 spacing: DesignSystem.Spacing.xs
             ) {
                 ForEach(Array(colorMap.keys.sorted()), id: \.self) { key in
@@ -96,15 +98,20 @@ private extension MapColoringScreen {
 
     func legendItem(label: String, color: Color) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            Circle()
-                .fill(color)
-                .frame(width: 12, height: 12)
+            groupMarker(for: label, color: color, font: DesignSystem.Font.caption)
             Text(label)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
             Spacer()
         }
+        .accessibilityElement(children: .combine)
+    }
+
+    func groupMarker(for group: String, color: Color, font: Font) -> some View {
+        Image(systemName: markerSymbol(for: group))
+            .font(font)
+            .foregroundStyle(color)
+            .accessibilityHidden(true)
     }
 }
 
@@ -147,9 +154,7 @@ private extension MapColoringScreen {
             }
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                Circle()
-                    .fill(color)
-                    .frame(width: 16, height: 16)
+                groupMarker(for: group, color: color, font: DesignSystem.Font.subheadline)
                 Text(group)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -160,15 +165,25 @@ private extension MapColoringScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                 Image(systemName: isVisible ? "chevron.up" : "chevron.down")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .accessibilityHidden(true)
             }
             .padding(DesignSystem.Spacing.sm)
             .background(color.opacity(0.1), in: RoundedRectangle(
                 cornerRadius: DesignSystem.CornerRadius.small,
                 style: .continuous
             ))
+            .overlay {
+                if colorSchemeContrast == .increased {
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
+                        .strokeBorder(DesignSystem.Color.dividerSubtle)
+                }
+            }
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityLabel("\(group), \(count) countries")
+        .accessibilityValue(isVisible ? "Expanded" : "Collapsed")
+        .accessibilityHint(isVisible ? "Hides these countries" : "Shows these countries")
     }
 
     func countryRow(_ country: Country, color: Color) -> some View {
@@ -179,9 +194,7 @@ private extension MapColoringScreen {
             selectedCountry = country
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                Circle()
-                    .fill(color.opacity(0.6))
-                    .frame(width: 8, height: 8)
+                groupMarker(for: groupKey(for: country), color: color, font: DesignSystem.Font.caption2)
                 CountryListRow(country: country) {
                     RowChevron()
                 }
@@ -273,10 +286,10 @@ private extension MapColoringScreen {
                 "Africa": DesignSystem.Color.warning,
                 "Asia": DesignSystem.Color.error,
                 "Europe": DesignSystem.Color.blue,
-                "North America": DesignSystem.Color.success,
+                "North America": DesignSystem.Color.indigo,
                 "South America": DesignSystem.Color.success,
                 "Oceania": DesignSystem.Color.purple,
-                "Antarctica": DesignSystem.Color.textTertiary,
+                "Antarctica": DesignSystem.Color.textSecondary,
             ]
         case .incomeLevel:
             return [
@@ -284,7 +297,7 @@ private extension MapColoringScreen {
                 "Upper Middle Income": DesignSystem.Color.blue,
                 "Lower Middle Income": DesignSystem.Color.warning,
                 "Low Income": DesignSystem.Color.error,
-                "Unknown": DesignSystem.Color.textTertiary,
+                "Unknown": DesignSystem.Color.textSecondary,
             ]
         case .populationSize:
             return [
@@ -294,6 +307,16 @@ private extension MapColoringScreen {
                 "Under 1M": DesignSystem.Color.success,
             ]
         }
+    }
+
+    // A distinct shape per group, so the legend reads without relying on color.
+    func markerSymbol(for group: String) -> String {
+        let symbols = [
+            "circle.fill", "square.fill", "triangle.fill", "diamond.fill",
+            "hexagon.fill", "pentagon.fill", "star.fill",
+        ]
+        guard let index = colorMap.keys.sorted().firstIndex(of: group) else { return symbols[0] }
+        return symbols[index % symbols.count]
     }
 }
 

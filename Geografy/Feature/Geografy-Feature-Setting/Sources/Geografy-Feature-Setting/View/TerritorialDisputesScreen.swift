@@ -9,7 +9,6 @@ public struct TerritorialDisputesScreen: View {
 
     @State private var selections: [String: String] = [:]
     @State private var showingResetAlert = false
-    @State private var appeared = false
 
     // MARK: - Init
     public init() {}
@@ -20,10 +19,7 @@ public struct TerritorialDisputesScreen: View {
             .screenBackground()
             .navigationTitle("Territorial Disputes")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                loadSelections()
-                appeared = true
-            }
+            .onAppear { loadSelections() }
             .alert("Reset to Defaults", isPresented: $showingResetAlert) {
                 Button("Reset", role: .destructive, action: resetToDefaults)
                 Button("Cancel", role: .cancel) {}
@@ -39,23 +35,18 @@ private extension TerritorialDisputesScreen {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                 introCard
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 12)
-                    .animation(.easeOut(duration: 0.4), value: appeared)
+                    .phaseEntrance()
 
                 ForEach(
                     Array(TerritorialDispute.grouped().enumerated()),
                     id: \.element.region.rawValue
                 ) { index, group in
                     regionSection(group.region, disputes: group.disputes)
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 12)
-                        .animation(.easeOut(duration: 0.4).delay(0.06 * Double(index + 1)), value: appeared)
+                        .phaseEntrance(index: index + 1)
                 }
 
                 resetButton
-                    .opacity(appeared ? 1 : 0)
-                    .animation(.easeOut(duration: 0.4).delay(0.30), value: appeared)
+                    .phaseEntrance(index: 5)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
@@ -103,8 +94,9 @@ private extension TerritorialDisputesScreen {
 
     func regionSection(_ region: TerritorialDispute.Region, disputes: [TerritorialDispute]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            EyebrowLabel(region.rawValue, color: DesignSystem.Color.textTertiary)
+            EyebrowLabel(region.rawValue, color: DesignSystem.Color.textSecondary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
+                .accessibilityAddTraits(.isHeader)
 
             CardView {
                 VStack(spacing: 0) {

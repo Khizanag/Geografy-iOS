@@ -6,6 +6,7 @@ import SwiftUI
 public struct FlashcardCardView: View {
     // MARK: - Properties
     @Environment(PronunciationService.self) private var pronunciationService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let card: FlashcardItem
     public let isFlipped: Bool
@@ -19,18 +20,46 @@ public struct FlashcardCardView: View {
             frontSide
                 .opacity(isFlipped ? 0 : 1)
                 .rotation3DEffect(
-                    .degrees(isFlipped ? 180 : 0),
+                    .degrees(reduceMotion ? 0 : (isFlipped ? 180 : 0)),
                     axis: (x: 0, y: 1, z: 0)
                 )
             backSide
                 .opacity(isFlipped ? 1 : 0)
                 .rotation3DEffect(
-                    .degrees(isFlipped ? 0 : -180),
+                    .degrees(reduceMotion ? 0 : (isFlipped ? 0 : -180)),
                     axis: (x: 0, y: 1, z: 0)
                 )
         }
-        .animation(.spring(response: 0.5, dampingFraction: 0.8), value: isFlipped)
+        .animation(
+            reduceMotion ? .easeInOut(duration: 0.2) : .spring(response: 0.5, dampingFraction: 0.8),
+            value: isFlipped
+        )
         .onTapGesture(perform: onTap)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Flip card")
+        .accessibilityValue(accessibilityFaceDescription)
+        .accessibilityHint(isFlipped ? "Shows the question" : "Reveals the answer")
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAction(.default, onTap)
+        .accessibilityAction(named: "Pronounce answer") { pronounceAnswer() }
+    }
+}
+
+// MARK: - Accessibility
+private extension FlashcardCardView {
+    var accessibilityFaceDescription: String {
+        if isFlipped {
+            let answer = card.showsFlagOnBack ? "Flag of \(card.countryName)" : card.backText
+            return "Answer: \(answer)"
+        }
+        let prompt = card.showsFlagOnFront ? "a flag" : card.frontText
+        return "\(card.type.promptLabel): \(prompt)"
+    }
+
+    func pronounceAnswer() {
+        let text = isFlipped && !card.backText.isEmpty ? card.backText : card.frontText
+        guard !text.isEmpty else { return }
+        pronunciationService.speak(text: text, countryCode: card.countryCode)
     }
 }
 
