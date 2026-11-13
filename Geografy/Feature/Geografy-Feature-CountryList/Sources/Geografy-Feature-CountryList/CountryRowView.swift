@@ -94,18 +94,15 @@ private extension CountryRowView {
 
             Spacer(minLength: 0)
 
-            favoriteIcon
-        }
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .padding(.trailing, DesignSystem.Spacing.sm)
-        .padding(.leading, DesignSystem.Spacing.sm)
-        .overlay(alignment: .topTrailing) {
-            if showContinent {
-                continentBadge
-                    .padding(.top, DesignSystem.Spacing.xs)
-                    .padding(.trailing, DesignSystem.Spacing.xs)
+            // Stacked rather than overlaid, so the badge never covers the heart on short rows.
+            VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xs) {
+                if showContinent {
+                    continentBadge
+                }
+                favoriteIcon
             }
         }
+        .padding(DesignSystem.Spacing.sm)
     }
 
     var capitalLabel: some View {
