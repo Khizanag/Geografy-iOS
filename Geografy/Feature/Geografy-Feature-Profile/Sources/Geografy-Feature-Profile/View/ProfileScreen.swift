@@ -33,7 +33,7 @@ public struct ProfileScreen: View {
         scrollContent
             .screenBackground(.rich)
             .navigationTitle("Profile")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .alert("Delete Account", isPresented: $showDeleteAlert) {
                 deleteAlertActions

@@ -15,7 +15,7 @@ public struct SizeCompareView: View {
     // MARK: - Body
     public var body: some View {
         mainContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Size Comparison")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

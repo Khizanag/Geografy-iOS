@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_CountryList
 import SwiftUI
@@ -24,12 +25,14 @@ public struct TravelBucketListScreen: View {
     // MARK: - Body
     public var body: some View {
         contentSwitcher
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .closeButtonPlacementLeading()
             .toolbar { toolbarItems }
             .onAppear { loadPersistedData() }
             .sheet(item: $selectedCountry) { country in
-                bucketListDetailSheet(for: country)
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    bucketListDetailSheet(for: country)
+                }
             }
     }
 }
@@ -328,7 +331,7 @@ public struct BucketListCountryDetailView: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle(country.name)
             .navigationBarTitleDisplayMode(.inline)
     }

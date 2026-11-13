@@ -16,7 +16,7 @@ struct ExploreScreen: View {
         modeContent
             .safeAreaInset(edge: .top) { modePicker }
             .navigationTitle("Explore")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { coordinator.push(.search) } label: {

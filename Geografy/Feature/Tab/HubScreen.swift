@@ -22,15 +22,17 @@ struct HubScreen<Header: View>: View {
     // MARK: - Body
     var body: some View {
         itemList
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.large)
             .sheet(item: $testChecklistSheet) { item in
-                TestChecklistSheet(
-                    title: item.label,
-                    checklist: testChecklistService.checklist(for: item.testKey)
-                )
-                .presentationDetents([.medium])
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    TestChecklistSheet(
+                        title: item.label,
+                        checklist: testChecklistService.checklist(for: item.testKey)
+                    )
+                    .presentationDetents([.medium])
+                }
             }
     }
 }

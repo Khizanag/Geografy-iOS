@@ -31,8 +31,9 @@ public struct OrganizationsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Organizations")
+            .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
     }

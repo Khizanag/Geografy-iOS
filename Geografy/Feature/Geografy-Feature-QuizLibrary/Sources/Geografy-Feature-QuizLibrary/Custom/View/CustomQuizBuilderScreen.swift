@@ -34,12 +34,16 @@ public struct CustomQuizBuilderScreen: View {
     // MARK: - Body
     public var body: some View {
         formContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle(existingQuiz == nil ? "New Quiz" : "Edit Quiz")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { loadExistingQuiz() }
             .sheet(isPresented: $showCountryPicker) { countryPickerSheet }
-            .sheet(isPresented: $showPreview) { previewSheet }
+            .sheet(isPresented: $showPreview) {
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    previewSheet
+                }
+            }
     }
 }
 

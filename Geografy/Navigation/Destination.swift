@@ -45,11 +45,11 @@ extension Destination {
         switch self {
         case .achievementDetail(let definition): AchievementDetailView(definition: definition)
         case .achievements: AchievementsScreen()
-        case .allMaps: AllMapsScreen().navigationTitle("All Maps")
+        case .allMaps: AllMapsScreen().navigationTitle("All Maps").navigationBarTitleDisplayMode(.inline)
         case .collectionDetail(let name): CollectionDetailScreen(collectionName: name)
         case .compare(let country): CompareScreen(preselectedCountry: country)
         case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)
-        case .countries: CountryListScreen().navigationTitle("Countries")
+        case .countries: CountryListScreen().navigationTitle("Countries").navigationBarTitleDisplayMode(.inline)
         case .countryDetail(let country): CountryDetailScreen(country: country)
         case .currencyConverter(let code): CurrencyConverterScreen(preselectedCurrencyCode: code)
         case .customQuizShare(let quiz): CustomQuizShareScreen(quiz: quiz)

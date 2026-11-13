@@ -31,7 +31,7 @@ public struct SettingsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Settings")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

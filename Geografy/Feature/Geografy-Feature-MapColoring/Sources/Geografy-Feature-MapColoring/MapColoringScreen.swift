@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -19,7 +20,7 @@ public struct MapColoringScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Map Coloring Book")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -28,7 +29,9 @@ public struct MapColoringScreen: View {
                 visibleGroups = Set(groupedCountries.keys)
             }
             .sheet(item: $selectedCountry) { country in
-                countryDetailPopup(country)
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    countryDetailPopup(country)
+                }
             }
     }
 }
@@ -229,7 +232,7 @@ private extension MapColoringScreen {
             Spacer()
         }
         .padding(DesignSystem.Spacing.xl)
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground()
         .navigationTitle(country.name)
         #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)

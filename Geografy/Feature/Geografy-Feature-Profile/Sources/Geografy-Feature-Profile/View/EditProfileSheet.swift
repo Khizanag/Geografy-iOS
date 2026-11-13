@@ -19,13 +19,10 @@ public struct EditProfileSheet: View {
     // MARK: - Body
     public var body: some View {
         formContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Edit Profile")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    cancelButton
-                }
                 ToolbarItem(placement: .confirmationAction) {
                     saveButton
                 }
@@ -76,11 +73,6 @@ private extension EditProfileSheet {
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.words)
         }
-    }
-
-    var cancelButton: some View {
-        Button("Cancel") { dismiss() }
-            .buttonStyle(.plain)
     }
 
     var saveButton: some View {

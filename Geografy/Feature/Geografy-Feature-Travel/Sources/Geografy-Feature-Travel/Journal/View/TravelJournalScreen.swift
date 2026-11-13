@@ -31,7 +31,9 @@ public struct TravelJournalScreen: View {
                 }
             }
             .sheet(item: $activeSheet) { sheet in
-                sheetContent(for: sheet)
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    sheetContent(for: sheet)
+                }
             }
     }
 }

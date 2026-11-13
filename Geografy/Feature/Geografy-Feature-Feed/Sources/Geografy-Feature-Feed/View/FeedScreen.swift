@@ -21,7 +21,7 @@ public struct FeedScreen: View {
             .background { backgroundGradient }
             .navigationTitle("Feed")
             #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             #endif
             .task {
                 guard !appeared else { return }

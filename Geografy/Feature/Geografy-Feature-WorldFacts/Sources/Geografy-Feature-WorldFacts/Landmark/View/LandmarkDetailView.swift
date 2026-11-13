@@ -12,7 +12,7 @@ struct LandmarkDetailView: View {
     // MARK: - Body
     var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle(landmark.name)
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

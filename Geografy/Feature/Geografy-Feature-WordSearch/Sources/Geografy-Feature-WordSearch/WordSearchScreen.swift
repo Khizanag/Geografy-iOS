@@ -16,8 +16,9 @@ public struct WordSearchScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Word Search")
+            .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .safeAreaInset(edge: .bottom) { startButton }
             .toolbar { toolbarContent }

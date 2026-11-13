@@ -57,7 +57,7 @@ public struct GuideSheet<Illustration: View>: View {
 
             pageIndicatorAndButton
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground()
         #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif

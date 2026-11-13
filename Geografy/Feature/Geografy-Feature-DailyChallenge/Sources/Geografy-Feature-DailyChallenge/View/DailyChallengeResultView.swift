@@ -43,7 +43,9 @@ public struct DailyChallengeResultView: View {
             .navigationBarBackButtonHidden()
             .onAppear { animateScore() }
             .sheet(isPresented: $showShareCard) {
-                shareCardSheet
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    shareCardSheet
+                }
             }
     }
 }

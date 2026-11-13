@@ -18,7 +18,7 @@ public struct LeaderboardScreen: View {
         scrollContent
             .screenBackground(.leaderboard)
             .navigationTitle("Leaderboards")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -38,7 +38,7 @@ public struct CountryDetailScreen: View {
     // MARK: - Body
     public var body: some View {
         contentScrollView
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }

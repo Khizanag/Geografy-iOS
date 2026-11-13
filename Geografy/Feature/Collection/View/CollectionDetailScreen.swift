@@ -16,7 +16,7 @@ struct CollectionDetailScreen: View {
     // MARK: - Body
     var body: some View {
         content
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle(collectionName)
             .navigationBarTitleDisplayMode(.inline)
     }

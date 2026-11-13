@@ -1,6 +1,7 @@
 #if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import PhotosUI
 import SwiftUI
@@ -254,45 +255,15 @@ extension TravelJournalEditorSheet {
     }
 
     var countryPickerSheet: some View {
-        countryPickerContent
-            .navigationTitle("Select Country")
-            .navigationBarTitleDisplayMode(.inline)
-    }
-
-    var countryPickerContent: some View {
-        List(filteredCountries) { country in
-            Button {
+        CoordinatedNavigationStack(showCloseButton: true) {
+            CountryPicker(
+                "Select Country",
+                countries: countryDataService.countries,
+                selectedCode: countryCode.isEmpty ? nil : countryCode
+            ) { country in
                 countryCode = country.code
-                showCountryPicker = false
-            } label: {
-                HStack(spacing: DesignSystem.Spacing.sm) {
-                    FlagView(
-                        countryCode: country.code,
-                        height: 24
-                    )
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 3)
-                    )
-                    Text(country.name)
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(
-                            DesignSystem.Color.textPrimary
-                        )
-                    Spacer(minLength: 0)
-                    if country.code == countryCode {
-                        Image(systemName: "checkmark")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(
-                                DesignSystem.Color.accent
-                            )
-                    }
-                }
             }
         }
-        .searchable(
-            text: $countrySearchText,
-            prompt: "Search countries"
-        )
     }
 }
 
@@ -397,20 +368,6 @@ extension TravelJournalEditorSheet {
         loadedImages.isEmpty
             ? "Up to 20"
             : "\(loadedImages.count) selected"
-    }
-
-    var filteredCountries: [Country] {
-        let countries = countryDataService.countries
-        guard !countrySearchText.isEmpty else {
-            return countries.sorted(by: \.name)
-        }
-        return countries
-            .filter {
-                $0.name.localizedCaseInsensitiveContains(
-                    countrySearchText
-                )
-            }
-            .sorted(by: \.name)
     }
 }
 #endif

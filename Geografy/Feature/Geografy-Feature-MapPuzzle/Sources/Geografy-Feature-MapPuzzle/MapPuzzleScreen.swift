@@ -22,7 +22,7 @@ struct MapPuzzleScreen: View {
     // MARK: - Body
     var body: some View {
         mainContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("\(continent.displayName) Puzzle")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

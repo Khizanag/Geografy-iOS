@@ -22,12 +22,24 @@ public struct CustomQuizLibraryScreen: View {
     // MARK: - Body
     public var body: some View {
         content
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
-            .sheet(isPresented: $showBuilder) { builderSheet }
-            .sheet(item: $editingQuiz) { quiz in editSheet(for: quiz) }
-            .sheet(item: $selectedQuiz) { quiz in detailSheet(for: quiz) }
+            .sheet(isPresented: $showBuilder) {
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    builderSheet
+                }
+            }
+            .sheet(item: $editingQuiz) { quiz in
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    editSheet(for: quiz)
+                }
+            }
+            .sheet(item: $selectedQuiz) { quiz in
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    detailSheet(for: quiz)
+                }
+            }
             .alert("Delete Quiz?", isPresented: deleteAlertBinding) { deleteAlertActions }
     }
 }

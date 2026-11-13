@@ -333,8 +333,8 @@ custom_rules:
     severity: error
 
   screen_background_under_keyboard:
-    name: "Screen Background Under Keyboard"
-    regex: '\.background\(DesignSystem\.Color\.background\)'
-    message: "Use .background(DesignSystem.Color.background.ignoresSafeArea()) so the background reaches under the keyboard"
+    name: "Screen Background"
+    regex: '\.background\(DesignSystem\.Color\.background(\.ignoresSafeArea\(\))?\)'
+    message: "Use .screenBackground() so the background fills the screen under the bars and the keyboard in every orientation"
     severity: error
     excluded: "GeografyTV/"

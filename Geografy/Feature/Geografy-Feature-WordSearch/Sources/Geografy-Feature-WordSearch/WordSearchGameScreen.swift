@@ -35,8 +35,9 @@ public struct WordSearchGameScreen: View {
     // MARK: - Body
     public var body: some View {
         contentSwitcher
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Word Search")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { startPuzzle() }
             .onReceive(timer) { _ in

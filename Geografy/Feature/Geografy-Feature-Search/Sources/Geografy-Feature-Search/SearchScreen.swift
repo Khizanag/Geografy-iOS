@@ -29,8 +29,9 @@ public struct SearchScreen: View {
     public var body: some View {
         mainContent
             .animation(.easeInOut(duration: 0.2), value: query.isEmpty)
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Search")
+            .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $query, prompt: "Countries, capitals, organizations…")
             .onChange(of: query) { _, newValue in
                 scheduleSearch(query: newValue)

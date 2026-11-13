@@ -20,7 +20,7 @@ public struct TimelineScreen: View {
     // MARK: - Body
     public var body: some View {
         mainContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Timeline")
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
@@ -28,7 +28,9 @@ public struct TimelineScreen: View {
                 timelineService.loadEvents()
             }
             .sheet(item: $selectedEvent) { event in
-                eventDetailSheet(for: event)
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    eventDetailSheet(for: event)
+                }
             }
     }
 }
@@ -243,7 +245,7 @@ private extension TimelineScreen {
             }
             .padding(DesignSystem.Spacing.md)
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground()
     }
 
     func detailHeader(for event: HistoricalEvent) -> some View {

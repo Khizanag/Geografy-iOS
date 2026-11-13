@@ -20,7 +20,7 @@ public struct CountrySaveToCollectionSheet: View {
     // MARK: - Body
     public var body: some View {
         content
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Save to Collection")
             .navigationBarTitleDisplayMode(.inline)
             .nameEntryAlert(

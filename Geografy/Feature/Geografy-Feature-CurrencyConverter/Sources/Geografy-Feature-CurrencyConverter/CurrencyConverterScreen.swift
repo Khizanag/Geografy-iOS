@@ -40,20 +40,24 @@ public struct CurrencyConverterScreen: View {
                 }
             }
             .sheet(isPresented: $showFromPicker) {
-                CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
-                    #if !os(tvOS)
-                    hapticsService.selection()
-                    #endif
-                    fromCurrency = entry
-                    Task { await currencyService.fetchRates(for: entry.code) }
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    CurrencyPickerSheet(title: "From Currency", currencies: allCurrencies) { entry in
+                        #if !os(tvOS)
+                        hapticsService.selection()
+                        #endif
+                        fromCurrency = entry
+                        Task { await currencyService.fetchRates(for: entry.code) }
+                    }
                 }
             }
             .sheet(isPresented: $showToPicker) {
-                CurrencyPickerSheet(title: "To Currency", currencies: allCurrencies) { entry in
-                    #if !os(tvOS)
-                    hapticsService.selection()
-                    #endif
-                    toCurrency = entry
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    CurrencyPickerSheet(title: "To Currency", currencies: allCurrencies) { entry in
+                        #if !os(tvOS)
+                        hapticsService.selection()
+                        #endif
+                        toCurrency = entry
+                    }
                 }
             }
     }
@@ -429,7 +433,6 @@ private struct CurrencyPickerSheet: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar { toolbarContent }
     }
 }
 
@@ -455,17 +458,6 @@ private extension CurrencyPickerSheet {
                     }
                 }
             }
-        }
-    }
-}
-
-// MARK: - Toolbar
-private extension CurrencyPickerSheet {
-    @ToolbarContentBuilder
-    var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .cancellationAction) {
-            Button("Cancel") { dismiss() }
-                .tint(DesignSystem.Color.textPrimary)
         }
     }
 }

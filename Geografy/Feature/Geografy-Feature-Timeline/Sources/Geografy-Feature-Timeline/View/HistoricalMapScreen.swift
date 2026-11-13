@@ -1,6 +1,7 @@
 #if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_Map
 import SwiftUI
@@ -45,7 +46,11 @@ public struct HistoricalMapScreen: View {
             .task { await loadData() }
             .onAppear { selectedYear = initialYear }
             .onChange(of: selectedYear) { updateCountryColors() }
-            .sheet(item: $selectedEvent) { eventSheet(for: $0) }
+            .sheet(item: $selectedEvent) { event in
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    eventSheet(for: event)
+                }
+            }
     }
 }
 
@@ -190,7 +195,7 @@ private extension HistoricalMapScreen {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .background(DesignSystem.Color.background.ignoresSafeArea())
+        .screenBackground()
     }
 
     func eventHeader(for event: HistoricalEvent) -> some View {

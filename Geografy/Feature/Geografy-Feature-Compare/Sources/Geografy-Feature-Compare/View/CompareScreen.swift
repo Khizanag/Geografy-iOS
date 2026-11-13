@@ -26,8 +26,9 @@ public struct CompareScreen: View {
     // MARK: - Body
     public var body: some View {
         contentScrollView
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Compare")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 loadRecentPairs()
                 if let preselected = preselectedCountry, leftCountry == nil {

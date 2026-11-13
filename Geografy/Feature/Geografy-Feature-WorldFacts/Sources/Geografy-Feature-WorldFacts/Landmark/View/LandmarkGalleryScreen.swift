@@ -1,4 +1,5 @@
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import SwiftUI
 
 public struct LandmarkGalleryScreen: View {
@@ -23,9 +24,11 @@ public struct LandmarkGalleryScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .sheet(item: $selectedLandmark) { landmark in
-                LandmarkDetailView(landmark: landmark)
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    LandmarkDetailView(landmark: landmark)
+                }
             }
     }
 }

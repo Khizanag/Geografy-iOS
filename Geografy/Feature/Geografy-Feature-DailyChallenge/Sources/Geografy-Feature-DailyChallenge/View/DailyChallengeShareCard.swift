@@ -16,7 +16,7 @@ public struct DailyChallengeShareCard: View {
     public var body: some View {
         mainContent
             .padding(DesignSystem.Spacing.md)
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Share")
             .navigationBarTitleDisplayMode(.inline)
     }

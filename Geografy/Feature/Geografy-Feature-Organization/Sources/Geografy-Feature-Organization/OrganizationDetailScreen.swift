@@ -28,6 +28,7 @@ public struct OrganizationDetailScreen: View {
         scrollContent
             .screenBackground(.tinted(organization.highlightColor))
             .navigationTitle(organization.displayName)
+            .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .task { trackOrgView() }
             .overlay {

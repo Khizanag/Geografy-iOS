@@ -23,7 +23,7 @@ public struct FriendsListScreen: View {
         content
             .screenBackground(.standard)
             .navigationTitle("Friends")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .task { await loadData() }
             .onAppear {
                 animating = true

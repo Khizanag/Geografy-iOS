@@ -26,6 +26,7 @@ public struct TimeZoneScreen: View {
         mainContent
             .screenBackground(.tinted(DesignSystem.Color.indigo))
             .navigationTitle("Time Zones")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
             }
     }

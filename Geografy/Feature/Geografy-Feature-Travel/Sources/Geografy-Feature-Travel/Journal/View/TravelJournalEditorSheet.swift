@@ -22,7 +22,6 @@ public struct TravelJournalEditorSheet: View {
     @State var selectedPhotos: [PhotosPickerItem] = []
     @State var loadedImages: [LoadedImage] = []
     @State var showCountryPicker = false
-    @State var countrySearchText = ""
 
     let existingEntry: TravelJournalEntry?
 

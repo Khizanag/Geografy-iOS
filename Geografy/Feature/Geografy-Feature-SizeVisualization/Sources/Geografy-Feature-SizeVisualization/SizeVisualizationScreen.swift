@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -21,18 +22,20 @@ public struct SizeVisualizationScreen: View {
     // MARK: - Body
     public var body: some View {
         mainContent
-            .background(DesignSystem.Color.background.ignoresSafeArea())
+            .screenBackground()
             .navigationTitle("Size Visualization")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .searchable(text: $searchQuery, prompt: "Search countries...")
             .sheet(isPresented: $showCompare) {
-                if let selected = selectedCountry, let reference = referenceCountry {
-                    SizeCompareView(
-                        referenceCountry: reference,
-                        comparisonCountry: selected
-                    )
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    if let selected = selectedCountry, let reference = referenceCountry {
+                        SizeCompareView(
+                            referenceCountry: reference,
+                            comparisonCountry: selected
+                        )
+                    }
                 }
             }
     }
