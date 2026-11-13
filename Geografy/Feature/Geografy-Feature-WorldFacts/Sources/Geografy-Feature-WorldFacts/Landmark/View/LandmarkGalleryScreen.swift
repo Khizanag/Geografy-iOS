@@ -50,13 +50,13 @@ private extension LandmarkGalleryScreen {
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
-                filterChip(label: "All", icon: "globe", isSelected: selectedCategory == nil) {
+                SelectableChip("All", systemImage: "globe", isSelected: selectedCategory == nil) {
                     selectedCategory = nil
                 }
                 ForEach(LandmarkCategory.allCases, id: \.self) { category in
-                    filterChip(
-                        label: category.displayName,
-                        icon: category.icon,
+                    SelectableChip(
+                        category.displayName,
+                        systemImage: category.icon,
                         isSelected: selectedCategory == category
                     ) {
                         selectedCategory = selectedCategory == category ? nil : category
@@ -64,26 +64,6 @@ private extension LandmarkGalleryScreen {
                 }
             }
         }
-    }
-
-    func filterChip(label: String, icon: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 4) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.caption)
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
-        }
-        .buttonStyle(PressButtonStyle())
     }
 
     var landmarkGrid: some View {
@@ -129,14 +109,14 @@ private extension LandmarkGalleryScreen {
     }
 
     func landmarkInfo(_ landmark: Landmark) -> some View {
-        VStack(spacing: 4) {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
             Text(landmark.name)
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-            HStack(spacing: 4) {
+            HStack(spacing: DesignSystem.Spacing.xxs) {
                 FlagView(countryCode: landmark.countryCode, height: 14, fixedWidth: true)
                     .clipShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
                 Text(landmark.city)

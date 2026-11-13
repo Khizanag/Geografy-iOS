@@ -129,23 +129,21 @@ private extension DistanceCalculatorScreen {
         icon: String,
         color: Color
     ) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(color)
-                .frame(width: 24)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(color)
+                    .frame(width: 24)
 
-            if let country {
-                selectedCountryRow(country)
-            } else {
-                placeholderRow(placeholder)
+                if let country {
+                    selectedCountryRow(country)
+                } else {
+                    placeholderRow(placeholder)
+                }
             }
+            .padding(DesignSystem.Spacing.md)
         }
-        .padding(DesignSystem.Spacing.md)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(color.opacity(0.25), lineWidth: 1)
@@ -153,12 +151,7 @@ private extension DistanceCalculatorScreen {
     }
 
     func selectedCountryRow(_ country: Country) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            FlagView(countryCode: country.code, height: 20, fixedWidth: true)
-            Text(country.name)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Spacer()
+        CountryListRow(country: country) {
             Text(country.capital)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -203,11 +196,7 @@ private extension DistanceCalculatorScreen {
     func distanceSection(distance: Double) -> some View {
         CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
-                Text("Great Circle Distance")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .textCase(.uppercase)
-                    .accessibilityAddTraits(.isHeader)
+                EyebrowLabel("Great Circle Distance")
 
                 HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                     Text(formatDistance(distance, inKm: true))
@@ -251,11 +240,8 @@ private extension DistanceCalculatorScreen {
 
     func comparisonsSection(distance: Double) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            Text("In perspective")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+            SectionHeaderView(title: "In perspective")
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .accessibilityAddTraits(.isHeader)
 
             VStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(comparisons(for: distance), id: \.label) { item in

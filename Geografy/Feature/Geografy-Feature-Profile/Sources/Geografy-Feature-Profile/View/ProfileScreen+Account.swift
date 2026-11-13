@@ -21,14 +21,11 @@ extension ProfileScreen {
 private extension ProfileScreen {
     func quizHistoryRow(_ record: QuizHistoryRecord) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.purple.opacity(0.15))
-                    .frame(width: 36, height: 36)
-                Image(systemName: QuizType(rawValue: record.quizType)?.icon ?? "gamecontroller.fill")
-                    .font(DesignSystem.Font.iconXS)
-                    .foregroundStyle(DesignSystem.Color.purple)
-            }
+            IconBadge(
+                QuizType(rawValue: record.quizType)?.icon ?? "gamecontroller.fill",
+                color: DesignSystem.Color.purple,
+                size: .small
+            )
             VStack(alignment: .leading, spacing: 2) {
                 Text(QuizType(rawValue: record.quizType)?.displayName ?? record.quizType)
                     .font(DesignSystem.Font.subheadline)
@@ -131,22 +128,13 @@ private extension ProfileScreen {
 
     func accountRowLabel(icon: String, title: String, color: Color) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(color.opacity(0.12))
-                    .frame(width: 36, height: 36)
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.iconXS)
-                    .foregroundStyle(color)
-            }
+            IconBadge(icon, color: color, size: .small)
             Text(title)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(color)
             Spacer()
-            Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+            RowChevron()
         }
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(

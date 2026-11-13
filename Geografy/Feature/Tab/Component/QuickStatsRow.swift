@@ -50,26 +50,26 @@ private extension QuickStatsRow {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Image(systemName: icon)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(color)
+            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+                VStack(spacing: DesignSystem.Spacing.xxs) {
+                    HStack(spacing: DesignSystem.Spacing.xxs) {
+                        Image(systemName: icon)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(color)
 
-                    Text(value)
-                        .font(DesignSystem.Font.caption.weight(.semibold))
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(value)
+                            .font(DesignSystem.Font.caption.weight(.semibold))
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                    }
+
+                    Text(label)
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
-
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, DesignSystem.Spacing.xs)
+                .padding(.horizontal, DesignSystem.Spacing.sm)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }
         .buttonStyle(PressButtonStyle())
         .accessibilityLabel("\(label): \(value)")

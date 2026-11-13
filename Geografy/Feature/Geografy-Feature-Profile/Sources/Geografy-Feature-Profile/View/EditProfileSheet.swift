@@ -49,7 +49,7 @@ private extension EditProfileSheet {
     var avatarSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ProfileAvatarView(name: displayName.isEmpty ? "E" : displayName, size: 96)
-                .shadow(color: DesignSystem.Color.accent.opacity(0.35), radius: 16, x: 0, y: 4)
+                .geoShadow(.elevated)
             Text("Tap to change photo")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textTertiary)
@@ -59,12 +59,7 @@ private extension EditProfileSheet {
 
     var nameField: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            Text("Display Name")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .textCase(.uppercase)
-                .kerning(0.8)
+            EyebrowLabel("Display Name")
             TextField("Enter your name", text: $displayName)
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)

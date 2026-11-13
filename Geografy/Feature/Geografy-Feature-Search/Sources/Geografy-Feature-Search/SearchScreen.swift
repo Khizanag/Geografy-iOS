@@ -107,21 +107,19 @@ private extension SearchScreen {
             query = recentQuery
             scheduleSearch(query: recentQuery)
         } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "clock.arrow.circlepath")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                Text(recentQuery)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer(minLength: 0)
+            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    Image(systemName: "clock.arrow.circlepath")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                    Text(recentQuery)
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(
-                DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            )
             .contentShape(Rectangle())
         }
         .buttonStyle(PressButtonStyle())
@@ -175,33 +173,12 @@ private extension SearchScreen {
     @ViewBuilder
     var resultContent: some View {
         if isSearching {
-            Spacer()
-            ProgressView()
-                .tint(DesignSystem.Color.accent)
-            Spacer()
+            LoadingView()
         } else if sections.isEmpty {
-            noResultsView
+            ContentUnavailableView.search(text: query)
         } else {
             resultsList
         }
-    }
-
-    var noResultsView: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Spacer()
-            Image(systemName: "magnifyingglass")
-                .font(DesignSystem.Font.displaySmall)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Text("No results for \"\(query)\"")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text("Try a different search term")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, DesignSystem.Spacing.xl)
     }
 
     var resultsList: some View {
@@ -227,17 +204,20 @@ private extension SearchScreen {
     func resultSection(_ section: SearchResultSection) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: section.title, icon: section.icon)
-            VStack(spacing: 0) {
-                ForEach(section.rows) { row in
-                    resultRow(row)
-                    if row != section.rows.last {
-                        Divider()
-                            .padding(.leading, DesignSystem.Spacing.md + DesignSystem.Size.lg + DesignSystem.Spacing.sm)
+            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+                VStack(spacing: 0) {
+                    ForEach(section.rows) { row in
+                        resultRow(row)
+                        if row != section.rows.last {
+                            Divider()
+                                .padding(
+                                    .leading,
+                                    DesignSystem.Spacing.md + DesignSystem.Size.lg + DesignSystem.Spacing.sm
+                                )
+                        }
                     }
                 }
             }
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }
     }
 
@@ -277,36 +257,16 @@ private extension SearchScreen {
 // MARK: - Row Content
 private extension SearchScreen {
     func countryRowContent(_ country: Country) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: country.code, height: DesignSystem.Size.lg)
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(country.name)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(country.continent.displayName)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            Spacer(minLength: 0)
-            Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+        CountryListRow(country: country, subtitle: country.continent.displayName) {
+            RowChevron()
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
-        .contentShape(Rectangle())
     }
 
     func capitalRowContent(country: Country, capitalName: String) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.blue.opacity(0.12))
-                    .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
-                Image(systemName: "building.2.fill")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.blue)
-            }
+            IconBadge("building.2.fill", color: DesignSystem.Color.blue, size: .small)
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(capitalName)
                     .font(DesignSystem.Font.body)
@@ -316,9 +276,7 @@ private extension SearchScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             Spacer(minLength: 0)
-            Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+            RowChevron()
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
@@ -327,14 +285,7 @@ private extension SearchScreen {
 
     func organizationRowContent(_ organization: Organization) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(organization.highlightColor.opacity(0.12))
-                    .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
-                Image(systemName: organization.icon)
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(organization.highlightColor)
-            }
+            IconBadge(organization.icon, color: organization.highlightColor, size: .small)
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(organization.fullName)
                     .font(DesignSystem.Font.body)
@@ -344,9 +295,7 @@ private extension SearchScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             Spacer(minLength: 0)
-            Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+            RowChevron()
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)

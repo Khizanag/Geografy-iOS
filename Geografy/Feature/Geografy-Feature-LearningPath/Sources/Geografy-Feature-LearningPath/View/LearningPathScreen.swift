@@ -117,22 +117,11 @@ private extension LearningPathScreen {
     }
 
     func moduleIcon(module: LearningModule) -> some View {
-        ZStack {
-            Circle()
-                .fill(
-                    module.isUnlocked
-                        ? DesignSystem.Color.accent.opacity(0.15)
-                        : DesignSystem.Color.textTertiary.opacity(0.12)
-                )
-                .frame(width: 44, height: 44)
-            Image(systemName: module.isUnlocked ? module.icon : "lock.fill")
-                .font(DesignSystem.Font.title3)
-                .foregroundStyle(
-                    module.isUnlocked
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.textTertiary
-                )
-        }
+        IconBadge(
+            module.isUnlocked ? module.icon : "lock.fill",
+            color: module.isUnlocked ? DesignSystem.Color.accent : DesignSystem.Color.textTertiary,
+            size: .medium
+        )
     }
 
     func moduleInfo(module: LearningModule) -> some View {

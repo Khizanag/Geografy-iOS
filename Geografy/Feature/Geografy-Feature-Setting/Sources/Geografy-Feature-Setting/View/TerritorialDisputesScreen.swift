@@ -86,14 +86,7 @@ private extension TerritorialDisputesScreen {
 
     var introCardHeader: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.warning.opacity(0.15))
-                    .frame(width: 40, height: 40)
-                Image(systemName: "globe.europe.africa.fill")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.warning)
-            }
+            IconBadge("globe.europe.africa.fill", color: DesignSystem.Color.warning, size: .small)
             Text("About This Setting")
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.semibold)
@@ -110,13 +103,8 @@ private extension TerritorialDisputesScreen {
 
     func regionSection(_ region: TerritorialDispute.Region, disputes: [TerritorialDispute]) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Text(region.rawValue.uppercased())
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.xs)
+            EyebrowLabel(region.rawValue, color: DesignSystem.Color.textTertiary)
+                .padding(.horizontal, DesignSystem.Spacing.xs)
 
             CardView {
                 VStack(spacing: 0) {
@@ -197,13 +185,13 @@ private extension TerritorialDisputesScreen {
         Button {
             showingResetAlert = true
         } label: {
-            Text("Reset to Defaults")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.error)
-                .frame(maxWidth: .infinity)
-                .padding(DesignSystem.Spacing.md)
-                .background(DesignSystem.Color.cardBackground)
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
+            CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+                Text("Reset to Defaults")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.error)
+                    .frame(maxWidth: .infinity)
+                    .padding(DesignSystem.Spacing.md)
+            }
         }
         .buttonStyle(PressButtonStyle())
     }

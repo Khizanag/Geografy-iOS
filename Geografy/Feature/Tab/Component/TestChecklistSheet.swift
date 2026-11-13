@@ -49,23 +49,21 @@ private extension TestChecklistSheet {
                 checked.insert(index)
             }
         } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(isChecked ? DesignSystem.Color.success : DesignSystem.Color.textTertiary)
-                Text(item)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(
-                        isChecked ? DesignSystem.Color.textSecondary : DesignSystem.Color.textPrimary
-                    )
-                    .strikethrough(isChecked)
-                Spacer(minLength: 0)
+            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(isChecked ? DesignSystem.Color.success : DesignSystem.Color.textTertiary)
+                    Text(item)
+                        .font(DesignSystem.Font.body)
+                        .foregroundStyle(
+                            isChecked ? DesignSystem.Color.textSecondary : DesignSystem.Color.textPrimary
+                        )
+                        .strikethrough(isChecked)
+                    Spacer(minLength: 0)
+                }
+                .padding(DesignSystem.Spacing.sm)
             }
-            .padding(DesignSystem.Spacing.sm)
-            .background(
-                DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            )
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

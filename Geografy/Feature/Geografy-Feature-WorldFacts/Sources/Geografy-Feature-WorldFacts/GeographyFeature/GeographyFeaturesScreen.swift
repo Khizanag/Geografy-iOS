@@ -46,29 +46,12 @@ private extension GeographyFeaturesScreen {
     }
 
     func typeChip(_ type: GeographyFeatureType) -> some View {
-        let isSelected = selectedType == type
-        return Button {
+        SelectableChip(type.displayName, systemImage: type.icon, isSelected: selectedType == type) {
             withAnimation(.easeInOut(duration: 0.2)) {
                 selectedType = type
                 expandedFeatureId = nil
             }
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: type.icon)
-                    .font(DesignSystem.Font.caption)
-                Text(type.displayName)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(isSelected ? .semibold : .regular)
-            }
-            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
         }
-        .buttonStyle(.plain)
     }
 
     var featureList: some View {
@@ -169,13 +152,7 @@ private extension GeographyFeaturesScreen {
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
-                Text(feature.continent)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.medium)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .padding(.horizontal, DesignSystem.Spacing.xs)
-                    .padding(.vertical, 2)
-                    .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
+                InfoPill(feature.continent, style: .accent)
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.bottom, DesignSystem.Spacing.sm)

@@ -168,23 +168,7 @@ private struct WorldClockView: View {
     }
 
     private func worldClockRow(for item: CountryWithZone) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: item.country.code, height: 24, fixedWidth: true)
-                .frame(width: 36, alignment: .center)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(item.country.name)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
-                Text(item.utcOffsetLabel)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-
-            Spacer()
-
+        CountryListRow(country: item.country, subtitle: item.utcOffsetLabel) {
             VStack(alignment: .trailing, spacing: 2) {
                 Text(currentTimeString(for: item.timeZone))
                     .font(DesignSystem.Font.monoSmall)
@@ -305,14 +289,7 @@ private struct AllZonesView: View {
     }
 
     private func zoneCountryRow(for item: CountryWithZone) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: item.country.code, height: 20, fixedWidth: true)
-                .frame(width: 32, alignment: .center)
-            Text(item.country.name)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-            Spacer()
+        CountryListRow(country: item.country) {
             Text(currentTimeString(for: item.timeZone))
                 .font(DesignSystem.Font.monoCaption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)

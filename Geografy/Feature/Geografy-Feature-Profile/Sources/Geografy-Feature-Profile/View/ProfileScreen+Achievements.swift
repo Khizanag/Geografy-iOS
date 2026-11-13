@@ -28,14 +28,12 @@ private extension ProfileScreen {
                 hapticsService.impact(.light)
                 coordinator.push(.achievements)
             } label: {
-                HStack(spacing: 4) {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
                     Text("\(achievementService.unlockedAchievements.count)/\(AchievementCatalog.all.count)")
                         .font(DesignSystem.Font.caption)
                         .fontWeight(.semibold)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption2)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                    RowChevron()
                 }
             }
             .buttonStyle(.plain)
@@ -60,40 +58,23 @@ private extension ProfileScreen {
     }
 
     var emptyAchievementsView: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "trophy")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-            Text("Start exploring to earn achievements!")
-                .font(DesignSystem.Font.callout)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(DesignSystem.Spacing.md)
-        .background(
-            .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+        ContentUnavailableView(
+            "No Achievements Yet",
+            systemImage: "trophy",
+            description: Text("Start exploring to earn achievements!")
         )
     }
 
     func achievementCard(_ definition: AchievementDefinition) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            ZStack {
-                Circle()
-                    .fill(definition.category.themeColor.opacity(0.18))
-                    .frame(width: 52, height: 52)
-
-                Circle()
-                    .strokeBorder(
-                        definition.rarity.borderGradient,
-                        lineWidth: definition.rarity.borderWidth
-                    )
-                    .frame(width: 52, height: 52)
-
-                Image(systemName: definition.iconName)
-                    .font(DesignSystem.Font.iconDefault)
-                    .foregroundStyle(definition.category.themeColor)
-            }
+            IconBadge(definition.iconName, color: definition.category.themeColor, size: .large)
+                .overlay {
+                    Circle()
+                        .strokeBorder(
+                            definition.rarity.borderGradient,
+                            lineWidth: definition.rarity.borderWidth
+                        )
+                }
 
             Text(definition.title)
                 .font(DesignSystem.Font.caption2)

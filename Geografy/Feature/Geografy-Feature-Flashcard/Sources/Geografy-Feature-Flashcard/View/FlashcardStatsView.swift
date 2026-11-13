@@ -10,16 +10,14 @@ public struct FlashcardStatsView: View {
 
     // MARK: - Body
     public var body: some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            headerSection
-            statsGrid
-            accuracyBar
+        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                headerSection
+                statsGrid
+                accuracyBar
+            }
+            .padding(DesignSystem.Spacing.lg)
         }
-        .padding(DesignSystem.Spacing.lg)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-        )
     }
 }
 

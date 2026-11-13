@@ -7,13 +7,11 @@ public struct FriendsListScreen: View {
     // MARK: - Properties
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var friends: [GKPlayer] = []
     @State private var avatars: [String: Image] = [:]
     @State private var xpScores: [String: Int] = [:]
     @State private var isLoading = true
-    @State private var animating = false
 
     // MARK: - Init
     public init() {}
@@ -25,9 +23,6 @@ public struct FriendsListScreen: View {
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.inline)
             .task { await loadData() }
-            .onAppear {
-                animating = true
-            }
     }
 }
 
@@ -38,7 +33,7 @@ private extension FriendsListScreen {
         if !gameCenterService.isAuthenticated {
             notAuthenticatedView
         } else if isLoading {
-            loadingView
+            LoadingView("Finding your friends")
         } else if friends.isEmpty {
             emptyStateView
         } else {
@@ -46,74 +41,22 @@ private extension FriendsListScreen {
         }
     }
 
-    var loadingView: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Spacer()
-
-            PulsingCirclesView(icon: "person.2.fill", isAnimating: animating)
-
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text("Finding your friends")
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Connecting to Game Center...")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
     var notAuthenticatedView: some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            Spacer()
-
-            PulsingCirclesView(icon: "gamecontroller.fill", isAnimating: animating)
-
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text("Sign in to Game Center")
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Connect your Game Center account to see your friends and compare scores.")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .multilineTextAlignment(.center)
-            }
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, DesignSystem.Spacing.xl)
+        ContentUnavailableView(
+            "Sign in to Game Center",
+            systemImage: "gamecontroller.fill",
+            description: Text("Connect your Game Center account to see your friends and compare scores.")
+        )
     }
 
     var emptyStateView: some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            Spacer()
-
-            PulsingCirclesView(icon: "person.2", isAnimating: animating)
-
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text("No Friends Yet")
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text("Only Game Center friends who also have Geografy installed will appear here.")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .multilineTextAlignment(.center)
-            }
-
+        ContentUnavailableView {
+            Label("No Friends Yet", systemImage: "person.2")
+        } description: {
+            Text("Only Game Center friends who also have Geografy installed will appear here.")
+        } actions: {
             addFriendsButton
-
-            Spacer()
         }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, DesignSystem.Spacing.xl)
     }
 }
 
@@ -139,14 +82,7 @@ private extension FriendsListScreen {
 
     var friendsHeader: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.15))
-                    .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
-                Image(systemName: "person.2.fill")
-                    .font(DesignSystem.Font.callout)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
+            IconBadge("person.2.fill", size: .small)
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(friends.count) Friends")
                     .font(DesignSystem.Font.subheadline)
@@ -189,7 +125,7 @@ private extension FriendsListScreen {
                 }
                 Spacer(minLength: 0)
                 if let score = xpScores[player.gamePlayerID] {
-                    xpBadge(score)
+                    InfoPill(abbreviatedScore(score), systemImage: "bolt.fill", style: .accent)
                 }
             }
             .padding(DesignSystem.Spacing.md)
@@ -235,23 +171,6 @@ private extension FriendsListScreen {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
             }
         }
-    }
-
-    func xpBadge(_ score: Int) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "bolt.fill")
-                .font(DesignSystem.Font.caption2)
-            Text(abbreviatedScore(score))
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.bold)
-        }
-        .foregroundStyle(DesignSystem.Color.accent)
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(
-            DesignSystem.Color.accent.opacity(0.12),
-            in: Capsule()
-        )
     }
 
     var addFriendsButton: some View {

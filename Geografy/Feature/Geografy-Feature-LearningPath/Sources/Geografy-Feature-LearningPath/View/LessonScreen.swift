@@ -51,18 +51,7 @@ private extension LessonScreen {
     }
 
     var lessonTypeTag: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: typeIcon)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
-            Text(typeLabel)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
+        InfoPill(typeLabel, systemImage: typeIcon, style: .accent)
     }
 
     var lessonContent: some View {

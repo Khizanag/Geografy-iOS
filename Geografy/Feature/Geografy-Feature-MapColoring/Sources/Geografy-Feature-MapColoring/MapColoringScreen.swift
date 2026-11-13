@@ -68,29 +68,13 @@ private extension MapColoringScreen {
     }
 
     func schemeChip(_ scheme: ColoringScheme) -> some View {
-        Button {
+        SelectableChip(scheme.displayName, systemImage: scheme.icon, isSelected: selectedScheme == scheme) {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
             selectedScheme = scheme
             visibleGroups = Set(groupedCountries.keys)
-        } label: {
-            HStack(spacing: 4) {
-                Image(systemName: scheme.icon)
-                    .font(DesignSystem.Font.caption)
-                Text(scheme.displayName)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(selectedScheme == scheme ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                selectedScheme == scheme ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
         }
-        .buttonStyle(PressButtonStyle())
     }
 
     var legendSection: some View {
@@ -198,16 +182,9 @@ private extension MapColoringScreen {
                 Circle()
                     .fill(color.opacity(0.6))
                     .frame(width: 8, height: 8)
-                FlagView(countryCode: country.code, height: 20)
-                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
-                Text(country.name)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.micro)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                CountryListRow(country: country) {
+                    RowChevron()
+                }
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)

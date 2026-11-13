@@ -205,7 +205,7 @@ private extension OnboardingFlow {
                     .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
                     .frame(width: DesignSystem.Size.Avatar.md)
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(goal.title)
                         .font(DesignSystem.Font.headline)
                     Text(goal.subtitle)
@@ -247,14 +247,7 @@ private extension OnboardingFlow {
 
             Spacer()
 
-            Button(action: advance) {
-                Text(step < 3 ? "Continue" : "Get started")
-                    .font(DesignSystem.Font.headline)
-                    .padding(.horizontal, DesignSystem.Spacing.xl)
-                    .padding(.vertical, DesignSystem.Spacing.sm)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(DesignSystem.Color.accent)
+            GlassButton(step < 3 ? "Continue" : "Get started", action: advance)
         }
     }
 }

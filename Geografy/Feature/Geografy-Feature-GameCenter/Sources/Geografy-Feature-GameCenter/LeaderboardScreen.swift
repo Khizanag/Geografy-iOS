@@ -42,7 +42,7 @@ private extension LeaderboardScreen {
 
     var statusCard: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            statusIconBadge
+            IconBadge(statusIcon, color: statusColor, size: .small)
             statusInfo
             Spacer()
             Circle()
@@ -54,17 +54,6 @@ private extension LeaderboardScreen {
             cornerRadius: DesignSystem.CornerRadius.medium,
             style: .continuous
         ))
-    }
-
-    var statusIconBadge: some View {
-        ZStack {
-            Circle()
-                .fill(statusColor.opacity(0.15))
-                .frame(width: DesignSystem.Size.lg, height: DesignSystem.Size.lg)
-            Image(systemName: statusIcon)
-                .font(DesignSystem.Font.callout)
-                .foregroundStyle(statusColor)
-        }
     }
 
     @ViewBuilder
@@ -113,7 +102,7 @@ private extension LeaderboardScreen {
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(info.color)
             }
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(info.title)
                     .font(DesignSystem.Font.headline)
                     .fontWeight(.bold)

@@ -133,14 +133,7 @@ private extension ProfileScreen {
 
     func statCard(icon: String, color: Color, value: String, label: String) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            ZStack {
-                Circle()
-                    .fill(color.opacity(0.15))
-                    .frame(width: 36, height: 36)
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.iconXS)
-                    .foregroundStyle(color)
-            }
+            IconBadge(icon, color: color, size: .small)
             Text(value)
                 .font(DesignSystem.Font.roundedFootnote)
                 .foregroundStyle(DesignSystem.Color.textPrimary)

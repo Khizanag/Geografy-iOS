@@ -51,17 +51,7 @@ private extension CompareCountrySlot {
 
     var emptyContent: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                    .frame(
-                        width: DesignSystem.Size.xxl,
-                        height: DesignSystem.Size.xxl
-                    )
-                Image(systemName: "plus")
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
+            IconBadge("plus", size: .medium)
 
             Text(label)
                 .font(DesignSystem.Font.caption)
