@@ -17,25 +17,9 @@ public struct CountryListRow<Trailing: View>: View {
 
     // MARK: - Body
     public var body: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: country.code, height: DesignSystem.Size.Flag.inline, fixedWidth: true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(country.name)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
-                if let subtitle {
-                    Text(subtitle)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                        .lineLimit(1)
-                }
-            }
-            Spacer(minLength: 0)
+        FlagListRow(flagCode: country.code, title: country.name, subtitle: subtitle) {
             trailing
         }
-        .contentShape(Rectangle())
-        .accessibilityElement(children: .combine)
     }
 }
 
