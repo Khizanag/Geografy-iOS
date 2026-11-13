@@ -32,10 +32,10 @@ private extension SectionHeaderView {
             if let icon {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
                     .accessibilityHidden(true)
             } else {
-                accentBar
+                leadingBar
                     .accessibilityHidden(true)
             }
             Text(title)
@@ -50,9 +50,10 @@ private extension SectionHeaderView {
         }
     }
 
-    var accentBar: some View {
+    /// Neutral, so a screen's own colors carry meaning and headers don't compete with them.
+    var leadingBar: some View {
         RoundedRectangle(cornerRadius: 2, style: .continuous)
-            .fill(DesignSystem.Color.accent)
+            .fill(DesignSystem.Color.textTertiary)
             .frame(width: 3, height: 18)
     }
 }
