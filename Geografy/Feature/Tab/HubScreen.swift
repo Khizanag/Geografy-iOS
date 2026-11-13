@@ -10,7 +10,6 @@ struct HubScreen<Header: View>: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TestingModeService.self) private var testingModeService
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @ScaledMetric(relativeTo: .caption) private var iconScale: CGFloat = 1
 
@@ -70,11 +69,7 @@ private extension HubScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title)
             GlassEffectContainer {
-                AdaptiveGrid(
-                    // One tile per row at accessibility sizes, so labels wrap whole words.
-                    compactMinimum: dynamicTypeSize.isAccessibilitySize ? 300 : 100,
-                    regularMinimum: dynamicTypeSize.isAccessibilitySize ? 240 : 150
-                ) {
+                AdaptiveGrid(compactMinimum: 100, regularMinimum: 150) {
                     ForEach(items, id: \.id) { sheet in
                         gridTile(for: sheet)
                     }
@@ -101,16 +96,12 @@ private extension HubScreen {
                 .font(tileLabelFont)
                 .fontWeight(.medium)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 3)
-                .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
 
             Text(sheet.subtitle)
                 .font(tileSubtitleFont)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
-                .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
         }

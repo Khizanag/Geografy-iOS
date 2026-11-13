@@ -82,9 +82,11 @@ public extension View {
     }
 }
 
+/// A grid whose columns get wider as text gets bigger, so it steps down from three columns to two to one.
 public struct AdaptiveGrid<Content: View>: View {
     // MARK: - Properties
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @ScaledMetric(relativeTo: .caption) private var textScale: CGFloat = 1
 
     let compactMinimum: CGFloat
     let regularMinimum: CGFloat
@@ -109,7 +111,7 @@ public struct AdaptiveGrid<Content: View>: View {
         LazyVGrid(
             columns: [
                 GridItem(
-                    .adaptive(minimum: horizontalSizeClass == .regular ? regularMinimum : compactMinimum),
+                    .adaptive(minimum: baseMinimum * textScale),
                     spacing: spacing
                 ),
             ],
@@ -117,5 +119,9 @@ public struct AdaptiveGrid<Content: View>: View {
         ) {
             content()
         }
+    }
+
+    private var baseMinimum: CGFloat {
+        horizontalSizeClass == .regular ? regularMinimum : compactMinimum
     }
 }
