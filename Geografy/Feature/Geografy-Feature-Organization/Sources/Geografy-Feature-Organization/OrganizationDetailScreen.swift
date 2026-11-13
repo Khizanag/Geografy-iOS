@@ -26,7 +26,7 @@ public struct OrganizationDetailScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.tinted(organization.highlightColor))
+            .screenBackground()
             .navigationTitle(organization.displayName)
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()

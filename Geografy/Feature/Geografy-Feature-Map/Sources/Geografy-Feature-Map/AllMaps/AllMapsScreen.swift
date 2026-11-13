@@ -26,7 +26,7 @@ public struct AllMapsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.hero)
+            .screenBackground()
     }
 }
 

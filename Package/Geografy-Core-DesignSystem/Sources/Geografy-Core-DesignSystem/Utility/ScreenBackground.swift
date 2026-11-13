@@ -1,28 +1,22 @@
 import SwiftUI
 
 public extension View {
-    /// Sets a navigation page's backdrop as its container background, which fills the whole screen
-    /// in every orientation — under the bars, the tab bar, and the keyboard.
-    func screenBackground<Background: View>(@ViewBuilder _ background: () -> Background) -> some View {
+    /// The app's one screen backdrop. Set as the navigation container's background, so it fills the
+    /// whole screen in every orientation — under the bars, the tab bar, and the keyboard.
+    ///
+    /// Every screen uses this; change the backdrop here and the whole app follows.
+    func screenBackground() -> some View {
         #if os(tvOS)
-        self.background { background().ignoresSafeArea() }
+        background { AppBackdrop().ignoresSafeArea() }
         #else
-        containerBackground(for: .navigation, content: background)
+        containerBackground(for: .navigation) { AppBackdrop() }
         #endif
     }
+}
 
-    /// The plain app background, filling the whole screen.
-    func screenBackground() -> some View {
-        screenBackground { DesignSystem.Color.background }
-    }
-
-    /// The app background with ambient color blobs, filling the whole screen.
-    func screenBackground(_ preset: AmbientBlobsView.Preset) -> some View {
-        screenBackground {
-            ZStack {
-                DesignSystem.Color.background
-                AmbientBlobsView(preset)
-            }
-        }
+/// What every screen draws behind its content.
+private struct AppBackdrop: View {
+    var body: some View {
+        DesignSystem.Color.background
     }
 }

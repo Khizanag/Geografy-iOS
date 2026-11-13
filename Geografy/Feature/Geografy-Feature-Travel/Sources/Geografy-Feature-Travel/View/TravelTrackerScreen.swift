@@ -88,7 +88,7 @@ private extension TravelTrackerScreen {
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }
-        .screenBackground(.travel)
+        .screenBackground()
     }
 
     var statsSection: some View {

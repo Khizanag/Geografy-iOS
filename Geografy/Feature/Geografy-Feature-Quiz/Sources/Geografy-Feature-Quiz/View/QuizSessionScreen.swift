@@ -84,7 +84,7 @@ private extension QuizSessionScreen {
         .padding(.top, DesignSystem.Spacing.sm)
         .blur(radius: isPaused ? 12 : 0)
         .allowsHitTesting(!isPaused)
-        .screenBackground(.quiz)
+        .screenBackground()
     }
 
     @ToolbarContentBuilder

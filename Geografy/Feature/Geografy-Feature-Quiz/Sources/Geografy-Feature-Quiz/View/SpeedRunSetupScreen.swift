@@ -23,7 +23,7 @@ public struct SpeedRunSetupScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.quiz)
+            .screenBackground()
             .navigationTitle("Speed Run")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) { startButton }

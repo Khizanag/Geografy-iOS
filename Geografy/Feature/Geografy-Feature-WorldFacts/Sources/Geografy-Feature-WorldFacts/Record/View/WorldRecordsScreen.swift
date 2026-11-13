@@ -20,7 +20,7 @@ public struct WorldRecordsScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.standard)
+            .screenBackground()
             .task {
                 records = worldRecordsService.computeRecords(from: countryDataService.countries)
             }

@@ -27,7 +27,7 @@ public struct MultiplayerLobbyScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.subtle)
+            .screenBackground()
             .navigationTitle("Multiplayer")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {

@@ -20,7 +20,7 @@ public struct LocalMultiplayerMatchScreen: View {
             progressBar
             questionContent
         }
-        .screenBackground(.quiz)
+        .screenBackground()
         .onChange(of: coordinator.currentIndex) {
             selectedOptionID = nil
             answerStartTime = Date()

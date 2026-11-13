@@ -15,7 +15,7 @@ public struct MultiplayerResultScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.tinted(resultColor))
+            .screenBackground()
             .navigationTitle("Match Result")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) { actionButtons }

@@ -21,7 +21,7 @@ public struct FriendsListScreen: View {
     // MARK: - Body
     public var body: some View {
         content
-            .screenBackground(.standard)
+            .screenBackground()
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.inline)
             .task { await loadData() }

@@ -24,7 +24,7 @@ public struct DistanceCalculatorScreen: View {
     // MARK: - Body
     public var body: some View {
         extractedContent
-            .screenBackground(.standard)
+            .screenBackground()
             .navigationTitle("Distance Calculator")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

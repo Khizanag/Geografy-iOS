@@ -18,7 +18,7 @@ public struct MapPuzzleSetupScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.subtle)
+            .screenBackground()
             .navigationTitle("Map Puzzle")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

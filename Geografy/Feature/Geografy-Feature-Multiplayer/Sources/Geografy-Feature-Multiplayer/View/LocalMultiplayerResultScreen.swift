@@ -16,7 +16,7 @@ public struct LocalMultiplayerResultScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.standard)
+            .screenBackground()
             .onAppear { awardXPOnce() }
             .alert("Rematch?", isPresented: $coordinator.rematchRequested) {
                 Button("Accept") { coordinator.acceptRematch() }

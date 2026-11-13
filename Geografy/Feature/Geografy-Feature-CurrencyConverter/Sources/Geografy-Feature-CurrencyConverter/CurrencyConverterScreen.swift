@@ -28,7 +28,7 @@ public struct CurrencyConverterScreen: View {
     // MARK: - Body
     public var body: some View {
         extractedContent
-            .screenBackground(.standard)
+            .screenBackground()
             .navigationTitle("Currency Converter")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

@@ -57,7 +57,7 @@ private extension NeighborExplorerScreen {
             .padding(.vertical, DesignSystem.Spacing.lg)
             .readableContentWidth()
         }
-        .screenBackground(.standard)
+        .screenBackground()
     }
 }
 

@@ -23,7 +23,7 @@ public struct LessonScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.standard)
+            .screenBackground()
             .navigationTitle(lesson.title)
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)

@@ -16,7 +16,7 @@ public struct LeaderboardScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.leaderboard)
+            .screenBackground()
             .navigationTitle("Leaderboards")
             .navigationBarTitleDisplayMode(.inline)
     }

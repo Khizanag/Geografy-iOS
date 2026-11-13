@@ -20,7 +20,7 @@ public struct QuizPackBrowserScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.subtle)
+            .screenBackground()
             .task { loadData() }
             .onAppear { startAnimations() }
     }

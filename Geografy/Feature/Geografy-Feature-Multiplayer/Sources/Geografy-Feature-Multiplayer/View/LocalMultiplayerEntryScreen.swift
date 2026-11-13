@@ -52,7 +52,7 @@ private extension LocalMultiplayerEntryScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.lg)
         }
-        .screenBackground(.standard)
+        .screenBackground()
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -191,7 +191,7 @@ private extension LocalMultiplayerEntryScreen {
             Spacer()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .screenBackground(.standard)
+        .screenBackground()
     }
 }
 #endif

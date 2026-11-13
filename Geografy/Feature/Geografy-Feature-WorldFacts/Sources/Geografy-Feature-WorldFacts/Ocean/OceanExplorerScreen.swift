@@ -18,7 +18,7 @@ public struct OceanExplorerScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.tinted(DesignSystem.Color.blue))
+            .screenBackground()
     }
 }
 

@@ -18,7 +18,7 @@ public struct FeedScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .background { backgroundGradient }
+            .screenBackground()
             .navigationTitle("Feed")
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -54,10 +54,6 @@ private extension FeedScreen {
         .refreshable {
             feedService.refresh()
         }
-    }
-
-    var backgroundGradient: some View {
-        DesignSystem.Color.background.ignoresSafeArea()
     }
 
     func feedCard(for item: FeedItem) -> some View {

@@ -60,7 +60,7 @@ private extension HubScreen {
             .readableContentWidth()
         }
         .scrollEdgeEffectStyle(.soft, for: .top)
-        .screenBackground(.standard)
+        .screenBackground()
     }
 
     func hubSection(title: String, items: [HubItem]) -> some View {

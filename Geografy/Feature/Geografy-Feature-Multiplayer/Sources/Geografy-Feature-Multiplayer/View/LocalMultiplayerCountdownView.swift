@@ -10,7 +10,7 @@ public struct LocalMultiplayerCountdownView: View {
     public var body: some View {
         countdownContent
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .screenBackground(.standard)
+            .screenBackground()
     }
 }
 

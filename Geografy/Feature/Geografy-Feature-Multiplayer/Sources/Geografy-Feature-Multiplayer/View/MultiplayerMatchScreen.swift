@@ -58,7 +58,7 @@ private extension MultiplayerMatchScreen {
             questionContent
             Spacer(minLength: 0)
         }
-        .screenBackground(.subtle)
+        .screenBackground()
     }
 
     @ViewBuilder

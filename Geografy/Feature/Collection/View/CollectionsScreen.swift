@@ -16,7 +16,7 @@ struct CollectionsScreen: View {
     // MARK: - Body
     var body: some View {
         content
-            .screenBackground(.standard)
+            .screenBackground()
             .toolbar { toolbarContent }
             .nameEntryAlert(
                 "New Collection",

@@ -14,7 +14,7 @@ public struct LocalMultiplayerLobbyScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.standard)
+            .screenBackground()
             .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {

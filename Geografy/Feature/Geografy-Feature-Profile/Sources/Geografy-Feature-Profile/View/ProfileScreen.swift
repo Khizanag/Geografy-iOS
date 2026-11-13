@@ -31,7 +31,7 @@ public struct ProfileScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.rich)
+            .screenBackground()
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }

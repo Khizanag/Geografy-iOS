@@ -68,7 +68,7 @@ private extension FlashcardSessionScreen {
             ratingSection
         }
         .padding(.top, DesignSystem.Spacing.sm)
-        .screenBackground(.rich)
+        .screenBackground()
     }
 
     var resultsContent: some View {

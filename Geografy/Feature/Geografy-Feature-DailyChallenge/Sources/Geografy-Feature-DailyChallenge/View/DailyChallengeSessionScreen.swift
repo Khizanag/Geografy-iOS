@@ -46,7 +46,7 @@ private extension DailyChallengeSessionScreen {
 
             challengeRouter
         }
-        .screenBackground(.quiz)
+        .screenBackground()
     }
 
     var scoreBanner: some View {

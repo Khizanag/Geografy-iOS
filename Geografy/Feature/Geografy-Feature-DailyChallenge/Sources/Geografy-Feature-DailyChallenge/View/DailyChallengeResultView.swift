@@ -63,7 +63,7 @@ private extension DailyChallengeResultView {
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
         .safeAreaInset(edge: .bottom) { actionButtons }
-        .screenBackground(.standard)
+        .screenBackground()
     }
 }
 

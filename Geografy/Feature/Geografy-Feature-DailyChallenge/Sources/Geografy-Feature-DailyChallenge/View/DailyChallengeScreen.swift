@@ -44,7 +44,7 @@ private extension DailyChallengeScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
-        .screenBackground(.standard)
+        .screenBackground()
     }
 
     var sessionCover: some View {

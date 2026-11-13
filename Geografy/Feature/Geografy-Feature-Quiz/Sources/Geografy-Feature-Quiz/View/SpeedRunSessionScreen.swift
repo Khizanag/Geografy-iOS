@@ -36,7 +36,7 @@ public struct SpeedRunSessionScreen: View {
     // MARK: - Body
     public var body: some View {
         mainContent
-            .screenBackground(.quiz)
+            .screenBackground()
             .navigationTitle("Speed Run · \(region.displayName)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }

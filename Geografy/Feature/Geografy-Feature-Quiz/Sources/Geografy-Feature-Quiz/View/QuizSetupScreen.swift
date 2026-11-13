@@ -26,7 +26,7 @@ public struct QuizSetupScreen: View {
     // MARK: - Body
     public var body: some View {
         scrollContent
-            .screenBackground(.quiz)
+            .screenBackground()
             .navigationTitle("Quiz")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) { startButton }

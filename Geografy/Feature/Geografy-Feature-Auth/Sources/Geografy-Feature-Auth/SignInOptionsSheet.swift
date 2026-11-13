@@ -20,7 +20,7 @@ public struct SignInOptionsSheet: View {
     // MARK: - Body
     public var body: some View {
         extractedContent
-            .screenBackground(.standard)
+            .screenBackground()
             .onAppear { appeared = true }
             .alert("Sign In Failed", isPresented: $showError) {
                 Button("OK", role: .cancel) {}

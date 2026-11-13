@@ -16,7 +16,7 @@ public struct SRSStudyScreen: View {
     // MARK: - Body
     public var body: some View {
         contentView
-            .screenBackground(.standard)
+            .screenBackground()
             .navigationTitle("Review")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaInset(edge: .bottom) {
