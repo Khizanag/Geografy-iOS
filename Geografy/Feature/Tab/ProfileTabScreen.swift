@@ -35,7 +35,7 @@ private extension ProfileTabScreen {
     static let sections = [
         HubSection(title: "You", items: [.profile, .favorites, .travel]),
         HubSection(title: "Progress", items: [.achievements, .leaderboards, .friends]),
-        HubSection(title: "App", items: [.themes, .settings]),
+        HubSection(title: "App", items: [.settings]),
     ]
 }
 
