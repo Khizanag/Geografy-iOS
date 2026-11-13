@@ -16,6 +16,8 @@ public struct MapCanvasView: View {
     public var showDensityOverlay: Bool = false
     public var wrapsHorizontally: Bool = true
 
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
     // MARK: - Init
     public init(
         countryShapes: [CountryShape],
@@ -113,7 +115,7 @@ private extension MapCanvasView {
             if showDensityOverlay, let density = densityData[shape.id] {
                 transformedContext.fill(path, with: .color(densityHeatmapColor(for: density)))
             } else {
-                let fillColor = isSelected ? shape.color.opacity(1) : shape.color.opacity(0.85)
+                let fillColor = isSelected || reduceTransparency ? shape.color.opacity(1) : shape.color.opacity(0.85)
                 transformedContext.fill(path, with: .color(fillColor))
             }
 
@@ -121,6 +123,15 @@ private extension MapCanvasView {
                 transformedContext.fill(
                     path,
                     with: .color(travelStatus.color.opacity(0.35))
+                )
+                let outlineWidth = 1.5 / scale
+                transformedContext.stroke(
+                    path,
+                    with: .color(travelStatus.color),
+                    style: StrokeStyle(
+                        lineWidth: outlineWidth,
+                        dash: travelStatus.mapOutlineDash(lineWidth: outlineWidth)
+                    )
                 )
             }
 

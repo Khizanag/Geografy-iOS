@@ -34,7 +34,6 @@ public struct ContinentOverviewScreen: View {
     public let continent: Country.Continent
 
     @State private var sortBy: SortOption = .name
-    @State private var appeared = false
 
     // MARK: - Body
     public var body: some View {
@@ -53,9 +52,6 @@ public struct ContinentOverviewScreen: View {
                             .foregroundStyle(DesignSystem.Color.iconPrimary)
                     }
                 }
-            }
-            .onAppear {
-                appeared = true
             }
     }
 }
@@ -262,13 +258,7 @@ private extension ContinentOverviewScreen {
                 }
             }
             .buttonStyle(PressButtonStyle())
-            .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 16)
-            .animation(
-                .spring(response: 0.5, dampingFraction: 0.8)
-                    .delay(Double(index) * 0.03 + 0.15),
-                value: appeared
-            )
+            .phaseEntrance(index: index, stagger: 0.03)
         }
     }
 }
