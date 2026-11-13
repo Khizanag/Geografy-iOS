@@ -59,6 +59,9 @@ private extension LocalMultiplayerMatchScreen {
                 .lineLimit(1)
         }
         .frame(minWidth: 60)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue("\(score) points")
     }
 }
 
@@ -97,6 +100,7 @@ private extension LocalMultiplayerMatchScreen {
             if let flagCode = question.promptFlag {
                 FlagView(countryCode: flagCode, height: 80)
                     .geoShadow(.elevated)
+                    .accessibilityLabel("Mystery flag")
             }
 
             Text(question.promptText)
@@ -104,6 +108,7 @@ private extension LocalMultiplayerMatchScreen {
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.md)
@@ -119,6 +124,7 @@ private extension LocalMultiplayerMatchScreen {
                     index: index,
                     action: { selectOption(option.id) }
                 )
+                .accessibilityLabel(option.text ?? "Flag \(index + 1)")
             }
         }
     }
@@ -132,13 +138,14 @@ private extension LocalMultiplayerMatchScreen {
                         : DesignSystem.Color.warning
                 )
                 .frame(width: 6, height: 6)
+                .accessibilityHidden(true)
             Text(
                 coordinator.opponentHasAnswered
                     ? "Opponent answered"
                     : "Opponent thinking..."
             )
             .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .animation(.easeInOut(duration: 0.3), value: coordinator.opponentHasAnswered)
     }
@@ -153,6 +160,21 @@ private extension LocalMultiplayerMatchScreen {
 
         hapticsService.impact(.light)
         coordinator.submitAnswer(optionID: optionID, timeSpent: timeSpent)
+        announceAnswer(optionID: optionID)
+    }
+
+    func announceAnswer(optionID: UUID) {
+        guard coordinator.currentIndex < coordinator.questions.count else { return }
+        let question = coordinator.questions[coordinator.currentIndex]
+        let message: String
+        if optionID == question.correctOptionID {
+            message = "Correct."
+        } else {
+            let answer = question.options.first { $0.id == question.correctOptionID }?.text
+                ?? question.correctCountry.name
+            message = "Incorrect. The answer is \(answer)."
+        }
+        AccessibilityNotification.Announcement(message).post()
     }
 
     func optionState(for optionID: UUID, question: QuizQuestion) -> QuizOptionButton.OptionState {

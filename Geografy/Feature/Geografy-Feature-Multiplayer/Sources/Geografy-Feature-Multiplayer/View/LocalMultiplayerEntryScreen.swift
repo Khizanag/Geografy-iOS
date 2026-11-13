@@ -6,6 +6,7 @@ import SwiftUI
 public struct LocalMultiplayerEntryScreen: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var coordinator = LocalMultiplayerCoordinator()
     @State private var appeared = false
@@ -60,13 +61,19 @@ private extension LocalMultiplayerEntryScreen {
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             IconBadge("antenna.radiowaves.left.and.right", size: .hero)
-                .symbolEffect(.variableColor.iterative, options: .repeating, value: appeared)
+                .symbolEffect(
+                    .variableColor.iterative,
+                    options: reduceMotion ? .nonRepeating : .repeating,
+                    value: appeared
+                )
+                .accessibilityHidden(true)
 
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Play Nearby")
                     .font(DesignSystem.Font.title)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
                 Text("Challenge a friend on the same network")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -74,8 +81,7 @@ private extension LocalMultiplayerEntryScreen {
             }
         }
         .frame(maxWidth: .infinity)
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 16)
+        .phaseEntrance()
     }
 
     var roleCards: some View {
@@ -100,9 +106,7 @@ private extension LocalMultiplayerEntryScreen {
                 coordinator.startBrowsing()
             }
         }
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 12)
-        .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
+        .phaseEntrance(index: 1, stagger: 0.15)
     }
 
     func roleCard(
@@ -116,6 +120,7 @@ private extension LocalMultiplayerEntryScreen {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
                     IconBadge(icon, color: color, size: .medium)
+                        .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text(title)
@@ -142,25 +147,27 @@ private extension LocalMultiplayerEntryScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Image(systemName: "info.circle")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
             Text("Both devices must be nearby on the same Wi-Fi or with Bluetooth enabled.")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
-        .opacity(appeared ? 1 : 0)
-        .animation(.easeOut(duration: 0.5).delay(0.3), value: appeared)
+        .phaseEntrance(index: 2, stagger: 0.15)
     }
 
     var disconnectedView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             Spacer()
             PulsingCirclesView(icon: "wifi.slash", isAnimating: true)
+                .accessibilityHidden(true)
 
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Disconnected")
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
                 Text("The connection to your opponent was lost.")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)

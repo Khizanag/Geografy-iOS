@@ -6,6 +6,7 @@ import SwiftUI
 public struct MultiplayerRoundView: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     public let question: QuizQuestion
     public let quizType: QuizType
@@ -32,6 +33,7 @@ private extension MultiplayerRoundView {
         VStack(spacing: DesignSystem.Spacing.sm) {
             if let promptFlag = question.promptFlag {
                 FlagView(countryCode: promptFlag, height: 80)
+                    .accessibilityLabel("Mystery flag")
             }
 
             if let subject = question.promptSubject {
@@ -44,15 +46,17 @@ private extension MultiplayerRoundView {
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                     .minimumScaleFactor(0.8)
+                    .accessibilityAddTraits(.isHeader)
             } else {
                 Text(question.promptText)
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                     .minimumScaleFactor(0.8)
+                    .accessibilityAddTraits(.isHeader)
             }
 
             opponentStatusIndicator
@@ -65,18 +69,20 @@ private extension MultiplayerRoundView {
                 Image(systemName: "checkmark.circle.fill")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.success)
+                    .accessibilityHidden(true)
                 Text("Opponent answered")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             } else if opponentIsThinking {
                 thinkingDots
+                    .accessibilityHidden(true)
                 Text("Opponent thinking")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
-        .animation(.easeInOut(duration: 0.3), value: opponentHasAnswered)
-        .animation(.easeInOut(duration: 0.3), value: opponentIsThinking)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: opponentHasAnswered)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: opponentIsThinking)
     }
 
     var thinkingDots: some View {
@@ -88,7 +94,7 @@ private extension MultiplayerRoundView {
                     .opacity(opponentIsThinking ? 1 : 0.3)
                     .animation(
                         reduceMotion
-                            ? .default
+                            ? nil
                             : .easeInOut(duration: 0.5)
                                 .repeatForever(autoreverses: true)
                                 .delay(Double(index) * 0.2),
@@ -112,6 +118,8 @@ private extension MultiplayerRoundView {
                 ) {
                     onSelectOption(option.id)
                 }
+                .accessibilityLabel(option.text ?? "Flag \(index + 1)")
+                .accessibilityValue(optionAccessibilityValue(for: option))
                 .overlay(alignment: .trailing) {
                     if showFeedback,
                        opponentSelectedOptionID == option.id {
@@ -130,6 +138,7 @@ private extension MultiplayerRoundView {
             .padding(.horizontal, DesignSystem.Spacing.xxs)
             .padding(.vertical, 2)
             .background(DesignSystem.Color.purple, in: Capsule())
+            .accessibilityHidden(true)
     }
 }
 
@@ -142,5 +151,18 @@ private extension MultiplayerRoundView {
         if option.id == question.correctOptionID { return .correct }
         if selectedOptionID == option.id { return .incorrect }
         return .disabled
+    }
+
+    func optionAccessibilityValue(for option: QuizOption) -> String {
+        var parts: [String] = []
+        switch optionState(for: option) {
+        case .correct: parts.append("Correct answer")
+        case .incorrect: parts.append("Your answer, incorrect")
+        case .default, .disabled: break
+        }
+        if showFeedback, opponentSelectedOptionID == option.id {
+            parts.append("Opponent's pick")
+        }
+        return parts.joined(separator: ", ")
     }
 }
