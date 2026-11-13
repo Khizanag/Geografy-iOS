@@ -76,33 +76,10 @@ private extension TravelCountryPickerSheet {
             return
         }
         guard travelService.status(for: country.code) != status else { return }
-        travelService.set(status: status, for: country.code)
-        awardTravelXP(for: status, countryCode: country.code)
-        checkTravelAchievements()
-    }
-}
-
-// MARK: - Actions
-private extension TravelCountryPickerSheet {
-    func awardTravelXP(for status: TravelStatus, countryCode: String) {
-        let key = "travel_xp_awarded"
-        var awarded = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
-        let entryKey = "\(countryCode):\(status.rawValue)"
-        guard !awarded.contains(entryKey) else { return }
-        awarded.insert(entryKey)
-        UserDefaults.standard.set(Array(awarded), forKey: key)
-        switch status {
-        case .visited:
-            xpService.award(20, source: .travelVisited)
-        case .wantToVisit:
-            xpService.award(5, source: .travelWantToVisit)
-        }
+        recorder.record(status, for: country.code)
     }
 
-    func checkTravelAchievements() {
-        achievementService.checkTravelAchievements(
-            visitedCount: travelService.visitedCodes.count,
-            wantCount: travelService.wantToVisitCodes.count
-        )
+    var recorder: TravelStatusRecorder {
+        TravelStatusRecorder(travelService: travelService, xpService: xpService, achievementService: achievementService)
     }
 }

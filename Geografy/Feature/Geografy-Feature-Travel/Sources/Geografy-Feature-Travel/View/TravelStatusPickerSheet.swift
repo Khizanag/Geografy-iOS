@@ -145,10 +145,12 @@ private extension TravelStatusPickerSheet {
 private extension TravelStatusPickerSheet {
     func select(_ status: TravelStatus, isSelected: Bool) {
         hapticsService.impact(.light)
-        travelService.set(status: isSelected ? nil : status, for: country.code)
-        guard !isSelected else { return }
-        awardTravelXP(for: status)
-        checkTravelAchievements()
+        if isSelected {
+            travelService.set(status: nil, for: country.code)
+            return
+        }
+        TravelStatusRecorder(travelService: travelService, xpService: xpService, achievementService: achievementService)
+            .record(status, for: country.code)
         dismiss()
     }
 }
@@ -160,30 +162,5 @@ private extension TravelStatus {
         case .visited: "I've been there"
         case .wantToVisit: "It's on my list"
         }
-    }
-}
-
-// MARK: - Gamification
-private extension TravelStatusPickerSheet {
-    func awardTravelXP(for status: TravelStatus) {
-        let key = "travel_xp_awarded"
-        var awarded = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
-        let entryKey = "\(country.code):\(status.rawValue)"
-        guard !awarded.contains(entryKey) else { return }
-        awarded.insert(entryKey)
-        UserDefaults.standard.set(Array(awarded), forKey: key)
-        switch status {
-        case .visited:
-            xpService.award(20, source: .travelVisited)
-        case .wantToVisit:
-            xpService.award(5, source: .travelWantToVisit)
-        }
-    }
-
-    func checkTravelAchievements() {
-        achievementService.checkTravelAchievements(
-            visitedCount: travelService.visitedCodes.count,
-            wantCount: travelService.wantToVisitCodes.count
-        )
     }
 }
