@@ -142,7 +142,7 @@ private extension WordSearchGameScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
         }
-        .safeAreaInset(edge: .bottom) {
+        .safeAreaBar(edge: .bottom) {
             if gameFinished {
                 resultFooter
                     .padding(.horizontal, DesignSystem.Spacing.md)

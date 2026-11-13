@@ -18,7 +18,7 @@ public struct CustomQuizPreviewScreen: View {
             .screenBackground()
             .navigationTitle("Preview")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) { saveButton }
+            .safeAreaBar(edge: .bottom) { saveButton }
     }
 }
 

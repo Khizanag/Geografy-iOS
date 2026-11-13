@@ -18,7 +18,7 @@ public struct LocalMultiplayerLobbyScreen: View {
             .screenBackground()
             .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) {
+            .safeAreaBar(edge: .bottom) {
                 if coordinator.isHost, coordinator.opponent?.isReady == true {
                     startButton
                 }

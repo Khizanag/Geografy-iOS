@@ -21,7 +21,7 @@ public struct WordSearchScreen: View {
             .navigationTitle("Word Search")
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
-            .safeAreaInset(edge: .bottom) { startButton }
+            .safeAreaBar(edge: .bottom) { startButton }
             .toolbar { toolbarContent }
             .sheet(isPresented: $showGuide) { wordSearchGuide }
     }

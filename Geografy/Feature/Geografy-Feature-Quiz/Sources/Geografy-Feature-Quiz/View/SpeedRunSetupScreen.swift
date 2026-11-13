@@ -26,7 +26,7 @@ public struct SpeedRunSetupScreen: View {
             .screenBackground()
             .navigationTitle("Speed Run")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) { startButton }
+            .safeAreaBar(edge: .bottom) { startButton }
             .onAppear {
                 appeared = true
                 pulseTimer = true

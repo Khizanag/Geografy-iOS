@@ -19,7 +19,7 @@ public struct SRSStudyScreen: View {
             .screenBackground()
             .navigationTitle("Review")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) {
+            .safeAreaBar(edge: .bottom) {
                 if !dueCards.isEmpty {
                     startReviewButton
                         .padding(.horizontal, DesignSystem.Spacing.md)

@@ -32,7 +32,7 @@ public struct QuizResultsScreen: View {
             .navigationTitle("Results")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-            .safeAreaInset(edge: .bottom) {
+            .safeAreaBar(edge: .bottom) {
                 actionButtons
                     .padding(.horizontal, DesignSystem.Spacing.md)
             }

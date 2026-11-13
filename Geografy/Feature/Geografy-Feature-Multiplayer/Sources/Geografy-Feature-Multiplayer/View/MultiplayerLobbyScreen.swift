@@ -30,7 +30,7 @@ public struct MultiplayerLobbyScreen: View {
             .screenBackground()
             .navigationTitle("Multiplayer")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) {
+            .safeAreaBar(edge: .bottom) {
                 if !isSearching {
                     footerButton
                 }

@@ -18,7 +18,7 @@ public struct MultiplayerResultScreen: View {
             .screenBackground()
             .navigationTitle("Match Result")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) { actionButtons }
+            .safeAreaBar(edge: .bottom) { actionButtons }
             .toolbar {
             }
             .onAppear {

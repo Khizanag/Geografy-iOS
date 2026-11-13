@@ -19,7 +19,7 @@ struct CustomQuizDetailSheet: View {
             .screenBackground()
             .navigationTitle(quiz.name)
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaInset(edge: .bottom) { playButton }
+            .safeAreaBar(edge: .bottom) { playButton }
             .toolbar { toolbarContent }
     }
 }
