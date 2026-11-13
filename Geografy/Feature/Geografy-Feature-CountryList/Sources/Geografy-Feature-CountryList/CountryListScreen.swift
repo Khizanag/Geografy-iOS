@@ -35,6 +35,7 @@ public struct CountryListScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var searchText = ""
     @State private var debouncedSearchText = ""
@@ -112,7 +113,7 @@ private extension CountryListScreen {
         if showJumpIndex {
             AlphabetJumpIndex(letters: sectionKeys) { letter in
                 hapticsService.selection()
-                withAnimation(.easeInOut(duration: 0.2)) {
+                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
                     expandedSections.insert(letter)
                     proxy.scrollTo(letter, anchor: .top)
                 }
@@ -166,7 +167,7 @@ private extension CountryListScreen {
 
     var resetButton: some View {
         Button(role: .destructive) {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 groupBy = .none
                 sortBy = .name
                 sortAscending = true
@@ -185,7 +186,7 @@ private extension CountryListScreen {
     }
 
     var groupBySubmenu: some View {
-        Picker(selection: $groupBy.animation()) {
+        Picker(selection: $groupBy.animation(reduceMotion ? nil : .default)) {
             ForEach(GroupOption.allCases, id: \.self) { option in
                 Label(option.rawValue, systemImage: groupIcon(for: option))
                     .tag(option)
@@ -280,7 +281,7 @@ private extension CountryListScreen {
 
     func sectionHeader(key: String, count: Int) -> some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.75)) {
                 if expandedSections.contains(key) {
                     expandedSections.remove(key)
                 } else {
@@ -291,6 +292,10 @@ private extension CountryListScreen {
             sectionHeaderLabel(key: key, count: count)
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(key), \(count) countries")
+        .accessibilityValue(expandedSections.contains(key) ? "Expanded" : "Collapsed")
+        .accessibilityAddTraits([.isButton, .isHeader])
     }
 
     func sectionHeaderLabel(key: String, count: Int) -> some View {
@@ -339,13 +344,13 @@ private extension CountryListScreen {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Text("\(count)")
                 .font(DesignSystem.Font.micro.weight(.semibold))
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .monospacedDigit()
             Image(
                 systemName: expandedSections.contains(key) ? "chevron.up" : "chevron.down"
             )
             .font(DesignSystem.Font.nano.bold())
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
         }
         .padding(.horizontal, DesignSystem.Spacing.xs)
         .padding(.vertical, DesignSystem.Spacing.xxs)
@@ -376,7 +381,7 @@ private extension CountryListScreen {
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button {
                 hapticsService.impact(.medium)
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
                     favoritesService.toggle(code: country.code)
                 }
             } label: {
