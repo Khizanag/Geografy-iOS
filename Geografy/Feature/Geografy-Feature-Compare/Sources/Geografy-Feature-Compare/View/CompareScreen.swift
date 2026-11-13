@@ -157,20 +157,11 @@ private extension CompareScreen {
     }
 
     var emptyPrompt: some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "arrow.triangle.swap")
-                    .font(DesignSystem.Font.title)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .accessibilityHidden(true)
-                Text("Select two countries to compare")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .multilineTextAlignment(.center)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.xl)
-        }
+        ContentUnavailableView(
+            "No Comparison Yet",
+            systemImage: "arrow.triangle.swap",
+            description: Text("Select two countries to compare")
+        )
     }
 }
 
@@ -179,7 +170,6 @@ private extension CompareScreen {
     func metricsSection(left: Country, right: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Comparison")
-                .accessibilityAddTraits(.isHeader)
 
             numericCharts(left: left, right: right)
             textMetrics(left: left, right: right)
@@ -297,7 +287,6 @@ private extension CompareScreen {
     var recentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Recent", icon: "clock")
-                .accessibilityAddTraits(.isHeader)
 
             ForEach(recentPairs) { pair in
                 recentPairRow(pair)

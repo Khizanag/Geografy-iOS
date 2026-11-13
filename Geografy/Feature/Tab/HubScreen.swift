@@ -139,7 +139,7 @@ private extension HubScreen {
             Image(systemName: "ladybug.fill")
                 .font(DesignSystem.Font.micro)
                 .foregroundStyle(DesignSystem.Color.onAccent)
-                .padding(4)
+                .padding(DesignSystem.Spacing.xxs)
                 .background(DesignSystem.Color.orange, in: Circle())
         }
         .buttonStyle(.plain)
@@ -169,7 +169,7 @@ private extension HubScreen {
 
     var tileLabelFont: Font { isWide ? DesignSystem.Font.subheadline : DesignSystem.Font.caption }
 
-    var tileSubtitleFont: Font { isWide ? DesignSystem.Font.caption : .system(size: 10) }
+    var tileSubtitleFont: Font { isWide ? DesignSystem.Font.caption : DesignSystem.Font.micro }
 
     var tileSpacing: CGFloat { isWide ? DesignSystem.Spacing.sm : DesignSystem.Spacing.xs }
 

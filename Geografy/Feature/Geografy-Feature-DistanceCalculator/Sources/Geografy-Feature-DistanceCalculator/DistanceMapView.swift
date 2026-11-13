@@ -122,7 +122,7 @@ private extension DistanceMapView {
         context.fill(Path(ellipseIn: dotRect), with: .color(color))
         context.fill(
             Path(ellipseIn: dotRect.insetBy(dx: 3, dy: 3)),
-            with: .color(.white)
+            with: .color(DesignSystem.Color.onAccent)
         )
     }
 

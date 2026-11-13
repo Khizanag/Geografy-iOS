@@ -48,15 +48,8 @@ private extension ModuleLessonsScreen {
     var moduleHeaderCard: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.accent.opacity(0.15))
-                        .frame(width: 52, height: 52)
-                    Image(systemName: module.icon)
-                        .font(DesignSystem.Font.iconMedium)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-                VStack(alignment: .leading, spacing: 4) {
+                IconBadge(module.icon, size: .large)
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(module.description)
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -90,9 +83,7 @@ private extension ModuleLessonsScreen {
                 lessonNumberBadge(index: index, isCompleted: lesson.isCompleted)
                 lessonInfo(lesson: lesson)
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                RowChevron()
             }
             .padding(DesignSystem.Spacing.md)
         }

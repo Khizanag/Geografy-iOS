@@ -72,22 +72,11 @@ private extension SizeVisualizationScreen {
     }
 
     func sortChip(for mode: SortMode) -> some View {
-        Button {
+        SelectableChip(mode.displayName, isSelected: sortMode == mode) {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
             sortMode = mode
-        } label: {
-            Text(mode.displayName)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(sortMode == mode ? .bold : .regular)
-                .foregroundStyle(sortMode == mode ? DesignSystem.Color.onAccent : DesignSystem.Color.textSecondary)
-                .padding(.horizontal, DesignSystem.Spacing.sm)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(
-                    sortMode == mode ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                    in: Capsule()
-                )
         }
     }
 

@@ -84,11 +84,8 @@ private extension CurrencyConverterScreen {
 
     var quickChipsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            Text("Quick select")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+            EyebrowLabel("Quick select")
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .accessibilityAddTraits(.isHeader)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DesignSystem.Spacing.xs) {
@@ -102,43 +99,15 @@ private extension CurrencyConverterScreen {
     }
 
     func quickChip(for entry: CurrencyEntry) -> some View {
-        let isSelected = fromCurrency?.code == entry.code
-        return Button {
+        SelectableChip(entry.code, isSelected: fromCurrency?.code == entry.code) {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
             fromCurrency = entry
             Task { await currencyService.fetchRates(for: entry.code) }
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                FlagView(countryCode: entry.countryCode, height: 16)
-                Text(entry.code)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(
-                        isSelected
-                            ? DesignSystem.Color.onAccent
-                            : DesignSystem.Color.textPrimary
-                    )
-            }
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xxs + 2)
-            .background(
-                isSelected
-                    ? DesignSystem.Color.accent
-                    : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
-            .overlay(
-                Capsule().strokeBorder(
-                    isSelected
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.textTertiary.opacity(0.3),
-                    lineWidth: 1
-                )
-            )
+        } icon: {
+            FlagView(countryCode: entry.countryCode, height: 16)
         }
-        .buttonStyle(PressButtonStyle())
     }
 
     var converterCard: some View {
@@ -286,8 +255,7 @@ private extension CurrencyConverterScreen {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 if currencyService.isLoading {
-                    ProgressView()
-                        .tint(DesignSystem.Color.accent)
+                    LoadingView()
                 } else if let converted = convertedAmount, let toEntry = toCurrency {
                     resultContent(converted: converted, toEntry: toEntry)
                 }
@@ -300,11 +268,7 @@ private extension CurrencyConverterScreen {
 
     func resultContent(converted: Double, toEntry: CurrencyEntry) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            Text("Result")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .textCase(.uppercase)
-                .accessibilityAddTraits(.isHeader)
+            EyebrowLabel("Result")
 
             HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
                 Text(formatAmount(converted))

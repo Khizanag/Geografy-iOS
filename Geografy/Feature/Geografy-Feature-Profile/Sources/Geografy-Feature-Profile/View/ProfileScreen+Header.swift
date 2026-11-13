@@ -47,14 +47,11 @@ extension ProfileScreen {
 private extension ProfileScreen {
     var guestBannerLabel: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.warning.opacity(0.15))
-                    .frame(width: 44, height: 44)
-                Image(systemName: "person.crop.circle.badge.exclamationmark.fill")
-                    .font(DesignSystem.Font.iconSmall)
-                    .foregroundStyle(DesignSystem.Color.warning)
-            }
+            IconBadge(
+                "person.crop.circle.badge.exclamationmark.fill",
+                color: DesignSystem.Color.warning,
+                size: .medium
+            )
             VStack(alignment: .leading, spacing: 3) {
                 Text("Save your progress")
                     .font(DesignSystem.Font.subheadline)
@@ -98,7 +95,7 @@ private extension ProfileScreen {
                 .opacity(0.6)
 
             ProfileAvatarView(name: displayName, size: 66)
-                .shadow(color: DesignSystem.Color.accent.opacity(0.30), radius: 10, x: 0, y: 4)
+                .geoShadow(.card)
         }
     }
 

@@ -116,7 +116,7 @@ private extension FlashcardGuideSheet {
             .overlay {
                 VStack(spacing: DesignSystem.Spacing.xs) {
                     Text(front ? "🇵🇹" : "Lisbon")
-                        .font(front ? .system(size: 40) : DesignSystem.Font.title2)
+                        .font(front ? DesignSystem.Font.displayXXS : DesignSystem.Font.title2)
                     Text(front ? "What is the capital?" : "Tap to flip")
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)

@@ -43,12 +43,7 @@ private extension ProfileTabScreen {
 private extension ProfileTabScreen {
     var greeting: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            Text(greetingLabel)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .textCase(.uppercase)
-                .kerning(1.2)
+            EyebrowLabel(greetingLabel, color: DesignSystem.Color.accent)
             Text(authService.currentProfile?.displayName ?? "Explorer")
                 .font(DesignSystem.Font.title)
                 .fontWeight(.bold)

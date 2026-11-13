@@ -84,7 +84,7 @@ private extension SignInOptionsSheet {
                 .frame(width: 110, height: 110)
                 .blur(radius: 40)
 
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
                 .fill(
                     LinearGradient(
                         colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
@@ -93,17 +93,17 @@ private extension SignInOptionsSheet {
                     )
                 )
                 .frame(width: 76, height: 76)
-                .shadow(color: DesignSystem.Color.accent.opacity(0.55), radius: 20, x: 0, y: 8)
+                .geoShadow(.elevated)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .strokeBorder(.white.opacity(0.18), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
+                        .strokeBorder(DesignSystem.Color.onAccent.opacity(0.18), lineWidth: 1)
                 )
 
             Image(systemName: "globe.americas.fill")
                 .font(DesignSystem.Font.iconXL)
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [.white, .white.opacity(0.82)],
+                        colors: [DesignSystem.Color.onAccent, DesignSystem.Color.onAccent.opacity(0.82)],
                         startPoint: .top,
                         endPoint: .bottom
                     )
@@ -127,24 +127,22 @@ private extension SignInOptionsSheet {
     }
 
     func statPill(value: String, label: String, icon: String, color: Color) -> some View {
-        VStack(spacing: 5) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.footnote)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.roundedCaption)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .minimumScaleFactor(0.8)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(spacing: 5) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.footnote)
+                    .foregroundStyle(color)
+                Text(value)
+                    .font(DesignSystem.Font.roundedCaption)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .minimumScaleFactor(0.8)
+                Text(label)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
     }
 }
 
@@ -177,31 +175,22 @@ private extension SignInOptionsSheet {
         _ benefit: (icon: String, color: Color, title: String, subtitle: String),
         delay: Double
     ) -> some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(benefit.color.opacity(0.16))
-                    .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                Image(systemName: benefit.icon)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(benefit.color)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                IconBadge(benefit.icon, color: benefit.color, size: .medium)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(benefit.title)
+                        .font(DesignSystem.Font.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text(benefit.subtitle)
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
+                Spacer(minLength: 0)
             }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(benefit.title)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(benefit.subtitle)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            Spacer(minLength: 0)
+            .padding(DesignSystem.Spacing.sm)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)
         .animation(.easeOut(duration: 0.5).delay(0.25 + delay), value: appeared)
@@ -248,7 +237,7 @@ private extension SignInOptionsSheet {
         .signInWithAppleButtonStyle(.white)
         .frame(height: 50)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
-        .shadow(color: .white.opacity(0.12), radius: 16, y: 4)
+        .geoShadow(.subtle)
     }
 
     var googleSignInButton: some View {
@@ -268,7 +257,7 @@ private extension SignInOptionsSheet {
             }
             #endif
         } label: {
-            HStack(spacing: 12) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
                 GoogleGLogo()
                     .frame(width: 22, height: 22)
                 Text("Sign in with Google")
@@ -277,7 +266,7 @@ private extension SignInOptionsSheet {
             }
             .frame(maxWidth: .infinity)
             .frame(height: 50)
-            .background(.white)
+            .background(DesignSystem.Color.onAccent)
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
             .geoShadow(.subtle)
         }
@@ -312,7 +301,7 @@ private extension SignInOptionsSheet {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
                 LinearGradient(
-                    colors: [Color(hex: "7B2FF7"), Color(hex: "F107A3")],
+                    colors: [DesignSystem.Color.purple, DesignSystem.Color.indigo],
                     startPoint: .leading,
                     endPoint: .trailing
                 ),

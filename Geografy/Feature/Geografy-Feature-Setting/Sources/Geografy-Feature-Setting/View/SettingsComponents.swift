@@ -48,9 +48,7 @@ struct SettingsNavigationRow: View {
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
             Spacer()
-            Image(systemName: "chevron.right")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+            RowChevron()
         }
         .settingsRowPadding()
         .contentShape(Rectangle())

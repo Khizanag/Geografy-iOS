@@ -75,7 +75,7 @@ private extension OceanExplorerScreen {
 
     func summaryRow(ocean: Ocean, isExpanded: Bool) -> some View {
         HStack(spacing: DesignSystem.Spacing.md) {
-            oceanIcon(icon: ocean.icon)
+            IconBadge(ocean.icon, color: DesignSystem.Color.blue, size: .medium)
             oceanSummary(ocean: ocean)
             Spacer()
             Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
@@ -89,24 +89,6 @@ private extension OceanExplorerScreen {
             "\(ocean.name), area: \(formatArea(ocean.area)), average depth: \(formatDepth(ocean.averageDepth))"
         )
         .accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
-    }
-
-    func oceanIcon(icon: String) -> some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.25), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 28
-                    )
-                )
-                .frame(width: 50, height: 50)
-            Image(systemName: icon)
-                .font(DesignSystem.Font.iconDefault)
-                .foregroundStyle(DesignSystem.Color.blue)
-        }
     }
 
     func oceanSummary(ocean: Ocean) -> some View {
@@ -165,7 +147,7 @@ private extension OceanExplorerScreen {
     }
 
     func statTile(label: String, value: String, icon: String) -> some View {
-        VStack(spacing: 4) {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.iconXS)
                 .foregroundStyle(DesignSystem.Color.blue)
@@ -188,7 +170,7 @@ private extension OceanExplorerScreen {
     }
 
     func borderingContinentsRow(ocean: Ocean) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
             Label("Bordering Continents", systemImage: "map")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)

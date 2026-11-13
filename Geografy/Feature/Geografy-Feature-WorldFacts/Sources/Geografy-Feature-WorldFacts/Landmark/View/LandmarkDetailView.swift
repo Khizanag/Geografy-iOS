@@ -45,7 +45,7 @@ private extension LandmarkDetailView {
                 Image(systemName: landmark.symbolName)
                     .font(DesignSystem.Font.displayLarge)
                     .foregroundStyle(accentSwiftUIColor)
-                    .shadow(color: accentSwiftUIColor.opacity(0.5), radius: 20, x: 0, y: 10)
+                    .geoShadow(.elevated)
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: landmark.countryCode, height: 24)
                         .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
@@ -77,7 +77,7 @@ private extension LandmarkDetailView {
     }
 
     var categoryBadge: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: landmark.category.icon)
             Text(landmark.category.displayName)
         }
@@ -90,7 +90,7 @@ private extension LandmarkDetailView {
     }
 
     var unescooBadge: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "checkmark.seal.fill")
             Text("UNESCO")
         }

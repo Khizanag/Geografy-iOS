@@ -52,14 +52,7 @@ private extension SRSStudyScreen {
 
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.purple.opacity(0.12))
-                    .frame(width: 80, height: 80)
-                Image(systemName: "clock.arrow.circlepath")
-                    .font(DesignSystem.Font.largeTitle)
-                    .foregroundStyle(DesignSystem.Color.purple)
-            }
+            IconBadge("clock.arrow.circlepath", color: DesignSystem.Color.purple, size: .hero)
 
             Text("Spaced Repetition")
                 .font(DesignSystem.Font.title2)
@@ -141,7 +134,9 @@ private extension SRSStudyScreen {
             SectionHeaderView(title: "Due Countries")
 
             ForEach(dueCards.prefix(5)) { card in
-                dueCardRow(card)
+                if let country = countryDataService.country(for: card.countryCode) {
+                    dueCardRow(card, country: country)
+                }
             }
 
             if dueCards.count > 5 {
@@ -153,28 +148,10 @@ private extension SRSStudyScreen {
         }
     }
 
-    func dueCardRow(_ card: FlashcardItem) -> some View {
+    func dueCardRow(_ card: FlashcardItem, country: Country) -> some View {
         let srData = flashcardService.spacedRepetitionData(for: card.id)
         return CardView {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                FlagView(
-                    countryCode: card.countryCode,
-                    height: DesignSystem.Size.lg,
-                    fixedWidth: true
-                )
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(card.countryName)
-                        .font(DesignSystem.Font.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text(card.capital)
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-
-                Spacer()
-
+            CountryListRow(country: country, subtitle: card.capital) {
                 proficiencyBadge(for: srData.proficiencyLevel)
             }
             .padding(DesignSystem.Spacing.sm)
@@ -194,22 +171,11 @@ private extension SRSStudyScreen {
     }
 
     var allCaughtUpSection: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(DesignSystem.Font.displaySmall)
-                .foregroundStyle(DesignSystem.Color.success)
-
-            Text("All caught up!")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            Text("No cards are due right now.\nCome back later or study new cards.")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .padding(.vertical, DesignSystem.Spacing.xxl)
+        ContentUnavailableView(
+            "All caught up!",
+            systemImage: "checkmark.seal.fill",
+            description: Text("No cards are due right now.\nCome back later or study new cards.")
+        )
     }
 }
 

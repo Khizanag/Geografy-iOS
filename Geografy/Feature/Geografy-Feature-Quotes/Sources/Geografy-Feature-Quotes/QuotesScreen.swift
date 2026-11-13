@@ -52,13 +52,13 @@ private extension QuotesScreen {
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
-                filterChip(label: "All", icon: "square.grid.2x2.fill", isSelected: selectedCategory == nil) {
+                SelectableChip("All", systemImage: "square.grid.2x2.fill", isSelected: selectedCategory == nil) {
                     selectedCategory = nil
                 }
                 ForEach(QuoteCategory.allCases, id: \.self) { category in
-                    filterChip(
-                        label: category.displayName,
-                        icon: category.icon,
+                    SelectableChip(
+                        category.displayName,
+                        systemImage: category.icon,
                         isSelected: selectedCategory == category
                     ) {
                         selectedCategory = selectedCategory == category ? nil : category
@@ -68,26 +68,6 @@ private extension QuotesScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
         }
         .scrollClipDisabled()
-    }
-
-    func filterChip(label: String, icon: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 4) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.caption)
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
-        }
-        .buttonStyle(PressButtonStyle())
     }
 
     var quotesList: some View {
@@ -137,18 +117,10 @@ private extension QuotesScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
             Spacer()
-            categoryChip(quote.category)
+            IconBadge(quote.category.icon, size: .small)
             favoriteButton(quote)
             shareButton(quote)
         }
-    }
-
-    func categoryChip(_ category: QuoteCategory) -> some View {
-        Image(systemName: category.icon)
-            .font(DesignSystem.Font.caption)
-            .foregroundStyle(DesignSystem.Color.accent)
-            .padding(DesignSystem.Spacing.xs)
-            .background(DesignSystem.Color.accent.opacity(0.12), in: Circle())
     }
 
     func favoriteButton(_ quote: Quote) -> some View {

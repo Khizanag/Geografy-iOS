@@ -35,11 +35,7 @@ private extension CountrySpotlightCard {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.micro)
                 .foregroundStyle(DesignSystem.Color.warning)
-            Text("COUNTRY OF THE DAY")
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .kerning(0.8)
+            EyebrowLabel("Country of the Day")
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xxs)

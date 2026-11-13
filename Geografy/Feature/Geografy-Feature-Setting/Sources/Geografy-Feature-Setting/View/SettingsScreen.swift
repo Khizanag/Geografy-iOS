@@ -139,9 +139,7 @@ private extension SettingsScreen {
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                RowChevron()
             }
             .settingsRowPadding()
         }
@@ -461,11 +459,8 @@ private extension SettingsScreen {
 
     func settingsGroup(header: String, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            Text(header.uppercased())
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+            EyebrowLabel(header, color: DesignSystem.Color.textTertiary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
-                .accessibilityAddTraits(.isHeader)
             CardView {
                 content()
             }
