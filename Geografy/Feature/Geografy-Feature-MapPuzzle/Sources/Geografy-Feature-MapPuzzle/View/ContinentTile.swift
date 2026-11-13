@@ -7,7 +7,7 @@ struct ContinentTile: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @ScaledMetric(relativeTo: .title) private var outlineHeight: CGFloat = 72
+    @ScaledMetric(relativeTo: .title) private var outlineHeight: CGFloat = 56
 
     let continent: Country.Continent
     let outline: ContinentOutline?
@@ -59,7 +59,7 @@ private extension ContinentTile {
         if let outline {
             ContinentOutlineView(
                 outline: outline,
-                fill: isSelected ? color : DesignSystem.Color.mapLandMuted
+                fill: isSelected ? color : DesignSystem.Color.textTertiary
             )
         } else {
             Image(systemName: continent.icon)

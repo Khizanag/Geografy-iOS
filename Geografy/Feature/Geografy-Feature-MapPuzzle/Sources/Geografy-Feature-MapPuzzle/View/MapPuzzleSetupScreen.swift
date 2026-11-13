@@ -7,6 +7,7 @@ public struct MapPuzzleSetupScreen: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @AppStorage("mapPuzzle_selectedContinent") private var selectedContinent: Country.Continent = .europe
 
@@ -60,7 +61,8 @@ private extension MapPuzzleSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
-            AdaptiveGrid(compactMinimum: 140, regularMinimum: 180) {
+            // Two across, like Word Search's themes, so all six regions fit above the start button.
+            LazyVGrid(columns: regionColumns, spacing: DesignSystem.Spacing.sm) {
                 ForEach(continents, id: \.self) { continent in
                     ContinentTile(
                         continent: continent,
@@ -74,6 +76,11 @@ private extension MapPuzzleSetupScreen {
                 }
             }
         }
+    }
+
+    var regionColumns: [GridItem] {
+        let count = dynamicTypeSize.isAccessibilitySize ? 1 : 2
+        return Array(repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.sm), count: count)
     }
 
     var startButton: some View {
