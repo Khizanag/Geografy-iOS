@@ -73,17 +73,10 @@ private extension DailyChallengeScreen {
     @ViewBuilder
     var startBar: some View {
         if let service, service.todayChallenge != nil, !service.hasCompletedToday {
-            Button {
+            // The same neutral glass start button as the other game setup screens.
+            GlassButton("Start Challenge", systemImage: "play.fill", fullWidth: true) {
                 showSession = true
-            } label: {
-                Label("Start Challenge", systemImage: "play.fill")
-                    .font(DesignSystem.Font.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.xxs)
             }
-            .buttonStyle(.glassProminent)
-            .tint(DesignSystem.Color.orange)
-            .controlSize(.large)
             .accessibilityHint("Opens today's challenge")
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.md)
