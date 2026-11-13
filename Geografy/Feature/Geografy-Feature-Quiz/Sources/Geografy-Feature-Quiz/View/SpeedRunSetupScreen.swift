@@ -106,7 +106,7 @@ private extension SpeedRunSetupScreen {
             Image(systemName: "timer")
                 .font(DesignSystem.Font.iconXL.weight(.semibold))
                 .foregroundStyle(DesignSystem.Color.error)
-                .symbolEffect(.pulse, options: .repeating, value: appeared)
+                .symbolEffect(.pulse, options: reduceMotion ? .nonRepeating : .repeating, value: appeared)
         }
         .animation(reduceMotion ? nil : .easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: pulseTimer)
     }

@@ -12,6 +12,7 @@ public struct SpeedRunSessionScreen: View {
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let region: QuizRegion
 
@@ -27,6 +28,9 @@ public struct SpeedRunSessionScreen: View {
     @State private var showGiveUpAlert = false
 
     @FocusState private var isInputFocused: Bool
+
+    @ScaledMetric(relativeTo: .largeTitle) private var timerFontSize: CGFloat = 44
+    @ScaledMetric(relativeTo: .largeTitle) private var resultTimeFontSize: CGFloat = 40
 
     // MARK: - Init
     public init(region: QuizRegion) {
@@ -103,11 +107,24 @@ private extension SpeedRunSessionScreen {
 
     var timerSection: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(formattedTime)
-                .font(DesignSystem.Font.monoLarge)
-                .foregroundStyle(timerColor)
-                .contentTransition(.numericText())
-                .animation(.easeInOut(duration: 0.1), value: elapsedTime)
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                if let timerStatusSymbol {
+                    Image(systemName: timerStatusSymbol)
+                        .font(DesignSystem.Font.iconMedium)
+                        .foregroundStyle(timerColor)
+                        .accessibilityHidden(true)
+                }
+                Text(formattedTime)
+                    .font(DesignSystem.Font.system(size: timerFontSize, weight: .bold, design: .monospaced))
+                    .foregroundStyle(timerColor)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .contentTransition(.numericText())
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.1), value: elapsedTime)
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Elapsed time")
+            .accessibilityValue(timerAccessibilityValue)
             Text("\(completedCodes.count) of \(targetCountries.count) countries")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -132,6 +149,7 @@ private extension SpeedRunSessionScreen {
             Image(systemName: "magnifyingglass")
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
 
             TextField("Type a country name…", text: $inputText)
                 .font(DesignSystem.Font.body)
@@ -151,6 +169,7 @@ private extension SpeedRunSessionScreen {
                         .foregroundStyle(DesignSystem.Color.textTertiary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Clear text")
             }
         }
         .padding(DesignSystem.Spacing.sm)
@@ -173,7 +192,7 @@ private extension SpeedRunSessionScreen {
                             .id(country.code)
                             .transition(
                                 .asymmetric(
-                                    insertion: .scale(scale: 0.85).combined(with: .opacity),
+                                    insertion: reduceMotion ? .opacity : .scale(scale: 0.85).combined(with: .opacity),
                                     removal: .opacity
                                 )
                             )
@@ -185,7 +204,7 @@ private extension SpeedRunSessionScreen {
             }
             .onChange(of: completedCodes.count) { _, _ in
                 if let last = completedCountries.first {
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         proxy.scrollTo(last.code, anchor: .top)
                     }
                 }
@@ -199,6 +218,7 @@ private extension SpeedRunSessionScreen {
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.success)
+                .accessibilityHidden(true)
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
@@ -208,7 +228,8 @@ private extension SpeedRunSessionScreen {
                 : DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
-        .animation(.easeInOut(duration: 0.3), value: isFlashing)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: isFlashing)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -252,17 +273,23 @@ private extension SpeedRunSessionScreen {
     var resultsHeader: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             IconBadge("trophy.fill", color: DesignSystem.Color.warning, size: .hero)
-                .symbolEffect(.bounce)
+                .symbolEffect(.bounce, isActive: !reduceMotion)
+                .accessibilityHidden(true)
 
             Text(completionMessage)
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
+                .accessibilityAddTraits(.isHeader)
 
             Text(formattedTime)
-                .font(DesignSystem.Font.monoMedium)
+                .font(DesignSystem.Font.system(size: resultTimeFontSize, weight: .bold, design: .monospaced))
                 .foregroundStyle(DesignSystem.Color.accent)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .accessibilityLabel("Time")
+                .accessibilityValue(timerAccessibilityValue)
         }
         .frame(maxWidth: .infinity)
         .padding(.top, DesignSystem.Spacing.xl)
@@ -300,6 +327,7 @@ private extension SpeedRunSessionScreen {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "star.fill")
                     .foregroundStyle(DesignSystem.Color.warning)
+                    .accessibilityHidden(true)
                 Text("+\(xpEarned) XP")
                     .font(DesignSystem.Font.headline)
                     .fontWeight(.bold)
@@ -308,7 +336,9 @@ private extension SpeedRunSessionScreen {
             .padding(.horizontal, DesignSystem.Spacing.lg)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.warning.opacity(0.12), in: Capsule())
-            .transition(.scale(scale: 0.7).combined(with: .opacity))
+            .transition(reduceMotion ? .opacity : .scale(scale: 0.7).combined(with: .opacity))
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Earned \(xpEarned) XP")
         }
     }
 
@@ -323,6 +353,7 @@ private extension SpeedRunSessionScreen {
                             .padding(.horizontal, DesignSystem.Spacing.sm)
                             .padding(.vertical, DesignSystem.Spacing.xs)
                     }
+                    .accessibilityElement(children: .combine)
                 }
             }
         }
@@ -359,12 +390,14 @@ private extension SpeedRunSessionScreen {
             alternateNames[country.code]?.contains(normalized) == true
         }) else { return }
 
-        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+        withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
             completedCodes.append(match.code)
         }
         inputText = ""
         flashingCode = match.code
         hapticsService.notification(.success)
+        let announcement = "\(match.name). \(completedCodes.count) of \(targetCountries.count)."
+        AccessibilityNotification.Announcement(announcement).post()
 
         Task {
             try? await Task.sleep(for: .milliseconds(700))
@@ -397,7 +430,10 @@ private extension SpeedRunSessionScreen {
             await gameCenterService.submitScore(timeScore, to: leaderboardID)
         }
 
-        withAnimation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6)) {
+        let announcement = "\(completionMessage) Named \(completedCodes.count) of \(targetCountries.count) countries."
+        AccessibilityNotification.Announcement(announcement).post()
+
+        withAnimation(reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.7).delay(0.6)) {
             showXPBadge = true
         }
     }
@@ -472,6 +508,23 @@ private extension SpeedRunSessionScreen {
         } else {
             DesignSystem.Color.textPrimary
         }
+    }
+
+    var timerStatusSymbol: String? {
+        if completedCodes.count == targetCountries.count {
+            "checkmark.circle.fill"
+        } else if elapsedTime > 300 {
+            "exclamationmark.triangle.fill"
+        } else {
+            nil
+        }
+    }
+
+    var timerAccessibilityValue: String {
+        let spoken = Duration.seconds(Int(elapsedTime))
+            .formatted(.units(allowed: [.minutes, .seconds], width: .wide))
+        let isOverTime = elapsedTime > 300 && completedCodes.count < targetCountries.count
+        return isOverTime ? "\(spoken), over 5 minutes" : spoken
     }
 
     var completionMessage: String {

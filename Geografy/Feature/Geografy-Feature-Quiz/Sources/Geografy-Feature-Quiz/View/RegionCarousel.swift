@@ -8,6 +8,9 @@ public struct RegionCarousel: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    @ScaledMetric(relativeTo: .headline) private var carouselHeight: CGFloat = 190
 
     @Binding var selectedRegion: QuizRegion
 
@@ -31,6 +34,15 @@ private extension RegionCarousel {
         VStack(spacing: DesignSystem.Spacing.sm) {
             carousel
             pageIndicator
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Region")
+        .accessibilityValue(
+            "\(currentRegion.displayName), \(currentRegion.filter(countryDataService.countries).count) countries"
+        )
+        .accessibilityHint("Swipe up or down to change the region")
+        .accessibilityAdjustableAction { direction in
+            adjustRegion(direction)
         }
     }
 
@@ -60,7 +72,7 @@ private extension RegionCarousel {
             .scrollPosition(id: $visibleRegion)
             .scrollClipDisabled()
         }
-        .frame(height: 190)
+        .frame(height: carouselHeight)
         .onChange(of: visibleRegion) { _, newValue in
             guard let newValue, newValue != selectedRegion else { return }
             selectedRegion = newValue
@@ -81,7 +93,7 @@ private extension RegionCarousel {
                         width: region == currentRegion ? 20 : 6,
                         height: 6
                     )
-                    .animation(.easeInOut(duration: 0.25), value: currentRegion)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: currentRegion)
             }
         }
         .frame(maxWidth: .infinity)
@@ -92,6 +104,18 @@ private extension RegionCarousel {
 private extension RegionCarousel {
     var currentRegion: QuizRegion {
         visibleRegion ?? selectedRegion
+    }
+
+    func adjustRegion(_ direction: AccessibilityAdjustmentDirection) {
+        let regions = QuizRegion.allCases
+        guard let index = regions.firstIndex(of: currentRegion) else { return }
+        let newIndex: Int
+        switch direction {
+        case .increment: newIndex = min(index + 1, regions.count - 1)
+        case .decrement: newIndex = max(index - 1, 0)
+        @unknown default: return
+        }
+        visibleRegion = regions[newIndex]
     }
 
     func color(for region: QuizRegion) -> Color {
@@ -127,6 +151,11 @@ private struct RegionCard: View {
     let color: Color
     let description: String
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
+    @Environment(\.colorSchemeContrast) private var contrast
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     var body: some View {
         cardContent
             .padding(.vertical, DesignSystem.Spacing.md)
@@ -137,26 +166,45 @@ private struct RegionCard: View {
                     .fill(DesignSystem.Color.cardBackground)
                     .overlay(
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                            .strokeBorder(
-                                isSelected
-                                    ? color.opacity(0.5)
-                                    : DesignSystem.Color.cardBackgroundHighlighted,
-                                lineWidth: isSelected ? 1.5 : 1
-                            )
+                            .strokeBorder(borderColor, lineWidth: isSelected ? 2.5 : 1)
                     )
             )
-            .animation(.easeInOut(duration: 0.2), value: isSelected)
+            .overlay(alignment: .topTrailing) {
+                if isSelected, differentiateWithoutColor {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(DesignSystem.Font.iconSmall)
+                        .foregroundStyle(color)
+                        .padding(DesignSystem.Spacing.sm)
+                        .accessibilityHidden(true)
+                }
+            }
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isSelected)
             .hoverEffect(.highlight)
     }
 }
 
 // MARK: - Subviews
 private extension RegionCard {
+    var borderColor: Color {
+        if isSelected {
+            color.opacity(contrast == .increased ? 1 : 0.5)
+        } else if contrast == .increased {
+            DesignSystem.Color.dividerSubtle
+        } else {
+            DesignSystem.Color.cardBackgroundHighlighted
+        }
+    }
+
     var cardContent: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
                 Circle()
                     .fill(color.opacity(isSelected ? 0.18 : 0.08))
+                    .overlay {
+                        if contrast == .increased {
+                            Circle().strokeBorder(color, lineWidth: 1)
+                        }
+                    }
                     .frame(width: 64, height: 64)
 
                 Image(systemName: region.regionIcon)
@@ -177,10 +225,10 @@ private extension RegionCard {
 
             Text(description)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .frame(height: 34)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                .frame(minHeight: 34, alignment: .top)
         }
     }
 }

@@ -5,6 +5,9 @@ public struct ScoreRingView: View {
     // MARK: - Properties
     public let progress: Double
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo: .largeTitle) private var ringSize: CGFloat = 120
+
     @State private var animatedProgress: Double = 0
     @State private var displayPercent: Int = 0
 
@@ -20,8 +23,11 @@ public struct ScoreRingView: View {
             progressRing
             percentageLabel
         }
-        .frame(width: 120, height: 120)
+        .frame(width: ringSize, height: ringSize)
         .onAppear { startCountUp() }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Score")
+        .accessibilityValue("\(Int(progress * 100)) percent, \(ratingDescription)")
     }
 }
 
@@ -52,6 +58,8 @@ private extension ScoreRingView {
         Text("\(displayPercent)%")
             .font(DesignSystem.Font.largeTitle)
             .foregroundStyle(ringColor)
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
             .contentTransition(.numericText(countsDown: false))
     }
 }
@@ -68,9 +76,25 @@ private extension ScoreRingView {
         }
     }
 
+    var ratingDescription: String {
+        if progress < 0.4 {
+            "low"
+        } else if progress < 0.7 {
+            "fair"
+        } else {
+            "good"
+        }
+    }
+
     func startCountUp() {
         let targetPercent = Int(progress * 100)
         guard targetPercent > 0 else { return }
+
+        guard !reduceMotion else {
+            animatedProgress = progress
+            displayPercent = targetPercent
+            return
+        }
 
         withAnimation(.easeOut(duration: 1.2)) {
             animatedProgress = progress

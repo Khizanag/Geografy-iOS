@@ -9,6 +9,8 @@ public struct QuizSetupScreen: View {
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz
     @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
@@ -49,13 +51,13 @@ private extension QuizSetupScreen {
                 if selectedType.hasComparisonMetric {
                     metricSection
                         .padding(.horizontal, DesignSystem.Spacing.md)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
+                        .transition(sectionTransition)
                 }
 
                 if selectedType.supportedAnswerModes.count > 1 {
                     answerModeSection
                         .padding(.horizontal, DesignSystem.Spacing.md)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
+                        .transition(sectionTransition)
                 }
 
                 regionSection
@@ -63,15 +65,15 @@ private extension QuizSetupScreen {
                 if selectedGameMode == .standard {
                     questionCountSection
                         .padding(.horizontal, DesignSystem.Spacing.md)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
+                        .transition(sectionTransition)
                 }
 
                 timerSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
             }
-            .animation(.easeInOut(duration: 0.3), value: selectedType)
-            .animation(.easeInOut(duration: 0.3), value: selectedGameMode)
-            .animation(.easeInOut(duration: 0.3), value: answerMode)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: selectedType)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: selectedGameMode)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: answerMode)
             .padding(.vertical, DesignSystem.Spacing.md)
             .readableContentWidth()
         }
@@ -84,7 +86,7 @@ private extension QuizSetupScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Game Mode")
 
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            chipRow(spacing: DesignSystem.Spacing.sm) {
                 ForEach(QuizGameMode.allCases) { mode in
                     gameModeChip(mode)
                 }
@@ -99,6 +101,7 @@ private extension QuizSetupScreen {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: mode.icon)
                     .font(DesignSystem.Font.subheadline)
+                    .accessibilityHidden(true)
 
                 Text(mode.rawValue)
                     .font(DesignSystem.Font.caption)
@@ -111,26 +114,24 @@ private extension QuizSetupScreen {
                             ? DesignSystem.Color.onAccent.opacity(0.75)
                             : DesignSystem.Color.textSecondary
                     )
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.7)
+                    .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
+                    .minimumScaleFactor(0.8)
             }
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .padding(.horizontal, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            )
+            .selectionChipBackground(isSelected: isSelected)
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     var timerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Timer")
 
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            chipRow(spacing: DesignSystem.Spacing.sm) {
                 ForEach(ArcadeTimer.allCases) { timer in
                     arcadeTimerChip(timer)
                 }
@@ -145,6 +146,7 @@ private extension QuizSetupScreen {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: timer.icon)
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
                 Text(timer.rawValue)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -153,18 +155,17 @@ private extension QuizSetupScreen {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .padding(.horizontal, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            )
+            .selectionChipBackground(isSelected: isSelected)
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             IconBadge(selectedType.icon, size: .large)
-                .contentTransition(.symbolEffect(.replace))
+                .contentTransition(reduceMotion ? .opacity : .symbolEffect(.replace))
+                .accessibilityHidden(true)
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text(selectedType.displayName)
                     .font(DesignSystem.Font.title2)
@@ -181,7 +182,8 @@ private extension QuizSetupScreen {
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.md)
         .accessibilityElement(children: .combine)
-        .animation(.easeInOut(duration: 0.25), value: selectedType)
+        .accessibilityAddTraits(.isHeader)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: selectedType)
     }
 }
 
@@ -205,7 +207,7 @@ private extension QuizSetupScreen {
     var answerModeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Answer Mode")
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            chipRow(spacing: DesignSystem.Spacing.sm) {
                 ForEach(selectedType.supportedAnswerModes) { mode in
                     modeChip(mode)
                 }
@@ -213,7 +215,7 @@ private extension QuizSetupScreen {
             .fixedSize(horizontal: false, vertical: true)
             answerModeNote
         }
-        .animation(.easeInOut(duration: 0.3), value: answerMode)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: answerMode)
     }
 
     func modeChip(_ mode: QuizAnswerMode) -> some View {
@@ -222,6 +224,7 @@ private extension QuizSetupScreen {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: mode.icon)
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
                 Text(mode.displayName)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -231,12 +234,10 @@ private extension QuizSetupScreen {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .padding(.horizontal, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            )
+            .selectionChipBackground(isSelected: isSelected)
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     @ViewBuilder
@@ -253,6 +254,7 @@ private extension QuizSetupScreen {
                         Image(systemName: "text.magnifyingglass")
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.accent)
+                            .accessibilityHidden(true)
 
                         Text("Show suggestions")
                             .font(DesignSystem.Font.subheadline)
@@ -261,13 +263,13 @@ private extension QuizSetupScreen {
                 }
                 .tint(DesignSystem.Color.accent)
             }
-            .transition(.opacity.combined(with: .move(edge: .top)))
+            .transition(sectionTransition)
         } else if answerMode == .spellingBee {
             answerModeInfoRow(
                 icon: "textformat.abc",
                 text: "Spell the answer letter by letter — 2× XP bonus"
             )
-            .transition(.opacity.combined(with: .move(edge: .top)))
+            .transition(sectionTransition)
         }
     }
 
@@ -291,7 +293,7 @@ private extension QuizSetupScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Metric")
 
-            HStack(spacing: DesignSystem.Spacing.xs) {
+            chipRow(spacing: DesignSystem.Spacing.xs) {
                 ForEach(ComparisonMetric.allCases) { metric in
                     metricChip(metric)
                 }
@@ -305,22 +307,21 @@ private extension QuizSetupScreen {
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: metric.icon)
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
 
                 Text(metric.rawValue)
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(.semibold)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                    .minimumScaleFactor(0.8)
             }
             .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            )
+            .selectionChipBackground(isSelected: isSelected)
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     var regionSection: some View {
@@ -356,12 +357,10 @@ private extension QuizSetupScreen {
                 .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(
-                    isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                )
+                .selectionChipBackground(isSelected: isSelected)
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
@@ -376,12 +375,23 @@ private extension QuizSetupScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
-        .animation(.easeInOut(duration: 0.2), value: selectedType)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: selectedType)
     }
 }
 
 // MARK: - Helpers
 private extension QuizSetupScreen {
+    var sectionTransition: AnyTransition {
+        reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .top))
+    }
+
+    func chipRow<Content: View>(spacing: CGFloat, @ViewBuilder content: () -> Content) -> some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: spacing))
+            : AnyLayout(HStackLayout(spacing: spacing))
+        return layout(content)
+    }
+
     func hapticSelection() {
         #if !os(tvOS)
         hapticsService.selection()

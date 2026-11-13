@@ -10,6 +10,8 @@ public struct QuizSessionScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) var hapticsService
     @Environment(CountryDataService.self) var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let configuration: QuizConfiguration
 
@@ -82,7 +84,8 @@ private extension QuizSessionScreen {
             Spacer(minLength: 0)
         }
         .padding(.top, DesignSystem.Spacing.sm)
-        .blur(radius: isPaused ? 12 : 0)
+        .blur(radius: isPaused && !reduceTransparency ? 12 : 0)
+        .accessibilityHidden(isPaused)
         .allowsHitTesting(!isPaused)
         .screenBackground()
     }
@@ -129,7 +132,7 @@ private extension QuizSessionScreen {
     var flagPreviewOverlay: some View {
         if showFlagPreview, let flagCode = currentQuestion?.promptFlag {
             ZoomableFlagView(countryCode: flagCode) {
-                withAnimation(.easeInOut(duration: 0.25)) {
+                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
                     showFlagPreview = false
                 }
             }
@@ -148,13 +151,18 @@ private extension QuizSessionScreen {
                 resumeButton
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(DesignSystem.Color.background.opacity(0.5).ignoresSafeArea())
+            .background(
+                DesignSystem.Color.background
+                    .opacity(reduceTransparency ? 1 : 0.5)
+                    .ignoresSafeArea()
+            )
             .transition(.opacity)
         }
     }
 
     var pauseIcon: some View {
         IconBadge("pause.circle.fill", size: .hero)
+            .accessibilityHidden(true)
     }
 
     var pauseInfo: some View {
@@ -163,12 +171,13 @@ private extension QuizSessionScreen {
                 .font(DesignSystem.Font.title)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .accessibilityAddTraits(.isHeader)
             Text("\(Int(timerRemaining))s remaining")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
             Text("Question \(currentIndex + 1) of \(questions.count)")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
 
@@ -190,13 +199,13 @@ private extension QuizSessionScreen {
                     SessionProgressBar(progress: progress)
                     if currentStreak >= 2 {
                         streakBadge
-                            .transition(.scale.combined(with: .opacity))
+                            .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
                     } else {
                         QuestionCounterPill(current: currentIndex + 1, total: questions.count)
                     }
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .animation(.spring(response: 0.35, dampingFraction: 0.7), value: currentStreak)
+                .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7), value: currentStreak)
 
                 if configuration.difficulty.hasTimer {
                     timerPill
@@ -218,6 +227,9 @@ private extension QuizSessionScreen {
                         )
                 }
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Lives")
+            .accessibilityValue("\(arcadeLives) of 3")
 
             Spacer()
 
@@ -226,6 +238,8 @@ private extension QuizSessionScreen {
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .contentTransition(.numericText())
+                .accessibilityLabel("Score")
+                .accessibilityValue("\(arcadeScore)")
 
             Spacer()
 
@@ -255,8 +269,11 @@ private extension QuizSessionScreen {
             in: Capsule()
         )
         .shadow(color: DesignSystem.Color.error.opacity(0.4), radius: 8, y: 2)
-        .scaleEffect(showStreakBurst ? 1.25 : 1.0)
-        .animation(.spring(response: 0.25, dampingFraction: 0.5), value: showStreakBurst)
+        .scaleEffect(showStreakBurst && !reduceMotion ? 1.25 : 1.0)
+        .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.5), value: showStreakBurst)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Streak")
+        .accessibilityValue("\(currentStreak) in a row")
     }
 
     var timerPill: some View {
@@ -324,7 +341,8 @@ private extension QuizSessionScreen {
     }
 
     var questionTransition: AnyTransition {
-        .asymmetric(
+        guard !reduceMotion else { return .opacity }
+        return .asymmetric(
             insertion: .move(edge: .trailing).combined(with: .opacity),
             removal: .move(edge: .leading).combined(with: .opacity)
         )

@@ -41,6 +41,7 @@ extension QuizSessionScreen {
         )
         answers.append(answer)
         typingIsCorrect = false
+        AccessibilityNotification.Announcement("Time's up. The answer is \(correctAnswerText(for: question)).").post()
 
         withAnimation(.easeInOut(duration: 0.3)) {
             showFeedback = true

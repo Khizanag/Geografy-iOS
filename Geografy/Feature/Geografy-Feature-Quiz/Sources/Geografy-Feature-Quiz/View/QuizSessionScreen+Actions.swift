@@ -28,6 +28,7 @@ extension QuizSessionScreen {
         let timeSpent = Date().timeIntervalSince(questionStartTime)
 
         handleAnswerFeedback(isCorrect: isCorrect)
+        announceAnswer(isCorrect: isCorrect, question: question)
 
         let answer = QuizAnswer(
             id: UUID(),
@@ -114,6 +115,7 @@ extension QuizSessionScreen {
         let timeSpent = Date().timeIntervalSince(questionStartTime)
 
         handleAnswerFeedback(isCorrect: isCorrect)
+        announceAnswer(isCorrect: isCorrect, question: question)
 
         let answer = QuizAnswer(
             id: UUID(),
@@ -156,6 +158,7 @@ extension QuizSessionScreen {
 
         let correctText = spellingBeeCorrectText(for: question)
         typingInput = correctText
+        AccessibilityNotification.Announcement("Skipped. The answer is \(correctText).").post()
 
         withAnimation(.easeInOut(duration: 0.3)) {
             showFeedback = true
@@ -164,6 +167,20 @@ extension QuizSessionScreen {
         if isArcadeMode, arcadeLives <= 0 { return }
 
         scheduleTransition(after: .seconds(1.5)) { advanceToNext() }
+    }
+
+    func announceAnswer(isCorrect: Bool, question: QuizQuestion) {
+        let message: String
+        if isCorrect {
+            message = currentStreak >= 2 ? "Correct. \(currentStreak) in a row." : "Correct."
+        } else {
+            message = "Incorrect. The answer is \(correctAnswerText(for: question))."
+        }
+        AccessibilityNotification.Announcement(message).post()
+    }
+
+    func correctAnswerText(for question: QuizQuestion) -> String {
+        question.options.first { $0.id == question.correctOptionID }?.text ?? question.correctCountry.name
     }
 
     // A stored task, unlike asyncAfter, is cancelled when the session disappears.
