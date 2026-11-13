@@ -8,7 +8,6 @@ import SwiftUI
 public struct TravelBucketListScreen: View {
     // MARK: - Properties
     @Environment(TravelService.self) private var travelService
-    @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
 
     @State private var selectedSort: BucketListSort = .continent
@@ -101,12 +100,12 @@ private extension TravelBucketListScreen {
         let priority = priorities[country.code] ?? .someday
         return HStack(spacing: DesignSystem.Spacing.sm) {
             Button {
-                hapticsService.impact(.light)
                 selectedCountry = country
             } label: {
                 CountryRowView(country: country, isFavorite: false)
             }
             .buttonStyle(PressButtonStyle())
+            .countryContextMenu(country)
             priorityBadge(priority)
         }
     }

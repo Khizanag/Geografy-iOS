@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CountryTimelineEvent: Codable, Identifiable {
+public struct CountryTimelineEvent: Codable, Identifiable, Sendable {
     public var id: String { "\(year)-\(title)" }
 
     public let year: String

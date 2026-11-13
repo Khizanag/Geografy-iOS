@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CountryPhrase: Codable, Identifiable {
+public struct CountryPhrase: Codable, Identifiable, Sendable {
     public var id: String { english }
 
     public let english: String

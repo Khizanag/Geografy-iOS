@@ -56,7 +56,6 @@ public struct CountryRowView: View {
                 .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
         )
         .hoverEffect(.lift)
-        .countryContextMenu(country)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint("Double tap to view details")

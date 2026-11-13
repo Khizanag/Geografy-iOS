@@ -31,8 +31,9 @@ private struct PressButtonBody: View {
             .hoverEffect(.lift)
             #if !os(tvOS)
             .onChange(of: configuration.isPressed) { _, isPressed in
+                // A tap only acknowledges the touch, so it stays at half strength.
                 if isPressed {
-                    hapticsService.impact(.light)
+                    hapticsService.impact(.light, intensity: 0.5)
                 }
             }
             #endif

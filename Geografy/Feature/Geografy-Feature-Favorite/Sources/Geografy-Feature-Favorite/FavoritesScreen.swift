@@ -162,7 +162,6 @@ private extension FavoritesScreen {
                 ForEach(filteredCountries) { country in
                     Button {
                         coordinator.push(.countryDetail(country))
-                        hapticsService.impact(.light)
                     } label: {
                         CountryRowView(
                             country: country,
@@ -174,6 +173,7 @@ private extension FavoritesScreen {
                         )
                     }
                     .buttonStyle(PressButtonStyle())
+                    .countryContextMenu(country)
                     #if !os(tvOS)
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         removeButton(for: country)

@@ -59,6 +59,7 @@ private extension CustomQuizPreviewScreen {
                         showPopulation: false,
                         showContinent: true,
                     )
+                    .countryContextMenu(country)
                 }
 
                 if selectedCountries.count > 5 {

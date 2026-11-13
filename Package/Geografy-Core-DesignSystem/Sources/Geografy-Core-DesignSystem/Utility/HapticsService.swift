@@ -34,6 +34,12 @@ public final class HapticsService {
         UIImpactFeedbackGenerator(style: style).impactOccurred()
     }
 
+    /// An impact at a fraction of the style's full strength, from 0 to 1.
+    public func impact(_ style: HapticImpactStyle, intensity: CGFloat) {
+        guard isEnabled else { return }
+        UIImpactFeedbackGenerator(style: style).impactOccurred(intensity: intensity)
+    }
+
     public func notification(_ type: HapticNotificationType) {
         guard isEnabled else { return }
         UINotificationFeedbackGenerator().notificationOccurred(type)
@@ -45,6 +51,7 @@ public final class HapticsService {
     }
     #else
     public func impact(_ style: HapticImpactStyle) {}
+    public func impact(_ style: HapticImpactStyle, intensity: CGFloat) {}
     public func notification(_ type: HapticNotificationType) {}
     public func selection() {}
     #endif

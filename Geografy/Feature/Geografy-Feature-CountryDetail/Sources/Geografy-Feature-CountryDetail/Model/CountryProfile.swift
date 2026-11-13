@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CountryProfile: Codable, Identifiable {
+public struct CountryProfile: Codable, Identifiable, Sendable {
     public var id: String { countryCode }
 
     public let countryCode: String
@@ -14,7 +14,7 @@ public struct CountryProfile: Codable, Identifiable {
 
 // MARK: - Culture Highlights
 extension CountryProfile {
-    public struct CultureHighlights: Codable {
+    public struct CultureHighlights: Codable, Sendable {
         public let traditionalFood: [String]
         public let music: String
         public let art: String
@@ -24,7 +24,7 @@ extension CountryProfile {
 
 // MARK: - Geography Deep Dive
 extension CountryProfile {
-    public struct GeographyDeepDive: Codable {
+    public struct GeographyDeepDive: Codable, Sendable {
         public let climate: String
         public let terrain: String
         public let naturalWonders: [String]
@@ -34,7 +34,7 @@ extension CountryProfile {
 
 // MARK: - Economy Snapshot
 extension CountryProfile {
-    public struct EconomySnapshot: Codable {
+    public struct EconomySnapshot: Codable, Sendable {
         public let majorIndustries: [String]
         public let topExports: [String]
         public let gdpRank: Int

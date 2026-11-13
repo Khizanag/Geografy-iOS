@@ -1,10 +1,13 @@
 import Foundation
 
 public struct CountryProfileService {
+    // Decoded once per launch; every country screen reads the same table.
+    private static let sharedProfiles = loadProfiles()
+
     private let profiles: [String: CountryProfile]
 
     public init() {
-        profiles = Self.loadProfiles()
+        profiles = Self.sharedProfiles
     }
 
     public func profile(for countryCode: String) -> CountryProfile? {

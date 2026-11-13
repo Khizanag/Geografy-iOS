@@ -377,6 +377,7 @@ private extension CountryListScreen {
             )
         }
         .buttonStyle(PressButtonStyle())
+        .countryContextMenu(country)
         #if !os(tvOS)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button {
