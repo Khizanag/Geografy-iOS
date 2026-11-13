@@ -87,29 +87,11 @@ private extension WorldBankChartSheet {
     var rangePicker: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(TimeRange.allCases, id: \.self) { range in
-                Button {
+                SelectableChip(range.rawValue, isSelected: selectedRange == range) {
                     withAnimation(.easeInOut(duration: 0.2)) {
                         selectedRange = range
                     }
-                } label: {
-                    Text(range.rawValue)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(selectedRange == range ? .bold : .regular)
-                        .foregroundStyle(
-                            selectedRange == range
-                                ? DesignSystem.Color.onAccent
-                                : DesignSystem.Color.textSecondary
-                        )
-                        .padding(.horizontal, DesignSystem.Spacing.sm)
-                        .padding(.vertical, DesignSystem.Spacing.xxs)
-                        .background(
-                            selectedRange == range
-                                ? DesignSystem.Color.accent
-                                : DesignSystem.Color.cardBackground,
-                            in: Capsule()
-                        )
                 }
-                .buttonStyle(.plain)
             }
         }
     }
@@ -221,6 +203,12 @@ private extension WorldBankChartSheet {
     }
 
     func statCard(label: String, value: String, detail: String, color: Color) -> some View {
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            statCardContent(label: label, value: value, detail: detail, color: color)
+        }
+    }
+
+    func statCardContent(label: String, value: String, detail: String, color: Color) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
             Text(label)
                 .font(DesignSystem.Font.caption)
@@ -237,8 +225,6 @@ private extension WorldBankChartSheet {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
     }
 
     @ChartContentBuilder

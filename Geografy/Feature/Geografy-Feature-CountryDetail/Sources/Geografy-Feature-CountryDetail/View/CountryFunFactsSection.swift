@@ -48,7 +48,7 @@ private extension TappableFunFactCard {
                     numberCircle
                     factPreview
                     Spacer(minLength: 0)
-                    chevron
+                    RowChevron()
                 }
                 .padding(DesignSystem.Spacing.md)
             }
@@ -82,13 +82,6 @@ private extension TappableFunFactCard {
                 .multilineTextAlignment(.leading)
         }
     }
-
-    var chevron: some View {
-        Image(systemName: "chevron.right")
-            .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .accessibilityHidden(true)
-    }
 }
 
 // MARK: - Detail Sheet
@@ -113,12 +106,7 @@ private struct FunFactDetailSheet: View {
 
     var factText: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            Text("Fun Fact #\(index + 1)")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .textCase(.uppercase)
-                .kerning(1.5)
+            EyebrowLabel("Fun Fact #\(index + 1)", color: DesignSystem.Color.accent)
             Text(fact)
                 .font(DesignSystem.Font.title3)
                 .fontWeight(.semibold)

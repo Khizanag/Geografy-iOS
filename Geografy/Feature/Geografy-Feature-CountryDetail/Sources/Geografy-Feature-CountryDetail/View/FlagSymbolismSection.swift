@@ -58,14 +58,7 @@ private extension FlagSymbolismCard {
 
     var headerRowLabel: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                    .frame(width: 36, height: 36)
-                Image(systemName: "flag.fill")
-                    .font(DesignSystem.Font.iconXS)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
+            IconBadge("flag.fill", size: .small)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("Colors & Symbols")
@@ -196,7 +189,7 @@ private extension FlagSymbolismCard {
             }
             Spacer(minLength: 0)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, DesignSystem.Spacing.xxs)
     }
 
     func emblemRow(_ emblem: FlagEmblemEntry) -> some View {
@@ -222,14 +215,10 @@ private extension FlagSymbolismCard {
             }
             Spacer(minLength: 0)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, DesignSystem.Spacing.xxs)
     }
 
     func sectionLabel(_ text: String) -> some View {
-        Text(text.uppercased())
-            .font(DesignSystem.Font.caption2)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
-            .kerning(0.8)
+        EyebrowLabel(text, color: DesignSystem.Color.textTertiary)
     }
 }

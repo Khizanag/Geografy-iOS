@@ -29,15 +29,7 @@ private extension CountryDetailScreen {
     var islandNationCard: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.blue.opacity(0.15))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "water.waves")
-                        .font(DesignSystem.Font.iconSmall)
-                        .foregroundStyle(DesignSystem.Color.blue)
-                }
-                .accessibilityHidden(true)
+                IconBadge("water.waves", color: DesignSystem.Color.blue)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Island Nation")
                         .font(DesignSystem.Font.subheadline)
@@ -58,15 +50,7 @@ private extension CountryDetailScreen {
     var noNeighborDataCard: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.accent.opacity(0.12))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "map")
-                        .font(DesignSystem.Font.iconSmall)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-                .accessibilityHidden(true)
+                IconBadge("map")
                 Text("Neighbor data not available.")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)

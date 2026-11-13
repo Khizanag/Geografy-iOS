@@ -55,27 +55,25 @@ private extension CountrySaveToCollectionSheet {
     }
 
     var itemHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: countryCode, height: 28)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                FlagView(countryCode: countryCode, height: 28)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(countryName)
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(countryName)
+                        .font(DesignSystem.Font.headline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
 
-                Text("Country")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    Text("Country")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
+
+                Spacer()
             }
-
-            Spacer()
+            .padding(DesignSystem.Spacing.md)
         }
-        .padding(DesignSystem.Spacing.md)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
     }
 
     var existingCollections: some View {

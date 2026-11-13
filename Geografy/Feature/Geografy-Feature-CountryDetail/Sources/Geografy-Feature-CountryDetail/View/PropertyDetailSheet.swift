@@ -32,12 +32,7 @@ private extension PropertyDetailSheet {
                     .padding(.top, DesignSystem.Spacing.lg)
 
                 VStack(spacing: DesignSystem.Spacing.xs) {
-                    Text(title)
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                        .textCase(.uppercase)
-                        .kerning(1.5)
+                    EyebrowLabel(title, color: DesignSystem.Color.accent)
 
                     Text(value)
                         .font(DesignSystem.Font.title2)
@@ -101,14 +96,7 @@ struct SheetIconHeader: View {
                 )
                 .frame(width: 112, height: 112)
 
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                    .frame(width: 72, height: 72)
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.iconXL.weight(.medium))
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
+            IconBadge(icon, size: .hero)
         }
         .accessibilityHidden(true)
     }

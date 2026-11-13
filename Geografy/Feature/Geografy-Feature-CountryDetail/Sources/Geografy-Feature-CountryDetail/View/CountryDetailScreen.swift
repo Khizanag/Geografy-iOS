@@ -156,7 +156,6 @@ private extension CountryDetailScreen {
 extension CountryDetailScreen {
     func sectionHeader(_ title: String) -> some View {
         SectionHeaderView(title: title)
-            .accessibilityAddTraits(.isHeader)
     }
 }
 

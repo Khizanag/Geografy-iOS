@@ -98,16 +98,7 @@ private extension CountryDeepDiveSections {
     }
 
     func wonderChip(_ name: String) -> some View {
-        Text(name)
-            .font(DesignSystem.Font.caption)
-            .fontWeight(.medium)
-            .foregroundStyle(DesignSystem.Color.accent)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
-            .background(
-                DesignSystem.Color.accent.opacity(0.1),
-                in: Capsule()
-            )
+        InfoPill(name, style: .accent)
     }
 }
 
