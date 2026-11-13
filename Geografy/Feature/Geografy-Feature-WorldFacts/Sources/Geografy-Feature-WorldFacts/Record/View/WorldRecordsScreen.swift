@@ -21,7 +21,8 @@ public struct WorldRecordsScreen: View {
     public var body: some View {
         scrollContent
             .screenBackground()
-            .task {
+            // Keyed on the count: opened before country data loads, the records fill in once it arrives.
+            .task(id: countryDataService.countries.count) {
                 records = worldRecordsService.computeRecords(from: countryDataService.countries)
             }
     }
