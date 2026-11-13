@@ -72,27 +72,25 @@ private extension AchievementsScreen {
     }
 
     func statPill(value: String, label: String, icon: String, color: Color) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(color)
-                .accessibilityHidden(true)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(color)
+                    .accessibilityHidden(true)
 
-            Text(value)
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(value)
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                Text(label)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(value) \(label)")
     }
@@ -103,14 +101,14 @@ private extension AchievementsScreen {
     var categoryFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
-                filterChip(title: "All", icon: "square.grid.2x2", isSelected: selectedCategory == nil) {
+                SelectableChip("All", systemImage: "square.grid.2x2", isSelected: selectedCategory == nil) {
                     selectedCategory = nil
                 }
 
                 ForEach(AchievementCategory.allCases, id: \.self) { category in
-                    filterChip(
-                        title: category.displayName,
-                        icon: category.iconName,
+                    SelectableChip(
+                        category.displayName,
+                        systemImage: category.iconName,
                         isSelected: selectedCategory == category
                     ) {
                         selectedCategory = category
@@ -120,27 +118,6 @@ private extension AchievementsScreen {
             .padding(.vertical, DesignSystem.Spacing.xxs)
         }
         .scrollClipDisabled()
-    }
-
-    func filterChip(title: String, icon: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.caption2)
-
-                Text(title)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-            }
-            .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.sm)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: Capsule()
-            )
-        }
-        .buttonStyle(PressButtonStyle())
     }
 }
 
@@ -171,52 +148,55 @@ private extension AchievementsScreen {
         let isUnlocked = achievementService.isUnlocked(definition.id)
         let progress = achievementService.progress(for: definition.id)
 
-        return HStack(spacing: DesignSystem.Spacing.md) {
-            achievementIcon(definition, isUnlocked: isUnlocked)
-
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    Text(definition.title)
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(1)
-
-                    if achievementService.isPinned(definition.id) {
-                        Image(systemName: "pin.fill")
-                            .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(DesignSystem.Color.accent)
-                    }
-                }
-
-                Text(definition.requirement)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(1)
-
-                if !isUnlocked {
-                    SessionProgressBar(progress: progress.fraction, height: 4)
-                        .accessibilityValue("\(Int(progress.fraction * 100)) percent complete")
-                }
+        return CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                achievementIcon(definition, isUnlocked: isUnlocked)
+                achievementInfo(definition, isUnlocked: isUnlocked, progress: progress)
+                Spacer(minLength: 0)
+                Text(definition.rarity.displayName)
+                    .font(DesignSystem.Font.caption2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(definition.rarity.borderColor)
             }
-
-            Spacer(minLength: 0)
-
-            Text(definition.rarity.displayName)
-                .font(DesignSystem.Font.caption2)
-                .fontWeight(.bold)
-                .foregroundStyle(definition.rarity.borderColor)
+            .padding(DesignSystem.Spacing.sm)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             "\(definition.title), \(isUnlocked ? "unlocked" : "locked"), \(definition.rarity.displayName)"
         )
         .accessibilityHint(definition.requirement)
+    }
+
+    func achievementInfo(
+        _ definition: AchievementDefinition,
+        isUnlocked: Bool,
+        progress: AchievementProgress
+    ) -> some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+            HStack(spacing: DesignSystem.Spacing.xs) {
+                Text(definition.title)
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(1)
+
+                if achievementService.isPinned(definition.id) {
+                    Image(systemName: "pin.fill")
+                        .font(DesignSystem.Font.caption2)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                }
+            }
+
+            Text(definition.requirement)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(1)
+
+            if !isUnlocked {
+                SessionProgressBar(progress: progress.fraction, height: 4)
+                    .accessibilityValue("\(Int(progress.fraction * 100)) percent complete")
+            }
+        }
     }
 
     func achievementIcon(_ definition: AchievementDefinition, isUnlocked: Bool) -> some View {

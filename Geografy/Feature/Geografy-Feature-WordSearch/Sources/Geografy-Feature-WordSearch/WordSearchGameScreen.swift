@@ -55,12 +55,12 @@ private extension WordSearchGameScreen {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "timer")
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
                 Text(formattedTime)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.bold)
                     .monospacedDigit()
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
                     .contentTransition(.numericText())
                     .animation(.snappy, value: elapsedSeconds)
 
@@ -69,7 +69,7 @@ private extension WordSearchGameScreen {
                         isPaused.toggle()
                     } label: {
                         Image(systemName: isPaused ? "play.fill" : "pause.fill")
-                            .foregroundStyle(.white)
+                            .foregroundStyle(DesignSystem.Color.iconPrimary)
                     }
                     .buttonStyle(.plain)
                 }
@@ -91,7 +91,7 @@ private extension WordSearchGameScreen {
         if let puzzle {
             gameContent(puzzle)
         } else {
-            ProgressView().tint(DesignSystem.Color.accent)
+            LoadingView()
         }
     }
 }

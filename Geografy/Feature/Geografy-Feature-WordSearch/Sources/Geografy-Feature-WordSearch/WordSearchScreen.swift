@@ -43,14 +43,7 @@ private extension WordSearchScreen {
 
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                    .frame(width: 96, height: 96)
-                Image(systemName: "character.magnify")
-                    .font(DesignSystem.Font.displayXS)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
+            IconBadge("character.magnify", size: .hero)
             Text("Find hidden country names\nin a grid of letters")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -121,21 +114,19 @@ private extension WordSearchScreen {
     }
 
     func tipRow(icon: String, text: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .frame(width: 24)
-            Text(text)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Spacer(minLength: 0)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .frame(width: 24)
+                Text(text)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Spacer(minLength: 0)
+            }
+            .padding(DesignSystem.Spacing.sm)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
     }
 
     var startButton: some View {
@@ -214,7 +205,7 @@ private extension WordSearchScreen {
         ToolbarItem(placement: .topBarTrailing) {
             Button { showGuide = true } label: {
                 Image(systemName: "info.circle")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
         }

@@ -98,21 +98,21 @@ private extension CustomQuizPreviewScreen {
     }
 
     func questionTypeRow(_ type: QuizType) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: type.icon)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .frame(width: 28)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: type.icon)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .frame(width: 28)
 
-            Text(type.displayName)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(type.displayName)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            Spacer(minLength: 0)
+                Spacer(minLength: 0)
+            }
+            .padding(DesignSystem.Spacing.sm)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
     }
 }
 

@@ -39,7 +39,8 @@ private extension DailyChallengeShareCard {
         cardContent
             .clipShape(
                 RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.large
+                    cornerRadius: DesignSystem.CornerRadius.large,
+                    style: .continuous
                 )
             )
             .geoShadow(.elevated)

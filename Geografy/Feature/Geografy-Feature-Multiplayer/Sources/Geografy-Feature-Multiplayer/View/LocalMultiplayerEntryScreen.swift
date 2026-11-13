@@ -59,15 +59,8 @@ private extension LocalMultiplayerEntryScreen {
 
     var heroSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
-                    .frame(width: 80, height: 80)
-                Image(systemName: "antenna.radiowaves.left.and.right")
-                    .font(DesignSystem.Font.iconXL)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .symbolEffect(.variableColor.iterative, options: .repeating, value: appeared)
-            }
+            IconBadge("antenna.radiowaves.left.and.right", size: .hero)
+                .symbolEffect(.variableColor.iterative, options: .repeating, value: appeared)
 
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Play Nearby")
@@ -122,14 +115,7 @@ private extension LocalMultiplayerEntryScreen {
         Button(action: action) {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {
-                    ZStack {
-                        Circle()
-                            .fill(color.opacity(0.15))
-                            .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
-                        Image(systemName: icon)
-                            .font(DesignSystem.Font.title2)
-                            .foregroundStyle(color)
-                    }
+                    IconBadge(icon, color: color, size: .medium)
 
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text(title)
@@ -144,9 +130,7 @@ private extension LocalMultiplayerEntryScreen {
 
                     Spacer(minLength: 0)
 
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                    RowChevron()
                 }
                 .padding(DesignSystem.Spacing.md)
             }

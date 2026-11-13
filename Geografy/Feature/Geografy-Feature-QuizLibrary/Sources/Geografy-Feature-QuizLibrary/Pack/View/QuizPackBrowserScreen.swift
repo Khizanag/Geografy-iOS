@@ -40,8 +40,7 @@ private extension QuizPackBrowserScreen {
     }
 
     var loadingContent: some View {
-        ProgressView()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        LoadingView()
     }
 
     var emptyContent: some View {
@@ -105,26 +104,22 @@ private extension QuizPackBrowserScreen {
         icon: String,
         color: Color
     ) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(color)
+                Text(value)
+                    .font(DesignSystem.Font.title2)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(label)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            )
-        )
     }
 }
 
@@ -154,64 +149,25 @@ private extension QuizPackBrowserScreen {
     }
 
     var allCategoryChip: some View {
-        Button { selectedCategory = nil } label: {
-            chipLabel(
-                emoji: "🌍",
-                text: "All",
-                isSelected: selectedCategory == nil
-            )
+        SelectableChip("All", isSelected: selectedCategory == nil) {
+            selectedCategory = nil
+        } icon: {
+            Text(verbatim: "🌍")
+                .font(DesignSystem.Font.subheadline)
         }
-        .buttonStyle(.plain)
     }
 
     func categoryChip(
         _ category: QuizPackCategory
     ) -> some View {
         let isSelected = selectedCategory == category
-        return Button { selectedCategory = category } label: {
-            chipLabel(
-                emoji: category.emoji,
-                text: category.displayName,
-                isSelected: isSelected
-            )
-        }
-        .buttonStyle(.plain)
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
-    }
-
-    func chipLabel(
-        emoji: String,
-        text: String,
-        isSelected: Bool
-    ) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(emoji)
+        return SelectableChip(category.displayName, isSelected: isSelected) {
+            selectedCategory = category
+        } icon: {
+            Text(verbatim: category.emoji)
                 .font(DesignSystem.Font.subheadline)
-            Text(text)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(isSelected ? .bold : .regular)
         }
-        .foregroundStyle(
-            isSelected
-                ? DesignSystem.Color.onAccent
-                : DesignSystem.Color.textPrimary
-        )
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(
-            isSelected
-                ? DesignSystem.Color.accent
-                : DesignSystem.Color.cardBackground,
-            in: Capsule()
-        )
-        .overlay(
-            Capsule().strokeBorder(
-                isSelected
-                    ? DesignSystem.Color.accent
-                    : DesignSystem.Color.cardBackgroundHighlighted,
-                lineWidth: 1
-            )
-        )
+        .animation(.easeInOut(duration: 0.2), value: isSelected)
     }
 }
 

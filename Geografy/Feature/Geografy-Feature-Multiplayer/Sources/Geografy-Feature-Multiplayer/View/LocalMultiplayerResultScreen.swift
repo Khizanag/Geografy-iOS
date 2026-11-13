@@ -43,15 +43,8 @@ private extension LocalMultiplayerResultScreen {
 
     var resultHeader: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                Circle()
-                    .fill(resultColor.opacity(0.15))
-                    .frame(width: 100, height: 100)
-                Image(systemName: resultIcon)
-                    .font(DesignSystem.Font.displayXXS)
-                    .foregroundStyle(resultColor)
-                    .symbolEffect(.bounce, value: appeared)
-            }
+            IconBadge(resultIcon, color: resultColor, size: .hero)
+                .symbolEffect(.bounce, value: appeared)
 
             Text(resultTitle)
                 .font(DesignSystem.Font.title)

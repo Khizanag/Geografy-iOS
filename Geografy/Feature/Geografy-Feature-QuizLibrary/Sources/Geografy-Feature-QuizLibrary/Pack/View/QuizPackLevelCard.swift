@@ -20,19 +20,15 @@ public struct QuizPackLevelCard: View {
 
     // MARK: - Body
     public var body: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            levelNumber
-            levelInfo
-            Spacer(minLength: 0)
-            trailingContent
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                levelNumber
+                levelInfo
+                Spacer(minLength: 0)
+                trailingContent
+            }
+            .padding(DesignSystem.Spacing.md)
         }
-        .padding(DesignSystem.Spacing.md)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.medium
-            )
-        )
         .opacity(isLocked ? 0.5 : 1.0)
     }
 }

@@ -132,7 +132,7 @@ private extension MultiplayerMatchScreen {
     var progressSection: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             progressBar
-            questionCounterPill
+            QuestionCounterPill(current: currentIndex + 1, total: questions.count)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.sm)
@@ -163,18 +163,6 @@ private extension MultiplayerMatchScreen {
             }
         }
         .frame(height: 6)
-    }
-
-    var questionCounterPill: some View {
-        Text("\(currentIndex + 1)/\(questions.count)")
-            .font(DesignSystem.Font.roundedMicro)
-            .foregroundStyle(DesignSystem.Color.textSecondary)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(
-                DesignSystem.Color.cardBackgroundHighlighted,
-                in: Capsule()
-            )
     }
 }
 

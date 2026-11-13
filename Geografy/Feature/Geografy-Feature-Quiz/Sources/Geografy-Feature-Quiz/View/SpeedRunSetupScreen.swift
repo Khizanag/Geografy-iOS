@@ -134,14 +134,7 @@ private extension SpeedRunSetupScreen {
     var bestTimeCard: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.warning.opacity(0.15))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "trophy.fill")
-                        .font(DesignSystem.Font.iconSmall)
-                        .foregroundStyle(DesignSystem.Color.warning)
-                }
+                IconBadge("trophy.fill", color: DesignSystem.Color.warning, size: .medium)
 
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Personal Best")
@@ -159,9 +152,7 @@ private extension SpeedRunSetupScreen {
                     Text("Leaderboard")
                         .font(DesignSystem.Font.caption2)
                         .foregroundStyle(DesignSystem.Color.textTertiary)
-                    Image(systemName: "chevron.right")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                    RowChevron()
                 }
             }
             .padding(DesignSystem.Spacing.md)
@@ -176,7 +167,7 @@ private extension SpeedRunSetupScreen {
 private extension SpeedRunSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Choose Region")
+            SectionHeaderView(title: "Choose Region")
                 .padding(.horizontal, DesignSystem.Spacing.md)
 
             #if !os(tvOS)
@@ -247,7 +238,7 @@ private extension SpeedRunSetupScreen {
 private extension SpeedRunSetupScreen {
     var rulesSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("How It Works")
+            SectionHeaderView(title: "How It Works")
             CardView { rulesCardContent }
         }
         .opacity(appeared ? 1 : 0)
@@ -316,14 +307,7 @@ private extension SpeedRunSetupScreen {
         subtitle: String
     ) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(color.opacity(0.12))
-                    .frame(width: 36, height: 36)
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.subheadline.weight(.medium))
-                    .foregroundStyle(color)
-            }
+            IconBadge(icon, color: color, size: .small)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
@@ -361,13 +345,6 @@ private extension SpeedRunSetupScreen {
 
 // MARK: - Helpers
 private extension SpeedRunSetupScreen {
-    func sectionTitle(_ text: String) -> some View {
-        Text(text)
-            .font(DesignSystem.Font.headline)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-    }
-
     var countryCount: Int {
         selectedRegion.filter(countryDataService.countries).count
     }

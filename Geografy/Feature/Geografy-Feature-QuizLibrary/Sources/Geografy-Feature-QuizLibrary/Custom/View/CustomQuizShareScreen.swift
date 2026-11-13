@@ -36,16 +36,14 @@ public struct CustomQuizShareScreen: View {
 private extension CustomQuizShareScreen {
     var scrollContent: some View {
         ScrollView {
-            Text(quiz.shareableJSON)
-                .font(.system(.caption, design: .monospaced))
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .padding(DesignSystem.Spacing.md)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(DesignSystem.Color.cardBackground)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                )
-                .padding(DesignSystem.Spacing.md)
+            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+                Text(quiz.shareableJSON)
+                    .font(DesignSystem.Font.textStyle(.caption, design: .monospaced))
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .padding(DesignSystem.Spacing.md)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(DesignSystem.Spacing.md)
         }
     }
 }

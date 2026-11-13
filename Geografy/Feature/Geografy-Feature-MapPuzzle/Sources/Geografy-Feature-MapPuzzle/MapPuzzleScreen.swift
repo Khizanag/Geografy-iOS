@@ -49,13 +49,7 @@ private extension MapPuzzleScreen {
     }
 
     var loadingView: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            ProgressView()
-            Text("Building puzzle…")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        LoadingView("Building puzzle…")
     }
 
     var puzzleContent: some View {
@@ -96,12 +90,7 @@ private extension MapPuzzleScreen {
         let question = questions[currentIndex]
         return CardView {
             VStack(spacing: DesignSystem.Spacing.md) {
-                Text("Which region is…")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .textCase(.uppercase)
-                    .kerning(0.8)
+                EyebrowLabel("Which region is…")
 
                 FlagView(countryCode: question.country.code, height: 60)
                     .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))

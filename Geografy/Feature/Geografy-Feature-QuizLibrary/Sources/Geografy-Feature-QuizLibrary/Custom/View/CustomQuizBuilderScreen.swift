@@ -236,21 +236,21 @@ private extension CustomQuizBuilderScreen {
     }
 
     func continentSummaryRow(_ continent: Country.Continent, count: Int) -> some View {
-        HStack {
-            Text(continent.displayName)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+        CardView(cornerRadius: DesignSystem.CornerRadius.small) {
+            HStack {
+                Text(continent.displayName)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            Spacer()
+                Spacer()
 
-            Text("\(count)")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                Text("\(count)")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xs)
         }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
     }
 }
 

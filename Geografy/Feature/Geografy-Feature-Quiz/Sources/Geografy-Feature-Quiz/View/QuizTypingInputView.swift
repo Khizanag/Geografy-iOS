@@ -61,21 +61,22 @@ private extension QuizTypingInputView {
             if let flagCode = question.promptFlag {
                 Button { showFlagPreview = true } label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                             .fill(DesignSystem.Color.accent.opacity(0.12))
                             .blur(radius: 24)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
+                            .padding(.horizontal, DesignSystem.Spacing.md)
+                            .padding(.vertical, DesignSystem.Spacing.xs)
 
                         FlagView(countryCode: flagCode, height: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            .clipShape(
+                                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
+                            )
                             .geoShadow(.elevated)
-                            .shadow(color: DesignSystem.Color.accent.opacity(0.15), radius: 12, y: 4)
                     }
                 }
                 .buttonStyle(.plain)
 
-                HStack(spacing: 4) {
+                HStack(spacing: DesignSystem.Spacing.xxs) {
                     Image(systemName: "arrow.up.left.and.arrow.down.right")
                         .font(DesignSystem.Font.nano)
                     Text("Tap to zoom")
@@ -147,33 +148,22 @@ private extension QuizTypingInputView {
     }
 
     var suggestionsList: some View {
-        VStack(spacing: 0) {
-            ForEach(filteredSuggestions) { country in
-                Button {
-                    typingInput = country.name
-                    isInputFocused = false
-                    onSubmit()
-                } label: {
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: country.code, height: 20, fixedWidth: true)
-
-                        Text(country.name)
-                            .font(DesignSystem.Font.body)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                        Spacer()
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(spacing: 0) {
+                ForEach(filteredSuggestions) { country in
+                    Button {
+                        typingInput = country.name
+                        isInputFocused = false
+                        onSubmit()
+                    } label: {
+                        CountryListRow(country: country)
+                            .padding(.horizontal, DesignSystem.Spacing.sm)
+                            .padding(.vertical, DesignSystem.Spacing.xs)
                     }
-                    .padding(.horizontal, DesignSystem.Spacing.sm)
-                    .padding(.vertical, DesignSystem.Spacing.xs)
-                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
         }
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
     }
 
     var inputField: some View {

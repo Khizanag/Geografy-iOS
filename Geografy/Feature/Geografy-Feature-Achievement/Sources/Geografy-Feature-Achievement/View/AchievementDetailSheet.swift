@@ -115,20 +115,20 @@ private extension AchievementDetailSheet {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .multilineTextAlignment(.center)
 
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "target")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(definition.category.themeColor)
+            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Image(systemName: "target")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(definition.category.themeColor)
 
-                Text(definition.requirement)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text(definition.requirement)
+                        .font(DesignSystem.Font.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
 
             if definition.xpReward > 0 {
                 HStack(spacing: DesignSystem.Spacing.xs) {
@@ -186,27 +186,27 @@ private extension AchievementDetailSheet {
     }
 
     var progressView: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "chart.bar.fill")
-                    .foregroundStyle(definition.category.themeColor)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                HStack(spacing: DesignSystem.Spacing.xs) {
+                    Image(systemName: "chart.bar.fill")
+                        .foregroundStyle(definition.category.themeColor)
 
-                Text("Progress")
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    Text("Progress")
+                        .font(DesignSystem.Font.headline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                }
+
+                SessionProgressBar(progress: progress.fraction, height: 8)
+
+                Text("\(String(progress.currentValue)) of \(String(definition.targetValue)) completed")
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
-
-            SessionProgressBar(progress: progress.fraction, height: 8)
-
-            Text("\(String(progress.currentValue)) of \(String(definition.targetValue)) completed")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+            .padding(DesignSystem.Spacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(DesignSystem.Spacing.md)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
     }
 }
 

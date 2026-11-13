@@ -113,14 +113,7 @@ private extension LocalMultiplayerLobbyScreen {
     func opponentCard(_ opponent: PeerPlayer) -> some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.blue.opacity(0.15))
-                        .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
-                    Image(systemName: "person.fill")
-                        .font(DesignSystem.Font.title3)
-                        .foregroundStyle(DesignSystem.Color.blue)
-                }
+                IconBadge("person.fill", color: DesignSystem.Color.blue, size: .medium)
 
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(opponent.displayName)
@@ -175,15 +168,8 @@ private extension LocalMultiplayerLobbyScreen {
     }
 
     var searchingIndicator: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ProgressView()
-                .tint(DesignSystem.Color.accent)
-            Text("Searching nearby...")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.vertical, DesignSystem.Spacing.xl)
+        LoadingView("Searching nearby...")
+            .padding(.vertical, DesignSystem.Spacing.xl)
     }
 
     var discoveredPeerRows: some View {
