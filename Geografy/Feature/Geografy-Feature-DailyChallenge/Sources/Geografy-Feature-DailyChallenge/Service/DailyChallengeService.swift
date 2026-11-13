@@ -260,55 +260,6 @@ private extension DailyChallengeService {
     }
 
     func computeStreak() {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let sortedDates = history
-            .compactMap { dateFromKey($0.dateKey) }
-            .sorted(by: >)
-
-        guard let first = sortedDates.first,
-              calendar.isDate(first, inSameDayAs: today) ||
-              calendar.isDate(
-                  first,
-                  inSameDayAs: calendar.date(
-                      byAdding: .day,
-                      value: -1,
-                      to: today
-                  ) ?? today
-              )
-        else {
-            streak = 0
-            return
-        }
-
-        var count = 1
-        for index in 1..<sortedDates.count {
-            guard let expected = calendar.date(
-                byAdding: .day,
-                value: -1,
-                to: sortedDates[index - 1]
-            ) else { break }
-            if calendar.isDate(sortedDates[index], inSameDayAs: expected) {
-                count += 1
-            } else {
-                break
-            }
-        }
-        streak = count
-    }
-
-    func dateFromKey(_ key: String) -> Date? {
-        let parts = key.split(separator: "-")
-        guard parts.count == 3,
-              let year = Int(parts[0]),
-              let month = Int(parts[1]),
-              let day = Int(parts[2])
-        else { return nil }
-
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.day = day
-        return Calendar.current.date(from: components)
+        streak = DailyChallengeStreak(dateKeys: history.map(\.dateKey)).current
     }
 }

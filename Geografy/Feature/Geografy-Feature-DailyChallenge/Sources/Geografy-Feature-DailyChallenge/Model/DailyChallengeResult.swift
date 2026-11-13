@@ -2,6 +2,9 @@ import Foundation
 
 /// Persisted result of a completed daily challenge, stored as JSON on disk.
 public struct DailyChallengeResult: Identifiable, Codable {
+    /// Every challenge starts at this score and loses points for hints and wrong answers.
+    public static let defaultMaxScore = 1_000
+
     public let id: String
     public let userID: String
     public let dateKey: String
@@ -22,7 +25,7 @@ public struct DailyChallengeResult: Identifiable, Codable {
         dateKey: String,
         challengeType: String,
         score: Int,
-        maxScore: Int = 1_000,
+        maxScore: Int = defaultMaxScore,
         completedAt: Date = .now,
         timeSpentSeconds: Double
     ) {
@@ -39,8 +42,8 @@ public struct DailyChallengeResult: Identifiable, Codable {
 
 // MARK: - Date Key
 extension DailyChallengeResult {
-    public static func dateKey(for date: Date = .now) -> String {
-        let components = Calendar.current.dateComponents(
+    public static func dateKey(for date: Date = .now, calendar: Calendar = .current) -> String {
+        let components = calendar.dateComponents(
             [.year, .month, .day],
             from: date
         )
@@ -50,5 +53,19 @@ extension DailyChallengeResult {
             components.month ?? 0,
             components.day ?? 0
         )
+    }
+
+    /// The start of the day a date key such as "2026-11-13" names, or nil when the key isn't one.
+    public static func date(forKey key: String, calendar: Calendar = .current) -> Date? {
+        let parts = key.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3, (1...12).contains(parts[1]), (1...31).contains(parts[2]) else {
+            return nil
+        }
+        let components = DateComponents(year: parts[0], month: parts[1], day: parts[2])
+        guard let date = calendar.date(from: components),
+              calendar.component(.day, from: date) == parts[2] else {
+            return nil
+        }
+        return calendar.startOfDay(for: date)
     }
 }
