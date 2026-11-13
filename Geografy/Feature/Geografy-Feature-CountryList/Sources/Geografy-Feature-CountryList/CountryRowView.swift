@@ -78,10 +78,18 @@ private extension CountryRowView {
             }
 
             VStack(alignment: .leading, spacing: 3) {
-                Text(country.name)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
+                // The continent rides on the name line, clear of the heart and of the stats below.
+                HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
+                    Text(country.name)
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.textPrimary)
+                        .lineLimit(2)
+                        .layoutPriority(1)
+                    if showContinent {
+                        continentBadge
+                            .fixedSize()
+                    }
+                }
 
                 if showCapital {
                     capitalLabel
@@ -94,13 +102,7 @@ private extension CountryRowView {
 
             Spacer(minLength: 0)
 
-            // Stacked rather than overlaid, so the badge never covers the heart on short rows.
-            VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xs) {
-                if showContinent {
-                    continentBadge
-                }
-                favoriteIcon
-            }
+            favoriteIcon
         }
         .padding(DesignSystem.Spacing.sm)
     }
