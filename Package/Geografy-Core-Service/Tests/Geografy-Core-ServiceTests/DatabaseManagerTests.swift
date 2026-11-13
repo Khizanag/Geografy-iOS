@@ -41,6 +41,29 @@ struct DatabaseManagerTests {
         #expect(collections.map(\.userID) == [""])
     }
 
+    @Test("After the update, the first user to load takes the version 2 favorites and collections")
+    func firstUserClaimsMigratedRows() throws {
+        let url = TestStore.temporaryURL()
+        defer { TestStore.remove(at: url) }
+        try TestStore.writeVersionTwoStore(at: url, favoriteCode: "FR", collectionItemID: "JP", collectionName: "Trips")
+        let manager = DatabaseManager(storeURL: url, inMemory: false)
+
+        let firstFavorites = FavoritesService(container: manager.container, userID: "first")
+        firstFavorites.fetchEntries()
+        let firstCollections = CollectionService()
+        firstCollections.configure(container: manager.container, userID: "first")
+        let secondFavorites = FavoritesService(container: manager.container, userID: "second")
+        secondFavorites.fetchEntries()
+        let secondCollections = CollectionService()
+        secondCollections.configure(container: manager.container, userID: "second")
+
+        #expect(firstFavorites.favoriteCodes == ["FR"])
+        #expect(firstCollections.collectionNames == ["Trips"])
+        #expect(firstCollections.items(in: "Trips").map(\.itemID) == ["JP"])
+        #expect(secondFavorites.favoriteCodes.isEmpty)
+        #expect(secondCollections.collectionNames.isEmpty)
+    }
+
     @Test(
         "Earlier versions keep their own shape, so their checksums never match the current one",
         arguments: ["CollectionItem", "FavoriteEntry", "SavedCollection"]

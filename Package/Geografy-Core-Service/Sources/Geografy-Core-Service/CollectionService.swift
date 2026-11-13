@@ -9,13 +9,20 @@ public final class CollectionService {
     // MARK: - Properties
     public private(set) var items: [CollectionItem] = []
     public private(set) var savedCollections: [SavedCollection] = []
+    public private(set) var currentUserID = UserScope.currentUserID
     private var modelContext: ModelContext?
 
     // MARK: - Init
     public init() {}
 
-    public func configure(container: ModelContainer) {
+    public func configure(container: ModelContainer, userID: String = UserScope.currentUserID) {
         modelContext = ModelContext(container)
+        currentUserID = userID
+        fetchItems()
+    }
+
+    public func switchUser(id: String) {
+        currentUserID = id
         fetchItems()
     }
 }
@@ -76,7 +83,8 @@ public extension CollectionService {
         let item = CollectionItem(
             itemID: itemID,
             itemType: type,
-            collectionName: collection
+            collectionName: collection,
+            userID: currentUserID
         )
         modelContext?.insert(item)
         save()
@@ -114,7 +122,7 @@ public extension CollectionService {
     /// Creates an empty collection. Does nothing when the name isn't available.
     func createCollection(named name: String) {
         guard isAvailableName(name) else { return }
-        modelContext?.insert(SavedCollection(name: name))
+        modelContext?.insert(SavedCollection(name: name, userID: currentUserID))
         save()
         fetchItems()
     }
@@ -144,13 +152,36 @@ public extension CollectionService {
 
 // MARK: - Persistence
 private extension CollectionService {
+    /// Loads the current user's collections, first giving them any saved before collections were per user.
     func fetchItems() {
         guard let modelContext else { return }
-        let descriptor = FetchDescriptor<CollectionItem>(
+        claimUnownedCollections(in: modelContext)
+        let userID = currentUserID
+        let itemDescriptor = FetchDescriptor<CollectionItem>(
+            predicate: #Predicate { $0.userID == userID },
             sortBy: [SortDescriptor(\CollectionItem.addedAt, order: .reverse)]
         )
-        items = (try? modelContext.fetch(descriptor)) ?? []
-        savedCollections = (try? modelContext.fetch(FetchDescriptor<SavedCollection>())) ?? []
+        let collectionDescriptor = FetchDescriptor<SavedCollection>(predicate: #Predicate { $0.userID == userID })
+        items = (try? modelContext.fetch(itemDescriptor)) ?? []
+        savedCollections = (try? modelContext.fetch(collectionDescriptor)) ?? []
+    }
+
+    func claimUnownedCollections(in modelContext: ModelContext) {
+        guard !currentUserID.isEmpty else { return }
+        let unownedItems = (try? modelContext.fetch(
+            FetchDescriptor<CollectionItem>(predicate: #Predicate { $0.userID.isEmpty })
+        )) ?? []
+        let unownedCollections = (try? modelContext.fetch(
+            FetchDescriptor<SavedCollection>(predicate: #Predicate { $0.userID.isEmpty })
+        )) ?? []
+        guard !unownedItems.isEmpty || !unownedCollections.isEmpty else { return }
+        for item in unownedItems {
+            item.userID = currentUserID
+        }
+        for collection in unownedCollections {
+            collection.userID = currentUserID
+        }
+        save()
     }
 
     func save() {
