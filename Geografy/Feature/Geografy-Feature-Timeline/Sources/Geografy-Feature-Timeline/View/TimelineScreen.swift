@@ -10,6 +10,7 @@ public struct TimelineScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var timelineService = TimelineService()
     @State private var selectedYear = 1_960
@@ -124,18 +125,20 @@ private extension TimelineScreen {
 
     var clearFilterButton: some View {
         Button {
-            withAnimation { filter = TimelineFilter() }
+            withAnimation(reduceMotion ? nil : .default) { filter = TimelineFilter() }
         } label: {
             Image(systemName: "xmark.circle.fill")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
+        .accessibilityLabel("Clear Filters")
     }
 
     func filterChip(title: String, icon: String, isActive: Bool) -> some View {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
+                .accessibilityHidden(true)
             Text(title)
                 .font(DesignSystem.Font.caption)
         }
@@ -170,7 +173,7 @@ private extension TimelineScreen {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .animation(.easeInOut, value: selectedYear)
+        .animation(reduceMotion ? nil : .easeInOut, value: selectedYear)
     }
 
     @ViewBuilder

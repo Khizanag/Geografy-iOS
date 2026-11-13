@@ -15,6 +15,7 @@ public struct HistoricalMapScreen: View {
     }
     // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -46,6 +47,9 @@ public struct HistoricalMapScreen: View {
             .task { await loadData() }
             .onAppear { selectedYear = initialYear }
             .onChange(of: selectedYear) { updateCountryColors() }
+            .onChange(of: mapState.selectedCountryCode) { _, code in
+                announceSelection(of: code)
+            }
             .sheet(item: $selectedEvent) { event in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     eventSheet(for: event)
@@ -83,6 +87,9 @@ private extension HistoricalMapScreen {
             showLabels: mapState.showLabels,
             canvasSize: size
         )
+        .accessibilityLabel("Historical map, \(String(selectedYear))")
+        .accessibilityValue(selectedCountryDescription.map { "Selected: \($0)" } ?? "No country selected")
+        .accessibilityHint("Double tap to select a country")
         .gesture(dragGesture)
         .gesture(magnifyGesture)
         .onTapGesture { location in
@@ -109,7 +116,7 @@ private extension HistoricalMapScreen {
         if let code = mapState.selectedCountryCode,
            let shape = mapState.selectedShape {
             historicalBanner(for: code, shape: shape)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
         }
     }
 
@@ -126,6 +133,7 @@ private extension HistoricalMapScreen {
                     countryCode: code,
                     height: DesignSystem.Size.xl
                 )
+                .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(country?.name ?? shape.name)
                         .font(DesignSystem.Font.headline)
@@ -133,6 +141,7 @@ private extension HistoricalMapScreen {
                         .lineLimit(1)
                     independenceLabel(year: independenceYear)
                 }
+                .accessibilityElement(children: .combine)
                 Spacer(minLength: 0)
                 if let year = independenceYear {
                     eventInfoButton(code: code, year: year)
@@ -142,7 +151,7 @@ private extension HistoricalMapScreen {
         }
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.bottom, DesignSystem.Spacing.xxs)
-        .animation(.easeInOut(duration: 0.3), value: code)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: code)
     }
 
     func independenceLabel(year: Int?) -> some View {
@@ -152,7 +161,7 @@ private extension HistoricalMapScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
             } else {
                 Text("Historical state unknown")
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
         .font(DesignSystem.Font.caption)
@@ -169,6 +178,18 @@ private extension HistoricalMapScreen {
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Event details")
+    }
+
+    var selectedCountryDescription: String? {
+        guard let shape = mapState.selectedShape else { return nil }
+        let name = countryDataService.country(for: shape.id)?.name ?? shape.name
+        guard let year = independenceMap[shape.id] else { return name }
+        return "\(name), independent since \(String(year))"
+    }
+
+    func announceSelection(of code: String?) {
+        guard code != nil, let description = selectedCountryDescription else { return }
+        AccessibilityNotification.Announcement("Selected \(description)").post()
     }
 }
 
@@ -404,7 +425,7 @@ private extension HistoricalMapScreen {
                 )
             }
 
-        withAnimation(.easeInOut(duration: 0.2)) {
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
             mapState.countryShapes = colored
         }
     }
