@@ -9,6 +9,7 @@ public struct WordSearchScreen: View {
     public init() {}
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var selectedTheme: WordSearchTheme = .capitals
     @State private var showGuide = false
@@ -67,7 +68,7 @@ private extension WordSearchScreen {
     func themeRow(_ theme: WordSearchTheme) -> some View {
         let isSelected = selectedTheme == theme
         return Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.8)) {
                 selectedTheme = theme
             }
         } label: {
@@ -76,6 +77,7 @@ private extension WordSearchScreen {
                     .font(DesignSystem.Font.body)
                     .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
                     .frame(width: 28)
+                    .accessibilityHidden(true)
                 Text(theme.rawValue)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(isSelected ? .semibold : .regular)
@@ -88,7 +90,8 @@ private extension WordSearchScreen {
                         .font(DesignSystem.Font.caption)
                         .fontWeight(.bold)
                         .foregroundStyle(DesignSystem.Color.onAccent)
-                        .transition(.scale.combined(with: .opacity))
+                        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+                        .accessibilityHidden(true)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -99,6 +102,7 @@ private extension WordSearchScreen {
             )
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     var howItWorksSection: some View {
@@ -120,6 +124,7 @@ private extension WordSearchScreen {
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.accent)
                     .frame(width: 24)
+                    .accessibilityHidden(true)
                 Text(text)
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -208,6 +213,7 @@ private extension WordSearchScreen {
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Guide")
         }
         #endif
     }

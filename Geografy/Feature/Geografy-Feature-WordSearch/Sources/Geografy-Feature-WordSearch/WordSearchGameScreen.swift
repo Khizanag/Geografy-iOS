@@ -8,6 +8,10 @@ import SwiftUI
 public struct WordSearchGameScreen: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.colorSchemeContrast) private var contrast
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -56,13 +60,18 @@ private extension WordSearchGameScreen {
                 Image(systemName: "timer")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
+                    .accessibilityHidden(true)
                 Text(formattedTime)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.bold)
                     .monospacedDigit()
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .contentTransition(.numericText())
-                    .animation(.snappy, value: elapsedSeconds)
+                    .animation(reduceMotion ? nil : .snappy, value: elapsedSeconds)
+                    .accessibilityLabel("Elapsed time")
+                    .accessibilityValue(
+                        Duration.seconds(elapsedSeconds).formatted(.units(allowed: [.minutes, .seconds], width: .wide))
+                    )
 
                 if timerActive {
                     Button {
@@ -72,6 +81,7 @@ private extension WordSearchGameScreen {
                             .foregroundStyle(DesignSystem.Color.iconPrimary)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel(isPaused ? "Resume" : "Pause")
                 }
             }
         }
@@ -147,32 +157,38 @@ private extension WordSearchGameScreen {
                 Image(systemName: allFound(puzzle) ? "trophy.fill" : "flag.checkered")
                     .font(DesignSystem.Font.iconXL)
                     .foregroundStyle(allFound(puzzle) ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
+                    .accessibilityHidden(true)
                 Text(allFound(puzzle) ? "All Words Found!" : "Puzzle Complete")
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    ResultStatItem(
-                        icon: "checkmark.circle.fill",
-                        value: "\(foundWordIDs.count)",
-                        label: "Found",
-                        color: DesignSystem.Color.success
-                    )
-                    ResultStatItem(
-                        icon: "eye.fill",
-                        value: "\(revealedCount)",
-                        label: "Revealed",
-                        color: DesignSystem.Color.warning
-                    )
-                    ResultStatItem(
-                        icon: "timer",
-                        value: formattedTime,
-                        label: "Time"
-                    )
-                }
+                    .accessibilityAddTraits(.isHeader)
+                resultStats
             }
             .padding(DesignSystem.Spacing.lg)
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    var resultStats: some View {
+        statsLayout {
+            ResultStatItem(
+                icon: "checkmark.circle.fill",
+                value: "\(foundWordIDs.count)",
+                label: "Found",
+                color: DesignSystem.Color.success
+            )
+            ResultStatItem(
+                icon: "eye.fill",
+                value: "\(revealedCount)",
+                label: "Revealed",
+                color: DesignSystem.Color.warning
+            )
+            ResultStatItem(
+                icon: "timer",
+                value: formattedTime,
+                label: "Time"
+            )
         }
     }
 
@@ -200,52 +216,64 @@ private extension WordSearchGameScreen {
             let computedCellSize = geometry.size.width / CGFloat(service.gridSize)
 
             ZStack {
-                VStack(spacing: 0) {
-                    ForEach(0..<service.gridSize, id: \.self) { row in
-                        HStack(spacing: 0) {
-                            ForEach(0..<service.gridSize, id: \.self) { col in
-                                gridCell(
-                                    letter: puzzle.grid[row][col],
-                                    cellSize: computedCellSize
-                                )
-                            }
-                        }
-                    }
-                }
+                letterRows(puzzle, cellSize: computedCellSize)
 
                 wordCapsules(puzzle: puzzle, cellSize: computedCellSize)
+                    .accessibilityHidden(true)
                 selectionCapsule(cellSize: computedCellSize)
+                    .accessibilityHidden(true)
             }
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
             #if !os(tvOS)
             .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
             #endif
-            .blur(radius: isPaused ? 8 : 0)
-            .animation(.easeInOut(duration: 0.2), value: isPaused)
+            .blur(radius: isPaused && !reduceTransparency ? 8 : 0)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isPaused)
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("Letter grid")
+            .accessibilityHidden(isPaused)
             .overlay {
                 if isPaused {
                     pauseOverlay
                         .transition(.opacity)
-                        .animation(.easeInOut(duration: 0.2), value: isPaused)
+                        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isPaused)
                 }
             }
         }
         .aspectRatio(1, contentMode: .fit)
-        .animation(.easeInOut(duration: 0.4), value: isRevealed)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: isRevealed)
+    }
+
+    // Each row reads as one element, so VoiceOver can scan the grid line by line.
+    func letterRows(_ puzzle: WordSearchPuzzle, cellSize: CGFloat) -> some View {
+        VStack(spacing: 0) {
+            ForEach(0..<service.gridSize, id: \.self) { row in
+                HStack(spacing: 0) {
+                    ForEach(0..<service.gridSize, id: \.self) { col in
+                        gridCell(letter: puzzle.grid[row][col], cellSize: cellSize)
+                    }
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Row \(row + 1)")
+                .accessibilityValue(puzzle.grid[row].map(String.init).joined(separator: " "))
+            }
+        }
     }
 
     var pauseOverlay: some View {
         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            .fill(DesignSystem.Color.background.opacity(0.6))
+            .fill(DesignSystem.Color.background.opacity(reduceTransparency ? 1 : 0.6))
             .overlay {
                 VStack(spacing: DesignSystem.Spacing.sm) {
                     Image(systemName: "pause.circle.fill")
                         .font(DesignSystem.Font.displaySmall)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .accessibilityHidden(true)
                     Text("Paused")
                         .font(DesignSystem.Font.title2)
                         .fontWeight(.bold)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
+                        .accessibilityAddTraits(.isHeader)
                     GlassButton("Continue", systemImage: "play.fill") {
                         isPaused = false
                     }
@@ -258,7 +286,8 @@ private extension WordSearchGameScreen {
             .font(DesignSystem.Font.system(size: max(cellSize * 0.48, 12), weight: .semibold, design: .monospaced))
             .foregroundStyle(DesignSystem.Color.textPrimary)
             .frame(width: cellSize, height: cellSize)
-            .background(DesignSystem.Color.cardBackground.opacity(0.3))
+            .background(DesignSystem.Color.cardBackground.opacity(reduceTransparency ? 1 : 0.3))
+            .border(contrast == .increased ? DesignSystem.Color.dividerSubtle : .clear, width: 0.5)
     }
 
     func wordCapsules(puzzle: WordSearchPuzzle, cellSize: CGFloat) -> some View {
@@ -268,13 +297,15 @@ private extension WordSearchGameScreen {
             if isUserFound || isRevealed || isHintRevealed {
                 let cells = wordCoversCells(wordItem)
                 if let first = cells.first, let last = cells.last {
+                    // Revealed words get a dashed outline so they differ from found words by shape, not just color.
                     wordCapsuleShape(
                         from: first,
                         to: last,
                         cellSize: cellSize,
                         color: isUserFound
                             ? DesignSystem.Color.success.opacity(0.5)
-                            : DesignSystem.Color.warning.opacity(0.4)
+                            : DesignSystem.Color.warning.opacity(0.4),
+                        dashedOutline: isUserFound ? nil : DesignSystem.Color.warning
                     )
                 }
             }
@@ -297,7 +328,8 @@ private extension WordSearchGameScreen {
         from start: GridCoord,
         to end: GridCoord,
         cellSize: CGFloat,
-        color: Color
+        color: Color,
+        dashedOutline: Color? = nil
     ) -> some View {
         let startCenter = cellCenter(start, cellSize: cellSize)
         let endCenter = cellCenter(end, cellSize: cellSize)
@@ -312,6 +344,11 @@ private extension WordSearchGameScreen {
 
         return Capsule()
             .fill(color)
+            .overlay {
+                if let dashedOutline {
+                    Capsule().strokeBorder(dashedOutline, style: StrokeStyle(lineWidth: 2, dash: [4, 3]))
+                }
+            }
             .frame(width: length, height: cellSize * 0.75)
             .rotationEffect(.radians(angle))
             .position(midpoint)
@@ -355,10 +392,12 @@ private extension WordSearchGameScreen {
                 Image(systemName: "checkmark.circle.fill")
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.success)
+                    .accessibilityHidden(true)
             } else if isRevealedOnly {
                 Image(systemName: "eye.fill")
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.warning)
+                    .accessibilityHidden(true)
             }
             Text(wordItem.word)
                 .font(DesignSystem.Font.caption)
@@ -379,6 +418,23 @@ private extension WordSearchGameScreen {
                 : (isRevealedOnly ? DesignSystem.Color.warning.opacity(0.12) : DesignSystem.Color.cardBackground),
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
+        .overlay {
+            if contrast == .increased {
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
+                    .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(wordItem.word)
+        .accessibilityValue(
+            isUserFound
+                ? "Found, \(wordItem.spokenLocation)"
+                : (isRevealedOnly ? "Revealed, \(wordItem.spokenLocation)" : "Not found")
+        )
+        .accessibilityAction(named: "Reveal location") {
+            guard !isUserFound, !gameFinished else { return }
+            revealHint(wordItem)
+        }
     }
 }
 
@@ -411,6 +467,13 @@ private extension WordSearchGameScreen {
 
 // MARK: - Helpers
 private extension WordSearchGameScreen {
+    func statsLayout<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.md))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.md))
+        return layout(content)
+    }
+
     var revealedCount: Int {
         guard let puzzle else { return 0 }
         let autoRevealed = isRevealed ? puzzle.words.count - foundWordIDs.count - hintRevealedIDs.count : 0
@@ -481,6 +544,11 @@ private extension WordSearchGameScreen {
                 #if !os(tvOS)
                 hapticsService.notification(.success)
                 #endif
+                let announcement = "Found \(wordItem.word). All words found in \(formattedTime)."
+                AccessibilityNotification.Announcement(announcement).post()
+            } else {
+                let announcement = "Found \(wordItem.word). \(foundWordIDs.count) of \(puzzle.words.count)."
+                AccessibilityNotification.Announcement(announcement).post()
             }
             return
         }
@@ -493,9 +561,10 @@ private extension WordSearchGameScreen {
     }
 
     func revealHint(_ wordItem: WordSearchWord) {
-        _ = withAnimation(.easeInOut(duration: 0.3)) {
+        _ = withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
             hintRevealedIDs.insert(wordItem.id)
         }
+        AccessibilityNotification.Announcement("\(wordItem.word) \(wordItem.spokenLocation).").post()
         #if !os(tvOS)
         hapticsService.impact(.light)
         #endif
@@ -504,6 +573,7 @@ private extension WordSearchGameScreen {
     func revealAllWords() {
         timerActive = false
         isRevealed = true
+        AccessibilityNotification.Announcement("All words revealed.").post()
         #if !os(tvOS)
         hapticsService.impact(.light)
         #endif
