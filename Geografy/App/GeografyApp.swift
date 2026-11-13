@@ -282,9 +282,9 @@ private extension GeografyApp {
     var navigateMenuItems: some View {
         Button("Explore") { NotificationCenter.default.post(name: .switchTab, object: AppTab.explore.rawValue) }
             .keyboardShortcut("1", modifiers: .command)
-        Button("Map") { NotificationCenter.default.post(name: .switchTab, object: AppTab.map.rawValue) }
-            .keyboardShortcut("2", modifiers: .command)
         Button("Play") { NotificationCenter.default.post(name: .switchTab, object: AppTab.play.rawValue) }
+            .keyboardShortcut("2", modifiers: .command)
+        Button("Map") { NotificationCenter.default.post(name: .switchTab, object: AppTab.map.rawValue) }
             .keyboardShortcut("3", modifiers: .command)
         Button("Learn") { NotificationCenter.default.post(name: .switchTab, object: AppTab.learn.rawValue) }
             .keyboardShortcut("4", modifiers: .command)

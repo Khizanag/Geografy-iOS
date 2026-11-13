@@ -5,8 +5,8 @@ import SwiftUI
 
 enum AppTab: Int, Hashable {
     case explore
-    case map
     case play
+    case map
     case learn
     case profile
 }
