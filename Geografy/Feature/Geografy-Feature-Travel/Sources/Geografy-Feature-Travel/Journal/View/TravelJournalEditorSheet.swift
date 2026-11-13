@@ -9,6 +9,8 @@ public struct TravelJournalEditorSheet: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelJournalService.self) var journalService
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     @Binding var activeSheet: TravelJournalScreen.ActiveSheet?
     public let countryDataService: CountryDataService
@@ -92,7 +94,7 @@ private extension TravelJournalEditorSheet {
                 .foregroundStyle(
                     canSave
                         ? DesignSystem.Color.accent
-                        : DesignSystem.Color.textTertiary
+                        : DesignSystem.Color.textSecondary
                 )
         }
         .disabled(!canSave)

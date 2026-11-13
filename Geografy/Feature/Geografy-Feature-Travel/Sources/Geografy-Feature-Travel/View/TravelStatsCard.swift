@@ -9,6 +9,9 @@ public struct TravelStatsCard: View {
     public let totalCountries: Int
     public let continentBreakdown: [(name: String, visited: Int, total: Int)]
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     // MARK: - Body
     public var body: some View {
         CardView {
@@ -21,6 +24,7 @@ public struct TravelStatsCard: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -31,8 +35,21 @@ private extension TravelStatsCard {
         return Double(visitedCount) / Double(totalCountries)
     }
 
+    var columnLayout: AnyLayout {
+        dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xs))
+    }
+
+    var progressAnimation: Animation {
+        reduceMotion ? .easeOut(duration: 0.2) : .spring(response: 0.8, dampingFraction: 0.7)
+    }
+
     var heroStats: some View {
-        HStack(spacing: DesignSystem.Spacing.xl) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: DesignSystem.Spacing.lg))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xl))
+        return layout {
             worldRing
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 statLine(
@@ -65,7 +82,7 @@ private extension TravelStatsCard {
                 )
                 .frame(width: 96, height: 96)
                 .rotationEffect(.degrees(-90))
-                .animation(.spring(response: 0.8, dampingFraction: 0.7), value: visitedFraction)
+                .animation(progressAnimation, value: visitedFraction)
             VStack(spacing: 1) {
                 Text("\(Int(visitedFraction * 100))%")
                     .font(DesignSystem.Font.title2)
@@ -76,6 +93,9 @@ private extension TravelStatsCard {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("World visited")
+        .accessibilityValue("\(Int(visitedFraction * 100)) percent")
     }
 
     func statLine(icon: String, color: Color, label: String, value: String) -> some View {
@@ -84,6 +104,7 @@ private extension TravelStatsCard {
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(color)
                 .frame(width: 16)
+                .accessibilityHidden(true)
             Text(label)
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -96,12 +117,12 @@ private extension TravelStatsCard {
     }
 
     var statsPills: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
+        columnLayout {
             statPill(value: "\(visitedCount)", label: "Countries", color: TravelStatus.visited.color)
             statPill(
                 value: "\(totalCountries - visitedCount)",
                 label: "Remaining",
-                color: DesignSystem.Color.textTertiary
+                color: DesignSystem.Color.textSecondary
             )
             statPill(value: "\(visitedContinents)", label: "Continents", color: DesignSystem.Color.accent)
         }
@@ -157,10 +178,14 @@ private extension TravelStatsCard {
                     Capsule()
                         .fill(TravelStatus.visited.color)
                         .frame(width: geo.size.width * fraction)
-                        .animation(.spring(response: 0.6, dampingFraction: 0.7), value: fraction)
+                        .animation(
+                            reduceMotion ? .easeOut(duration: 0.2) : .spring(response: 0.6, dampingFraction: 0.7),
+                            value: fraction
+                        )
                 }
             }
             .frame(height: 5)
+            .accessibilityHidden(true)
         }
     }
 }

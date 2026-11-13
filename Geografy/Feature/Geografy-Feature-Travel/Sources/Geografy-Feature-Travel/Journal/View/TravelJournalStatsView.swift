@@ -10,6 +10,8 @@ public struct TravelJournalStatsView: View {
     public let averageRating: Double
     public let favoriteCountryCode: String?
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     // MARK: - Body
     public var body: some View {
         CardView {
@@ -22,6 +24,7 @@ public struct TravelJournalStatsView: View {
             }
             .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -32,6 +35,7 @@ private extension TravelJournalStatsView {
             Image(systemName: "book.closed.fill")
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text("Journal Stats")
                     .font(DesignSystem.Font.headline)
@@ -55,10 +59,15 @@ private extension TravelJournalStatsView {
                     )
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Average rating \(formattedRating) of 5 stars")
     }
 
     var statsPills: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
+        let layout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xs))
+        return layout {
             statPill(
                 value: "\(uniqueCountries)",
                 label: "Countries",
@@ -86,6 +95,7 @@ private extension TravelJournalStatsView {
             Image(systemName: icon)
                 .font(DesignSystem.Font.iconXS)
                 .foregroundStyle(DesignSystem.Color.accent)
+                .accessibilityHidden(true)
             Text(value)
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
@@ -107,6 +117,7 @@ private extension TravelJournalStatsView {
             Image(systemName: "heart.fill")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.error)
+                .accessibilityHidden(true)
             Text("Favorite Destination")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -115,6 +126,7 @@ private extension TravelJournalStatsView {
                 .clipShape(
                     RoundedRectangle(cornerRadius: 3, style: .continuous)
                 )
+                .accessibilityLabel(Locale.current.localizedString(forRegionCode: countryCode) ?? countryCode)
         }
     }
 }

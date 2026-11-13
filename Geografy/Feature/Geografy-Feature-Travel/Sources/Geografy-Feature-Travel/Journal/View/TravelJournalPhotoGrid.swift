@@ -40,10 +40,10 @@ private extension TravelJournalPhotoGrid {
 // MARK: - Subviews
 private extension TravelJournalPhotoGrid {
     func photoCell(at index: Int) -> some View {
-        Button {
-            selectedPhotoIndex = SelectedIndex(value: index)
-        } label: {
-            ZStack(alignment: .topTrailing) {
+        ZStack(alignment: .topTrailing) {
+            Button {
+                selectedPhotoIndex = SelectedIndex(value: index)
+            } label: {
                 Image(uiImage: images[index])
                     .resizable()
                     .scaledToFill()
@@ -52,13 +52,15 @@ private extension TravelJournalPhotoGrid {
                     .clipShape(
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                     )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Photo \(index + 1) of \(images.count)")
+            .accessibilityHint("Opens the photo full screen")
 
-                if !isReadOnly {
-                    deleteOverlay(at: index)
-                }
+            if !isReadOnly {
+                deleteOverlay(at: index)
             }
         }
-        .buttonStyle(.plain)
     }
 
     func deleteOverlay(at index: Int) -> some View {
@@ -74,6 +76,7 @@ private extension TravelJournalPhotoGrid {
                 )
         }
         .padding(DesignSystem.Spacing.xxs)
+        .accessibilityLabel("Delete photo \(index + 1)")
     }
 
     func fullScreenPhoto(at index: Int) -> some View {
@@ -84,6 +87,7 @@ private extension TravelJournalPhotoGrid {
                 .resizable()
                 .scaledToFit()
                 .ignoresSafeArea()
+                .accessibilityLabel("Photo \(index + 1) of \(images.count)")
         }
         .overlay(alignment: .topTrailing) {
             closeButton
@@ -99,5 +103,6 @@ private extension TravelJournalPhotoGrid {
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .padding(DesignSystem.Spacing.md)
         }
+        .accessibilityLabel("Close photo")
     }
 }

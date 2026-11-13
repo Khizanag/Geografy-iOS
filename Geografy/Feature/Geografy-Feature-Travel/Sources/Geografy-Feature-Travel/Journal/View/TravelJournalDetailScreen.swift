@@ -57,6 +57,7 @@ private extension TravelJournalDetailScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)
         }
+        .accessibilityLabel("Edit Entry")
     }
 }
 
@@ -96,6 +97,7 @@ private extension TravelJournalDetailScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: entry.countryCode, height: 40)
                 .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(countryName)
                     .font(DesignSystem.Font.title2)
@@ -106,6 +108,7 @@ private extension TravelJournalDetailScreen {
             }
             Spacer(minLength: 0)
         }
+        .accessibilityElement(children: .combine)
     }
 
     var ratingRow: some View {
@@ -114,7 +117,10 @@ private extension TravelJournalDetailScreen {
                 Image(systemName: star <= entry.rating ? "star.fill" : "star")
                     .font(DesignSystem.Font.title3)
                     .foregroundStyle(DesignSystem.Color.warning)
+                    .accessibilityHidden(true)
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Rated \(entry.rating) of 5 stars")
             Spacer(minLength: 0)
             durationBadge
         }
@@ -136,17 +142,19 @@ private extension TravelJournalDetailScreen {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 1) {
                 Text(label)
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
                 Text(formattedDate(date))
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.medium)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
             }
         }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -196,6 +204,7 @@ private extension TravelJournalDetailScreen {
                 .font(DesignSystem.Font.footnote)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .frame(width: 20)
+                .accessibilityHidden(true)
             Text(label)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -205,6 +214,7 @@ private extension TravelJournalDetailScreen {
                 .fontWeight(.medium)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
         }
+        .accessibilityElement(children: .combine)
     }
 
     var deleteButton: some View {
@@ -213,6 +223,7 @@ private extension TravelJournalDetailScreen {
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "trash")
+                    .accessibilityHidden(true)
                 Text("Delete Entry")
             }
             .font(DesignSystem.Font.subheadline)

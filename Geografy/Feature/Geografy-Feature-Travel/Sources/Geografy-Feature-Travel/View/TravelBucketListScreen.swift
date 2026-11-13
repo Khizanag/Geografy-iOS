@@ -378,10 +378,20 @@ private extension BucketListCountryDetailView {
 
     func priorityRow(_ option: BucketListPriority) -> some View {
         let isSelected = priority == option
-        return CardView {
+        return Button { priority = option } label: {
+            priorityCard(option, isSelected: isSelected)
+        }
+        .buttonStyle(PressButtonStyle())
+        .accessibilityLabel(option.label)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+
+    func priorityCard(_ option: BucketListPriority, isSelected: Bool) -> some View {
+        CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Text(option.emoji)
                     .font(DesignSystem.Font.iconDefault)
+                    .accessibilityHidden(true)
                 Text(option.label)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.medium)
@@ -396,7 +406,6 @@ private extension BucketListCountryDetailView {
             }
             .padding(DesignSystem.Spacing.sm)
         }
-        .onTapGesture { priority = option }
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(isSelected ? DesignSystem.Color.accent : .clear, lineWidth: 2)

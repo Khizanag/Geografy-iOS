@@ -15,6 +15,8 @@ public struct TravelJournalEntryCard: View {
             cardContent
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Opens the journal entry")
     }
 }
 
@@ -41,6 +43,7 @@ private extension TravelJournalEntryCard {
             FlagView(countryCode: entry.countryCode, height: 28)
                 .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
                 .frame(width: 42)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(entry.title)
                     .font(DesignSystem.Font.headline)
@@ -67,6 +70,8 @@ private extension TravelJournalEntryCard {
                 .foregroundStyle(DesignSystem.Color.warning)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Rated \(entry.rating) of 5 stars")
     }
 
     var notesPreview: some View {
@@ -90,6 +95,8 @@ private extension TravelJournalEntryCard {
             }
             Spacer(minLength: 0)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(entry.photoFileNames.count) photos")
     }
 
     func photoThumbnail(fileName: String) -> some View {
@@ -130,10 +137,11 @@ private extension TravelJournalEntryCard {
         HStack(spacing: DesignSystem.Spacing.xs) {
             Image(systemName: "calendar")
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
             Text(entry.formattedDateRange)
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
             if !entry.photoFileNames.isEmpty {
                 photoCountBadge
             }
@@ -149,7 +157,7 @@ private extension TravelJournalEntryCard {
     var durationBadge: some View {
         Text(durationText)
             .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
     }
 }
 

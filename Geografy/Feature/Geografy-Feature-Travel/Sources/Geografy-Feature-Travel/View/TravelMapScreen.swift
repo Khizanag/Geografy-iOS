@@ -11,6 +11,8 @@ public struct TravelMapScreen: View {
     @Environment(GeoJSONCache.self) private var geoJSONCache
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelService.self) private var travelService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let filter: TravelMapFilter
 
@@ -37,8 +39,13 @@ public struct TravelMapScreen: View {
             .closeButtonPlacementLeading()
             .safeAreaInset(edge: .top) {
                 if isLoaded {
-                    infoBanner
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                    VStack(spacing: DesignSystem.Spacing.xs) {
+                        infoBanner
+                        if selectedFilter == .all {
+                            TravelStatusLegend()
+                        }
+                    }
+                    .transition(reduceMotion ? .opacity : .move(edge: .top).combined(with: .opacity))
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
@@ -107,7 +114,7 @@ private extension TravelMapScreen {
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .animation(.easeInOut(duration: 0.3), value: selectedFilter)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: selectedFilter)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(selectedFilter.displayName), \(travelCodes.count) countries")
     }
@@ -141,11 +148,13 @@ private extension TravelMapScreen {
                 }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Country labels")
+        .accessibilityValue(showLabels ? "Shown" : "Hidden")
     }
 
     var filterMenu: some View {
         Menu {
-            Picker(selection: $selectedFilter.animation()) {
+            Picker(selection: $selectedFilter.animation(reduceMotion ? nil : .default)) {
                 ForEach(TravelMapFilter.allCases, id: \.self) { mapFilter in
                     Label(mapFilter.displayName, systemImage: mapFilter.icon)
                         .tag(mapFilter)
@@ -158,6 +167,8 @@ private extension TravelMapScreen {
             Image(systemName: "line.3.horizontal.decrease")
                 .foregroundStyle(DesignSystem.Color.iconPrimary)
         }
+        .accessibilityLabel("Filter")
+        .accessibilityValue(selectedFilter.displayName)
     }
 }
 
@@ -218,12 +229,14 @@ private extension TravelMapScreen {
             .map { shape in
                 var modified = shape
                 if !travelCodes.contains(shape.id) {
-                    modified.color = Color(hex: "1A1A2E").opacity(0.5)
+                    modified.color = reduceTransparency ? Self.untrackedColor : Self.untrackedColor.opacity(0.5)
                     modified.name = ""
                 }
                 return modified
             }
     }
+
+    static let untrackedColor = Color(hex: "1A1A2E")
 
     var filterIcon: String {
         switch selectedFilter {
@@ -251,7 +264,7 @@ private extension TravelMapScreen {
 
         mapState.contentBounds = computeContentBounds(from: shapes)
 
-        withAnimation(.easeOut(duration: 0.3)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
         }
 
@@ -263,7 +276,7 @@ private extension TravelMapScreen {
             isInitialized = true
         }
 
-        withAnimation(.easeInOut(duration: 0.4).delay(0.3)) {
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.4).delay(0.3)) {
             isLoaded = true
         }
     }
