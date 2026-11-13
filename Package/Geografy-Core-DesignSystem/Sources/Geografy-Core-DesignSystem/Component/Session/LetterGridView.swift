@@ -101,9 +101,11 @@ private extension LetterGridView {
                 )
 
             if let letter = typed {
+                // Wrong letters are struck through, so right and wrong don't rest on green and red alone.
                 Text(letter.uppercased())
                     .font(DesignSystem.Font.headline)
                     .fontWeight(.bold)
+                    .strikethrough(!isCorrect, color: DesignSystem.Color.onAccent)
                     .foregroundStyle(
                         typed != nil
                             ? DesignSystem.Color.onAccent

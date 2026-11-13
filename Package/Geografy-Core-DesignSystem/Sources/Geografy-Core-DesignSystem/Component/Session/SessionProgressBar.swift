@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct SessionProgressBar: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     public let progress: CGFloat
     public var height: CGFloat = 6
 
@@ -21,7 +22,7 @@ public struct SessionProgressBar: View {
             .accessibilityLabel("Progress")
             .accessibilityValue("\(Int(progress * 100)) percent")
             .onChange(of: progress) {
-                withAnimation(.spring(response: 0.6, dampingFraction: 0.6)) {
+                withAnimation(reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.6)) {
                     animatedProgress = progress
                 }
             }

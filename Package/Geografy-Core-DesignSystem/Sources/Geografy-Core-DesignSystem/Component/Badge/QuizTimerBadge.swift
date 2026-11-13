@@ -2,6 +2,8 @@ import SwiftUI
 
 public struct QuizTimerBadge: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     public let seconds: Int
     public var totalSeconds: Int?
     public var style: Style = .pill
@@ -25,9 +27,12 @@ public struct QuizTimerBadge: View {
             .padding(.vertical, style == .compact ? 3 : DesignSystem.Spacing.xxs)
             .background(timerColor.opacity(0.15), in: Capsule())
             .overlay(Capsule().strokeBorder(timerColor.opacity(0.25), lineWidth: 1))
-            .scaleEffect(isUrgent ? 1.06 : 1.0)
-            .animation(.easeInOut(duration: 0.3), value: seconds)
-            .animation(.easeInOut(duration: 0.3), value: timerColor)
+            .scaleEffect(isUrgent && !reduceMotion ? 1.06 : 1.0)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: seconds)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: timerColor)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Time left")
+            .accessibilityValue(Text("\(seconds) seconds"))
     }
 }
 
@@ -47,6 +52,12 @@ private extension QuizTimerBadge {
                 progressRing(progress: CGFloat(seconds) / CGFloat(max(totalSeconds, 1)))
             } else {
                 Image(systemName: "timer")
+                    .font(DesignSystem.Font.caption2)
+            }
+
+            if isUrgent {
+                // Urgency shows as a symbol too, not only as the timer turning red.
+                Image(systemName: "exclamationmark.triangle.fill")
                     .font(DesignSystem.Font.caption2)
             }
 

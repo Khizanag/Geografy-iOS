@@ -23,6 +23,8 @@ public struct QuizOptionButton: View {
         self.action = action
     }
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var shakeOffset: CGFloat = 0
 
     // MARK: - Body
@@ -48,10 +50,37 @@ public struct QuizOptionButton: View {
         .keyboardShortcut(keyForIndex, modifiers: [])
         #endif
         .onChange(of: state) { _, newState in
-            if newState == .incorrect {
+            if newState == .incorrect, !reduceMotion {
                 Task { await shake() }
             }
         }
+        .accessibilityLabel(accessibilityTitle)
+        .accessibilityValue(accessibilityStateValue)
+    }
+}
+
+// MARK: - Accessibility
+private extension QuizOptionButton {
+    // A flag answer reads as "Option A", never the country, so VoiceOver doesn't give it away.
+    var accessibilityTitle: Text {
+        if let text {
+            Text(text)
+        } else {
+            Text("Option \(optionLetter)")
+        }
+    }
+
+    var accessibilityStateValue: Text {
+        switch state {
+        case .correct: Text("Correct")
+        case .incorrect: Text("Incorrect")
+        case .default, .disabled: Text("")
+        }
+    }
+
+    var optionLetter: String {
+        let letters = ["A", "B", "C", "D", "E", "F"]
+        return index < letters.count ? letters[index] : ""
     }
 }
 
@@ -112,13 +141,12 @@ private extension QuizOptionButton {
     }
 
     var letterBadge: some View {
-        let letters = ["A", "B", "C", "D", "E", "F"]
-        let letter = index < letters.count ? letters[index] : ""
-        return Text(letter)
+        Text(optionLetter)
             .font(DesignSystem.Font.footnote.weight(.black))
             .foregroundStyle(badgeTextColor)
             .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
             .background(badgeBackground, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+            .accessibilityHidden(true)
     }
 
     @ViewBuilder

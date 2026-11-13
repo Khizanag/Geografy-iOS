@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct ZoomableOrgLogoView: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let url: URL
@@ -120,7 +121,7 @@ private extension ZoomableOrgLogoView {
 // MARK: - Actions
 private extension ZoomableOrgLogoView {
     func toggleZoom() {
-        withAnimation(.spring(response: 0.3)) {
+        withAnimation(reduceMotion ? nil : .spring(response: 0.3)) {
             if scale > 1.0 {
                 resetPosition()
             } else {
@@ -131,7 +132,7 @@ private extension ZoomableOrgLogoView {
     }
 
     func resetPosition() {
-        withAnimation(.spring(response: 0.3)) {
+        withAnimation(reduceMotion ? nil : .spring(response: 0.3)) {
             scale = 1.0
             lastScale = 1.0
             offset = .zero
@@ -144,7 +145,7 @@ private extension ZoomableOrgLogoView {
             resetPosition()
             return
         }
-        withAnimation(.easeOut(duration: 0.2)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
             onDismiss()
         }
     }

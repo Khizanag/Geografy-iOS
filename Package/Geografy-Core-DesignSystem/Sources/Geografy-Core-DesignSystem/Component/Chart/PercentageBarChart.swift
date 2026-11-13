@@ -5,6 +5,9 @@ import SwiftUI
 /// always comes last in a neutral color.
 public struct PercentageBarChart: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     public let title: String?
     public let icon: String?
     public let items: [PercentageItem]
@@ -53,35 +56,62 @@ private extension PercentageBarChart {
     }
 
     func itemRow(item: PercentageItem, index: Int) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Text(item.name)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: 110, alignment: .leading)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    Capsule()
-                        .fill(barColor(for: item))
-                        .frame(width: barWidth(for: item, in: geo.size))
-                        .animation(
-                            .spring(response: 0.6, dampingFraction: 0.7)
-                                .delay(0.3 + Double(index) * 0.08),
-                            value: appeared
-                        )
+        Group {
+            // At accessibility sizes the name and value sit above the bar instead of squeezing beside it.
+            if dynamicTypeSize.isAccessibilitySize {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                    HStack {
+                        itemName(item)
+                        Spacer(minLength: DesignSystem.Spacing.xs)
+                        itemValue(item)
+                    }
+                    bar(for: item, index: index)
+                }
+            } else {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    itemName(item)
+                        .frame(width: 110, alignment: .leading)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                    bar(for: item, index: index)
+                    itemValue(item)
+                        .frame(width: DesignSystem.Spacing.xl, alignment: .trailing)
                 }
             }
-            .frame(height: DesignSystem.Spacing.xs)
-
-            Text(String(format: "%.0f%%", item.percentage))
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: DesignSystem.Spacing.xl, alignment: .trailing)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(item.name)
+        .accessibilityValue(Text("\(Int(item.percentage.rounded())) percent"))
+    }
+
+    func itemName(_ item: PercentageItem) -> some View {
+        Text(item.name)
+            .font(DesignSystem.Font.caption)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+    }
+
+    func itemValue(_ item: PercentageItem) -> some View {
+        Text(String(format: "%.0f%%", item.percentage))
+            .font(DesignSystem.Font.caption2)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+    }
+
+    func bar(for item: PercentageItem, index: Int) -> some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                Capsule()
+                    .fill(barColor(for: item))
+                    .frame(width: barWidth(for: item, in: geo.size))
+                    .animation(
+                        reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7)
+                            .delay(0.3 + Double(index) * 0.08),
+                        value: appeared
+                    )
+            }
+        }
+        .frame(height: DesignSystem.Spacing.xs)
     }
 }
 

@@ -9,8 +9,29 @@ import SwiftUI
 ///     .geoEffect(.favoriteTap(isFavorite: isFavorite))
 /// ```
 public extension View {
-    @ViewBuilder
     func geoEffect(_ effect: GeoSymbolEffect) -> some View {
+        modifier(GeoSymbolEffectModifier(effect: effect))
+    }
+}
+
+// Symbol effects are decoration, so they stop entirely under Reduce Motion.
+private struct GeoSymbolEffectModifier: ViewModifier {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    let effect: GeoSymbolEffect
+
+    func body(content: Content) -> some View {
+        if reduceMotion {
+            content
+        } else {
+            content.applying(effect)
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func applying(_ effect: GeoSymbolEffect) -> some View {
         switch effect {
         case .favoriteTap(let isFavorite):
             symbolEffect(.bounce, value: isFavorite)

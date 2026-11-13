@@ -15,6 +15,11 @@ public struct CountryFlagTile: View {
 
     // MARK: - Body
     public var body: some View {
+        tile
+            .accessibilityElement(children: .combine)
+    }
+
+    private var tile: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.large) {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 FlagView(countryCode: country.code, height: 36, fixedWidth: true)
@@ -23,10 +28,10 @@ public struct CountryFlagTile: View {
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(isHighlighted ? .bold : .semibold)
                     .foregroundStyle(isHighlighted ? DesignSystem.Color.accent : DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
                     .multilineTextAlignment(.center)
                     // Room for two lines, so one-line and two-line names make the same height.
-                    .frame(width: 72, height: 32)
+                    .lineLimit(2, reservesSpace: true)
+                    .frame(width: 72)
             }
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .padding(.vertical, DesignSystem.Spacing.sm)

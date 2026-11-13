@@ -23,12 +23,16 @@ public struct FlagView: View {
         flagImage
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2, style: .continuous))
             .frame(width: fixedWidth ? slotWidth : nil, height: fixedWidth ? height : nil, alignment: .center)
-            .accessibilityLabel("Flag of \(countryCode.uppercased())")
+            .accessibilityLabel("Flag of \(countryName)")
     }
 }
 
 // MARK: - Subviews
 private extension FlagView {
+    var countryName: String {
+        Locale.current.localizedString(forRegionCode: countryCode) ?? countryCode.uppercased()
+    }
+
     @ViewBuilder
     var flagImage: some View {
         let assetName = "Flags/\(countryCode.uppercased())"

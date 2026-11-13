@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct ZoomableFlagView: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let countryCode: String
@@ -120,7 +121,7 @@ private extension ZoomableFlagView {
 // MARK: - Actions
 private extension ZoomableFlagView {
     func toggleZoom() {
-        withAnimation(.spring(response: 0.3)) {
+        withAnimation(reduceMotion ? nil : .spring(response: 0.3)) {
             if scale > 1.0 {
                 resetPosition()
             } else {
@@ -131,7 +132,7 @@ private extension ZoomableFlagView {
     }
 
     func resetPosition() {
-        withAnimation(.spring(response: 0.3)) {
+        withAnimation(reduceMotion ? nil : .spring(response: 0.3)) {
             scale = 1.0
             lastScale = 1.0
             offset = .zero

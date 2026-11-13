@@ -28,6 +28,7 @@ public struct GuideStep: Identifiable, Sendable {
 
 public struct GuideSheet<Illustration: View>: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
 
     public let pages: [GuidePage]
@@ -144,7 +145,10 @@ private extension GuideSheet {
                                 : DesignSystem.Color.cardBackgroundHighlighted
                         )
                         .frame(width: index == currentPage ? 20 : 8, height: 8)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentPage)
+                        .animation(
+                            reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),
+                            value: currentPage
+                        )
                 }
             }
 
@@ -157,6 +161,6 @@ private extension GuideSheet {
             }
         }
         .padding(.vertical, DesignSystem.Spacing.md)
-        .animation(.easeInOut(duration: 0.25), value: currentPage)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: currentPage)
     }
 }

@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct TypeSelectionGrid<T: SelectableType>: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
@@ -74,7 +75,7 @@ private extension TypeSelectionGrid {
             y: isSelected ? 6 : 2
         )
         .scaleEffect(isSelected ? 1.03 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
 
     func cardHeader(item: T, isSelected: Bool) -> some View {

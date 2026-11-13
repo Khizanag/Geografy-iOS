@@ -51,7 +51,7 @@ private extension PulsingCirclesView {
             .opacity(isAnimating ? 1 : 0.4)
             .animation(
                 reduceMotion
-                    ? .easeInOut(duration: 0.3)
+                    ? nil
                     : .easeInOut(duration: 1.8).repeatForever(autoreverses: true).delay(delay),
                 value: isAnimating
             )

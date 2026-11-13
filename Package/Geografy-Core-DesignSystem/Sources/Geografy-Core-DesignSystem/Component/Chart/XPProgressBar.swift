@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct XPProgressBar: View {
     // MARK: - Properties
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     public let currentLevelNumber: Int
     public let nextLevelNumber: Int?
     public let xpInCurrentLevel: Int
@@ -33,15 +34,18 @@ public struct XPProgressBar: View {
             xpCountLabel
         }
         .onAppear {
-            withAnimation(.spring(response: 0.8, dampingFraction: 0.7).delay(0.15)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.8, dampingFraction: 0.7).delay(0.15)) {
                 animatedProgress = progressFraction
             }
         }
         .onChange(of: progressFraction) { _, newValue in
-            withAnimation(.spring(response: 0.8, dampingFraction: 0.7)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.8, dampingFraction: 0.7)) {
                 animatedProgress = newValue
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Level \(currentLevelNumber)"))
+        .accessibilityValue(Text("\(xpInCurrentLevel) of \(xpRequiredForNextLevel) XP"))
     }
 }
 
@@ -87,7 +91,7 @@ private extension XPProgressBar {
             Spacer()
             Text("\(xpInCurrentLevel) / \(xpRequiredForNextLevel) XP")
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
 
