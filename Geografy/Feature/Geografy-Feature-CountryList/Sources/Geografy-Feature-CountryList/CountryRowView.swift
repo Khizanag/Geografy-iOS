@@ -7,6 +7,7 @@ public struct CountryRowView: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(PronunciationService.self) private var pronunciationService
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     public let country: Country
     public let isFavorite: Bool
@@ -70,20 +71,27 @@ private extension CountryRowView {
             .frame(width: 3)
     }
 
+    // At accessibility text sizes the row stacks: flag on top, then each fact on its own line.
+    var isStacked: Bool {
+        dynamicTypeSize.isAccessibilitySize
+    }
+
     var contentRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            if showFlag {
-                FlagView(countryCode: country.code, height: 36, fixedWidth: true)
-                    .geoShadow(.subtle)
+        HStack(alignment: isStacked ? .top : .center, spacing: DesignSystem.Spacing.sm) {
+            if showFlag, !isStacked {
+                flag
             }
 
             VStack(alignment: .leading, spacing: 3) {
+                if showFlag, isStacked {
+                    flag
+                }
                 // The continent rides on the name line, clear of the heart and of the stats below.
-                HStack(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs) {
+                nameLineLayout {
                     Text(country.name)
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                        .lineLimit(2)
+                        .lineLimit(isStacked ? nil : 2)
                         .layoutPriority(1)
                     if showContinent {
                         continentBadge
@@ -119,12 +127,26 @@ private extension CountryRowView {
         }
     }
 
+    var flag: some View {
+        FlagView(countryCode: country.code, height: 36, fixedWidth: true)
+            .geoShadow(.subtle)
+    }
+
+    var nameLineLayout: AnyLayout {
+        isStacked
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: DesignSystem.Spacing.xxs))
+            : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: DesignSystem.Spacing.xs))
+    }
+
     var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
+        let layout = isStacked
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: DesignSystem.Spacing.xxs))
+            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xxs))
+        return layout {
             if showArea {
                 stat(icon: "map", value: country.area.formatArea())
             }
-            if showArea, showPopulation {
+            if showArea, showPopulation, !isStacked {
                 Text("·")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textTertiary)
