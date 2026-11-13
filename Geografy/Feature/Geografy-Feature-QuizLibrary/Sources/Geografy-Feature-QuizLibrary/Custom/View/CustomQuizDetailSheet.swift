@@ -70,27 +70,27 @@ private extension CustomQuizDetailSheet {
     }
 
     func continentRow(_ continent: Country.Continent, count: Int) -> some View {
-        HStack {
-            Image(systemName: continent.icon)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .frame(width: 24)
+        CardView(cornerRadius: DesignSystem.CornerRadius.small) {
+            HStack {
+                Image(systemName: continent.icon)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .frame(width: 24)
 
-            Text(continent.displayName)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(continent.displayName)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            Spacer()
+                Spacer()
 
-            Text("\(count)")
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                Text("\(count)")
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .padding(.horizontal, DesignSystem.Spacing.sm)
+            .padding(.vertical, DesignSystem.Spacing.xs)
         }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
     }
 }
 
@@ -109,21 +109,21 @@ private extension CustomQuizDetailSheet {
     }
 
     func questionTypeRow(_ type: QuizType) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: type.icon)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .frame(width: 28)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Image(systemName: type.icon)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.accent)
+                    .frame(width: 28)
 
-            Text(type.displayName)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(type.displayName)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            Spacer(minLength: 0)
+                Spacer(minLength: 0)
+            }
+            .padding(DesignSystem.Spacing.sm)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
     }
 }
 
@@ -150,26 +150,24 @@ private extension CustomQuizDetailSheet {
     }
 
     func infoPill(value: String, label: String, icon: String) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.accent)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.accent)
 
-            Text(value)
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(value)
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                Text(label)
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous),
-        )
     }
 }
 

@@ -154,14 +154,7 @@ private extension QuizSessionScreen {
     }
 
     var pauseIcon: some View {
-        ZStack {
-            Circle()
-                .fill(DesignSystem.Color.accent.opacity(0.12))
-                .frame(width: 80, height: 80)
-            Image(systemName: "pause.circle.fill")
-                .font(DesignSystem.Font.displayXS)
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
+        IconBadge("pause.circle.fill", size: .hero)
     }
 
     var pauseInfo: some View {

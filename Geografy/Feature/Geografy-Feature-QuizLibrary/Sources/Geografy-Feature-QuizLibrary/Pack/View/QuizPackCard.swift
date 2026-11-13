@@ -30,7 +30,8 @@ public struct QuizPackCard: View {
             .frame(height: 160)
             .clipShape(
                 RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.large
+                    cornerRadius: DesignSystem.CornerRadius.large,
+                    style: .continuous
                 )
             )
             .shadow(
@@ -92,13 +93,15 @@ private extension QuizPackCard {
 
     var statsRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            statPill(
-                text: "\(completedLevels)/\(pack.levelCount)",
-                icon: "checkmark.circle"
+            InfoPill(
+                "\(completedLevels)/\(pack.levelCount)",
+                systemImage: "checkmark.circle",
+                style: .onColor
             )
-            statPill(
-                text: "\(stars)/\(maxStars)",
-                icon: "star.fill"
+            InfoPill(
+                "\(stars)/\(maxStars)",
+                systemImage: "star.fill",
+                style: .onColor
             )
         }
     }
@@ -113,32 +116,5 @@ private extension QuizPackCard {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
-    }
-}
-
-// MARK: - Helpers
-private extension QuizPackCard {
-    func statPill(text: String, icon: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption2)
-            Text(text)
-                .font(DesignSystem.Font.caption2)
-        }
-        .foregroundStyle(
-            DesignSystem.Color.onAccent.opacity(0.9)
-        )
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(
-            DesignSystem.Color.onAccent.opacity(0.18)
-        )
-        .clipShape(Capsule())
-        .overlay(
-            Capsule().strokeBorder(
-                DesignSystem.Color.onAccent.opacity(0.25),
-                lineWidth: 1
-            )
-        )
     }
 }

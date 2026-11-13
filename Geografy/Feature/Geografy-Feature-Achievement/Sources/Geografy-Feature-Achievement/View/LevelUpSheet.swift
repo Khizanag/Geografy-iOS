@@ -51,18 +51,16 @@ private extension LevelUpSheet {
     }
 
     var card: some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            levelUpHeadline
-            LevelBadgeView(level: newLevel, size: .large, animated: true)
-            levelDetails
-            continueButton
+        CardView {
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                levelUpHeadline
+                LevelBadgeView(level: newLevel, size: .large, animated: true)
+                levelDetails
+                continueButton
+            }
+            .padding(DesignSystem.Spacing.lg)
+            .frame(maxWidth: 360)
         }
-        .padding(DesignSystem.Spacing.lg)
-        .frame(maxWidth: 360)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
-        )
         .padding(.horizontal, DesignSystem.Spacing.lg)
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
@@ -94,18 +92,9 @@ private extension LevelUpSheet {
     }
 
     var continueButton: some View {
-        Button {
+        GlassButton("Continue", fullWidth: true) {
             onDismiss()
-        } label: {
-            Text("Continue")
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-                .background(DesignSystem.Color.accent, in: Capsule())
         }
-        .buttonStyle(PressButtonStyle())
     }
 
     var particleLayer: some View {

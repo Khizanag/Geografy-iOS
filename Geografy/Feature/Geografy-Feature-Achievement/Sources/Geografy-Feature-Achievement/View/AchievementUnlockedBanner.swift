@@ -39,7 +39,7 @@ public struct AchievementUnlockedBanner: View {
 private extension AchievementUnlockedBanner {
     var bannerContent: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            iconView
+            IconBadge(achievement.iconName, color: categoryColor, size: .medium)
             textContent
             Spacer()
             xpBadge
@@ -57,17 +57,6 @@ private extension AchievementUnlockedBanner {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .onTapGesture {
             dismiss()
-        }
-    }
-
-    var iconView: some View {
-        ZStack {
-            Circle()
-                .fill(categoryColor.opacity(0.18))
-                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-            Image(systemName: achievement.iconName)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(categoryColor)
         }
     }
 

@@ -63,8 +63,7 @@ private extension DailyChallengeScreen {
 private extension DailyChallengeScreen {
     var challengeHeader: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            headerIcon
-                .accessibilityHidden(true)
+            IconBadge("calendar.badge.clock", size: .large)
             Text("Daily Challenge")
                 .font(DesignSystem.Font.title)
                 .fontWeight(.bold)
@@ -76,20 +75,6 @@ private extension DailyChallengeScreen {
         }
         .padding(.bottom, DesignSystem.Spacing.sm)
     }
-
-    var headerIcon: some View {
-        ZStack {
-            Circle()
-                .fill(DesignSystem.Color.accent.opacity(0.15))
-                .frame(
-                    width: DesignSystem.Size.xxxl,
-                    height: DesignSystem.Size.xxxl
-                )
-            Image(systemName: "calendar.badge.clock")
-                .font(DesignSystem.Font.iconLarge)
-                .foregroundStyle(DesignSystem.Color.accent)
-        }
-    }
 }
 
 // MARK: - Streak Section
@@ -97,8 +82,7 @@ private extension DailyChallengeScreen {
     func streakSection(service: DailyChallengeService) -> some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
-                streakIcon(streak: service.streak)
-                    .accessibilityHidden(true)
+                IconBadge("flame.fill", color: DesignSystem.Color.orange, size: .medium)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Challenge Streak")
                         .font(DesignSystem.Font.headline)
@@ -113,20 +97,6 @@ private extension DailyChallengeScreen {
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Challenge Streak: \(service.streak)-day streak")
-    }
-
-    func streakIcon(streak: Int) -> some View {
-        ZStack {
-            Circle()
-                .fill(DesignSystem.Color.orange.opacity(0.15))
-                .frame(
-                    width: DesignSystem.Size.xl,
-                    height: DesignSystem.Size.xl
-                )
-            Image(systemName: "flame.fill")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.orange)
-        }
     }
 }
 
@@ -165,7 +135,7 @@ private extension DailyChallengeScreen {
 
     func challengeTypeRow(challenge: DailyChallenge) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            challengeTypeIcon(challenge: challenge)
+            IconBadge(challenge.type.iconName, color: DesignSystem.Color.indigo, size: .medium)
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                 Text(challenge.type.title)
                     .font(DesignSystem.Font.headline)
@@ -176,20 +146,6 @@ private extension DailyChallengeScreen {
                     .lineLimit(2)
             }
             Spacer()
-        }
-    }
-
-    func challengeTypeIcon(challenge: DailyChallenge) -> some View {
-        ZStack {
-            Circle()
-                .fill(DesignSystem.Color.indigo.opacity(0.15))
-                .frame(
-                    width: DesignSystem.Size.xl,
-                    height: DesignSystem.Size.xl
-                )
-            Image(systemName: challenge.type.iconName)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.indigo)
         }
     }
 
@@ -297,17 +253,7 @@ private extension DailyChallengeScreen {
 
     var emptyHistoryView: some View {
         CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: "calendar")
-                    .font(DesignSystem.Font.iconXL)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .accessibilityHidden(true)
-                Text("No challenges completed yet")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.xl)
+            ContentUnavailableView("No challenges completed yet", systemImage: "calendar")
         }
     }
 

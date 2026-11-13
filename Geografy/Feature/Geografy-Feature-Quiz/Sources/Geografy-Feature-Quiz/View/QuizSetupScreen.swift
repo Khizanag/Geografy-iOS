@@ -82,7 +82,7 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var gameModeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Game Mode")
+            SectionHeaderView(title: "Game Mode")
 
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(QuizGameMode.allCases) { mode in
@@ -128,7 +128,7 @@ private extension QuizSetupScreen {
 
     var timerSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Timer")
+            SectionHeaderView(title: "Timer")
 
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(ArcadeTimer.allCases) { timer in
@@ -163,16 +163,8 @@ private extension QuizSetupScreen {
 
     var headerSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.15))
-                    .frame(width: DesignSystem.Size.xxxl, height: DesignSystem.Size.xxxl)
-                Image(systemName: selectedType.icon)
-                    .font(DesignSystem.Font.iconLarge)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .contentTransition(.symbolEffect(.replace))
-            }
-            .accessibilityHidden(true)
+            IconBadge(selectedType.icon, size: .large)
+                .contentTransition(.symbolEffect(.replace))
             VStack(spacing: DesignSystem.Spacing.xxs) {
                 Text(selectedType.displayName)
                     .font(DesignSystem.Font.title2)
@@ -197,7 +189,7 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var quizTypeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Quiz Type")
+            SectionHeaderView(title: "Quiz Type")
                 .padding(.horizontal, DesignSystem.Spacing.md)
             TypeSelectionGrid(
                 items: QuizType.allCases.map { $0 },
@@ -212,7 +204,7 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var answerModeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Answer Mode")
+            SectionHeaderView(title: "Answer Mode")
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(selectedType.supportedAnswerModes) { mode in
                     modeChip(mode)
@@ -297,7 +289,7 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var metricSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Metric")
+            SectionHeaderView(title: "Metric")
 
             HStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(ComparisonMetric.allCases) { metric in
@@ -333,7 +325,7 @@ private extension QuizSetupScreen {
 
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Region")
+            SectionHeaderView(title: "Region")
                 .padding(.horizontal, DesignSystem.Spacing.md)
             #if !os(tvOS)
             RegionCarousel(selectedRegion: $selectedRegion)
@@ -346,7 +338,7 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var questionCountSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            sectionTitle("Questions")
+            SectionHeaderView(title: "Questions")
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(QuestionCount.allCases) { count in
                     countChip(count)
@@ -390,14 +382,6 @@ private extension QuizSetupScreen {
 
 // MARK: - Helpers
 private extension QuizSetupScreen {
-    func sectionTitle(_ text: String) -> some View {
-        Text(text)
-            .font(DesignSystem.Font.headline)
-            .fontWeight(.semibold)
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .accessibilityAddTraits(.isHeader)
-    }
-
     func hapticSelection() {
         #if !os(tvOS)
         hapticsService.selection()

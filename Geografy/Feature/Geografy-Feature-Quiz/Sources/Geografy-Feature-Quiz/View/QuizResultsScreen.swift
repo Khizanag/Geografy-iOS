@@ -132,11 +132,8 @@ private extension QuizResultsScreen {
 
     var answersSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            Text("Answers")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
+            SectionHeaderView(title: "Answers")
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .accessibilityAddTraits(.isHeader)
 
             ForEach(Array(result.answers.enumerated()), id: \.element.id) { index, answer in
                 answerRow(index: index + 1, answer: answer)

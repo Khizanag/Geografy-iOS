@@ -125,18 +125,7 @@ private extension DailyChallengeResultView {
     var streakBadge: some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
-                ZStack {
-                    Circle()
-                        .fill(DesignSystem.Color.orange.opacity(0.15))
-                        .frame(
-                            width: DesignSystem.Size.xl,
-                            height: DesignSystem.Size.xl
-                        )
-                    Image(systemName: "flame.fill")
-                        .font(DesignSystem.Font.title2)
-                        .foregroundStyle(DesignSystem.Color.orange)
-                }
-                .accessibilityHidden(true)
+                IconBadge("flame.fill", color: DesignSystem.Color.orange, size: .medium)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text("Challenge Streak")
                         .font(DesignSystem.Font.headline)

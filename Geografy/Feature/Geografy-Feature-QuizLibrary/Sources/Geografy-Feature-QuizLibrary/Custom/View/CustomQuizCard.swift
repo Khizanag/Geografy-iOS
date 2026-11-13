@@ -58,14 +58,8 @@ private extension CustomQuizCard {
 
     var statsRow: some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            statPill(
-                text: "\(quiz.countryCodes.count) countries",
-                icon: "globe",
-            )
-            statPill(
-                text: "\(quiz.questionTypes.count) types",
-                icon: "list.bullet",
-            )
+            InfoPill("\(quiz.countryCodes.count) countries", systemImage: "globe", style: .onColor)
+            InfoPill("\(quiz.questionTypes.count) types", systemImage: "list.bullet", style: .onColor)
         }
     }
 }
@@ -75,24 +69,6 @@ private extension CustomQuizCard {
     var accentColor: Color {
         let codeValue = quiz.name.unicodeScalars.reduce(0) { $0 + Int($1.value) }
         return DesignSystem.Color.mapColors[codeValue % DesignSystem.Color.mapColors.count]
-    }
-
-    func statPill(text: String, icon: String) -> some View {
-        HStack(spacing: 4) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption2)
-            Text(text)
-                .font(DesignSystem.Font.caption2)
-        }
-        .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.9))
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .padding(.vertical, 4)
-        .background(DesignSystem.Color.onAccent.opacity(0.18))
-        .clipShape(Capsule())
-        .overlay(
-            Capsule()
-                .strokeBorder(DesignSystem.Color.onAccent.opacity(0.25), lineWidth: 1)
-        )
     }
 }
 #endif

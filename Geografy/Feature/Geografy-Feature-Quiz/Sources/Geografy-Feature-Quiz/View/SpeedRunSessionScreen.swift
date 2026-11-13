@@ -195,13 +195,7 @@ private extension SpeedRunSessionScreen {
 
     func completedRow(country: Country) -> some View {
         let isFlashing = flashingCode == country.code
-        return HStack(spacing: DesignSystem.Spacing.sm) {
-            FlagView(countryCode: country.code, height: 24, fixedWidth: true)
-                .frame(width: 40, alignment: .center)
-            Text(country.name)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Spacer()
+        return CountryListRow(country: country) {
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.success)
@@ -257,15 +251,8 @@ private extension SpeedRunSessionScreen {
 
     var resultsHeader: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.warning.opacity(0.12))
-                    .frame(width: 96, height: 96)
-                Image(systemName: "trophy.fill")
-                    .font(DesignSystem.Font.displayXS)
-                    .foregroundStyle(DesignSystem.Color.warning)
-                    .symbolEffect(.bounce)
-            }
+            IconBadge("trophy.fill", color: DesignSystem.Color.warning, size: .hero)
+                .symbolEffect(.bounce)
 
             Text(completionMessage)
                 .font(DesignSystem.Font.title2)
@@ -331,22 +318,11 @@ private extension SpeedRunSessionScreen {
 
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(missedCountries) { country in
-                    HStack(spacing: DesignSystem.Spacing.sm) {
-                        FlagView(countryCode: country.code, height: 24, fixedWidth: true)
-                            .frame(width: 40, alignment: .center)
-
-                        Text(country.name)
-                            .font(DesignSystem.Font.body)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                        Spacer()
+                    CardView(cornerRadius: DesignSystem.CornerRadius.small) {
+                        CountryListRow(country: country)
+                            .padding(.horizontal, DesignSystem.Spacing.sm)
+                            .padding(.vertical, DesignSystem.Spacing.xs)
                     }
-                    .padding(.horizontal, DesignSystem.Spacing.sm)
-                    .padding(.vertical, DesignSystem.Spacing.xs)
-                    .background(
-                        DesignSystem.Color.cardBackground,
-                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-                    )
                 }
             }
         }

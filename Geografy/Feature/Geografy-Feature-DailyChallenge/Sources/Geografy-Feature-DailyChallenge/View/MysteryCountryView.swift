@@ -171,7 +171,8 @@ private extension MysteryCountryView {
                 .background(DesignSystem.Color.cardBackground)
                 .clipShape(
                     RoundedRectangle(
-                        cornerRadius: DesignSystem.CornerRadius.medium
+                        cornerRadius: DesignSystem.CornerRadius.medium,
+                        style: .continuous
                     )
                 )
                 .autocorrectionDisabled()

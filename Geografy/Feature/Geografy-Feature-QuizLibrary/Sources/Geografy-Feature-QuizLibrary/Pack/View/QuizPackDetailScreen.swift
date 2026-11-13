@@ -29,8 +29,7 @@ public struct QuizPackDetailScreen: View {
             if let pack {
                 packContent(pack)
             } else {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                LoadingView()
             }
         }
         .screenBackground()
@@ -106,14 +105,8 @@ private extension QuizPackDetailScreen {
 
     func packInfoPills(_ pack: QuizPack) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            infoPill(
-                text: "\(pack.totalQuestions) questions",
-                icon: "questionmark.circle"
-            )
-            infoPill(
-                text: "\(pack.levelCount) levels",
-                icon: "chart.bar.fill"
-            )
+            InfoPill("\(pack.totalQuestions) questions", systemImage: "questionmark.circle")
+            InfoPill("\(pack.levelCount) levels", systemImage: "chart.bar.fill")
         }
     }
 }
@@ -144,26 +137,24 @@ private extension QuizPackDetailScreen {
         label: String,
         total: String
     ) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            HStack(spacing: 0) {
-                Text(value)
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                Text("/\(total)")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            VStack(spacing: DesignSystem.Spacing.xxs) {
+                HStack(spacing: 0) {
+                    Text(value)
+                        .font(DesignSystem.Font.title2)
+                        .fontWeight(.bold)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                    Text("/\(total)")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                }
+                Text(label)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, DesignSystem.Spacing.sm)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
     }
 }
 
@@ -201,22 +192,6 @@ private extension QuizPackDetailScreen {
         guard index > 0 else { return false }
         let previousLevel = pack.levels[index - 1]
         return packService.progress(for: previousLevel.id) == nil
-    }
-}
-
-// MARK: - Helpers
-private extension QuizPackDetailScreen {
-    func infoPill(text: String, icon: String) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.caption2)
-            Text(text)
-                .font(DesignSystem.Font.caption2)
-        }
-        .foregroundStyle(DesignSystem.Color.textSecondary)
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(DesignSystem.Color.cardBackground, in: Capsule())
     }
 }
 

@@ -55,15 +55,7 @@ private extension MultiplayerResultScreen {
     }
 
     var resultIcon: some View {
-        ZStack {
-            Circle()
-                .fill(resultColor.opacity(0.15))
-                .frame(width: 80, height: 80)
-
-            Image(systemName: resultSystemImage)
-                .font(DesignSystem.Font.iconXL)
-                .foregroundStyle(resultColor)
-        }
+        IconBadge(resultSystemImage, color: resultColor, size: .hero)
     }
 
     var resultTitle: some View {
