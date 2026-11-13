@@ -5,14 +5,19 @@ import Geografy_Core_Service
 import SwiftUI
 
 public struct WordSearchScreen: View {
-    // MARK: - Init
-    public init() {}
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    @State private var selectedTheme: WordSearchTheme = .capitals
+    @AppStorage("wordSearch_selectedTheme") private var selectedTheme: WordSearchTheme = .capitals
+
     @State private var showGuide = false
+
+    private let service = WordSearchService()
+    private let color = DesignSystem.Color.indigo
+
+    // MARK: - Init
+    public init() {}
 
     // MARK: - Body
     public var body: some View {
@@ -31,10 +36,9 @@ public struct WordSearchScreen: View {
 private extension WordSearchScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                heroSection
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                introHeader
                 themeSection
-                howItWorksSection
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.md)
@@ -42,95 +46,48 @@ private extension WordSearchScreen {
         }
     }
 
-    var heroSection: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            IconBadge("character.magnify", size: .hero)
-            Text("Find hidden country names\nin a grid of letters")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, DesignSystem.Spacing.md)
+    var introHeader: some View {
+        GameIntroHeader(
+            title: String(localized: "Word Search", bundle: .module),
+            subtitle: String(localized: "Drag across the letters to find every hidden word.", bundle: .module),
+            systemImage: "character.magnify",
+            color: color,
+            facts: facts
+        )
     }
 
     var themeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Theme")
-            VStack(spacing: DesignSystem.Spacing.xs) {
+            SectionHeaderView(title: String(localized: "Theme", bundle: .module))
+            themeGrid
+        }
+    }
+
+    // Two columns side by side; one column at accessibility sizes so names and samples never truncate.
+    @ViewBuilder
+    var themeGrid: some View {
+        if dynamicTypeSize.isAccessibilitySize {
+            VStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(WordSearchTheme.allCases, id: \.self) { theme in
-                    themeRow(theme)
+                    themeTile(theme)
+                }
+            }
+        } else {
+            Grid(horizontalSpacing: DesignSystem.Spacing.sm, verticalSpacing: DesignSystem.Spacing.sm) {
+                ForEach(themeRows, id: \.self) { row in
+                    GridRow {
+                        ForEach(row, id: \.self) { theme in
+                            themeTile(theme)
+                        }
+                    }
                 }
             }
         }
     }
 
-    func themeRow(_ theme: WordSearchTheme) -> some View {
-        let isSelected = selectedTheme == theme
-        return Button {
-            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.8)) {
-                selectedTheme = theme
-            }
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: theme.icon)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.accent)
-                    .frame(width: 28)
-                    .accessibilityHidden(true)
-                Text(theme.rawValue)
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(isSelected ? .semibold : .regular)
-                    .foregroundStyle(
-                        isSelected ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary
-                    )
-                Spacer(minLength: 0)
-                if isSelected {
-                    Image(systemName: "checkmark")
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.onAccent)
-                        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-                        .accessibilityHidden(true)
-                }
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(
-                isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
-    }
-
-    var howItWorksSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "How It Works", icon: "lightbulb.fill")
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                tipRow(icon: "hand.draw.fill", text: "Drag across letters to select a word")
-                tipRow(icon: "checkmark.circle.fill", text: "Found words highlight in green")
-                tipRow(icon: "clock.fill", text: "Timer tracks how fast you finish")
-                tipRow(icon: "eye.fill", text: "Stuck? Reveal answers anytime")
-            }
-        }
-    }
-
-    func tipRow(icon: String, text: String) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .frame(width: 24)
-                    .accessibilityHidden(true)
-                Text(text)
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer(minLength: 0)
-            }
-            .padding(DesignSystem.Spacing.sm)
+    func themeTile(_ theme: WordSearchTheme) -> some View {
+        WordSearchThemeTile(theme: theme, isSelected: selectedTheme == theme) {
+            selectedTheme = theme
         }
     }
 
@@ -138,10 +95,14 @@ private extension WordSearchScreen {
         GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
             coordinator.cover(.wordSearchGame(selectedTheme))
         }
+        .accessibilityHint(Text("Starts a \(selectedTheme.rawValue) puzzle"))
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
     }
+}
 
+// MARK: - Guide
+private extension WordSearchScreen {
     var wordSearchGuide: some View {
         GuideSheet(
             pages: [
@@ -183,15 +144,8 @@ private extension WordSearchScreen {
                 ),
             ]
         ) { _ in
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.08))
-                    .frame(width: 140, height: 140)
-                Image(systemName: "character.magnify")
-                    .font(DesignSystem.Font.displayMedium)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
-            .frame(height: 180)
+            IconBadge("character.magnify", color: color, size: .hero)
+                .frame(height: 180)
         }
     }
 }
@@ -213,5 +167,35 @@ private extension WordSearchScreen {
             }
         }
         #endif
+    }
+}
+
+// MARK: - Helpers
+private extension WordSearchScreen {
+    var facts: [GameIntroHeader.Fact] {
+        let gridSize = service.gridSize
+        let directionCount = WordSearchDirection.allCases.count
+        return [
+            GameIntroHeader.Fact(
+                String(localized: "\(gridSize) × \(gridSize) grid", bundle: .module),
+                systemImage: "square.grid.3x3"
+            ),
+            GameIntroHeader.Fact(
+                String(localized: "\(directionCount) directions", bundle: .module),
+                systemImage: "arrow.up.and.down.and.arrow.left.and.right"
+            ),
+            GameIntroHeader.Fact(
+                String(localized: "Timed", bundle: .module),
+                systemImage: "timer"
+            ),
+        ]
+    }
+
+    var themeRows: [[WordSearchTheme]] {
+        let themes = WordSearchTheme.allCases
+        let columns = 2
+        return stride(from: 0, to: themes.count, by: columns).map { start in
+            Array(themes[start..<min(start + columns, themes.count)])
+        }
     }
 }
