@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 import SwiftData
 
 @Model
@@ -12,6 +13,8 @@ public final class TravelJournalEntry {
     public var endDate: Date
     public var photoFileNames: [String]
     public var createdAt: Date
+    /// Empty on entries saved before the journal was per user, until the first active user claims them.
+    public var userID: String = ""
 
     public init(
         id: String = UUID().uuidString,
@@ -22,7 +25,8 @@ public final class TravelJournalEntry {
         startDate: Date = .now,
         endDate: Date = .now,
         photoFileNames: [String] = [],
-        createdAt: Date = .now
+        createdAt: Date = .now,
+        userID: String = UserScope.currentUserID
     ) {
         self.id = id
         self.countryCode = countryCode
@@ -33,6 +37,7 @@ public final class TravelJournalEntry {
         self.endDate = endDate
         self.photoFileNames = photoFileNames
         self.createdAt = createdAt
+        self.userID = userID
     }
 }
 
