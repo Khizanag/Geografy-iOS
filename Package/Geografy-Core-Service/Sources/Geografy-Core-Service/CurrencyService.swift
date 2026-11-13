@@ -47,6 +47,8 @@ public final class CurrencyService {
 
     public func fetchRates(for base: String) async {
         if let cached = readCache(for: base), !isStale(cached.fetchedAt) {
+            // Fresh rates, so an earlier failure for another base no longer applies.
+            fetchError = nil
             applyCache(cached)
             return
         }
