@@ -15,6 +15,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../../../Package/Geografy-Core-Common"),
         .package(path: "../../../Package/Geografy-Core-DesignSystem"),
         .package(path: "../../../Package/Geografy-Core-Navigation"),
         .package(path: "../../../Package/Geografy-Core-Service"),
@@ -23,6 +24,7 @@ let package = Package(
         .target(
             name: "Geografy-Feature-CurrencyConverter",
             dependencies: [
+                .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
                 .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
                 .product(name: "Geografy-Core-Navigation", package: "Geografy-Core-Navigation"),
                 .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
