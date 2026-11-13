@@ -134,14 +134,7 @@ private extension CollectionDetailScreen {
         case .country:
             FlagView(countryCode: item.itemID, height: DesignSystem.Size.lg, fixedWidth: true)
         default:
-            ZStack {
-                Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.15))
-                    .frame(width: 36, height: 36)
-                Image(systemName: item.type.icon)
-                    .font(DesignSystem.Font.iconSmall)
-                    .foregroundStyle(DesignSystem.Color.accent)
-            }
+            IconBadge(item.type.icon, size: .small)
         }
     }
 
