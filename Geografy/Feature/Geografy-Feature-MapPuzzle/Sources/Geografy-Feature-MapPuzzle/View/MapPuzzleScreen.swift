@@ -292,15 +292,15 @@ private extension MapPuzzleScreen {
 private extension MapPuzzleScreen {
     func buildQuestions() {
         let continentCountries = countryDataService.countries.filter { $0.continent == continent }
-        guard continentCountries.count >= 4 else { return }
+        let questionCount = MapPuzzleRules.questionCount(forCountryCount: continentCountries.count)
+        guard questionCount > 0 else { return }
 
-        let shuffled = continentCountries.shuffled()
-        let questionCountries = Array(shuffled.prefix(min(10, shuffled.count)))
+        let questionCountries = Array(continentCountries.shuffled().prefix(questionCount))
 
         questions = questionCountries.map { country in
             var options = [country]
             let pool = continentCountries.filter { $0.code != country.code }.shuffled()
-            options += Array(pool.prefix(3))
+            options += Array(pool.prefix(MapPuzzleRules.optionsPerQuestion - 1))
             options.shuffle()
             return PuzzleQuestion(country: country, options: options)
         }
