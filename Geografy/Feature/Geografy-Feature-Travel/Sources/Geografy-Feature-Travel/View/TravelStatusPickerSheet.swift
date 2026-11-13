@@ -11,6 +11,7 @@ public struct TravelStatusPickerSheet: View {
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     public let country: Country
 
@@ -32,7 +33,9 @@ public struct TravelStatusPickerSheet: View {
         }
         .padding(.top, DesignSystem.Spacing.sm)
         .padding(.bottom, DesignSystem.Spacing.md)
-        .presentationDetents([.height(hasExistingStatus ? 240 : 200)])
+        .presentationDetents(
+            dynamicTypeSize.isAccessibilitySize ? [.large] : [.height(hasExistingStatus ? 240 : 200)]
+        )
     }
 }
 
@@ -72,6 +75,7 @@ private extension TravelStatusPickerSheet {
                     .font(DesignSystem.Font.iconSmall)
                     .foregroundStyle(status.color)
                     .frame(width: 24)
+                    .accessibilityHidden(true)
                 Text(status.label)
                     .font(DesignSystem.Font.body)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -80,6 +84,7 @@ private extension TravelStatusPickerSheet {
                     Image(systemName: "checkmark")
                         .font(DesignSystem.Font.iconXS.weight(.semibold))
                         .foregroundStyle(status.color)
+                        .accessibilityHidden(true)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -87,6 +92,8 @@ private extension TravelStatusPickerSheet {
             .contentShape(Rectangle())
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityHint(isSelected ? "Double tap to clear this status" : "Double tap to set this status")
     }
 
     var clearButton: some View {

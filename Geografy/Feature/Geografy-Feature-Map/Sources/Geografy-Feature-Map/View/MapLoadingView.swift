@@ -4,6 +4,7 @@ import SwiftUI
 public struct MapLoadingView: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     @State private var isAnimating = false
     @State private var dotPhase = 0
@@ -47,6 +48,15 @@ private extension MapLoadingView {
             DesignSystem.Color.ocean
                 .ignoresSafeArea()
 
+            if !reduceTransparency {
+                glowBlobs
+            }
+        }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
+    }
+
+    var glowBlobs: some View {
+        ZStack {
             Ellipse()
                 .fill(
                     RadialGradient(
@@ -75,7 +85,7 @@ private extension MapLoadingView {
                 .offset(x: 120, y: 80)
                 .scaleEffect(blobAnimating ? 0.88 : 1.10)
         }
-        .animation(reduceMotion ? nil : .easeInOut(duration: 5).repeatForever(autoreverses: true), value: blobAnimating)
+        .accessibilityHidden(true)
     }
 
     var globeSection: some View {
@@ -104,7 +114,7 @@ private extension MapLoadingView {
                 .foregroundStyle(DesignSystem.Color.accent)
                 .rotationEffect(.degrees(isAnimating ? 12 : -12))
                 .animation(
-                    reduceMotion ? .default : .easeInOut(duration: 1.8).repeatForever(autoreverses: true),
+                    reduceMotion ? nil : .easeInOut(duration: 1.8).repeatForever(autoreverses: true),
                     value: isAnimating
                 )
         }
@@ -149,7 +159,7 @@ private extension MapLoadingView {
             .opacity(isAnimating ? 1.0 : 0.4)
             .animation(
                 reduceMotion
-                    ? .default
+                    ? nil
                     : .easeInOut(duration: 0.7)
                         .repeatForever(autoreverses: true)
                         .delay(delay),

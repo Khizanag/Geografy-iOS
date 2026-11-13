@@ -10,12 +10,12 @@ public struct TravelTrackerScreen: View {
     @Environment(HapticsService.self) var hapticsService
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) var travelService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State var selectedFilter: TravelStatus?
     @State var searchText = ""
     @State var showCountryPicker = false
     @State var selectedCountry: Country?
-    @State private var appeared = false
 
     // MARK: - Init
     public init() {}
@@ -27,9 +27,6 @@ public struct TravelTrackerScreen: View {
             .closeButtonPlacementLeading()
             .searchable(text: $searchText, prompt: "Search countries…")
             .toolbar { toolbarContent }
-            .onAppear {
-                appeared = true
-            }
             .sheet(isPresented: $showCountryPicker) {
                 CoordinatedNavigationStack(showCloseButton: true) {
                     TravelCountryPickerSheet(
@@ -61,25 +58,22 @@ private extension TravelTrackerScreen {
                 statsSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
                     .padding(.top, DesignSystem.Spacing.md)
-                    .offset(y: appeared ? 0 : 20)
-                    .animation(.easeOut(duration: 0.5), value: appeared)
+                    .phaseEntrance(index: 0)
 
                 viewOnMapSection
                     .padding(.top, DesignSystem.Spacing.lg)
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .offset(y: appeared ? 0 : 20)
-                    .animation(.easeOut(duration: 0.5).delay(0.08), value: appeared)
+                    .phaseEntrance(index: 1)
 
                 filterTabs
                     .padding(.top, DesignSystem.Spacing.lg)
-                    .animation(.easeOut(duration: 0.5).delay(0.1), value: appeared)
+                    .phaseEntrance(index: 2)
 
                 countryList
                     .padding(.top, DesignSystem.Spacing.sm)
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .animation(.easeOut(duration: 0.5).delay(0.15), value: appeared)
+                    .phaseEntrance(index: 3)
             }
-            .opacity(appeared ? 1 : 0)
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }
@@ -175,13 +169,14 @@ private extension TravelTrackerScreen {
         let isActive = selectedFilter == filter && !isSearching
         let activeColor: Color = filter?.color ?? DesignSystem.Color.accent
         return Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.75)) {
                 selectedFilter = filter
             }
         } label: {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 Image(systemName: icon)
                     .font(DesignSystem.Font.caption)
+                    .accessibilityHidden(true)
                 Text(label)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -202,6 +197,7 @@ private extension TravelTrackerScreen {
             )
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAddTraits(isActive ? .isSelected : [])
     }
 
     func filteredCount(for filter: TravelStatus?) -> Int? {
@@ -234,7 +230,7 @@ private extension TravelTrackerScreen {
                     ForEach(countries) { country in
                         if let status = travelService.status(for: country.code) {
                             TravelCountryRow(country: country, status: status)
-                                .transition(.asymmetric(
+                                .transition(reduceMotion ? .opacity : .asymmetric(
                                     insertion: .push(from: .trailing),
                                     removal: .push(from: .leading)
                                 ))
@@ -242,7 +238,10 @@ private extension TravelTrackerScreen {
                     }
                     addCountryFooter
                 }
-                .animation(.spring(response: 0.35, dampingFraction: 0.75), value: travelService.entries.count)
+                .animation(
+                    reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.75),
+                    value: travelService.entries.count
+                )
             }
         }
     }

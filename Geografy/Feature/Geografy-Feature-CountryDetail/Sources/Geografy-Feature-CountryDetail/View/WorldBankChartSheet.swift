@@ -8,6 +8,9 @@ public struct WorldBankChartSheet: View {
     public let indicator: StatIndicator
     public let allPoints: [WorldBankService.DataPoint]
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     @State private var selectedRange: TimeRange = .thirtyYears
     @State private var selectedPoint: WorldBankService.DataPoint?
     // Outlives the selection so the pointer fades out in place instead of vanishing mid-move.
@@ -67,7 +70,7 @@ private extension WorldBankChartSheet {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             if let shown = selectedPoint ?? allPoints.last {
                 Text(indicator.format(shown.value))
-                    .font(DesignSystem.Font.roundedTitle)
+                    .font(DesignSystem.Font.textStyle(.largeTitle, design: .rounded, weight: .bold))
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .contentTransition(.numericText())
                 HStack(spacing: DesignSystem.Spacing.xs) {
@@ -75,10 +78,11 @@ private extension WorldBankChartSheet {
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                     Text("·")
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                        .accessibilityHidden(true)
                     Text(indicator.unit)
                         .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
             }
         }
@@ -88,7 +92,7 @@ private extension WorldBankChartSheet {
         HStack(spacing: DesignSystem.Spacing.xs) {
             ForEach(TimeRange.allCases, id: \.self) { range in
                 SelectableChip(range.rawValue, isSelected: selectedRange == range) {
-                    withAnimation(.easeInOut(duration: 0.2)) {
+                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
                         selectedRange = range
                     }
                 }
@@ -123,7 +127,7 @@ private extension WorldBankChartSheet {
         .chartXAxis {
             AxisMarks(values: chartXValues(min: minYear, max: maxYear, count: 5)) { value in
                 AxisGridLine()
-                    .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.15))
+                    .foregroundStyle(DesignSystem.Color.dividerSubtle)
                 AxisValueLabel(anchor: .top) {
                     if let year = value.as(Int.self) {
                         Text(String(year))
@@ -136,7 +140,7 @@ private extension WorldBankChartSheet {
         .chartYAxis {
             AxisMarks(values: .automatic(desiredCount: 5)) { value in
                 AxisGridLine()
-                    .foregroundStyle(DesignSystem.Color.textTertiary.opacity(0.15))
+                    .foregroundStyle(DesignSystem.Color.dividerSubtle)
                 AxisValueLabel {
                     if let doubleValue = value.as(Double.self) {
                         Text(indicator.formatAxisValue(doubleValue))
@@ -148,6 +152,8 @@ private extension WorldBankChartSheet {
         }
         .frame(height: 280)
         .padding(.vertical, DesignSystem.Spacing.sm)
+        .accessibilityLabel("\(indicator.title) chart")
+        .accessibilityValue(chartSummary(points: points))
     }
 
     var statsSection: some View {
@@ -160,7 +166,9 @@ private extension WorldBankChartSheet {
 
     func summaryGrid(for points: [WorldBankService.DataPoint]) -> some View {
         LazyVGrid(
-            columns: [GridItem(.flexible()), GridItem(.flexible())],
+            columns: dynamicTypeSize.isAccessibilitySize
+                ? [GridItem(.flexible())]
+                : [GridItem(.flexible()), GridItem(.flexible())],
             spacing: DesignSystem.Spacing.sm
         ) {
             summaryGridContent(for: points)
@@ -218,13 +226,20 @@ private extension WorldBankChartSheet {
                 .fontWeight(.bold)
                 .foregroundStyle(color)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.8)
             Text(detail)
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
+        .accessibilityElement(children: .combine)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(DesignSystem.Spacing.sm)
+    }
+
+    func chartSummary(points: [WorldBankService.DataPoint]) -> String {
+        guard let first = points.first, let last = points.last else { return "" }
+        return "From \(indicator.format(first.value)) in \(String(first.year)) "
+            + "to \(indicator.format(last.value)) in \(String(last.year))"
     }
 
     @ChartContentBuilder
@@ -268,7 +283,7 @@ private extension WorldBankChartSheet {
                 selectPoint(atX: drag.location.x, proxy: proxy, geometry: geometry, points: points)
             }
             .onEnded { _ in
-                withAnimation(.easeOut(duration: 0.2)) { selectedPoint = nil }
+                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) { selectedPoint = nil }
             }
     }
 
@@ -287,7 +302,7 @@ private extension WorldBankChartSheet {
         if isFirstSelection {
             pointerPoint = nearest
         } else {
-            withAnimation(.snappy(duration: 0.2)) { pointerPoint = nearest }
+            withAnimation(reduceMotion ? nil : .snappy(duration: 0.2)) { pointerPoint = nearest }
         }
     }
 

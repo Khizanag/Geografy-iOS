@@ -17,6 +17,8 @@ public struct CountryBannerView: View {
     public let onDismiss: () -> Void
     public let isCompact: Bool
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var dragOffset: CGFloat = 0
 
     // MARK: - Init
@@ -52,6 +54,9 @@ public struct CountryBannerView: View {
             .opacity(1 - Double(max(dragOffset, 0)) / 100)
             .gesture(swipeToDismiss)
             #endif
+            .onChange(of: countryCode, initial: true) {
+                announceSelection()
+            }
     }
 }
 
@@ -84,6 +89,8 @@ private extension CountryBannerView {
         }
         .buttonStyle(.plain)
         .disabled(onFlagTap == nil)
+        .accessibilityLabel("Flag of \(name)")
+        .accessibilityHint("Shows the flag full screen")
     }
 
     var infoSection: some View {
@@ -93,7 +100,7 @@ private extension CountryBannerView {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.8)
 
             if !capital.isEmpty {
                 capitalLabel
@@ -137,6 +144,14 @@ private extension CountryBannerView {
     }
 }
 
+// MARK: - Actions
+private extension CountryBannerView {
+    func announceSelection() {
+        let message = capital.isEmpty ? "Selected \(name)" : "Selected \(name), capital \(capital)"
+        AccessibilityNotification.Announcement(message).post()
+    }
+}
+
 // MARK: - Metrics
 private extension CountryBannerView {
     // The floating tab bar's side inset and height, so the banner reads as part of it.
@@ -157,14 +172,14 @@ private extension CountryBannerView {
             }
             .onEnded { value in
                 if value.translation.height > 30 {
-                    withAnimation(.easeOut(duration: 0.2)) {
+                    withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
                         dragOffset = 200
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         onDismiss()
                     }
                 } else {
-                    withAnimation(.spring(response: 0.3)) {
+                    withAnimation(reduceMotion ? nil : .spring(response: 0.3)) {
                         dragOffset = 0
                     }
                 }

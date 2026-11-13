@@ -7,6 +7,7 @@ public struct CountrySaveToCollectionSheet: View {
     // MARK: - Properties
     @Environment(CollectionService.self) private var collectionService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     public let countryCode: String
     public let countryName: String
 
@@ -97,7 +98,7 @@ private extension CountrySaveToCollectionSheet {
 
         return Button {
             hapticsService.impact(.light)
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
                 collectionService.toggle(
                     itemID: countryCode,
                     type: .country,

@@ -11,7 +11,6 @@ public struct TravelJournalScreen: View {
     @State private var journalService = TravelJournalService()
     @State private var activeSheet: ActiveSheet?
     @State private var searchText = ""
-    @State private var appeared = false
 
     // MARK: - Init
     public init() {}
@@ -25,11 +24,6 @@ public struct TravelJournalScreen: View {
                 prompt: "Search journal entries..."
             )
             .toolbar { addEntryButton }
-            .onAppear {
-                withAnimation(.easeOut(duration: 0.6)) {
-                    appeared = true
-                }
-            }
             .sheet(item: $activeSheet) { sheet in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     sheetContent(for: sheet)
@@ -69,6 +63,7 @@ private extension TravelJournalScreen {
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Add Journal Entry")
         }
     }
 }
@@ -90,13 +85,11 @@ private extension TravelJournalScreen {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 statsSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 20)
+                    .phaseEntrance(index: 0)
 
                 entriesSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 20)
+                    .phaseEntrance(index: 1)
             }
             .padding(.top, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)

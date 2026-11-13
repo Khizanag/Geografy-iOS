@@ -14,7 +14,7 @@ extension CountryDetailScreen {
     var heroCardContent: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             Button {
-                withAnimation(.easeInOut(duration: 0.25)) {
+                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
                     showFlagFullScreen = true
                 }
             } label: {
@@ -24,7 +24,7 @@ extension CountryDetailScreen {
                     .onGeometryChange(for: Bool.self) { proxy in
                         proxy.frame(in: .scrollView).maxY < 0
                     } action: { isHidden in
-                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                        withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
                             flagScrolledUp = isHidden
                         }
                     }

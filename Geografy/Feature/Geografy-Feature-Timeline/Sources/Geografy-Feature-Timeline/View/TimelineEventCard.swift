@@ -35,7 +35,7 @@ private extension TimelineEventCard {
                 .lineLimit(2)
             Text(event.formattedDate)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
             if let country {
                 Text(country.name)
                     .font(DesignSystem.Font.caption)

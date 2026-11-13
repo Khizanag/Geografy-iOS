@@ -33,13 +33,15 @@ private extension CountryDetailScreen {
 private struct PhraseChip: View {
     let phrase: CountryPhrase
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var flipped = false
 
     var body: some View {
         extractedContent
             .buttonStyle(PressButtonStyle())
             .rotation3DEffect(
-                .degrees(flipped ? 180 : 0),
+                .degrees(flipped && !reduceMotion ? 180 : 0),
                 axis: (x: 0, y: 1, z: 0),
                 perspective: 0.5
             )
@@ -50,7 +52,7 @@ private struct PhraseChip: View {
 private extension PhraseChip {
     var extractedContent: some View {
         Button {
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+            withAnimation(reduceMotion ? .easeInOut(duration: 0.2) : .spring(response: 0.4, dampingFraction: 0.7)) {
                 flipped.toggle()
             }
         } label: {
@@ -91,12 +93,12 @@ private extension PhraseChip {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .lineLimit(2)
-                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                .rotation3DEffect(.degrees(reduceMotion ? 0 : 180), axis: (x: 0, y: 1, z: 0))
             Text(phrase.pronunciation)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .italic()
-                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                .rotation3DEffect(.degrees(reduceMotion ? 0 : 180), axis: (x: 0, y: 1, z: 0))
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(phrase.local), pronounced \(phrase.pronunciation)")

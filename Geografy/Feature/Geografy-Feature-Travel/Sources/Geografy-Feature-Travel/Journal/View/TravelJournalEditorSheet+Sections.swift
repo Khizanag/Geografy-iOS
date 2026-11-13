@@ -30,6 +30,8 @@ extension TravelJournalEditorSheet {
             }
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Choose the country for this entry")
     }
 
     @ViewBuilder
@@ -37,6 +39,7 @@ extension TravelJournalEditorSheet {
         if !countryCode.isEmpty {
             FlagView(countryCode: countryCode, height: 28)
                 .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
+                .accessibilityHidden(true)
             Text(selectedCountryName)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(
@@ -46,12 +49,13 @@ extension TravelJournalEditorSheet {
             Image(systemName: "globe")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(
-                    DesignSystem.Color.textTertiary
+                    DesignSystem.Color.textSecondary
                 )
+                .accessibilityHidden(true)
             Text("Select a country")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(
-                    DesignSystem.Color.textTertiary
+                    DesignSystem.Color.textSecondary
                 )
         }
     }
@@ -78,7 +82,10 @@ extension TravelJournalEditorSheet {
             spacing: DesignSystem.Spacing.xs
         ) {
             SectionHeaderView(title: "Dates", icon: "calendar")
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            let layout = dynamicTypeSize.isAccessibilitySize
+                ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
+                : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
+            layout {
                 datePicker(label: "Start", date: $startDate)
                 datePicker(label: "End", date: $endDate)
             }
@@ -99,8 +106,9 @@ extension TravelJournalEditorSheet {
                     .foregroundStyle(
                         DesignSystem.Color.textSecondary
                     )
+                    .accessibilityHidden(true)
                 DatePicker(
-                    "",
+                    label,
                     selection: date,
                     displayedComponents: .date
                 )
@@ -131,7 +139,7 @@ extension TravelJournalEditorSheet {
                 ForEach(1...5, id: \.self) { star in
                     Button {
                         withAnimation(
-                            .spring(response: 0.3, dampingFraction: 0.6)
+                            reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)
                         ) {
                             rating = star
                         }
@@ -145,6 +153,8 @@ extension TravelJournalEditorSheet {
                         .foregroundStyle(DesignSystem.Color.warning)
                         .scaleEffect(star <= rating ? 1.1 : 1.0)
                     }
+                    .accessibilityLabel(star == 1 ? "1 star" : "\(star) stars")
+                    .accessibilityAddTraits(star == rating ? .isSelected : [])
                 }
                 Spacer(minLength: 0)
             }
@@ -211,13 +221,14 @@ extension TravelJournalEditorSheet {
                 Image(systemName: "photo.badge.plus.fill")
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.accent)
+                    .accessibilityHidden(true)
                 Text("Add Photos")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                 Spacer(minLength: 0)
                 Text(photosCountText)
                     .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             .padding(DesignSystem.Spacing.sm)
         }
@@ -227,7 +238,7 @@ extension TravelJournalEditorSheet {
         TravelJournalPhotoGrid(
             images: loadedImages.map(\.image),
             onDelete: { deleteIndex in
-                withAnimation {
+                withAnimation(reduceMotion ? nil : .default) {
                     _ = loadedImages.remove(at: deleteIndex)
                 }
             }

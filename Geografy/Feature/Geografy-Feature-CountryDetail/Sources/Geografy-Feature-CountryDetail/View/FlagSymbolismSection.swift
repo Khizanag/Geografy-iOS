@@ -23,6 +23,8 @@ extension CountryDetailScreen {
 private struct FlagSymbolismCard: View {
     let symbolism: FlagSymbolism
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var expanded = false
 
     var body: some View {
@@ -47,13 +49,14 @@ private struct FlagSymbolismCard: View {
 private extension FlagSymbolismCard {
     var headerRow: some View {
         Button {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
                 expanded.toggle()
             }
         } label: {
             headerRowLabel
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityValue(expanded ? "Expanded" : "Collapsed")
     }
 
     var headerRowLabel: some View {
@@ -78,9 +81,10 @@ private extension FlagSymbolismCard {
 
             Image(systemName: "chevron.down")
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .rotationEffect(.degrees(expanded ? 180 : 0))
-                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: expanded)
+                .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8), value: expanded)
+                .accessibilityHidden(true)
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)

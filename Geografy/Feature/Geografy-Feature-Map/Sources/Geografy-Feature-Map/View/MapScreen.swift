@@ -7,6 +7,8 @@ import SwiftUI
 public struct MapScreen: View {
     // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
     #if !os(tvOS)
@@ -39,11 +41,17 @@ public struct MapScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .closeButtonPlacementLeading()
+            .safeAreaInset(edge: .top) {
+                if showsTravelLegend {
+                    TravelStatusLegend()
+                        .padding(.horizontal, DesignSystem.Spacing.md)
+                }
+            }
             .safeAreaInset(edge: .bottom) {
                 if !isLandscape {
                     bannerOverlay
                         .padding(.bottom, DesignSystem.Spacing.xs)
-                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
             .toolbarBackground(.clear, for: .navigationBar)
@@ -94,7 +102,7 @@ private extension MapScreen {
 
     func flagPreview(for code: String) -> some View {
         ZoomableFlagView(countryCode: code) {
-            withAnimation(.easeInOut(duration: 0.25)) {
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
                 showFlagPreview = false
             }
         }
@@ -112,6 +120,17 @@ private extension MapScreen {
 
     var isWorldMap: Bool { continentFilter == nil }
 
+    var selectedCountryName: String? {
+        guard let shape = mapState.selectedShape else { return nil }
+        let name = countryDataService.country(for: shape.id)?.name ?? shape.name
+        guard let status = travelService.entries[shape.id] else { return name }
+        return "\(name), \(status.label)"
+    }
+
+    var showsTravelLegend: Bool {
+        differentiateWithoutColor && !travelService.entries.isEmpty && !mapState.countryShapes.isEmpty
+    }
+
     func mapCanvas(in size: CGSize) -> some View {
         MapCanvasView(
             countryShapes: mapState.countryShapes,
@@ -124,7 +143,8 @@ private extension MapScreen {
             travelStatuses: travelService.entries,
             wrapsHorizontally: isWorldMap
         )
-        .accessibilityLabel("Interactive world map")
+        .accessibilityLabel(continentFilter.map { "Interactive map of \($0)" } ?? "Interactive world map")
+        .accessibilityValue(selectedCountryName.map { "Selected: \($0)" } ?? "No country selected")
         .accessibilityHint("Double tap to select a country")
         #if !os(tvOS)
         .gesture(dragGesture)
@@ -144,7 +164,7 @@ private extension MapScreen {
             if isLandscape {
                 bannerOverlay
                     .frame(width: CountryBannerView.landscapeWidth)
-                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
         }
         ToolbarItem(placement: .primaryAction) {
@@ -194,15 +214,19 @@ private extension MapScreen {
                 namespace: flagNamespace,
                 isFlagHidden: showFlagPreview,
                 onFlagTap: {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                    withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.85)) {
                         showFlagPreview = true
                     }
                 },
                 onMoreInfo: country.map { selected in { coordinator.push(.countryDetail(selected)) } },
                 isCompact: isLandscape,
-                onDismiss: { withAnimation(.easeInOut(duration: 0.3)) { mapState.selectedCountryCode = nil } }
+                onDismiss: {
+                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+                        mapState.selectedCountryCode = nil
+                    }
+                }
             )
-            .transition(.move(edge: .bottom).combined(with: .opacity))
+            .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
         }
     }
 }
@@ -402,7 +426,7 @@ private extension MapScreen {
         }
 
         for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.78)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.78)) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil
                     #if !os(tvOS)
@@ -419,7 +443,7 @@ private extension MapScreen {
             return
         }
 
-        withAnimation(.easeInOut(duration: 0.3)) {
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
             mapState.selectedCountryCode = nil
         }
     }
@@ -438,7 +462,7 @@ private extension MapScreen {
 
         mapState.contentBounds = computeContentBounds(from: shapes)
 
-        withAnimation(wasPreloaded ? nil : .easeOut(duration: 0.3)) {
+        withAnimation(wasPreloaded || reduceMotion ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
         }
 

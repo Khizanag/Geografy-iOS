@@ -10,6 +10,7 @@ struct CollectionDetailScreen: View {
     @Environment(CollectionService.self) private var collectionService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let collectionName: String
 
@@ -107,7 +108,7 @@ private extension CollectionDetailScreen {
 
                 Button {
                     hapticsService.impact(.light)
-                    withAnimation {
+                    withAnimation(reduceMotion ? nil : .default) {
                         collectionService.remove(
                             itemID: item.itemID,
                             type: item.type,
@@ -120,6 +121,7 @@ private extension CollectionDetailScreen {
                         .foregroundStyle(DesignSystem.Color.error)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Remove \(itemName(for: item)) from collection")
             }
             .padding(DesignSystem.Spacing.sm)
         }

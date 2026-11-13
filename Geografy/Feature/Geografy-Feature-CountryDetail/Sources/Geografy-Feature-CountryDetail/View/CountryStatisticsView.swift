@@ -5,6 +5,7 @@ import SwiftUI
 public struct CountryStatisticsView: View {
     // MARK: - Properties
     @Environment(WorldBankService.self) private var worldBankService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let countryCode: String
 
@@ -41,7 +42,7 @@ private extension CountryStatisticsView {
             systemImage: category.icon,
             isSelected: selectedCategory == category
         ) {
-            withAnimation(.easeInOut(duration: 0.2)) {
+            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
                 selectedCategory = category
             }
         }

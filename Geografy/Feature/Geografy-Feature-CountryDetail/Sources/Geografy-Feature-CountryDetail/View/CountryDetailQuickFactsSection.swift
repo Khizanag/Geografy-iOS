@@ -12,19 +12,32 @@ extension CountryDetailScreen {
     }
 
     var quickFactsRow: some View {
-        HStack(spacing: 0) {
+        let isStacked = dynamicTypeSize.isAccessibilitySize
+        let layout = isStacked
+            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
+            : AnyLayout(HStackLayout(spacing: 0))
+        return layout {
             capitalButton
                 // Outside the column's button, so pronouncing doesn't also open the capital sheet.
                 .overlay(alignment: .topTrailing) {
                     SpeakerButton(text: country.capital, countryCode: country.code, size: .compact)
                         .padding(.trailing, DesignSystem.Spacing.xs)
                 }
-            Divider().frame(height: 56)
+            factDivider(isStacked: isStacked)
             areaButton
-            Divider().frame(height: 56)
+            factDivider(isStacked: isStacked)
             continentButton
         }
         .padding(.vertical, DesignSystem.Spacing.sm)
+    }
+
+    @ViewBuilder
+    func factDivider(isStacked: Bool) -> some View {
+        if isStacked {
+            Divider().padding(.horizontal, DesignSystem.Spacing.md)
+        } else {
+            Divider().frame(height: 56)
+        }
     }
 }
 
@@ -99,13 +112,17 @@ private extension CountryDetailScreen {
             Text(label)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-            // Two lines reserved in every column, so the three stay the same height and stay aligned.
+            // Two lines reserved in every column, so the three stay the same height and stay aligned;
+            // stacked at accessibility sizes, the alignment no longer applies and long values may wrap further.
             Text(value)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
-                .lineLimit(2, reservesSpace: true)
+                .lineLimit(
+                    dynamicTypeSize.isAccessibilitySize ? 4 : 2,
+                    reservesSpace: !dynamicTypeSize.isAccessibilitySize
+                )
                 .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)

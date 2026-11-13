@@ -17,6 +17,7 @@ public struct FavoritesScreen: View {
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var searchText = ""
     @State private var sortBy: FavoritesSortOption = .dateAdded
@@ -127,7 +128,7 @@ private extension FavoritesScreen {
 
     var resetButton: some View {
         Button(role: .destructive) {
-            withAnimation {
+            withAnimation(reduceMotion ? nil : .default) {
                 sortBy = .dateAdded
                 sortAscending = false
                 continentFilter = nil
@@ -190,12 +191,13 @@ private extension FavoritesScreen {
     func removeButton(for country: Country) -> some View {
         Button(role: .destructive) {
             hapticsService.impact(.medium)
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
                 favoritesService.toggle(code: country.code)
             }
         } label: {
             Label("Remove", systemImage: "heart.slash.fill")
         }
+        .accessibilityLabel("Remove from Favorites")
     }
 
     var emptyState: some View {

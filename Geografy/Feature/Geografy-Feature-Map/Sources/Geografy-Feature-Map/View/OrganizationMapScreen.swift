@@ -7,6 +7,7 @@ import SwiftUI
 public struct OrganizationMapScreen: View {
     // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
@@ -45,7 +46,7 @@ public struct OrganizationMapScreen: View {
                 if !isLandscape {
                     bannerOverlay
                         .padding(.bottom, DesignSystem.Spacing.xs)
-                        .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
                 }
             }
             .closeButtonPlacementLeading()
@@ -61,7 +62,7 @@ public struct OrganizationMapScreen: View {
             .overlay {
                 if showFlagPreview, let code = mapState.selectedCountryCode {
                     ZoomableFlagView(countryCode: code) {
-                        withAnimation(.easeInOut(duration: 0.25)) {
+                        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
                             showFlagPreview = false
                         }
                     }
@@ -108,6 +109,9 @@ private extension OrganizationMapScreen {
             canvasSize: size,
             capitalPoint: selectedCapitalPoint
         )
+        .accessibilityLabel("Map of \(organization.displayName) members")
+        .accessibilityValue(selectedCountryName.map { "Selected: \($0)" } ?? "No country selected")
+        .accessibilityHint("Double tap to select a country")
         #if !os(tvOS)
         .gesture(dragGesture)
         .gesture(magnifyGesture)
@@ -115,6 +119,11 @@ private extension OrganizationMapScreen {
             handleTap(at: location, in: size)
         }
         #endif
+    }
+
+    var selectedCountryName: String? {
+        guard let shape = mapState.selectedShape else { return nil }
+        return countryDataService.country(for: shape.id)?.name ?? shape.name
     }
 
     var selectedCapitalPoint: CGPoint? {
@@ -132,7 +141,7 @@ private extension OrganizationMapScreen {
             if isLandscape {
                 landscapeHeader
                     .frame(width: CountryBannerView.landscapeWidth)
-                    .animation(.easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
         }
         ToolbarItem(placement: .primaryAction) {
@@ -248,7 +257,7 @@ private extension OrganizationMapScreen {
                 namespace: flagNamespace,
                 isFlagHidden: showFlagPreview,
                 onFlagTap: {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                    withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.85)) {
                         showFlagPreview = true
                     }
                 },
@@ -256,7 +265,7 @@ private extension OrganizationMapScreen {
                 isCompact: isLandscape,
                 onDismiss: { mapState.selectedCountryCode = nil }
             )
-            .transition(.move(edge: .bottom).combined(with: .opacity))
+            .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
         }
     }
 }
@@ -407,7 +416,7 @@ private extension OrganizationMapScreen {
 
         mapState.contentBounds = computeContentBounds(from: shapes)
 
-        withAnimation(.easeOut(duration: 0.3)) {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
         }
 

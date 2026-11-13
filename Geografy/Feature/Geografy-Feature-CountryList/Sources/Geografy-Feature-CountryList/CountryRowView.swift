@@ -8,6 +8,7 @@ public struct CountryRowView: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(PronunciationService.self) private var pronunciationService
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let country: Country
     public let isFavorite: Bool
@@ -59,6 +60,12 @@ public struct CountryRowView: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(country.name), \(country.continent.displayName)")
         .accessibilityHint("Double tap to view details")
+        .accessibilityValue(isFavorite ? "Favorite" : "")
+        .accessibilityActions {
+            if onFavoriteTap != nil {
+                Button(favoriteActionLabel) { toggleFavorite() }
+            }
+        }
     }
 }
 
@@ -164,7 +171,7 @@ private extension CountryRowView {
             Text(value)
         }
         .font(DesignSystem.Font.caption2)
-        .foregroundStyle(DesignSystem.Color.textTertiary)
+        .foregroundStyle(DesignSystem.Color.textSecondary)
     }
 
     var continentBadge: some View {
@@ -173,24 +180,36 @@ private extension CountryRowView {
 
     @ViewBuilder
     var favoriteIcon: some View {
-        if let onFavoriteTap {
-            Button {
-                hapticsService.impact(.light)
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                    onFavoriteTap()
-                }
-            } label: {
+        if onFavoriteTap != nil {
+            Button(action: toggleFavorite) {
                 Image(systemName: isFavorite ? "heart.fill" : "heart")
                     .font(DesignSystem.Font.title2)
-                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
-                    .symbolEffect(.bounce, value: isFavorite)
+                    .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.textSecondary)
+                    .symbolEffect(.bounce, value: reduceMotion ? false : isFavorite)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .accessibilityLabel(favoriteActionLabel)
         } else {
             Image(systemName: isFavorite ? "heart.fill" : "heart")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.textTertiary)
+                .foregroundStyle(isFavorite ? DesignSystem.Color.error : DesignSystem.Color.textSecondary)
+                .accessibilityHidden(true)
+        }
+    }
+}
+
+// MARK: - Actions
+private extension CountryRowView {
+    var favoriteActionLabel: String {
+        isFavorite ? "Remove from Favorites" : "Add to Favorites"
+    }
+
+    func toggleFavorite() {
+        guard let onFavoriteTap else { return }
+        hapticsService.impact(.light)
+        withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
+            onFavoriteTap()
         }
     }
 }

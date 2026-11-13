@@ -36,6 +36,7 @@ extension CountryDetailScreen {
             Image(systemName: "building.columns.fill")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.indigo)
+                .accessibilityHidden(true)
             Text("\(count) World Heritage Sites")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)
@@ -45,6 +46,11 @@ extension CountryDetailScreen {
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .background(DesignSystem.Color.indigo.opacity(0.12))
         .clipShape(Capsule())
+        .overlay {
+            if colorSchemeContrast == .increased {
+                Capsule().strokeBorder(DesignSystem.Color.dividerSubtle)
+            }
+        }
     }
 }
 
@@ -52,17 +58,21 @@ extension CountryDetailScreen {
 private struct UNESCOSiteRow: View {
     let site: UNESCOSite
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+
     @State private var expanded = false
 
     var body: some View {
         Button {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.75)) {
                 expanded.toggle()
             }
         } label: {
             rowContent
         }
         .buttonStyle(PressButtonStyle())
+        .accessibilityValue(expanded ? "Expanded" : "Collapsed")
     }
 }
 
@@ -84,7 +94,7 @@ private extension UNESCOSiteRow {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .lineLimit(expanded ? nil : 2)
                     .multilineTextAlignment(.leading)
-                    .animation(.easeInOut(duration: 0.2), value: expanded)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: expanded)
             }
             Spacer(minLength: 0)
             chevron
@@ -103,6 +113,7 @@ private extension UNESCOSiteRow {
                 .font(DesignSystem.Font.subheadline.weight(.medium))
                 .foregroundStyle(siteTypeColor)
         }
+        .accessibilityHidden(true)
     }
 
     var metaRow: some View {
@@ -115,18 +126,24 @@ private extension UNESCOSiteRow {
                 .padding(.vertical, 2)
                 .background(siteTypeColor.opacity(0.12))
                 .clipShape(Capsule())
+                .overlay {
+                    if colorSchemeContrast == .increased {
+                        Capsule().strokeBorder(DesignSystem.Color.dividerSubtle)
+                    }
+                }
             Text(String(site.yearInscribed))
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
         }
     }
 
     var chevron: some View {
         Image(systemName: "chevron.down")
             .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
             .rotationEffect(.degrees(expanded ? 180 : 0))
-            .animation(.spring(response: 0.3, dampingFraction: 0.75), value: expanded)
+            .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.75), value: expanded)
+            .accessibilityHidden(true)
     }
 
     var siteTypeIcon: String {
