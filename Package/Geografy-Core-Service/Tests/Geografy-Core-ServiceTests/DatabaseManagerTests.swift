@@ -9,8 +9,8 @@ import Testing
 struct DatabaseManagerTests {
     @Test("A store created before versioning opens with its data intact")
     func opensUnversionedStore() throws {
-        let url = Self.temporaryStoreURL()
-        defer { Self.removeStore(at: url) }
+        let url = TestStore.temporaryURL()
+        defer { TestStore.remove(at: url) }
         try Self.writeLegacyStore(at: url, streakUserID: "legacy-user")
 
         let manager = DatabaseManager(storeURL: url, inMemory: false)
@@ -20,10 +20,45 @@ struct DatabaseManagerTests {
         #expect(records.map(\.userID) == ["legacy-user"])
     }
 
+    @Test("A version 2 store opens as version 3 with its favorites and collections intact and unowned")
+    func migratesVersionTwoStore() throws {
+        let url = TestStore.temporaryURL()
+        defer { TestStore.remove(at: url) }
+        try TestStore.writeVersionTwoStore(at: url, favoriteCode: "FR", collectionItemID: "JP", collectionName: "Trips")
+
+        let manager = DatabaseManager(storeURL: url, inMemory: false)
+
+        #expect(!manager.isUsingFallbackStore)
+        let favorites = try manager.mainContext.fetch(FetchDescriptor<FavoriteEntry>())
+        #expect(favorites.map(\.countryCode) == ["FR"])
+        #expect(favorites.map(\.userID) == [""])
+        let items = try manager.mainContext.fetch(FetchDescriptor<CollectionItem>())
+        #expect(items.map(\.itemID) == ["JP"])
+        #expect(items.map(\.collectionName) == ["Trips"])
+        #expect(items.map(\.userID) == [""])
+        let collections = try manager.mainContext.fetch(FetchDescriptor<SavedCollection>())
+        #expect(collections.map(\.name) == ["Trips"])
+        #expect(collections.map(\.userID) == [""])
+    }
+
+    @Test(
+        "Earlier versions keep their own shape, so their checksums never match the current one",
+        arguments: ["CollectionItem", "FavoriteEntry", "SavedCollection"]
+    )
+    func earlierVersionsHaveNoOwner(entityName: String) throws {
+        let versionTwo = Schema(versionedSchema: GeografySchemaV2.self)
+        let versionThree = Schema(versionedSchema: GeografySchemaV3.self)
+
+        let oldEntity = try #require(versionTwo.entitiesByName[entityName])
+        let newEntity = try #require(versionThree.entitiesByName[entityName])
+        #expect(oldEntity.attributesByName["userID"] == nil)
+        #expect(newEntity.attributesByName["userID"] != nil)
+    }
+
     @Test("Data saved in one session is there in the next")
     func persistsAcrossSessions() throws {
-        let url = Self.temporaryStoreURL()
-        defer { Self.removeStore(at: url) }
+        let url = TestStore.temporaryURL()
+        defer { TestStore.remove(at: url) }
 
         let first = DatabaseManager(storeURL: url, inMemory: false)
         first.mainContext.insert(StreakRecord(userID: "user", date: .now))
@@ -35,8 +70,8 @@ struct DatabaseManagerTests {
 
     @Test("An unreadable store falls back to memory and is left on disk")
     func unreadableStoreFallsBack() throws {
-        let url = Self.temporaryStoreURL()
-        defer { Self.removeStore(at: url) }
+        let url = TestStore.temporaryURL()
+        defer { TestStore.remove(at: url) }
         let garbage = Data("not a database".utf8)
         try garbage.write(to: url)
 
@@ -49,27 +84,9 @@ struct DatabaseManagerTests {
 
 // MARK: - Helpers
 private extension DatabaseManagerTests {
-    static func temporaryStoreURL() -> URL {
-        FileManager.default.temporaryDirectory.appending(path: "\(UUID().uuidString).store")
-    }
-
-    static func removeStore(at url: URL) {
-        for suffix in ["", "-shm", "-wal"] {
-            try? FileManager.default.removeItem(at: URL(filePath: url.path() + suffix))
-        }
-    }
-
     // Mirrors how the store was opened before versioning: a plain schema and no migration plan.
     static func writeLegacyStore(at url: URL, streakUserID: String) throws {
-        let schema = Schema([
-            CollectionItem.self,
-            FavoriteEntry.self,
-            QuizHistoryRecord.self,
-            StreakRecord.self,
-            UnlockedAchievement.self,
-            UserProfile.self,
-            XPRecord.self,
-        ])
+        let schema = Schema(GeografySchemaV1.models)
         let container = try ModelContainer(
             for: schema,
             configurations: [ModelConfiguration(schema: schema, url: url, cloudKitDatabase: .none)]

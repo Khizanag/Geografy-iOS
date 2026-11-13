@@ -8,18 +8,22 @@ public final class CollectionItem {
     public var itemType: String
     public var collectionName: String
     public var addedAt: Date
+    /// Empty on items saved before they were per user, until the first active user claims them.
+    public var userID: String = ""
 
     // MARK: - Init
     public init(
         itemID: String,
         itemType: ItemType,
         collectionName: String,
-        addedAt: Date = .now
+        addedAt: Date = .now,
+        userID: String = UserScope.currentUserID
     ) {
         self.itemID = itemID
         self.itemType = itemType.rawValue
         self.collectionName = collectionName
         self.addedAt = addedAt
+        self.userID = userID
     }
 
     public var type: ItemType {
