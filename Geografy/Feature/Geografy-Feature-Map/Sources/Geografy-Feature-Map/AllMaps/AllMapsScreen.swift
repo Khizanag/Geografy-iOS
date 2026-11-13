@@ -95,10 +95,10 @@ private extension AllMapsScreen {
             .padding(DesignSystem.Spacing.lg)
         }
         .frame(height: isWideLayout ? 240 : (isLandscape ? 180 : 220))
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .shadow(color: Color(hex: "1A237E").opacity(0.5), radius: 20, y: 8)
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                 .strokeBorder(.white.opacity(0.1), lineWidth: 1)
         )
     }
@@ -170,10 +170,10 @@ private extension AllMapsScreen {
             continentCardText(name: name)
         }
         .frame(height: isWideLayout ? 180 : (isLandscape ? 130 : 160))
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .shadow(color: colors.0.opacity(0.50), radius: 16, y: 6)
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                 .strokeBorder(.white.opacity(0.08), lineWidth: 1)
         )
     }

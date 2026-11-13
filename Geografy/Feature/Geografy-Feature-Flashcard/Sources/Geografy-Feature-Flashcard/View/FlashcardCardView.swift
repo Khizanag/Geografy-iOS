@@ -127,10 +127,10 @@ private extension FlashcardCardView {
                 }
             )
             .clipShape(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
                     .strokeBorder(
                         swipeOpacity > 0
                             ? swipeColor.opacity(swipeOpacity * 2)

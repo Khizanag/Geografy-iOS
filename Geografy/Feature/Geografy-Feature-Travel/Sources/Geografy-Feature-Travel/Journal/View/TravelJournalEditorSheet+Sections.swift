@@ -40,7 +40,7 @@ extension TravelJournalEditorSheet {
     var countrySelectorContent: some View {
         if !countryCode.isEmpty {
             FlagView(countryCode: countryCode, height: 28)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
             Text(selectedCountryName)
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(

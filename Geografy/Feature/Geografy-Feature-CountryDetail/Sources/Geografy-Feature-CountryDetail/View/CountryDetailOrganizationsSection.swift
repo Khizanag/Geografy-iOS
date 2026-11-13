@@ -106,7 +106,7 @@ private extension CountryDetailScreen {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 38, height: 38)
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
                 default:
                     orgRowIconFallback(org)
                 }
@@ -119,7 +119,7 @@ private extension CountryDetailScreen {
 
     func orgRowIconFallback(_ org: Organization) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(org.highlightColor.opacity(0.15))
                 .frame(width: 38, height: 38)
             Image(systemName: org.icon)

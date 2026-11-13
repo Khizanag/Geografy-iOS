@@ -70,7 +70,7 @@ private extension FlashcardGuideSheet {
         HStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(Array(["1d", "3d", "7d", "14d"].enumerated()), id: \.offset) { index, label in
                 VStack(spacing: DesignSystem.Spacing.xxs) {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                         .fill(DesignSystem.Color.accent.opacity(0.15 + Double(index) * 0.2))
                         .frame(width: 50, height: CGFloat(40 + index * 25))
                     Text(label)
@@ -107,10 +107,10 @@ private extension FlashcardGuideSheet {
 // MARK: - Illustration Helpers
 private extension FlashcardGuideSheet {
     func cardMock(front: Bool) -> some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
             .fill(DesignSystem.Color.cardBackground)
             .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                     .strokeBorder(DesignSystem.Color.cardBackgroundHighlighted, lineWidth: 1)
             )
             .overlay {
@@ -151,9 +151,12 @@ private extension FlashcardGuideSheet {
         .foregroundStyle(color)
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(color.opacity(0.12), in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(color.opacity(0.12), in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(color.opacity(0.25), lineWidth: 1)
         )
     }

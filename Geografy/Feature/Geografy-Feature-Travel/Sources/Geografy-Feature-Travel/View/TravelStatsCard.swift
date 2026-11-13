@@ -125,7 +125,7 @@ private extension TravelStatsCard {
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 

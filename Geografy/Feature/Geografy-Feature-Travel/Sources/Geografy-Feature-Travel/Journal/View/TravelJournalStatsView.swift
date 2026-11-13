@@ -115,7 +115,7 @@ private extension TravelJournalStatsView {
             Spacer(minLength: 0)
             FlagView(countryCode: countryCode, height: 18)
                 .clipShape(
-                    RoundedRectangle(cornerRadius: 3)
+                    RoundedRectangle(cornerRadius: 3, style: .continuous)
                 )
         }
     }

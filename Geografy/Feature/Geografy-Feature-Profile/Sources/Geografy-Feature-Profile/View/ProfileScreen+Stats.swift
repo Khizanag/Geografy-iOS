@@ -115,7 +115,10 @@ private extension ProfileScreen {
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .padding(.horizontal, DesignSystem.Spacing.xs)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(.ultraThinMaterial, in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Accuracy \(percentage) percent")
     }
@@ -151,7 +154,10 @@ private extension ProfileScreen {
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .padding(.horizontal, DesignSystem.Spacing.xs)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(.ultraThinMaterial, in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(label): \(value)")
     }

@@ -30,7 +30,7 @@ private extension TravelCountryRow {
         CardView {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: country.code, height: 36)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
                     .frame(width: 54)
                 countryInfo
                 Spacer(minLength: 0)

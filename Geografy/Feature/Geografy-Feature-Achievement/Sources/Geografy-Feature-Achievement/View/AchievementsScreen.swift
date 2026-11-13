@@ -91,7 +91,7 @@ private extension AchievementsScreen {
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(value) \(label)")
@@ -210,7 +210,7 @@ private extension AchievementsScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(

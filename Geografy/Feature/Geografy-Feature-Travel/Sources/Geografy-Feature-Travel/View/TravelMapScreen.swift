@@ -105,7 +105,7 @@ private extension TravelMapScreen {
         }
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .padding(.horizontal, DesignSystem.Spacing.md)
         .animation(.easeInOut(duration: 0.3), value: selectedFilter)
         .accessibilityElement(children: .combine)

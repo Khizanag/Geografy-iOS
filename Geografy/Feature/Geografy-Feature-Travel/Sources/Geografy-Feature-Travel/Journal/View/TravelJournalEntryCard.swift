@@ -39,7 +39,7 @@ private extension TravelJournalEntryCard {
     var headerRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: entry.countryCode, height: 28)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
                 .frame(width: 42)
             VStack(alignment: .leading, spacing: 2) {
                 Text(entry.title)

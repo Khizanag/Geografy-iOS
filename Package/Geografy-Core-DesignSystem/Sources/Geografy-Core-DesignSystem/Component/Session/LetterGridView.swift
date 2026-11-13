@@ -92,11 +92,11 @@ private extension LetterGridView {
 
     func letterCell(typed: String?, isCorrect: Bool) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                 .fill(cellBackground(typed: typed, isCorrect: isCorrect))
                 .aspectRatio(32.0 / 36.0, contentMode: .fit)
                 .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                         .stroke(cellBorderColor(typed: typed, isCorrect: isCorrect), lineWidth: 1.5)
                 )
 
@@ -119,11 +119,11 @@ private extension LetterGridView {
             : DesignSystem.Color.success
 
         return ZStack {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                 .fill(color.opacity(0.2))
                 .aspectRatio(32.0 / 36.0, contentMode: .fit)
                 .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                         .stroke(color.opacity(0.5), lineWidth: 1.5)
                 )
 

@@ -15,7 +15,7 @@ struct DailyActionCard: View {
             cardContent
                 .padding(DesignSystem.Spacing.md)
                 .background { gradientBackground }
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
                 .geoShadow(.card)
         }
         .buttonStyle(PressButtonStyle())

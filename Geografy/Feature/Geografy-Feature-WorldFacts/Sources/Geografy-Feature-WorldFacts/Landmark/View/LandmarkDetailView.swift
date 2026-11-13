@@ -48,7 +48,7 @@ private extension LandmarkDetailView {
                     .shadow(color: accentSwiftUIColor.opacity(0.5), radius: 20, x: 0, y: 10)
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: landmark.countryCode, height: 24)
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
                     Text(landmark.city)
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -57,7 +57,7 @@ private extension LandmarkDetailView {
             .padding(.vertical, DesignSystem.Spacing.xxl)
         }
         .frame(maxWidth: .infinity)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.top, DesignSystem.Spacing.md)
     }

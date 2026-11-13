@@ -18,7 +18,7 @@ public struct FlashcardStatsView: View {
         .padding(DesignSystem.Spacing.lg)
         .background(DesignSystem.Color.cardBackground)
         .clipShape(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
         )
     }
 }

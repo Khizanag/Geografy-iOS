@@ -15,7 +15,7 @@ public struct CustomQuizCard: View {
             cardInfo
         }
         .frame(height: 140)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .shadow(color: accentColor.opacity(0.4), radius: 12, y: 5)
     }
 }

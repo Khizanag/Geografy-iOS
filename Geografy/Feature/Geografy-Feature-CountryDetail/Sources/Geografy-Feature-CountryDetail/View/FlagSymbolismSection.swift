@@ -97,11 +97,11 @@ private extension FlagSymbolismCard {
     var colorSwatchRow: some View {
         HStack(spacing: 3) {
             ForEach(Array(symbolism.colors.prefix(4).enumerated()), id: \.offset) { _, colorEntry in
-                RoundedRectangle(cornerRadius: 3)
+                RoundedRectangle(cornerRadius: 3, style: .continuous)
                     .fill(Color(hex: colorEntry.hex))
                     .frame(width: 14, height: 20)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 3)
+                        RoundedRectangle(cornerRadius: 3, style: .continuous)
                             .stroke(.primary.opacity(0.15), lineWidth: 0.5)
                     )
             }
@@ -176,11 +176,11 @@ private extension FlagSymbolismCard {
 
     func colorRow(_ entry: FlagColorEntry) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                 .fill(Color(hex: entry.hex))
                 .frame(width: 32, height: 32)
                 .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                         .stroke(.primary.opacity(0.15), lineWidth: 0.5)
                 )
 
@@ -202,7 +202,7 @@ private extension FlagSymbolismCard {
     func emblemRow(_ emblem: FlagEmblemEntry) -> some View {
         HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
             ZStack {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)
                     .frame(width: 32, height: 32)
                 Image(systemName: emblem.symbol)

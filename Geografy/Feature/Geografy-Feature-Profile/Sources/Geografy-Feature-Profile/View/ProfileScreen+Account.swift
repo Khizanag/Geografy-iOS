@@ -50,7 +50,10 @@ private extension ProfileScreen {
             }
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(.ultraThinMaterial, in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
         .accessibilityElement(children: .combine)
     }
 
@@ -146,7 +149,10 @@ private extension ProfileScreen {
                 .foregroundStyle(DesignSystem.Color.textTertiary)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(.ultraThinMaterial, in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
     }
 }
 #endif

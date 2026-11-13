@@ -120,7 +120,7 @@ private extension QuizSetupScreen {
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .background(
                 isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }
         .buttonStyle(PressButtonStyle())
@@ -155,7 +155,7 @@ private extension QuizSetupScreen {
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .background(
                 isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }
         .buttonStyle(PressButtonStyle())
@@ -241,7 +241,7 @@ private extension QuizSetupScreen {
             .padding(.horizontal, DesignSystem.Spacing.xs)
             .background(
                 isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }
         .buttonStyle(PressButtonStyle())
@@ -325,7 +325,7 @@ private extension QuizSetupScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
                 isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }
         .buttonStyle(PressButtonStyle())
@@ -366,7 +366,7 @@ private extension QuizSetupScreen {
                 .padding(.vertical, DesignSystem.Spacing.sm)
                 .background(
                     isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 )
         }
         .buttonStyle(PressButtonStyle())

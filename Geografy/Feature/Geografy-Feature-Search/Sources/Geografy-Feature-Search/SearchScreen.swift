@@ -120,7 +120,7 @@ private extension SearchScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
                 DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
             .contentShape(Rectangle())
         }
@@ -237,7 +237,7 @@ private extension SearchScreen {
                 }
             }
             .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }
     }
 

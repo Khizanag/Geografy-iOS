@@ -61,14 +61,14 @@ private extension QuizTypingInputView {
             if let flagCode = question.promptFlag {
                 Button { showFlagPreview = true } label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 16)
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
                             .fill(DesignSystem.Color.accent.opacity(0.12))
                             .blur(radius: 24)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
 
                         FlagView(countryCode: flagCode, height: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                             .geoShadow(.elevated)
                             .shadow(color: DesignSystem.Color.accent.opacity(0.15), radius: 12, y: 4)
                     }
@@ -172,7 +172,7 @@ private extension QuizTypingInputView {
         }
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 
@@ -218,10 +218,10 @@ private extension QuizTypingInputView {
     }
 
     var inputBackground: some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
             .fill(DesignSystem.Color.cardBackground)
             .overlay {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                     .strokeBorder(inputBorderColor, lineWidth: 2)
             }
     }

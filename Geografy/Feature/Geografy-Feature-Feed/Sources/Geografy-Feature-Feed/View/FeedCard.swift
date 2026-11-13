@@ -80,7 +80,7 @@ private extension FeedCard {
         Button { onCountryTap(country) } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: country.code, height: 24)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
                 Text(country.name)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -98,7 +98,7 @@ private extension FeedCard {
             .padding(.vertical, DesignSystem.Spacing.xs)
             .background(
                 DesignSystem.Color.cardBackgroundHighlighted,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
             )
         }
         .buttonStyle(.plain)

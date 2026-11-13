@@ -112,7 +112,7 @@ private extension CustomQuizPreviewScreen {
         }
         .padding(DesignSystem.Spacing.sm)
         .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
     }
 }
 

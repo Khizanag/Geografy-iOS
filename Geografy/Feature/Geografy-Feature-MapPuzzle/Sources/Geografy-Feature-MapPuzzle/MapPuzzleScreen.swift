@@ -104,7 +104,7 @@ private extension MapPuzzleScreen {
                     .kerning(0.8)
 
                 FlagView(countryCode: question.country.code, height: 60)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
 
                 Text(question.country.name)
                     .font(DesignSystem.Font.title2)
@@ -155,7 +155,7 @@ private extension MapPuzzleScreen {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: option.code, height: 22)
-                        .clipShape(RoundedRectangle(cornerRadius: 2))
+                        .clipShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
                     Text(option.name)
                         .font(DesignSystem.Font.caption)
                         .fontWeight(.semibold)

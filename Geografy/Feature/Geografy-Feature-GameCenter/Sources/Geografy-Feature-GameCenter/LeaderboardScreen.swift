@@ -50,7 +50,10 @@ private extension LeaderboardScreen {
                 .frame(width: DesignSystem.Spacing.xs, height: DesignSystem.Spacing.xs)
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(.ultraThinMaterial, in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
     }
 
     var statusIconBadge: some View {
@@ -103,7 +106,7 @@ private extension LeaderboardScreen {
     func leaderboardCardHeader(_ info: LeaderboardInfo) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                     .fill(info.color.opacity(0.18))
                     .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 Image(systemName: info.icon)
@@ -145,7 +148,7 @@ private extension LeaderboardScreen {
             .padding(.vertical, DesignSystem.Spacing.xs)
             .background(
                 info.color.opacity(0.12),
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
             )
         }
         .disabled(!gameCenterService.isAuthenticated)

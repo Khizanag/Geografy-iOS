@@ -79,10 +79,10 @@ private extension SizeCompareView {
         let side = max(30, 160 * sizeFraction)
         return VStack(spacing: DesignSystem.Spacing.sm) {
             Spacer()
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                 .fill(color.opacity(0.25))
                 .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                         .stroke(color, lineWidth: 2)
                 )
                 .frame(width: side, height: side)

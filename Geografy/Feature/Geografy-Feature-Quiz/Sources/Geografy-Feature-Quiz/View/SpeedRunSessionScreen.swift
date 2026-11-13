@@ -156,10 +156,10 @@ private extension SpeedRunSessionScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
         )
     }
@@ -212,7 +212,7 @@ private extension SpeedRunSessionScreen {
             isFlashing
                 ? DesignSystem.Color.success.opacity(0.18)
                 : DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
         .animation(.easeInOut(duration: 0.3), value: isFlashing)
     }
@@ -345,7 +345,7 @@ private extension SpeedRunSessionScreen {
                     .padding(.vertical, DesignSystem.Spacing.xs)
                     .background(
                         DesignSystem.Color.cardBackground,
-                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+                        in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                     )
                 }
             }

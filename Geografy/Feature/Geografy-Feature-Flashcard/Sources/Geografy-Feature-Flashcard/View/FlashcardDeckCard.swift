@@ -18,7 +18,7 @@ public struct FlashcardDeckCard: View {
         }
         .frame(height: 150)
         .clipShape(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
         )
         .shadow(
             color: deck.gradientColors.0.opacity(0.45),

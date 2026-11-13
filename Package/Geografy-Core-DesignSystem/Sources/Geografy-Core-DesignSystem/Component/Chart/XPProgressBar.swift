@@ -71,10 +71,10 @@ private extension XPProgressBar {
     var progressTrack: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.pill)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.pill, style: .continuous)
                     .fill(DesignSystem.Color.cardBackgroundHighlighted)
                     .frame(height: DesignSystem.Spacing.xs)
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.pill)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.pill, style: .continuous)
                     .fill(progressGradient)
                     .frame(width: geometry.size.width * animatedProgress, height: 8)
             }

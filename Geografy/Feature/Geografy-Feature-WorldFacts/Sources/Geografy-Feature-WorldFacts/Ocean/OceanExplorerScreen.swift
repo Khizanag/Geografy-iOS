@@ -183,7 +183,7 @@ private extension OceanExplorerScreen {
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.blue.opacity(0.08),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
     }
 
@@ -213,7 +213,7 @@ private extension OceanExplorerScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.warning.opacity(0.08),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
     }
 }

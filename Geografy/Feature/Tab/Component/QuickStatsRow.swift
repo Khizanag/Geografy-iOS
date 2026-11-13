@@ -69,7 +69,7 @@ private extension QuickStatsRow {
             .padding(.vertical, DesignSystem.Spacing.xs)
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }
         .buttonStyle(PressButtonStyle())
         .accessibilityLabel("\(label): \(value)")

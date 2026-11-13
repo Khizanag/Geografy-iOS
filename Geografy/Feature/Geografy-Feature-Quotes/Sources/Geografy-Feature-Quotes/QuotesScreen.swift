@@ -130,7 +130,7 @@ private extension QuotesScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             if let code = quote.countryCode {
                 FlagView(countryCode: code, height: 16, fixedWidth: true)
-                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
             }
             Text("— \(quote.author)")
                 .font(DesignSystem.Font.caption)

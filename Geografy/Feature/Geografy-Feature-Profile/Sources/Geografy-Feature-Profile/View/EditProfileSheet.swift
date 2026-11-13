@@ -69,7 +69,10 @@ private extension EditProfileSheet {
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .padding(DesignSystem.Spacing.sm)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .background(.ultraThinMaterial, in: RoundedRectangle(
+                    cornerRadius: DesignSystem.CornerRadius.medium,
+                    style: .continuous
+                ))
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.words)
         }

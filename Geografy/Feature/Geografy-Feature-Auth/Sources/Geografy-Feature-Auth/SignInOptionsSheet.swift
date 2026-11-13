@@ -84,7 +84,7 @@ private extension SignInOptionsSheet {
                 .frame(width: 110, height: 110)
                 .blur(radius: 40)
 
-            RoundedRectangle(cornerRadius: 24)
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .fill(
                     LinearGradient(
                         colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
@@ -95,7 +95,7 @@ private extension SignInOptionsSheet {
                 .frame(width: 76, height: 76)
                 .shadow(color: DesignSystem.Color.accent.opacity(0.55), radius: 20, x: 0, y: 8)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 24)
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
                         .strokeBorder(.white.opacity(0.18), lineWidth: 1)
                 )
 
@@ -143,7 +143,7 @@ private extension SignInOptionsSheet {
         .padding(.vertical, DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 }
@@ -179,7 +179,7 @@ private extension SignInOptionsSheet {
     ) -> some View {
         HStack(spacing: DesignSystem.Spacing.md) {
             ZStack {
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(benefit.color.opacity(0.16))
                     .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 Image(systemName: benefit.icon)
@@ -200,7 +200,7 @@ private extension SignInOptionsSheet {
         .padding(DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 20)
@@ -247,7 +247,7 @@ private extension SignInOptionsSheet {
         }
         .signInWithAppleButtonStyle(.white)
         .frame(height: 50)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .shadow(color: .white.opacity(0.12), radius: 16, y: 4)
     }
 
@@ -278,7 +278,7 @@ private extension SignInOptionsSheet {
             .frame(maxWidth: .infinity)
             .frame(height: 50)
             .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
             .geoShadow(.subtle)
         }
         .buttonStyle(.plain)
@@ -316,7 +316,7 @@ private extension SignInOptionsSheet {
                     startPoint: .leading,
                     endPoint: .trailing
                 ),
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }
         .buttonStyle(PressButtonStyle())

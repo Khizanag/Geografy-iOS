@@ -102,7 +102,7 @@ private extension WordSearchScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
                 isSelected ? DesignSystem.Color.accent : DesignSystem.Color.cardBackground,
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }
         .buttonStyle(PressButtonStyle())
@@ -134,7 +134,7 @@ private extension WordSearchScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 

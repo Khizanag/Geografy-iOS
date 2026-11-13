@@ -179,7 +179,10 @@ private extension MapColoringScreen {
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             .padding(DesignSystem.Spacing.sm)
-            .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+            .background(color.opacity(0.1), in: RoundedRectangle(
+                cornerRadius: DesignSystem.CornerRadius.small,
+                style: .continuous
+            ))
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -196,7 +199,7 @@ private extension MapColoringScreen {
                     .fill(color.opacity(0.6))
                     .frame(width: 8, height: 8)
                 FlagView(countryCode: country.code, height: 20)
-                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
                 Text(country.name)
                     .font(DesignSystem.Font.body)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -218,7 +221,7 @@ private extension MapColoringScreen {
     func countryDetailPopup(_ country: Country) -> some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             FlagView(countryCode: country.code, height: 80)
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
                 .geoShadow(.card)
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text(country.name)

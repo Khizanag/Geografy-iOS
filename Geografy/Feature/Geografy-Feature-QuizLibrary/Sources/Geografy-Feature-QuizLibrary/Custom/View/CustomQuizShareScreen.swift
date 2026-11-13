@@ -43,7 +43,7 @@ private extension CustomQuizShareScreen {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(DesignSystem.Color.cardBackground)
                 .clipShape(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 )
                 .padding(DesignSystem.Spacing.md)
         }

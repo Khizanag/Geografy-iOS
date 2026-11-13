@@ -144,10 +144,10 @@ private extension DistanceCalculatorScreen {
         .padding(DesignSystem.Spacing.md)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(color.opacity(0.25), lineWidth: 1)
         )
     }
@@ -243,7 +243,7 @@ private extension DistanceCalculatorScreen {
                 lineProgress: lineProgress
             )
             .frame(height: 180)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .accessibilityLabel("Map showing route between selected countries")

@@ -145,7 +145,7 @@ private extension TypeSelectionGrid {
     @ViewBuilder
     func cardBackground(isSelected: Bool) -> some View {
         if isSelected {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                 .fill(
                     LinearGradient(
                         colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
@@ -154,21 +154,21 @@ private extension TypeSelectionGrid {
                     )
                 )
         } else {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                 .fill(
                     reduceTransparency
                         ? AnyShapeStyle(DesignSystem.Color.cardBackground)
                         : AnyShapeStyle(.ultraThinMaterial)
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                         .fill(DesignSystem.Color.cardBackground.opacity(0.6))
                 )
         }
     }
 
     func cardBorder(isSelected: Bool) -> some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
             .strokeBorder(
                 isSelected
                     ? DesignSystem.Color.accent.opacity(0.5)

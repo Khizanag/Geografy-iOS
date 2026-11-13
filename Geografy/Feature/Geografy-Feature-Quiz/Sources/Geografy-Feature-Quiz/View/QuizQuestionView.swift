@@ -74,14 +74,14 @@ private extension QuizQuestionView {
             if let flagCode = question.promptFlag {
                 Button { showFlagPreview = true } label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 16)
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
                             .fill(DesignSystem.Color.accent.opacity(0.12))
                             .blur(radius: 24)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
 
                         FlagView(countryCode: flagCode, height: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                             .geoShadow(.elevated)
                             .shadow(color: DesignSystem.Color.accent.opacity(0.15), radius: 12, y: 4)
                     }
@@ -150,7 +150,7 @@ private extension QuizQuestionView {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
         )
     }
 }

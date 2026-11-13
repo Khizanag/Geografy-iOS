@@ -130,9 +130,9 @@ private extension GeographyFeaturesScreen {
         HStack(spacing: -6) {
             ForEach(codes.prefix(3), id: \.self) { code in
                 FlagView(countryCode: code, height: 24)
-                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
                     .overlay(
-                        RoundedRectangle(cornerRadius: 3)
+                        RoundedRectangle(cornerRadius: 3, style: .continuous)
                             .stroke(DesignSystem.Color.cardBackground, lineWidth: 1)
                     )
             }

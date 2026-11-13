@@ -216,7 +216,7 @@ private extension WordSearchGameScreen {
                 wordCapsules(puzzle: puzzle, cellSize: computedCellSize)
                 selectionCapsule(cellSize: computedCellSize)
             }
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
             #if !os(tvOS)
             .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
             #endif
@@ -235,7 +235,7 @@ private extension WordSearchGameScreen {
     }
 
     var pauseOverlay: some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             .fill(DesignSystem.Color.background.opacity(0.6))
             .overlay {
                 VStack(spacing: DesignSystem.Spacing.sm) {
@@ -377,7 +377,7 @@ private extension WordSearchGameScreen {
             isUserFound
                 ? DesignSystem.Color.success.opacity(0.12)
                 : (isRevealedOnly ? DesignSystem.Color.warning.opacity(0.12) : DesignSystem.Color.cardBackground),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
     }
 }

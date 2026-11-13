@@ -96,7 +96,7 @@ private extension UNESCOSiteRow {
 
     var typeIcon: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(siteTypeColor.opacity(0.15))
                 .frame(width: 38, height: 38)
             Image(systemName: siteTypeIcon)

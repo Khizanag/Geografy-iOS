@@ -398,7 +398,7 @@ private extension BucketListCountryDetailView {
         }
         .onTapGesture { priority = option }
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(isSelected ? DesignSystem.Color.accent : .clear, lineWidth: 2)
         )
     }

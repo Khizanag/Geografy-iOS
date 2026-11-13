@@ -94,7 +94,7 @@ struct SettingsIconBadge: View {
             .foregroundStyle(DesignSystem.Color.onAccent)
             .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
             .background(color)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
             .accessibilityHidden(true)
     }
 }

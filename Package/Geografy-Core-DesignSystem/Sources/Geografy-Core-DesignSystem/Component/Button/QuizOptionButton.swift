@@ -33,9 +33,9 @@ public struct QuizOptionButton: View {
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm + 2)
                 .background { backgroundLayer }
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
                 .overlay {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                         .strokeBorder(borderColor, lineWidth: 1.5)
                 }
         }
@@ -118,7 +118,7 @@ private extension QuizOptionButton {
             .font(DesignSystem.Font.footnote.weight(.black))
             .foregroundStyle(badgeTextColor)
             .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-            .background(badgeBackground, in: RoundedRectangle(cornerRadius: 7))
+            .background(badgeBackground, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
     }
 
     @ViewBuilder
@@ -162,9 +162,9 @@ private extension QuizOptionButton {
     @ViewBuilder
     var backgroundLayer: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .fill(.ultraThinMaterial)
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .fill(overlayColor)
         }
     }

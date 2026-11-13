@@ -203,7 +203,7 @@ private extension TerritorialDisputesScreen {
                 .frame(maxWidth: .infinity)
                 .padding(DesignSystem.Spacing.md)
                 .background(DesignSystem.Color.cardBackground)
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large))
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         }
         .buttonStyle(PressButtonStyle())
     }

@@ -108,7 +108,7 @@ private extension CountrySpotlightCard {
         .padding(.vertical, DesignSystem.Spacing.xs)
         .background(
             DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 
@@ -128,7 +128,7 @@ private extension CountrySpotlightCard {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 }

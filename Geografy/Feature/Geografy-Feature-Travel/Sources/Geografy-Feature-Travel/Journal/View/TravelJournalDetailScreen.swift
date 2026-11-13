@@ -95,7 +95,7 @@ private extension TravelJournalDetailScreen {
     var countryRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: entry.countryCode, height: 40)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
             VStack(alignment: .leading, spacing: 2) {
                 Text(countryName)
                     .font(DesignSystem.Font.title2)
@@ -232,7 +232,7 @@ private extension TravelJournalDetailScreen {
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
                 DesignSystem.Color.error.opacity(0.1),
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }
         .buttonStyle(PressButtonStyle())

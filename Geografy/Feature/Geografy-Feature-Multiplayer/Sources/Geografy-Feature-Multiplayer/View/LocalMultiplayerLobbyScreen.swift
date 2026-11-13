@@ -68,7 +68,10 @@ private extension LocalMultiplayerLobbyScreen {
             }
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(.ultraThinMaterial, in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
     }
 }
 

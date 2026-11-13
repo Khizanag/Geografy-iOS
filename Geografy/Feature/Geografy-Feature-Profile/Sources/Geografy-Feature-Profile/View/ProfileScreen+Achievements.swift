@@ -72,7 +72,7 @@ private extension ProfileScreen {
         .padding(DesignSystem.Spacing.md)
         .background(
             .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 
@@ -106,7 +106,7 @@ private extension ProfileScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(
             .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 }

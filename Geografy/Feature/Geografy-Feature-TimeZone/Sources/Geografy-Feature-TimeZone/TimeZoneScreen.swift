@@ -292,7 +292,7 @@ private struct AllZonesView: View {
         }
 
         return HStack(spacing: DesignSystem.Spacing.xs) {
-            RoundedRectangle(cornerRadius: 2)
+            RoundedRectangle(cornerRadius: 2, style: .continuous)
                 .fill(zoneColor(for: offset))
                 .frame(width: 3, height: 18)
                 .accessibilityHidden(true)

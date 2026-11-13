@@ -115,10 +115,10 @@ private extension WorldBankIndicatorCard {
 
     var loadingView: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            RoundedRectangle(cornerRadius: 6)
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
                 .fill(DesignSystem.Color.cardBackgroundHighlighted)
                 .frame(width: 100, height: 32)
-            RoundedRectangle(cornerRadius: 6)
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
                 .fill(DesignSystem.Color.cardBackgroundHighlighted)
                 .frame(maxWidth: .infinity)
                 .frame(height: 90)

@@ -74,7 +74,7 @@ private extension CountrySaveToCollectionSheet {
         .padding(DesignSystem.Spacing.md)
         .background(
             DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
 

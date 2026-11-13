@@ -125,7 +125,7 @@ private extension LandmarkGalleryScreen {
                 .foregroundStyle(accentColor)
         }
         .frame(height: 100)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
     }
 
     func landmarkInfo(_ landmark: Landmark) -> some View {
@@ -138,7 +138,7 @@ private extension LandmarkGalleryScreen {
                 .lineLimit(2)
             HStack(spacing: 4) {
                 FlagView(countryCode: landmark.countryCode, height: 14, fixedWidth: true)
-                    .clipShape(RoundedRectangle(cornerRadius: 2))
+                    .clipShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
                 Text(landmark.city)
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)

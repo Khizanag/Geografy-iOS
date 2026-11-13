@@ -108,7 +108,7 @@ private extension SizeVisualizationScreen {
         .padding(DesignSystem.Spacing.sm)
         .background(
             DesignSystem.Color.accent.opacity(0.1),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small)
+            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
     }
 
@@ -247,10 +247,10 @@ private extension CountryRowContent {
     var barRow: some View {
         GeometryReader { geometryReader in
             ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 3)
+                RoundedRectangle(cornerRadius: 3, style: .continuous)
                     .fill(DesignSystem.Color.cardBackground)
                     .frame(height: 6)
-                RoundedRectangle(cornerRadius: 3)
+                RoundedRectangle(cornerRadius: 3, style: .continuous)
                     .fill(DesignSystem.Color.accent)
                     .frame(width: max(6, geometryReader.size.width * barFraction), height: 6)
             }

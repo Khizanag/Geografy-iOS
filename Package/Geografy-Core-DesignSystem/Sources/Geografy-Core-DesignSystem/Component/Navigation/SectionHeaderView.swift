@@ -51,7 +51,7 @@ private extension SectionHeaderView {
     }
 
     var accentBar: some View {
-        RoundedRectangle(cornerRadius: 2)
+        RoundedRectangle(cornerRadius: 2, style: .continuous)
             .fill(DesignSystem.Color.accent)
             .frame(width: 3, height: 18)
     }

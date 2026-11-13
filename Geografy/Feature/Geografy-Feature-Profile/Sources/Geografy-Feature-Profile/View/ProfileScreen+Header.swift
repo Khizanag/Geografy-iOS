@@ -72,10 +72,10 @@ private extension ProfileScreen {
         }
         .padding(DesignSystem.Spacing.md)
         .background(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .fill(DesignSystem.Color.warning.opacity(0.08))
                 .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                         .strokeBorder(DesignSystem.Color.warning.opacity(0.30), lineWidth: 1)
                 )
         )

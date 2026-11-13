@@ -133,10 +133,10 @@ private struct RegionCard: View {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .frame(maxWidth: .infinity)
             .background(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                     .fill(DesignSystem.Color.cardBackground)
                     .overlay(
-                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                             .strokeBorder(
                                 isSelected
                                     ? color.opacity(0.5)

@@ -159,7 +159,10 @@ private extension FriendsListScreen {
             Spacer()
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .background(.ultraThinMaterial, in: RoundedRectangle(
+            cornerRadius: DesignSystem.CornerRadius.medium,
+            style: .continuous
+        ))
     }
 
     func friendRow(_ player: GKPlayer, rank: Int) -> some View {

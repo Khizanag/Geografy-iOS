@@ -128,7 +128,7 @@ private extension AchievementDetailSheet {
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(DesignSystem.Color.cardBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
 
             if definition.xpReward > 0 {
                 HStack(spacing: DesignSystem.Spacing.xs) {
@@ -178,9 +178,9 @@ private extension AchievementDetailSheet {
         .padding(DesignSystem.Spacing.md)
         .frame(maxWidth: .infinity)
         .background(DesignSystem.Color.success.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                 .strokeBorder(DesignSystem.Color.success.opacity(0.3), lineWidth: 1)
         )
     }
@@ -206,7 +206,7 @@ private extension AchievementDetailSheet {
         .padding(DesignSystem.Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
     }
 }
 
@@ -230,7 +230,7 @@ private extension AchievementDetailSheet {
             .background(
                 (isPinned ? DesignSystem.Color.error : DesignSystem.Color.accent).opacity(0.12)
             )
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }
         .buttonStyle(PressButtonStyle())
         .disabled(!canPin && !isPinned)

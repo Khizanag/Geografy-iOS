@@ -132,9 +132,9 @@ private extension CustomQuizBuilderScreen {
                 .font(DesignSystem.Font.body)
                 .padding(DesignSystem.Spacing.sm)
                 .background(DesignSystem.Color.cardBackground)
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium))
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
                 .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                         .strokeBorder(
                             nameValidationColor,
                             lineWidth: 1,
@@ -250,7 +250,7 @@ private extension CustomQuizBuilderScreen {
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xs)
         .background(DesignSystem.Color.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small))
+        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
     }
 }
 
