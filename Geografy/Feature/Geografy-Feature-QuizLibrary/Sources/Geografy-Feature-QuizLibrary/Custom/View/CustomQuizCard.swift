@@ -14,9 +14,12 @@ public struct CustomQuizCard: View {
             backgroundIcon
             cardInfo
         }
-        .frame(height: 140)
+        .frame(minHeight: 140)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .shadow(color: accentColor.opacity(0.4), radius: 12, y: 5)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(quiz.name)
+        .accessibilityValue("\(quiz.countryCodes.count) countries, \(quiz.questionTypes.count) question types")
     }
 }
 
@@ -37,6 +40,7 @@ private extension CustomQuizCard {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 24, y: -12)
             .clipped()
+            .accessibilityHidden(true)
     }
 
     var cardInfo: some View {
@@ -53,7 +57,8 @@ private extension CustomQuizCard {
             .font(DesignSystem.Font.headline)
             .fontWeight(.bold)
             .foregroundStyle(DesignSystem.Color.onAccent)
-            .lineLimit(1)
+            .lineLimit(2)
+            .minimumScaleFactor(0.8)
     }
 
     var statsRow: some View {

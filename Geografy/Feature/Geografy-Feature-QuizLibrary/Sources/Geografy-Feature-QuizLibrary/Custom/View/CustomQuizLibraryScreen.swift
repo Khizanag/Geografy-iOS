@@ -9,6 +9,7 @@ public struct CustomQuizLibraryScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var quizService = CustomQuizService()
     @State private var showBuilder = false
@@ -91,6 +92,9 @@ private extension CustomQuizLibraryScreen {
         }
         .contextMenu { contextMenuItems(for: quiz) }
         .buttonStyle(PressButtonStyle())
+        .accessibilityAction(named: "Edit") { editingQuiz = quiz }
+        .accessibilityAction(named: "Share") { coordinator.sheet(.customQuizShare(quiz)) }
+        .accessibilityAction(named: "Delete") { quizToDelete = quiz }
     }
 
     func contextMenuItems(for quiz: CustomQuiz) -> some View {
@@ -198,7 +202,7 @@ private extension CustomQuizLibraryScreen {
         }
         Button("Delete", role: .destructive) {
             if let quiz = quizToDelete {
-                withAnimation { quizService.delete(quiz) }
+                withAnimation(reduceMotion ? nil : .default) { quizService.delete(quiz) }
             }
             quizToDelete = nil
         }
