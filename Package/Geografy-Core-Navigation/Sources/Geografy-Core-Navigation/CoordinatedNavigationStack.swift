@@ -14,14 +14,6 @@ public extension EnvironmentValues {
     }
 }
 
-public extension View {
-    func destinationContentProvider(
-        @ViewBuilder _ provider: @MainActor @Sendable @escaping (Destination) -> some View
-    ) -> some View {
-        environment(\.destinationContent, { @MainActor @Sendable in AnyView(provider($0)) })
-    }
-}
-
 // MARK: - Coordinated Navigation Stack
 public struct CoordinatedNavigationStack<Root: View>: View {
     // MARK: - Properties

@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_Flashcard
 import Geografy_Feature_LearningPath
@@ -60,7 +61,7 @@ struct GeografyApp: App {
     var body: some Scene {
         WindowGroup {
             contentView
-                .destinationContentProvider { $0.content }
+                .environment(\.destinationContent, Self.destinationContent)
         }
         .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)
@@ -100,10 +101,44 @@ private extension GeografyApp {
             .task(priority: .background) { await setupNotificationsAndSpotlight() }
             .task(priority: .background) { await syncWidgetData() }
             .onReceive(achievementService.unlockPublisher) { handleAchievementUnlock($0) }
-            .onChange(of: authService.currentUserID) { _, id in handleUserSwitch(id) }
-            .onChange(of: xpService.totalXP) { _, xp in handleXPChange(xp) }
-            .onChange(of: streakService.currentStreak) { _, streak in handleStreakChange(streak) }
-            .onChange(of: travelService.visitedCodes.count) { _, count in handleVisitedChange(count) }
+            .modifier(
+                ServiceChangeHandlers(
+                    authService: authService,
+                    xpService: xpService,
+                    streakService: streakService,
+                    travelService: travelService,
+                    onUserSwitch: handleUserSwitch,
+                    onXPChange: handleXPChange,
+                    onStreakChange: handleStreakChange,
+                    onVisitedChange: handleVisitedChange
+                )
+            )
+    }
+
+    /// One provider for the app's lifetime. A closure made in `body` would differ on every run,
+    /// and each tab's stack reads it, so every app-level update would rebuild every stack.
+    static let destinationContent: @MainActor @Sendable (Destination) -> AnyView = { AnyView($0.content) }
+}
+
+// MARK: - Service Change Handlers
+/// Watches the services the app reacts to. Reading them here rather than in the app's `body`
+/// means an XP award or a visited country re-runs only this modifier, not the whole scene.
+private struct ServiceChangeHandlers: ViewModifier {
+    let authService: AuthService
+    let xpService: XPService
+    let streakService: StreakService
+    let travelService: TravelService
+    let onUserSwitch: (String) -> Void
+    let onXPChange: (Int) -> Void
+    let onStreakChange: (Int) -> Void
+    let onVisitedChange: (Int) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: authService.currentUserID) { _, id in onUserSwitch(id) }
+            .onChange(of: xpService.totalXP) { _, xp in onXPChange(xp) }
+            .onChange(of: streakService.currentStreak) { _, streak in onStreakChange(streak) }
+            .onChange(of: travelService.visitedCodes.count) { _, count in onVisitedChange(count) }
     }
 }
 
