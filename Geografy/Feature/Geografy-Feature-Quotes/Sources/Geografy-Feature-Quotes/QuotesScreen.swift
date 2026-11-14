@@ -120,8 +120,12 @@ private extension QuotesScreen {
             Spacer()
             IconBadge(quote.category.icon, size: .small)
                 .accessibilityHidden(true)
-            favoriteButton(quote)
-            shareButton(quote)
+            GlassEffectContainer(spacing: 0) {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    favoriteButton(quote)
+                    shareButton(quote)
+                }
+            }
         }
     }
 

@@ -5,12 +5,15 @@ import Observation
 @Observable
 @MainActor
 public final class QuotesService {
+    // Decoded once per launch: the screen's @State default builds a service on every init.
+    private static let bundledQuotes = loadQuotesFromJSON()
+
     private let favoritesKey = "geo_quotes_favorites"
 
     public private(set) var quotes: [Quote] = []
 
     public init() {
-        quotes = Self.loadQuotesFromJSON()
+        quotes = Self.bundledQuotes
         loadFavorites()
     }
 
