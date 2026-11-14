@@ -8,7 +8,6 @@ public struct MapScreen: View {
     // MARK: - Properties
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
     @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
     #if !os(tvOS)
@@ -16,6 +15,8 @@ public struct MapScreen: View {
     #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
+
+    @AppStorage("map_showsVisitedCountries") private var showsVisitedCountries = true
 
     public var continentFilter: String?
 
@@ -41,12 +42,6 @@ public struct MapScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .closeButtonPlacementLeading()
-            .safeAreaInset(edge: .top) {
-                if showsTravelLegend {
-                    TravelStatusLegend()
-                        .padding(.horizontal, DesignSystem.Spacing.md)
-                }
-            }
             .safeAreaInset(edge: .bottom) {
                 if !isLandscape {
                     bannerOverlay
@@ -126,10 +121,6 @@ private extension MapScreen {
         return "\(name), \(status.label)"
     }
 
-    var showsTravelLegend: Bool {
-        differentiateWithoutColor && !travelService.entries.isEmpty && !mapState.countryShapes.isEmpty
-    }
-
     func mapCanvas(in size: CGSize) -> some View {
         MapCanvasView(
             countryShapes: mapState.countryShapes,
@@ -139,7 +130,7 @@ private extension MapScreen {
             showLabels: mapState.showLabels,
             canvasSize: size,
             capitalPoint: selectedCapitalPoint,
-            travelStatuses: travelService.entries,
+            highlightedCodes: showsVisitedCountries ? travelService.visitedCodes : [],
             wrapsHorizontally: isWorldMap
         )
         .accessibilityLabel(continentFilter.map { "Interactive map of \($0)" } ?? "Interactive world map")
@@ -166,34 +157,66 @@ private extension MapScreen {
                     .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
         }
-        ToolbarItem(placement: .primaryAction) {
+        ToolbarItemGroup(placement: .primaryAction) {
+            visitedToggleButton
             labelsToggleButton
         }
     }
 
+    var visitedToggleButton: some View {
+        toolbarToggle(
+            isOn: showsVisitedCountries,
+            accessibilityLabel: "Visited countries",
+            accessibilityHint: "Double tap to highlight the countries you've visited"
+        ) {
+            showsVisitedCountries.toggle()
+        } label: {
+            Image(systemName: TravelStatus.visited.icon)
+                .font(DesignSystem.Font.headline)
+        }
+    }
+
     var labelsToggleButton: some View {
-        Button {
+        toolbarToggle(
+            isOn: mapState.showLabels,
+            accessibilityLabel: "Country labels",
+            accessibilityHint: "Double tap to toggle country name labels"
+        ) {
             mapState.showLabels.toggle()
+        } label: {
+            Text("Aa")
+                .font(DesignSystem.Font.headline)
+        }
+    }
+
+    /// A map display switch: filled in the accent color while on.
+    func toolbarToggle(
+        isOn: Bool,
+        accessibilityLabel: String,
+        accessibilityHint: String,
+        action: @escaping () -> Void,
+        @ViewBuilder label: () -> some View
+    ) -> some View {
+        Button {
+            action()
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
         } label: {
-            Text("Aa")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(
-                    mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary
-                )
+            label()
+                .foregroundStyle(isOn ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
+                .frame(minWidth: DesignSystem.Size.md, minHeight: DesignSystem.Size.md)
                 .padding(DesignSystem.Spacing.xs)
                 .background {
-                    if mapState.showLabels {
+                    if isOn {
                         Circle().fill(DesignSystem.Color.accent)
                     }
                 }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Country labels")
-        .accessibilityValue(mapState.showLabels ? "Shown" : "Hidden")
-        .accessibilityHint("Double tap to toggle country name labels")
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityValue(isOn ? "Shown" : "Hidden")
+        .accessibilityHint(accessibilityHint)
     }
 }
 

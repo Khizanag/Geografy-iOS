@@ -12,6 +12,10 @@ public struct MapCanvasView: View {
     public let canvasSize: CGSize
     public var capitalPoint: CGPoint?
     public var travelStatuses: [String: TravelStatus] = [:]
+    /// Countries filled with `highlightColor` and outlined, such as the ones the user visited. The outline
+    /// keeps them distinct from neighbors whose palette color happens to be close, and from color alone.
+    public var highlightedCodes: Set<String> = []
+    public var highlightColor: Color = DesignSystem.Color.success
     public var densityData: [String: Double] = [:]
     public var showDensityOverlay: Bool = false
     public var wrapsHorizontally: Bool = true
@@ -28,6 +32,8 @@ public struct MapCanvasView: View {
         canvasSize: CGSize,
         capitalPoint: CGPoint? = nil,
         travelStatuses: [String: TravelStatus] = [:],
+        highlightedCodes: Set<String> = [],
+        highlightColor: Color = DesignSystem.Color.success,
         densityData: [String: Double] = [:],
         showDensityOverlay: Bool = false,
         wrapsHorizontally: Bool = true
@@ -40,6 +46,8 @@ public struct MapCanvasView: View {
         self.canvasSize = canvasSize
         self.capitalPoint = capitalPoint
         self.travelStatuses = travelStatuses
+        self.highlightedCodes = highlightedCodes
+        self.highlightColor = highlightColor
         self.densityData = densityData
         self.showDensityOverlay = showDensityOverlay
         self.wrapsHorizontally = wrapsHorizontally
@@ -107,6 +115,8 @@ private extension MapCanvasView {
         guard transformedBounds.intersects(visibleRect) else { return }
 
         let isSelected = shape.id == selectedCountryCode
+        let isHighlighted = highlightedCodes.contains(shape.id)
+        let baseColor = isHighlighted ? highlightColor : shape.color
         let strokeWidth = 2.0 / scale
 
         let paths = shape.detailPath(forScale: scale).map { [Path($0)] } ?? shape.polygons.map(Path.init)
@@ -114,7 +124,7 @@ private extension MapCanvasView {
             if showDensityOverlay, let density = densityData[shape.id] {
                 transformedContext.fill(path, with: .color(densityHeatmapColor(for: density)))
             } else {
-                let fillColor = isSelected || reduceTransparency ? shape.color.opacity(1) : shape.color.opacity(0.85)
+                let fillColor = isSelected || reduceTransparency ? baseColor.opacity(1) : baseColor.opacity(0.85)
                 transformedContext.fill(path, with: .color(fillColor))
             }
 
@@ -131,6 +141,14 @@ private extension MapCanvasView {
                         lineWidth: outlineWidth,
                         dash: travelStatus.mapOutlineDash(lineWidth: outlineWidth)
                     )
+                )
+            }
+
+            if isHighlighted, !isSelected {
+                transformedContext.stroke(
+                    path,
+                    with: .color(DesignSystem.Color.textPrimary.opacity(0.7)),
+                    lineWidth: 1.0 / scale
                 )
             }
 
