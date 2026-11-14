@@ -7,13 +7,14 @@ public struct LandmarkGalleryScreen: View {
     @State private var selectedCategory: LandmarkCategory?
     @State private var selectedLandmark: Landmark?
 
-    private let service = LandmarkGalleryService()
+    // Shared so re-inits of the screen don't rebuild the whole landmark catalog.
+    private static let service = LandmarkGalleryService()
 
     // MARK: - Init
     public init() {}
 
     private var displayedLandmarks: [Landmark] {
-        service.landmarks(in: selectedCategory)
+        Self.service.landmarks(in: selectedCategory)
     }
 
     private let columns = [
