@@ -12,6 +12,8 @@ struct SearchSuggestionsView: View {
     let onSearch: (String) -> Void
     let onOpen: (SearchRow) -> Void
 
+    @State private var recentRows: [String: SearchRow] = [:]
+
     private static let popularCountryCodes = ["US", "CN", "JP", "BR", "FR", "AU", "IN", "EG", "CA"]
     private static let popularOrganizationIDs = ["UN"]
     private static let recentLimit = 8
@@ -29,6 +31,8 @@ struct SearchSuggestionsView: View {
             .readableContentWidth()
         }
         .scrollDismissesKeyboard(.immediately)
+        .onChange(of: recentService.queries, initial: true) { resolveRecentRows() }
+        .onChange(of: countryService.countries.count) { resolveRecentRows() }
     }
 }
 
@@ -61,7 +65,7 @@ private extension SearchSuggestionsView {
     }
 
     func recentChip(_ recentQuery: String) -> some View {
-        let row = resolvedRow(for: recentQuery)
+        let row = recentRows[recentQuery]
         return SearchChip(title: row?.chipTitle ?? recentQuery, row: row) {
             onSearch(recentQuery)
         }
@@ -76,9 +80,18 @@ private extension SearchSuggestionsView {
         }
     }
 
-    /// The place a recent search names exactly, so its chip can show that place's flag.
-    func resolvedRow(for recentQuery: String) -> SearchRow? {
+    // Each lookup runs a whole search, so it happens when the recents change, not on every render.
+    func resolveRecentRows() {
         let engine = SearchEngine(countries: countryService.countries, organizations: Organization.all)
+        var rows: [String: SearchRow] = [:]
+        for recentQuery in recentService.queries.prefix(Self.recentLimit) {
+            rows[recentQuery] = resolvedRow(for: recentQuery, engine: engine)
+        }
+        recentRows = rows
+    }
+
+    /// The place a recent search names exactly, so its chip can show that place's flag.
+    func resolvedRow(for recentQuery: String, engine: SearchEngine) -> SearchRow? {
         guard let topHit = engine.results(for: recentQuery, scope: .all).topHit else { return nil }
         let isExactName = topHit.title.compare(
             recentQuery,
@@ -109,7 +122,7 @@ private extension SearchSuggestionsView {
 
     var popularRows: [SearchRow] {
         let countries = Self.popularCountryCodes.compactMap { code in
-            countryService.countries.first { $0.code == code }.map(SearchRow.country)
+            countryService.country(for: code).map(SearchRow.country)
         }
         let organizations = Self.popularOrganizationIDs.compactMap(Organization.find).map(SearchRow.organization)
         return countries + organizations

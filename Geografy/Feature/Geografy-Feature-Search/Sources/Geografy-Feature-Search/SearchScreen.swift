@@ -12,6 +12,7 @@ public struct SearchScreen: View {
 
     @State private var query = ""
     @State private var scope: SearchScope = .all
+    @State private var results: SearchResults = .empty
     @State private var recentService = RecentSearchesService()
     @State private var hasFocusedOnOpen = false
     @FocusState private var isSearchFocused: Bool
@@ -38,6 +39,7 @@ public struct SearchScreen: View {
             }
             .searchFocused($isSearchFocused)
             .onAppear(perform: focusSearchOnFirstOpen)
+            .onChange(of: searchInput, initial: true) { search() }
     }
 }
 
@@ -65,15 +67,25 @@ private extension SearchScreen {
         query.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    // Local data, so results update on every keystroke with no debounce or spinner.
-    var results: SearchResults {
-        SearchEngine(countries: countryService.countries, organizations: Organization.all)
-            .results(for: trimmedQuery, scope: scope)
+    var searchInput: SearchInput {
+        SearchInput(query: trimmedQuery, scope: scope, countryCount: countryService.countries.count)
+    }
+
+    struct SearchInput: Equatable {
+        let query: String
+        let scope: SearchScope
+        let countryCount: Int
     }
 }
 
 // MARK: - Actions
 private extension SearchScreen {
+    // Local data, so results update on every keystroke with no debounce or spinner.
+    func search() {
+        results = SearchEngine(countries: countryService.countries, organizations: Organization.all)
+            .results(for: trimmedQuery, scope: scope)
+    }
+
     // Opening Search means the person is about to type. Coming back from a result keeps the keyboard down.
     func focusSearchOnFirstOpen() {
         guard !hasFocusedOnOpen else { return }

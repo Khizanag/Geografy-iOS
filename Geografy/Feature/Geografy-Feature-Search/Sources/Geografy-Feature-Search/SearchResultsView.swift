@@ -12,7 +12,7 @@ struct SearchResultsView: View {
     // MARK: - Body
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+            LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
                 if let topHit = results.topHit {
                     topHitCard(topHit)
                 }
@@ -66,7 +66,7 @@ private extension SearchResultsView {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: section.title)
             CardView(cornerRadius: DesignSystem.CornerRadius.large) {
-                VStack(spacing: 0) {
+                LazyVStack(spacing: 0) {
                     ForEach(section.rows) { row in
                         resultRow(row)
                         if row != section.rows.last {
