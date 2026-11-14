@@ -21,7 +21,7 @@ struct PlayScreen: View {
         HubScreen(title: "Play", sections: Self.sections) {
             DailyActionCard(
                 dailyChallengeCompleted: dailyChallengeService?.hasCompletedToday ?? false,
-                srsCardsDue: dueReviewCount,
+                srsCardsDue: flashcardService.dueCount(of: .countryToCapital, in: countryDataService.countries),
                 onDailyChallenge: { coordinator.push(.dailyChallenge) },
                 onReviewCards: { coordinator.push(.srsStudy) },
                 onStartQuiz: { coordinator.push(.quizSetup) }
@@ -41,19 +41,16 @@ private extension PlayScreen {
 
 // MARK: - Data
 private extension PlayScreen {
-    var dueReviewCount: Int {
-        let allCards = countryDataService.countries.map {
-            FlashcardItem.make(from: $0, type: .countryToCapital)
-        }
-        return flashcardService.dueCards(from: allCards).count
-    }
-
+    // Runs on every appearance so a challenge finished elsewhere shows as done; the refresh is cheap.
     func loadDailyChallenge() async {
-        let service = DailyChallengeService(
+        let service = DailyChallengeService.service(
+            reusing: dailyChallengeService,
             countryDataService: countryDataService,
             userID: xpService.currentUserID
         )
         await service.loadChallenge()
-        dailyChallengeService = service
+        if dailyChallengeService !== service {
+            dailyChallengeService = service
+        }
     }
 }
