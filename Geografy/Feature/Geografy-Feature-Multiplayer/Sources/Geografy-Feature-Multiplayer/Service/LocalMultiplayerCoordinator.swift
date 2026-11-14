@@ -28,7 +28,7 @@ public final class LocalMultiplayerCoordinator {
     public var difficulty: QuizDifficulty = .easy
     public var questionCount: QuestionCount = .ten
 
-    private var countryDataService = CountryDataService()
+    private let countryDataService: CountryDataService
     private var opponentAnswers: [Int: (optionID: UUID, timeSpent: TimeInterval)] = [:]
     private var playerAnswers: [Int: (optionID: UUID, timeSpent: TimeInterval)] = [:]
     private var countdownTask: Task<Void, Never>?
@@ -38,8 +38,8 @@ public final class LocalMultiplayerCoordinator {
     private var isAdvancing = false
     private var xpAwarded = false
 
-    public init() {
-        Task { await countryDataService.loadCountries() }
+    public init(countryDataService: CountryDataService) {
+        self.countryDataService = countryDataService
         sessionManager.onMessageReceived = { [weak self] _, message in
             self?.handleMessage(message)
         }

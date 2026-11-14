@@ -27,6 +27,7 @@ public struct MultiplayerMatchScreen: View {
     @State private var opponentEngine = MockOpponentEngine()
     @State private var showQuitAlert = false
     @State private var completedMatch: MultiplayerMatch?
+    @State private var roundTask: Task<Void, Never>?
 
     // MARK: - Body
     public var body: some View {
@@ -38,7 +39,7 @@ public struct MultiplayerMatchScreen: View {
                     GiveUpButton { showQuitAlert = true }
                 }
             }
-            .onDisappear { opponentEngine.cancelPendingAnswer() }
+            .onDisappear { cancelPendingWork() }
             .fullScreenCover(item: $completedMatch) { match in
                 MultiplayerResultScreen(
                     match: match,
@@ -270,22 +271,25 @@ private extension MultiplayerMatchScreen {
         playerIsCorrect: Bool,
         playerTimeSpent: TimeInterval
     ) {
-        Task { @MainActor in
-            await waitForOpponent()
+        roundTask?.cancel()
+        roundTask = Task { @MainActor in
+            await opponentEngine.waitForAnswer()
+            guard !Task.isCancelled, opponentEngine.hasAnswered else { return }
             processRoundResult(
                 playerOptionID: playerOptionID,
                 playerIsCorrect: playerIsCorrect,
                 playerTimeSpent: playerTimeSpent
             )
             try? await Task.sleep(for: .seconds(1.5))
+            guard !Task.isCancelled else { return }
             advanceToNext()
         }
     }
 
-    func waitForOpponent() async {
-        while !opponentEngine.hasAnswered {
-            try? await Task.sleep(for: .milliseconds(100))
-        }
+    func cancelPendingWork() {
+        roundTask?.cancel()
+        roundTask = nil
+        opponentEngine.cancelPendingAnswer()
     }
 
     func processRoundResult(

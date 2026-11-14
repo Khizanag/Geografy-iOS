@@ -6,8 +6,11 @@ import SwiftUI
 public struct LocalMultiplayerEntryScreen: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var coordinator = LocalMultiplayerCoordinator()
+    // Created on the first Host or Join tap: building one opens a peer identity, so the
+    // screen's init (re-run on every parent render) must not.
+    @State private var coordinator: LocalMultiplayerCoordinator?
     @State private var appeared = false
 
     // MARK: - Init
@@ -16,7 +19,7 @@ public struct LocalMultiplayerEntryScreen: View {
     // MARK: - Body
     public var body: some View {
         extractedContent
-            .animation(.easeInOut(duration: 0.3), value: coordinator.state)
+            .animation(.easeInOut(duration: 0.3), value: coordinator?.state)
             .onAppear { appeared = true }
     }
 }
@@ -25,20 +28,29 @@ public struct LocalMultiplayerEntryScreen: View {
 private extension LocalMultiplayerEntryScreen {
     var extractedContent: some View {
         Group {
-            switch coordinator.state {
-            case .idle:
+            if let coordinator, coordinator.state != .idle {
+                matchFlowContent(coordinator)
+            } else {
                 entryContent
-            case .advertising, .browsing, .lobby:
-                LocalMultiplayerLobbyScreen(coordinator: coordinator)
-            case .countdown:
-                LocalMultiplayerCountdownView(coordinator: coordinator)
-            case .playing:
-                LocalMultiplayerMatchScreen(coordinator: coordinator)
-            case .finished:
-                LocalMultiplayerResultScreen(coordinator: coordinator)
-            case .disconnected:
-                disconnectedView
             }
+        }
+    }
+
+    @ViewBuilder
+    func matchFlowContent(_ coordinator: LocalMultiplayerCoordinator) -> some View {
+        switch coordinator.state {
+        case .idle:
+            EmptyView()
+        case .advertising, .browsing, .lobby:
+            LocalMultiplayerLobbyScreen(coordinator: coordinator)
+        case .countdown:
+            LocalMultiplayerCountdownView(coordinator: coordinator)
+        case .playing:
+            LocalMultiplayerMatchScreen(coordinator: coordinator)
+        case .finished:
+            LocalMultiplayerResultScreen(coordinator: coordinator)
+        case .disconnected:
+            disconnectedView(coordinator)
         }
     }
 
@@ -89,17 +101,17 @@ private extension LocalMultiplayerEntryScreen {
     var roleButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             GlassButton("Host Game", systemImage: "antenna.radiowaves.left.and.right", fullWidth: true) {
-                coordinator.startHosting()
+                resolvedCoordinator().startHosting()
             }
             GlassButton("Join Game", systemImage: "magnifyingglass", role: .secondary, fullWidth: true) {
-                coordinator.startBrowsing()
+                resolvedCoordinator().startBrowsing()
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
     }
 
-    var disconnectedView: some View {
+    func disconnectedView(_ coordinator: LocalMultiplayerCoordinator) -> some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
             PulsingCirclesView(icon: "wifi.slash", isAnimating: true, color: Self.color)
                 .accessibilityHidden(true)
@@ -129,5 +141,17 @@ private extension LocalMultiplayerEntryScreen {
     }
 
     static let color = DesignSystem.Color.error
+}
+
+// MARK: - Actions
+private extension LocalMultiplayerEntryScreen {
+    func resolvedCoordinator() -> LocalMultiplayerCoordinator {
+        if let coordinator {
+            return coordinator
+        }
+        let created = LocalMultiplayerCoordinator(countryDataService: countryDataService)
+        coordinator = created
+        return created
+    }
 }
 #endif

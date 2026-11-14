@@ -45,6 +45,10 @@ extension MockOpponentEngine {
         }
     }
 
+    public func waitForAnswer() async {
+        await answerTask?.value
+    }
+
     public func reset() {
         answerTask?.cancel()
         answerTask = nil
