@@ -104,10 +104,12 @@ private extension SizeVisualizationScreen {
     }
 
     var countryList: some View {
-        ScrollView(showsIndicators: false) {
+        let countries = filteredCountries
+        let largestValue = maxValue(in: countries)
+        return ScrollView(showsIndicators: false) {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(Array(filteredCountries.enumerated()), id: \.element.id) { index, country in
-                    countryRow(country: country, rank: index + 1)
+                ForEach(Array(countries.enumerated()), id: \.element.id) { index, country in
+                    countryRow(country: country, rank: index + 1, maxValue: largestValue)
                         .padding(.horizontal, DesignSystem.Spacing.md)
                 }
             }
@@ -116,7 +118,7 @@ private extension SizeVisualizationScreen {
         }
     }
 
-    func countryRow(country: Country, rank: Int) -> some View {
+    func countryRow(country: Country, rank: Int, maxValue: Double) -> some View {
         Button {
             if referenceCountry == nil {
                 referenceCountry = country
@@ -175,14 +177,14 @@ private extension SizeVisualizationScreen {
         }
     }
 
-    var maxValue: Double {
+    func maxValue(in sortedCountries: [Country]) -> Double {
         switch sortMode {
         case .area:
-            filteredCountries.first?.area ?? 1
+            sortedCountries.first?.area ?? 1
         case .population:
-            Double(filteredCountries.first?.population ?? 1)
+            Double(sortedCountries.first?.population ?? 1)
         case .density:
-            filteredCountries.first?.populationDensity ?? 1
+            sortedCountries.first?.populationDensity ?? 1
         }
     }
 }
