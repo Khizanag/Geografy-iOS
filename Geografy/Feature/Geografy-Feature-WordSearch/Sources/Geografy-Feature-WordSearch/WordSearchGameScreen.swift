@@ -1,4 +1,3 @@
-import Combine
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
@@ -24,17 +23,15 @@ public struct WordSearchGameScreen: View {
     }
 
     @State private var puzzle: WordSearchPuzzle?
-    @State private var selectionStart: GridCoord?
-    @State private var selectionEnd: GridCoord?
+    @State private var spokenRows: [String] = []
     @State private var foundWordIDs: Set<UUID> = []
-    @State private var elapsedSeconds = 0
+    @State private var stopwatch = WordSearchStopwatch()
     @State private var timerActive = false
     @State private var isPaused = false
     @State private var isRevealed = false
     @State private var hintRevealedIDs: Set<UUID> = []
 
     private let service = WordSearchService()
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     // MARK: - Body
     public var body: some View {
@@ -44,9 +41,12 @@ public struct WordSearchGameScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { startPuzzle() }
-            .onReceive(timer) { _ in
-                guard timerActive, !isPaused else { return }
-                elapsedSeconds += 1
+            .onChange(of: isClockRunning) { _, isRunning in
+                if isRunning {
+                    stopwatch.resume(at: .now)
+                } else {
+                    stopwatch.pause(at: .now)
+                }
             }
     }
 }
@@ -57,21 +57,7 @@ private extension WordSearchGameScreen {
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "timer")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.iconPrimary)
-                    .accessibilityHidden(true)
-                Text(formattedTime)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.bold)
-                    .monospacedDigit()
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .contentTransition(.numericText())
-                    .animation(reduceMotion ? nil : .snappy, value: elapsedSeconds)
-                    .accessibilityLabel("Elapsed time")
-                    .accessibilityValue(
-                        Duration.seconds(elapsedSeconds).formatted(.units(allowed: [.minutes, .seconds], width: .wide))
-                    )
+                WordSearchClockLabel(stopwatch: stopwatch)
 
                 if timerActive {
                     Button {
@@ -88,9 +74,7 @@ private extension WordSearchGameScreen {
     }
 
     var formattedTime: String {
-        let minutes = elapsedSeconds / 60
-        let seconds = elapsedSeconds % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        WordSearchStopwatch.formatted(seconds: stopwatch.wholeSeconds(at: .now))
     }
 }
 
@@ -215,47 +199,43 @@ private extension WordSearchGameScreen {
         GeometryReader { geometry in
             let computedCellSize = geometry.size.width / CGFloat(service.gridSize)
 
-            ZStack {
-                letterRows(puzzle, cellSize: computedCellSize)
-
-                wordCapsules(puzzle: puzzle, cellSize: computedCellSize)
-                    .accessibilityHidden(true)
-                selectionCapsule(cellSize: computedCellSize)
-                    .accessibilityHidden(true)
-            }
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
-            #if !os(tvOS)
-            .gesture(isPaused || gameFinished ? nil : dragGesture(cellSize: computedCellSize, puzzle: puzzle))
-            #endif
-            .blur(radius: isPaused && !reduceTransparency ? 8 : 0)
-            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isPaused)
-            .accessibilityElement(children: .contain)
-            .accessibilityLabel("Letter grid")
-            .accessibilityHidden(isPaused)
-            .overlay {
-                if isPaused {
-                    pauseOverlay
-                        .transition(.opacity)
-                        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isPaused)
+            gridLayers(puzzle, cellSize: computedCellSize)
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
+                .blur(radius: isPaused && !reduceTransparency ? 8 : 0)
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isPaused)
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Letter grid")
+                .accessibilityHidden(isPaused)
+                .overlay {
+                    if isPaused {
+                        pauseOverlay
+                            .transition(.opacity)
+                            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isPaused)
+                    }
                 }
-            }
         }
         .aspectRatio(1, contentMode: .fit)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: isRevealed)
     }
 
-    // Each row reads as one element, so VoiceOver can scan the grid line by line.
-    func letterRows(_ puzzle: WordSearchPuzzle, cellSize: CGFloat) -> some View {
-        VStack(spacing: 0) {
-            ForEach(0..<service.gridSize, id: \.self) { row in
-                HStack(spacing: 0) {
-                    ForEach(0..<service.gridSize, id: \.self) { col in
-                        gridCell(letter: puzzle.grid[row][col], cellSize: cellSize)
-                    }
-                }
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Row \(row + 1)")
-                .accessibilityValue(puzzle.grid[row].map(String.init).joined(separator: " "))
+    func gridLayers(_ puzzle: WordSearchPuzzle, cellSize: CGFloat) -> some View {
+        ZStack {
+            WordSearchLetterGrid(
+                puzzleID: puzzle.id,
+                grid: puzzle.grid,
+                spokenRows: spokenRows,
+                cellSize: cellSize
+            )
+            .equatable()
+
+            wordCapsules(puzzle: puzzle, cellSize: cellSize)
+                .accessibilityHidden(true)
+            WordSearchSelectionLayer(
+                gridSize: service.gridSize,
+                cellSize: cellSize,
+                isEnabled: !isPaused && !gameFinished
+            ) { start, end in
+                checkSelection(from: start, to: end, puzzle: puzzle)
             }
         }
     }
@@ -281,15 +261,6 @@ private extension WordSearchGameScreen {
             }
     }
 
-    func gridCell(letter: Character, cellSize: CGFloat) -> some View {
-        Text(String(letter))
-            .font(DesignSystem.Font.system(size: max(cellSize * 0.48, 12), weight: .semibold, design: .monospaced))
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .frame(width: cellSize, height: cellSize)
-            .background(DesignSystem.Color.cardBackground.opacity(reduceTransparency ? 1 : 0.3))
-            .border(contrast == .increased ? DesignSystem.Color.dividerSubtle : .clear, width: 0.5)
-    }
-
     func wordCapsules(puzzle: WordSearchPuzzle, cellSize: CGFloat) -> some View {
         ForEach(puzzle.words) { wordItem in
             let isUserFound = foundWordIDs.contains(wordItem.id)
@@ -298,9 +269,9 @@ private extension WordSearchGameScreen {
                 let cells = wordCoversCells(wordItem)
                 if let first = cells.first, let last = cells.last {
                     // Revealed words get a dashed outline so they differ from found words by shape, not just color.
-                    wordCapsuleShape(
-                        from: first,
-                        to: last,
+                    WordSearchCapsule(
+                        start: first,
+                        end: last,
                         cellSize: cellSize,
                         color: isUserFound
                             ? DesignSystem.Color.success.opacity(0.5)
@@ -310,56 +281,6 @@ private extension WordSearchGameScreen {
                 }
             }
         }
-    }
-
-    @ViewBuilder
-    func selectionCapsule(cellSize: CGFloat) -> some View {
-        if let start = selectionStart, let end = selectionEnd {
-            wordCapsuleShape(
-                from: start,
-                to: end,
-                cellSize: cellSize,
-                color: DesignSystem.Color.accent.opacity(0.5)
-            )
-        }
-    }
-
-    func wordCapsuleShape(
-        from start: GridCoord,
-        to end: GridCoord,
-        cellSize: CGFloat,
-        color: Color,
-        dashedOutline: Color? = nil
-    ) -> some View {
-        let startCenter = cellCenter(start, cellSize: cellSize)
-        let endCenter = cellCenter(end, cellSize: cellSize)
-        let dx = endCenter.x - startCenter.x
-        let dy = endCenter.y - startCenter.y
-        let length = sqrt(dx * dx + dy * dy) + cellSize * 0.85
-        let angle = atan2(dy, dx)
-        let midpoint = CGPoint(
-            x: (startCenter.x + endCenter.x) / 2,
-            y: (startCenter.y + endCenter.y) / 2
-        )
-
-        return Capsule()
-            .fill(color)
-            .overlay {
-                if let dashedOutline {
-                    Capsule().strokeBorder(dashedOutline, style: StrokeStyle(lineWidth: 2, dash: [4, 3]))
-                }
-            }
-            .frame(width: length, height: cellSize * 0.75)
-            .rotationEffect(.radians(angle))
-            .position(midpoint)
-            .allowsHitTesting(false)
-    }
-
-    func cellCenter(_ coord: GridCoord, cellSize: CGFloat) -> CGPoint {
-        CGPoint(
-            x: CGFloat(coord.col) * cellSize + cellSize / 2,
-            y: CGFloat(coord.row) * cellSize + cellSize / 2
-        )
     }
 
     func wordListSection(_ puzzle: WordSearchPuzzle) -> some View {
@@ -438,33 +359,6 @@ private extension WordSearchGameScreen {
     }
 }
 
-#if !os(tvOS)
-// MARK: - Gesture
-private extension WordSearchGameScreen {
-    func dragGesture(cellSize: CGFloat, puzzle: WordSearchPuzzle) -> some Gesture {
-        DragGesture(minimumDistance: 0)
-            .onChanged { value in
-                let col = Int(value.location.x / cellSize)
-                let row = Int(value.location.y / cellSize)
-                let clampedRow = max(0, min(service.gridSize - 1, row))
-                let clampedCol = max(0, min(service.gridSize - 1, col))
-
-                if selectionStart == nil {
-                    selectionStart = GridCoord(row: clampedRow, col: clampedCol)
-                }
-                selectionEnd = GridCoord(row: clampedRow, col: clampedCol)
-            }
-            .onEnded { _ in
-                if let start = selectionStart, let end = selectionEnd {
-                    checkSelection(from: start, to: end, puzzle: puzzle)
-                }
-                selectionStart = nil
-                selectionEnd = nil
-            }
-    }
-}
-#endif
-
 // MARK: - Helpers
 private extension WordSearchGameScreen {
     func statsLayout<Content: View>(@ViewBuilder content: () -> Content) -> some View {
@@ -494,13 +388,20 @@ private extension WordSearchGameScreen {
         foundWordIDs.count == puzzle.words.count
     }
 
+    var isClockRunning: Bool {
+        timerActive && !isPaused
+    }
+
     func startPuzzle() {
+        let newPuzzle = service.makePuzzle(theme: theme)
         foundWordIDs = []
         hintRevealedIDs = []
-        elapsedSeconds = 0
+        stopwatch = WordSearchStopwatch()
+        stopwatch.resume(at: .now)
         isPaused = false
         isRevealed = false
-        puzzle = service.makePuzzle(theme: theme)
+        spokenRows = WordSearchLetterGrid.spokenRows(of: newPuzzle.grid)
+        puzzle = newPuzzle
         timerActive = true
     }
 
@@ -578,10 +479,4 @@ private extension WordSearchGameScreen {
         hapticsService.impact(.light)
         #endif
     }
-}
-
-// MARK: - Supporting Types
-private struct GridCoord: Hashable {
-    let row: Int
-    let col: Int
 }
