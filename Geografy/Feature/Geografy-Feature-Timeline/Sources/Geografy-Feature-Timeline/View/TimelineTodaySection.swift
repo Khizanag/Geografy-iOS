@@ -1,11 +1,13 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct TimelineTodaySection: View {
     // MARK: - Properties
+    @Environment(CountryDataService.self) private var countryDataService
+
     public let events: [HistoricalEvent]
-    public let countries: [Country]
 
     // MARK: - Body
     public var body: some View {
@@ -31,7 +33,7 @@ private extension TimelineTodaySection {
         ForEach(events) { event in
             TimelineEventCard(
                 event: event,
-                country: country(for: event.countryCode)
+                country: countryDataService.country(for: event.countryCode)
             )
         }
     }
@@ -39,13 +41,13 @@ private extension TimelineTodaySection {
 
 // MARK: - Helpers
 private extension TimelineTodaySection {
-    var formattedToday: String {
+    static let todayFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d"
-        return formatter.string(from: Date())
-    }
+        return formatter
+    }()
 
-    func country(for code: String) -> Country? {
-        countries.first { $0.code == code }
+    var formattedToday: String {
+        Self.todayFormatter.string(from: Date())
     }
 }

@@ -28,24 +28,20 @@ extension HistoricalEvent {
 
     public var formattedDate: String {
         if let month, let day {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMMM d, yyyy"
             var components = DateComponents()
             components.year = year
             components.month = month
             components.day = day
             if let date = Calendar.current.date(from: components) {
-                return dateFormatter.string(from: date)
+                return Self.dayFormatter.string(from: date)
             }
         }
         if let month {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMMM yyyy"
             var components = DateComponents()
             components.year = year
             components.month = month
             if let date = Calendar.current.date(from: components) {
-                return dateFormatter.string(from: date)
+                return Self.monthFormatter.string(from: date)
             }
         }
         return String(year)
@@ -53,9 +49,29 @@ extension HistoricalEvent {
 
     public var matchesToday: Bool {
         let today = Calendar.current.dateComponents([.month, .day], from: Date())
-        guard let eventMonth = month, let eventDay = day else { return false }
-        return eventMonth == today.month && eventDay == today.day
+        return occurs(onMonth: today.month, day: today.day)
     }
+
+    /// Whether the event fell on this day of the year; false when its month or day isn't known.
+    public func occurs(onMonth month: Int?, day: Int?) -> Bool {
+        guard let eventMonth = self.month, let eventDay = self.day else { return false }
+        return eventMonth == month && eventDay == day
+    }
+}
+
+// MARK: - Formatters
+private extension HistoricalEvent {
+    static let dayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, yyyy"
+        return formatter
+    }()
+
+    static let monthFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter
+    }()
 }
 
 // MARK: - Event Type Display

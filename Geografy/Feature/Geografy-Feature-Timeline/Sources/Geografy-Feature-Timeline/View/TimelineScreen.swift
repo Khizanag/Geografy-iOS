@@ -144,10 +144,7 @@ private extension TimelineScreen {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 if showTodaySection {
-                    TimelineTodaySection(
-                        events: todayEvents,
-                        countries: countryDataService.countries
-                    )
+                    TimelineTodaySection(events: todayEvents)
                     .padding(.bottom, DesignSystem.Spacing.sm)
                 }
 
