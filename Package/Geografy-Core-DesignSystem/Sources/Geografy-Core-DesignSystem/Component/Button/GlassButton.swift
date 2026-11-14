@@ -63,8 +63,8 @@ private extension GlassButton {
                 Text(title)
             }
         }
-        .font(DesignSystem.Font.headline)
-        .foregroundStyle(foregroundColor)
+        .font(font)
+        .foregroundStyle(DesignSystem.Color.textPrimary)
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .hoverEffect(.highlight)
@@ -74,21 +74,21 @@ private extension GlassButton {
         HStack(spacing: DesignSystem.Spacing.xs) {
             if let systemImage {
                 Image(systemName: systemImage)
-                    .font(DesignSystem.Font.headline)
             }
             Text(title)
-                .font(DesignSystem.Font.headline)
         }
-        .foregroundStyle(foregroundColor)
+        .font(font)
+        .foregroundStyle(DesignSystem.Color.textPrimary)
         .padding(.horizontal, DesignSystem.Spacing.lg)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .hoverEffect(.highlight)
     }
 
-    var foregroundColor: Color {
+    /// Secondary ranks below primary by weight, not by a grey label that reads as disabled.
+    var font: Font {
         switch role {
-        case .primary: DesignSystem.Color.textPrimary
-        case .secondary: DesignSystem.Color.textSecondary
+        case .primary: DesignSystem.Font.headline
+        case .secondary: DesignSystem.Font.body.weight(.medium)
         }
     }
 }
