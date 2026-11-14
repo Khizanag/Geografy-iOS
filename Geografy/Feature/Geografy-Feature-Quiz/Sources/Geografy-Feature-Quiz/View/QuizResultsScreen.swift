@@ -132,7 +132,7 @@ private extension QuizResultsScreen {
     }
 
     var answersSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+        LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Answers")
                 .padding(.horizontal, DesignSystem.Spacing.md)
 
