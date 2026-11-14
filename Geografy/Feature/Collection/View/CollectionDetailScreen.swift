@@ -25,16 +25,13 @@ struct CollectionDetailScreen: View {
 
 // MARK: - Content
 private extension CollectionDetailScreen {
-    var items: [CollectionItem] {
-        collectionService.items(in: collectionName)
-    }
-
     @ViewBuilder
     var content: some View {
+        let items = collectionService.items(in: collectionName)
         if items.isEmpty {
             emptyState
         } else {
-            itemList
+            itemList(groups: groupedByType(items))
         }
     }
 
@@ -46,11 +43,11 @@ private extension CollectionDetailScreen {
         }
     }
 
-    var itemList: some View {
+    func itemList(groups: [TypeGroup]) -> some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(groupedByType, id: \.type) { group in
-                    typeSection(group.type, items: group.items)
+            LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(groups, id: \.type) { group in
+                    typeSection(group.type, items: group.items, isFirst: group.type == groups.first?.type)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -67,7 +64,7 @@ private extension CollectionDetailScreen {
         let items: [CollectionItem]
     }
 
-    var groupedByType: [TypeGroup] {
+    func groupedByType(_ items: [CollectionItem]) -> [TypeGroup] {
         let grouped = Dictionary(grouping: items, by: \.type)
         return CollectionItem.ItemType.allCases.compactMap { type in
             guard let items = grouped[type], !items.isEmpty else { return nil }
@@ -75,16 +72,21 @@ private extension CollectionDetailScreen {
         }
     }
 
+    // Rows sit directly in the lazy stack so they load as they scroll in; the header's top
+    // padding restores the wider gap that used to separate sections.
     func typeSection(
         _ type: CollectionItem.ItemType,
-        items: [CollectionItem]
+        items: [CollectionItem],
+        isFirst: Bool
     ) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            SectionHeaderView(title: type.pluralName, icon: type.icon)
-
+        Section {
             ForEach(items, id: \.itemID) { item in
                 itemRow(item)
             }
+        } header: {
+            SectionHeaderView(title: type.pluralName, icon: type.icon)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, isFirst ? 0 : DesignSystem.Spacing.sm - DesignSystem.Spacing.xs)
         }
     }
 
