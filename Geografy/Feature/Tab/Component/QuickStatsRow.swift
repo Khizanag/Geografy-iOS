@@ -1,8 +1,10 @@
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
 
 struct QuickStatsRow: View {
     // MARK: - Properties
+    @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     let streakDays: Int
@@ -21,15 +23,15 @@ struct QuickStatsRow: View {
             statPill(
                 icon: "flame.fill",
                 value: "\(streakDays)",
-                label: String(localized: "streak"),
+                label: String(localized: "streak", in: locale),
                 color: DesignSystem.Color.orange,
                 action: onStreakTap
             )
 
             statPill(
                 icon: "star.fill",
-                value: String(localized: "Lv. \(level)"),
-                label: String(localized: "level"),
+                value: String(localized: "Lv. \(level)", in: locale),
+                label: String(localized: "level", in: locale),
                 color: DesignSystem.Color.accent,
                 action: onLevelTap
             )
@@ -37,7 +39,7 @@ struct QuickStatsRow: View {
             statPill(
                 icon: "globe.americas.fill",
                 value: "\(countriesExplored)",
-                label: String(localized: "explored"),
+                label: String(localized: "explored", in: locale),
                 color: DesignSystem.Color.success,
                 action: onCountriesTap
             )

@@ -54,3 +54,7 @@ Reuse the wording already in the catalogs for the app's terms, so a term reads t
 ## Output
 
 One JSON object keyed by the exact English key, with the translation as each value. UTF-8, every key included.
+
+## After merging translations
+
+SwiftUI looks most package text up in the app's own catalog, so run `python3 scripts/merge_package_strings.py` after any translation pass and commit `Geografy/Resource/Localizable.xcstrings` with the package catalogs. Without it, package screens stay in English.

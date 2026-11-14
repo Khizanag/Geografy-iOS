@@ -1,9 +1,74 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {},
+    "" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
     "\"%@\"" : {},
-    "#%lld" : {},
+    "#%lld" : {
+      "localizations" : {}
+    },
+    "%@ %@ over 10 years, %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@ over 10 years, %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ 10 წელიწადში, %3$@"
+          }
+        }
+      }
+    },
+    "%@ Puzzle" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ თავსატეხი"
+          }
+        }
+      }
+    },
+    "%@ XP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ XP"
+          }
+        }
+      }
+    },
+    "%@ chart" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ დიაგრამა"
+          }
+        }
+      }
+    },
     "%@ coins" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -11,6 +76,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ მონეტა"
+          }
+        }
+      }
+    },
+    "%@ density" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ სიმჭიდროვე"
           }
         }
       }
@@ -25,12 +102,144 @@
         }
       }
     },
+    "%@ has no land borders — surrounded entirely by water." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს არ აქვს სახმელეთო საზღვრები — მთლიანად წყლით არის გარშემორტყმული."
+          }
+        }
+      }
+    },
     "%@ is not correct. −100 pts" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ არასწორია. −100 ქულა"
+          }
+        }
+      }
+    },
+    "%@ kilometers" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ კილომეტრი"
+          }
+        }
+      }
+    },
+    "%@ miles" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ მილი"
+          }
+        }
+      }
+    },
+    "%@ of %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ of %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@-დან"
+          }
+        }
+      }
+    },
+    "%@ of %@ completed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ of %2$@ completed"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@-დან დასრულებული"
+          }
+        }
+      }
+    },
+    "%@ pts" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ქულა"
+          }
+        }
+      }
+    },
+    "%@ versus %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ versus %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@-ს წინააღმდეგ"
+          }
+        }
+      }
+    },
+    "%@ wants a rematch!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს რევანში სურს!"
+          }
+        }
+      }
+    },
+    "%@, %lld countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$lld countries"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$lld ქვეყანა"
           }
         }
       }
@@ -51,6 +260,54 @@
         }
       }
     },
+    "%@, capital %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, capital %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, დედაქალაქი %2$@"
+          }
+        }
+      }
+    },
+    "%@, pronounced %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, pronounced %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, წარმოთქმა %2$@"
+          }
+        }
+      }
+    },
+    "%@/km²" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/კმ²"
+          }
+        }
+      }
+    },
     "%@: %@" : {
       "comment" : "A label that combines the label and value of the stat pill. The first argument is the string “streak”, the string “level”, or the string “explored”. The second argument is the string “%arg” or the string “Lv. %arg”.",
       "isCommentAutoGenerated" : true,
@@ -60,6 +317,12 @@
             "state" : "new",
             "value" : "%1$@: %2$@"
           }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
         }
       }
     },
@@ -68,6 +331,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$@: %2$@, %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$@: %2$@, %3$@"
           }
         }
@@ -115,6 +384,68 @@
         }
       }
     },
+    "%lld / %lld XP to next level" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld XP to next level"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld / %2$lld XP შემდეგ დონემდე"
+          }
+        }
+      }
+    },
+    "%lld / %lld points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld points"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld / %2$lld ქულა"
+          }
+        }
+      }
+    },
+    "%lld Friends" : {
+      "comment" : "A title that describes the number of friends and a subtitle that explains how they are ranked.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მეგობარი"
+          }
+        }
+      }
+    },
+    "%lld World Heritage Sites" : {
+      "comment" : "A badge displaying the number of World Heritage Sites. The argument is the count of World Heritage Sites.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მსოფლიო მემკვიდრეობის ძეგლი"
+          }
+        }
+      }
+    },
     "%lld bordering countries" : {
       "localizations" : {
         "ka" : {
@@ -136,6 +467,18 @@
         }
       }
     },
+    "%lld correct" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld სწორი"
+          }
+        }
+      }
+    },
     "%lld countries" : {
       "localizations" : {
         "ka" : {
@@ -146,12 +489,151 @@
         }
       }
     },
+    "%lld countries found" : {
+      "comment" : "A label displaying the number of countries that match the current search query. The argument is the count of matching countries.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაპოვნია %lld ქვეყანა"
+          }
+        }
+      }
+    },
+    "%lld countries on your bucket list" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა შენს სურვილების სიაში"
+          }
+        }
+      }
+    },
+    "%lld countries to name" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა დასახელებელი"
+          }
+        }
+      }
+    },
+    "%lld countries, %lld question types" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld countries, %2$lld question types"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ქვეყანა, %2$lld კითხვის ტიპი"
+          }
+        }
+      }
+    },
+    "%lld day streak, %lld of 7 days active this week" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld day streak, %2$lld of 7 days active this week"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld-დღიანი სერია, %2$lld 7 დღიდან აქტიური ამ კვირაში"
+          }
+        }
+      }
+    },
+    "%lld directions" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მიმართულება"
+          }
+        }
+      }
+    },
     "%lld entries written" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დაწერილია %lld ჩანაწერი"
+          }
+        }
+      }
+    },
+    "%lld found" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ნაპოვნი"
+          }
+        }
+      }
+    },
+    "%lld hop%@ from %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld hop%2$@ from %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ნახტომი%2$@ %3$@-დან"
+          }
+        }
+      }
+    },
+    "%lld in a row" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ზედიზედ"
+          }
+        }
+      }
+    },
+    "%lld independent" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld დამოუკიდებელი"
           }
         }
       }
@@ -195,6 +677,30 @@
         }
       }
     },
+    "%lld member countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld წევრი ქვეყანა"
+          }
+        }
+      }
+    },
+    "%lld members" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld წევრი"
+          }
+        }
+      }
+    },
     "%lld million speakers" : {
       "localizations" : {
         "ka" : {
@@ -215,6 +721,174 @@
         }
       }
     },
+    "%lld of %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "%lld of %lld XP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld XP"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld XP-დან"
+          }
+        }
+      }
+    },
+    "%lld of %lld countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld countries"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld ქვეყნიდან"
+          }
+        }
+      }
+    },
+    "%lld of %lld lessons" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld lessons"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld გაკვეთილიდან"
+          }
+        }
+      }
+    },
+    "%lld of %lld modules complete" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld modules complete"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld მოდულიდან დასრულებული"
+          }
+        }
+      }
+    },
+    "%lld of %lld, winner" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld, winner"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld-დან, გამარჯვებული"
+          }
+        }
+      }
+    },
+    "%lld of 3" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 3-დან"
+          }
+        }
+      }
+    },
+    "%lld percent" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld პროცენტი"
+          }
+        }
+      }
+    },
+    "%lld percent complete" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld პროცენტი დასრულებული"
+          }
+        }
+      }
+    },
+    "%lld percent of lessons complete" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაკვეთილების %lld პროცენტი დასრულებულია"
+          }
+        }
+      }
+    },
+    "%lld percent progress" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld პროცენტი პროგრესი"
+          }
+        }
+      }
+    },
     "%lld percent to next level" : {
       "localizations" : {
         "ka" : {
@@ -225,12 +899,72 @@
         }
       }
     },
+    "%lld percent, %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld percent, %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld პროცენტი, %2$@"
+          }
+        }
+      }
+    },
+    "%lld photos" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ფოტო"
+          }
+        }
+      }
+    },
+    "%lld points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქულა"
+          }
+        }
+      }
+    },
     "%lld points available" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ხელმისაწვდომია %lld ქულა"
+          }
+        }
+      }
+    },
+    "%lld points, %lld of %lld correct" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld points, %2$lld of %3$lld correct"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ქულა, სწორია %2$lld %3$lld-დან"
           }
         }
       }
@@ -255,12 +989,139 @@
         }
       }
     },
+    "%lld seconds" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld წამი"
+          }
+        }
+      }
+    },
     "%lld selected" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld არჩეული"
+          }
+        }
+      }
+    },
+    "%lld stars" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ვარსკვლავი"
+          }
+        }
+      }
+    },
+    "%lld total XP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld სულ XP"
+          }
+        }
+      }
+    },
+    "%lld words" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld სიტყვა"
+          }
+        }
+      }
+    },
+    "%lld words, such as %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld words, such as %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld სიტყვა, მაგალითად %2$@"
+          }
+        }
+      }
+    },
+    "%lld × %lld grid" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld × %2$lld grid"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld × %2$lld ბადე"
+          }
+        }
+      }
+    },
+    "%lld-day streak" : {
+      "comment" : "A subheading describing a user's streak of completing a daily challenge. The argument is the length of the streak.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld-დღიანი სერია"
+          }
+        }
+      }
+    },
+    "%lld/%lld correct" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld correct"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld სწორი"
+          }
+        }
+      }
+    },
+    "%lld/7 days" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/7 დღე"
           }
         }
       }
@@ -275,12 +1136,48 @@
         }
       }
     },
+    "%lldM speakers" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მლნ მოლაპარაკე"
+          }
+        }
+      }
+    },
     "%llds" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld წმ"
+          }
+        }
+      }
+    },
+    "%llds remaining" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%llds დარჩენილია"
+          }
+        }
+      }
+    },
+    "+ %lld more" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %lld სხვა"
           }
         }
       }
@@ -295,7 +1192,28 @@
         }
       }
     },
-    "+%lld" : {},
+    "+%@ XP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%@ XP"
+          }
+        }
+      }
+    },
+    "+%lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+%lld"
+          }
+        }
+      }
+    },
     "+%lld XP" : {
       "localizations" : {
         "ka" : {
@@ -306,7 +1224,40 @@
         }
       }
     },
-    "/%@" : {},
+    "/%@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/%@"
+          }
+        }
+      }
+    },
+    "1 star" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 ვარსკვლავი"
+          }
+        }
+      }
+    },
+    "10yr" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10წ"
+          }
+        }
+      }
+    },
     "30 world languages & scripts" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -328,6 +1279,114 @@
         }
       }
     },
+    "Aa" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aa"
+          }
+        }
+      }
+    },
+    "About" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესახებ"
+          }
+        }
+      }
+    },
+    "About This Setting" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ პარამეტრის შესახებ"
+          }
+        }
+      }
+    },
+    "Accept" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღება"
+          }
+        }
+      }
+    },
+    "Account" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ანგარიში"
+          }
+        }
+      }
+    },
+    "Accuracy" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიზუსტე"
+          }
+        }
+      }
+    },
+    "Accuracy %lld percent" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიზუსტე %lld პროცენტი"
+          }
+        }
+      }
+    },
+    "Achievement Unlocked!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღწევა განბლოკილია!"
+          }
+        }
+      }
+    },
+    "Achievements" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღწევები"
+          }
+        }
+      }
+    },
     "Add" : {
       "comment" : "A button label that says \"Add\".",
       "isCommentAutoGenerated" : true,
@@ -336,6 +1395,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დამატება"
+          }
+        }
+      }
+    },
+    "Add Country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნის დამატება"
+          }
+        }
+      }
+    },
+    "Add Journal Entry" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღიურში ჩანაწერის დამატება"
           }
         }
       }
@@ -350,12 +1433,36 @@
         }
       }
     },
+    "Add a note..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენიშვნის დამატება..."
+          }
+        }
+      }
+    },
     "Add items from country details, oceans, languages, and more." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დაამატე ელემენტები ქვეყნის დეტალებიდან, ოკეანეებიდან, ენებიდან და სხვა."
+          }
+        }
+      }
+    },
+    "Add to Favorites" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულებში დამატება"
           }
         }
       }
@@ -371,6 +1478,18 @@
         }
       }
     },
+    "Adopted %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღებულია %@"
+          }
+        }
+      }
+    },
     "Aggregated data per continent" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -382,12 +1501,84 @@
         }
       }
     },
+    "All %@ Countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა %@ ქვეყანა"
+          }
+        }
+      }
+    },
+    "All Continents" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა კონტინენტი"
+          }
+        }
+      }
+    },
+    "All Countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ქვეყანა"
+          }
+        }
+      }
+    },
+    "All Currencies" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ვალუტა"
+          }
+        }
+      }
+    },
     "All Maps" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ყველა რუკა"
+          }
+        }
+      }
+    },
+    "All Types" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ტიპი"
+          }
+        }
+      }
+    },
+    "All Words Found!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა სიტყვა ნაპოვნია!"
           }
         }
       }
@@ -425,6 +1616,214 @@
         }
       }
     },
+    "All territorial dispute settings will be reset to their internationally recognized defaults." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტერიტორიული დავების ყველა პარამეტრი საერთაშორისოდ აღიარებულ ნაგულისხმევ მნიშვნელობებზე დაბრუნდება."
+          }
+        }
+      }
+    },
+    "All your progress, XP, and achievements will be permanently deleted." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თქვენი მთელი პროგრესი, XP და მიღწევები სამუდამოდ წაიშლება."
+          }
+        }
+      }
+    },
+    "Alphabet index" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ანბანის ინდექსი"
+          }
+        }
+      }
+    },
+    "Already named" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უკვე დასახელებულია"
+          }
+        }
+      }
+    },
+    "Amount" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თანხა"
+          }
+        }
+      }
+    },
+    "Amount in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თანხა %@-ში"
+          }
+        }
+      }
+    },
+    "Answer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხი"
+          }
+        }
+      }
+    },
+    "Answer, %lld letters" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხი, %lld ასო"
+          }
+        }
+      }
+    },
+    "Answers" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხები"
+          }
+        }
+      }
+    },
+    "App language" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აპის ენა"
+          }
+        }
+      }
+    },
+    "App version %@" : {
+      "comment" : "An accessibility label for the app version number. The placeholder is replaced with the actual version number.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აპის ვერსია %@"
+          }
+        }
+      }
+    },
+    "Appearance" : {
+      "comment" : "A label for a row in the settings screen related to the appearance of the app.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იერსახე"
+          }
+        }
+      }
+    },
+    "Area" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფართობი"
+          }
+        }
+      }
+    },
+    "Ascending" : {
+      "comment" : "A text label that indicates ascending sorting.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზრდადობით"
+          }
+        }
+      }
+    },
+    "Auto" : {
+      "comment" : "Labels for the different theme options in the settings.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ავტომატური"
+          }
+        }
+      }
+    },
+    "Average rating %@ of 5 stars" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საშუალო შეფასება %@ 5 ვარსკვლავიდან"
+          }
+        }
+      }
+    },
+    "Best in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საუკეთესო %@-ში"
+          }
+        }
+      }
+    },
     "Border Challenge" : {
       "localizations" : {
         "ka" : {
@@ -451,6 +1850,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მოსაზღვრე ქვეყნები"
+          }
+        }
+      }
+    },
+    "Both devices must be nearby on the same Wi-Fi or with Bluetooth enabled." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორივე მოწყობილობა ერთ Wi-Fi ქსელში ან Bluetooth-ით უნდა იყოს დაკავშირებული."
+          }
+        }
+      }
+    },
+    "Bucket List" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სურვილების სია"
+          }
+        }
+      }
+    },
+    "Building puzzle…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავსატეხი იქმნება…"
+          }
+        }
+      }
+    },
+    "By Continent" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტის მიხედვით"
           }
         }
       }
@@ -485,6 +1932,42 @@
         }
       }
     },
+    "Capital" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დედაქალაქი"
+          }
+        }
+      }
+    },
+    "Capital of %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს დედაქალაქი"
+          }
+        }
+      }
+    },
+    "Capitals (%lld)" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დედაქალაქები (%lld)"
+          }
+        }
+      }
+    },
     "Capitals, countries, continents & more" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -496,12 +1979,307 @@
         }
       }
     },
+    "Capture memories from your travels with photos, notes, and ratings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეინახე მოგზაურობის მოგონებები ფოტოებით, შენიშვნებითა და შეფასებებით"
+          }
+        }
+      }
+    },
+    "Card %lld of %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Card %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Challenge Streak" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის სერია"
+          }
+        }
+      }
+    },
+    "Challenge Streak: %lld-day streak" : {
+      "comment" : "A badge displaying the duration of a user's streak in a daily challenge.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის სერია: %lld-დღიანი სერია"
+          }
+        }
+      }
+    },
+    "Challenge a friend on a device close by." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოუწვიე მეგობარი ახლომდებარე მოწყობილობაზე."
+          }
+        }
+      }
+    },
+    "Challenge a friend on the same network" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოუწვიე მეგობარი ერთ ქსელში"
+          }
+        }
+      }
+    },
+    "Challenge completed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევა დასრულებულია"
+          }
+        }
+      }
+    },
+    "Change" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეცვლა"
+          }
+        }
+      }
+    },
+    "Change reference country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საბაზისო ქვეყნის შეცვლა"
+          }
+        }
+      }
+    },
+    "Changes it" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცვლის არჩევანს"
+          }
+        }
+      }
+    },
+    "Choose Countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ქვეყნები"
+          }
+        }
+      }
+    },
+    "Choose a Country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ქვეყანა"
+          }
+        }
+      }
+    },
+    "Choose a Region" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე რეგიონი"
+          }
+        }
+      }
+    },
+    "Choose the country for this entry" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ქვეყანა ამ ჩანაწერისთვის"
+          }
+        }
+      }
+    },
+    "Chooses one" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ირჩევს ერთს"
+          }
+        }
+      }
+    },
+    "Clear" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასუფთავება"
+          }
+        }
+      }
+    },
+    "Clear Filters" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფილტრების გასუფთავება"
+          }
+        }
+      }
+    },
+    "Clear Travel Status" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსის წაშლა"
+          }
+        }
+      }
+    },
+    "Clear text" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტექსტის გასუფთავება"
+          }
+        }
+      }
+    },
+    "Clears this status" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შლის ამ სტატუსს"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დახურვა"
+          }
+        }
+      }
+    },
+    "Close photo" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფოტოს დახურვა"
+          }
+        }
+      }
+    },
     "Clue %lld of 5 revealed" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გამოვლენილია მინიშნება %lld 5-დან"
+          }
+        }
+      }
+    },
+    "Collapsed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩაკეცილია"
+          }
+        }
+      }
+    },
+    "Collected on %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეგროვებულია %@"
           }
         }
       }
@@ -526,6 +2304,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "კოლექციები"
+          }
+        }
+      }
+    },
+    "Colors & Symbols" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფერები და სიმბოლოები"
+          }
+        }
+      }
+    },
+    "Coming Soon" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მალე"
           }
         }
       }
@@ -562,6 +2364,66 @@
         }
       }
     },
+    "Compares with the reference country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ადარებს საბაზისო ქვეყანას"
+          }
+        }
+      }
+    },
+    "Connect your Game Center account to see your friends and compare scores." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დააკავშირე Game Center ანგარიში მეგობრების სანახავად და ქულების შესადარებლად."
+          }
+        }
+      }
+    },
+    "Connected" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაკავშირებულია"
+          }
+        }
+      }
+    },
+    "Connecting to Game Center..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center-თან დაკავშირება..."
+          }
+        }
+      }
+    },
+    "Continent" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტი"
+          }
+        }
+      }
+    },
     "Continent Stats" : {
       "localizations" : {
         "ka" : {
@@ -582,12 +2444,108 @@
         }
       }
     },
+    "Continue" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
+    "Continue as Guest" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება სტუმრად"
+          }
+        }
+      }
+    },
+    "Converted" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონვერტირებული"
+          }
+        }
+      }
+    },
+    "Converts this amount" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკონვერტირებს ამ თანხას"
+          }
+        }
+      }
+    },
     "Copy" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "კოპირება"
+          }
+        }
+      }
+    },
+    "Correct" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორი"
+          }
+        }
+      }
+    },
+    "Correct answer: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორი პასუხი: %@"
+          }
+        }
+      }
+    },
+    "Correct!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორია!"
+          }
+        }
+      }
+    },
+    "Costs %lld points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ღირს %lld ქულა"
           }
         }
       }
@@ -612,6 +2570,43 @@
         }
       }
     },
+    "Countries, capitals, organizations" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები, დედაქალაქები, ორგანიზაციები"
+          }
+        }
+      }
+    },
+    "Countries, capitals, organizations…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები, დედაქალაქები, ორგანიზაციები…"
+          }
+        }
+      }
+    },
+    "Country" : {
+      "comment" : "A caption displayed underneath the name of a country.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყანა"
+          }
+        }
+      }
+    },
     "Country Comparison" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -623,12 +2618,46 @@
         }
       }
     },
+    "Country Details" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნის დეტალები"
+          }
+        }
+      }
+    },
     "Country Nicknames" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნების მეტსახელები"
+          }
+        }
+      }
+    },
+    "Country labels" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ეტიკეტები"
+          }
+        }
+      }
+    },
+    "Country of the Day" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღის ქვეყანა"
           }
         }
       }
@@ -657,6 +2686,30 @@
         }
       }
     },
+    "Create Quiz" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის შექმნა"
+          }
+        }
+      }
+    },
+    "Create an account — your XP & achievements will be linked" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შექმენი ანგარიში — შენი XP და მიღწევები დაკავშირდება"
+          }
+        }
+      }
+    },
     "Create your own geography quiz by selecting countries and question types." : {
       "localizations" : {
         "ka" : {
@@ -677,12 +2730,97 @@
         }
       }
     },
+    "Culture, History & More" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კულტურა, ისტორია და სხვა"
+          }
+        }
+      }
+    },
+    "Currency Converter" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტის კონვერტორი"
+          }
+        }
+      }
+    },
+    "Currency, code, or country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტა, კოდი ან ქვეყანა"
+          }
+        }
+      }
+    },
     "Daily Challenge" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ყოველდღიური გამოწვევა"
+          }
+        }
+      }
+    },
+    "Dark" : {
+      "comment" : "A theme option in the settings menu.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მუქი"
+          }
+        }
+      }
+    },
+    "Data unavailable" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონაცემები მიუწვდომელია"
+          }
+        }
+      }
+    },
+    "Debug Sign In" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug შესვლა"
+          }
+        }
+      }
+    },
+    "Decline" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უარყოფა"
           }
         }
       }
@@ -705,6 +2843,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "წაშლა"
+          }
+        }
+      }
+    },
+    "Delete Account" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ანგარიშის წაშლა"
           }
         }
       }
@@ -741,12 +2891,110 @@
         }
       }
     },
+    "Delete photo %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფოტო %lld-ის წაშლა"
+          }
+        }
+      }
+    },
+    "Density" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიმჭიდროვე"
+          }
+        }
+      }
+    },
+    "Descending" : {
+      "comment" : "A label for sorting countries in descending order.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კლებადობით"
+          }
+        }
+      }
+    },
     "Destination" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დანიშნულება"
+          }
+        }
+      }
+    },
+    "Developer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დეველოპერი"
+          }
+        }
+      }
+    },
+    "Different" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განსხვავებული"
+          }
+        }
+      }
+    },
+    "Difficulty" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სირთულე"
+          }
+        }
+      }
+    },
+    "Direction" : {
+      "comment" : "A label for the direction of sorting options.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიმართულება"
+          }
+        }
+      }
+    },
+    "Disconnected" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გათიშულია"
           }
         }
       }
@@ -793,6 +3041,78 @@
         }
       }
     },
+    "Dismisses the banner" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხურავს ბანერს"
+          }
+        }
+      }
+    },
+    "Display" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩვენება"
+          }
+        }
+      }
+    },
+    "Display Name" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საჩვენებელი სახელი"
+          }
+        }
+      }
+    },
+    "Display name" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საჩვენებელი სახელი"
+          }
+        }
+      }
+    },
+    "Distance Calculator" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მანძილის კალკულატორი"
+          }
+        }
+      }
+    },
+    "Distance between capitals" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მანძილი დედაქალაქებს შორის"
+          }
+        }
+      }
+    },
     "Dive In" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -814,6 +3134,48 @@
         }
       }
     },
+    "Done. Score %lld of %lld, in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Done. Score %1$lld of %2$lld, in %3$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულდა. ქულა %1$lld %2$lld-დან, დრო %3$@"
+          }
+        }
+      }
+    },
+    "Double tap for more details" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხებით მეტი დეტალების სანახავად"
+          }
+        }
+      }
+    },
+    "Double tap to close, pinch to zoom" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება დახურვისთვის, მოჭიმვა გასადიდებლად"
+          }
+        }
+      }
+    },
     "Double tap to collapse" : {
       "localizations" : {
         "ka" : {
@@ -830,6 +3192,114 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ორჯერ შეხება გასაშლელად"
+          }
+        }
+      }
+    },
+    "Double tap to see translation" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება თარგმანის სანახავად"
+          }
+        }
+      }
+    },
+    "Double tap to select" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ასარჩევად"
+          }
+        }
+      }
+    },
+    "Double tap to select a country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ქვეყნის ასარჩევად"
+          }
+        }
+      }
+    },
+    "Double tap to toggle country name labels" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ქვეყნის სახელების გადასართავად"
+          }
+        }
+      }
+    },
+    "Double tap to view details" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება დეტალების სანახავად"
+          }
+        }
+      }
+    },
+    "Double-tap to type your answer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება პასუხის ასაკრეფად"
+          }
+        }
+      }
+    },
+    "Drag across the letters to find every hidden word." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადაატარე თითი ასოებზე, რომ იპოვო ყველა დამალული სიტყვა."
+          }
+        }
+      }
+    },
+    "Drag to jump to a letter" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადაათრიე ასოზე გადასახტომად"
+          }
+        }
+      }
+    },
+    "Earned %lld XP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღებულია %lld XP"
           }
         }
       }
@@ -864,6 +3334,18 @@
         }
       }
     },
+    "Edit Profile" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროფილის რედაქტირება"
+          }
+        }
+      }
+    },
     "Edit Quiz" : {
       "localizations" : {
         "ka" : {
@@ -885,6 +3367,30 @@
         }
       }
     },
+    "Edit profile" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროფილის რედაქტირება"
+          }
+        }
+      }
+    },
+    "Elapsed time" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასული დრო"
+          }
+        }
+      }
+    },
     "Empty Collection" : {
       "comment" : "A label describing an empty collection.",
       "isCommentAutoGenerated" : true,
@@ -897,12 +3403,108 @@
         }
       }
     },
+    "Enter your name" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიყვანე სახელი"
+          }
+        }
+      }
+    },
+    "Event Details" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის დეტალები"
+          }
+        }
+      }
+    },
+    "Event Type" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის ტიპი"
+          }
+        }
+      }
+    },
+    "Event details" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის დეტალები"
+          }
+        }
+      }
+    },
+    "Event type" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის ტიპი"
+          }
+        }
+      }
+    },
+    "Event type: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის ტიპი: %@"
+          }
+        }
+      }
+    },
+    "Expanded" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაშლილია"
+          }
+        }
+      }
+    },
     "Explore" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "აღმოაჩინე"
+          }
+        }
+      }
+    },
+    "Explore Neighbor Chain" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეზობელი ქვეყნების ჯაჭვის შესწავლა"
           }
         }
       }
@@ -938,6 +3540,18 @@
         }
       }
     },
+    "Explore phrases, timeline, economy and cultural highlights" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფრაზების, ქრონოლოგიის, ეკონომიკისა და კულტურული მომენტების შესწავლა"
+          }
+        }
+      }
+    },
     "Fact #%lld" : {
       "localizations" : {
         "ka" : {
@@ -969,12 +3583,36 @@
         }
       }
     },
+    "Favorite" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეული"
+          }
+        }
+      }
+    },
     "Favorite Destination" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "რჩეული დანიშნულება"
+          }
+        }
+      }
+    },
+    "Favorites" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულები"
           }
         }
       }
@@ -989,12 +3627,121 @@
         }
       }
     },
+    "Field" : {
+      "comment" : "A label describing the sorting field.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ველი"
+          }
+        }
+      }
+    },
+    "Filter" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფილტრი"
+          }
+        }
+      }
+    },
+    "Find Shortest Path" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უმოკლესი გზის პოვნა"
+          }
+        }
+      }
+    },
+    "Find a country in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე ქვეყანა %@-ში"
+          }
+        }
+      }
+    },
     "Find a feature…" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "იპოვე ფუნქცია…"
+          }
+        }
+      }
+    },
+    "Find hidden country names\nin a grid of letters" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე დამალული ქვეყნების სახელები\nასოების ბადეში"
+          }
+        }
+      }
+    },
+    "Finding your friends" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეგობრების მოძებნა"
+          }
+        }
+      }
+    },
+    "Finish today's challenge to start your history." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასრულე დღევანდელი გამოწვევა, რომ ისტორია დაიწყო."
+          }
+        }
+      }
+    },
+    "Flag" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროშა"
+          }
+        }
+      }
+    },
+    "Flag %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროშა %lld"
           }
         }
       }
@@ -1020,6 +3767,42 @@
         }
       }
     },
+    "Flag of %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს დროშა"
+          }
+        }
+      }
+    },
+    "Flip card" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათის გადაბრუნება"
+          }
+        }
+      }
+    },
+    "Found, %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაპოვნია, %@"
+          }
+        }
+      }
+    },
     "Friends" : {
       "localizations" : {
         "ka" : {
@@ -1030,12 +3813,96 @@
         }
       }
     },
+    "From %@ to %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "From %1$@ to %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@-დან %2$@-მდე"
+          }
+        }
+      }
+    },
+    "Fun Fact #%lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საინტერესო ფაქტი #%lld"
+          }
+        }
+      }
+    },
+    "Fun fact: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საინტერესო ფაქტი: %@"
+          }
+        }
+      }
+    },
+    "GO!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე!"
+          }
+        }
+      }
+    },
     "Geografy" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geografy"
+          }
+        }
+      }
+    },
+    "Geografy Daily Challenge" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy ყოველდღიური გამოწვევა"
+          }
+        }
+      }
+    },
+    "Geografy v%@ (%@)" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Geografy v%1$@ (%2$@)"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy v%1$@ (%2$@)"
           }
         }
       }
@@ -1061,6 +3928,54 @@
         }
       }
     },
+    "Get ready, %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოემზადე, %lld"
+          }
+        }
+      }
+    },
+    "Get ready..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოემზადე..."
+          }
+        }
+      }
+    },
+    "Give Up" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანებება"
+          }
+        }
+      }
+    },
+    "Give Up?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანებება?"
+          }
+        }
+      }
+    },
     "Global GDP Rank" : {
       "localizations" : {
         "ka" : {
@@ -1082,12 +3997,72 @@
         }
       }
     },
+    "Go!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე!"
+          }
+        }
+      }
+    },
+    "Great Circle Distance" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დიდი წრის მანძილი"
+          }
+        }
+      }
+    },
+    "Great work! Keep reviewing to improve mastery." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესანიშნავი! განაგრძე გამეორება ოსტატობის გასაუმჯობესებლად."
+          }
+        }
+      }
+    },
+    "Group by" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაჯგუფება"
+          }
+        }
+      }
+    },
     "Guess the country..." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გამოიცანი ქვეყანა..."
+          }
+        }
+      }
+    },
+    "Guest" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტუმარი"
           }
         }
       }
@@ -1102,6 +4077,120 @@
         }
       }
     },
+    "Haptic feedback" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიბრაცია"
+          }
+        }
+      }
+    },
+    "Heading %@, %lld degrees" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Heading %1$@, %2$lld degrees"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიმართულება %1$@, %2$lld გრადუსი"
+          }
+        }
+      }
+    },
+    "Hidden" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამალული"
+          }
+        }
+      }
+    },
+    "Hides these countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მალავს ამ ქვეყნებს"
+          }
+        }
+      }
+    },
+    "Hint" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მინიშნება"
+          }
+        }
+      }
+    },
+    "Hint: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მინიშნება: %@"
+          }
+        }
+      }
+    },
+    "Historical Map" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული რუკა"
+          }
+        }
+      }
+    },
+    "Historical map, %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული რუკა, %@"
+          }
+        }
+      }
+    },
+    "Historical state unknown" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული მდგომარეობა უცნობია"
+          }
+        }
+      }
+    },
     "Home" : {
       "localizations" : {
         "ka" : {
@@ -1112,12 +4201,48 @@
         }
       }
     },
+    "Host Lobby" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლობის შექმნა"
+          }
+        }
+      }
+    },
+    "How many border hops from **%@** to your destination?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რამდენი საზღვრის გადაკვეთაა **%@**-დან შენს დანიშნულებამდე?"
+          }
+        }
+      }
+    },
     "How to Play" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "როგორ ვითამაშოთ"
+          }
+        }
+      }
+    },
+    "I knew it" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიცოდი"
           }
         }
       }
@@ -1153,6 +4278,30 @@
         }
       }
     },
+    "In perspective" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პერსპექტივაში"
+          }
+        }
+      }
+    },
+    "Incorrect" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არასწორი"
+          }
+        }
+      }
+    },
     "Independence Timeline" : {
       "localizations" : {
         "ka" : {
@@ -1163,12 +4312,132 @@
         }
       }
     },
+    "Independent since %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამოუკიდებელი %@-დან"
+          }
+        }
+      }
+    },
+    "Interactive map of %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს ინტერაქტიული რუკა"
+          }
+        }
+      }
+    },
+    "Interactive world map" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ინტერაქტიული მსოფლიო რუკა"
+          }
+        }
+      }
+    },
+    "Island Nation" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კუნძულოვანი ქვეყანა"
+          }
+        }
+      }
+    },
+    "Island nation — no land borders" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კუნძულოვანი ქვეყანა — სახმელეთო საზღვრების გარეშე"
+          }
+        }
+      }
+    },
+    "Join" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეერთება"
+          }
+        }
+      }
+    },
+    "Join %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-თან შეერთება"
+          }
+        }
+      }
+    },
+    "Join Lobby" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლობიში შესვლა"
+          }
+        }
+      }
+    },
     "Journal Stats" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დღიურის სტატისტიკა"
+          }
+        }
+      }
+    },
+    "Knew It" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიცოდი"
+          }
+        }
+      }
+    },
+    "LEVEL UP!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე აიწია!"
           }
         }
       }
@@ -1193,12 +4462,84 @@
         }
       }
     },
+    "Language" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენა"
+          }
+        }
+      }
+    },
     "Language Explorer" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ენების მკვლევარი"
+          }
+        }
+      }
+    },
+    "Language in iOS Settings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენა iOS-ის პარამეტრებში"
+          }
+        }
+      }
+    },
+    "Languages" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენები"
+          }
+        }
+      }
+    },
+    "Latest: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უახლესი: %@"
+          }
+        }
+      }
+    },
+    "Leaderboard" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლიდერბორდი"
+          }
+        }
+      }
+    },
+    "Leaderboards" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლიდერბორდები"
           }
         }
       }
@@ -1213,6 +4554,30 @@
         }
       }
     },
+    "Learn More" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტის გაგება"
+          }
+        }
+      }
+    },
+    "Learn more about %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტი ინფორმაცია %@-ზე"
+          }
+        }
+      }
+    },
     "Learning Path" : {
       "localizations" : {
         "ka" : {
@@ -1223,12 +4588,127 @@
         }
       }
     },
+    "Leave" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დატოვება"
+          }
+        }
+      }
+    },
+    "Letter grid" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ასოების ბადე"
+          }
+        }
+      }
+    },
     "Level %lld" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დონე %lld"
+          }
+        }
+      }
+    },
+    "Level %lld, %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Level %1$lld, %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %1$lld, %2$@"
+          }
+        }
+      }
+    },
+    "Light" : {
+      "comment" : "Options for changing the appearance of the app.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ღია"
+          }
+        }
+      }
+    },
+    "Lisbon" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisbon"
+          }
+        }
+      }
+    },
+    "Lives" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიცოცხლეები"
+          }
+        }
+      }
+    },
+    "Loading map" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა იტვირთება"
+          }
+        }
+      }
+    },
+    "Loading rates" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კურსები იტვირთება"
+          }
+        }
+      }
+    },
+    "Local Play" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლოკალური თამაში"
           }
         }
       }
@@ -1285,6 +4765,18 @@
         }
       }
     },
+    "Map Unavailable" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა მიუწვდომელია"
+          }
+        }
+      }
+    },
     "Map carousel page %lld of %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1302,12 +4794,126 @@
         }
       }
     },
+    "Map data © OpenStreetMap contributors · Geografy" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის მონაცემები © OpenStreetMap-ის კონტრიბუტორები · Geografy"
+          }
+        }
+      }
+    },
+    "Map of %@ members" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წევრების რუკა"
+          }
+        }
+      }
+    },
+    "Map of the route from %@ to %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Map of the route from %1$@ to %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მარშრუტის რუკა %1$@-დან %2$@-მდე"
+          }
+        }
+      }
+    },
+    "Map showing route between selected countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა არჩეულ ქვეყნებს შორის მარშრუტით"
+          }
+        }
+      }
+    },
     "Maps" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "რუკები"
+          }
+        }
+      }
+    },
+    "Mark as Visited" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოინიშნე როგორც მონახულებული"
+          }
+        }
+      }
+    },
+    "Mark countries as 'Want to Visit' in the Travel Tracker to add them here" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონიშნე ქვეყნები როგორც 'მსურს მონახულება' მოგზაურობის ტრეკერში აქ დასამატებლად"
+          }
+        }
+      }
+    },
+    "Match" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩი"
+          }
+        }
+      }
+    },
+    "Match Result" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩის შედეგი"
+          }
+        }
+      }
+    },
+    "Match Settings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩის პარამეტრები"
           }
         }
       }
@@ -1323,12 +4929,48 @@
         }
       }
     },
+    "Maximum level reached!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაქსიმალური დონე მიღწეულია!"
+          }
+        }
+      }
+    },
+    "Member Countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წევრი ქვეყნები"
+          }
+        }
+      }
+    },
     "More" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "სხვა"
+          }
+        }
+      }
+    },
+    "More info" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტი ინფორმაცია"
           }
         }
       }
@@ -1340,6 +4982,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მთები, მდინარეები, უდაბნოები და ტბები"
+          }
+        }
+      }
+    },
+    "Multiplayer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მულტიპლეიერი"
           }
         }
       }
@@ -1376,6 +5030,18 @@
         }
       }
     },
+    "Mystery flag" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საიდუმლო დროშა"
+          }
+        }
+      }
+    },
     "NEW" : {
       "comment" : "A label indicating a new feature or update.",
       "isCommentAutoGenerated" : true,
@@ -1384,6 +5050,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ახალი"
+          }
+        }
+      }
+    },
+    "Name a country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე ქვეყანა"
           }
         }
       }
@@ -1409,12 +5087,84 @@
         }
       }
     },
+    "Name every country.\nAs fast as you can." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე ყოველი ქვეყანა.\nრაც შეიძლება სწრაფად."
+          }
+        }
+      }
+    },
+    "Name the country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე ქვეყანა"
+          }
+        }
+      }
+    },
+    "Name, capital, or code" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სახელი, დედაქალაქი ან კოდი"
+          }
+        }
+      }
+    },
     "Natural Wonders" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ბუნების საოცრებები"
+          }
+        }
+      }
+    },
+    "Neighbor Explorer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეზობელი ქვეყნები"
+          }
+        }
+      }
+    },
+    "Neighbor data not available." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეზობლის მონაცემები მიუწვდომელია."
+          }
+        }
+      }
+    },
+    "New" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახალი"
           }
         }
       }
@@ -1451,6 +5201,42 @@
         }
       }
     },
+    "Next Challenge" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი გამოწვევა"
+          }
+        }
+      }
+    },
+    "Next Challenge: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი გამოწვევა: %@"
+          }
+        }
+      }
+    },
+    "Next challenge in" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგ გამოწვევამდე"
+          }
+        }
+      }
+    },
     "Nickname Expert!" : {
       "localizations" : {
         "ka" : {
@@ -1467,6 +5253,31 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მეტსახელების ვიქტორინა"
+          }
+        }
+      }
+    },
+    "No Achievements Yet" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ მიღწევები არ არის"
+          }
+        }
+      }
+    },
+    "No Bucket List Yet" : {
+      "comment" : "A label describing a state where a user has not added any countries to their bucket list.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სურვილების სია ჯერ ცარიელია"
           }
         }
       }
@@ -1503,6 +5314,42 @@
         }
       }
     },
+    "No Favorites Yet" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ რჩეულები არ არის"
+          }
+        }
+      }
+    },
+    "No Friends Yet" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ მეგობრები არ არის"
+          }
+        }
+      }
+    },
+    "No Land Path" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სახმელეთო გზა არ არის"
+          }
+        }
+      }
+    },
     "No Packs Found" : {
       "localizations" : {
         "ka" : {
@@ -1513,12 +5360,133 @@
         }
       }
     },
+    "No Questions" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვები არ არის"
+          }
+        }
+      }
+    },
+    "No Results" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგები არ არის"
+          }
+        }
+      }
+    },
+    "No XP recorded" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "XP არ არის დაფიქსირებული"
+          }
+        }
+      }
+    },
+    "No cards are due right now.\nCome back later or study new cards." : {
+      "comment" : "A description displayed when a user has reviewed all their flashcards and there are no more due cards.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლა გასამეორებელი ბარათები არ არის.\nდაბრუნდი მოგვიანებით ან ისწავლე ახალი ბარათები."
+          }
+        }
+      }
+    },
+    "No challenges completed yet" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ გამოწვევები არ დასრულებულა"
+          }
+        }
+      }
+    },
+    "No countries found" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "No country by that name" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ასეთი სახელის ქვეყანა არ არსებობს"
+          }
+        }
+      }
+    },
+    "No country selected" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყანა არ არის არჩეული"
+          }
+        }
+      }
+    },
     "No events found" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "მოვლენები ვერ მოიძებნა"
+          }
+        }
+      }
+    },
+    "No events in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენები %@-ში არ არის"
+          }
+        }
+      }
+    },
+    "No historical data" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული მონაცემები არ არის"
           }
         }
       }
@@ -1543,6 +5511,42 @@
         }
       }
     },
+    "No rates yet. Connect to the internet once to download them." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კურსები ჯერ არ არის. ჩამოსატვირთად ერთხელ დაუკავშირდი ინტერნეტს."
+          }
+        }
+      }
+    },
+    "No results for \"%@\"" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"-ისთვის შედეგები არ მოიძებნა"
+          }
+        }
+      }
+    },
+    "No results yet" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგები ჯერ არ არის"
+          }
+        }
+      }
+    },
     "No test items defined for this feature yet." : {
       "localizations" : {
         "ka" : {
@@ -1559,6 +5563,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "არცერთი"
+          }
+        }
+      }
+    },
+    "None in common" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საერთო არაფერია"
+          }
+        }
+      }
+    },
+    "Not found" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არ არის ნაპოვნი"
+          }
+        }
+      }
+    },
+    "Not in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არ არის %@-ში"
+          }
+        }
+      }
+    },
+    "Notifications" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეტყობინებები"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კარგი"
+          }
+        }
+      }
+    },
+    "OPP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OPP"
           }
         }
       }
@@ -1584,12 +5660,48 @@
         }
       }
     },
+    "One of you hosts and picks the quiz. The other joins from their phone." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ერთი ქმნის ლობის და ირჩევს ვიქტორინას. მეორე უერთდება თავისი ტელეფონიდან."
+          }
+        }
+      }
+    },
+    "Only Game Center friends who also have Geografy installed will appear here." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აქ მხოლოდ Game Center-ის მეგობრები გამოჩნდებიან, ვისაც Geografy დაინსტალირებული აქვს."
+          }
+        }
+      }
+    },
     "Open" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გახსნა"
+          }
+        }
+      }
+    },
+    "Open Game Center" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center-ის გახსნა"
           }
         }
       }
@@ -1615,12 +5727,36 @@
         }
       }
     },
+    "Opens %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის %@-ს"
+          }
+        }
+      }
+    },
     "Opens Geografy to a specific tab." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ხსნის Geografy-ს კონკრეტულ ჩანართში."
+          }
+        }
+      }
+    },
+    "Opens Geografy's page in the Settings app" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის Geografy-ს გვერდს პარამეტრების აპში"
           }
         }
       }
@@ -1635,12 +5771,283 @@
         }
       }
     },
+    "Opens the flag full screen" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის დროშას სრულ ეკრანზე"
+          }
+        }
+      }
+    },
+    "Opens the full chart" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის სრულ დიაგრამას"
+          }
+        }
+      }
+    },
+    "Opens the journal entry" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის დღიურის ჩანაწერს"
+          }
+        }
+      }
+    },
+    "Opens the photo full screen" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის ფოტოს სრულ ეკრანზე"
+          }
+        }
+      }
+    },
+    "Opens today's challenge" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის დღევანდელ გამოწვევას"
+          }
+        }
+      }
+    },
+    "Opponent answered" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგემ უპასუხა"
+          }
+        }
+      }
+    },
+    "Opponent found" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგე ნაპოვნია"
+          }
+        }
+      }
+    },
+    "Opponent thinking" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგე ფიქრობს"
+          }
+        }
+      }
+    },
+    "Opponent thinking..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგე ფიქრობს..."
+          }
+        }
+      }
+    },
+    "Option %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვარიანტი %@"
+          }
+        }
+      }
+    },
+    "Organizations" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორგანიზაციები"
+          }
+        }
+      }
+    },
+    "Origin" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საწყისი წერტილი"
+          }
+        }
+      }
+    },
     "Out of ~195 countries" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "~195 ქვეყნიდან"
+          }
+        }
+      }
+    },
+    "Parsing geographic data" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფიული მონაცემების დამუშავება"
+          }
+        }
+      }
+    },
+    "Pause" : {
+      "comment" : "A button that pauses the quiz.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაუზა"
+          }
+        }
+      }
+    },
+    "Paused" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეჩერებულია"
+          }
+        }
+      }
+    },
+    "People (live estimate)" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსახლეობა (ცოცხალი შეფასება)"
+          }
+        }
+      }
+    },
+    "Personal Best" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პირადი რეკორდი"
+          }
+        }
+      }
+    },
+    "Photo %lld of %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Photo %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფოტო %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Pick a continent and guess where countries belong on the map." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე კონტინენტი და გამოიცანი ქვეყნების მდებარეობა რუკაზე."
+          }
+        }
+      }
+    },
+    "Pick the highlighted country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე მონიშნული ქვეყანა"
+          }
+        }
+      }
+    },
+    "Pin to Showcase" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიტრინაზე მიმაგრება"
+          }
+        }
+      }
+    },
+    "Pinch to zoom, drag to pan" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოჭიმვა გასადიდებლად, გადაათრიე გადასაადგილებლად"
           }
         }
       }
@@ -1677,12 +6084,84 @@
         }
       }
     },
+    "Play Again" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავიდან თამაში"
+          }
+        }
+      }
+    },
+    "Play Nearby" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლომახლო თამაში"
+          }
+        }
+      }
+    },
+    "Popular" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პოპულარული"
+          }
+        }
+      }
+    },
+    "Population" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსახლეობა"
+          }
+        }
+      }
+    },
+    "Preferences" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზოგადი"
+          }
+        }
+      }
+    },
     "Preview" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გადახედვა"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონფიდენციალურობის პოლიტიკა"
           }
         }
       }
@@ -1697,12 +6176,151 @@
         }
       }
     },
+    "Progress" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროგრესი"
+          }
+        }
+      }
+    },
+    "Progress saved on this device only" : {
+      "comment" : "A description of the guest user account, indicating that the user's progress is only saved on their device.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროგრესი მხოლოდ ამ მოწყობილობაზე ინახება"
+          }
+        }
+      }
+    },
+    "Pronounce %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წარმოთქმა"
+          }
+        }
+      }
+    },
+    "Pronounce answer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხის წარმოთქმა"
+          }
+        }
+      }
+    },
+    "Pronunciation" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წარმოთქმა"
+          }
+        }
+      }
+    },
+    "Push notifications" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Push-შეტყობინებები"
+          }
+        }
+      }
+    },
+    "Puzzle Complete" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავსატეხი დასრულებულია"
+          }
+        }
+      }
+    },
+    "Question %lld of %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Question %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვა %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Questions" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვები"
+          }
+        }
+      }
+    },
+    "Quick select" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწრაფი არჩევა"
+          }
+        }
+      }
+    },
     "Quit" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Quit Challenge?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის დატოვება?"
           }
         }
       }
@@ -1717,12 +6335,72 @@
         }
       }
     },
+    "Quit Match?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩის დატოვება?"
+          }
+        }
+      }
+    },
+    "Quit Quiz?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის დატოვება?"
+          }
+        }
+      }
+    },
+    "Quit Session?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სესიის დატოვება?"
+          }
+        }
+      }
+    },
+    "Quit Speed Run?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიჩქარის რეჟიმის დატოვება?"
+          }
+        }
+      }
+    },
     "Quiz" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინა"
+          }
+        }
+      }
+    },
+    "Quiz Library" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინების ბიბლიოთეკა"
           }
         }
       }
@@ -1778,6 +6456,18 @@
         }
       }
     },
+    "Rank %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგი %lld"
+          }
+        }
+      }
+    },
     "Rank %lld, %@, %@: %@" : {
       "localizations" : {
         "en" : {
@@ -1794,6 +6484,79 @@
         }
       }
     },
+    "Ranked by Total XP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალაგებული სულ XP-ით"
+          }
+        }
+      }
+    },
+    "Rarity" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იშვიათობა"
+          }
+        }
+      }
+    },
+    "Rate Geografy" : {
+      "comment" : "A button label that encourages users to rate the app.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy-ს შეფასება"
+          }
+        }
+      }
+    },
+    "Rated %lld of 5 stars" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეფასება %lld 5 ვარსკვლავიდან"
+          }
+        }
+      }
+    },
+    "Rates updated %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კურსები განახლებულია %@"
+          }
+        }
+      }
+    },
+    "Rating Change" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგის ცვლილება"
+          }
+        }
+      }
+    },
     "Read" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1801,6 +6564,90 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "წაკითხვა"
+          }
+        }
+      }
+    },
+    "Read on Wikipedia" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაიკითხე ვიკიპედიაზე"
+          }
+        }
+      }
+    },
+    "Ready" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მზადაა"
+          }
+        }
+      }
+    },
+    "Reference: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მითითება: %@"
+          }
+        }
+      }
+    },
+    "Relative density (ref: 500/km²)" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფარდობითი სიმჭიდროვე (მით: 500/კმ²)"
+          }
+        }
+      }
+    },
+    "Rematch" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რევანში"
+          }
+        }
+      }
+    },
+    "Rematch?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რევანში?"
+          }
+        }
+      }
+    },
+    "Remove" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაშლა"
           }
         }
       }
@@ -1815,6 +6662,30 @@
         }
       }
     },
+    "Remove Status" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატუსის წაშლა"
+          }
+        }
+      }
+    },
+    "Remove from Favorites" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულებიდან წაშლა"
+          }
+        }
+      }
+    },
     "Remove from favorites" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1822,6 +6693,43 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რჩეულებიდან წაშლა"
+          }
+        }
+      }
+    },
+    "Remove from saved" : {
+      "comment" : "An accessibility label for a button that removes an item from a saved list.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენახულებიდან წაშლა"
+          }
+        }
+      }
+    },
+    "Reset" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადატვირთვა"
+          }
+        }
+      }
+    },
+    "Reset All" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაფრის გადატვირთვა"
           }
         }
       }
@@ -1848,6 +6756,30 @@
         }
       }
     },
+    "Reset to Defaults" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაგულისხმევებზე დაბრუნება"
+          }
+        }
+      }
+    },
+    "Result" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგი"
+          }
+        }
+      }
+    },
     "Results" : {
       "localizations" : {
         "ka" : {
@@ -1858,12 +6790,132 @@
         }
       }
     },
+    "Resume" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
     "Reveal All" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ყველას გამოვლენა"
+          }
+        }
+      }
+    },
+    "Reveal clues to narrow it down" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მინიშნებების გამოვლენა შესავიწროებლად"
+          }
+        }
+      }
+    },
+    "Reveal location" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მდებარეობის გამოვლენა"
+          }
+        }
+      }
+    },
+    "Revealed, %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოვლენილია, %@"
+          }
+        }
+      }
+    },
+    "Reveals the answer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ავლენს პასუხს"
+          }
+        }
+      }
+    },
+    "Reveals the answer and counts it as wrong" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ავლენს პასუხს და ითვლის მას არასწორად"
+          }
+        }
+      }
+    },
+    "Review" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამეორება"
+          }
+        }
+      }
+    },
+    "Review again" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კიდევ გამეორება"
+          }
+        }
+      }
+    },
+    "Review cards at the optimal time\nfor long-term memory retention" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბარათების გამეორება ოპტიმალურ დროს\nხანგრძლივი მეხსიერებისთვის"
+          }
+        }
+      }
+    },
+    "Round %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაუნდი %lld"
           }
         }
       }
@@ -1884,6 +6936,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რაუნდის შეჯამება"
+          }
+        }
+      }
+    },
+    "Row %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რიგი %lld"
           }
         }
       }
@@ -1932,12 +6996,36 @@
         }
       }
     },
+    "Save your progress" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეინახე პროგრესი"
+          }
+        }
+      }
+    },
     "Saved" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენახული"
+          }
+        }
+      }
+    },
+    "Saves your display name" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ინახავს შენს საჩვენებელ სახელს"
           }
         }
       }
@@ -1962,12 +7050,66 @@
         }
       }
     },
+    "Score: %lld out of %lld points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Score: %1$lld out of %2$lld points"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა: %1$lld %2$lld ქულიდან"
+          }
+        }
+      }
+    },
+    "Score: %lld percent" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა: %lld პროცენტი"
+          }
+        }
+      }
+    },
+    "Score: %lld points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა: %lld ქულა"
+          }
+        }
+      }
+    },
     "Search" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ძიება"
+          }
+        }
+      }
+    },
+    "Search by name, capital, or currency" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ძიება სახელით, დედაქალაქით ან ვალუტით"
           }
         }
       }
@@ -1988,6 +7130,66 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნების ან კერძების ძიება..."
+          }
+        }
+      }
+    },
+    "Search countries..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება..."
+          }
+        }
+      }
+    },
+    "Search countries…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ძიება…"
+          }
+        }
+      }
+    },
+    "Search country…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნის ძიება…"
+          }
+        }
+      }
+    },
+    "Search currency or country…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტის ან ქვეყნის ძიება…"
+          }
+        }
+      }
+    },
+    "Search favorites" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულების ძიება"
           }
         }
       }
@@ -2022,12 +7224,84 @@
         }
       }
     },
+    "Searches again" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხელახლა ეძებს"
+          }
+        }
+      }
+    },
+    "Searching for an opponent…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგის ძიება…"
+          }
+        }
+      }
+    },
+    "Searching for opponent..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგის ძიება..."
+          }
+        }
+      }
+    },
+    "Searching nearby..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლომახლო ძიება..."
+          }
+        }
+      }
+    },
+    "Searching..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ძიება..."
+          }
+        }
+      }
+    },
     "See All" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ყველას ნახვა"
+          }
+        }
+      }
+    },
+    "See all phrases in Deep Dive" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ფრაზის ნახვა ღრმა ჩაძირვაში"
           }
         }
       }
@@ -2072,12 +7346,132 @@
         }
       }
     },
+    "Select the correct region on the map" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე სწორი რეგიონი რუკაზე"
+          }
+        }
+      }
+    },
+    "Select two countries to compare" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ორი ქვეყანა შესადარებლად"
+          }
+        }
+      }
+    },
     "Selected" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "არჩეული"
+          }
+        }
+      }
+    },
+    "Selected: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არჩეულია: %@"
+          }
+        }
+      }
+    },
+    "Session Complete" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სესია დასრულებულია"
+          }
+        }
+      }
+    },
+    "Set travel status" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსის დაყენება"
+          }
+        }
+      }
+    },
+    "Sets it as the destination" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აყენებს დანიშნულებად"
+          }
+        }
+      }
+    },
+    "Sets it as the origin" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აყენებს საწყის წერტილად"
+          }
+        }
+      }
+    },
+    "Sets this country as the reference" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ ქვეყანას საბაზისოდ აყენებს"
+          }
+        }
+      }
+    },
+    "Sets this status" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აყენებს ამ სტატუსს"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პარამეტრები"
           }
         }
       }
@@ -2092,12 +7486,193 @@
         }
       }
     },
+    "Share Geografy" : {
+      "comment" : "A button label that invites users to share the Geografy app.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy-ს გაზიარება"
+          }
+        }
+      }
+    },
     "Share Quiz" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინის გაზიარება"
+          }
+        }
+      }
+    },
+    "Share Result" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგის გაზიარება"
+          }
+        }
+      }
+    },
+    "Share quote" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ციტატის გაზიარება"
+          }
+        }
+      }
+    },
+    "Show suggestions" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემოთავაზებების ჩვენება"
+          }
+        }
+      }
+    },
+    "Shown" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაჩვენებია"
+          }
+        }
+      }
+    },
+    "Shows the first letters of the answer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აჩვენებს პასუხის პირველ ასოებს"
+          }
+        }
+      }
+    },
+    "Shows the flag full screen" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აჩვენებს დროშას სრულ ეკრანზე"
+          }
+        }
+      }
+    },
+    "Shows the question" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აჩვენებს კითხვას"
+          }
+        }
+      }
+    },
+    "Shows these countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აჩვენებს ამ ქვეყნებს"
+          }
+        }
+      }
+    },
+    "Sign In" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესვლა"
+          }
+        }
+      }
+    },
+    "Sign In Failed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესვლა ვერ მოხერხდა"
+          }
+        }
+      }
+    },
+    "Sign Out" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასვლა"
+          }
+        }
+      }
+    },
+    "Sign in to Game Center" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Center-ში შესვლა"
+          }
+        }
+      }
+    },
+    "Sign in with Google" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google-ით შესვლა"
+          }
+        }
+      }
+    },
+    "Size Comparison" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზომის შედარება"
           }
         }
       }
@@ -2113,12 +7688,73 @@
         }
       }
     },
+    "Skip" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოტოვება"
+          }
+        }
+      }
+    },
+    "Skipped" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოტოვებული"
+          }
+        }
+      }
+    },
+    "Sort" : {
+      "comment" : "A label for sorting options in the settings menu.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალაგება"
+          }
+        }
+      }
+    },
     "Sort by" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დალაგება"
+          }
+        }
+      }
+    },
+    "Sound & Haptics" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხმა და ვიბრაცია"
+          }
+        }
+      }
+    },
+    "Sound effects" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხმოვანი ეფექტები"
           }
         }
       }
@@ -2130,6 +7766,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ინტერვალური გამეორება"
+          }
+        }
+      }
+    },
+    "Speed Run" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიჩქარის რეჟიმი"
+          }
+        }
+      }
+    },
+    "Speed Run · %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიჩქარის რეჟიმი · %@"
+          }
+        }
+      }
+    },
+    "Start Challenge" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოწვევის დაწყება"
           }
         }
       }
@@ -2154,12 +7826,72 @@
         }
       }
     },
+    "Start Review · %lld cards" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამეორების დაწყება · %lld ბარათი"
+          }
+        }
+      }
+    },
     "Start Your Travel Journal" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დაიწყე მოგზაურობის დღიური"
+          }
+        }
+      }
+    },
+    "Start exploring to earn achievements!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე აღმოჩენა მიღწევების მისაღებად!"
+          }
+        }
+      }
+    },
+    "Starting Point" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საწყისი წერტილი"
+          }
+        }
+      }
+    },
+    "Starts a %@ puzzle" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იწყებს %@ თავსატეხს"
+          }
+        }
+      }
+    },
+    "Starts a puzzle in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იწყებს თავსატეხს %@-ში"
           }
         }
       }
@@ -2174,12 +7906,114 @@
         }
       }
     },
+    "Stats, rankings & full country list" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატისტიკა, რეიტინგები და ქვეყნების სრული სია"
+          }
+        }
+      }
+    },
+    "Step %lld of %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Step %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაბიჯი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Stop pronunciation" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წარმოთქმის შეჩერება"
+          }
+        }
+      }
+    },
+    "Streak" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სერია"
+          }
+        }
+      }
+    },
+    "Submit" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგზავნა"
+          }
+        }
+      }
+    },
+    "Submit Guess" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვარაუდის გაგზავნა"
+          }
+        }
+      }
+    },
+    "Swap" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადანაცვლება"
+          }
+        }
+      }
+    },
     "Swipe right for TRUE · Swipe left for FALSE" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "მარჯვნივ — მართალია · მარცხნივ — მცდარია"
+          }
+        }
+      }
+    },
+    "Swipe to rate" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადაასრიალე შესაფასებლად"
           }
         }
       }
@@ -2205,6 +8039,150 @@
         }
       }
     },
+    "Tap the heart icon on any country to save it here." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გულის ხატულას ნებისმიერ ქვეყანაზე აქ შესანახად."
+          }
+        }
+      }
+    },
+    "Tap to change photo" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე ფოტოს შესაცვლელად"
+          }
+        }
+      }
+    },
+    "Tap to flip" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გადასაბრუნებლად"
+          }
+        }
+      }
+    },
+    "Tap to retry" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე ხელახლა საცდელად"
+          }
+        }
+      }
+    },
+    "Tap to reveal" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გამოსავლენად"
+          }
+        }
+      }
+    },
+    "Tap to reveal (-%lld pts)" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გამოსავლენად (-%lld ქულა)"
+          }
+        }
+      }
+    },
+    "Tap to see translation" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე თარგმანის სანახავად"
+          }
+        }
+      }
+    },
+    "Tap to select" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე ასარჩევად"
+          }
+        }
+      }
+    },
+    "Tap to zoom" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე გასადიდებლად"
+          }
+        }
+      }
+    },
+    "Terms of Service" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მომსახურების პირობები"
+          }
+        }
+      }
+    },
+    "Territorial Disputes" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტერიტორიული დავები"
+          }
+        }
+      }
+    },
+    "Territorial disputes" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტერიტორიული დავები"
+          }
+        }
+      }
+    },
     "Test checklist for %@" : {
       "localizations" : {
         "ka" : {
@@ -2225,6 +8203,114 @@
         }
       }
     },
+    "Testing Mode" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტესტირების რეჟიმი"
+          }
+        }
+      }
+    },
+    "The answer was %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხი იყო %@"
+          }
+        }
+      }
+    },
+    "The connection to your opponent was lost." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კავშირი მოწინააღმდეგესთან გაწყდა."
+          }
+        }
+      }
+    },
+    "The highlighted country is %@." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონიშნული ქვეყანაა %@."
+          }
+        }
+      }
+    },
+    "Theme" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თემა"
+          }
+        }
+      }
+    },
+    "There's no land border route between these countries." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ ქვეყნებს შორის სახმელეთო საზღვრის მარშრუტი არ არის."
+          }
+        }
+      }
+    },
+    "This quiz has no questions for the selected region. Try World." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ ვიქტორინას არჩეული რეგიონისთვის კითხვები არ აქვს. სცადე მსოფლიო."
+          }
+        }
+      }
+    },
+    "This region's map couldn't be loaded." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ რეგიონის რუკა ვერ ჩაიტვირთა."
+          }
+        }
+      }
+    },
+    "This route can't be measured: a capital's location is missing." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ მარშრუტის გაზომვა შეუძლებელია: დედაქალაქის მდებარეობა უცნობია."
+          }
+        }
+      }
+    },
     "This will restore the default section order." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2232,6 +8318,114 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "სექციების ნაგულისხმევი რიგი აღდგება."
+          }
+        }
+      }
+    },
+    "Time" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დრო"
+          }
+        }
+      }
+    },
+    "Time Zones" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროის სარტყელები"
+          }
+        }
+      }
+    },
+    "Time left" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დარჩენილი დრო"
+          }
+        }
+      }
+    },
+    "Timed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროზე"
+          }
+        }
+      }
+    },
+    "Timeline" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქრონოლოგია"
+          }
+        }
+      }
+    },
+    "Today's Challenge" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღევანდელი გამოწვევა"
+          }
+        }
+      }
+    },
+    "Topic" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თემა"
+          }
+        }
+      }
+    },
+    "Total XP" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სულ XP"
+          }
+        }
+      }
+    },
+    "Travel" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობა"
           }
         }
       }
@@ -2257,6 +8451,78 @@
         }
       }
     },
+    "Travel Status" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსი"
+          }
+        }
+      }
+    },
+    "Travel Status: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსი: %@"
+          }
+        }
+      }
+    },
+    "Travel Tracker" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის ტრეკერი"
+          }
+        }
+      }
+    },
+    "Travel map showing %lld countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის რუკა %lld ქვეყნით"
+          }
+        }
+      }
+    },
+    "Travel status" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის სტატუსი"
+          }
+        }
+      }
+    },
+    "Tries loading the data again" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხელახლა ცდილობს მონაცემების ჩატვირთვას"
+          }
+        }
+      }
+    },
     "Trip title" : {
       "localizations" : {
         "ka" : {
@@ -2277,12 +8543,60 @@
         }
       }
     },
+    "Try a different search or filter." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა ძიება ან ფილტრი."
+          }
+        }
+      }
+    },
+    "Try a different search term" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა საძიებო ტერმინი"
+          }
+        }
+      }
+    },
     "Try a different search term or category filter." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "სცადე სხვა საძიებო ტერმინი ან კატეგორიის ფილტრი."
+          }
+        }
+      }
+    },
+    "Try a different spelling or search term" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე სხვა ორთოგრაფია ან საძიებო ტერმინი"
+          }
+        }
+      }
+    },
+    "Try adjusting filters or selecting a different year" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე ფილტრების შეცვლა ან სხვა წლის არჩევა"
           }
         }
       }
@@ -2297,6 +8611,18 @@
         }
       }
     },
+    "Type a country name…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე ქვეყნის სახელი…"
+          }
+        }
+      }
+    },
     "Type a neighbor..." : {
       "localizations" : {
         "ka" : {
@@ -2307,12 +8633,108 @@
         }
       }
     },
+    "Type country name..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე ქვეყნის სახელი..."
+          }
+        }
+      }
+    },
+    "Type your answer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე პასუხი"
+          }
+        }
+      }
+    },
+    "Type your answer..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე პასუხი..."
+          }
+        }
+      }
+    },
     "UNESCO" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "UNESCO"
+          }
+        }
+      }
+    },
+    "Unfavorite" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულებიდან წაშლა"
+          }
+        }
+      }
+    },
+    "Unlocked" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განბლოკილია"
+          }
+        }
+      }
+    },
+    "Unpin from Showcase" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიტრინიდან მოხსნა"
+          }
+        }
+      }
+    },
+    "Updated %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განახლებულია %@"
+          }
+        }
+      }
+    },
+    "VS" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VS"
           }
         }
       }
@@ -2328,6 +8750,66 @@
         }
       }
     },
+    "View %@ rankings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგების ნახვა: %@"
+          }
+        }
+      }
+    },
+    "View Details" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დეტალების ნახვა"
+          }
+        }
+      }
+    },
+    "View Map" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის ნახვა"
+          }
+        }
+      }
+    },
+    "View Rankings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგების ნახვა"
+          }
+        }
+      }
+    },
+    "View on Map" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკაზე ნახვა"
+          }
+        }
+      }
+    },
     "Vote for what's next" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2339,12 +8821,84 @@
         }
       }
     },
+    "W" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W"
+          }
+        }
+      }
+    },
+    "Waiting for a player to join..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოთამაშის მოლოდინში..."
+          }
+        }
+      }
+    },
+    "Waiting..." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოლოდინში..."
+          }
+        }
+      }
+    },
+    "Want to Visit" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსურს მონახულება"
+          }
+        }
+      }
+    },
+    "We're working on something great." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაღაც შესანიშნავზე ვმუშაობთ."
+          }
+        }
+      }
+    },
     "Well Played!" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "კარგად ითამაშე!"
+          }
+        }
+      }
+    },
+    "What is the capital?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რა არის დედაქალაქი?"
           }
         }
       }
@@ -2360,12 +8914,48 @@
         }
       }
     },
+    "Which country does this flag belong to?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელ ქვეყანას ეკუთვნის ეს დროშა?"
+          }
+        }
+      }
+    },
+    "Which country is highlighted on the map of %@?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქვეყანაა მონიშნული %@-ს რუკაზე?"
+          }
+        }
+      }
+    },
     "Which country is known as…" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "რომელ ქვეყანას უწოდებენ…"
+          }
+        }
+      }
+    },
+    "Which country is this?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქვეყანაა ეს?"
           }
         }
       }
@@ -2380,6 +8970,18 @@
         }
       }
     },
+    "Which region is…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელ რეგიონშია…"
+          }
+        }
+      }
+    },
     "Wisdom about travel & exploration" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2387,6 +8989,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "სიბრძნე მოგზაურობისა და აღმოჩენის შესახებ"
+          }
+        }
+      }
+    },
+    "Word Search" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიტყვების ძიება"
+          }
+        }
+      }
+    },
+    "World Facts" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო ფაქტები"
           }
         }
       }
@@ -2411,6 +9037,157 @@
         }
       }
     },
+    "World visited" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიოს მონახულებული ნაწილი"
+          }
+        }
+      }
+    },
+    "Wrong" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არასწორი"
+          }
+        }
+      }
+    },
+    "Year" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წელი"
+          }
+        }
+      }
+    },
+    "You" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენ"
+          }
+        }
+      }
+    },
+    "You %lld, %@ %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You %1$lld, %2$@ %3$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენ %1$lld, %2$@ %3$lld"
+          }
+        }
+      }
+    },
+    "You can sign back in anytime to restore your progress." : {
+      "comment" : "A message displayed in the confirmation dialog for signing out.",
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროგრესის აღსადგენად ნებისმიერ დროს შეგიძლია ხელახლა შეხვიდე."
+          }
+        }
+      }
+    },
+    "You got %lld out of %lld correct" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You got %1$lld out of %2$lld correct"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორად გამოიცანი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "You'll see your results and missed countries." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნახავ შენს შედეგებს და გამოტოვებულ ქვეყნებს."
+          }
+        }
+      }
+    },
+    "You've reached a new level" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახალ დონეზე ხარ"
+          }
+        }
+      }
+    },
+    "Your Journey" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი მოგზაურობა"
+          }
+        }
+      }
+    },
+    "Your Journey, %lld of %lld modules complete" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your Journey, %1$lld of %2$lld modules complete"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი მოგზაურობა, %1$lld %2$lld მოდულიდან დასრულებული"
+          }
+        }
+      }
+    },
     "Your Progress" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2428,6 +9205,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენი პროგრესი დაიკარგება."
+          }
+        }
+      }
+    },
+    "Your progress will be saved." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი შეინახება."
+          }
+        }
+      }
+    },
+    "Your world, explored." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი მსოფლიო, აღმოჩენილი."
+          }
+        }
+      }
+    },
+    "by land area" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფართობის მიხედვით"
           }
         }
       }
@@ -2475,6 +9288,18 @@
         }
       }
     },
+    "km" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კმ"
+          }
+        }
+      }
+    },
     "level" : {
       "comment" : "A label describing a user's level in the app, represented by a star icon.",
       "isCommentAutoGenerated" : true,
@@ -2497,6 +9322,30 @@
         }
       }
     },
+    "of world" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიოს"
+          }
+        }
+      }
+    },
+    "out of %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld-დან"
+          }
+        }
+      }
+    },
     "streak" : {
       "comment" : "The text \"streak\" is used as a label for the number of consecutive days a user has been on a streak.",
       "isCommentAutoGenerated" : true,
@@ -2509,8 +9358,55 @@
         }
       }
     },
-    "·" : {},
-    "• %@" : {},
+    "vs" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vs"
+          }
+        }
+      }
+    },
+    "vs %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წინააღმდეგ"
+          }
+        }
+      }
+    },
+    "with capital: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დედაქალაქით: %@"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    },
+    "• %@" : {
+      "localizations" : {}
+    },
     "💤" : {
       "extractionState" : "stale",
       "localizations" : {

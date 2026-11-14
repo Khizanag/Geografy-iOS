@@ -8,7 +8,10 @@ import SwiftUI
 public struct SettingsScreen: View {
     // MARK: - Properties
     @Environment(AuthService.self) private var authService
+    @Environment(LanguageService.self) private var languageService
     @Environment(Navigator.self) private var coordinator
+    @Environment(\.openURL) private var openURL
+    @Environment(\.locale) private var locale
     @Environment(TestingModeService.self) private var testingModeService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if !os(tvOS)
@@ -33,7 +36,9 @@ public struct SettingsScreen: View {
     public var body: some View {
         scrollContent
             .screenBackground()
-            .navigationTitle("Settings")
+            // Built from the locale, so the title follows a language switch made on this screen;
+            // a bar keeps a plain key's first translation.
+            .navigationTitle(String(localized: "Settings", in: locale))
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -72,6 +77,7 @@ private extension SettingsScreen {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 accountSection
                 preferencesSection
+                languageSection
                 soundAndHapticsSection
                 notificationsSection
                 aboutSection
@@ -246,6 +252,71 @@ private extension SettingsScreen {
             }
         }
         .settingsRowPadding()
+    }
+}
+
+// MARK: - Language
+private extension SettingsScreen {
+    var languageSection: some View {
+        settingsGroup(header: "Language") {
+            VStack(spacing: 0) {
+                if languageService.isChoosable {
+                    languageRow
+                    settingsDivider
+                }
+                systemLanguageRow
+            }
+        }
+    }
+
+    var languageRow: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SettingsIconBadge(systemImage: "globe", color: DesignSystem.Color.blue)
+            Text("App language")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            MenuPicker(
+                "App language",
+                selection: languageSelection,
+                selectedTitle: Text(verbatim: languageService.language.endonym)
+            ) {
+                ForEach(languageService.languages) { language in
+                    Text(verbatim: language.endonym).tag(language)
+                }
+            }
+        }
+        .settingsRowPadding()
+    }
+
+    /// Opens Geografy's page in iOS Settings, where its language can be set as well.
+    var systemLanguageRow: some View {
+        Button(action: openAppSettings) {
+            SettingsExternalRow(
+                icon: "gearshape.fill",
+                iconColor: DesignSystem.Color.textSecondary,
+                title: "Language in iOS Settings"
+            )
+        }
+        .buttonStyle(PressButtonStyle())
+        .accessibilityHint("Opens Geografy's page in the Settings app")
+    }
+
+    var languageSelection: Binding<AppLanguage> {
+        Binding {
+            languageService.language
+        } set: { language in
+            guard language != languageService.language else { return }
+            #if !os(tvOS)
+            hapticsService.selection()
+            #endif
+            languageService.language = language
+        }
+    }
+
+    func openAppSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        openURL(url)
     }
 }
 
@@ -458,7 +529,7 @@ private extension SettingsScreen {
             .padding(.leading, DesignSystem.Spacing.xxl + DesignSystem.Spacing.md)
     }
 
-    func settingsGroup(header: String, @ViewBuilder content: () -> some View) -> some View {
+    func settingsGroup(header: LocalizedStringKey, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             EyebrowLabel(header, color: DesignSystem.Color.textTertiary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)

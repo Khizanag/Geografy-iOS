@@ -4,6 +4,7 @@ import SwiftUI
 public struct FlagView: View {
     // MARK: - Properties
     @Environment(\.displayScale) private var displayScale
+    @Environment(\.locale) private var locale
 
     @State private var loaded: LoadedFlag?
 
@@ -33,7 +34,7 @@ public struct FlagView: View {
         flagImage
             .clipShape(Self.flagShape)
             .frame(width: fixedWidth ? slotWidth : nil, height: fixedWidth ? height : nil, alignment: .center)
-            .accessibilityLabel("Flag of \(FlagImageCache.shared.countryName(for: countryCode))")
+            .accessibilityLabel("Flag of \(FlagImageCache.shared.countryName(for: countryCode, in: locale))")
             .task(id: loadKey) { await load() }
     }
 }

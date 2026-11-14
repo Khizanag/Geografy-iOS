@@ -31,6 +31,7 @@ public enum SortOption: String, CaseIterable {
 // MARK: - CountryListScreen
 public struct CountryListScreen: View {
     // MARK: - Properties
+    @Environment(\.locale) private var locale
     @Environment(Navigator.self) private var coordinator
     @Environment(FavoritesService.self) private var favoritesService
     @Environment(HapticsService.self) private var hapticsService
@@ -265,7 +266,7 @@ private extension CountryListScreen {
                 .padding(.bottom, DesignSystem.Spacing.md)
                 .transition(.opacity)
             if state.groupBy == .none {
-                SectionHeaderView(title: String(localized: "All Countries", bundle: .module))
+                SectionHeaderView(title: String(localized: "All Countries", bundle: .module, in: locale))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, DesignSystem.Spacing.xxs)
             }

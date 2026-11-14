@@ -5,6 +5,7 @@ import SwiftUI
 
 public struct QuizTypingInputView: View {
     // MARK: - Properties
+    @Environment(\.locale) private var locale
     @Environment(HapticsService.self) private var hapticsService
 
     public let question: QuizQuestion
@@ -174,7 +175,7 @@ private extension QuizTypingInputView {
 
     var inputField: some View {
         AnswerField(
-            String(localized: "Type your answer", bundle: .module),
+            String(localized: "Type your answer", bundle: .module, in: locale),
             text: $typingInput,
             isFocused: $isInputFocused,
             feedback: feedback,

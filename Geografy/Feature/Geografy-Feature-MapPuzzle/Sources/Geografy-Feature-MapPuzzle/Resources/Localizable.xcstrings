@@ -157,6 +157,16 @@
         }
       }
     },
+    "Which country is this?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქვეყანაა ეს?"
+          }
+        }
+      }
+    },
     "Which region is…" : {
       "localizations" : {
         "ka" : {

@@ -6,6 +6,7 @@ import SwiftUI
 
 public struct WordSearchScreen: View {
     // MARK: - Properties
+    @Environment(\.locale) private var locale
     @Environment(Navigator.self) private var coordinator
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -48,8 +49,12 @@ private extension WordSearchScreen {
 
     var introHeader: some View {
         GameIntroHeader(
-            title: String(localized: "Word Search", bundle: .module),
-            subtitle: String(localized: "Drag across the letters to find every hidden word.", bundle: .module),
+            title: String(localized: "Word Search", bundle: .module, in: locale),
+            subtitle: String(
+                localized: "Drag across the letters to find every hidden word.",
+                bundle: .module,
+                in: locale
+            ),
             systemImage: "character.magnify",
             color: color,
             facts: facts
@@ -58,7 +63,7 @@ private extension WordSearchScreen {
 
     var themeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: String(localized: "Theme", bundle: .module))
+            SectionHeaderView(title: String(localized: "Theme", bundle: .module, in: locale))
             themeGrid
         }
     }
@@ -177,15 +182,15 @@ private extension WordSearchScreen {
         let directionCount = WordSearchDirection.allCases.count
         return [
             GameIntroHeader.Fact(
-                String(localized: "\(gridSize) × \(gridSize) grid", bundle: .module),
+                String(localized: "\(gridSize) × \(gridSize) grid", bundle: .module, in: locale),
                 systemImage: "square.grid.3x3"
             ),
             GameIntroHeader.Fact(
-                String(localized: "\(directionCount) directions", bundle: .module),
+                String(localized: "\(directionCount) directions", bundle: .module, in: locale),
                 systemImage: "arrow.up.and.down.and.arrow.left.and.right"
             ),
             GameIntroHeader.Fact(
-                String(localized: "Timed", bundle: .module),
+                String(localized: "Timed", bundle: .module, in: locale),
                 systemImage: "timer"
             ),
         ]

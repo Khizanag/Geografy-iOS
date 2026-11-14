@@ -62,13 +62,14 @@ public final class FlagImageCache {
         return image
     }
 
-    /// The country's name in the user's language, for the flag's VoiceOver label.
-    public func countryName(for countryCode: String) -> String {
-        if let name = names[countryCode] {
+    /// The country's name in `locale`'s language, for the flag's VoiceOver label.
+    public func countryName(for countryCode: String, in locale: Locale) -> String {
+        let key = "\(locale.identifier)-\(countryCode)"
+        if let name = names[key] {
             return name
         }
-        let name = Locale.current.localizedString(forRegionCode: countryCode) ?? countryCode.uppercased()
-        names[countryCode] = name
+        let name = locale.localizedString(forRegionCode: countryCode) ?? countryCode.uppercased()
+        names[key] = name
         return name
     }
 

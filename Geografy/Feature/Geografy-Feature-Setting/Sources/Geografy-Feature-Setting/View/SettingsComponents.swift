@@ -14,7 +14,7 @@ struct SettingsToggleRow: View {
     // MARK: - Properties
     let icon: String
     let iconColor: Color
-    let title: String
+    let title: LocalizedStringKey
     @Binding var isOn: Bool
 
     // MARK: - Body
@@ -38,7 +38,7 @@ struct SettingsNavigationRow: View {
     // MARK: - Properties
     let icon: String
     let iconColor: Color
-    let title: String
+    let title: LocalizedStringKey
 
     // MARK: - Body
     var body: some View {
@@ -60,7 +60,7 @@ struct SettingsExternalRow: View {
     // MARK: - Properties
     let icon: String
     let iconColor: Color
-    let title: String
+    let title: LocalizedStringKey
 
     // MARK: - Body
     var body: some View {

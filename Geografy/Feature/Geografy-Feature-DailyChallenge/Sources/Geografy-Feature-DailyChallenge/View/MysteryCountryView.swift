@@ -5,6 +5,7 @@ import SwiftUI
 
 public struct MysteryCountryView: View {
     // MARK: - Properties
+    @Environment(\.locale) private var locale
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(HapticsService.self) private var hapticsService
 
@@ -182,7 +183,7 @@ private extension MysteryCountryView {
 
     var inputView: some View {
         AnswerField(
-            String(localized: "Name the country", bundle: .module),
+            String(localized: "Name the country", bundle: .module, in: locale),
             text: $guess,
             isFocused: $isGuessFocused,
             onSubmit: submitGuess

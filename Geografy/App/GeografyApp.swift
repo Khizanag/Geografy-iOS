@@ -24,6 +24,7 @@ struct GeografyApp: App {
     @State private var gameCenterService = GameCenterService()
     @State private var geoJSONCache = GeoJSONCache()
     @State private var hapticsService = HapticsService()
+    @State private var languageService = LanguageService()
     @State private var learningPathService: LearningPathService
     @State private var pronunciationService = PronunciationService()
     @State private var streakService: StreakService
@@ -75,6 +76,7 @@ struct GeografyApp: App {
 private extension GeografyApp {
     var contentView: some View {
         ContentView()
+            .modifier(AppLanguageLocale())
             .environment(achievementService)
             .environment(authService)
             .environment(collectionService)
@@ -87,6 +89,7 @@ private extension GeografyApp {
             .environment(gameCenterService)
             .environment(geoJSONCache)
             .environment(hapticsService)
+            .environment(languageService)
             .environment(learningPathService)
             .environment(pronunciationService)
             .environment(streakService)
@@ -118,6 +121,16 @@ private extension GeografyApp {
     /// One provider for the app's lifetime. A closure made in `body` would differ on every run,
     /// and each tab's stack reads it, so every app-level update would rebuild every stack.
     static let destinationContent: @MainActor @Sendable (Destination) -> AnyView = { AnyView($0.content) }
+}
+
+// MARK: - App Language Locale
+/// Hands every screen the locale of the language chosen in the app, so text switches in place.
+private struct AppLanguageLocale: ViewModifier {
+    @Environment(LanguageService.self) private var languageService
+
+    func body(content: Content) -> some View {
+        content.environment(\.locale, languageService.locale)
+    }
 }
 
 // MARK: - Service Change Handlers

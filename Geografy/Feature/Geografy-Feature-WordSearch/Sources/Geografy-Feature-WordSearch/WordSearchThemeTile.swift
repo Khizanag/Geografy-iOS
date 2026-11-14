@@ -5,6 +5,7 @@ import SwiftUI
 /// A theme choice on the setup screen: its icon, name, and a few of the words the puzzle will hide.
 struct WordSearchThemeTile: View {
     // MARK: - Properties
+    @Environment(\.locale) private var locale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -65,6 +66,6 @@ private extension WordSearchThemeTile {
 
     var accessibilityValue: String {
         let samples = summary.sampleWords.formatted(.list(type: .and))
-        return String(localized: "\(summary.wordCount) words, such as \(samples)", bundle: .module)
+        return String(localized: "\(summary.wordCount) words, such as \(samples)", bundle: .module, in: locale)
     }
 }

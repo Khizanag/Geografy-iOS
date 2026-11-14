@@ -6,6 +6,7 @@ import SwiftUI
 
 public struct SpeedRunSessionScreen: View {
     // MARK: - Properties
+    @Environment(\.locale) private var locale
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
@@ -123,7 +124,7 @@ private extension SpeedRunSessionScreen {
 private extension SpeedRunSessionScreen {
     var inputField: some View {
         AnswerField(
-            String(localized: "Name a country", bundle: .module),
+            String(localized: "Name a country", bundle: .module, in: locale),
             text: $inputText,
             isFocused: $isInputFocused,
             systemImage: "keyboard",
@@ -329,7 +330,7 @@ private extension SpeedRunSessionScreen {
         rejectedInput = nil
         if inputFeedback == .incorrect { inputFeedback = .none }
         inputMessage = isAlreadyNamed(normalized)
-            ? String(localized: "Already named", bundle: .module)
+            ? String(localized: "Already named", bundle: .module, in: locale)
             : nil
         guard normalized.count >= 2,
               let match = remainingCountry(named: normalized)
@@ -362,11 +363,11 @@ private extension SpeedRunSessionScreen {
     func rejectInput() {
         let normalized = normalizeInput(inputText)
         inputMessage = if isAlreadyNamed(normalized) {
-            String(localized: "Already named", bundle: .module)
+            String(localized: "Already named", bundle: .module, in: locale)
         } else if !nameIndex.codes(named: normalized).isEmpty {
-            String(localized: "Not in \(region.displayName)", bundle: .module)
+            String(localized: "Not in \(region.displayName)", bundle: .module, in: locale)
         } else {
-            String(localized: "No country by that name", bundle: .module)
+            String(localized: "No country by that name", bundle: .module, in: locale)
         }
         rejectedInput = normalized
         inputFeedback = .incorrect
