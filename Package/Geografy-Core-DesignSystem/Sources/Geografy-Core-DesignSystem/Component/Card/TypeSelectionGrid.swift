@@ -1,177 +1,99 @@
 import Geografy_Core_Common
 import SwiftUI
 
+/// A row of selectable type tiles that scrolls sideways: icon, name, and a short description for each.
 public struct TypeSelectionGrid<T: SelectableType>: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
 
+    @ScaledMetric(relativeTo: .subheadline) private var tileWidth: CGFloat = 156
+
+    /// Starts on the first selected tile, so a saved choice further along is never off screen.
+    @State private var scrolledID: T.ID?
+
     public let items: [T]
     public let selectedIDs: Set<T.ID>
+    public let color: Color
     public let onSelect: (T) -> Void
 
     // MARK: - Init
+    /// - Parameter color: The screen's game color, used for the icons and the selected tile.
     public init(
         items: [T],
         selectedIDs: Set<T.ID>,
+        color: Color,
         onSelect: @escaping (T) -> Void
     ) {
         self.items = items
         self.selectedIDs = selectedIDs
+        self.color = color
         self.onSelect = onSelect
     }
 
     // MARK: - Body
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                 ForEach(items) { item in
-                    typeCard(item)
+                    typeTile(item)
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
+            .fixedSize(horizontal: false, vertical: true)
+            .scrollTargetLayout()
         }
+        .contentMargins(.horizontal, DesignSystem.Spacing.md, for: .scrollContent)
+        .scrollTargetBehavior(.viewAligned)
+        .scrollPosition(id: $scrolledID, anchor: .center)
         .scrollClipDisabled()
+        .task { scrolledID = items.first { selectedIDs.contains($0.id) }?.id }
     }
 }
 
 // MARK: - Subviews
 private extension TypeSelectionGrid {
-    func typeCard(_ item: T) -> some View {
+    func typeTile(_ item: T) -> some View {
         let isSelected = selectedIDs.contains(item.id)
-
         return Button {
             #if !os(tvOS)
-            hapticsService.impact(.light)
+            hapticsService.selection()
             #endif
             onSelect(item)
         } label: {
-            cardContent(item: item, isSelected: isSelected)
+            tileContent(item: item, isSelected: isSelected)
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel("\(item.displayName), \(item.description)")
-        .accessibilityAddTraits(isSelected ? [.isSelected] : [])
-        .accessibilityHint("Double tap to select")
+        .buttonStyle(PressButtonStyle())
+        .animation(reduceMotion ? nil : .snappy(duration: 0.2), value: isSelected)
+        .accessibilityLabel(item.displayName)
+        .accessibilityValue(item.description)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
-    func cardContent(item: T, isSelected: Bool) -> some View {
+    func tileContent(item: T, isSelected: Bool) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            cardHeader(item: item, isSelected: isSelected)
-
-            Spacer(minLength: 0)
-
-            cardLabels(item: item, isSelected: isSelected)
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .frame(width: 158, height: 148)
-        .background { cardBackground(isSelected: isSelected) }
-        .overlay(cardBorder(isSelected: isSelected))
-        .shadow(
-            color: isSelected ? DesignSystem.Color.accent.opacity(0.40) : .primary.opacity(0.08),
-            radius: isSelected ? 16 : 4,
-            y: isSelected ? 6 : 2
-        )
-        .scaleEffect(isSelected ? 1.03 : 1.0)
-        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
-    }
-
-    func cardHeader(item: T, isSelected: Bool) -> some View {
-        HStack {
-            cardHeaderIcon(item: item, isSelected: isSelected)
-            Spacer()
-            cardHeaderTrailing(isSelected: isSelected)
-        }
-    }
-
-    func cardHeaderIcon(item: T, isSelected: Bool) -> some View {
-        ZStack {
-            Circle()
-                .fill(
-                    isSelected
-                        ? DesignSystem.Color.onAccent.opacity(0.20)
-                        : DesignSystem.Color.accent.opacity(0.15)
-                )
-                .frame(width: 36, height: 36)
-            Image(systemName: item.icon)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(
-                    isSelected
-                        ? DesignSystem.Color.onAccent
-                        : DesignSystem.Color.accent
-                )
-        }
-    }
-
-    @ViewBuilder
-    func cardHeaderTrailing(isSelected: Bool) -> some View {
-        if isSelected {
-            Image(systemName: "checkmark.circle.fill")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .transition(.scale.combined(with: .opacity))
-        }
-    }
-
-    func cardLabels(item: T, isSelected: Bool) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+            HStack(alignment: .top) {
+                IconBadge(item.icon, color: color, size: .small)
+                Spacer(minLength: DesignSystem.Spacing.xs)
+                SelectionMark(isSelected: isSelected, color: color)
+            }
             Text(item.displayName)
                 .font(DesignSystem.Font.subheadline)
-                .fontWeight(.bold)
-                .foregroundStyle(
-                    isSelected
-                        ? DesignSystem.Color.onAccent
-                        : DesignSystem.Color.textPrimary
-                )
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 1)
+                .minimumScaleFactor(0.85)
             Text(item.description)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(
-                    isSelected
-                        ? DesignSystem.Color.onAccent.opacity(0.75)
-                        : DesignSystem.Color.textSecondary
-                )
-                .lineLimit(2)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : 2)
                 .fixedSize(horizontal: false, vertical: true)
         }
-    }
-
-    @ViewBuilder
-    func cardBackground(isSelected: Bool) -> some View {
-        if isSelected {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-        } else {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                .fill(
-                    reduceTransparency
-                        ? AnyShapeStyle(DesignSystem.Color.cardBackground)
-                        : AnyShapeStyle(.ultraThinMaterial)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                        .fill(DesignSystem.Color.cardBackground.opacity(0.6))
-                )
-        }
-    }
-
-    func cardBorder(isSelected: Bool) -> some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-            .strokeBorder(
-                isSelected
-                    ? DesignSystem.Color.accent.opacity(0.5)
-                    : DesignSystem.Color.dividerSubtle,
-                lineWidth: 1
-            )
+        .padding(DesignSystem.Spacing.sm)
+        .frame(width: tileWidth, alignment: .topLeading)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .selectableTileBackground(isSelected: isSelected, color: color)
     }
 }

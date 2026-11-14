@@ -86,10 +86,11 @@ private extension LocalMultiplayerLobbyScreen {
             TypeSelectionGrid(
                 items: [QuizType.flagQuiz, .capitalQuiz, .reverseFlag, .reverseCapital],
                 selectedIDs: [coordinator.quizType.id],
+                color: DesignSystem.Color.error,
                 onSelect: { coordinator.quizType = $0 }
             )
 
-            RegionCarousel(selectedRegion: $coordinator.region)
+            RegionPicker(selectedRegion: $coordinator.region, color: DesignSystem.Color.error)
 
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Picker("Difficulty", selection: $coordinator.difficulty) {

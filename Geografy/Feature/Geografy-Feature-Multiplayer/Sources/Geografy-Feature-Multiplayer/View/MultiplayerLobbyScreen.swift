@@ -19,6 +19,8 @@ public struct MultiplayerLobbyScreen: View {
     @State private var opponent: MockOpponent?
     @State private var showMatch = false
 
+    private let color = DesignSystem.Color.error
+
     // MARK: - Init
     public init(multiplayerService: MultiplayerService) {
         self.multiplayerService = multiplayerService
@@ -46,109 +48,126 @@ public struct MultiplayerLobbyScreen: View {
 private extension MultiplayerLobbyScreen {
     var scrollContent: some View {
         ScrollView {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                ratingHeader
-                configurationSection
+            Group {
                 if isSearching {
                     searchingView
+                        .transition(.opacity)
+                } else {
+                    lobbyContent
+                        .transition(.opacity)
                 }
             }
-            .padding(.vertical, DesignSystem.Spacing.lg)
+            .padding(.top, DesignSystem.Spacing.xs)
+            .padding(.bottom, DesignSystem.Spacing.lg)
             .readableContentWidth()
+            .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: isSearching)
         }
     }
 
-    var ratingHeader: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            ratingBadge
-            ratingStats
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    var ratingBadge: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            Image(systemName: multiplayerService.playerRating.rankIcon)
-                .font(DesignSystem.IconSize.large)
-                .foregroundStyle(DesignSystem.Color.accent)
-
-            Text("\(multiplayerService.playerRating.rating)")
-                .font(DesignSystem.Font.largeTitle)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-
-            Text(multiplayerService.playerRating.rankTitle)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-    }
-
-    var ratingStats: some View {
-        HStack(spacing: DesignSystem.Spacing.lg) {
-            statPill(
-                label: "W",
-                value: "\(multiplayerService.playerRating.wins)",
-                color: DesignSystem.Color.success
+    var lobbyContent: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+            GameIntroHeader(
+                title: "Multiplayer",
+                subtitle: "Race an opponent through ten questions.",
+                systemImage: "person.2.fill",
+                color: color,
+                facts: [
+                    GameIntroHeader.Fact("10 questions", systemImage: "list.number"),
+                    GameIntroHeader.Fact("Medium", systemImage: "gauge.with.dots.needle.50percent"),
+                ]
             )
-            statPill(
-                label: "L",
-                value: "\(multiplayerService.playerRating.losses)",
-                color: DesignSystem.Color.error
-            )
-            statPill(
-                label: "D",
-                value: "\(multiplayerService.playerRating.draws)",
-                color: DesignSystem.Color.warning
-            )
-        }
-    }
-
-    func statPill(label: String, value: String, color: Color) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(color)
-            Text(value)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(color.opacity(0.15), in: Capsule())
-    }
-
-    var configurationSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
-            SectionHeaderView(title: "Quiz Type", icon: "questionmark.circle")
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            ratingCard
                 .padding(.horizontal, DesignSystem.Spacing.md)
+            quizTypeSection
+            regionSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+            nearbySection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+        }
+    }
 
+    var ratingCard: some View {
+        let rating = multiplayerService.playerRating
+        return CardView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                HStack(spacing: DesignSystem.Spacing.md) {
+                    IconBadge(rating.rankIcon, color: DesignSystem.Color.warning, size: .medium)
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text("\(rating.rating)")
+                            .font(DesignSystem.Font.title2)
+                            .fontWeight(.bold)
+                            .monospacedDigit()
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text(rating.rankTitle)
+                            .font(DesignSystem.Font.caption)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                    Spacer(minLength: 0)
+                }
+                FlowLayout(spacing: DesignSystem.Spacing.xs) {
+                    InfoPill("\(rating.wins) won", style: .tinted(DesignSystem.Color.success))
+                    InfoPill("\(rating.losses) lost", style: .tinted(DesignSystem.Color.error))
+                    InfoPill("\(rating.draws) drawn", style: .neutral)
+                }
+            }
+            .padding(DesignSystem.Spacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    var quizTypeSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Quiz Type")
+                .padding(.horizontal, DesignSystem.Spacing.md)
             TypeSelectionGrid(
-                items: QuizType.allCases.map { $0 },
+                items: QuizType.allCases,
                 selectedIDs: [selectedType.id],
+                color: color,
                 onSelect: { selectedType = $0 }
             )
+        }
+    }
 
-            SectionHeaderView(title: "Region", icon: "globe")
-                .padding(.horizontal, DesignSystem.Spacing.md)
+    var regionSection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Region")
+            RegionPicker(selectedRegion: $selectedRegion, color: color)
+        }
+    }
 
-            #if !os(tvOS)
-            RegionCarousel(selectedRegion: $selectedRegion)
-            #endif
+    var nearbySection: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "With Friends")
+            Button {
+                coordinator.cover(.localMultiplayer)
+            } label: {
+                CardView {
+                    HStack(spacing: DesignSystem.Spacing.sm) {
+                        IconBadge("antenna.radiowaves.left.and.right", color: color, size: .small)
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                            Text("Play Nearby")
+                                .font(DesignSystem.Font.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(DesignSystem.Color.textPrimary)
+                            Text("Challenge a friend on a device close by.")
+                                .font(DesignSystem.Font.caption)
+                                .foregroundStyle(DesignSystem.Color.textSecondary)
+                        }
+                        Spacer(minLength: 0)
+                        RowChevron()
+                    }
+                    .padding(DesignSystem.Spacing.md)
+                }
+            }
+            .buttonStyle(PressButtonStyle())
         }
     }
 
     var footerButton: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
-                startSearching()
-            }
-            GlassButton(
-                "Play Nearby",
-                systemImage: "antenna.radiowaves.left.and.right",
-                role: .secondary,
-                fullWidth: true
-            ) {
-                coordinator.cover(.localMultiplayer)
-            }
+        GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
+            startSearching()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
@@ -168,13 +187,13 @@ private extension MultiplayerLobbyScreen {
                     .transition(.scale(scale: 0.8).combined(with: .opacity))
             }
 
-            Button { cancelSearch() } label: {
-                Text("Cancel")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            GlassButton("Cancel", systemImage: "xmark", role: .secondary) {
+                cancelSearch()
             }
-            .buttonStyle(.plain)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.top, DesignSystem.Spacing.xl)
     }
 
     func opponentFoundCard(_ foundOpponent: MockOpponent) -> some View {

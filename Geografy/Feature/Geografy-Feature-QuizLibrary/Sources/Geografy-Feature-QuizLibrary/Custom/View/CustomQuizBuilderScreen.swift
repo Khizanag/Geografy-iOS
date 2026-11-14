@@ -292,6 +292,7 @@ private extension CustomQuizBuilderScreen {
             TypeSelectionGrid(
                 items: QuizType.allCases.map { $0 },
                 selectedIDs: Set(selectedQuestionTypes.map(\.id)),
+                color: DesignSystem.Color.purple,
                 onSelect: { toggleQuestionType($0) }
             )
         }
