@@ -15,6 +15,8 @@ public struct MysteryCountryView: View {
     @Binding var guess: String
     @Binding var guessSubmitted: Bool
 
+    @FocusState private var isGuessFocused: Bool
+
     public let onFinish: () -> Void
 
     // MARK: - Body
@@ -179,27 +181,12 @@ private extension MysteryCountryView {
     }
 
     var inputView: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            TextField("Type country name...", text: $guess)
-                .font(DesignSystem.Font.body)
-                .padding(DesignSystem.Spacing.sm)
-                .background(DesignSystem.Color.cardBackground)
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: DesignSystem.CornerRadius.medium,
-                        style: .continuous
-                    )
-                )
-                .autocorrectionDisabled()
-                .accessibilityLabel("Your guess")
-
-            GlassButton("Submit Guess", fullWidth: true) {
-                submitGuess()
-            }
-            .disabled(guess.trimmingCharacters(
-                in: .whitespacesAndNewlines
-            ).isEmpty)
-        }
+        AnswerField(
+            String(localized: "Name the country", bundle: .module),
+            text: $guess,
+            isFocused: $isGuessFocused,
+            onSubmit: submitGuess
+        )
     }
 
     var feedbackView: some View {

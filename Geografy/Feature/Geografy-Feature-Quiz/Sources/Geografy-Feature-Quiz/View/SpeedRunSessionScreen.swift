@@ -21,6 +21,9 @@ public struct SpeedRunSessionScreen: View {
     @State private var inputText = ""
     @State private var completedCodes: [String] = []
     @State private var flashingCode: String?
+    @State private var inputFeedback: AnswerField.Feedback = .none
+    @State private var inputMessage: String?
+    @State private var rejectedInput: String?
     @State private var isFinished = false
     @State private var xpEarned = 0
     @State private var showXPBadge = false
@@ -145,42 +148,20 @@ private extension SpeedRunSessionScreen {
 // MARK: - Input & Completed List
 private extension SpeedRunSessionScreen {
     var inputField: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .accessibilityHidden(true)
-
-            TextField("Type a country name…", text: $inputText)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
-                .focused($isInputFocused)
-                .onChange(of: inputText) { _, newValue in
-                    checkInput(newValue)
-                }
-                .submitLabel(.done)
-
-            if !inputText.isEmpty {
-                Button { inputText = "" } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(DesignSystem.Font.body)
-                        .foregroundStyle(DesignSystem.Color.textTertiary)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Clear text")
-            }
+        AnswerField(
+            String(localized: "Name a country", bundle: .module),
+            text: $inputText,
+            isFocused: $isInputFocused,
+            systemImage: "keyboard",
+            color: DesignSystem.Color.error,
+            feedback: inputFeedback,
+            message: inputMessage,
+            showsSendButton: false,
+            onSubmit: rejectInput
+        )
+        .onChange(of: inputText) { _, newValue in
+            checkInput(newValue)
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackground,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .strokeBorder(DesignSystem.Color.accent.opacity(0.3), lineWidth: 1)
-        )
     }
 
     var completedList: some View {
@@ -380,20 +361,24 @@ private extension SpeedRunSessionScreen {
     }
 
     func checkInput(_ text: String) {
-        let normalized = text
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .lowercased()
-        guard normalized.count >= 2 else { return }
-
-        guard let match = remainingCountries.first(where: { country in
-            normalizeCountryName(country.name) == normalized ||
-            alternateNames[country.code]?.contains(normalized) == true
-        }) else { return }
+        let normalized = normalizeInput(text)
+        // Return can also accept the keyboard's suggestion; that edit alone shouldn't clear the rejection.
+        guard normalized != rejectedInput else { return }
+        rejectedInput = nil
+        if inputFeedback == .incorrect { inputFeedback = .none }
+        inputMessage = isAlreadyNamed(normalized)
+            ? String(localized: "Already named", bundle: .module)
+            : nil
+        guard normalized.count >= 2,
+              let match = remainingCountries.first(where: { matches($0, normalized) })
+        else { return }
 
         withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
             completedCodes.append(match.code)
         }
         inputText = ""
+        inputMessage = nil
+        inputFeedback = .correct
         flashingCode = match.code
         hapticsService.notification(.success)
         let announcement = "\(match.name). \(completedCodes.count) of \(targetCountries.count)."
@@ -402,11 +387,44 @@ private extension SpeedRunSessionScreen {
         Task {
             try? await Task.sleep(for: .milliseconds(700))
             flashingCode = nil
+            if inputFeedback == .correct { inputFeedback = .none }
         }
 
         if completedCodes.count == targetCountries.count {
             finishRun()
         }
+    }
+
+    /// Return only arrives when nothing matched, so it explains why and keeps the keyboard up.
+    func rejectInput() {
+        let normalized = normalizeInput(inputText)
+        inputMessage = if isAlreadyNamed(normalized) {
+            String(localized: "Already named", bundle: .module)
+        } else if countryDataService.countries.contains(where: { matches($0, normalized) }) {
+            String(localized: "Not in \(region.displayName)", bundle: .module)
+        } else {
+            String(localized: "No country by that name", bundle: .module)
+        }
+        rejectedInput = normalized
+        inputFeedback = .incorrect
+        hapticsService.notification(.error)
+        isInputFocused = true
+        if let inputMessage {
+            AccessibilityNotification.Announcement(inputMessage).post()
+        }
+    }
+
+    func normalizeInput(_ text: String) -> String {
+        normalizeCountryName(text.trimmingCharacters(in: .whitespacesAndNewlines))
+    }
+
+    func matches(_ country: Country, _ normalized: String) -> Bool {
+        normalizeCountryName(country.name) == normalized
+            || alternateNames[country.code]?.contains(normalized) == true
+    }
+
+    func isAlreadyNamed(_ normalized: String) -> Bool {
+        targetCountries.contains { completedCodes.contains($0.code) && matches($0, normalized) }
     }
 
     func normalizeCountryName(_ name: String) -> String {
@@ -460,6 +478,9 @@ private extension SpeedRunSessionScreen {
     func restart() {
         completedCodes = []
         inputText = ""
+        inputFeedback = .none
+        inputMessage = nil
+        rejectedInput = nil
         elapsedTime = 0
         isFinished = false
         showXPBadge = false

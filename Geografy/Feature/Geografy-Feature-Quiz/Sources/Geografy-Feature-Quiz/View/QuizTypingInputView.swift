@@ -181,57 +181,14 @@ private extension QuizTypingInputView {
     }
 
     var inputField: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            TextField("Type your answer...", text: $typingInput)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.words)
-                .focused($isInputFocused)
-                .disabled(showFeedback)
-                .onSubmit { onSubmit() }
-
-            inputTrailingContent
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.md)
-        .background(inputBackground)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: showFeedback)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: isCorrectAnswer)
-        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isInputFocused)
-    }
-
-    @ViewBuilder
-    var inputTrailingContent: some View {
-        if showFeedback {
-            Image(systemName: isCorrectAnswer ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(isCorrectAnswer ? DesignSystem.Color.success : DesignSystem.Color.error)
-                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-                .accessibilityLabel(isCorrectAnswer ? "Correct" : "Incorrect")
-        } else if !typingInput.isEmpty {
-            Button {
-                typingInput = ""
-                isInputFocused = true
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(DesignSystem.Font.callout)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-                    .frame(minWidth: 44, minHeight: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Clear answer")
-        }
-    }
-
-    var inputBackground: some View {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-            .fill(DesignSystem.Color.cardBackground)
-            .overlay {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                    .strokeBorder(inputBorderColor, lineWidth: 2)
-            }
+        AnswerField(
+            String(localized: "Type your answer", bundle: .module),
+            text: $typingInput,
+            isFocused: $isInputFocused,
+            feedback: feedback,
+            onSubmit: onSubmit
+        )
+        .disabled(showFeedback)
     }
 
     var correctAnswerLabel: some View {
@@ -244,7 +201,6 @@ private extension QuizTypingInputView {
         HStack(spacing: DesignSystem.Spacing.sm) {
             hintButton
             Spacer()
-            submitButton
         }
     }
 
@@ -274,35 +230,13 @@ private extension QuizTypingInputView {
         .accessibilityLabel(showHint ? "Hint: \(hintText)" : "Hint")
         .accessibilityHint(showHint ? "" : "Shows the first letters of the answer")
     }
-
-    var submitButton: some View {
-        Button { onSubmit() } label: {
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Text("Submit")
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.bold)
-                Image(systemName: "arrow.right")
-                    .font(DesignSystem.Font.caption)
-                    .accessibilityHidden(true)
-            }
-            .foregroundStyle(DesignSystem.Color.textPrimary)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-        }
-        .glassEffect(.regular.interactive(), in: .capsule)
-        .disabled(showFeedback || typingInput.trimmingCharacters(in: .whitespaces).isEmpty)
-    }
 }
 
 // MARK: - Helpers
 private extension QuizTypingInputView {
-    var inputBorderColor: Color {
-        guard showFeedback else {
-            return isInputFocused
-                ? DesignSystem.Color.accent.opacity(0.5)
-                : DesignSystem.Color.accent.opacity(0.2)
-        }
-        return isCorrectAnswer ? DesignSystem.Color.success : DesignSystem.Color.error
+    var feedback: AnswerField.Feedback {
+        guard showFeedback else { return .none }
+        return isCorrectAnswer ? .correct : .incorrect
     }
 
     var correctAnswerText: String {

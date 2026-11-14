@@ -142,10 +142,10 @@ private extension SpeedRunSetupScreen {
     }
 
     static let rules = [
-        Rule(title: "Type and submit", subtitle: "Type country names one by one", systemImage: "keyboard"),
+        Rule(title: "Just type", subtitle: "No need to press Return for a name", systemImage: "keyboard"),
         Rule(
             title: "Instant feedback",
-            subtitle: "Each correct name is ticked off",
+            subtitle: "A correct name ticks off as you type it",
             systemImage: "checkmark.circle.fill"
         ),
         Rule(title: "Race the clock", subtitle: "Finish faster for more XP", systemImage: "timer"),
