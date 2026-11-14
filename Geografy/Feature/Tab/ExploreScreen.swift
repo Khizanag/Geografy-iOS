@@ -10,6 +10,7 @@ struct ExploreScreen: View {
     @Environment(Navigator.self) private var coordinator
 
     @State private var mode: Mode = .countries
+    @State private var countryListState = CountryListState()
 
     // MARK: - Body
     var body: some View {
@@ -49,7 +50,8 @@ private extension ExploreScreen {
     @ViewBuilder
     var modeContent: some View {
         switch mode {
-        case .countries: CountryListScreen()
+        // The list's state is kept here, so switching to Maps and back keeps its search, sort, and groups.
+        case .countries: CountryListScreen(state: countryListState)
         case .maps: AllMapsScreen()
         }
     }

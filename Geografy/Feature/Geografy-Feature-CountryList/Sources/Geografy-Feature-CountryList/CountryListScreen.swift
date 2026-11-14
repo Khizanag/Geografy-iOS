@@ -37,43 +37,41 @@ public struct CountryListScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var searchText = ""
-    @State private var debouncedSearchText = ""
-    @State private var groupBy: GroupOption = .none
-    @State private var sortBy: SortOption = .name
-    @State private var sortAscending = true
-    @State private var continentFilter: Country.Continent?
-    @State private var expandedSections: Set<String> = []
-    @State private var showFlag = true
-    @State private var showCapital = true
-    @State private var showArea = true
-    @State private var showPopulation = true
+    @State private var state: CountryListState
 
     // MARK: - Init
-    public init() {}
+    /// Pass a `state` the host keeps to have the list's choices outlive this screen.
+    public init(state: CountryListState? = nil) {
+        _state = State(initialValue: state ?? CountryListState())
+    }
 
     // MARK: - Body
     public var body: some View {
         listContent
             .closeButtonPlacementLeading()
-            .searchable(text: $searchText, prompt: "Search by name, capital, or currency")
+            .searchable(text: $state.searchText, prompt: "Search by name, capital, or currency")
             .overlay { searchEmptyOverlay }
             .toolbar { toolbarContent }
-            .onAppear { expandedSections = Set(sectionKeys) }
-            .onChange(of: groupBy) { expandedSections = Set(sectionKeys) }
-            .onChange(of: countryDataService.countries.count) { expandedSections = Set(sectionKeys) }
-            .task(id: searchText) {
+            .onAppear {
+                // Only the first time, so groups collapsed before opening a country stay collapsed on return.
+                if !state.hasSeededSections {
+                    seedExpandedSections()
+                }
+            }
+            .onChange(of: state.groupBy) { seedExpandedSections() }
+            .onChange(of: countryDataService.countries.count) { seedExpandedSections() }
+            .task(id: state.searchText) {
                 try? await Task.sleep(for: .milliseconds(250))
                 if !Task.isCancelled {
-                    debouncedSearchText = searchText
+                    state.debouncedSearchText = state.searchText
                 }
             }
     }
 
     @ViewBuilder
     private var searchEmptyOverlay: some View {
-        if !debouncedSearchText.isEmpty, filteredCountries.isEmpty {
-            ContentUnavailableView.search(text: debouncedSearchText)
+        if !state.debouncedSearchText.isEmpty, listing.sorted.isEmpty {
+            ContentUnavailableView.search(text: state.debouncedSearchText)
         }
     }
 }
@@ -93,7 +91,7 @@ private extension CountryListScreen {
         ScrollView {
             LazyVStack(spacing: DesignSystem.Spacing.xs, pinnedViews: .sectionHeaders) {
                 favoritesSection
-                if groupBy == .none {
+                if state.groupBy == .none {
                     Section { flatContent }
                 } else {
                     groupedContent
@@ -112,10 +110,10 @@ private extension CountryListScreen {
     @ViewBuilder
     func jumpIndex(proxy: ScrollViewProxy) -> some View {
         if showJumpIndex {
-            AlphabetJumpIndex(letters: sectionKeys) { letter in
+            AlphabetJumpIndex(letters: listing.sectionKeys) { letter in
                 hapticsService.selection()
                 withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
-                    expandedSections.insert(letter)
+                    state.expandedSections.insert(letter)
                     proxy.scrollTo(letter, anchor: .top)
                 }
             }
@@ -152,15 +150,15 @@ private extension CountryListScreen {
     }
 
     var hasActiveFilters: Bool {
-        groupBy != .none || sortBy != .name || !sortAscending || continentFilter != nil
+        state.groupBy != .none || state.sortBy != .name || !state.sortAscending || state.continentFilter != nil
     }
 
     var displaySubmenu: some View {
         Menu {
-            Toggle(isOn: $showFlag) { Label("Flag", systemImage: "flag.fill") }
-            Toggle(isOn: $showCapital) { Label("Capital", systemImage: "star") }
-            Toggle(isOn: $showArea) { Label("Area", systemImage: "map") }
-            Toggle(isOn: $showPopulation) { Label("Population", systemImage: "person.2") }
+            Toggle(isOn: $state.showFlag) { Label("Flag", systemImage: "flag.fill") }
+            Toggle(isOn: $state.showCapital) { Label("Capital", systemImage: "star") }
+            Toggle(isOn: $state.showArea) { Label("Area", systemImage: "map") }
+            Toggle(isOn: $state.showPopulation) { Label("Population", systemImage: "person.2") }
         } label: {
             Label("Display", systemImage: "eye")
         }
@@ -169,15 +167,15 @@ private extension CountryListScreen {
     var resetButton: some View {
         Button(role: .destructive) {
             withAnimation(reduceMotion ? nil : .default) {
-                groupBy = .none
-                sortBy = .name
-                sortAscending = true
-                continentFilter = nil
-                searchText = ""
-                showFlag = true
-                showCapital = true
-                showArea = true
-                showPopulation = true
+                state.groupBy = .none
+                state.sortBy = .name
+                state.sortAscending = true
+                state.continentFilter = nil
+                state.searchText = ""
+                state.showFlag = true
+                state.showCapital = true
+                state.showArea = true
+                state.showPopulation = true
             }
         } label: {
             Label("Reset All", systemImage: "arrow.counterclockwise")
@@ -187,7 +185,7 @@ private extension CountryListScreen {
     }
 
     var groupBySubmenu: some View {
-        Picker(selection: $groupBy.animation(reduceMotion ? nil : .default)) {
+        Picker(selection: $state.groupBy.animation(reduceMotion ? nil : .default)) {
             ForEach(GroupOption.allCases, id: \.self) { option in
                 Label(option.rawValue, systemImage: groupIcon(for: option))
                     .tag(option)
@@ -200,7 +198,7 @@ private extension CountryListScreen {
 
     var sortBySubmenu: some View {
         Menu {
-            Picker(selection: $sortBy) {
+            Picker(selection: $state.sortBy) {
                 ForEach(SortOption.allCases, id: \.self) { option in
                     Label(option.rawValue, systemImage: option.icon)
                         .tag(option)
@@ -212,7 +210,7 @@ private extension CountryListScreen {
 
             Divider()
 
-            Picker(selection: $sortAscending) {
+            Picker(selection: $state.sortAscending) {
                 Label("Ascending", systemImage: "arrow.up")
                     .tag(true)
                 Label("Descending", systemImage: "arrow.down")
@@ -227,7 +225,7 @@ private extension CountryListScreen {
     }
 
     var continentFilterSubmenu: some View {
-        Picker(selection: $continentFilter) {
+        Picker(selection: $state.continentFilter) {
             Label("All Continents", systemImage: "globe")
                 .tag(Country.Continent?.none)
 
@@ -266,7 +264,7 @@ private extension CountryListScreen {
             FavoriteCountriesStrip(countries: favorites) { coordinator.push(.countryDetail($0)) }
                 .padding(.bottom, DesignSystem.Spacing.md)
                 .transition(.opacity)
-            if groupBy == .none {
+            if state.groupBy == .none {
                 SectionHeaderView(title: String(localized: "All Countries", bundle: .module))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, DesignSystem.Spacing.xxs)
@@ -275,15 +273,15 @@ private extension CountryListScreen {
     }
 
     var flatContent: some View {
-        ForEach(sortedCountries) { country in
+        ForEach(listing.sorted) { country in
             countryCard(for: country)
         }
     }
 
     var groupedContent: some View {
-        ForEach(groupedSections, id: \.key) { section in
+        ForEach(listing.sections, id: \.key) { section in
             Section {
-                if expandedSections.contains(section.key) {
+                if state.expandedSections.contains(section.key) {
                     ForEach(section.countries) { country in
                         countryCard(for: country)
                     }
@@ -298,10 +296,10 @@ private extension CountryListScreen {
     func sectionHeader(key: String, count: Int) -> some View {
         Button {
             withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.75)) {
-                if expandedSections.contains(key) {
-                    expandedSections.remove(key)
+                if state.expandedSections.contains(key) {
+                    state.expandedSections.remove(key)
                 } else {
-                    expandedSections.insert(key)
+                    state.expandedSections.insert(key)
                 }
             }
         } label: {
@@ -310,7 +308,7 @@ private extension CountryListScreen {
         .buttonStyle(PressButtonStyle())
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(key), \(count) countries")
-        .accessibilityValue(expandedSections.contains(key) ? "Expanded" : "Collapsed")
+        .accessibilityValue(state.expandedSections.contains(key) ? "Expanded" : "Collapsed")
         .accessibilityAddTraits([.isButton, .isHeader])
     }
 
@@ -318,7 +316,7 @@ private extension CountryListScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             sectionKeyBadge(key: key)
 
-            if groupBy != .firstLetter {
+            if state.groupBy != .firstLetter {
                 Text(key)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -346,14 +344,14 @@ private extension CountryListScreen {
             Text(String(key.prefix(1)).uppercased())
                 .font(
                     DesignSystem.Font.system(
-                        size: groupBy == .firstLetter ? 16 : 13,
+                        size: state.groupBy == .firstLetter ? 16 : 13,
                         weight: .bold,
                         design: .rounded
                     )
                 )
                 .foregroundStyle(DesignSystem.Color.accent)
         }
-        .frame(width: groupBy == .firstLetter ? 36 : 30, height: groupBy == .firstLetter ? 36 : 30)
+        .frame(width: state.groupBy == .firstLetter ? 36 : 30, height: state.groupBy == .firstLetter ? 36 : 30)
     }
 
     func sectionCountChevron(key: String, count: Int) -> some View {
@@ -363,7 +361,7 @@ private extension CountryListScreen {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .monospacedDigit()
             Image(
-                systemName: expandedSections.contains(key) ? "chevron.up" : "chevron.down"
+                systemName: state.expandedSections.contains(key) ? "chevron.up" : "chevron.down"
             )
             .font(DesignSystem.Font.nano.bold())
             .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -384,10 +382,10 @@ private extension CountryListScreen {
             CountryRowView(
                 country: country,
                 isFavorite: isFavorite,
-                showFlag: showFlag,
-                showCapital: showCapital,
-                showArea: showArea,
-                showPopulation: showPopulation,
+                showFlag: state.showFlag,
+                showCapital: state.showCapital,
+                showArea: state.showArea,
+                showPopulation: state.showPopulation,
                 showContinent: true,
                 onFavoriteTap: { favoritesService.toggle(code: country.code) }
             )
@@ -415,72 +413,23 @@ private extension CountryListScreen {
 
 // MARK: - Helpers
 private extension CountryListScreen {
-    var showJumpIndex: Bool {
-        groupBy == .firstLetter && !sectionKeys.isEmpty && debouncedSearchText.isEmpty
+    var listing: CountryListing {
+        state.listing(of: countryDataService.countries)
     }
 
-    var filteredCountries: [Country] {
-        var countries = countryDataService.countries
-
-        if let continentFilter {
-            countries = countries.filter { $0.continent == continentFilter }
-        }
-
-        if !debouncedSearchText.isEmpty {
-            let query = debouncedSearchText.lowercased()
-            countries = countries.filter {
-                $0.name.lowercased().contains(query) ||
-                $0.allCapitals.contains { $0.name.lowercased().contains(query) } ||
-                $0.currency.name.lowercased().contains(query)
-            }
-        }
-
-        return countries
+    var showJumpIndex: Bool {
+        state.groupBy == .firstLetter && !listing.sectionKeys.isEmpty && state.debouncedSearchText.isEmpty
     }
 
     /// Hidden while searching, where favorites already show among the results.
     var favoriteCountries: [Country] {
-        guard debouncedSearchText.isEmpty else { return [] }
+        guard state.debouncedSearchText.isEmpty else { return [] }
         let codes = favoritesService.favoriteCodes
-        return sortedCountries.filter { codes.contains($0.code) }
+        return listing.sorted.filter { codes.contains($0.code) }
     }
 
-    var sortedCountries: [Country] {
-        filteredCountries.sorted { lhs, rhs in
-            let result = compareCountries(lhs, rhs)
-            return sortAscending ? result : !result
-        }
-    }
-
-    func compareCountries(_ lhs: Country, _ rhs: Country) -> Bool {
-        switch sortBy {
-        case .name: lhs.name < rhs.name
-        case .population: lhs.population < rhs.population
-        case .area: lhs.area < rhs.area
-        case .gdp: (lhs.gdp ?? 0) < (rhs.gdp ?? 0)
-        }
-    }
-
-    var sectionKeys: [String] {
-        groupedSections.map(\.key)
-    }
-
-    var groupedSections: [(key: String, countries: [Country])] {
-        let sorted = sortedCountries
-
-        let grouped: [String: [Country]] = switch groupBy {
-        case .none:
-            [:]
-        case .firstLetter:
-            Dictionary(grouping: sorted) { String($0.name.prefix(1)).uppercased() }
-        case .continent:
-            Dictionary(grouping: sorted) { $0.continent.displayName }
-        case .government:
-            Dictionary(grouping: sorted) { $0.formOfGovernment }
-        }
-
-        return grouped
-            .map { (key: $0.key, countries: $0.value) }
-            .sorted(by: \.key)
+    func seedExpandedSections() {
+        state.expandedSections = Set(listing.sectionKeys)
+        state.hasSeededSections = true
     }
 }
