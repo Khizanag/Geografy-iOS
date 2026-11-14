@@ -71,6 +71,6 @@ private extension FeedScreen {
 
     func country(for code: String?) -> Country? {
         guard let code else { return nil }
-        return countryDataService.countries.first { $0.code == code }
+        return countryDataService.country(for: code)
     }
 }
