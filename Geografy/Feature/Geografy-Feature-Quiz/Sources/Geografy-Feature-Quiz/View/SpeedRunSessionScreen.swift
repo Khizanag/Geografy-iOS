@@ -1,4 +1,3 @@
-import Combine
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
@@ -16,10 +15,13 @@ public struct SpeedRunSessionScreen: View {
 
     public let region: QuizRegion
 
+    @State private var targetCountries: [Country] = []
+    @State private var nameIndex = SpeedRunNameIndex(countries: [])
+    @State private var startDate = Date.now
     @State private var elapsedTime: TimeInterval = 0
-    @State private var timerCancellable: AnyCancellable?
     @State private var inputText = ""
-    @State private var completedCodes: [String] = []
+    @State private var completedCodes: Set<String> = []
+    @State private var completedCountries: [Country] = []
     @State private var flashingCode: String?
     @State private var inputFeedback: AnswerField.Feedback = .none
     @State private var inputMessage: String?
@@ -31,7 +33,6 @@ public struct SpeedRunSessionScreen: View {
 
     @FocusState private var isInputFocused: Bool
 
-    @ScaledMetric(relativeTo: .largeTitle) private var timerFontSize: CGFloat = 44
     @ScaledMetric(relativeTo: .largeTitle) private var resultTimeFontSize: CGFloat = 40
 
     // MARK: - Init
@@ -47,11 +48,10 @@ public struct SpeedRunSessionScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .hideNavigationCloseButton()
-            .task {
-                startTimer()
-            }
             .onAppear { isInputFocused = true }
-            .onDisappear { timerCancellable?.cancel() }
+            .onChange(of: countryDataService.countries.count, initial: true) {
+                loadCountries()
+            }
             .alert("Give Up?", isPresented: $showGiveUpAlert) {
                 Button("Give Up", role: .destructive) { finishRun() }
                 Button("Continue", role: .cancel) {}
@@ -101,24 +101,7 @@ private extension SpeedRunSessionScreen {
 
     var timerSection: some View {
         VStack(spacing: DesignSystem.Spacing.xxs) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                if let timerStatusSymbol {
-                    Image(systemName: timerStatusSymbol)
-                        .font(DesignSystem.Font.iconMedium)
-                        .foregroundStyle(timerColor)
-                        .accessibilityHidden(true)
-                }
-                Text(formattedTime)
-                    .font(DesignSystem.Font.system(size: timerFontSize, weight: .bold, design: .monospaced))
-                    .foregroundStyle(timerColor)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                    .contentTransition(.numericText())
-                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.1), value: elapsedTime)
-            }
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Elapsed time")
-            .accessibilityValue(timerAccessibilityValue)
+            SpeedRunClock(startDate: startDate, isComplete: isComplete)
             Text("\(completedCodes.count) of \(targetCountries.count) countries")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -255,13 +238,13 @@ private extension SpeedRunSessionScreen {
                 .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
 
-            Text(formattedTime)
+            Text(SpeedRunClock.formatted(elapsedTime))
                 .font(DesignSystem.Font.system(size: resultTimeFontSize, weight: .bold, design: .monospaced))
                 .foregroundStyle(DesignSystem.Color.accent)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 .accessibilityLabel("Time")
-                .accessibilityValue(timerAccessibilityValue)
+                .accessibilityValue(SpeedRunClock.spokenValue(elapsedTime, isComplete: isComplete))
         }
         .frame(maxWidth: .infinity)
         .padding(.top, DesignSystem.Spacing.xl)
@@ -334,14 +317,9 @@ private extension SpeedRunSessionScreen {
 
 // MARK: - Actions
 private extension SpeedRunSessionScreen {
-    func startTimer() {
-        timerCancellable = Timer.publish(every: 0.1, on: .main, in: .common)
-            .autoconnect()
-            .sink { [self] _ in
-                if !isFinished {
-                    elapsedTime += 0.1
-                }
-            }
+    func loadCountries() {
+        targetCountries = region.filter(countryDataService.countries)
+        nameIndex = SpeedRunNameIndex(countries: countryDataService.countries)
     }
 
     func checkInput(_ text: String) {
@@ -354,11 +332,12 @@ private extension SpeedRunSessionScreen {
             ? String(localized: "Already named", bundle: .module)
             : nil
         guard normalized.count >= 2,
-              let match = remainingCountries.first(where: { matches($0, normalized) })
+              let match = remainingCountry(named: normalized)
         else { return }
 
         withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
-            completedCodes.append(match.code)
+            completedCodes.insert(match.code)
+            completedCountries.insert(match, at: 0)
         }
         inputText = ""
         inputMessage = nil
@@ -384,7 +363,7 @@ private extension SpeedRunSessionScreen {
         let normalized = normalizeInput(inputText)
         inputMessage = if isAlreadyNamed(normalized) {
             String(localized: "Already named", bundle: .module)
-        } else if countryDataService.countries.contains(where: { matches($0, normalized) }) {
+        } else if !nameIndex.codes(named: normalized).isEmpty {
             String(localized: "Not in \(region.displayName)", bundle: .module)
         } else {
             String(localized: "No country by that name", bundle: .module)
@@ -399,25 +378,21 @@ private extension SpeedRunSessionScreen {
     }
 
     func normalizeInput(_ text: String) -> String {
-        normalizeCountryName(text.trimmingCharacters(in: .whitespacesAndNewlines))
+        SpeedRunNameIndex.normalize(text.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 
-    func matches(_ country: Country, _ normalized: String) -> Bool {
-        normalizeCountryName(country.name) == normalized
-            || alternateNames[country.code]?.contains(normalized) == true
+    func remainingCountry(named normalized: String) -> Country? {
+        let codes = nameIndex.codes(named: normalized)
+        guard !codes.isEmpty else { return nil }
+        return targetCountries.first { codes.contains($0.code) && !completedCodes.contains($0.code) }
     }
 
     func isAlreadyNamed(_ normalized: String) -> Bool {
-        targetCountries.contains { completedCodes.contains($0.code) && matches($0, normalized) }
-    }
-
-    func normalizeCountryName(_ name: String) -> String {
-        name.lowercased()
-            .folding(options: .diacriticInsensitive, locale: .current)
+        nameIndex.codes(named: normalized).contains { completedCodes.contains($0) }
     }
 
     func finishRun() {
-        timerCancellable?.cancel()
+        elapsedTime = Date.now.timeIntervalSince(startDate)
         isFinished = true
         isInputFocused = false
         hapticsService.notification(.success)
@@ -461,6 +436,7 @@ private extension SpeedRunSessionScreen {
 
     func restart() {
         completedCodes = []
+        completedCountries = []
         inputText = ""
         inputFeedback = .none
         inputMessage = nil
@@ -470,19 +446,15 @@ private extension SpeedRunSessionScreen {
         showXPBadge = false
         xpEarned = 0
         flashingCode = nil
-        startTimer()
+        startDate = .now
         isInputFocused = true
     }
 }
 
 // MARK: - Helpers
 private extension SpeedRunSessionScreen {
-    var targetCountries: [Country] {
-        region.filter(countryDataService.countries)
-    }
-
-    var remainingCountries: [Country] {
-        targetCountries.filter { !completedCodes.contains($0.code) }
+    var isComplete: Bool {
+        !targetCountries.isEmpty && completedCodes.count == targetCountries.count
     }
 
     var missedCountries: [Country] {
@@ -491,50 +463,9 @@ private extension SpeedRunSessionScreen {
             .sorted(by: \.name)
     }
 
-    var completedCountries: [Country] {
-        completedCodes
-            .reversed()
-            .compactMap { code in targetCountries.first { $0.code == code } }
-    }
-
     var progressFraction: CGFloat {
         guard !targetCountries.isEmpty else { return 0 }
         return CGFloat(completedCodes.count) / CGFloat(targetCountries.count)
-    }
-
-    var formattedTime: String {
-        let totalSeconds = Int(elapsedTime)
-        let minutes = totalSeconds / 60
-        let seconds = totalSeconds % 60
-        let tenths = Int((elapsedTime.truncatingRemainder(dividingBy: 1)) * 10)
-        return String(format: "%02d:%02d.%d", minutes, seconds, tenths)
-    }
-
-    var timerColor: Color {
-        if completedCodes.count == targetCountries.count {
-            DesignSystem.Color.success
-        } else if elapsedTime > 300 {
-            DesignSystem.Color.error
-        } else {
-            DesignSystem.Color.textPrimary
-        }
-    }
-
-    var timerStatusSymbol: String? {
-        if completedCodes.count == targetCountries.count {
-            "checkmark.circle.fill"
-        } else if elapsedTime > 300 {
-            "exclamationmark.triangle.fill"
-        } else {
-            nil
-        }
-    }
-
-    var timerAccessibilityValue: String {
-        let spoken = Duration.seconds(Int(elapsedTime))
-            .formatted(.units(allowed: [.minutes, .seconds], width: .wide))
-        let isOverTime = elapsedTime > 300 && completedCodes.count < targetCountries.count
-        return isOverTime ? "\(spoken), over 5 minutes" : spoken
     }
 
     var completionMessage: String {
@@ -555,35 +486,5 @@ private extension SpeedRunSessionScreen {
         case .southAmerica: GameCenterService.LeaderboardID.speedRunSouthAmerica
         case .oceania: GameCenterService.LeaderboardID.speedRunOceania
         }
-    }
-
-    var alternateNames: [String: [String]] {
-        [
-            "US": ["usa", "united states", "america", "u.s.a.", "u.s."],
-            "GB": ["uk", "great britain", "england", "britain", "u.k."],
-            "KP": ["north korea"],
-            "KR": ["south korea"],
-            "CD": ["drc", "democratic republic of congo", "congo dr", "congo drc"],
-            "CG": ["republic of congo", "congo republic", "republic of the congo"],
-            "CI": ["ivory coast", "cote d'ivoire", "cote divoire"],
-            "MM": ["burma"],
-            "CZ": ["czech republic"],
-            "TL": ["east timor"],
-            "FM": ["micronesia"],
-            "MK": ["north macedonia", "macedonia"],
-            "SS": ["south sudan"],
-            "TT": ["trinidad and tobago"],
-            "BO": ["bolivia"],
-            "VE": ["venezuela"],
-            "IR": ["iran"],
-            "SY": ["syria"],
-            "VN": ["vietnam"],
-            "RU": ["russia"],
-            "LA": ["laos"],
-            "CV": ["cape verde"],
-            "EH": ["western sahara"],
-            "AE": ["uae", "emirates", "united arab emirates"],
-            "XK": ["kosovo"],
-        ]
     }
 }
