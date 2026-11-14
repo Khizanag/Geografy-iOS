@@ -1,7 +1,7 @@
 import Foundation
 
 /// Persisted result of a completed daily challenge, stored as JSON on disk.
-public struct DailyChallengeResult: Identifiable, Codable {
+public struct DailyChallengeResult: Identifiable, Codable, Sendable {
     /// Every challenge starts at this score and loses points for hints and wrong answers.
     public static let defaultMaxScore = 1_000
 

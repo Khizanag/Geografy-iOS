@@ -10,26 +10,47 @@ public final class DailyChallengeService {
     public private(set) var todayResult: DailyChallengeResult?
     public private(set) var streak: Int = 0
     public private(set) var history: [DailyChallengeResult] = []
+    private(set) var streakSummary = DailyChallengeStreak(dateKeys: [String]())
+    private(set) var sortedHistory: [DailyChallengeResult] = []
 
     public var hasCompletedToday: Bool { todayResult != nil }
 
+    public let userID: String
+
     private let countryDataService: CountryDataService
-    private let userID: String
+    @ObservationIgnored private var loadedDateKey: String?
+    @ObservationIgnored private var loadedResultIDs: [String] = []
+
+    // Shared by every instance, so screens opened later skip the disk read and the challenge build.
+    private static var cachedResults: [DailyChallengeResult]?
+    private static var cachedChallenge: DailyChallenge?
 
     public init(countryDataService: CountryDataService, userID: String) {
         self.countryDataService = countryDataService
         self.userID = userID
     }
 
+    /// `existing` while it still belongs to `userID`, otherwise a new service for them.
+    public static func service(
+        reusing existing: DailyChallengeService?,
+        countryDataService: CountryDataService,
+        userID: String
+    ) -> DailyChallengeService {
+        if let existing, existing.userID == userID {
+            return existing
+        }
+        return DailyChallengeService(countryDataService: countryDataService, userID: userID)
+    }
+
+    /// Cheap to call on every appearance: it rebuilds only when the day or the saved results change.
     public func loadChallenge() async {
         await countryDataService.loadCountries()
-        let today = Date.now
-        todayChallenge = generateChallenge(for: today)
-        history = Self.results(for: userID, in: loadAllResults())
-        todayResult = history.first {
-            $0.dateKey == DailyChallengeResult.dateKey()
+        let dateKey = DailyChallengeResult.dateKey()
+        let allResults = await Self.allResults()
+        if todayChallenge?.id != dateKey {
+            todayChallenge = challenge(forDateKey: dateKey)
         }
-        computeStreak()
+        apply(history: Self.results(for: userID, in: allResults), dateKey: dateKey)
     }
 
     public func saveResult(score: Int, timeSpent: Double) {
@@ -41,18 +62,48 @@ public final class DailyChallengeService {
             timeSpentSeconds: timeSpent
         )
 
-        var allResults = loadAllResults()
+        var allResults = Self.cachedResults ?? Self.readResults(from: Self.storageURL)
         allResults.insert(result, at: 0)
-        persistResults(allResults)
+        Self.persistResults(allResults)
 
-        todayResult = result
-        history = Self.results(for: userID, in: allResults)
-        computeStreak()
+        apply(history: Self.results(for: userID, in: allResults), dateKey: result.dateKey)
     }
 
     /// One file holds every account's results on this device, so history and streaks keep only the signed-in user's.
     nonisolated static func results(for userID: String, in results: [DailyChallengeResult]) -> [DailyChallengeResult] {
         results.filter { $0.userID == userID }
+    }
+
+    nonisolated static func newestFirst(_ results: [DailyChallengeResult]) -> [DailyChallengeResult] {
+        results.sorted { lhs, rhs in
+            lhs.dateKey == rhs.dateKey ? lhs.completedAt > rhs.completedAt : lhs.dateKey > rhs.dateKey
+        }
+    }
+}
+
+// MARK: - State
+private extension DailyChallengeService {
+    func challenge(forDateKey dateKey: String) -> DailyChallenge {
+        if let cached = Self.cachedChallenge, cached.id == dateKey {
+            return cached
+        }
+        let challenge = generateChallenge(for: .now)
+        Self.cachedChallenge = challenge
+        return challenge
+    }
+
+    func apply(history newHistory: [DailyChallengeResult], dateKey: String) {
+        let resultIDs = newHistory.map(\.id)
+        guard resultIDs != loadedResultIDs || dateKey != loadedDateKey else { return }
+        loadedResultIDs = resultIDs
+        loadedDateKey = dateKey
+
+        let summary = DailyChallengeStreak(dateKeys: newHistory.map(\.dateKey))
+        history = newHistory
+        todayResult = newHistory.first { $0.dateKey == dateKey }
+        streakSummary = summary
+        streak = summary.current
+        sortedHistory = Self.newestFirst(newHistory)
     }
 }
 
@@ -235,7 +286,7 @@ private extension DailyChallengeService {
 
 // MARK: - File-Based Persistence
 private extension DailyChallengeService {
-    var storageURL: URL {
+    nonisolated static var storageURL: URL {
         let directory = FileManager.default.urls(
             for: .documentDirectory,
             in: .userDomainMask
@@ -245,8 +296,26 @@ private extension DailyChallengeService {
         )
     }
 
-    func loadAllResults() -> [DailyChallengeResult] {
-        guard let data = try? Data(contentsOf: storageURL) else {
+    static func allResults() async -> [DailyChallengeResult] {
+        if let cachedResults {
+            return cachedResults
+        }
+        let loaded = await readResultsInBackground(from: storageURL)
+        // A save may have landed while the file was being read; its list is newer.
+        if let cachedResults {
+            return cachedResults
+        }
+        cachedResults = loaded
+        return loaded
+    }
+
+    @concurrent
+    nonisolated static func readResultsInBackground(from url: URL) async -> [DailyChallengeResult] {
+        readResults(from: url)
+    }
+
+    nonisolated static func readResults(from url: URL) -> [DailyChallengeResult] {
+        guard let data = try? Data(contentsOf: url) else {
             return []
         }
         let decoder = JSONDecoder()
@@ -257,14 +326,11 @@ private extension DailyChallengeService {
         )) ?? []
     }
 
-    func persistResults(_ results: [DailyChallengeResult]) {
+    static func persistResults(_ results: [DailyChallengeResult]) {
+        cachedResults = results
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         guard let data = try? encoder.encode(results) else { return }
         try? data.write(to: storageURL, options: .atomic)
-    }
-
-    func computeStreak() {
-        streak = DailyChallengeStreak(dateKeys: history.map(\.dateKey)).current
     }
 }

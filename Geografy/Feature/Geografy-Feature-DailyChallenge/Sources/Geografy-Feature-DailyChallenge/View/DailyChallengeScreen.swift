@@ -65,9 +65,9 @@ private extension DailyChallengeScreen {
         }
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Streak")
-            DailyChallengeStreakCard(streak: streak(for: service))
+            DailyChallengeStreakCard(streak: service.streakSummary)
         }
-        DailyChallengeHistorySection(results: sortedHistory(for: service))
+        DailyChallengeHistorySection(results: service.sortedHistory)
     }
 
     @ViewBuilder
@@ -97,13 +97,17 @@ private extension DailyChallengeScreen {
 
 // MARK: - Actions
 private extension DailyChallengeScreen {
+    // Reuses the loaded service, so coming back from the session doesn't rebuild the whole screen.
     func loadData() async {
-        let challengeService = DailyChallengeService(
+        let challengeService = DailyChallengeService.service(
+            reusing: service,
             countryDataService: countryDataService,
             userID: xpService.currentUserID
         )
         await challengeService.loadChallenge()
-        service = challengeService
+        if service !== challengeService {
+            service = challengeService
+        }
     }
 }
 
@@ -117,21 +121,11 @@ private extension DailyChallengeScreen {
                 GameIntroHeader.Fact("\(gameCount) rotating games", systemImage: "square.stack"),
             ]
         }
-        let streak = streak(for: service)
+        let streak = service.streakSummary
         return [
             GameIntroHeader.Fact("\(streak.current)-day streak", systemImage: "flame.fill"),
             GameIntroHeader.Fact("Best streak \(streak.best)", systemImage: "trophy.fill"),
             GameIntroHeader.Fact("\(streak.completedCount) completed", systemImage: "checkmark.seal.fill"),
         ]
-    }
-
-    func streak(for service: DailyChallengeService) -> DailyChallengeStreak {
-        DailyChallengeStreak(dateKeys: service.history.map(\.dateKey))
-    }
-
-    func sortedHistory(for service: DailyChallengeService) -> [DailyChallengeResult] {
-        service.history.sorted { lhs, rhs in
-            lhs.dateKey == rhs.dateKey ? lhs.completedAt > rhs.completedAt : lhs.dateKey > rhs.dateKey
-        }
     }
 }
