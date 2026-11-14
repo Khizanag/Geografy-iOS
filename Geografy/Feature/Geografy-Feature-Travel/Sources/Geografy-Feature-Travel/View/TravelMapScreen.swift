@@ -15,12 +15,14 @@ public struct TravelMapScreen: View {
 
     public let filter: TravelMapFilter
 
+    @State private var highlightedStatuses: [String: TravelStatus] = [:]
     @State private var isInitialized = false
     @State private var isLoaded = false
     @State private var mapState = MapState()
     @State private var screenSize: CGSize = .zero
     @State private var selectedFilter: TravelMapFilter
     @State private var showLabels = false
+    @State private var styledShapes: [CountryShape] = []
 
     // MARK: - Init
     public init(filter: TravelMapFilter) {
@@ -50,6 +52,8 @@ public struct TravelMapScreen: View {
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
             .task { await loadMapData() }
+            .onChange(of: selectedFilter) { restyleShapes() }
+            .onChange(of: travelService.entries) { restyleShapes() }
     }
 }
 
@@ -72,22 +76,15 @@ private extension TravelMapScreen {
     }
 
     func mapCanvas(in size: CGSize) -> some View {
-        MapCanvasView(
+        TravelMapCanvas(
+            mapState: mapState,
             countryShapes: styledShapes,
-            scale: mapState.scale,
-            offset: mapState.offset,
-            selectedCountryCode: nil,
+            travelStatuses: highlightedStatuses,
             showLabels: showLabels,
-            canvasSize: size,
-            capitalPoint: nil,
-            travelStatuses: highlightedStatuses
+            canvasSize: size
         )
-        .accessibilityLabel("Travel map showing \(travelCodes.count) countries")
+        .accessibilityLabel("Travel map showing \(travelCount) countries")
         .accessibilityHint("Pinch to zoom, drag to pan")
-        #if !os(tvOS)
-        .gesture(dragGesture)
-        .gesture(magnifyGesture)
-        #endif
     }
 
     var infoBanner: some View {
@@ -102,7 +99,7 @@ private extension TravelMapScreen {
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
 
-                Text("\(travelCodes.count) countries")
+                Text("\(travelCount) countries")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
@@ -115,7 +112,7 @@ private extension TravelMapScreen {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: selectedFilter)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(selectedFilter.displayName), \(travelCodes.count) countries")
+        .accessibilityLabel("\(selectedFilter.displayName), \(travelCount) countries")
     }
 }
 
@@ -171,68 +168,14 @@ private extension TravelMapScreen {
     }
 }
 
-// MARK: - Gestures
-#if !os(tvOS)
-private extension TravelMapScreen {
-    var magnifyGesture: some Gesture {
-        MagnifyGesture()
-            .onChanged { value in
-                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
-                let scaleRatio = newScale / mapState.scale
-                mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio,
-                    height: mapState.offset.height * scaleRatio
-                )
-                mapState.scale = newScale
-            }
-            .onEnded { _ in
-                mapState.lastScale = mapState.scale
-                mapState.lastOffset = mapState.offset
-            }
-    }
-
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                mapState.offset = CGSize(
-                    width: mapState.lastOffset.width + value.translation.width,
-                    height: mapState.lastOffset.height + value.translation.height
-                )
-            }
-            .onEnded { _ in
-                mapState.lastOffset = mapState.offset
-            }
-    }
-}
-#endif
-
 // MARK: - Helpers
 private extension TravelMapScreen {
-    var highlightedStatuses: [String: TravelStatus] {
+    var travelCount: Int {
         switch selectedFilter {
-        case .visited:
-            travelService.entries.filter { $0.value == .visited }
-        case .wantToVisit:
-            travelService.entries.filter { $0.value == .wantToVisit }
-        case .all:
-            travelService.entries
+        case .visited: travelService.visitedCodes.count
+        case .wantToVisit: travelService.wantToVisitCodes.count
+        case .all: travelService.entries.count
         }
-    }
-
-    var travelCodes: Set<String> {
-        Set(highlightedStatuses.keys)
-    }
-
-    var styledShapes: [CountryShape] {
-        mapState.countryShapes
-            .map { shape in
-                var modified = shape
-                if !travelCodes.contains(shape.id) {
-                    modified.color = DesignSystem.Color.mapLandMuted
-                    modified.name = ""
-                }
-                return modified
-            }
     }
 
     var filterIcon: String {
@@ -264,6 +207,7 @@ private extension TravelMapScreen {
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
         }
+        restyleShapes()
 
         if screenSize.width > 0, !isInitialized {
             let fitScale = screenSize.width / MapProjection.mapWidth
@@ -275,6 +219,22 @@ private extension TravelMapScreen {
 
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.4).delay(0.3)) {
             isLoaded = true
+        }
+    }
+
+    /// Mutes countries the filter leaves out; runs when the filter, entries or shapes change, not every frame.
+    func restyleShapes() {
+        let statuses = switch selectedFilter {
+        case .visited: travelService.entries.filter { $0.value == .visited }
+        case .wantToVisit: travelService.entries.filter { $0.value == .wantToVisit }
+        case .all: travelService.entries
+        }
+        highlightedStatuses = statuses
+        styledShapes = mapState.countryShapes.map { shape in
+            guard statuses[shape.id] == nil else { return shape }
+            var muted = shape.recolored(DesignSystem.Color.mapLandMuted)
+            muted.name = ""
+            return muted
         }
     }
 
@@ -295,3 +255,67 @@ private extension TravelMapScreen {
         return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }
+
+// MARK: - TravelMapCanvas
+/// Reads pan and zoom on its own, so a gesture redraws the map without re-running the screen around it.
+private struct TravelMapCanvas: View {
+    // MARK: - Properties
+    let mapState: MapState
+    let countryShapes: [CountryShape]
+    let travelStatuses: [String: TravelStatus]
+    let showLabels: Bool
+    let canvasSize: CGSize
+
+    // MARK: - Body
+    var body: some View {
+        MapCanvasView(
+            countryShapes: countryShapes,
+            scale: mapState.scale,
+            offset: mapState.offset,
+            selectedCountryCode: nil,
+            showLabels: showLabels,
+            canvasSize: canvasSize,
+            capitalPoint: nil,
+            travelStatuses: travelStatuses
+        )
+        #if !os(tvOS)
+        .gesture(dragGesture)
+        .gesture(magnifyGesture)
+        #endif
+    }
+}
+
+// MARK: - Gestures
+#if !os(tvOS)
+private extension TravelMapCanvas {
+    var magnifyGesture: some Gesture {
+        MagnifyGesture()
+            .onChanged { value in
+                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
+                let scaleRatio = newScale / mapState.scale
+                mapState.offset = CGSize(
+                    width: mapState.offset.width * scaleRatio,
+                    height: mapState.offset.height * scaleRatio
+                )
+                mapState.scale = newScale
+            }
+            .onEnded { _ in
+                mapState.lastScale = mapState.scale
+                mapState.lastOffset = mapState.offset
+            }
+    }
+
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                mapState.offset = CGSize(
+                    width: mapState.lastOffset.width + value.translation.width,
+                    height: mapState.lastOffset.height + value.translation.height
+                )
+            }
+            .onEnded { _ in
+                mapState.lastOffset = mapState.offset
+            }
+    }
+}
+#endif
