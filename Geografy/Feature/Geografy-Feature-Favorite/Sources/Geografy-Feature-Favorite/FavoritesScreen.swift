@@ -29,11 +29,12 @@ public struct FavoritesScreen: View {
 
     // MARK: - Body
     public var body: some View {
+        let countries = filteredCountries
         Group {
-            if filteredCountries.isEmpty {
+            if countries.isEmpty {
                 emptyState
             } else {
-                countryList
+                countryList(countries)
             }
         }
         .closeButtonPlacementLeading()
@@ -156,10 +157,10 @@ private extension FavoritesScreen {
 
 // MARK: - Content
 private extension FavoritesScreen {
-    var countryList: some View {
+    func countryList(_ countries: [Country]) -> some View {
         ScrollView {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(filteredCountries) { country in
+                ForEach(countries) { country in
                     Button {
                         coordinator.push(.countryDetail(country))
                     } label: {
@@ -173,7 +174,7 @@ private extension FavoritesScreen {
                         )
                     }
                     .buttonStyle(PressButtonStyle())
-                    .countryContextMenu(country)
+                    .countryContextMenu(country, isFavorite: true)
                     #if !os(tvOS)
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         removeButton(for: country)
