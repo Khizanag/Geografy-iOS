@@ -250,7 +250,7 @@ public enum StatIndicator: String, CaseIterable, Identifiable, Sendable {
 @Observable
 @MainActor
 public final class WorldBankService {
-    public struct DataPoint: Identifiable, Codable, Hashable {
+    public struct DataPoint: Identifiable, Codable, Hashable, Sendable {
         public let year: Int
         public let value: Double
 
@@ -262,7 +262,7 @@ public final class WorldBankService {
         }
     }
 
-    private struct CachedEntry: Codable {
+    fileprivate struct CachedEntry: Codable, Sendable {
         let data: [DataPoint]
         let fetchedAt: Date
     }
@@ -274,7 +274,8 @@ public final class WorldBankService {
     }
 
     public private(set) var loadStates: [String: LoadState] = [:]
-    private var memoryCache: [String: CachedEntry] = [:]
+    // Every write lands in the same turn as a loadStates write, so observing it would only add redraws.
+    @ObservationIgnored private var memoryCache: [String: CachedEntry] = [:]
     private let cacheDirectory: URL
     private let cacheExpiry: TimeInterval = 30 * 24 * 3_600 // 30 days
 
@@ -286,63 +287,31 @@ public final class WorldBankService {
     }
 
     public func fetch(_ indicators: [StatIndicator], for countryCode: String) async {
-        await withTaskGroup(of: Void.self) { group in
-            for indicator in indicators {
-                group.addTask { [self] in
-                    await fetch(indicator, for: countryCode)
+        let missingKeys = markPending(indicators, countryCode: countryCode)
+        guard !missingKeys.isEmpty else { return }
+
+        let diskEntries = await Self.readDiskCache(keys: missingKeys, in: cacheDirectory)
+        let networkKeys = applyFreshDiskEntries(diskEntries, keys: missingKeys)
+        guard !networkKeys.isEmpty else { return }
+
+        let directory = cacheDirectory
+        let requests = indicators.map { indicator in
+            (key: cacheKey(indicator, countryCode: countryCode), url: requestURL(indicator, countryCode: countryCode))
+        }
+        await withTaskGroup(of: (String, CachedEntry?).self) { group in
+            for request in requests where networkKeys.contains(request.key) {
+                group.addTask {
+                    (request.key, await Self.download(from: request.url, key: request.key, cacheDirectory: directory))
                 }
+            }
+            for await (key, entry) in group {
+                applyNetworkResult(entry, fallback: diskEntries[key], key: key)
             }
         }
     }
 
     public func fetch(_ indicator: StatIndicator, for countryCode: String) async {
-        let key = cacheKey(indicator, countryCode: countryCode)
-        switch loadStates[key] {
-        case .loading: return
-        case .loaded(let points) where !points.isEmpty: return
-        default: break
-        }
-
-        // Check memory cache
-        if let cached = memoryCache[key], !isStale(cached.fetchedAt), !cached.data.isEmpty {
-            loadStates[key] = .loaded(cached.data)
-            return
-        }
-
-        loadStates[key] = .loading
-
-        // Check disk cache
-        if let diskEntry = readDiskCache(key: key), !isStale(diskEntry.fetchedAt), !diskEntry.data.isEmpty {
-            memoryCache[key] = diskEntry
-            loadStates[key] = .loaded(diskEntry.data)
-            return
-        }
-
-        // Network fetch
-        let urlString = "https://api.worldbank.org/v2/country/\(countryCode.lowercased())/indicator/\(indicator.rawValue)?format=json&date=1960:2023&per_page=100"
-        guard let url = URL(string: urlString) else {
-            loadStates[key] = .failed
-            return
-        }
-
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let points = try parseResponse(data)
-            let entry = CachedEntry(data: points, fetchedAt: Date())
-            memoryCache[key] = entry
-            if !points.isEmpty {
-                writeDiskCache(entry, key: key)
-            }
-            loadStates[key] = .loaded(points)
-        } catch {
-            // Fall back to stale disk cache if available
-            if let diskEntry = readDiskCache(key: key) {
-                memoryCache[key] = diskEntry
-                loadStates[key] = .loaded(diskEntry.data)
-            } else {
-                loadStates[key] = .failed
-            }
-        }
+        await fetch([indicator], for: countryCode)
     }
 
     public func state(for indicator: StatIndicator, countryCode: String) -> LoadState? {
@@ -351,6 +320,60 @@ public final class WorldBankService {
 
     public func cacheAge(for indicator: StatIndicator, countryCode: String) -> Date? {
         memoryCache[cacheKey(indicator, countryCode: countryCode)]?.fetchedAt
+    }
+}
+
+// MARK: - State Updates
+private extension WorldBankService {
+    func markPending(_ indicators: [StatIndicator], countryCode: String) -> [String] {
+        var states = loadStates
+        var missingKeys: [String] = []
+        var hasChanges = false
+        for indicator in indicators {
+            let key = cacheKey(indicator, countryCode: countryCode)
+            switch states[key] {
+            case .loading: continue
+            case .loaded(let points) where !points.isEmpty: continue
+            default: break
+            }
+            hasChanges = true
+            if let cached = memoryCache[key], !isStale(cached.fetchedAt), !cached.data.isEmpty {
+                states[key] = .loaded(cached.data)
+            } else {
+                states[key] = .loading
+                missingKeys.append(key)
+            }
+        }
+        if hasChanges {
+            loadStates = states
+        }
+        return missingKeys
+    }
+
+    func applyFreshDiskEntries(_ entries: [String: CachedEntry], keys: [String]) -> [String] {
+        var states = loadStates
+        var networkKeys: [String] = []
+        for key in keys {
+            if let entry = entries[key], !isStale(entry.fetchedAt), !entry.data.isEmpty {
+                memoryCache[key] = entry
+                states[key] = .loaded(entry.data)
+            } else {
+                networkKeys.append(key)
+            }
+        }
+        if networkKeys.count != keys.count {
+            loadStates = states
+        }
+        return networkKeys
+    }
+
+    func applyNetworkResult(_ entry: CachedEntry?, fallback: CachedEntry?, key: String) {
+        guard let resolved = entry ?? fallback else {
+            loadStates[key] = .failed
+            return
+        }
+        memoryCache[key] = resolved
+        loadStates[key] = .loaded(resolved.data)
     }
 }
 
@@ -364,20 +387,42 @@ private extension WorldBankService {
         Date().timeIntervalSince(date) > cacheExpiry
     }
 
-    private func readDiskCache(key: String) -> CachedEntry? {
-        let url = cacheDirectory.appendingPathComponent("\(key).json")
-        guard let data = try? Data(contentsOf: url),
-              let entry = try? JSONDecoder().decode(CachedEntry.self, from: data) else { return nil }
+    func requestURL(_ indicator: StatIndicator, countryCode: String) -> URL? {
+        URL(
+            string: "https://api.worldbank.org/v2/country/\(countryCode.lowercased())/indicator/\(indicator.rawValue)"
+                + "?format=json&date=1960:2023&per_page=100"
+        )
+    }
+}
+
+// MARK: - Loading
+private extension WorldBankService {
+    @concurrent
+    nonisolated static func readDiskCache(keys: [String], in directory: URL) async -> [String: CachedEntry] {
+        let decoder = JSONDecoder()
+        var entries: [String: CachedEntry] = [:]
+        for key in keys {
+            let url = directory.appendingPathComponent("\(key).json")
+            guard let data = try? Data(contentsOf: url),
+                  let entry = try? decoder.decode(CachedEntry.self, from: data) else { continue }
+            entries[key] = entry
+        }
+        return entries
+    }
+
+    @concurrent
+    nonisolated static func download(from url: URL?, key: String, cacheDirectory: URL) async -> CachedEntry? {
+        guard let url,
+              let (data, _) = try? await URLSession.shared.data(from: url),
+              let points = try? parseResponse(data) else { return nil }
+        let entry = CachedEntry(data: points, fetchedAt: Date())
+        if !points.isEmpty, let encoded = try? JSONEncoder().encode(entry) {
+            try? encoded.write(to: cacheDirectory.appendingPathComponent("\(key).json"))
+        }
         return entry
     }
 
-    private func writeDiskCache(_ entry: CachedEntry, key: String) {
-        let url = cacheDirectory.appendingPathComponent("\(key).json")
-        guard let data = try? JSONEncoder().encode(entry) else { return }
-        try? data.write(to: url)
-    }
-
-    func parseResponse(_ data: Data) throws -> [DataPoint] {
+    nonisolated static func parseResponse(_ data: Data) throws -> [DataPoint] {
         guard let json = try JSONSerialization.jsonObject(with: data) as? [Any],
               json.count >= 2,
               let records = json[1] as? [[String: Any]] else { return [] }
