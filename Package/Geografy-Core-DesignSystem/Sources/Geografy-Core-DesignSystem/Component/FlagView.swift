@@ -10,22 +10,28 @@ public struct FlagView: View {
     let countryCode: String
     var height: CGFloat = DesignSystem.Size.md
     var fixedWidth: Bool = false
+    var isOutlined: Bool = false
 
     // MARK: - Init
+    /// - Parameter isOutlined: Edges the flag with a hairline, so white and pale flags stand off the background.
+    ///   Use it in place of a drop shadow on flags that repeat in scrolling lists:
+    ///   a shadow costs an offscreen render pass per flag.
     public init(
         countryCode: String,
         height: CGFloat = DesignSystem.Size.md,
-        fixedWidth: Bool = false
+        fixedWidth: Bool = false,
+        isOutlined: Bool = false
     ) {
         self.countryCode = countryCode
         self.height = height
         self.fixedWidth = fixedWidth
+        self.isOutlined = isOutlined
     }
 
     // MARK: - Body
     public var body: some View {
         flagImage
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2, style: .continuous))
+            .clipShape(Self.flagShape)
             .frame(width: fixedWidth ? slotWidth : nil, height: fixedWidth ? height : nil, alignment: .center)
             .accessibilityLabel("Flag of \(FlagImageCache.shared.countryName(for: countryCode))")
             .task(id: loadKey) { await load() }
@@ -52,6 +58,11 @@ private extension FlagView {
             Image(uiImage: image)
                 .resizable()
                 .frame(width: size.width, height: size.height)
+                .overlay {
+                    if isOutlined {
+                        Self.flagShape.strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 0.5)
+                    }
+                }
         } else if loaded?.key == loadKey {
             Text(fallbackEmoji)
                 .font(DesignSystem.Font.title)
@@ -61,6 +72,8 @@ private extension FlagView {
                 .frame(width: size.width, height: size.height)
         }
     }
+
+    static let flagShape = RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2, style: .continuous)
 
     /// The width reserved for each flag when `fixedWidth` is on, so a list's text lines up.
     var slotWidth: CGFloat { height * 1.6 }

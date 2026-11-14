@@ -138,8 +138,7 @@ private extension CountryRowView {
     }
 
     var flag: some View {
-        FlagView(countryCode: country.code, height: 36, fixedWidth: true)
-            .geoShadow(.subtle)
+        FlagView(countryCode: country.code, height: 36, fixedWidth: true, isOutlined: true)
     }
 
     // The continent rides beside the name while both fit on one line; a long name gets the full width

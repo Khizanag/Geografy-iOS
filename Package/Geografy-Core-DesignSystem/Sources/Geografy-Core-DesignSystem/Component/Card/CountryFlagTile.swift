@@ -22,19 +22,14 @@ public struct CountryFlagTile: View {
             .accessibilityElement(children: .combine)
     }
 
-    // A hairline on the flag's own bounds replaces a drop shadow, which forced an offscreen
-    // pass per tile in scrolling strips. The flag is sized here so the hairline hugs it.
+    // The flag is sized to fit the slot here, so its outline hugs the flag rather than the slot.
     @ViewBuilder
     private var flag: some View {
         if let ratio = FlagAspectRatio.ratio(for: country.code) {
-            FlagView(countryCode: country.code, height: min(flagHeight, flagSlotWidth / ratio))
-                .overlay {
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2, style: .continuous)
-                        .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 0.5)
-                }
+            FlagView(countryCode: country.code, height: min(flagHeight, flagSlotWidth / ratio), isOutlined: true)
                 .frame(width: flagSlotWidth, height: flagHeight)
         } else {
-            FlagView(countryCode: country.code, height: flagHeight, fixedWidth: true)
+            FlagView(countryCode: country.code, height: flagHeight, fixedWidth: true, isOutlined: true)
         }
     }
 

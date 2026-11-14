@@ -90,8 +90,7 @@ private extension WorldRecordsScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
 
-            FlagView(countryCode: record.countryCode, height: DesignSystem.Size.Flag.compact)
-                .geoShadow(.subtle)
+            FlagView(countryCode: record.countryCode, height: DesignSystem.Size.Flag.compact, isOutlined: true)
                 .padding(.vertical, DesignSystem.Spacing.xxs)
 
             Text(record.countryName)

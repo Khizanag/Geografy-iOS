@@ -53,8 +53,7 @@ private extension PairSlot {
 
     func filledContent(_ item: PairSlotItem) -> some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            FlagView(countryCode: item.flagCode, height: DesignSystem.Size.Flag.compact)
-                .geoShadow(.subtle)
+            FlagView(countryCode: item.flagCode, height: DesignSystem.Size.Flag.compact, isOutlined: true)
                 .padding(.bottom, DesignSystem.Spacing.xxs)
                 .accessibilityHidden(true)
 

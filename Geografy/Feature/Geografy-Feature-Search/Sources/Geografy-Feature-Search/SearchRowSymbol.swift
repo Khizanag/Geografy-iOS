@@ -38,8 +38,7 @@ private extension SearchRowSymbol {
     var symbol: some View {
         switch row {
         case .country(let country), .capital(let country, _):
-            FlagView(countryCode: country.code, height: size.height, fixedWidth: true)
-                .geoShadow(.subtle)
+            FlagView(countryCode: country.code, height: size.height, fixedWidth: true, isOutlined: true)
         case .organization(let organization):
             Image(systemName: organization.icon)
                 .font(DesignSystem.Font.system(size: size.height * 0.6, weight: .semibold))
