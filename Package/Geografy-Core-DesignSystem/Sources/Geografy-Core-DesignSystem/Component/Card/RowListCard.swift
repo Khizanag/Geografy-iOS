@@ -46,6 +46,8 @@ public enum RowListCardLayout {
     public static let flagWidth = DesignSystem.Size.Flag.inline * 1.6
     /// Two inline flags side by side.
     public static let flagPairWidth = flagWidth * 2 + DesignSystem.Spacing.xxs
+    /// A small `IconBadge`, as list rows lead with it.
+    public static let iconBadgeWidth = IconBadge.Size.small.diameter
 
     /// Divider inset for rows that lead with a view of the given width.
     public static func dividerInset(after leadingWidth: CGFloat) -> CGFloat {
