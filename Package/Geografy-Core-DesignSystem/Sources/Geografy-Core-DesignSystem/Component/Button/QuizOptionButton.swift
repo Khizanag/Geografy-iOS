@@ -40,10 +40,10 @@ public struct QuizOptionButton: View {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                         .strokeBorder(borderColor, lineWidth: 1.5)
                 }
+                .background { glowLayer }
         }
         .buttonStyle(PressButtonStyle())
         .disabled(state != .default)
-        .shadow(color: glowColor, radius: glowRadius, y: 3)
         .offset(x: shakeOffset)
         .animation(.easeInOut(duration: 0.2), value: state)
         #if !os(tvOS)
@@ -187,6 +187,18 @@ private extension QuizOptionButton {
         }
     }
 
+    // The glow sits on a plain shape behind the button: shadowing the whole button would
+    // render its material offscreen, and the default state carries no shadow at all.
+    @ViewBuilder
+    var glowLayer: some View {
+        if let glowTint {
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+                .fill(glowTint.opacity(glowOpacity))
+                .shadow(color: glowTint, radius: glowRadius, y: 3)
+                .transition(.opacity)
+        }
+    }
+
     @ViewBuilder
     var backgroundLayer: some View {
         ZStack {
@@ -218,11 +230,20 @@ private extension QuizOptionButton {
         }
     }
 
-    var glowColor: Color {
+    var glowTint: Color? {
         switch state {
-        case .correct:   DesignSystem.Color.success.opacity(0.45)
-        case .incorrect: DesignSystem.Color.error.opacity(0.35)
-        default:         .clear
+        case .correct:   DesignSystem.Color.success
+        case .incorrect: DesignSystem.Color.error
+        default:         nil
+        }
+    }
+
+    // The shape's own alpha scales its shadow, so the shadow color stays opaque.
+    var glowOpacity: Double {
+        switch state {
+        case .correct:   0.45
+        case .incorrect: 0.35
+        default:         0
         }
     }
 
