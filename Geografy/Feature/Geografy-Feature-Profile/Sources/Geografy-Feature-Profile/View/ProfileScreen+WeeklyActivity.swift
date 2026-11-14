@@ -94,9 +94,9 @@ private extension ProfileScreen {
     }
 
     func shortWeekdaySymbol(for date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEE"
-        return String(formatter.string(from: date).prefix(2))
+        let calendar = Calendar.current
+        let symbol = calendar.shortWeekdaySymbols[calendar.component(.weekday, from: date) - 1]
+        return String(symbol.prefix(2))
     }
 }
 

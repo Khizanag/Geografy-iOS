@@ -21,6 +21,7 @@ public struct ProfileScreen: View {
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     @State var recentQuizzes: [QuizHistoryRecord] = []
+    @State var quizTotals: QuizTotals?
     @State var statistics: UserStatistics?
     @State var showDeleteAlert = false
     @State var selectedAchievement: AchievementDefinition?
@@ -40,7 +41,7 @@ public struct ProfileScreen: View {
             } message: {
                 deleteAlertMessage
             }
-            .onAppear { fetchQuizData() }
+            .onAppear { refreshQuizData() }
     }
 }
 
@@ -84,28 +85,30 @@ private extension ProfileScreen {
 
 // MARK: - Helpers
 private extension ProfileScreen {
-    func fetchQuizData() {
+    /// Reads the whole quiz history only when its count or owner changed since the last visit;
+    /// the other stats are cheap and refresh every time.
+    func refreshQuizData() {
         let userID = authService.currentUserID
-        var descriptor = FetchDescriptor<QuizHistoryRecord>(
-            predicate: #Predicate { $0.userID == userID }
-        )
-        descriptor.sortBy = [SortDescriptor(\QuizHistoryRecord.completedAt, order: .reverse)]
-        let allQuizzes = (try? database.mainContext.fetch(descriptor)) ?? []
-        recentQuizzes = Array(allQuizzes.prefix(3))
-        statistics = buildStatistics(from: allQuizzes)
+        let predicate = #Predicate<QuizHistoryRecord> { $0.userID == userID }
+        let count = (try? database.mainContext.fetchCount(FetchDescriptor(predicate: predicate))) ?? 0
+        if quizTotals?.userID != userID || quizTotals?.quizCount != count {
+            var descriptor = FetchDescriptor<QuizHistoryRecord>(predicate: predicate)
+            descriptor.sortBy = [SortDescriptor(\QuizHistoryRecord.completedAt, order: .reverse)]
+            let allQuizzes = (try? database.mainContext.fetch(descriptor)) ?? []
+            recentQuizzes = Array(allQuizzes.prefix(3))
+            quizTotals = QuizTotals(userID: userID, quizzes: allQuizzes)
+        }
+        statistics = quizTotals.map(buildStatistics)
     }
 
-    func buildStatistics(from quizzes: [QuizHistoryRecord]) -> UserStatistics {
-        let totalCorrect = quizzes.reduce(0) { $0 + $1.correctCount }
-        let totalQuestions = quizzes.reduce(0) { $0 + $1.totalCount }
-        let perfectCount = quizzes.filter { $0.correctCount == $0.totalCount }.count
+    func buildStatistics(from totals: QuizTotals) -> UserStatistics {
         let longestStreak = authService.currentProfile?.longestStreak ?? streakService.currentStreak
 
         return UserStatistics(
-            totalQuizzes: quizzes.count,
-            totalCorrectAnswers: totalCorrect,
-            totalQuestions: totalQuestions,
-            perfectScores: perfectCount,
+            totalQuizzes: totals.quizCount,
+            totalCorrectAnswers: totals.correctAnswers,
+            totalQuestions: totals.questions,
+            perfectScores: totals.perfectScores,
             currentStreak: streakService.currentStreak,
             longestStreak: longestStreak,
             countriesExplored: favoritesService.favoriteCodes.count,
@@ -137,6 +140,24 @@ private extension ProfileScreen {
             "This will permanently delete your account, XP, achievements, "
             + "and quiz history. This action cannot be undone."
         )
+    }
+}
+
+// MARK: - Quiz Totals
+/// What the profile shows from one user's quiz history.
+struct QuizTotals {
+    let userID: String
+    let quizCount: Int
+    let correctAnswers: Int
+    let questions: Int
+    let perfectScores: Int
+
+    init(userID: String, quizzes: [QuizHistoryRecord]) {
+        self.userID = userID
+        quizCount = quizzes.count
+        correctAnswers = quizzes.reduce(0) { $0 + $1.correctCount }
+        questions = quizzes.reduce(0) { $0 + $1.totalCount }
+        perfectScores = quizzes.filter { $0.correctCount == $0.totalCount }.count
     }
 }
 #endif
