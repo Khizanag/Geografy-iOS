@@ -45,10 +45,11 @@ public struct CountryRowView: View {
 
     // MARK: - Body
     public var body: some View {
+        let text = RowText(country: country, showArea: showArea, showPopulation: showPopulation)
         CardView {
             HStack(spacing: 0) {
                 accentStripe
-                contentRow
+                contentRow(text)
             }
         }
         .overlay(
@@ -57,7 +58,7 @@ public struct CountryRowView: View {
         )
         .hoverEffect(.lift)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(accessibilityLabel)
+        .accessibilityLabel(accessibilityLabel(text))
         .accessibilityHint("Double tap to view details")
         .accessibilityValue(isFavorite ? "Favorite" : "")
         .accessibilityActions {
@@ -82,7 +83,7 @@ private extension CountryRowView {
         dynamicTypeSize.isAccessibilitySize
     }
 
-    var contentRow: some View {
+    func contentRow(_ text: RowText) -> some View {
         HStack(alignment: isStacked ? .top : .center, spacing: DesignSystem.Spacing.sm) {
             if showFlag, !isStacked {
                 flag
@@ -95,11 +96,11 @@ private extension CountryRowView {
                 nameLine
 
                 if showCapital {
-                    capitalLabel
+                    capitalLabel(text.capitals)
                 }
 
-                if showArea || showPopulation {
-                    statsRow
+                if text.hasStats {
+                    statsRow(text)
                 }
             }
 
@@ -123,13 +124,13 @@ private extension CountryRowView {
         }
     }
 
-    var capitalLabel: some View {
+    func capitalLabel(_ capitals: [String]) -> some View {
         HStack(spacing: 3) {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.pico.bold())
                 .foregroundStyle(DesignSystem.Color.accent)
                 .accessibilityHidden(true)
-            Text(country.allCapitals.map(\.name).joined(separator: " · "))
+            Text(capitals.joined(separator: " · "))
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .lineLimit(1)
@@ -178,46 +179,38 @@ private extension CountryRowView {
 
     // Side by side when both fit on one line; otherwise each stat takes its own line, never breaking mid-value.
     @ViewBuilder
-    var statsRow: some View {
+    func statsRow(_ text: RowText) -> some View {
         if isStacked {
-            statsColumn
+            statsColumn(text)
         } else {
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: DesignSystem.Spacing.xxs) {
-                    if showArea {
-                        areaStat
+                    if let area = text.area {
+                        stat(icon: "map", value: area)
                     }
-                    if showArea, showPopulation {
+                    if text.area != nil, text.population != nil {
                         Text("·")
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.textTertiary)
                     }
-                    if showPopulation {
-                        populationStat
+                    if let population = text.population {
+                        stat(icon: "person.2", value: population)
                     }
                 }
-                statsColumn
+                statsColumn(text)
             }
         }
     }
 
-    var statsColumn: some View {
+    func statsColumn(_ text: RowText) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            if showArea {
-                areaStat
+            if let area = text.area {
+                stat(icon: "map", value: area)
             }
-            if showPopulation {
-                populationStat
+            if let population = text.population {
+                stat(icon: "person.2", value: population)
             }
         }
-    }
-
-    var areaStat: some View {
-        stat(icon: "map", value: country.area.formatArea())
-    }
-
-    var populationStat: some View {
-        stat(icon: "person.2", value: country.population.formatPopulation())
     }
 
     func stat(icon: String, value: String) -> some View {
@@ -258,10 +251,10 @@ private extension CountryRowView {
 
 // MARK: - Actions
 private extension CountryRowView {
-    var accessibilityLabel: String {
+    func accessibilityLabel(_ text: RowText) -> String {
         var parts = [country.name, country.continent.displayName]
         if showCapital {
-            parts.append("Capital \(country.allCapitals.map(\.name).formatted(.list(type: .and)))")
+            parts.append("Capital \(text.capitals.joined(separator: ", "))")
         }
         return parts.joined(separator: ", ")
     }
@@ -276,5 +269,21 @@ private extension CountryRowView {
         withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
             onFavoriteTap()
         }
+    }
+}
+
+// MARK: - Row Text
+/// The row's formatted text, built once per render so both layouts `ViewThatFits` tries share it.
+private struct RowText {
+    let capitals: [String]
+    let area: String?
+    let population: String?
+
+    var hasStats: Bool { area != nil || population != nil }
+
+    init(country: Country, showArea: Bool, showPopulation: Bool) {
+        capitals = country.allCapitals.map(\.name)
+        area = showArea ? country.area.formatArea() : nil
+        population = showPopulation ? country.population.formatPopulation() : nil
     }
 }

@@ -393,7 +393,7 @@ private extension CountryListScreen {
             )
         }
         .buttonStyle(PressButtonStyle())
-        .countryContextMenu(country)
+        .countryContextMenu(country, isFavorite: isFavorite)
         #if !os(tvOS)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button {

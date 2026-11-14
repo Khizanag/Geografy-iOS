@@ -21,13 +21,13 @@ struct FavoriteCountriesStrip: View {
 private extension FavoriteCountriesStrip {
     var tiles: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            LazyHStack(spacing: DesignSystem.Spacing.sm) {
                 ForEach(countries) { country in
                     Button { onSelect(country) } label: {
                         CountryFlagTile(country: country)
                     }
                     .buttonStyle(PressButtonStyle())
-                    .countryContextMenu(country)
+                    .countryContextMenu(country, isFavorite: true)
                 }
             }
             .padding(.vertical, DesignSystem.Spacing.xxs)

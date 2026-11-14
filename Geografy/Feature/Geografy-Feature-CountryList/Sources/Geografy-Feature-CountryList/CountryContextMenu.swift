@@ -4,30 +4,34 @@ import Geografy_Core_Service
 import SwiftUI
 
 struct CountryContextMenu: ViewModifier {
-    @Environment(FavoritesService.self) private var favoritesService
-    @Environment(TravelService.self) private var travelService
-
     let country: Country
+    let isFavorite: Bool?
 
     func body(content: Content) -> some View {
         content
             .contextMenu {
-                contextMenuContent
+                CountryContextMenuItems(country: country, isFavorite: isFavorite)
             }
     }
+}
 
-    @ViewBuilder
-    var contextMenuContent: some View {
+// MARK: - Items
+/// Its own view, so the services are read where the menu builds instead of in every row's render.
+private struct CountryContextMenuItems: View {
+    @Environment(FavoritesService.self) private var favoritesService
+    @Environment(TravelService.self) private var travelService
+
+    let country: Country
+    let isFavorite: Bool?
+
+    var body: some View {
+        let isFavorite = self.isFavorite ?? favoritesService.isFavorite(code: country.code)
         Button {
             favoritesService.toggle(code: country.code)
         } label: {
             Label(
-                favoritesService.isFavorite(code: country.code)
-                    ? "Remove from Favorites"
-                    : "Add to Favorites",
-                systemImage: favoritesService.isFavorite(code: country.code)
-                    ? "heart.slash"
-                    : "heart"
+                isFavorite ? "Remove from Favorites" : "Add to Favorites",
+                systemImage: isFavorite ? "heart.slash" : "heart"
             )
         }
 
@@ -73,7 +77,8 @@ struct CountryContextMenu: ViewModifier {
 }
 
 public extension View {
-    func countryContextMenu(_ country: Country) -> some View {
-        modifier(CountryContextMenu(country: country))
+    /// Pass `isFavorite` when the caller already knows it, so the menu needn't look it up.
+    func countryContextMenu(_ country: Country, isFavorite: Bool? = nil) -> some View {
+        modifier(CountryContextMenu(country: country, isFavorite: isFavorite))
     }
 }
