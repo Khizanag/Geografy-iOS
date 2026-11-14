@@ -6,6 +6,9 @@ public struct CountryFlagTile: View {
     // MARK: - Properties
     private let country: Country
     private let isHighlighted: Bool
+    private let flagHeight: CGFloat = 36
+    // FlagView's fixed-width slot, so tiles keep the size they had with fixedWidth.
+    private let flagSlotWidth: CGFloat = 36 * 1.6
 
     // MARK: - Init
     public init(country: Country, isHighlighted: Bool = false) {
@@ -19,11 +22,26 @@ public struct CountryFlagTile: View {
             .accessibilityElement(children: .combine)
     }
 
+    // A hairline on the flag's own bounds replaces a drop shadow, which forced an offscreen
+    // pass per tile in scrolling strips. The flag is sized here so the hairline hugs it.
+    @ViewBuilder
+    private var flag: some View {
+        if let ratio = FlagAspectRatio.ratio(for: country.code) {
+            FlagView(countryCode: country.code, height: min(flagHeight, flagSlotWidth / ratio))
+                .overlay {
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2, style: .continuous)
+                        .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 0.5)
+                }
+                .frame(width: flagSlotWidth, height: flagHeight)
+        } else {
+            FlagView(countryCode: country.code, height: flagHeight, fixedWidth: true)
+        }
+    }
+
     private var tile: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.large) {
             VStack(spacing: DesignSystem.Spacing.xs) {
-                FlagView(countryCode: country.code, height: 36, fixedWidth: true)
-                    .geoShadow(.subtle)
+                flag
                 Text(country.name)
                     .font(DesignSystem.Font.caption2)
                     .fontWeight(isHighlighted ? .bold : .semibold)
