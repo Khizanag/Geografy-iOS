@@ -3,6 +3,9 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
+// One for the app: tab roots rebuild this screen often, and the checklists never change.
+@MainActor private let testChecklistService = TestChecklistService()
+
 /// A tab root: an optional header above titled grids of feature tiles.
 struct HubScreen<Header: View>: View {
     // MARK: - Properties
@@ -18,8 +21,6 @@ struct HubScreen<Header: View>: View {
     let title: String
     let sections: [HubSection]
     @ViewBuilder let header: () -> Header
-
-    private let testChecklistService = TestChecklistService()
 
     // MARK: - Body
     var body: some View {
