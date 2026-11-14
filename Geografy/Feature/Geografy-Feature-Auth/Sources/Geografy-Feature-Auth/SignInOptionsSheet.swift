@@ -1,16 +1,17 @@
 import AuthenticationServices
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
+import Geografy_Feature_Map
 import SwiftUI
 
 public struct SignInOptionsSheet: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AuthService.self) private var authService
     @Environment(TestingModeService.self) private var testingModeService
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var showError = false
     @State private var errorMessage = ""
@@ -20,8 +21,9 @@ public struct SignInOptionsSheet: View {
 
     // MARK: - Body
     public var body: some View {
-        extractedContent
+        scrollContent
             .screenBackground()
+            .safeAreaBar(edge: .bottom) { actionsSection }
             .alert("Sign In Failed", isPresented: $showError) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -32,158 +34,61 @@ public struct SignInOptionsSheet: View {
 
 // MARK: - Subviews
 private extension SignInOptionsSheet {
-    var extractedContent: some View {
+    var scrollContent: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                heroSection
-                statsRow
-                benefitsSection
-                actionsSection
+            VStack(spacing: DesignSystem.Spacing.lg) {
+                SignInMapHero()
+                    .phaseEntrance(index: 0)
+                benefitsCard
+                    .padding(.horizontal, DesignSystem.Spacing.md)
+                    .phaseEntrance(index: 1)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.top, DesignSystem.Spacing.xl)
+            .padding(.bottom, DesignSystem.Spacing.md)
+            .readableContentWidth()
         }
-    }
-}
-
-// MARK: - Hero
-private extension SignInOptionsSheet {
-    var heroSection: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            appIconBadge
-                .phaseEntrance(index: 0)
-            heroText
-                .phaseEntrance(index: 1)
-        }
-    }
-
-    var heroText: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            Text("Geografy")
-                .font(DesignSystem.Font.roundedHeadline)
-                .minimumScaleFactor(0.8)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [DesignSystem.Color.textPrimary, DesignSystem.Color.accent],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-            Text("Your world, explored.")
-                .font(DesignSystem.Font.callout)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
-    }
-
-    var appIconBadge: some View {
-        ZStack {
-            if !reduceTransparency {
-                DesignSystem.Color.accent.opacity(0.35)
-                    .frame(width: 110, height: 110)
-                    .blur(radius: 40)
-            }
-
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .frame(width: 76, height: 76)
-                .geoShadow(.elevated)
-                .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
-                        .strokeBorder(DesignSystem.Color.onAccent.opacity(0.18), lineWidth: 1)
-                )
-
-            Image(systemName: "globe.americas.fill")
-                .font(DesignSystem.Font.iconXL)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [DesignSystem.Color.onAccent, DesignSystem.Color.onAccent.opacity(0.82)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-        }
-        .frame(width: 110, height: 110)
-        .accessibilityHidden(true)
-    }
-}
-
-// MARK: - Stats Row
-private extension SignInOptionsSheet {
-    var statsRow: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
-            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.sm))
-        return layout {
-            statPill(value: "197", label: "Countries", icon: "flag.fill", color: DesignSystem.Color.accent)
-            statPill(value: "7", label: "Continents", icon: "globe.americas", color: DesignSystem.Color.blue)
-            statPill(value: "∞", label: "Adventures", icon: "star.fill", color: DesignSystem.Color.indigo)
-        }
-        .phaseEntrance(index: 2)
-    }
-
-    func statPill(value: String, label: String, icon: String, color: Color) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-            VStack(spacing: 5) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.footnote)
-                    .foregroundStyle(color)
-                    .accessibilityHidden(true)
-                Text(value)
-                    .font(DesignSystem.Font.roundedCaption)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .minimumScaleFactor(0.8)
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-        }
-        .accessibilityElement(children: .combine)
+        .ignoresSafeArea(.container, edges: .top)
     }
 }
 
 // MARK: - Benefits
 private extension SignInOptionsSheet {
-    var benefitsSection: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            ForEach(Array(benefits.enumerated()), id: \.offset) { index, benefit in
-                benefitRow(benefit)
-                    .phaseEntrance(index: 3 + index)
-            }
-        }
+    struct Benefit: Identifiable {
+        let icon: String
+        let color: Color
+        let title: LocalizedStringKey
+        let subtitle: LocalizedStringKey
+
+        var id: String { icon }
     }
 
-    var benefits: [(icon: String, color: Color, title: String, subtitle: String)] {
+    var benefits: [Benefit] {
         [
-            ("icloud.and.arrow.up.fill", DesignSystem.Color.blue, "Sync across devices",
-             "Progress follows you everywhere"),
-            ("trophy.fill", DesignSystem.Color.warning, "Achievements & XP",
-             "Earn rewards as you explore"),
-            ("airplane.departure", DesignSystem.Color.accent, "Track your travels",
-             "Pin countries you've visited"),
-            ("chart.line.uptrend.xyaxis", DesignSystem.Color.indigo, "Quiz history & streaks",
-             "Watch your knowledge grow"),
-            ("person.2.fill", DesignSystem.Color.purple, "Global leaderboards",
-             "Compete with explorers worldwide"),
+            Benefit(
+                icon: "icloud.and.arrow.up.fill",
+                color: DesignSystem.Color.blue,
+                title: "Sync across devices",
+                subtitle: "Progress follows you everywhere"
+            ),
+            Benefit(
+                icon: "trophy.fill",
+                color: DesignSystem.Color.warning,
+                title: "Achievements & XP",
+                subtitle: "Earn rewards as you explore"
+            ),
+            Benefit(
+                icon: "person.2.fill",
+                color: DesignSystem.Color.purple,
+                title: "Global leaderboards",
+                subtitle: "Compete with explorers worldwide"
+            ),
         ]
     }
 
-    func benefitRow(
-        _ benefit: (icon: String, color: Color, title: String, subtitle: String)
-    ) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+    var benefitsCard: some View {
+        RowListCard(benefits, dividerInset: RowListCardLayout.iconBadgeWidth + DesignSystem.Spacing.md * 2) { benefit in
             HStack(spacing: DesignSystem.Spacing.md) {
-                IconBadge(benefit.icon, color: benefit.color, size: .medium)
-                VStack(alignment: .leading, spacing: 2) {
+                IconBadge(benefit.icon, color: benefit.color, size: .small)
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                     Text(benefit.title)
                         .font(DesignSystem.Font.subheadline)
                         .fontWeight(.semibold)
@@ -194,9 +99,9 @@ private extension SignInOptionsSheet {
                 }
                 Spacer(minLength: 0)
             }
-            .padding(DesignSystem.Spacing.sm)
+            .rowListCardRow()
+            .accessibilityElement(children: .combine)
         }
-        .accessibilityElement(children: .combine)
     }
 }
 
@@ -213,9 +118,14 @@ private extension SignInOptionsSheet {
             #endif
             continueAsGuestButton
         }
-        .padding(.bottom, DesignSystem.Spacing.md)
-        .phaseEntrance(index: 8)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.top, DesignSystem.Spacing.sm)
+        .readableContentWidth()
     }
+
+    /// Both sign-in buttons share Apple's button size and shape, as the Human Interface Guidelines ask.
+    static let signInButtonHeight: CGFloat = 50
+    static let signInButtonShape = RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
 
     var appleSignInButton: some View {
         SignInWithAppleButton(.signIn) { request in
@@ -235,10 +145,9 @@ private extension SignInOptionsSheet {
                 }
             }
         }
-        .signInWithAppleButtonStyle(.white)
-        .frame(height: 50)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
-        .geoShadow(.subtle)
+        .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
+        .frame(height: Self.signInButtonHeight)
+        .clipShape(Self.signInButtonShape)
     }
 
     var googleSignInButton: some View {
@@ -267,22 +176,25 @@ private extension SignInOptionsSheet {
                     .foregroundStyle(Color(white: 0.18))
             }
             .frame(maxWidth: .infinity)
-            .frame(minHeight: 50)
-            .background(DesignSystem.Color.onAccent)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
-            .geoShadow(.subtle)
+            .frame(minHeight: Self.signInButtonHeight)
+            .background(Color.white, in: Self.signInButtonShape)
+            .overlay {
+                // Edges the white button on the light background, as Google's own button does.
+                Self.signInButtonShape.strokeBorder(Color(white: 0.75), lineWidth: colorScheme == .dark ? 0 : 1)
+            }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressButtonStyle())
     }
 
     var continueAsGuestButton: some View {
         Button { dismiss() } label: {
             Text("Continue as Guest")
                 .font(DesignSystem.Font.subheadline)
+                .fontWeight(.medium)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, DesignSystem.Spacing.xs)
+                .frame(maxWidth: .infinity, minHeight: 44)
         }
+        .buttonStyle(PressButtonStyle())
     }
 
     #if DEBUG
@@ -314,6 +226,85 @@ private extension SignInOptionsSheet {
         .buttonStyle(PressButtonStyle())
     }
     #endif
+}
+
+// MARK: - Map Hero
+/// The world map, with the countries the person has visited lit up, fading into the page under the app's name.
+private struct SignInMapHero: View {
+    // MARK: - Properties
+    @Environment(GeoJSONCache.self) private var geoJSONCache
+    @Environment(TravelService.self) private var travelService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    @State private var shapes: [CountryShape] = []
+
+    /// How far the map sits below center, as a share of its height, so the northern lands most people live on show.
+    private static let northwardShift: CGFloat = 0.1
+    private static let mapHeight: CGFloat = 300
+
+    // MARK: - Body
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            map
+            title
+        }
+        .task { await loadShapes() }
+    }
+}
+
+// MARK: - Subviews
+private extension SignInMapHero {
+    var map: some View {
+        GeometryReader { geometry in
+            let scale = geometry.size.width / MapProjection.mapWidth
+            MapCanvasView(
+                countryShapes: shapes,
+                scale: scale,
+                offset: CGSize(width: 0, height: MapProjection.mapHeight * scale * Self.northwardShift),
+                selectedCountryCode: nil,
+                showLabels: false,
+                canvasSize: geometry.size,
+                highlightedCodes: travelService.visitedCodes,
+                wrapsHorizontally: false
+            )
+        }
+        .frame(height: Self.mapHeight)
+        .opacity(shapes.isEmpty ? 0 : 0.75)
+        .mask {
+            LinearGradient(
+                stops: [
+                    .init(color: .black, location: 0.35),
+                    .init(color: .clear, location: 1),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+
+    var title: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            Text(verbatim: "Geografy")
+                .font(DesignSystem.Font.roundedHeadline)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Text("Your world, explored.")
+                .font(DesignSystem.Font.callout)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .multilineTextAlignment(.center)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
+    }
+
+    func loadShapes() async {
+        let loaded = await geoJSONCache.loadShapes()
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
+            shapes = loaded
+        }
+    }
 }
 
 // MARK: - Google G Logo
