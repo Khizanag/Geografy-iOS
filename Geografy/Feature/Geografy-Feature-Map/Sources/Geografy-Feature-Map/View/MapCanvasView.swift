@@ -188,27 +188,19 @@ private extension MapCanvasView {
 
             let fontSize = min(max(transformedBounds.width / CGFloat(shape.name.count), 6), 14)
 
-            var shadowContext = context
-            shadowContext.opacity = 0.7
-            shadowContext.draw(
-                shadowContext.resolve(
-                    Text(shape.name)
-                        .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                ),
-                at: CGPoint(x: point.x + 0.5, y: point.y + 0.5),
-                anchor: .center
+            // Resolved once and recolored, so each label is laid out once per frame, not twice.
+            var label = context.resolve(
+                Text(shape.name)
+                    .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
             )
 
-            context.draw(
-                context.resolve(
-                    Text(shape.name)
-                        .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
-                        .foregroundStyle(DesignSystem.Color.onAccent)
-                ),
-                at: point,
-                anchor: .center
-            )
+            var shadowContext = context
+            shadowContext.opacity = 0.7
+            label.shading = .color(DesignSystem.Color.textPrimary)
+            shadowContext.draw(label, at: CGPoint(x: point.x + 0.5, y: point.y + 0.5), anchor: .center)
+
+            label.shading = .color(DesignSystem.Color.onAccent)
+            context.draw(label, at: point, anchor: .center)
         }
     }
 }
