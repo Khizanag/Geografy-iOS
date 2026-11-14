@@ -92,6 +92,7 @@ private extension CountryListScreen {
     var countryScrollView: some View {
         ScrollView {
             LazyVStack(spacing: DesignSystem.Spacing.xs, pinnedViews: .sectionHeaders) {
+                favoritesSection
                 if groupBy == .none {
                     Section { flatContent }
                 } else {
@@ -258,6 +259,21 @@ private extension CountryListScreen {
 
 // MARK: - List Content
 private extension CountryListScreen {
+    @ViewBuilder
+    var favoritesSection: some View {
+        let favorites = favoriteCountries
+        if !favorites.isEmpty {
+            FavoriteCountriesStrip(countries: favorites) { coordinator.push(.countryDetail($0)) }
+                .padding(.bottom, DesignSystem.Spacing.md)
+                .transition(.opacity)
+            if groupBy == .none {
+                SectionHeaderView(title: String(localized: "All Countries", bundle: .module))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, DesignSystem.Spacing.xxs)
+            }
+        }
+    }
+
     var flatContent: some View {
         ForEach(sortedCountries) { country in
             countryCard(for: country)
@@ -420,6 +436,13 @@ private extension CountryListScreen {
         }
 
         return countries
+    }
+
+    /// Hidden while searching, where favorites already show among the results.
+    var favoriteCountries: [Country] {
+        guard debouncedSearchText.isEmpty else { return [] }
+        let codes = favoritesService.favoriteCodes
+        return sortedCountries.filter { codes.contains($0.code) }
     }
 
     var sortedCountries: [Country] {
