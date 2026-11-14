@@ -291,3 +291,31 @@ private extension MapCanvasView {
             .translatedBy(x: centerX / scale, y: centerY / scale)
     }
 }
+
+// MARK: - Equatable
+/// Lets a pan or pinch re-run the parent without redrawing the canvas, as long as what it draws is unchanged.
+extension MapCanvasView: @MainActor Equatable {
+    public static func == (lhs: MapCanvasView, rhs: MapCanvasView) -> Bool {
+        lhs.scale == rhs.scale
+            && lhs.offset == rhs.offset
+            && lhs.canvasSize == rhs.canvasSize
+            && lhs.selectedCountryCode == rhs.selectedCountryCode
+            && lhs.showLabels == rhs.showLabels
+            && lhs.capitalPoint == rhs.capitalPoint
+            && lhs.wrapsHorizontally == rhs.wrapsHorizontally
+            && lhs.showDensityOverlay == rhs.showDensityOverlay
+            && lhs.highlightColor == rhs.highlightColor
+            && lhs.highlightedCodes == rhs.highlightedCodes
+            && lhs.travelStatuses == rhs.travelStatuses
+            && lhs.densityData == rhs.densityData
+            && drawSameShapes(lhs.countryShapes, rhs.countryShapes)
+    }
+
+    /// Shapes are drawn alike when they have the same countries, names, and colors; their outlines never change.
+    private static func drawSameShapes(_ lhs: [CountryShape], _ rhs: [CountryShape]) -> Bool {
+        guard lhs.count == rhs.count else { return false }
+        return zip(lhs, rhs).allSatisfy { left, right in
+            left.id == right.id && left.color == right.color && left.name == right.name
+        }
+    }
+}

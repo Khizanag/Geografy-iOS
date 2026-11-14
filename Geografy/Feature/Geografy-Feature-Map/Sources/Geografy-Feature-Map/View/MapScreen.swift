@@ -122,17 +122,19 @@ private extension MapScreen {
     }
 
     func mapCanvas(in size: CGSize) -> some View {
-        MapCanvasView(
-            countryShapes: mapState.countryShapes,
-            scale: mapState.scale,
-            offset: mapState.offset,
-            selectedCountryCode: mapState.selectedCountryCode,
-            showLabels: mapState.showLabels,
-            canvasSize: size,
-            capitalPoint: selectedCapitalPoint,
-            highlightedCodes: showsVisitedCountries ? travelService.visitedCodes : [],
-            wrapsHorizontally: isWorldMap
-        )
+        MapViewport(mapState: mapState, viewSize: size) { frame, canvasSize in
+            MapCanvasView(
+                countryShapes: mapState.countryShapes,
+                scale: frame.scale,
+                offset: frame.offset,
+                selectedCountryCode: mapState.selectedCountryCode,
+                showLabels: mapState.showLabels,
+                canvasSize: canvasSize,
+                capitalPoint: selectedCapitalPoint,
+                highlightedCodes: showsVisitedCountries ? travelService.visitedCodes : [],
+                wrapsHorizontally: isWorldMap
+            )
+        }
         .accessibilityLabel(continentFilter.map { "Interactive map of \($0)" } ?? "Interactive world map")
         .accessibilityValue(selectedCountryName.map { "Selected: \($0)" } ?? "No country selected")
         .accessibilityHint("Double tap to select a country")
@@ -259,6 +261,7 @@ private extension MapScreen {
     var magnifyGesture: some Gesture {
         MagnifyGesture()
             .onChanged { value in
+                mapState.beginGesture()
                 let newScale = min(
                     max(mapState.lastScale * value.magnification, mapState.minScale),
                     MapState.maxScale
@@ -278,31 +281,46 @@ private extension MapScreen {
                 )
                 mapState.scale = newScale
                 clampVerticalOffset()
+                redrawIfNeeded()
             }
             .onEnded { _ in
-                if isWorldMap {
-                    wrapHorizontalOffset()
-                }
+                finishGesture()
                 mapState.lastScale = mapState.scale
-                mapState.lastOffset = mapState.offset
             }
     }
 
     var dragGesture: some Gesture {
         DragGesture()
             .onChanged { value in
+                mapState.beginGesture()
                 mapState.offset = CGSize(
                     width: mapState.lastOffset.width + value.translation.width,
                     height: mapState.lastOffset.height + value.translation.height
                 )
                 clampVerticalOffset()
-                if isWorldMap {
-                    wrapHorizontalOffset()
-                }
+                redrawIfNeeded()
             }
             .onEnded { _ in
-                mapState.lastOffset = mapState.offset
+                finishGesture()
             }
+    }
+
+    /// Redraws mid-gesture only once the moved map would show an edge or blur.
+    /// The world map wraps sideways just before, so the redraw lands on the copy nearest the view.
+    func redrawIfNeeded() {
+        guard mapState.needsRedraw(in: screenSize) else { return }
+        if isWorldMap {
+            wrapHorizontalOffset()
+        }
+        mapState.redrawGestureFrame()
+    }
+
+    func finishGesture() {
+        if isWorldMap {
+            wrapHorizontalOffset()
+        }
+        mapState.lastOffset = mapState.offset
+        mapState.endGesture()
     }
 }
 #endif
