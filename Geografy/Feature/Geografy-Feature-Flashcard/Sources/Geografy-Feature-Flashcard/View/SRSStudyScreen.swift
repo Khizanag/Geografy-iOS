@@ -182,14 +182,8 @@ private extension SRSStudyScreen {
 
 // MARK: - Helpers
 private extension SRSStudyScreen {
-    var allCards: [FlashcardItem] {
-        countryDataService.countries.map {
-            FlashcardItem.make(from: $0, type: .countryToCapital)
-        }
-    }
-
     var dueCards: [FlashcardItem] {
-        flashcardService.dueCards(from: allCards)
+        flashcardService.dueCards(of: .countryToCapital, in: countryDataService.countries)
     }
 
     func announceDueCount(_ count: Int) {

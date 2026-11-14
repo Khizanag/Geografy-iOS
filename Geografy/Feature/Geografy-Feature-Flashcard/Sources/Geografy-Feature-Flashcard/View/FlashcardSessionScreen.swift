@@ -22,8 +22,7 @@ public struct FlashcardSessionScreen: View {
     @State private var isFlipped = false
     @State private var showResults = false
     @State private var correctCount = 0
-    @State private var dragOffset: CGSize = .zero
-    @State private var cardOpacity: Double = 1
+    @State private var cardExit: FlashcardCardExit?
     @State private var showQuitAlert = false
 
     @State private var showGuide = false
@@ -48,6 +47,7 @@ public struct FlashcardSessionScreen: View {
             } message: {
                 Text("Your progress will be saved.")
             }
+            .onDisappear { flashcardService.persistPendingChanges() }
     }
 }
 
@@ -89,6 +89,7 @@ private extension FlashcardSessionScreen {
         }
         .screenBackground()
         .onAppear {
+            flashcardService.persistPendingChanges()
             submitFlashcardAccuracy()
             announceResults()
         }
@@ -125,88 +126,14 @@ private extension FlashcardSessionScreen {
 // MARK: - Card
 private extension FlashcardSessionScreen {
     var cardSection: some View {
-        GeometryReader { geometry in
-            ZStack {
-                FlashcardCardView(
-                    card: currentCard,
-                    isFlipped: isFlipped,
-                    onTap: flipCard,
-                    swipeColor: swipeTintColor,
-                    swipeOpacity: swipeTintOpacity
-                )
-                .accessibilityAction(named: "I knew it") { rateFromAccessibility(knewIt: true) }
-                .accessibilityAction(named: "Review again") { rateFromAccessibility(knewIt: false) }
-                .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.8), value: isFlipped)
-                .opacity(cardOpacity)
-                .frame(
-                    width: max(geometry.size.width - DesignSystem.Spacing.xl * 2, 0),
-                    height: max(geometry.size.height * 0.85, 0)
-                )
-                .offset(dragOffset)
-                .rotationEffect(.degrees(reduceMotion ? 0 : dragRotation))
-                .gesture(swipeGesture)
-                .overlay(alignment: .bottomTrailing) { swipeHintRight }
-                .overlay(alignment: .bottomLeading) { swipeHintLeft }
-            }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .center
-            )
-        }
+        FlashcardSwipeCard(
+            card: currentCard,
+            isFlipped: isFlipped,
+            exit: cardExit,
+            onTap: flipCard,
+            onRate: rate
+        )
         .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    @ViewBuilder
-    var swipeHintRight: some View {
-        if dragOffset.width > 30 {
-            Label(
-                isFlipped ? "Correct" : "Knew It",
-                systemImage: isFlipped ? "checkmark.circle.fill" : "bolt.circle.fill"
-            )
-            .font(DesignSystem.Font.title2)
-            .fontWeight(.black)
-            .foregroundStyle(DesignSystem.Color.success)
-            .padding(DesignSystem.Spacing.lg)
-            .rotationEffect(.degrees(15))
-            .opacity(min(Double(dragOffset.width) / 100.0, 1.0))
-            .scaleEffect(min(Double(dragOffset.width) / 100.0, 1.0))
-        }
-    }
-
-    @ViewBuilder
-    var swipeHintLeft: some View {
-        if isFlipped, dragOffset.width < -30 {
-            Label("Wrong", systemImage: "xmark.circle.fill")
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.black)
-                .foregroundStyle(DesignSystem.Color.error)
-                .padding(DesignSystem.Spacing.lg)
-                .rotationEffect(.degrees(-15))
-                .opacity(min(Double(-dragOffset.width) / 100.0, 1.0))
-                .scaleEffect(min(Double(-dragOffset.width) / 100.0, 1.0))
-        }
-    }
-
-    var swipeGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                if isFlipped || value.translation.width > 20 {
-                    dragOffset = value.translation
-                }
-            }
-            .onEnded { value in
-                if isFlipped {
-                    handleSwipeEnd(translation: value.translation.width)
-                } else if value.translation.width > 100 {
-                    showSwipeFeedback(.knewIt)
-                    flyOffAndAdvance(direction: .right, result: .easy)
-                } else {
-                    withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
-                        dragOffset = .zero
-                    }
-                }
-            }
     }
 }
 
@@ -285,7 +212,7 @@ private extension FlashcardSessionScreen {
 private extension FlashcardSessionScreen {
     func showCountryDetail() {
         let code = currentCard.countryCode
-        guard let country = countryDataService.countries.first(where: { $0.code == code }) else { return }
+        guard let country = countryDataService.country(for: code) else { return }
         coordinator.sheet(.countryDetail(country))
     }
 
@@ -316,20 +243,9 @@ private extension FlashcardSessionScreen {
         exitCard(towards: exitRight ? 400 : -400, duration: 0.2, delay: 0.35)
     }
 
-    func handleSwipeEnd(translation: CGFloat) {
-        let threshold: CGFloat = 100
-
-        if translation > threshold {
-            showSwipeFeedback(.correct)
-            flyOffAndAdvance(direction: .right, result: .good)
-        } else if translation < -threshold {
-            showSwipeFeedback(.wrong)
-            flyOffAndAdvance(direction: .left, result: .again)
-        } else {
-            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7)) {
-                dragOffset = .zero
-            }
-        }
+    func rate(_ feedback: SwipeFeedback) {
+        showSwipeFeedback(feedback)
+        flyOffAndAdvance(direction: feedback == .wrong ? .left : .right, result: feedback.reviewResult)
     }
 
     func flyOffAndAdvance(direction: SwipeDirection, result: FlashcardReviewResult) {
@@ -339,14 +255,7 @@ private extension FlashcardSessionScreen {
     }
 
     func exitCard(towards offscreenX: CGFloat, duration: Double, delay: Double) {
-        if reduceMotion {
-            dragOffset = .zero
-            withAnimation(.easeOut(duration: 0.15)) { cardOpacity = 0 }
-        } else {
-            withAnimation(.easeIn(duration: duration)) {
-                dragOffset = CGSize(width: offscreenX, height: 0)
-            }
-        }
+        cardExit = FlashcardCardExit(offscreenX: offscreenX, duration: duration)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + (reduceMotion ? 0.15 : delay)) {
             showNextCard()
@@ -364,24 +273,7 @@ private extension FlashcardSessionScreen {
             currentIndex += 1
             isFlipped = false
             cardShownAt = .now
-            dragOffset = reduceMotion ? .zero : CGSize(width: 400, height: 0)
-        }
-        if reduceMotion {
-            withAnimation(.easeIn(duration: 0.15)) { cardOpacity = 1 }
-        } else {
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                dragOffset = .zero
-            }
-        }
-    }
-
-    func rateFromAccessibility(knewIt: Bool) {
-        if knewIt {
-            showSwipeFeedback(isFlipped ? .correct : .knewIt)
-            flyOffAndAdvance(direction: .right, result: isFlipped ? .good : .easy)
-        } else {
-            showSwipeFeedback(.wrong)
-            flyOffAndAdvance(direction: .left, result: .again)
+            cardExit = nil
         }
     }
 
@@ -421,24 +313,6 @@ private extension FlashcardSessionScreen {
         return CGFloat(currentIndex) / CGFloat(cards.count)
     }
 
-    var dragRotation: Double {
-        Double(dragOffset.width) / 20.0
-    }
-
-    var swipeTintColor: Color {
-        dragOffset.width >= 0 ? DesignSystem.Color.success : DesignSystem.Color.error
-    }
-
-    var swipeTintOpacity: Double {
-        let offset = dragOffset.width
-        if offset > 0 {
-            return min(offset / 150.0, 0.35)
-        } else if isFlipped {
-            return min(-offset / 150.0, 0.35)
-        }
-        return 0
-    }
-
     var averageThinkingTime: TimeInterval {
         guard !thinkingTimes.isEmpty else { return 0 }
         return thinkingTimes.reduce(0, +) / Double(thinkingTimes.count)
@@ -450,5 +324,13 @@ public enum SwipeFeedback {
     case correct
     case wrong
     case knewIt
+
+    var reviewResult: FlashcardReviewResult {
+        switch self {
+        case .correct: .good
+        case .wrong: .again
+        case .knewIt: .easy
+        }
+    }
 }
 #endif

@@ -11,8 +11,6 @@ public struct FlashcardCardView: View {
     public let card: FlashcardItem
     public let isFlipped: Bool
     public let onTap: () -> Void
-    public var swipeColor: Color = .clear
-    public var swipeOpacity: Double = 0
 
     // MARK: - Body
     public var body: some View {
@@ -149,25 +147,56 @@ private extension FlashcardCardView {
     ) -> some View {
         content()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(
-                ZStack {
-                    DesignSystem.Color.cardBackground
-                    swipeColor.opacity(swipeOpacity)
-                }
-            )
+            .background(SwipeTintFill())
             .clipShape(
                 RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
             )
-            .overlay(
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
-                    .strokeBorder(
-                        swipeOpacity > 0
-                            ? swipeColor.opacity(swipeOpacity * 2)
-                            : DesignSystem.Color.cardBackgroundHighlighted,
-                        lineWidth: swipeOpacity > 0 ? 2 : 1
-                    )
-                    .animation(.interactiveSpring(response: 0.15), value: swipeOpacity)
-            )
+            .overlay(SwipeTintBorder())
             .geoShadow(.elevated)
+    }
+}
+
+// MARK: - Equatable
+// The swipe tint arrives through the environment, so a drag frame redraws only the tint layers, not the faces.
+extension FlashcardCardView: Equatable {
+    nonisolated public static func == (lhs: FlashcardCardView, rhs: FlashcardCardView) -> Bool {
+        lhs.card == rhs.card && lhs.isFlipped == rhs.isFlipped
+    }
+}
+
+// MARK: - Swipe Tint
+/// How strongly a swipe in progress tints the card: green toward "knew it", red toward "wrong".
+struct FlashcardSwipeTint: Equatable {
+    var color: Color = .clear
+    var opacity: Double = 0
+}
+
+extension EnvironmentValues {
+    @Entry var flashcardSwipeTint = FlashcardSwipeTint()
+}
+
+private struct SwipeTintFill: View {
+    @Environment(\.flashcardSwipeTint) private var tint
+
+    var body: some View {
+        ZStack {
+            DesignSystem.Color.cardBackground
+            tint.color.opacity(tint.opacity)
+        }
+    }
+}
+
+private struct SwipeTintBorder: View {
+    @Environment(\.flashcardSwipeTint) private var tint
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
+            .strokeBorder(
+                tint.opacity > 0
+                    ? tint.color.opacity(tint.opacity * 2)
+                    : DesignSystem.Color.cardBackgroundHighlighted,
+                lineWidth: tint.opacity > 0 ? 2 : 1
+            )
+            .animation(.interactiveSpring(response: 0.15), value: tint.opacity)
     }
 }
