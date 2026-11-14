@@ -65,15 +65,11 @@ public struct LevelBadgeView: View {
 private extension LevelBadgeView {
     var badgeCircle: some View {
         ZStack {
+            glow
+                .opacity(glowPulse ? 0.85 : 0.45)
             Circle()
                 .fill(levelGradient)
                 .frame(width: size.diameter, height: size.diameter)
-                .shadow(
-                    color: glowColor.opacity(glowPulse ? 0.85 : 0.45),
-                    radius: size.glowRadius,
-                    x: 0,
-                    y: 0
-                )
             Text("\(level.level)")
                 .font(size.numberFont)
                 .fontWeight(.black)
@@ -87,6 +83,31 @@ private extension LevelBadgeView {
             guard animated else { return }
             glowPulse = true
         }
+    }
+
+    // A static gradient halo stands in for a shadow, so the pulse animates only opacity
+    // instead of re-blurring a shadow every frame.
+    var glow: some View {
+        let radius = size.diameter / 2
+        let outerRadius = radius + size.glowRadius
+        let edge = radius / outerRadius
+        let middle = (radius + size.glowRadius / 2) / outerRadius
+        return Circle()
+            .fill(
+                RadialGradient(
+                    stops: [
+                        .init(color: glowColor.opacity(0.5), location: edge),
+                        .init(color: glowColor.opacity(0.16), location: middle),
+                        .init(color: glowColor.opacity(0), location: 1),
+                    ],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: outerRadius
+                )
+            )
+            .frame(width: outerRadius * 2, height: outerRadius * 2)
+            .frame(width: size.diameter, height: size.diameter)
+            .accessibilityHidden(true)
     }
 
     var levelTitle: some View {
