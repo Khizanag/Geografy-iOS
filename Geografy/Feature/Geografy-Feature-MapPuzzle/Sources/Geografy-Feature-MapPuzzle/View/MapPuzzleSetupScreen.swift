@@ -99,7 +99,7 @@ private extension MapPuzzleSetupScreen {
     func loadOutlines() async {
         guard outlines.isEmpty else { return }
         let shapes = await geoJSONCache.loadShapes()
-        outlines = ContinentOutline.outlines(for: continents, shapes: shapes)
+        outlines = await ContinentOutline.silhouettes(for: continents, shapes: shapes)
     }
 }
 

@@ -12,18 +12,29 @@ struct ContinentOutline: @unchecked Sendable {
 
 // MARK: - Building
 extension ContinentOutline {
+    /// How much of the map an outline keeps.
+    enum Detail {
+        /// The coarsest outline and no per-country paths, for thumbnails a few dozen points tall.
+        case silhouette
+        /// An outline fine enough for a full-width map, plus every country's full-detail path to highlight.
+        case puzzle
+    }
+
     /// Joins the polygons of every shape on `continent`; `nil` when none match or the continent has no framing.
-    init?(continent: Country.Continent, shapes: [CountryShape]) {
+    init?(continent: Country.Continent, shapes: [CountryShape], detail: Detail = .puzzle) {
         guard let viewport = Self.viewport(for: continent) else { return nil }
         let path = CGMutablePath()
         var countryPaths: [String: CGPath] = [:]
         for shape in shapes where shape.continent == continent.displayName {
-            let countryPath = CGMutablePath()
-            for polygon in shape.polygons {
-                path.addPath(polygon)
-                countryPath.addPath(polygon)
+            switch detail {
+            case .silhouette:
+                Self.add(shape.detailPaths.first, orPolygonsOf: shape, to: path)
+            case .puzzle:
+                Self.add(shape.detailPath(forScale: Self.puzzleScale), orPolygonsOf: shape, to: path)
+                let countryPath = CGMutablePath()
+                shape.polygons.forEach { countryPath.addPath($0) }
+                countryPaths[shape.id] = countryPath
             }
-            countryPaths[shape.id] = countryPath
         }
         guard !path.isEmpty else { return nil }
         self.init(continent: continent, path: path, viewport: viewport, countryPaths: countryPaths)
@@ -31,11 +42,27 @@ extension ContinentOutline {
 
     static func outlines(
         for continents: [Country.Continent],
-        shapes: [CountryShape]
+        shapes: [CountryShape],
+        detail: Detail = .silhouette
     ) -> [Country.Continent: ContinentOutline] {
         continents.reduce(into: [:]) { outlines, continent in
-            outlines[continent] = ContinentOutline(continent: continent, shapes: shapes)
+            outlines[continent] = ContinentOutline(continent: continent, shapes: shapes, detail: detail)
         }
+    }
+
+    /// Builds the region thumbnails off the main actor.
+    @concurrent
+    static func silhouettes(
+        for continents: [Country.Continent],
+        shapes: [CountryShape]
+    ) async -> [Country.Continent: ContinentOutline] {
+        outlines(for: continents, shapes: shapes, detail: .silhouette)
+    }
+
+    /// Builds one continent's puzzle map off the main actor.
+    @concurrent
+    static func puzzleOutline(for continent: Country.Continent, shapes: [CountryShape]) async -> ContinentOutline? {
+        ContinentOutline(continent: continent, shapes: shapes, detail: .puzzle)
     }
 
     /// The projected window around the mainland. It crops outliers such as Russia east of the Urals,
@@ -73,6 +100,18 @@ extension ContinentOutline {
 
 // MARK: - Helpers
 private extension ContinentOutline {
+    /// Above the largest scale the puzzle map reaches: its height scales with Dynamic Type, and even
+    /// the largest sizes keep a whole continent under 2 points per map unit.
+    static let puzzleScale: CGFloat = 2
+
+    static func add(_ detailPath: CGPath?, orPolygonsOf shape: CountryShape, to path: CGMutablePath) {
+        if let detailPath {
+            path.addPath(detailPath)
+        } else {
+            shape.polygons.forEach { path.addPath($0) }
+        }
+    }
+
     struct GeographicBounds {
         let longitude: ClosedRange<Double>
         let latitude: ClosedRange<Double>

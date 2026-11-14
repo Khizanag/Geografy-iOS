@@ -51,6 +51,46 @@ struct ContinentOutlineTests {
         #expect(outline.countryPaths["DE"]?.boundingBoxOfPath == CGRect(x: 1_050, y: 520, width: 20, height: 20))
     }
 
+    @Test("A silhouette joins each shape's coarsest detail level and keeps no country paths")
+    func silhouetteUsesCoarsestDetail() throws {
+        let coarse = CGRect(x: 1_000, y: 500, width: 10, height: 10)
+        let shape = makeShape(
+            id: "FR",
+            continent: "Europe",
+            rect: CGRect(x: 990, y: 490, width: 30, height: 30),
+            detailRects: [coarse, CGRect(x: 995, y: 495, width: 20, height: 20)]
+        )
+
+        let outline = try #require(ContinentOutline(continent: .europe, shapes: [shape], detail: .silhouette))
+
+        #expect(outline.path.boundingBoxOfPath == coarse)
+        #expect(outline.countryPaths.isEmpty)
+    }
+
+    @Test("A puzzle outline highlights countries at full detail")
+    func puzzleKeepsFullDetailCountryPaths() throws {
+        let full = CGRect(x: 990, y: 490, width: 30, height: 30)
+        let shape = makeShape(
+            id: "FR",
+            continent: "Europe",
+            rect: full,
+            detailRects: [CGRect(x: 1_000, y: 500, width: 10, height: 10)]
+        )
+
+        let outline = try #require(ContinentOutline(continent: .europe, shapes: [shape], detail: .puzzle))
+
+        #expect(outline.countryPaths["FR"]?.boundingBoxOfPath == full)
+    }
+
+    @Test("Builds silhouettes off the main actor for every continent with shapes")
+    func silhouettesForContinents() async {
+        let shapes = [makeShape(continent: "Asia", rect: CGRect(x: 1_500, y: 700, width: 10, height: 10))]
+
+        let outlines = await ContinentOutline.silhouettes(for: Self.playableContinents, shapes: shapes)
+
+        #expect(Set(outlines.keys) == [.asia])
+    }
+
     @Test("No outline when no shape is on the continent")
     func noMatchingShapes() {
         let shapes = [makeShape(continent: "Africa", rect: CGRect(x: 1_000, y: 900, width: 50, height: 50))]
@@ -100,12 +140,18 @@ struct ContinentOutlineTests {
 
 // MARK: - Helpers
 private extension ContinentOutlineTests {
-    func makeShape(id: String = UUID().uuidString, continent: String, rect: CGRect) -> CountryShape {
+    func makeShape(
+        id: String = UUID().uuidString,
+        continent: String,
+        rect: CGRect,
+        detailRects: [CGRect] = []
+    ) -> CountryShape {
         CountryShape(
             id: id,
             name: continent,
             continent: continent,
             polygons: [CGPath(rect: rect, transform: nil)],
+            detailPaths: detailRects.map { CGPath(rect: $0, transform: nil) },
             centroid: CGPoint(x: rect.midX, y: rect.midY),
             boundingBox: rect,
             color: .gray

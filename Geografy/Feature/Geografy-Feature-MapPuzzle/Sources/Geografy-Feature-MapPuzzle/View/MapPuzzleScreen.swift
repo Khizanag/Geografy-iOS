@@ -321,7 +321,7 @@ private extension MapPuzzleScreen {
     func loadMap() async {
         if outline == nil {
             let shapes = await geoJSONCache.loadShapes()
-            outline = ContinentOutline(continent: continent, shapes: shapes)
+            outline = await ContinentOutline.puzzleOutline(for: continent, shapes: shapes)
         }
         buildQuestions()
         hasLoaded = true
