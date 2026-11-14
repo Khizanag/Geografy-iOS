@@ -41,13 +41,14 @@ public struct MapColoringScreen: View {
 // MARK: - Subviews
 private extension MapColoringScreen {
     var scrollContent: some View {
-        ScrollView(showsIndicators: false) {
+        let groups = groupedCountries
+        return ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 schemePicker
                     .padding(.horizontal, DesignSystem.Spacing.md)
                 legendSection
                     .padding(.horizontal, DesignSystem.Spacing.md)
-                countryGroupsList
+                countryGroupsList(groups)
                     .padding(.horizontal, DesignSystem.Spacing.md)
                 Spacer(minLength: DesignSystem.Spacing.xxl)
             }
@@ -89,8 +90,8 @@ private extension MapColoringScreen {
                 ),
                 spacing: DesignSystem.Spacing.xs
             ) {
-                ForEach(Array(colorMap.keys.sorted()), id: \.self) { key in
-                    legendItem(label: key, color: colorMap[key] ?? DesignSystem.Color.accent)
+                ForEach(selectedScheme.groups, id: \.self) { key in
+                    legendItem(label: key, color: selectedScheme.colorMap[key] ?? DesignSystem.Color.accent)
                 }
             }
         }
@@ -108,7 +109,7 @@ private extension MapColoringScreen {
     }
 
     func groupMarker(for group: String, color: Color, font: Font) -> some View {
-        Image(systemName: markerSymbol(for: group))
+        Image(systemName: selectedScheme.markerSymbol(for: group))
             .font(font)
             .foregroundStyle(color)
             .accessibilityHidden(true)
@@ -117,25 +118,24 @@ private extension MapColoringScreen {
 
 // MARK: - Country Groups
 private extension MapColoringScreen {
-    var countryGroupsList: some View {
+    func countryGroupsList(_ groups: [String: [Country]]) -> some View {
         VStack(spacing: DesignSystem.Spacing.md) {
-            ForEach(Array(groupedCountries.keys.sorted()), id: \.self) { group in
-                groupSection(group)
+            ForEach(groups.keys.sorted(), id: \.self) { group in
+                groupSection(group, countries: groups[group] ?? [])
             }
         }
     }
 
-    func groupSection(_ group: String) -> some View {
-        let countries = groupedCountries[group] ?? []
-        let groupColor = colorMap[group] ?? DesignSystem.Color.accent
+    func groupSection(_ group: String, countries: [Country]) -> some View {
+        let groupColor = selectedScheme.colorMap[group] ?? DesignSystem.Color.accent
         let isVisible = visibleGroups.contains(group)
 
         return VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             groupHeader(group, color: groupColor, isVisible: isVisible, count: countries.count)
             if isVisible {
-                VStack(spacing: DesignSystem.Spacing.xs) {
+                LazyVStack(spacing: DesignSystem.Spacing.xs) {
                     ForEach(countries) { country in
-                        countryRow(country, color: groupColor)
+                        countryRow(country, group: group, color: groupColor)
                     }
                 }
             }
@@ -186,7 +186,7 @@ private extension MapColoringScreen {
         .accessibilityHint(isVisible ? "Hides these countries" : "Shows these countries")
     }
 
-    func countryRow(_ country: Country, color: Color) -> some View {
+    func countryRow(_ country: Country, group: String, color: Color) -> some View {
         Button {
             #if !os(tvOS)
             hapticsService.impact(.light)
@@ -194,7 +194,7 @@ private extension MapColoringScreen {
             selectedCountry = country
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
-                groupMarker(for: groupKey(for: country), color: color, font: DesignSystem.Font.caption2)
+                groupMarker(for: group, color: color, font: DesignSystem.Font.caption2)
                 CountryListRow(country: country) {
                     RowChevron()
                 }
@@ -278,46 +278,6 @@ private extension MapColoringScreen {
         default: "Under 1M"
         }
     }
-
-    var colorMap: [String: Color] {
-        switch selectedScheme {
-        case .continent:
-            return [
-                "Africa": DesignSystem.Color.warning,
-                "Asia": DesignSystem.Color.error,
-                "Europe": DesignSystem.Color.blue,
-                "North America": DesignSystem.Color.indigo,
-                "South America": DesignSystem.Color.success,
-                "Oceania": DesignSystem.Color.purple,
-                "Antarctica": DesignSystem.Color.textSecondary,
-            ]
-        case .incomeLevel:
-            return [
-                "High Income": DesignSystem.Color.success,
-                "Upper Middle Income": DesignSystem.Color.blue,
-                "Lower Middle Income": DesignSystem.Color.warning,
-                "Low Income": DesignSystem.Color.error,
-                "Unknown": DesignSystem.Color.textSecondary,
-            ]
-        case .populationSize:
-            return [
-                "100M+": DesignSystem.Color.error,
-                "10M–100M": DesignSystem.Color.warning,
-                "1M–10M": DesignSystem.Color.blue,
-                "Under 1M": DesignSystem.Color.success,
-            ]
-        }
-    }
-
-    // A distinct shape per group, so the legend reads without relying on color.
-    func markerSymbol(for group: String) -> String {
-        let symbols = [
-            "circle.fill", "square.fill", "triangle.fill", "diamond.fill",
-            "hexagon.fill", "pentagon.fill", "star.fill",
-        ]
-        guard let index = colorMap.keys.sorted().firstIndex(of: group) else { return symbols[0] }
-        return symbols[index % symbols.count]
-    }
 }
 
 // MARK: - Supporting Types
@@ -343,4 +303,66 @@ extension MapColoringScreen {
             }
         }
     }
+}
+
+// MARK: - Scheme Groups
+extension MapColoringScreen.ColoringScheme {
+    var colorMap: [String: Color] {
+        switch self {
+        case .continent: Self.continentColors
+        case .incomeLevel: Self.incomeColors
+        case .populationSize: Self.populationColors
+        }
+    }
+
+    /// The scheme's group names, sorted, in legend order.
+    var groups: [String] {
+        switch self {
+        case .continent: Self.continentGroups
+        case .incomeLevel: Self.incomeGroups
+        case .populationSize: Self.populationGroups
+        }
+    }
+
+    // A distinct shape per group, so the legend reads without relying on color.
+    func markerSymbol(for group: String) -> String {
+        guard let index = groups.firstIndex(of: group) else { return Self.markerSymbols[0] }
+        return Self.markerSymbols[index % Self.markerSymbols.count]
+    }
+}
+
+private extension MapColoringScreen.ColoringScheme {
+    static let markerSymbols = [
+        "circle.fill", "square.fill", "triangle.fill", "diamond.fill",
+        "hexagon.fill", "pentagon.fill", "star.fill",
+    ]
+
+    static let continentColors: [String: Color] = [
+        "Africa": DesignSystem.Color.warning,
+        "Asia": DesignSystem.Color.error,
+        "Europe": DesignSystem.Color.blue,
+        "North America": DesignSystem.Color.indigo,
+        "South America": DesignSystem.Color.success,
+        "Oceania": DesignSystem.Color.purple,
+        "Antarctica": DesignSystem.Color.textSecondary,
+    ]
+
+    static let incomeColors: [String: Color] = [
+        "High Income": DesignSystem.Color.success,
+        "Upper Middle Income": DesignSystem.Color.blue,
+        "Lower Middle Income": DesignSystem.Color.warning,
+        "Low Income": DesignSystem.Color.error,
+        "Unknown": DesignSystem.Color.textSecondary,
+    ]
+
+    static let populationColors: [String: Color] = [
+        "100M+": DesignSystem.Color.error,
+        "10M–100M": DesignSystem.Color.warning,
+        "1M–10M": DesignSystem.Color.blue,
+        "Under 1M": DesignSystem.Color.success,
+    ]
+
+    static let continentGroups = continentColors.keys.sorted()
+    static let incomeGroups = incomeColors.keys.sorted()
+    static let populationGroups = populationColors.keys.sorted()
 }
