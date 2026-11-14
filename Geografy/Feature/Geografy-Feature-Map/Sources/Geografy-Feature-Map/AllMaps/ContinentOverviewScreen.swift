@@ -65,46 +65,28 @@ private extension ContinentOverviewScreen {
 
 // MARK: - Computed Properties
 private extension ContinentOverviewScreen {
-    var countries: [Country] {
-        countryDataService.countries
-            .filter { $0.continent == continent }
-            .sorted { lhs, rhs in
-                switch sortBy {
-                case .name: lhs.name < rhs.name
-                case .population: lhs.population > rhs.population
-                case .area: lhs.area > rhs.area
-                case .gdp: (lhs.gdpPerCapita ?? 0) > (rhs.gdpPerCapita ?? 0)
-                }
+    var continentCountries: [Country] {
+        countryDataService.countries.filter { $0.continent == continent }
+    }
+
+    func sorted(_ countries: [Country]) -> [Country] {
+        countries.sorted { lhs, rhs in
+            switch sortBy {
+            case .name: lhs.name < rhs.name
+            case .population: lhs.population > rhs.population
+            case .area: lhs.area > rhs.area
+            case .gdp: (lhs.gdpPerCapita ?? 0) > (rhs.gdpPerCapita ?? 0)
             }
+        }
     }
 
-    var totalPopulation: Int {
-        countries.reduce(0) { $0 + $1.population }
-    }
-
-    var totalArea: Double {
-        countries.reduce(0.0) { $0 + $1.area }
-    }
-
-    var largestCountry: Country? {
-        countries.max { $0.area < $1.area }
-    }
-
-    var mostPopulousCountry: Country? {
-        countries.first
-    }
-
-    var smallestCountry: Country? {
-        countries.filter { $0.area > 0 }.min { $0.area < $1.area }
-    }
-
-    var averageGDPPerCapita: Double? {
+    func averageGDPPerCapita(of countries: [Country]) -> Double? {
         let values = countries.compactMap(\.gdpPerCapita)
         guard !values.isEmpty else { return nil }
         return values.reduce(0, +) / Double(values.count)
     }
 
-    var mostSpokenLanguage: String? {
+    func mostSpokenLanguage(in countries: [Country]) -> String? {
         var weights: [String: Double] = [:]
         for country in countries {
             for language in country.languages {
@@ -118,10 +100,11 @@ private extension ContinentOverviewScreen {
 // MARK: - Subviews
 private extension ContinentOverviewScreen {
     var scrollContent: some View {
-        ScrollView(showsIndicators: false) {
+        let countries = continentCountries
+        return ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-                statsGrid
-                countryListSection
+                statsGrid(countries)
+                countryListSection(sorted(countries))
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
@@ -132,18 +115,20 @@ private extension ContinentOverviewScreen {
 
 // MARK: - Stats Grid
 private extension ContinentOverviewScreen {
-    var statsGrid: some View {
+    func statsGrid(_ countries: [Country]) -> some View {
         LazyVGrid(
             columns: [GridItem(.flexible()), GridItem(.flexible())],
             spacing: DesignSystem.Spacing.sm
         ) {
-            sizeTiles
-            profileTiles
+            sizeTiles(countries)
+            profileTiles(countries)
         }
     }
 
     @ViewBuilder
-    var sizeTiles: some View {
+    func sizeTiles(_ countries: [Country]) -> some View {
+        let totalPopulation = countries.reduce(0) { $0 + $1.population }
+        let totalArea = countries.reduce(0.0) { $0 + $1.area }
         statTile(
             icon: "flag.fill",
             label: "Countries",
@@ -164,7 +149,7 @@ private extension ContinentOverviewScreen {
                 color: DesignSystem.Color.success
             )
         }
-        if let largest = largestCountry {
+        if let largest = countries.max(by: { $0.area < $1.area }) {
             statTile(
                 icon: "arrow.up.right.and.arrow.down.left.rectangle.fill",
                 label: "Largest Country",
@@ -175,8 +160,8 @@ private extension ContinentOverviewScreen {
     }
 
     @ViewBuilder
-    var profileTiles: some View {
-        if let smallest = smallestCountry {
+    func profileTiles(_ countries: [Country]) -> some View {
+        if let smallest = countries.filter({ $0.area > 0 }).min(by: { $0.area < $1.area }) {
             statTile(
                 icon: "smallcircle.filled.circle",
                 label: "Smallest Country",
@@ -184,7 +169,7 @@ private extension ContinentOverviewScreen {
                 color: DesignSystem.Color.orange
             )
         }
-        if let average = averageGDPPerCapita {
+        if let average = averageGDPPerCapita(of: countries) {
             statTile(
                 icon: "dollarsign.circle.fill",
                 label: "Avg GDP per Capita",
@@ -192,7 +177,7 @@ private extension ContinentOverviewScreen {
                 color: DesignSystem.Color.purple
             )
         }
-        if let language = mostSpokenLanguage {
+        if let language = mostSpokenLanguage(in: countries) {
             statTile(
                 icon: "bubble.left.fill",
                 label: "Most Spoken Language",
@@ -227,10 +212,10 @@ private extension ContinentOverviewScreen {
 
 // MARK: - Country List
 private extension ContinentOverviewScreen {
-    var countryListSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+    func countryListSection(_ countries: [Country]) -> some View {
+        LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             countryListHeader
-            countryListRows
+            countryListRows(countries)
         }
     }
 
@@ -247,7 +232,7 @@ private extension ContinentOverviewScreen {
         }
     }
 
-    var countryListRows: some View {
+    func countryListRows(_ countries: [Country]) -> some View {
         ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
             Button { navigateToCountry(country) } label: {
                 CardView {
