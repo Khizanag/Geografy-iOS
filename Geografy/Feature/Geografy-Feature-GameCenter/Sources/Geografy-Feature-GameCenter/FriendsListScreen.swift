@@ -14,6 +14,7 @@ public struct FriendsListScreen: View {
     @State private var avatars: [String: Image] = [:]
     @State private var xpScores: [String: Int] = [:]
     @State private var isLoading = true
+    @State private var hasLoaded = false
 
     // MARK: - Init
     public init() {}
@@ -24,7 +25,7 @@ public struct FriendsListScreen: View {
             .screenBackground()
             .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.inline)
-            .task { await loadData() }
+            .task(id: gameCenterService.isAuthenticated) { await loadData() }
     }
 }
 
@@ -66,7 +67,7 @@ private extension FriendsListScreen {
 private extension FriendsListScreen {
     var friendsList: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.md) {
+            LazyVStack(spacing: DesignSystem.Spacing.md) {
                 friendsHeader
 
                 ForEach(Array(sortedFriends.enumerated()), id: \.element.gamePlayerID) { index, friend in
@@ -232,21 +233,33 @@ private extension FriendsListScreen {
 // MARK: - Actions
 private extension FriendsListScreen {
     func loadData() async {
-        friends = await gameCenterService.loadFriends()
-
-        for friend in friends {
-            if let uiImage = try? await friend.loadPhoto(for: .small) {
-                avatars[friend.gamePlayerID] = Image(uiImage: uiImage)
-            }
-        }
-
+        guard !hasLoaded else { return }
+        let loadedFriends = await gameCenterService.loadFriends()
+        let loadedAvatars = await loadAvatars(for: loadedFriends)
         let entries = await gameCenterService.loadFriendLeaderboardEntries(
             for: GameCenterService.LeaderboardID.totalXP
         )
+        var scores: [String: Int] = [:]
         for entry in entries {
-            xpScores[entry.player.gamePlayerID] = entry.score
+            scores[entry.player.gamePlayerID] = entry.score
         }
 
+        friends = loadedFriends
+        avatars = loadedAvatars
+        xpScores = scores
         isLoading = false
+        hasLoaded = gameCenterService.isAuthenticated
+    }
+
+    // GKPlayer isn't Sendable, so photos load one after another; collecting them locally
+    // keeps the list from re-sorting and redrawing on every photo.
+    func loadAvatars(for players: [GKPlayer]) async -> [String: Image] {
+        var loaded: [String: Image] = [:]
+        for player in players {
+            if let photo = try? await player.loadPhoto(for: .small) {
+                loaded[player.gamePlayerID] = Image(uiImage: photo)
+            }
+        }
+        return loaded
     }
 }
