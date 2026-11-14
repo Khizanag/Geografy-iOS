@@ -143,16 +143,18 @@ extension TravelTrackerScreen {
     }
 
     var continentBreakdown: [(name: String, visited: Int, total: Int)] {
-        let allContinents = Country.Continent.allCases
         let visitedCodes = travelService.visitedCodes
-        return allContinents
-            .map { continent in
-                let total = countryDataService.countries.filter { $0.continent == continent }.count
-                let visited = countryDataService.countries.filter {
-                    $0.continent == continent && visitedCodes.contains($0.code)
-                }.count
-                return (name: continent.displayName, visited: visited, total: total)
+        var totals: [Country.Continent: Int] = [:]
+        var visited: [Country.Continent: Int] = [:]
+        for country in countryDataService.countries {
+            totals[country.continent, default: 0] += 1
+            if visitedCodes.contains(country.code) {
+                visited[country.continent, default: 0] += 1
             }
-            .filter { $0.total > 0 }
+        }
+        return Country.Continent.allCases.compactMap { continent in
+            guard let total = totals[continent], total > 0 else { return nil }
+            return (name: continent.displayName, visited: visited[continent] ?? 0, total: total)
+        }
     }
 }

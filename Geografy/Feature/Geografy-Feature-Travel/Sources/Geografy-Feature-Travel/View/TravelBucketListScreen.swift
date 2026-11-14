@@ -23,10 +23,11 @@ public struct TravelBucketListScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        contentSwitcher
+        let countries = bucketListCountries
+        contentSwitcher(countries)
             .screenBackground()
             .closeButtonPlacementLeading()
-            .toolbar { toolbarItems }
+            .toolbar { toolbarItems(countries) }
             .onAppear { loadPersistedData() }
             .sheet(item: $selectedCountry) { country in
                 CoordinatedNavigationStack(showCloseButton: true) {
@@ -39,21 +40,21 @@ public struct TravelBucketListScreen: View {
 // MARK: - Subviews
 private extension TravelBucketListScreen {
     @ViewBuilder
-    var contentSwitcher: some View {
+    func contentSwitcher(_ countries: [Country]) -> some View {
         if countryDataService.countries.isEmpty {
             LoadingView()
-        } else if bucketListCountries.isEmpty {
+        } else if countries.isEmpty {
             emptyState
         } else {
-            mainContent
+            mainContent(countries)
         }
     }
 
-    var mainContent: some View {
+    func mainContent(_ countries: [Country]) -> some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                summaryHeader
-                countrySections
+            LazyVStack(spacing: DesignSystem.Spacing.md) {
+                summaryHeader(countries)
+                countrySections(countries)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
@@ -61,7 +62,7 @@ private extension TravelBucketListScreen {
         }
     }
 
-    var summaryHeader: some View {
+    func summaryHeader(_ countries: [Country]) -> some View {
         CardView {
             HStack(spacing: DesignSystem.Spacing.md) {
                 Image(systemName: "list.star")
@@ -69,11 +70,11 @@ private extension TravelBucketListScreen {
                     .foregroundStyle(DesignSystem.Color.accent)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text("\(bucketListCountries.count) countries on your bucket list")
+                    Text("\(countries.count) countries on your bucket list")
                         .font(DesignSystem.Font.headline)
                         .fontWeight(.bold)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text(continentSummary)
+                    Text(continentSummary(countries))
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
                 }
@@ -85,9 +86,9 @@ private extension TravelBucketListScreen {
         .accessibilityElement(children: .combine)
     }
 
-    var countrySections: some View {
-        ForEach(groupedSections, id: \.title) { section in
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+    func countrySections(_ countries: [Country]) -> some View {
+        ForEach(groupedSections(countries), id: \.title) { section in
+            LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 SectionHeaderView(title: section.title)
                 ForEach(section.countries) { country in
                     bucketListRow(for: country)
@@ -146,7 +147,7 @@ private extension TravelBucketListScreen {
 // MARK: - Toolbar
 private extension TravelBucketListScreen {
     @ToolbarContentBuilder
-    var toolbarItems: some ToolbarContent {
+    func toolbarItems(_ countries: [Country]) -> some ToolbarContent {
         ToolbarItem(placement: sortPlacement) {
             Menu {
                 Picker(selection: $selectedSort) {
@@ -166,7 +167,7 @@ private extension TravelBucketListScreen {
 
         #if !os(tvOS)
         ToolbarItem(placement: .primaryAction) {
-            ShareLink(item: shareableText) {
+            ShareLink(item: shareableText(countries)) {
                 Label("Share", systemImage: "square.and.arrow.up")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
@@ -190,38 +191,34 @@ private extension TravelBucketListScreen {
         return countryDataService.countries.filter { codes.contains($0.code) }
     }
 
-    var continentSummary: String {
-        let continentNames = Set(bucketListCountries.map(\.continent.displayName))
+    func continentSummary(_ countries: [Country]) -> String {
+        let continentNames = Set(countries.map(\.continent.displayName))
         return continentNames.sorted().joined(separator: ", ")
     }
 
-    var groupedSections: [(title: String, countries: [Country])] {
+    func groupedSections(_ countries: [Country]) -> [(title: String, countries: [Country])] {
+        let sorted = countries.sorted(by: \.name)
         switch selectedSort {
         case .continent:
-            return groupedByContinent
+            return groupedByContinent(sorted)
         case .priority:
-            return groupedByPriority
+            return groupedByPriority(sorted)
         case .alphabetical:
-            return [("A – Z", bucketListCountries.sorted(by: \.name))]
+            return [("A – Z", sorted)]
         }
     }
 
-    var groupedByContinent: [(title: String, countries: [Country])] {
-        let continents = Array(Set(bucketListCountries.map(\.continent))).sorted(by: \.displayName)
-        return continents.map { continent in
-            let countries = bucketListCountries
-                .filter { $0.continent == continent }
-                .sorted(by: \.name)
-            return (title: continent.displayName, countries: countries)
-        }
+    func groupedByContinent(_ sortedCountries: [Country]) -> [(title: String, countries: [Country])] {
+        let byContinent = Dictionary(grouping: sortedCountries, by: \.continent)
+        return byContinent.keys
+            .sorted(by: \.displayName)
+            .map { continent in (title: continent.displayName, countries: byContinent[continent] ?? []) }
     }
 
-    var groupedByPriority: [(title: String, countries: [Country])] {
-        BucketListPriority.allCases.compactMap { priority in
-            let countries = bucketListCountries
-                .filter { (priorities[$0.code] ?? .someday) == priority }
-                .sorted(by: \.name)
-            guard !countries.isEmpty else { return nil }
+    func groupedByPriority(_ sortedCountries: [Country]) -> [(title: String, countries: [Country])] {
+        let byPriority = Dictionary(grouping: sortedCountries) { priorities[$0.code] ?? .someday }
+        return BucketListPriority.allCases.compactMap { priority in
+            guard let countries = byPriority[priority], !countries.isEmpty else { return nil }
             return (title: priority.label, countries: countries)
         }
     }
@@ -262,14 +259,14 @@ private extension TravelBucketListScreen {
         UserDefaults.standard.set(data, forKey: UserScope.key(notesKey))
     }
 
-    var shareableText: String {
-        let lines = bucketListCountries
+    func shareableText(_ countries: [Country]) -> String {
+        let lines = countries
             .sorted(by: \.name)
             .map { country in
                 let priority = priorities[country.code] ?? .someday
                 return "\(priority.emoji) \(country.flagEmoji) \(country.name)"
             }
-        let header = "My Travel Bucket List (\(bucketListCountries.count) countries):\n\n"
+        let header = "My Travel Bucket List (\(countries.count) countries):\n\n"
         return header + lines.joined(separator: "\n")
     }
 }
