@@ -18,6 +18,9 @@ public struct QuizTypingInputView: View {
     @Binding var showFlagPreview: Bool
     public let onSubmit: () -> Void
 
+    @State private var suggestions: [Country] = []
+    @State private var foldedNames: [String] = []
+
     @FocusState private var isInputFocused: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -32,6 +35,9 @@ public struct QuizTypingInputView: View {
             .onAppear { isInputFocused = true }
             .onChange(of: showFeedback) { _, newValue in
                 if newValue { isInputFocused = false }
+            }
+            .onChange(of: typingInput) { _, newValue in
+                updateSuggestions(for: newValue)
             }
     }
 }
@@ -139,7 +145,7 @@ private extension QuizTypingInputView {
                     .transition(reduceMotion ? .opacity : .scale(scale: 0.9).combined(with: .opacity))
             }
 
-            if showAutocomplete, !filteredSuggestions.isEmpty, isInputFocused, !showFeedback {
+            if showAutocomplete, !suggestions.isEmpty, isInputFocused, !showFeedback {
                 suggestionsList
             }
 
@@ -147,24 +153,10 @@ private extension QuizTypingInputView {
         }
     }
 
-    var filteredSuggestions: [Country] {
-        guard showAutocomplete, !typingInput.isEmpty else { return [] }
-        let query = typingInput.lowercased()
-            .folding(options: .diacriticInsensitive, locale: .current)
-        return countries
-            .filter {
-                $0.name.lowercased()
-                    .folding(options: .diacriticInsensitive, locale: .current)
-                    .contains(query)
-            }
-            .prefix(5)
-            .map { $0 }
-    }
-
     var suggestionsList: some View {
         CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
             VStack(spacing: 0) {
-                ForEach(filteredSuggestions) { country in
+                ForEach(suggestions) { country in
                     Button {
                         typingInput = country.name
                         isInputFocused = false
@@ -229,6 +221,32 @@ private extension QuizTypingInputView {
         .opacity(showFeedback ? 0.4 : 1)
         .accessibilityLabel(showHint ? "Hint: \(hintText)" : "Hint")
         .accessibilityHint(showHint ? "" : "Shows the first letters of the answer")
+    }
+}
+
+// MARK: - Suggestions
+private extension QuizTypingInputView {
+    func updateSuggestions(for input: String) {
+        guard showAutocomplete, !input.isEmpty else {
+            suggestions = []
+            return
+        }
+        if foldedNames.count != countries.count {
+            foldedNames = countries.map { Self.fold($0.name) }
+        }
+        let query = Self.fold(input)
+        suggestions = Array(
+            zip(countries, foldedNames)
+                .lazy
+                .filter { $0.1.contains(query) }
+                .prefix(5)
+                .map(\.0)
+        )
+    }
+
+    static func fold(_ text: String) -> String {
+        text.lowercased()
+            .folding(options: .diacriticInsensitive, locale: .current)
     }
 }
 

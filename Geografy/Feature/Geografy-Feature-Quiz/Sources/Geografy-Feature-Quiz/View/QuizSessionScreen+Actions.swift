@@ -10,17 +10,22 @@ extension QuizSessionScreen {
             isPaused.toggle()
         }
         if isPaused {
-            timerCancellable?.cancel()
+            stopTimer()
+            stopArcadeTimer()
         } else {
             #if !os(tvOS)
-            startTimer()
+            if !isArcadeMode {
+                startTimer()
+            } else if hasArcadeTimer {
+                startArcadeTimer()
+            }
             #endif
         }
     }
 
     public func selectOption(_ optionID: UUID) {
         guard selectedOptionID == nil else { return }
-        timerCancellable?.cancel()
+        stopTimer()
         selectedOptionID = optionID
 
         let question = questions[currentIndex]
@@ -98,7 +103,7 @@ extension QuizSessionScreen {
             finishQuiz()
             #endif
         } else {
-            timerCancellable?.cancel()
+            stopTimer()
             finishQuiz()
         }
     }
@@ -108,7 +113,7 @@ extension QuizSessionScreen {
         let trimmedInput = typingInput.trimmingCharacters(in: .whitespaces)
         guard !trimmedInput.isEmpty else { return }
 
-        timerCancellable?.cancel()
+        stopTimer()
 
         let question = questions[currentIndex]
         let isCorrect = isTypingAnswerCorrect(input: trimmedInput, question: question)
@@ -138,7 +143,7 @@ extension QuizSessionScreen {
 
     public func skipSpellingBee() {
         guard !showFeedback else { return }
-        timerCancellable?.cancel()
+        stopTimer()
 
         let question = questions[currentIndex]
         let timeSpent = Date().timeIntervalSince(questionStartTime)
@@ -181,6 +186,25 @@ extension QuizSessionScreen {
 
     func correctAnswerText(for question: QuizQuestion) -> String {
         question.options.first { $0.id == question.correctOptionID }?.text ?? question.correctCountry.name
+    }
+
+    /// Freezes the question timer, keeping the time left for a later resume.
+    func stopTimer() {
+        if let timerDeadline {
+            timerRemaining = max(0, timerDeadline.timeIntervalSinceNow)
+        }
+        timerDeadline = nil
+        timerTask?.cancel()
+        timerTask = nil
+    }
+
+    func stopArcadeTimer() {
+        if let arcadeDeadline {
+            arcadeTimeRemaining = max(0, arcadeDeadline.timeIntervalSinceNow)
+        }
+        arcadeDeadline = nil
+        arcadeTimerTask?.cancel()
+        arcadeTimerTask = nil
     }
 
     // A stored task, unlike asyncAfter, is cancelled when the session disappears.

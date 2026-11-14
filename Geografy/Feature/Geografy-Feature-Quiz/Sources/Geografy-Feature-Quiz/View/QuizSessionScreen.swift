@@ -1,4 +1,3 @@
-import Combine
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
@@ -22,7 +21,8 @@ public struct QuizSessionScreen: View {
     @State var selectedOptionID: UUID?
     @State var showFeedback = false
     @State var timerRemaining: TimeInterval = 0
-    @State var timerCancellable: AnyCancellable?
+    @State var timerDeadline: Date?
+    @State var timerTask: Task<Void, Never>?
     @State var pendingTransition: Task<Void, Never>?
     @State var startTime = Date()
     @State var questionStartTime = Date()
@@ -43,7 +43,8 @@ public struct QuizSessionScreen: View {
     @State var arcadeLives = 3
     @State var arcadeScore = 0
     @State var arcadeTimeRemaining: TimeInterval = 60
-    @State var arcadeTimerCancellable: AnyCancellable?
+    @State var arcadeDeadline: Date?
+    @State var arcadeTimerTask: Task<Void, Never>?
 
     // MARK: - Init
     public init(configuration: QuizConfiguration) {
@@ -58,8 +59,8 @@ public struct QuizSessionScreen: View {
             .toolbar { toolbarContent }
             .task(id: countryDataService.countries.isEmpty) { loadQuiz() }
             .onDisappear {
-                timerCancellable?.cancel()
-                arcadeTimerCancellable?.cancel()
+                stopTimer()
+                stopArcadeTimer()
                 pendingTransition?.cancel()
             }
             .navigationDestination(item: $navigateToResult) { result in
@@ -172,7 +173,7 @@ private extension QuizSessionScreen {
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .accessibilityAddTraits(.isHeader)
-            Text("\(Int(timerRemaining))s remaining")
+            Text("\(Int(timerRemaining.rounded(.up)))s remaining")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
             Text("Question \(currentIndex + 1) of \(questions.count)")
@@ -244,7 +245,9 @@ private extension QuizSessionScreen {
             Spacer()
 
             if hasArcadeTimer {
-                QuizTimerBadge(seconds: Int(arcadeTimeRemaining), style: .compact)
+                QuizCountdown(deadline: arcadeDeadline, remaining: arcadeTimeRemaining, rounding: .down) { seconds in
+                    QuizTimerBadge(seconds: seconds, style: .compact)
+                }
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
@@ -277,11 +280,14 @@ private extension QuizSessionScreen {
     }
 
     var timerPill: some View {
-        QuizTimerBadge(
-            seconds: Int(timerRemaining),
-            totalSeconds: Int(configuration.difficulty.timerDuration)
-        )
-        .opacity(timerPulseOpacity)
+        QuizCountdown(deadline: timerDeadline, remaining: timerRemaining, rounding: .up) { seconds in
+            QuizTimerBadge(
+                seconds: seconds,
+                totalSeconds: Int(configuration.difficulty.timerDuration)
+            )
+            .opacity(timerPulseOpacity(seconds: seconds))
+            .animation(.easeInOut(duration: 0.3), value: seconds)
+        }
     }
 
     @ViewBuilder
@@ -405,9 +411,9 @@ extension QuizSessionScreen {
         return CGFloat(currentIndex) / CGFloat(questions.count)
     }
 
-    var timerPulseOpacity: Double {
+    func timerPulseOpacity(seconds: Int) -> Double {
         let threshold = configuration.difficulty.timerDuration * 0.4
-        guard timerRemaining <= threshold else { return 1.0 }
-        return timerRemaining.truncatingRemainder(dividingBy: 2) < 1 ? 0.7 : 1.0
+        guard Double(seconds) <= threshold else { return 1.0 }
+        return seconds.isMultiple(of: 2) ? 0.7 : 1.0
     }
 }

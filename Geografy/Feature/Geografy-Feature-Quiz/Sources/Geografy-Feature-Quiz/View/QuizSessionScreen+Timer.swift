@@ -1,30 +1,27 @@
 #if !os(tvOS)
-import Combine
 import SwiftUI
 
 // MARK: - Timer
 extension QuizSessionScreen {
+    /// Only the badge ticks; the screen hears from this timer once, when it runs out.
     public func startTimer() {
-        timerCancellable?.cancel()
+        timerTask?.cancel()
+        timerDeadline = nil
         guard configuration.difficulty.hasTimer else { return }
 
-        timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { _ in
-                guard !showFeedback, !isPaused else { return }
-
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    timerRemaining -= 1
-                }
-
-                if timerRemaining <= 0 {
-                    handleTimerExpired()
-                }
-            }
+        let remaining = timerRemaining
+        timerDeadline = Date.now.addingTimeInterval(remaining)
+        timerTask = Task {
+            try? await Task.sleep(for: .seconds(remaining))
+            guard !Task.isCancelled, !showFeedback, !isPaused else { return }
+            timerDeadline = nil
+            timerRemaining = 0
+            handleTimerExpired()
+        }
     }
 
     public func handleTimerExpired() {
-        timerCancellable?.cancel()
+        stopTimer()
 
         let question = questions[currentIndex]
         let timeSpent = configuration.difficulty.timerDuration
@@ -51,22 +48,21 @@ extension QuizSessionScreen {
     }
 
     public func startArcadeTimer() {
-        arcadeTimerCancellable?.cancel()
-        arcadeTimerCancellable = Timer.publish(every: 0.1, on: .main, in: .common)
-            .autoconnect()
-            .sink { _ in
-                guard !isPaused else { return }
-                arcadeTimeRemaining = max(0, arcadeTimeRemaining - 0.1)
-                if arcadeTimeRemaining <= 0 {
-                    arcadeTimerCancellable?.cancel()
-                    finishArcade()
-                }
-            }
+        arcadeTimerTask?.cancel()
+        let remaining = arcadeTimeRemaining
+        arcadeDeadline = Date.now.addingTimeInterval(remaining)
+        arcadeTimerTask = Task {
+            try? await Task.sleep(for: .seconds(remaining))
+            guard !Task.isCancelled, !isPaused else { return }
+            arcadeDeadline = nil
+            arcadeTimeRemaining = 0
+            finishArcade()
+        }
     }
 
     public func finishArcade() {
-        arcadeTimerCancellable?.cancel()
-        timerCancellable?.cancel()
+        stopArcadeTimer()
+        stopTimer()
         let totalTime: TimeInterval
         if let duration = configuration.arcadeTimer.duration {
             totalTime = duration - arcadeTimeRemaining
