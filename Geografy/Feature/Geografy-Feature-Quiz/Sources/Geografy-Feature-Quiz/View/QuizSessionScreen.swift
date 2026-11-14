@@ -56,7 +56,7 @@ public struct QuizSessionScreen: View {
             .navigationTitle(configuration.type.displayName)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
-            .task { loadQuiz() }
+            .task(id: countryDataService.countries.isEmpty) { loadQuiz() }
             .onDisappear {
                 timerCancellable?.cancel()
                 arcadeTimerCancellable?.cancel()

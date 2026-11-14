@@ -205,7 +205,9 @@ extension QuizSessionScreen {
         )
     }
 
+    /// Waits for country data, so a quiz opened at launch doesn't settle on an empty question list.
     public func loadQuiz() {
+        guard !countryDataService.countries.isEmpty else { return }
         hasLoadedQuestions = true
         let pool = configuration.region.filter(countryDataService.countries)
         let optionCount = max(configuration.difficulty.optionCount, 4)
