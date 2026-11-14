@@ -44,11 +44,12 @@ public struct OrganizationDetailScreen: View {
 // MARK: - Content
 private extension OrganizationDetailScreen {
     var scrollContent: some View {
-        ScrollView {
+        let members = memberCountries
+        return ScrollView {
             VStack(spacing: DesignSystem.Spacing.md) {
-                headerCard
+                headerCard(memberCount: members.count)
                 openMapButton
-                memberCountriesSection
+                memberCountriesSection(members)
             }
             .padding(DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
@@ -56,14 +57,14 @@ private extension OrganizationDetailScreen {
         }
     }
 
-    var headerCard: some View {
+    func headerCard(memberCount: Int) -> some View {
         CardView {
-            headerCardContent
+            headerCardContent(memberCount: memberCount)
                 .padding(DesignSystem.Spacing.md)
         }
     }
 
-    var headerCardContent: some View {
+    func headerCardContent(memberCount: Int) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             HStack(spacing: DesignSystem.Spacing.md) {
                 orgLogo
@@ -79,10 +80,10 @@ private extension OrganizationDetailScreen {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     InfoPill(
-                        "\(memberCountries.count) member countries",
+                        "\(memberCount) member countries",
                         style: .tinted(organization.highlightColor)
                     )
-                    .accessibilityLabel("\(memberCountries.count) member countries")
+                    .accessibilityLabel("\(memberCount) member countries")
                 }
                 Spacer(minLength: 0)
             }
@@ -134,12 +135,12 @@ private extension OrganizationDetailScreen {
         }
     }
 
-    var memberCountriesSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+    func memberCountriesSection(_ members: [Country]) -> some View {
+        LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Member Countries")
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
 
-            ForEach(memberCountries) { country in
+            ForEach(members) { country in
                 memberCountryRow(country)
             }
         }
@@ -168,8 +169,6 @@ private extension OrganizationDetailScreen {
 // MARK: - Helpers
 private extension OrganizationDetailScreen {
     var memberCountries: [Country] {
-        countryDataService.countries
-            .filter { $0.organizations.contains(organization.id) }
-            .sorted(by: \.name)
+        OrganizationMembership.members(of: organization.id, in: countryDataService.countries)
     }
 }

@@ -64,9 +64,10 @@ private extension OrganizationsScreen {
 // MARK: - Subviews
 private extension OrganizationsScreen {
     var scrollContent: some View {
-        ScrollView {
+        let memberCounts = OrganizationMembership.memberCounts(in: countryDataService.countries)
+        return ScrollView {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(sortedOrgs) { org in
+                ForEach(sortedOrgs(memberCounts: memberCounts)) { org in
                     Button {
                         #if !os(tvOS)
                         hapticsService.impact(.light)
@@ -78,7 +79,7 @@ private extension OrganizationsScreen {
                                 orgLogo(org)
                                 orgInfo(org)
                                 Spacer(minLength: 0)
-                                orgTrailing(org)
+                                orgTrailing(org, memberCount: memberCounts[org.id] ?? 0)
                             }
                             .padding(DesignSystem.Spacing.sm)
                         }
@@ -134,13 +135,13 @@ private extension OrganizationsScreen {
         .layoutPriority(1)
     }
 
-    func orgTrailing(_ org: Organization) -> some View {
+    func orgTrailing(_ org: Organization, memberCount: Int) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            InfoPill("\(memberCount(for: org))", style: .tinted(org.highlightColor))
+            InfoPill("\(memberCount)", style: .tinted(org.highlightColor))
                 .monospacedDigit()
                 .lineLimit(1)
                 .fixedSize()
-                .accessibilityLabel("\(memberCount(for: org)) members")
+                .accessibilityLabel("\(memberCount) members")
             RowChevron()
         }
     }
@@ -148,16 +149,12 @@ private extension OrganizationsScreen {
 
 // MARK: - Helpers
 private extension OrganizationsScreen {
-    func memberCount(for org: Organization) -> Int {
-        countryDataService.countries.filter { $0.organizations.contains(org.id) }.count
-    }
-
-    var sortedOrgs: [Organization] {
+    func sortedOrgs(memberCounts: [String: Int]) -> [Organization] {
         switch sortOption {
         case .alphabetical:
             Organization.all.sorted(by: \.displayName)
         case .memberCount:
-            Organization.all.sorted { memberCount(for: $0) > memberCount(for: $1) }
+            Organization.all.sorted { (memberCounts[$0.id] ?? 0) > (memberCounts[$1.id] ?? 0) }
         }
     }
 }
