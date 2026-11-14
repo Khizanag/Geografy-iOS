@@ -28,6 +28,7 @@ public struct HistoricalMapScreen: View {
     @State private var timelineService = TimelineService()
     @State private var selectedYear = 1_960
     @State private var allShapes: [CountryShape] = []
+    @State private var dimmedCodes: Set<String> = []
     @State private var independenceMap: [String: Int] = [:]
     @State private var selectedEvent: HistoricalEvent?
     @State private var screenSize: CGSize = .zero
@@ -79,22 +80,15 @@ private extension HistoricalMapScreen {
     }
 
     func mapContent(in size: CGSize) -> some View {
-        MapCanvasView(
-            countryShapes: mapState.countryShapes,
-            scale: mapState.scale,
-            offset: mapState.offset,
-            selectedCountryCode: mapState.selectedCountryCode,
-            showLabels: mapState.showLabels,
-            canvasSize: size
-        )
-        .accessibilityLabel("Historical map, \(String(selectedYear))")
-        .accessibilityValue(selectedCountryDescription.map { "Selected: \($0)" } ?? "No country selected")
-        .accessibilityHint("Double tap to select a country")
-        .gesture(dragGesture)
-        .gesture(magnifyGesture)
-        .onTapGesture { location in
-            handleTap(at: location, in: size)
-        }
+        HistoricalMapCanvas(mapState: mapState, canvasSize: size)
+            .accessibilityLabel("Historical map, \(String(selectedYear))")
+            .accessibilityValue(selectedCountryDescription.map { "Selected: \($0)" } ?? "No country selected")
+            .accessibilityHint("Double tap to select a country")
+            .gesture(dragGesture)
+            .gesture(magnifyGesture)
+            .onTapGesture { location in
+                handleTap(at: location, in: size)
+            }
     }
 
     var footerOverlay: some View {
@@ -402,23 +396,15 @@ private extension HistoricalMapScreen {
         applyColorsForYear(shapes: allShapes)
     }
 
+    /// Most year steps change no country's status, so the map is recolored only when the dimmed set changes.
     func applyColorsForYear(shapes: [CountryShape]) {
+        let dimmed = Set(shapes.lazy.filter { !isIndependent($0.id) }.map(\.id))
+        guard dimmed != dimmedCodes || mapState.countryShapes.isEmpty else { return }
+        dimmedCodes = dimmed
+
         let dimmedColor = DesignSystem.Color.mapLandMuted
-
-        let colored = shapes
-            .map { shape -> CountryShape in
-                let isIndependent: Bool
-                if let year = independenceMap[shape.id] {
-                    isIndependent = year <= selectedYear
-                } else {
-                    isIndependent = true
-                }
-
-                return shape.recolored(isIndependent ? shape.color : dimmedColor)
-            }
-
-        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
-            mapState.countryShapes = colored
+        mapState.countryShapes = shapes.map { shape in
+            dimmed.contains(shape.id) ? shape.recolored(dimmedColor) : shape
         }
     }
 
@@ -443,13 +429,12 @@ private extension HistoricalMapScreen {
 // MARK: - Helpers
 private extension HistoricalMapScreen {
     var independentCountryCount: Int {
-        allShapes.count { shape in
-            if let year = independenceMap[shape.id] {
-                year <= selectedYear
-            } else {
-                true
-            }
-        }
+        allShapes.count { isIndependent($0.id) }
+    }
+
+    func isIndependent(_ code: String) -> Bool {
+        guard let year = independenceMap[code] else { return true }
+        return year <= selectedYear
     }
 }
 

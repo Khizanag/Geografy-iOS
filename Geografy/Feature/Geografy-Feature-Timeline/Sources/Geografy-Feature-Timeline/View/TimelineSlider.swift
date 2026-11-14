@@ -30,7 +30,7 @@ private extension TimelineSlider {
     var yearHeader: some View {
         HStack {
             Picker("Year", selection: $selectedYear) {
-                ForEach(Array(stride(from: range.upperBound, through: range.lowerBound, by: -1)), id: \.self) { year in
+                ForEach(range.reversed(), id: \.self) { year in
                     Text(String(year)).tag(year)
                 }
             }
@@ -60,9 +60,9 @@ private extension TimelineSlider {
 
     var decadeMarkers: some View {
         HStack {
-            ForEach(majorDecades, id: \.self) { decade in
+            ForEach(Self.majorDecades, id: \.self) { decade in
                 decadeLabel(decade)
-                if decade != majorDecades.last {
+                if decade != Self.majorDecades.last {
                     Spacer(minLength: 0)
                 }
             }
@@ -96,9 +96,7 @@ private extension TimelineSlider {
         )
     }
 
-    var majorDecades: [Int] {
-        stride(from: 1_800, through: 2_020, by: 20).map { $0 }
-    }
+    static let majorDecades = Array(stride(from: 1_800, through: 2_020, by: 20))
 
     func decadeText(_ decade: Int) -> String {
         "\(decade.isMultiple(of: 100) ? String(decade) : "'\(decade % 100)")"
