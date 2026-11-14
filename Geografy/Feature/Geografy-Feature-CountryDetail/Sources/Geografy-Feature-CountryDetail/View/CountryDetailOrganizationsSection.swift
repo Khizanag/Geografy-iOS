@@ -5,10 +5,6 @@ import SwiftUI
 
 // MARK: - Organizations
 extension CountryDetailScreen {
-    var memberOrganizations: [Organization] {
-        country.organizations.compactMap { Organization.find($0) }
-    }
-
     func organizationsSection(
         countryDataService: CountryDataService,
         hapticsService: HapticsService
@@ -16,7 +12,7 @@ extension CountryDetailScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             sectionHeader("Member Of")
             VStack(spacing: DesignSystem.Spacing.sm) {
-                ForEach(memberOrganizations) { org in
+                ForEach(content.memberOrganizations) { org in
                     orgCard(org, countryDataService: countryDataService, hapticsService: hapticsService)
                 }
             }
@@ -72,8 +68,7 @@ extension CountryDetailScreen {
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
-                    let memberCount = countryDataService.countries
-                        .filter { $0.organizations.contains(org.id) }.count
+                    let memberCount = content.memberCount(of: org, among: countryDataService.countries)
                     if memberCount > 0 {
                         Text("\(memberCount) members")
                             .font(DesignSystem.Font.caption2)

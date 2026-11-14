@@ -4,14 +4,9 @@ import SwiftUI
 
 // MARK: - Fun Facts Section
 extension CountryDetailScreen {
-    var funFacts: [String] {
-        let curated = CountryFunFacts.data[country.code] ?? []
-        let profileFacts = profileService.profile(for: country.code)?.funFacts.map(\.text) ?? []
-        return curated + profileFacts.filter { !curated.contains($0) }
-    }
-
     @ViewBuilder
     var funFactsSection: some View {
+        let funFacts = content.funFacts
         if !funFacts.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("Fun Facts")

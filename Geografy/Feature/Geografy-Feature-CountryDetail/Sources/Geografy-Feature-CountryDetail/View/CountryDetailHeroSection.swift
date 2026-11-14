@@ -18,16 +18,7 @@ extension CountryDetailScreen {
                     showFlagFullScreen = true
                 }
             } label: {
-                FlagView(countryCode: country.code, height: 120)
-                    .opacity(flagScrolledUp ? 0 : 1)
-                    .geoShadow(.elevated)
-                    .onGeometryChange(for: Bool.self) { proxy in
-                        proxy.frame(in: .scrollView).maxY < 0
-                    } action: { isHidden in
-                        withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.8)) {
-                            flagScrolledUp = isHidden
-                        }
-                    }
+                CountryDetailHeroFlag(countryCode: country.code, scrollState: scrollState)
             }
             .buttonStyle(.plain)
 

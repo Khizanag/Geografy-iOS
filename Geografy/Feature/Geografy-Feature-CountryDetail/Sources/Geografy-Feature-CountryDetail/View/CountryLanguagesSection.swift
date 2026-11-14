@@ -5,7 +5,7 @@ import SwiftUI
 extension CountryDetailScreen {
     @ViewBuilder
     var languagesSection: some View {
-        let languages = LanguageProfiles.official(in: country.code)
+        let languages = content.officialLanguages
         if !languages.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("Language Facts")

@@ -21,12 +21,11 @@ public struct CountryDetailScreen: View {
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Environment(\.colorSchemeContrast) var colorSchemeContrast
 
-    @State var profileService = CountryProfileService()
-    @State var appeared = false
+    @State var content: CountryDetailContent
+    @State var scrollState = CountryDetailScrollState()
     @State var activeSheet: CountryDetailSheet?
     @State var afterSheetDismiss: (() -> Void)?
     @State var showFlagFullScreen = false
-    @State var flagScrolledUp = false
     @State private var selectedStatCategory: StatCategory = .economy
     @State var populationStartDate = Date()
 
@@ -35,6 +34,7 @@ public struct CountryDetailScreen: View {
     // MARK: - Init
     public init(country: Country) {
         self.country = country
+        _content = State(initialValue: CountryDetailContent(country: country))
     }
 
     // MARK: - Body
@@ -45,7 +45,6 @@ public struct CountryDetailScreen: View {
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .task { trackExploration() }
-            .onAppear { appeared = true }
             .userActivity("com.khizanag.geografy.viewCountry") { activity in
                 activity.title = country.name
                 activity.isEligibleForHandoff = true
@@ -94,16 +93,7 @@ private extension CountryDetailScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            HStack(spacing: flagScrolledUp ? DesignSystem.Spacing.xs : 0) {
-                FlagView(countryCode: country.code, height: 20, fixedWidth: true)
-                    .opacity(flagScrolledUp ? 1 : 0)
-                    .scaleEffect(flagScrolledUp || reduceMotion ? 1 : 0.5)
-                    .frame(width: flagScrolledUp ? nil : 0, height: 20)
-                    .clipped()
-                Text(country.name)
-                    .font(DesignSystem.Font.headline)
-            }
-            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: flagScrolledUp)
+            CountryDetailNavigationTitle(country: country, scrollState: scrollState)
         }
 
         ToolbarItem(placement: .primaryAction) {
@@ -236,8 +226,11 @@ extension CountryDetailScreen {
 
     var contentStack: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-            topSections
-            bottomSections
+            heroSection
+            LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
+                topSections
+                bottomSections
+            }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.xxl)
@@ -246,7 +239,6 @@ extension CountryDetailScreen {
 
     @ViewBuilder
     var topSections: some View {
-        heroSection
         quickFactsCard
         travelEssentialsSection
         travelSection
@@ -269,7 +261,7 @@ extension CountryDetailScreen {
 
     @ViewBuilder
     var bottomSections: some View {
-        if !memberOrganizations.isEmpty {
+        if !content.memberOrganizations.isEmpty {
             organizationsSection(
                 countryDataService: countryDataService,
                 hapticsService: hapticsService
@@ -280,7 +272,7 @@ extension CountryDetailScreen {
         phrasebookSection
         funFactsSection
         unescoSection
-        if let profile = profileService.profile(for: country.code) {
+        if let profile = content.profile {
             CountryDeepDiveSections(profile: profile)
         }
         continentExploreSection

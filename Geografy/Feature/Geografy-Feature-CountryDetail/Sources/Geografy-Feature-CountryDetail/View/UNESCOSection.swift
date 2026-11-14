@@ -4,19 +4,15 @@ import SwiftUI
 
 // MARK: - UNESCO Section
 extension CountryDetailScreen {
-    var unescoSites: [UNESCOSite] {
-        UNESCOData.data[country.code] ?? []
-    }
-
     @ViewBuilder
     var unescoSection: some View {
-        if !unescoSites.isEmpty {
+        let sorted = content.unescoSites
+        if !sorted.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 sectionHeader("UNESCO Heritage Sites")
-                unescoBadge
+                unescoBadge(siteCount: sorted.count)
                 CardView {
                     VStack(spacing: 0) {
-                        let sorted = unescoSites.sorted(by: \.yearInscribed)
                         ForEach(Array(sorted.enumerated()), id: \.offset) { index, site in
                             UNESCOSiteRow(site: site)
                             if index < sorted.count - 1 {
@@ -30,9 +26,9 @@ extension CountryDetailScreen {
         }
     }
 
-    private var unescoBadge: some View {
+    private func unescoBadge(siteCount: Int) -> some View {
         InfoPill(
-            "\(unescoSites.count) World Heritage Sites",
+            "\(siteCount) World Heritage Sites",
             systemImage: "building.columns.fill",
             style: .tinted(DesignSystem.Color.indigo)
         )

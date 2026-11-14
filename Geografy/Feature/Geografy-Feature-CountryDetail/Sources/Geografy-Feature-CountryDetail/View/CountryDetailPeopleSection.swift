@@ -86,16 +86,7 @@ private extension CountryDetailScreen {
 
     var livePopulationTicker: some View {
         HStack(alignment: .center, spacing: DesignSystem.Spacing.xs) {
-            Circle()
-                .fill(DesignSystem.Color.success)
-                .frame(width: 6, height: 6)
-                .scaleEffect(appeared && !reduceMotion ? 1.5 : 1.0)
-                .opacity(appeared && !reduceMotion ? 0.4 : 1.0)
-                .accessibilityHidden(true)
-                .animation(
-                    reduceMotion ? nil : .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
-                    value: appeared
-                )
+            LivePulseDot()
             TimelineView(.periodic(from: populationStartDate, by: 1.0)) { timeline in
                 let elapsed = timeline.date.timeIntervalSince(populationStartDate)
                 let growthPerSecond = Double(country.population) * 0.009 / 31_557_600
@@ -117,22 +108,7 @@ private extension CountryDetailScreen {
 
     var densityBar: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            GeometryReader { geometryReader in
-                let fraction = densityFraction
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    Capsule()
-                        .fill(densityColor(for: fraction))
-                        .frame(width: geometryReader.size.width * (appeared ? fraction : 0))
-                        .animation(
-                            reduceMotion ? nil : .spring(response: 0.7, dampingFraction: 0.7).delay(0.4),
-                            value: appeared
-                        )
-                }
-            }
-            .frame(height: 6)
-            .accessibilityHidden(true)
+            DensityFillBar(fraction: densityFraction, color: densityColor(for: densityFraction))
             HStack(alignment: .firstTextBaseline) {
                 Text("Relative density (ref: 500/km²)")
                     .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -143,5 +119,55 @@ private extension CountryDetailScreen {
             }
             .font(DesignSystem.Font.caption2)
         }
+    }
+}
+
+// MARK: - Live Pulse Dot
+private struct LivePulseDot: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    @State private var appeared = false
+
+    var body: some View {
+        Circle()
+            .fill(DesignSystem.Color.success)
+            .frame(width: 6, height: 6)
+            .scaleEffect(appeared && !reduceMotion ? 1.5 : 1.0)
+            .opacity(appeared && !reduceMotion ? 0.4 : 1.0)
+            .accessibilityHidden(true)
+            .animation(
+                reduceMotion ? nil : .easeInOut(duration: 1.2).repeatForever(autoreverses: true),
+                value: appeared
+            )
+            .onAppear { appeared = true }
+    }
+}
+
+// MARK: - Density Fill Bar
+private struct DensityFillBar: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    let fraction: Double
+    let color: Color
+
+    @State private var appeared = false
+
+    var body: some View {
+        GeometryReader { geometryReader in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
+                Capsule()
+                    .fill(color)
+                    .frame(width: geometryReader.size.width * (appeared ? fraction : 0))
+                    .animation(
+                        reduceMotion ? nil : .spring(response: 0.7, dampingFraction: 0.7).delay(0.4),
+                        value: appeared
+                    )
+            }
+        }
+        .frame(height: 6)
+        .accessibilityHidden(true)
+        .onAppear { appeared = true }
     }
 }

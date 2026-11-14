@@ -5,7 +5,7 @@ import SwiftUI
 extension CountryDetailScreen {
     @ViewBuilder
     var phrasebookSection: some View {
-        let phrases = profileService.profile(for: country.code)?.phrases ?? []
+        let phrases = content.profile?.phrases ?? []
         if !phrases.isEmpty {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 SectionHeaderView(title: "Language Corner", icon: "character.bubble")
