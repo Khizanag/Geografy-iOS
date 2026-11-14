@@ -4,7 +4,6 @@ import Observation
 import OSLog
 import SwiftData
 import SwiftUI
-import UIKit
 
 @MainActor
 @Observable
@@ -63,13 +62,9 @@ public final class TravelJournalService {
         }
     }
 
-    public func loadPhoto(named fileName: String) -> UIImage? {
-        let url = photosDirectory
-            .appendingPathComponent(fileName)
-        guard let data = try? Data(contentsOf: url) else {
-            return nil
-        }
-        return UIImage(data: data)
+    /// Where a stored photo lives; load it through `TravelJournalPhotoCache` at the size it's drawn.
+    public func photoURL(named fileName: String) -> URL {
+        photosDirectory.appendingPathComponent(fileName)
     }
 
     public func deletePhotos(fileNames: [String]) {

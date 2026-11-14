@@ -3,11 +3,17 @@ import SwiftUI
 
 public struct TravelJournalPhotoGrid: View {
     // MARK: - Properties
+    /// Previews scaled for the grid's cells.
     public let images: [UIImage]
     public var isReadOnly = false
     public var onDelete: ((Int) -> Void)?
+    /// The photo at an index, scaled so its shorter side is at least the given pixels, for full screen.
+    public var loadFullImage: (@MainActor (_ index: Int, _ minimumPixelSide: CGFloat) async -> UIImage?)?
 
     @State private var selectedPhotoIndex: SelectedIndex?
+
+    /// The widest a cell gets: adaptive columns are at least 80pt, so they stay under twice that.
+    static let cellPointSide: CGFloat = 160
 
     private let columns = [
         GridItem(
@@ -83,11 +89,13 @@ private extension TravelJournalPhotoGrid {
         ZStack {
             DesignSystem.Color.background
                 .ignoresSafeArea()
-            Image(uiImage: images[index])
-                .resizable()
-                .scaledToFit()
-                .ignoresSafeArea()
-                .accessibilityLabel("Photo \(index + 1) of \(images.count)")
+            FullScreenPhoto(
+                preview: images[index],
+                label: "Photo \(index + 1) of \(images.count)"
+            ) { minimumPixelSide in
+                await loadFullImage?(index, minimumPixelSide)
+            }
+            .ignoresSafeArea()
         }
         .overlay(alignment: .topTrailing) {
             closeButton
@@ -104,5 +112,33 @@ private extension TravelJournalPhotoGrid {
                 .padding(DesignSystem.Spacing.md)
         }
         .accessibilityLabel("Close photo")
+    }
+}
+
+// MARK: - FullScreenPhoto
+/// Shows the grid's preview at once, then swaps in a copy sharp enough for the screen.
+private struct FullScreenPhoto: View {
+    // MARK: - Properties
+    @Environment(\.displayScale) private var displayScale
+
+    let preview: UIImage
+    let label: LocalizedStringKey
+    let load: @MainActor (_ minimumPixelSide: CGFloat) async -> UIImage?
+
+    @State private var fullImage: UIImage?
+
+    // MARK: - Body
+    var body: some View {
+        GeometryReader { geometryReader in
+            Image(uiImage: fullImage ?? preview)
+                .resizable()
+                .scaledToFit()
+                .frame(width: geometryReader.size.width, height: geometryReader.size.height)
+                .accessibilityLabel(label)
+                .task {
+                    let side = min(geometryReader.size.width, geometryReader.size.height) * displayScale
+                    fullImage = await load(side)
+                }
+        }
     }
 }

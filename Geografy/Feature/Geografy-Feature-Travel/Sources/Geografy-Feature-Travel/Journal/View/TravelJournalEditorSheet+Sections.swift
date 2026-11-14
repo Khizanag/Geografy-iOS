@@ -241,6 +241,9 @@ extension TravelJournalEditorSheet {
                 withAnimation(reduceMotion ? nil : .default) {
                     _ = loadedImages.remove(at: deleteIndex)
                 }
+            },
+            loadFullImage: { index, minimumPixelSide in
+                await fullImage(at: index, minimumPixelSide: minimumPixelSide)
             }
         )
     }
@@ -290,52 +293,72 @@ extension TravelJournalEditorSheet {
         activeSheet = nil
     }
 
+    /// Until the stored photos have loaded they aren't in `loadedImages`, and must not count as removed.
     func saveNewPhotos() -> [String] {
-        loadedImages.compactMap { loadedImage in
+        let fileNames = loadedImages.compactMap { loadedImage in
             if let existingName = loadedImage.fileName {
                 return existingName
             }
-            guard let data = loadedImage.image
+            guard let data = loadedImage.data.flatMap(UIImage.init(data:))?
                 .jpegData(compressionQuality: 0.8) else {
                 return nil
             }
             return journalService.savePhoto(data)
         }
+        guard !existingPhotosLoaded, let storedFileNames = existingEntry?.photoFileNames else {
+            return fileNames
+        }
+        return storedFileNames + fileNames.filter { !storedFileNames.contains($0) }
     }
 
     func loadSelectedPhotos(
         _ items: [PhotosPickerItem]
     ) {
         Task {
-            var newImages: [LoadedImage] = loadedImages
-                .filter { $0.fileName != nil }
+            var picks: [LoadedImage] = []
             for item in items {
                 if let data = try? await item
                     .loadTransferable(type: Data.self),
-                    let uiImage = UIImage(data: data) {
-                    newImages.append(
+                    let preview = await TravelJournalPhotoCache.image(
+                        from: data,
+                        minimumPixelSide: previewPixelSide
+                    ) {
+                    picks.append(
                         LoadedImage(
-                            image: uiImage,
-                            fileName: nil
+                            image: preview,
+                            fileName: nil,
+                            data: data
                         )
                     )
                 }
             }
-            loadedImages = newImages
+            loadedImages = loadedImages.filter { $0.fileName != nil } + picks
         }
     }
 
-    func loadExistingPhotos(_ fileNames: [String]) {
-        loadedImages = fileNames.compactMap { fileName in
-            guard let image = journalService
-                .loadPhoto(named: fileName) else {
-                return nil
-            }
-            return LoadedImage(
-                image: image,
-                fileName: fileName
+    func loadExistingPhotos(_ fileNames: [String]) async {
+        let images = await TravelJournalPhotoCache.shared.images(
+            at: fileNames.map(journalService.photoURL(named:)),
+            minimumPixelSide: previewPixelSide
+        )
+        let existing = zip(fileNames, images).compactMap { fileName, image in
+            image.map { LoadedImage(image: $0, fileName: fileName) }
+        }
+        loadedImages = existing + loadedImages.filter { $0.fileName == nil }
+        existingPhotosLoaded = true
+    }
+
+    func fullImage(at index: Int, minimumPixelSide: CGFloat) async -> UIImage? {
+        guard loadedImages.indices.contains(index) else { return nil }
+        let loadedImage = loadedImages[index]
+        if let fileName = loadedImage.fileName {
+            return await TravelJournalPhotoCache.shared.image(
+                at: journalService.photoURL(named: fileName),
+                minimumPixelSide: minimumPixelSide
             )
         }
+        guard let data = loadedImage.data else { return nil }
+        return await TravelJournalPhotoCache.image(from: data, minimumPixelSide: minimumPixelSide)
     }
 }
 
@@ -353,6 +376,10 @@ extension TravelJournalEditorSheet {
     var selectedCountryName: String {
         countryDataService.country(for: countryCode)?.name
             ?? countryCode
+    }
+
+    var previewPixelSide: CGFloat {
+        TravelJournalPhotoGrid.cellPointSide * displayScale
     }
 
     var photosCountText: String {

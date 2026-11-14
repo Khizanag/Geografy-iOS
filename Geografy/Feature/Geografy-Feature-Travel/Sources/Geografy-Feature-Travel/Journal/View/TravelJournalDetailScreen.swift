@@ -6,11 +6,13 @@ import SwiftUI
 public struct TravelJournalDetailScreen: View {
     // MARK: - Properties
     @Environment(TravelJournalService.self) private var journalService
+    @Environment(\.displayScale) private var displayScale
 
     public let entry: TravelJournalEntry
     @Binding var activeSheet: TravelJournalScreen.ActiveSheet?
     public let countryDataService: CountryDataService
 
+    @State private var photos: [LoadedPhoto] = []
     @State private var showDeleteConfirmation = false
 
     // MARK: - Body
@@ -22,6 +24,7 @@ public struct TravelJournalDetailScreen: View {
             #endif
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
+            .task(id: entry.photoFileNames) { await loadPhotos() }
             .confirmationDialog(
                 "Delete Entry",
                 isPresented: $showDeleteConfirmation,
@@ -166,7 +169,17 @@ private extension TravelJournalDetailScreen {
                 title: "Photos (\(entry.photoFileNames.count))",
                 icon: "photo.fill"
             )
-            TravelJournalPhotoGrid(images: loadedPhotos, isReadOnly: true)
+            TravelJournalPhotoGrid(
+                images: photos.map(\.image),
+                isReadOnly: true,
+                loadFullImage: { index, minimumPixelSide in
+                    guard photos.indices.contains(index) else { return nil }
+                    return await TravelJournalPhotoCache.shared.image(
+                        at: photos[index].url,
+                        minimumPixelSide: minimumPixelSide
+                    )
+                }
+            )
         }
     }
 
@@ -252,16 +265,29 @@ private extension TravelJournalDetailScreen {
         "\(entry.durationDays) days"
     }
 
-    var loadedPhotos: [UIImage] {
-        entry.photoFileNames.compactMap { fileName in
-            journalService.loadPhoto(named: fileName)
-        }
-    }
-
     func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         return formatter.string(from: date)
+    }
+}
+
+// MARK: - Photos
+private extension TravelJournalDetailScreen {
+    struct LoadedPhoto {
+        let url: URL
+        let image: UIImage
+    }
+
+    func loadPhotos() async {
+        let urls = entry.photoFileNames.map(journalService.photoURL(named:))
+        let images = await TravelJournalPhotoCache.shared.images(
+            at: urls,
+            minimumPixelSide: TravelJournalPhotoGrid.cellPointSide * displayScale
+        )
+        photos = zip(urls, images).compactMap { url, image in
+            image.map { LoadedPhoto(url: url, image: $0) }
+        }
     }
 }

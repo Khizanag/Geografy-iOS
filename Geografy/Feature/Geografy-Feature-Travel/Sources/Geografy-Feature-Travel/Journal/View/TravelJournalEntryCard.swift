@@ -100,15 +100,10 @@ private extension TravelJournalEntryCard {
     }
 
     func photoThumbnail(fileName: String) -> some View {
-        Group {
-            if let image = journalService.loadPhoto(named: fileName) {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-            } else {
-                DesignSystem.Color.cardBackgroundHighlighted
-            }
-        }
+        TravelJournalPhotoThumbnail(
+            url: journalService.photoURL(named: fileName),
+            side: DesignSystem.Size.xxl
+        )
         .frame(
             width: DesignSystem.Size.xxl,
             height: DesignSystem.Size.xxl

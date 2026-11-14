@@ -10,6 +10,7 @@ public struct TravelJournalEditorSheet: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TravelJournalService.self) var journalService
     @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.displayScale) var displayScale
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
     @Binding var activeSheet: TravelJournalScreen.ActiveSheet?
@@ -23,6 +24,7 @@ public struct TravelJournalEditorSheet: View {
     @State var countryCode = ""
     @State var selectedPhotos: [PhotosPickerItem] = []
     @State var loadedImages: [LoadedImage] = []
+    @State var existingPhotosLoaded = false
     @State var showCountryPicker = false
 
     let existingEntry: TravelJournalEntry?
@@ -54,7 +56,7 @@ public struct TravelJournalEditorSheet: View {
             .toolbar { toolbarContent }
             .task {
                 if let entry = existingEntry {
-                    loadExistingPhotos(entry.photoFileNames)
+                    await loadExistingPhotos(entry.photoFileNames)
                 }
             }
             .onChange(of: selectedPhotos) { _, newItems in
@@ -70,8 +72,10 @@ public struct TravelJournalEditorSheet: View {
 extension TravelJournalEditorSheet {
     struct LoadedImage: Identifiable {
         let id = UUID()
+        /// Scaled for the grid; the stored file, or `data` for a new pick, holds the full photo.
         let image: UIImage
         let fileName: String?
+        var data: Data?
     }
 }
 
