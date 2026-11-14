@@ -7,7 +7,6 @@ public struct MapLoadingView: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     @State private var isAnimating = false
-    @State private var dotPhase = 0
     @State private var blobAnimating = false
 
     // MARK: - Init
@@ -21,9 +20,6 @@ public struct MapLoadingView: View {
             .onAppear {
                 isAnimating = true
                 blobAnimating = true
-            }
-            .onReceive(Timer.publish(every: 0.4, on: .main, in: .common).autoconnect()) { _ in
-                dotPhase = (dotPhase + 1) % 3
             }
     }
 }
@@ -57,33 +53,23 @@ private extension MapLoadingView {
 
     var glowBlobs: some View {
         ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.accent.opacity(0.18), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 200
-                    )
-                )
-                .frame(width: 400, height: 300)
-                .blur(radius: 40)
-                .offset(x: -80, y: -180)
-                .scaleEffect(blobAnimating ? 1.10 : 0.90)
+            glowBlob(
+                color: DesignSystem.Color.accent.opacity(0.18),
+                endRadius: 200,
+                size: CGSize(width: 400, height: 300),
+                blur: 40
+            )
+            .offset(x: -80, y: -180)
+            .scaleEffect(blobAnimating ? 1.10 : 0.90)
 
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [DesignSystem.Color.blue.opacity(0.22), .clear],
-                        center: .center,
-                        startRadius: 0,
-                        endRadius: 180
-                    )
-                )
-                .frame(width: 360, height: 280)
-                .blur(radius: 36)
-                .offset(x: 120, y: 80)
-                .scaleEffect(blobAnimating ? 0.88 : 1.10)
+            glowBlob(
+                color: DesignSystem.Color.blue.opacity(0.22),
+                endRadius: 180,
+                size: CGSize(width: 360, height: 280),
+                blur: 36
+            )
+            .offset(x: 120, y: 80)
+            .scaleEffect(blobAnimating ? 0.88 : 1.10)
         }
         .accessibilityHidden(true)
     }
@@ -127,11 +113,12 @@ private extension MapLoadingView {
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.90))
 
-                Text(dotString)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.accent)
-                    .frame(width: 28, alignment: .leading)
-                    .animation(nil, value: dotPhase)
+                TimelineView(.periodic(from: .now, by: 0.4)) { timeline in
+                    Text(dotString(at: timeline.date))
+                        .font(DesignSystem.Font.headline)
+                        .foregroundStyle(DesignSystem.Color.accent)
+                        .frame(width: 28, alignment: .leading)
+                }
             }
 
             Text("Parsing geographic data")
@@ -147,8 +134,27 @@ private extension MapLoadingView {
             .multilineTextAlignment(.center)
     }
 
-    var dotString: String {
-        String(repeating: ".", count: dotPhase + 1)
+    func dotString(at date: Date) -> String {
+        let dotPhase = Int(date.timeIntervalSinceReferenceDate / 0.4) % 3
+        return String(repeating: ".", count: dotPhase + 1)
+    }
+
+    // Each blob is blurred once into its own layer, padded so the blur isn't clipped;
+    // the breathing animation then only scales that layer instead of re-blurring every frame.
+    func glowBlob(color: Color, endRadius: CGFloat, size: CGSize, blur: CGFloat) -> some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [color, .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: endRadius
+                )
+            )
+            .frame(width: size.width, height: size.height)
+            .blur(radius: blur)
+            .padding(blur)
+            .drawingGroup()
     }
 
     func pulseRing(size: CGFloat, opacity: Double, delay: Double) -> some View {
