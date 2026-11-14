@@ -12,7 +12,6 @@
       }
     },
     "Debug Sign In" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -42,6 +41,16 @@
         }
       }
     },
+    "Sign In Failed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესვლა ვერ მოხერხდა"
+          }
+        }
+      }
+    },
     "Sign in" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -49,16 +58,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შესვლა"
-          }
-        }
-      }
-    },
-    "Sign In Failed" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "შესვლა ვერ მოხერხდა"
           }
         }
       }

@@ -79,6 +79,16 @@
         }
       }
     },
+    "%lld%%" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
+    },
     "%lld-day streak" : {
       "localizations" : {
         "ka" : {
@@ -111,16 +121,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld/7 დღე"
-          }
-        }
-      }
-    },
-    "%lld%%" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld%%"
           }
         }
       }
@@ -205,6 +205,16 @@
         }
       }
     },
+    "Display name" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საჩვენებელი სახელი"
+          }
+        }
+      }
+    },
     "Earn badges by playing!" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -217,6 +227,16 @@
       }
     },
     "Edit Profile" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროფილის რედაქტირება"
+          }
+        }
+      }
+    },
+    "Edit profile" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -277,6 +297,16 @@
         }
       }
     },
+    "No Achievements Yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ მიღწევები არ არის"
+          }
+        }
+      }
+    },
     "Premium" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -314,6 +344,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეინახე პროგრესი"
+          }
+        }
+      }
+    },
+    "Saves your display name" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ინახავს შენს საჩვენებელ სახელს"
           }
         }
       }

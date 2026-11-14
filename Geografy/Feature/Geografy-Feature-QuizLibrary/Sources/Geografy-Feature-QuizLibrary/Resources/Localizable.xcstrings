@@ -1,12 +1,54 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ of %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ of %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@-დან"
+          }
+        }
+      }
+    },
     "%lld" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა"
+          }
+        }
+      }
+    },
+    "%lld countries, %lld question types" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld countries, %2$lld question types"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ქვეყანა, %2$lld კითხვის ტიპი"
           }
         }
       }
@@ -182,6 +224,22 @@
         }
       }
     },
+    "Level %lld, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Level %1$lld, %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %1$lld, %2$@"
+          }
+        }
+      }
+    },
     "My Quizzes" : {
       "localizations" : {
         "ka" : {
@@ -248,6 +306,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გადახედვა"
+          }
+        }
+      }
+    },
+    "Quiz Library" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინების ბიბლიოთეკა"
           }
         }
       }

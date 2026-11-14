@@ -94,7 +94,7 @@ private extension CollectionsScreen {
                             .fontWeight(.semibold)
                             .foregroundStyle(DesignSystem.Color.textPrimary)
 
-                        Text("\(itemCount) item\(itemCount == 1 ? "" : "s")")
+                        Text("\(itemCount) items")
                             .font(DesignSystem.Font.caption)
                             .foregroundStyle(DesignSystem.Color.textSecondary)
                     }

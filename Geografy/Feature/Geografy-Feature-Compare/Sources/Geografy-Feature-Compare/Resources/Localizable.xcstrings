@@ -47,6 +47,16 @@
         }
       }
     },
+    "None in common" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საერთო არაფერია"
+          }
+        }
+      }
+    },
     "Search countries" : {
       "localizations" : {
         "ka" : {

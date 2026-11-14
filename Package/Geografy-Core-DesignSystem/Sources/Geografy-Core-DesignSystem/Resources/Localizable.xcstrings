@@ -1,6 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {},
+    "%@ · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@"
+          }
+        }
+      }
+    },
     "%@, %@" : {
       "localizations" : {
         "en" : {
@@ -13,6 +24,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
           }
         }
       }
@@ -43,12 +64,58 @@
         }
       }
     },
+    "%lld of %lld XP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld XP"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld XP-დან"
+          }
+        }
+      }
+    },
     "%lld percent" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld პროცენტი"
+          }
+        }
+      }
+    },
+    "%lld seconds" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld წამი"
+          }
+        }
+      }
+    },
+    "%lld selected" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld არჩეული"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
           }
         }
       }
@@ -69,22 +136,82 @@
         }
       }
     },
-    "%lld%%" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld%%"
-          }
-        }
-      }
-    },
     "Alphabet index" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ანბანის ინდექსი"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაუქმება"
+          }
+        }
+      }
+    },
+    "Change" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეცვლა"
+          }
+        }
+      }
+    },
+    "Changes it" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცვლის არჩევანს"
+          }
+        }
+      }
+    },
+    "Choose Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ქვეყნები"
+          }
+        }
+      }
+    },
+    "Choose a Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ქვეყანა"
+          }
+        }
+      }
+    },
+    "Chooses one" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ირჩევს ერთს"
+          }
+        }
+      }
+    },
+    "Clear text" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ტექსტის გასუფთავება"
           }
         }
       }
@@ -105,6 +232,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მალე"
+          }
+        }
+      }
+    },
+    "Correct" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორი"
           }
         }
       }
@@ -170,12 +307,42 @@
         }
       }
     },
+    "Give Up" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანებება"
+          }
+        }
+      }
+    },
+    "Incorrect" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არასწორი"
+          }
+        }
+      }
+    },
     "Languages" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ენები"
+          }
+        }
+      }
+    },
+    "Level %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %lld"
           }
         }
       }
@@ -216,6 +383,26 @@
         }
       }
     },
+    "NEW" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახალი"
+          }
+        }
+      }
+    },
+    "Name, capital, or code" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სახელი, დედაქალაქი ან კოდი"
+          }
+        }
+      }
+    },
     "New" : {
       "localizations" : {
         "ka" : {
@@ -226,12 +413,22 @@
         }
       }
     },
-    "NEW" : {
+    "None" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ახალი"
+            "value" : "არცერთი"
+          }
+        }
+      }
+    },
+    "Option %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვარიანტი %@"
           }
         }
       }
@@ -295,6 +492,56 @@
         }
       }
     },
+    "Remove" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წაშლა"
+          }
+        }
+      }
+    },
+    "Select All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველას არჩევა"
+          }
+        }
+      }
+    },
+    "Submit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგზავნა"
+          }
+        }
+      }
+    },
+    "Swap" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადანაცვლება"
+          }
+        }
+      }
+    },
+    "Time left" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დარჩენილი დრო"
+          }
+        }
+      }
+    },
     "Unlock with Premium" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -315,7 +562,8 @@
           }
         }
       }
-    }
+    },
+    "·" : {}
   },
   "version" : "1.0"
 }

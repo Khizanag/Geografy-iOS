@@ -43,12 +43,32 @@
         }
       }
     },
+    "All Currencies" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა ვალუტა"
+          }
+        }
+      }
+    },
     "Amount" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "თანხა"
+          }
+        }
+      }
+    },
+    "Amount in %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თანხა %@-ში"
           }
         }
       }
@@ -63,12 +83,82 @@
         }
       }
     },
+    "Converted" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონვერტირებული"
+          }
+        }
+      }
+    },
+    "Converts this amount" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკონვერტირებს ამ თანხას"
+          }
+        }
+      }
+    },
     "Currency Converter" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვალუტის კონვერტორი"
+          }
+        }
+      }
+    },
+    "Currency, code, or country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვალუტა, კოდი ან ქვეყანა"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Loading rates" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კურსები იტვირთება"
+          }
+        }
+      }
+    },
+    "No rates yet. Connect to the internet once to download them." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კურსები ჯერ არ არის. ჩამოსატვირთად ერთხელ დაუკავშირდი ინტერნეტს."
+          }
+        }
+      }
+    },
+    "Popular" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პოპულარული"
           }
         }
       }

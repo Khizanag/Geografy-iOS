@@ -41,6 +41,16 @@
         }
       }
     },
+    "%lld in a row" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ზედიზედ"
+          }
+        }
+      }
+    },
     "%lld of %lld countries" : {
       "localizations" : {
         "en" : {
@@ -53,6 +63,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld %2$lld ქვეყნიდან"
+          }
+        }
+      }
+    },
+    "%lld of 3" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 3-დან"
+          }
+        }
+      }
+    },
+    "%lld percent, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld percent, %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld პროცენტი, %2$@"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
           }
         }
       }
@@ -73,12 +119,12 @@
         }
       }
     },
-    "%lld%%" : {
+    "%llds remaining" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%llds დარჩენილია"
           }
         }
       }
@@ -93,16 +139,6 @@
         }
       }
     },
-    "%llds remaining" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%llds დარჩენილია"
-          }
-        }
-      }
-    },
     "+%lld XP" : {
       "localizations" : {
         "ka" : {
@@ -113,13 +149,22 @@
         }
       }
     },
-    "🇫🇷" : {
-      "extractionState" : "stale",
+    "Already named" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🇫🇷"
+            "value" : "უკვე დასახელებულია"
+          }
+        }
+      }
+    },
+    "Answer, %lld letters" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პასუხი, %lld ასო"
           }
         }
       }
@@ -130,6 +175,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "პასუხები"
+          }
+        }
+      }
+    },
+    "Best in %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საუკეთესო %@-ში"
           }
         }
       }
@@ -154,6 +209,26 @@
         }
       }
     },
+    "Correct" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორი"
+          }
+        }
+      }
+    },
+    "Correct answer: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწორი პასუხი: %@"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "ka" : {
@@ -164,12 +239,42 @@
         }
       }
     },
+    "Double-tap to type your answer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება პასუხის ასაკრეფად"
+          }
+        }
+      }
+    },
     "Earned %lld XP" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "მიღებულია %lld XP"
+          }
+        }
+      }
+    },
+    "Elapsed time" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასული დრო"
+          }
+        }
+      }
+    },
+    "Flag %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროშა %lld"
           }
         }
       }
@@ -194,12 +299,72 @@
         }
       }
     },
+    "Hint" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მინიშნება"
+          }
+        }
+      }
+    },
+    "Hint: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მინიშნება: %@"
+          }
+        }
+      }
+    },
+    "Incorrect" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არასწორი"
+          }
+        }
+      }
+    },
     "Leaderboard" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ლიდერბორდი"
+          }
+        }
+      }
+    },
+    "Lives" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიცოცხლეები"
+          }
+        }
+      }
+    },
+    "Mystery flag" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საიდუმლო დროშა"
+          }
+        }
+      }
+    },
+    "Name a country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე ქვეყანა"
           }
         }
       }
@@ -214,9 +379,57 @@
         }
       }
     },
+    "No Questions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვები არ არის"
+          }
+        }
+      }
+    },
+    "No country by that name" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ასეთი სახელის ქვეყანა არ არსებობს"
+          }
+        }
+      }
+    },
+    "Not in %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არ არის %@-ში"
+          }
+        }
+      }
+    },
+    "Opens the flag full screen" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის დროშას სრულ ეკრანზე"
+          }
+        }
+      }
+    },
     "Pause" : {
       "comment" : "A button that pauses the quiz.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაუზა"
+          }
+        }
+      }
     },
     "Paused" : {
       "localizations" : {
@@ -324,6 +537,26 @@
         }
       }
     },
+    "Reveals the answer and counts it as wrong" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ავლენს პასუხს და ითვლის მას არასწორად"
+          }
+        }
+      }
+    },
+    "Score" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა"
+          }
+        }
+      }
+    },
     "Score: %lld percent" : {
       "localizations" : {
         "ka" : {
@@ -344,12 +577,32 @@
         }
       }
     },
+    "Shows the first letters of the answer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აჩვენებს პასუხის პირველ ასოებს"
+          }
+        }
+      }
+    },
     "Skip" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გამოტოვება"
+          }
+        }
+      }
+    },
+    "Skipped" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოტოვებული"
           }
         }
       }
@@ -374,6 +627,16 @@
         }
       }
     },
+    "Streak" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სერია"
+          }
+        }
+      }
+    },
     "Submit" : {
       "localizations" : {
         "ka" : {
@@ -394,12 +657,42 @@
         }
       }
     },
+    "This quiz has no questions for the selected region. Try World." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ ვიქტორინას არჩეული რეგიონისთვის კითხვები არ აქვს. სცადე მსოფლიო."
+          }
+        }
+      }
+    },
+    "Time" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დრო"
+          }
+        }
+      }
+    },
     "Type a country name…" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "აკრიფე ქვეყნის სახელი…"
+          }
+        }
+      }
+    },
+    "Type your answer" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აკრიფე პასუხი"
           }
         }
       }
@@ -430,6 +723,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენი პროგრესი დაიკარგება."
+          }
+        }
+      }
+    },
+    "🇫🇷" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🇫🇷"
           }
         }
       }

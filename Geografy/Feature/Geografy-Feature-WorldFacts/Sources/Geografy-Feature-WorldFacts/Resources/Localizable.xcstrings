@@ -135,6 +135,16 @@
         }
       }
     },
+    "Topic" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თემა"
+          }
+        }
+      }
+    },
     "Type" : {
       "localizations" : {
         "ka" : {
@@ -151,6 +161,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "UNESCO"
+          }
+        }
+      }
+    },
+    "World Facts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო ფაქტები"
           }
         }
       }

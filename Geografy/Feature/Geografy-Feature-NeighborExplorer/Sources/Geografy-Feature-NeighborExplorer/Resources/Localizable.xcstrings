@@ -17,6 +17,16 @@
         }
       }
     },
+    "Destination" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანიშნულება"
+          }
+        }
+      }
+    },
     "Find Shortest Path" : {
       "localizations" : {
         "ka" : {

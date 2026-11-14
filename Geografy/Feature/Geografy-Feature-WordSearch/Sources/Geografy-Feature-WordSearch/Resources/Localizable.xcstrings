@@ -1,12 +1,84 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld directions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld მიმართულება"
+          }
+        }
+      }
+    },
+    "%lld words" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld სიტყვა"
+          }
+        }
+      }
+    },
+    "%lld words, such as %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld words, such as %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld სიტყვა, მაგალითად %2$@"
+          }
+        }
+      }
+    },
+    "%lld × %lld grid" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld × %2$lld grid"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld × %2$lld ბადე"
+          }
+        }
+      }
+    },
     "All Words Found!" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ყველა სიტყვა ნაპოვნია!"
+          }
+        }
+      }
+    },
+    "Drag across the letters to find every hidden word." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გადაატარე თითი ასოებზე, რომ იპოვო ყველა დამალული სიტყვა."
+          }
+        }
+      }
+    },
+    "Elapsed time" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასული დრო"
           }
         }
       }
@@ -21,6 +93,16 @@
         }
       }
     },
+    "Found, %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაპოვნია, %@"
+          }
+        }
+      }
+    },
     "Guide" : {
       "localizations" : {
         "ka" : {
@@ -31,8 +113,27 @@
         }
       }
     },
+    "Letter grid" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ასოების ბადე"
+          }
+        }
+      }
+    },
+    "Not found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არ არის ნაპოვნი"
+          }
+        }
+      }
+    },
     "Pause" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -63,12 +164,51 @@
       }
     },
     "Resume" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
+    "Reveal location" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მდებარეობის გამოვლენა"
+          }
+        }
+      }
+    },
+    "Revealed, %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოვლენილია, %@"
+          }
+        }
+      }
+    },
+    "Row %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რიგი %lld"
+          }
+        }
+      }
+    },
+    "Starts a %@ puzzle" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იწყებს %@ თავსატეხს"
           }
         }
       }
@@ -79,6 +219,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "თემა"
+          }
+        }
+      }
+    },
+    "Timed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დროზე"
           }
         }
       }

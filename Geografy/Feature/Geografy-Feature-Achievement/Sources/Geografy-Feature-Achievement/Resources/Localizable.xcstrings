@@ -136,12 +136,12 @@
         }
       }
     },
-    "Level %lld" : {
+    "Dismisses the banner" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "დონე %lld"
+            "value" : "ხურავს ბანერს"
           }
         }
       }
@@ -152,6 +152,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დონე აიწია!"
+          }
+        }
+      }
+    },
+    "Level %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %lld"
           }
         }
       }
@@ -172,6 +182,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "პროგრესი"
+          }
+        }
+      }
+    },
+    "Rarity" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იშვიათობა"
           }
         }
       }

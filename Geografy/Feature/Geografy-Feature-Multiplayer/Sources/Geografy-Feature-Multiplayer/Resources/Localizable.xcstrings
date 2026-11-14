@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    ":" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":"
-          }
-        }
-      }
-    },
     "%@ wants a rematch!" : {
       "localizations" : {
         "ka" : {
@@ -58,6 +48,64 @@
         }
       }
     },
+    "%lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "%lld of %lld, winner" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld, winner"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld-დან, გამარჯვებული"
+          }
+        }
+      }
+    },
+    "%lld points" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქულა"
+          }
+        }
+      }
+    },
+    "%lld points, %lld of %lld correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld points, %2$lld of %3$lld correct"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld ქულა, სწორია %2$lld %3$lld-დან"
+          }
+        }
+      }
+    },
     "%lld questions" : {
       "localizations" : {
         "ka" : {
@@ -100,6 +148,16 @@
         }
       }
     },
+    ":" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ":"
+          }
+        }
+      }
+    },
     "Accept" : {
       "localizations" : {
         "ka" : {
@@ -130,6 +188,16 @@
         }
       }
     },
+    "Challenge a friend on a device close by." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოუწვიე მეგობარი ახლომდებარე მოწყობილობაზე."
+          }
+        }
+      }
+    },
     "Challenge a friend on the same network" : {
       "localizations" : {
         "ka" : {
@@ -146,6 +214,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დაკავშირებულია"
+          }
+        }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
           }
         }
       }
@@ -190,6 +268,26 @@
         }
       }
     },
+    "GO!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე!"
+          }
+        }
+      }
+    },
+    "Get ready, %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოემზადე, %lld"
+          }
+        }
+      }
+    },
     "Get ready..." : {
       "localizations" : {
         "ka" : {
@@ -200,7 +298,27 @@
         }
       }
     },
-    "GO!" : {
+    "Give Up" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანებება"
+          }
+        }
+      }
+    },
+    "Give Up?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანებება?"
+          }
+        }
+      }
+    },
+    "Go!" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -226,6 +344,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეერთება"
+          }
+        }
+      }
+    },
+    "Join %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-თან შეერთება"
           }
         }
       }
@@ -301,6 +429,16 @@
         }
       }
     },
+    "Mystery flag" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საიდუმლო დროშა"
+          }
+        }
+      }
+    },
     "No Matches Yet" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -322,12 +460,32 @@
         }
       }
     },
+    "One of you hosts and picks the quiz. The other joins from their phone." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ერთი ქმნის ლობის და ირჩევს ვიქტორინას. მეორე უერთდება თავისი ტელეფონიდან."
+          }
+        }
+      }
+    },
     "Opponent answered" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "მოწინააღმდეგემ უპასუხა"
+          }
+        }
+      }
+    },
+    "Opponent found" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგე ნაპოვნია"
           }
         }
       }
@@ -352,6 +510,16 @@
         }
       }
     },
+    "Play Nearby" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლომახლო თამაში"
+          }
+        }
+      }
+    },
     "Play a multiplayer match to see your history here." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -363,12 +531,28 @@
         }
       }
     },
-    "Play Nearby" : {
+    "Progress" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ახლომახლო თამაში"
+            "value" : "პროგრესი"
+          }
+        }
+      }
+    },
+    "Question %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Question %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვა %1$lld %2$lld-დან"
           }
         }
       }
@@ -443,6 +627,36 @@
         }
       }
     },
+    "Round %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაუნდი %lld"
+          }
+        }
+      }
+    },
+    "Score" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა"
+          }
+        }
+      }
+    },
+    "Searching for an opponent…" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგის ძიება…"
+          }
+        }
+      }
+    },
     "Searching for opponent..." : {
       "localizations" : {
         "ka" : {
@@ -483,32 +697,12 @@
         }
       }
     },
-    "vs" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "vs"
-          }
-        }
-      }
-    },
     "VS" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "VS"
-          }
-        }
-      }
-    },
-    "vs %@" : {
-      "localizations" : {
-        "ka" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@-ს წინააღმდეგ"
           }
         }
       }
@@ -543,12 +737,48 @@
         }
       }
     },
+    "You %lld, %@ %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You %1$lld, %2$@ %3$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენ %1$lld, %2$@ %3$lld"
+          }
+        }
+      }
+    },
     "Your progress will be lost." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენი პროგრესი დაიკარგება."
+          }
+        }
+      }
+    },
+    "vs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vs"
+          }
+        }
+      }
+    },
+    "vs %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წინააღმდეგ"
           }
         }
       }

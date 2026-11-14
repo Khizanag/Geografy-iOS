@@ -47,12 +47,48 @@
         }
       }
     },
+    "Destination" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დანიშნულება"
+          }
+        }
+      }
+    },
     "Distance Calculator" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "მანძილის კალკულატორი"
+          }
+        }
+      }
+    },
+    "Distance between capitals" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მანძილი დედაქალაქებს შორის"
+          }
+        }
+      }
+    },
+    "From %@ to %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "From %1$@ to %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@-დან %2$@-მდე"
           }
         }
       }
@@ -67,12 +103,44 @@
         }
       }
     },
+    "Heading %@, %lld degrees" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Heading %1$@, %2$lld degrees"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიმართულება %1$@, %2$lld გრადუსი"
+          }
+        }
+      }
+    },
     "In perspective" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "პერსპექტივაში"
+          }
+        }
+      }
+    },
+    "Map of the route from %@ to %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Map of the route from %1$@ to %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მარშრუტის რუკა %1$@-დან %2$@-მდე"
           }
         }
       }
@@ -87,12 +155,52 @@
         }
       }
     },
+    "Origin" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საწყისი წერტილი"
+          }
+        }
+      }
+    },
     "Search countries…" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნების ძიება…"
+          }
+        }
+      }
+    },
+    "Sets it as the destination" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აყენებს დანიშნულებად"
+          }
+        }
+      }
+    },
+    "Sets it as the origin" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აყენებს საწყის წერტილად"
+          }
+        }
+      }
+    },
+    "This route can't be measured: a capital's location is missing." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ მარშრუტის გაზომვა შეუძლებელია: დედაქალაქის მდებარეობა უცნობია."
           }
         }
       }

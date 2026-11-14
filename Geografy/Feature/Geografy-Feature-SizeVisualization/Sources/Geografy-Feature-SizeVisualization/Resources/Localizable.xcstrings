@@ -21,6 +21,36 @@
         }
       }
     },
+    "Change reference country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საბაზისო ქვეყნის შეცვლა"
+          }
+        }
+      }
+    },
+    "Compares with the reference country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ადარებს საბაზისო ქვეყანას"
+          }
+        }
+      }
+    },
+    "Rank %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეიტინგი %lld"
+          }
+        }
+      }
+    },
     "Reference: %@" : {
       "localizations" : {
         "ka" : {
@@ -37,6 +67,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნების ძიება..."
+          }
+        }
+      }
+    },
+    "Sets this country as the reference" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ ქვეყანას საბაზისოდ აყენებს"
           }
         }
       }

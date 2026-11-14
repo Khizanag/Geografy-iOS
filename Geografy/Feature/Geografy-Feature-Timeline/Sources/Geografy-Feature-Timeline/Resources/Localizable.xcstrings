@@ -53,6 +53,26 @@
         }
       }
     },
+    "Clear Filters" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფილტრების გასუფთავება"
+          }
+        }
+      }
+    },
+    "Continent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტი"
+          }
+        }
+      }
+    },
     "Done" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -64,8 +84,15 @@
         }
       }
     },
-    "Event details" : {
-
+    "Double tap to select a country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ქვეყნის ასარჩევად"
+          }
+        }
+      }
     },
     "Event Details" : {
       "localizations" : {
@@ -73,6 +100,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მოვლენის დეტალები"
+          }
+        }
+      }
+    },
+    "Event Type" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის ტიპი"
+          }
+        }
+      }
+    },
+    "Event details" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის დეტალები"
+          }
+        }
+      }
+    },
+    "Event type" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოვლენის ტიპი"
           }
         }
       }
@@ -97,6 +154,16 @@
         }
       }
     },
+    "Historical map, %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული რუკა, %@"
+          }
+        }
+      }
+    },
     "Historical state unknown" : {
       "localizations" : {
         "ka" : {
@@ -113,6 +180,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დამოუკიდებელი %@-დან"
+          }
+        }
+      }
+    },
+    "No country selected" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყანა არ არის არჩეული"
           }
         }
       }
@@ -134,6 +211,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "წლის არჩევა"
+          }
+        }
+      }
+    },
+    "Selected: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არჩეულია: %@"
           }
         }
       }

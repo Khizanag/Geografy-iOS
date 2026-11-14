@@ -21,6 +21,16 @@
         }
       }
     },
+    "%lld countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა"
+          }
+        }
+      }
+    },
     "Building puzzle…" : {
       "localizations" : {
         "ka" : {
@@ -51,12 +61,32 @@
         }
       }
     },
+    "Map Unavailable" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა მიუწვდომელია"
+          }
+        }
+      }
+    },
     "Pick a continent and guess where countries belong on the map." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "აირჩიე კონტინენტი და გამოიცანი ქვეყნების მდებარეობა რუკაზე."
+          }
+        }
+      }
+    },
+    "Pick the highlighted country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე მონიშნული ქვეყანა"
           }
         }
       }
@@ -83,6 +113,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "აირჩიე სწორი რეგიონი რუკაზე"
+          }
+        }
+      }
+    },
+    "Starts a puzzle in %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იწყებს თავსატეხს %@-ში"
+          }
+        }
+      }
+    },
+    "The highlighted country is %@." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონიშნული ქვეყანაა %@."
+          }
+        }
+      }
+    },
+    "This region's map couldn't be loaded." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ რეგიონის რუკა ვერ ჩაიტვირთა."
+          }
+        }
+      }
+    },
+    "Which country is highlighted on the map of %@?" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რომელი ქვეყანაა მონიშნული %@-ს რუკაზე?"
           }
         }
       }

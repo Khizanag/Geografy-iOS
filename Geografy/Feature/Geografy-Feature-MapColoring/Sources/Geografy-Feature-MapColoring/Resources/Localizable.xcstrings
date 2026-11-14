@@ -1,6 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@, %lld countries" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$lld countries"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$lld ქვეყანა"
+          }
+        }
+      }
+    },
     "%lld" : {
       "localizations" : {
         "ka" : {
@@ -11,12 +27,52 @@
         }
       }
     },
+    "Collapsed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩაკეცილია"
+          }
+        }
+      }
+    },
+    "Expanded" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაშლილია"
+          }
+        }
+      }
+    },
+    "Hides these countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მალავს ამ ქვეყნებს"
+          }
+        }
+      }
+    },
     "Map Coloring Book" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "რუკის შეფერადება"
+          }
+        }
+      }
+    },
+    "Shows these countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აჩვენებს ამ ქვეყნებს"
           }
         }
       }

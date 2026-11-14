@@ -43,6 +43,16 @@
         }
       }
     },
+    "%lld percent of lessons complete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაკვეთილების %lld პროცენტი დასრულებულია"
+          }
+        }
+      }
+    },
     "%lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -75,6 +85,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენი მოგზაურობა"
+          }
+        }
+      }
+    },
+    "Your Journey, %lld of %lld modules complete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your Journey, %1$lld of %2$lld modules complete"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი მოგზაურობა, %1$lld %2$lld მოდულიდან დასრულებული"
           }
         }
       }
