@@ -117,11 +117,11 @@ private extension CountrySpotlightCard {
         .padding(.vertical, DesignSystem.Spacing.xs)
         .background(
             DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+            in: Self.panelShape
         )
         .overlay {
             if colorSchemeContrast == .increased {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+                Self.panelShape
                     .strokeBorder(DesignSystem.Color.dividerSubtle)
             }
         }
@@ -153,7 +153,7 @@ private extension CountrySpotlightCard {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+            in: Self.panelShape
         )
     }
 }
@@ -164,7 +164,7 @@ private extension CountrySpotlightCard {
         VStack(spacing: 3) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
                 .accessibilityHidden(true)
             Text(value)
                 .font(DesignSystem.Font.caption2)
@@ -181,6 +181,12 @@ private extension CountrySpotlightCard {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(label): \(value)")
     }
+
+    /// Inner panels sit one padding in from the card edge, so their corners nest inside the card's.
+    static let panelShape = RoundedRectangle(
+        cornerRadius: DesignSystem.CornerRadius.nested(inset: DesignSystem.Spacing.md),
+        style: .continuous
+    )
 
     var continentColor: Color {
         switch country.continent {
