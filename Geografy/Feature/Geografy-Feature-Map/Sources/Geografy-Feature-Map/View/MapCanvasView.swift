@@ -109,9 +109,8 @@ private extension MapCanvasView {
         let isSelected = shape.id == selectedCountryCode
         let strokeWidth = 2.0 / scale
 
-        for cgPath in shape.polygons {
-            let path = Path(cgPath)
-
+        let paths = shape.detailPath(forScale: scale).map { [Path($0)] } ?? shape.polygons.map(Path.init)
+        for path in paths {
             if showDensityOverlay, let density = densityData[shape.id] {
                 transformedContext.fill(path, with: .color(densityHeatmapColor(for: density)))
             } else {

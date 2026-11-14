@@ -23,7 +23,8 @@ public final class GeoJSONCache {
             return await existingTask.value
         }
 
-        let task = Task.detached(priority: .userInitiated) { () -> [CountryShape] in
+        // Utility, so parsing the map never competes with the first screens drawing.
+        let task = Task.detached(priority: .utility) { () -> [CountryShape] in
             guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
                   let data = try? Data(contentsOf: url) else { return [] }
             return GeoJSONParser.parse(data: data)

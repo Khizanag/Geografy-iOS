@@ -415,16 +415,18 @@ private extension MapScreen {
         let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
         let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
 
-        let mapPoint = CGPoint(
-            x: (point.x - originX) / mapState.scale,
-            y: (point.y - originY) / mapState.scale
-        )
+        // The world map repeats sideways, so a tap on a neighboring copy maps back onto the one copy of the shapes.
+        let mapWidth = MapProjection.mapWidth
+        let unwrappedX = (point.x - originX) / mapState.scale
+        let wrappedX = (unwrappedX.truncatingRemainder(dividingBy: mapWidth) + mapWidth)
+            .truncatingRemainder(dividingBy: mapWidth)
+        let mapPoint = CGPoint(x: isWorldMap ? wrappedX : unwrappedX, y: (point.y - originY) / mapState.scale)
 
         let sortedByArea = mapState.countryShapes.sorted {
             $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
         }
 
-        for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
+        for shape in sortedByArea where shape.contains(mapPoint) {
             withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.78)) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil

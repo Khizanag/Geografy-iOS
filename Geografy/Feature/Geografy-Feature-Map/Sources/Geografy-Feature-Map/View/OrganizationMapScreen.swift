@@ -325,7 +325,7 @@ private extension OrganizationMapScreen {
         let sortedByArea = mapState.countryShapes.sorted {
             $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
         }
-        for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
+        for shape in sortedByArea where shape.contains(mapPoint) {
             if mapState.selectedCountryCode == shape.id {
                 mapState.selectedCountryCode = nil
                 #if !os(tvOS)

@@ -4,7 +4,8 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 
 public enum GeoJSONParser {
-    private static var territoryMergeMap: [String: String] {
+    /// Read once per parse: each disputed territory's merge target, from the user's chosen option.
+    private static func makeTerritoryMergeMap() -> [String: String] {
         TerritorialDispute.all.reduce(into: [:]) { map, dispute in
             guard let geoJSONName = dispute.geoJSONName else { return }
             let stored = UserDefaults.standard.string(forKey: dispute.userDefaultsKey)
@@ -58,8 +59,9 @@ public enum GeoJSONParser {
             return []
         }
 
+        let mergeMap = makeTerritoryMergeMap()
         var shapes = collection.features.enumerated().compactMap { index, feature in
-            parseFeature(feature, at: index)
+            parseFeature(feature, at: index, mergeMap: mergeMap)
         }
 
         shapes = consolidateMergedTerritories(shapes)
@@ -72,7 +74,7 @@ public enum GeoJSONParser {
 
 // MARK: - Parsing
 private extension GeoJSONParser {
-    static func parseFeature(_ feature: GeoJSONFeature, at index: Int) -> CountryShape? {
+    static func parseFeature(_ feature: GeoJSONFeature, at index: Int, mergeMap: [String: String]) -> CountryShape? {
         let rawCode = feature.id ?? extractISOCode(from: feature)
         let name = extractProperty(from: feature, keys: ["name", "NAME", "ADMIN"])
         let continent = extractProperty(from: feature, keys: ["CONTINENT"]) ?? ""
@@ -87,13 +89,14 @@ private extension GeoJSONParser {
         // Filter non-country territories
         guard !filteredTerritories.contains(name) else { return nil }
 
-        let code = resolveCountryCode(rawCode: rawCode, name: name)
+        let code = resolveCountryCode(rawCode: rawCode, name: name, mergeMap: mergeMap)
 
         let ringArrays = extractRings(from: feature.geometry)
         guard !ringArrays.isEmpty else { return nil }
 
         var allPoints: [CGPoint] = []
         var paths: [CGPath] = []
+        var projectedRings: [[CGPoint]] = []
         var largestPolygonPoints: [CGPoint] = []
         var largestPolygonArea: CGFloat = 0
 
@@ -115,6 +118,7 @@ private extension GeoJSONParser {
             path.closeSubpath()
 
             paths.append(path)
+            projectedRings.append(projectedPoints)
             allPoints.append(contentsOf: projectedPoints)
 
             // Track the largest polygon for label placement.
@@ -147,6 +151,7 @@ private extension GeoJSONParser {
             name: name,
             continent: continent,
             polygons: paths,
+            detailPaths: makeDetailPaths(rings: projectedRings),
             centroid: centroid,
             boundingBox: boundingBox,
             color: color
@@ -188,11 +193,11 @@ private extension GeoJSONParser {
         "Cyprus U.N. Buffer Zone": "CY",
     ]
 
-    static func resolveCountryCode(rawCode: String, name: String) -> String {
+    static func resolveCountryCode(rawCode: String, name: String, mergeMap: [String: String]) -> String {
         if let code = alwaysMerge[name] {
             return code
         }
-        if let mergeCode = territoryMergeMap[name] {
+        if let mergeCode = mergeMap[name] {
             return mergeCode
         }
         if rawCode.count == 3 {
@@ -234,6 +239,7 @@ private extension GeoJSONParser {
                         name: shape.name,
                         continent: shape.continent,
                         polygons: shape.polygons + existing.polygons,
+                        detailPaths: combine(shape.detailPaths, existing.detailPaths),
                         centroid: shape.centroid,
                         boundingBox: shape.boundingBox.union(existing.boundingBox),
                         color: shape.color
@@ -245,6 +251,7 @@ private extension GeoJSONParser {
                         name: existing.name,
                         continent: existing.continent,
                         polygons: existing.polygons + shape.polygons,
+                        detailPaths: combine(existing.detailPaths, shape.detailPaths),
                         centroid: existing.centroid,
                         boundingBox: existing.boundingBox.union(shape.boundingBox),
                         color: existing.color
@@ -257,6 +264,35 @@ private extension GeoJSONParser {
         }
 
         return result
+    }
+}
+
+// MARK: - Detail Levels
+private extension GeoJSONParser {
+    /// Simplification tolerances, in map units, for every detail level but the full one.
+    /// Each keeps the outline within 0.3 pt of the border up to its level's scale limit.
+    static let detailTolerances = CountryShape.detailScaleLimits.dropLast().map { 0.3 / $0 }
+
+    /// One path per detail level, coarsest first; each level simplifies the finer one before it.
+    static func makeDetailPaths(rings: [[CGPoint]]) -> [CGPath] {
+        var levels = [PathSimplifier.makePath(rings: rings)]
+        var simplified = rings
+        for tolerance in detailTolerances.reversed() {
+            simplified = simplified
+                .map { PathSimplifier.simplify(ring: $0, tolerance: tolerance) }
+                .filter { $0.count >= 3 }
+            levels.insert(PathSimplifier.makePath(rings: simplified), at: 0)
+        }
+        return levels
+    }
+
+    static func combine(_ paths: [CGPath], _ otherPaths: [CGPath]) -> [CGPath] {
+        zip(paths, otherPaths).map { path, otherPath in
+            let combined = CGMutablePath()
+            combined.addPath(path)
+            combined.addPath(otherPath)
+            return combined
+        }
     }
 }
 

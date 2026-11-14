@@ -46,8 +46,17 @@ public enum MapColorPalette {
 
 // MARK: - Adjacency Detection
 private extension MapColorPalette {
+    /// One polygon's bounds and boundary samples, worked out once rather than for every pair it's compared in.
+    struct PolygonOutline {
+        let bounds: CGRect
+        let samples: [CGPoint]
+    }
+
     static func buildAdjacencyMap(from shapes: [CountryShape]) -> [String: Set<String>] {
         var adjacency: [String: Set<String>] = [:]
+        let outlines = shapes.map { shape in
+            shape.polygons.map { PolygonOutline(bounds: $0.boundingBoxOfPath, samples: sampledPoints(from: $0)) }
+        }
 
         for i in shapes.indices {
             for j in (i + 1)..<shapes.count {
@@ -55,7 +64,7 @@ private extension MapColorPalette {
                     continue
                 }
 
-                if shapesAreAdjacent(shapes[i], shapes[j]) {
+                if outlinesAreAdjacent(outlines[i], outlines[j]) {
                     adjacency[shapes[i].id, default: []].insert(shapes[j].id)
                     adjacency[shapes[j].id, default: []].insert(shapes[i].id)
                 }
@@ -73,28 +82,21 @@ private extension MapColorPalette {
         return adjacency
     }
 
-    // Checks adjacency by sampling boundary points from each path and testing
-    // if any point lies within the expanded bounding box of the opposing path.
+    // Checks adjacency by sampling boundary points from each polygon and testing
+    // if any point lies within the expanded bounding box of the opposing polygon.
     // A tight 3px threshold filters out false positives from narrow straits.
-    static func shapesAreAdjacent(_ a: CountryShape, _ b: CountryShape) -> Bool {
+    static func outlinesAreAdjacent(_ outlines: [PolygonOutline], _ otherOutlines: [PolygonOutline]) -> Bool {
         let threshold: CGFloat = 3.0
 
-        for pathA in a.polygons {
-            for pathB in b.polygons {
-                let boxA = pathA.boundingBoxOfPath
-                let boxB = pathB.boundingBoxOfPath
-
-                guard boxA.insetBy(dx: -threshold * 4, dy: -threshold * 4).intersects(boxB) else {
-                    continue
-                }
-
-                let expandedB = boxB.insetBy(dx: -threshold, dy: -threshold)
-                if sampledPoints(from: pathA).contains(where: { expandedB.contains($0) }) {
+        for outlineA in outlines {
+            let nearA = outlineA.bounds.insetBy(dx: -threshold * 4, dy: -threshold * 4)
+            let expandedA = outlineA.bounds.insetBy(dx: -threshold, dy: -threshold)
+            for outlineB in otherOutlines where nearA.intersects(outlineB.bounds) {
+                let expandedB = outlineB.bounds.insetBy(dx: -threshold, dy: -threshold)
+                if outlineA.samples.contains(where: { expandedB.contains($0) }) {
                     return true
                 }
-
-                let expandedA = boxA.insetBy(dx: -threshold, dy: -threshold)
-                if sampledPoints(from: pathB).contains(where: { expandedA.contains($0) }) {
+                if outlineB.samples.contains(where: { expandedA.contains($0) }) {
                     return true
                 }
             }

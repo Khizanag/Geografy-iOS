@@ -306,7 +306,7 @@ private extension HistoricalMapScreen {
                 < $1.boundingBox.width * $1.boundingBox.height
         }
 
-        for shape in sortedByArea where shape.polygons.contains(where: { $0.contains(mapPoint) }) {
+        for shape in sortedByArea where shape.contains(mapPoint) {
             if mapState.selectedCountryCode == shape.id {
                 mapState.selectedCountryCode = nil
             } else {
@@ -414,15 +414,7 @@ private extension HistoricalMapScreen {
                     isIndependent = true
                 }
 
-                return CountryShape(
-                    id: shape.id,
-                    name: shape.name,
-                    continent: shape.continent,
-                    polygons: shape.polygons,
-                    centroid: shape.centroid,
-                    boundingBox: shape.boundingBox,
-                    color: isIndependent ? shape.color : dimmedColor
-                )
+                return shape.recolored(isIndependent ? shape.color : dimmedColor)
             }
 
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) {
