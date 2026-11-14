@@ -34,8 +34,8 @@ public struct MultiplayerMatchScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .task { loadMatch() }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    CircleCloseButton { showQuitAlert = true }
+                ToolbarItem(placement: .topBarLeading) {
+                    GiveUpButton { showQuitAlert = true }
                 }
             }
             .onDisappear { opponentEngine.cancelPendingAnswer() }
@@ -46,7 +46,7 @@ public struct MultiplayerMatchScreen: View {
                     onDone: { dismiss() },
                 )
             }
-            .alert("Quit Match?", isPresented: $showQuitAlert) {
+            .alert("Give Up?", isPresented: $showQuitAlert) {
                 quitAlertActions
             } message: {
                 Text("Your progress will be lost.")
@@ -68,8 +68,8 @@ private extension MultiplayerMatchScreen {
 
     @ViewBuilder
     var quitAlertActions: some View {
-        Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { dismiss() }
+        Button("Give Up", role: .destructive) { dismiss() }
+        Button("Continue", role: .cancel) {}
     }
 }
 
