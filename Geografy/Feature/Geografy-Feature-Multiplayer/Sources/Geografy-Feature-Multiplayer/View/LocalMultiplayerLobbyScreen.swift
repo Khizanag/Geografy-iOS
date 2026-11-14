@@ -152,7 +152,11 @@ private extension LocalMultiplayerLobbyScreen {
             if coordinator.state == .browsing {
                 peerList
             } else {
-                PulsingCirclesView(icon: "antenna.radiowaves.left.and.right", isAnimating: true)
+                PulsingCirclesView(
+                    icon: "antenna.radiowaves.left.and.right",
+                    isAnimating: true,
+                    color: DesignSystem.Color.error
+                )
                     .scaleEffect(0.6)
                     .frame(height: 160)
                     .accessibilityHidden(true)

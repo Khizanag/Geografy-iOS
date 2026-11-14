@@ -6,11 +6,14 @@ public struct PulsingCirclesView: View {
 
     public let icon: String
     public let isAnimating: Bool
+    public let color: Color
 
     // MARK: - Init
-    public init(icon: String, isAnimating: Bool) {
+    /// - Parameter color: The screen's game color, for the icon and the rings.
+    public init(icon: String, isAnimating: Bool, color: Color = DesignSystem.Color.accent) {
         self.icon = icon
         self.isAnimating = isAnimating
+        self.color = color
     }
 
     // MARK: - Body
@@ -40,12 +43,12 @@ private extension PulsingCirclesView {
     var iconView: some View {
         Image(systemName: icon)
             .font(DesignSystem.IconSize.xLarge)
-            .foregroundStyle(DesignSystem.Color.accent)
+            .foregroundStyle(color)
     }
 
     func circle(size: CGFloat, opacity: Double, delay: Double) -> some View {
         Circle()
-            .fill(DesignSystem.Color.accent.opacity(opacity))
+            .fill(color.opacity(opacity))
             .frame(width: size, height: size)
             .scaleEffect(isAnimating ? (reduceMotion ? 1.0 : 1.06) : 0.94)
             .opacity(isAnimating ? 1 : 0.4)

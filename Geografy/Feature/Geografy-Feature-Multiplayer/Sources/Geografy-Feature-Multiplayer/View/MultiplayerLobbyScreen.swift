@@ -28,15 +28,12 @@ public struct MultiplayerLobbyScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        scrollContent
+        content
             .screenBackground()
             .navigationTitle("Multiplayer")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaBar(edge: .bottom) {
-                if !isSearching {
-                    footerButton
-                }
-            }
+            .safeAreaBar(edge: .bottom) { footer }
+            .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: isSearching)
             .fullScreenCover(isPresented: $showMatch) {
                 matchDestination
             }
@@ -46,21 +43,19 @@ public struct MultiplayerLobbyScreen: View {
 
 // MARK: - Subviews
 private extension MultiplayerLobbyScreen {
-    var scrollContent: some View {
-        ScrollView {
-            Group {
-                if isSearching {
-                    searchingView
-                        .transition(.opacity)
-                } else {
-                    lobbyContent
-                        .transition(.opacity)
-                }
+    @ViewBuilder
+    var content: some View {
+        if isSearching {
+            searchingView
+                .transition(.opacity)
+        } else {
+            ScrollView {
+                lobbyContent
+                    .padding(.top, DesignSystem.Spacing.xs)
+                    .padding(.bottom, DesignSystem.Spacing.lg)
+                    .readableContentWidth()
             }
-            .padding(.top, DesignSystem.Spacing.xs)
-            .padding(.bottom, DesignSystem.Spacing.lg)
-            .readableContentWidth()
-            .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: isSearching)
+            .transition(.opacity)
         }
     }
 
@@ -165,9 +160,18 @@ private extension MultiplayerLobbyScreen {
         }
     }
 
-    var footerButton: some View {
-        GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
-            startSearching()
+    @ViewBuilder
+    var footer: some View {
+        Group {
+            if isSearching {
+                GlassButton("Cancel", systemImage: "xmark", role: .secondary, fullWidth: true) {
+                    cancelSearch()
+                }
+            } else {
+                GlassButton("Find Opponent", systemImage: "person.2.fill", fullWidth: true) {
+                    startSearching()
+                }
+            }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
@@ -175,25 +179,21 @@ private extension MultiplayerLobbyScreen {
 
     var searchingView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            PulsingCirclesView(icon: "magnifyingglass", isAnimating: isSearching)
-                .frame(height: 200)
+            PulsingCirclesView(icon: "magnifyingglass", isAnimating: isSearching, color: color)
 
-            Text("Searching for opponent...")
+            Text(opponent == nil ? "Searching for an opponent…" : "Opponent found")
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
+                .contentTransition(.opacity)
 
             if let opponent {
                 opponentFoundCard(opponent)
                     .transition(.scale(scale: 0.8).combined(with: .opacity))
             }
-
-            GlassButton("Cancel", systemImage: "xmark", role: .secondary) {
-                cancelSearch()
-            }
         }
-        .frame(maxWidth: .infinity)
         .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.top, DesignSystem.Spacing.xl)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: opponent?.id)
     }
 
     func opponentFoundCard(_ foundOpponent: MockOpponent) -> some View {

@@ -44,22 +44,23 @@ private extension LocalMultiplayerEntryScreen {
 
     var entryContent: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                heroSection
-                roleCards
-                infoSection
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.lg)
+            heroSection
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.lg)
+                .containerRelativeFrame(.vertical, alignment: .center) { length, _ in
+                    max(length - DesignSystem.Spacing.xl, 0)
+                }
         }
+        .scrollBounceBehavior(.basedOnSize)
         .screenBackground()
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaBar(edge: .bottom) { roleButtons }
     }
 
     var heroSection: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            IconBadge("antenna.radiowaves.left.and.right", size: .hero)
+        VStack(spacing: DesignSystem.Spacing.lg) {
+            IconBadge("antenna.radiowaves.left.and.right", color: Self.color, size: .hero)
                 .symbolEffect(
                     .variableColor.iterative,
                     options: reduceMotion ? .nonRepeating : .repeating,
@@ -73,90 +74,34 @@ private extension LocalMultiplayerEntryScreen {
                     .fontWeight(.bold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .accessibilityAddTraits(.isHeader)
-                Text("Challenge a friend on the same network")
+                Text("One of you hosts and picks the quiz. The other joins from their phone.")
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)
             }
+
+            InfoPill("Same Wi-Fi or Bluetooth", systemImage: "wifi", style: .neutral)
         }
         .frame(maxWidth: .infinity)
         .phaseEntrance()
     }
 
-    var roleCards: some View {
+    var roleButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
-            roleCard(
-                title: "Host Game",
-                subtitle: "Configure the quiz and wait for a friend to join",
-                icon: "wifi",
-                color: DesignSystem.Color.accent
-            ) {
+            GlassButton("Host Game", systemImage: "antenna.radiowaves.left.and.right", fullWidth: true) {
                 coordinator.startHosting()
             }
-
-            roleCard(
-                title: "Join Game",
-                subtitle: "Find a nearby host and join their quiz",
-                icon: "magnifyingglass",
-                color: DesignSystem.Color.blue
-            ) {
+            GlassButton("Join Game", systemImage: "magnifyingglass", role: .secondary, fullWidth: true) {
                 coordinator.startBrowsing()
             }
         }
-        .phaseEntrance(index: 1, stagger: 0.15)
-    }
-
-    func roleCard(
-        title: String,
-        subtitle: String,
-        icon: String,
-        color: Color,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            CardView {
-                HStack(spacing: DesignSystem.Spacing.md) {
-                    IconBadge(icon, color: color, size: .medium)
-                        .accessibilityHidden(true)
-
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                        Text(title)
-                            .font(DesignSystem.Font.headline)
-                            .fontWeight(.bold)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Text(subtitle)
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                            .lineLimit(2)
-                    }
-
-                    Spacer(minLength: 0)
-
-                    RowChevron()
-                }
-                .padding(DesignSystem.Spacing.md)
-            }
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    var infoSection: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            Image(systemName: "info.circle")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .accessibilityHidden(true)
-            Text("Both devices must be nearby on the same Wi-Fi or with Bluetooth enabled.")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .phaseEntrance(index: 2, stagger: 0.15)
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .padding(.bottom, DesignSystem.Spacing.md)
     }
 
     var disconnectedView: some View {
         VStack(spacing: DesignSystem.Spacing.lg) {
-            Spacer()
-            PulsingCirclesView(icon: "wifi.slash", isAnimating: true)
+            PulsingCirclesView(icon: "wifi.slash", isAnimating: true, color: Self.color)
                 .accessibilityHidden(true)
 
             VStack(spacing: DesignSystem.Spacing.xs) {
@@ -170,16 +115,19 @@ private extension LocalMultiplayerEntryScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)
             }
-
+        }
+        .padding(.horizontal, DesignSystem.Spacing.md)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .screenBackground()
+        .safeAreaBar(edge: .bottom) {
             GlassButton("Back to Menu", systemImage: "arrow.left", fullWidth: true) {
                 coordinator.leave()
             }
-            .padding(.horizontal, DesignSystem.Spacing.xl)
-
-            Spacer()
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.md)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .screenBackground()
     }
+
+    static let color = DesignSystem.Color.error
 }
 #endif
