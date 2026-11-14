@@ -3,6 +3,10 @@ import SwiftUI
 
 public struct FlagView: View {
     // MARK: - Properties
+    @Environment(\.displayScale) private var displayScale
+
+    @State private var loaded: LoadedFlag?
+
     let countryCode: String
     var height: CGFloat = DesignSystem.Size.md
     var fixedWidth: Bool = false
@@ -23,30 +27,38 @@ public struct FlagView: View {
         flagImage
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2, style: .continuous))
             .frame(width: fixedWidth ? slotWidth : nil, height: fixedWidth ? height : nil, alignment: .center)
-            .accessibilityLabel("Flag of \(countryName)")
+            .accessibilityLabel("Flag of \(FlagImageCache.shared.countryName(for: countryCode))")
+            .task(id: loadKey) { await load() }
+    }
+}
+
+// MARK: - Loaded Flag
+private extension FlagView {
+    /// The image decoded for one code and size; a nil image means the app has no flag for that code.
+    struct LoadedFlag {
+        let key: String
+        let image: UIImage?
     }
 }
 
 // MARK: - Subviews
 private extension FlagView {
-    var countryName: String {
-        Locale.current.localizedString(forRegionCode: countryCode) ?? countryCode.uppercased()
-    }
-
     @ViewBuilder
     var flagImage: some View {
-        let assetName = "Flags/\(countryCode.uppercased())"
+        let image = currentImage
+        let size = fittedSize(ratio: FlagAspectRatio.ratio(for: countryCode) ?? image.map(aspectRatio) ?? 4 / 3)
 
-        if let uiImage = UIImage(named: assetName) {
-            let ratio = FlagAspectRatio.ratio(for: countryCode)
-                ?? (uiImage.size.width / uiImage.size.height)
-            let size = fittedSize(ratio: ratio)
-            Image(uiImage: uiImage)
+        if let image {
+            Image(uiImage: image)
                 .resizable()
                 .frame(width: size.width, height: size.height)
-        } else {
+        } else if loaded?.key == loadKey {
             Text(fallbackEmoji)
                 .font(DesignSystem.Font.title)
+        } else {
+            // Holds the flag's place for the moment it takes to decode, so nothing around it shifts.
+            DesignSystem.Color.cardBackgroundHighlighted
+                .frame(width: size.width, height: size.height)
         }
     }
 
@@ -61,6 +73,30 @@ private extension FlagView {
             return CGSize(width: naturalWidth, height: height)
         }
         return CGSize(width: slotWidth, height: slotWidth / ratio)
+    }
+
+    var pixelHeight: CGFloat { height * displayScale }
+
+    var loadKey: String { "\(countryCode)-\(Int(pixelHeight))" }
+
+    /// Taken from the cache first, so a flag already decoded draws in the first frame.
+    var currentImage: UIImage? {
+        FlagImageCache.shared.cachedImage(countryCode: countryCode, pixelHeight: pixelHeight)
+            ?? (loaded?.key == loadKey ? loaded?.image : nil)
+    }
+
+    func aspectRatio(of image: UIImage) -> CGFloat {
+        image.size.width / image.size.height
+    }
+
+    func load() async {
+        let key = loadKey
+        guard FlagImageCache.shared.cachedImage(countryCode: countryCode, pixelHeight: pixelHeight) == nil else {
+            return
+        }
+        let image = await FlagImageCache.shared.image(countryCode: countryCode, pixelHeight: pixelHeight)
+        guard !Task.isCancelled else { return }
+        loaded = LoadedFlag(key: key, image: image)
     }
 
     var fallbackEmoji: String {

@@ -14,6 +14,7 @@ struct ContentView: View {
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.displayScale) private var displayScale
 
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
 
@@ -53,6 +54,7 @@ struct ContentView: View {
             }
             #endif
             .onOpenURL { appCoordinator.handleDeepLink($0) }
+            .task(id: countryDataService.countries.count, priority: .utility) { await prewarmListFlags() }
             #if DEBUG
             .task { appCoordinator.openHubItemFromLaunchArguments() }
             #endif
@@ -143,6 +145,15 @@ private extension ContentView {
 
 // MARK: - Helpers
 private extension ContentView {
+    /// Lists draw every flag at row size, so decoding them up front keeps the first scroll smooth.
+    func prewarmListFlags() async {
+        await FlagImageCache.shared.prewarm(
+            countryCodes: countryDataService.countries.map(\.code),
+            pointHeight: DesignSystem.Size.Flag.row,
+            displayScale: displayScale
+        )
+    }
+
     var colorScheme: ColorScheme? {
         switch selectedTheme {
         case "Light": .light
