@@ -99,7 +99,7 @@ private extension ProfileScreen {
             .sorted(by: \.unlockedAt, descending: true)
             .prefix(6)
             .compactMap { unlocked in
-                AchievementCatalog.all.first { $0.id == unlocked.id }
+                AchievementCatalog.byID[unlocked.id]
             }
     }
 }

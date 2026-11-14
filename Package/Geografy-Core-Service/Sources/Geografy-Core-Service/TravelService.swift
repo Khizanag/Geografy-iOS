@@ -4,12 +4,18 @@ import Observation
 
 @Observable
 public final class TravelService {
-    public private(set) var entries: [String: TravelStatus]
+    public private(set) var entries: [String: TravelStatus] {
+        didSet { updateCodeSets() }
+    }
+    /// Kept beside `entries` so screens reading them on every render don't filter the whole dictionary.
+    public private(set) var visitedCodes: Set<String> = []
+    public private(set) var wantToVisitCodes: Set<String> = []
 
     private let storageKey = "travel_tracker_entries"
 
     public init() {
         entries = Self.loadEntries(storageKey: storageKey)
+        updateCodeSets()
     }
 
     /// Loads the active user's entries; call after the user changes.
@@ -29,18 +35,15 @@ public final class TravelService {
     public func status(for code: String) -> TravelStatus? {
         entries[code]
     }
-
-    public var visitedCodes: Set<String> {
-        Set(entries.filter { $0.value == .visited }.keys)
-    }
-
-    public var wantToVisitCodes: Set<String> {
-        Set(entries.filter { $0.value == .wantToVisit }.keys)
-    }
 }
 
 // MARK: - Helpers
 private extension TravelService {
+    func updateCodeSets() {
+        visitedCodes = Set(entries.filter { $0.value == .visited }.keys)
+        wantToVisitCodes = Set(entries.filter { $0.value == .wantToVisit }.keys)
+    }
+
     func persist() {
         guard let data = try? JSONEncoder().encode(entries) else { return }
         UserDefaults.standard.set(data, forKey: UserScope.key(storageKey))

@@ -6,6 +6,8 @@ import Geografy_Core_Common
 public final class CountryDataService {
     public private(set) var countries: [Country] = []
     private var countriesByCode: [String: Country] = [:]
+    /// The pick for one day; tab roots ask on every render, and picking sorts and shuffles every country.
+    @ObservationIgnored private var countryOfTheDayCache: (day: Date, count: Int, country: Country)?
 
     public init() {}
 
@@ -38,6 +40,16 @@ public final class CountryDataService {
 
     public func countryOfTheDay(for date: Date = .now) -> Country? {
         guard !countries.isEmpty else { return nil }
+        let dayKey = Calendar.current.startOfDay(for: date)
+        if let cached = countryOfTheDayCache, cached.day == dayKey, cached.count == countries.count {
+            return cached.country
+        }
+        let country = pickCountryOfTheDay(for: date)
+        countryOfTheDayCache = (dayKey, countries.count, country)
+        return country
+    }
+
+    private func pickCountryOfTheDay(for date: Date) -> Country {
         let sorted = countries.sorted(by: \.code)
         let year = Calendar.current.component(.year, from: date)
         let dayOfYear = (Calendar.current.ordinality(of: .day, in: .year, for: date) ?? 1) - 1

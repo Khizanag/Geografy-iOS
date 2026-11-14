@@ -4,6 +4,9 @@ public enum AchievementCatalog {
     public static let all: [AchievementDefinition] =
         explorer + quizExpert + streak + travel + knowledge
         + continental + flashcard + speed + perfectScore + social
+
+    /// Every achievement by its ID, for lookups that would otherwise scan `all`.
+    public static let byID: [String: AchievementDefinition] = Dictionary(all.map { ($0.id, $0) }) { first, _ in first }
 }
 
 // MARK: - Explorer

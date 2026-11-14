@@ -5,17 +5,21 @@ import SwiftData
 
 @Observable
 public final class FavoritesService {
-    private(set) var entries: [FavoriteEntry] = []
+    private(set) var entries: [FavoriteEntry] = [] {
+        didSet {
+            addedDates = Dictionary(entries.map { ($0.countryCode, $0.addedAt) }) { first, _ in first }
+            favoriteCodes = Set(addedDates.keys)
+        }
+    }
+    /// Kept beside `entries` so a list asking about every row never reads the database objects.
+    public private(set) var favoriteCodes: Set<String> = []
+    private var addedDates: [String: Date] = [:]
     public private(set) var currentUserID: String
     private let modelContext: ModelContext
 
     public init(container: ModelContainer, userID: String = UserScope.currentUserID) {
         self.modelContext = ModelContext(container)
         self.currentUserID = userID
-    }
-
-    public var favoriteCodes: Set<String> {
-        Set(entries.map(\.countryCode))
     }
 
     public func switchUser(id: String) {
@@ -36,11 +40,11 @@ public final class FavoritesService {
     }
 
     public func isFavorite(code: String) -> Bool {
-        entries.contains { $0.countryCode == code }
+        favoriteCodes.contains(code)
     }
 
     public func addedAt(code: String) -> Date? {
-        entries.first { $0.countryCode == code }?.addedAt
+        addedDates[code]
     }
 }
 

@@ -7,7 +7,10 @@ import SwiftData
 @Observable
 @MainActor
 public final class AchievementService {
-    public private(set) var unlockedAchievements: [UnlockedAchievement] = []
+    public private(set) var unlockedAchievements: [UnlockedAchievement] = [] {
+        didSet { unlockedIDs = Set(unlockedAchievements.map(\.id)) }
+    }
+    private var unlockedIDs: Set<String> = []
     public private(set) var pinnedIDs: [String] = []
 
     public let unlockPublisher = PassthroughSubject<AchievementDefinition, Never>()
@@ -19,6 +22,9 @@ public final class AchievementService {
     // Progress belongs to one user, like unlocks do, so signing in or switching users never shows someone else's.
     private var progressKey: String { "achievement_progress_v3_\(currentUserID)" }
     private let pinnedKey = "achievement_pinned"
+    /// The decoded progress for `cachedProgressKey`, so screens asking per row don't decode storage each time.
+    @ObservationIgnored private var cachedProgress: [String: AchievementProgress]?
+    @ObservationIgnored private var cachedProgressKey = ""
 
     public init(db: DatabaseManager, xpService: XPService, userID: String) {
         self.db = db
@@ -34,7 +40,7 @@ public final class AchievementService {
 
     // MARK: - Query
     public func isUnlocked(_ achievementID: String) -> Bool {
-        unlockedAchievements.contains { $0.id == achievementID }
+        unlockedIDs.contains(achievementID)
     }
 
     public func progress(for achievementID: String) -> AchievementProgress {
@@ -42,7 +48,7 @@ public final class AchievementService {
         if let existing = stored[achievementID] {
             return existing
         }
-        let definition = AchievementCatalog.all.first { $0.id == achievementID }
+        let definition = AchievementCatalog.byID[achievementID]
         return AchievementProgress(
             achievementID: achievementID,
             currentValue: 0,
@@ -62,7 +68,7 @@ public final class AchievementService {
     // MARK: - Progress Tracking
     public func updateProgress(_ achievementID: String, value: Int) {
         var allProgress = loadProgress()
-        let definition = AchievementCatalog.all.first { $0.id == achievementID }
+        let definition = AchievementCatalog.byID[achievementID]
         let target = definition?.targetValue ?? 1
 
         var entry = allProgress[achievementID] ?? AchievementProgress(
@@ -174,7 +180,7 @@ public final class AchievementService {
 extension AchievementService {
     public func unlock(_ achievementID: String) {
         guard !isUnlocked(achievementID),
-              let definition = AchievementCatalog.all.first(where: { $0.id == achievementID })
+              let definition = AchievementCatalog.byID[achievementID]
         else { return }
 
         let record = UnlockedAchievement(id: achievementID, userID: currentUserID)
@@ -198,15 +204,23 @@ extension AchievementService {
     }
 
     public func loadProgress() -> [String: AchievementProgress] {
-        guard let data = UserDefaults.standard.data(forKey: progressKey),
-              let decoded = try? JSONDecoder().decode([String: AchievementProgress].self, from: data)
-        else { return [:] }
+        let key = progressKey
+        if let cachedProgress, cachedProgressKey == key {
+            return cachedProgress
+        }
+        let decoded = UserDefaults.standard.data(forKey: key)
+            .flatMap { try? JSONDecoder().decode([String: AchievementProgress].self, from: $0) } ?? [:]
+        cachedProgress = decoded
+        cachedProgressKey = key
         return decoded
     }
 
     public func saveProgress(_ progress: [String: AchievementProgress]) {
+        let key = progressKey
+        cachedProgress = progress
+        cachedProgressKey = key
         guard let data = try? JSONEncoder().encode(progress) else { return }
-        UserDefaults.standard.set(data, forKey: progressKey)
+        UserDefaults.standard.set(data, forKey: key)
     }
 
     public func loadPinnedIDs() {
