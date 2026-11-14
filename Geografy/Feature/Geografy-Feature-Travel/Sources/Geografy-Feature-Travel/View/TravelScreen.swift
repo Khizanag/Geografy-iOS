@@ -5,6 +5,7 @@ import SwiftUI
 /// The countries you've visited or want to visit, and your journal of trips.
 public struct TravelScreen: View {
     // MARK: - Properties
+    @State private var journalStore = TravelJournalServiceStore()
     @State private var tab: Tab = .countries
 
     // MARK: - Init
@@ -45,7 +46,7 @@ private extension TravelScreen {
     var tabContent: some View {
         switch tab {
         case .countries: TravelTrackerScreen()
-        case .journal: TravelJournalScreen()
+        case .journal: TravelJournalScreen(serviceStore: journalStore)
         }
     }
 }

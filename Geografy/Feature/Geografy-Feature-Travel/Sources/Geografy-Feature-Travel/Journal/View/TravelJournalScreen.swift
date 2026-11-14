@@ -8,12 +8,10 @@ public struct TravelJournalScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
 
-    @State private var journalService = TravelJournalService()
+    let serviceStore: TravelJournalServiceStore
+
     @State private var activeSheet: ActiveSheet?
     @State private var searchText = ""
-
-    // MARK: - Init
-    public init() {}
 
     // MARK: - Body
     public var body: some View {
@@ -191,6 +189,8 @@ private extension TravelJournalScreen {
 
 // MARK: - Data
 private extension TravelJournalScreen {
+    var journalService: TravelJournalService { serviceStore.service }
+
     var isSearching: Bool { !searchText.isEmpty }
 
     var filteredEntries: [TravelJournalEntry] {
