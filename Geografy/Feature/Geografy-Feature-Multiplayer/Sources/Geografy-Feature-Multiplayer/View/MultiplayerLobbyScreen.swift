@@ -237,11 +237,13 @@ private extension MultiplayerLobbyScreen {
                 comparisonMetric: .population,
                 gameMode: .standard,
             )
-            MultiplayerMatchScreen(
-                opponent: opponent,
-                configuration: configuration,
-                multiplayerService: multiplayerService,
-            )
+            NavigationStack {
+                MultiplayerMatchScreen(
+                    opponent: opponent,
+                    configuration: configuration,
+                    multiplayerService: multiplayerService,
+                )
+            }
         }
     }
 }

@@ -33,6 +33,11 @@ public struct MultiplayerMatchScreen: View {
         matchContent
             .navigationBarTitleDisplayMode(.inline)
             .task { loadMatch() }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    CircleCloseButton { showQuitAlert = true }
+                }
+            }
             .onDisappear { opponentEngine.cancelPendingAnswer() }
             .fullScreenCover(item: $completedMatch) { match in
                 MultiplayerResultScreen(

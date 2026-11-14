@@ -19,8 +19,6 @@ public struct MultiplayerResultScreen: View {
             .navigationTitle("Match Result")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaBar(edge: .bottom) { actionButtons }
-            .toolbar {
-            }
             .onAppear {
                 announceResult()
             }
