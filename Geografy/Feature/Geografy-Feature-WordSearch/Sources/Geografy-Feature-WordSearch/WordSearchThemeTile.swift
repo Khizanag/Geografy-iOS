@@ -6,7 +6,6 @@ import SwiftUI
 struct WordSearchThemeTile: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorSchemeContrast) private var contrast
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     let theme: WordSearchTheme
@@ -35,7 +34,7 @@ private extension WordSearchThemeTile {
             HStack(alignment: .top) {
                 IconBadge(theme.icon, color: color, size: .small)
                 Spacer(minLength: DesignSystem.Spacing.xs)
-                checkmark
+                SelectionMark(isSelected: isSelected, color: color)
             }
             Text(theme.rawValue)
                 .font(DesignSystem.Font.subheadline)
@@ -54,49 +53,12 @@ private extension WordSearchThemeTile {
         }
         .padding(DesignSystem.Spacing.sm)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background { background }
-        .overlay { border }
-        .contentShape(shape)
-    }
-
-    @ViewBuilder
-    var checkmark: some View {
-        if isSelected {
-            Image(systemName: "checkmark.circle.fill")
-                .font(DesignSystem.Font.title3)
-                .foregroundStyle(color)
-                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-                .accessibilityHidden(true)
-        }
-    }
-
-    // The tint sits on the opaque card fill, so the tile stays solid under Reduce Transparency.
-    var background: some View {
-        shape
-            .fill(DesignSystem.Color.cardBackground)
-            .overlay {
-                if isSelected {
-                    shape.fill(color.opacity(0.12))
-                }
-            }
-    }
-
-    @ViewBuilder
-    var border: some View {
-        if isSelected {
-            shape.strokeBorder(color, lineWidth: 2)
-        } else if contrast == .increased {
-            shape.strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
-        }
+        .selectableTileBackground(isSelected: isSelected, color: color)
     }
 }
 
 // MARK: - Helpers
 private extension WordSearchThemeTile {
-    var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-    }
-
     var summary: WordSearchThemeSummary {
         WordSearchThemeSummary(theme: theme)
     }

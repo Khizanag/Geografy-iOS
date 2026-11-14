@@ -32,26 +32,19 @@ struct ContinentTile: View {
 // MARK: - Subviews
 private extension ContinentTile {
     var tileContent: some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                silhouette
-                    .frame(maxWidth: .infinity)
-                    .frame(height: outlineHeight)
-                titleRow
-            }
-            .padding(DesignSystem.Spacing.md)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background {
-                if isSelected {
-                    color.opacity(0.12)
-                }
-            }
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            silhouette
+                .frame(maxWidth: .infinity)
+                .frame(height: outlineHeight)
+            titleRow
         }
-        .overlay {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous)
-                .strokeBorder(isSelected ? color : .clear, lineWidth: 2)
-        }
-        .contentShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraLarge, style: .continuous))
+        .padding(DesignSystem.Spacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .selectableTileBackground(
+            isSelected: isSelected,
+            color: color,
+            cornerRadius: DesignSystem.CornerRadius.extraLarge
+        )
     }
 
     @ViewBuilder
@@ -80,10 +73,7 @@ private extension ContinentTile {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
             Spacer(minLength: 0)
-            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                .font(DesignSystem.Font.title3)
-                .foregroundStyle(isSelected ? color : DesignSystem.Color.textTertiary)
-                .accessibilityHidden(true)
+            SelectionMark(isSelected: isSelected, color: color)
         }
     }
 }
