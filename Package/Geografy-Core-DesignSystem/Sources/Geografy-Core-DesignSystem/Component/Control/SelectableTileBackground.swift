@@ -6,7 +6,7 @@ public extension View {
     func selectableTileBackground(
         isSelected: Bool,
         color: Color,
-        cornerRadius: CGFloat = DesignSystem.CornerRadius.large
+        cornerRadius: CGFloat = DesignSystem.CornerRadius.extraLarge
     ) -> some View {
         modifier(SelectableTileBackground(isSelected: isSelected, color: color, cornerRadius: cornerRadius))
     }

@@ -125,11 +125,7 @@ private extension PinDropSetupScreen {
                 SelectionMark(isSelected: region == .world, color: PinDropStyle.gameColor)
             }
             .padding(DesignSystem.Spacing.md)
-            .selectableTileBackground(
-                isSelected: region == .world,
-                color: PinDropStyle.gameColor,
-                cornerRadius: DesignSystem.CornerRadius.extraLarge
-            )
+            .selectableTileBackground(isSelected: region == .world, color: PinDropStyle.gameColor)
             .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
         .buttonStyle(PressButtonStyle())

@@ -59,11 +59,7 @@ private extension ContinentTile {
         }
         .padding(DesignSystem.Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .selectableTileBackground(
-            isSelected: isSelected ?? false,
-            color: color,
-            cornerRadius: DesignSystem.CornerRadius.extraLarge
-        )
+        .selectableTileBackground(isSelected: isSelected ?? false, color: color)
         .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
     }
 

@@ -110,10 +110,10 @@ private extension HubScreen {
         .padding(isWide ? DesignSystem.Spacing.lg : DesignSystem.Spacing.md)
         .glassEffect(
             .regular,
-            in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
+            in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge)
         )
         // The glass doesn't take touches, so without this only the icon and text would.
-        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         .accessibilityElement(children: .combine)
         .overlay(alignment: .topTrailing) {
             if testingModeService.isEnabled {

@@ -27,7 +27,10 @@ struct CountrySpotlightCard: View {
                     funFactRow(fact)
                 }
             }
-            .padding(DesignSystem.Spacing.md)
+            // The panels sit close to the card's edge, so their concentric corners stay rounded (24 − 8 = 16).
+            .padding(.horizontal, Self.panelInset)
+            .padding(.bottom, Self.panelInset)
+            .padding(.top, DesignSystem.Spacing.md)
         }
         .accessibilityElement(children: .combine)
     }
@@ -180,9 +183,12 @@ private extension CountrySpotlightCard {
         .accessibilityLabel("\(label): \(value)")
     }
 
-    /// Inner panels sit one padding in from the card edge, so their corners nest inside the card's.
+    /// How far the inner panels sit from the card's edge.
+    static let panelInset = DesignSystem.Spacing.xs
+
+    /// Inner panels' corners nest inside the card's, so both curves stay parallel.
     static let panelShape = RoundedRectangle(
-        cornerRadius: DesignSystem.CornerRadius.nested(inset: DesignSystem.Spacing.md),
+        cornerRadius: DesignSystem.CornerRadius.nested(inset: panelInset),
         style: .continuous
     )
 

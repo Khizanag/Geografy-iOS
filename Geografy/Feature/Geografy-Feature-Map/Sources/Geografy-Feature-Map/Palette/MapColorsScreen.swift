@@ -91,11 +91,7 @@ private extension MapColorsScreen {
             }
             .padding(DesignSystem.Spacing.md)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .selectableTileBackground(
-                isSelected: isSelected,
-                color: DesignSystem.Color.accent,
-                cornerRadius: DesignSystem.CornerRadius.extraLarge
-            )
+            .selectableTileBackground(isSelected: isSelected, color: DesignSystem.Color.accent)
             .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
         .buttonStyle(PressButtonStyle())
