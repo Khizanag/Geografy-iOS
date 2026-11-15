@@ -289,21 +289,14 @@ private extension SettingsScreen {
             MenuPicker(
                 "Map projection",
                 selection: $projection,
-                selectedTitle: projectionTitle(for: MapProjectionKind(rawValue: projection) ?? .mercator)
+                selectedTitle: Text((MapProjectionKind(rawValue: projection) ?? .mercator).title)
             ) {
                 ForEach(MapProjectionKind.allCases) { kind in
-                    projectionTitle(for: kind).tag(kind.rawValue)
+                    Text(kind.title).tag(kind.rawValue)
                 }
             }
         }
         .settingsRowPadding()
-    }
-
-    func projectionTitle(for kind: MapProjectionKind) -> Text {
-        switch kind {
-        case .mercator: Text("Mercator")
-        case .equalEarth: Text("Equal Earth")
-        }
     }
 
     var appearanceRow: some View {

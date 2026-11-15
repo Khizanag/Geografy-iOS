@@ -5943,6 +5943,18 @@
         }
       }
     },
+    "Map Projection" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის პროექცია"
+          }
+        }
+      }
+    },
     "Map Puzzle" : {
       "localizations" : {
         "ka" : {

@@ -176,6 +176,26 @@ private extension MapScreen {
             }
         }
         ToolbarItem(placement: .secondaryAction) {
+            Picker(selection: $projection) {
+                ForEach(MapProjectionKind.allCases) { kind in
+                    Text(kind.title).tag(kind.rawValue)
+                }
+            } label: {
+                Label("Map Projection", systemImage: "map")
+            }
+            .pickerStyle(.menu)
+        }
+        ToolbarItem(placement: .secondaryAction) {
+            Picker(selection: $palette) {
+                ForEach(MapPalette.allCases) { option in
+                    Text(option.title).tag(option.rawValue)
+                }
+            } label: {
+                Label("Map Colors", systemImage: "paintpalette")
+            }
+            .pickerStyle(.menu)
+        }
+        ToolbarItem(placement: .secondaryAction) {
             Toggle(isOn: $showsVisitedCountries) {
                 Label("Show Visited Countries", systemImage: TravelStatus.visited.icon)
             }

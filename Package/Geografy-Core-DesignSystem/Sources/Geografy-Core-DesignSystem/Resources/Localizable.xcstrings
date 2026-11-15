@@ -337,6 +337,16 @@
         }
       }
     },
+    "Equal Earth" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equal Earth (თანაბარი ფართობი)"
+          }
+        }
+      }
+    },
     "Flag of %@" : {
       "localizations" : {
         "ka" : {
@@ -449,6 +459,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მაქს"
+          }
+        }
+      }
+    },
+    "Mercator" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მერკატორი"
           }
         }
       }

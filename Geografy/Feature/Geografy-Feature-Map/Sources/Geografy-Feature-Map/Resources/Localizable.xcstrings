@@ -308,6 +308,16 @@
         }
       }
     },
+    "Map Projection" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის პროექცია"
+          }
+        }
+      }
+    },
     "Map data © OpenStreetMap contributors · Geografy" : {
       "localizations" : {
         "ka" : {
