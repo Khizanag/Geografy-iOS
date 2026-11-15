@@ -59,9 +59,9 @@ private extension AllMapsScreen {
     var worldMapCard: some View {
         Button { openMap(named: "World") } label: {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                WorldMapThumbnail(northwardShift: 0.08)
+                WorldMapThumbnail()
                     .frame(height: isWideLayout ? 220 : 160)
-                    .clipShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+                    .clipShape(.rect(cornerRadius: DesignSystem.CornerRadius.nested(inset: DesignSystem.Spacing.md)))
                 HStack(alignment: .center, spacing: DesignSystem.Spacing.xs) {
                     VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
                         Text("World Map")

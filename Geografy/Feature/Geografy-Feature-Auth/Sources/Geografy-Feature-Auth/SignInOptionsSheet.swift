@@ -191,7 +191,7 @@ private extension SignInOptionsSheet {
 }
 
 // MARK: - Map Hero
-/// The world map, with the countries the person has visited lit up, fading into the page under the app's name.
+/// The world map, fading into the page under the app's name.
 private struct SignInMapHero: View {
     private static let mapHeight: CGFloat = 300
 
@@ -206,7 +206,7 @@ private struct SignInMapHero: View {
 // MARK: - Subviews
 private extension SignInMapHero {
     var map: some View {
-        WorldMapThumbnail(northwardShift: 0.1)
+        WorldMapThumbnail()
             .frame(height: Self.mapHeight)
             .opacity(0.75)
             .mask {

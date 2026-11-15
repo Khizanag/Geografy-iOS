@@ -3,12 +3,11 @@ import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
-/// The whole world map drawn to fit its frame's width, with the countries the person visited lit up.
-/// For heroes and cards; it takes no touches and is hidden from VoiceOver.
+/// The whole world, fitted inside its frame and centered: the full Earth outline where the projection draws one,
+/// otherwise all the land. For heroes and cards; it takes no touches and is hidden from VoiceOver.
 public struct WorldMapThumbnail: View {
     // MARK: - Properties
     @Environment(GeoJSONCache.self) private var geoJSONCache
-    @Environment(TravelService.self) private var travelService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
@@ -16,27 +15,20 @@ public struct WorldMapThumbnail: View {
 
     @State private var shapes: [CountryShape] = []
 
-    private let northwardShift: CGFloat
-
     // MARK: - Init
-    /// - Parameter northwardShift: How far below center the map sits, as a share of its height,
-    ///   so a short frame shows the northern lands where most countries are.
-    public init(northwardShift: CGFloat = 0.1) {
-        self.northwardShift = northwardShift
-    }
+    public init() {}
 
     // MARK: - Body
     public var body: some View {
         GeometryReader { geometry in
-            let scale = geometry.size.width / MapProjection.mapWidth
+            let fitted = fit(in: geometry.size)
             MapCanvasView(
                 countryShapes: shapes,
-                scale: scale,
-                offset: CGSize(width: 0, height: MapProjection.mapHeight * scale * northwardShift),
+                scale: fitted.scale,
+                offset: fitted.offset,
                 selectedCountryCode: nil,
                 showLabels: false,
                 canvasSize: geometry.size,
-                highlightedCodes: travelService.visitedCodes,
                 wrapsHorizontally: false
             )
         }
@@ -44,6 +36,35 @@ public struct WorldMapThumbnail: View {
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         .task(id: "\(projection)-\(palette)") { await loadShapes() }
+    }
+}
+
+// MARK: - Fitting
+private extension WorldMapThumbnail {
+    /// The scale and offset that fit `worldBounds` inside `size` and center it.
+    func fit(in size: CGSize) -> (scale: CGFloat, offset: CGSize) {
+        let bounds = worldBounds
+        guard bounds.width > 0, bounds.height > 0, size.width > 0, size.height > 0 else {
+            return (size.width / MapProjection.mapWidth, .zero)
+        }
+        let scale = min(size.width / bounds.width, size.height / bounds.height)
+        // The canvas centers the map's square, so moving the bounds' center there centers the world.
+        let offset = CGSize(
+            width: (MapProjection.mapWidth / 2 - bounds.midX) * scale,
+            height: (MapProjection.mapHeight / 2 - bounds.midY) * scale
+        )
+        return (scale, offset)
+    }
+
+    /// The Earth's outline where the projection draws one, so it's never cut; otherwise the land.
+    var worldBounds: CGRect {
+        let kind = MapProjectionKind(rawValue: projection) ?? .mercator
+        if let outline = MapProjection.worldOutline(kind: kind), let first = outline.first {
+            return outline.dropFirst().reduce(CGRect(origin: first, size: .zero)) { bounds, point in
+                bounds.union(CGRect(origin: point, size: .zero))
+            }
+        }
+        return shapes.dropFirst().reduce(shapes.first?.boundingBox ?? .zero) { $0.union($1.boundingBox) }
     }
 }
 

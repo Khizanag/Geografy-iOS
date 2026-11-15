@@ -110,7 +110,7 @@ private extension PinDropSetupScreen {
             region = .world
         } label: {
             HStack(spacing: DesignSystem.Spacing.md) {
-                WorldMapThumbnail(northwardShift: 0.05)
+                WorldMapThumbnail()
                     .frame(width: 96, height: 56)
                     .clipShape(.rect(cornerRadius: DesignSystem.CornerRadius.small))
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {

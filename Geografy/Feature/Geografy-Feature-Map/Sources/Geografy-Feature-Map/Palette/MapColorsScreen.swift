@@ -47,7 +47,7 @@ private extension MapColorsScreen {
 
     var preview: some View {
         CardView {
-            WorldMapThumbnail(northwardShift: 0.06)
+            WorldMapThumbnail()
                 .frame(maxWidth: .infinity)
                 // Capped, so at the largest text sizes the pinned map still leaves room for the rows.
                 .frame(height: min(previewHeight, 220))
