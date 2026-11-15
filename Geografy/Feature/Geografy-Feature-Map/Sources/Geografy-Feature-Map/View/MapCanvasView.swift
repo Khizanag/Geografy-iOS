@@ -8,7 +8,8 @@ public struct MapCanvasView: View {
     public let scale: CGFloat
     public let offset: CGSize
     public let selectedCountryCode: String?
-    public let showLabels: Bool
+    /// Whether names are drawn on the countries. `MapViewport` turns this off and draws them in a layer of their own.
+    public var showLabels: Bool
     public let canvasSize: CGSize
     public var capitalPoint: CGPoint?
     public var travelStatuses: [String: TravelStatus] = [:]
@@ -167,41 +168,7 @@ private extension MapCanvasView {
         transform: CGAffineTransform,
         visibleRect: CGRect
     ) {
-        let minLabelWidth: CGFloat = 40
-
-        for shape in countryShapes {
-            let transformedBounds = shape.boundingBox.applying(transform)
-
-            guard transformedBounds.width > minLabelWidth,
-                  transformedBounds.intersects(visibleRect) else { continue }
-
-            // Clamp the centroid within the country's transformed bounding box so labels
-            // never appear outside narrow or geographically non-convex countries (e.g. UAE, Chile).
-            let rawPoint = shape.centroid.applying(transform)
-            let insetBounds = transformedBounds.insetBy(dx: 2, dy: 2)
-            let point = CGPoint(
-                x: max(insetBounds.minX, min(rawPoint.x, insetBounds.maxX)),
-                y: max(insetBounds.minY, min(rawPoint.y, insetBounds.maxY))
-            )
-
-            guard visibleRect.contains(point) else { continue }
-
-            let fontSize = min(max(transformedBounds.width / CGFloat(shape.name.count), 6), 14)
-
-            // Resolved once and recolored, so each label is laid out once per frame, not twice.
-            var label = context.resolve(
-                Text(shape.name)
-                    .font(DesignSystem.Font.system(size: fontSize, weight: .semibold))
-            )
-
-            var shadowContext = context
-            shadowContext.opacity = 0.7
-            label.shading = .color(DesignSystem.Color.textPrimary)
-            shadowContext.draw(label, at: CGPoint(x: point.x + 0.5, y: point.y + 0.5), anchor: .center)
-
-            label.shading = .color(DesignSystem.Color.onAccent)
-            context.draw(label, at: point, anchor: .center)
-        }
+        MapLabelPainter.draw(countryShapes, in: &context, transform: transform, visibleRect: visibleRect)
     }
 }
 
@@ -278,12 +245,30 @@ private extension MapCanvasView {
 // MARK: - Helpers
 private extension MapCanvasView {
     var horizontalOffsets: [CGFloat] {
+        Self.horizontalOffsets(scale: scale, wrapsHorizontally: wrapsHorizontally)
+    }
+
+    func makeTransform(for size: CGSize, horizontalShift: CGFloat) -> CGAffineTransform {
+        Self.transform(scale: scale, offset: offset, size: size, horizontalShift: horizontalShift)
+    }
+}
+
+// MARK: - Geometry
+extension MapCanvasView {
+    /// The horizontal shifts of the copies drawn side by side, so the world wraps around when panned sideways.
+    static func horizontalOffsets(scale: CGFloat, wrapsHorizontally: Bool) -> [CGFloat] {
         guard wrapsHorizontally else { return [0] }
         let mapWidthScaled = MapProjection.mapWidth * scale
         return [-mapWidthScaled, 0, mapWidthScaled]
     }
 
-    func makeTransform(for size: CGSize, horizontalShift: CGFloat) -> CGAffineTransform {
+    /// Maps projected map coordinates to a view of `size`, with the map centered and then moved by `offset`.
+    static func transform(
+        scale: CGFloat,
+        offset: CGSize,
+        size: CGSize,
+        horizontalShift: CGFloat
+    ) -> CGAffineTransform {
         let centerX = size.width / 2 - (MapProjection.mapWidth * scale) / 2 + offset.width + horizontalShift
         let centerY = size.height / 2 - (MapProjection.mapHeight * scale) / 2 + offset.height
 
