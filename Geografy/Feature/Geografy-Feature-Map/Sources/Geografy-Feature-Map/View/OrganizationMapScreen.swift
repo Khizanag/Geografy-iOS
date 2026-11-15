@@ -271,10 +271,10 @@ private extension OrganizationMapScreen {
                     height: mapState.offset.height * scaleRatio - anchorOffset.height * (scaleRatio - 1)
                 )
                 mapState.scale = newScale
-                clampVerticalOffset()
+                clampOffset()
             }
             .onEnded { _ in
-                wrapHorizontalOffset()
+                if wrapsWorld { wrapHorizontalOffset() }
                 mapState.lastScale = mapState.scale
                 mapState.lastOffset = mapState.offset
             }
@@ -287,10 +287,10 @@ private extension OrganizationMapScreen {
                     width: mapState.lastOffset.width + value.translation.width,
                     height: mapState.lastOffset.height + value.translation.height
                 )
-                clampVerticalOffset()
+                clampOffset()
             }
             .onEnded { _ in
-                wrapHorizontalOffset()
+                if wrapsWorld { wrapHorizontalOffset() }
                 mapState.lastOffset = mapState.offset
             }
     }
@@ -326,17 +326,11 @@ private extension OrganizationMapScreen {
         mapState.selectedCountryCode = nil
     }
 
-    func clampVerticalOffset() {
-        let bounds = mapState.contentBounds
-        guard bounds.height > 0 else { return }
-        let scaledContentHeight = bounds.height * mapState.scale
-        let maxOffsetY = max(0, (scaledContentHeight - screenSize.height) / 2)
-        let contentCenterInMap = (bounds.minY + bounds.maxY) / 2
-        let mapCenter = MapProjection.mapHeight / 2
-        let centerCorrection = (mapCenter - contentCenterInMap) * mapState.scale
-        let correctedOffset = mapState.offset.height - centerCorrection
-        let clamped = min(max(correctedOffset, -maxOffsetY), maxOffsetY)
-        mapState.offset.height = clamped + centerCorrection
+    /// Only Mercator's rectangular world repeats sideways; Equal Earth's curved edges can't meet.
+    var wrapsWorld: Bool { MapProjection.current == .mercator }
+
+    func clampOffset() {
+        mapState.clampOffset(to: mapState.contentBounds, in: screenSize, horizontally: !wrapsWorld)
     }
 
     func wrapHorizontalOffset() {
@@ -358,7 +352,7 @@ private extension OrganizationMapScreen {
             mapState.lastScale = newMin
         }
         centerOnContent()
-        clampVerticalOffset()
+        clampOffset()
         mapState.lastOffset = mapState.offset
     }
 

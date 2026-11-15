@@ -273,7 +273,7 @@ private extension MapScreen {
                     height: mapState.offset.height * scaleRatio - anchorOffset.height * (scaleRatio - 1)
                 )
                 mapState.scale = newScale
-                clampVerticalOffset()
+                clampOffset()
                 redrawIfNeeded()
             }
             .onEnded { _ in
@@ -290,7 +290,7 @@ private extension MapScreen {
                     width: mapState.lastOffset.width + value.translation.width,
                     height: mapState.lastOffset.height + value.translation.height
                 )
-                clampVerticalOffset()
+                clampOffset()
                 redrawIfNeeded()
             }
             .onEnded { _ in
@@ -320,20 +320,8 @@ private extension MapScreen {
 
 // MARK: - Map Geometry
 private extension MapScreen {
-    func clampVerticalOffset() {
-        let bounds = mapState.contentBounds
-        guard bounds.height > 0 else { return }
-
-        let scaledContentHeight = bounds.height * mapState.scale
-        let maxOffsetY = max(0, (scaledContentHeight - screenSize.height) / 2)
-
-        let contentCenterInMap = (bounds.minY + bounds.maxY) / 2
-        let mapCenter = MapProjection.mapHeight / 2
-        let centerCorrection = (mapCenter - contentCenterInMap) * mapState.scale
-
-        let correctedOffset = mapState.offset.height - centerCorrection
-        let clamped = min(max(correctedOffset, -maxOffsetY), maxOffsetY)
-        mapState.offset.height = clamped + centerCorrection
+    func clampOffset() {
+        mapState.clampOffset(to: effectiveViewportBounds, in: screenSize, horizontally: !wrapsWorld)
     }
 
     func wrapHorizontalOffset() {
@@ -360,7 +348,7 @@ private extension MapScreen {
         }
 
         centerOnContent()
-        clampVerticalOffset()
+        clampOffset()
         mapState.lastOffset = mapState.offset
     }
 

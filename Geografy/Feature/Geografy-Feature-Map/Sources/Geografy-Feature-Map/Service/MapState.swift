@@ -35,12 +35,41 @@ public extension MapState {
         gestureFrame = nil
     }
 
-    func clampOffset(in size: CGSize) {
-        let maxOffsetX = max(0, (MapProjection.mapWidth * scale - size.width) / 2)
-        let maxOffsetY = max(0, (MapProjection.mapHeight * scale - size.height) / 2)
+    /// Keeps `content`, in map coordinates, on screen: a side bigger than the view pans only until its edge meets
+    /// the view's edge, a smaller one stays centered. A map that wraps sideways is held only top to bottom.
+    func clampOffset(to content: CGRect, in viewSize: CGSize, horizontally: Bool) {
+        guard content.width > 0, content.height > 0 else { return }
+        offset.height = Self.clamped(
+            offset.height,
+            content: content.minY...content.maxY,
+            mapLength: MapProjection.mapHeight,
+            viewLength: viewSize.height,
+            scale: scale
+        )
+        guard horizontally else { return }
+        offset.width = Self.clamped(
+            offset.width,
+            content: content.minX...content.maxX,
+            mapLength: MapProjection.mapWidth,
+            viewLength: viewSize.width,
+            scale: scale
+        )
+    }
+}
 
-        offset.width = min(max(offset.width, -maxOffsetX), maxOffsetX)
-        offset.height = min(max(offset.height, -maxOffsetY), maxOffsetY)
+// MARK: - Clamping
+private extension MapState {
+    /// One axis of `clampOffset`. An offset moves the map's center, so it's measured from the content's center.
+    static func clamped(
+        _ offset: CGFloat,
+        content: ClosedRange<CGFloat>,
+        mapLength: CGFloat,
+        viewLength: CGFloat,
+        scale: CGFloat
+    ) -> CGFloat {
+        let maxOffset = max(0, ((content.upperBound - content.lowerBound) * scale - viewLength) / 2)
+        let centerCorrection = (mapLength / 2 - (content.lowerBound + content.upperBound) / 2) * scale
+        return min(max(offset - centerCorrection, -maxOffset), maxOffset) + centerCorrection
     }
 }
 
