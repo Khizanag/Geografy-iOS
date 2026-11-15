@@ -10175,6 +10175,18 @@
         }
       }
     },
+    "Tap the country you think it is" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე ქვეყანას, რომელიც გგონია"
+          }
+        }
+      }
+    },
     "Tap the heart icon on any country to save it here." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11208,14 +11220,14 @@
         }
       }
     },
-    "We name a country, you drop a pin. Inside is a bullseye; the closer, the more you score." : {
+    "We name a country, you find it on the map. A hit is a bullseye; the closer, the more you score." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ჩვენ ვასახელებთ ქვეყანას, შენ სვამ ქინძისთავს. შიგნით — ზუსტად მიზანში; რაც უფრო ახლოს, მით მეტი ქულა."
+            "value" : "ჩვენ ვასახელებთ ქვეყანას, შენ პოულობ რუკაზე. მოხვედრა — ზუსტად მიზანში; რაც უფრო ახლოს, მით მეტი ქულა."
           }
         }
       }

@@ -21,7 +21,11 @@ struct PinDropScreen: View {
 
     @State private var game: PinDropGame?
     @State private var allShapes: [CountryShape] = []
+    /// The region's countries in their land colors.
+    @State private var landShapes: [CountryShape] = []
+    /// What's drawn: the land, with a wrong country pick greyed while the answer shows.
     @State private var shapes: [CountryShape] = []
+    @State private var shapesBySize: [CountryShape] = []
     @State private var hasLoaded = false
 
     @State private var camera = MapFrame(scale: 0.2, offset: .zero)
@@ -85,6 +89,7 @@ private extension PinDropScreen {
                 size: fullSize,
                 shapes: shapes,
                 pin: game?.pin,
+                selectedCountryCode: game?.selectedCountryCode,
                 dropCount: dropCount,
                 result: game?.phase == .aiming ? nil : game?.lastResult,
                 lineProgress: lineProgress,
@@ -94,11 +99,15 @@ private extension PinDropScreen {
             #if !os(tvOS)
             .gesture(dragGesture)
             .gesture(pinchGesture)
-            .onTapGesture { location in dropPin(atScreenPoint: location) }
+            .onTapGesture { location in guess(atScreenPoint: location) }
             #endif
             .accessibilityElement()
             .accessibilityLabel(Text("Map of \(configuration.region.displayName)"))
-            .accessibilityHint("Tap where you think the country is to drop a pin")
+            .accessibilityHint(
+                configuration.showsBorders
+                    ? "Tap the country you think it is"
+                    : "Tap where you think the country is to drop a pin"
+            )
             .accessibilityAddTraits(.allowsDirectInteraction)
         } else {
             LoadingView("Unfolding the map…")
@@ -177,7 +186,7 @@ private extension PinDropScreen {
             switch game.phase {
             case .aiming:
                 if game.pin == nil {
-                    tapHint
+                    tapHint(picksCountries: configuration.showsBorders)
                 } else {
                     GlassButton("Lock In", systemImage: "scope", fullWidth: true, action: lockIn)
                         .transition(.scale(scale: 0.9).combined(with: .opacity))
@@ -197,8 +206,11 @@ private extension PinDropScreen {
         .animation(reduceMotion ? nil : .spring(duration: 0.35, bounce: 0.3), value: game.pin == nil)
     }
 
-    var tapHint: some View {
-        Label("Tap the map to drop your pin", systemImage: "hand.tap.fill")
+    func tapHint(picksCountries: Bool) -> some View {
+        Label(
+            picksCountries ? "Tap the country you think it is" : "Tap the map to drop your pin",
+            systemImage: "hand.tap.fill"
+        )
             .font(DesignSystem.Font.subheadline)
             .fontWeight(.semibold)
             .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -343,9 +355,13 @@ private extension PinDropScreen {
         allShapes = loaded
         let region = configuration.region.mapRect
         let visible = region.insetBy(dx: -region.width * 0.2, dy: -region.height * 0.2)
-        shapes = loaded
+        landShapes = loaded
             .filter { $0.boundingBox.intersects(visible) }
             .map { $0.recolored(landColor(for: $0)) }
+        shapes = landShapes
+        shapesBySize = shapes.sorted {
+            $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
+        }
         startGame()
         hasLoaded = true
         if screenSize != .zero { frameRegion(animated: false) }
@@ -365,18 +381,34 @@ private extension PinDropScreen {
         lineProgress = 0
     }
 
-    func dropPin(atScreenPoint point: CGPoint) {
+    /// With borders, picks the country under the tap; without, drops the pin there.
+    func guess(atScreenPoint point: CGPoint) {
         guard let game, game.phase == .aiming else { return }
-        game.dropPin(at: PinDropCamera.mapPoint(of: point, frame: camera, in: screenSize))
-        dropCount += 1
-        #if !os(tvOS)
-        hapticsService.impact(.medium)
-        #endif
+        let mapPoint = PinDropCamera.mapPoint(of: point, frame: camera, in: screenSize)
+        if configuration.showsBorders {
+            // Smallest first, so an enclave like San Marino wins over the country around it.
+            guard let shape = shapesBySize.first(where: { $0.contains(mapPoint) }) else { return }
+            game.selectCountry(shape)
+            #if !os(tvOS)
+            hapticsService.selection()
+            #endif
+        } else {
+            game.dropPin(at: mapPoint)
+            dropCount += 1
+            #if !os(tvOS)
+            hapticsService.impact(.medium)
+            #endif
+        }
         SoundService.shared.play(.tap)
     }
 
     func lockIn() {
         guard let game, let result = game.lockIn() else { return }
+        if let guess = result.guessedCountryCode, !result.isInside {
+            // Grey, not a rating color, so only the answer carries how the round went.
+            let missTint = DesignSystem.Color.mapLandMuted.mix(with: DesignSystem.Color.textPrimary, by: 0.5)
+            shapes = landShapes.map { $0.id == guess ? $0.recolored(missTint) : $0 }
+        }
         celebrate(result)
         frameAnswer(result)
         lineProgress = 0
@@ -404,6 +436,7 @@ private extension PinDropScreen {
             game.advance()
             lineProgress = 0
         }
+        shapes = landShapes
         if game.phase == .finished {
             finish(game)
         } else {

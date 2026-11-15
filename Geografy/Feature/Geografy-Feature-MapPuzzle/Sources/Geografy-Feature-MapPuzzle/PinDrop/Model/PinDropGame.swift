@@ -9,6 +9,7 @@ public struct PinDropConfiguration: Hashable, Sendable {
     public var difficulty: PinDropDifficulty
     public var roundCount: Int
     /// Whether countries are outlined and tinted apart; without, only coastlines show.
+    /// With borders the player picks a whole country; without, they drop a pin.
     public var showsBorders: Bool
 
     public static let roundCounts = [5, 10, 15]
@@ -68,6 +69,8 @@ final class PinDropGame {
         let pin: CGPoint
         /// The country's border point nearest the pin; the pin itself when it landed inside.
         let nearestPoint: CGPoint
+        /// The country picked, when the player picks countries instead of dropping a pin.
+        let guessedCountryCode: String?
         let distanceKilometers: Double
         let isInside: Bool
         let score: PinDropScore
@@ -82,6 +85,8 @@ final class PinDropGame {
     private(set) var currentIndex = 0
     private(set) var phase: Phase = .aiming
     private(set) var pin: CGPoint?
+    /// The country picked so far, when picking countries; `pin` is then its middle.
+    private(set) var selectedCountryCode: String?
     private(set) var results: [Result] = []
     private var roundStartedAt: Date
 
@@ -113,6 +118,15 @@ extension PinDropGame {
     func dropPin(at mapPoint: CGPoint) {
         guard phase == .aiming else { return }
         pin = mapPoint
+        selectedCountryCode = nil
+    }
+
+    /// Picks a whole country as the guess, or another one, until the guess is locked in.
+    /// A wrong pick is measured from its middle, so picking a neighbor still scores well.
+    func selectCountry(_ shape: CountryShape) {
+        guard phase == .aiming else { return }
+        selectedCountryCode = shape.id
+        pin = shape.centroid
     }
 
     /// Scores the pin against the current country.
@@ -120,7 +134,7 @@ extension PinDropGame {
     func lockIn(now: Date = .now) -> Result? {
         guard phase == .aiming, let pin, let round = currentRound else { return nil }
 
-        let isInside = round.shape.contains(pin)
+        let isInside = selectedCountryCode.map { $0 == round.id } ?? round.shape.contains(pin)
         let nearest = isInside ? pin : PinDropGeometry.nearestPoint(to: pin, on: round.shape.polygons) ?? pin
         let distance = isInside ? 0 : PinDropGeometry.distanceKilometers(
             from: GeoCoordinate(mapPoint: pin),
@@ -138,6 +152,7 @@ extension PinDropGame {
             round: round,
             pin: pin,
             nearestPoint: nearest,
+            guessedCountryCode: selectedCountryCode,
             distanceKilometers: distance,
             isInside: isInside,
             score: score
@@ -151,6 +166,7 @@ extension PinDropGame {
     func advance(now: Date = .now) {
         guard phase == .revealed else { return }
         pin = nil
+        selectedCountryCode = nil
         if isLastRound {
             phase = .finished
         } else {

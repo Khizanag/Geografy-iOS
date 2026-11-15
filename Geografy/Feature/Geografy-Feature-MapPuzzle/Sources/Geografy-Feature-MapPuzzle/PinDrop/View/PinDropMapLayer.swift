@@ -18,6 +18,8 @@ struct PinDropMapLayer: View, Animatable {
     let size: CGSize
     let shapes: [CountryShape]
     let pin: CGPoint?
+    /// The country picked so far, when the player picks countries; it's lit instead of a pin shown.
+    let selectedCountryCode: String?
     let dropCount: Int
     let result: PinDropGame.Result?
     let lineProgress: CGFloat
@@ -45,7 +47,15 @@ struct PinDropMapLayer: View, Animatable {
                 targetMarker(for: result)
             }
             if let pin {
-                pinMarker(at: pin)
+                if selectedCountryCode == nil, result?.guessedCountryCode == nil {
+                    pinMarker(at: pin)
+                } else if let result, !result.isInside {
+                    guessMarker(at: pin)
+                }
+                if let result, result.isInside {
+                    PinDropBurstView(color: result.score.rating.color)
+                        .position(screenPoint(pin))
+                }
             }
         }
         .frame(width: size.width, height: size.height)
@@ -61,10 +71,11 @@ private extension PinDropMapLayer {
             countryShapes: shapes,
             scale: drawnFrame.scale,
             offset: drawnFrame.offset,
-            selectedCountryCode: nil,
+            // A wrong pick stays outlined next to the answer.
+            selectedCountryCode: result?.isInside == false ? result?.guessedCountryCode : nil,
             showLabels: false,
             canvasSize: MapFrame.drawnSize(for: size),
-            highlightedCodes: result.map { [$0.round.id] } ?? [],
+            highlightedCodes: highlightedCodes,
             highlightColor: result?.score.rating.color ?? PinDropStyle.gameColor,
             wrapsHorizontally: false,
             borderColor: borderColor
@@ -73,6 +84,12 @@ private extension PinDropMapLayer {
         .scaleEffect(magnification)
         .offset(shift)
         .frame(width: size.width, height: size.height)
+    }
+
+    /// The answer once revealed; before that, the country picked.
+    var highlightedCodes: Set<String> {
+        if let result { return [result.round.id] }
+        return selectedCountryCode.map { [$0] } ?? []
     }
 
     func screenPoint(_ mapPoint: CGPoint) -> CGPoint {
@@ -85,14 +102,20 @@ private extension PinDropMapLayer {
     func pinMarker(at mapPoint: CGPoint) -> some View {
         let tip = screenPoint(mapPoint)
         let pinHeight = PinDropPinView.headDiameter + PinDropPinView.needleLength
-        return ZStack {
-            PinDropPinView(dropCount: dropCount)
-                .position(x: tip.x, y: tip.y - pinHeight / 2)
-            if let result, result.isInside {
-                PinDropBurstView(color: result.score.rating.color)
-                    .position(tip)
-            }
-        }
+        return PinDropPinView(dropCount: dropCount)
+            .position(x: tip.x, y: tip.y - pinHeight / 2)
+    }
+
+    /// Where a wrong country pick is measured from: a dot in its middle.
+    func guessMarker(at mapPoint: CGPoint) -> some View {
+        Circle()
+            .fill(PinDropStyle.gameColor)
+            .overlay { Circle().strokeBorder(.white, lineWidth: 2.5) }
+            .frame(width: 14, height: 14)
+            .shadow(color: .black.opacity(0.3), radius: 3, y: 2)
+            .position(screenPoint(mapPoint))
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
     }
 }
 

@@ -205,6 +205,39 @@ struct PinDropGameTests {
         #expect(game.phase == .finished)
     }
 
+    @Test("Picking the right country is a bullseye, wherever its middle is")
+    func pickRightCountry() throws {
+        let target = round(code: "AA")
+        let game = PinDropGame(configuration: PinDropConfiguration(roundCount: 1), rounds: [target])
+
+        game.selectCountry(target.shape)
+        let result = try #require(game.lockIn())
+
+        #expect(result.isInside)
+        #expect(result.guessedCountryCode == "AA")
+        #expect(result.score.rating == .bullseye)
+    }
+
+    @Test("Picking another country measures from its middle to the answer's border")
+    func pickWrongCountry() throws {
+        let game = PinDropGame(configuration: PinDropConfiguration(roundCount: 1), rounds: [round(code: "AA")])
+        let neighbor = CountryShape(
+            id: "BB", name: "BB", continent: "Europe",
+            polygons: [CGPath(rect: CGRect(x: 1_020, y: 700, width: 20, height: 20), transform: nil)],
+            centroid: CGPoint(x: 1_030, y: 710), boundingBox: CGRect(x: 1_020, y: 700, width: 20, height: 20),
+            color: .blue
+        )
+
+        game.selectCountry(neighbor)
+        let result = try #require(game.lockIn())
+
+        #expect(!result.isInside)
+        #expect(result.guessedCountryCode == "BB")
+        #expect(result.pin == CGPoint(x: 1_030, y: 710))
+        #expect(result.nearestPoint == CGPoint(x: 1_020, y: 710))
+        #expect(result.distanceKilometers > 0)
+    }
+
     @Test("Locking in needs a pin")
     func lockInNeedsPin() {
         let game = PinDropGame(configuration: PinDropConfiguration(roundCount: 1), rounds: [round(code: "AA")])

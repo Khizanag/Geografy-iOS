@@ -61,7 +61,7 @@ private extension PinDropSetupScreen {
     var header: some View {
         GameIntroHeader(
             title: "Pin Drop",
-            subtitle: "We name a country, you drop a pin. Inside is a bullseye; the closer, the more you score.",
+            subtitle: "We name a country, you find it on the map. A hit is a bullseye; the closer, the more you score.",
             systemImage: "mappin.and.ellipse",
             color: PinDropStyle.gameColor,
             facts: headerFacts
