@@ -19,7 +19,6 @@ public struct SettingsScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
 
-    @AppStorage("notificationsEnabled") private var notificationsEnabled = false
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
     @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
     @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
@@ -43,7 +42,6 @@ public struct SettingsScreen: View {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .task { await syncNotificationStatus() }
             .confirmationDialog(
                 "Delete Account",
                 isPresented: $showDeleteConfirmation,
@@ -378,21 +376,7 @@ private extension SettingsScreen {
 private extension SettingsScreen {
     var notificationsSection: some View {
         settingsGroup(header: "Notifications") {
-            SettingsToggleRow(
-                icon: "bell.fill",
-                iconColor: DesignSystem.Color.accent,
-                title: "Push notifications",
-                isOn: Binding(
-                    get: { notificationsEnabled },
-                    set: { newValue in
-                        if newValue {
-                            requestNotificationPermission()
-                        } else {
-                            notificationsEnabled = false
-                        }
-                    }
-                )
-            )
+            NotificationSettingsRows()
         }
     }
 }
@@ -544,9 +528,7 @@ private extension SettingsScreen {
     }
 
     var settingsDivider: some View {
-        Divider()
-            .background(DesignSystem.Color.cardBackgroundHighlighted)
-            .padding(.leading, DesignSystem.Spacing.xxl + DesignSystem.Spacing.md)
+        SettingsDivider()
     }
 
     func settingsGroup(header: LocalizedStringKey, @ViewBuilder content: () -> some View) -> some View {
@@ -562,24 +544,6 @@ private extension SettingsScreen {
 
 // MARK: - Actions
 private extension SettingsScreen {
-    func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: [.alert, .badge, .sound]
-        ) { granted, _ in
-            DispatchQueue.main.async {
-                notificationsEnabled = granted
-            }
-        }
-    }
-
-    func syncNotificationStatus() async {
-        let settings = await UNUserNotificationCenter.current().notificationSettings()
-        let authorized = settings.authorizationStatus == .authorized
-        if notificationsEnabled, !authorized {
-            notificationsEnabled = false
-        }
-    }
-
     func requestReview() {
         #if !os(tvOS)
         guard let scene = UIApplication.shared.connectedScenes

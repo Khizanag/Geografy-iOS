@@ -1,7 +1,40 @@
 #if os(iOS)
 import UserNotifications
 
+/// The daily streak and challenge reminders. They're scheduled only while the person has them on
+/// in Settings and iOS allows Geografy to notify.
 public enum NotificationService {
+    /// Where the person's choice is kept, under the key Settings has always used.
+    public static let preferenceKey = "notificationsEnabled"
+
+    /// Whether iOS lets Geografy notify.
+    public enum Authorization: Sendable {
+        /// Never asked: asking shows the system prompt.
+        case notDetermined
+        case allowed
+        /// Turned off in iOS Settings, or refused at the prompt: only iOS Settings can turn it back on.
+        case denied
+    }
+
+    public static func authorization() async -> Authorization {
+        switch await UNUserNotificationCenter.current().notificationSettings().authorizationStatus {
+        case .notDetermined: .notDetermined
+        case .authorized, .provisional, .ephemeral: .allowed
+        case .denied: .denied
+        @unknown default: .denied
+        }
+    }
+
+    /// Schedules the reminders when `enabled` and allowed, and removes them otherwise.
+    public static func syncReminders(enabled: Bool) async {
+        guard enabled, await authorization() == .allowed else {
+            cancelAll()
+            return
+        }
+        scheduleStreakReminder()
+        scheduleDailyChallengeReminder()
+    }
+
     public static func requestPermission() async -> Bool {
         let center = UNUserNotificationCenter.current()
         return (try? await center.requestAuthorization(options: [.alert, .sound, .badge])) ?? false

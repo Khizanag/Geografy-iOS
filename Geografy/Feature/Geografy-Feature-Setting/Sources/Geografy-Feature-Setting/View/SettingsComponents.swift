@@ -79,6 +79,16 @@ struct SettingsExternalRow: View {
     }
 }
 
+// MARK: - Divider
+/// The line between two rows in a settings card, starting past the icons.
+struct SettingsDivider: View {
+    var body: some View {
+        Divider()
+            .background(DesignSystem.Color.cardBackgroundHighlighted)
+            .padding(.leading, DesignSystem.Spacing.xxl + DesignSystem.Spacing.md)
+    }
+}
+
 // MARK: - Icon Badge
 struct SettingsIconBadge: View {
     // MARK: - Properties

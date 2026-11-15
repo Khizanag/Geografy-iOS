@@ -6563,6 +6563,18 @@
         }
       }
     },
+    "Notifications are off for Geografy in iOS Settings." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geografy-ს შეტყობინებები iOS-ის პარამეტრებში გამორთულია."
+          }
+        }
+      }
+    },
     "OK" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6717,6 +6729,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ხსნის Geografy-ს კონკრეტულ ჩანართში."
+          }
+        }
+      }
+    },
+    "Opens Geografy's notification settings in the Settings app" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის Geografy-ს შეტყობინებების პარამეტრებს Settings აპში"
           }
         }
       }
@@ -10397,6 +10421,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "სცადე ფილტრების შეცვლა ან სხვა წლის არჩევა"
+          }
+        }
+      }
+    },
+    "Turn On in iOS Settings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩართე iOS-ის პარამეტრებში"
           }
         }
       }

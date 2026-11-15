@@ -185,11 +185,10 @@ private extension GeografyApp {
 
     func setupNotificationsAndSpotlight() async {
         #if os(iOS)
-        let granted = await NotificationService.requestPermission()
-        if granted {
-            NotificationService.scheduleStreakReminder()
-            NotificationService.scheduleDailyChallengeReminder()
-        }
+        // Permission is asked for when the person turns reminders on in Settings, not at launch.
+        await NotificationService.syncReminders(
+            enabled: UserDefaults.standard.bool(forKey: NotificationService.preferenceKey)
+        )
         SpotlightIndexer.indexCountriesIfNeeded(countryDataService.countries)
         #endif
     }
