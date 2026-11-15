@@ -1041,6 +1041,18 @@
         }
       }
     },
+    "%lld rounds" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld რაუნდი"
+          }
+        }
+      }
+    },
     "%lld seconds" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -1936,6 +1948,18 @@
         }
       }
     },
+    "Average Miss" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საშუალო აცდენა"
+          }
+        }
+      }
+    },
     "Average rating %@ of 5 stars" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -2008,6 +2032,18 @@
         }
       }
     },
+    "Best %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეკორდი %@"
+          }
+        }
+      }
+    },
     "Best Streak" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -2028,6 +2064,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "საუკეთესო %@-ში"
+          }
+        }
+      }
+    },
+    "Best: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეკორდი: %@"
+          }
+        }
+      }
+    },
+    "Bonus for speed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბონუსი სისწრაფისთვის"
           }
         }
       }
@@ -2104,6 +2164,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "თავსატეხი იქმნება…"
+          }
+        }
+      }
+    },
+    "Bullseye!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ზუსტად მიზანში!"
+          }
+        }
+      }
+    },
+    "Bullseyes" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიზანში"
           }
         }
       }
@@ -2235,6 +2319,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ბარათი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Cartographer level. Flawless." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კარტოგრაფის დონე. უნაკლოდ."
           }
         }
       }
@@ -3700,6 +3796,18 @@
         }
       }
     },
+    "Drop a pin on the named country" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასვი ქინძისთავი დასახელებულ ქვეყანაზე"
+          }
+        }
+      }
+    },
     "Due Countries" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -3931,6 +4039,18 @@
         }
       }
     },
+    "Every explorer starts somewhere." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა მკვლევარი სადღაც იწყებს."
+          }
+        }
+      }
+    },
     "Expanded" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4140,6 +4260,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ფილტრი"
+          }
+        }
+      }
+    },
+    "Find" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე"
+          }
+        }
+      }
+    },
+    "Find %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე %@"
           }
         }
       }
@@ -4395,6 +4539,18 @@
         }
       }
     },
+    "Game" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თამაში"
+          }
+        }
+      }
+    },
     "Geografy" : {
       "localizations" : {
         "ka" : {
@@ -4504,6 +4660,18 @@
         }
       }
     },
+    "Getting there. Play again?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლოს ხარ. კიდევ ითამაშებ?"
+          }
+        }
+      }
+    },
     "Give Up" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4581,6 +4749,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გასაგებია!"
+          }
+        }
+      }
+    },
+    "Grade %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეფასება %@"
           }
         }
       }
@@ -4992,6 +5172,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დამოუკიდებელი %@-დან"
+          }
+        }
+      }
+    },
+    "Inside" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შიგნით"
           }
         }
       }
@@ -5469,6 +5661,18 @@
         }
       }
     },
+    "Lock In" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დადასტურება"
+          }
+        }
+      }
+    },
     "Locked" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5582,6 +5786,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რუკის მონაცემები © OpenStreetMap-ის კონტრიბუტორები · Geografy"
+          }
+        }
+      }
+    },
+    "Map of %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ — რუკა"
           }
         }
       }
@@ -6057,6 +6273,18 @@
         }
       }
     },
+    "New Best!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახალი რეკორდი!"
+          }
+        }
+      }
+    },
     "New Collection" : {
       "comment" : "The title of an alert that appears when the user taps the \"Add New Collection\" button.",
       "isCommentAutoGenerated" : true,
@@ -6137,6 +6365,18 @@
         }
       }
     },
+    "Next Round" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი რაუნდი"
+          }
+        }
+      }
+    },
     "Next challenge in" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6145,6 +6385,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შემდეგ გამოწვევამდე"
+          }
+        }
+      }
+    },
+    "Nice Guess" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კარგი ვარაუდი"
           }
         }
       }
@@ -6212,6 +6464,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "კოლექციები არ არის"
+          }
+        }
+      }
+    },
+    "No Countries Here" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აქ ქვეყნები არ არის"
           }
         }
       }
@@ -6511,6 +6775,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "საერთო არაფერია"
+          }
+        }
+      }
+    },
+    "Not Bad" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცუდი არაა"
           }
         }
       }
@@ -7140,6 +7416,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "აირჩიე მონიშნული ქვეყანა"
+          }
+        }
+      }
+    },
+    "Pin Drop" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქინძისთავი"
           }
         }
       }
@@ -8288,6 +8576,42 @@
         }
       }
     },
+    "Round %lld of %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Round %1$lld of %2$lld"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაუნდი %1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "Round %lld of %lld, %lld points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Round %1$lld of %2$lld, %3$lld points"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაუნდი %1$lld / %2$lld, %3$lld ქულა"
+          }
+        }
+      }
+    },
     "Round Complete!" : {
       "localizations" : {
         "ka" : {
@@ -9308,6 +9632,30 @@
         }
       }
     },
+    "So Close!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ძალიან ახლოს!"
+          }
+        }
+      }
+    },
+    "Solid sense of direction." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიმართულებას კარგად გრძნობ."
+          }
+        }
+      }
+    },
     "Sort" : {
       "comment" : "A label for sorting options in the settings menu.",
       "extractionState" : "manual",
@@ -9366,6 +9714,18 @@
         }
       }
     },
+    "Speed +%lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სისწრაფე +%lld"
+          }
+        }
+      }
+    },
     "Speed Run" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9398,6 +9758,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვარსკვლავები"
+          }
+        }
+      }
+    },
+    "Start" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაწყება"
           }
         }
       }
@@ -9779,6 +10151,18 @@
         }
       }
     },
+    "Tap the map to drop your pin" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე რუკას ქინძისთავის დასასმელად"
+          }
+        }
+      }
+    },
     "Tap to change photo" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9871,6 +10255,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეეხე გასადიდებლად"
+          }
+        }
+      }
+    },
+    "Tap where you think the country is to drop a pin" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე იქ, სადაც ფიქრობ რომ ქვეყანაა, ქინძისთავის დასასმელად"
           }
         }
       }
@@ -10035,6 +10431,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ამ ვიქტორინას არჩეული რეგიონისთვის კითხვები არ აქვს. სცადე მსოფლიო."
+          }
+        }
+      }
+    },
+    "This region has no countries to find at this difficulty." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ რეგიონში ამ სირთულით საპოვნელი ქვეყნები არ არის."
           }
         }
       }
@@ -10752,6 +11160,30 @@
         }
       }
     },
+    "Way Off" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ძალიან შორს"
+          }
+        }
+      }
+    },
+    "We name a country, you drop a pin. Inside is a bullseye; the closer, the more you score." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩვენ ვასახელებთ ქვეყანას, შენ სვამ ქინძისთავს. შიგნით — ზუსტად მიზანში; რაც უფრო ახლოს, მით მეტი ქულა."
+          }
+        }
+      }
+    },
     "We're working on something great." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10861,6 +11293,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რომელ რეგიონშია…"
+          }
+        }
+      }
+    },
+    "Whole World" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მთელი მსოფლიო"
           }
         }
       }
@@ -11025,6 +11469,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "სწორად გამოიცანი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "You know this map by heart." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამ რუკას ზეპირად იცნობ."
           }
         }
       }
@@ -11285,6 +11741,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld-დან"
+          }
+        }
+      }
+    },
+    "points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქულა"
           }
         }
       }

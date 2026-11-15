@@ -35,7 +35,7 @@ struct PlayScreen: View {
 private extension PlayScreen {
     static let sections = [
         HubSection(title: "Quick Play", items: [.quiz, .trueOrFalse, .neighbors, .mysteryCountry]),
-        HubSection(title: "Games", items: [.speedRun, .quizPacks, .multiplayer, .mapPuzzle, .wordSearch]),
+        HubSection(title: "Games", items: [.pinDrop, .speedRun, .quizPacks, .multiplayer, .mapPuzzle, .wordSearch]),
     ]
 }
 

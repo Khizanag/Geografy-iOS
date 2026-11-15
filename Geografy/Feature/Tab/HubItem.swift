@@ -11,6 +11,7 @@ enum HubItem: Identifiable, CaseIterable {
     case neighbors
     case mysteryCountry
     case mapPuzzle
+    case pinDrop
     case worldFacts
     case friends
     case countries
@@ -47,6 +48,7 @@ enum HubItem: Identifiable, CaseIterable {
         case .neighbors: "Neighbors"
         case .mysteryCountry: "Mystery Country"
         case .mapPuzzle: "Map Puzzle"
+        case .pinDrop: "Pin Drop"
         case .worldFacts: "World Facts"
         case .friends: "Friends"
         case .countries: "Countries"
@@ -83,6 +85,7 @@ enum HubItem: Identifiable, CaseIterable {
         case .neighbors: "square.dashed"
         case .mysteryCountry: "magnifyingglass"
         case .mapPuzzle: "puzzlepiece.fill"
+        case .pinDrop: "mappin.and.ellipse"
         case .worldFacts: "globe.europe.africa.fill"
         case .friends: "person.2.fill"
         case .countries: "list.bullet"
@@ -119,6 +122,7 @@ enum HubItem: Identifiable, CaseIterable {
         case .neighbors: "Which country shares a border?"
         case .mysteryCountry: "Guess from clues"
         case .mapPuzzle: "Place countries on the map"
+        case .pinDrop: "Drop a pin on the named country"
         case .worldFacts: "Records, oceans, landmarks"
         case .friends: "Game Center friends"
         case .countries: "Browse all 197 countries"
@@ -155,6 +159,7 @@ enum HubItem: Identifiable, CaseIterable {
         case .neighbors: DesignSystem.Color.error
         case .mysteryCountry: DesignSystem.Color.orange
         case .mapPuzzle: DesignSystem.Color.purple
+        case .pinDrop: DesignSystem.Color.orange
         case .worldFacts: DesignSystem.Color.ocean
         case .friends: DesignSystem.Color.indigo
         case .countries: DesignSystem.Color.blue
@@ -191,6 +196,7 @@ enum HubItem: Identifiable, CaseIterable {
         case .neighbors: "neighbors"
         case .mysteryCountry: "mysteryCountry"
         case .mapPuzzle: "mapPuzzle"
+        case .pinDrop: "pinDrop"
         case .worldFacts: "worldFacts"
         case .friends: "friends"
         case .countries: "countries"
@@ -227,6 +233,7 @@ enum HubItem: Identifiable, CaseIterable {
         case .neighbors: .quizSession(.quickPlay(.neighbors))
         case .mysteryCountry: .quizSession(.quickPlay(.mysteryCountry))
         case .mapPuzzle: .mapPuzzle
+        case .pinDrop: .pinDrop
         case .worldFacts: .worldFacts(.records)
         case .friends: .friends
         case .countries: .countries

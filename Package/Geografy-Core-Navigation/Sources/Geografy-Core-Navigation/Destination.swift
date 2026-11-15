@@ -36,6 +36,7 @@ public enum Destination: Hashable, Identifiable {
     case mapPuzzle
     case multiplayer
     case neighborExplorer(Country)
+    case pinDrop
     case organizationDetail(Organization)
     case organizationMap(Organization)
     case organizations
@@ -93,6 +94,7 @@ public enum Destination: Hashable, Identifiable {
         case .mapColoring: "mapColoring"
         case .mapFullScreen(let filter): "mapFullScreen-\(filter ?? "world")"
         case .mapPuzzle: "mapPuzzle"
+        case .pinDrop: "pinDrop"
         case .multiplayer: "multiplayer"
         case .neighborExplorer(let country): "neighborExplorer-\(country.code)"
         case .organizationDetail(let org): "orgDetail-\(org.id)"

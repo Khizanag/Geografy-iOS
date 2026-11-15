@@ -74,6 +74,7 @@ extension Destination {
         case .mapColoring: MapColoringScreen()
         case .mapFullScreen(let filter): MapScreen(continentFilter: filter)
         case .mapPuzzle: MapPuzzleSetupScreen()
+        case .pinDrop: PinDropSetupScreen()
         case .multiplayer: MultiplayerLobbyScreen(multiplayerService: Self.multiplayerService)
         case .neighborExplorer(let country): NeighborExplorerScreen(country: country)
         case .organizationDetail(let org): OrganizationDetailScreen(organization: org)
