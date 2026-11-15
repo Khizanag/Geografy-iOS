@@ -94,9 +94,9 @@ private extension MapColorsScreen {
             .selectableTileBackground(
                 isSelected: isSelected,
                 color: DesignSystem.Color.accent,
-                cornerRadius: DesignSystem.CornerRadius.large
+                cornerRadius: DesignSystem.CornerRadius.extraLarge
             )
-            .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+            .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
         .buttonStyle(PressButtonStyle())
         .accessibilityElement(children: .combine)
