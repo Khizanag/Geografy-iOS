@@ -141,6 +141,7 @@
 				"Feature/Geografy-Feature-Timeline",
 				"Feature/Geografy-Feature-TimeZone",
 				"Feature/Geografy-Feature-Travel",
+				"Feature/Geografy-Feature-TravelJournal",
 				"Feature/Geografy-Feature-WordSearch",
 				"Feature/Geografy-Feature-WorldFacts",
 			);
