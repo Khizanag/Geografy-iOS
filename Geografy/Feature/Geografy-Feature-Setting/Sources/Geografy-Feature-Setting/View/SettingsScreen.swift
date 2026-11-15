@@ -230,6 +230,17 @@ private extension SettingsScreen {
                     )
                 }
                 .buttonStyle(PressButtonStyle())
+
+                settingsDivider
+
+                Button { coordinator.push(.storage) } label: {
+                    SettingsNavigationRow(
+                        icon: "internaldrive.fill",
+                        iconColor: DesignSystem.Color.textSecondary,
+                        title: "Storage"
+                    )
+                }
+                .buttonStyle(PressButtonStyle())
             }
         }
     }

@@ -92,6 +92,7 @@ extension Destination {
         case .speedRunSession(let region): SpeedRunSessionScreen(region: region)
         case .speedRunSetup: SpeedRunSetupScreen()
         case .srsStudy: SRSStudyScreen()
+        case .storage: StorageScreen()
         case .territorialDisputes: TerritorialDisputesScreen()
         case .themes: ThemesScreen()
         case .timeline: TimelineScreen()

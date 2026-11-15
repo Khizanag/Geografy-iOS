@@ -1736,6 +1736,18 @@
         }
       }
     },
+    "App" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აპი"
+          }
+        }
+      }
+    },
     "App language" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -1920,6 +1932,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დღის ქვეყანა"
+          }
+        }
+      }
+    },
+    "Cache" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქეში"
           }
         }
       }
@@ -2186,6 +2210,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გასუფთავება"
+          }
+        }
+      }
+    },
+    "Clear Cache" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქეშის გასუფთავება"
+          }
+        }
+      }
+    },
+    "Clear Cache?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გავასუფთაოთ ქეში?"
           }
         }
       }
@@ -3292,6 +3340,18 @@
         }
       }
     },
+    "Downloaded statistics and exchange rates" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩამოტვირთული სტატისტიკა და ვალუტის კურსები"
+          }
+        }
+      }
+    },
     "Drag across the letters to find every hidden word." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -3921,6 +3981,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geografy ყოველდღიური გამოწვევა"
+          }
+        }
+      }
+    },
+    "Geografy itself, with its maps and flags" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავად Geografy, რუკებითა და დროშებით"
           }
         }
       }
@@ -6297,6 +6369,18 @@
         }
       }
     },
+    "Progress, favorites, travel journal, and settings" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პროგრესი, რჩეულები, მოგზაურობის დღიური და პარამეტრები"
+          }
+        }
+      }
+    },
     "Pronounce %@" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8002,6 +8086,18 @@
         }
       }
     },
+    "Statistics and exchange rates download again the next time you're online." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატისტიკა და ვალუტის კურსები თავიდან ჩამოიტვირთება, როცა ინტერნეტთან დაკავშირდები."
+          }
+        }
+      }
+    },
     "Stats, rankings & full country list" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8040,6 +8136,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "წარმოთქმის შეჩერება"
+          }
+        }
+      }
+    },
+    "Storage" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეხსიერება"
           }
         }
       }
@@ -8835,6 +8943,18 @@
         }
       }
     },
+    "Used on this device" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოყენებულია ამ მოწყობილობაზე"
+          }
+        }
+      }
+    },
     "VS" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9303,6 +9423,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შენი პროგრესი"
+          }
+        }
+      }
+    },
+    "Your data" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი მონაცემები"
+          }
+        }
+      }
+    },
+    "Your progress and travel journal are kept." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი პროგრესი და მოგზაურობის დღიური შენარჩუნდება."
           }
         }
       }

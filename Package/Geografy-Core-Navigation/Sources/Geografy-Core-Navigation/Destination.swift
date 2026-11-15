@@ -52,6 +52,7 @@ public enum Destination: Hashable, Identifiable {
     case speedRunSession(region: QuizRegion)
     case speedRunSetup
     case srsStudy
+    case storage
     case territorialDisputes
     case themes
     case timeline
@@ -110,6 +111,7 @@ public enum Destination: Hashable, Identifiable {
         case .speedRunSession(let region): "speedRunSession-\(region.rawValue)"
         case .speedRunSetup: "speedRunSetup"
         case .srsStudy: "srsStudy"
+        case .storage: "storage"
         case .territorialDisputes: "territorialDisputes"
         case .themes: "themes"
         case .timeline: "timeline"
