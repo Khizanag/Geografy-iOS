@@ -29,6 +29,7 @@ Every screen is one of these five. Pick the template first, then fill it with th
 | A list of tappable rows | `RowListCard` with `.rowListCardRow()` | Separate cards per row |
 | A flag | `FlagView`, `isOutlined: true` in lists | A flag with a drop shadow in a scrolling list |
 | A screen that switches between two or three views | `.segmentedTabs(…)`: the picker sits in the navigation bar, the title stays inline, tab labels stay short | A picker bar under the navigation bar, or one under a large title |
+| An on/off switch in the navigation bar | `ToolbarToggle`: one in front, the rest as `Toggle`s under `.secondaryAction` | A hand-made circle that fills the glass edge to edge |
 
 ## Rules
 

@@ -129,23 +129,12 @@ private extension TravelMapScreen {
     }
 
     var labelsToggle: some View {
-        Button {
+        ToolbarToggle("Country labels", isOn: showLabels) {
             showLabels.toggle()
             hapticsService.impact(.light)
         } label: {
-            Text("Aa")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
-                .padding(DesignSystem.Spacing.xs)
-                .background {
-                    if showLabels {
-                        Circle().fill(DesignSystem.Color.accent)
-                    }
-                }
+            Text(verbatim: "Aa")
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Country labels")
-        .accessibilityValue(showLabels ? "Shown" : "Hidden")
     }
 
     var filterMenu: some View {

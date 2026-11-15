@@ -327,6 +327,16 @@
         }
       }
     },
+    "Hidden" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამალული"
+          }
+        }
+      }
+    },
     "Incorrect" : {
       "localizations" : {
         "ka" : {
@@ -518,6 +528,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ყველას არჩევა"
+          }
+        }
+      }
+    },
+    "Shown" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაჩვენებია"
           }
         }
       }

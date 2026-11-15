@@ -8997,6 +8997,18 @@
         }
       }
     },
+    "Show Visited Countries" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნანახი ქვეყნების ჩვენება"
+          }
+        }
+      }
+    },
     "Show all %lld results" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

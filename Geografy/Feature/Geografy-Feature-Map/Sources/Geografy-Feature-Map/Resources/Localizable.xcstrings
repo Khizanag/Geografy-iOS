@@ -316,6 +316,16 @@
         }
       }
     },
+    "Show Visited Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნანახი ქვეყნების ჩვენება"
+          }
+        }
+      }
+    },
     "Shown" : {
       "localizations" : {
         "ka" : {

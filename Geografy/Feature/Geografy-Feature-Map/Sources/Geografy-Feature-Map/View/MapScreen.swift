@@ -159,66 +159,21 @@ private extension MapScreen {
                     .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
         }
-        ToolbarItemGroup(placement: .primaryAction) {
-            visitedToggleButton
-            labelsToggleButton
+        ToolbarItem(placement: .primaryAction) {
+            ToolbarToggle("Country labels", isOn: mapState.showLabels) {
+                mapState.showLabels.toggle()
+                #if !os(tvOS)
+                hapticsService.impact(.light)
+                #endif
+            } label: {
+                Text(verbatim: "Aa")
+            }
         }
-    }
-
-    var visitedToggleButton: some View {
-        toolbarToggle(
-            isOn: showsVisitedCountries,
-            accessibilityLabel: "Visited countries",
-            accessibilityHint: "Double tap to highlight the countries you've visited"
-        ) {
-            showsVisitedCountries.toggle()
-        } label: {
-            Image(systemName: TravelStatus.visited.icon)
-                .font(DesignSystem.Font.headline)
+        ToolbarItem(placement: .secondaryAction) {
+            Toggle(isOn: $showsVisitedCountries) {
+                Label("Show Visited Countries", systemImage: TravelStatus.visited.icon)
+            }
         }
-    }
-
-    var labelsToggleButton: some View {
-        toolbarToggle(
-            isOn: mapState.showLabels,
-            accessibilityLabel: "Country labels",
-            accessibilityHint: "Double tap to toggle country name labels"
-        ) {
-            mapState.showLabels.toggle()
-        } label: {
-            Text("Aa")
-                .font(DesignSystem.Font.headline)
-        }
-    }
-
-    /// A map display switch: filled in the accent color while on.
-    func toolbarToggle(
-        isOn: Bool,
-        accessibilityLabel: String,
-        accessibilityHint: String,
-        action: @escaping () -> Void,
-        @ViewBuilder label: () -> some View
-    ) -> some View {
-        Button {
-            action()
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
-        } label: {
-            label()
-                .foregroundStyle(isOn ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
-                .frame(minWidth: DesignSystem.Size.md, minHeight: DesignSystem.Size.md)
-                .padding(DesignSystem.Spacing.xs)
-                .background {
-                    if isOn {
-                        Circle().fill(DesignSystem.Color.accent)
-                    }
-                }
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(accessibilityLabel)
-        .accessibilityValue(isOn ? "Shown" : "Hidden")
-        .accessibilityHint(accessibilityHint)
     }
 }
 

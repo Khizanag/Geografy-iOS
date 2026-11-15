@@ -145,28 +145,15 @@ private extension OrganizationMapScreen {
             }
         }
         ToolbarItem(placement: .primaryAction) {
-            labelsToggleButton
+            ToolbarToggle("Country labels", isOn: mapState.showLabels) {
+                mapState.showLabels.toggle()
+                #if !os(tvOS)
+                hapticsService.impact(.light)
+                #endif
+            } label: {
+                Text(verbatim: "Aa")
+            }
         }
-    }
-
-    var labelsToggleButton: some View {
-        Button {
-            mapState.showLabels.toggle()
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
-        } label: {
-            Text("Aa")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(mapState.showLabels ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
-                .padding(DesignSystem.Spacing.xs)
-                .background {
-                    if mapState.showLabels {
-                        Circle().fill(DesignSystem.Color.accent)
-                    }
-                }
-        }
-        .buttonStyle(.plain)
     }
 }
 
