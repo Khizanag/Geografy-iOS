@@ -21,7 +21,6 @@ public enum Destination: Hashable, Identifiable {
     case editProfile
     case distanceCalculator
     case saved(SavedTab)
-    case feed
     case flashcardSession(deck: FlashcardDeck, cards: [FlashcardItem])
     case historicalMap(initialYear: Int)
     case learningPath
@@ -29,7 +28,6 @@ public enum Destination: Hashable, Identifiable {
     case lesson(LearningModule, Lesson)
     case leaderboards
     case map(continentFilter: Country.Continent? = nil)
-    case mapColoring
     case mapColors
     case mapFullScreen(continentFilter: String?)
     case mapPuzzle
@@ -44,7 +42,6 @@ public enum Destination: Hashable, Identifiable {
     case quizLibrary(QuizLibraryTab)
     case quizSession(QuizConfiguration)
     case quizSetup
-    case quotes
     case saveToCollection(countryCode: String, countryName: String)
     case search
     case settings
@@ -54,7 +51,6 @@ public enum Destination: Hashable, Identifiable {
     case srsStudy
     case storage
     case territorialDisputes
-    case themes
     case timeline
     case timeZones
     case travelMap(TravelMapFilter)
@@ -80,7 +76,6 @@ public enum Destination: Hashable, Identifiable {
         case .editProfile: "editProfile"
         case .distanceCalculator: "distanceCalculator"
         case .saved(let tab): "saved-\(tab.rawValue)"
-        case .feed: "feed"
         case .flashcardSession: "flashcardSession"
         case .historicalMap(let year): "historicalMap-\(year)"
         case .learningPath: "learningPath"
@@ -88,7 +83,6 @@ public enum Destination: Hashable, Identifiable {
         case let .lesson(module, lesson): "lesson-\(module.id)-\(lesson.id)"
         case .leaderboards: "leaderboards"
         case .map(let filter): "map-\(filter?.rawValue ?? "world")"
-        case .mapColoring: "mapColoring"
         case .mapColors: "mapColors"
         case .mapFullScreen(let filter): "mapFullScreen-\(filter ?? "world")"
         case .mapPuzzle: "mapPuzzle"
@@ -103,7 +97,6 @@ public enum Destination: Hashable, Identifiable {
         case .quizLibrary(let tab): "quizLibrary-\(tab.rawValue)"
         case .quizSession: "quizSession"
         case .quizSetup: "quizSetup"
-        case .quotes: "quotes"
         case let .saveToCollection(code, _): "saveToCollection-\(code)"
         case .search: "search"
         case .settings: "settings"
@@ -113,7 +106,6 @@ public enum Destination: Hashable, Identifiable {
         case .srsStudy: "srsStudy"
         case .storage: "storage"
         case .territorialDisputes: "territorialDisputes"
-        case .themes: "themes"
         case .timeline: "timeline"
         case .timeZones: "timeZones"
         case .travelMap: "travelMap"

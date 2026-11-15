@@ -22,7 +22,7 @@ struct LearnScreen: View {
 private extension LearnScreen {
     static let sections = [
         HubSection(title: "Study", items: [.learningPath, .srsStudy]),
-        HubSection(title: "Discover", items: [.worldFacts, .timeline, .orgs, .compare, .feed, .quotes]),
+        HubSection(title: "Discover", items: [.worldFacts, .timeline, .orgs, .compare]),
         HubSection(title: "Tools", items: [.timeZones, .currencyConverter, .distanceCalculator]),
     ]
 }

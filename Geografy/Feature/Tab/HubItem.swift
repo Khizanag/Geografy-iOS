@@ -23,14 +23,11 @@ enum HubItem: Identifiable, CaseIterable {
     case multiplayer
     case speedRun
     case wordSearch
-    case quotes
-    case feed
     case srsStudy
     case learningPath
     case timeline
     case achievements
     case leaderboards
-    case themes
     case settings
     case search
     case distanceCalculator
@@ -64,12 +61,9 @@ enum HubItem: Identifiable, CaseIterable {
         case .timeline: "Historical Timeline"
         case .achievements: "Achievements"
         case .leaderboards: "Leaderboards"
-        case .themes: "Themes"
         case .settings: "Settings"
         case .search: "Global Search"
         case .wordSearch: "Word Search"
-        case .quotes: "Quotes"
-        case .feed: "Feed"
         case .srsStudy: "Flashcards"
         case .learningPath: "Learning Path"
         }
@@ -100,12 +94,9 @@ enum HubItem: Identifiable, CaseIterable {
         case .timeline: "clock.arrow.circlepath"
         case .achievements: "trophy.fill"
         case .leaderboards: "list.number"
-        case .themes: "paintbrush.fill"
         case .settings: "gearshape.fill"
         case .search: "magnifyingglass"
         case .wordSearch: "character.magnify"
-        case .quotes: "quote.bubble.fill"
-        case .feed: "newspaper.fill"
         case .srsStudy: "brain.fill"
         case .learningPath: "graduationcap.fill"
         }
@@ -136,12 +127,9 @@ enum HubItem: Identifiable, CaseIterable {
         case .timeline: "Borders through history"
         case .achievements: "Unlock badges and rewards"
         case .leaderboards: "Compete with others"
-        case .themes: "Customize your experience"
         case .settings: "App preferences"
         case .search: "Search all countries & orgs"
         case .wordSearch: "Find hidden country names"
-        case .quotes: "Geography quotes & facts"
-        case .feed: "Curated geography news"
         case .srsStudy: "Spaced repetition review"
         case .learningPath: "Guided geography curriculum"
         }
@@ -172,12 +160,9 @@ enum HubItem: Identifiable, CaseIterable {
         case .timeline: DesignSystem.Color.indigo
         case .achievements: DesignSystem.Color.warning
         case .leaderboards: DesignSystem.Color.success
-        case .themes: DesignSystem.Color.indigo
         case .settings: DesignSystem.Color.textSecondary
         case .search: DesignSystem.Color.accent
         case .wordSearch: DesignSystem.Color.indigo
-        case .quotes: DesignSystem.Color.indigo
-        case .feed: DesignSystem.Color.blue
         case .srsStudy: DesignSystem.Color.accent
         case .learningPath: DesignSystem.Color.success
         }
@@ -208,12 +193,9 @@ enum HubItem: Identifiable, CaseIterable {
         case .timeline: "timeline"
         case .achievements: "achievements"
         case .leaderboards: "leaderboards"
-        case .themes: "themes"
         case .settings: "settings"
         case .search: "search"
         case .wordSearch: "wordSearch"
-        case .quotes: "quotes"
-        case .feed: "feed"
         case .srsStudy: "srsStudy"
         case .learningPath: "learningPath"
         }
@@ -244,12 +226,9 @@ enum HubItem: Identifiable, CaseIterable {
         case .timeline: .timeline
         case .achievements: .achievements
         case .leaderboards: .leaderboards
-        case .themes: .themes
         case .settings: .settings
         case .search: .search
         case .wordSearch: .wordSearch
-        case .quotes: .quotes
-        case .feed: .feed
         case .srsStudy: .srsStudy
         case .learningPath: .learningPath
         }

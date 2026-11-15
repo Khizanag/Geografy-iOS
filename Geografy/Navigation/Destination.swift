@@ -9,12 +9,10 @@ import Geografy_Feature_CurrencyConverter
 import Geografy_Feature_DailyChallenge
 import Geografy_Feature_DistanceCalculator
 import Geografy_Feature_Favorite
-import Geografy_Feature_Feed
 import Geografy_Feature_Flashcard
 import Geografy_Feature_GameCenter
 import Geografy_Feature_LearningPath
 import Geografy_Feature_Map
-import Geografy_Feature_MapColoring
 import Geografy_Feature_MapPuzzle
 import Geografy_Feature_Multiplayer
 import Geografy_Feature_NationalSymbols
@@ -23,11 +21,8 @@ import Geografy_Feature_Organization
 import Geografy_Feature_Profile
 import Geografy_Feature_Quiz
 import Geografy_Feature_QuizLibrary
-import Geografy_Feature_Quotes
 import Geografy_Feature_Search
 import Geografy_Feature_Setting
-import Geografy_Feature_SizeVisualization
-import Geografy_Feature_Theme
 import Geografy_Feature_Timeline
 import Geografy_Feature_TimeZone
 import Geografy_Feature_Travel
@@ -59,7 +54,6 @@ extension Destination {
         case .editProfile: EditProfileSheet()
         case .distanceCalculator: DistanceCalculatorScreen()
         case .saved(let tab): SavedScreen(tab: tab)
-        case .feed: FeedScreen()
         case let .flashcardSession(deck, cards): FlashcardSessionScreen(deck: deck, cards: cards)
         case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
         case .learningPath: LearningPathScreen()
@@ -67,7 +61,6 @@ extension Destination {
         case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)
         case .leaderboards: LeaderboardScreen()
         case .map(let filter): MapScreen(continentFilter: filter?.displayName)
-        case .mapColoring: MapColoringScreen()
         case .mapColors: MapColorsScreen()
         case .mapFullScreen(let filter): MapScreen(continentFilter: filter)
         case .mapPuzzle: MapPuzzleSetupScreen()
@@ -82,7 +75,6 @@ extension Destination {
         case .quizLibrary(let tab): QuizLibraryScreen(tab: tab)
         case .quizSession(let config): QuizSessionScreen(configuration: config)
         case .quizSetup: QuizSetupScreen()
-        case .quotes: QuotesScreen()
         case let .saveToCollection(code, name): CountrySaveToCollectionSheet(countryCode: code, countryName: name)
         case .search: SearchScreen()
         case .settings: SettingsScreen()
@@ -92,7 +84,6 @@ extension Destination {
         case .srsStudy: SRSStudyScreen()
         case .storage: StorageScreen()
         case .territorialDisputes: TerritorialDisputesScreen()
-        case .themes: ThemesScreen()
         case .timeline: TimelineScreen()
         case .timeZones: TimeZoneScreen()
         case .travelMap(let filter): TravelMapScreen(filter: filter)

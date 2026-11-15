@@ -83,20 +83,6 @@ struct MoreScreen: View {
                 }
             }
 
-            Section("Content") {
-                NavigationLink {
-                    FeedScreen(countryDataService: countryDataService)
-                } label: {
-                    Label("Feed", systemImage: "newspaper.fill")
-                }
-
-                NavigationLink {
-                    QuotesScreen()
-                } label: {
-                    Label("Quotes", systemImage: "quote.opening")
-                }
-            }
-
             Section("Travel") {
                 NavigationLink {
                     TravelScreen(countryDataService: countryDataService)
