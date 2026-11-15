@@ -131,7 +131,7 @@ private extension OrganizationDetailScreen {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
-            coordinator.cover(.map(continentFilter: nil))
+            coordinator.cover(.organizationMap(organization))
         }
     }
 
