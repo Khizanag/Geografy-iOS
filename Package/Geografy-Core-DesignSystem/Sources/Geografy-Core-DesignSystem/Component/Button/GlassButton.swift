@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct GlassButton: View {
     // MARK: - Properties
-    private let title: String
+    private let title: Text
     private let systemImage: String?
     private let role: Role
     private let fullWidth: Bool
@@ -15,13 +15,29 @@ public struct GlassButton: View {
 
     // MARK: - Init
     public init(
-        _ title: String,
+        _ title: LocalizedStringKey,
         systemImage: String? = nil,
         role: Role = .primary,
         fullWidth: Bool = false,
         action: @escaping () -> Void
     ) {
-        self.title = title
+        self.title = Text(title)
+        self.systemImage = systemImage
+        self.role = role
+        self.fullWidth = fullWidth
+        self.action = action
+    }
+
+    /// A title that's already in the reader's language, such as one built with `String(localized:in:)`.
+    @_disfavoredOverload
+    public init(
+        _ title: some StringProtocol,
+        systemImage: String? = nil,
+        role: Role = .primary,
+        fullWidth: Bool = false,
+        action: @escaping () -> Void
+    ) {
+        self.title = Text(title)
         self.systemImage = systemImage
         self.role = role
         self.fullWidth = fullWidth
@@ -58,9 +74,13 @@ private extension GlassButton {
     var fullWidthLabel: some View {
         Group {
             if let systemImage {
-                Label(title, systemImage: systemImage)
+                Label {
+                    title
+                } icon: {
+                    Image(systemName: systemImage)
+                }
             } else {
-                Text(title)
+                title
             }
         }
         .font(font)
@@ -75,7 +95,7 @@ private extension GlassButton {
             if let systemImage {
                 Image(systemName: systemImage)
             }
-            Text(title)
+            title
         }
         .font(font)
         .foregroundStyle(DesignSystem.Color.textPrimary)

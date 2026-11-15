@@ -20,8 +20,8 @@ public struct GameIntroHeader: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 56
 
-    private let title: String
-    private let subtitle: String
+    private let title: Text
+    private let subtitle: Text
     private let systemImage: String
     private let color: Color
     private let facts: [Fact]
@@ -29,14 +29,30 @@ public struct GameIntroHeader: View {
     // MARK: - Init
     /// - Parameter color: The game's own color, as on its hub tile, so each game is recognizable.
     public init(
-        title: String,
-        subtitle: String,
+        title: LocalizedStringKey,
+        subtitle: LocalizedStringKey,
         systemImage: String,
         color: Color,
         facts: [Fact] = []
     ) {
-        self.title = title
-        self.subtitle = subtitle
+        self.title = Text(title)
+        self.subtitle = Text(subtitle)
+        self.systemImage = systemImage
+        self.color = color
+        self.facts = facts
+    }
+
+    /// A title and subtitle already in the reader's language, such as a pack's name and description from data.
+    @_disfavoredOverload
+    public init(
+        title: some StringProtocol,
+        subtitle: some StringProtocol,
+        systemImage: String,
+        color: Color,
+        facts: [Fact] = []
+    ) {
+        self.title = Text(title)
+        self.subtitle = Text(subtitle)
         self.systemImage = systemImage
         self.color = color
         self.facts = facts
@@ -81,12 +97,12 @@ private extension GameIntroHeader {
 
     var titleBlock: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            Text(title)
+            title
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .accessibilityAddTraits(.isHeader)
-            Text(subtitle)
+            subtitle
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)

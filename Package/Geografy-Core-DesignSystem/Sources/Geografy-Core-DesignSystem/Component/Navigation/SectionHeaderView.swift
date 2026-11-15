@@ -2,19 +2,33 @@ import SwiftUI
 
 public struct SectionHeaderView: View {
     // MARK: - Properties
-    public let title: String
+    private let title: Text
     public var icon: String?
     public var isNew: Bool = false
     public var action: SectionHeaderAction?
 
     // MARK: - Init
     public init(
-        title: String,
+        title: LocalizedStringKey,
         icon: String? = nil,
         isNew: Bool = false,
         action: SectionHeaderAction? = nil
     ) {
-        self.title = title
+        self.title = Text(title)
+        self.icon = icon
+        self.isNew = isNew
+        self.action = action
+    }
+
+    /// A title that's already in the reader's language, such as a name or a value from data.
+    @_disfavoredOverload
+    public init(
+        title: some StringProtocol,
+        icon: String? = nil,
+        isNew: Bool = false,
+        action: SectionHeaderAction? = nil
+    ) {
+        self.title = Text(title)
         self.icon = icon
         self.isNew = isNew
         self.action = action
@@ -37,21 +51,21 @@ public struct SectionHeaderView: View {
 
 /// A small glass button at the trailing end of a section header, such as "Shuffle" or "Clear".
 public struct SectionHeaderAction {
-    let title: String
+    let title: Text
     let systemImage: String?
-    let accessibilityLabel: String
+    let accessibilityLabel: Text
     let perform: () -> Void
 
     /// - Parameter accessibilityLabel: What the button does when its title alone is vague; defaults to the title.
     public init(
-        _ title: String,
+        _ title: LocalizedStringKey,
         systemImage: String? = nil,
-        accessibilityLabel: String? = nil,
+        accessibilityLabel: LocalizedStringKey? = nil,
         perform: @escaping () -> Void
     ) {
-        self.title = title
+        self.title = Text(title)
         self.systemImage = systemImage
-        self.accessibilityLabel = accessibilityLabel ?? title
+        self.accessibilityLabel = accessibilityLabel.map { Text($0) } ?? Text(title)
         self.perform = perform
     }
 }
@@ -75,7 +89,7 @@ private extension SectionHeaderView {
                 leadingBar
                     .accessibilityHidden(true)
             }
-            Text(title)
+            title
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -95,11 +109,15 @@ private extension SectionHeaderView {
     }
 
     func actionButton(_ action: SectionHeaderAction) -> some View {
-        Group {
+        Button(action: action.perform) {
             if let systemImage = action.systemImage {
-                Button(action.title, systemImage: systemImage, action: action.perform)
+                Label {
+                    action.title
+                } icon: {
+                    Image(systemName: systemImage)
+                }
             } else {
-                Button(action.title, action: action.perform)
+                action.title
             }
         }
         .buttonStyle(.glass)
