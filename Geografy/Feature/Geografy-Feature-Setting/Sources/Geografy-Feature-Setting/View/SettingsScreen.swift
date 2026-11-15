@@ -295,10 +295,10 @@ private extension SettingsScreen {
             MenuPicker(
                 "App language",
                 selection: languageSelection,
-                selectedTitle: Text(verbatim: languageService.language.endonym)
+                selectedTitle: languageTitle(languageService.language)
             ) {
                 ForEach(languageService.languages) { language in
-                    Text(verbatim: language.endonym).tag(language)
+                    languageTitle(language).tag(language)
                 }
             }
         }
@@ -316,6 +316,10 @@ private extension SettingsScreen {
         }
         .buttonStyle(PressButtonStyle())
         .accessibilityHint("Opens Geografy's page in the Settings app")
+    }
+
+    func languageTitle(_ language: AppLanguage) -> Text {
+        Text(verbatim: "\(language.flagEmoji) \(language.endonym)")
     }
 
     var languageSelection: Binding<AppLanguage> {

@@ -22,6 +22,12 @@ struct LanguageServiceTests {
         #expect(AppLanguage(code: "ka").endonym == "ქართული")
     }
 
+    @Test("Each language shows the flag of the country it's most at home in")
+    func flags() {
+        #expect(AppLanguage(code: "ka").flagEmoji == "🇬🇪")
+        #expect(AppLanguage(code: "en").flagEmoji == "🇺🇸")
+    }
+
     @Test("A language keeps the device's region")
     func keepsTheRegion() {
         let georgian = AppLanguage(code: "ka").locale(basedOn: Locale(identifier: "en_GE"))
