@@ -62,15 +62,14 @@ extension TravelTrackerScreen {
 // MARK: - Empty States
 extension TravelTrackerScreen {
     var emptyState: some View {
-        ContentUnavailableView {
-            Label(emptyStateTitle, systemImage: selectedFilter?.icon ?? "airplane.departure")
-        } description: {
-            Text(emptyStateSubtitle)
-        } actions: {
-            GlassButton("Add Country", systemImage: "plus") {
-                hapticsService.impact(.light)
-                showCountryPicker = true
-            }
+        EmptyStateView(
+            icon: selectedFilter?.icon ?? "airplane.departure",
+            title: emptyStateTitle,
+            message: emptyStateSubtitle,
+            actionTitle: "Add Country"
+        ) {
+            hapticsService.impact(.light)
+            showCountryPicker = true
         }
         .padding(.top, DesignSystem.Spacing.xxl)
     }
@@ -108,7 +107,7 @@ extension TravelTrackerScreen {
 
     var isSearching: Bool { !searchText.isEmpty }
 
-    var emptyStateTitle: String {
+    var emptyStateTitle: LocalizedStringKey {
         switch selectedFilter {
         case .visited: "No visited countries yet"
         case .wantToVisit: "No wishlist yet"
@@ -116,7 +115,7 @@ extension TravelTrackerScreen {
         }
     }
 
-    var emptyStateSubtitle: String {
+    var emptyStateSubtitle: LocalizedStringKey {
         switch selectedFilter {
         case .visited: "Search above or tap + to add countries you've visited"
         case .wantToVisit: "Search above or tap + to build your travel wishlist"

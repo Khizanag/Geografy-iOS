@@ -7,6 +7,7 @@ import SwiftUI
 
 public struct TravelBucketListScreen: View {
     // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
     @Environment(TravelService.self) private var travelService
     @Environment(CountryDataService.self) private var countryDataService
 
@@ -120,10 +121,13 @@ private extension TravelBucketListScreen {
     }
 
     var emptyState: some View {
-        ContentUnavailableView {
-            Label("No Bucket List Yet", systemImage: "heart.slash")
-        } description: {
-            Text("Mark countries as 'Want to Visit' in the Travel Tracker to add them here")
+        EmptyStateView(
+            icon: "heart.slash",
+            title: "No Bucket List Yet",
+            message: "Mark countries as 'Want to Visit' in the Travel Tracker to add them here",
+            actionTitle: "Open Travel Tracker"
+        ) {
+            coordinator.push(.travelTracker)
         }
     }
 

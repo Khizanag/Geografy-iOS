@@ -132,18 +132,14 @@ private extension TravelJournalScreen {
     }
 
     var emptyState: some View {
-        ContentUnavailableView {
-            Label("Start Your Travel Journal", systemImage: "book.closed.fill")
-        } description: {
-            Text("Capture memories from your travels with photos, notes, and ratings")
-        } actions: {
-            GeoButton(
-                "Add First Entry",
-                systemImage: "plus"
-            ) {
-                hapticsService.impact(.light)
-                activeSheet = .newEntry
-            }
+        EmptyStateView(
+            icon: "book.closed.fill",
+            title: "Start Your Travel Journal",
+            message: "Capture memories from your travels with photos, notes, and ratings",
+            actionTitle: "Add First Entry"
+        ) {
+            hapticsService.impact(.light)
+            activeSheet = .newEntry
         }
     }
 
