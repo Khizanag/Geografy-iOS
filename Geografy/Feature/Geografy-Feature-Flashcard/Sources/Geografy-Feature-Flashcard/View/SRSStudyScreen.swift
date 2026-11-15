@@ -143,10 +143,10 @@ private extension SRSStudyScreen {
     }
 
     var allCaughtUpSection: some View {
-        ContentUnavailableView(
-            "All caught up!",
-            systemImage: "checkmark.seal.fill",
-            description: Text("No cards are due right now.\nCome back later or study new cards.")
+        EmptyStateView(
+            icon: "checkmark.seal.fill",
+            title: "All caught up!",
+            message: "No cards are due right now.\nCome back later or study new cards."
         )
     }
 }
