@@ -36,18 +36,10 @@ struct CountrySpotlightCard: View {
 // MARK: - Subviews
 private extension CountrySpotlightCard {
     var headerBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: "star.fill")
-                .font(DesignSystem.Font.micro)
-                .foregroundStyle(DesignSystem.Color.warning)
-                .accessibilityHidden(true)
-            EyebrowLabel("Country of the Day")
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .background(
-            DesignSystem.Color.cardBackgroundHighlighted,
-            in: Capsule()
+        InfoPill(
+            String(localized: "Country of the Day"),
+            systemImage: "star.fill",
+            style: .tinted(DesignSystem.Color.warning)
         )
     }
 
@@ -145,16 +137,22 @@ private extension CountrySpotlightCard {
                 .accessibilityHidden(true)
             Text(fact)
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
                 .lineLimit(3)
                 .multilineTextAlignment(.leading)
         }
-        .padding(DesignSystem.Spacing.xs)
+        .padding(DesignSystem.Spacing.sm)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            DesignSystem.Color.cardBackgroundHighlighted,
+            DesignSystem.Color.warning.opacity(0.12),
             in: Self.panelShape
         )
+        .overlay {
+            if colorSchemeContrast == .increased {
+                Self.panelShape
+                    .strokeBorder(DesignSystem.Color.dividerSubtle)
+            }
+        }
     }
 }
 

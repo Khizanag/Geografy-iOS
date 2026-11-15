@@ -105,7 +105,10 @@ private extension FlagView {
 
     func load() async {
         let key = loadKey
-        guard FlagImageCache.shared.cachedImage(countryCode: countryCode, pixelHeight: pixelHeight) == nil else {
+        // Another flag view may have filled the cache since this one drew its placeholder. The cache doesn't
+        // redraw views, so the image is stored here too, or the placeholder would stay.
+        if let cached = FlagImageCache.shared.cachedImage(countryCode: countryCode, pixelHeight: pixelHeight) {
+            if loaded?.key != key { loaded = LoadedFlag(key: key, image: cached) }
             return
         }
         let image = await FlagImageCache.shared.image(countryCode: countryCode, pixelHeight: pixelHeight)
