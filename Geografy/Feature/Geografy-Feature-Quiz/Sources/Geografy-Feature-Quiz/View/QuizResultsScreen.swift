@@ -177,9 +177,9 @@ private extension QuizResultsScreen {
     }
 
     var actionButtons: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            playAgainButton
+        ButtonRow {
             doneButton
+            playAgainButton
         }
     }
 

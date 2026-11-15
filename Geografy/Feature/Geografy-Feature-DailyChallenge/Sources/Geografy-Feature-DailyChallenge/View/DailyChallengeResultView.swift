@@ -146,9 +146,9 @@ private extension DailyChallengeResultView {
 // MARK: - Action Buttons
 private extension DailyChallengeResultView {
     var actionButtons: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            shareButton
+        ButtonRow {
             doneButton
+            shareButton
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)

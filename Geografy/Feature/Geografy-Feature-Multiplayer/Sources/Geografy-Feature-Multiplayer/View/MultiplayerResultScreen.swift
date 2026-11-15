@@ -245,9 +245,9 @@ private extension MultiplayerResultScreen {
 // MARK: - Action Buttons
 private extension MultiplayerResultScreen {
     var actionButtons: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            rematchButton
+        ButtonRow {
             doneButton
+            rematchButton
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)

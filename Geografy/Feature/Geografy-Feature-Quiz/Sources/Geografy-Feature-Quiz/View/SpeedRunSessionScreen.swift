@@ -213,13 +213,13 @@ private extension SpeedRunSessionScreen {
     }
 
     var resultsActions: some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            GlassButton("Try Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
-                restart()
+        ButtonRow {
+            GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
+                dismiss()
             }
 
-            GlassButton("Done", systemImage: "checkmark", fullWidth: true) {
-                dismiss()
+            GlassButton("Try Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
+                restart()
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)

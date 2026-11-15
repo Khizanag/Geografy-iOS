@@ -177,8 +177,8 @@ private extension WordSearchGameScreen {
     }
 
     var resultFooter: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            GlassButton("Close", systemImage: "xmark", fullWidth: true) {
+        ButtonRow {
+            GlassButton("Close", systemImage: "xmark", role: .secondary, fullWidth: true) {
                 dismiss()
             }
             GlassButton("Try Again", systemImage: "arrow.clockwise", fullWidth: true) {

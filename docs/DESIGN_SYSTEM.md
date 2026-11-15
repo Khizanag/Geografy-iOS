@@ -23,6 +23,7 @@ Every screen is one of these five. Pick the template first, then fill it with th
 | A section title | `SectionHeaderView`, with `SectionHeaderAction` for a trailing button | A custom `Text` with a bar |
 | The top of a game or pack | `GameIntroHeader` | A centered icon circle and pills |
 | A primary action | `GlassButton(fullWidth: true)` in a bottom `safeAreaBar` | A button that scrolls away with the content |
+| Two actions under a result | `ButtonRow`, the way out first and the main action last | Full-width buttons stacked over the tab bar |
 | An icon in a colored circle | `IconBadge` | A hand-made `Circle().fill(color.opacity(0.15))` |
 | A share or ratio bar | `ShareBar` | A custom capsule bar |
 | A list of tappable rows | `RowListCard` with `.rowListCardRow()` | Separate cards per row |
