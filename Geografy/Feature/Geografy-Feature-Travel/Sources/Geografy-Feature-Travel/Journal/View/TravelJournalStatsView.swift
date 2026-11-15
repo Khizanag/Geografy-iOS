@@ -10,21 +10,21 @@ public struct TravelJournalStatsView: View {
     public let averageRating: Double
     public let favoriteCountryCode: String?
 
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-
     // MARK: - Body
     public var body: some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                headerRow
-                statsPills
-                if let favoriteCountryCode {
-                    favoriteRow(countryCode: favoriteCountryCode)
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            CardView {
+                VStack(spacing: DesignSystem.Spacing.md) {
+                    headerRow
+                    if let favoriteCountryCode {
+                        favoriteRow(countryCode: favoriteCountryCode)
+                    }
                 }
+                .padding(DesignSystem.Spacing.md)
             }
-            .padding(DesignSystem.Spacing.md)
+            .accessibilityElement(children: .combine)
+            statsRow
         }
-        .accessibilityElement(children: .combine)
     }
 }
 
@@ -63,53 +63,12 @@ private extension TravelJournalStatsView {
         .accessibilityLabel("Average rating \(formattedRating) of 5 stars")
     }
 
-    var statsPills: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
-            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xs))
-        return layout {
-            statPill(
-                value: "\(uniqueCountries)",
-                label: "Countries",
-                icon: "globe"
-            )
-            statPill(
-                value: "\(totalPhotos)",
-                label: "Photos",
-                icon: "photo.fill"
-            )
-            statPill(
-                value: formattedRating,
-                label: "Avg Rating",
-                icon: "star.fill"
-            )
+    var statsRow: some View {
+        StatTileRow {
+            StatTile(value: "\(uniqueCountries)", label: "Countries", icon: "globe")
+            StatTile(value: "\(totalPhotos)", label: "Photos", icon: "photo.fill")
+            StatTile(value: formattedRating, label: "Avg Rating", icon: "star.fill")
         }
-    }
-
-    func statPill(
-        value: String,
-        label: String,
-        icon: String
-    ) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.iconXS)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .accessibilityHidden(true)
-            Text(value)
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
     }
 
     func favoriteRow(countryCode: String) -> some View {

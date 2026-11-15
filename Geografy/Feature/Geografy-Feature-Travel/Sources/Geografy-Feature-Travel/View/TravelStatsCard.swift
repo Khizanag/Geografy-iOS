@@ -14,17 +14,21 @@ public struct TravelStatsCard: View {
 
     // MARK: - Body
     public var body: some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.lg) {
+        VStack(spacing: DesignSystem.Spacing.sm) {
+            CardView {
                 heroStats
-                statsPills
-                if !continentBreakdown.isEmpty {
-                    continentSection
-                }
+                    .padding(DesignSystem.Spacing.md)
             }
-            .padding(DesignSystem.Spacing.md)
+            .accessibilityElement(children: .combine)
+            statsRow
+            if !continentBreakdown.isEmpty {
+                CardView {
+                    continentSection
+                        .padding(DesignSystem.Spacing.md)
+                }
+                .accessibilityElement(children: .combine)
+            }
         }
-        .accessibilityElement(children: .combine)
     }
 }
 
@@ -33,12 +37,6 @@ private extension TravelStatsCard {
     var visitedFraction: Double {
         guard totalCountries > 0 else { return 0 }
         return Double(visitedCount) / Double(totalCountries)
-    }
-
-    var columnLayout: AnyLayout {
-        dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.xs))
-            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.xs))
     }
 
     var progressAnimation: Animation {
@@ -116,38 +114,31 @@ private extension TravelStatsCard {
         }
     }
 
-    var statsPills: some View {
-        columnLayout {
-            statPill(value: "\(visitedCount)", label: "Countries", color: TravelStatus.visited.color)
-            statPill(
+    var statsRow: some View {
+        StatTileRow {
+            StatTile(
+                value: "\(visitedCount)",
+                label: "Countries",
+                icon: TravelStatus.visited.icon,
+                color: TravelStatus.visited.color
+            )
+            StatTile(
                 value: "\(totalCountries - visitedCount)",
                 label: "Remaining",
+                icon: "circle.dashed",
                 color: DesignSystem.Color.textSecondary
             )
-            statPill(value: "\(visitedContinents)", label: "Continents", color: DesignSystem.Color.accent)
+            StatTile(
+                value: "\(visitedContinents)",
+                label: "Continents",
+                icon: "globe.europe.africa.fill",
+                color: DesignSystem.Color.accent
+            )
         }
     }
 
     var visitedContinents: Int {
         Set(continentBreakdown.filter { $0.visited > 0 }.map { $0.name }).count
-    }
-
-    func statPill(value: String, label: String, color: Color) -> some View {
-        VStack(spacing: 2) {
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(color)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.cardBackgroundHighlighted,
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-        )
     }
 
     var continentSection: some View {
