@@ -44,11 +44,14 @@ private extension QuizPackBrowserScreen {
     }
 
     var emptyContent: some View {
-        ContentUnavailableView(
-            "No Packs Found",
-            systemImage: "square.grid.2x2",
-            description: Text("No quiz packs match the selected category.")
-        )
+        EmptyStateView(
+            icon: "square.grid.2x2",
+            title: "No Packs Found",
+            message: "No quiz packs match the selected category.",
+            actionTitle: "Show All Packs"
+        ) {
+            selectedCategory = nil
+        }
     }
 
     var packScrollView: some View {
