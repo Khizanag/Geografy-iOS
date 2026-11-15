@@ -794,7 +794,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSBonjourServices = "_geografy-quiz._tcp";
-				INFOPLIST_KEY_NSGKFriendListUsageDescription = "Geografy shows your Game Center friends so you can compare scores and challenge them.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Geografy uses your local network to play quiz matches with nearby friends.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -824,7 +823,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSBonjourServices = "_geografy-quiz._tcp";
-				INFOPLIST_KEY_NSGKFriendListUsageDescription = "Geografy shows your Game Center friends so you can compare scores and challenge them.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Geografy uses your local network to play quiz matches with nearby friends.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

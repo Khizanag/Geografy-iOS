@@ -13,7 +13,6 @@ enum HubItem: Identifiable, CaseIterable {
     case mapPuzzle
     case pinDrop
     case worldFacts
-    case friends
     case countries
     case orgs
     case favorites
@@ -50,7 +49,6 @@ enum HubItem: Identifiable, CaseIterable {
         case .mapPuzzle: "Map Puzzle"
         case .pinDrop: "Pin Drop"
         case .worldFacts: "World Facts"
-        case .friends: "Friends"
         case .countries: "Countries"
         case .orgs: "Organizations"
         case .favorites: "Saved"
@@ -87,7 +85,6 @@ enum HubItem: Identifiable, CaseIterable {
         case .mapPuzzle: "puzzlepiece.fill"
         case .pinDrop: "mappin.and.ellipse"
         case .worldFacts: "globe.europe.africa.fill"
-        case .friends: "person.2.fill"
         case .countries: "list.bullet"
         case .orgs: "building.2.fill"
         case .favorites: "heart.fill"
@@ -124,7 +121,6 @@ enum HubItem: Identifiable, CaseIterable {
         case .mapPuzzle: "Place countries on the map"
         case .pinDrop: "Drop a pin on the named country"
         case .worldFacts: "Records, oceans, landmarks"
-        case .friends: "Game Center friends"
         case .countries: "Browse all 197 countries"
         case .orgs: "International organizations"
         case .favorites: "Favorites, places to visit, collections"
@@ -161,7 +157,6 @@ enum HubItem: Identifiable, CaseIterable {
         case .mapPuzzle: DesignSystem.Color.purple
         case .pinDrop: DesignSystem.Color.orange
         case .worldFacts: DesignSystem.Color.ocean
-        case .friends: DesignSystem.Color.indigo
         case .countries: DesignSystem.Color.blue
         case .orgs: DesignSystem.Color.indigo
         case .favorites: DesignSystem.Color.error
@@ -198,7 +193,6 @@ enum HubItem: Identifiable, CaseIterable {
         case .mapPuzzle: "mapPuzzle"
         case .pinDrop: "pinDrop"
         case .worldFacts: "worldFacts"
-        case .friends: "friends"
         case .countries: "countries"
         case .orgs: "orgs"
         case .favorites: "favorites"
@@ -235,7 +229,6 @@ enum HubItem: Identifiable, CaseIterable {
         case .mapPuzzle: .mapPuzzle
         case .pinDrop: .pinDrop
         case .worldFacts: .worldFacts(.records)
-        case .friends: .friends
         case .countries: .countries
         case .orgs: .organizations
         case .favorites: .saved(.favorites)

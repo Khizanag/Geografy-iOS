@@ -63,40 +63,6 @@ public final class GameCenterService {
         }
     }
 
-    public func loadFriends() async -> [GKPlayer] {
-        guard isAuthenticated else { return [] }
-        do {
-            let status = try await GKLocalPlayer.local.loadFriendsAuthorizationStatus()
-            switch status {
-            case .authorized:
-                return try await GKLocalPlayer.local.loadFriends()
-            case .notDetermined:
-                // Triggers the system prompt asking user to share friends
-                return try await GKLocalPlayer.local.loadFriends()
-            default:
-                return []
-            }
-        } catch {
-            return []
-        }
-    }
-
-    public func loadFriendLeaderboardEntries(for leaderboardID: String) async -> [GKLeaderboard.Entry] {
-        guard isAuthenticated else { return [] }
-        do {
-            let leaderboards = try await GKLeaderboard.loadLeaderboards(IDs: [leaderboardID])
-            guard let leaderboard = leaderboards.first else { return [] }
-            let (_, entries, _) = try await leaderboard.loadEntries(
-                for: .friendsOnly,
-                timeScope: .allTime,
-                range: NSRange(location: 1, length: 25)
-            )
-            return entries
-        } catch {
-            return []
-        }
-    }
-
     public func retryPendingSubmissions() async {
         guard isAuthenticated else { return }
         let pending = loadQueue()

@@ -61,7 +61,6 @@ extension Destination {
         case .saved(let tab): SavedScreen(tab: tab)
         case .feed: FeedScreen()
         case let .flashcardSession(deck, cards): FlashcardSessionScreen(deck: deck, cards: cards)
-        case .friends: FriendsListScreen()
         case .historicalMap(let year): HistoricalMapScreen(initialYear: year)
         case .learningPath: LearningPathScreen()
         case .learningModule(let module): ModuleLessonsScreen(module: module)
