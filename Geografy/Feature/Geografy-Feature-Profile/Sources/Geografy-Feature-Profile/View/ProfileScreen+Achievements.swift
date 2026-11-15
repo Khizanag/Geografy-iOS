@@ -58,11 +58,15 @@ private extension ProfileScreen {
     }
 
     var emptyAchievementsView: some View {
-        ContentUnavailableView(
-            "No Achievements Yet",
-            systemImage: "trophy",
-            description: Text("Start exploring to earn achievements!")
-        )
+        EmptyStateView(
+            icon: "trophy",
+            title: "No Achievements Yet",
+            message: "Start exploring to earn achievements!",
+            actionTitle: "See All Achievements"
+        ) {
+            hapticsService.impact(.light)
+            coordinator.push(.achievements)
+        }
     }
 
     func achievementCard(_ definition: AchievementDefinition) -> some View {
