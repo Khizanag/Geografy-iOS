@@ -21,6 +21,7 @@ public struct SettingsScreen: View {
 
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
     @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
+    @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
     @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
     @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
@@ -222,6 +223,10 @@ private extension SettingsScreen {
 
                 settingsDivider
 
+                projectionRow
+
+                settingsDivider
+
                 SettingsToggleRow(
                     icon: "globe",
                     iconColor: DesignSystem.Color.blue,
@@ -251,6 +256,34 @@ private extension SettingsScreen {
                 }
                 .buttonStyle(PressButtonStyle())
             }
+        }
+    }
+
+    /// Mercator's straight grid, or Equal Earth's curved one with every country at its true size.
+    var projectionRow: some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            SettingsIconBadge(systemImage: "map.fill", color: DesignSystem.Color.blue)
+            Text("Map projection")
+                .font(DesignSystem.Font.body)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+            Spacer()
+            MenuPicker(
+                "Map projection",
+                selection: $projection,
+                selectedTitle: projectionTitle(for: MapProjectionKind(rawValue: projection) ?? .mercator)
+            ) {
+                ForEach(MapProjectionKind.allCases) { kind in
+                    projectionTitle(for: kind).tag(kind.rawValue)
+                }
+            }
+        }
+        .settingsRowPadding()
+    }
+
+    func projectionTitle(for kind: MapProjectionKind) -> Text {
+        switch kind {
+        case .mercator: Text("Mercator")
+        case .equalEarth: Text("Equal Earth")
         }
     }
 

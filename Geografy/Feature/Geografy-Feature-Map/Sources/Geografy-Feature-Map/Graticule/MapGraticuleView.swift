@@ -50,35 +50,31 @@ private extension MapGraticuleView {
     var lineColor: Color { DesignSystem.Color.textPrimary }
 
     func draw(in context: inout GraphicsContext, size: CGSize) {
-        let placement = MapGraticule.Placement(scale: scale, offset: offset, size: size)
+        let projection = MapProjection.current
+        let placement = MapGraticule.Placement(scale: scale, offset: offset, size: size, projection: projection)
         let step = MapGraticule.step(forScale: scale)
 
         let topLatitude = min(placement.latitude(atY: 0), MapGraticule.latitudeLimit)
         let bottomLatitude = max(placement.latitude(atY: size.height), -MapGraticule.latitudeLimit)
         let latitudes = MapGraticule.values(from: bottomLatitude, to: topLatitude, step: step)
-
-        var westLongitude = placement.longitude(atX: 0)
-        var eastLongitude = placement.longitude(atX: size.width)
-        if !wrapsHorizontally {
-            westLongitude = max(westLongitude, -180)
-            eastLongitude = min(eastLongitude, 180)
-        }
-        let longitudes = MapGraticule.values(from: westLongitude, to: eastLongitude, step: step)
-
-        let top = max(placement.y(forLatitude: MapGraticule.latitudeLimit), 0)
-        let bottom = min(placement.y(forLatitude: -MapGraticule.latitudeLimit), size.height)
+        let longitudeRange = visibleLongitudes(placement: placement, size: size, projection: projection)
+        let longitudes = MapGraticule.values(from: longitudeRange.lowerBound, to: longitudeRange.upperBound, step: step)
 
         for latitude in latitudes {
-            let y = placement.y(forLatitude: latitude)
-            let isEquator = latitude == 0
-            strokeLine(from: CGPoint(x: 0, y: y), to: CGPoint(x: size.width, y: y), isPrimary: isEquator, in: context)
+            let parallel = parallelPath(latitude, across: longitudeRange, placement: placement)
+            stroke(parallel, isPrimary: latitude == 0, in: context)
         }
         for longitude in longitudes {
-            let x = placement.x(forLongitude: longitude)
-            let isPrimary = MapGraticule.normalizedLongitude(longitude) == 0
-            strokeLine(from: CGPoint(x: x, y: top), to: CGPoint(x: x, y: bottom), isPrimary: isPrimary, in: context)
+            let meridian = meridianPath(longitude, from: bottomLatitude, to: topLatitude, placement: placement)
+            stroke(meridian, isPrimary: MapGraticule.normalizedLongitude(longitude) == 0, in: context)
         }
-        drawSpecialLatitudes(placement: placement, size: size, range: bottomLatitude...topLatitude, in: &context)
+        drawSpecialLatitudes(
+            placement: placement,
+            longitudes: longitudeRange,
+            size: size,
+            range: bottomLatitude...topLatitude,
+            in: &context
+        )
 
         for latitude in latitudes {
             drawLatitudeLabel(latitude, step: step, y: placement.y(forLatitude: latitude), in: &context)
@@ -88,10 +84,11 @@ private extension MapGraticuleView {
         let equator = placement.y(forLatitude: 0)
         let isEquatorCentral = (size.height * 0.25...size.height * 0.75).contains(equator)
         let labelRow = isEquatorCentral ? equator - Self.labelRowGap : size.height / 2
+        let rowLatitude = placement.latitude(atY: labelRow)
         let labelStride = MapGraticule.labelStride(forScale: scale, step: step)
         var previousLabelEnd = -CGFloat.infinity
         for longitude in longitudes where Int((longitude / step).rounded()).isMultiple(of: labelStride) {
-            let point = CGPoint(x: placement.x(forLongitude: longitude), y: labelRow)
+            let point = CGPoint(x: placement.x(forLongitude: longitude, atLatitude: rowLatitude), y: labelRow)
             // Labels skip rather than touch, however long the language writes them.
             let leadingEdge = max(Self.latitudeLabelWidth, previousLabelEnd + Self.labelGap)
             if let drawn = drawLongitudeLabel(longitude, step: step, at: point, clearOf: leadingEdge, in: &context) {
@@ -100,11 +97,55 @@ private extension MapGraticuleView {
         }
     }
 
-    func strokeLine(from start: CGPoint, to end: CGPoint, isPrimary: Bool, in context: GraphicsContext) {
-        let line = Path { path in
-            path.move(to: start)
-            path.addLine(to: end)
+    /// The longitudes on screen. Equal Earth's meridians lean outward toward the poles, so the screen's
+    /// corners can show wider longitudes than its middle; a world that doesn't repeat stops at ±180°.
+    func visibleLongitudes(
+        placement: MapGraticule.Placement,
+        size: CGSize,
+        projection: MapProjectionKind
+    ) -> ClosedRange<Double> {
+        let rows: [CGFloat] = [0, size.height / 2, size.height, placement.y(forLatitude: 0)]
+        let samples = rows.flatMap { y in
+            [placement.longitude(atX: 0, y: y), placement.longitude(atX: size.width, y: y)]
         }
+        var west = samples.min() ?? -180
+        var east = samples.max() ?? 180
+        if !wrapsHorizontally || projection != .mercator {
+            west = max(west, -180)
+            east = min(east, 180)
+        }
+        return west...max(west, east)
+    }
+
+    func parallelPath(
+        _ latitude: Double,
+        across longitudes: ClosedRange<Double>,
+        placement: MapGraticule.Placement
+    ) -> Path {
+        Path { path in
+            path.move(to: placement.point(longitude: longitudes.lowerBound, latitude: latitude))
+            path.addLine(to: placement.point(longitude: longitudes.upperBound, latitude: latitude))
+        }
+    }
+
+    /// Traced in short steps, so it follows Equal Earth's curve; on Mercator the steps fall on one straight line.
+    func meridianPath(
+        _ longitude: Double,
+        from southLatitude: Double,
+        to northLatitude: Double,
+        placement: MapGraticule.Placement
+    ) -> Path {
+        let segments = 32
+        return Path { path in
+            for index in 0...segments {
+                let latitude = southLatitude + (northLatitude - southLatitude) * Double(index) / Double(segments)
+                let point = placement.point(longitude: longitude, latitude: latitude)
+                if index == 0 { path.move(to: point) } else { path.addLine(to: point) }
+            }
+        }
+    }
+
+    func stroke(_ line: Path, isPrimary: Bool, in context: GraphicsContext) {
         context.stroke(
             line,
             with: .color(lineColor.opacity(isPrimary ? 0.45 : 0.2)),
@@ -115,16 +156,14 @@ private extension MapGraticuleView {
     /// The Tropics and polar circles: dashed, and named where they meet the trailing edge.
     func drawSpecialLatitudes(
         placement: MapGraticule.Placement,
+        longitudes: ClosedRange<Double>,
         size: CGSize,
         range: ClosedRange<Double>,
         in context: inout GraphicsContext
     ) {
         for special in MapGraticule.specialLatitudes where range.contains(special.latitude) {
             let y = placement.y(forLatitude: special.latitude)
-            let line = Path { path in
-                path.move(to: CGPoint(x: 0, y: y))
-                path.addLine(to: CGPoint(x: size.width, y: y))
-            }
+            let line = parallelPath(special.latitude, across: longitudes, placement: placement)
             context.stroke(
                 line,
                 with: .color(lineColor.opacity(0.35)),

@@ -54,14 +54,15 @@ public enum GeoJSONParser {
         "FM": (158.0, 7.0),     // Micronesia — Chuuk/Pohnpei area
     ]
 
-    public static func parse(data: Data) -> [CountryShape] {
+    /// - Parameter projection: Read once by the caller, so a whole map lands in the same projection.
+    public static func parse(data: Data, projection: MapProjectionKind) -> [CountryShape] {
         guard let collection = try? JSONDecoder().decode(GeoJSONFeatureCollection.self, from: data) else {
             return []
         }
 
         let mergeMap = makeTerritoryMergeMap()
         var shapes = collection.features.enumerated().compactMap { index, feature in
-            parseFeature(feature, at: index, mergeMap: mergeMap)
+            parseFeature(feature, at: index, mergeMap: mergeMap, projection: projection)
         }
 
         shapes = consolidateMergedTerritories(shapes)
@@ -74,7 +75,13 @@ public enum GeoJSONParser {
 
 // MARK: - Parsing
 private extension GeoJSONParser {
-    static func parseFeature(_ feature: GeoJSONFeature, at index: Int, mergeMap: [String: String]) -> CountryShape? {
+    static func parseFeature(
+        _ feature: GeoJSONFeature,
+        at index: Int,
+        mergeMap: [String: String],
+        projection: MapProjectionKind
+    ) -> CountryShape? {
+        let project = { MapProjection.project(longitude: $0, latitude: $1, kind: projection) }
         let rawCode = feature.id ?? extractISOCode(from: feature)
         let name = extractProperty(from: feature, keys: ["name", "NAME", "ADMIN"])
         let continent = extractProperty(from: feature, keys: ["CONTINENT"]) ?? ""
@@ -105,7 +112,7 @@ private extension GeoJSONParser {
 
             let projectedPoints = outerRing.compactMap { coord -> CGPoint? in
                 guard coord.count >= 2 else { return nil }
-                return MapProjection.project(longitude: coord[0], latitude: coord[1])
+                return project(coord[0], coord[1])
             }
 
             guard projectedPoints.count >= 3 else { continue }
@@ -140,7 +147,7 @@ private extension GeoJSONParser {
         // Apply manual override for countries where even the largest-polygon centroid is wrong
         // (e.g. Kiribati crossing the antimeridian, Israel overlapping Palestine).
         if let override = labelOverrides[code] {
-            centroid = MapProjection.project(longitude: override.longitude, latitude: override.latitude)
+            centroid = project(override.longitude, override.latitude)
         }
 
         let boundingBox = calculateBoundingBox(from: allPoints)

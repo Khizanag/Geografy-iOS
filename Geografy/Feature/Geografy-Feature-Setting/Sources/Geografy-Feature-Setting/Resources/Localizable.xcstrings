@@ -210,6 +210,16 @@
         }
       }
     },
+    "Equal Earth" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equal Earth (თანაბარი ფართობი)"
+          }
+        }
+      }
+    },
     "Feature Flags" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -316,6 +326,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ღია"
+          }
+        }
+      }
+    },
+    "Map projection" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის პროექცია"
+          }
+        }
+      }
+    },
+    "Mercator" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მერკატორი"
           }
         }
       }

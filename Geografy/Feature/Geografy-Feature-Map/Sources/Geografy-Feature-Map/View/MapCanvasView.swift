@@ -69,6 +69,8 @@ public struct MapCanvasView: View {
                 var transformedContext = context
                 transformedContext.concatenate(transform)
 
+                drawWorldOutline(in: &transformedContext)
+
                 drawAllCountries(
                     in: &transformedContext,
                     transform: transform,
@@ -95,6 +97,18 @@ public struct MapCanvasView: View {
 
 // MARK: - Drawing
 private extension MapCanvasView {
+    /// The Earth's edge, for projections whose world isn't a rectangle, so its rounded shape reads at a glance.
+    func drawWorldOutline(in transformedContext: inout GraphicsContext) {
+        guard let outline = MapProjection.worldOutline() else { return }
+        let edge = Path { path in
+            path.addLines(outline)
+            path.closeSubpath()
+        }
+        transformedContext.fill(edge, with: .color(DesignSystem.Color.textPrimary.opacity(0.04)))
+        let edgeColor = DesignSystem.Color.textTertiary.opacity(0.6)
+        transformedContext.stroke(edge, with: .color(edgeColor), lineWidth: 1.2 / scale)
+    }
+
     func drawAllCountries(
         in transformedContext: inout GraphicsContext,
         transform: CGAffineTransform,
@@ -264,8 +278,9 @@ private extension MapCanvasView {
 // MARK: - Geometry
 extension MapCanvasView {
     /// The horizontal shifts of the copies drawn side by side, so the world wraps around when panned sideways.
+    /// Only a rectangular world repeats sideways: Equal Earth's curved edges can't meet.
     static func horizontalOffsets(scale: CGFloat, wrapsHorizontally: Bool) -> [CGFloat] {
-        guard wrapsHorizontally else { return [0] }
+        guard wrapsHorizontally, MapProjection.current == .mercator else { return [0] }
         let mapWidthScaled = MapProjection.mapWidth * scale
         return [-mapWidthScaled, 0, mapWidthScaled]
     }

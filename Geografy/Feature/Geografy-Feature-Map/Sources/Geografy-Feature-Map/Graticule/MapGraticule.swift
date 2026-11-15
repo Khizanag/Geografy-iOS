@@ -63,29 +63,46 @@ public enum MapGraticule {
 
 // MARK: - Screen Geometry
 extension MapGraticule {
-    /// Where a map at `scale` and `offset` puts longitudes and latitudes in a view of `size`.
+    /// Where a map at `scale` and `offset` puts longitudes and latitudes in a view of `size`, in `projection`.
+    /// Parallels are straight across in both projections; meridians curve in Equal Earth, so they're traced.
     struct Placement {
         let scale: CGFloat
         let offset: CGSize
         let size: CGSize
+        var projection: MapProjectionKind = .mercator
 
-        private var originX: CGFloat { size.width / 2 - MapProjection.mapWidth * scale / 2 + offset.width }
-        private var originY: CGFloat { size.height / 2 - MapProjection.mapHeight * scale / 2 + offset.height }
+        private var origin: CGPoint {
+            CGPoint(
+                x: size.width / 2 - MapProjection.mapWidth * scale / 2 + offset.width,
+                y: size.height / 2 - MapProjection.mapHeight * scale / 2 + offset.height
+            )
+        }
 
-        func x(forLongitude longitude: Double) -> CGFloat {
-            originX + CGFloat((longitude + 180) / 360) * MapProjection.mapWidth * scale
+        func point(longitude: Double, latitude: Double) -> CGPoint {
+            let mapPoint = MapProjection.project(longitude: longitude, latitude: latitude, kind: projection)
+            return CGPoint(x: origin.x + mapPoint.x * scale, y: origin.y + mapPoint.y * scale)
         }
 
         func y(forLatitude latitude: Double) -> CGFloat {
-            originY + MapProjection.project(longitude: 0, latitude: latitude).y * scale
+            point(longitude: 0, latitude: latitude).y
         }
 
-        func longitude(atX x: CGFloat) -> Double {
-            Double((x - originX) / (MapProjection.mapWidth * scale)) * 360 - 180
+        func x(forLongitude longitude: Double, atLatitude latitude: Double = 0) -> CGFloat {
+            point(longitude: longitude, latitude: latitude).x
+        }
+
+        /// The place under a screen point. On Mercator, longitudes run past ±180° for a world drawn repeating.
+        func coordinate(at screenPoint: CGPoint) -> (longitude: Double, latitude: Double) {
+            let mapPoint = CGPoint(x: (screenPoint.x - origin.x) / scale, y: (screenPoint.y - origin.y) / scale)
+            return MapProjection.unproject(point: mapPoint, kind: projection)
         }
 
         func latitude(atY y: CGFloat) -> Double {
-            MapProjection.unproject(point: CGPoint(x: 0, y: (y - originY) / scale)).latitude
+            coordinate(at: CGPoint(x: origin.x + MapProjection.mapWidth * scale / 2, y: y)).latitude
+        }
+
+        func longitude(atX x: CGFloat, y: CGFloat? = nil) -> Double {
+            coordinate(at: CGPoint(x: x, y: y ?? origin.y + MapProjection.mapHeight * scale / 2)).longitude
         }
     }
 }

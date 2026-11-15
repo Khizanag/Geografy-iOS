@@ -57,9 +57,12 @@ public enum PinDropRegion: String, CaseIterable, Identifiable, Sendable {
     /// The region's frame in map coordinates.
     var mapRect: CGRect {
         let bounds = bounds
-        let topLeft = MapProjection.project(longitude: bounds.minLongitude, latitude: bounds.maxLatitude)
-        let bottomRight = MapProjection.project(longitude: bounds.maxLongitude, latitude: bounds.minLatitude)
-        return CGRect(x: topLeft.x, y: topLeft.y, width: bottomRight.x - topLeft.x, height: bottomRight.y - topLeft.y)
+        return MapProjection.boundingRect(
+            minLongitude: bounds.minLongitude,
+            maxLongitude: bounds.maxLongitude,
+            minLatitude: bounds.minLatitude,
+            maxLatitude: bounds.maxLatitude
+        )
     }
 }
 

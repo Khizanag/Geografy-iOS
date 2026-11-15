@@ -72,19 +72,11 @@ extension ContinentOutline {
     /// overseas territories, and islands across the antimeridian, which would shrink the silhouette.
     public static func viewport(for continent: Country.Continent) -> CGRect? {
         guard let bounds = geographicBounds(for: continent) else { return nil }
-        let topLeft = MapProjection.project(
-            longitude: bounds.longitude.lowerBound,
-            latitude: bounds.latitude.upperBound
-        )
-        let bottomRight = MapProjection.project(
-            longitude: bounds.longitude.upperBound,
-            latitude: bounds.latitude.lowerBound
-        )
-        return CGRect(
-            x: topLeft.x,
-            y: topLeft.y,
-            width: bottomRight.x - topLeft.x,
-            height: bottomRight.y - topLeft.y
+        return MapProjection.boundingRect(
+            minLongitude: bounds.longitude.lowerBound,
+            maxLongitude: bounds.longitude.upperBound,
+            minLatitude: bounds.latitude.lowerBound,
+            maxLatitude: bounds.latitude.upperBound
         )
     }
 }

@@ -35,8 +35,9 @@ enum PinDropGeometry {
         return 2 * earthRadiusKilometers * atan2(sqrt(haversine), sqrt(1 - haversine))
     }
 
-    /// The point of the outlines closest to `point`, both in map coordinates.
-    /// The map is conformal, so the closest point on it is the closest on the ground for any sensible miss.
+    /// The point of the outlines closest to `point`, both in map coordinates. Over the distances a guess
+    /// misses by, the closest point on the map is the closest on the ground in either projection; the miss
+    /// itself is then measured on the globe.
     static func nearestPoint(to point: CGPoint, on outlines: [CGPath]) -> CGPoint? {
         var nearest: CGPoint?
         var nearestDistance = CGFloat.infinity

@@ -11,6 +11,8 @@ public struct AllMapsScreen: View {
     @Environment(GeoJSONCache.self) private var geoJSONCache
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
+    @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
+
     @State private var outlines: [Country.Continent: ContinentOutline] = [:]
 
     private static let continents: [Country.Continent] = [
@@ -24,7 +26,7 @@ public struct AllMapsScreen: View {
     public var body: some View {
         scrollContent
             .screenBackground()
-            .task { await loadOutlines() }
+            .task(id: projection) { await loadOutlines() }
     }
 }
 
@@ -120,7 +122,6 @@ private extension AllMapsScreen {
     }
 
     func loadOutlines() async {
-        guard outlines.isEmpty else { return }
         let shapes = await geoJSONCache.loadShapes()
         outlines = await ContinentOutline.silhouettes(for: Self.continents, shapes: shapes)
     }

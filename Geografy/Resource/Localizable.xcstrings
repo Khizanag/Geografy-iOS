@@ -4063,6 +4063,18 @@
         }
       }
     },
+    "Equal Earth" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equal Earth (თანაბარი ფართობი)"
+          }
+        }
+      }
+    },
     "Event Details" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5928,6 +5940,18 @@
         }
       }
     },
+    "Map projection" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის პროექცია"
+          }
+        }
+      }
+    },
     "Map showing route between selected countries" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6065,6 +6089,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "წევრი ქვეყნები"
+          }
+        }
+      }
+    },
+    "Mercator" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მერკატორი"
           }
         }
       }

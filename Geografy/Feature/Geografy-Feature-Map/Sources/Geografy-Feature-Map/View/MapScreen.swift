@@ -18,6 +18,7 @@ public struct MapScreen: View {
 
     @AppStorage("map_showsVisitedCountries") private var showsVisitedCountries = true
     @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
+    @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
 
     public var continentFilter: String?
 
@@ -52,7 +53,11 @@ public struct MapScreen: View {
             }
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
-            .task { await loadMapData() }
+            // Again when the projection changes in Settings: the Map tab stays alive behind it.
+            .task(id: projection) {
+                isInitialized = false
+                await loadMapData()
+            }
             .zoomableViewer(isPresented: $showFlagPreview, title: selectedCountryTitle) {
                 if let code = mapState.selectedCountryCode {
                     ZoomableFlagView(countryCode: code) { showFlagPreview = false }
@@ -107,6 +112,9 @@ private extension MapScreen {
 
     var isWorldMap: Bool { continentFilter == nil }
 
+    /// Whether the world repeats sideways. Only a rectangular world can: Equal Earth's curved edges can't meet.
+    var wrapsWorld: Bool { isWorldMap && projection == MapProjectionKind.mercator.rawValue }
+
     var selectedCountryTitle: String? {
         mapState.selectedShape.map { countryDataService.country(for: $0.id)?.name ?? $0.name }
     }
@@ -129,7 +137,7 @@ private extension MapScreen {
                 canvasSize: canvasSize,
                 capitalPoint: selectedCapitalPoint,
                 highlightedCodes: showsVisitedCountries ? travelService.visitedCodes : [],
-                wrapsHorizontally: isWorldMap
+                wrapsHorizontally: wrapsWorld
             )
         }
         .accessibilityLabel(continentFilter.map { "Interactive map of \($0)" } ?? "Interactive world map")
@@ -266,14 +274,14 @@ private extension MapScreen {
     /// The world map wraps sideways just before, so the redraw lands on the copy nearest the view.
     func redrawIfNeeded() {
         guard mapState.needsRedraw(in: screenSize) else { return }
-        if isWorldMap {
+        if wrapsWorld {
             wrapHorizontalOffset()
         }
         mapState.redrawGestureFrame()
     }
 
     func finishGesture() {
-        if isWorldMap {
+        if wrapsWorld {
             wrapHorizontalOffset()
         }
         mapState.lastOffset = mapState.offset
@@ -389,13 +397,11 @@ private extension MapScreen {
             "South America": (-82, -34, -56, 13),
         ]
         guard let b = lookup[filter] else { return nil }
-        let topLeft = MapProjection.project(longitude: b.minLng, latitude: b.maxLat)
-        let bottomRight = MapProjection.project(longitude: b.maxLng, latitude: b.minLat)
-        return CGRect(
-            x: topLeft.x,
-            y: topLeft.y,
-            width: bottomRight.x - topLeft.x,
-            height: bottomRight.y - topLeft.y
+        return MapProjection.boundingRect(
+            minLongitude: b.minLng,
+            maxLongitude: b.maxLng,
+            minLatitude: b.minLat,
+            maxLatitude: b.maxLat
         )
     }
 
@@ -418,7 +424,7 @@ private extension MapScreen {
         let unwrappedX = (point.x - originX) / mapState.scale
         let wrappedX = (unwrappedX.truncatingRemainder(dividingBy: mapWidth) + mapWidth)
             .truncatingRemainder(dividingBy: mapWidth)
-        let mapPoint = CGPoint(x: isWorldMap ? wrappedX : unwrappedX, y: (point.y - originY) / mapState.scale)
+        let mapPoint = CGPoint(x: wrapsWorld ? wrappedX : unwrappedX, y: (point.y - originY) / mapState.scale)
 
         let sortedByArea = mapState.countryShapes.sorted {
             $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height

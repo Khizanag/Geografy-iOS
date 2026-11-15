@@ -10,6 +10,8 @@ public struct WorldMapThumbnail: View {
     @Environment(TravelService.self) private var travelService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
+
     @State private var shapes: [CountryShape] = []
 
     private let northwardShift: CGFloat
@@ -39,7 +41,7 @@ public struct WorldMapThumbnail: View {
         .opacity(shapes.isEmpty ? 0 : 1)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
-        .task { await loadShapes() }
+        .task(id: projection) { await loadShapes() }
     }
 }
 
