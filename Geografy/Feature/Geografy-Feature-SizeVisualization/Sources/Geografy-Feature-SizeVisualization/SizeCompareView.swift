@@ -103,35 +103,19 @@ private extension SizeCompareView {
     }
 
     var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            statCard(
-                title: referenceCountry.name,
+        StatTileRow {
+            StatTile(
                 value: formattedArea(referenceCountry.area),
+                label: "Reference",
+                icon: "square.fill",
                 color: DesignSystem.Color.accent
             )
-            statCard(
-                title: comparisonCountry.name,
+            StatTile(
                 value: formattedArea(comparisonCountry.area),
+                label: "Selected",
+                icon: "square.fill",
                 color: DesignSystem.Color.ocean
             )
-        }
-    }
-
-    func statCard(title: String, value: String, color: Color) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text(title)
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.medium)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(1)
-                Text(value)
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(color)
-            }
-            .padding(DesignSystem.Spacing.md)
-            .frame(maxWidth: .infinity)
         }
     }
 }
