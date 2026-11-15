@@ -82,4 +82,16 @@ struct MapProjectionTests {
         #expect(MapProjection.worldOutline(kind: .mercator) == nil)
         #expect((MapProjection.worldOutline(kind: .equalEarth)?.count ?? 0) > 100)
     }
+
+    @Test("World bounds take in Equal Earth's whole outline, and keep Mercator's land as it is")
+    func worldBounds() throws {
+        let land = CGRect(x: 600, y: 600, width: 800, height: 600)
+        let outline = try #require(MapProjection.worldOutlineBounds(kind: .equalEarth))
+
+        let equalEarth = MapProjection.worldBounds(around: land, kind: .equalEarth)
+
+        #expect(equalEarth.contains(outline))
+        #expect(equalEarth.contains(land))
+        #expect(MapProjection.worldBounds(around: land, kind: .mercator) == land)
+    }
 }

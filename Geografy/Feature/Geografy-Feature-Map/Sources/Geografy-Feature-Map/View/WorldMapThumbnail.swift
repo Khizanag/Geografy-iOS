@@ -58,13 +58,8 @@ private extension WorldMapThumbnail {
 
     /// The Earth's outline where the projection draws one, so it's never cut; otherwise the land.
     var worldBounds: CGRect {
-        let kind = MapProjectionKind(rawValue: projection) ?? .mercator
-        if let outline = MapProjection.worldOutline(kind: kind), let first = outline.first {
-            return outline.dropFirst().reduce(CGRect(origin: first, size: .zero)) { bounds, point in
-                bounds.union(CGRect(origin: point, size: .zero))
-            }
-        }
-        return shapes.dropFirst().reduce(shapes.first?.boundingBox ?? .zero) { $0.union($1.boundingBox) }
+        let land = shapes.dropFirst().reduce(shapes.first?.boundingBox ?? .zero) { $0.union($1.boundingBox) }
+        return MapProjection.worldBounds(around: land, kind: MapProjectionKind(rawValue: projection) ?? .mercator)
     }
 }
 

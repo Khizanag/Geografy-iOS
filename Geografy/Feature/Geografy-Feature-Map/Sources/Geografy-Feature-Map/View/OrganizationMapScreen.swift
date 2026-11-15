@@ -330,7 +330,11 @@ private extension OrganizationMapScreen {
     var wrapsWorld: Bool { MapProjection.current == .mercator }
 
     func clampOffset() {
-        mapState.clampOffset(to: mapState.contentBounds, in: screenSize, horizontally: !wrapsWorld)
+        mapState.clampOffset(
+            to: MapProjection.worldBounds(around: mapState.contentBounds),
+            in: screenSize,
+            horizontally: !wrapsWorld
+        )
     }
 
     func wrapHorizontalOffset() {

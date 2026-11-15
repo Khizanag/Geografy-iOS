@@ -85,6 +85,20 @@ public extension MapProjection {
         let west = stride(from: 90.0, through: -90, by: -2).map { project(longitude: -180, latitude: $0, kind: kind) }
         return east + west
     }
+
+    /// The area `worldOutline` encloses, for fitting or holding the whole Earth on screen; nil when it's a rectangle.
+    static func worldOutlineBounds(kind: MapProjectionKind = current) -> CGRect? {
+        guard let outline = worldOutline(kind: kind), let first = outline.first else { return nil }
+        return outline.dropFirst().reduce(CGRect(origin: first, size: .zero)) { bounds, point in
+            bounds.union(CGRect(origin: point, size: .zero))
+        }
+    }
+
+    /// `land` widened to the Earth's whole outline where the projection draws one, so its curved edge is never cut.
+    static func worldBounds(around land: CGRect, kind: MapProjectionKind = current) -> CGRect {
+        guard let outline = worldOutlineBounds(kind: kind) else { return land }
+        return land.isEmpty ? outline : land.union(outline)
+    }
 }
 
 // MARK: - Mercator

@@ -425,7 +425,7 @@ private extension MapScreen {
         if let filter = continentFilter, let vp = continentViewportBounds(for: filter) {
             return vp
         }
-        return mapState.contentBounds
+        return MapProjection.worldBounds(around: mapState.contentBounds)
     }
 }
 
