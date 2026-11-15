@@ -55,7 +55,7 @@ public struct StatTile: View {
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, DesignSystem.Spacing.md)
             .padding(.horizontal, DesignSystem.Spacing.xs)
         }
@@ -82,8 +82,10 @@ public struct StatTileRow<Content: View>: View {
         let layout = dynamicTypeSize.isAccessibilitySize
             ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.sm))
             : AnyLayout(HStackLayout(alignment: .top, spacing: DesignSystem.Spacing.sm))
+        // Tiles stretch to the tallest one, so a label that wraps doesn't leave its neighbors short.
         layout {
             content()
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
