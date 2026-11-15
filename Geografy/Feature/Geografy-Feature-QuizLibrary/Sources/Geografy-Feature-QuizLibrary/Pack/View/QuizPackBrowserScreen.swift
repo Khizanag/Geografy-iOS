@@ -117,7 +117,7 @@ private extension QuizPackBrowserScreen {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 allCategoryChip
-                ForEach(QuizPackCategory.allCases) { category in
+                ForEach(QuizPackCategory.allCases.filter(\.hasOwnQuiz)) { category in
                     categoryChip(category)
                 }
             }

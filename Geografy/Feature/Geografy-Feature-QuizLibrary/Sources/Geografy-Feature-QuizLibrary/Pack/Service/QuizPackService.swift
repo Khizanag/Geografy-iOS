@@ -106,7 +106,7 @@ extension QuizPackService {
         packs.append(contentsOf: makeCurrencyPacks(countries: countries))
         packs.append(contentsOf: makeGovernmentPacks(countries: countries))
         packs.append(contentsOf: makeOrganizationPacks(countries: countries))
-        return packs
+        return packs.filter(\.category.hasOwnQuiz)
     }
 }
 

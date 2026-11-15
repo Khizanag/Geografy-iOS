@@ -40,6 +40,15 @@ extension QuizPackCategory {
         }
     }
 
+    /// Whether a quiz asks about this category itself. Currency, government, and organization packs would
+    /// fall back to a capitals quiz, so they stay hidden until a quiz of their own exists.
+    public var hasOwnQuiz: Bool {
+        switch self {
+        case .capitals, .flags, .population, .geography: true
+        case .currency, .government, .organizations: false
+        }
+    }
+
     public var quizType: QuizType {
         switch self {
         case .capitals: .capitalQuiz
