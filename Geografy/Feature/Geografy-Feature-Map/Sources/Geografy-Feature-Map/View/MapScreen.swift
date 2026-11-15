@@ -16,7 +16,7 @@ public struct MapScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
 
-    @AppStorage("map_showsVisitedCountries") private var showsVisitedCountries = true
+    @AppStorage("map_showsVisitedCountries") private var showsVisitedCountries = false
     @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
     @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
     @AppStorage(MapPreferences.paletteKey) private var palette = MapPalette.default.rawValue
@@ -204,7 +204,7 @@ private extension MapScreen {
         }
         ToolbarItem(placement: .secondaryAction) {
             Toggle(isOn: $showsVisitedCountries) {
-                Label("Show Visited Countries", systemImage: TravelStatus.visited.icon)
+                Label("Show Visited Countries", systemImage: "airplane")
             }
         }
         ToolbarItem(placement: .secondaryAction) {
