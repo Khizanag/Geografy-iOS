@@ -17,13 +17,19 @@ public struct AppLanguage: Hashable, Identifiable, Sendable {
         return locale.localizedString(forLanguageCode: code)?.capitalized(with: locale) ?? code
     }
 
-    /// The flag of the country the language is most at home in — 🇬🇪 for Georgian, 🇺🇸 for English —
+    /// The flag of the country the language comes from — 🇬🇪 for Georgian, 🇬🇧 for English —
     /// to find a language at a glance. Empty when there's no such country.
     public var flagEmoji: String {
-        let likely = Locale.Language(identifier: Locale.Language(identifier: code).maximalIdentifier)
-        guard let region = likely.region?.identifier, region.count == 2 else { return "" }
+        guard let region = flagRegion, region.count == 2 else { return "" }
         let indicators = region.unicodeScalars.compactMap { Unicode.Scalar(0x1F1E6 - 0x41 + $0.value) }
         return String(String.UnicodeScalarView(indicators))
+    }
+
+    /// English is named after England, not the country with the most speakers that iOS would pick.
+    /// Every other language takes the country iOS considers its home.
+    private var flagRegion: String? {
+        if code == "en" { return "GB" }
+        return Locale.Language(identifier: Locale.Language(identifier: code).maximalIdentifier).region?.identifier
     }
 
     // MARK: - Init
