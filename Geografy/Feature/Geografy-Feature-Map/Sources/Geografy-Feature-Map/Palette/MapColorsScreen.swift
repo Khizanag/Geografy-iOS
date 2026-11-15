@@ -25,11 +25,14 @@ public struct MapColorsScreen: View {
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
         }
+        // A bar this tall gets the hard edge by default; the soft one fades the rows like the navigation bar does.
+        .scrollEdgeEffectStyle(.soft, for: .top)
         // Pinned, so every palette can be compared on the map while the rows scroll under its soft edge.
         .safeAreaBar(edge: .top) {
             preview
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.top, DesignSystem.Spacing.xs)
+                .padding(.bottom, DesignSystem.Spacing.md)
                 .readableContentWidth()
         }
         .screenBackground()
