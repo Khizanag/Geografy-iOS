@@ -31,6 +31,7 @@ Every screen is one of these five. Pick the template first, then fill it with th
 | A flag | `FlagView`, `isOutlined: true` in lists | A flag with a drop shadow in a scrolling list |
 | A screen that switches between two or three views | `.segmentedTabs(…)` on a `SegmentedTabContent`: the picker sits in the navigation bar, the title stays inline, tab labels stay short, and pages slide in from the side of their tab | A picker bar under the navigation bar, or one under a large title |
 | An on/off switch in the navigation bar | `ToolbarToggle`: one in front, the rest as `Toggle`s under `.secondaryAction` | A hand-made circle that fills the glass edge to edge |
+| A short detail in a sheet | `.fittedSheet()` on the content, with no background of its own, so the sheet is as tall as it needs and drawn in Liquid Glass | A full-height sheet with `screenBackground()` around a few lines |
 | A flag or logo to look at closely | `.zoomableViewer(isPresented:title:)` around `ZoomableFlagView` / `ZoomableOrgLogoView`: full screen, the standard close button in its own bar | An overlay with a floating close button under the page's bar |
 
 ## Rules

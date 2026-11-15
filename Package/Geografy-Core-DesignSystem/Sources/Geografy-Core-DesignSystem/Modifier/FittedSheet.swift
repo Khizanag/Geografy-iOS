@@ -1,8 +1,10 @@
 import SwiftUI
 
 public extension View {
-    /// Makes a sheet exactly as tall as its content. At accessibility text sizes it opens full height and scrolls.
+    /// Makes a sheet exactly as tall as its content, under a navigation bar or not. At accessibility text sizes
+    /// it opens full height and scrolls.
     ///
+    /// Leave the content without a background: below full height, iOS draws the sheet in Liquid Glass.
     /// The content runs to the sheet's bottom edge, so its own bottom padding sets the gap there: give it the same
     /// padding as its sides and buttons sit evenly inside the sheet.
     func fittedSheet() -> some View {
@@ -16,7 +18,7 @@ private struct FittedSheetModifier: ViewModifier {
 
     // Only first guesses; the real values arrive once the sheet is laid out.
     @State private var contentHeight: CGFloat = 300
-    @State private var bottomInset: CGFloat = 0
+    @State private var insets = EdgeInsets()
 
     func body(content: Content) -> some View {
         ScrollView {
@@ -29,12 +31,17 @@ private struct FittedSheetModifier: ViewModifier {
         }
         .scrollBounceBehavior(.basedOnSize)
         .ignoresSafeArea(.container, edges: .bottom)
-        .onGeometryChange(for: CGFloat.self) { proxy in
-            proxy.safeAreaInsets.bottom
-        } action: { inset in
-            bottomInset = inset
+        .onGeometryChange(for: EdgeInsets.self) { proxy in
+            proxy.safeAreaInsets
+        } action: { newInsets in
+            insets = newInsets
         }
-        // A height detent leaves the bottom safe area below it, so take that back out of the measured height.
-        .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.height(contentHeight - bottomInset)])
+        .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.height(sheetHeight)])
+    }
+
+    /// The content plus the navigation bar above it, if any. A height detent leaves the bottom safe area below it,
+    /// so that comes back out of the measured height.
+    var sheetHeight: CGFloat {
+        contentHeight + insets.top - insets.bottom
     }
 }

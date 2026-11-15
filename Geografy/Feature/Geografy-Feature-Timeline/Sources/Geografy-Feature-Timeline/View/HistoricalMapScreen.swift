@@ -195,22 +195,19 @@ private extension HistoricalMapScreen {
             #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
-            .presentationDetents([.medium])
     }
 
     func eventSheetContent(for event: HistoricalEvent) -> some View {
-        ScrollView {
-            VStack(
-                alignment: .leading,
-                spacing: DesignSystem.Spacing.lg
-            ) {
-                eventHeader(for: event)
-                eventDescription(for: event)
-            }
-            .padding(DesignSystem.Spacing.md)
-            .readableContentWidth()
+        VStack(
+            alignment: .leading,
+            spacing: DesignSystem.Spacing.lg
+        ) {
+            eventHeader(for: event)
+            eventDescription(for: event)
         }
-        .screenBackground()
+        .padding(DesignSystem.Spacing.md)
+        .readableContentWidth()
+        .fittedSheet()
     }
 
     func eventHeader(for event: HistoricalEvent) -> some View {

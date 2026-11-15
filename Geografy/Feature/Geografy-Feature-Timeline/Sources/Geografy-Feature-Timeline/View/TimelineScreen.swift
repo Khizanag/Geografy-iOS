@@ -218,19 +218,17 @@ private extension TimelineScreen {
     }
 
     func eventDetailContent(for event: HistoricalEvent) -> some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                detailHeader(for: event)
-                detailDescription(for: event)
-                if let country = countryDataService.country(
-                    for: event.countryCode
-                ) {
-                    detailCountryInfo(country: country)
-                }
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+            detailHeader(for: event)
+            detailDescription(for: event)
+            if let country = countryDataService.country(
+                for: event.countryCode
+            ) {
+                detailCountryInfo(country: country)
             }
-            .padding(DesignSystem.Spacing.md)
         }
-        .screenBackground()
+        .padding(DesignSystem.Spacing.md)
+        .fittedSheet()
     }
 
     func detailHeader(for event: HistoricalEvent) -> some View {

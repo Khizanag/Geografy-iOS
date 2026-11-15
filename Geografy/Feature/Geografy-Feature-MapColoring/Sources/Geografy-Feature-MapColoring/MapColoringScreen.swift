@@ -220,14 +220,13 @@ private extension MapColoringScreen {
                     .font(DesignSystem.Font.subheadline)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
-            Spacer()
         }
+        .frame(maxWidth: .infinity)
         .padding(DesignSystem.Spacing.xl)
-        .screenBackground()
+        .fittedSheet()
         .navigationTitle(country.name)
         #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
-        .presentationDetents([.medium])
         #endif
     }
 }

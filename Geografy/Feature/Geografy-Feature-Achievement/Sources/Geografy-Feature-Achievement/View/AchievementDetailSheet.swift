@@ -16,8 +16,8 @@ public struct AchievementDetailSheet: View {
 
     // MARK: - Body
     public var body: some View {
-        scrollContent
-            .screenBackground()
+        sheetContent
+            .fittedSheet()
             .navigationTitle(definition.title)
             .navigationBarTitleDisplayMode(.inline)
     }
@@ -25,21 +25,19 @@ public struct AchievementDetailSheet: View {
 
 // MARK: - Subviews
 private extension AchievementDetailSheet {
-    var scrollContent: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                heroSection
+    var sheetContent: some View {
+        VStack(spacing: DesignSystem.Spacing.xl) {
+            heroSection
 
-                infoSection
+            infoSection
 
-                statusSection
+            statusSection
 
-                if isUnlocked {
-                    pinSection
-                }
+            if isUnlocked {
+                pinSection
             }
-            .padding(DesignSystem.Spacing.lg)
         }
+        .padding(DesignSystem.Spacing.lg)
     }
 }
 
