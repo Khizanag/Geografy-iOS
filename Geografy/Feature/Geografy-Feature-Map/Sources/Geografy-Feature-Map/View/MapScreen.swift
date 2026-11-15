@@ -34,6 +34,9 @@ public struct MapScreen: View {
     @State private var showFlagPreview = false
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
+    /// The projection the shown shapes were laid out in. Until it matches the chosen one, the map hides behind
+    /// the loading view, so a switch never shows old shapes inside the new projection's outline and grid.
+    @State private var loadedProjection: String?
 
     // MARK: - Body
     public var body: some View {
@@ -73,6 +76,8 @@ private extension MapScreen {
         ZStack {
             GeometryReader { geometry in
                 mapContent(in: geometry.size)
+                    .opacity(isLoading ? 0 : 1)
+                    .allowsHitTesting(!isLoading)
                     .onAppear {
                         screenSize = geometry.size
                         if !isInitialized, !mapState.countryShapes.isEmpty {
@@ -92,7 +97,7 @@ private extension MapScreen {
                     }
             }
 
-            if mapState.countryShapes.isEmpty {
+            if isLoading {
                 MapLoadingView()
                     .transition(.opacity)
             }
@@ -100,6 +105,8 @@ private extension MapScreen {
     }
 
     var isLandscape: Bool { verticalSizeClass == .compact }
+
+    var isLoading: Bool { mapState.countryShapes.isEmpty || loadedProjection != projection }
 
     var selectedCapitalPoint: CGPoint? {
         guard let code = mapState.selectedCountryCode,
@@ -480,6 +487,8 @@ private extension MapScreen {
     func loadMapData() async {
         let wasPreloaded = geoJSONCache.isLoaded
         var shapes = await geoJSONCache.loadShapes()
+        // A newer switch replaced this load; its shapes may be in the projection just left.
+        guard !Task.isCancelled else { return }
         if let continentFilter {
             shapes = shapes.filter { $0.continent == continentFilter }
         }
@@ -495,6 +504,10 @@ private extension MapScreen {
         if screenSize.width > 0, !isInitialized {
             setInitialScale(for: screenSize)
             isInitialized = true
+        }
+
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
+            loadedProjection = projection
         }
     }
 
