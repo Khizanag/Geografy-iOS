@@ -10,11 +10,10 @@ import SwiftUI
 struct HubScreen<Header: View>: View {
     // MARK: - Properties
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(Navigator.self) private var coordinator
     @Environment(HapticsService.self) private var hapticsService
     @Environment(TestingModeService.self) private var testingModeService
-
-    @ScaledMetric(relativeTo: .caption) private var iconScale: CGFloat = 1
 
     @State private var testChecklistSheet: HubItem?
 
@@ -70,7 +69,7 @@ private extension HubScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: title)
             GlassEffectContainer {
-                AdaptiveGrid(compactMinimum: 100, regularMinimum: 150) {
+                LazyVGrid(columns: gridColumns, spacing: DesignSystem.Spacing.sm) {
                     ForEach(items, id: \.id) { sheet in
                         gridTile(for: sheet)
                     }
@@ -90,47 +89,35 @@ private extension HubScreen {
     }
 
     func gridTileLabel(for sheet: HubItem) -> some View {
-        VStack(spacing: tileSpacing) {
-            gridTileIcon(for: sheet)
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            IconBadge(sheet.icon, color: sheet.color, size: isWide ? .large : .medium)
 
-            Text(sheet.label)
-                .font(tileLabelFont)
-                .fontWeight(.medium)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.xxs)
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text(sheet.label)
+                    .font(isWide ? DesignSystem.Font.headline : DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                    .lineLimit(2)
 
-            Text(sheet.subtitle)
-                .font(tileSubtitleFont)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.xxs)
+                Text(sheet.subtitle)
+                    .font(isWide ? DesignSystem.Font.subheadline : DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .lineLimit(2)
+            }
+            .multilineTextAlignment(.leading)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.vertical, tilePadding)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(isWide ? DesignSystem.Spacing.lg : DesignSystem.Spacing.md)
         .glassEffect(
             .regular,
-            in: .rect(cornerRadius: DesignSystem.CornerRadius.medium)
+            in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
         )
+        .accessibilityElement(children: .combine)
         .overlay(alignment: .topTrailing) {
             if testingModeService.isEnabled {
                 testBadge(for: sheet)
             }
         }
-    }
-
-    func gridTileIcon(for sheet: HubItem) -> some View {
-        ZStack {
-            RoundedRectangle(
-                cornerRadius: DesignSystem.CornerRadius.small
-            )
-            .fill(sheet.color.opacity(0.15))
-            .frame(width: tileIconSize, height: tileIconSize)
-            Image(systemName: sheet.icon)
-                .font(DesignSystem.Font.system(size: tileIconFontSize))
-                .foregroundStyle(sheet.color)
-        }
-        .accessibilityHidden(true)
     }
 
     func testBadge(for sheet: HubItem) -> some View {
@@ -165,15 +152,14 @@ private extension HubScreen {
 private extension HubScreen {
     var isWide: Bool { sizeClass == .regular }
 
-    var tileIconSize: CGFloat { (isWide ? 52 : 36) * iconScale }
-
-    var tileIconFontSize: CGFloat { (isWide ? 22 : 14) * iconScale }
-
-    var tileLabelFont: Font { isWide ? DesignSystem.Font.subheadline : DesignSystem.Font.caption }
-
-    var tileSubtitleFont: Font { isWide ? DesignSystem.Font.caption : DesignSystem.Font.micro }
-
-    var tileSpacing: CGFloat { isWide ? DesignSystem.Spacing.sm : DesignSystem.Spacing.xs }
-
-    var tilePadding: CGFloat { isWide ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm }
+    /// Two tiles a row on a phone, so names fit on a line or two beside a readable icon;
+    /// one at accessibility text sizes, and as many as fit on a wide screen.
+    var gridColumns: [GridItem] {
+        let spacing = DesignSystem.Spacing.sm
+        if isWide {
+            return [GridItem(.adaptive(minimum: 200), spacing: spacing)]
+        }
+        let count = dynamicTypeSize.isAccessibilitySize ? 1 : 2
+        return Array(repeating: GridItem(.flexible(), spacing: spacing), count: count)
+    }
 }
