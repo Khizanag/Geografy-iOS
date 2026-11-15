@@ -35,13 +35,10 @@ private extension GeographyFeaturesScreen {
     }
 
     var typePicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(GeographyFeatureType.allCases, id: \.rawValue) { type in
-                    typeChip(type)
-                }
+        ChipScrollRow {
+            ForEach(GeographyFeatureType.allCases, id: \.rawValue) { type in
+                typeChip(type)
             }
-            .padding(.horizontal, DesignSystem.Spacing.xxs)
         }
     }
 

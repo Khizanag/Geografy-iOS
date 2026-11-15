@@ -60,11 +60,9 @@ private extension MapColoringScreen {
     var schemePicker: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Color Scheme", icon: "paintpalette.fill")
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: DesignSystem.Spacing.xs) {
-                    ForEach(ColoringScheme.allCases, id: \.self) { scheme in
-                        schemeChip(scheme)
-                    }
+            ChipScrollRow {
+                ForEach(ColoringScheme.allCases, id: \.self) { scheme in
+                    schemeChip(scheme)
                 }
             }
         }

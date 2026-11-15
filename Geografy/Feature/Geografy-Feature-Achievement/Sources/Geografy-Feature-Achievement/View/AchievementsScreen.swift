@@ -76,25 +76,20 @@ private extension AchievementsScreen {
 // MARK: - Category Filter
 private extension AchievementsScreen {
     var categoryFilter: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                SelectableChip("All", systemImage: "square.grid.2x2", isSelected: selectedCategory == nil) {
-                    selectedCategory = nil
-                }
-
-                ForEach(AchievementCategory.allCases, id: \.self) { category in
-                    SelectableChip(
-                        category.displayName,
-                        systemImage: category.iconName,
-                        isSelected: selectedCategory == category
-                    ) {
-                        selectedCategory = category
-                    }
+        ChipScrollRow {
+            SelectableChip("All", systemImage: "square.grid.2x2", isSelected: selectedCategory == nil) {
+                selectedCategory = nil
+            }
+            ForEach(AchievementCategory.allCases, id: \.self) { category in
+                SelectableChip(
+                    category.displayName,
+                    systemImage: category.iconName,
+                    isSelected: selectedCategory == category
+                ) {
+                    selectedCategory = category
                 }
             }
-            .padding(.vertical, DesignSystem.Spacing.xxs)
         }
-        .scrollClipDisabled()
     }
 }
 

@@ -27,6 +27,7 @@ Every screen is one of these five. Pick the template first, then fill it with th
 | An icon in a colored circle | `IconBadge` | A hand-made `Circle().fill(color.opacity(0.15))` |
 | A share or ratio bar | `ShareBar` | A custom capsule bar |
 | A list of tappable rows | `RowListCard` with `.rowListCardRow()` | Separate cards per row |
+| A filter over a list | `SelectableChip`s in a `ChipScrollRow`; the chosen chip is inked in the text color | Accent-green chips, or a hand-made horizontal `ScrollView` of capsules |
 | A flag | `FlagView`, `isOutlined: true` in lists | A flag with a drop shadow in a scrolling list |
 | A screen that switches between two or three views | `.segmentedTabs(…)` on a `SegmentedTabContent`: the picker sits in the navigation bar, the title stays inline, tab labels stay short, and pages slide in from the side of their tab | A picker bar under the navigation bar, or one under a large title |
 | An on/off switch in the navigation bar | `ToolbarToggle`: one in front, the rest as `Toggle`s under `.secondaryAction` | A hand-made circle that fills the glass edge to edge |

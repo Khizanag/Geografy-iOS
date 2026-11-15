@@ -49,19 +49,17 @@ private extension LandmarkGalleryScreen {
     }
 
     var categoryFilter: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                SelectableChip("All", systemImage: "globe", isSelected: selectedCategory == nil) {
-                    selectedCategory = nil
-                }
-                ForEach(LandmarkCategory.allCases, id: \.self) { category in
-                    SelectableChip(
-                        category.displayName,
-                        systemImage: category.icon,
-                        isSelected: selectedCategory == category
-                    ) {
-                        selectedCategory = selectedCategory == category ? nil : category
-                    }
+        ChipScrollRow {
+            SelectableChip("All", systemImage: "globe", isSelected: selectedCategory == nil) {
+                selectedCategory = nil
+            }
+            ForEach(LandmarkCategory.allCases, id: \.self) { category in
+                SelectableChip(
+                    category.displayName,
+                    systemImage: category.icon,
+                    isSelected: selectedCategory == category
+                ) {
+                    selectedCategory = selectedCategory == category ? nil : category
                 }
             }
         }

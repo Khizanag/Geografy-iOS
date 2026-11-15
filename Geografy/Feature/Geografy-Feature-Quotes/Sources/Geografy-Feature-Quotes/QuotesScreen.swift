@@ -50,24 +50,20 @@ private extension QuotesScreen {
     }
 
     var categoryFilter: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                SelectableChip("All", systemImage: "square.grid.2x2.fill", isSelected: selectedCategory == nil) {
-                    selectedCategory = nil
-                }
-                ForEach(QuoteCategory.allCases, id: \.self) { category in
-                    SelectableChip(
-                        category.displayName,
-                        systemImage: category.icon,
-                        isSelected: selectedCategory == category
-                    ) {
-                        selectedCategory = selectedCategory == category ? nil : category
-                    }
+        ChipScrollRow(inset: DesignSystem.Spacing.md) {
+            SelectableChip("All", systemImage: "square.grid.2x2.fill", isSelected: selectedCategory == nil) {
+                selectedCategory = nil
+            }
+            ForEach(QuoteCategory.allCases, id: \.self) { category in
+                SelectableChip(
+                    category.displayName,
+                    systemImage: category.icon,
+                    isSelected: selectedCategory == category
+                ) {
+                    selectedCategory = selectedCategory == category ? nil : category
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
-        .scrollClipDisabled()
     }
 
     var quotesList: some View {

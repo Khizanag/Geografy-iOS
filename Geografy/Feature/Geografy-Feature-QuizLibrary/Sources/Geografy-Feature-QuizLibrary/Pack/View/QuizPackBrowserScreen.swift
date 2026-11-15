@@ -117,14 +117,11 @@ private extension QuizPackBrowserScreen {
     }
 
     var categoryChips: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                allCategoryChip
-                ForEach(QuizPackCategory.allCases.filter(\.hasOwnQuiz)) { category in
-                    categoryChip(category)
-                }
+        ChipScrollRow(inset: DesignSystem.Spacing.md) {
+            allCategoryChip
+            ForEach(QuizPackCategory.allCases.filter(\.hasOwnQuiz)) { category in
+                categoryChip(category)
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
         }
     }
 

@@ -1589,6 +1589,18 @@
         }
       }
     },
+    "All" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა"
+          }
+        }
+      }
+    },
     "All %@ Countries" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

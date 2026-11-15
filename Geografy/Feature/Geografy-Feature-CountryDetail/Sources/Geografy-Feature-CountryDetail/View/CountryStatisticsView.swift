@@ -26,14 +26,11 @@ public struct CountryStatisticsView: View {
 // MARK: - Subviews
 private extension CountryStatisticsView {
     var categoryPicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(StatCategory.allCases) { category in
-                    categoryTab(category)
-                }
+        ChipScrollRow {
+            ForEach(StatCategory.allCases) { category in
+                categoryTab(category)
             }
         }
-        .scrollClipDisabled()
     }
 
     func categoryTab(_ category: StatCategory) -> some View {

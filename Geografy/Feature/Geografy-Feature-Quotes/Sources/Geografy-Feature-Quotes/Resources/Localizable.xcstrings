@@ -11,6 +11,16 @@
         }
       }
     },
+    "All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა"
+          }
+        }
+      }
+    },
     "Quotes" : {
       "localizations" : {
         "ka" : {

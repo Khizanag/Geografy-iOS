@@ -116,6 +116,16 @@
         }
       }
     },
+    "All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა"
+          }
+        }
+      }
+    },
     "Collected on %@" : {
       "localizations" : {
         "ka" : {
