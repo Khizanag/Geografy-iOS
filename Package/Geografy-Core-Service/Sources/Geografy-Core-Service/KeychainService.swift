@@ -7,9 +7,6 @@ public struct KeychainService {
 
     public enum Key: String {
         case appleUserID = "com.khizanag.geografy.apple.user_id"
-        case googleUserID = "com.khizanag.geografy.google.user_id"
-        case googleAccessToken = "com.khizanag.geografy.google.access_token"
-        case googleRefreshToken = "com.khizanag.geografy.google.refresh_token"
         case guestUUID = "com.khizanag.geografy.guest.uuid"
     }
 

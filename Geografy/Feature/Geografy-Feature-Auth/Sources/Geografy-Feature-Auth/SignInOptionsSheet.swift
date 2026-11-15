@@ -109,7 +109,6 @@ private extension SignInOptionsSheet {
     var actionsSection: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             appleSignInButton
-            googleSignInButton
             #if DEBUG
             if testingModeService.isEnabled {
                 debugSignInButton
@@ -122,7 +121,7 @@ private extension SignInOptionsSheet {
         .readableContentWidth()
     }
 
-    /// Both sign-in buttons share Apple's button size and shape, as the Human Interface Guidelines ask.
+    /// Apple's button at the size and shape the Human Interface Guidelines ask for.
     static let signInButtonHeight: CGFloat = 50
     static let signInButtonShape = RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
 
@@ -147,42 +146,6 @@ private extension SignInOptionsSheet {
         .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
         .frame(height: Self.signInButtonHeight)
         .clipShape(Self.signInButtonShape)
-    }
-
-    var googleSignInButton: some View {
-        Button {
-            #if !os(tvOS)
-            Task { @MainActor in
-                await authService.signInWithGoogle()
-                switch authService.state {
-                case .authenticated:
-                    dismiss()
-                case .error(let error):
-                    errorMessage = error.localizedDescription
-                    showError = true
-                default:
-                    break
-                }
-            }
-            #endif
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                GoogleGLogo()
-                    .frame(width: 22, height: 22)
-                    .accessibilityHidden(true)
-                Text("Sign in with Google")
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(Color(white: 0.18))
-            }
-            .frame(maxWidth: .infinity)
-            .frame(minHeight: Self.signInButtonHeight)
-            .background(Color.white, in: Self.signInButtonShape)
-            .overlay {
-                // Edges the white button on the light background, as Google's own button does.
-                Self.signInButtonShape.strokeBorder(Color(white: 0.75), lineWidth: colorScheme == .dark ? 0 : 1)
-            }
-        }
-        .buttonStyle(PressButtonStyle())
     }
 
     var continueAsGuestButton: some View {
@@ -271,57 +234,5 @@ private extension SignInMapHero {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
-    }
-}
-
-// MARK: - Google G Logo
-private struct ArcSegment {
-    let startDeg: CGFloat
-    let endDeg: CGFloat
-    let red: Double
-    let green: Double
-    let blue: Double
-}
-
-private struct GoogleGLogo: View {
-    private static let segments: [ArcSegment] = [
-        ArcSegment(startDeg: 30, endDeg: 90, red: 0.918, green: 0.263, blue: 0.208),
-        ArcSegment(startDeg: 90, endDeg: 150, red: 0.984, green: 0.737, blue: 0.016),
-        ArcSegment(startDeg: 150, endDeg: 210, red: 0.204, green: 0.659, blue: 0.325),
-        ArcSegment(startDeg: 210, endDeg: 330, red: 0.259, green: 0.522, blue: 0.957),
-    ]
-
-    var body: some View {
-        Canvas { context, size in
-            let cx = size.width / 2
-            let cy = size.height / 2
-            let outerR = min(size.width, size.height) / 2
-            let strokeW = outerR * 0.36
-            let midR = outerR - strokeW / 2
-            let center = CGPoint(x: cx, y: cy)
-            let style = StrokeStyle(lineWidth: strokeW, lineCap: .butt)
-
-            for segment in Self.segments {
-                let arc = Path { builder in
-                    builder.addArc(
-                        center: center,
-                        radius: midR,
-                        startAngle: .degrees(segment.startDeg),
-                        endAngle: .degrees(segment.endDeg),
-                        clockwise: false
-                    )
-                }
-                context.stroke(
-                    arc,
-                    with: .color(Color(red: segment.red, green: segment.green, blue: segment.blue)),
-                    style: style
-                )
-            }
-
-            var crossbar = Path()
-            crossbar.move(to: CGPoint(x: cx, y: cy))
-            crossbar.addLine(to: CGPoint(x: size.width - strokeW * 0.2, y: cy))
-            context.stroke(crossbar, with: .color(Color(red: 0.259, green: 0.522, blue: 0.957)), style: style)
-        }
     }
 }

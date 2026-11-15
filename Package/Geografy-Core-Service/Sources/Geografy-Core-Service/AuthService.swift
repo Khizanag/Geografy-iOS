@@ -18,17 +18,11 @@ public final class AuthService {
     public private(set) var currentUserID: String
 
     private let db: DatabaseManager
-    #if !os(tvOS)
-    private let googleSignInHandler = GoogleSignInHandler()
-    #endif
 
     public init(db: DatabaseManager) {
         self.db = db
         if let appleUserID = KeychainService.load(for: .appleUserID) {
             self.currentUserID = appleUserID
-            self.state = .authenticating
-        } else if let googleUserID = KeychainService.load(for: .googleUserID) {
-            self.currentUserID = googleUserID
             self.state = .authenticating
         } else {
             let guestID = Self.resolveGuestID()
@@ -56,9 +50,7 @@ extension AuthService {
     public func validateOnLaunch() async {
         guard case .authenticating = state else { return }
 
-        if KeychainService.load(for: .googleUserID) != nil {
-            validateGoogleSessionOnLaunch()
-        } else if KeychainService.load(for: .appleUserID) != nil {
+        if KeychainService.load(for: .appleUserID) != nil {
             await validateAppleSessionOnLaunch()
         } else {
             let profile = Self.loadOrCreateGuestProfile(id: currentUserID, db: db)
@@ -66,28 +58,6 @@ extension AuthService {
         }
     }
 }
-
-// MARK: - Sign In with Google
-#if !os(tvOS)
-extension AuthService {
-    public func signInWithGoogle() async {
-        let previousState = state
-        state = .authenticating
-        do {
-            let userInfo = try await googleSignInHandler.signIn()
-            handleGoogleUserInfo(userInfo)
-        } catch {
-            let nsError = error as NSError
-            if nsError.domain == "com.apple.AuthenticationServices.WebAuthenticationSession",
-               nsError.code == 1 {
-                state = previousState
-            } else {
-                state = .error(error)
-            }
-        }
-    }
-}
-#endif
 
 // MARK: - Sign In
 extension AuthService {
@@ -203,17 +173,6 @@ extension AuthService {
 
 // MARK: - Helpers
 private extension AuthService {
-    func validateGoogleSessionOnLaunch() {
-        if let profile = fetchProfile(id: currentUserID) {
-            state = .authenticated(profile)
-        } else {
-            KeychainService.delete(for: .googleUserID)
-            KeychainService.delete(for: .googleAccessToken)
-            KeychainService.delete(for: .googleRefreshToken)
-            transitionToGuest()
-        }
-    }
-
     func validateAppleSessionOnLaunch() async {
         let userID = currentUserID
         switch await AppleCredentialCheck.resolve(userID: userID) {
@@ -237,57 +196,8 @@ private extension AuthService {
         }
     }
 
-    #if !os(tvOS)
-    func handleGoogleUserInfo(_ userInfo: GoogleUserInfo) {
-        let googleUserID = "google:\(userInfo.sub)"
-        KeychainService.save(googleUserID, for: .googleUserID)
-
-        let displayName = [userInfo.givenName, userInfo.familyName]
-            .compactMap { $0 }
-            .filter { !$0.isEmpty }
-            .joined(separator: " ")
-
-        if let existingProfile = fetchProfile(id: googleUserID) {
-            if case .guest(let guestProfile) = state {
-                migrateGuestData(from: guestProfile.id, to: googleUserID)
-            }
-            existingProfile.isGuest = false
-            existingProfile.lastLoginAt = .now
-            if let email = userInfo.email { existingProfile.email = email }
-            try? db.mainContext.save()
-            currentUserID = googleUserID
-            state = .authenticated(existingProfile)
-        } else if case .guest(let guestProfile) = state {
-            let oldGuestID = guestProfile.id
-            migrateGuestData(from: oldGuestID, to: googleUserID)
-            guestProfile.id = googleUserID
-            guestProfile.isGuest = false
-            if !displayName.isEmpty { guestProfile.displayName = displayName }
-            if let email = userInfo.email { guestProfile.email = email }
-            guestProfile.lastLoginAt = .now
-            try? db.mainContext.save()
-            currentUserID = googleUserID
-            state = .authenticated(guestProfile)
-        } else {
-            let profile = UserProfile(
-                id: googleUserID,
-                displayName: displayName.isEmpty ? "Explorer" : displayName,
-                email: userInfo.email,
-                isGuest: false
-            )
-            db.mainContext.insert(profile)
-            try? db.mainContext.save()
-            currentUserID = googleUserID
-            state = .authenticated(profile)
-        }
-    }
-    #endif
-
     func clearAuthTokens() {
         KeychainService.delete(for: .appleUserID)
-        KeychainService.delete(for: .googleUserID)
-        KeychainService.delete(for: .googleAccessToken)
-        KeychainService.delete(for: .googleRefreshToken)
     }
 
     static func resolveGuestID() -> String {
