@@ -36,10 +36,14 @@ private extension CollectionDetailScreen {
     }
 
     var emptyState: some View {
-        ContentUnavailableView {
-            Label("Empty Collection", systemImage: "folder")
-        } description: {
-            Text("Add items from country details, oceans, languages, and more.")
+        EmptyStateView(
+            icon: "folder",
+            title: "Empty Collection",
+            message: "Add items from country details, oceans, languages, and more.",
+            actionTitle: "Browse Countries"
+        ) {
+            hapticsService.impact(.light)
+            coordinator.push(.countries)
         }
     }
 

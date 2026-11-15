@@ -52,14 +52,13 @@ private extension CollectionsScreen {
     }
 
     var emptyState: some View {
-        ContentUnavailableView {
-            Label("No Collections", systemImage: "folder")
-        } description: {
-            Text("Save countries, oceans, languages and more into collections.")
-        } actions: {
-            GlassButton("Create Collection", systemImage: "plus") {
-                showNewCollection = true
-            }
+        EmptyStateView(
+            icon: "folder",
+            title: "No Collections",
+            message: "Save countries, oceans, languages and more into collections.",
+            actionTitle: "Create Collection"
+        ) {
+            showNewCollection = true
         }
     }
 
