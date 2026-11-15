@@ -59,6 +59,16 @@
         }
       }
     },
+    "About" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესახებ"
+          }
+        }
+      }
+    },
     "Bordering Continents" : {
       "localizations" : {
         "ka" : {
@@ -85,6 +95,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ორჯერ შეხება გასაშლელად"
+          }
+        }
+      }
+    },
+    "Fun Fact" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საინტერესო ფაქტი"
           }
         }
       }

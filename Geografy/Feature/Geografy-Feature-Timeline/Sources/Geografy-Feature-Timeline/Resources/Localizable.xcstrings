@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ Events" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ წლის მოვლენები"
+          }
+        }
+      }
+    },
     "%lld independent" : {
       "localizations" : {
         "ka" : {
@@ -29,6 +39,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2025"
+          }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესახებ"
           }
         }
       }
@@ -69,6 +89,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "კონტინენტი"
+          }
+        }
+      }
+    },
+    "Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყანა"
           }
         }
       }
@@ -221,6 +251,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "არჩეულია: %@"
+          }
+        }
+      }
+    },
+    "This Day in History" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეს დღე ისტორიაში"
           }
         }
       }

@@ -221,6 +221,16 @@
         }
       }
     },
+    "Add First Entry" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პირველი ჩანაწერის დამატება"
+          }
+        }
+      }
+    },
     "Add Journal Entry" : {
       "localizations" : {
         "ka" : {
@@ -257,6 +267,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "საშუალო შეფასება %@ 5 ვარსკვლავიდან"
+          }
+        }
+      }
+    },
+    "Avg Rating" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საშ. შეფასება"
           }
         }
       }
@@ -321,12 +341,52 @@
         }
       }
     },
+    "Continents" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტები"
+          }
+        }
+      }
+    },
+    "Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები"
+          }
+        }
+      }
+    },
+    "Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყანა"
+          }
+        }
+      }
+    },
     "Country labels" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნების ეტიკეტები"
+          }
+        }
+      }
+    },
+    "Dates" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თარიღები"
           }
         }
       }
@@ -357,6 +417,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ფოტო %lld-ის წაშლა"
+          }
+        }
+      }
+    },
+    "Details" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დეტალები"
           }
         }
       }
@@ -485,6 +555,46 @@
         }
       }
     },
+    "No visited countries yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონახულებული ქვეყნები ჯერ არ არის"
+          }
+        }
+      }
+    },
+    "No wishlist yet" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სურვილების სია ჯერ ცარიელია"
+          }
+        }
+      }
+    },
+    "Notes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენიშვნები"
+          }
+        }
+      }
+    },
+    "Open Travel Tracker" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოგზაურობის ტრეკერის გახსნა"
+          }
+        }
+      }
+    },
     "Opens the journal entry" : {
       "localizations" : {
         "ka" : {
@@ -521,6 +631,26 @@
         }
       }
     },
+    "Photos" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფოტოები"
+          }
+        }
+      }
+    },
+    "Photos (%lld)" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფოტოები (%lld)"
+          }
+        }
+      }
+    },
     "Pinch to zoom, drag to pan" : {
       "localizations" : {
         "ka" : {
@@ -531,12 +661,42 @@
         }
       }
     },
+    "Priority" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პრიორიტეტი"
+          }
+        }
+      }
+    },
     "Rated %lld of 5 stars" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეფასება %lld 5 ვარსკვლავიდან"
+          }
+        }
+      }
+    },
+    "Rating" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეფასება"
+          }
+        }
+      }
+    },
+    "Remaining" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დარჩენილი"
           }
         }
       }
@@ -561,6 +721,26 @@
         }
       }
     },
+    "Search above or tap + to add countries you've visited" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოძებნე ზემოთ ან შეეხე +-ს, რომ დაამატო მონახულებული ქვეყნები"
+          }
+        }
+      }
+    },
+    "Search above or tap + to build your travel wishlist" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოძებნე ზემოთ ან შეეხე +-ს, რომ შექმნა მოგზაურობის სურვილების სია"
+          }
+        }
+      }
+    },
     "Search countries" : {
       "localizations" : {
         "ka" : {
@@ -577,6 +757,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნების ძიება…"
+          }
+        }
+      }
+    },
+    "Search for a country above, or tap + to browse all countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოძებნე ქვეყანა ზემოთ ან შეეხე +-ს ყველა ქვეყნის სანახავად"
           }
         }
       }
@@ -679,6 +869,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დაიწყე მოგზაურობის დღიური"
+          }
+        }
+      }
+    },
+    "Start tracking your journey" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე შენი მოგზაურობის აღრიცხვა"
+          }
+        }
+      }
+    },
+    "Title" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სათაური"
           }
         }
       }

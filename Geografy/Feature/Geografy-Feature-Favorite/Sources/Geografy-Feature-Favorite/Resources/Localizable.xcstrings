@@ -21,6 +21,16 @@
         }
       }
     },
+    "Browse Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების დათვალიერება"
+          }
+        }
+      }
+    },
     "Continent" : {
       "localizations" : {
         "ka" : {

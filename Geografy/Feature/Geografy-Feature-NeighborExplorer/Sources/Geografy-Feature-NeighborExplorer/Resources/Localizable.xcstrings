@@ -67,6 +67,16 @@
         }
       }
     },
+    "Neighbors of %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს მეზობლები"
+          }
+        }
+      }
+    },
     "No Land Path" : {
       "localizations" : {
         "ka" : {
@@ -87,12 +97,42 @@
         }
       }
     },
+    "Shortest Path — %lld hops" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უმოკლესი გზა — %lld ნახტომი"
+          }
+        }
+      }
+    },
+    "Six Degrees of Separation" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ექვსი ხელის ჩამორთმევა"
+          }
+        }
+      }
+    },
     "There's no land border route between these countries." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ამ ქვეყნებს შორის სახმელეთო საზღვრის მარშრუტი არ არის."
+          }
+        }
+      }
+    },
+    "Your Chain" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი ჯაჭვი"
           }
         }
       }

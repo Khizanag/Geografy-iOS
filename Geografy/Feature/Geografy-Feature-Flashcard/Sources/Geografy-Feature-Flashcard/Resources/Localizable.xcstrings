@@ -146,6 +146,46 @@
         }
       }
     },
+    "Day Streak" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღიანი სერია"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულება"
+          }
+        }
+      }
+    },
+    "Due Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასამეორებელი ქვეყნები"
+          }
+        }
+      }
+    },
+    "Due Today" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღეს გასამეორებელი"
+          }
+        }
+      }
+    },
     "Flashcards" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -306,6 +346,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ბარათების გამეორება ოპტიმალურ დროს\nხანგრძლივი მეხსიერებისთვის"
+          }
+        }
+      }
+    },
+    "Reviewed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამეორებული"
           }
         }
       }

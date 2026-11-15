@@ -21,6 +21,16 @@
         }
       }
     },
+    "Quotes of the Day" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღის ციტატები"
+          }
+        }
+      }
+    },
     "Remove from favorites" : {
       "localizations" : {
         "ka" : {

@@ -47,6 +47,26 @@
         }
       }
     },
+    "Clear" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასუფთავება"
+          }
+        }
+      }
+    },
+    "Clear recent routes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლო მარშრუტების გასუფთავება"
+          }
+        }
+      }
+    },
     "Destination" : {
       "localizations" : {
         "ka" : {
@@ -119,6 +139,16 @@
         }
       }
     },
+    "In Perspective" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პერსპექტივაში"
+          }
+        }
+      }
+    },
     "In perspective" : {
       "localizations" : {
         "ka" : {
@@ -165,6 +195,26 @@
         }
       }
     },
+    "Pick at random" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემთხვევითი არჩევა"
+          }
+        }
+      }
+    },
+    "Recent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლოდროინდელი"
+          }
+        }
+      }
+    },
     "Search countries…" : {
       "localizations" : {
         "ka" : {
@@ -191,6 +241,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "აყენებს საწყის წერტილად"
+          }
+        }
+      }
+    },
+    "Shuffle" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემთხვევითი"
           }
         }
       }

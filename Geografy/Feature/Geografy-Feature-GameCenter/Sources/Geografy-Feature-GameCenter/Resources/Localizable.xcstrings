@@ -50,12 +50,32 @@
         }
       }
     },
+    "Add Friends in Game Center" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეგობრების დამატება Game Center-ში"
+          }
+        }
+      }
+    },
     "Connect your Game Center account to see your friends and compare scores." : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "დააკავშირე Game Center ანგარიში მეგობრების სანახავად და ქულების შესადარებლად."
+          }
+        }
+      }
+    },
+    "Connected to Game Center" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაკავშირებულია Game Center-თან"
           }
         }
       }
@@ -140,6 +160,26 @@
         }
       }
     },
+    "Open Settings" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პარამეტრების გახსნა"
+          }
+        }
+      }
+    },
+    "Opens the rankings in Game Center" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხსნის რეიტინგებს Game Center-ში"
+          }
+        }
+      }
+    },
     "Rank %lld" : {
       "localizations" : {
         "ka" : {
@@ -180,6 +220,26 @@
         }
       }
     },
+    "Sign in to Game Center in Settings to post your scores and see how you rank." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედი Game Center-ში პარამეტრებიდან, რომ გამოაქვეყნო შენი ქულები და ნახო შენი რეიტინგი."
+          }
+        }
+      }
+    },
+    "Sign in to Game Center in Settings to see your friends and compare scores." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედი Game Center-ში პარამეტრებიდან, რომ ნახო მეგობრები და შეადარო ქულები."
+          }
+        }
+      }
+    },
     "View %@ rankings" : {
       "localizations" : {
         "ka" : {
@@ -196,6 +256,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რეიტინგების ნახვა"
+          }
+        }
+      }
+    },
+    "Your scores are syncing automatically" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შენი ქულები ავტომატურად სინქრონიზდება"
           }
         }
       }

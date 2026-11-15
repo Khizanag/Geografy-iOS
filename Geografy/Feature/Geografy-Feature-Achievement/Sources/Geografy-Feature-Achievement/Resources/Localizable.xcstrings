@@ -176,6 +176,16 @@
         }
       }
     },
+    "Pinned" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიმაგრებული"
+          }
+        }
+      }
+    },
     "Progress" : {
       "localizations" : {
         "ka" : {
@@ -192,6 +202,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "იშვიათობა"
+          }
+        }
+      }
+    },
+    "Total" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სულ"
           }
         }
       }

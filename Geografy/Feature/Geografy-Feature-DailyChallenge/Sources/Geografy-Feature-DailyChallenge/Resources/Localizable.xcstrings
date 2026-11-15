@@ -272,6 +272,16 @@
         }
       }
     },
+    "History" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორია"
+          }
+        }
+      }
+    },
     "Mystery flag" : {
       "localizations" : {
         "ka" : {
@@ -448,6 +458,46 @@
         }
       }
     },
+    "Show All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველას ჩვენება"
+          }
+        }
+      }
+    },
+    "Show Less" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაკლების ჩვენება"
+          }
+        }
+      }
+    },
+    "Show all %lld results" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა %lld შედეგის ჩვენება"
+          }
+        }
+      }
+    },
+    "Show fewer results" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაკლები შედეგის ჩვენება"
+          }
+        }
+      }
+    },
     "Start Challenge" : {
       "localizations" : {
         "ka" : {
@@ -480,6 +530,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ნაბიჯი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Streak" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სერია"
           }
         }
       }

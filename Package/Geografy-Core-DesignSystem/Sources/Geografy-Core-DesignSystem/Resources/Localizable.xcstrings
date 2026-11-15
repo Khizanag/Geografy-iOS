@@ -317,6 +317,16 @@
         }
       }
     },
+    "Got it!" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასაგებია!"
+          }
+        }
+      }
+    },
     "Incorrect" : {
       "localizations" : {
         "ka" : {

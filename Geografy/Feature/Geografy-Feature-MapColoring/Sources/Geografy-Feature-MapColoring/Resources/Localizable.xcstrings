@@ -37,6 +37,16 @@
         }
       }
     },
+    "Color Scheme" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფერთა სქემა"
+          }
+        }
+      }
+    },
     "Expanded" : {
       "localizations" : {
         "ka" : {
@@ -53,6 +63,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მალავს ამ ქვეყნებს"
+          }
+        }
+      }
+    },
+    "Legend" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ლეგენდა"
           }
         }
       }

@@ -73,6 +73,16 @@
         }
       }
     },
+    "Avg GDP per Capita" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საშ. მშპ ერთ სულზე"
+          }
+        }
+      }
+    },
     "Back" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -90,6 +100,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "კონტინენტები"
+          }
+        }
+      }
+    },
+    "Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები"
           }
         }
       }
@@ -186,6 +206,16 @@
         }
       }
     },
+    "Largest Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უდიდესი ქვეყანა"
+          }
+        }
+      }
+    },
     "Loading map" : {
       "localizations" : {
         "ka" : {
@@ -232,6 +262,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მეტი ინფორმაცია"
+          }
+        }
+      }
+    },
+    "Most Spoken Language" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაზე გავრცელებული ენა"
           }
         }
       }
@@ -296,6 +336,16 @@
         }
       }
     },
+    "Smallest Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უმცირესი ქვეყანა"
+          }
+        }
+      }
+    },
     "Sort by" : {
       "localizations" : {
         "ka" : {
@@ -313,6 +363,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეეხე რეგიონს ინტერაქტიულ რუკაში ჩასაშვებად"
+          }
+        }
+      }
+    },
+    "Total Area" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საერთო ფართობი"
+          }
+        }
+      }
+    },
+    "Total Population" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საერთო მოსახლეობა"
           }
         }
       }

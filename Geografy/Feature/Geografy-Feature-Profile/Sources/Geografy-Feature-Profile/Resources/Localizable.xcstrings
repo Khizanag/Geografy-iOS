@@ -135,6 +135,16 @@
         }
       }
     },
+    "Account" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ანგარიში"
+          }
+        }
+      }
+    },
     "Accuracy" : {
       "localizations" : {
         "ka" : {
@@ -151,6 +161,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "სიზუსტე %lld პროცენტი"
+          }
+        }
+      }
+    },
+    "Achievements" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიღწევები"
+          }
+        }
+      }
+    },
+    "Badges" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბეჯები"
+          }
+        }
+      }
+    },
+    "Best Streak" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საუკეთესო სერია"
           }
         }
       }
@@ -256,6 +296,16 @@
         }
       }
     },
+    "Explored" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შესწავლილი"
+          }
+        }
+      }
+    },
     "Get Geografy Premium" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -297,12 +347,32 @@
         }
       }
     },
+    "Member" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "წევრი"
+          }
+        }
+      }
+    },
     "No Achievements Yet" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ჯერ მიღწევები არ არის"
+          }
+        }
+      }
+    },
+    "Perfect" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იდეალური"
           }
         }
       }
@@ -324,6 +394,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "პროფილი"
+          }
+        }
+      }
+    },
+    "Quizzes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინები"
+          }
+        }
+      }
+    },
+    "Recent Quizzes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლო ვიქტორინები"
           }
         }
       }
@@ -369,6 +459,16 @@
         }
       }
     },
+    "See All Achievements" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა მიღწევის ნახვა"
+          }
+        }
+      }
+    },
     "Start exploring to earn achievements!" : {
       "localizations" : {
         "ka" : {
@@ -379,12 +479,42 @@
         }
       }
     },
+    "Statistics" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სტატისტიკა"
+          }
+        }
+      }
+    },
+    "Streak" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სერია"
+          }
+        }
+      }
+    },
     "Tap to change photo" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "შეეხე ფოტოს შესაცვლელად"
+          }
+        }
+      }
+    },
+    "This Week" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეს კვირა"
           }
         }
       }
@@ -406,6 +536,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "განბლოკე ყველა ვიქტორინის ტიპი, გაფართოებული სტატისტიკა და სხვა"
+          }
+        }
+      }
+    },
+    "Visited" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონახულებული"
           }
         }
       }

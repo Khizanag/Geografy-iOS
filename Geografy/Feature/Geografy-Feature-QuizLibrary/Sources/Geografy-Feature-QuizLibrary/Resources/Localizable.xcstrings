@@ -53,6 +53,42 @@
         }
       }
     },
+    "%lld levels" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld დონე"
+          }
+        }
+      }
+    },
+    "%lld of %lld levels, %lld of %lld stars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld levels, %3$lld of %4$lld stars"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$lld დონიდან, %3$lld %4$lld ვარსკვლავიდან"
+          }
+        }
+      }
+    },
+    "%lld of 3 stars" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 3 ვარსკვლავიდან"
+          }
+        }
+      }
+    },
     "%lld questions" : {
       "localizations" : {
         "ka" : {
@@ -113,6 +149,26 @@
         }
       }
     },
+    "Available" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ხელმისაწვდომი"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უკან"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "ka" : {
@@ -123,12 +179,32 @@
         }
       }
     },
+    "Categories" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კატეგორიები"
+          }
+        }
+      }
+    },
     "Copy" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "კოპირება"
+          }
+        }
+      }
+    },
+    "Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები"
           }
         }
       }
@@ -224,6 +300,16 @@
         }
       }
     },
+    "Level %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონე %lld"
+          }
+        }
+      }
+    },
     "Level %lld, %@" : {
       "localizations" : {
         "en" : {
@@ -236,6 +322,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დონე %1$lld, %2$@"
+          }
+        }
+      }
+    },
+    "Levels" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დონეები"
+          }
+        }
+      }
+    },
+    "Levels done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გავლილი დონეები"
+          }
+        }
+      }
+    },
+    "Locked" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩაკეტილია"
           }
         }
       }
@@ -256,6 +372,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ახალი ვიქტორინა"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი"
           }
         }
       }
@@ -300,12 +426,82 @@
         }
       }
     },
+    "Not played" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჯერ არ გითამაშია"
+          }
+        }
+      }
+    },
+    "Packs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაკეტები"
+          }
+        }
+      }
+    },
+    "Packs Done" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გავლილი პაკეტები"
+          }
+        }
+      }
+    },
+    "Pick Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აირჩიე ქვეყნები"
+          }
+        }
+      }
+    },
+    "Play Level %lld" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ითამაშე დონე %lld"
+          }
+        }
+      }
+    },
+    "Play Quiz" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ითამაშე ვიქტორინა"
+          }
+        }
+      }
+    },
     "Preview" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გადახედვა"
+          }
+        }
+      }
+    },
+    "Question Types" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კითხვების ტიპები"
           }
         }
       }
@@ -336,6 +532,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინის პაკეტები"
+          }
+        }
+      }
+    },
+    "Save Quiz" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის შენახვა"
           }
         }
       }
@@ -386,6 +592,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინის გაზიარება"
+          }
+        }
+      }
+    },
+    "Show All Packs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა პაკეტის ჩვენება"
+          }
+        }
+      }
+    },
+    "Stars" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვარსკვლავები"
+          }
+        }
+      }
+    },
+    "Up next" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგია"
           }
         }
       }

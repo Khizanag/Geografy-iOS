@@ -51,6 +51,16 @@
         }
       }
     },
+    "Reference" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საბაზისო"
+          }
+        }
+      }
+    },
     "Reference: %@" : {
       "localizations" : {
         "ka" : {
@@ -67,6 +77,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნების ძიება..."
+          }
+        }
+      }
+    },
+    "Selected" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არჩეული"
           }
         }
       }

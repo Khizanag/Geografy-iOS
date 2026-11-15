@@ -69,12 +69,32 @@
         }
       }
     },
+    "Already Completed" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უკვე დასრულებულია"
+          }
+        }
+      }
+    },
     "Learning Path" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "სწავლის გეზი"
+          }
+        }
+      }
+    },
+    "Mark as Complete" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დასრულებულად მონიშვნა"
           }
         }
       }

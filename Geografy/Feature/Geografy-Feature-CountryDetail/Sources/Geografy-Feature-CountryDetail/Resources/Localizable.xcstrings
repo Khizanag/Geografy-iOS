@@ -360,12 +360,32 @@
         }
       }
     },
+    "Economy Snapshot" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეკონომიკის მიმოხილვა"
+          }
+        }
+      }
+    },
     "Expanded" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "გაშლილია"
+          }
+        }
+      }
+    },
+    "Explore %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აღმოაჩინე %@"
           }
         }
       }
@@ -430,6 +450,16 @@
         }
       }
     },
+    "Geography" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფია"
+          }
+        }
+      }
+    },
     "Global GDP Rank" : {
       "localizations" : {
         "ka" : {
@@ -450,12 +480,32 @@
         }
       }
     },
+    "Historical Timeline" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ისტორიული ქრონოლოგია"
+          }
+        }
+      }
+    },
     "Island Nation" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "კუნძულოვანი ქვეყანა"
+          }
+        }
+      }
+    },
+    "Language Corner" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ენის კუთხე"
           }
         }
       }
@@ -640,6 +690,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "სტატისტიკა, რეიტინგები და ქვეყნების სრული სია"
+          }
+        }
+      }
+    },
+    "Summary" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეჯამება"
           }
         }
       }

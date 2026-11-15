@@ -319,6 +319,16 @@
         }
       }
     },
+    "How It Works" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "როგორ მუშაობს"
+          }
+        }
+      }
+    },
     "Incorrect" : {
       "localizations" : {
         "ka" : {
@@ -349,6 +359,16 @@
         }
       }
     },
+    "Missed Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამორჩენილი ქვეყნები"
+          }
+        }
+      }
+    },
     "Mystery flag" : {
       "localizations" : {
         "ka" : {
@@ -365,6 +385,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დაასახელე ქვეყანა"
+          }
+        }
+      }
+    },
+    "Name every country in the region, as fast as you can." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე რეგიონის ყველა ქვეყანა რაც შეიძლება სწრაფად."
           }
         }
       }
@@ -415,6 +445,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ხსნის დროშას სრულ ეკრანზე"
+          }
+        }
+      }
+    },
+    "Options" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ოფციები"
           }
         }
       }
@@ -513,6 +553,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვიქტორინა"
+          }
+        }
+      }
+    },
+    "Quiz Type" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის ტიპი"
+          }
+        }
+      }
+    },
+    "Region" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეგიონი"
           }
         }
       }
@@ -627,6 +687,26 @@
         }
       }
     },
+    "Start %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაიწყე %@"
+          }
+        }
+      }
+    },
+    "Start Speed Run" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სიჩქარის რეჟიმის დაწყება"
+          }
+        }
+      }
+    },
     "Streak" : {
       "localizations" : {
         "ka" : {
@@ -673,6 +753,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დრო"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე თავიდან"
           }
         }
       }

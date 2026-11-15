@@ -63,6 +63,26 @@
         }
       }
     },
+    "Close" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დახურვა"
+          }
+        }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გაგრძელება"
+          }
+        }
+      }
+    },
     "Drag across the letters to find every hidden word." : {
       "localizations" : {
         "ka" : {
@@ -79,6 +99,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "გასული დრო"
+          }
+        }
+      }
+    },
+    "Find These Words" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იპოვე ეს სიტყვები"
           }
         }
       }
@@ -173,6 +203,26 @@
         }
       }
     },
+    "Reveal \"%@\"" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გამოავლინე \"%@\""
+          }
+        }
+      }
+    },
+    "Reveal All" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველას გამოვლენა"
+          }
+        }
+      }
+    },
     "Reveal location" : {
       "localizations" : {
         "ka" : {
@@ -203,6 +253,16 @@
         }
       }
     },
+    "Start Puzzle" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავსატეხის დაწყება"
+          }
+        }
+      }
+    },
     "Starts a %@ puzzle" : {
       "localizations" : {
         "ka" : {
@@ -229,6 +289,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დროზე"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სცადე თავიდან"
           }
         }
       }

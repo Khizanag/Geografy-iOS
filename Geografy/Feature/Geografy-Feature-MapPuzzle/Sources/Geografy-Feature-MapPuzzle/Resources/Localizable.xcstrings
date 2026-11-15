@@ -71,6 +71,26 @@
         }
       }
     },
+    "Name the country highlighted on the map." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაასახელე რუკაზე მონიშნული ქვეყანა."
+          }
+        }
+      }
+    },
+    "Next Question" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემდეგი კითხვა"
+          }
+        }
+      }
+    },
     "Pick a continent and guess where countries belong on the map." : {
       "localizations" : {
         "ka" : {
@@ -91,6 +111,16 @@
         }
       }
     },
+    "Play Again" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავიდან თამაში"
+          }
+        }
+      }
+    },
     "Question %lld of %lld" : {
       "localizations" : {
         "en" : {
@@ -107,12 +137,42 @@
         }
       }
     },
+    "Region" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეგიონი"
+          }
+        }
+      }
+    },
+    "See Results" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შედეგების ნახვა"
+          }
+        }
+      }
+    },
     "Select the correct region on the map" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "აირჩიე სწორი რეგიონი რუკაზე"
+          }
+        }
+      }
+    },
+    "Start Puzzle" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თავსატეხის დაწყება"
           }
         }
       }

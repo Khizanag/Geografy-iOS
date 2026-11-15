@@ -83,6 +83,26 @@
         }
       }
     },
+    "Clear" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გასუფთავება"
+          }
+        }
+      }
+    },
+    "Clear recent conversions" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლო კონვერტაციების გასუფთავება"
+          }
+        }
+      }
+    },
     "Converted" : {
       "localizations" : {
         "ka" : {
@@ -153,12 +173,32 @@
         }
       }
     },
+    "Pick at random" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემთხვევითი არჩევა"
+          }
+        }
+      }
+    },
     "Popular" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "პოპულარული"
+          }
+        }
+      }
+    },
+    "Quick Amounts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სწრაფი თანხები"
           }
         }
       }
@@ -183,6 +223,16 @@
         }
       }
     },
+    "Recent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლოდროინდელი"
+          }
+        }
+      }
+    },
     "Result" : {
       "localizations" : {
         "ka" : {
@@ -199,6 +249,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ვალუტის ან ქვეყნის ძიება…"
+          }
+        }
+      }
+    },
+    "Shuffle" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შემთხვევითი"
           }
         }
       }

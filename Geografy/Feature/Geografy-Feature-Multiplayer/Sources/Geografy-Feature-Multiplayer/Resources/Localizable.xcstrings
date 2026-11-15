@@ -168,6 +168,16 @@
         }
       }
     },
+    "Back to Menu" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მენიუში დაბრუნება"
+          }
+        }
+      }
+    },
     "Both devices must be nearby on the same Wi-Fi or with Bluetooth enabled." : {
       "localizations" : {
         "ka" : {
@@ -268,6 +278,16 @@
         }
       }
     },
+    "Find Opponent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოწინააღმდეგის პოვნა"
+          }
+        }
+      }
+    },
     "GO!" : {
       "localizations" : {
         "ka" : {
@@ -328,12 +348,32 @@
         }
       }
     },
+    "Host Game" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თამაშის შექმნა"
+          }
+        }
+      }
+    },
     "Host Lobby" : {
       "localizations" : {
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ლობის შექმნა"
+          }
+        }
+      }
+    },
+    "I'm Ready" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მზად ვარ"
           }
         }
       }
@@ -354,6 +394,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@-თან შეერთება"
+          }
+        }
+      }
+    },
+    "Join Game" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თამაშში შესვლა"
           }
         }
       }
@@ -435,6 +485,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "საიდუმლო დროშა"
+          }
+        }
+      }
+    },
+    "Nearby Hosts" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ახლომახლო მასპინძლები"
           }
         }
       }
@@ -587,6 +647,36 @@
         }
       }
     },
+    "Quiz Settings" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის პარამეტრები"
+          }
+        }
+      }
+    },
+    "Quiz Type" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ვიქტორინის ტიპი"
+          }
+        }
+      }
+    },
+    "Race an opponent through ten questions." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეჯიბრე მოწინააღმდეგეს ათ კითხვაში."
+          }
+        }
+      }
+    },
     "Rating Change" : {
       "localizations" : {
         "ka" : {
@@ -603,6 +693,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მზადაა"
+          }
+        }
+      }
+    },
+    "Region" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რეგიონი"
           }
         }
       }
@@ -633,6 +733,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რაუნდი %lld"
+          }
+        }
+      }
+    },
+    "Round by Round" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რაუნდების მიხედვით"
           }
         }
       }
@@ -687,6 +797,16 @@
         }
       }
     },
+    "Start Match" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მატჩის დაწყება"
+          }
+        }
+      }
+    },
     "The connection to your opponent was lost." : {
       "localizations" : {
         "ka" : {
@@ -723,6 +843,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მოლოდინში..."
+          }
+        }
+      }
+    },
+    "With Friends" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეგობრებთან ერთად"
           }
         }
       }

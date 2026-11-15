@@ -21,6 +21,16 @@
         }
       }
     },
+    "Clear recent searches" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლო ძიებების გასუფთავება"
+          }
+        }
+      }
+    },
     "Countries, capitals, organizations" : {
       "localizations" : {
         "ka" : {
@@ -61,6 +71,26 @@
         }
       }
     },
+    "Popular" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პოპულარული"
+          }
+        }
+      }
+    },
+    "Recent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბოლოდროინდელი"
+          }
+        }
+      }
+    },
     "Remove" : {
       "localizations" : {
         "ka" : {
@@ -87,6 +117,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ხელახლა ეძებს"
+          }
+        }
+      }
+    },
+    "Top Hit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საუკეთესო დამთხვევა"
           }
         }
       }
