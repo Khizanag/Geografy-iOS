@@ -46,6 +46,22 @@ struct LanguageServiceTests {
         #expect(defaults.stringArray(forKey: AppLanguage.preferenceKey) == ["ka"])
     }
 
+    @Test("iOS Settings offers a language only once the device lists more than one")
+    func systemSettingsNeedsTwoDeviceLanguages() {
+        let oneLanguage = LanguageService(languages: englishAndGeorgian, deviceLanguages: { ["en-US"] })
+        let twoLanguages = LanguageService(languages: englishAndGeorgian, deviceLanguages: { ["en-US", "ka-GE"] })
+
+        #expect(!oneLanguage.isChoosableInSystemSettings)
+        #expect(twoLanguages.isChoosableInSystemSettings)
+    }
+
+    @Test("An app with one language has nothing to choose in iOS Settings")
+    func systemSettingsNeedsTwoAppLanguages() {
+        let service = LanguageService(languages: [AppLanguage(code: "en")], deviceLanguages: { ["en-US", "ka-GE"] })
+
+        #expect(!service.isChoosableInSystemSettings)
+    }
+
     @Test("Text built in code follows the chosen language")
     func codeBuiltTextFollowsTheLocale() {
         let georgian = Locale(identifier: "ka")

@@ -12,6 +12,7 @@ public struct SettingsScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(\.openURL) private var openURL
     @Environment(\.locale) private var locale
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(TestingModeService.self) private var testingModeService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if !os(tvOS)
@@ -268,14 +269,18 @@ private extension SettingsScreen {
 
 // MARK: - Language
 private extension SettingsScreen {
+    @ViewBuilder
     var languageSection: some View {
-        settingsGroup(header: "Language") {
-            VStack(spacing: 0) {
-                if languageService.isChoosable {
+        if languageService.isChoosable {
+            settingsGroup(header: "Language") {
+                VStack(spacing: 0) {
                     languageRow
-                    settingsDivider
+                    // Read on every return to the app, so a language added in iOS Settings shows the row.
+                    if scenePhase == .active, languageService.isChoosableInSystemSettings {
+                        settingsDivider
+                        systemLanguageRow
+                    }
                 }
-                systemLanguageRow
             }
         }
     }
