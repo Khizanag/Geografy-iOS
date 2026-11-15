@@ -23,6 +23,9 @@ public struct TimelineScreen: View {
         mainContent
             .screenBackground()
             .navigationTitle("Timeline")
+            #if !os(tvOS)
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .onAppear {
