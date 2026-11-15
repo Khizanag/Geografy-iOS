@@ -70,55 +70,26 @@ private extension SRSStudyScreen {
     }
 
     var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            statCard(
+        StatTileRow {
+            StatTile(
                 value: "\(dueCards.count)",
                 label: "Due Today",
                 icon: "clock.badge.exclamationmark",
                 color: dueCards.isEmpty ? DesignSystem.Color.success : DesignSystem.Color.purple
             )
-            statCard(
+            StatTile(
                 value: "\(flashcardService.reviewedTodayCount())",
                 label: "Reviewed",
                 icon: "checkmark.circle",
                 color: DesignSystem.Color.blue
             )
-            statCard(
+            StatTile(
                 value: "\(flashcardService.currentStreak())",
                 label: "Day Streak",
                 icon: "flame",
                 color: DesignSystem.Color.warning
             )
         }
-    }
-
-    func statCard(
-        value: String,
-        label: String,
-        icon: String,
-        color: Color
-    ) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(color)
-                    .accessibilityHidden(true)
-                Text(value)
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .contentTransition(.numericText())
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(DesignSystem.Spacing.sm)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(label)
-        .accessibilityValue(value)
     }
 
     var startReviewButton: some View {
