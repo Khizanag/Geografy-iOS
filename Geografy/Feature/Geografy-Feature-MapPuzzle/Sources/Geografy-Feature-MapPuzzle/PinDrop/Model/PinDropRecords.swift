@@ -21,7 +21,9 @@ struct PinDropRecords {
         return true
     }
 
+    /// Games without borders are harder, so they keep a record of their own.
     private func key(for configuration: PinDropConfiguration) -> String {
-        "pinDrop.best.\(configuration.region.rawValue).\(configuration.difficulty.rawValue).\(configuration.roundCount)"
+        let base = "pinDrop.best.\(configuration.region.rawValue).\(configuration.difficulty.rawValue)"
+        return "\(base).\(configuration.roundCount)" + (configuration.showsBorders ? "" : ".noBorders")
     }
 }

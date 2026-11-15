@@ -151,6 +151,16 @@
         }
       }
     },
+    "Countries are outlined and tinted apart" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნებს აქვს კონტური და განსხვავებული ფერი"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "ka" : {
@@ -341,6 +351,16 @@
         }
       }
     },
+    "Only coastlines. Harder, with its own record" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მხოლოდ სანაპიროები. უფრო რთულია, ცალკე რეკორდით"
+          }
+        }
+      }
+    },
     "Pick a continent and guess where countries belong on the map." : {
       "localizations" : {
         "ka" : {
@@ -455,6 +475,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "აირჩიე სწორი რეგიონი რუკაზე"
+          }
+        }
+      }
+    },
+    "Show Borders" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საზღვრების ჩვენება"
           }
         }
       }

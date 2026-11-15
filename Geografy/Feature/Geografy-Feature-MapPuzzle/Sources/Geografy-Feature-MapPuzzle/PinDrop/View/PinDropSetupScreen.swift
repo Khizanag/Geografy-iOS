@@ -15,6 +15,7 @@ public struct PinDropSetupScreen: View {
     @AppStorage("pinDrop_region") private var region: PinDropRegion = .europe
     @AppStorage("pinDrop_difficulty") private var difficulty: PinDropDifficulty = .standard
     @AppStorage("pinDrop_roundCount") private var roundCount = 10
+    @AppStorage("pinDrop_showsBorders") private var showsBorders = true
 
     @State private var outlines: [Country.Continent: ContinentOutline] = [:]
     @State private var activeGame: PinDropConfiguration?
@@ -41,7 +42,7 @@ public struct PinDropSetupScreen: View {
 // MARK: - Subviews
 private extension PinDropSetupScreen {
     var configuration: PinDropConfiguration {
-        PinDropConfiguration(region: region, difficulty: difficulty, roundCount: roundCount)
+        PinDropConfiguration(region: region, difficulty: difficulty, roundCount: roundCount, showsBorders: showsBorders)
     }
 
     var scrollContent: some View {
@@ -162,10 +163,31 @@ private extension PinDropSetupScreen {
                         case .expert: "All"
                         }
                     }
+                    Divider()
+                    bordersToggle
                 }
                 .padding(DesignSystem.Spacing.md)
             }
         }
+    }
+
+    var bordersToggle: some View {
+        Toggle(isOn: $showsBorders.animation()) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text("Show Borders")
+                    .font(DesignSystem.Font.body)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(
+                    showsBorders
+                        ? "Countries are outlined and tinted apart"
+                        : "Only coastlines. Harder, with its own record"
+                )
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .contentTransition(.opacity)
+            }
+        }
+        .tint(PinDropStyle.gameColor)
     }
 
     var startButton: some View {

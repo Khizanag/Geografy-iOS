@@ -20,6 +20,8 @@ public struct MapCanvasView: View {
     public var densityData: [String: Double] = [:]
     public var showDensityOverlay: Bool = false
     public var wrapsHorizontally: Bool = true
+    /// Outlines every country in this color, a hairline at any zoom; nil leaves borders to the fills.
+    public var borderColor: Color?
 
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
@@ -37,7 +39,8 @@ public struct MapCanvasView: View {
         highlightColor: Color = DesignSystem.Color.success,
         densityData: [String: Double] = [:],
         showDensityOverlay: Bool = false,
-        wrapsHorizontally: Bool = true
+        wrapsHorizontally: Bool = true,
+        borderColor: Color? = nil
     ) {
         self.countryShapes = countryShapes
         self.scale = scale
@@ -52,6 +55,7 @@ public struct MapCanvasView: View {
         self.densityData = densityData
         self.showDensityOverlay = showDensityOverlay
         self.wrapsHorizontally = wrapsHorizontally
+        self.borderColor = borderColor
     }
 
     // MARK: - Body
@@ -143,6 +147,10 @@ private extension MapCanvasView {
                         dash: travelStatus.mapOutlineDash(lineWidth: outlineWidth)
                     )
                 )
+            }
+
+            if let borderColor, !isHighlighted, !isSelected {
+                transformedContext.stroke(path, with: .color(borderColor), lineWidth: 0.75 / scale)
             }
 
             if isHighlighted, !isSelected {
@@ -288,6 +296,7 @@ extension MapCanvasView: @MainActor Equatable {
             && lhs.showLabels == rhs.showLabels
             && lhs.capitalPoint == rhs.capitalPoint
             && lhs.wrapsHorizontally == rhs.wrapsHorizontally
+            && lhs.borderColor == rhs.borderColor
             && lhs.showDensityOverlay == rhs.showDensityOverlay
             && lhs.highlightColor == rhs.highlightColor
             && lhs.highlightedCodes == rhs.highlightedCodes

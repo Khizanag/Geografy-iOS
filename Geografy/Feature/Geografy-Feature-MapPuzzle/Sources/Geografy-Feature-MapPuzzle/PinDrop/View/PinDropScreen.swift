@@ -87,7 +87,8 @@ private extension PinDropScreen {
                 pin: game?.pin,
                 dropCount: dropCount,
                 result: game?.phase == .aiming ? nil : game?.lastResult,
-                lineProgress: lineProgress
+                lineProgress: lineProgress,
+                borderColor: configuration.showsBorders ? DesignSystem.Color.background.opacity(0.7) : nil
             )
             .contentShape(Rectangle())
             #if !os(tvOS)
@@ -344,7 +345,7 @@ private extension PinDropScreen {
         let visible = region.insetBy(dx: -region.width * 0.2, dy: -region.height * 0.2)
         shapes = loaded
             .filter { $0.boundingBox.intersects(visible) }
-            .map { $0.recolored(Self.landTone(for: $0.id)) }
+            .map { $0.recolored(landColor(for: $0)) }
         startGame()
         hasLoaded = true
         if screenSize != .zero { frameRegion(animated: false) }
@@ -427,9 +428,14 @@ private extension PinDropScreen {
         frameRegion(animated: true)
     }
 
-    /// Four close shades of land, so neighbors read apart without color giving countries away.
-    static func landTone(for code: String) -> Color {
-        let tone = code.unicodeScalars.reduce(0) { $0 + Int($1.value) } % 4
-        return DesignSystem.Color.mapLandMuted.mix(with: DesignSystem.Color.textPrimary, by: Double(tone) * 0.07)
+    /// With borders, a muted tint of the map's own palette, which never gives neighbors the same color,
+    /// so they read apart while staying quiet enough not to give countries away. Without, one land color.
+    func landColor(for shape: CountryShape) -> Color {
+        // Nudged toward the text color, which darkens it in light mode and lightens it in dark, so the
+        // coastline stands out from the ocean either way.
+        guard configuration.showsBorders else {
+            return DesignSystem.Color.mapLandMuted.mix(with: DesignSystem.Color.textPrimary, by: 0.2)
+        }
+        return DesignSystem.Color.mapLandMuted.mix(with: shape.color, by: 0.45)
     }
 }

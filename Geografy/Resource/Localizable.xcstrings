@@ -3016,6 +3016,18 @@
         }
       }
     },
+    "Countries are outlined and tinted apart" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნებს აქვს კონტური და განსხვავებული ფერი"
+          }
+        }
+      }
+    },
     "Countries, capitals, organizations" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6932,6 +6944,18 @@
         }
       }
     },
+    "Only coastlines. Harder, with its own record" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მხოლოდ სანაპიროები. უფრო რთულია, ცალკე რეკორდით"
+          }
+        }
+      }
+    },
     "Open" : {
       "localizations" : {
         "ka" : {
@@ -9341,6 +9365,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ყველა პაკეტის ჩვენება"
+          }
+        }
+      }
+    },
+    "Show Borders" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საზღვრების ჩვენება"
           }
         }
       }

@@ -21,6 +21,7 @@ struct PinDropMapLayer: View, Animatable {
     let dropCount: Int
     let result: PinDropGame.Result?
     let lineProgress: CGFloat
+    let borderColor: Color?
 
     nonisolated var animatableData: AnimatablePair<CGFloat, AnimatablePair<CGFloat, CGFloat>> {
         get { AnimatablePair(camera.scale, AnimatablePair(camera.offset.width, camera.offset.height)) }
@@ -65,7 +66,8 @@ private extension PinDropMapLayer {
             canvasSize: MapFrame.drawnSize(for: size),
             highlightedCodes: result.map { [$0.round.id] } ?? [],
             highlightColor: result?.score.rating.color ?? PinDropStyle.gameColor,
-            wrapsHorizontally: false
+            wrapsHorizontally: false,
+            borderColor: borderColor
         )
         .equatable()
         .scaleEffect(magnification)

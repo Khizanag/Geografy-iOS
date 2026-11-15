@@ -257,6 +257,7 @@ struct PinDropRecordsTests {
         #expect(!records.record(400, for: configuration))
         #expect(records.best(for: configuration) == 500)
         #expect(records.best(for: PinDropConfiguration(region: .asia)) == 0)
+        #expect(records.best(for: PinDropConfiguration(showsBorders: false)) == 0)
     }
 }
 

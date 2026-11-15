@@ -8,13 +8,21 @@ public struct PinDropConfiguration: Hashable, Sendable {
     public var region: PinDropRegion
     public var difficulty: PinDropDifficulty
     public var roundCount: Int
+    /// Whether countries are outlined and tinted apart; without, only coastlines show.
+    public var showsBorders: Bool
 
     public static let roundCounts = [5, 10, 15]
 
-    public init(region: PinDropRegion = .europe, difficulty: PinDropDifficulty = .standard, roundCount: Int = 10) {
+    public init(
+        region: PinDropRegion = .europe,
+        difficulty: PinDropDifficulty = .standard,
+        roundCount: Int = 10,
+        showsBorders: Bool = true
+    ) {
         self.region = region
         self.difficulty = difficulty
         self.roundCount = roundCount
+        self.showsBorders = showsBorders
     }
 }
 
