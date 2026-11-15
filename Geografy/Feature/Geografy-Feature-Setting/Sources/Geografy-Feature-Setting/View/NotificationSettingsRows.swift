@@ -5,7 +5,7 @@ import SwiftUI
 import UIKit
 #endif
 
-/// The reminders switch, and a way into iOS Settings when iOS has notifications for Geografy turned off.
+/// The reminders switch.
 ///
 /// Once turned off in iOS Settings, iOS no longer shows its prompt, so turning the switch on there
 /// opens Geografy's notification settings instead, and switches on when the person comes back allowed.
@@ -21,48 +21,21 @@ struct NotificationSettingsRows: View {
 
     // MARK: - Body
     var body: some View {
-        VStack(spacing: 0) {
-            SettingsToggleRow(
-                icon: "bell.fill",
-                iconColor: DesignSystem.Color.accent,
-                title: "Push notifications",
-                isOn: Binding(
-                    get: { isEnabled },
-                    set: { isOn in Task { await setEnabled(isOn) } }
-                )
+        SettingsToggleRow(
+            icon: "bell.fill",
+            iconColor: DesignSystem.Color.accent,
+            title: "Push notifications",
+            isOn: Binding(
+                get: { isEnabled },
+                set: { isOn in Task { await setEnabled(isOn) } }
             )
-            if authorization == .denied {
-                SettingsDivider()
-                systemSettingsRow
-            }
-        }
+        )
+        .accessibilityHint(authorization == .denied ? "Opens Geografy's notification settings in the Settings app" : "")
         // Checked again on each return to the app, as the person may have changed it in iOS Settings.
         .task(id: scenePhase) {
             guard scenePhase == .active else { return }
             await refresh()
         }
-    }
-}
-
-// MARK: - Subviews
-private extension NotificationSettingsRows {
-    var systemSettingsRow: some View {
-        Button(action: openNotificationSettings) {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                SettingsExternalRow(
-                    icon: "bell.slash.fill",
-                    iconColor: DesignSystem.Color.textSecondary,
-                    title: "Turn On in iOS Settings"
-                )
-                Text("Notifications are off for Geografy in iOS Settings.")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.bottom, DesignSystem.Spacing.sm)
-            }
-        }
-        .buttonStyle(PressButtonStyle())
-        .accessibilityHint("Opens Geografy's notification settings in the Settings app")
     }
 }
 
