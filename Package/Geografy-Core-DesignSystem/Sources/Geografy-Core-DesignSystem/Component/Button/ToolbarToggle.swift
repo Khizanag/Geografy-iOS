@@ -33,19 +33,19 @@ public struct ToolbarToggle<Content: View>: View {
     public var body: some View {
         Button(action: action) {
             label
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
+                .font(DesignSystem.Font.headline)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .foregroundStyle(isOn ? DesignSystem.Color.onAccent : DesignSystem.Color.iconPrimary)
                 // Fixed, not scaled with text size: the bar's glass circle doesn't grow, and the disc must stay inside it.
-                .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
+                .frame(width: DesignSystem.Size.Button.compact, height: DesignSystem.Size.Button.compact)
                 .background {
                     Circle()
                         .fill(DesignSystem.Color.accent)
                         .opacity(isOn ? 1 : 0)
                 }
-                // Outside the disc, so the whole glass circle takes the tap.
+                // Outside the disc, so the whole glass circle takes the tap. The bar's glass is 44 points,
+                // so a 32-point disc keeps a 6-point margin.
                 .padding(DesignSystem.Spacing.xs)
                 .contentShape(.circle)
                 .animation(reduceMotion ? nil : .snappy(duration: 0.2), value: isOn)
