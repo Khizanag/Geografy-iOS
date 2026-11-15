@@ -48,52 +48,28 @@ private extension AchievementsScreen {
 // MARK: - Stats Header
 private extension AchievementsScreen {
     var statsHeader: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            statPill(
+        StatTileRow {
+            StatTile(
                 value: "\(unlockedCount)",
                 label: "Unlocked",
                 icon: "checkmark.circle.fill",
                 color: DesignSystem.Color.success
             )
 
-            statPill(
-                value: "\(String(AchievementCatalog.all.count))",
+            StatTile(
+                value: "\(AchievementCatalog.all.count)",
                 label: "Total",
                 icon: "trophy.fill",
                 color: DesignSystem.Color.warning
             )
 
-            statPill(
+            StatTile(
                 value: "\(pinnedCount)",
                 label: "Pinned",
                 icon: "pin.fill",
                 color: DesignSystem.Color.accent
             )
         }
-    }
-
-    func statPill(value: String, label: String, icon: String, color: Color) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(color)
-                    .accessibilityHidden(true)
-
-                Text(value)
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textTertiary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(value) \(label)")
     }
 }
 
