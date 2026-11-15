@@ -143,10 +143,10 @@ private extension TravelTrackerScreen {
             } label: {
                 Label("Add", systemImage: "plus")
                     .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.iconPrimary)
             }
-            .tint(Color.clear)
-            .buttonStyle(.glassProminent)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Add Country")
         }
     }
 }

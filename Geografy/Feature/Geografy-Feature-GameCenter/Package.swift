@@ -16,7 +16,6 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Package/Geografy-Core-DesignSystem"),
-        .package(path: "../../../Package/Geografy-Core-Navigation"),
         .package(path: "../../../Package/Geografy-Core-Service"),
     ],
     targets: [
@@ -24,7 +23,6 @@ let package = Package(
             name: "Geografy-Feature-GameCenter",
             dependencies: [
                 .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
-                .product(name: "Geografy-Core-Navigation", package: "Geografy-Core-Navigation"),
                 .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
             ]
         ),
