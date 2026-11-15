@@ -54,6 +54,7 @@ public struct StatTile: View {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.75)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, DesignSystem.Spacing.md)
