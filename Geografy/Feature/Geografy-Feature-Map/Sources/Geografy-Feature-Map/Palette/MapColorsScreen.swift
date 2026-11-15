@@ -10,7 +10,7 @@ public struct MapColorsScreen: View {
 
     @AppStorage(MapPreferences.paletteKey) private var palette = MapPalette.default.rawValue
 
-    @ScaledMetric(relativeTo: .body) private var previewHeight: CGFloat = 190
+    @ScaledMetric(relativeTo: .body) private var previewHeight: CGFloat = 170
 
     // MARK: - Init
     public init() {}
@@ -19,12 +19,18 @@ public struct MapColorsScreen: View {
     public var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-                preview
                 paletteList
                 explanation
             }
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
+        }
+        // Pinned, so every palette can be compared on the map while the rows scroll under its soft edge.
+        .safeAreaBar(edge: .top) {
+            preview
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.top, DesignSystem.Spacing.xs)
+                .readableContentWidth()
         }
         .screenBackground()
         .navigationTitle("Map Colors")
@@ -40,7 +46,8 @@ private extension MapColorsScreen {
         CardView {
             WorldMapThumbnail(northwardShift: 0.06)
                 .frame(maxWidth: .infinity)
-                .frame(height: previewHeight)
+                // Capped, so at the largest text sizes the pinned map still leaves room for the rows.
+                .frame(height: min(previewHeight, 220))
                 .padding(DesignSystem.Spacing.sm)
                 .background(DesignSystem.Color.ocean)
                 .id(palette)
