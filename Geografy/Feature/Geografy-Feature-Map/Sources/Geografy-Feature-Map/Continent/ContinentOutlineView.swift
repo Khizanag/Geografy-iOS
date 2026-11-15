@@ -3,11 +3,16 @@ import SwiftUI
 
 /// A continent's silhouette with its country borders, fitted into the available space,
 /// optionally with one country picked out in a color.
-struct ContinentOutlineView: View {
+public struct ContinentOutlineView: View {
     // MARK: - Highlight
-    struct Highlight {
+    public struct Highlight {
         let countryCode: String
         let color: Color
+
+        public init(countryCode: String, color: Color) {
+            self.countryCode = countryCode
+            self.color = color
+        }
     }
 
     // MARK: - Properties
@@ -15,8 +20,15 @@ struct ContinentOutlineView: View {
     let fill: Color
     var highlight: Highlight?
 
+    // MARK: - Init
+    public init(outline: ContinentOutline, fill: Color, highlight: Highlight? = nil) {
+        self.outline = outline
+        self.fill = fill
+        self.highlight = highlight
+    }
+
     // MARK: - Body
-    var body: some View {
+    public var body: some View {
         Canvas { context, size in
             let transform = outline.fittingTransform(in: size)
             var mapContext = context

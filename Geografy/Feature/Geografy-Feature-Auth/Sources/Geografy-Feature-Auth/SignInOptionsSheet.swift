@@ -1,5 +1,4 @@
 import AuthenticationServices
-import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
@@ -231,57 +230,32 @@ private extension SignInOptionsSheet {
 // MARK: - Map Hero
 /// The world map, with the countries the person has visited lit up, fading into the page under the app's name.
 private struct SignInMapHero: View {
-    // MARK: - Properties
-    @Environment(GeoJSONCache.self) private var geoJSONCache
-    @Environment(TravelService.self) private var travelService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    @State private var shapes: [CountryShape] = []
-
-    /// How far the map sits below center, as a share of its height, so the northern lands most people live on show.
-    private static let northwardShift: CGFloat = 0.1
     private static let mapHeight: CGFloat = 300
 
-    // MARK: - Body
     var body: some View {
         ZStack(alignment: .bottom) {
             map
             title
         }
-        .task { await loadShapes() }
     }
 }
 
 // MARK: - Subviews
 private extension SignInMapHero {
     var map: some View {
-        GeometryReader { geometry in
-            let scale = geometry.size.width / MapProjection.mapWidth
-            MapCanvasView(
-                countryShapes: shapes,
-                scale: scale,
-                offset: CGSize(width: 0, height: MapProjection.mapHeight * scale * Self.northwardShift),
-                selectedCountryCode: nil,
-                showLabels: false,
-                canvasSize: geometry.size,
-                highlightedCodes: travelService.visitedCodes,
-                wrapsHorizontally: false
-            )
-        }
-        .frame(height: Self.mapHeight)
-        .opacity(shapes.isEmpty ? 0 : 0.75)
-        .mask {
-            LinearGradient(
-                stops: [
-                    .init(color: .black, location: 0.35),
-                    .init(color: .clear, location: 1),
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        }
-        .allowsHitTesting(false)
-        .accessibilityHidden(true)
+        WorldMapThumbnail(northwardShift: 0.1)
+            .frame(height: Self.mapHeight)
+            .opacity(0.75)
+            .mask {
+                LinearGradient(
+                    stops: [
+                        .init(color: .black, location: 0.35),
+                        .init(color: .clear, location: 1),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
     }
 
     var title: some View {
@@ -297,13 +271,6 @@ private extension SignInMapHero {
         .padding(.horizontal, DesignSystem.Spacing.md)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
-    }
-
-    func loadShapes() async {
-        let loaded = await geoJSONCache.loadShapes()
-        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
-            shapes = loaded
-        }
     }
 }
 

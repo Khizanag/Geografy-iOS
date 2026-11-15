@@ -7,17 +7,14 @@ import SwiftUI
 public struct AllMapsScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryDataService
+    @Environment(GeoJSONCache.self) private var geoJSONCache
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    private let continentMaps: [(name: String, icon: String)] = [
-        ("Europe", Country.Continent.europe.icon),
-        ("Asia", Country.Continent.asia.icon),
-        ("Africa", Country.Continent.africa.icon),
-        ("North America", Country.Continent.northAmerica.icon),
-        ("South America", Country.Continent.southAmerica.icon),
-        ("Oceania", Country.Continent.oceania.icon),
+    @State private var outlines: [Country.Continent: ContinentOutline] = [:]
+
+    private static let continents: [Country.Continent] = [
+        .europe, .asia, .africa, .northAmerica, .southAmerica, .oceania,
     ]
 
     // MARK: - Init
@@ -27,179 +24,90 @@ public struct AllMapsScreen: View {
     public var body: some View {
         scrollContent
             .screenBackground()
+            .task { await loadOutlines() }
     }
 }
 
 // MARK: - Content
 private extension AllMapsScreen {
-    var isLandscape: Bool { verticalSizeClass == .compact }
     var isWideLayout: Bool { horizontalSizeClass == .regular }
 
     var columns: [GridItem] {
-        let minSize: CGFloat = isWideLayout ? 220 : (isLandscape ? 180 : 140)
-        let spacing = isLandscape || isWideLayout ? DesignSystem.Spacing.md : DesignSystem.Spacing.sm
-        return [GridItem(.adaptive(minimum: minSize), spacing: spacing)]
+        let count = isWideLayout ? 3 : 2
+        return Array(repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.sm), count: count)
     }
 
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
-                worldMapHero
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                worldMapCard
                 continentSection
             }
-            .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
+            .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.sm)
             .padding(.bottom, DesignSystem.Spacing.xxl)
+            .readableContentWidth(DesignSystem.AdaptiveLayout.maxWideContentWidth)
         }
     }
 }
 
-// MARK: - World Map Hero
+// MARK: - World Map
 private extension AllMapsScreen {
-    var worldMapHero: some View {
+    var worldMapCard: some View {
         Button { openMap(named: "World") } label: {
-            worldMapCard
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                WorldMapThumbnail(northwardShift: 0.08)
+                    .frame(height: isWideLayout ? 220 : 160)
+                    .clipShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+                HStack(alignment: .center, spacing: DesignSystem.Spacing.xs) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                        Text("World Map")
+                            .font(DesignSystem.Font.title3)
+                            .fontWeight(.bold)
+                            .foregroundStyle(DesignSystem.Color.textPrimary)
+                        Text("Explore all 197 countries")
+                            .font(DesignSystem.Font.subheadline)
+                            .foregroundStyle(DesignSystem.Color.textSecondary)
+                    }
+                    Spacer(minLength: 0)
+                    RowChevron()
+                }
+            }
+            .padding(DesignSystem.Spacing.md)
+            .background(
+                DesignSystem.Color.cardBackground,
+                in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+            )
+            .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
         .buttonStyle(PressButtonStyle())
-    }
-
-    var worldMapCard: some View {
-        ZStack(alignment: .bottomLeading) {
-            LinearGradient(
-                colors: [Color(hex: "1A237E"), Color(hex: "3949AB")],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-
-            Image(systemName: "globe")
-                .font(DesignSystem.IconSize.hero)
-                .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.08))
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                .offset(x: 30, y: -20)
-                .clipped()
-
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                Text("World Map")
-                    .font(DesignSystem.Font.title)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
-
-                Text("Explore all 197 countries")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.75))
-
-                openPill
-            }
-            .padding(DesignSystem.Spacing.lg)
-        }
-        .frame(height: isWideLayout ? 240 : (isLandscape ? 180 : 220))
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
-        .geoShadow(.elevated)
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                .strokeBorder(DesignSystem.Color.onAccent.opacity(0.1), lineWidth: 1)
-        )
-    }
-
-    var openPill: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            Text("Open")
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-            Image(systemName: "arrow.right")
-                .font(DesignSystem.Font.caption2)
-        }
-        .foregroundStyle(DesignSystem.Color.onAccent)
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(DesignSystem.Color.onAccent.opacity(0.2))
-        .clipShape(Capsule())
-        .overlay(Capsule().strokeBorder(DesignSystem.Color.onAccent.opacity(0.3), lineWidth: 1))
+        .accessibilityElement(children: .combine)
     }
 }
 
-// MARK: - Continent Section
+// MARK: - Continents
 private extension AllMapsScreen {
     var continentSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Continents")
-                .padding(.horizontal, DesignSystem.Spacing.md)
 
-            continentGrid
-        }
-    }
-
-    var continentGrid: some View {
-        LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.md) {
-            ForEach(Array(continentMaps.enumerated()), id: \.offset) { _, map in
-                continentCard(name: map.name, icon: map.icon)
+            LazyVGrid(columns: columns, spacing: DesignSystem.Spacing.sm) {
+                ForEach(Self.continents, id: \.self) { continent in
+                    ContinentTile(
+                        continent: continent,
+                        outline: outlines[continent],
+                        countryCount: countryCount(on: continent),
+                        color: DesignSystem.Color.blue
+                    ) {
+                        openMap(named: continent.displayName)
+                    }
+                }
             }
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
     }
 
-    func continentCard(name: String, icon: String) -> some View {
-        let colors = gradientColors(for: name)
-        return Button { openMap(named: name) } label: {
-            continentCardLabel(name: name, icon: icon, colors: colors)
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    func continentCardLabel(
-        name: String,
-        icon: String,
-        colors: (Color, Color)
-    ) -> some View {
-        ZStack(alignment: .bottomLeading) {
-            LinearGradient(
-                colors: [colors.0, colors.1],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-
-            Image(systemName: icon)
-                .font(DesignSystem.IconSize.hero)
-                .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.10))
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                .offset(x: 24, y: -12)
-                .clipped()
-
-            continentCardText(name: name)
-        }
-        .frame(height: isWideLayout ? 180 : (isLandscape ? 130 : 160))
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
-        .geoShadow(.elevated)
-        .overlay(
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                .strokeBorder(DesignSystem.Color.onAccent.opacity(0.08), lineWidth: 1)
-        )
-    }
-
-    func continentCardText(name: String) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            Text(name)
-                .font(DesignSystem.Font.headline)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-
-            HStack(spacing: DesignSystem.Spacing.xxs) {
-                Text("Open")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.9))
-                Image(systemName: "arrow.right")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.9))
-            }
-            .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, DesignSystem.Spacing.xxs)
-            .background(DesignSystem.Color.onAccent.opacity(0.18))
-            .clipShape(Capsule())
-            .overlay(Capsule().strokeBorder(DesignSystem.Color.onAccent.opacity(0.25), lineWidth: 1))
-        }
-        .padding(DesignSystem.Spacing.sm)
+    func countryCount(on continent: Country.Continent) -> Int {
+        countryDataService.countries.filter { $0.continent == continent }.count
     }
 }
 
@@ -210,19 +118,10 @@ private extension AllMapsScreen {
             .mapFullScreen(continentFilter: name == "World" ? nil : name)
         )
     }
-}
 
-// MARK: - Gradient Colors
-private extension AllMapsScreen {
-    func gradientColors(for name: String) -> (Color, Color) {
-        switch name {
-        case "Europe": (Color(hex: "1B5E20"), Color(hex: "388E3C"))
-        case "Asia": (Color(hex: "B71C1C"), Color(hex: "D32F2F"))
-        case "Africa": (Color(hex: "E65100"), Color(hex: "FF8F00"))
-        case "North America": (Color(hex: "004D40"), Color(hex: "00695C"))
-        case "South America": (Color(hex: "33691E"), Color(hex: "558B2F"))
-        case "Oceania": (Color(hex: "01579B"), Color(hex: "0277BD"))
-        default: (Color(hex: "1A237E"), Color(hex: "3949AB"))
-        }
+    func loadOutlines() async {
+        guard outlines.isEmpty else { return }
+        let shapes = await geoJSONCache.loadShapes()
+        outlines = await ContinentOutline.silhouettes(for: Self.continents, shapes: shapes)
     }
 }

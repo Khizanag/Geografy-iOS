@@ -2,18 +2,18 @@ import CoreGraphics
 import Geografy_Core_Common
 
 /// A continent's countries as one path in map space, and the window that frames its mainland.
-struct ContinentOutline: @unchecked Sendable {
-    let continent: Country.Continent
-    let path: CGPath
-    let viewport: CGRect
+public struct ContinentOutline: @unchecked Sendable {
+    public let continent: Country.Continent
+    public let path: CGPath
+    public let viewport: CGRect
     /// Each country's own path, keyed by country code, so one can be highlighted on the continent.
-    var countryPaths: [String: CGPath] = [:]
+    public var countryPaths: [String: CGPath] = [:]
 }
 
 // MARK: - Building
 extension ContinentOutline {
     /// How much of the map an outline keeps.
-    enum Detail {
+    public enum Detail: Sendable {
         /// The coarsest outline and no per-country paths, for thumbnails a few dozen points tall.
         case silhouette
         /// An outline fine enough for a full-width map, plus every country's full-detail path to highlight.
@@ -21,7 +21,7 @@ extension ContinentOutline {
     }
 
     /// Joins the polygons of every shape on `continent`; `nil` when none match or the continent has no framing.
-    init?(continent: Country.Continent, shapes: [CountryShape], detail: Detail = .puzzle) {
+    public init?(continent: Country.Continent, shapes: [CountryShape], detail: Detail = .puzzle) {
         guard let viewport = Self.viewport(for: continent) else { return nil }
         let path = CGMutablePath()
         var countryPaths: [String: CGPath] = [:]
@@ -40,7 +40,7 @@ extension ContinentOutline {
         self.init(continent: continent, path: path, viewport: viewport, countryPaths: countryPaths)
     }
 
-    static func outlines(
+    public static func outlines(
         for continents: [Country.Continent],
         shapes: [CountryShape],
         detail: Detail = .silhouette
@@ -52,7 +52,7 @@ extension ContinentOutline {
 
     /// Builds the region thumbnails off the main actor.
     @concurrent
-    static func silhouettes(
+    public static func silhouettes(
         for continents: [Country.Continent],
         shapes: [CountryShape]
     ) async -> [Country.Continent: ContinentOutline] {
@@ -61,13 +61,16 @@ extension ContinentOutline {
 
     /// Builds one continent's puzzle map off the main actor.
     @concurrent
-    static func puzzleOutline(for continent: Country.Continent, shapes: [CountryShape]) async -> ContinentOutline? {
+    public static func puzzleOutline(
+        for continent: Country.Continent,
+        shapes: [CountryShape]
+    ) async -> ContinentOutline? {
         ContinentOutline(continent: continent, shapes: shapes, detail: .puzzle)
     }
 
     /// The projected window around the mainland. It crops outliers such as Russia east of the Urals,
     /// overseas territories, and islands across the antimeridian, which would shrink the silhouette.
-    static func viewport(for continent: Country.Continent) -> CGRect? {
+    public static func viewport(for continent: Country.Continent) -> CGRect? {
         guard let bounds = geographicBounds(for: continent) else { return nil }
         let topLeft = MapProjection.project(
             longitude: bounds.longitude.lowerBound,
@@ -89,7 +92,7 @@ extension ContinentOutline {
 // MARK: - Fitting
 extension ContinentOutline {
     /// Maps the viewport into `size`, centered, keeping its aspect ratio.
-    func fittingTransform(in size: CGSize) -> CGAffineTransform {
+    public func fittingTransform(in size: CGSize) -> CGAffineTransform {
         guard viewport.width > 0, viewport.height > 0, size.width > 0, size.height > 0 else { return .identity }
         let scale = min(size.width / viewport.width, size.height / viewport.height)
         let offsetX = (size.width - viewport.width * scale) / 2 - viewport.minX * scale

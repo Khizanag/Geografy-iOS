@@ -1,6 +1,6 @@
 import CoreGraphics
 import Geografy_Core_Common
-@testable import Geografy_Feature_MapPuzzle
+@testable import Geografy_Feature_Map
 import SwiftUI
 import Testing
 
