@@ -201,19 +201,24 @@ private extension FavoritesScreen {
         .accessibilityLabel("Remove from Favorites")
     }
 
+    @ViewBuilder
     var emptyState: some View {
-        let hasSearch = !searchText.isEmpty || continentFilter != nil
-        return ContentUnavailableView {
-            Label(
-                hasSearch ? "No Results" : "No Favorites Yet",
-                systemImage: hasSearch ? "magnifyingglass" : "heart.slash"
+        if !searchText.isEmpty || continentFilter != nil {
+            ContentUnavailableView(
+                "No Results",
+                systemImage: "magnifyingglass",
+                description: Text("Try a different search or filter.")
             )
-        } description: {
-            Text(
-                hasSearch
-                    ? "Try a different search or filter."
-                    : "Tap the heart icon on any country to save it here."
-            )
+        } else {
+            EmptyStateView(
+                icon: "heart.slash",
+                title: "No Favorites Yet",
+                message: "Tap the heart icon on any country to save it here.",
+                actionTitle: "Browse Countries"
+            ) {
+                hapticsService.impact(.light)
+                coordinator.push(.countries)
+            }
         }
     }
 }
