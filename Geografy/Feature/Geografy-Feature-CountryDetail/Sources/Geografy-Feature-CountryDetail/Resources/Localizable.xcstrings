@@ -440,6 +440,16 @@
         }
       }
     },
+    "High density" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაღალი სიმჭიდროვე"
+          }
+        }
+      }
+    },
     "Island Nation" : {
       "localizations" : {
         "ka" : {
@@ -466,6 +476,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მეტი ინფორმაცია %@-ზე"
+          }
+        }
+      }
+    },
+    "Low density" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაბალი სიმჭიდროვე"
+          }
+        }
+      }
+    },
+    "Moderate density" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საშუალო სიმჭიდროვე"
           }
         }
       }

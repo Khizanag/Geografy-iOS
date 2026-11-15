@@ -5,25 +5,21 @@ import SwiftUI
 /// always comes last in a neutral color.
 public struct PercentageBarChart: View {
     // MARK: - Properties
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     public let title: String?
     public let icon: String?
     public let items: [PercentageItem]
-    public let appeared: Bool
 
     // MARK: - Init
     public init(
         title: String? = nil,
         icon: String? = nil,
-        items: [PercentageItem],
-        appeared: Bool
+        items: [PercentageItem]
     ) {
         self.title = title
         self.icon = icon
         self.items = items
-        self.appeared = appeared
     }
 
     // MARK: - Body
@@ -97,21 +93,11 @@ private extension PercentageBarChart {
     }
 
     func bar(for item: PercentageItem, index: Int) -> some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                Capsule()
-                    .fill(barColor(for: item))
-                    .frame(width: barWidth(for: item, in: geo.size))
-                    .animation(
-                        reduceMotion ? nil : .spring(response: 0.6, dampingFraction: 0.7)
-                            .delay(0.3 + Double(index) * 0.08),
-                        value: appeared
-                    )
-            }
-        }
-        .frame(height: DesignSystem.Spacing.xs)
+        ShareBar(
+            fraction: item.percentage / 100,
+            color: barColor(for: item),
+            delay: 0.3 + Double(index) * 0.08
+        )
     }
 }
 
@@ -128,12 +114,5 @@ private extension PercentageBarChart {
 
     func barColor(for item: PercentageItem) -> Color {
         isCatchAll(item) ? DesignSystem.Color.textTertiary : DesignSystem.Color.accent
-    }
-
-    // A nonzero share never shrinks below a dot, so 1% rows stay visible.
-    func barWidth(for item: PercentageItem, in size: CGSize) -> CGFloat {
-        guard appeared, item.percentage > 0 else { return 0 }
-        let share = size.width * min(item.percentage / 100, 1)
-        return max(share, size.height)
     }
 }

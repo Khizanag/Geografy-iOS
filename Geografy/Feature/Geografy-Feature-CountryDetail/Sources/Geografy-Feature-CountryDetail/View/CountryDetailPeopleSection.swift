@@ -12,8 +12,7 @@ extension CountryDetailScreen {
                 PercentageBarChart(
                     title: "Languages",
                     icon: "globe",
-                    items: country.languages.map { PercentageItem(name: $0.name, percentage: $0.percentage) },
-                    appeared: true
+                    items: country.languages.map { PercentageItem(name: $0.name, percentage: $0.percentage) }
                 )
             }
         }
@@ -22,23 +21,14 @@ extension CountryDetailScreen {
 
 // MARK: - Helpers
 extension CountryDetailScreen {
-    func densityColor(for fraction: Double) -> Color {
+    /// The whole phrase is one key, so each language words it in its own order.
+    func densityLevel(for fraction: Double) -> LocalizedStringKey {
         if fraction > 0.7 {
-            DesignSystem.Color.error
+            "High density"
         } else if fraction > 0.4 {
-            DesignSystem.Color.warning
+            "Moderate density"
         } else {
-            DesignSystem.Color.success
-        }
-    }
-
-    func densityLevel(for fraction: Double) -> String {
-        if fraction > 0.7 {
-            "High"
-        } else if fraction > 0.4 {
-            "Moderate"
-        } else {
-            "Low"
+            "Low density"
         }
     }
 }
@@ -108,12 +98,12 @@ private extension CountryDetailScreen {
 
     var densityBar: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            DensityFillBar(fraction: densityFraction, color: densityColor(for: densityFraction))
+            ShareBar(fraction: densityFraction)
             HStack(alignment: .firstTextBaseline) {
                 Text("Relative density (ref: 500/km²)")
                     .foregroundStyle(DesignSystem.Color.textSecondary)
                 Spacer(minLength: DesignSystem.Spacing.xs)
-                Text("\(densityLevel(for: densityFraction)) density")
+                Text(densityLevel(for: densityFraction))
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
             }
@@ -140,34 +130,5 @@ private struct LivePulseDot: View {
                 value: appeared
             )
             .onAppear { appeared = true }
-    }
-}
-
-// MARK: - Density Fill Bar
-private struct DensityFillBar: View {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    let fraction: Double
-    let color: Color
-
-    @State private var appeared = false
-
-    var body: some View {
-        GeometryReader { geometryReader in
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                Capsule()
-                    .fill(color)
-                    .frame(width: geometryReader.size.width * (appeared ? fraction : 0))
-                    .animation(
-                        reduceMotion ? nil : .spring(response: 0.7, dampingFraction: 0.7).delay(0.4),
-                        value: appeared
-                    )
-            }
-        }
-        .frame(height: 6)
-        .accessibilityHidden(true)
-        .onAppear { appeared = true }
     }
 }

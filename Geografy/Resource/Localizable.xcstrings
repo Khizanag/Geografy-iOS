@@ -4179,6 +4179,18 @@
         }
       }
     },
+    "High density" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მაღალი სიმჭიდროვე"
+          }
+        }
+      }
+    },
     "Hint" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4761,6 +4773,18 @@
         }
       }
     },
+    "Low density" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დაბალი სიმჭიდროვე"
+          }
+        }
+      }
+    },
     "Lv. %lld" : {
       "localizations" : {
         "ka" : {
@@ -4997,6 +5021,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "წევრი ქვეყნები"
+          }
+        }
+      }
+    },
+    "Moderate density" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საშუალო სიმჭიდროვე"
           }
         }
       }
