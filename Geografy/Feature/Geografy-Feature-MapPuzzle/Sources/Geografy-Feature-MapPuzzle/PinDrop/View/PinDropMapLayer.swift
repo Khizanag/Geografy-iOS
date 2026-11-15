@@ -39,6 +39,8 @@ struct PinDropMapLayer: View, Animatable {
     var body: some View {
         ZStack(alignment: .topLeading) {
             map
+            MapGraticuleView(scale: camera.scale, offset: camera.offset, wrapsHorizontally: false)
+                .frame(width: size.width, height: size.height)
             if let result {
                 if !result.isInside {
                     guideLine(for: result)

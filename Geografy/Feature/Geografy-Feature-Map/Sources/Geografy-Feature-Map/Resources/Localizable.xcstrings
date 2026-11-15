@@ -33,6 +33,46 @@
         }
       }
     },
+    "%@°E" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° აღ.გ."
+          }
+        }
+      }
+    },
+    "%@°N" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° ჩ.გ."
+          }
+        }
+      }
+    },
+    "%@°S" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° ს.გ."
+          }
+        }
+      }
+    },
+    "%@°W" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° დ.გ."
+          }
+        }
+      }
+    },
     "%lld countries" : {
       "localizations" : {
         "ka" : {
@@ -53,6 +93,8 @@
         }
       }
     },
+    "0°" : {},
+    "180°" : {},
     "Aa" : {
       "localizations" : {
         "ka" : {
@@ -312,6 +354,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "არჩეულია: %@"
+          }
+        }
+      }
+    },
+    "Show Latitude & Longitude" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განედისა და გრძედის ჩვენება"
           }
         }
       }

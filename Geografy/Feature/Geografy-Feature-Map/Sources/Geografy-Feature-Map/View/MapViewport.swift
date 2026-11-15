@@ -41,6 +41,13 @@ public struct MapViewport: View {
                 .scaleEffect(magnification)
                 .offset(shift)
 
+            MapGraticuleView(
+                scale: mapState.currentFrame.scale,
+                offset: mapState.currentFrame.offset,
+                wrapsHorizontally: map.wrapsHorizontally
+            )
+            .frame(width: viewSize.width, height: viewSize.height)
+
             if showsLabels {
                 MapLabelsLayer(
                     countryShapes: map.countryShapes,

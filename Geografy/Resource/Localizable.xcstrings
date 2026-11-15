@@ -352,6 +352,54 @@
         }
       }
     },
+    "%@°E" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° აღ.გ."
+          }
+        }
+      }
+    },
+    "%@°N" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° ჩ.გ."
+          }
+        }
+      }
+    },
+    "%@°S" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° ს.გ."
+          }
+        }
+      }
+    },
+    "%@°W" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° დ.გ."
+          }
+        }
+      }
+    },
     "%lld" : {
       "localizations" : {
         "ka" : {
@@ -1848,6 +1896,18 @@
         }
       }
     },
+    "Antarctic Circle" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სამხრეთის პოლარული წრე"
+          }
+        }
+      }
+    },
     "App" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -1894,6 +1954,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "იერსახე"
+          }
+        }
+      }
+    },
+    "Arctic Circle" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩრდილოეთის პოლარული წრე"
           }
         }
       }
@@ -5440,6 +5512,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "უახლესი: %@"
+          }
+        }
+      }
+    },
+    "Latitude & longitude on maps" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განედი და გრძედი რუკებზე"
           }
         }
       }
@@ -9381,6 +9465,18 @@
         }
       }
     },
+    "Show Latitude & Longitude" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განედისა და გრძედის ჩვენება"
+          }
+        }
+      }
+    },
     "Show Less" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10819,6 +10915,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ტრივია"
+          }
+        }
+      }
+    },
+    "Tropic of Cancer" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კირჩხიბის ტროპიკი"
+          }
+        }
+      }
+    },
+    "Tropic of Capricorn" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თხის რქის ტროპიკი"
           }
         }
       }

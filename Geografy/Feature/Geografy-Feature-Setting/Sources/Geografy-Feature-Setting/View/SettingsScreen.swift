@@ -20,6 +20,7 @@ public struct SettingsScreen: View {
     #endif
 
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
+    @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
     @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
     @AppStorage("soundEffectsEnabled") private var soundEffectsEnabled = true
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
@@ -218,6 +219,15 @@ private extension SettingsScreen {
         settingsGroup(header: "Preferences") {
             VStack(spacing: 0) {
                 appearanceRow
+
+                settingsDivider
+
+                SettingsToggleRow(
+                    icon: "globe",
+                    iconColor: DesignSystem.Color.blue,
+                    title: "Latitude & longitude on maps",
+                    isOn: $showsGraticule.animation()
+                )
 
                 settingsDivider
 

@@ -267,6 +267,7 @@ private struct TravelMapCanvas: View {
             capitalPoint: nil,
             travelStatuses: travelStatuses
         )
+        .overlay { MapGraticuleView(scale: mapState.scale, offset: mapState.offset) }
         #if !os(tvOS)
         .gesture(dragGesture)
         .gesture(magnifyGesture)

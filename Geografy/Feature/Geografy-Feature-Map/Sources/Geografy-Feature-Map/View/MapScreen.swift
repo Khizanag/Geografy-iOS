@@ -17,6 +17,7 @@ public struct MapScreen: View {
     @Environment(GeoJSONCache.self) private var geoJSONCache
 
     @AppStorage("map_showsVisitedCountries") private var showsVisitedCountries = true
+    @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
 
     public var continentFilter: String?
 
@@ -168,6 +169,11 @@ private extension MapScreen {
         ToolbarItem(placement: .secondaryAction) {
             Toggle(isOn: $showsVisitedCountries) {
                 Label("Show Visited Countries", systemImage: TravelStatus.visited.icon)
+            }
+        }
+        ToolbarItem(placement: .secondaryAction) {
+            Toggle(isOn: $showsGraticule.animation()) {
+                Label("Show Latitude & Longitude", systemImage: "globe")
             }
         }
     }

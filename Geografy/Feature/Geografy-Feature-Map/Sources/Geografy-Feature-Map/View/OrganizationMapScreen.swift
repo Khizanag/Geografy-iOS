@@ -105,6 +105,7 @@ private extension OrganizationMapScreen {
             canvasSize: size,
             capitalPoint: selectedCapitalPoint
         )
+        .overlay { MapGraticuleView(scale: mapState.scale, offset: mapState.offset) }
         .accessibilityLabel("Map of \(organization.displayName) members")
         .accessibilityValue(selectedCountryName.map { "Selected: \($0)" } ?? "No country selected")
         .accessibilityHint("Double tap to select a country")
