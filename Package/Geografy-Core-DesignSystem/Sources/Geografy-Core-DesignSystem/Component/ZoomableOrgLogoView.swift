@@ -4,7 +4,6 @@ import SwiftUI
 public struct ZoomableOrgLogoView: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let url: URL
     public let organization: Organization
@@ -33,13 +32,13 @@ public struct ZoomableOrgLogoView: View {
 private extension ZoomableOrgLogoView {
     var extractedContent: some View {
         logoContent
-            .overlay(alignment: .topTrailing) { closeButton }
             .background { backdrop }
     }
 
+    /// Taps around the image close it; the blur behind comes from `zoomableViewer`.
     var backdrop: some View {
-        Rectangle()
-            .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.background) : AnyShapeStyle(.ultraThinMaterial))
+        Color.clear
+            .contentShape(Rectangle())
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
             .accessibilityHidden(true)
@@ -75,16 +74,6 @@ private extension ZoomableOrgLogoView {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    var closeButton: some View {
-        Button { onDismiss() } label: {
-            Image(systemName: "xmark.circle.fill")
-                .font(DesignSystem.Font.title)
-                .foregroundStyle(.secondary)
-                .padding(DesignSystem.Spacing.md)
-        }
-        .accessibilityLabel("Close")
     }
 }
 

@@ -53,7 +53,9 @@ public struct CountryDetailScreen: View {
             .sheet(item: $activeSheet, onDismiss: runAfterSheetDismiss) { sheet in
                 countryDetailSheetContent(for: sheet)
             }
-            .overlay { flagFullScreenOverlay }
+            .zoomableViewer(isPresented: $showFlagFullScreen, title: country.name) {
+                ZoomableFlagView(countryCode: country.code) { showFlagFullScreen = false }
+            }
     }
 }
 
@@ -277,17 +279,5 @@ extension CountryDetailScreen {
         #if !os(tvOS)
         WikipediaSection(countryName: country.name)
         #endif
-    }
-
-    @ViewBuilder
-    var flagFullScreenOverlay: some View {
-        if showFlagFullScreen {
-            ZoomableFlagView(countryCode: country.code) {
-                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
-                    showFlagFullScreen = false
-                }
-            }
-            .transition(.opacity)
-        }
     }
 }

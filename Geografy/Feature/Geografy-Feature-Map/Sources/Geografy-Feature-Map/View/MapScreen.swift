@@ -52,9 +52,9 @@ public struct MapScreen: View {
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
             .task { await loadMapData() }
-            .overlay {
-                if showFlagPreview, let code = mapState.selectedCountryCode {
-                    flagPreview(for: code)
+            .zoomableViewer(isPresented: $showFlagPreview, title: selectedCountryTitle) {
+                if let code = mapState.selectedCountryCode {
+                    ZoomableFlagView(countryCode: code) { showFlagPreview = false }
                 }
             }
     }
@@ -94,14 +94,6 @@ private extension MapScreen {
 
     var isLandscape: Bool { verticalSizeClass == .compact }
 
-    func flagPreview(for code: String) -> some View {
-        ZoomableFlagView(countryCode: code) {
-            withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
-                showFlagPreview = false
-            }
-        }
-    }
-
     var selectedCapitalPoint: CGPoint? {
         guard let code = mapState.selectedCountryCode,
               let info = CountryBasicInfo.info(for: code) else { return nil }
@@ -113,6 +105,10 @@ private extension MapScreen {
     }
 
     var isWorldMap: Bool { continentFilter == nil }
+
+    var selectedCountryTitle: String? {
+        mapState.selectedShape.map { countryDataService.country(for: $0.id)?.name ?? $0.name }
+    }
 
     var selectedCountryName: String? {
         guard let shape = mapState.selectedShape else { return nil }

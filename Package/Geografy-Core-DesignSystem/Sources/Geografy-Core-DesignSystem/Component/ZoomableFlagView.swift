@@ -4,7 +4,6 @@ import SwiftUI
 public struct ZoomableFlagView: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     public let countryCode: String
     public let onDismiss: () -> Void
@@ -38,26 +37,16 @@ public struct ZoomableFlagView: View {
 private extension ZoomableFlagView {
     var extractedContent: some View {
         flagContent
-            .overlay(alignment: .topTrailing) { closeButton }
             .background { backdrop }
     }
 
+    /// Taps around the image close it; the blur behind comes from `zoomableViewer`.
     var backdrop: some View {
-        Rectangle()
-            .fill(reduceTransparency ? AnyShapeStyle(DesignSystem.Color.background) : AnyShapeStyle(.ultraThinMaterial))
+        Color.clear
+            .contentShape(Rectangle())
             .ignoresSafeArea()
             .onTapGesture { dismiss() }
             .accessibilityHidden(true)
-    }
-
-    var closeButton: some View {
-        Button { onDismiss() } label: {
-            Image(systemName: "xmark.circle.fill")
-                .font(DesignSystem.Font.title)
-                .foregroundStyle(.secondary)
-                .padding(DesignSystem.Spacing.md)
-        }
-        .accessibilityLabel("Close")
     }
 
     var flagContent: some View {

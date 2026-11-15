@@ -71,7 +71,11 @@ public struct QuizSessionScreen: View {
             } message: {
                 Text("Your progress will be lost.")
             }
-            .overlay { flagPreviewOverlay }
+            .zoomableViewer(isPresented: $showFlagPreview, title: nil) {
+                if let flagCode = currentQuestion?.promptFlag {
+                    ZoomableFlagView(countryCode: flagCode) { showFlagPreview = false }
+                }
+            }
             .overlay { pauseOverlay }
     }
 }
@@ -127,17 +131,6 @@ private extension QuizSessionScreen {
             },
             onDone: { dismiss() }
         )
-    }
-
-    @ViewBuilder
-    var flagPreviewOverlay: some View {
-        if showFlagPreview, let flagCode = currentQuestion?.promptFlag {
-            ZoomableFlagView(countryCode: flagCode) {
-                withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
-                    showFlagPreview = false
-                }
-            }
-        }
     }
 }
 

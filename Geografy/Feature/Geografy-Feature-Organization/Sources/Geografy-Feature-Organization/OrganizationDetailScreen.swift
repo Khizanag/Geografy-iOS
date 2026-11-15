@@ -31,11 +31,9 @@ public struct OrganizationDetailScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
             .task { trackOrgView() }
-            .overlay {
-                if showLogoZoom, let urlString = organization.logoURL, let url = URL(string: urlString) {
-                    ZoomableOrgLogoView(url: url, organization: organization) {
-                        showLogoZoom = false
-                    }
+            .zoomableViewer(isPresented: $showLogoZoom, title: organization.displayName) {
+                if let urlString = organization.logoURL, let url = URL(string: urlString) {
+                    ZoomableOrgLogoView(url: url, organization: organization) { showLogoZoom = false }
                 }
             }
     }

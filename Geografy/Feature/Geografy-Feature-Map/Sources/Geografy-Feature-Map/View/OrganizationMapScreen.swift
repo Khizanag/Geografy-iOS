@@ -59,13 +59,9 @@ public struct OrganizationMapScreen: View {
                     navigateToCountry = nil
                 }
             }
-            .overlay {
-                if showFlagPreview, let code = mapState.selectedCountryCode {
-                    ZoomableFlagView(countryCode: code) {
-                        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
-                            showFlagPreview = false
-                        }
-                    }
+            .zoomableViewer(isPresented: $showFlagPreview, title: mapState.selectedShape?.name) {
+                if let code = mapState.selectedCountryCode {
+                    ZoomableFlagView(countryCode: code) { showFlagPreview = false }
                 }
             }
     }
