@@ -45,21 +45,19 @@ private extension FriendsListScreen {
     }
 
     var notAuthenticatedView: some View {
-        ContentUnavailableView(
-            "Sign in to Game Center",
-            systemImage: "gamecontroller.fill",
-            description: Text("Connect your Game Center account to see your friends and compare scores.")
+        GameCenterSignInPrompt(
+            message: "Sign in to Game Center in Settings to see your friends and compare scores."
         )
     }
 
     var emptyStateView: some View {
-        ContentUnavailableView {
-            Label("No Friends Yet", systemImage: "person.2")
-        } description: {
-            Text("Only Game Center friends who also have Geografy installed will appear here.")
-        } actions: {
-            addFriendsButton
-        }
+        EmptyStateView(
+            icon: "person.2",
+            title: "No Friends Yet",
+            message: "Only Game Center friends who also have Geografy installed will appear here.",
+            actionTitle: "Add Friends in Game Center",
+            action: openFriendsInGameCenter
+        )
     }
 }
 
@@ -189,10 +187,12 @@ private extension FriendsListScreen {
     }
 
     var addFriendsButton: some View {
-        GlassButton("Add Friends in Game Center", systemImage: "person.badge.plus", fullWidth: true) {
-            hapticsService.impact(.light)
-            GKAccessPoint.shared.trigger(state: .localPlayerFriendsList) {}
-        }
+        GlassButton(
+            "Add Friends in Game Center",
+            systemImage: "person.badge.plus",
+            fullWidth: true,
+            action: openFriendsInGameCenter
+        )
     }
 }
 
@@ -232,6 +232,11 @@ private extension FriendsListScreen {
 
 // MARK: - Actions
 private extension FriendsListScreen {
+    func openFriendsInGameCenter() {
+        hapticsService.impact(.light)
+        GKAccessPoint.shared.trigger(state: .localPlayerFriendsList) {}
+    }
+
     func loadData() async {
         guard !hasLoaded else { return }
         let loadedFriends = await gameCenterService.loadFriends()
