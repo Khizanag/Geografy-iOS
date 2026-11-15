@@ -30,53 +30,53 @@ private extension ProfileScreen {
     @ViewBuilder
     var statsGridItems: some View {
         accuracyCard
-        statCard(
-            icon: "checkmark.seal.fill",
-            color: DesignSystem.Color.accent,
+        StatTile(
             value: "\(statistics?.perfectScores ?? 0)",
-            label: "Perfect"
+            label: "Perfect",
+            icon: "checkmark.seal.fill",
+            color: DesignSystem.Color.accent
         )
-        statCard(
-            icon: "flame.fill",
-            color: DesignSystem.Color.error,
+        StatTile(
             value: "\(statistics?.longestStreak ?? 0)",
-            label: "Best Streak"
+            label: "Best Streak",
+            icon: "flame.fill",
+            color: DesignSystem.Color.error
         )
-        statCard(
-            icon: "gamecontroller.fill",
-            color: DesignSystem.Color.purple,
+        StatTile(
             value: "\(statistics?.totalQuizzes ?? 0)",
-            label: "Quizzes"
+            label: "Quizzes",
+            icon: "gamecontroller.fill",
+            color: DesignSystem.Color.purple
         )
-        statCard(
-            icon: "globe.americas.fill",
-            color: DesignSystem.Color.blue,
+        StatTile(
             value: "\(statistics?.countriesExplored ?? 0)",
-            label: "Explored"
+            label: "Explored",
+            icon: "globe.americas.fill",
+            color: DesignSystem.Color.blue
         )
-        statCard(
-            icon: "airplane.departure",
-            color: DesignSystem.Color.success,
+        StatTile(
             value: "\(statistics?.countriesVisited ?? 0)",
-            label: "Visited"
+            label: "Visited",
+            icon: "airplane.departure",
+            color: DesignSystem.Color.success
         )
-        statCard(
-            icon: "star.fill",
-            color: DesignSystem.Color.warning,
+        StatTile(
             value: "\(achievementService.unlockedAchievements.count)",
-            label: "Badges"
+            label: "Badges",
+            icon: "star.fill",
+            color: DesignSystem.Color.warning
         )
-        statCard(
-            icon: "bolt.fill",
-            color: DesignSystem.Color.orange,
+        StatTile(
             value: "\(streakService.currentStreak)",
-            label: "Streak"
+            label: "Streak",
+            icon: "bolt.fill",
+            color: DesignSystem.Color.orange
         )
-        statCard(
-            icon: "calendar.badge.checkmark",
-            color: DesignSystem.Color.indigo,
+        StatTile(
             value: statistics?.formattedMemberSince ?? "—",
-            label: "Member"
+            label: "Member",
+            icon: "calendar.badge.checkmark",
+            color: DesignSystem.Color.indigo
         )
     }
 }
@@ -86,38 +86,12 @@ private extension ProfileScreen {
     var accuracyCard: some View {
         let percentage = statistics?.accuracyPercentage ?? 0
         let rate = statistics?.accuracyRate ?? 0
-        let color = accuracyColor(for: rate)
-
-        return VStack(spacing: DesignSystem.Spacing.xs) {
-            ZStack {
-                Circle()
-                    .stroke(color.opacity(0.2), lineWidth: 3)
-                    .frame(width: 36, height: 36)
-                Circle()
-                    .trim(from: 0, to: rate)
-                    .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
-                    .frame(width: 36, height: 36)
-                    .rotationEffect(.degrees(-90))
-            }
-            Text("\(percentage)%")
-                .font(DesignSystem.Font.roundedFootnote)
-                .foregroundStyle(color)
-                .minimumScaleFactor(0.8)
-                .lineLimit(1)
-            Text("Accuracy")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .background(.ultraThinMaterial, in: RoundedRectangle(
-            cornerRadius: DesignSystem.CornerRadius.medium,
-            style: .continuous
-        ))
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Accuracy \(percentage) percent")
+        return StatTile(
+            value: "\(percentage)%",
+            label: "Accuracy",
+            icon: "target",
+            color: accuracyColor(for: rate)
+        )
     }
 
     func accuracyColor(for rate: Double) -> Color {
@@ -126,31 +100,6 @@ private extension ProfileScreen {
         case 0.5..<0.8: DesignSystem.Color.warning
         default:        DesignSystem.Color.error
         }
-    }
-
-    func statCard(icon: String, color: Color, value: String, label: String) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            IconBadge(icon, color: color, size: .small)
-            Text(value)
-                .font(DesignSystem.Font.roundedFootnote)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .minimumScaleFactor(0.8)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .lineLimit(1)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .padding(.horizontal, DesignSystem.Spacing.xs)
-        .background(.ultraThinMaterial, in: RoundedRectangle(
-            cornerRadius: DesignSystem.CornerRadius.medium,
-            style: .continuous
-        ))
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(label): \(value)")
     }
 }
 #endif
