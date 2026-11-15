@@ -7,7 +7,6 @@ public struct QuizPack: Identifiable, Hashable {
     public let icon: String
     public let category: QuizPackCategory
     public let levels: [QuizPackLevel]
-    public let gradientHex: (String, String)
     public let prerequisitePackID: String?
 
     public init(
@@ -17,7 +16,6 @@ public struct QuizPack: Identifiable, Hashable {
         icon: String,
         category: QuizPackCategory,
         levels: [QuizPackLevel],
-        gradientHex: (String, String),
         prerequisitePackID: String?
     ) {
         self.id = id
@@ -26,7 +24,6 @@ public struct QuizPack: Identifiable, Hashable {
         self.icon = icon
         self.category = category
         self.levels = levels
-        self.gradientHex = gradientHex
         self.prerequisitePackID = prerequisitePackID
     }
 
@@ -41,8 +38,8 @@ public struct QuizPack: Identifiable, Hashable {
 
 // MARK: - Computed Properties
 extension QuizPack {
-    public var gradientColors: (Color, Color) {
-        (Color(hex: gradientHex.0), Color(hex: gradientHex.1))
+    public var color: Color {
+        category.color
     }
 
     public var totalQuestions: Int {

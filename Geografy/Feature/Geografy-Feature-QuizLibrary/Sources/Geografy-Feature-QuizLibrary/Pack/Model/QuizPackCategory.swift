@@ -1,4 +1,6 @@
 import Geografy_Core_Common
+import Geografy_Core_DesignSystem
+import SwiftUI
 
 public enum QuizPackCategory: String, CaseIterable, Identifiable {
     case capitals
@@ -50,15 +52,16 @@ extension QuizPackCategory {
         }
     }
 
-    public var gradientHex: (String, String) {
+    /// The category's color from the design system, so packs read in the same palette as the rest of the app.
+    public var color: Color {
         switch self {
-        case .capitals: ("1A237E", "3949AB")
-        case .flags: ("B71C1C", "D32F2F")
-        case .population: ("004D40", "00695C")
-        case .geography: ("1B5E20", "388E3C")
-        case .currency: ("E65100", "FF8F00")
-        case .government: ("4A148C", "7B1FA2")
-        case .organizations: ("01579B", "0277BD")
+        case .capitals: DesignSystem.Color.indigo
+        case .flags: DesignSystem.Color.error
+        case .population: DesignSystem.Color.blue
+        case .geography: DesignSystem.Color.accent
+        case .currency: DesignSystem.Color.orange
+        case .government: DesignSystem.Color.purple
+        case .organizations: DesignSystem.Color.warning
         }
     }
 }

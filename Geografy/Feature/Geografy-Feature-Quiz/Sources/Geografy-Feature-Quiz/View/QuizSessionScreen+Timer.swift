@@ -74,6 +74,7 @@ extension QuizSessionScreen {
             answers: answers,
             totalTime: totalTime,
         )
+        configuration.announceFinished(accuracy: result.accuracy)
         navigateToResult = result
     }
 }

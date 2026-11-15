@@ -21,7 +21,7 @@ public struct QuizPackBrowserScreen: View {
     public var body: some View {
         scrollContent
             .screenBackground()
-            .task { loadData() }
+            .task(id: countryDataService.countries.count) { loadData() }
             .onAppear { startAnimations() }
     }
 }
@@ -67,6 +67,7 @@ private extension QuizPackBrowserScreen {
                 packGrid
                     .feedSection(appeared: appeared, delay: 0.16, reduceMotion: reduceMotion)
             }
+            .padding(.top, DesignSystem.Spacing.sm)
             .padding(.bottom, DesignSystem.Spacing.xxl)
             .readableContentWidth()
         }
@@ -76,52 +77,26 @@ private extension QuizPackBrowserScreen {
 // MARK: - Overall Progress
 private extension QuizPackBrowserScreen {
     var overallProgress: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            overallStat(
+        StatTileRow {
+            StatTile(
                 value: "\(totalCompletedPacks)",
                 label: "Packs Done",
                 icon: "checkmark.circle.fill",
                 color: DesignSystem.Color.success
             )
-            overallStat(
+            StatTile(
                 value: "\(totalStars)",
                 label: "Stars",
                 icon: "star.fill",
                 color: DesignSystem.Color.warning
             )
-            overallStat(
+            StatTile(
                 value: "\(filteredPacks.count)",
                 label: "Available",
                 icon: "square.grid.2x2.fill",
                 color: DesignSystem.Color.accent
             )
         }
-    }
-
-    func overallStat(
-        value: String,
-        label: String,
-        icon: String,
-        color: Color
-    ) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(color)
-                    .accessibilityHidden(true)
-                Text(value)
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(label)
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-        }
-        .accessibilityElement(children: .combine)
     }
 }
 

@@ -222,18 +222,23 @@ extension QuizSessionScreen {
 
     public func finishQuiz() {
         let totalTime = Date().timeIntervalSince(startTime)
-        navigateToResult = QuizResult(
+        let result = QuizResult(
             configuration: configuration,
             answers: answers,
             totalTime: totalTime
         )
+        configuration.announceFinished(accuracy: result.accuracy)
+        navigateToResult = result
     }
 
     /// Waits for country data, so a quiz opened at launch doesn't settle on an empty question list.
     public func loadQuiz() {
         guard !countryDataService.countries.isEmpty else { return }
         hasLoadedQuestions = true
-        let pool = configuration.region.filter(countryDataService.countries)
+        let pool = configuration.countryCodes.map { codes in
+            let wanted = Set(codes)
+            return countryDataService.countries.filter { wanted.contains($0.code) }
+        } ?? configuration.region.filter(countryDataService.countries)
         let optionCount = max(configuration.difficulty.optionCount, 4)
         guard pool.count >= optionCount else { return }
 

@@ -10,6 +10,8 @@ public struct QuizConfiguration: Identifiable, Equatable, Hashable, Sendable {
     public let comparisonMetric: ComparisonMetric
     public let gameMode: QuizGameMode
     public let arcadeTimer: ArcadeTimer
+    /// When set, questions come from these countries only, as a quiz pack level asks; otherwise from `region`.
+    public let countryCodes: [String]?
 
     public init(
         id: UUID = UUID(),
@@ -20,7 +22,8 @@ public struct QuizConfiguration: Identifiable, Equatable, Hashable, Sendable {
         answerMode: QuizAnswerMode,
         comparisonMetric: ComparisonMetric,
         gameMode: QuizGameMode,
-        arcadeTimer: ArcadeTimer = .sixty
+        arcadeTimer: ArcadeTimer = .sixty,
+        countryCodes: [String]? = nil
     ) {
         self.id = id
         self.type = type
@@ -31,6 +34,7 @@ public struct QuizConfiguration: Identifiable, Equatable, Hashable, Sendable {
         self.comparisonMetric = comparisonMetric
         self.gameMode = gameMode
         self.arcadeTimer = arcadeTimer
+        self.countryCodes = countryCodes
     }
 }
 
@@ -46,6 +50,22 @@ public extension QuizConfiguration {
             answerMode: .multipleChoice,
             comparisonMetric: .population,
             gameMode: .standard
+        )
+    }
+}
+
+// MARK: - Finishing
+public extension QuizConfiguration {
+    /// Posted when a quiz session ends, with the configuration's `id` as the object and the share of
+    /// correct answers, from 0 to 1, under `accuracyKey`; screens that started a quiz record its result from it.
+    static let finishedNotification = Notification.Name("QuizConfiguration.finished")
+    static let accuracyKey = "accuracy"
+
+    func announceFinished(accuracy: Double) {
+        NotificationCenter.default.post(
+            name: Self.finishedNotification,
+            object: id,
+            userInfo: [Self.accuracyKey: accuracy]
         )
     }
 }

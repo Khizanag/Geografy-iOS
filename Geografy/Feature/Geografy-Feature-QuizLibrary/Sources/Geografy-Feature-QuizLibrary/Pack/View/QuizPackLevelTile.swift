@@ -1,143 +1,91 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
 
-public struct QuizPackLevelCard: View {
+/// One level of a pack as a compact tile in the level grid: its number, or a lock, and the stars earned.
+/// The level to play next stands out in the pack's color.
+struct QuizPackLevelTile: View {
     // MARK: - Properties
-    public let level: QuizPackLevel
-    public let stars: Int
-    public let isLocked: Bool
-
-    // MARK: - Init
-    public init(
-        level: QuizPackLevel,
-        stars: Int,
-        isLocked: Bool
-    ) {
-        self.level = level
-        self.stars = stars
-        self.isLocked = isLocked
-    }
+    let level: QuizPackLevel
+    let stars: Int
+    let isLocked: Bool
+    let isNext: Bool
+    let color: Color
 
     // MARK: - Body
-    public var body: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                levelNumber
-                levelInfo
-                Spacer(minLength: 0)
-                trailingContent
-            }
-            .padding(DesignSystem.Spacing.md)
+    var body: some View {
+        VStack(spacing: DesignSystem.Spacing.xs) {
+            badge
+            starRow
         }
-        .opacity(isLocked ? 0.5 : 1.0)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, DesignSystem.Spacing.sm)
+        .background(
+            DesignSystem.Color.cardBackground,
+            in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
+        )
+        .overlay {
+            if isNext {
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large)
+                    .strokeBorder(color, lineWidth: 2)
+            }
+        }
+        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .opacity(isLocked ? 0.55 : 1)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Level \(level.levelIndex), \(level.name)")
+        .accessibilityLabel(Text("Level \(level.levelIndex)"))
         .accessibilityValue(accessibilityValue)
     }
 }
 
 // MARK: - Subviews
-private extension QuizPackLevelCard {
-    var levelNumber: some View {
+private extension QuizPackLevelTile {
+    var badge: some View {
         ZStack {
             Circle()
-                .fill(circleColor)
-                .frame(
-                    width: DesignSystem.Size.lg,
-                    height: DesignSystem.Size.lg
-                )
-
+                .fill(badgeFill)
+                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
             if isLocked {
                 Image(systemName: "lock.fill")
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            } else if isCompleted {
-                Image(systemName: "checkmark")
-                    .font(DesignSystem.Font.caption)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textTertiary)
             } else {
-                Text("\(level.levelIndex)")
+                Text(verbatim: "\(level.levelIndex)")
                     .font(DesignSystem.Font.headline)
                     .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.onAccent)
+                    .monospacedDigit()
+                    .foregroundStyle(numberColor)
             }
         }
     }
 
-    var levelInfo: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-            Text(level.name)
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(1)
-
-            Text("\(level.questionCount) questions")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-    }
-
-    @ViewBuilder
-    var trailingContent: some View {
-        if isCompleted {
-            completedBadge
-        } else {
-            starDisplay
-        }
-    }
-
-    var starDisplay: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
+    var starRow: some View {
+        HStack(spacing: 2) {
             ForEach(1...3, id: \.self) { index in
-                Image(systemName: starIcon(for: index))
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(starColor(for: index))
-            }
-        }
-    }
-
-    var completedBadge: some View {
-        HStack(spacing: DesignSystem.Spacing.xxs) {
-            ForEach(1...3, id: \.self) { index in
-                Image(systemName: starIcon(for: index))
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(starColor(for: index))
+                Image(systemName: index <= stars ? "star.fill" : "star")
+                    .font(DesignSystem.Font.caption2)
+                    .foregroundStyle(index <= stars ? DesignSystem.Color.warning : DesignSystem.Color.textTertiary)
             }
         }
     }
 }
 
 // MARK: - Helpers
-private extension QuizPackLevelCard {
-    var isCompleted: Bool {
-        stars > 0
+private extension QuizPackLevelTile {
+    var isCompleted: Bool { stars > 0 }
+
+    var badgeFill: Color {
+        if isLocked { return DesignSystem.Color.cardBackgroundHighlighted }
+        if isNext || isCompleted { return color }
+        return DesignSystem.Color.cardBackgroundHighlighted
     }
 
-    var accessibilityValue: String {
-        let questions = "\(level.questionCount) questions"
-        if isLocked { return "Locked, \(questions)" }
-        if isCompleted { return "Completed, \(stars) of 3 stars, \(questions)" }
-        return questions
+    var numberColor: Color {
+        isNext || isCompleted ? DesignSystem.Color.onAccent : DesignSystem.Color.textPrimary
     }
 
-    var circleColor: Color {
-        if isLocked {
-            DesignSystem.Color.cardBackgroundHighlighted
-        } else if isCompleted {
-            DesignSystem.Color.success
-        } else {
-            DesignSystem.Color.accent
-        }
-    }
-
-    func starIcon(for index: Int) -> String {
-        index <= stars ? "star.fill" : "star"
-    }
-
-    func starColor(for index: Int) -> Color {
-        index <= stars
-            ? DesignSystem.Color.warning
-            : DesignSystem.Color.textTertiary
+    var accessibilityValue: Text {
+        if isLocked { return Text("Locked") }
+        if isCompleted { return Text("\(stars) of 3 stars") }
+        return isNext ? Text("Up next") : Text("Not played")
     }
 }

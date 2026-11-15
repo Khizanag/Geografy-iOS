@@ -1,6 +1,7 @@
 import Geografy_Core_DesignSystem
 import SwiftUI
 
+/// A pack in the library grid: its category's icon and color, its name, and how far along it is.
 public struct QuizPackCard: View {
     // MARK: - Properties
     public let pack: QuizPack
@@ -8,9 +9,6 @@ public struct QuizPackCard: View {
     public let stars: Int
     public let maxStars: Int
     public let isUnlocked: Bool
-
-    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     // MARK: - Init
     public init(
@@ -29,113 +27,71 @@ public struct QuizPackCard: View {
 
     // MARK: - Body
     public var body: some View {
-        cardContent
-            .frame(minHeight: 160)
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: DesignSystem.CornerRadius.large,
-                    style: .continuous
-                )
-            )
-            .shadow(
-                color: pack.gradientColors.0.opacity(0.35),
-                radius: 10,
-                y: 4
-            )
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(pack.name)
-            .accessibilityValue(accessibilityValue)
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            HStack(alignment: .top) {
+                IconBadge(pack.icon, color: pack.color, size: .medium)
+                Spacer(minLength: 0)
+                if !isUnlocked {
+                    Image(systemName: "lock.fill")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textTertiary)
+                        .accessibilityHidden(true)
+                }
+            }
+
+            Text(pack.name)
+                .font(DesignSystem.Font.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+
+            Spacer(minLength: 0)
+
+            progress
+        }
+        .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
+        .padding(DesignSystem.Spacing.md)
+        .background(DesignSystem.Color.cardBackground, in: .rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
+        .opacity(isUnlocked ? 1 : 0.6)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(pack.name)
+        .accessibilityValue(accessibilityValue)
     }
 }
 
 // MARK: - Subviews
 private extension QuizPackCard {
-    var cardContent: some View {
-        ZStack(alignment: .bottomLeading) {
-            gradient
-
-            backgroundIcon
-
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Spacer(minLength: 0)
-                packTitle
-                statsRow
-            }
-            .padding(DesignSystem.Spacing.sm)
-        }
-        .overlay { lockedOverlayIfNeeded }
-    }
-
-    var gradient: some View {
-        LinearGradient(
-            colors: [
-                pack.gradientColors.0,
-                pack.gradientColors.1,
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-
-    var backgroundIcon: some View {
-        Image(systemName: pack.icon)
-            .font(DesignSystem.IconSize.hero)
-            .foregroundStyle(
-                DesignSystem.Color.onAccent.opacity(0.08)
+    var progress: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+            ShareBar(
+                fraction: pack.levelCount > 0 ? Double(completedLevels) / Double(pack.levelCount) : 0,
+                color: pack.color
             )
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-            .offset(x: 20, y: -10)
-            .clipped()
-            .accessibilityHidden(true)
-    }
-
-    var packTitle: some View {
-        Text(pack.name)
-            .font(DesignSystem.Font.headline)
-            .fontWeight(.bold)
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .lineLimit(dynamicTypeSize.isAccessibilitySize ? 3 : 1)
-            .minimumScaleFactor(0.8)
-    }
-
-    var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            InfoPill(
-                "\(completedLevels)/\(pack.levelCount)",
-                systemImage: "checkmark.circle",
-                style: .onColor
-            )
-            InfoPill(
-                "\(stars)/\(maxStars)",
-                systemImage: "star.fill",
-                style: .onColor
-            )
-        }
-    }
-
-    @ViewBuilder
-    var lockedOverlayIfNeeded: some View {
-        if !isUnlocked {
-            ZStack {
-                DesignSystem.Color.background.opacity(reduceTransparency ? 1 : 0.6)
-                VStack(spacing: DesignSystem.Spacing.xs) {
-                    Image(systemName: "lock.fill")
-                        .font(DesignSystem.Font.title2)
-                    // A solid overlay covers the card, so the name moves onto it.
-                    if reduceTransparency {
-                        Text(pack.name)
-                            .font(DesignSystem.Font.headline)
-                            .multilineTextAlignment(.center)
-                    }
+            HStack(spacing: DesignSystem.Spacing.sm) {
+                Label {
+                    Text(verbatim: "\(completedLevels)/\(pack.levelCount)")
+                } icon: {
+                    Image(systemName: "square.grid.3x3.fill")
                 }
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .padding(DesignSystem.Spacing.sm)
+                Label {
+                    Text(verbatim: "\(stars)/\(maxStars)")
+                } icon: {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(DesignSystem.Color.warning)
+                }
             }
+            .font(DesignSystem.Font.caption)
+            .monospacedDigit()
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+            .labelStyle(.titleAndIcon)
         }
     }
 
-    var accessibilityValue: String {
-        let progress = "\(completedLevels) of \(pack.levelCount) levels, \(stars) of \(maxStars) stars"
-        return isUnlocked ? progress : "Locked, \(progress)"
+    var accessibilityValue: Text {
+        isUnlocked
+            ? Text("\(completedLevels) of \(pack.levelCount) levels, \(stars) of \(maxStars) stars")
+            : Text("Locked")
     }
 }

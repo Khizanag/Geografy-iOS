@@ -8,11 +8,14 @@ public struct QuizPackDetailScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.locale) private var locale
 
     public let packID: String
 
     @State private var packService = QuizPackService()
     @State private var allPacks: [QuizPack] = []
+    /// The quiz started from this screen and the level it plays, so its result is recorded against that level.
+    @State private var playing: (quizID: UUID, levelID: String)?
 
     // MARK: - Init
     public init(packID: String) {
@@ -37,11 +40,14 @@ public struct QuizPackDetailScreen: View {
         #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
-        .task {
+        .task(id: countryDataService.countries.count) {
             packService.loadProgress()
             allPacks = QuizPackService.makeAllPacks(
                 countries: countryDataService.countries
             )
+        }
+        .onReceive(NotificationCenter.default.publisher(for: QuizConfiguration.finishedNotification)) { notification in
+            recordResult(notification)
         }
     }
 }
@@ -50,139 +56,95 @@ public struct QuizPackDetailScreen: View {
 private extension QuizPackDetailScreen {
     func packContent(_ pack: QuizPack) -> some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                packHeader(pack)
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+                GameIntroHeader(
+                    title: pack.name,
+                    subtitle: pack.description,
+                    systemImage: pack.icon,
+                    color: pack.color,
+                    facts: facts(for: pack)
+                )
                 progressOverview(pack)
                 levelsSection(pack)
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
+        }
+        .safeAreaBar(edge: .bottom) {
+            if let level = nextLevel(in: pack) {
+                GlassButton(
+                    String(localized: "Play Level \(level.levelIndex)", in: locale),
+                    systemImage: "play.fill",
+                    fullWidth: true
+                ) {
+                    play(level, in: pack)
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.bottom, DesignSystem.Spacing.xs)
+                .readableContentWidth()
+            }
         }
     }
 }
 
-// MARK: - Header
+// MARK: - Facts
 private extension QuizPackDetailScreen {
-    func packHeader(_ pack: QuizPack) -> some View {
-        VStack(spacing: DesignSystem.Spacing.sm) {
-            packIconCircle(pack)
-
-            Text(pack.description)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, DesignSystem.Spacing.lg)
-
-            packInfoPills(pack)
-        }
-        .padding(.top, DesignSystem.Spacing.md)
-    }
-
-    func packIconCircle(_ pack: QuizPack) -> some View {
-        ZStack {
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            pack.gradientColors.0,
-                            pack.gradientColors.1,
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .frame(
-                    width: DesignSystem.Size.xxxl,
-                    height: DesignSystem.Size.xxxl
-                )
-
-            Image(systemName: pack.icon)
-                .font(DesignSystem.Font.title)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-        }
-        .accessibilityHidden(true)
-    }
-
-    func packInfoPills(_ pack: QuizPack) -> some View {
-        HStack(spacing: DesignSystem.Spacing.xs) {
-            InfoPill("\(pack.totalQuestions) questions", systemImage: "questionmark.circle")
-            InfoPill("\(pack.levelCount) levels", systemImage: "chart.bar.fill")
-        }
+    func facts(for pack: QuizPack) -> [GameIntroHeader.Fact] {
+        [
+            .init(
+                String(localized: "\(pack.totalQuestions) questions", in: locale),
+                systemImage: "questionmark.circle"
+            ),
+            .init(
+                String(localized: "\(pack.levelCount) levels", in: locale),
+                systemImage: "square.grid.3x3.fill"
+            ),
+        ]
     }
 }
 
 // MARK: - Progress Overview
 private extension QuizPackDetailScreen {
     func progressOverview(_ pack: QuizPack) -> some View {
-        let completed = packService.completedLevelCount(for: pack)
-        let stars = packService.totalStars(for: pack)
-        let maxStars = packService.maxStars(for: pack)
-
-        return HStack(spacing: DesignSystem.Spacing.sm) {
-            progressStat(
-                value: "\(completed)",
-                label: "Completed",
-                total: "\(pack.levelCount)"
+        StatTileRow {
+            StatTile(
+                value: "\(packService.completedLevelCount(for: pack))/\(pack.levelCount)",
+                label: "Levels done",
+                icon: "checkmark.circle.fill",
+                color: DesignSystem.Color.success
             )
-            progressStat(
-                value: "\(stars)",
+            StatTile(
+                value: "\(packService.totalStars(for: pack))/\(packService.maxStars(for: pack))",
                 label: "Stars",
-                total: "\(maxStars)"
+                icon: "star.fill",
+                color: DesignSystem.Color.warning
             )
         }
-    }
-
-    func progressStat(
-        value: String,
-        label: String,
-        total: String
-    ) -> some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                HStack(spacing: 0) {
-                    Text(value)
-                        .font(DesignSystem.Font.title2)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                    Text("/\(total)")
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(label)
-        .accessibilityValue("\(value) of \(total)")
     }
 }
 
 // MARK: - Levels Section
 private extension QuizPackDetailScreen {
+    static let levelColumns = [GridItem(.adaptive(minimum: 72), spacing: DesignSystem.Spacing.sm)]
+
     func levelsSection(_ pack: QuizPack) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Levels", icon: "chart.bar.fill")
+        let next = nextLevel(in: pack)
+        return VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+            SectionHeaderView(title: "Levels")
 
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(
-                    Array(pack.levels.enumerated()),
-                    id: \.element.id
-                ) { index, level in
+            LazyVGrid(columns: Self.levelColumns, spacing: DesignSystem.Spacing.sm) {
+                ForEach(Array(pack.levels.enumerated()), id: \.element.id) { index, level in
                     let locked = isLevelLocked(at: index, in: pack)
-                    let starCount = packService.stars(for: level.id)
-
                     Button {
-                        handleLevelTap(level, in: pack, locked: locked)
+                        play(level, in: pack)
                     } label: {
-                        QuizPackLevelCard(
+                        QuizPackLevelTile(
                             level: level,
-                            stars: starCount,
-                            isLocked: locked
+                            stars: packService.stars(for: level.id),
+                            isLocked: locked,
+                            isNext: level.id == next?.id,
+                            color: pack.color
                         )
                     }
                     .buttonStyle(PressButtonStyle())
@@ -197,17 +159,18 @@ private extension QuizPackDetailScreen {
         let previousLevel = pack.levels[index - 1]
         return packService.progress(for: previousLevel.id) == nil
     }
+
+    /// The first level not played yet; once all are, the first one short of three stars.
+    func nextLevel(in pack: QuizPack) -> QuizPackLevel? {
+        pack.levels.first { packService.progress(for: $0.id) == nil }
+            ?? pack.levels.first { packService.stars(for: $0.id) < 3 }
+            ?? pack.levels.first
+    }
 }
 
 // MARK: - Actions
 private extension QuizPackDetailScreen {
-    func handleLevelTap(
-        _ level: QuizPackLevel,
-        in pack: QuizPack,
-        locked: Bool
-    ) {
-        guard !locked else { return }
-
+    func play(_ level: QuizPackLevel, in pack: QuizPack) {
         let metric: ComparisonMetric =
             pack.category == .population ? .population : .area
 
@@ -219,8 +182,20 @@ private extension QuizPackDetailScreen {
             answerMode: .multipleChoice,
             comparisonMetric: metric,
             gameMode: .standard,
+            countryCodes: level.countryCodes
         )
 
+        playing = (config.id, level.id)
         coordinator.cover(.quizSession(config))
+    }
+
+    func recordResult(_ notification: Notification) {
+        guard let playing,
+              notification.object as? UUID == playing.quizID,
+              let accuracy = notification.userInfo?[QuizConfiguration.accuracyKey] as? Double else {
+            return
+        }
+        packService.recordCompletion(levelID: playing.levelID, accuracy: accuracy)
+        self.playing = nil
     }
 }

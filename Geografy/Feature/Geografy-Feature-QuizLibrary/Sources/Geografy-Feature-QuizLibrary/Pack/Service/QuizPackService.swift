@@ -24,6 +24,8 @@ public final class QuizPackService {
         accuracy: Double
     ) {
         let stars = QuizPackProgress.starRating(for: accuracy)
+        // Under half right doesn't pass a level, so it neither earns stars nor unlocks the next one.
+        guard stars > 0 else { return }
         let existing = progressByLevel[levelID]
         let shouldUpdate = existing == nil
             || accuracy > (existing?.bestAccuracy ?? 0)
@@ -60,7 +62,7 @@ public final class QuizPackService {
     }
 
     public func isPackCompleted(_ pack: QuizPack) -> Bool {
-        completedLevelCount(for: pack) == pack.levelCount
+        pack.levelCount > 0 && completedLevelCount(for: pack) == pack.levelCount
     }
 
     public func isPackUnlocked(
@@ -144,7 +146,6 @@ private extension QuizPackService {
                     icon: "building.columns.fill",
                     category: .capitals,
                     levels: levels,
-                    gradientHex: QuizPackCategory.capitals.gradientHex,
                     prerequisitePackID: previousID
                 )
             }
@@ -181,7 +182,6 @@ private extension QuizPackService {
                     countries: easyCountries,
                     questionsPerLevel: 10
                 ),
-                gradientHex: QuizPackCategory.flags.gradientHex,
                 prerequisitePackID: nil
             ),
             QuizPack(
@@ -195,7 +195,6 @@ private extension QuizPackService {
                     countries: hardCountries,
                     questionsPerLevel: 10
                 ),
-                gradientHex: ("880E4F", "C2185B"),
                 prerequisitePackID: "flags_easy"
             ),
         ]
@@ -220,7 +219,6 @@ private extension QuizPackService {
                     countries: Array(sorted.prefix(60)),
                     questionsPerLevel: 10
                 ),
-                gradientHex: QuizPackCategory.population.gradientHex,
                 prerequisitePackID: nil
             ),
             QuizPack(
@@ -234,7 +232,6 @@ private extension QuizPackService {
                     countries: Array(sorted.suffix(60)),
                     questionsPerLevel: 10
                 ),
-                gradientHex: ("006064", "00838F"),
                 prerequisitePackID: "population_top"
             ),
         ]
@@ -265,7 +262,6 @@ private extension QuizPackService {
                     countries: largest,
                     questionsPerLevel: 10
                 ),
-                gradientHex: QuizPackCategory.geography.gradientHex,
                 prerequisitePackID: nil
             ),
             QuizPack(
@@ -279,7 +275,6 @@ private extension QuizPackService {
                     countries: smallest,
                     questionsPerLevel: 10
                 ),
-                gradientHex: ("33691E", "558B2F"),
                 prerequisitePackID: "geo_largest"
             ),
             QuizPack(
@@ -293,7 +288,6 @@ private extension QuizPackService {
                     countries: landlocked,
                     questionsPerLevel: 10
                 ),
-                gradientHex: ("2E7D32", "43A047"),
                 prerequisitePackID: "geo_smallest"
             ),
         ]
@@ -320,7 +314,6 @@ private extension QuizPackService {
                     countries: withCurrency,
                     questionsPerLevel: 10
                 ),
-                gradientHex: QuizPackCategory.currency.gradientHex,
                 prerequisitePackID: nil
             ),
         ]
@@ -347,7 +340,6 @@ private extension QuizPackService {
                     countries: withGovernment,
                     questionsPerLevel: 10
                 ),
-                gradientHex: QuizPackCategory.government.gradientHex,
                 prerequisitePackID: nil
             ),
         ]
@@ -381,7 +373,6 @@ private extension QuizPackService {
                         countries: members,
                         questionsPerLevel: 10
                     ),
-                    gradientHex: QuizPackCategory.organizations.gradientHex,
                     prerequisitePackID: nil
                 )
             }
