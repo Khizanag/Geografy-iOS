@@ -5,6 +5,9 @@ import SwiftUI
 /// Put two to four in a `StatTileRow` so they share the width and stack at accessibility text sizes.
 public struct StatTile: View {
     // MARK: - Properties
+    // Symbols differ in glyph height; a fixed slot keeps tiles in a row the same height.
+    @ScaledMetric(relativeTo: .headline) private var iconHeight: CGFloat = 24
+
     private let value: String
     private let label: LocalizedStringKey
     private let icon: String?
@@ -35,6 +38,7 @@ public struct StatTile: View {
                     Image(systemName: icon)
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(color)
+                        .frame(height: iconHeight)
                         .accessibilityHidden(true)
                 }
                 Text(verbatim: value)
