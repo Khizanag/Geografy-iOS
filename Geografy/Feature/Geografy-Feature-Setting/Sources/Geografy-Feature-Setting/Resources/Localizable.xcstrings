@@ -330,6 +330,26 @@
         }
       }
     },
+    "Map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა"
+          }
+        }
+      }
+    },
+    "Map colors" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის ფერები"
+          }
+        }
+      }
+    },
     "Map projection" : {
       "localizations" : {
         "ka" : {

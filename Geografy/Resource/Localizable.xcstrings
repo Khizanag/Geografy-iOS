@@ -1995,6 +1995,18 @@
         }
       }
     },
+    "Atlas" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ატლასი"
+          }
+        }
+      }
+    },
     "Auto" : {
       "comment" : "Labels for the different theme options in the settings.",
       "extractionState" : "manual",
@@ -2148,6 +2160,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რეკორდი: %@"
+          }
+        }
+      }
+    },
+    "Bold, clearly separate hues for the most contrast." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მკვეთრი, ერთმანეთისგან აშკარად განსხვავებული ფერები მაქსიმალური კონტრასტისთვის."
           }
         }
       }
@@ -2802,6 +2826,18 @@
         }
       }
     },
+    "Color-Blind Safe" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალტონიზმისთვის"
+          }
+        }
+      }
+    },
     "Colors & Symbols" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -3096,6 +3132,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ქვეყნებს აქვს კონტური და განსხვავებული ფერი"
+          }
+        }
+      }
+    },
+    "Countries that share a border never share a color. Of the colors left, each country takes the one that looks most different from its neighbors, then keeps away from countries just across the sea, so the colors spread evenly over the map." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსაზღვრე ქვეყნებს ერთი ფერი არასდროს აქვთ. დარჩენილი ფერებიდან თითოეული ქვეყანა იღებს იმას, რომელიც მეზობლებისგან ყველაზე მეტად განსხვავდება, შემდეგ კი ერიდება ზღვის გაღმა მდებარე ქვეყნების ფერებს, ასე რომ ფერები რუკაზე თანაბრად ნაწილდება."
           }
         }
       }
@@ -3936,6 +3984,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მიღებულია %lld XP"
+          }
+        }
+      }
+    },
+    "Earth" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბუნებრივი"
           }
         }
       }
@@ -5125,6 +5185,18 @@
         }
       }
     },
+    "How countries get their colors" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "როგორ იღებენ ქვეყნები ფერებს"
+          }
+        }
+      }
+    },
     "How many border hops from **%@** to your destination?" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5143,6 +5215,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "როგორ ვითამაშოთ"
+          }
+        }
+      }
+    },
+    "Hues that stay distinct with common color blindness." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფერები, რომლებიც ფერთა აღქმის გავრცელებული დარღვევების დროსაც გაირჩევა."
           }
         }
       }
@@ -5847,6 +5931,18 @@
         }
       }
     },
+    "Map Colors" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის ფერები"
+          }
+        }
+      }
+    },
     "Map Puzzle" : {
       "localizations" : {
         "ka" : {
@@ -5882,6 +5978,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რუკის კარუსელი გვერდი %1$lld %2$lld-დან"
+          }
+        }
+      }
+    },
+    "Map colors" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის ფერები"
           }
         }
       }
@@ -6129,6 +6237,18 @@
         }
       }
     },
+    "Monochrome" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონოქრომი"
+          }
+        }
+      }
+    },
     "More" : {
       "localizations" : {
         "ka" : {
@@ -6182,6 +6302,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მულტიპლეიერი"
+          }
+        }
+      }
+    },
+    "Muted natural tones, easy on the eyes." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მქრქალი ბუნებრივი ტონები, თვალისთვის სასიამოვნო."
           }
         }
       }
@@ -7048,6 +7180,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ერთი ქმნის ლობის და ირჩევს ვიქტორინას. მეორე უერთდება თავისი ტელეფონიდან."
+          }
+        }
+      }
+    },
+    "One warm sand color in six shades, for a calm map." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ერთი თბილი ქვიშისფერი ექვს ელფერში, მშვიდი რუკისთვის."
           }
         }
       }
@@ -9812,6 +9956,18 @@
         }
       }
     },
+    "Soft pastels, like a printed political atlas." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რბილი პასტელი, როგორც ნაბეჭდ პოლიტიკურ ატლასში."
+          }
+        }
+      }
+    },
     "Solid sense of direction." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11305,6 +11461,18 @@
         }
       }
     },
+    "Vivid" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცოცხალი"
+          }
+        }
+      }
+    },
     "Vote for what's next" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -11576,6 +11744,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მსოფლიო რეკორდები"
+          }
+        }
+      }
+    },
+    "World map in the %@ colors" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო რუკა „%@“ ფერებში"
           }
         }
       }

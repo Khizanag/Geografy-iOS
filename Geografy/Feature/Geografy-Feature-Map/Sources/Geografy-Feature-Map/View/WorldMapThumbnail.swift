@@ -1,4 +1,5 @@
 import Geografy_Core_Common
+import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
 
@@ -11,6 +12,7 @@ public struct WorldMapThumbnail: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
+    @AppStorage(MapPreferences.paletteKey) private var palette = MapPalette.default.rawValue
 
     @State private var shapes: [CountryShape] = []
 
@@ -41,7 +43,7 @@ public struct WorldMapThumbnail: View {
         .opacity(shapes.isEmpty ? 0 : 1)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
-        .task(id: projection) { await loadShapes() }
+        .task(id: "\(projection)-\(palette)") { await loadShapes() }
     }
 }
 

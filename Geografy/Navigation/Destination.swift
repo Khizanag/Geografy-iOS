@@ -72,6 +72,7 @@ extension Destination {
         case .localMultiplayer: LocalMultiplayerEntryScreen()
         case .map(let filter): MapScreen(continentFilter: filter?.displayName)
         case .mapColoring: MapColoringScreen()
+        case .mapColors: MapColorsScreen()
         case .mapFullScreen(let filter): MapScreen(continentFilter: filter)
         case .mapPuzzle: MapPuzzleSetupScreen()
         case .pinDrop: PinDropSetupScreen()

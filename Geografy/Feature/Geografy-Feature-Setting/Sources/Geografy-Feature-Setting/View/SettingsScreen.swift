@@ -78,6 +78,7 @@ private extension SettingsScreen {
             VStack(spacing: DesignSystem.Spacing.lg) {
                 accountSection
                 preferencesSection
+                mapSection
                 languageSection
                 soundAndHapticsSection
                 notificationsSection
@@ -214,16 +215,23 @@ private extension SettingsScreen {
     }
 }
 
-// MARK: - Preferences
+// MARK: - Map
 private extension SettingsScreen {
-    var preferencesSection: some View {
-        settingsGroup(header: "Preferences") {
+    var mapSection: some View {
+        settingsGroup(header: "Map") {
             VStack(spacing: 0) {
-                appearanceRow
+                projectionRow
 
                 settingsDivider
 
-                projectionRow
+                Button { coordinator.push(.mapColors) } label: {
+                    SettingsNavigationRow(
+                        icon: "paintpalette.fill",
+                        iconColor: DesignSystem.Color.orange,
+                        title: "Map colors"
+                    )
+                }
+                .buttonStyle(PressButtonStyle())
 
                 settingsDivider
 
@@ -233,6 +241,17 @@ private extension SettingsScreen {
                     title: "Latitude & longitude on maps",
                     isOn: $showsGraticule.animation()
                 )
+            }
+        }
+    }
+}
+
+// MARK: - Preferences
+private extension SettingsScreen {
+    var preferencesSection: some View {
+        settingsGroup(header: "Preferences") {
+            VStack(spacing: 0) {
+                appearanceRow
 
                 settingsDivider
 

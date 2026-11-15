@@ -32,6 +32,7 @@ public enum Destination: Hashable, Identifiable {
     case localMultiplayer
     case map(continentFilter: Country.Continent? = nil)
     case mapColoring
+    case mapColors
     case mapFullScreen(continentFilter: String?)
     case mapPuzzle
     case multiplayer
@@ -92,6 +93,7 @@ public enum Destination: Hashable, Identifiable {
         case .localMultiplayer: "localMultiplayer"
         case .map(let filter): "map-\(filter?.rawValue ?? "world")"
         case .mapColoring: "mapColoring"
+        case .mapColors: "mapColors"
         case .mapFullScreen(let filter): "mapFullScreen-\(filter ?? "world")"
         case .mapPuzzle: "mapPuzzle"
         case .pinDrop: "pinDrop"

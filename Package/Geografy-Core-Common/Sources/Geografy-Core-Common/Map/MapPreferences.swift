@@ -4,4 +4,6 @@ public enum MapPreferences {
     public static let showsGraticuleKey = "map_showsGraticule"
     /// The `MapProjectionKind` the maps draw in.
     public static let projectionKey = "map_projection"
+    /// The `MapPalette` countries are filled from.
+    public static let paletteKey = "map_palette"
 }

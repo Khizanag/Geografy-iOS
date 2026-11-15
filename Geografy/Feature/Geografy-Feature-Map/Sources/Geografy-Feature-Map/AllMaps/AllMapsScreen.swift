@@ -12,6 +12,7 @@ public struct AllMapsScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
+    @AppStorage(MapPreferences.paletteKey) private var palette = MapPalette.default.rawValue
 
     @State private var outlines: [Country.Continent: ContinentOutline] = [:]
 
@@ -26,7 +27,7 @@ public struct AllMapsScreen: View {
     public var body: some View {
         scrollContent
             .screenBackground()
-            .task(id: projection) { await loadOutlines() }
+            .task(id: "\(projection)-\(palette)") { await loadOutlines() }
     }
 }
 

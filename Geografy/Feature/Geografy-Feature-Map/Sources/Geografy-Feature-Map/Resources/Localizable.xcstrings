@@ -156,6 +156,16 @@
         }
       }
     },
+    "Countries that share a border never share a color. Of the colors left, each country takes the one that looks most different from its neighbors, then keeps away from countries just across the sea, so the colors spread evenly over the map." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსაზღვრე ქვეყნებს ერთი ფერი არასდროს აქვთ. დარჩენილი ფერებიდან თითოეული ქვეყანა იღებს იმას, რომელიც მეზობლებისგან ყველაზე მეტად განსხვავდება, შემდეგ კი ერიდება ზღვის გაღმა მდებარე ქვეყნების ფერებს, ასე რომ ფერები რუკაზე თანაბრად ნაწილდება."
+          }
+        }
+      }
+    },
     "Country labels" : {
       "localizations" : {
         "ka" : {
@@ -228,6 +238,16 @@
         }
       }
     },
+    "How countries get their colors" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "როგორ იღებენ ქვეყნები ფერებს"
+          }
+        }
+      }
+    },
     "Interactive map of %@" : {
       "localizations" : {
         "ka" : {
@@ -274,6 +294,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "რუკა"
+          }
+        }
+      }
+    },
+    "Map Colors" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის ფერები"
           }
         }
       }
@@ -457,6 +487,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "მსოფლიო რუკა"
+          }
+        }
+      }
+    },
+    "World map in the %@ colors" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო რუკა „%@“ ფერებში"
           }
         }
       }

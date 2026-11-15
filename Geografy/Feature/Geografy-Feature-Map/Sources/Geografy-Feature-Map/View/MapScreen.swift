@@ -19,6 +19,7 @@ public struct MapScreen: View {
     @AppStorage("map_showsVisitedCountries") private var showsVisitedCountries = true
     @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
     @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
+    @AppStorage(MapPreferences.paletteKey) private var palette = MapPalette.default.rawValue
 
     public var continentFilter: String?
 
@@ -53,8 +54,8 @@ public struct MapScreen: View {
             }
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
-            // Again when the projection changes in Settings: the Map tab stays alive behind it.
-            .task(id: projection) {
+            // Again when the projection or colors change in Settings: the Map tab stays alive behind it.
+            .task(id: "\(projection)-\(palette)") {
                 isInitialized = false
                 await loadMapData()
             }

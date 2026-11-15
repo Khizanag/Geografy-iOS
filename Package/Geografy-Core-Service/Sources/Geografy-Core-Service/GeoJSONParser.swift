@@ -61,15 +61,12 @@ public enum GeoJSONParser {
         }
 
         let mergeMap = makeTerritoryMergeMap()
-        var shapes = collection.features.enumerated().compactMap { index, feature in
+        let shapes = collection.features.enumerated().compactMap { index, feature in
             parseFeature(feature, at: index, mergeMap: mergeMap, projection: projection)
         }
 
-        shapes = consolidateMergedTerritories(shapes)
-
-        MapColorPalette.assignColors(to: &shapes)
-
-        return shapes
+        // Colors come later, from `MapColoringEngine`, so a palette change never parses the map again.
+        return consolidateMergedTerritories(shapes)
     }
 }
 

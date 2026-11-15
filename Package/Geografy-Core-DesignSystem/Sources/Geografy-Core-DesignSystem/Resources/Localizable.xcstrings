@@ -146,6 +146,26 @@
         }
       }
     },
+    "Atlas" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ატლასი"
+          }
+        }
+      }
+    },
+    "Bold, clearly separate hues for the most contrast." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მკვეთრი, ერთმანეთისგან აშკარად განსხვავებული ფერები მაქსიმალური კონტრასტისთვის."
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "ka" : {
@@ -226,6 +246,16 @@
         }
       }
     },
+    "Color-Blind Safe" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალტონიზმისთვის"
+          }
+        }
+      }
+    },
     "Coming Soon" : {
       "localizations" : {
         "ka" : {
@@ -297,6 +327,16 @@
         }
       }
     },
+    "Earth" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ბუნებრივი"
+          }
+        }
+      }
+    },
     "Flag of %@" : {
       "localizations" : {
         "ka" : {
@@ -333,6 +373,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დამალული"
+          }
+        }
+      }
+    },
+    "Hues that stay distinct with common color blindness." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ფერები, რომლებიც ფერთა აღქმის გავრცელებული დარღვევების დროსაც გაირჩევა."
           }
         }
       }
@@ -403,6 +453,26 @@
         }
       }
     },
+    "Monochrome" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მონოქრომი"
+          }
+        }
+      }
+    },
+    "Muted natural tones, easy on the eyes." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მქრქალი ბუნებრივი ტონები, თვალისთვის სასიამოვნო."
+          }
+        }
+      }
+    },
     "NEW" : {
       "localizations" : {
         "ka" : {
@@ -439,6 +509,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "არცერთი"
+          }
+        }
+      }
+    },
+    "One warm sand color in six shades, for a calm map." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ერთი თბილი ქვიშისფერი ექვს ელფერში, მშვიდი რუკისთვის."
           }
         }
       }
@@ -542,6 +622,16 @@
         }
       }
     },
+    "Soft pastels, like a printed political atlas." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რბილი პასტელი, როგორც ნაბეჭდ პოლიტიკურ ატლასში."
+          }
+        }
+      }
+    },
     "Submit" : {
       "localizations" : {
         "ka" : {
@@ -579,6 +669,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "განბლოკვა პრემიუმით"
+          }
+        }
+      }
+    },
+    "Vivid" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ცოცხალი"
           }
         }
       }
