@@ -1,12 +1,10 @@
 import GameKit
 import Geografy_Core_DesignSystem
-import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct LeaderboardScreen: View {
     // MARK: - Properties
-    @Environment(Navigator.self) private var coordinator
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
 
@@ -27,12 +25,11 @@ private extension LeaderboardScreen {
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: DesignSystem.Spacing.md) {
-                statusCard
-                    .padding(.top, DesignSystem.Spacing.sm)
-                ForEach(leaderboards, id: \.id) { info in
-                    leaderboardCard(info)
+                if gameCenterService.isAuthenticated {
+                    connectedContent
+                } else {
+                    signedOutContent
                 }
-                openGameCenterButton
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.bottom, DesignSystem.Spacing.xxl)
@@ -40,17 +37,53 @@ private extension LeaderboardScreen {
         }
     }
 
+    @ViewBuilder
+    var connectedContent: some View {
+        statusCard
+            .padding(.top, DesignSystem.Spacing.sm)
+        ForEach(leaderboards) { info in
+            leaderboardCard(info)
+        }
+        openGameCenterButton
+    }
+
+    var signedOutContent: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+            GameCenterSignInPrompt(
+                message: "Sign in to Game Center in Settings to post your scores and see how you rank."
+            )
+            SectionHeaderView(title: "Leaderboards")
+            RowListCard(
+                leaderboards,
+                dividerInset: RowListCardLayout.dividerInset(after: DesignSystem.Size.xl)
+            ) { info in
+                leaderboardSummary(info)
+                    .rowListCardRow()
+                    .accessibilityElement(children: .combine)
+            }
+        }
+    }
+
     var statusCard: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
-            IconBadge(statusIcon, color: statusColor, size: .small)
+            IconBadge("checkmark.seal.fill", color: DesignSystem.Color.success, size: .small)
                 .accessibilityHidden(true)
-            statusInfo
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Connected to Game Center")
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text("Your scores are syncing automatically")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
             Spacer()
-            Image(systemName: gameCenterService.isAuthenticated ? "checkmark.circle.fill" : "xmark.circle")
+            Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(gameCenterService.isAuthenticated ? statusColor : DesignSystem.Color.textSecondary)
+                .foregroundStyle(DesignSystem.Color.success)
                 .accessibilityHidden(true)
         }
+        .accessibilityElement(children: .combine)
         .padding(DesignSystem.Spacing.sm)
         .background(.ultraThinMaterial, in: RoundedRectangle(
             cornerRadius: DesignSystem.CornerRadius.medium,
@@ -58,70 +91,7 @@ private extension LeaderboardScreen {
         ))
     }
 
-    @ViewBuilder
-    var statusInfo: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(statusTitle)
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-            if gameCenterService.isAuthenticated {
-                Text(statusSubtitle)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-            } else {
-                Button {
-                    hapticsService.impact(.light)
-                    coordinator.sheet(.signIn)
-                } label: {
-                    Text("Sign In")
-                        .font(DesignSystem.Font.caption)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(DesignSystem.Color.accent)
-                }
-                .buttonStyle(.plain)
-            }
-        }
-    }
-
     func leaderboardCard(_ info: LeaderboardInfo) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.md) {
-                leaderboardCardHeader(info)
-                leaderboardCardAction(info)
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    func leaderboardCardHeader(_ info: LeaderboardInfo) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            ZStack {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-                    .fill(info.color.opacity(0.18))
-                    .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                Image(systemName: info.icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(info.color)
-            }
-            .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text(info.title)
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(info.subtitle)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .lineLimit(2)
-            }
-            Spacer()
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
-    }
-
-    func leaderboardCardAction(_ info: LeaderboardInfo) -> some View {
         Button {
             hapticsService.impact(.light)
             GKAccessPoint.shared.trigger(
@@ -130,25 +100,43 @@ private extension LeaderboardScreen {
                 timeScope: .allTime
             ) {}
         } label: {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "list.number")
-                    .font(DesignSystem.Font.caption)
-                    .accessibilityHidden(true)
-                Text("View Rankings")
-                    .font(DesignSystem.Font.subheadline)
-                    .fontWeight(.semibold)
+            CardView {
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    leaderboardSummary(info)
+                    RowChevron()
+                }
+                .padding(DesignSystem.Spacing.md)
             }
-            .foregroundStyle(info.color)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(
-                info.color.opacity(0.12),
-                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-            )
+            .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
-        .accessibilityLabel("View \(info.title) rankings")
-        .disabled(!gameCenterService.isAuthenticated)
-        .opacity(gameCenterService.isAuthenticated ? 1 : 0.4)
+        .buttonStyle(PressButtonStyle())
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Opens the rankings in Game Center")
+    }
+
+    func leaderboardSummary(_ info: LeaderboardInfo) -> some View {
+        HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: info.icon)
+                .font(DesignSystem.Font.title2)
+                .foregroundStyle(info.color)
+                .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
+                .background(
+                    info.color.opacity(0.18),
+                    in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
+                )
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
+                Text(info.title)
+                    .font(DesignSystem.Font.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(info.subtitle)
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 
     var openGameCenterButton: some View {
@@ -156,15 +144,13 @@ private extension LeaderboardScreen {
             hapticsService.impact(.light)
             GKAccessPoint.shared.trigger(state: .dashboard) {}
         }
-        .disabled(!gameCenterService.isAuthenticated)
-        .opacity(gameCenterService.isAuthenticated ? 1 : 0.4)
         .padding(.top, DesignSystem.Spacing.xs)
     }
 }
 
 // MARK: - Leaderboard Data
 private extension LeaderboardScreen {
-    struct LeaderboardInfo {
+    struct LeaderboardInfo: Identifiable {
         let id: String
         let title: String
         let subtitle: String
@@ -217,26 +203,5 @@ private extension LeaderboardScreen {
                 color: DesignSystem.Color.error
             ),
         ]
-    }
-}
-
-// MARK: - Status
-private extension LeaderboardScreen {
-    var statusColor: Color {
-        gameCenterService.isAuthenticated ? DesignSystem.Color.success : DesignSystem.Color.textTertiary
-    }
-
-    var statusIcon: String {
-        gameCenterService.isAuthenticated ? "checkmark.seal.fill" : "gamecontroller"
-    }
-
-    var statusTitle: String {
-        gameCenterService.isAuthenticated ? "Connected to Game Center" : "Not Connected"
-    }
-
-    var statusSubtitle: String {
-        gameCenterService.isAuthenticated
-            ? "Your scores are syncing automatically"
-            : "Sign in to Game Center in iOS Settings"
     }
 }
