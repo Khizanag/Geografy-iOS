@@ -16,7 +16,7 @@ struct SavedScreen: View {
 
     // MARK: - Body
     var body: some View {
-        tabContent
+        tabPages
             .segmentedTabs("Saved", selection: $tab, tabs: SavedTab.allCases) { $0.title }
             .navigationTitle("Saved")
             .closeButtonPlacementLeading()
@@ -25,8 +25,12 @@ struct SavedScreen: View {
 
 // MARK: - Subviews
 private extension SavedScreen {
+    var tabPages: some View {
+        SegmentedTabContent(selection: tab, tabs: SavedTab.allCases) { content(for: $0) }
+    }
+
     @ViewBuilder
-    var tabContent: some View {
+    func content(for tab: SavedTab) -> some View {
         switch tab {
         case .favorites: FavoritesScreen()
         case .wantToVisit: TravelBucketListScreen()

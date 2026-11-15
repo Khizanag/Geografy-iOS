@@ -14,7 +14,7 @@ struct ExploreScreen: View {
 
     // MARK: - Body
     var body: some View {
-        modeContent
+        modePages
             .segmentedTabs("View", selection: $mode, tabs: Mode.allCases) { $0.title }
             .navigationTitle("Explore")
             .toolbar {
@@ -46,8 +46,12 @@ private extension ExploreScreen {
 
 // MARK: - Subviews
 private extension ExploreScreen {
+    var modePages: some View {
+        SegmentedTabContent(selection: mode, tabs: Mode.allCases) { content(for: $0) }
+    }
+
     @ViewBuilder
-    var modeContent: some View {
+    func content(for mode: Mode) -> some View {
         switch mode {
         // The list's state is kept here, so switching to Maps and back keeps its search, sort, and groups.
         case .countries: CountryListScreen(state: countryListState)

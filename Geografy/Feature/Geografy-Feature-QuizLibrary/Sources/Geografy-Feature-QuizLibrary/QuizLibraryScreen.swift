@@ -14,7 +14,7 @@ public struct QuizLibraryScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        tabContent
+        tabPages
             .segmentedTabs("Quiz Library", selection: $tab, tabs: Self.availableTabs) { $0.title }
             .navigationTitle("Quiz Library")
             .closeButtonPlacementLeading()
@@ -30,8 +30,12 @@ private extension QuizLibraryScreen {
     static let availableTabs = QuizLibraryTab.allCases
     #endif
 
+    var tabPages: some View {
+        SegmentedTabContent(selection: tab, tabs: Self.availableTabs) { content(for: $0) }
+    }
+
     @ViewBuilder
-    var tabContent: some View {
+    func content(for tab: QuizLibraryTab) -> some View {
         switch tab {
         case .packs: QuizPackBrowserScreen()
         case .custom:

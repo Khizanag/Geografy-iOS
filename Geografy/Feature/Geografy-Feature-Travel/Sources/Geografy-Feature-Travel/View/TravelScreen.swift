@@ -13,7 +13,7 @@ public struct TravelScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        tabContent
+        tabPages
             .segmentedTabs("Travel", selection: $tab, tabs: Tab.allCases) { $0.title }
             .navigationTitle("Travel")
             .closeButtonPlacementLeading()
@@ -39,8 +39,12 @@ private extension TravelScreen {
 
 // MARK: - Subviews
 private extension TravelScreen {
+    var tabPages: some View {
+        SegmentedTabContent(selection: tab, tabs: Tab.allCases) { content(for: $0) }
+    }
+
     @ViewBuilder
-    var tabContent: some View {
+    func content(for tab: Tab) -> some View {
         switch tab {
         case .countries: TravelTrackerScreen()
         case .journal: TravelJournalScreen(serviceStore: journalStore)
