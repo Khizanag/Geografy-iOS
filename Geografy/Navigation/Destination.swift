@@ -38,8 +38,6 @@ import SwiftUI
 // MARK: - Content
 @MainActor
 extension Destination {
-    private static let multiplayerService = MultiplayerService()
-
     @ViewBuilder
     var content: some View {
         switch self {
@@ -69,14 +67,13 @@ extension Destination {
         case .learningModule(let module): ModuleLessonsScreen(module: module)
         case let .lesson(module, lesson): LessonScreen(module: module, lesson: lesson)
         case .leaderboards: LeaderboardScreen()
-        case .localMultiplayer: LocalMultiplayerEntryScreen()
         case .map(let filter): MapScreen(continentFilter: filter?.displayName)
         case .mapColoring: MapColoringScreen()
         case .mapColors: MapColorsScreen()
         case .mapFullScreen(let filter): MapScreen(continentFilter: filter)
         case .mapPuzzle: MapPuzzleSetupScreen()
         case .pinDrop: PinDropSetupScreen()
-        case .multiplayer: MultiplayerLobbyScreen(multiplayerService: Self.multiplayerService)
+        case .multiplayer: LocalMultiplayerEntryScreen()
         case .neighborExplorer(let country): NeighborExplorerScreen(country: country)
         case .organizationDetail(let org): OrganizationDetailScreen(organization: org)
         case .organizationMap(let org): OrganizationMapScreen(organization: org)

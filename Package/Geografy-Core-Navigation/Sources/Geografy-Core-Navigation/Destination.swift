@@ -29,7 +29,6 @@ public enum Destination: Hashable, Identifiable {
     case learningModule(LearningModule)
     case lesson(LearningModule, Lesson)
     case leaderboards
-    case localMultiplayer
     case map(continentFilter: Country.Continent? = nil)
     case mapColoring
     case mapColors
@@ -90,7 +89,6 @@ public enum Destination: Hashable, Identifiable {
         case .learningModule(let module): "learningModule-\(module.id)"
         case let .lesson(module, lesson): "lesson-\(module.id)-\(lesson.id)"
         case .leaderboards: "leaderboards"
-        case .localMultiplayer: "localMultiplayer"
         case .map(let filter): "map-\(filter?.rawValue ?? "world")"
         case .mapColoring: "mapColoring"
         case .mapColors: "mapColors"
