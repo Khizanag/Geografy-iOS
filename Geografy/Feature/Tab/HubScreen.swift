@@ -112,6 +112,8 @@ private extension HubScreen {
             .regular,
             in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
         )
+        // The glass doesn't take touches, so without this only the icon and text would.
+        .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.large))
         .accessibilityElement(children: .combine)
         .overlay(alignment: .topTrailing) {
             if testingModeService.isEnabled {

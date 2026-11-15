@@ -74,6 +74,7 @@ private extension PairSelector {
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                     .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                     .glassEffect(.regular.interactive(), in: .circle)
+                    .contentShape(.circle)
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Swap")
