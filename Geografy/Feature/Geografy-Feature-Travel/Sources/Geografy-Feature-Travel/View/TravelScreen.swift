@@ -16,9 +16,6 @@ public struct TravelScreen: View {
         tabContent
             .segmentedTabs("Travel", selection: $tab, tabs: Tab.allCases) { $0.title }
             .navigationTitle("Travel")
-            #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
             .closeButtonPlacementLeading()
     }
 }
@@ -31,7 +28,7 @@ private extension TravelScreen {
 
         var id: String { rawValue }
 
-        var title: String {
+        var title: LocalizedStringKey {
             switch self {
             case .countries: "Countries"
             case .journal: "Journal"

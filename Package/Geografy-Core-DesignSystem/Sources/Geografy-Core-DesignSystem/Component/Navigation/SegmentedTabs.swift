@@ -1,28 +1,33 @@
 import SwiftUI
 
 public extension View {
-    /// Puts a segmented picker of `tabs` above this content, for screens that switch between a few views,
+    /// Puts a segmented picker of `tabs` in the navigation bar, for screens that switch between a few views,
     /// and gives the whole screen the app background.
+    ///
+    /// The picker takes the title's place, so the bar stays inline. A bar of its own under the navigation bar
+    /// moved with every scroll and fought a large title collapsing, which made the bar shake.
     func segmentedTabs<Tab: Hashable & Identifiable>(
-        _ title: String,
+        _ title: LocalizedStringKey,
         selection: Binding<Tab>,
         tabs: [Tab],
-        tabTitle: @escaping (Tab) -> String
+        tabTitle: @escaping (Tab) -> LocalizedStringKey
     ) -> some View {
-        // A bar, not a plain inset, so content scrolling under it fades the way it does under the navigation bar.
-        safeAreaBar(edge: .top) {
-            SegmentedTabPicker(title: title, selection: selection, tabs: tabs, tabTitle: tabTitle)
+        toolbar {
+            ToolbarItem(placement: .principal) {
+                SegmentedTabPicker(title: title, selection: selection, tabs: tabs, tabTitle: tabTitle)
+            }
         }
+        .navigationBarTitleDisplayMode(.inline)
         .screenBackground()
     }
 }
 
 // MARK: - Picker
 private struct SegmentedTabPicker<Tab: Hashable & Identifiable>: View {
-    let title: String
+    let title: LocalizedStringKey
     @Binding var selection: Tab
     let tabs: [Tab]
-    let tabTitle: (Tab) -> String
+    let tabTitle: (Tab) -> LocalizedStringKey
 
     var body: some View {
         Picker(title, selection: $selection) {
@@ -31,7 +36,5 @@ private struct SegmentedTabPicker<Tab: Hashable & Identifiable>: View {
             }
         }
         .pickerStyle(.segmented)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.xs)
     }
 }

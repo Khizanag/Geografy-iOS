@@ -5080,6 +5080,18 @@
         }
       }
     },
+    "Journal" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღიური"
+          }
+        }
+      }
+    },
     "Journal Stats" : {
       "localizations" : {
         "ka" : {
@@ -10086,6 +10098,18 @@
         }
       }
     },
+    "To Visit" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სანახავი"
+          }
+        }
+      }
+    },
     "Today's Challenge" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10528,7 +10552,6 @@
       }
     },
     "View" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {

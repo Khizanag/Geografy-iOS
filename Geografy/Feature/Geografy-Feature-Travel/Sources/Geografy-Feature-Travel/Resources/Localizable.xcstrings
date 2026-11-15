@@ -481,6 +481,16 @@
         }
       }
     },
+    "Journal" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დღიური"
+          }
+        }
+      }
+    },
     "Journal Stats" : {
       "localizations" : {
         "ka" : {

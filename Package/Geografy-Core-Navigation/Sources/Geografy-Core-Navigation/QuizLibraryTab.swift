@@ -1,3 +1,5 @@
+import SwiftUI
+
 /// A tab of the Quiz Library: themed packs or the user's own quizzes.
 public enum QuizLibraryTab: String, CaseIterable, Hashable, Identifiable, Sendable {
     case packs
@@ -5,7 +7,7 @@ public enum QuizLibraryTab: String, CaseIterable, Hashable, Identifiable, Sendab
 
     public var id: String { rawValue }
 
-    public var title: String {
+    public var title: LocalizedStringKey {
         switch self {
         case .packs: "Packs"
         case .custom: "My Quizzes"

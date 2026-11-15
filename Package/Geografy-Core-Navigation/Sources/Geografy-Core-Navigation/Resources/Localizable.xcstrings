@@ -1,5 +1,56 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "Collections" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კოლექციები"
+          }
+        }
+      }
+    },
+    "Favorites" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რჩეულები"
+          }
+        }
+      }
+    },
+    "My Quizzes" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩემი ვიქტორინები"
+          }
+        }
+      }
+    },
+    "Packs" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "პაკეტები"
+          }
+        }
+      }
+    },
+    "To Visit" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "სანახავი"
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

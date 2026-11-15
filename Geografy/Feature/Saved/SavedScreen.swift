@@ -19,7 +19,6 @@ struct SavedScreen: View {
         tabContent
             .segmentedTabs("Saved", selection: $tab, tabs: SavedTab.allCases) { $0.title }
             .navigationTitle("Saved")
-            .navigationBarTitleDisplayMode(.inline)
             .closeButtonPlacementLeading()
     }
 }

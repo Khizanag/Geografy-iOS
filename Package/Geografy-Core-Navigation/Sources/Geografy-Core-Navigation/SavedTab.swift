@@ -1,3 +1,5 @@
+import SwiftUI
+
 /// A tab of the Saved screen, which gathers everything the user keeps.
 public enum SavedTab: String, CaseIterable, Hashable, Identifiable, Sendable {
     case favorites
@@ -6,10 +8,10 @@ public enum SavedTab: String, CaseIterable, Hashable, Identifiable, Sendable {
 
     public var id: String { rawValue }
 
-    public var title: String {
+    public var title: LocalizedStringKey {
         switch self {
         case .favorites: "Favorites"
-        case .wantToVisit: "Want to Visit"
+        case .wantToVisit: "To Visit"
         case .collections: "Collections"
         }
     }

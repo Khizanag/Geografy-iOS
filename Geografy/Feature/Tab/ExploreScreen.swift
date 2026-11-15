@@ -17,7 +17,6 @@ struct ExploreScreen: View {
         modeContent
             .segmentedTabs("View", selection: $mode, tabs: Mode.allCases) { $0.title }
             .navigationTitle("Explore")
-            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { coordinator.push(.search) } label: {
@@ -36,7 +35,7 @@ private extension ExploreScreen {
 
         var id: String { rawValue }
 
-        var title: String {
+        var title: LocalizedStringKey {
             switch self {
             case .countries: "Countries"
             case .maps: "Maps"

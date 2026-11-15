@@ -17,9 +17,6 @@ public struct QuizLibraryScreen: View {
         tabContent
             .segmentedTabs("Quiz Library", selection: $tab, tabs: Self.availableTabs) { $0.title }
             .navigationTitle("Quiz Library")
-            #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
             .closeButtonPlacementLeading()
     }
 }
