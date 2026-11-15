@@ -129,31 +129,31 @@ private extension ContinentOverviewScreen {
     func sizeTiles(_ countries: [Country]) -> some View {
         let totalPopulation = countries.reduce(0) { $0 + $1.population }
         let totalArea = countries.reduce(0.0) { $0 + $1.area }
-        statTile(
-            icon: "flag.fill",
-            label: "Countries",
+        StatTile(
             value: "\(countries.count)",
+            label: "Countries",
+            icon: "flag.fill",
             color: DesignSystem.Color.accent
         )
-        statTile(
-            icon: "person.3.fill",
-            label: "Total Population",
+        StatTile(
             value: totalPopulation.formatPopulation(),
+            label: "Total Population",
+            icon: "person.3.fill",
             color: DesignSystem.Color.blue
         )
         if totalArea > 0 {
-            statTile(
-                icon: "map.fill",
-                label: "Total Area",
+            StatTile(
                 value: "\(Int(totalArea / 1_000_000))M km²",
+                label: "Total Area",
+                icon: "map.fill",
                 color: DesignSystem.Color.success
             )
         }
         if let largest = countries.max(by: { $0.area < $1.area }) {
-            statTile(
-                icon: "arrow.up.right.and.arrow.down.left.rectangle.fill",
-                label: "Largest Country",
+            StatTile(
                 value: "\(largest.name) (\(Int(largest.area / 1_000))K km²)",
+                label: "Largest Country",
+                icon: "arrow.up.right.and.arrow.down.left.rectangle.fill",
                 color: DesignSystem.Color.warning
             )
         }
@@ -162,50 +162,28 @@ private extension ContinentOverviewScreen {
     @ViewBuilder
     func profileTiles(_ countries: [Country]) -> some View {
         if let smallest = countries.filter({ $0.area > 0 }).min(by: { $0.area < $1.area }) {
-            statTile(
-                icon: "smallcircle.filled.circle",
-                label: "Smallest Country",
+            StatTile(
                 value: smallest.name,
+                label: "Smallest Country",
+                icon: "smallcircle.filled.circle",
                 color: DesignSystem.Color.orange
             )
         }
         if let average = averageGDPPerCapita(of: countries) {
-            statTile(
-                icon: "dollarsign.circle.fill",
-                label: "Avg GDP per Capita",
+            StatTile(
                 value: average.formatted(.currency(code: "USD").precision(.fractionLength(0))),
+                label: "Avg GDP per Capita",
+                icon: "dollarsign.circle.fill",
                 color: DesignSystem.Color.purple
             )
         }
         if let language = mostSpokenLanguage(in: countries) {
-            statTile(
-                icon: "bubble.left.fill",
-                label: "Most Spoken Language",
+            StatTile(
                 value: language,
+                label: "Most Spoken Language",
+                icon: "bubble.left.fill",
                 color: DesignSystem.Color.indigo
             )
-        }
-    }
-
-    func statTile(icon: String, label: String, value: String, color: Color) -> some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(color)
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                Text(value)
-                    .font(DesignSystem.Font.footnote)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.7)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(DesignSystem.Spacing.sm)
         }
     }
 }
