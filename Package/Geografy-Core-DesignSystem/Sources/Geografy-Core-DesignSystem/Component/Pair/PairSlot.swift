@@ -26,6 +26,7 @@ struct PairSlot: View {
             if item != nil {
                 Button("Change", systemImage: "arrow.triangle.2.circlepath", action: onPick)
                 Button("Remove", systemImage: "xmark", role: .destructive, action: onClear)
+                    .tint(DesignSystem.Color.destructive)
             }
         }
         .accessibilityLabel("\(role): \(item?.title ?? "not chosen")")

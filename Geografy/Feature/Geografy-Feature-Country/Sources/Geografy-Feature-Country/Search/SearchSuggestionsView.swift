@@ -73,6 +73,7 @@ private extension SearchSuggestionsView {
             Button("Remove", systemImage: "xmark", role: .destructive) {
                 recentService.remove(recentQuery)
             }
+            .tint(DesignSystem.Color.destructive)
         }
         .accessibilityHint("Searches again")
         .accessibilityActions {
