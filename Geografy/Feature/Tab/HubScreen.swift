@@ -87,6 +87,11 @@ private extension HubGrid {
                     }
                 }
             }
+            // Over the container rather than on each tile: the container draws every tile's glass in one layer,
+            // which would cover a badge hanging over a tile's corner.
+            .overlayPreferenceValue(TestBadgeAnchorKey.self) { anchors in
+                testBadges(for: items, at: anchors)
+            }
         }
     }
 
@@ -120,13 +125,6 @@ private extension HubGrid {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(isWide ? DesignSystem.Spacing.lg : DesignSystem.Spacing.md)
-        // Inside the tile and before the glass, so it's drawn as the tile's content: the container draws every
-        // tile's glass in one layer, which would cover anything hanging over a corner.
-        .overlay(alignment: .topTrailing) {
-            if testingModeService.isEnabled {
-                testBadge(for: sheet)
-            }
-        }
         .glassEffect(
             .regular,
             in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge)
@@ -134,19 +132,39 @@ private extension HubGrid {
         // The glass doesn't take touches, so without this only the icon and text would.
         .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         .accessibilityElement(children: .combine)
+        .anchorPreference(key: TestBadgeAnchorKey.self, value: .topTrailing) { [sheet: $0] }
     }
 
+    @ViewBuilder
+    func testBadges(for items: [HubItem], at anchors: [HubItem: Anchor<CGPoint>]) -> some View {
+        if testingModeService.isEnabled {
+            GeometryReader { proxy in
+                ForEach(items) { item in
+                    if let anchor = anchors[item] {
+                        let corner = proxy[anchor]
+                        // A point just past the corner, with the badge's top-trailing corner hung on it.
+                        Color.clear
+                            .frame(width: 0, height: 0)
+                            .overlay(alignment: .topTrailing) {
+                                testBadge(for: item).fixedSize()
+                            }
+                            .position(x: corner.x + 4, y: corner.y - 4)
+                    }
+                }
+            }
+        }
+    }
+
+    /// Half over the tile's top-trailing corner.
     func testBadge(for sheet: HubItem) -> some View {
         Button {
             testChecklistSheet = sheet
         } label: {
             Image(systemName: "ladybug.fill")
-                .font(DesignSystem.Font.caption)
+                .font(DesignSystem.Font.micro)
                 .foregroundStyle(DesignSystem.Color.onAccent)
-                .padding(DesignSystem.Spacing.xs)
+                .padding(DesignSystem.Spacing.xxs)
                 .background(DesignSystem.Color.orange, in: Circle())
-                .padding(DesignSystem.Spacing.sm)
-                .contentShape(.rect)
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Test checklist for \(sheet.label)")
@@ -177,5 +195,15 @@ private extension HubGrid {
         }
         let count = dynamicTypeSize.isAccessibilitySize ? 1 : 2
         return Array(repeating: GridItem(.flexible(), spacing: spacing), count: count)
+    }
+}
+
+// MARK: - Test Badge Anchors
+/// Each tile's top-trailing corner, so its test badge can be drawn above the glass container.
+private struct TestBadgeAnchorKey: PreferenceKey {
+    static let defaultValue: [HubItem: Anchor<CGPoint>] = [:]
+
+    static func reduce(value: inout [HubItem: Anchor<CGPoint>], nextValue: () -> [HubItem: Anchor<CGPoint>]) {
+        value.merge(nextValue()) { $1 }
     }
 }
