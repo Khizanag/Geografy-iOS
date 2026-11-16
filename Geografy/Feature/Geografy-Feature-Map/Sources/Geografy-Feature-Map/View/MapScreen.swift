@@ -33,6 +33,7 @@ public struct MapScreen: View {
 
     @State private var mapState = MapState()
     @State private var showFlagPreview = false
+    @State private var showsFinder = false
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
     /// The projection the shown shapes were laid out in. Until it matches the chosen one, the map hides behind
@@ -62,6 +63,11 @@ public struct MapScreen: View {
             .task(id: "\(projection)-\(palette)-\(geoJSONCache.revision)") {
                 isInitialized = false
                 await loadMapData()
+            }
+            .sheet(isPresented: $showsFinder) {
+                CoordinatedNavigationStack(showCloseButton: true) {
+                    MapCountryFinder(shapes: mapState.countryShapes) { focus(on: $0) }
+                }
             }
             .zoomableViewer(isPresented: $showFlagPreview, title: selectedCountryTitle) {
                 if let code = mapState.selectedCountryCode {
@@ -173,6 +179,12 @@ private extension MapScreen {
                     .frame(width: CountryBannerView.landscapeWidth)
                     .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: mapState.selectedCountryCode)
             }
+        }
+        ToolbarItem(placement: .topBarLeading) {
+            Button { showsFinder = true } label: {
+                Label("Find a Country", systemImage: "magnifyingglass")
+            }
+            .disabled(isLoading)
         }
         ToolbarItem(placement: .primaryAction) {
             ToolbarToggle("Country labels", isOn: mapState.showLabels) {
@@ -404,6 +416,20 @@ private extension MapScreen {
 
 // MARK: - Actions
 private extension MapScreen {
+    /// Flies the map to a country and selects it. The drawn map moves during the flight and is drawn sharp
+    /// again when it lands, the same way a pinch works.
+    func focus(on shape: CountryShape) {
+        mapState.beginGesture()
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.6)) {
+            mapState.focus(on: shape.boundingBox, in: screenSize)
+            clampOffset()
+            mapState.selectedCountryCode = shape.id
+        } completion: {
+            mapState.lastOffset = mapState.offset
+            mapState.endGesture()
+        }
+    }
+
     func handleTap(at point: CGPoint, in size: CGSize) {
         let mapPoint = mapState.mapPoint(for: point, in: size, wrapping: wrapsWorld)
         if let shape = mapState.shape(at: mapPoint) {

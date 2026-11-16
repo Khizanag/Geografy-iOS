@@ -93,8 +93,12 @@
         }
       }
     },
-    "0°" : {},
-    "180°" : {},
+    "0°" : {
+
+    },
+    "180°" : {
+
+    },
     "Aa" : {
       "localizations" : {
         "ka" : {
@@ -176,6 +180,9 @@
         }
       }
     },
+    "Country or capital" : {
+
+    },
     "Double tap to select a country" : {
       "localizations" : {
         "ka" : {
@@ -217,6 +224,9 @@
           }
         }
       }
+    },
+    "Find a Country" : {
+
     },
     "Flag of %@" : {
       "localizations" : {

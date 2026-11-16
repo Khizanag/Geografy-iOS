@@ -92,3 +92,29 @@ private extension MapStateViewportTests {
         )
     }
 }
+
+// MARK: - Focus
+extension MapStateViewportTests {
+    @Test("Focusing zooms a country to about half the view and centers it")
+    func focusFitsAndCenters() {
+        let state = MapState()
+        state.minScale = 0.1
+        let bounds = CGRect(x: MapProjection.mapWidth / 2, y: MapProjection.mapHeight / 2, width: 100, height: 50)
+
+        state.focus(on: bounds, in: CGSize(width: 400, height: 800))
+
+        #expect(state.scale == 2)
+        #expect(state.lastScale == 2)
+        #expect(state.offset == CGSize(width: -100, height: -50))
+    }
+
+    @Test("Focusing never zooms past the focus limit, even for a tiny country")
+    func focusIsCapped() {
+        let state = MapState()
+        let tiny = CGRect(x: 10, y: 10, width: 0.01, height: 0.01)
+
+        state.focus(on: tiny, in: CGSize(width: 400, height: 800))
+
+        #expect(state.scale == MapState.maxFocusScale)
+    }
+}

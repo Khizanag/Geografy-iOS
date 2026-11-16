@@ -10,6 +10,10 @@ public final class MapState {
     public var lastOffset: CGSize = .zero
     public var minScale: CGFloat = 0.15
     public static let maxScale: CGFloat = 100.0
+    /// How much of the view a focused country fills, leaving room around it to see where it is.
+    public static let focusFill: CGFloat = 0.5
+    /// The closest a focus zooms, so a tiny country like the Vatican still shows its neighbors.
+    public static let maxFocusScale: CGFloat = 24
     public var selectedCountryCode: String?
     public var showLabels = false
     public var countryShapes: [CountryShape] = []
@@ -99,6 +103,16 @@ public extension MapState {
             height: (MapProjection.mapHeight / 2 - bounds.midY) * scale
         )
         lastOffset = offset
+    }
+
+    /// Zooms so `bounds` fills about half the view, never past `maxFocusScale`, and centers it.
+    func focus(on bounds: CGRect, in viewSize: CGSize) {
+        guard bounds.width > 0, bounds.height > 0, viewSize.width > 0, viewSize.height > 0 else { return }
+        let fit = min(viewSize.width / bounds.width, viewSize.height / bounds.height) * Self.focusFill
+        let target = min(max(fit, minScale), Self.maxFocusScale)
+        scale = target
+        lastScale = target
+        center(on: bounds)
     }
 
     /// The box around every shape, in map coordinates; zero when there are none.
