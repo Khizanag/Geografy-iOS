@@ -23,11 +23,11 @@ struct DistanceSuggestions: Equatable {
         among countries: [Country],
         excluding excludedCode: String? = nil,
         neighbors: [String: [String]] = CountryNeighbors.data,
-        coordinate: (String) -> CapitalCoordinateService.Coordinate? = CapitalCoordinateService.coordinate(for:),
+        coordinate: (Country) -> GeoCoordinate? = \.capitalCoordinate,
         nearbyLimit: Int = 4,
         farAwayLimit: Int = 2
     ) {
-        guard let origin = coordinate(country.code) else {
+        guard let origin = coordinate(country) else {
             self.nearby = []
             self.farAway = []
             return
@@ -37,7 +37,7 @@ struct DistanceSuggestions: Equatable {
         let byDistance = countries
             .filter { $0.code != country.code && $0.code != excludedCode }
             .compactMap { candidate -> DistanceSuggestion? in
-                guard let destination = coordinate(candidate.code) else { return nil }
+                guard let destination = coordinate(candidate) else { return nil }
                 return DistanceSuggestion(
                     country: candidate,
                     distanceKm: RouteMetrics(from: origin, to: destination).distanceKm,

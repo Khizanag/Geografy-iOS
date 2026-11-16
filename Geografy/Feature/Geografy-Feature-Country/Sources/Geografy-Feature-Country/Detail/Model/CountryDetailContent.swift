@@ -15,12 +15,7 @@ final class CountryDetailContent {
 
     lazy var memberOrganizations: [Organization] = country.organizations.compactMap { Organization.find($0) }
 
-    lazy var funFacts: [String] = {
-        let curated = CountryFunFacts.data[country.code] ?? []
-        let curatedSet = Set(curated)
-        let profileFacts = profile?.funFacts.map(\.text) ?? []
-        return curated + profileFacts.filter { !curatedSet.contains($0) }
-    }()
+    lazy var funFacts: [String] = CountryFunFacts.data[country.code] ?? []
 
     lazy var unescoSites: [UNESCOSite] = (UNESCOData.data[country.code] ?? []).sorted(by: \.yearInscribed)
 

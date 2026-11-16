@@ -73,8 +73,8 @@ private extension DistanceSuggestionsTests {
 
     static let countries = ["OO", "AA", "BB", "CC", "DD", "EE", "FF", "XX"].map(makeCountry)
 
-    static func coordinate(_ code: String) -> CapitalCoordinateService.Coordinate? {
-        longitudes[code].map { CapitalCoordinateService.Coordinate(latitude: 0, longitude: $0) }
+    static func coordinate(_ country: Country) -> GeoCoordinate? {
+        longitudes[country.code].map { GeoCoordinate(latitude: 0, longitude: $0) }
     }
 
     func makeSuggestions(

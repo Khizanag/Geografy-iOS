@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 
 public enum FlashcardType: String, CaseIterable, Identifiable, Codable, Sendable {
     case countryToCapital

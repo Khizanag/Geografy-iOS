@@ -1,13 +1,6 @@
 {
   "US": {
     "countryCode": "US",
-    "funFacts": [
-      { "emoji": "🗽", "text": "The Statue of Liberty was a gift from France in 1886 and weighs about 225 tons." },
-      { "emoji": "🌙", "text": "The US is the only country to have landed humans on the Moon — 12 astronauts walked on its surface." },
-      { "emoji": "🍕", "text": "Americans eat approximately 3 billion pizzas every year, roughly 23 pounds per person." },
-      { "emoji": "🦅", "text": "Alaska is so large that it could fit Texas inside it more than two times." },
-      { "emoji": "🎸", "text": "The US invented jazz, blues, rock and roll, hip-hop, and country music." }
-    ],
     "culture": {
       "traditionalFood": ["Apple Pie", "BBQ Ribs", "Clam Chowder", "Cornbread"],
       "music": "Birthplace of jazz, blues, rock and roll, hip-hop, and country music.",
@@ -38,13 +31,6 @@
   },
   "GB": {
     "countryCode": "GB",
-    "funFacts": [
-      { "emoji": "🍵", "text": "The British drink about 165 million cups of tea per day." },
-      { "emoji": "👑", "text": "The British monarchy is the oldest in Europe, dating back over 1,200 years." },
-      { "emoji": "🏰", "text": "There are over 1,500 castles scattered across the United Kingdom." },
-      { "emoji": "🎭", "text": "William Shakespeare invented over 1,700 words still used in English today." },
-      { "emoji": "🔬", "text": "The UK has produced 137 Nobel Prize winners — third most in the world." }
-    ],
     "culture": {
       "traditionalFood": ["Fish and Chips", "Sunday Roast", "Shepherd's Pie", "Scones with Clotted Cream"],
       "music": "Gave the world The Beatles, The Rolling Stones, Adele, and the British Invasion of the 1960s.",
@@ -75,13 +61,6 @@
   },
   "FR": {
     "countryCode": "FR",
-    "funFacts": [
-      { "emoji": "🗼", "text": "The Eiffel Tower was supposed to be temporary and was almost torn down in 1909." },
-      { "emoji": "🧀", "text": "France produces over 1,600 varieties of cheese — more than any other country." },
-      { "emoji": "🍷", "text": "France is the world's most visited country, welcoming over 89 million tourists annually." },
-      { "emoji": "🥐", "text": "The croissant actually originated in Austria, not France." },
-      { "emoji": "🎨", "text": "The Louvre is the world's most visited museum with 9.6 million visitors per year." }
-    ],
     "culture": {
       "traditionalFood": ["Croissants", "Coq au Vin", "Ratatouille", "Crème Brûlée"],
       "music": "Famous for chanson, Edith Piaf, and a thriving electronic music scene (Daft Punk).",
@@ -112,13 +91,6 @@
   },
   "DE": {
     "countryCode": "DE",
-    "funFacts": [
-      { "emoji": "🍺", "text": "Germany has over 1,500 different beers brewed according to the 1516 Reinheitsgebot purity law." },
-      { "emoji": "🚗", "text": "The Autobahn has sections with no speed limit — some drivers exceed 250 km/h." },
-      { "emoji": "🎄", "text": "Germany is the origin of the Christmas tree tradition, dating back to the 16th century." },
-      { "emoji": "📚", "text": "The first printed book (Gutenberg Bible) was produced in Germany around 1455." },
-      { "emoji": "🏰", "text": "Neuschwanstein Castle inspired Disney's Sleeping Beauty Castle." }
-    ],
     "culture": {
       "traditionalFood": ["Bratwurst", "Schnitzel", "Pretzels", "Black Forest Cake"],
       "music": "Home of Bach, Beethoven, and the world-renowned Berlin Philharmonic.",
@@ -149,13 +121,6 @@
   },
   "JP": {
     "countryCode": "JP",
-    "funFacts": [
-      { "emoji": "🗻", "text": "Mount Fuji last erupted in 1707, and over 300,000 people climb it every year." },
-      { "emoji": "🚄", "text": "Japan's bullet trains (Shinkansen) have an average delay of less than 1 minute per year." },
-      { "emoji": "🍣", "text": "There are more Michelin-starred restaurants in Tokyo than in any other city in the world." },
-      { "emoji": "🤖", "text": "Japan has more robots per capita than any other country, with over 300,000 industrial robots." },
-      { "emoji": "🏯", "text": "Japan has over 6,800 islands, though only about 430 are inhabited." }
-    ],
     "culture": {
       "traditionalFood": ["Sushi", "Ramen", "Tempura", "Mochi"],
       "music": "Traditional gagaku court music alongside J-Pop; invented karaoke.",
@@ -186,13 +151,6 @@
   },
   "BR": {
     "countryCode": "BR",
-    "funFacts": [
-      { "emoji": "🌳", "text": "The Amazon Rainforest produces about 20% of the world's oxygen." },
-      { "emoji": "⚽", "text": "Brazil has won the FIFA World Cup 5 times — more than any other country." },
-      { "emoji": "🎭", "text": "Rio Carnival is the world's largest carnival, attracting 2 million people per day." },
-      { "emoji": "☕", "text": "Brazil is the world's largest coffee producer, supplying about 1/3 of global coffee." },
-      { "emoji": "🐆", "text": "Brazil has the highest biodiversity of any country, with over 50,000 plant species." }
-    ],
     "culture": {
       "traditionalFood": ["Feijoada", "Pão de Queijo", "Açaí Bowl", "Brigadeiro"],
       "music": "Birthplace of samba, bossa nova, and forró; heavily influenced global music.",
@@ -223,13 +181,6 @@
   },
   "IN": {
     "countryCode": "IN",
-    "funFacts": [
-      { "emoji": "🏛️", "text": "The Taj Mahal took 22 years and 20,000 workers to build, completed in 1653." },
-      { "emoji": "🧮", "text": "India invented the number zero, the decimal system, and the game of chess." },
-      { "emoji": "🎬", "text": "Bollywood produces over 1,800 films per year — more than any other film industry." },
-      { "emoji": "🌶️", "text": "India is the world's largest producer and consumer of spices." },
-      { "emoji": "🚂", "text": "Indian Railways employs over 1.3 million people, one of the largest employers on Earth." }
-    ],
     "culture": {
       "traditionalFood": ["Biryani", "Butter Chicken", "Dosa", "Samosa"],
       "music": "Classical traditions of Hindustani and Carnatic music; Bollywood film scores.",
@@ -260,13 +211,6 @@
   },
   "AU": {
     "countryCode": "AU",
-    "funFacts": [
-      { "emoji": "🐨", "text": "Australia has more kangaroos than people — about 50 million kangaroos vs 26 million humans." },
-      { "emoji": "🪸", "text": "The Great Barrier Reef is the largest living structure on Earth, visible from space." },
-      { "emoji": "🕷️", "text": "Australia is home to 21 of the world's 25 most venomous snakes." },
-      { "emoji": "🏖️", "text": "Australia has over 10,000 beaches — you could visit a new one every day for 27 years." },
-      { "emoji": "🦆", "text": "The platypus is one of only five species of egg-laying mammals in the world." }
-    ],
     "culture": {
       "traditionalFood": ["Vegemite on Toast", "Meat Pie", "Lamingtons", "Barramundi"],
       "music": "Birthplace of AC/DC, INXS, and Kylie Minogue; didgeridoo is the world's oldest wind instrument.",
@@ -297,13 +241,6 @@
   },
   "IT": {
     "countryCode": "IT",
-    "funFacts": [
-      { "emoji": "🏛️", "text": "Italy has 58 UNESCO World Heritage Sites — more than any other country." },
-      { "emoji": "🍝", "text": "There are over 600 different pasta shapes registered in Italy." },
-      { "emoji": "⛲", "text": "Visitors throw an estimated €1.5 million into Rome's Trevi Fountain each year." },
-      { "emoji": "🎻", "text": "The piano was invented in Italy by Bartolomeo Cristofori around 1700." },
-      { "emoji": "🚗", "text": "Italy is home to Ferrari, Lamborghini, Maserati, and Alfa Romeo." }
-    ],
     "culture": {
       "traditionalFood": ["Pasta Carbonara", "Risotto", "Tiramisu", "Gelato"],
       "music": "Birthplace of opera; Verdi, Puccini, and Vivaldi are among the greatest composers.",
@@ -334,13 +271,6 @@
   },
   "CN": {
     "countryCode": "CN",
-    "funFacts": [
-      { "emoji": "🧱", "text": "The Great Wall of China is over 21,000 km long and took over 2,000 years to build." },
-      { "emoji": "🐼", "text": "China is the only country where giant pandas live in the wild — about 1,800 remain." },
-      { "emoji": "🥢", "text": "China uses about 80 billion pairs of disposable chopsticks per year." },
-      { "emoji": "🎆", "text": "Gunpowder, paper, printing, and the compass were all invented in China." },
-      { "emoji": "🚄", "text": "China has the world's largest high-speed rail network — over 42,000 km." }
-    ],
     "culture": {
       "traditionalFood": ["Peking Duck", "Dim Sum", "Kung Pao Chicken", "Mooncakes"],
       "music": "Traditional instruments like erhu and guzheng; rich operatic traditions (Peking Opera).",
@@ -371,13 +301,6 @@
   },
   "MX": {
     "countryCode": "MX",
-    "funFacts": [
-      { "emoji": "🍫", "text": "The ancient Aztecs used cacao beans as currency and invented chocolate drinks." },
-      { "emoji": "🌮", "text": "Mexico has 35 UNESCO World Heritage Sites, more than any other country in the Americas." },
-      { "emoji": "🦋", "text": "Every winter, 300 million monarch butterflies migrate to Mexico from Canada." },
-      { "emoji": "🌶️", "text": "Mexico is the origin of corn (maize), tomatoes, vanilla, and avocados." },
-      { "emoji": "💀", "text": "Día de los Muertos (Day of the Dead) is a UNESCO-recognized tradition dating back 3,000 years." }
-    ],
     "culture": {
       "traditionalFood": ["Tacos al Pastor", "Mole", "Tamales", "Churros"],
       "music": "Mariachi music is UNESCO Intangible Cultural Heritage; also known for norteño and cumbia.",
@@ -408,13 +331,6 @@
   },
   "EG": {
     "countryCode": "EG",
-    "funFacts": [
-      { "emoji": "🏛️", "text": "The Great Pyramid of Giza is the only surviving Wonder of the Ancient World." },
-      { "emoji": "😸", "text": "Ancient Egyptians worshipped cats and shaved their eyebrows to mourn a cat's death." },
-      { "emoji": "📜", "text": "Egyptians invented papyrus paper, toothpaste, and one of the first written languages." },
-      { "emoji": "🌊", "text": "The Suez Canal handles about 12% of all global trade — over 19,000 ships per year." },
-      { "emoji": "🗿", "text": "The Great Sphinx is about 4,500 years old and its nose remains a mystery to historians." }
-    ],
     "culture": {
       "traditionalFood": ["Koshari", "Ful Medames", "Molokhia", "Basbousa"],
       "music": "Umm Kulthum is the most famous Arab singer of all time; oud is the iconic instrument.",
@@ -445,13 +361,6 @@
   },
   "KR": {
     "countryCode": "KR",
-    "funFacts": [
-      { "emoji": "🎮", "text": "South Korea is the birthplace of esports and has the world's fastest average internet speed." },
-      { "emoji": "💄", "text": "The K-beauty industry is worth over $13 billion; Koreans pioneered the 10-step skincare routine." },
-      { "emoji": "🎵", "text": "BTS became the first K-pop act to top the Billboard Hot 100 chart." },
-      { "emoji": "🥬", "text": "Koreans consume about 40 pounds of kimchi per person per year." },
-      { "emoji": "🏗️", "text": "Seoul's Incheon Airport has been rated the world's best airport multiple times." }
-    ],
     "culture": {
       "traditionalFood": ["Kimchi", "Bibimbap", "Korean BBQ", "Tteokbokki"],
       "music": "K-Pop is a global phenomenon; traditional gugak music dates back centuries.",
@@ -482,13 +391,6 @@
   },
   "ZA": {
     "countryCode": "ZA",
-    "funFacts": [
-      { "emoji": "🌍", "text": "South Africa has 11 official languages — more than almost any other country." },
-      { "emoji": "💎", "text": "The world's largest diamond, the Cullinan (3,106 carats), was found in South Africa in 1905." },
-      { "emoji": "🐧", "text": "African penguins live on the beaches of Cape Town — one of the few places penguins live in Africa." },
-      { "emoji": "🏉", "text": "The Springboks' 1995 Rugby World Cup win united the nation after apartheid." },
-      { "emoji": "🫀", "text": "The world's first heart transplant was performed in Cape Town in 1967." }
-    ],
     "culture": {
       "traditionalFood": ["Braai (BBQ)", "Bobotie", "Biltong", "Bunny Chow"],
       "music": "Township jazz, Afrikaans folk, and Amapiano have shaped global music.",
@@ -519,13 +421,6 @@
   },
   "ES": {
     "countryCode": "ES",
-    "funFacts": [
-      { "emoji": "😴", "text": "The Spanish siesta tradition dates back thousands of years — shops still close at 2 PM." },
-      { "emoji": "🍅", "text": "La Tomatina festival sees 150,000 tomatoes thrown in just one hour." },
-      { "emoji": "🏃", "text": "The Running of the Bulls in Pamplona has been held annually since 1591." },
-      { "emoji": "🌐", "text": "Spanish is the world's second most spoken language by native speakers (over 470 million)." },
-      { "emoji": "🏟️", "text": "Spain's La Liga is one of the most watched sports leagues on Earth." }
-    ],
     "culture": {
       "traditionalFood": ["Paella", "Tapas", "Gazpacho", "Churros con Chocolate"],
       "music": "Flamenco is a UNESCO Intangible Cultural Heritage; vibrant pop and reggaeton scene.",
@@ -556,13 +451,6 @@
   },
   "RU": {
     "countryCode": "RU",
-    "funFacts": [
-      { "emoji": "🌍", "text": "Russia spans 11 time zones — the most of any country in the world." },
-      { "emoji": "🚀", "text": "Russia launched the first satellite (Sputnik, 1957) and first human (Yuri Gagarin, 1961) into space." },
-      { "emoji": "🌲", "text": "Siberian forests (taiga) produce more oxygen than the Amazon Rainforest." },
-      { "emoji": "🏛️", "text": "The Hermitage Museum in St. Petersburg has over 3 million items — it would take 11 years to see each one for 1 minute." },
-      { "emoji": "🥶", "text": "The coldest inhabited place on Earth is Oymyakon, Russia, where temperatures hit −67.7°C." }
-    ],
     "culture": {
       "traditionalFood": ["Borscht", "Pelmeni", "Blini", "Beef Stroganoff"],
       "music": "Tchaikovsky, Rachmaninoff, and Stravinsky shaped classical music worldwide.",
@@ -593,13 +481,6 @@
   },
   "CA": {
     "countryCode": "CA",
-    "funFacts": [
-      { "emoji": "🍁", "text": "Canada produces 71% of the world's maple syrup — 13 million gallons per year." },
-      { "emoji": "🏒", "text": "Hockey is the official winter sport, and Canada has won more Olympic hockey golds than any nation." },
-      { "emoji": "🌊", "text": "Canada has the longest coastline in the world at 243,042 km." },
-      { "emoji": "🐻", "text": "Two-thirds of the world's polar bears live in Canada." },
-      { "emoji": "🗣️", "text": "Canada is officially bilingual — English and French are both national languages." }
-    ],
     "culture": {
       "traditionalFood": ["Poutine", "Butter Tarts", "Nanaimo Bars", "Tourtière"],
       "music": "Home to Drake, Celine Dion, Joni Mitchell, and The Weeknd.",
@@ -630,13 +511,6 @@
   },
   "TR": {
     "countryCode": "TR",
-    "funFacts": [
-      { "emoji": "🕌", "text": "Istanbul is the only city in the world that spans two continents — Europe and Asia." },
-      { "emoji": "🌷", "text": "Tulips originated in Turkey, not the Netherlands — they were exported to Holland in the 1500s." },
-      { "emoji": "☕", "text": "Turkish coffee is UNESCO Intangible Cultural Heritage and has been brewed since the 15th century." },
-      { "emoji": "🏛️", "text": "Turkey has more ancient Greek ruins than Greece itself." },
-      { "emoji": "🎈", "text": "Cappadocia's fairy chimneys were formed by volcanic eruptions millions of years ago." }
-    ],
     "culture": {
       "traditionalFood": ["Kebab", "Baklava", "Lahmacun", "Turkish Delight"],
       "music": "Ottoman classical music, Turkish folk, and arabesque pop; home of whirling dervishes.",
@@ -667,13 +541,6 @@
   },
   "GE": {
     "countryCode": "GE",
-    "funFacts": [
-      { "emoji": "🍷", "text": "Georgia is the birthplace of wine — archaeologists found 8,000-year-old wine residue in clay vessels." },
-      { "emoji": "🏔️", "text": "Georgia has 5 UNESCO World Heritage Sites, including ancient cave monasteries." },
-      { "emoji": "🔤", "text": "The Georgian alphabet is one of only 14 unique scripts still in use in the world." },
-      { "emoji": "🎶", "text": "Georgian polyphonic singing is a UNESCO Intangible Cultural Heritage masterpiece." },
-      { "emoji": "🏔️", "text": "Ushguli, one of Europe's highest continuously inhabited settlements, sits at 2,200 meters." }
-    ],
     "culture": {
       "traditionalFood": ["Khachapuri", "Khinkali", "Churchkhela", "Pkhali"],
       "music": "UNESCO-recognized polyphonic singing dates back centuries; toastmaster (tamada) traditions.",
@@ -704,13 +571,6 @@
   },
   "NG": {
     "countryCode": "NG",
-    "funFacts": [
-      { "emoji": "🎬", "text": "Nollywood produces over 2,500 films per year — second only to India's Bollywood." },
-      { "emoji": "👥", "text": "Nigeria is Africa's most populous country with over 220 million people and 250+ ethnic groups." },
-      { "emoji": "🦍", "text": "Nigeria is home to the endangered Cross River gorilla — fewer than 300 remain in the wild." },
-      { "emoji": "🎵", "text": "Afrobeats, pioneered by Fela Kuti, has become one of the world's most popular music genres." },
-      { "emoji": "📚", "text": "Wole Soyinka became the first African to win the Nobel Prize in Literature in 1986." }
-    ],
     "culture": {
       "traditionalFood": ["Jollof Rice", "Suya", "Pounded Yam with Egusi", "Puff-Puff"],
       "music": "Fela Kuti created Afrobeats; Burna Boy, Wizkid, and Davido are global superstars.",

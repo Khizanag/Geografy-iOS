@@ -98,6 +98,7 @@
 		TV00000000000000000EXCPT /* Exceptions for "Geografy" folder in "GeografyTV" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App/AppDependencies.swift,
 				App/ContentView.swift,
 				App/GeografyApp.swift,
 				"Feature/Geografy-Feature-Achievement",

@@ -1,4 +1,4 @@
-import Geografy_Core_Service
+import Geografy_Core_Common
 @testable import Geografy_Feature_Discover
 import Testing
 
@@ -69,7 +69,7 @@ private extension RouteMetricsTests {
     static let london = point(51.5074, -0.1278)
     static let paris = point(48.8566, 2.3522)
 
-    static func point(_ latitude: Double, _ longitude: Double) -> CapitalCoordinateService.Coordinate {
-        CapitalCoordinateService.Coordinate(latitude: latitude, longitude: longitude)
+    static func point(_ latitude: Double, _ longitude: Double) -> GeoCoordinate {
+        GeoCoordinate(latitude: latitude, longitude: longitude)
     }
 }

@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 
 public struct Lesson: Identifiable, Hashable, Codable, Sendable {
     public let id: String

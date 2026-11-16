@@ -1,6 +1,7 @@
 // swiftlint:disable file_length
 // swiftlint:disable line_length
 import Foundation
+import Geografy_Core_Common
 
 public struct FlagColorEntry: Sendable {
     public let name: String

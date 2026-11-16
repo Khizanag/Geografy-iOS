@@ -126,8 +126,9 @@ private extension OrganizationMapScreen {
 
     var selectedCapitalPoint: CGPoint? {
         guard let code = mapState.selectedCountryCode,
-              let info = CountryBasicInfo.info(for: code) else { return nil }
-        return MapProjection.project(longitude: info.capitalLongitude, latitude: info.capitalLatitude)
+              let coordinate = countryDataService.country(for: code)?.capitalCoordinate
+                ?? MapTerritory.info(for: code)?.capitalCoordinate else { return nil }
+        return MapProjection.project(coordinate)
     }
 }
 
@@ -225,13 +226,13 @@ private extension OrganizationMapScreen {
     var bannerOverlay: some View {
         if let shape = mapState.selectedShape {
             let country = countryDataService.country(for: shape.id)
-            let basicInfo = CountryBasicInfo.info(for: shape.id)
+            let territory = MapTerritory.info(for: shape.id)
 
             CountryBannerView(
                 countryCode: shape.id,
                 name: country?.name ?? shape.name,
-                flag: country?.flagEmoji ?? basicInfo?.flag ?? "🏳️",
-                capital: country?.capital ?? basicInfo?.capital ?? "",
+                flag: country?.flagEmoji ?? territory?.flag ?? "🏳️",
+                capital: country?.capital ?? territory?.capital ?? "",
                 namespace: flagNamespace,
                 isFlagHidden: showFlagPreview,
                 onFlagTap: {

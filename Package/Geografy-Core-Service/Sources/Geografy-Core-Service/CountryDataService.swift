@@ -1,5 +1,6 @@
 import Foundation
 import Geografy_Core_Common
+import os
 
 @Observable
 @MainActor
@@ -8,14 +9,25 @@ public final class CountryDataService {
     private var countriesByCode: [String: Country] = [:]
     /// The pick for one day; tab roots ask on every render, and picking sorts and shuffles every country.
     @ObservationIgnored private var countryOfTheDayCache: (day: Date, count: Int, country: Country)?
+    /// The one load in flight, so callers that ask at the same time share it instead of parsing the file twice.
+    @ObservationIgnored private var loadTask: Task<Void, Never>?
+
+    nonisolated private static let logger = Logger(subsystem: "com.khizanag.geografy", category: "CountryDataService")
 
     public init() {}
 
     public func loadCountries() async {
-        guard countries.isEmpty else { return }
-        guard let result = await Self.parseCountriesFile() else { return }
-        countries = result.countries
-        countriesByCode = result.byCode
+        if let loadTask {
+            await loadTask.value
+            return
+        }
+        let task = Task {
+            guard let result = await Self.parseCountriesFile() else { return }
+            countries = result.countries
+            countriesByCode = result.byCode
+        }
+        loadTask = task
+        await task.value
     }
 
     nonisolated private static func parseCountriesFile() async -> (countries: [Country], byCode: [String: Country])? {
@@ -29,7 +41,7 @@ public final class CountryDataService {
             let byCode = Dictionary(uniqueKeysWithValues: decoded.map { ($0.code, $0) })
             return (decoded, byCode)
         } catch {
-            print("Failed to decode countries: \(error)")
+            logger.error("Couldn't decode countries.json: \(error.localizedDescription, privacy: .public)")
             return nil
         }
     }

@@ -1,5 +1,6 @@
 // swiftlint:disable line_length
 import Foundation
+import Geografy_Core_Common
 
 public enum ReligionData: Sendable {
     public static let data: [String: [PercentageItem]] = [

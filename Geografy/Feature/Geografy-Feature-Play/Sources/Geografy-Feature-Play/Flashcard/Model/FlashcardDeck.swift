@@ -1,3 +1,4 @@
+import Geografy_Core_Common
 import SwiftUI
 
 public struct FlashcardDeck: Identifiable, Equatable, Hashable, Sendable {

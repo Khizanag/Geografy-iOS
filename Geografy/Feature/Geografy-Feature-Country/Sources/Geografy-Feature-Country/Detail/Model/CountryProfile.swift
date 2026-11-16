@@ -4,7 +4,6 @@ public struct CountryProfile: Codable, Identifiable, Sendable {
     public var id: String { countryCode }
 
     public let countryCode: String
-    public let funFacts: [CountryFunFact]
     public let culture: CultureHighlights
     public let phrases: [CountryPhrase]
     public let geography: GeographyDeepDive

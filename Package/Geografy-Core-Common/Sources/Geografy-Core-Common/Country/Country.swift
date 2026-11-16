@@ -6,6 +6,8 @@ public struct Country: Identifiable, Hashable, Codable, Sendable {
     public let code: String
     public let name: String
     public let capital: String
+    public let capitalLatitude: Double?
+    public let capitalLongitude: Double?
     public var capitals: [Capital]?
     public let flagEmoji: String
     public let continent: Continent
@@ -20,6 +22,12 @@ public struct Country: Identifiable, Hashable, Codable, Sendable {
     public let gdpPPP: Double?
     public let organizations: [String]
 
+    /// Where the capital is, when it's on record.
+    public var capitalCoordinate: GeoCoordinate? {
+        guard let capitalLatitude, let capitalLongitude else { return nil }
+        return GeoCoordinate(latitude: capitalLatitude, longitude: capitalLongitude)
+    }
+
     public var allCapitals: [Capital] {
         if let caps = capitals, !caps.isEmpty { return caps }
         return [Capital(name: capital, role: nil)]
@@ -29,6 +37,8 @@ public struct Country: Identifiable, Hashable, Codable, Sendable {
         code: String,
         name: String,
         capital: String,
+        capitalLatitude: Double? = nil,
+        capitalLongitude: Double? = nil,
         capitals: [Capital]? = nil,
         flagEmoji: String,
         continent: Continent,
@@ -46,6 +56,8 @@ public struct Country: Identifiable, Hashable, Codable, Sendable {
         self.code = code
         self.name = name
         self.capital = capital
+        self.capitalLatitude = capitalLatitude
+        self.capitalLongitude = capitalLongitude
         self.capitals = capitals
         self.flagEmoji = flagEmoji
         self.continent = continent

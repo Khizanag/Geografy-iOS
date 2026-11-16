@@ -1,5 +1,5 @@
 import Foundation
-import Geografy_Core_Service
+import Geografy_Core_Common
 
 /// The great-circle route between two capitals and the figures that put its length in perspective.
 struct RouteMetrics: Equatable {
@@ -26,7 +26,7 @@ struct RouteMetrics: Equatable {
         self.initialBearing = initialBearing
     }
 
-    init(from origin: CapitalCoordinateService.Coordinate, to destination: CapitalCoordinateService.Coordinate) {
+    init(from origin: GeoCoordinate, to destination: GeoCoordinate) {
         let latitude1 = origin.latitude * .pi / 180
         let latitude2 = destination.latitude * .pi / 180
         let deltaLatitude = latitude2 - latitude1

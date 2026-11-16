@@ -2,16 +2,7 @@ import CoreGraphics
 import Foundation
 import Geografy_Core_Common
 
-/// A point on the Earth, in degrees.
-struct GeoCoordinate: Equatable, Sendable {
-    let latitude: Double
-    let longitude: Double
-
-    init(latitude: Double, longitude: Double) {
-        self.latitude = latitude
-        self.longitude = longitude
-    }
-
+extension GeoCoordinate {
     /// The place under a point of the projected map.
     init(mapPoint: CGPoint) {
         let (longitude, latitude) = MapProjection.unproject(point: mapPoint)

@@ -1,6 +1,5 @@
 import Foundation
 import Geografy_Core_Common
-import Geografy_Core_Service
 
 /// Two countries as a route between their capitals, ready to show in a row or open.
 struct CapitalRoute: Identifiable {
@@ -31,8 +30,7 @@ extension Country {
 extension RouteMetrics {
     /// The route between two countries' capitals, or nil when either capital's location is unknown.
     init?(from origin: Country, to destination: Country) {
-        guard let start = CapitalCoordinateService.coordinate(for: origin.code),
-              let end = CapitalCoordinateService.coordinate(for: destination.code) else { return nil }
+        guard let start = origin.capitalCoordinate, let end = destination.capitalCoordinate else { return nil }
         self.init(from: start, to: end)
     }
 }

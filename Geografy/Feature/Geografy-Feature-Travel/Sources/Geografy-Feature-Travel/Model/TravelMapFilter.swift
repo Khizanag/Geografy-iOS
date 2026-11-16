@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 
 public enum TravelMapFilter: String, CaseIterable, Sendable {
     case visited

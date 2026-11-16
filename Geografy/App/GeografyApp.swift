@@ -16,50 +16,13 @@ struct GeografyApp: App {
     // MARK: - Properties
     @Environment(\.scenePhase) private var scenePhase
 
-    @State private var achievementService: AchievementService
-    @State private var authService: AuthService
-    @State private var collectionService = CollectionService()
-    @State private var countryDataService = CountryDataService()
-    @State private var currencyService = CurrencyService()
-    @State private var databaseManager: DatabaseManager
-    @State private var entitlementService = EntitlementService()
-    @State private var favoritesService: FavoritesService
-    @State private var flashcardService = FlashcardService()
-    @State private var gameCenterService = GameCenterService()
-    @State private var geoJSONCache = GeoJSONCache()
-    @State private var hapticsService = HapticsService()
-    @State private var languageService = LanguageService()
-    @State private var learningPathService: LearningPathService
-    @State private var pronunciationService = PronunciationService()
-    @State private var streakService: StreakService
-    @State private var testingModeService = TestingModeService()
-    @State private var travelService: TravelService
-    @State private var widgetDataBridge = WidgetDataBridge()
-    @State private var worldBankService = WorldBankService()
-    @State private var xpService: XPService
+    @State private var dependencies = AppDependencies()
 
     // MARK: - Init
     init() {
         #if os(iOS)
         BackgroundTaskService.registerTasks()
         #endif
-        let database = DatabaseManager()
-        let auth = AuthService(db: database)
-        let userID = auth.currentUserID
-        // Before any store loads, so each one reads the signed-in user's data.
-        UserScope.activate(userID)
-        let xp = XPService(db: database, userID: userID)
-        let achievement = AchievementService(db: database, xpService: xp, userID: userID)
-        let streak = StreakService(db: database, xpService: xp, achievementService: achievement, userID: userID)
-        let favorites = FavoritesService(container: database.container, userID: userID)
-        _databaseManager = State(wrappedValue: database)
-        _authService = State(wrappedValue: auth)
-        _xpService = State(wrappedValue: xp)
-        _achievementService = State(wrappedValue: achievement)
-        _streakService = State(wrappedValue: streak)
-        _favoritesService = State(wrappedValue: favorites)
-        _learningPathService = State(wrappedValue: LearningPathService())
-        _travelService = State(wrappedValue: TravelService())
     }
 
     // MARK: - Body
@@ -81,39 +44,20 @@ private extension GeografyApp {
     var contentView: some View {
         ContentView()
             .modifier(AppLanguageLocale())
-            .environment(achievementService)
-            .environment(authService)
-            .environment(collectionService)
-            .environment(countryDataService)
-            .environment(currencyService)
-            .environment(databaseManager)
-            .environment(entitlementService)
-            .environment(favoritesService)
-            .environment(flashcardService)
-            .environment(gameCenterService)
-            .environment(geoJSONCache)
-            .environment(hapticsService)
-            .environment(languageService)
-            .environment(learningPathService)
-            .environment(pronunciationService)
-            .environment(streakService)
-            .environment(testingModeService)
-            .environment(travelService)
-            .environment(worldBankService)
-            .environment(xpService)
+            .environment(dependencies)
             .task { await bootstrap() }
-            .task(priority: .utility) { await geoJSONCache.preload() }
-            .task(priority: .utility) { await authService.validateOnLaunch() }
+            .task(priority: .utility) { await dependencies.geoJSONCache.preload() }
+            .task(priority: .utility) { await dependencies.authService.validateOnLaunch() }
             .task(priority: .utility) { await authenticateGameCenter() }
             .task(priority: .background) { await setupNotificationsAndSpotlight() }
             .task(priority: .background) { await syncWidgetData() }
-            .onReceive(achievementService.unlockPublisher) { handleAchievementUnlock($0) }
+            .onReceive(dependencies.achievementService.unlockPublisher) { handleAchievementUnlock($0) }
             .modifier(
                 ServiceChangeHandlers(
-                    authService: authService,
-                    xpService: xpService,
-                    streakService: streakService,
-                    travelService: travelService,
+                    authService: dependencies.authService,
+                    xpService: dependencies.xpService,
+                    streakService: dependencies.streakService,
+                    travelService: dependencies.travelService,
                     onUserSwitch: handleUserSwitch,
                     onXPChange: handleXPChange,
                     onStreakChange: handleStreakChange,
@@ -170,25 +114,25 @@ private struct ServiceChangeHandlers: ViewModifier {
 // MARK: - Bootstrap
 private extension GeografyApp {
     func bootstrap() async {
-        await countryDataService.loadCountries()
-        favoritesService.fetchEntries()
-        flashcardService.loadData()
-        collectionService.configure(container: databaseManager.container)
-        xpService.refreshXP()
-        achievementService.refreshUnlocked()
-        achievementService.loadPinnedIDs()
-        streakService.refreshStreak()
+        await dependencies.countryDataService.loadCountries()
+        dependencies.favoritesService.fetchEntries()
+        dependencies.flashcardService.loadData()
+        dependencies.collectionService.configure(container: dependencies.databaseManager.container)
+        dependencies.xpService.refreshXP()
+        dependencies.achievementService.refreshUnlocked()
+        dependencies.achievementService.loadPinnedIDs()
+        dependencies.streakService.refreshStreak()
     }
 }
 
 // MARK: - Lifecycle Tasks
 private extension GeografyApp {
     func authenticateGameCenter() async {
-        gameCenterService.authenticatePlayer()
-        let longestStreak = authService.currentProfile?.longestStreak
-            ?? streakService.currentStreak
+        dependencies.gameCenterService.authenticatePlayer()
+        let longestStreak = dependencies.authService.currentProfile?.longestStreak
+            ?? dependencies.streakService.currentStreak
         if longestStreak > 0 {
-            await gameCenterService.submitScore(
+            await dependencies.gameCenterService.submitScore(
                 longestStreak,
                 to: GameCenterService.LeaderboardID.longestStreak
             )
@@ -201,12 +145,12 @@ private extension GeografyApp {
         await NotificationService.syncReminders(
             enabled: UserDefaults.standard.bool(forKey: NotificationService.preferenceKey)
         )
-        SpotlightIndexer.indexCountriesIfNeeded(countryDataService.countries)
+        SpotlightIndexer.indexCountriesIfNeeded(dependencies.countryDataService.countries)
         #endif
     }
 
     func syncWidgetData() async {
-        await widgetDataBridge.loadCountriesIfNeeded()
+        await dependencies.widgetDataBridge.loadCountriesIfNeeded()
         await synchronizeWidgetData()
     }
 }
@@ -216,7 +160,7 @@ private extension GeografyApp {
     func handleAchievementUnlock(_ definition: AchievementDefinition) {
         Task {
             if let gameCenterID = definition.gameCenterID {
-                await gameCenterService.reportAchievement(
+                await dependencies.gameCenterService.reportAchievement(
                     id: gameCenterID,
                     percentComplete: 100.0
                 )
@@ -227,19 +171,19 @@ private extension GeografyApp {
 
     func handleUserSwitch(_ newUserID: String) {
         UserScope.activate(newUserID)
-        favoritesService.switchUser(id: newUserID)
-        collectionService.switchUser(id: newUserID)
-        travelService.reload()
-        learningPathService.reload()
-        flashcardService.loadData()
-        xpService.switchUser(id: newUserID)
-        streakService.switchUser(id: newUserID)
-        achievementService.switchUser(id: newUserID)
+        dependencies.favoritesService.switchUser(id: newUserID)
+        dependencies.collectionService.switchUser(id: newUserID)
+        dependencies.travelService.reload()
+        dependencies.learningPathService.reload()
+        dependencies.flashcardService.loadData()
+        dependencies.xpService.switchUser(id: newUserID)
+        dependencies.streakService.switchUser(id: newUserID)
+        dependencies.achievementService.switchUser(id: newUserID)
     }
 
     func handleXPChange(_ newXP: Int) {
         Task {
-            await gameCenterService.submitScore(
+            await dependencies.gameCenterService.submitScore(
                 newXP,
                 to: GameCenterService.LeaderboardID.totalXP
             )
@@ -250,10 +194,10 @@ private extension GeografyApp {
     func handleStreakChange(_ newStreak: Int) {
         let longestStreak = max(
             newStreak,
-            authService.currentProfile?.longestStreak ?? 0
+            dependencies.authService.currentProfile?.longestStreak ?? 0
         )
         Task {
-            await gameCenterService.submitScore(
+            await dependencies.gameCenterService.submitScore(
                 longestStreak,
                 to: GameCenterService.LeaderboardID.longestStreak
             )
@@ -263,7 +207,7 @@ private extension GeografyApp {
 
     func handleVisitedChange(_ count: Int) {
         Task {
-            await gameCenterService.submitScore(
+            await dependencies.gameCenterService.submitScore(
                 count,
                 to: GameCenterService.LeaderboardID.countriesVisited
             )
@@ -273,7 +217,7 @@ private extension GeografyApp {
 
     func handleScenePhaseChange(_ newPhase: ScenePhase) {
         if newPhase == .active {
-            streakService.recordDailyLogin()
+            dependencies.streakService.recordDailyLogin()
         }
         #if os(iOS)
         if newPhase == .background {
@@ -286,12 +230,12 @@ private extension GeografyApp {
 // MARK: - Widget Sync
 private extension GeografyApp {
     func synchronizeWidgetData() async {
-        await widgetDataBridge.synchronize(
-            streak: streakService.currentStreak,
-            totalXP: xpService.totalXP,
-            level: xpService.currentLevel,
-            progressFraction: xpService.progressFraction,
-            visitedCount: travelService.visitedCodes.count
+        await dependencies.widgetDataBridge.synchronize(
+            streak: dependencies.streakService.currentStreak,
+            totalXP: dependencies.xpService.totalXP,
+            level: dependencies.xpService.currentLevel,
+            progressFraction: dependencies.xpService.progressFraction,
+            visitedCount: dependencies.travelService.visitedCodes.count
         )
     }
 }
@@ -300,7 +244,7 @@ private extension GeografyApp {
 private extension GeografyApp {
     func requestReviewIfAppropriate() {
         let key = "app_review_milestone"
-        let unlocked = achievementService.unlockedAchievements.count
+        let unlocked = dependencies.achievementService.unlockedAchievements.count
         let lastMilestone = UserDefaults.standard.integer(forKey: key)
         let milestones = [3, 7, 15]
         guard let milestone = milestones.first(where: { unlocked >= $0 && lastMilestone < $0 }) else { return }

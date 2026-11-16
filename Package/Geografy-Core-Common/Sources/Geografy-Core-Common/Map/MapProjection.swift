@@ -28,6 +28,10 @@ public enum MapProjectionKind: String, CaseIterable, Identifiable, Sendable {
 
 // MARK: - Projection
 public extension MapProjection {
+    static func project(_ coordinate: GeoCoordinate) -> CGPoint {
+        project(longitude: coordinate.longitude, latitude: coordinate.latitude)
+    }
+
     static func project(longitude: Double, latitude: Double) -> CGPoint {
         project(longitude: longitude, latitude: latitude, kind: current)
     }

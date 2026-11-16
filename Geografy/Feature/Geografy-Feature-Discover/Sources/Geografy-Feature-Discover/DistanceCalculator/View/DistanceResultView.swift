@@ -30,8 +30,11 @@ private extension DistanceResultView {
     var mapCard: some View {
         CardView {
             DistanceMapView(
-                origin: RouteMapView.Endpoint(countryCode: origin.code, label: origin.routePlaceName),
-                destination: RouteMapView.Endpoint(countryCode: destination.code, label: destination.routePlaceName)
+                origin: RouteMapView.Endpoint(coordinate: origin.capitalCoordinate, label: origin.routePlaceName),
+                destination: RouteMapView.Endpoint(
+                    coordinate: destination.capitalCoordinate,
+                    label: destination.routePlaceName
+                )
             )
             .id("\(origin.code)-\(destination.code)")
             .frame(height: DesignSystem.Size.Card.regular)

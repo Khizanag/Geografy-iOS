@@ -11,8 +11,12 @@ final class WidgetDataBridge {
     private static let defaults: UserDefaults? = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
     private static let reloadDebounceInterval: TimeInterval = 2
 
-    private var countryDataService = CountryDataService()
+    private let countryDataService: CountryDataService
     private var reloadTask: Task<Void, Never>?
+
+    init(countryDataService: CountryDataService) {
+        self.countryDataService = countryDataService
+    }
 
     func synchronize(
         streak: Int,
@@ -37,9 +41,7 @@ final class WidgetDataBridge {
     }
 
     func loadCountriesIfNeeded() async {
-        if countryDataService.countries.isEmpty {
-            await countryDataService.loadCountries()
-        }
+        await countryDataService.loadCountries()
     }
 }
 

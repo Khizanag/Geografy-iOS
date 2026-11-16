@@ -1,3 +1,4 @@
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
@@ -36,7 +37,7 @@ private extension DistanceMapView {
 /// Draws the route; animatable so the arc grows as `lineProgress` animates.
 struct RouteMapView: View, Animatable {
     struct Endpoint {
-        let countryCode: String
+        let coordinate: GeoCoordinate?
         let label: String
     }
 
@@ -57,8 +58,7 @@ struct RouteMapView: View, Animatable {
     var body: some View {
         Canvas { context, size in
             drawGrid(in: context, size: size)
-            guard let start = CapitalCoordinateService.coordinate(for: origin.countryCode),
-                  let end = CapitalCoordinateService.coordinate(for: destination.countryCode) else { return }
+            guard let start = origin.coordinate, let end = destination.coordinate else { return }
             let startPoint = mapPoint(from: start, in: size)
             let endPoint = mapPoint(from: end, in: size)
             drawLine(in: context, from: startPoint, to: endPoint)
@@ -71,7 +71,7 @@ struct RouteMapView: View, Animatable {
 
 // MARK: - Drawing
 private extension RouteMapView {
-    func mapPoint(from coordinate: CapitalCoordinateService.Coordinate, in size: CGSize) -> CGPoint {
+    func mapPoint(from coordinate: GeoCoordinate, in size: CGSize) -> CGPoint {
         let usableWidth = size.width - Self.inset * 2
         let usableHeight = size.height - Self.inset * 2
         return CGPoint(

@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 
 public struct FlashcardItem: Identifiable, Equatable, Hashable, Sendable {
     public let id: String

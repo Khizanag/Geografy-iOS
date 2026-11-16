@@ -206,7 +206,7 @@ private extension DistanceCalculatorScreen {
 
     /// Only countries whose capital is on record, so every pick can be measured.
     var routableCountries: [Country] {
-        countryDataService.countries.filter { CapitalCoordinateService.coordinate(for: $0.code) != nil }
+        countryDataService.countries.filter { $0.capitalCoordinate != nil }
     }
 
     var resolvedRecentRoutes: [CapitalRoute] {

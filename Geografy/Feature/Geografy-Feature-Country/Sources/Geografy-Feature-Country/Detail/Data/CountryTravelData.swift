@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 
 /// Travel-essentials lookup: calling code, demonym, driving side, internet TLD.
 ///
