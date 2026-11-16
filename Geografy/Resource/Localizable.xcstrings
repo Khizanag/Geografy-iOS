@@ -9710,6 +9710,7 @@
       }
     },
     "Shake the phone to open it. Rows have Settings-style icons, and every reset row is red." : {},
+    "Shake to open it, and open it from Settings ▸ Developer too. Every section works as before; Erase Everything and Quit now also clears saved files, so the next launch is a first launch." : {},
     "Share" : {
       "localizations" : {
         "ka" : {
@@ -10841,6 +10842,7 @@
     "Testing Lab" : {
       "localizations" : {}
     },
+    "Testing Lab from the shared package" : {},
     "Testing Mode" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
