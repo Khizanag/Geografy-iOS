@@ -113,7 +113,7 @@ private extension TypeSelectionGrid {
 
     /// The icon and name side by side; the tile's tint and border mark the chosen one.
     func compactTileContent(item: T, isSelected: Bool) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
+        HStack(spacing: DesignSystem.Spacing.xs) {
             IconBadge(item.icon, color: color, size: .small)
             Text(item.displayName)
                 .font(DesignSystem.Font.subheadline)
@@ -124,7 +124,8 @@ private extension TypeSelectionGrid {
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)
         }
-        .padding(DesignSystem.Spacing.sm)
+        .padding(.horizontal, DesignSystem.Spacing.xs)
+        .padding(.vertical, DesignSystem.Spacing.sm)
         .frame(maxWidth: .infinity, minHeight: compactTileHeight, maxHeight: .infinity, alignment: .leading)
         .selectableTileBackground(isSelected: isSelected, color: color)
         .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
