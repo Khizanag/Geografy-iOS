@@ -867,6 +867,16 @@
         }
       }
     },
+    "%lld of %lld checked" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld checked"
+          }
+        }
+      }
+    },
     "%lld of %lld countries" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -1835,6 +1845,7 @@
         }
       }
     },
+    "All checks pass" : {},
     "All countries" : {
       "localizations" : {
         "ka" : {
@@ -2623,6 +2634,7 @@
         }
       }
     },
+    "Checks" : {},
     "Choose Countries" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7365,6 +7377,7 @@
         }
       }
     },
+    "Open %@" : {},
     "Open Game Center" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10790,6 +10803,7 @@
         }
       }
     },
+    "Test Checklist" : {},
     "Test checklist for %@" : {
       "localizations" : {
         "ka" : {
@@ -10964,6 +10978,7 @@
         }
       }
     },
+    "This screen has no checks yet." : {},
     "This will restore the default section order." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -11452,6 +11467,7 @@
         }
       }
     },
+    "Uncheck All" : {},
     "Unfavorite" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

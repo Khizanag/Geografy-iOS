@@ -39,10 +39,13 @@ struct HubGrid<Header: View>: View {
             .sheet(item: $testChecklistSheet) { item in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     TestChecklistSheet(
-                        title: item.label,
+                        item: item,
                         checklist: testChecklistService.checklist(for: item.testKey)
-                    )
-                    .presentationDetents([.medium])
+                    ) {
+                        testChecklistSheet = nil
+                        open(item)
+                    }
+                    .presentationDetents([.medium, .large])
                 }
             }
     }
