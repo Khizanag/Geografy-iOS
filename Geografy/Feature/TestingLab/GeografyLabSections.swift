@@ -3,12 +3,13 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
+import TestingLab
 
-/// Developer tools for trying the app in any state: progress, achievements, streaks, the map cache, any screen,
-/// and a clean first launch. Opens on a shake or from Settings, in debug builds only.
-struct TestingLabScreen: View {
+/// Geografy's own tools in the Testing Lab: the account, progress, achievements, streaks, the map cache, any
+/// screen, switches, and resets.
+struct GeografyLabSections: View {
     // MARK: - Properties
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.closeTestingLab) private var closeTestingLab
     @Environment(AchievementService.self) private var achievementService
     @Environment(AuthService.self) private var authService
     @Environment(DatabaseManager.self) private var databaseManager
@@ -23,30 +24,11 @@ struct TestingLabScreen: View {
     @State private var pendingReset: Reset?
 
     let onOpen: (HubItem) -> Void
-    let onSelectTab: (AppTab) -> Void
 
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            Form {
-                BuildNotesSection(notes: BuildNotes.current) { go(to: $0) }
-                buildSection
-                progressSection
-                achievementsSection
-                streakSection
-                mapSection
-                screensSection
-                switchesSection
-                resetSection
-            }
-            .navigationTitle("Testing Lab")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done", systemImage: "checkmark") { dismiss() }
-                        .tint(DesignSystem.Color.accent)
-                }
-            }
+        accountSection
+        progressSection
             .confirmationDialog(
                 pendingReset?.title ?? "",
                 isPresented: Binding(get: { pendingReset != nil }, set: { if !$0 { pendingReset = nil } }),
@@ -58,17 +40,20 @@ struct TestingLabScreen: View {
             } message: { reset in
                 Text(reset.message)
             }
-        }
-        .task { savedMapSize = geoJSONCache.savedMapSize }
+        achievementsSection
+        streakSection
+        mapSection
+            .task { savedMapSize = geoJSONCache.savedMapSize }
+        screensSection
+        switchesSection
+        resetSection
     }
 }
 
 // MARK: - Sections
-private extension TestingLabScreen {
-    var buildSection: some View {
-        Section("Build") {
-            LabeledContent("Version", value: version)
-            LabeledContent("Bundle ID", value: Bundle.main.bundleIdentifier ?? "–")
+private extension GeografyLabSections {
+    var accountSection: some View {
+        Section("Account") {
             LabeledContent("User", value: authService.isGuest ? "Guest" : "Signed in")
             LabeledContent("User ID") {
                 Text(authService.currentUserID)
@@ -105,11 +90,11 @@ private extension TestingLabScreen {
             Button { xpService.award(1_000, source: .dailyLogin) } label: {
                 LabRow("Add 1,000 XP", systemImage: "forward.fill", color: DesignSystem.Color.warning)
             }
-            Button { closeThen { data.reachNextLevel() } } label: {
+            Button { closeTestingLab { data.reachNextLevel() } } label: {
                 LabRow("Reach Next Level", systemImage: "arrow.up", color: DesignSystem.Color.purple)
             }
             .disabled(xpService.currentLevel.maxXP == Int.max)
-            Button { closeThen { xpService.levelUpPublisher.send(xpService.currentLevel) } } label: {
+            Button { closeTestingLab { xpService.levelUpPublisher.send(xpService.currentLevel) } } label: {
                 LabRow("Show Level Up", systemImage: "sparkles", color: DesignSystem.Color.indigo)
             }
             Button(role: .destructive) { pendingReset = .xp } label: {
@@ -129,12 +114,12 @@ private extension TestingLabScreen {
             } label: {
                 LabRow("Unlocked", systemImage: "trophy.fill", color: DesignSystem.Color.warning)
             }
-            Button { closeThen { data.unlockNextAchievement() } } label: {
+            Button { closeTestingLab { data.unlockNextAchievement() } } label: {
                 LabRow("Unlock Next", systemImage: "lock.open.fill", color: DesignSystem.Color.warning)
             }
             Button {
                 guard let sample = AchievementCatalog.all.randomElement() else { return }
-                closeThen { achievementService.unlockPublisher.send(sample) }
+                closeTestingLab { achievementService.unlockPublisher.send(sample) }
             } label: {
                 LabRow(
                     "Show Unlock Banner",
@@ -198,7 +183,7 @@ private extension TestingLabScreen {
         Section("Open a Screen") {
             DisclosureGroup {
                 ForEach(HubItem.allCases.sorted { $0.label < $1.label }, id: \.self) { item in
-                    Button { closeThen { onOpen(item) } } label: {
+                    Button { closeTestingLab { onOpen(item) } } label: {
                         LabRow(verbatim: item.label, systemImage: item.icon, color: item.color)
                     }
                 }
@@ -226,26 +211,19 @@ private extension TestingLabScreen {
             Button(role: .destructive) { TestingLabData.resetGameSetups() } label: {
                 LabRow("Reset Game Setups", systemImage: "slider.horizontal.3", isDestructive: true)
             }
-            Button(role: .destructive) { pendingReset = .everything } label: {
-                LabRow("Erase Everything and Quit", systemImage: "xmark.octagon.fill", isDestructive: true)
-            }
         } header: {
             Text("Reset")
         } footer: {
-            Text(
-                "Game setups go back to each game's defaults. Erasing deletes all progress, settings, and caches, "
-                    + "then quits; open the app again for a first launch."
-            )
+            Text("Game setups go back to each game's defaults.")
         }
     }
 }
 
 // MARK: - Reset
-private extension TestingLabScreen {
+private extension GeografyLabSections {
     enum Reset: Identifiable {
         case xp
         case achievements
-        case everything
 
         var id: Self { self }
 
@@ -253,7 +231,6 @@ private extension TestingLabScreen {
             switch self {
             case .xp: "Reset XP"
             case .achievements: "Reset Achievements"
-            case .everything: "Erase Everything and Quit"
             }
         }
 
@@ -261,7 +238,6 @@ private extension TestingLabScreen {
             switch self {
             case .xp: "Every XP record of this user is deleted, so the level goes back to 1."
             case .achievements: "Unlocked achievements, their progress, and pins are cleared."
-            case .everything: "All progress, settings, and caches are deleted and the app quits."
             }
         }
     }
@@ -270,13 +246,12 @@ private extension TestingLabScreen {
         switch reset {
         case .xp: data.resetXP()
         case .achievements: data.resetAchievements()
-        case .everything: data.eraseEverythingAndQuit()
         }
     }
 }
 
 // MARK: - Helpers
-private extension TestingLabScreen {
+private extension GeografyLabSections {
     var data: TestingLabData {
         TestingLabData(
             database: databaseManager,
@@ -286,80 +261,10 @@ private extension TestingLabScreen {
         )
     }
 
-    /// Goes where a change in this build is, turning on Testing Mode first when only it shows the change.
-    func go(to note: BuildNote) {
-        guard let target = note.target else { return }
-        if note.needsTestingMode {
-            testingModeService.isEnabled = true
-        }
-        closeThen {
-            switch target {
-            case .screen(let item): onOpen(item)
-            case .tab(let tab): onSelectTab(tab)
-            case .levelUp: xpService.levelUpPublisher.send(xpService.currentLevel)
-            }
-        }
-    }
-
-    /// Closes the lab first, so what the action shows over the app isn't hidden behind it.
-    func closeThen(_ action: @escaping @MainActor () -> Void) {
-        dismiss()
-        Task {
-            try? await Task.sleep(for: .milliseconds(450))
-            action()
-        }
-    }
-
-    var version: String {
-        let info = Bundle.main.infoDictionary
-        let short = info?["CFBundleShortVersionString"] as? String ?? "–"
-        let build = info?["CFBundleVersion"] as? String ?? "–"
-        return "\(short) (\(build))"
-    }
-
     func projectionName(_ kind: MapProjectionKind) -> String {
         switch kind {
         case .mercator: "Mercator"
         case .equalEarth: "Equal Earth"
-        }
-    }
-}
-
-// MARK: - Row
-/// A lab row as Settings draws one: a colored icon square and the title in the primary color. A row that deletes
-/// is red in both, so it reads as one at a glance.
-private struct LabRow: View {
-    private let title: Text
-    private let systemImage: String
-    private let color: Color
-    private let isDestructive: Bool
-
-    init(
-        _ title: LocalizedStringKey,
-        systemImage: String,
-        color: Color = DesignSystem.Color.error,
-        isDestructive: Bool = false
-    ) {
-        self.title = Text(title)
-        self.systemImage = systemImage
-        self.color = color
-        self.isDestructive = isDestructive
-    }
-
-    /// A title that's already in the reader's language, such as a screen's name.
-    init(verbatim title: String, systemImage: String, color: Color) {
-        self.title = Text(verbatim: title)
-        self.systemImage = systemImage
-        self.color = color
-        self.isDestructive = false
-    }
-
-    var body: some View {
-        Label {
-            title
-                .foregroundStyle(isDestructive ? DesignSystem.Color.error : DesignSystem.Color.textPrimary)
-        } icon: {
-            SettingsIconBadge(systemImage: systemImage, color: isDestructive ? DesignSystem.Color.error : color)
         }
     }
 }

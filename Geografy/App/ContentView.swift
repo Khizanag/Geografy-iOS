@@ -7,6 +7,9 @@ import Geografy_Feature_Country
 import Geografy_Feature_Play
 import Geografy_Feature_Profile
 import SwiftUI
+#if DEBUG
+import TestingLab
+#endif
 
 struct ContentView: View {
     // MARK: - Properties
@@ -14,6 +17,11 @@ struct ContentView: View {
     @Environment(AchievementService.self) private var achievementService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.displayScale) private var displayScale
+    #if DEBUG
+    @Environment(DatabaseManager.self) private var databaseManager
+    @Environment(StreakService.self) private var streakService
+    @Environment(TestingModeService.self) private var testingModeService
+    #endif
 
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
 
@@ -21,9 +29,6 @@ struct ContentView: View {
     @State private var levelUpLevel: UserLevel?
     @State private var currentBannerAchievement: AchievementDefinition?
     @State private var bannerQueue: [AchievementDefinition] = []
-    #if DEBUG
-    @State private var showsTestingLab = false
-    #endif
 
     // MARK: - Body
     var body: some View {
@@ -59,16 +64,12 @@ struct ContentView: View {
             .task(id: countryDataService.countries.count, priority: .utility) { await prewarmListFlags() }
             #if DEBUG
             .task { appCoordinator.openHubItemFromLaunchArguments() }
-            .task { showsTestingLab = UserDefaults.standard.bool(forKey: "openTestingLab") }
-            .onReceive(NotificationCenter.default.publisher(for: TestingLab.openNotification)) { _ in
-                showsTestingLab = true
-            }
-            .sheet(isPresented: $showsTestingLab) {
-                TestingLabScreen(
-                    onOpen: { appCoordinator.open($0) },
-                    onSelectTab: { appCoordinator.selectedTab = $0 }
-                )
-            }
+            .testingLab(
+                notes: BuildNotes(go: buildNoteRoutes).current,
+                accent: DesignSystem.Color.accent,
+                erase: { labData.eraseStore() },
+                sections: { GeografyLabSections { appCoordinator.open($0) } }
+            )
             #endif
             .onContinueUserActivity(CSSearchableItemActionType) { activity in
                 if let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
@@ -148,6 +149,29 @@ private extension ContentView {
         }
     }
 }
+
+// MARK: - Testing Lab
+#if DEBUG
+private extension ContentView {
+    var labData: TestingLabData {
+        TestingLabData(
+            database: databaseManager,
+            xpService: xpService,
+            achievementService: achievementService,
+            streakService: streakService
+        )
+    }
+
+    var buildNoteRoutes: BuildNoteRoutes {
+        BuildNoteRoutes(
+            open: { appCoordinator.open($0) },
+            selectTab: { appCoordinator.selectedTab = $0 },
+            showLevelUp: { xpService.levelUpPublisher.send(xpService.currentLevel) },
+            enableTestingMode: { testingModeService.isEnabled = true }
+        )
+    }
+}
+#endif
 
 // MARK: - Helpers
 private extension ContentView {

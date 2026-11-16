@@ -71,17 +71,9 @@ struct TestingLabData {
         }
     }
 
-    /// Deletes the store, every setting, and the caches, then quits, so the next launch is a first launch.
-    /// Sign-in stays: the Keychain outlives the app.
-    func eraseEverythingAndQuit() {
+    /// Empties the open store before the lab deletes the app's files, so nothing writes to it on the way out.
+    func eraseStore() {
         database.container.deleteAllData()
-        if let bundleID = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-        }
-        if let caches = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
-            try? FileManager.default.removeItem(at: caches)
-        }
-        exit(0)
     }
 }
 #endif

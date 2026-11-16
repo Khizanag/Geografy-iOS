@@ -4819,6 +4819,7 @@
         }
       }
     },
+    "Game setups go back to each game's defaults." : {},
     "Geografy" : {
       "localizations" : {
         "ka" : {
@@ -10895,6 +10896,7 @@
       }
     },
     "The map opens without a wait from the second launch on. Clear Saved Map below, relaunch: the first open is slower again." : {},
+    "The map opens without a wait from the second launch on. Clear Saved Map in the lab, relaunch: the first open is slower again." : {},
     "The store failed to open, so data lives in memory only." : {},
     "Theme" : {
       "extractionState" : "manual",

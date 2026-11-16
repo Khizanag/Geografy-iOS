@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7AB1AB00000000000000A003 /* TestingLab in Frameworks */ = {isa = PBXBuildFile; productRef = 7AB1AB00000000000000A002 /* TestingLab */; };
 		05427941C2F156E173413E3A /* Geografy-Feature-Profile in Frameworks */ = {isa = PBXBuildFile; productRef = AD71FE005C3A03C2C7D1ECBE /* Geografy-Feature-Profile */; };
 		18E1E1AD7D200A6AEE5377C4 /* Geografy-Feature-Country in Frameworks */ = {isa = PBXBuildFile; productRef = 4E1359C0A837D686E19161EE /* Geografy-Feature-Country */; };
 		2DEC24A92439BA5E6BC1E5C7 /* Geografy-Feature-Discover in Frameworks */ = {isa = PBXBuildFile; productRef = 9DE107E6699ED8CC7FC03368 /* Geografy-Feature-Discover */; };
@@ -182,6 +183,7 @@
 		B2C3D4E5F60718293A4B5C6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				7AB1AB00000000000000A003 /* TestingLab in Frameworks */,
 				727A214E2F7D6582001B7073 /* Geografy-Core-DesignSystem in Frameworks */,
 				727A0FDC2F7D52E3001B7073 /* Geografy-Feature-Map in Frameworks */,
 				727A214C2F7D6582001B7073 /* Geografy-Core-Common in Frameworks */,
@@ -289,6 +291,7 @@
 				3179417A10A213221BB5B42E /* Geografy-Feature-Play */,
 				01C9D562C658A8CAFDF02F46 /* Geografy-Feature-Travel */,
 				EB62CABE55CDB420D3A0EB65 /* Geografy-Feature-Profile */,
+				7AB1AB00000000000000A002 /* TestingLab */,
 			);
 			productName = Geografy;
 			productReference = E5F60718293A4B5C6D7E8F90 /* Geografy.app */;
@@ -367,6 +370,7 @@
 				4DF83A0BDA38039F69861E4F /* XCLocalSwiftPackageReference "Package/Geografy-Core-Navigation" */,
 				124B4378E2A78A135BE34510 /* XCLocalSwiftPackageReference "Package/Geografy-Core-Service" */,
 				A1A1444444444444A1A14444 /* XCLocalSwiftPackageReference "Package/Geografy-Core-Map" */,
+				7AB1AB00000000000000A001 /* XCRemoteSwiftPackageReference "TestingLab-iOS" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = D4E5F60718293A4B5C6D7E8F /* Products */;
@@ -792,7 +796,23 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		7AB1AB00000000000000A001 /* XCRemoteSwiftPackageReference "TestingLab-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Khizanag/TestingLab-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		7AB1AB00000000000000A002 /* TestingLab */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7AB1AB00000000000000A001 /* XCRemoteSwiftPackageReference "TestingLab-iOS" */;
+			productName = TestingLab;
+		};
 		01C9D562C658A8CAFDF02F46 /* Geografy-Feature-Travel */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Geografy-Feature-Travel";

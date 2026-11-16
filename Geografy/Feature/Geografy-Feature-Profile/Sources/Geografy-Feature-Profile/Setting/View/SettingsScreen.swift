@@ -4,6 +4,9 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import StoreKit
 import SwiftUI
+#if DEBUG
+import TestingLab
+#endif
 
 public struct SettingsScreen: View {
     // MARK: - Properties
@@ -13,6 +16,9 @@ public struct SettingsScreen: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.locale) private var locale
     @Environment(\.scenePhase) private var scenePhase
+    #if DEBUG
+    @Environment(\.openTestingLab) private var openTestingLab
+    #endif
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -511,9 +517,7 @@ private extension SettingsScreen {
 private extension SettingsScreen {
     var developerSection: some View {
         settingsGroup(header: "Developer") {
-            Button {
-                NotificationCenter.default.post(name: TestingLab.openNotification, object: nil)
-            } label: {
+            Button { openTestingLab() } label: {
                 SettingsNavigationRow(icon: "flask.fill", iconColor: DesignSystem.Color.orange, title: "Testing Lab")
             }
             .buttonStyle(PressButtonStyle())
