@@ -42,6 +42,7 @@ struct TestingLabScreen: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done", systemImage: "checkmark") { dismiss() }
+                        .tint(DesignSystem.Color.accent)
                 }
             }
             .confirmationDialog(
@@ -56,7 +57,6 @@ struct TestingLabScreen: View {
                 Text(reset.message)
             }
         }
-        .tint(DesignSystem.Color.accent)
         .task { savedMapSize = geoJSONCache.savedMapSize }
     }
 }
@@ -87,16 +87,32 @@ private extension TestingLabScreen {
 
     var progressSection: some View {
         Section {
-            LabeledContent("Level", value: "\(xpService.currentLevel.level) · \(xpService.currentLevel.title)")
-            LabeledContent("Total XP", value: xpService.totalXP.formatted())
-            Button("Add 100 XP", systemImage: "plus.circle") { xpService.award(100, source: .dailyLogin) }
-            Button("Add 1,000 XP", systemImage: "plus.circle.fill") { xpService.award(1_000, source: .dailyLogin) }
-            Button("Reach Next Level", systemImage: "arrow.up.circle") { closeThen { data.reachNextLevel() } }
-                .disabled(xpService.currentLevel.maxXP == Int.max)
-            Button("Show Level Up", systemImage: "sparkles") {
-                closeThen { xpService.levelUpPublisher.send(xpService.currentLevel) }
+            LabeledContent {
+                Text("\(xpService.currentLevel.level) · \(xpService.currentLevel.title)")
+            } label: {
+                LabRow("Level", systemImage: "rosette", color: DesignSystem.Color.purple)
             }
-            Button("Reset XP", systemImage: "arrow.counterclockwise", role: .destructive) { pendingReset = .xp }
+            LabeledContent {
+                Text(xpService.totalXP.formatted())
+            } label: {
+                LabRow("Total XP", systemImage: "star.fill", color: DesignSystem.Color.warning)
+            }
+            Button { xpService.award(100, source: .dailyLogin) } label: {
+                LabRow("Add 100 XP", systemImage: "plus", color: DesignSystem.Color.warning)
+            }
+            Button { xpService.award(1_000, source: .dailyLogin) } label: {
+                LabRow("Add 1,000 XP", systemImage: "forward.fill", color: DesignSystem.Color.warning)
+            }
+            Button { closeThen { data.reachNextLevel() } } label: {
+                LabRow("Reach Next Level", systemImage: "arrow.up", color: DesignSystem.Color.purple)
+            }
+            .disabled(xpService.currentLevel.maxXP == Int.max)
+            Button { closeThen { xpService.levelUpPublisher.send(xpService.currentLevel) } } label: {
+                LabRow("Show Level Up", systemImage: "sparkles", color: DesignSystem.Color.indigo)
+            }
+            Button(role: .destructive) { pendingReset = .xp } label: {
+                LabRow("Reset XP", systemImage: "arrow.counterclockwise", isDestructive: true)
+            }
         } header: {
             Text("Progress")
         } footer: {
@@ -106,73 +122,96 @@ private extension TestingLabScreen {
 
     var achievementsSection: some View {
         Section("Achievements") {
-            LabeledContent(
-                "Unlocked",
-                value: "\(achievementService.unlockedAchievements.count) of \(AchievementCatalog.all.count)"
-            )
-            Button("Unlock Next", systemImage: "trophy") { closeThen { data.unlockNextAchievement() } }
-            Button("Show Unlock Banner", systemImage: "rectangle.topthird.inset.filled") {
+            LabeledContent {
+                Text("\(achievementService.unlockedAchievements.count) of \(AchievementCatalog.all.count)")
+            } label: {
+                LabRow("Unlocked", systemImage: "trophy.fill", color: DesignSystem.Color.warning)
+            }
+            Button { closeThen { data.unlockNextAchievement() } } label: {
+                LabRow("Unlock Next", systemImage: "lock.open.fill", color: DesignSystem.Color.warning)
+            }
+            Button {
                 guard let sample = AchievementCatalog.all.randomElement() else { return }
                 closeThen { achievementService.unlockPublisher.send(sample) }
+            } label: {
+                LabRow(
+                    "Show Unlock Banner",
+                    systemImage: "rectangle.topthird.inset.filled",
+                    color: DesignSystem.Color.blue
+                )
             }
-            Button("Reset Achievements", systemImage: "arrow.counterclockwise", role: .destructive) {
-                pendingReset = .achievements
+            Button(role: .destructive) { pendingReset = .achievements } label: {
+                LabRow("Reset Achievements", systemImage: "arrow.counterclockwise", isDestructive: true)
             }
         }
     }
 
     var streakSection: some View {
         Section("Streak") {
-            LabeledContent("Current") {
+            LabeledContent {
                 Text("^[\(streakService.currentStreak) day](inflect: true)")
+            } label: {
+                LabRow("Current", systemImage: "flame.fill", color: DesignSystem.Color.orange)
             }
-            LabeledContent("Played Today", value: streakService.hasPlayedToday ? "Yes" : "No")
+            LabeledContent {
+                Text(streakService.hasPlayedToday ? "Yes" : "No")
+            } label: {
+                LabRow("Played Today", systemImage: "calendar", color: DesignSystem.Color.blue)
+            }
             Menu {
                 ForEach([1, 3, 7, 30, 100], id: \.self) { days in
                     Button("^[\(days) day](inflect: true)") { data.setStreak(days: days) }
                 }
                 Button("No streak", role: .destructive) { data.setStreak(days: 0) }
             } label: {
-                Label("Set Streak", systemImage: "flame")
+                LabRow("Set Streak", systemImage: "pencil", color: DesignSystem.Color.orange)
             }
         }
     }
 
     var mapSection: some View {
         Section("Map") {
-            Picker("Projection", selection: $projection) {
+            Picker(selection: $projection) {
                 ForEach(MapProjectionKind.allCases) { kind in
                     Text(projectionName(kind)).tag(kind.rawValue)
                 }
+            } label: {
+                LabRow("Projection", systemImage: "globe.europe.africa.fill", color: DesignSystem.Color.blue)
             }
-            LabeledContent("Saved Map", value: savedMapSize.formatted(.byteCount(style: .file)))
-            Button("Clear Saved Map", systemImage: "trash") {
+            LabeledContent {
+                Text(savedMapSize.formatted(.byteCount(style: .file)))
+            } label: {
+                LabRow("Saved Map", systemImage: "internaldrive.fill", color: DesignSystem.Color.textSecondary)
+            }
+            Button(role: .destructive) {
                 geoJSONCache.clearSavedMap()
                 savedMapSize = geoJSONCache.savedMapSize
+            } label: {
+                LabRow("Clear Saved Map", systemImage: "trash.fill", isDestructive: true)
             }
         }
     }
 
     var screensSection: some View {
         Section("Open a Screen") {
-            DisclosureGroup("All Screens") {
+            DisclosureGroup {
                 ForEach(HubItem.allCases.sorted { $0.label < $1.label }, id: \.self) { item in
-                    Button {
-                        closeThen { onOpen(item) }
-                    } label: {
-                        Label(item.label, systemImage: item.icon)
+                    Button { closeThen { onOpen(item) } } label: {
+                        LabRow(verbatim: item.label, systemImage: item.icon, color: item.color)
                     }
                 }
+            } label: {
+                LabRow("All Screens", systemImage: "square.grid.2x2.fill", color: DesignSystem.Color.textSecondary)
             }
         }
     }
 
     var switchesSection: some View {
         Section {
-            Toggle(
-                "Testing Mode",
-                isOn: Binding(get: { testingModeService.isEnabled }, set: { testingModeService.isEnabled = $0 })
-            )
+            Toggle(isOn: Binding(get: { testingModeService.isEnabled }, set: { testingModeService.isEnabled = $0 })) {
+                LabRow("Testing Mode", systemImage: "hammer.fill", color: DesignSystem.Color.orange)
+            }
+            .tint(DesignSystem.Color.accent)
         } header: {
             Text("Switches")
         } footer: {
@@ -182,9 +221,11 @@ private extension TestingLabScreen {
 
     var resetSection: some View {
         Section {
-            Button("Reset Game Setups", systemImage: "slider.horizontal.3") { TestingLabData.resetGameSetups() }
-            Button("Erase Everything and Quit", systemImage: "exclamationmark.octagon", role: .destructive) {
-                pendingReset = .everything
+            Button(role: .destructive) { TestingLabData.resetGameSetups() } label: {
+                LabRow("Reset Game Setups", systemImage: "slider.horizontal.3", isDestructive: true)
+            }
+            Button(role: .destructive) { pendingReset = .everything } label: {
+                LabRow("Erase Everything and Quit", systemImage: "xmark.octagon.fill", isDestructive: true)
             }
         } header: {
             Text("Reset")
@@ -263,6 +304,45 @@ private extension TestingLabScreen {
         switch kind {
         case .mercator: "Mercator"
         case .equalEarth: "Equal Earth"
+        }
+    }
+}
+
+// MARK: - Row
+/// A lab row as Settings draws one: a colored icon square and the title in the primary color. A row that deletes
+/// is red in both, so it reads as one at a glance.
+private struct LabRow: View {
+    private let title: Text
+    private let systemImage: String
+    private let color: Color
+    private let isDestructive: Bool
+
+    init(
+        _ title: LocalizedStringKey,
+        systemImage: String,
+        color: Color = DesignSystem.Color.error,
+        isDestructive: Bool = false
+    ) {
+        self.title = Text(title)
+        self.systemImage = systemImage
+        self.color = color
+        self.isDestructive = isDestructive
+    }
+
+    /// A title that's already in the reader's language, such as a screen's name.
+    init(verbatim title: String, systemImage: String, color: Color) {
+        self.title = Text(verbatim: title)
+        self.systemImage = systemImage
+        self.color = color
+        self.isDestructive = false
+    }
+
+    var body: some View {
+        Label {
+            title
+                .foregroundStyle(isDestructive ? DesignSystem.Color.error : DesignSystem.Color.textPrimary)
+        } icon: {
+            SettingsIconBadge(systemImage: systemImage, color: isDestructive ? DesignSystem.Color.error : color)
         }
     }
 }

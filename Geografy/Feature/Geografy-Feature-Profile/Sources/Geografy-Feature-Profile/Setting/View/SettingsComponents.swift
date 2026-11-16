@@ -89,24 +89,6 @@ struct SettingsDivider: View {
     }
 }
 
-// MARK: - Icon Badge
-struct SettingsIconBadge: View {
-    // MARK: - Properties
-    let systemImage: String
-    let color: Color
-
-    // MARK: - Body
-    var body: some View {
-        Image(systemName: systemImage)
-            .font(DesignSystem.IconSize.medium)
-            .foregroundStyle(DesignSystem.Color.onAccent)
-            .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-            .background(color)
-            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
-            .accessibilityHidden(true)
-    }
-}
-
 // MARK: - Row Padding
 extension View {
     func settingsRowPadding() -> some View {

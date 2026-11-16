@@ -1217,6 +1217,16 @@
         }
       }
     },
+    "%lld · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld · %2$@"
+          }
+        }
+      }
+    },
     "%lld × %lld grid" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5848,7 +5858,8 @@
     },
     "Level up" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Level up! You’re now level %lld, %@." : {
       "extractionState" : "manual",
@@ -6772,7 +6783,8 @@
     },
     "Next: %@" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Nice Guess" : {
       "extractionState" : "manual",
@@ -6806,6 +6818,7 @@
         }
       }
     },
+    "No" : {},
     "No Achievements Yet" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10815,7 +10828,8 @@
     "Testing Mode adds a test checklist to each hub tile and a test sign-in." : {},
     "That's the top level. Well travelled!" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "The answer was %@" : {
       "extractionState" : "manual",
@@ -11945,6 +11959,7 @@
         }
       }
     },
+    "Yes" : {},
     "You" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -12020,7 +12035,8 @@
     },
     "You reached level %lld" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "You'll see your results and missed countries." : {
       "extractionState" : "manual",
