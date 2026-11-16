@@ -120,6 +120,13 @@ private extension HubGrid {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(isWide ? DesignSystem.Spacing.lg : DesignSystem.Spacing.md)
+        // Inside the tile and before the glass, so it's drawn as the tile's content: the container draws every
+        // tile's glass in one layer, which would cover anything hanging over a corner.
+        .overlay(alignment: .topTrailing) {
+            if testingModeService.isEnabled {
+                testBadge(for: sheet)
+            }
+        }
         .glassEffect(
             .regular,
             in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge)
@@ -127,11 +134,6 @@ private extension HubGrid {
         // The glass doesn't take touches, so without this only the icon and text would.
         .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         .accessibilityElement(children: .combine)
-        .overlay(alignment: .topTrailing) {
-            if testingModeService.isEnabled {
-                testBadge(for: sheet)
-            }
-        }
     }
 
     func testBadge(for sheet: HubItem) -> some View {
@@ -139,14 +141,15 @@ private extension HubGrid {
             testChecklistSheet = sheet
         } label: {
             Image(systemName: "ladybug.fill")
-                .font(DesignSystem.Font.micro)
+                .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.onAccent)
-                .padding(DesignSystem.Spacing.xxs)
+                .padding(DesignSystem.Spacing.xs)
                 .background(DesignSystem.Color.orange, in: Circle())
+                .padding(DesignSystem.Spacing.sm)
+                .contentShape(.rect)
         }
         .buttonStyle(.plain)
         .accessibilityLabel("Test checklist for \(sheet.label)")
-        .offset(x: 4, y: -4)
     }
 }
 
