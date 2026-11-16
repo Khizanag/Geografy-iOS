@@ -3,7 +3,8 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 
 /// The world's country outlines, parsed once per projection, colored from the chosen palette,
-/// and kept for every map. Switching back to a projection already seen, or to another palette, needs no parse.
+/// and kept for every map. Switching back to a projection already seen, or to another palette, needs no parse,
+/// and later launches read the outlines saved on disk instead of parsing the map again.
 @Observable
 @MainActor
 public final class GeoJSONCache {
@@ -81,17 +82,37 @@ public final class GeoJSONCache {
         }
         // Utility, so parsing the map never competes with the first screens drawing.
         let task = Task.detached(priority: .utility) { () -> Parsed in
-            guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
-                  let data = try? Data(contentsOf: url) else {
-                return Parsed(shapes: [], adjacency: nil)
+            let key = MapDiskCache.key()
+            let shapes = MapDiskCache.loadShapes(projection: projection, key: key) ?? Self.parseMap(
+                in: projection,
+                savingUnder: key
+            )
+            guard buildingAdjacency, !shapes.isEmpty else { return Parsed(shapes: shapes, adjacency: nil) }
+            if let saved = MapDiskCache.loadAdjacency(key: key) {
+                return Parsed(shapes: shapes, adjacency: saved)
             }
-            let shapes = GeoJSONParser.parse(data: data, projection: projection)
-            return Parsed(shapes: shapes, adjacency: buildingAdjacency ? MapAdjacency.build(from: shapes) : nil)
+            let adjacency = MapAdjacency.build(from: shapes)
+            MapDiskCache.saveAdjacency(adjacency, key: key)
+            return Parsed(shapes: shapes, adjacency: adjacency)
         }
         loadTask = (projection, task)
         let parsed = await task.value
         guard loadTask?.projection == projection else { return nil }
         loadTask = nil
         return parsed
+    }
+
+    /// The outlines from the GeoJSON, saved for the next launch; empty when the file can't be read.
+    nonisolated private static func parseMap(
+        in projection: MapProjectionKind,
+        savingUnder key: String
+    ) -> [CountryShape] {
+        guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
+              let data = try? Data(contentsOf: url) else { return [] }
+        let shapes = GeoJSONParser.parse(data: data, projection: projection)
+        if !shapes.isEmpty {
+            MapDiskCache.saveShapes(shapes, projection: projection, key: key)
+        }
+        return shapes
     }
 }

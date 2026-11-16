@@ -2,7 +2,7 @@ import CoreGraphics
 import Geografy_Core_Common
 
 /// Which countries touch and which sit close across water, worked out once per map for coloring it.
-public struct MapAdjacency: Sendable {
+public struct MapAdjacency: Codable, Sendable {
     /// Countries sharing a land border.
     public let neighbors: [String: Set<String>]
     /// Countries that don't touch but lie a short crossing apart, such as island neighbors or coasts

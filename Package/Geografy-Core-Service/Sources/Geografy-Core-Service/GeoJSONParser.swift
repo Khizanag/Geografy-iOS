@@ -22,6 +22,12 @@ public enum GeoJSONParser {
         }
     }
 
+    /// The disputed territories merged into another country under the current settings, as text that changes
+    /// whenever the parsed map would.
+    static func territoryMergeKey() -> String {
+        makeTerritoryMergeMap().sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" }.joined(separator: ",")
+    }
+
     private static let filteredTerritories: Set<String> = [
         "Bir Tawil", "Siachen Glacier",
         "Bajo Nuevo Bank", "Scarborough Reef", "Serranilla Bank", "Spratly Is.",
