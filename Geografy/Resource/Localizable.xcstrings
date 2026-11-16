@@ -9768,6 +9768,7 @@
         }
       }
     },
+    "Shortcuts open full screens" : {},
     "Shortest Path — %lld hops" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10636,6 +10637,7 @@
         }
       }
     },
+    "Tap a change here: the lab closes, then its screen opens with all its content, not blank. Try it twice in a row." : {},
     "Tap the country you think it is" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

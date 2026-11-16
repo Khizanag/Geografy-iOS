@@ -19,12 +19,27 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [sharedLab]
+        [labShortcuts, sharedLab]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var labShortcuts: BuildNote {
+        BuildNote(
+            commit: "01d3e435",
+            title: "Shortcuts open full screens",
+            howToTest: """
+                Tap a change here: the lab closes, then its screen opens with all its content, not blank. \
+                Try it twice in a row.
+                """,
+            systemImage: "arrow.up.forward.app.fill",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.settings)
+        }
+    }
+
     var sharedLab: BuildNote {
         BuildNote(
             commit: "475e5503",
