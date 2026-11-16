@@ -1,0 +1,516 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@, capital %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, capital %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, დედაქალაქი %2$@"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%@°E" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° აღ.გ."
+          }
+        }
+      }
+    },
+    "%@°N" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° ჩ.გ."
+          }
+        }
+      }
+    },
+    "%@°S" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° ს.გ."
+          }
+        }
+      }
+    },
+    "%@°W" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° დ.გ."
+          }
+        }
+      }
+    },
+    "%lld countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ქვეყანა"
+          }
+        }
+      }
+    },
+    "%lld members" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld წევრი"
+          }
+        }
+      }
+    },
+    "0°" : {},
+    "180°" : {},
+    "Aa" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aa"
+          }
+        }
+      }
+    },
+    "All Maps" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველა რუკა"
+          }
+        }
+      }
+    },
+    "Avg GDP per Capita" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საშ. მშპ ერთ სულზე"
+          }
+        }
+      }
+    },
+    "Back" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უკან"
+          }
+        }
+      }
+    },
+    "Continents" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტები"
+          }
+        }
+      }
+    },
+    "Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნები"
+          }
+        }
+      }
+    },
+    "Countries that share a border never share a color. Of the colors left, each country takes the one that looks most different from its neighbors, then keeps away from countries just across the sea, so the colors spread evenly over the map." : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მოსაზღვრე ქვეყნებს ერთი ფერი არასდროს აქვთ. დარჩენილი ფერებიდან თითოეული ქვეყანა იღებს იმას, რომელიც მეზობლებისგან ყველაზე მეტად განსხვავდება, შემდეგ კი ერიდება ზღვის გაღმა მდებარე ქვეყნების ფერებს, ასე რომ ფერები რუკაზე თანაბრად ნაწილდება."
+          }
+        }
+      }
+    },
+    "Country labels" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყნების ეტიკეტები"
+          }
+        }
+      }
+    },
+    "Double tap to select a country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ქვეყნის ასარჩევად"
+          }
+        }
+      }
+    },
+    "Double tap to toggle country name labels" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ორჯერ შეხება ქვეყნის სახელების გადასართავად"
+          }
+        }
+      }
+    },
+    "Explore aggregated statistics for each continent" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონტინენტების აგრეგირებული სტატისტიკის შესწავლა"
+          }
+        }
+      }
+    },
+    "Explore all 197 countries" : {
+      "comment" : "A description of the world map feature.",
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აღმოაჩინე ყველა 197 ქვეყანა"
+          }
+        }
+      }
+    },
+    "Flag of %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს დროშა"
+          }
+        }
+      }
+    },
+    "Hidden" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დამალული"
+          }
+        }
+      }
+    },
+    "How countries get their colors" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "როგორ იღებენ ქვეყნები ფერებს"
+          }
+        }
+      }
+    },
+    "Interactive map of %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს ინტერაქტიული რუკა"
+          }
+        }
+      }
+    },
+    "Interactive world map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ინტერაქტიული მსოფლიო რუკა"
+          }
+        }
+      }
+    },
+    "Largest Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უდიდესი ქვეყანა"
+          }
+        }
+      }
+    },
+    "Loading map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა იტვირთება"
+          }
+        }
+      }
+    },
+    "Map" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკა"
+          }
+        }
+      }
+    },
+    "Map Colors" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის ფერები"
+          }
+        }
+      }
+    },
+    "Map Projection" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის პროექცია"
+          }
+        }
+      }
+    },
+    "Map data © OpenStreetMap contributors · Geografy" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "რუკის მონაცემები © OpenStreetMap-ის კონტრიბუტორები · Geografy"
+          }
+        }
+      }
+    },
+    "Map of %@ members" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ს წევრების რუკა"
+          }
+        }
+      }
+    },
+    "More info" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მეტი ინფორმაცია"
+          }
+        }
+      }
+    },
+    "Most Spoken Language" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ყველაზე გავრცელებული ენა"
+          }
+        }
+      }
+    },
+    "No country selected" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ქვეყანა არ არის არჩეული"
+          }
+        }
+      }
+    },
+    "Open" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გახსნა"
+          }
+        }
+      }
+    },
+    "Parsing geographic data" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გეოგრაფიული მონაცემების დამუშავება"
+          }
+        }
+      }
+    },
+    "Selected: %@" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "არჩეულია: %@"
+          }
+        }
+      }
+    },
+    "Show Latitude & Longitude" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "განედისა და გრძედის ჩვენება"
+          }
+        }
+      }
+    },
+    "Show Visited Countries" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნანახი ქვეყნების ჩვენება"
+          }
+        }
+      }
+    },
+    "Shown" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაჩვენებია"
+          }
+        }
+      }
+    },
+    "Shows the flag full screen" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "აჩვენებს დროშას სრულ ეკრანზე"
+          }
+        }
+      }
+    },
+    "Smallest Country" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უმცირესი ქვეყანა"
+          }
+        }
+      }
+    },
+    "Sort by" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დალაგება"
+          }
+        }
+      }
+    },
+    "Tap a region to dive into an interactive map" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეეხე რეგიონს ინტერაქტიულ რუკაში ჩასაშვებად"
+          }
+        }
+      }
+    },
+    "Total Area" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საერთო ფართობი"
+          }
+        }
+      }
+    },
+    "Total Population" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "საერთო მოსახლეობა"
+          }
+        }
+      }
+    },
+    "World Map" : {
+      "comment" : "The title of the world map card in the \"All Maps\" screen.",
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო რუკა"
+          }
+        }
+      }
+    },
+    "World map in the %@ colors" : {
+      "localizations" : {
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მსოფლიო რუკა „%@“ ფერებში"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

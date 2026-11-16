@@ -1,6 +1,27 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "Add to Favorites" : {
+
+    },
+    "Clear Travel Status" : {
+
+    },
+    "Clears this status" : {
+
+    },
+    "Double tap to view details" : {
+
+    },
+    "Favorite" : {
+
+    },
+    "Mark as Visited" : {
+
+    },
     "Pronounce %@" : {
       "localizations" : {
         "ka" : {
@@ -11,6 +32,15 @@
         }
       }
     },
+    "Remove Status" : {
+
+    },
+    "Remove from Favorites" : {
+
+    },
+    "Sets this status" : {
+
+    },
     "Stop pronunciation" : {
       "localizations" : {
         "ka" : {
@@ -20,6 +50,15 @@
           }
         }
       }
+    },
+    "Travel status" : {
+
+    },
+    "Want to Visit" : {
+
+    },
+    "·" : {
+
     }
   },
   "version" : "1.0"

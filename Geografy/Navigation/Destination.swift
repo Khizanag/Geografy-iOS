@@ -1,33 +1,11 @@
 import Geografy_Core_Navigation
 import Geografy_Core_Service
-import Geografy_Feature_Achievement
-import Geografy_Feature_Auth
-import Geografy_Feature_Compare
-import Geografy_Feature_CountryDetail
-import Geografy_Feature_CountryList
-import Geografy_Feature_CurrencyConverter
-import Geografy_Feature_DailyChallenge
-import Geografy_Feature_DistanceCalculator
-import Geografy_Feature_Favorite
-import Geografy_Feature_Flashcard
-import Geografy_Feature_GameCenter
-import Geografy_Feature_LearningPath
+import Geografy_Feature_Country
+import Geografy_Feature_Discover
 import Geografy_Feature_Map
-import Geografy_Feature_MapPuzzle
-import Geografy_Feature_Multiplayer
-import Geografy_Feature_NationalSymbols
-import Geografy_Feature_NeighborExplorer
-import Geografy_Feature_Organization
+import Geografy_Feature_Play
 import Geografy_Feature_Profile
-import Geografy_Feature_Quiz
-import Geografy_Feature_QuizLibrary
-import Geografy_Feature_Search
-import Geografy_Feature_Setting
-import Geografy_Feature_Timeline
-import Geografy_Feature_TimeZone
 import Geografy_Feature_Travel
-import Geografy_Feature_WordSearch
-import Geografy_Feature_WorldFacts
 import SwiftUI
 
 // MARK: - Content

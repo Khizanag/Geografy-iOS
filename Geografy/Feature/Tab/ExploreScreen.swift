@@ -2,7 +2,7 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
-import Geografy_Feature_CountryList
+import Geografy_Feature_Country
 import SwiftUI
 
 /// The Explore tab: every country in a list, and a Discover page with the country of the day, facts, and tools.

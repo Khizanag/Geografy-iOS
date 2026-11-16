@@ -1,0 +1,262 @@
+import Geografy_Core_Common
+import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
+import Geografy_Core_Service
+import SwiftUI
+
+public enum FavoritesSortOption: String, CaseIterable {
+    case dateAdded = "Date Added"
+    case name = "Name"
+    case continent = "Continent"
+}
+
+public struct FavoritesScreen: View {
+    // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
+    @Environment(FavoritesService.self) private var favoritesService
+    @Environment(HapticsService.self) private var hapticsService
+    @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    @State private var searchText = ""
+    @State private var sortBy: FavoritesSortOption = .dateAdded
+    @State private var sortAscending = false
+    @State private var continentFilter: Country.Continent?
+
+    // MARK: - Init
+    public init() {}
+
+    // MARK: - Body
+    public var body: some View {
+        let countries = filteredCountries
+        Group {
+            if countries.isEmpty {
+                emptyState
+            } else {
+                countryList(countries)
+            }
+        }
+        .closeButtonPlacementLeading()
+        .searchable(text: $searchText, prompt: "Search favorites")
+        .toolbar { toolbarContent }
+    }
+}
+
+// MARK: - Toolbar
+private extension FavoritesScreen {
+    @ToolbarContentBuilder
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            optionsMenu
+        }
+    }
+
+    var countLabel: some View {
+        let total = favoritesService.favoriteCodes.count
+        let shown = filteredCountries.count
+        let text = searchText.isEmpty && continentFilter == nil
+            ? "\(total) countries"
+            : "\(shown) of \(total)"
+        return Text(text)
+            .font(DesignSystem.Font.caption)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+    }
+
+    var optionsMenu: some View {
+        Menu {
+            sortBySubmenu
+            Divider()
+            continentSubmenu
+            Divider()
+            resetButton
+        } label: {
+            Label(
+                "Filter",
+                systemImage: hasActiveFilters
+                    ? "line.3.horizontal.decrease.circle.fill"
+                    : "line.3.horizontal.decrease"
+            )
+        }
+    }
+
+    var hasActiveFilters: Bool {
+        sortBy != .dateAdded || sortAscending || continentFilter != nil
+    }
+
+    var sortBySubmenu: some View {
+        Menu {
+            Picker(selection: $sortBy) {
+                ForEach(FavoritesSortOption.allCases, id: \.self) { option in
+                    Label(option.rawValue, systemImage: sortIcon(for: option))
+                        .tag(option)
+                }
+            } label: {
+                Label("Field", systemImage: "textformat")
+            }
+            .pickerStyle(.inline)
+
+            Divider()
+
+            Picker(selection: $sortAscending) {
+                Label("Ascending", systemImage: "arrow.up")
+                    .tag(true)
+                Label("Descending", systemImage: "arrow.down")
+                    .tag(false)
+            } label: {
+                Label("Direction", systemImage: "arrow.up.arrow.down")
+            }
+            .pickerStyle(.inline)
+        } label: {
+            Label("Sort by", systemImage: "arrow.up.arrow.down")
+        }
+    }
+
+    var continentSubmenu: some View {
+        Picker(selection: $continentFilter) {
+            Label("All Continents", systemImage: "globe")
+                .tag(Country.Continent?.none)
+            Divider()
+            ForEach(Country.Continent.allCases, id: \.self) { continent in
+                Label(continent.displayName, systemImage: continentIcon(for: continent))
+                    .tag(Country.Continent?.some(continent))
+            }
+        } label: {
+            Label("Continent", systemImage: "globe.americas")
+        }
+        .pickerStyle(.menu)
+    }
+
+    var resetButton: some View {
+        Button(role: .destructive) {
+            withAnimation(reduceMotion ? nil : .default) {
+                sortBy = .dateAdded
+                sortAscending = false
+                continentFilter = nil
+                searchText = ""
+            }
+        } label: {
+            Label("Reset All", systemImage: "arrow.counterclockwise")
+        }
+        // The menu tints icons with the primary color; a destructive item keeps its icon red.
+        .tint(DesignSystem.Color.destructive)
+    }
+
+    func continentIcon(for continent: Country.Continent) -> String {
+        continent.icon
+    }
+
+    func sortIcon(for option: FavoritesSortOption) -> String {
+        switch option {
+        case .dateAdded: "clock"
+        case .name: "textformat"
+        case .continent: "globe"
+        }
+    }
+}
+
+// MARK: - Content
+private extension FavoritesScreen {
+    func countryList(_ countries: [Country]) -> some View {
+        ScrollView {
+            LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                ForEach(countries) { country in
+                    Button {
+                        coordinator.push(.countryDetail(country))
+                    } label: {
+                        CountryRowView(
+                            country: country,
+                            isFavorite: true,
+                            showContinent: true,
+                            onFavoriteTap: {
+                                favoritesService.toggle(code: country.code)
+                            }
+                        )
+                    }
+                    .buttonStyle(PressButtonStyle())
+                    .countryContextMenu(country, isFavorite: true)
+                    #if !os(tvOS)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        removeButton(for: country)
+                    }
+                    #endif
+                }
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.bottom, DesignSystem.Spacing.xxl)
+            .padding(.top, DesignSystem.Spacing.sm)
+            .readableContentWidth()
+        }
+    }
+
+    func removeButton(for country: Country) -> some View {
+        Button(role: .destructive) {
+            hapticsService.impact(.light)
+            withAnimation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6)) {
+                favoritesService.toggle(code: country.code)
+            }
+        } label: {
+            Label("Remove", systemImage: "heart.slash.fill")
+        }
+        .accessibilityLabel("Remove from Favorites")
+    }
+
+    @ViewBuilder
+    var emptyState: some View {
+        if !searchText.isEmpty || continentFilter != nil {
+            ContentUnavailableView(
+                "No Results",
+                systemImage: "magnifyingglass",
+                description: Text("Try a different search or filter.")
+            )
+        } else {
+            EmptyStateView(
+                icon: "heart.slash",
+                title: "No Favorites Yet",
+                message: "Tap the heart icon on any country to save it here.",
+                actionTitle: "Browse Countries"
+            ) {
+                hapticsService.impact(.light)
+                coordinator.push(.countries)
+            }
+        }
+    }
+}
+
+// MARK: - Helpers
+private extension FavoritesScreen {
+    var filteredCountries: [Country] {
+        var countries = countryDataService.countries.filter {
+            favoritesService.isFavorite(code: $0.code)
+        }
+
+        if let continentFilter {
+            countries = countries.filter { $0.continent == continentFilter }
+        }
+
+        if !searchText.isEmpty {
+            let query = searchText.lowercased()
+            countries = countries.filter {
+                $0.name.lowercased().contains(query) ||
+                $0.allCapitals.contains { $0.name.lowercased().contains(query) }
+            }
+        }
+
+        return countries.sorted { lhs, rhs in
+            let ascending = compareCountries(lhs, rhs)
+            return sortAscending ? ascending : !ascending
+        }
+    }
+
+    func compareCountries(_ lhs: Country, _ rhs: Country) -> Bool {
+        switch sortBy {
+        case .dateAdded:
+            let lhsDate = favoritesService.addedAt(code: lhs.code) ?? .distantPast
+            let rhsDate = favoritesService.addedAt(code: rhs.code) ?? .distantPast
+            return lhsDate < rhsDate
+        case .name:
+            return lhs.name < rhs.name
+        case .continent:
+            return lhs.continent.displayName < rhs.continent.displayName
+        }
+    }
+}

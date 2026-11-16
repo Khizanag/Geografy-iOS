@@ -1,6 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import Geografy_Feature_LearningPath
+import Geografy_Feature_Play
 import SwiftUI
 
 struct LearningPathScreen: View {

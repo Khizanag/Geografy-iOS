@@ -3,9 +3,9 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
-import Geografy_Feature_Achievement
-import Geografy_Feature_CountryList
-import Geografy_Feature_Quiz
+import Geografy_Feature_Country
+import Geografy_Feature_Play
+import Geografy_Feature_Profile
 import SwiftUI
 
 struct ContentView: View {

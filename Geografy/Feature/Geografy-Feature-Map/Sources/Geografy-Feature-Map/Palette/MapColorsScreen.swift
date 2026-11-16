@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Map
 import SwiftUI
 
 /// Chooses the palette every map colors its countries from, with the world map previewing the choice.
