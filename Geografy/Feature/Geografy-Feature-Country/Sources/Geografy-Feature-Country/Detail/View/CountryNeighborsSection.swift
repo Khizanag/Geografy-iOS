@@ -83,7 +83,7 @@ private extension CountryDetailScreen {
     var exploreNeighborsButton: some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.sheet(.neighborExplorer(country))
+            coordinator.sheet(CountryLocalRoute.neighborExplorer(country))
         } label: {
             HStack(spacing: DesignSystem.Spacing.xs) {
                 Image(systemName: "point.3.filled.connected.trianglepath.dotted")

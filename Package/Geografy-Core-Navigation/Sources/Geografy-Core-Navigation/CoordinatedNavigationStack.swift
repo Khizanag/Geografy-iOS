@@ -1,24 +1,11 @@
-import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
-
-// MARK: - Destination Content Provider
-public struct DestinationContentKey: EnvironmentKey {
-    public static let defaultValue: (@MainActor @Sendable (Destination) -> AnyView)? = nil
-}
-
-public extension EnvironmentValues {
-    var destinationContent: (@MainActor @Sendable (Destination) -> AnyView)? {
-        get { self[DestinationContentKey.self] }
-        set { self[DestinationContentKey.self] = newValue }
-    }
-}
 
 // MARK: - Coordinated Navigation Stack
 public struct CoordinatedNavigationStack<Root: View>: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.destinationContent) private var destinationContent
+    @Environment(\.routes) private var routes
 
     // Owned here so it survives re-renders; a navigator built inline in a parent's body would be
     // replaced on every update, dropping any sheet, cover, or push it was presenting.
@@ -55,7 +42,7 @@ public struct CoordinatedNavigationStack<Root: View>: View {
         NavigationStack(path: $navigator.path) {
             rootWithCloseButton
                 .navigationDestination(for: Destination.self) { destination in
-                    destinationContent?(destination) ?? AnyView(EmptyView())
+                    routes.screen(for: destination)
                 }
         }
         .sheet(item: $navigator.activeSheet) { destination in
@@ -106,26 +93,26 @@ private struct CloseButtonWrapper<Content: View>: View {
 
 // MARK: - Destination Cover View
 private struct DestinationCoverView: View {
-    @Environment(\.destinationContent) private var destinationContent
+    @Environment(\.routes) private var routes
 
     let destination: Destination
 
     var body: some View {
         CoordinatedNavigationStack(showCloseButton: true) {
-            destinationContent?(destination) ?? AnyView(EmptyView())
+            routes.screen(for: destination)
         }
     }
 }
 
 // MARK: - Destination Sheet View
 private struct DestinationSheetView: View {
-    @Environment(\.destinationContent) private var destinationContent
+    @Environment(\.routes) private var routes
 
     let destination: Destination
 
     var body: some View {
         CoordinatedNavigationStack(showCloseButton: true) {
-            destinationContent?(destination) ?? AnyView(EmptyView())
+            routes.screen(for: destination)
         }
     }
 }

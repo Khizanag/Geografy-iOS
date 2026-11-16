@@ -56,7 +56,7 @@ public struct OrganizationMapScreen: View {
             .task { await loadMapData() }
             .onChange(of: navigateToCountry) { _, country in
                 if let country {
-                    coordinator.push(.countryDetail(country))
+                    coordinator.push(CountryRoute.countryDetail(country))
                     navigateToCountry = nil
                 }
             }

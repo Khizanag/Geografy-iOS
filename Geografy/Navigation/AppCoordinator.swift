@@ -37,10 +37,10 @@ final class AppCoordinator {
         case "more": selectedTab = .profile
         case "streak", "profile":
             selectedTab = .profile
-            profileNavigator.push(.profile)
+            profileNavigator.push(ProfileRoute.profile)
         case "progress":
             selectedTab = .profile
-            profileNavigator.push(.leaderboards)
+            profileNavigator.push(ProfileRoute.leaderboards)
         default: break
         }
     }
@@ -51,7 +51,7 @@ final class AppCoordinator {
         guard let key = UserDefaults.standard.string(forKey: "openHub"),
               let item = HubItem.allCases.first(where: { $0.testKey == key }) else { return }
         selectedTab = .explore
-        exploreNavigator.push(item.toDestination)
+        exploreNavigator.push(item.destination)
     }
     #endif
 
@@ -61,6 +61,6 @@ final class AppCoordinator {
         let code = String(identifier.dropFirst("country-".count))
         guard let country = countryDataService.country(for: code) else { return }
         selectedTab = .explore
-        exploreNavigator.push(.countryDetail(country))
+        exploreNavigator.push(CountryRoute.countryDetail(country))
     }
 }

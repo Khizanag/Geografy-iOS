@@ -98,7 +98,7 @@ private extension WordSearchScreen {
 
     var startButton: some View {
         GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-            coordinator.cover(.wordSearchGame(selectedTheme))
+            coordinator.cover(PlayLocalRoute.wordSearchGame(selectedTheme))
         }
         .accessibilityHint(Text("Starts a \(selectedTheme.rawValue) puzzle"))
         .padding(.horizontal, DesignSystem.Spacing.md)

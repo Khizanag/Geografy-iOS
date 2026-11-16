@@ -81,7 +81,7 @@ private extension CollectionsScreen {
 
         return Button {
             hapticsService.impact(.light)
-            coordinator.push(.collectionDetail(name))
+            coordinator.push(CountryLocalRoute.collectionDetail(name))
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.md) {

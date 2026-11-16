@@ -3,7 +3,7 @@ import SwiftUI
 
 /// A popular or recent route: "Japan → Australia" with both flags, its capitals and how far apart they are.
 struct RouteRow: View {
-    let route: CountryRoute
+    let route: CapitalRoute
     let action: () -> Void
 
     var body: some View {

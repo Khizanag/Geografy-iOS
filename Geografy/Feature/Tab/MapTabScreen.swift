@@ -12,7 +12,7 @@ struct MapTabScreen: View {
         MapScreen()
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button { coordinator.push(.continents) } label: {
+                    Button { coordinator.push(MapRoute.continents) } label: {
                         Label("Continents", systemImage: "globe.europe.africa")
                     }
                 }

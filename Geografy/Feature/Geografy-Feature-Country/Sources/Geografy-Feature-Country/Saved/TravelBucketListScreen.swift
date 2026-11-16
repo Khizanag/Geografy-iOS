@@ -126,7 +126,7 @@ private extension TravelBucketListScreen {
             message: "Mark countries as 'Want to Visit' in the Travel Tracker to add them here",
             actionTitle: "Open Travel Tracker"
         ) {
-            coordinator.push(.travelTracker)
+            coordinator.push(TravelRoute.travelTracker)
         }
     }
 

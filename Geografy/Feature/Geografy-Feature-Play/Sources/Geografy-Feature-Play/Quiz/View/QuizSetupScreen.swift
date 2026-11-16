@@ -173,7 +173,7 @@ private extension QuizSetupScreen {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
-            coordinator.cover(.quizSession(makeConfiguration()))
+            coordinator.cover(PlayRoute.quizSession(makeConfiguration()))
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)

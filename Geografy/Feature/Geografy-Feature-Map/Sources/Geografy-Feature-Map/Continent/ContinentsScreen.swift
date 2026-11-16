@@ -66,7 +66,7 @@ private extension ContinentsScreen {
                     countryCount: countryCount(on: continent),
                     color: DesignSystem.Color.blue
                 ) {
-                    coordinator.push(.map(continentFilter: continent))
+                    coordinator.push(MapRoute.map(continentFilter: continent))
                 }
             }
         }

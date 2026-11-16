@@ -72,7 +72,7 @@ private extension OrganizationsScreen {
                         #if !os(tvOS)
                         hapticsService.impact(.light)
                         #endif
-                        coordinator.push(.organizationDetail(org))
+                        coordinator.push(DiscoverRoute.organizationDetail(org))
                     } label: {
                         CardView {
                             HStack(spacing: DesignSystem.Spacing.sm) {

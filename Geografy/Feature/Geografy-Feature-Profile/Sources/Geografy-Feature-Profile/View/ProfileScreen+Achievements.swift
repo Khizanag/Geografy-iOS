@@ -1,6 +1,7 @@
 #if !os(tvOS)
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import SwiftUI
 
 // MARK: - Achievements Preview
@@ -26,7 +27,7 @@ private extension ProfileScreen {
             Spacer()
             Button {
                 hapticsService.impact(.light)
-                coordinator.push(.achievements)
+                coordinator.push(ProfileRoute.achievements)
             } label: {
                 HStack(spacing: DesignSystem.Spacing.xxs) {
                     Text("\(achievementService.unlockedAchievements.count)/\(AchievementCatalog.all.count)")
@@ -46,7 +47,7 @@ private extension ProfileScreen {
                 ForEach(recentUnlockedAchievements) { definition in
                     Button {
                         hapticsService.impact(.light)
-                        coordinator.sheet(.achievementDetail(definition))
+                        coordinator.sheet(ProfileLocalRoute.achievementDetail(definition))
                     } label: {
                         achievementCard(definition)
                     }
@@ -65,7 +66,7 @@ private extension ProfileScreen {
             actionTitle: "See All Achievements"
         ) {
             hapticsService.impact(.light)
-            coordinator.push(.achievements)
+            coordinator.push(ProfileRoute.achievements)
         }
     }
 

@@ -123,7 +123,7 @@ private extension DailyChallengeSessionScreen {
         }
 
         coordinator.push(
-            .dailyChallengeResult(
+            PlayLocalRoute.dailyChallengeResult(
                 score: score,
                 maxScore: 1_000,
                 challengeType: challenge.type,

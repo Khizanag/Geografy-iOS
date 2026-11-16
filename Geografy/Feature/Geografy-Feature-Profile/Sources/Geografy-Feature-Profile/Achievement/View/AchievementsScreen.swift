@@ -100,7 +100,7 @@ private extension AchievementsScreen {
             ForEach(Array(filteredAchievements.enumerated()), id: \.element.id) { index, definition in
                 Button {
                     hapticsService.impact(.light)
-                    coordinator.sheet(.achievementDetail(definition))
+                    coordinator.sheet(ProfileLocalRoute.achievementDetail(definition))
                 } label: {
                     achievementRow(definition)
                 }

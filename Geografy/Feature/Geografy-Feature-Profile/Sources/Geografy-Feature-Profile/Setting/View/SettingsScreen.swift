@@ -132,7 +132,7 @@ private extension SettingsScreen {
     }
 
     var profileRow: some View {
-        Button { coordinator.sheet(.profile) } label: {
+        Button { coordinator.sheet(ProfileRoute.profile) } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ProfileAvatarView(
                     name: authService.currentProfile?.displayName ?? "Explorer",
@@ -173,7 +173,7 @@ private extension SettingsScreen {
     }
 
     var signInRow: some View {
-        Button { coordinator.push(.signIn) } label: {
+        Button { coordinator.push(ProfileLocalRoute.signIn) } label: {
             SettingsNavigationRow(
                 icon: "person.badge.plus",
                 iconColor: DesignSystem.Color.accent,
@@ -224,7 +224,7 @@ private extension SettingsScreen {
 
                 settingsDivider
 
-                Button { coordinator.push(.mapColors) } label: {
+                Button { coordinator.push(MapRoute.mapColors) } label: {
                     SettingsNavigationRow(
                         icon: "paintpalette.fill",
                         iconColor: DesignSystem.Color.orange,
@@ -255,7 +255,7 @@ private extension SettingsScreen {
 
                 settingsDivider
 
-                Button { coordinator.push(.territorialDisputes) } label: {
+                Button { coordinator.push(ProfileLocalRoute.territorialDisputes) } label: {
                     SettingsNavigationRow(
                         icon: "exclamationmark.triangle.fill",
                         iconColor: DesignSystem.Color.warning,
@@ -266,7 +266,7 @@ private extension SettingsScreen {
 
                 settingsDivider
 
-                Button { coordinator.push(.storage) } label: {
+                Button { coordinator.push(ProfileLocalRoute.storage) } label: {
                     SettingsNavigationRow(
                         icon: "internaldrive.fill",
                         iconColor: DesignSystem.Color.textSecondary,

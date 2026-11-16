@@ -99,7 +99,7 @@ private extension LearningPathScreen {
     func moduleCard(module: LearningModule) -> some View {
         Button {
             if module.isUnlocked {
-                coordinator.sheet(.learningModule(module))
+                coordinator.sheet(PlayLocalRoute.learningModule(module))
             }
         } label: {
             CardView {

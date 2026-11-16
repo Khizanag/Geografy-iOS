@@ -219,7 +219,7 @@ private extension QuizPackBrowserScreen {
         unlocked: Bool
     ) {
         guard unlocked else { return }
-        coordinator.sheet(.quizPackDetail(packID: pack.id))
+        coordinator.sheet(PlayLocalRoute.quizPackDetail(packID: pack.id))
     }
 }
 

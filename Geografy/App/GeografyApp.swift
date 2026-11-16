@@ -2,7 +2,12 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import Geografy_Core_Service
+import Geografy_Feature_Country
+import Geografy_Feature_Discover
+import Geografy_Feature_Map
 import Geografy_Feature_Play
+import Geografy_Feature_Profile
+import Geografy_Feature_Travel
 import StoreKit
 import SwiftUI
 
@@ -61,7 +66,7 @@ struct GeografyApp: App {
     var body: some Scene {
         WindowGroup {
             contentView
-                .environment(\.destinationContent, Self.destinationContent)
+                .environment(\.routes, Self.routes)
         }
         .onChange(of: scenePhase) { _, newPhase in handleScenePhaseChange(newPhase) }
         #if targetEnvironment(macCatalyst)
@@ -117,9 +122,17 @@ private extension GeografyApp {
             )
     }
 
-    /// One provider for the app's lifetime. A closure made in `body` would differ on every run,
-    /// and each tab's stack reads it, so every app-level update would rebuild every stack.
-    static let destinationContent: @MainActor @Sendable (Destination) -> AnyView = { AnyView($0.content) }
+    /// Every feature's screens, filled once for the app's lifetime and read by each navigation stack.
+    static let routes: RouteRegistry = {
+        var registry = RouteRegistry()
+        registry.registerMapScreens()
+        registry.registerCountryScreens()
+        registry.registerPlayScreens()
+        registry.registerDiscoverScreens()
+        registry.registerProfileScreens()
+        registry.registerTravelScreens()
+        return registry
+    }()
 }
 
 // MARK: - App Language Locale

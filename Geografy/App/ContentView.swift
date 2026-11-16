@@ -40,16 +40,16 @@ struct ContentView: View {
             }
             .onReceive(NotificationCenter.default.publisher(for: .startQuiz)) { _ in
                 appCoordinator.selectedTab = .play
-                appCoordinator.playNavigator.push(.quizSetup)
+                appCoordinator.playNavigator.push(PlayRoute.quizSetup)
             }
             .onReceive(NotificationCenter.default.publisher(for: .startDailyChallenge)) { _ in
                 appCoordinator.selectedTab = .play
-                appCoordinator.playNavigator.push(.dailyChallenge)
+                appCoordinator.playNavigator.push(PlayRoute.dailyChallenge)
             }
             #if targetEnvironment(macCatalyst)
             .onReceive(NotificationCenter.default.publisher(for: .macOpenSearch)) { _ in
                 appCoordinator.selectedTab = .explore
-                appCoordinator.exploreNavigator.push(.search)
+                appCoordinator.exploreNavigator.push(CountryRoute.search)
             }
             #endif
             .onOpenURL { appCoordinator.handleDeepLink($0) }

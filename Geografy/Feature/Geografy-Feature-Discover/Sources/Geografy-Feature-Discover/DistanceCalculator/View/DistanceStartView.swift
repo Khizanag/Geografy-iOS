@@ -10,7 +10,7 @@ struct DistanceStartView: View {
     let destinationCountry: Country?
     let countries: [Country]
     let onChoose: (Country, PairSide) -> Void
-    let onChooseRoute: (CountryRoute) -> Void
+    let onChooseRoute: (CapitalRoute) -> Void
     let onShuffle: () -> Void
 
     private static let popularCodePairs = [
@@ -109,11 +109,11 @@ private extension DistanceStartView {
 
 // MARK: - Data
 private extension DistanceStartView {
-    var popularRoutes: [CountryRoute] {
+    var popularRoutes: [CapitalRoute] {
         Self.popularCodePairs.compactMap { originCode, destinationCode in
             guard let origin = countries.first(where: { $0.code == originCode }),
                   let destination = countries.first(where: { $0.code == destinationCode }) else { return nil }
-            return CountryRoute(origin: origin, destination: destination)
+            return CapitalRoute(origin: origin, destination: destination)
         }
     }
 }

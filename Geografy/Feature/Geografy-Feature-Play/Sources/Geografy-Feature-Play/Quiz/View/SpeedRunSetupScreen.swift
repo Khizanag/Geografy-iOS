@@ -123,7 +123,7 @@ private extension SpeedRunSetupScreen {
             hapticsService.impact(.light)
             dismiss()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                coordinator.cover(.speedRunSession(region: selectedRegion))
+                coordinator.cover(PlayLocalRoute.speedRunSession(region: selectedRegion))
             }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)

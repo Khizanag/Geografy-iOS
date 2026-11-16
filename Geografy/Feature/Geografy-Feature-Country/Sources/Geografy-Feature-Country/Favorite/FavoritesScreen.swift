@@ -161,7 +161,7 @@ private extension FavoritesScreen {
             LazyVStack(spacing: DesignSystem.Spacing.xs) {
                 ForEach(countries) { country in
                     Button {
-                        coordinator.push(.countryDetail(country))
+                        coordinator.push(CountryRoute.countryDetail(country))
                     } label: {
                         CountryRowView(
                             country: country,
@@ -216,7 +216,7 @@ private extension FavoritesScreen {
                 actionTitle: "Browse Countries"
             ) {
                 hapticsService.impact(.light)
-                coordinator.push(.countries)
+                coordinator.push(CountryRoute.countries)
             }
         }
     }

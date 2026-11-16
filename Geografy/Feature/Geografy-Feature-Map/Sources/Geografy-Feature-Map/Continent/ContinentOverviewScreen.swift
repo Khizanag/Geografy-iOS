@@ -46,7 +46,7 @@ public struct ContinentOverviewScreen: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        coordinator.cover(.map(continentFilter: continent))
+                        coordinator.cover(MapRoute.map(continentFilter: continent))
                     } label: {
                         Label("Map", systemImage: "map.fill")
                             .foregroundStyle(DesignSystem.Color.iconPrimary)
@@ -59,7 +59,7 @@ public struct ContinentOverviewScreen: View {
 // MARK: - Navigation
 private extension ContinentOverviewScreen {
     func navigateToCountry(_ country: Country) {
-        coordinator.push(.countryDetail(country))
+        coordinator.push(CountryRoute.countryDetail(country))
     }
 }
 

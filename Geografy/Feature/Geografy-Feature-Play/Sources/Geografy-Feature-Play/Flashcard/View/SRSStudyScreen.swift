@@ -99,7 +99,7 @@ private extension SRSStudyScreen {
             fullWidth: true
         ) {
             coordinator.cover(
-                .flashcardSession(
+                PlayLocalRoute.flashcardSession(
                     deck: .makeDueForReviewDeck(cardType: .countryToCapital),
                     cards: dueCards
                 )

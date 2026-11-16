@@ -21,9 +21,9 @@ struct PlayScreen: View {
             DailyActionCard(
                 dailyChallengeCompleted: dailyChallengeService?.hasCompletedToday ?? false,
                 srsCardsDue: flashcardService.dueCount(of: .countryToCapital, in: countryDataService.countries),
-                onDailyChallenge: { coordinator.push(.dailyChallenge) },
-                onReviewCards: { coordinator.push(.srsStudy) },
-                onStartQuiz: { coordinator.push(.quizSetup) }
+                onDailyChallenge: { coordinator.push(PlayRoute.dailyChallenge) },
+                onReviewCards: { coordinator.push(PlayRoute.srsStudy) },
+                onStartQuiz: { coordinator.push(PlayRoute.quizSetup) }
             )
         }
         .task { await loadDailyChallenge() }

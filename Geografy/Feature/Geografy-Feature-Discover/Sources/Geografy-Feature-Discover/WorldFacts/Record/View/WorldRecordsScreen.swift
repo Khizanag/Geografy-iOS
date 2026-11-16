@@ -67,7 +67,7 @@ private extension WorldRecordsScreen {
         let country = countryDataService.country(for: record.countryCode)
         return Button {
             if let country {
-                coordinator.push(.countryDetail(country))
+                coordinator.push(CountryRoute.countryDetail(country))
             }
         } label: {
             CardView {

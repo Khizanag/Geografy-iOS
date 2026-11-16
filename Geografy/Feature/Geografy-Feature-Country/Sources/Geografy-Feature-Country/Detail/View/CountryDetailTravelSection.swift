@@ -68,7 +68,7 @@ extension CountryDetailScreen {
             mapButtonTitle: item.mapButtonTitle,
             onShowMap: {
                 dismissSheet {
-                    coordinator.cover(.map(continentFilter: country.continent))
+                    coordinator.cover(MapRoute.map(continentFilter: country.continent))
                 }
             },
             actionButtonTitle: item.actionButtonTitle,

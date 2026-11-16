@@ -236,7 +236,7 @@ private extension MapScreen {
                         showFlagPreview = true
                     }
                 },
-                onMoreInfo: country.map { selected in { coordinator.push(.countryDetail(selected)) } },
+                onMoreInfo: country.map { selected in { coordinator.push(CountryRoute.countryDetail(selected)) } },
                 isCompact: isLandscape,
                 onDismiss: {
                     withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {

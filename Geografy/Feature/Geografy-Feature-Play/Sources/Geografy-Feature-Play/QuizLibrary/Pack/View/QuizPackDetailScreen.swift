@@ -186,7 +186,7 @@ private extension QuizPackDetailScreen {
         )
 
         playing = (config.id, level.id)
-        coordinator.cover(.quizSession(config))
+        coordinator.cover(PlayRoute.quizSession(config))
     }
 
     func recordResult(_ notification: Notification) {

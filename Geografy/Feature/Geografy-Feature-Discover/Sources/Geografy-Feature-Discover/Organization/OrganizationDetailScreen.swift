@@ -129,7 +129,7 @@ private extension OrganizationDetailScreen {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
-            coordinator.cover(.organizationMap(organization))
+            coordinator.cover(MapRoute.organizationMap(organization))
         }
     }
 
@@ -145,7 +145,7 @@ private extension OrganizationDetailScreen {
     }
 
     func memberCountryRow(_ country: Country) -> some View {
-        Button { coordinator.push(.countryDetail(country)) } label: {
+        Button { coordinator.push(CountryRoute.countryDetail(country)) } label: {
             CardView {
                 CountryListRow(country: country, subtitle: country.capital) {
                     RowChevron()

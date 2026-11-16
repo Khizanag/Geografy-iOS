@@ -68,7 +68,7 @@ private extension ModuleLessonsScreen {
     var lessonsList: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             ForEach(Array(currentModule.lessons.enumerated()), id: \.element.id) { index, lesson in
-                Button { coordinator.push(.lesson(currentModule, lesson)) } label: {
+                Button { coordinator.push(PlayLocalRoute.lesson(currentModule, lesson)) } label: {
                     lessonRow(lesson: lesson, index: index)
                 }
                 .buttonStyle(PressButtonStyle())

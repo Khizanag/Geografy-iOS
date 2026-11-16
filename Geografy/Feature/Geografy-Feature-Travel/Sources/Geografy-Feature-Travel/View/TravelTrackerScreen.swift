@@ -91,7 +91,7 @@ private extension TravelTrackerScreen {
 
     var viewOnMapSection: some View {
         Button {
-            coordinator.cover(.travelMap(currentTravelMapFilter))
+            coordinator.cover(TravelLocalRoute.travelMap(currentTravelMapFilter))
         } label: {
             CardView {
                 HStack(spacing: DesignSystem.Spacing.sm) {
@@ -129,7 +129,7 @@ private extension TravelTrackerScreen {
         ToolbarItem(placement: .primaryAction) {
             Button {
                 hapticsService.impact(.light)
-                coordinator.push(.saved(.wantToVisit))
+                coordinator.push(CountryRoute.saved(.wantToVisit))
             } label: {
                 Label("Bucket List", systemImage: "list.star")
                     .foregroundStyle(DesignSystem.Color.iconPrimary)

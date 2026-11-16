@@ -92,7 +92,7 @@ private extension CustomQuizLibraryScreen {
         .contextMenu { contextMenuItems(for: quiz) }
         .buttonStyle(PressButtonStyle())
         .accessibilityAction(named: "Edit") { editingQuiz = quiz }
-        .accessibilityAction(named: "Share") { coordinator.sheet(.customQuizShare(quiz)) }
+        .accessibilityAction(named: "Share") { coordinator.sheet(PlayLocalRoute.customQuizShare(quiz)) }
         .accessibilityAction(named: "Delete") { quizToDelete = quiz }
     }
 
@@ -105,7 +105,7 @@ private extension CustomQuizLibraryScreen {
             }
 
             Button {
-                coordinator.sheet(.customQuizShare(quiz))
+                coordinator.sheet(PlayLocalRoute.customQuizShare(quiz))
             } label: {
                 Label("Share", systemImage: "square.and.arrow.up")
             }
@@ -178,7 +178,7 @@ private extension CustomQuizLibraryScreen {
                         comparisonMetric: .population,
                         gameMode: .standard,
                     )
-                    coordinator.push(.quizSession(config))
+                    coordinator.push(PlayRoute.quizSession(config))
                 }
             },
         )

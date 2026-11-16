@@ -269,7 +269,7 @@ private extension TimelineScreen {
     func detailCountryInfo(country: Country) -> some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             SectionHeaderView(title: "Country")
-            Button { coordinator.push(.countryDetail(country)) } label: {
+            Button { coordinator.push(CountryRoute.countryDetail(country)) } label: {
                 CardView {
                     CountryListRow(country: country) {
                         RowChevron()
@@ -287,7 +287,7 @@ private extension TimelineScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
-            Button { coordinator.cover(.historicalMap(initialYear: selectedYear)) } label: {
+            Button { coordinator.cover(DiscoverLocalRoute.historicalMap(initialYear: selectedYear)) } label: {
                 Label("Historical Map", systemImage: "map.fill")
             }
             .buttonStyle(.plain)

@@ -3,7 +3,7 @@ import Geografy_Core_Common
 import Geografy_Core_Service
 
 /// Two countries as a route between their capitals, ready to show in a row or open.
-struct CountryRoute: Identifiable {
+struct CapitalRoute: Identifiable {
     let origin: Country
     let destination: Country
 

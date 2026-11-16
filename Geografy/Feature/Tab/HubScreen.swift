@@ -90,7 +90,7 @@ private extension HubGrid {
     func gridTile(for sheet: HubItem) -> some View {
         Button {
             hapticsService.impact(.light)
-            open(sheet.toDestination)
+            open(sheet)
         } label: {
             gridTileLabel(for: sheet)
         }
@@ -149,12 +149,11 @@ private extension HubGrid {
 
 // MARK: - Navigation
 private extension HubGrid {
-    // Games run full screen; everything else opens inside the tab.
-    func open(_ destination: Destination) {
-        if case .quizSession = destination {
-            coordinator.cover(destination)
+    func open(_ item: HubItem) {
+        if item.opensFullScreen {
+            coordinator.cover(item.destination)
         } else {
-            coordinator.push(destination)
+            coordinator.push(item.destination)
         }
     }
 }

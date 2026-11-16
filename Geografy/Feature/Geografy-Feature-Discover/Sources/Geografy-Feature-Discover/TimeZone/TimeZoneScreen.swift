@@ -121,7 +121,7 @@ private struct WorldClockView: View {
         List(filteredCountries) { item in
             Button {
                 #if !os(tvOS)
-                coordinator?.push(.countryDetail(item.country))
+                coordinator?.push(CountryRoute.countryDetail(item.country))
                 #endif
             } label: {
                 TimelineView(.everyMinute) { context in
@@ -195,7 +195,7 @@ private struct AllZonesView: View {
                         }
                         Button {
                             #if !os(tvOS)
-                            coordinator?.push(.countryDetail(item.country))
+                            coordinator?.push(CountryRoute.countryDetail(item.country))
                             #endif
                         } label: {
                             zoneCountryRow(for: item)

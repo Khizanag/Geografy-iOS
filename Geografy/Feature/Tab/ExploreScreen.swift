@@ -21,7 +21,7 @@ struct ExploreScreen: View {
             .navigationTitle("Explore")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button { coordinator.push(.search) } label: {
+                    Button { coordinator.push(CountryRoute.search) } label: {
                         Label("Search", systemImage: "magnifyingglass")
                     }
                 }
@@ -69,7 +69,7 @@ private extension ExploreScreen {
     @ViewBuilder
     var countryOfTheDay: some View {
         if let country = countryDataService.countryOfTheDay() {
-            Button { coordinator.push(.countryDetail(country)) } label: {
+            Button { coordinator.push(CountryRoute.countryDetail(country)) } label: {
                 CountrySpotlightCard(
                     country: country,
                     funFact: CountryFunFacts.data[country.code]?.first

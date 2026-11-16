@@ -201,36 +201,44 @@ enum HubItem: Identifiable, CaseIterable {
         }
     }
 
-    var toDestination: Destination {
+    var destination: Destination {
         switch self {
-        case .profile: .profile
-        case .quiz: .quizSetup
-        case .trueOrFalse: .quizSession(.quickPlay(.trueOrFalse))
-        case .neighbors: .quizSession(.quickPlay(.neighbors))
-        case .mysteryCountry: .quizSession(.quickPlay(.mysteryCountry))
-        case .mapPuzzle: .mapPuzzle
-        case .pinDrop: .pinDrop
-        case .worldFacts: .worldFacts(.records)
-        case .countries: .countries
-        case .orgs: .organizations
-        case .favorites: .saved(.favorites)
-        case .travel: .travelTracker
-        case .dailyChallenge: .dailyChallenge
-        case .compare: .compare()
-        case .quizPacks: .quizLibrary(.packs)
-        case .multiplayer: .multiplayer
-        case .speedRun: .speedRunSetup
-        case .distanceCalculator: .distanceCalculator
-        case .currencyConverter: .currencyConverter()
-        case .timeZones: .timeZones
-        case .timeline: .timeline
-        case .achievements: .achievements
-        case .leaderboards: .leaderboards
-        case .settings: .settings
-        case .search: .search
-        case .wordSearch: .wordSearch
-        case .srsStudy: .srsStudy
-        case .learningPath: .learningPath
+        case .profile: Destination(ProfileRoute.profile)
+        case .quiz: Destination(PlayRoute.quizSetup)
+        case .trueOrFalse: Destination(PlayRoute.quizSession(.quickPlay(.trueOrFalse)))
+        case .neighbors: Destination(PlayRoute.quizSession(.quickPlay(.neighbors)))
+        case .mysteryCountry: Destination(PlayRoute.quizSession(.quickPlay(.mysteryCountry)))
+        case .mapPuzzle: Destination(PlayRoute.mapPuzzle)
+        case .pinDrop: Destination(PlayRoute.pinDrop)
+        case .worldFacts: Destination(DiscoverRoute.worldFacts(.records))
+        case .countries: Destination(CountryRoute.countries)
+        case .orgs: Destination(DiscoverRoute.organizations)
+        case .favorites: Destination(CountryRoute.saved(.favorites))
+        case .travel: Destination(TravelRoute.travelTracker)
+        case .dailyChallenge: Destination(PlayRoute.dailyChallenge)
+        case .compare: Destination(CountryRoute.compare())
+        case .quizPacks: Destination(PlayRoute.quizLibrary(.packs))
+        case .multiplayer: Destination(PlayRoute.multiplayer)
+        case .speedRun: Destination(PlayRoute.speedRunSetup)
+        case .distanceCalculator: Destination(DiscoverRoute.distanceCalculator)
+        case .currencyConverter: Destination(DiscoverRoute.currencyConverter())
+        case .timeZones: Destination(DiscoverRoute.timeZones)
+        case .timeline: Destination(DiscoverRoute.timeline)
+        case .achievements: Destination(ProfileRoute.achievements)
+        case .leaderboards: Destination(ProfileRoute.leaderboards)
+        case .settings: Destination(ProfileRoute.settings)
+        case .search: Destination(CountryRoute.search)
+        case .wordSearch: Destination(PlayRoute.wordSearch)
+        case .srsStudy: Destination(PlayRoute.srsStudy)
+        case .learningPath: Destination(PlayRoute.learningPath)
+        }
+    }
+
+    /// Quick games run full screen; everything else opens inside the tab.
+    var opensFullScreen: Bool {
+        switch self {
+        case .trueOrFalse, .neighbors, .mysteryCountry: true
+        default: false
         }
     }
 }

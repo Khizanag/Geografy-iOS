@@ -262,7 +262,7 @@ private extension CountryListScreen {
     var favoritesSection: some View {
         let favorites = favoriteCountries
         if !favorites.isEmpty {
-            FavoriteCountriesStrip(countries: favorites) { coordinator.push(.countryDetail($0)) }
+            FavoriteCountriesStrip(countries: favorites) { coordinator.push(CountryRoute.countryDetail($0)) }
                 .padding(.bottom, DesignSystem.Spacing.md)
                 .transition(.opacity)
             if state.groupBy == .none {
@@ -378,7 +378,7 @@ private extension CountryListScreen {
     func countryCard(for country: Country) -> some View {
         let isFavorite = favoritesService.isFavorite(code: country.code)
         return Button {
-            coordinator.push(.countryDetail(country))
+            coordinator.push(CountryRoute.countryDetail(country))
         } label: {
             CountryRowView(
                 country: country,

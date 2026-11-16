@@ -213,7 +213,7 @@ private extension FlashcardSessionScreen {
     func showCountryDetail() {
         let code = currentCard.countryCode
         guard let country = countryDataService.country(for: code) else { return }
-        coordinator.sheet(.countryDetail(country))
+        coordinator.sheet(CountryRoute.countryDetail(country))
     }
 
     func flipCard() {

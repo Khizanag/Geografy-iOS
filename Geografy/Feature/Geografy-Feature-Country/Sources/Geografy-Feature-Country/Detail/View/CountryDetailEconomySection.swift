@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import SwiftUI
 
 // MARK: - Economy
@@ -121,7 +122,7 @@ extension CountryDetailScreen {
                         actionButtonTitle: "Convert \(country.currency.code)",
                         actionButtonIcon: "arrow.left.arrow.right",
                         onAction: { [self] in
-                            coordinator.sheet(.currencyConverter(preselectedCode: country.currency.code))
+                            coordinator.sheet(DiscoverRoute.currencyConverter(preselectedCode: country.currency.code))
                         }
                     )
                 )

@@ -139,7 +139,6 @@
 				"Feature/Geografy-Feature-WorldFacts",
 				Feature/Tab,
 				Navigation/AppCoordinator.swift,
-				Navigation/Destination.swift,
 			);
 			target = TV000000000000000000TARG /* GeografyTV */;
 		};

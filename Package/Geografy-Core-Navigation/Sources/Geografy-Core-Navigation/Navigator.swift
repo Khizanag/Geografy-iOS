@@ -1,4 +1,3 @@
-import Geografy_Core_Common
 import SwiftUI
 
 @Observable
@@ -9,12 +8,20 @@ public final class Navigator {
 
     public init() {}
 
+    public func push(_ route: some Route) {
+        push(Destination(route))
+    }
+
     public func push(_ destination: Destination) {
         path.append(destination)
     }
 
-    public func sheet(_ destination: Destination) {
-        activeSheet = destination
+    public func sheet(_ route: some Route) {
+        activeSheet = Destination(route)
+    }
+
+    public func cover(_ route: some Route) {
+        cover(Destination(route))
     }
 
     public func cover(_ destination: Destination) {

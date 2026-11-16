@@ -48,7 +48,7 @@ private extension CollectionDetailScreen {
             actionTitle: "Browse Countries"
         ) {
             hapticsService.impact(.light)
-            coordinator.push(.countries)
+            coordinator.push(CountryRoute.countries)
         }
     }
 

@@ -148,7 +148,7 @@ private extension DistanceCalculatorScreen {
         }
     }
 
-    func open(_ route: CountryRoute) {
+    func open(_ route: CapitalRoute) {
         withAnimation(reduceMotion ? nil : .smooth(duration: 0.3)) {
             originCountry = route.origin
             destinationCountry = route.destination
@@ -189,7 +189,7 @@ private extension DistanceCalculatorScreen {
         announce(route)
     }
 
-    func announce(_ route: CountryRoute) {
+    func announce(_ route: CapitalRoute) {
         guard let metrics = route.metrics else { return }
         let kilometers = DistanceFormat.number(metrics.distanceKm)
         let places = "\(route.origin.routePlaceName) to \(route.destination.routePlaceName)"
@@ -199,9 +199,9 @@ private extension DistanceCalculatorScreen {
 
 // MARK: - Helpers
 private extension DistanceCalculatorScreen {
-    var currentRoute: CountryRoute? {
+    var currentRoute: CapitalRoute? {
         guard let originCountry, let destinationCountry else { return nil }
-        return CountryRoute(origin: originCountry, destination: destinationCountry)
+        return CapitalRoute(origin: originCountry, destination: destinationCountry)
     }
 
     /// Only countries whose capital is on record, so every pick can be measured.
@@ -209,11 +209,11 @@ private extension DistanceCalculatorScreen {
         countryDataService.countries.filter { CapitalCoordinateService.coordinate(for: $0.code) != nil }
     }
 
-    var resolvedRecentRoutes: [CountryRoute] {
+    var resolvedRecentRoutes: [CapitalRoute] {
         recentRoutes.compactMap { pair in
             guard let origin = countryDataService.country(for: pair.originCode),
                   let destination = countryDataService.country(for: pair.destinationCode) else { return nil }
-            return CountryRoute(origin: origin, destination: destination)
+            return CapitalRoute(origin: origin, destination: destination)
         }
     }
 }

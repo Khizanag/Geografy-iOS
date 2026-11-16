@@ -132,7 +132,7 @@ private extension CountryDetailScreen {
     var compareButton: some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.sheet(.compare(preselectedCountry: country))
+            coordinator.sheet(CountryRoute.compare(preselectedCountry: country))
         } label: {
             Label("Compare", systemImage: "arrow.left.arrow.right")
         }
@@ -141,7 +141,7 @@ private extension CountryDetailScreen {
     var saveToCollectionButton: some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.sheet(.saveToCollection(countryCode: country.code, countryName: country.name))
+            coordinator.sheet(CountryLocalRoute.saveToCollection(countryCode: country.code, countryName: country.name))
         } label: {
             Label("Save to Collection", systemImage: "folder.badge.plus")
         }
@@ -158,15 +158,15 @@ extension CountryDetailScreen {
 // MARK: - Navigation
 extension CountryDetailScreen {
     func navigateToCountry(_ country: Country) {
-        coordinator.push(.countryDetail(country))
+        coordinator.push(CountryRoute.countryDetail(country))
     }
 
     func navigateToOrganization(_ organization: Organization) {
-        coordinator.push(.organizationDetail(organization))
+        coordinator.push(DiscoverRoute.organizationDetail(organization))
     }
 
     func navigateToContinent(_ continent: Country.Continent) {
-        coordinator.push(.continentOverview(continent))
+        coordinator.push(MapRoute.continentOverview(continent))
     }
 }
 

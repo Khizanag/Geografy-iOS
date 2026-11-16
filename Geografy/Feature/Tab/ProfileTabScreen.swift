@@ -21,9 +21,9 @@ struct ProfileTabScreen: View {
                     streakDays: streakService.currentStreak,
                     level: xpService.currentLevel.level,
                     countriesExplored: favoritesService.favoriteCodes.count,
-                    onStreakTap: { coordinator.push(.profile) },
-                    onLevelTap: { coordinator.push(.profile) },
-                    onCountriesTap: { coordinator.push(.saved(.favorites)) }
+                    onStreakTap: { coordinator.push(ProfileRoute.profile) },
+                    onLevelTap: { coordinator.push(ProfileRoute.profile) },
+                    onCountriesTap: { coordinator.push(CountryRoute.saved(.favorites)) }
                 )
             }
         }

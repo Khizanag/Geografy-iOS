@@ -98,9 +98,9 @@ private extension SearchScreen {
         recentService.add(row.title)
         switch row {
         case .country(let country), .capital(let country, _):
-            coordinator.push(.countryDetail(country))
+            coordinator.push(CountryRoute.countryDetail(country))
         case .organization(let organization):
-            coordinator.push(.organizationDetail(organization))
+            coordinator.push(DiscoverRoute.organizationDetail(organization))
         }
     }
 }

@@ -6,7 +6,7 @@ import SwiftUI
 extension ProfileScreen {
     public var guestBanner: some View {
         Button {
-            coordinator.push(.signIn)
+            coordinator.push(ProfileLocalRoute.signIn)
         } label: {
             guestBannerLabel
         }
@@ -31,7 +31,7 @@ extension ProfileScreen {
     public var editButton: some View {
         Button {
             hapticsService.impact(.light)
-            coordinator.push(.editProfile)
+            coordinator.push(ProfileLocalRoute.editProfile)
         } label: {
             Image(systemName: "pencil")
         }

@@ -86,7 +86,7 @@ extension ProfileScreen {
 private extension ProfileScreen {
     var signInRow: some View {
         Button {
-            coordinator.push(.signIn)
+            coordinator.push(ProfileLocalRoute.signIn)
         } label: {
             accountRowLabel(
                 icon: "person.badge.plus.fill",

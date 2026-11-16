@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
@@ -38,7 +39,7 @@ extension CountryDetailScreen {
                 Label("View Details", systemImage: "info.circle")
             }
             Button {
-                coordinator.sheet(.organizationMap(org))
+                coordinator.sheet(MapRoute.organizationMap(org))
             } label: {
                 Label("View Map", systemImage: "map")
             }
