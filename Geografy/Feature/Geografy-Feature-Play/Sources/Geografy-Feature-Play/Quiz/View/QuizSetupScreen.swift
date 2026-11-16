@@ -3,6 +3,7 @@ import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
 import SwiftUI
 
+/// Sets up a quiz: what it asks, where the countries come from, and how a round plays.
 public struct QuizSetupScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
@@ -10,6 +11,7 @@ public struct QuizSetupScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.locale) private var locale
 
     @AppStorage("quiz_selectedType") private var selectedType: QuizType = .flagQuiz
     @AppStorage("quiz_selectedRegion") private var selectedRegion: QuizRegion = .world
@@ -39,21 +41,18 @@ public struct QuizSetupScreen: View {
 // MARK: - Subviews
 private extension QuizSetupScreen {
     var scrollContent: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 header
-                    .padding(.horizontal, DesignSystem.Spacing.md)
                 quizTypeSection
-                optionsSection
-                    .padding(.horizontal, DesignSystem.Spacing.md)
                 regionSection
-                    .padding(.horizontal, DesignSystem.Spacing.md)
+                optionsSection
             }
-            .padding(.top, DesignSystem.Spacing.xs)
-            .padding(.bottom, DesignSystem.Spacing.lg)
+            .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
             .animation(reduceMotion ? nil : .smooth(duration: 0.3), value: layoutID)
         }
+        .scrollEdgeEffectStyle(.soft, for: .bottom)
     }
 
     var header: some View {
@@ -70,11 +69,11 @@ private extension QuizSetupScreen {
     var quizTypeSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Quiz Type")
-                .padding(.horizontal, DesignSystem.Spacing.md)
             TypeSelectionGrid(
                 items: QuizType.allCases,
                 selectedIDs: [selectedType.id],
                 color: color,
+                layout: .grid,
                 onSelect: { selectedType = $0 }
             )
         }
@@ -92,7 +91,7 @@ private extension QuizSetupScreen {
 private extension QuizSetupScreen {
     var optionsSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Options")
+            SectionHeaderView(title: "Game")
             CardView {
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
                     OptionPickerRow(
@@ -169,7 +168,7 @@ private extension QuizSetupScreen {
 // MARK: - Start Button
 private extension QuizSetupScreen {
     var startButton: some View {
-        GlassButton("Start \(selectedType.displayName)", systemImage: "play.fill", fullWidth: true) {
+        GlassButton("Start", systemImage: "play.fill", fullWidth: true) {
             #if !os(tvOS)
             hapticsService.impact(.light)
             #endif
@@ -182,18 +181,22 @@ private extension QuizSetupScreen {
 
 // MARK: - Helpers
 private extension QuizSetupScreen {
+    /// Where the countries come from and how long a round lasts; the rest of the setup sits below.
+    /// Facts take plain text, so it's looked up in the chosen language here.
     var facts: [GameIntroHeader.Fact] {
-        var facts = [GameIntroHeader.Fact(selectedRegion.displayName, systemImage: selectedRegion.regionIcon)]
+        let region = GameIntroHeader.Fact(selectedRegion.displayName, systemImage: selectedRegion.regionIcon)
         switch selectedGameMode {
         case .standard:
-            facts.append(GameIntroHeader.Fact("\(selectedCount.rawValue) questions", systemImage: "list.number"))
+            let questions = String(localized: "\(selectedCount.rawValue) questions", in: locale)
+            return [region, GameIntroHeader.Fact(questions, systemImage: "list.number")]
         case .arcade:
-            facts.append(GameIntroHeader.Fact("3 lives", systemImage: "heart.fill"))
-            facts.append(GameIntroHeader.Fact(selectedArcadeTimer.rawValue, systemImage: selectedArcadeTimer.icon))
+            let lives = String(localized: "3 lives", in: locale)
+            return [
+                region,
+                GameIntroHeader.Fact(lives, systemImage: "heart.fill"),
+                GameIntroHeader.Fact(selectedArcadeTimer.rawValue, systemImage: selectedArcadeTimer.icon),
+            ]
         }
-        let mode = effectiveAnswerMode.wrappedValue
-        facts.append(GameIntroHeader.Fact(mode.displayName, systemImage: mode.icon))
-        return facts
     }
 
     /// The saved answer mode when this quiz type supports it, multiple choice otherwise.

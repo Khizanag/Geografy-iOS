@@ -106,31 +106,13 @@ private extension PinDropSetupScreen {
     }
 
     var worldTile: some View {
-        Button {
+        WorldRegionTile(
+            countryCount: countryCount(for: .world),
+            color: PinDropStyle.gameColor,
+            isSelected: region == .world
+        ) {
             region = .world
-        } label: {
-            HStack(spacing: DesignSystem.Spacing.md) {
-                WorldMapThumbnail()
-                    .frame(width: 96, height: 56)
-                    .clipShape(.rect(cornerRadius: DesignSystem.CornerRadius.small))
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                    Text("Whole World")
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text("\(countryCount(for: .world)) countries")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.textSecondary)
-                }
-                Spacer(minLength: 0)
-                SelectionMark(isSelected: region == .world, color: PinDropStyle.gameColor)
-            }
-            .padding(DesignSystem.Spacing.md)
-            .selectableTileBackground(isSelected: region == .world, color: PinDropStyle.gameColor)
-            .contentShape(.rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         }
-        .buttonStyle(PressButtonStyle())
-        .accessibilityLabel("Whole World")
-        .accessibilityAddTraits(region == .world ? .isSelected : [])
     }
 
     var regionColumns: [GridItem] {

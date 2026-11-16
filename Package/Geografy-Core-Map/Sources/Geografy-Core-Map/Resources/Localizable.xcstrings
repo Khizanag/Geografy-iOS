@@ -93,8 +93,12 @@
         }
       }
     },
-    "0°" : {},
-    "180°" : {},
+    "0°" : {
+
+    },
+    "180°" : {
+
+    },
     "Aa" : {
       "localizations" : {
         "ka" : {
@@ -488,6 +492,9 @@
           }
         }
       }
+    },
+    "Whole World" : {
+
     },
     "World Map" : {
       "comment" : "The title of the world map card in the \"All Maps\" screen.",

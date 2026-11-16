@@ -1434,6 +1434,10 @@
         }
       }
     },
+    "3 lives" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "30 world languages & scripts" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3305,7 +3309,8 @@
     },
     "Country or capital" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Create" : {
       "comment" : "A button that creates a new collection.",
@@ -4550,7 +4555,8 @@
     },
     "Find a Country" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Find a country in %@" : {
       "extractionState" : "manual",
