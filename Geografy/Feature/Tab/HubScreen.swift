@@ -155,18 +155,18 @@ private extension HubGrid {
         }
     }
 
-    /// Half over the tile's top-trailing corner.
+    /// A glass button half over the tile's top-trailing corner.
     func testBadge(for sheet: HubItem) -> some View {
         Button {
             testChecklistSheet = sheet
         } label: {
             Image(systemName: "ladybug.fill")
-                .font(DesignSystem.Font.micro)
-                .foregroundStyle(DesignSystem.Color.onAccent)
-                .padding(DesignSystem.Spacing.xxs)
-                .background(DesignSystem.Color.orange, in: Circle())
+                .font(DesignSystem.Font.caption)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.glassProminent)
+        .buttonBorderShape(.circle)
+        .controlSize(.small)
+        .tint(DesignSystem.Color.orange)
         .accessibilityLabel("Test checklist for \(sheet.label)")
     }
 }
