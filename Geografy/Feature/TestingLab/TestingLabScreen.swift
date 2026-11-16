@@ -23,11 +23,13 @@ struct TestingLabScreen: View {
     @State private var pendingReset: Reset?
 
     let onOpen: (HubItem) -> Void
+    let onSelectTab: (AppTab) -> Void
 
     // MARK: - Body
     var body: some View {
         NavigationStack {
             Form {
+                BuildNotesSection(notes: BuildNotes.current) { go(to: $0) }
                 buildSection
                 progressSection
                 achievementsSection
@@ -282,6 +284,21 @@ private extension TestingLabScreen {
             achievementService: achievementService,
             streakService: streakService
         )
+    }
+
+    /// Goes where a change in this build is, turning on Testing Mode first when only it shows the change.
+    func go(to note: BuildNote) {
+        guard let target = note.target else { return }
+        if note.needsTestingMode {
+            testingModeService.isEnabled = true
+        }
+        closeThen {
+            switch target {
+            case .screen(let item): onOpen(item)
+            case .tab(let tab): onSelectTab(tab)
+            case .levelUp: xpService.levelUpPublisher.send(xpService.currentLevel)
+            }
+        }
     }
 
     /// Closes the lab first, so what the action shows over the app isn't hidden behind it.

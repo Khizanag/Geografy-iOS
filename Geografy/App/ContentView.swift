@@ -64,7 +64,10 @@ struct ContentView: View {
                 showsTestingLab = true
             }
             .sheet(isPresented: $showsTestingLab) {
-                TestingLabScreen { appCoordinator.open($0) }
+                TestingLabScreen(
+                    onOpen: { appCoordinator.open($0) },
+                    onSelectTab: { appCoordinator.selectedTab = $0 }
+                )
             }
             #endif
             .onContinueUserActivity(CSSearchableItemActionType) { activity in

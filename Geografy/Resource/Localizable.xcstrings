@@ -1471,6 +1471,7 @@
       }
     },
     "A daily nudge keeps your streak alive. You can change this in Settings at any time." : {},
+    "A glass card with the tier badge, the level's title, and progress to the next level. In Dark Mode the screen behind darkens." : {},
     "A quiz with this name already exists" : {
       "localizations" : {
         "ka" : {
@@ -4067,6 +4068,7 @@
         }
       }
     },
+    "Each tile has an orange glass bubble half over its corner, on top of the glass. Tap one: that screen's checklist opens." : {},
     "Earn rewards as you explore" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4311,6 +4313,7 @@
         }
       }
     },
+    "Every type's name fits, with no extra space before Flag Quiz's icon." : {},
     "Expanded" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5007,6 +5010,7 @@
         }
       }
     },
+    "Goes where this change is" : {},
     "Got it!" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5420,6 +5424,7 @@
         }
       }
     },
+    "In This Build" : {},
     "In perspective" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5885,6 +5890,7 @@
         }
       }
     },
+    "Level-up celebration" : {},
     "Levels" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7857,6 +7863,7 @@
         }
       }
     },
+    "Pick two countries, then long-press one: Remove's icon and label are both red. Same on a recent search chip." : {},
     "Pin Drop" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8398,6 +8405,7 @@
         }
       }
     },
+    "Quiz type tiles" : {},
     "Quizzes" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8630,6 +8638,7 @@
         }
       }
     },
+    "Red Remove in menus" : {},
     "Reference" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9179,6 +9188,7 @@
       }
     },
     "Saved Map" : {},
+    "Saved map" : {},
     "Saves your display name" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9698,6 +9708,7 @@
         }
       }
     },
+    "Shake the phone to open it. Rows have Settings-style icons, and every reset row is red." : {},
     "Share" : {
       "localizations" : {
         "ka" : {
@@ -10804,6 +10815,7 @@
       }
     },
     "Test Checklist" : {},
+    "Test badges on hub tiles" : {},
     "Test checklist for %@" : {
       "localizations" : {
         "ka" : {
@@ -10814,6 +10826,7 @@
         }
       }
     },
+    "Test checklist sheet" : {},
     "Test: %@" : {
       "localizations" : {
         "ka" : {
@@ -10881,6 +10894,7 @@
         }
       }
     },
+    "The map opens without a wait from the second launch on. Clear Saved Map below, relaunch: the first open is slower again." : {},
     "The store failed to open, so data lives in memory only." : {},
     "Theme" : {
       "extractionState" : "manual",
@@ -10990,6 +11004,7 @@
         }
       }
     },
+    "Tick checks: the count and bar update, and turn green when all pass. Close and reopen: ticks stay. Open goes to the screen; Uncheck All clears." : {},
     "Time" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11756,6 +11771,7 @@
         }
       }
     },
+    "What changed since the last build, and how to try it. Tap a change to go where it is." : {},
     "What is the capital?" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
