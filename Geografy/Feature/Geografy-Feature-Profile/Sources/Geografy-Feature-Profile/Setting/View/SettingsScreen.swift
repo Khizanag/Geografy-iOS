@@ -13,8 +13,6 @@ public struct SettingsScreen: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.locale) private var locale
     @Environment(\.scenePhase) private var scenePhase
-    @Environment(TestingModeService.self) private var testingModeService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -28,8 +26,6 @@ public struct SettingsScreen: View {
 
     @State private var showDeleteConfirmation = false
     @State private var showSignOutConfirmation = false
-    @State private var showDeveloperTools = false
-    @State private var versionTapCount = 0
 
     // MARK: - Init
     public init() {}
@@ -83,15 +79,11 @@ private extension SettingsScreen {
                 soundAndHapticsSection
                 notificationsSection
                 aboutSection
-
-                if showDeveloperTools {
-                    developerSection
-                        .transition(reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .bottom)))
-                }
-
+                #if DEBUG
+                developerSection
+                #endif
                 versionFooter
             }
-            .animation(.easeInOut(duration: 0.3), value: showDeveloperTools)
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .readableContentWidth()
@@ -515,46 +507,32 @@ private extension SettingsScreen {
 }
 
 // MARK: - Developer
+#if DEBUG
 private extension SettingsScreen {
     var developerSection: some View {
         settingsGroup(header: "Developer") {
-            VStack(spacing: 0) {
-                SettingsToggleRow(
-                    icon: "hammer.fill",
-                    iconColor: DesignSystem.Color.orange,
-                    title: "Testing Mode",
-                    isOn: Binding(
-                        get: { testingModeService.isEnabled },
-                        set: { testingModeService.isEnabled = $0 }
-                    )
-                )
+            Button {
+                NotificationCenter.default.post(name: TestingLab.openNotification, object: nil)
+            } label: {
+                SettingsNavigationRow(icon: "flask.fill", iconColor: DesignSystem.Color.orange, title: "Testing Lab")
             }
+            .buttonStyle(PressButtonStyle())
         }
     }
 }
+#endif
 
 // MARK: - Version Footer
 private extension SettingsScreen {
     var versionFooter: some View {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
-        return Button {
-            versionTapCount += 1
-            if versionTapCount >= 5, !showDeveloperTools {
-                showDeveloperTools = true
-                #if !os(tvOS)
-                hapticsService.notification(.success)
-                #endif
-            }
-        } label: {
-            Text("Geografy v\(version) (\(build))")
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textTertiary)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.vertical, DesignSystem.Spacing.sm)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("App version \(version)")
+        return Text("Geografy v\(version) (\(build))")
+            .font(DesignSystem.Font.caption2)
+            .foregroundStyle(DesignSystem.Color.textTertiary)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.vertical, DesignSystem.Spacing.sm)
+            .accessibilityLabel("App version \(version)")
     }
 }
 

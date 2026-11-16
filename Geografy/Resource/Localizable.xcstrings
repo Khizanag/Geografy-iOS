@@ -1436,7 +1436,8 @@
     },
     "3 lives" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "30 world languages & scripts" : {
       "extractionState" : "stale",
@@ -1592,6 +1593,8 @@
         }
       }
     },
+    "Add 1,000 XP" : {},
+    "Add 100 XP" : {},
     "Add Country" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -1787,6 +1790,7 @@
         }
       }
     },
+    "All Screens" : {},
     "All Types" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -2319,6 +2323,7 @@
         }
       }
     },
+    "Build" : {},
     "Building puzzle…" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -2355,6 +2360,7 @@
         }
       }
     },
+    "Bundle ID" : {},
     "By Continent" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -2715,6 +2721,7 @@
         }
       }
     },
+    "Clear Saved Map" : {},
     "Clear Travel Status" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -3426,6 +3433,7 @@
         }
       }
     },
+    "Current" : {},
     "Daily Challenge" : {
       "localizations" : {
         "ka" : {
@@ -4208,6 +4216,7 @@
         }
       }
     },
+    "Erase Everything and Quit" : {},
     "Event Details" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5808,6 +5817,7 @@
         }
       }
     },
+    "Level" : {},
     "Level %lld" : {
       "localizations" : {
         "ka" : {
@@ -5832,6 +5842,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "დონე %1$lld, %2$@"
+          }
+        }
+      }
+    },
+    "Level up" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
+    "Level up! You’re now level %lld, %@." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Level up! You’re now level %1$lld, %2$@."
           }
         }
       }
@@ -6744,6 +6770,10 @@
         }
       }
     },
+    "Next: %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Nice Guess" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7078,6 +7108,7 @@
         }
       }
     },
+    "No streak" : {},
     "No test items defined for this feature yet." : {
       "localizations" : {
         "ka" : {
@@ -7377,6 +7408,7 @@
         }
       }
     },
+    "Open a Screen" : {},
     "Opens %@" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7927,6 +7959,7 @@
         }
       }
     },
+    "Played Today" : {},
     "Popular" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8056,6 +8089,7 @@
         }
       }
     },
+    "Projection" : {},
     "Pronounce %@" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8509,6 +8543,8 @@
         }
       }
     },
+    "Reach Next Level" : {},
+    "Reaching a level and Show Level Up close the lab so the celebration is visible." : {},
     "Read" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -8733,6 +8769,7 @@
         }
       }
     },
+    "Reset Achievements" : {},
     "Reset All" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8745,6 +8782,7 @@
         }
       }
     },
+    "Reset Game Setups" : {},
     "Reset Section Order" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -8756,6 +8794,7 @@
         }
       }
     },
+    "Reset XP" : {},
     "Reset to Default" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -9113,6 +9152,7 @@
         }
       }
     },
+    "Saved Map" : {},
     "Saves your display name" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9559,6 +9599,7 @@
         }
       }
     },
+    "Set Streak" : {},
     "Set travel status" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9760,6 +9801,8 @@
         }
       }
     },
+    "Show Level Up" : {},
+    "Show Unlock Banner" : {},
     "Show Visited Countries" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10531,6 +10574,7 @@
         }
       }
     },
+    "Switches" : {},
     "Sync across devices" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10753,6 +10797,9 @@
         }
       }
     },
+    "Testing Lab" : {
+      "localizations" : {}
+    },
     "Testing Mode" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10764,6 +10811,11 @@
           }
         }
       }
+    },
+    "Testing Mode adds a test checklist to each hub tile and a test sign-in." : {},
+    "That's the top level. Well travelled!" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "The answer was %@" : {
       "extractionState" : "manual",
@@ -10801,6 +10853,7 @@
         }
       }
     },
+    "The store failed to open, so data lives in memory only." : {},
     "Theme" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11397,6 +11450,7 @@
         }
       }
     },
+    "Unlock Next" : {},
     "Unlocked" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11457,6 +11511,8 @@
         }
       }
     },
+    "User" : {},
+    "User ID" : {},
     "VS" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11469,6 +11525,7 @@
         }
       }
     },
+    "Version" : {},
     "View" : {
       "localizations" : {
         "ka" : {
@@ -11961,6 +12018,10 @@
         }
       }
     },
+    "You reached level %lld" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "You'll see your results and missed countries." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -12108,6 +12169,7 @@
         }
       }
     },
+    "^[%lld day](inflect: true)" : {},
     "by land area" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

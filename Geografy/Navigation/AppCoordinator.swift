@@ -50,6 +50,11 @@ final class AppCoordinator {
     func openHubItemFromLaunchArguments() {
         guard let key = UserDefaults.standard.string(forKey: "openHub"),
               let item = HubItem.allCases.first(where: { $0.testKey == key }) else { return }
+        open(item)
+    }
+
+    /// Opens a hub screen on the Explore tab, on top of whatever that tab shows.
+    func open(_ item: HubItem) {
         selectedTab = .explore
         exploreNavigator.push(item.destination)
     }

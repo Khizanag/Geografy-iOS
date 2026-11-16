@@ -47,6 +47,24 @@ enum MapDiskCache {
         guard let url = adjacencyURL(key: key), let data = try? JSONEncoder().encode(adjacency) else { return }
         write(data, to: url, key: key)
     }
+
+    // MARK: - Maintenance
+    /// Bytes the saved map takes on disk.
+    static func savedSize() -> Int {
+        guard let directory else { return 0 }
+        let files = (try? FileManager.default.contentsOfDirectory(
+            at: directory,
+            includingPropertiesForKeys: [.fileSizeKey]
+        )) ?? []
+        return files.reduce(0) { total, file in
+            total + ((try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0)
+        }
+    }
+
+    static func removeAll() {
+        guard let directory else { return }
+        try? FileManager.default.removeItem(at: directory)
+    }
 }
 
 // MARK: - Files

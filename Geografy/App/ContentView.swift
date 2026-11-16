@@ -21,6 +21,9 @@ struct ContentView: View {
     @State private var levelUpLevel: UserLevel?
     @State private var currentBannerAchievement: AchievementDefinition?
     @State private var bannerQueue: [AchievementDefinition] = []
+    #if DEBUG
+    @State private var showsTestingLab = false
+    #endif
 
     // MARK: - Body
     var body: some View {
@@ -56,6 +59,13 @@ struct ContentView: View {
             .task(id: countryDataService.countries.count, priority: .utility) { await prewarmListFlags() }
             #if DEBUG
             .task { appCoordinator.openHubItemFromLaunchArguments() }
+            .task { showsTestingLab = UserDefaults.standard.bool(forKey: "openTestingLab") }
+            .onReceive(NotificationCenter.default.publisher(for: TestingLab.openNotification)) { _ in
+                showsTestingLab = true
+            }
+            .sheet(isPresented: $showsTestingLab) {
+                TestingLabScreen { appCoordinator.open($0) }
+            }
             #endif
             .onContinueUserActivity(CSSearchableItemActionType) { activity in
                 if let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {

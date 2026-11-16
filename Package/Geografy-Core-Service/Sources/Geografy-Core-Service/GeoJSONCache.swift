@@ -75,6 +75,15 @@ public final class GeoJSONCache {
         revision += 1
     }
 
+    /// Bytes the map saved between launches takes on disk.
+    public var savedMapSize: Int { MapDiskCache.savedSize() }
+
+    /// Deletes the map saved between launches and drops the parsed one, so the next map parses from scratch.
+    public func clearSavedMap() {
+        MapDiskCache.removeAll()
+        invalidate()
+    }
+
     /// Nil when a newer projection was asked for meanwhile, so switching back and forth never keeps stale shapes.
     private func parse(in projection: MapProjectionKind, buildingAdjacency: Bool) async -> Parsed? {
         if let loadTask, loadTask.projection == projection {
