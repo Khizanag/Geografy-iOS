@@ -4,21 +4,19 @@ import Geografy_Core_Service
 import SwiftUI
 
 enum AppTab: Int, Hashable {
+    case map
     case explore
     case play
-    case map
-    case learn
     case profile
 }
 
 @Observable
 final class AppCoordinator {
-    var selectedTab: AppTab = .explore
+    var selectedTab: AppTab = .map
 
     let exploreNavigator = Navigator()
     let mapNavigator = Navigator()
     let playNavigator = Navigator()
-    let learnNavigator = Navigator()
     let profileNavigator = Navigator()
 
     func navigator(for tab: AppTab) -> Navigator {
@@ -26,7 +24,6 @@ final class AppCoordinator {
         case .explore: exploreNavigator
         case .map: mapNavigator
         case .play: playNavigator
-        case .learn: learnNavigator
         case .profile: profileNavigator
         }
     }
@@ -36,7 +33,7 @@ final class AppCoordinator {
         switch url.host {
         case "home", "countries": selectedTab = .explore
         case "map", "maps": selectedTab = .map
-        case "quiz": selectedTab = .play
+        case "quiz", "play": selectedTab = .play
         case "more": selectedTab = .profile
         case "streak", "profile":
             selectedTab = .profile
@@ -53,8 +50,8 @@ final class AppCoordinator {
     func openHubItemFromLaunchArguments() {
         guard let key = UserDefaults.standard.string(forKey: "openHub"),
               let item = HubItem.allCases.first(where: { $0.testKey == key }) else { return }
-        selectedTab = .learn
-        learnNavigator.push(item.toDestination)
+        selectedTab = .explore
+        exploreNavigator.push(item.toDestination)
     }
     #endif
 

@@ -6,8 +6,21 @@ import SwiftUI
 // One for the app: tab roots rebuild this screen often, and the checklists never change.
 @MainActor private let testChecklistService = TestChecklistService()
 
-/// A tab root: an optional header above titled grids of feature tiles.
+/// A tab root: a large title over a ``HubGrid``.
 struct HubScreen<Header: View>: View {
+    let title: String
+    let sections: [HubSection]
+    @ViewBuilder let header: () -> Header
+
+    var body: some View {
+        HubGrid(sections: sections, header: header)
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.large)
+    }
+}
+
+/// An optional header above titled grids of feature tiles.
+struct HubGrid<Header: View>: View {
     // MARK: - Properties
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -17,16 +30,12 @@ struct HubScreen<Header: View>: View {
 
     @State private var testChecklistSheet: HubItem?
 
-    let title: String
     let sections: [HubSection]
     @ViewBuilder let header: () -> Header
 
     // MARK: - Body
     var body: some View {
         itemList
-            .screenBackground()
-            .navigationTitle(title)
-            .navigationBarTitleDisplayMode(.large)
             .sheet(item: $testChecklistSheet) { item in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     TestChecklistSheet(
@@ -48,7 +57,7 @@ struct HubSection: Identifiable {
 }
 
 // MARK: - Subviews
-private extension HubScreen {
+private extension HubGrid {
     var itemList: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
@@ -139,7 +148,7 @@ private extension HubScreen {
 }
 
 // MARK: - Navigation
-private extension HubScreen {
+private extension HubGrid {
     // Games run full screen; everything else opens inside the tab.
     func open(_ destination: Destination) {
         if case .quizSession = destination {
@@ -151,7 +160,7 @@ private extension HubScreen {
 }
 
 // MARK: - Adaptive Tile Sizing
-private extension HubScreen {
+private extension HubGrid {
     var isWide: Bool { sizeClass == .regular }
 
     /// Two tiles a row on a phone, so names fit on a line or two beside a readable icon;

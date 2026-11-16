@@ -1616,7 +1616,6 @@
       }
     },
     "Add to favorites" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -5921,7 +5920,6 @@
       }
     },
     "Map Coloring Book" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -8619,7 +8617,6 @@
       }
     },
     "Remove from favorites" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -9910,7 +9907,6 @@
       }
     },
     "Size Visualization" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ka" : {
           "stringUnit" : {
@@ -12211,6 +12207,7 @@
         }
       }
     },
+    "— %@" : {},
     "• %@" : {},
     "💤" : {
       "extractionState" : "stale",

@@ -2,29 +2,26 @@
 import AppIntents
 
 enum AppDestination: String, AppEnum {
-    case home
-    case quiz
-    case countries
-    case maps
-    case more
+    case map
+    case explore
+    case play
+    case profile
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Tab"
 
     static let caseDisplayRepresentations: [AppDestination: DisplayRepresentation] = [
-        .home: "Home",
-        .quiz: "Quiz",
-        .countries: "Countries",
-        .maps: "Maps",
-        .more: "More",
+        .map: "Map",
+        .explore: "Explore",
+        .play: "Play",
+        .profile: "Profile",
     ]
 
     var tabIndex: Int {
         switch self {
-        case .home: 0
-        case .quiz: 1
-        case .countries: 2
-        case .maps: 3
-        case .more: 4
+        case .map: AppTab.map.rawValue
+        case .explore: AppTab.explore.rawValue
+        case .play: AppTab.play.rawValue
+        case .profile: AppTab.profile.rawValue
         }
     }
 }

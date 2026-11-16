@@ -5,9 +5,9 @@ import SwiftUI
 public enum Destination: Hashable, Identifiable {
     case achievementDetail(AchievementDefinition)
     case achievements
-    case allMaps
     case collectionDetail(String)
     case compare(preselectedCountry: Country? = nil)
+    case continents
     case continentOverview(Country.Continent)
     case countries
     case countryDetail(Country)
@@ -29,7 +29,6 @@ public enum Destination: Hashable, Identifiable {
     case leaderboards
     case map(continentFilter: Country.Continent? = nil)
     case mapColors
-    case mapFullScreen(continentFilter: String?)
     case mapPuzzle
     case multiplayer
     case neighborExplorer(Country)
@@ -63,9 +62,9 @@ public enum Destination: Hashable, Identifiable {
         switch self {
         case .achievementDetail(let definition): "achievementDetail-\(definition.id)"
         case .achievements: "achievements"
-        case .allMaps: "allMaps"
         case .collectionDetail(let name): "collectionDetail-\(name)"
         case .compare(let country): "compare-\(country?.code ?? "none")"
+        case .continents: "continents"
         case .continentOverview(let continent): "continentOverview-\(continent.rawValue)"
         case .countries: "countries"
         case .countryDetail(let country): "countryDetail-\(country.code)"
@@ -84,7 +83,6 @@ public enum Destination: Hashable, Identifiable {
         case .leaderboards: "leaderboards"
         case .map(let filter): "map-\(filter?.rawValue ?? "world")"
         case .mapColors: "mapColors"
-        case .mapFullScreen(let filter): "mapFullScreen-\(filter ?? "world")"
         case .mapPuzzle: "mapPuzzle"
         case .pinDrop: "pinDrop"
         case .multiplayer: "multiplayer"

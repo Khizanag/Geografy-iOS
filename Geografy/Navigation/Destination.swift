@@ -38,9 +38,9 @@ extension Destination {
         switch self {
         case .achievementDetail(let definition): AchievementDetailView(definition: definition)
         case .achievements: AchievementsScreen()
-        case .allMaps: AllMapsScreen().navigationTitle("All Maps").navigationBarTitleDisplayMode(.inline)
         case .collectionDetail(let name): CollectionDetailScreen(collectionName: name)
         case .compare(let country): CompareScreen(preselectedCountry: country)
+        case .continents: ContinentsScreen()
         case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)
         case .countries: CountryListScreen().navigationTitle("Countries").navigationBarTitleDisplayMode(.inline)
         case .countryDetail(let country): CountryDetailScreen(country: country)
@@ -62,7 +62,6 @@ extension Destination {
         case .leaderboards: LeaderboardScreen()
         case .map(let filter): MapScreen(continentFilter: filter?.displayName)
         case .mapColors: MapColorsScreen()
-        case .mapFullScreen(let filter): MapScreen(continentFilter: filter)
         case .mapPuzzle: MapPuzzleSetupScreen()
         case .pinDrop: PinDropSetupScreen()
         case .multiplayer: LocalMultiplayerEntryScreen()

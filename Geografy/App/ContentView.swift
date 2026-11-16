@@ -5,7 +5,6 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import Geografy_Feature_Achievement
 import Geografy_Feature_CountryList
-import Geografy_Feature_Map
 import Geografy_Feature_Quiz
 import SwiftUI
 
@@ -110,7 +109,13 @@ private extension ContentView {
 
     var tabContent: some View {
         TabView(selection: $appCoordinator.selectedTab) {
-            Tab("Explore", systemImage: "globe.europe.africa.fill", value: AppTab.explore) {
+            Tab("Map", systemImage: "map.fill", value: AppTab.map) {
+                CoordinatedNavigationStack(navigator: appCoordinator.mapNavigator) {
+                    MapTabScreen()
+                }
+            }
+
+            Tab("Explore", systemImage: "safari.fill", value: AppTab.explore) {
                 CoordinatedNavigationStack(navigator: appCoordinator.exploreNavigator) {
                     ExploreScreen()
                 }
@@ -119,18 +124,6 @@ private extension ContentView {
             Tab("Play", systemImage: "gamecontroller.fill", value: AppTab.play) {
                 CoordinatedNavigationStack(navigator: appCoordinator.playNavigator) {
                     PlayScreen()
-                }
-            }
-
-            Tab("Map", systemImage: "map.fill", value: AppTab.map) {
-                CoordinatedNavigationStack(navigator: appCoordinator.mapNavigator) {
-                    MapScreen()
-                }
-            }
-
-            Tab("Learn", systemImage: "book.fill", value: AppTab.learn) {
-                CoordinatedNavigationStack(navigator: appCoordinator.learnNavigator) {
-                    LearnScreen()
                 }
             }
 

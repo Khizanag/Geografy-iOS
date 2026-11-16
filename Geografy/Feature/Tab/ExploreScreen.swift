@@ -1,13 +1,15 @@
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
+import Geografy_Core_Service
 import Geografy_Feature_CountryList
-import Geografy_Feature_Map
 import SwiftUI
 
-/// The Explore tab: every country as a list or on the map.
+/// The Explore tab: every country in a list, and a Discover page with the country of the day, facts, and tools.
 struct ExploreScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
+    @Environment(CountryDataService.self) private var countryDataService
 
     @State private var mode: Mode = .countries
     @State private var countryListState = CountryListState()
@@ -31,17 +33,22 @@ struct ExploreScreen: View {
 private extension ExploreScreen {
     enum Mode: String, CaseIterable, Identifiable {
         case countries
-        case maps
+        case discover
 
         var id: String { rawValue }
 
         var title: LocalizedStringKey {
             switch self {
             case .countries: "Countries"
-            case .maps: "Maps"
+            case .discover: "Discover"
             }
         }
     }
+
+    static let discoverSections = [
+        HubSection(title: "Reference", items: [.worldFacts, .timeline, .orgs, .compare]),
+        HubSection(title: "Tools", items: [.timeZones, .currencyConverter, .distanceCalculator]),
+    ]
 }
 
 // MARK: - Subviews
@@ -53,9 +60,22 @@ private extension ExploreScreen {
     @ViewBuilder
     func content(for mode: Mode) -> some View {
         switch mode {
-        // The list's state is kept here, so switching to Maps and back keeps its search, sort, and groups.
+        // The list's state is kept here, so switching to Discover and back keeps its search, sort, and groups.
         case .countries: CountryListScreen(state: countryListState)
-        case .maps: AllMapsScreen()
+        case .discover: HubGrid(sections: Self.discoverSections) { countryOfTheDay }
+        }
+    }
+
+    @ViewBuilder
+    var countryOfTheDay: some View {
+        if let country = countryDataService.countryOfTheDay() {
+            Button { coordinator.push(.countryDetail(country)) } label: {
+                CountrySpotlightCard(
+                    country: country,
+                    funFact: CountryFunFacts.data[country.code]?.first
+                )
+            }
+            .buttonStyle(PressButtonStyle())
         }
     }
 }
