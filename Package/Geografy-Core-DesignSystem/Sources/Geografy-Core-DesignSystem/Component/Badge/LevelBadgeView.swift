@@ -34,6 +34,7 @@ public struct LevelBadgeView: View {
     public let level: UserLevel
     public var size: LevelBadgeSize = .small
     public var animated: Bool = false
+    public var showsTitle: Bool = true
 
     @State private var glowPulse = false
 
@@ -41,18 +42,20 @@ public struct LevelBadgeView: View {
     public init(
         level: UserLevel,
         size: LevelBadgeSize = .small,
-        animated: Bool = false
+        animated: Bool = false,
+        showsTitle: Bool = true
     ) {
         self.level = level
         self.size = size
         self.animated = animated
+        self.showsTitle = showsTitle
     }
 
     // MARK: - Body
     public var body: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
             badgeCircle
-            if size == .large {
+            if size == .large, showsTitle {
                 levelTitle
             }
         }
@@ -121,26 +124,25 @@ private extension LevelBadgeView {
 // MARK: - Helpers
 private extension LevelBadgeView {
     var levelGradient: LinearGradient {
-        LinearGradient(colors: levelColors, startPoint: .topLeading, endPoint: .bottomTrailing)
+        LinearGradient(colors: level.tierColors, startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 
-    var levelColors: [Color] {
-        switch level.level {
-        case 1, 2:  return [Color(hex: "CD7F32"), Color(hex: "8B4513")]  // Bronze
-        case 3, 4:  return [Color(hex: "C0C0C0"), Color(hex: "707070")]  // Silver
-        case 5, 6:  return [Color(hex: "FFD700"), Color(hex: "FFA500")]  // Gold
-        case 7, 8:  return [Color(hex: "50C878"), Color(hex: "006400")]  // Emerald
-        default:    return [Color(hex: "BF5FFF"), Color(hex: "6C3483")]  // Diamond
+    var glowColor: Color { level.tierColor }
+}
+
+// MARK: - Tier
+public extension UserLevel {
+    /// Bronze, silver, gold, emerald, then diamond, two levels each: the light and dark ends of the badge.
+    var tierColors: [Color] {
+        switch level {
+        case 1, 2: [Color(hex: "CD7F32"), Color(hex: "8B4513")]
+        case 3, 4: [Color(hex: "C0C0C0"), Color(hex: "707070")]
+        case 5, 6: [Color(hex: "FFD700"), Color(hex: "FFA500")]
+        case 7, 8: [Color(hex: "50C878"), Color(hex: "006400")]
+        default: [Color(hex: "BF5FFF"), Color(hex: "6C3483")]
         }
     }
 
-    var glowColor: Color {
-        switch level.level {
-        case 1, 2:  Color(hex: "CD7F32")
-        case 3, 4:  Color(hex: "C0C0C0")
-        case 5, 6:  Color(hex: "FFD700")
-        case 7, 8:  Color(hex: "50C878")
-        default:    Color(hex: "BF5FFF")
-        }
-    }
+    /// The tier's light end, for glows and accents around the badge.
+    var tierColor: Color { tierColors[0] }
 }
