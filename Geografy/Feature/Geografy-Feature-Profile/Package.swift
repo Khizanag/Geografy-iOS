@@ -20,7 +20,7 @@ let package = Package(
         .package(path: "../../../Package/Geografy-Core-Map"),
         .package(path: "../../../Package/Geografy-Core-Navigation"),
         .package(path: "../../../Package/Geografy-Core-Service"),
-        .package(url: "https://github.com/Khizanag/TestingLab-iOS", from: "1.0.2"),
+        .package(url: "https://github.com/Khizanag/TestingLab-iOS", from: "1.0.3"),
     ],
     targets: [
         .target(
