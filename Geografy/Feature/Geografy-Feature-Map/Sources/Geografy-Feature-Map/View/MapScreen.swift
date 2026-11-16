@@ -59,7 +59,7 @@ public struct MapScreen: View {
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
             // Again when the projection or colors change in Settings: the Map tab stays alive behind it.
-            .task(id: "\(projection)-\(palette)") {
+            .task(id: "\(projection)-\(palette)-\(geoJSONCache.revision)") {
                 isInitialized = false
                 await loadMapData()
             }
@@ -305,14 +305,14 @@ private extension MapScreen {
     func redrawIfNeeded() {
         guard mapState.needsRedraw(in: screenSize) else { return }
         if wrapsWorld {
-            wrapHorizontalOffset()
+            mapState.wrapHorizontalOffset()
         }
         mapState.redrawGestureFrame()
     }
 
     func finishGesture() {
         if wrapsWorld {
-            wrapHorizontalOffset()
+            mapState.wrapHorizontalOffset()
         }
         mapState.lastOffset = mapState.offset
         mapState.endGesture()
@@ -326,19 +326,6 @@ private extension MapScreen {
         mapState.clampOffset(to: effectiveViewportBounds, in: screenSize, horizontally: !wrapsWorld)
     }
 
-    func wrapHorizontalOffset() {
-        let mapWidthScaled = MapProjection.mapWidth * mapState.scale
-        let halfWidth = mapWidthScaled / 2
-
-        if mapState.offset.width > halfWidth {
-            mapState.offset.width -= mapWidthScaled
-            mapState.lastOffset.width -= mapWidthScaled
-        } else if mapState.offset.width < -halfWidth {
-            mapState.offset.width += mapWidthScaled
-            mapState.lastOffset.width += mapWidthScaled
-        }
-    }
-
     func updateMinScale(for size: CGSize) {
         guard size.width > 0, size.height > 0 else { return }
         let newMin = computeMinScale(for: size)
@@ -349,7 +336,7 @@ private extension MapScreen {
             mapState.lastScale = newMin
         }
 
-        centerOnContent()
+        mapState.center(on: effectiveViewportBounds)
         clampOffset()
         mapState.lastOffset = mapState.offset
     }
@@ -360,7 +347,7 @@ private extension MapScreen {
         mapState.scale = fitScale
         mapState.lastScale = fitScale
         mapState.minScale = fitScale
-        centerOnContent()
+        mapState.center(on: effectiveViewportBounds)
     }
 
     func computeMinScale(for size: CGSize) -> CGFloat {
@@ -384,22 +371,6 @@ private extension MapScreen {
         }
 
         return fitWidth
-    }
-
-    func centerOnContent() {
-        let bounds = effectiveViewportBounds
-        guard bounds.width > 0, bounds.height > 0 else { return }
-
-        let contentCenterX = (bounds.minX + bounds.maxX) / 2
-        let contentCenterY = (bounds.minY + bounds.maxY) / 2
-        let mapCenterX = MapProjection.mapWidth / 2
-        let mapCenterY = MapProjection.mapHeight / 2
-
-        let offsetX = (mapCenterX - contentCenterX) * mapState.scale
-        let offsetY = (mapCenterY - contentCenterY) * mapState.scale
-
-        mapState.offset = CGSize(width: offsetX, height: offsetY)
-        mapState.lastOffset = mapState.offset
     }
 
     // Returns a viewport rect for continents that span the antimeridian or
@@ -434,21 +405,8 @@ private extension MapScreen {
 // MARK: - Actions
 private extension MapScreen {
     func handleTap(at point: CGPoint, in size: CGSize) {
-        let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
-        let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
-
-        // The world map repeats sideways, so a tap on a neighboring copy maps back onto the one copy of the shapes.
-        let mapWidth = MapProjection.mapWidth
-        let unwrappedX = (point.x - originX) / mapState.scale
-        let wrappedX = (unwrappedX.truncatingRemainder(dividingBy: mapWidth) + mapWidth)
-            .truncatingRemainder(dividingBy: mapWidth)
-        let mapPoint = CGPoint(x: wrapsWorld ? wrappedX : unwrappedX, y: (point.y - originY) / mapState.scale)
-
-        let sortedByArea = mapState.countryShapes.sorted {
-            $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
-        }
-
-        for shape in sortedByArea where shape.contains(mapPoint) {
+        let mapPoint = mapState.mapPoint(for: point, in: size, wrapping: wrapsWorld)
+        if let shape = mapState.shape(at: mapPoint) {
             withAnimation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.78)) {
                 if mapState.selectedCountryCode == shape.id {
                     mapState.selectedCountryCode = nil
@@ -485,7 +443,7 @@ private extension MapScreen {
 
         guard !shapes.isEmpty else { return }
 
-        mapState.contentBounds = computeContentBounds(from: shapes)
+        mapState.contentBounds = MapState.bounds(of: shapes)
 
         withAnimation(wasPreloaded || reduceMotion ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
@@ -499,22 +457,5 @@ private extension MapScreen {
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) {
             loadedProjection = projection
         }
-    }
-
-    func computeContentBounds(from shapes: [CountryShape]) -> CGRect {
-        guard let first = shapes.first else { return .zero }
-        var minX = first.boundingBox.minX
-        var minY = first.boundingBox.minY
-        var maxX = first.boundingBox.maxX
-        var maxY = first.boundingBox.maxY
-
-        for shape in shapes.dropFirst() {
-            minX = min(minX, shape.boundingBox.minX)
-            minY = min(minY, shape.boundingBox.minY)
-            maxX = max(maxX, shape.boundingBox.maxX)
-            maxY = max(maxY, shape.boundingBox.maxY)
-        }
-
-        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }

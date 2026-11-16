@@ -35,7 +35,7 @@ public struct WorldMapThumbnail: View {
         .opacity(shapes.isEmpty ? 0 : 1)
         .allowsHitTesting(false)
         .accessibilityHidden(true)
-        .task(id: "\(projection)-\(palette)") { await loadShapes() }
+        .task(id: "\(projection)-\(palette)-\(geoJSONCache.revision)") { await loadShapes() }
     }
 }
 

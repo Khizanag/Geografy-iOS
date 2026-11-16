@@ -66,7 +66,10 @@ public enum GeoJSONParser {
         }
 
         // Colors come later, from `MapColoringEngine`, so a palette change never parses the map again.
-        return consolidateMergedTerritories(shapes)
+        // Largest first, so a country inside another, such as Lesotho in South Africa, draws on top of it.
+        return consolidateMergedTerritories(shapes).sorted {
+            $0.boundingBox.width * $0.boundingBox.height > $1.boundingBox.width * $1.boundingBox.height
+        }
     }
 }
 
@@ -105,24 +108,25 @@ private extension GeoJSONParser {
         var largestPolygonArea: CGFloat = 0
 
         for rings in ringArrays {
-            guard let outerRing = rings.first else { continue }
-
-            let projectedPoints = outerRing.compactMap { coord -> CGPoint? in
-                guard coord.count >= 2 else { return nil }
-                return project(coord[0], coord[1])
+            let projected = rings.map { ring in
+                ring.compactMap { coord -> CGPoint? in
+                    guard coord.count >= 2 else { return nil }
+                    return project(coord[0], coord[1])
+                }
             }
-
-            guard projectedPoints.count >= 3 else { continue }
+            // The first ring is the outline; the rest are holes, such as Lesotho inside South Africa.
+            guard let projectedPoints = projected.first, projectedPoints.count >= 3 else { continue }
+            let holes = projected.dropFirst().filter { $0.count >= 3 }
 
             let path = CGMutablePath()
-            path.move(to: projectedPoints[0])
-            for point in projectedPoints.dropFirst() {
-                path.addLine(to: point)
+            for ring in [projectedPoints] + holes {
+                path.addLines(between: ring)
+                path.closeSubpath()
             }
-            path.closeSubpath()
 
             paths.append(path)
             projectedRings.append(projectedPoints)
+            projectedRings.append(contentsOf: holes)
             allPoints.append(contentsOf: projectedPoints)
 
             // Track the largest polygon for label placement.

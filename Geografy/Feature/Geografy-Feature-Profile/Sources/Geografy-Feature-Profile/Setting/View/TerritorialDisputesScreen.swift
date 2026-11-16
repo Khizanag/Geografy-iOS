@@ -6,8 +6,10 @@ import SwiftUI
 public struct TerritorialDisputesScreen: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(GeoJSONCache.self) private var geoJSONCache
 
     @State private var selections: [String: String] = [:]
+    @State private var hasChanges = false
     @State private var showingResetAlert = false
 
     // MARK: - Init
@@ -20,6 +22,8 @@ public struct TerritorialDisputesScreen: View {
             .navigationTitle("Territorial Disputes")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear { loadSelections() }
+            // Once, on the way out, so trying several options doesn't parse the map for each.
+            .onDisappear { if hasChanges { geoJSONCache.invalidate() } }
             .alert("Reset to Defaults", isPresented: $showingResetAlert) {
                 Button("Reset", role: .destructive, action: resetToDefaults)
                 Button("Cancel", role: .cancel) {}
@@ -134,6 +138,7 @@ private extension TerritorialDisputesScreen {
             hapticsService.selection()
             selections[dispute.id] = newValue
             UserDefaults.standard.set(newValue, forKey: dispute.userDefaultsKey)
+            hasChanges = true
         }
     }
 
@@ -217,6 +222,7 @@ private extension TerritorialDisputesScreen {
             UserDefaults.standard.set(dispute.defaultOptionKey, forKey: dispute.userDefaultsKey)
             selections[dispute.id] = dispute.defaultOptionKey
         }
+        hasChanges = true
     }
 }
 

@@ -31,7 +31,7 @@ public struct ContinentsScreen: View {
             .screenBackground()
             .navigationTitle("Continents")
             .navigationBarTitleDisplayMode(.inline)
-            .task(id: "\(projection)-\(palette)") { await loadOutlines() }
+            .task(id: "\(projection)-\(palette)-\(geoJSONCache.revision)") { await loadOutlines() }
     }
 }
 

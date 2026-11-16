@@ -57,6 +57,57 @@ public extension MapState {
     }
 }
 
+// MARK: - Viewport
+public extension MapState {
+    /// The point under `screenPoint` in map coordinates. A world that repeats sideways maps a tap on a neighboring
+    /// copy back onto the one copy of the shapes.
+    func mapPoint(for screenPoint: CGPoint, in viewSize: CGSize, wrapping: Bool) -> CGPoint {
+        let originX = viewSize.width / 2 - MapProjection.mapWidth * scale / 2 + offset.width
+        let originY = viewSize.height / 2 - MapProjection.mapHeight * scale / 2 + offset.height
+        let mapX = (screenPoint.x - originX) / scale
+        let mapWidth = MapProjection.mapWidth
+        let wrappedX = (mapX.truncatingRemainder(dividingBy: mapWidth) + mapWidth)
+            .truncatingRemainder(dividingBy: mapWidth)
+        return CGPoint(x: wrapping ? wrappedX : mapX, y: (screenPoint.y - originY) / scale)
+    }
+
+    /// The smallest country under a map point, so a tap on an enclave or a small island picks it over its
+    /// surroundings.
+    func shape(at mapPoint: CGPoint) -> CountryShape? {
+        countryShapes
+            .filter { $0.contains(mapPoint) }
+            .min { $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height }
+    }
+
+    /// Keeps the offset within one copy of a world that repeats sideways, so panning never runs out of map.
+    func wrapHorizontalOffset() {
+        let width = MapProjection.mapWidth * scale
+        if offset.width > width / 2 {
+            offset.width -= width
+            lastOffset.width -= width
+        } else if offset.width < -width / 2 {
+            offset.width += width
+            lastOffset.width += width
+        }
+    }
+
+    /// Centers `bounds`, in map coordinates, on the view.
+    func center(on bounds: CGRect) {
+        guard bounds.width > 0, bounds.height > 0 else { return }
+        offset = CGSize(
+            width: (MapProjection.mapWidth / 2 - bounds.midX) * scale,
+            height: (MapProjection.mapHeight / 2 - bounds.midY) * scale
+        )
+        lastOffset = offset
+    }
+
+    /// The box around every shape, in map coordinates; zero when there are none.
+    static func bounds(of shapes: [CountryShape]) -> CGRect {
+        guard !shapes.isEmpty else { return .zero }
+        return shapes.map(\.boundingBox).reduce(CGRect.null) { $0.union($1) }
+    }
+}
+
 // MARK: - Clamping
 private extension MapState {
     /// One axis of `clampOffset`. An offset moves the map's center, so it's measured from the content's center.

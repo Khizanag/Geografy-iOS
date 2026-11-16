@@ -3,7 +3,7 @@ import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 
 /// The world's country outlines, parsed once per projection, colored from the chosen palette,
-/// and kept for every map.
+/// and kept for every map. Switching back to a projection already seen, or to another palette, needs no parse.
 @Observable
 @MainActor
 public final class GeoJSONCache {
@@ -12,14 +12,19 @@ public final class GeoJSONCache {
     public private(set) var projection: MapProjectionKind?
     /// The palette `shapes` are colored from.
     public private(set) var palette: MapPalette?
+    /// Goes up whenever the outlines change for a reason other than projection or palette, such as a
+    /// territorial-dispute choice, so open maps know to load again.
+    public private(set) var revision = 0
 
     private var outlines: [CountryShape] = []
-    private var adjacency = MapAdjacency(neighbors: [:])
+    private var outlinesByProjection: [MapProjectionKind: [CountryShape]] = [:]
+    /// Which countries touch doesn't depend on the projection, so it's worked out once.
+    private var adjacency: MapAdjacency?
     private var loadTask: (projection: MapProjectionKind, task: Task<Parsed, Never>)?
 
     private struct Parsed: Sendable {
         let shapes: [CountryShape]
-        let adjacency: MapAdjacency
+        let adjacency: MapAdjacency?
     }
 
     public init() {}
@@ -37,22 +42,40 @@ public final class GeoJSONCache {
     public func loadShapes() async -> [CountryShape] {
         let projection = MapProjection.current
         if self.projection != projection {
-            guard let parsed = await parse(in: projection) else { return shapes }
-            outlines = parsed.shapes
-            adjacency = parsed.adjacency
+            if let cached = outlinesByProjection[projection] {
+                outlines = cached
+            } else {
+                guard let parsed = await parse(in: projection, buildingAdjacency: adjacency == nil) else {
+                    return shapes
+                }
+                outlines = parsed.shapes
+                outlinesByProjection[projection] = parsed.shapes
+                adjacency = adjacency ?? parsed.adjacency
+            }
             self.projection = projection
             palette = nil
         }
         let palette = MapPalette.current
         if self.palette != palette {
+            let adjacency = adjacency ?? MapAdjacency(neighbors: [:])
             shapes = MapColoringEngine.colored(outlines, adjacency: adjacency, palette: palette)
             self.palette = palette
         }
         return shapes
     }
 
+    /// Drops every parsed outline, for when what the map contains changes, such as a territorial-dispute choice.
+    public func invalidate() {
+        outlinesByProjection = [:]
+        adjacency = nil
+        loadTask = nil
+        projection = nil
+        palette = nil
+        revision += 1
+    }
+
     /// Nil when a newer projection was asked for meanwhile, so switching back and forth never keeps stale shapes.
-    private func parse(in projection: MapProjectionKind) async -> Parsed? {
+    private func parse(in projection: MapProjectionKind, buildingAdjacency: Bool) async -> Parsed? {
         if let loadTask, loadTask.projection == projection {
             return await loadTask.task.value
         }
@@ -60,10 +83,10 @@ public final class GeoJSONCache {
         let task = Task.detached(priority: .utility) { () -> Parsed in
             guard let url = Bundle.main.url(forResource: "countries", withExtension: "geojson"),
                   let data = try? Data(contentsOf: url) else {
-                return Parsed(shapes: [], adjacency: MapAdjacency(neighbors: [:]))
+                return Parsed(shapes: [], adjacency: nil)
             }
             let shapes = GeoJSONParser.parse(data: data, projection: projection)
-            return Parsed(shapes: shapes, adjacency: MapAdjacency.build(from: shapes))
+            return Parsed(shapes: shapes, adjacency: buildingAdjacency ? MapAdjacency.build(from: shapes) : nil)
         }
         loadTask = (projection, task)
         let parsed = await task.value

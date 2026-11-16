@@ -276,7 +276,7 @@ private extension OrganizationMapScreen {
                 clampOffset()
             }
             .onEnded { _ in
-                if wrapsWorld { wrapHorizontalOffset() }
+                if wrapsWorld { mapState.wrapHorizontalOffset() }
                 mapState.lastScale = mapState.scale
                 mapState.lastOffset = mapState.offset
             }
@@ -292,7 +292,7 @@ private extension OrganizationMapScreen {
                 clampOffset()
             }
             .onEnded { _ in
-                if wrapsWorld { wrapHorizontalOffset() }
+                if wrapsWorld { mapState.wrapHorizontalOffset() }
                 mapState.lastOffset = mapState.offset
             }
     }
@@ -302,16 +302,8 @@ private extension OrganizationMapScreen {
 // MARK: - Actions
 private extension OrganizationMapScreen {
     func handleTap(at point: CGPoint, in size: CGSize) {
-        let originX = size.width / 2 - (MapProjection.mapWidth * mapState.scale) / 2 + mapState.offset.width
-        let originY = size.height / 2 - (MapProjection.mapHeight * mapState.scale) / 2 + mapState.offset.height
-        let mapPoint = CGPoint(
-            x: (point.x - originX) / mapState.scale,
-            y: (point.y - originY) / mapState.scale
-        )
-        let sortedByArea = mapState.countryShapes.sorted {
-            $0.boundingBox.width * $0.boundingBox.height < $1.boundingBox.width * $1.boundingBox.height
-        }
-        for shape in sortedByArea where shape.contains(mapPoint) {
+        let mapPoint = mapState.mapPoint(for: point, in: size, wrapping: wrapsWorld)
+        if let shape = mapState.shape(at: mapPoint) {
             if mapState.selectedCountryCode == shape.id {
                 mapState.selectedCountryCode = nil
                 #if !os(tvOS)
@@ -339,16 +331,6 @@ private extension OrganizationMapScreen {
         )
     }
 
-    func wrapHorizontalOffset() {
-        let mapWidthScaled = MapProjection.mapWidth * mapState.scale
-        let halfWidth = mapWidthScaled / 2
-        if mapState.offset.width > halfWidth {
-            mapState.offset.width -= mapWidthScaled
-        } else if mapState.offset.width < -halfWidth {
-            mapState.offset.width += mapWidthScaled
-        }
-    }
-
     func updateMinScale(for size: CGSize) {
         guard size.width > 0, size.height > 0 else { return }
         let newMin = computeMinScale(for: size)
@@ -357,19 +339,8 @@ private extension OrganizationMapScreen {
             mapState.scale = newMin
             mapState.lastScale = newMin
         }
-        centerOnContent()
+        mapState.center(on: mapState.contentBounds)
         clampOffset()
-        mapState.lastOffset = mapState.offset
-    }
-
-    func centerOnContent() {
-        let bounds = mapState.contentBounds
-        guard bounds.width > 0, bounds.height > 0 else { return }
-        let contentCenterX = (bounds.minX + bounds.maxX) / 2
-        let contentCenterY = (bounds.minY + bounds.maxY) / 2
-        let offsetX = (MapProjection.mapWidth / 2 - contentCenterX) * mapState.scale
-        let offsetY = (MapProjection.mapHeight / 2 - contentCenterY) * mapState.scale
-        mapState.offset = CGSize(width: offsetX, height: offsetY)
         mapState.lastOffset = mapState.offset
     }
 
@@ -391,7 +362,7 @@ private extension OrganizationMapScreen {
 
         guard !shapes.isEmpty else { return }
 
-        mapState.contentBounds = computeContentBounds(from: shapes)
+        mapState.contentBounds = MapState.bounds(of: shapes)
 
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
@@ -402,7 +373,7 @@ private extension OrganizationMapScreen {
             mapState.scale = fitScale
             mapState.lastScale = fitScale
             mapState.minScale = fitScale
-            centerOnContent()
+            mapState.center(on: mapState.contentBounds)
             isInitialized = true
         }
     }
@@ -420,20 +391,5 @@ private extension OrganizationMapScreen {
             return max(fitWidth, fitContentHeight)
         }
         return fitWidth
-    }
-
-    func computeContentBounds(from shapes: [CountryShape]) -> CGRect {
-        guard let first = shapes.first else { return .zero }
-        var minX = first.boundingBox.minX
-        var minY = first.boundingBox.minY
-        var maxX = first.boundingBox.maxX
-        var maxY = first.boundingBox.maxY
-        for shape in shapes.dropFirst() {
-            minX = min(minX, shape.boundingBox.minX)
-            minY = min(minY, shape.boundingBox.minY)
-            maxX = max(maxX, shape.boundingBox.maxX)
-            maxY = max(maxY, shape.boundingBox.maxY)
-        }
-        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }

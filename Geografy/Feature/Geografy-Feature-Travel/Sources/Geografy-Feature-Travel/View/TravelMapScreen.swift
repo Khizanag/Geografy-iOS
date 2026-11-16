@@ -192,7 +192,7 @@ private extension TravelMapScreen {
 
         guard !shapes.isEmpty else { return }
 
-        mapState.contentBounds = computeContentBounds(from: shapes)
+        mapState.contentBounds = MapState.bounds(of: shapes)
 
         withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) {
             mapState.countryShapes = shapes
@@ -226,23 +226,6 @@ private extension TravelMapScreen {
             muted.name = ""
             return muted
         }
-    }
-
-    func computeContentBounds(from shapes: [CountryShape]) -> CGRect {
-        guard let first = shapes.first else { return .zero }
-        var minX = first.boundingBox.minX
-        var minY = first.boundingBox.minY
-        var maxX = first.boundingBox.maxX
-        var maxY = first.boundingBox.maxY
-
-        for shape in shapes.dropFirst() {
-            minX = min(minX, shape.boundingBox.minX)
-            minY = min(minY, shape.boundingBox.minY)
-            maxX = max(maxX, shape.boundingBox.maxX)
-            maxY = max(maxY, shape.boundingBox.maxY)
-        }
-
-        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }
 

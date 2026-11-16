@@ -257,9 +257,19 @@ private extension HistoricalMapScreen {
                 mapState.scale = newScale
             }
             .onEnded { _ in
+                clampOffset()
                 mapState.lastScale = mapState.scale
                 mapState.lastOffset = mapState.offset
             }
+    }
+
+    /// Keeps the map's land on screen; the historical map doesn't repeat sideways.
+    func clampOffset() {
+        mapState.clampOffset(
+            to: MapProjection.worldBounds(around: mapState.contentBounds),
+            in: screenSize,
+            horizontally: true
+        )
     }
 
     var dragGesture: some Gesture {
@@ -269,9 +279,9 @@ private extension HistoricalMapScreen {
                     width: mapState.lastOffset.width + value.translation.width,
                     height: mapState.lastOffset.height + value.translation.height
                 )
+                clampOffset()
             }
             .onEnded { _ in
-                wrapHorizontalOffset()
                 mapState.lastOffset = mapState.offset
             }
     }
@@ -280,24 +290,8 @@ private extension HistoricalMapScreen {
 // MARK: - Actions
 private extension HistoricalMapScreen {
     func handleTap(at point: CGPoint, in size: CGSize) {
-        let originX = size.width / 2
-            - (MapProjection.mapWidth * mapState.scale) / 2
-            + mapState.offset.width
-        let originY = size.height / 2
-            - (MapProjection.mapHeight * mapState.scale) / 2
-            + mapState.offset.height
-
-        let mapPoint = CGPoint(
-            x: (point.x - originX) / mapState.scale,
-            y: (point.y - originY) / mapState.scale
-        )
-
-        let sortedByArea = mapState.countryShapes.sorted {
-            $0.boundingBox.width * $0.boundingBox.height
-                < $1.boundingBox.width * $1.boundingBox.height
-        }
-
-        for shape in sortedByArea where shape.contains(mapPoint) {
+        let mapPoint = mapState.mapPoint(for: point, in: size, wrapping: false)
+        if let shape = mapState.shape(at: mapPoint) {
             if mapState.selectedCountryCode == shape.id {
                 mapState.selectedCountryCode = nil
             } else {
@@ -310,17 +304,6 @@ private extension HistoricalMapScreen {
         }
 
         mapState.selectedCountryCode = nil
-    }
-
-    func wrapHorizontalOffset() {
-        let mapWidthScaled = MapProjection.mapWidth * mapState.scale
-        let halfWidth = mapWidthScaled / 2
-
-        if mapState.offset.width > halfWidth {
-            mapState.offset.width -= mapWidthScaled
-        } else if mapState.offset.width < -halfWidth {
-            mapState.offset.width += mapWidthScaled
-        }
     }
 
     func updateMinScale(for size: CGSize) {
@@ -341,17 +324,7 @@ private extension HistoricalMapScreen {
         mapState.lastScale = fitScale
         mapState.minScale = fitScale
 
-        let bounds = mapState.contentBounds
-        guard bounds.width > 0, bounds.height > 0 else { return }
-        let centerX = (bounds.minX + bounds.maxX) / 2
-        let centerY = (bounds.minY + bounds.maxY) / 2
-        let mapCenterX = MapProjection.mapWidth / 2
-        let mapCenterY = MapProjection.mapHeight / 2
-        mapState.offset = CGSize(
-            width: (mapCenterX - centerX) * fitScale,
-            height: (mapCenterY - centerY) * fitScale
-        )
-        mapState.lastOffset = mapState.offset
+        mapState.center(on: mapState.contentBounds)
     }
 }
 
@@ -366,7 +339,7 @@ private extension HistoricalMapScreen {
         guard !shapes.isEmpty else { return }
 
         allShapes = shapes
-        mapState.contentBounds = computeContentBounds(from: shapes)
+        mapState.contentBounds = MapState.bounds(of: shapes)
         applyColorsForYear(shapes: shapes)
 
         if screenSize.width > 0, !isInitialized {
@@ -403,23 +376,6 @@ private extension HistoricalMapScreen {
         mapState.countryShapes = shapes.map { shape in
             dimmed.contains(shape.id) ? shape.recolored(dimmedColor) : shape
         }
-    }
-
-    func computeContentBounds(from shapes: [CountryShape]) -> CGRect {
-        guard let first = shapes.first else { return .zero }
-        var minX = first.boundingBox.minX
-        var minY = first.boundingBox.minY
-        var maxX = first.boundingBox.maxX
-        var maxY = first.boundingBox.maxY
-
-        for shape in shapes.dropFirst() {
-            minX = min(minX, shape.boundingBox.minX)
-            minY = min(minY, shape.boundingBox.minY)
-            maxX = max(maxX, shape.boundingBox.maxX)
-            maxY = max(maxY, shape.boundingBox.maxY)
-        }
-
-        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }
 
