@@ -8,6 +8,9 @@ public struct SpacedRepetitionData: Codable {
     public var lastReviewDate: Date?
     public var totalReviews: Int
     public var correctReviews: Int
+    /// When the card was first reviewed, to cap how many new cards start each day. Nil for cards never
+    /// reviewed, and for ones reviewed before this was kept.
+    public var firstReviewDate: Date?
 
     public var proficiencyPercentage: Double {
         guard totalReviews > 0 else { return 0 }
@@ -66,6 +69,9 @@ extension SpacedRepetitionData {
         var updated = self
         updated.totalReviews += 1
         updated.lastReviewDate = Date()
+        if updated.firstReviewDate == nil {
+            updated.firstReviewDate = Date()
+        }
 
         switch result {
         case .again:

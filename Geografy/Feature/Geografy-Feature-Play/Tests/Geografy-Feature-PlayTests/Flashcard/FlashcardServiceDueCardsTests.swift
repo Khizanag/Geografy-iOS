@@ -44,9 +44,30 @@ struct FlashcardServiceDueCardsTests {
     }
 }
 
+// MARK: - New Cards a Day
+extension FlashcardServiceDueCardsTests {
+    @Test("Someone who has never reviewed starts with a day's worth of new cards, not every country")
+    func newCardsAreCapped() {
+        let service = FlashcardTestFixtures.makeService()
+
+        #expect(service.dueCount(of: .countryToCapital, in: Self.manyCountries) == FlashcardService.newCardsPerDay)
+    }
+
+    @Test("Cards started today use up the day's new cards")
+    func startedTodayCountAgainstTheCap() {
+        let service = FlashcardTestFixtures.makeService()
+        for code in Self.manyCountries.prefix(4).map(\.code) {
+            service.recordReview(cardID: Self.cardID(code), result: .good)
+        }
+
+        #expect(service.dueCount(of: .countryToCapital, in: Self.manyCountries) == FlashcardService.newCardsPerDay - 4)
+    }
+}
+
 // MARK: - Fixtures
 private extension FlashcardServiceDueCardsTests {
     static let countries = ["FR", "DE", "ES"].map(FlashcardTestFixtures.makeCountry)
+    static let manyCountries = (0..<15).map { FlashcardTestFixtures.makeCountry(code: "C\($0)") }
 
     static func cardID(_ code: String) -> String {
         "\(code)_\(FlashcardType.countryToCapital.rawValue)"

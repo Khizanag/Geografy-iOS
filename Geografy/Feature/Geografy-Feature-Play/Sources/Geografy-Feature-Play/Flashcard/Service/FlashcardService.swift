@@ -66,22 +66,43 @@ public final class FlashcardService {
         items.filter { spacedRepetitionData(for: $0.id).isDueForReview }
     }
 
-    /// The cards of `type` due now, one per country. Kept until a review, a reload,
-    /// or the moment the next card falls due, so reading it on every render is cheap.
+    /// New cards that can start each day, so a first session is a handful of countries rather than all of them.
+    public static let newCardsPerDay = 10
+
+    /// The cards of `type` due now: every reviewed card that has come due, then new ones, most populous first, up
+    /// to what's left of today's ``newCardsPerDay``. Kept until a review, a reload, midnight, or the moment the
+    /// next card falls due, so reading it on every render is cheap.
     public func dueCards(of type: FlashcardType, in countries: [Country]) -> [FlashcardItem] {
         let store = spacedRepetitionStore
         let now = Date.now
         if let memo = dueCardsMemo, memo.type == type, memo.countryCount == countries.count, now < memo.validUntil {
             return memo.cards
         }
-        var nextDueDate = Date.distantFuture
-        let cards = countries.compactMap { country -> FlashcardItem? in
+        let calendar = Calendar.current
+        var validUntil = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: now)) ?? .distantFuture
+        var reviewedDue: [FlashcardItem] = []
+        var unseen: [(population: Int, card: FlashcardItem)] = []
+        for country in countries {
             let card = FlashcardItem.make(from: country, type: type)
-            guard let data = store[card.id], data.nextReviewDate > now else { return card }
-            nextDueDate = min(nextDueDate, data.nextReviewDate)
-            return nil
+            guard let data = store[card.id] else {
+                unseen.append((country.population, card))
+                continue
+            }
+            if data.nextReviewDate <= now {
+                reviewedDue.append(card)
+            } else {
+                validUntil = min(validUntil, data.nextReviewDate)
+            }
         }
-        dueCardsMemo = DueCardsMemo(type: type, countryCount: countries.count, validUntil: nextDueDate, cards: cards)
+        let startedToday = store.count { id, data in
+            id.hasSuffix("_\(type.rawValue)") && data.firstReviewDate.map(calendar.isDateInToday) == true
+        }
+        let newCards = unseen.enumerated()
+            .sorted { ($0.element.population, -$0.offset) > ($1.element.population, -$1.offset) }
+            .prefix(max(Self.newCardsPerDay - startedToday, 0))
+            .map(\.element.card)
+        let cards = reviewedDue + newCards
+        dueCardsMemo = DueCardsMemo(type: type, countryCount: countries.count, validUntil: validUntil, cards: cards)
         return cards
     }
 
