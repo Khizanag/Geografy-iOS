@@ -1,11 +1,13 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 /// The end of a game: a grade, the score counting up, the record, and every round's pin.
 struct PinDropResultsView: View {
     // MARK: - Properties
     @Environment(\.locale) private var locale
+    @Environment(AchievementService.self) private var achievementService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     let results: [PinDropGame.Result]
@@ -23,6 +25,7 @@ struct PinDropResultsView: View {
             title: Text(grade.message),
             xpEarned: PinDropScoring.xp(for: results),
             primaryAction: .playAgain(onPlayAgain),
+            share: resultShare,
             onDone: onDone,
             hero: {
                 VStack(spacing: DesignSystem.Spacing.md) {
@@ -45,6 +48,21 @@ struct PinDropResultsView: View {
 // MARK: - Subviews
 private extension PinDropResultsView {
     var totalScore: Int { results.reduce(0) { $0 + $1.score.total } }
+
+    var resultShare: ResultShare {
+        ResultShare(
+            game: String(localized: "Pin Drop"),
+            score: totalScore.formatted(),
+            caption: String(localized: "\(results.count { $0.isInside }) of \(roundCount) bullseyes"),
+            details: [
+                ResultShare.Detail(
+                    String(localized: "\(PinDropStyle.distance(averageMiss, locale: locale)) average miss"),
+                    systemImage: "scope"
+                ),
+            ],
+            onShare: achievementService.recordShare
+        )
+    }
 
     var grade: PinDropGrade { PinDropScoring.grade(totalPoints: totalScore, roundCount: roundCount) }
 

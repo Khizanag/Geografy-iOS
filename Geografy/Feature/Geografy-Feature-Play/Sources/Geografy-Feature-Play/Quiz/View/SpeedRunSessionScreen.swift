@@ -196,6 +196,7 @@ private extension SpeedRunSessionScreen {
             title: Text(completionMessage),
             xpEarned: xpEarned,
             primaryAction: .playAgain { restart() },
+            share: resultShare,
             onDone: { dismiss() },
             hero: { resultsHero },
             stats: { resultsStats },
@@ -204,6 +205,17 @@ private extension SpeedRunSessionScreen {
                     missedSection
                 }
             }
+        )
+    }
+
+    var resultShare: ResultShare {
+        ResultShare(
+            game: String(localized: "Speed Run"),
+            score: "\(completedCodes.count)/\(targetCountries.count)",
+            caption: SpeedRunClock.formatted(elapsedTime),
+            fraction: Double(progressFraction),
+            details: [ResultShare.Detail(region.displayName, systemImage: "globe")],
+            onShare: achievementService.recordShare
         )
     }
 

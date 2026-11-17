@@ -39,6 +39,7 @@ public struct QuizResultsScreen: View {
                 #endif
                 onPlayAgain()
             },
+            share: resultShare,
             onDone: onDone,
             hero: { ScoreRingView(progress: result.accuracy) },
             stats: { stats },
@@ -49,6 +50,26 @@ public struct QuizResultsScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .task { processQuizResult() }
+    }
+}
+
+// MARK: - Share
+private extension QuizResultsScreen {
+    var resultShare: ResultShare {
+        ResultShare(
+            game: result.configuration.type.displayName,
+            score: "\(result.correctCount)/\(result.answers.count)",
+            caption: String(localized: "\(Int((result.accuracy * 100).rounded()))% correct"),
+            fraction: result.accuracy,
+            details: [
+                ResultShare.Detail(result.configuration.region.displayName, systemImage: "globe"),
+                ResultShare.Detail(
+                    Duration.seconds(result.totalTime).formatted(.time(pattern: .minuteSecond)),
+                    systemImage: "clock"
+                ),
+            ],
+            onShare: achievementService.recordShare
+        )
     }
 }
 

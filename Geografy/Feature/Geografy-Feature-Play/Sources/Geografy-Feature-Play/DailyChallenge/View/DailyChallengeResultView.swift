@@ -8,14 +8,13 @@ import SwiftUI
 public struct DailyChallengeResultView: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(AchievementService.self) private var achievementService
 
     public let score: Int
     public let maxScore: Int
     public let challengeType: DailyChallengeType
     public let timeSpent: Double
     public let streak: Int
-
-    @State private var showShareCard = false
 
     // MARK: - Init
     public init(
@@ -39,11 +38,6 @@ public struct DailyChallengeResultView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
             .onAppear { announceScore() }
-            .sheet(isPresented: $showShareCard) {
-                CoordinatedNavigationStack(showCloseButton: true) {
-                    shareCardSheet
-                }
-            }
     }
 }
 
@@ -54,9 +48,8 @@ private extension DailyChallengeResultView {
             title: Text(scoreMessage),
             message: Text("\(score) of \(maxScore) points"),
             xpEarned: XPRules.dailyChallenge(score: score, maxScore: maxScore),
-            primaryAction: GameResultAction("Share Result", systemImage: "square.and.arrow.up") {
-                showShareCard = true
-            },
+            primaryAction: nil,
+            share: resultShare,
             onDone: { dismiss() },
             hero: {
                 ScoreRingView(progress: Double(score) / Double(maxScore))
@@ -106,13 +99,14 @@ private extension DailyChallengeResultView {
 
 // MARK: - Share
 private extension DailyChallengeResultView {
-    var shareCardSheet: some View {
-        DailyChallengeShareCard(
-            score: score,
-            maxScore: maxScore,
-            challengeType: challengeType,
-            streak: streak,
-            date: .now
+    var resultShare: ResultShare {
+        ResultShare(
+            game: challengeType.title,
+            score: "\(score)",
+            caption: String(localized: "out of \(maxScore)"),
+            fraction: Double(score) / Double(maxScore),
+            details: [ResultShare.Detail(String(localized: "\(streak)-day streak"), systemImage: "flame.fill")],
+            onShare: achievementService.recordShare
         )
     }
 }

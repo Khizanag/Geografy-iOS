@@ -9,6 +9,7 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
     private let message: Text?
     private let xpEarned: Int
     private let primaryAction: GameResultAction?
+    private let share: ResultShare?
     private let onDone: () -> Void
     private let hero: Hero
     private let stats: Stats
@@ -18,11 +19,13 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
     /// - Parameters:
     ///   - xpEarned: Shown as a badge when above zero.
     ///   - primaryAction: Beside Done, nearest the thumb; usually ``GameResultAction/playAgain(_:)``.
+    ///   - share: Adds a share button before Done, which takes the main place when there's no `primaryAction`.
     public init(
         title: Text,
         message: Text? = nil,
         xpEarned: Int = 0,
         primaryAction: GameResultAction?,
+        share: ResultShare? = nil,
         onDone: @escaping () -> Void,
         @ViewBuilder hero: () -> Hero,
         @ViewBuilder stats: () -> Stats,
@@ -32,6 +35,7 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
         self.message = message
         self.xpEarned = xpEarned
         self.primaryAction = primaryAction
+        self.share = share
         self.onDone = onDone
         self.hero = hero()
         self.stats = stats()
@@ -65,6 +69,7 @@ public extension GameResultLayout where Details == EmptyView {
         message: Text? = nil,
         xpEarned: Int = 0,
         primaryAction: GameResultAction?,
+        share: ResultShare? = nil,
         onDone: @escaping () -> Void,
         @ViewBuilder hero: () -> Hero,
         @ViewBuilder stats: () -> Stats
@@ -74,6 +79,7 @@ public extension GameResultLayout where Details == EmptyView {
             message: message,
             xpEarned: xpEarned,
             primaryAction: primaryAction,
+            share: share,
             onDone: onDone,
             hero: hero,
             stats: stats,
@@ -102,7 +108,17 @@ private extension GameResultLayout {
 
     var buttons: some View {
         ButtonRow {
+            #if !os(tvOS)
+            if let share, primaryAction != nil {
+                ResultShareButton(share: share, showsTitle: false)
+            }
+            #endif
             GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true, action: onDone)
+            #if !os(tvOS)
+            if let share, primaryAction == nil {
+                ResultShareButton(share: share, showsTitle: true)
+            }
+            #endif
             if let primaryAction {
                 GlassButton(
                     primaryAction.title,
