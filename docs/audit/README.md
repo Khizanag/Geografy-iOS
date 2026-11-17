@@ -6,5 +6,6 @@ Name files `YYYY-MM-DD-<topic>.md`, newest first in the index below.
 
 | Date | Audit |
 |---|---|
+| 2026-11-17 | [Whole-app audit](2026-11-17-app-audit.md) — broken features, learning loop, consistency, smoothness, clean code, new features |
 | 2026-11-12 | [Whole-app audit](2026-11-12-app-audit.md) — scope, architecture, quality, map, shipping readiness |
 | 2026-03-31 | [Apple HIG audit](2026-03-31-hig-audit.md) — per-platform HIG compliance |
