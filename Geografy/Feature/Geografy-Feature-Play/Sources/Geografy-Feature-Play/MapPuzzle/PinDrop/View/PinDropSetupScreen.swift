@@ -1,11 +1,13 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 /// Sets up a Pin Drop game: the region, how many rounds, and how small the countries get.
 public struct PinDropSetupScreen: View {
     // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.locale) private var locale
 
@@ -13,8 +15,6 @@ public struct PinDropSetupScreen: View {
     @AppStorage("pinDrop_difficulty") private var difficulty: PinDropDifficulty = .standard
     @AppStorage("pinDrop_roundCount") private var roundCount = 10
     @AppStorage("pinDrop_showsBorders") private var showsBorders = true
-
-    @State private var activeGame: PinDropConfiguration?
 
     // MARK: - Init
     public init() {}
@@ -26,9 +26,6 @@ public struct PinDropSetupScreen: View {
             .navigationTitle("Pin Drop")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaBar(edge: .bottom) { startButton }
-            .navigationDestination(item: $activeGame) { configuration in
-                PinDropScreen(configuration: configuration)
-            }
     }
 }
 
@@ -140,7 +137,7 @@ private extension PinDropSetupScreen {
 
     var startButton: some View {
         GlassButton("Start", systemImage: "mappin.and.ellipse", fullWidth: true) {
-            activeGame = configuration
+            coordinator.push(PlayLocalRoute.pinDropGame(configuration))
         }
         .disabled(countryCount(for: region) == 0)
         .padding(.horizontal, DesignSystem.Spacing.md)

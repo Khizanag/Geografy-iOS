@@ -1,15 +1,15 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
 public struct MapPuzzleSetupScreen: View {
     // MARK: - Properties
+    @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
 
     @AppStorage("mapPuzzle_selectedContinent") private var selectedContinent: Country.Continent = .europe
-
-    @State private var showPuzzle = false
 
     private let continents = Country.Continent.allCases.filter { $0 != .antarctica }
     private let gameColor = DesignSystem.Color.purple
@@ -24,9 +24,6 @@ public struct MapPuzzleSetupScreen: View {
             .navigationTitle("Map Puzzle")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaBar(edge: .bottom) { startButton }
-            .navigationDestination(isPresented: $showPuzzle) {
-                MapPuzzleScreen(continent: selectedContinent)
-            }
     }
 }
 
@@ -68,7 +65,7 @@ private extension MapPuzzleSetupScreen {
 
     var startButton: some View {
         GlassButton("Start Puzzle", systemImage: "play.fill", fullWidth: true) {
-            showPuzzle = true
+            coordinator.push(PlayLocalRoute.mapPuzzleGame(continent: selectedContinent))
         }
         .disabled(!MapPuzzleRules.isPlayable(countryCount: countryCount(for: selectedContinent)))
         .accessibilityHint("Starts a puzzle in \(selectedContinent.displayName)")
