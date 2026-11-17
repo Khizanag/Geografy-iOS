@@ -1,6 +1,5 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
-import Geografy_Core_Map
 import Geografy_Core_Service
 import SwiftUI
 
@@ -8,8 +7,6 @@ import SwiftUI
 public struct PinDropSetupScreen: View {
     // MARK: - Properties
     @Environment(CountryDataService.self) private var countryDataService
-    @Environment(GeoJSONCache.self) private var geoJSONCache
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.locale) private var locale
 
     @AppStorage("pinDrop_region") private var region: PinDropRegion = .europe
@@ -17,10 +14,7 @@ public struct PinDropSetupScreen: View {
     @AppStorage("pinDrop_roundCount") private var roundCount = 10
     @AppStorage("pinDrop_showsBorders") private var showsBorders = true
 
-    @State private var outlines: [Country.Continent: ContinentOutline] = [:]
     @State private var activeGame: PinDropConfiguration?
-
-    private let continents: [PinDropRegion] = PinDropRegion.allCases.filter { $0 != .world }
 
     // MARK: - Init
     public init() {}
@@ -32,7 +26,6 @@ public struct PinDropSetupScreen: View {
             .navigationTitle("Pin Drop")
             .navigationBarTitleDisplayMode(.inline)
             .safeAreaBar(edge: .bottom) { startButton }
-            .task { await loadOutlines() }
             .navigationDestination(item: $activeGame) { configuration in
                 PinDropScreen(configuration: configuration)
             }
@@ -86,38 +79,15 @@ private extension PinDropSetupScreen {
     var regionSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Region")
-            worldTile
-            LazyVGrid(columns: regionColumns, spacing: DesignSystem.Spacing.sm) {
-                ForEach(continents) { option in
-                    if let continent = option.continent {
-                        ContinentTile(
-                            continent: continent,
-                            outline: outlines[continent],
-                            countryCount: countryCount(for: option),
-                            color: PinDropStyle.gameColor,
-                            isSelected: region == option
-                        ) {
-                            region = option
-                        }
-                    }
-                }
+            RegionPicker(
+                selection: $region,
+                regions: PinDropRegion.allCases,
+                color: PinDropStyle.gameColor,
+                continent: \.continent
+            ) { country in
+                country.area >= difficulty.minimumArea
             }
         }
-    }
-
-    var worldTile: some View {
-        WorldRegionTile(
-            countryCount: countryCount(for: .world),
-            color: PinDropStyle.gameColor,
-            isSelected: region == .world
-        ) {
-            region = .world
-        }
-    }
-
-    var regionColumns: [GridItem] {
-        let count = dynamicTypeSize.isAccessibilitySize ? 1 : 2
-        return Array(repeating: GridItem(.flexible(), spacing: DesignSystem.Spacing.sm), count: count)
     }
 
     var optionsSection: some View {
@@ -185,12 +155,6 @@ private extension PinDropSetupScreen {
             (option.continent.map { country.continent == $0 } ?? true)
                 && country.area >= difficulty.minimumArea
         }
-    }
-
-    func loadOutlines() async {
-        guard outlines.isEmpty else { return }
-        let shapes = await geoJSONCache.loadShapes()
-        outlines = await ContinentOutline.silhouettes(for: continents.compactMap(\.continent), shapes: shapes)
     }
 }
 

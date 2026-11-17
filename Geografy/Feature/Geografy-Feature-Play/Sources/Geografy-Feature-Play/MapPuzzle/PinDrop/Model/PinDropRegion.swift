@@ -4,9 +4,9 @@ import Geografy_Core_Common
 /// The part of the world a Pin Drop game is played on.
 public enum PinDropRegion: String, CaseIterable, Identifiable, Sendable {
     case world
-    case europe
-    case asia
     case africa
+    case asia
+    case europe
     case northAmerica
     case southAmerica
     case oceania
