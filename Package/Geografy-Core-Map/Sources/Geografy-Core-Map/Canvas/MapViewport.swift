@@ -63,18 +63,40 @@ public struct MapViewport: View {
             .frame(width: viewSize.width, height: viewSize.height)
 
             if showsLabels {
-                MapLabelsLayer(
-                    countryShapes: map.countryShapes,
-                    frame: mapState.currentFrame,
-                    wrapsHorizontally: map.wrapsHorizontally
-                )
-                .frame(width: viewSize.width, height: viewSize.height)
-                .transition(.opacity)
+                labels(for: map, drawnFrame: drawnFrame, isPanning: magnification == 1, shift: shift)
+                    .transition(.opacity)
             }
         }
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: showsLabels)
         .frame(width: viewSize.width, height: viewSize.height)
         .clipped()
         .contentShape(Rectangle())
+    }
+}
+
+// MARK: - Labels
+private extension MapViewport {
+    /// A pan only moves the names, so they're drawn once at the drawn frame, over the drawn map's area, and
+    /// moved with it. A pinch resizes them, so they're drawn at the current frame every time.
+    @ViewBuilder
+    func labels(for map: MapCanvasView, drawnFrame: MapFrame, isPanning: Bool, shift: CGSize) -> some View {
+        if isPanning {
+            let drawnSize = MapFrame.drawnSize(for: viewSize)
+            MapLabelsLayer(
+                countryShapes: map.countryShapes,
+                frame: drawnFrame,
+                wrapsHorizontally: map.wrapsHorizontally
+            )
+            .equatable()
+            .frame(width: drawnSize.width, height: drawnSize.height)
+            .offset(shift)
+        } else {
+            MapLabelsLayer(
+                countryShapes: map.countryShapes,
+                frame: mapState.currentFrame,
+                wrapsHorizontally: map.wrapsHorizontally
+            )
+            .frame(width: viewSize.width, height: viewSize.height)
+        }
     }
 }
