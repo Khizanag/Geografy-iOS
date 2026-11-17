@@ -69,8 +69,14 @@ final class AppCoordinator {
     }
 
     #if DEBUG
-    /// Launching with `-openHub <testKey>` opens that hub screen, so UI checks don't need to tap through tabs.
+    /// Launching with `-openHub <testKey>` opens that hub screen, so UI checks don't need to tap through tabs;
+    /// `-showOnMap <code>` opens a map with that country selected.
     func openHubItemFromLaunchArguments() {
+        if let code = UserDefaults.standard.string(forKey: "showOnMap") {
+            selectedTab = .explore
+            exploreNavigator.push(MapRoute.map(continentFilter: nil, focusCountryCode: code))
+            return
+        }
         guard let key = UserDefaults.standard.string(forKey: "openHub"),
               let item = HubItem.allCases.first(where: { $0.testKey == key }) else { return }
         open(item)

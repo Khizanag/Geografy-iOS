@@ -7,7 +7,7 @@ public struct MapCanvasView: View {
     public let countryShapes: [CountryShape]
     public let scale: CGFloat
     public let offset: CGSize
-    public let selectedCountryCode: String?
+    public var selectedCountryCode: String?
     /// Whether names are drawn on the countries. `MapViewport` turns this off and draws them in a layer of their own.
     public var showLabels: Bool
     public let canvasSize: CGSize
@@ -22,6 +22,9 @@ public struct MapCanvasView: View {
     public var wrapsHorizontally: Bool = true
     /// Outlines every country in this color, a hairline at any zoom; nil leaves borders to the fills.
     public var borderColor: Color?
+    /// Draws only the selected country and the capital pin, for `MapViewport`'s selection layer, so a tap
+    /// redraws one country instead of the whole map.
+    var drawsOnlySelection = false
 
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
@@ -69,15 +72,14 @@ public struct MapCanvasView: View {
                 var transformedContext = context
                 transformedContext.concatenate(transform)
 
-                drawWorldOutline(in: &transformedContext)
+                if drawsOnlySelection {
+                    drawSelectedCountry(in: &transformedContext, transform: transform, visibleRect: visibleRect)
+                } else {
+                    drawWorldOutline(in: &transformedContext)
+                    drawAllCountries(in: &transformedContext, transform: transform, visibleRect: visibleRect)
+                }
 
-                drawAllCountries(
-                    in: &transformedContext,
-                    transform: transform,
-                    visibleRect: visibleRect
-                )
-
-                if showLabels {
+                if showLabels, !drawsOnlySelection {
                     drawLabels(in: &context, transform: transform, visibleRect: visibleRect)
                 }
 
@@ -122,6 +124,17 @@ private extension MapCanvasView {
                 visibleRect: visibleRect
             )
         }
+    }
+
+    func drawSelectedCountry(
+        in transformedContext: inout GraphicsContext,
+        transform: CGAffineTransform,
+        visibleRect: CGRect
+    ) {
+        guard let selectedCountryCode,
+              let shape = countryShapes.first(where: { $0.id == selectedCountryCode })
+        else { return }
+        drawCountry(shape, in: &transformedContext, transform: transform, visibleRect: visibleRect)
     }
 
     func drawCountry(
@@ -317,6 +330,7 @@ extension MapCanvasView: @MainActor Equatable {
             && lhs.highlightedCodes == rhs.highlightedCodes
             && lhs.travelStatuses == rhs.travelStatuses
             && lhs.densityData == rhs.densityData
+            && lhs.drawsOnlySelection == rhs.drawsOnlySelection
             && drawSameShapes(lhs.countryShapes, rhs.countryShapes)
     }
 

@@ -6,7 +6,8 @@ import SwiftUI
 /// The map is drawn at `MapState.drawnFrame` and moved to the current scale and offset with a transform,
 /// so it's drawn again only when a gesture ends or runs past what was drawn.
 /// Country names are the exception: they're cheap, so they're drawn at the current frame every time,
-/// which keeps their size and fade smooth through a pinch.
+/// which keeps their size and fade smooth through a pinch. The selected country and capital pin are drawn in
+/// a layer of their own, so a tap redraws one country, not the whole map.
 public struct MapViewport: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -34,12 +35,25 @@ public struct MapViewport: View {
         var map = canvas(drawnFrame, MapFrame.drawnSize(for: viewSize))
         let showsLabels = map.showLabels
         map.showLabels = false
+        var selection = map
+        selection.drawsOnlySelection = true
+        let showsSelection = map.selectedCountryCode != nil || map.capitalPoint != nil
+        map.selectedCountryCode = nil
+        map.capitalPoint = nil
 
         return ZStack {
             map
                 .equatable()
                 .scaleEffect(magnification)
                 .offset(shift)
+
+            if showsSelection {
+                selection
+                    .equatable()
+                    .scaleEffect(magnification)
+                    .offset(shift)
+                    .allowsHitTesting(false)
+            }
 
             MapGraticuleView(
                 scale: mapState.currentFrame.scale,
