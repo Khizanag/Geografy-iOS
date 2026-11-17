@@ -21,6 +21,9 @@ public final class GeoJSONCache {
     private var outlinesByProjection: [MapProjectionKind: [CountryShape]] = [:]
     /// Which countries touch doesn't depend on the projection, so it's worked out once.
     private var adjacency: MapAdjacency?
+    /// Each palette's color for each country. It depends only on which countries touch, not the projection,
+    /// so it's worked out once per palette.
+    private var colorIndexes: [MapPalette: [String: Int]] = [:]
     private var loadTask: (projection: MapProjectionKind, task: Task<Parsed, Never>)?
 
     private struct Parsed: Sendable {
@@ -58,17 +61,37 @@ public final class GeoJSONCache {
         }
         let palette = MapPalette.current
         if self.palette != palette {
-            let adjacency = adjacency ?? MapAdjacency(neighbors: [:])
-            shapes = MapColoringEngine.colored(outlines, adjacency: adjacency, palette: palette)
+            let indexes = await colorIndexes(for: palette)
+            let colors = palette.colors
+            shapes = outlines.map { $0.recolored(colors[indexes[$0.id] ?? 0]) }
             self.palette = palette
         }
         return shapes
+    }
+
+    /// Colors the map off the main thread: it weighs every country against its neighbors, which would
+    /// otherwise hold up the first frames at launch.
+    private func colorIndexes(for palette: MapPalette) async -> [String: Int] {
+        if let cached = colorIndexes[palette] { return cached }
+        let codes = Array(Set(outlines.map(\.id))).sorted()
+        let adjacency = adjacency ?? MapAdjacency(neighbors: [:])
+        let distances = palette.distances
+        let revision = revision
+        let indexes = await Task.detached(priority: .userInitiated) {
+            MapColoringEngine.assign(codes: codes, adjacency: adjacency, distances: distances)
+        }.value
+        // A map invalidated meanwhile may have different borders, so this coloring isn't kept for it.
+        if revision == self.revision {
+            colorIndexes[palette] = indexes
+        }
+        return indexes
     }
 
     /// Drops every parsed outline, for when what the map contains changes, such as a territorial-dispute choice.
     public func invalidate() {
         outlinesByProjection = [:]
         adjacency = nil
+        colorIndexes = [:]
         loadTask = nil
         projection = nil
         palette = nil
