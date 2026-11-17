@@ -13,6 +13,7 @@ struct NotificationSettingsRows: View {
     // MARK: - Properties
     @Environment(\.openURL) private var openURL
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(StreakService.self) private var streakService
 
     @AppStorage(NotificationService.preferenceKey) private var isEnabled = false
 
@@ -45,7 +46,7 @@ private extension NotificationSettingsRows {
         guard isOn else {
             isEnabled = false
             isWaitingForSystemSettings = false
-            await NotificationService.syncReminders(enabled: false)
+            await NotificationService.syncReminders(enabled: false, learnedToday: streakService.hasPlayedToday)
             return
         }
 
@@ -60,7 +61,7 @@ private extension NotificationSettingsRows {
             openNotificationSettings()
         }
         authorization = await NotificationService.authorization()
-        await NotificationService.syncReminders(enabled: isEnabled)
+        await NotificationService.syncReminders(enabled: isEnabled, learnedToday: streakService.hasPlayedToday)
     }
 
     func refresh() async {
@@ -72,7 +73,7 @@ private extension NotificationSettingsRows {
         } else if current != .allowed {
             isEnabled = false
         }
-        await NotificationService.syncReminders(enabled: isEnabled)
+        await NotificationService.syncReminders(enabled: isEnabled, learnedToday: streakService.hasPlayedToday)
     }
 
     func openNotificationSettings() {

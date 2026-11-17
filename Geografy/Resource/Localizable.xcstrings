@@ -1473,6 +1473,10 @@
     },
     "A daily nudge keeps your streak alive. You can change this in Settings at any time." : {},
     "A glass card with the tier badge, the level's title, and progress to the next level. In Dark Mode the screen behind darkens." : {},
+    "A new Daily Challenge is waiting for you." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "A quiz with this name already exists" : {
       "localizations" : {
         "ka" : {
@@ -1482,6 +1486,10 @@
           }
         }
       }
+    },
+    "A quiz, a game, or a few flashcards today keeps it alive." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Aa" : {
       "extractionState" : "manual",
@@ -5611,6 +5619,10 @@
         }
       }
     },
+    "Keep your streak going" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Knew It" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8996,7 +9008,8 @@
     },
     "Review Streak" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Review again" : {
       "extractionState" : "manual",
@@ -11131,6 +11144,10 @@
           }
         }
       }
+    },
+    "Today's challenge is ready" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Today's challenge isn't ready" : {
       "extractionState" : "manual",

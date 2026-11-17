@@ -10,6 +10,9 @@ import Geografy_Feature_Profile
 import Geografy_Feature_Travel
 import StoreKit
 import SwiftUI
+#if os(iOS)
+import UserNotifications
+#endif
 
 @main
 struct GeografyApp: App {
@@ -22,6 +25,8 @@ struct GeografyApp: App {
     init() {
         #if os(iOS)
         BackgroundTaskService.registerTasks()
+        // Before launch finishes, so a reminder tapped while the app was closed is handled.
+        UNUserNotificationCenter.current().delegate = ReminderTapHandler.shared
         #endif
     }
 
@@ -62,6 +67,7 @@ private extension GeografyApp {
                     onUserSwitch: handleUserSwitch,
                     onXPChange: handleXPChange,
                     onStreakChange: handleStreakChange,
+                    onLearnedTodayChange: { Task { await syncReminders() } },
                     onVisitedChange: handleVisitedChange
                 )
             )
@@ -101,6 +107,7 @@ private struct ServiceChangeHandlers: ViewModifier {
     let onUserSwitch: (String) -> Void
     let onXPChange: (Int) -> Void
     let onStreakChange: (Int) -> Void
+    let onLearnedTodayChange: () -> Void
     let onVisitedChange: (Int) -> Void
 
     func body(content: Content) -> some View {
@@ -108,6 +115,7 @@ private struct ServiceChangeHandlers: ViewModifier {
             .onChange(of: authService.currentUserID) { _, id in onUserSwitch(id) }
             .onChange(of: xpService.totalXP) { _, xp in onXPChange(xp) }
             .onChange(of: streakService.currentStreak) { _, streak in onStreakChange(streak) }
+            .onChange(of: streakService.hasPlayedToday) { onLearnedTodayChange() }
             .onChange(of: travelService.visitedCodes.count) { _, count in onVisitedChange(count) }
     }
 }
@@ -140,12 +148,20 @@ private extension GeografyApp {
         }
     }
 
+    /// Today's reminders are skipped once something has been learned today, so this runs again when that changes.
+    func syncReminders() async {
+        #if os(iOS)
+        await NotificationService.syncReminders(
+            enabled: UserDefaults.standard.bool(forKey: NotificationService.preferenceKey),
+            learnedToday: dependencies.streakService.hasPlayedToday
+        )
+        #endif
+    }
+
     func setupNotificationsAndSpotlight() async {
         #if os(iOS)
         // Permission is asked for when the person turns reminders on in Settings, not at launch.
-        await NotificationService.syncReminders(
-            enabled: UserDefaults.standard.bool(forKey: NotificationService.preferenceKey)
-        )
+        await syncReminders()
         // Waits for the countries: launch tasks race their load, and indexing none would never be retried.
         await dependencies.countryDataService.loadCountries()
         SpotlightIndexer.indexCountriesIfNeeded(dependencies.countryDataService.countries)

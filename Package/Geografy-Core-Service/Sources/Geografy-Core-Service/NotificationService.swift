@@ -25,14 +25,35 @@ public enum NotificationService {
         }
     }
 
-    /// Schedules the reminders when `enabled` and allowed, and removes them otherwise.
-    public static func syncReminders(enabled: Bool) async {
-        guard enabled, await authorization() == .allowed else {
-            cancelAll()
-            return
+    /// What a reminder is for, which decides where tapping it goes.
+    public enum Reminder: String, Sendable {
+        case dailyChallenge = "daily-challenge"
+        case streak = "streak-reminder"
+
+        /// The reminder a delivered notification came from.
+        public init?(identifier: String) {
+            guard let match = [Self.dailyChallenge, .streak].first(where: { identifier.hasPrefix($0.rawValue) })
+            else { return nil }
+            self = match
         }
-        scheduleStreakReminder()
-        scheduleDailyChallengeReminder()
+    }
+
+    /// Days ahead the reminders are scheduled; opening the app schedules them again.
+    static let daysAhead = 14
+
+    /// Schedules the reminders when `enabled` and allowed, and removes them otherwise. Each day gets its own
+    /// reminders, so today's are left out once something has been learned today.
+    public static func syncReminders(enabled: Bool, learnedToday: Bool) async {
+        cancelAll()
+        guard enabled, await authorization() == .allowed else { return }
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        for offset in 0..<daysAhead {
+            if offset == 0, learnedToday { continue }
+            guard let day = calendar.date(byAdding: .day, value: offset, to: today) else { continue }
+            schedule(.dailyChallenge, on: day, hour: 9)
+            schedule(.streak, on: day, hour: 19)
+        }
     }
 
     public static func requestPermission() async -> Bool {
@@ -40,44 +61,35 @@ public enum NotificationService {
         return (try? await center.requestAuthorization(options: [.alert, .sound, .badge])) ?? false
     }
 
-    public static func scheduleStreakReminder() {
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: ["streak-reminder"])
-
-        let content = UNMutableNotificationContent()
-        content.title = "Keep your streak alive!"
-        content.body = "Open Geografy today to maintain your daily streak."
-        content.sound = .default
-
-        var dateComponents = DateComponents()
-        dateComponents.hour = 19
-        dateComponents.minute = 0
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        let request = UNNotificationRequest(identifier: "streak-reminder", content: content, trigger: trigger)
-        center.add(request)
-    }
-
-    public static func scheduleDailyChallengeReminder() {
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: ["daily-challenge"])
-
-        let content = UNMutableNotificationContent()
-        content.title = "New Daily Challenge!"
-        content.body = "A new mystery country, flag sequence, and capital chain await you."
-        content.sound = .default
-
-        var dateComponents = DateComponents()
-        dateComponents.hour = 9
-        dateComponents.minute = 0
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        let request = UNNotificationRequest(identifier: "daily-challenge", content: content, trigger: trigger)
-        center.add(request)
-    }
-
     public static func cancelAll() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    }
+}
+
+// MARK: - Scheduling
+private extension NotificationService {
+    static func schedule(_ reminder: Reminder, on day: Date, hour: Int) {
+        let calendar = Calendar.current
+        guard let fireDate = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: day),
+              fireDate > .now else { return }
+
+        let content = UNMutableNotificationContent()
+        switch reminder {
+        case .dailyChallenge:
+            content.title = String(localized: "Today's challenge is ready")
+            content.body = String(localized: "A new Daily Challenge is waiting for you.")
+        case .streak:
+            content.title = String(localized: "Keep your streak going")
+            content.body = String(localized: "A quiz, a game, or a few flashcards today keeps it alive.")
+        }
+        content.sound = .default
+
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        let identifier = "\(reminder.rawValue)-\(Int(fireDate.timeIntervalSince1970))"
+        UNUserNotificationCenter.current().add(
+            UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        )
     }
 }
 #endif

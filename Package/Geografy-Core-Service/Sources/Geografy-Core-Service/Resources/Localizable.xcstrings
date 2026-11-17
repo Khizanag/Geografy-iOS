@@ -4,6 +4,12 @@
     "" : {
 
     },
+    "A new Daily Challenge is waiting for you." : {
+
+    },
+    "A quiz, a game, or a few flashcards today keeps it alive." : {
+
+    },
     "Add to Favorites" : {
 
     },
@@ -17,6 +23,9 @@
 
     },
     "Favorite" : {
+
+    },
+    "Keep your streak going" : {
 
     },
     "Mark as Visited" : {
@@ -50,6 +59,9 @@
           }
         }
       }
+    },
+    "Today's challenge is ready" : {
+
     },
     "Travel status" : {
 
