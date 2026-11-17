@@ -36,6 +36,18 @@ public struct FlashcardDeck: Identifiable, Equatable, Hashable, Sendable {
 
 // MARK: - Predefined Decks
 public extension FlashcardDeck {
+    /// The cards a game just missed, reviewed right after it.
+    static func missed(cardType: FlashcardType) -> FlashcardDeck {
+        FlashcardDeck(
+            id: "missed_\(cardType.rawValue)",
+            name: String(localized: "Missed Answers"),
+            icon: "arrow.uturn.backward.circle.fill",
+            continentFilter: nil,
+            cardType: cardType,
+            gradientColors: (Color(hex: "B71C1C"), Color(hex: "E53935"))
+        )
+    }
+
     static func makeContinentDecks(cardType: FlashcardType) -> [FlashcardDeck] {
         [
             makeAllCountriesDeck(cardType: cardType),

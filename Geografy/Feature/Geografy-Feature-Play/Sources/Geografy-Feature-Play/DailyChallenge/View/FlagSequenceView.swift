@@ -6,6 +6,7 @@ import SwiftUI
 public struct FlagSequenceView: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(FlashcardService.self) private var flashcardService
 
     public let content: DailyChallenge.FlagSequenceContent
     public let seed: UInt64
@@ -117,6 +118,7 @@ private extension FlagSequenceView {
         selectedOption = option
 
         let isCorrect = option.code == correct.code
+        flashcardService.recordGameAnswer(countryCode: correct.code, type: .flagToCountry, isCorrect: isCorrect)
         if isCorrect {
             correctCount += 1
             hapticsService.notification(.success)

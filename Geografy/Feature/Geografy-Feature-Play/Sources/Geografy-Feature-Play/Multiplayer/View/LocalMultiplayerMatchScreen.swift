@@ -6,6 +6,7 @@ import SwiftUI
 public struct LocalMultiplayerMatchScreen: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(FlashcardService.self) private var flashcardService
 
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
@@ -158,8 +159,21 @@ private extension LocalMultiplayerMatchScreen {
         let timeSpent = Date().timeIntervalSince(answerStartTime)
 
         hapticsService.impact(.light)
+        countInReviews(optionID: optionID)
         coordinator.submitAnswer(optionID: optionID, timeSpent: timeSpent)
         announceAnswer(optionID: optionID)
+    }
+
+    func countInReviews(optionID: UUID) {
+        guard coordinator.currentIndex < coordinator.questions.count,
+              let cardType = FlashcardType(quizType: coordinator.quizType)
+        else { return }
+        let question = coordinator.questions[coordinator.currentIndex]
+        flashcardService.recordGameAnswer(
+            countryCode: question.correctCountry.code,
+            type: cardType,
+            isCorrect: optionID == question.correctOptionID
+        )
     }
 
     func announceAnswer(optionID: UUID) {

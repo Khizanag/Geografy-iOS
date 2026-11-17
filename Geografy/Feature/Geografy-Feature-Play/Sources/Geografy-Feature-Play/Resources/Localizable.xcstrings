@@ -1999,6 +1999,9 @@
     "Missed" : {
 
     },
+    "Missed Answers" : {
+
+    },
     "Missed Countries" : {
       "localizations" : {
         "ka" : {
@@ -2957,6 +2960,9 @@
           }
         }
       }
+    },
+    "Review %lld Missed" : {
+
     },
     "Review Streak" : {
 

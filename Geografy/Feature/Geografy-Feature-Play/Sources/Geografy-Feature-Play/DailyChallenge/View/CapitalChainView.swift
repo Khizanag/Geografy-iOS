@@ -6,6 +6,7 @@ import SwiftUI
 public struct CapitalChainView: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(FlashcardService.self) private var flashcardService
     @Environment(\.colorSchemeContrast) private var contrast
 
     public let content: DailyChallenge.CapitalChainContent
@@ -141,6 +142,11 @@ private extension CapitalChainView {
         selectedOption = option
 
         let isCorrect = option.code == step.expectedCountry.code
+        flashcardService.recordGameAnswer(
+            countryCode: step.expectedCountry.code,
+            type: .capitalToCountry,
+            isCorrect: isCorrect
+        )
         if isCorrect {
             correctCount += 1
             hapticsService.notification(.success)

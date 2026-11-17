@@ -50,6 +50,19 @@ public final class FlashcardService {
         scheduleSave()
     }
 
+    /// Records an answer from a game in the card for that country and question kind, so every game feeds the
+    /// same reviews. A miss counts as Again; a right answer only moves a card that's new or due, so replaying a
+    /// quiz can't push its reviews far into the future.
+    public func recordGameAnswer(countryCode: String, type: FlashcardType, isCorrect: Bool) {
+        let cardID = FlashcardItem.id(countryCode: countryCode, type: type)
+        if isCorrect {
+            guard spacedRepetitionStore[cardID]?.isDueForReview ?? true else { return }
+            recordReview(cardID: cardID, result: .good)
+        } else {
+            recordReview(cardID: cardID, result: .again)
+        }
+    }
+
     /// Writes reviews still waiting on the save delay; call when a session ends.
     public func persistPendingChanges() {
         guard let pendingSave else { return }

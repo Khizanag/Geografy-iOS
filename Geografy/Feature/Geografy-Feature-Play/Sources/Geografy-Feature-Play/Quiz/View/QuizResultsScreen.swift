@@ -1,6 +1,7 @@
 import Accessibility
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftData
 import SwiftUI
@@ -8,6 +9,8 @@ import SwiftUI
 public struct QuizResultsScreen: View {
     // MARK: - Properties
     @Environment(XPService.self) private var xpService
+    @Environment(FlashcardService.self) private var flashcardService
+    @Environment(Navigator.self) private var coordinator
     @Environment(AchievementService.self) private var achievementService
     @Environment(DatabaseManager.self) private var database
     @Environment(GameCenterService.self) private var gameCenterService
@@ -21,6 +24,8 @@ public struct QuizResultsScreen: View {
     public let onDone: () -> Void
 
     @State private var xpEarned = 0
+    /// The task runs again when the screen comes back, such as after reviewing misses; the quiz counts once.
+    @State private var hasProcessed = false
 
     // MARK: - Body
     public var body: some View {
@@ -68,12 +73,37 @@ private extension QuizResultsScreen {
 
     var answersSection: some View {
         LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Answers")
+            HStack {
+                SectionHeaderView(title: "Answers")
+                Spacer()
+                reviewMissedButton
+            }
 
             ForEach(Array(result.answers.enumerated()), id: \.element.id) { index, answer in
                 answerRow(index: index + 1, answer: answer)
             }
         }
+    }
+
+    /// Opens the missed answers as flashcards, for quizzes whose questions match a card.
+    @ViewBuilder
+    var reviewMissedButton: some View {
+        if let cardType = FlashcardType(quizType: result.configuration.type), !missedCountries.isEmpty {
+            Button("Review \(missedCountries.count) Missed", systemImage: "rectangle.on.rectangle.angled") {
+                let cards = missedCountries.map { FlashcardItem.make(from: $0, type: cardType) }
+                coordinator.push(PlayLocalRoute.flashcardSession(deck: .missed(cardType: cardType), cards: cards))
+            }
+            .buttonStyle(.glass)
+            .controlSize(.small)
+        }
+    }
+
+    var missedCountries: [Country] {
+        var seen = Set<String>()
+        return result.answers
+            .filter { !$0.isCorrect }
+            .map(\.question.correctCountry)
+            .filter { seen.insert($0.code).inserted }
     }
 
     func answerRow(index: Int, answer: QuizAnswer) -> some View {
@@ -113,6 +143,9 @@ private extension QuizResultsScreen {
 // MARK: - Gamification
 private extension QuizResultsScreen {
     func processQuizResult() {
+        guard !hasProcessed else { return }
+        hasProcessed = true
+        countAnswersInReviews()
         let difficulty = result.configuration.difficulty
         let earnedXP = XPRules.quiz(
             difficulty: difficulty,
@@ -187,5 +220,21 @@ private extension QuizResultsScreen {
             return String(format: "%d:%02d", minutes, seconds)
         }
         return "\(seconds)s"
+    }
+}
+
+// MARK: - Reviews
+private extension QuizResultsScreen {
+    /// Every answer counts toward the matching flashcard, so quizzes and reviews build one record per country.
+    func countAnswersInReviews() {
+        guard let cardType = FlashcardType(quizType: result.configuration.type) else { return }
+        for answer in result.answers {
+            flashcardService.recordGameAnswer(
+                countryCode: answer.question.correctCountry.code,
+                type: cardType,
+                isCorrect: answer.isCorrect
+            )
+        }
+        flashcardService.persistPendingChanges()
     }
 }

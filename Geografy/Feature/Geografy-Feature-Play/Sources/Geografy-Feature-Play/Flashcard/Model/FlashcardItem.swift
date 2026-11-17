@@ -51,9 +51,14 @@ public struct FlashcardItem: Identifiable, Equatable, Hashable, Sendable {
 
 // MARK: - Factory
 public extension FlashcardItem {
+    /// The card for one country and question kind, shared by flashcards and every game that asks it.
+    static func id(countryCode: String, type: FlashcardType) -> String {
+        "\(countryCode)_\(type.rawValue)"
+    }
+
     static func make(from country: Country, type: FlashcardType) -> FlashcardItem {
         FlashcardItem(
-            id: "\(country.code)_\(type.rawValue)",
+            id: id(countryCode: country.code, type: type),
             type: type,
             countryCode: country.code,
             countryName: country.name,
