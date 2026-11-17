@@ -45,6 +45,7 @@ private extension GeografyApp {
         ContentView()
             .modifier(AppLanguageLocale())
             .environment(dependencies)
+            .storeFallbackAlert(isUsingFallbackStore: dependencies.databaseManager.isUsingFallbackStore)
             .task { await bootstrap() }
             .task(priority: .utility) { await dependencies.geoJSONCache.preload() }
             .task(priority: .utility) { await dependencies.authService.validateOnLaunch() }

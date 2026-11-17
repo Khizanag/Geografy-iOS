@@ -4842,6 +4842,7 @@
         }
       }
     },
+    "Geografy couldn't open its saved data, so anything you do now is kept only until you close the app. Restarting your device or updating the app may fix it." : {},
     "Geografy itself, with its maps and flags" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8086,6 +8087,7 @@
         }
       }
     },
+    "Progress Isn't Being Saved" : {},
     "Progress follows you everywhere" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
