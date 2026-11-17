@@ -120,9 +120,11 @@ private extension DailyChallengeSessionScreen {
         let timeSpent = Date().timeIntervalSince(startTime)
         service.saveResult(score: score, timeSpent: timeSpent)
 
+        // The leaderboard ranks how many challenges people have completed, not one day's score.
+        let completedCount = service.history.count
         Task {
             await gameCenterService.submitScore(
-                score,
+                completedCount,
                 to: GameCenterService.LeaderboardID.dailyChallengesWon
             )
         }
