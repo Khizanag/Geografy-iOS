@@ -4,7 +4,7 @@ import SwiftUI
 // MARK: - Timer
 extension QuizSessionScreen {
     /// Only the badge ticks; the screen hears from this timer once, when it runs out.
-    public func startTimer() {
+    func startTimer() {
         timerTask?.cancel()
         timerDeadline = nil
         guard configuration.difficulty.hasTimer else { return }
@@ -20,25 +20,14 @@ extension QuizSessionScreen {
         }
     }
 
-    public func handleTimerExpired() {
+    func handleTimerExpired() {
         stopTimer()
-
-        let question = questions[currentIndex]
-        let timeSpent = configuration.difficulty.timerDuration
-
+        guard let question = session.currentQuestion else { return }
+        session.timeOut()
         hapticsService.impact(.light)
-        currentStreak = 0
-
-        let answer = QuizAnswer(
-            id: UUID(),
-            question: question,
-            selectedOptionID: nil,
-            isCorrect: false,
-            timeSpent: timeSpent
-        )
-        answers.append(answer)
         typingIsCorrect = false
-        AccessibilityNotification.Announcement("Time's up. The answer is \(correctAnswerText(for: question)).").post()
+        let answer = session.correctAnswerText(for: question)
+        AccessibilityNotification.Announcement("Time's up. The answer is \(answer).").post()
 
         withAnimation(.easeInOut(duration: 0.3)) {
             showFeedback = true
@@ -47,7 +36,7 @@ extension QuizSessionScreen {
         transition.schedule(after: .seconds(1.3)) { advanceToNext() }
     }
 
-    public func startArcadeTimer() {
+    func startArcadeTimer() {
         arcadeTimerTask?.cancel()
         let remaining = arcadeTimeRemaining
         arcadeDeadline = Date.now.addingTimeInterval(remaining)
@@ -60,20 +49,10 @@ extension QuizSessionScreen {
         }
     }
 
-    public func finishArcade() {
+    func finishArcade() {
         stopArcadeTimer()
         stopTimer()
-        let totalTime: TimeInterval
-        if let duration = configuration.arcadeTimer.duration {
-            totalTime = duration - arcadeTimeRemaining
-        } else {
-            totalTime = Date().timeIntervalSince(startTime)
-        }
-        let result = QuizResult(
-            configuration: configuration,
-            answers: answers,
-            totalTime: totalTime,
-        )
+        let result = session.result(arcadeTimeRemaining: arcadeTimeRemaining)
         configuration.announceFinished(accuracy: result.accuracy)
         navigateToResult = result
     }

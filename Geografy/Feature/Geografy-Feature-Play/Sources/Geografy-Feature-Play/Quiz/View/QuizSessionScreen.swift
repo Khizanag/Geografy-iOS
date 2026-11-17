@@ -14,18 +14,14 @@ public struct QuizSessionScreen: View {
 
     public let configuration: QuizConfiguration
 
-    @State var questions: [QuizQuestion] = []
-    @State var hasLoadedQuestions = false
-    @State var currentIndex = 0
-    @State var answers: [QuizAnswer] = []
+    @State var session: QuizSession
+
     @State var selectedOptionID: UUID?
     @State var showFeedback = false
     @State var timerRemaining: TimeInterval = 0
     @State var timerDeadline: Date?
     @State var timerTask: Task<Void, Never>?
     @State var transition = PendingAction()
-    @State var startTime = Date()
-    @State var questionStartTime = Date()
     @State private var showQuitAlert = false
     @State private var showFlagPreview = false
     @State var isPaused = false
@@ -36,13 +32,10 @@ public struct QuizSessionScreen: View {
     @State var showHint: Bool = false
     @State var typingIsCorrect: Bool = false
     @State var typingWasSkipped = false
-    @State var currentStreak: Int = 0
     @State var showStreakBurst = false
     @State var streakBurstEnd = PendingAction()
 
     // Arcade mode
-    @State var arcadeLives = 3
-    @State var arcadeScore = 0
     @State var arcadeTimeRemaining: TimeInterval = 60
     @State var arcadeDeadline: Date?
     @State var arcadeTimerTask: Task<Void, Never>?
@@ -50,6 +43,7 @@ public struct QuizSessionScreen: View {
     // MARK: - Init
     public init(configuration: QuizConfiguration) {
         self.configuration = configuration
+        _session = State(initialValue: QuizSession(configuration: configuration))
     }
 
     // MARK: - Body
@@ -75,7 +69,7 @@ public struct QuizSessionScreen: View {
                 Text("Your answers so far won't be saved.")
             }
             .zoomableViewer(isPresented: $showFlagPreview, title: nil) {
-                if let flagCode = currentQuestion?.promptFlag {
+                if let flagCode = session.currentQuestion?.promptFlag {
                     ZoomableFlagView(countryCode: flagCode) { showFlagPreview = false }
                 }
             }
@@ -158,7 +152,7 @@ private extension QuizSessionScreen {
             Text("\(Int(timerRemaining.rounded(.up)))s remaining")
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-            Text("Question \(currentIndex + 1) of \(questions.count)")
+            Text("Question \(session.currentIndex + 1) of \(session.questions.count)")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
         }
@@ -175,20 +169,20 @@ private extension QuizSessionScreen {
 private extension QuizSessionScreen {
     var progressSection: some View {
         VStack(spacing: DesignSystem.Spacing.xs) {
-            if isArcadeMode {
+            if session.isArcade {
                 arcadeHeader
             } else {
                 HStack(spacing: DesignSystem.Spacing.sm) {
-                    SessionProgressBar(progress: progress)
-                    if currentStreak >= 2 {
+                    SessionProgressBar(progress: session.progress)
+                    if session.streak >= 2 {
                         streakBadge
                             .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
                     } else {
-                        QuestionCounterPill(current: currentIndex + 1, total: questions.count)
+                        QuestionCounterPill(current: session.currentIndex + 1, total: session.questions.count)
                     }
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
-                .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7), value: currentStreak)
+                .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7), value: session.streak)
 
                 if configuration.difficulty.hasTimer {
                     timerPill
@@ -201,10 +195,10 @@ private extension QuizSessionScreen {
         HStack {
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 ForEach(0..<3, id: \.self) { index in
-                    Image(systemName: index < arcadeLives ? "heart.fill" : "heart")
+                    Image(systemName: index < session.lives ? "heart.fill" : "heart")
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(
-                            index < arcadeLives
+                            index < session.lives
                                 ? DesignSystem.Color.error
                                 : DesignSystem.Color.error.opacity(DesignSystem.Opacity.soft)
                         )
@@ -212,21 +206,21 @@ private extension QuizSessionScreen {
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Lives")
-            .accessibilityValue("\(arcadeLives) of 3")
+            .accessibilityValue("\(session.lives) of 3")
 
             Spacer()
 
-            Text("\(arcadeScore)")
+            Text("\(session.arcadeScore)")
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .contentTransition(.numericText())
                 .accessibilityLabel("Score")
-                .accessibilityValue("\(arcadeScore)")
+                .accessibilityValue("\(session.arcadeScore)")
 
             Spacer()
 
-            if hasArcadeTimer {
+            if session.hasArcadeTimer {
                 QuizCountdown(deadline: arcadeDeadline, remaining: arcadeTimeRemaining, rounding: .down) { seconds in
                     QuizTimerBadge(seconds: seconds, style: .compact)
                 }
@@ -239,7 +233,7 @@ private extension QuizSessionScreen {
         HStack(spacing: DesignSystem.Spacing.xxs) {
             Image(systemName: "flame.fill")
                 .font(DesignSystem.Font.roundedNano)
-            Text("\(currentStreak)×")
+            Text("\(session.streak)×")
                 .font(DesignSystem.Font.roundedMicro)
         }
         .foregroundStyle(DesignSystem.Color.onAccent)
@@ -258,7 +252,7 @@ private extension QuizSessionScreen {
         .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.5), value: showStreakBurst)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Streak")
-        .accessibilityValue("\(currentStreak) in a row")
+        .accessibilityValue("\(session.streak) in a row")
     }
 
     var timerPill: some View {
@@ -274,7 +268,7 @@ private extension QuizSessionScreen {
 
     @ViewBuilder
     var questionContent: some View {
-        if let question = currentQuestion {
+        if let question = session.currentQuestion {
             switch configuration.answerMode {
             case .multipleChoice:
                 QuizQuestionView(
@@ -319,7 +313,7 @@ private extension QuizSessionScreen {
                 .id(question.id)
                 .transition(questionTransition)
             }
-        } else if hasLoadedQuestions, questions.isEmpty {
+        } else if session.hasLoaded, session.questions.isEmpty {
             EmptyStateView(
                 icon: "globe",
                 title: "No Questions",
@@ -342,60 +336,6 @@ private extension QuizSessionScreen {
 
 // MARK: - Helpers
 extension QuizSessionScreen {
-    func isTypingAnswerCorrect(input: String, question: QuizQuestion) -> Bool {
-        let normalizedInput = normalizeText(input)
-        let lettersOnlyInput = normalizedInput.filter { $0.isLetter }
-        return makeAcceptableAnswers(for: question).contains { answer in
-            let normalizedAnswer = normalizeText(answer)
-            let lettersOnlyAnswer = normalizedAnswer.filter { $0.isLetter }
-            return normalizedAnswer == normalizedInput
-                || lettersOnlyAnswer == lettersOnlyInput
-        }
-    }
-
-    func normalizeText(_ string: String) -> String {
-        string
-            .trimmingCharacters(in: .whitespaces)
-            .lowercased()
-            .folding(options: .diacriticInsensitive, locale: .current)
-    }
-
-    func spellingBeeCorrectText(for question: QuizQuestion) -> String {
-        if let correctOption = question.options.first(where: { $0.id == question.correctOptionID }),
-           let text = correctOption.text {
-            return text
-        }
-        return question.correctCountry.name
-    }
-
-    func makeAcceptableAnswers(for question: QuizQuestion) -> [String] {
-        var answers: [String] = []
-
-        if let correctOption = question.options.first(where: { $0.id == question.correctOptionID }),
-           let text = correctOption.text {
-            answers.append(text)
-        }
-
-        if configuration.type == .capitalQuiz {
-            answers += question.correctCountry.allCapitals.map { $0.name }
-            answers.append(question.correctCountry.capital)
-        }
-
-        answers.append(question.correctCountry.name)
-
-        return answers.filter { !$0.isEmpty }
-    }
-
-    var currentQuestion: QuizQuestion? {
-        guard questions.indices.contains(currentIndex) else { return nil }
-        return questions[currentIndex]
-    }
-
-    var progress: CGFloat {
-        guard !questions.isEmpty else { return 0 }
-        return CGFloat(currentIndex) / CGFloat(questions.count)
-    }
-
     func timerPulseOpacity(seconds: Int) -> Double {
         let threshold = configuration.difficulty.timerDuration * 0.4
         guard Double(seconds) <= threshold else { return 1.0 }

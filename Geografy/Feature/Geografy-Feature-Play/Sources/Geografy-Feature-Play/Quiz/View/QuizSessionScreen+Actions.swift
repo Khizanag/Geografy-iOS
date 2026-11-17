@@ -5,7 +5,7 @@ import SwiftUI
 
 // MARK: - Actions
 extension QuizSessionScreen {
-    public func togglePause() {
+    func togglePause() {
         withAnimation(.easeInOut(duration: 0.25)) {
             isPaused.toggle()
         }
@@ -14,87 +14,64 @@ extension QuizSessionScreen {
             stopArcadeTimer()
         } else {
             #if !os(tvOS)
-            if !isArcadeMode {
+            if !session.isArcade {
                 startTimer()
-            } else if hasArcadeTimer {
+            } else if session.hasArcadeTimer {
                 startArcadeTimer()
             }
             #endif
         }
     }
 
-    public func selectOption(_ optionID: UUID) {
-        guard selectedOptionID == nil else { return }
+    func selectOption(_ optionID: UUID) {
+        guard selectedOptionID == nil, let question = session.currentQuestion else { return }
         stopTimer()
         selectedOptionID = optionID
+        let isCorrect = session.answer(option: optionID)
+        showAnswerFeedback(isCorrect: isCorrect, question: question, advanceAfter: .seconds(1.3))
+    }
 
-        let question = questions[currentIndex]
-        let isCorrect = optionID == question.correctOptionID
-        let timeSpent = Date().timeIntervalSince(questionStartTime)
+    func submitTypingAnswer() {
+        guard !showFeedback, let question = session.currentQuestion else { return }
+        let trimmedInput = typingInput.trimmingCharacters(in: .whitespaces)
+        guard !trimmedInput.isEmpty else { return }
+        stopTimer()
+        let isCorrect = session.answer(typed: trimmedInput)
+        typingIsCorrect = isCorrect
+        showAnswerFeedback(isCorrect: isCorrect, question: question, advanceAfter: .seconds(1.5))
+    }
 
-        handleAnswerFeedback(isCorrect: isCorrect)
-        announceAnswer(isCorrect: isCorrect, question: question)
-
-        let answer = QuizAnswer(
-            id: UUID(),
+    func skipSpellingBee() {
+        guard !showFeedback, let question = session.currentQuestion else { return }
+        stopTimer()
+        session.skip()
+        typingIsCorrect = false
+        typingWasSkipped = true
+        let correctText = session.correctAnswerText(for: question)
+        typingInput = correctText
+        showAnswerFeedback(
+            isCorrect: false,
             question: question,
-            selectedOptionID: optionID,
-            isCorrect: isCorrect,
-            timeSpent: timeSpent
+            announcement: "Skipped. The answer is \(correctText).",
+            advanceAfter: .seconds(1.5)
         )
-        answers.append(answer)
-
-        withAnimation(.easeInOut(duration: 0.3)) {
-            showFeedback = true
-        }
-
-        if isArcadeMode, arcadeLives <= 0 { return }
-
-        transition.schedule(after: .seconds(1.3)) { advanceToNext() }
     }
 
-    public func handleAnswerFeedback(isCorrect: Bool) {
-        if isCorrect {
-            hapticsService.notification(.success)
-            currentStreak += 1
-            if isArcadeMode {
-                arcadeScore += 10
-            }
-            if currentStreak >= 2 {
-                showStreakBurst = true
-                streakBurstEnd.schedule(after: .seconds(0.3)) { showStreakBurst = false }
-            }
-        } else {
-            hapticsService.impact(.light)
-            currentStreak = 0
-            if isArcadeMode {
-                arcadeLives -= 1
-                if arcadeLives <= 0 {
-                    #if !os(tvOS)
-                    transition.schedule(after: .seconds(1)) { finishArcade() }
-                    #endif
-                }
-            }
-        }
-    }
-
-    public func advanceToNext() {
-        if currentIndex + 1 < questions.count {
-            currentIndex += 1
+    func advanceToNext() {
+        if session.moveToNext() {
             selectedOptionID = nil
             showFeedback = false
             typingInput = ""
             showHint = false
             typingIsCorrect = false
             typingWasSkipped = false
-            questionStartTime = Date()
             timerRemaining = configuration.difficulty.timerDuration
-            if !isArcadeMode {
-                #if !os(tvOS)
+            #if !os(tvOS)
+            if !session.isArcade {
                 startTimer()
-                #endif
             }
-        } else if isArcadeMode {
+            #endif
+        } else if session.isArcade {
             #if !os(tvOS)
             finishArcade()
             #else
@@ -106,87 +83,7 @@ extension QuizSessionScreen {
         }
     }
 
-    public func submitTypingAnswer() {
-        guard !showFeedback else { return }
-        let trimmedInput = typingInput.trimmingCharacters(in: .whitespaces)
-        guard !trimmedInput.isEmpty else { return }
-
-        stopTimer()
-
-        let question = questions[currentIndex]
-        let isCorrect = isTypingAnswerCorrect(input: trimmedInput, question: question)
-        let timeSpent = Date().timeIntervalSince(questionStartTime)
-
-        handleAnswerFeedback(isCorrect: isCorrect)
-        announceAnswer(isCorrect: isCorrect, question: question)
-
-        let answer = QuizAnswer(
-            id: UUID(),
-            question: question,
-            selectedOptionID: isCorrect ? question.correctOptionID : nil,
-            isCorrect: isCorrect,
-            timeSpent: timeSpent,
-        )
-        answers.append(answer)
-        typingIsCorrect = isCorrect
-
-        withAnimation(.easeInOut(duration: 0.3)) {
-            showFeedback = true
-        }
-
-        if isArcadeMode, arcadeLives <= 0 { return }
-
-        transition.schedule(after: .seconds(1.5)) { advanceToNext() }
-    }
-
-    public func skipSpellingBee() {
-        guard !showFeedback else { return }
-        stopTimer()
-
-        let question = questions[currentIndex]
-        let timeSpent = Date().timeIntervalSince(questionStartTime)
-
-        handleAnswerFeedback(isCorrect: false)
-
-        let answer = QuizAnswer(
-            id: UUID(),
-            question: question,
-            selectedOptionID: nil,
-            isCorrect: false,
-            timeSpent: timeSpent,
-        )
-        answers.append(answer)
-        typingIsCorrect = false
-        typingWasSkipped = true
-
-        let correctText = spellingBeeCorrectText(for: question)
-        typingInput = correctText
-        AccessibilityNotification.Announcement("Skipped. The answer is \(correctText).").post()
-
-        withAnimation(.easeInOut(duration: 0.3)) {
-            showFeedback = true
-        }
-
-        if isArcadeMode, arcadeLives <= 0 { return }
-
-        transition.schedule(after: .seconds(1.5)) { advanceToNext() }
-    }
-
-    func announceAnswer(isCorrect: Bool, question: QuizQuestion) {
-        let message: String
-        if isCorrect {
-            message = currentStreak >= 2 ? "Correct. \(currentStreak) in a row." : "Correct."
-        } else {
-            message = "Incorrect. The answer is \(correctAnswerText(for: question))."
-        }
-        AccessibilityNotification.Announcement(message).post()
-    }
-
-    func correctAnswerText(for question: QuizQuestion) -> String {
-        question.options.first { $0.id == question.correctOptionID }?.text ?? question.correctCountry.name
-    }
-
-    /// Freezes the question timer, keeping the time left for a later resume.
+    /// Stops both timers, keeping the time left for a later resume.
     func stopTimer() {
         if let timerDeadline {
             timerRemaining = max(0, timerDeadline.timeIntervalSinceNow)
@@ -205,74 +102,74 @@ extension QuizSessionScreen {
         arcadeTimerTask = nil
     }
 
-    public func finishQuiz() {
-        let totalTime = Date().timeIntervalSince(startTime)
-        let result = QuizResult(
-            configuration: configuration,
-            answers: answers,
-            totalTime: totalTime
-        )
+    func finishQuiz() {
+        let result = session.result()
         configuration.announceFinished(accuracy: result.accuracy)
         navigateToResult = result
     }
 
     /// Waits for country data, so a quiz opened at launch doesn't settle on an empty question list.
-    public func loadQuiz() {
-        guard !countryDataService.countries.isEmpty else { return }
-        hasLoadedQuestions = true
-        let pool = configuration.countryCodes.map { codes in
-            let wanted = Set(codes)
-            return countryDataService.countries.filter { wanted.contains($0.code) }
-        } ?? configuration.region.filter(countryDataService.countries)
-        let optionCount = max(configuration.difficulty.optionCount, 4)
-        guard pool.count >= optionCount else { return }
-
-        let questionCount = isArcadeMode
-            ? min(100, pool.count)
-            : min(configuration.questionCount.rawValue, pool.count)
-
-        questions = QuestionGenerator.generate(
-            type: configuration.type,
-            countries: pool,
-            count: questionCount,
-            optionCount: optionCount,
-            comparisonMetric: configuration.comparisonMetric
-        )
-        currentIndex = 0
-        answers = []
+    func loadQuiz() {
+        session.load(countries: countryDataService.countries)
+        guard session.hasLoaded else { return }
         selectedOptionID = nil
         showFeedback = false
         typingInput = ""
         showHint = false
         typingIsCorrect = false
         typingWasSkipped = false
-        currentStreak = 0
         showStreakBurst = false
-        startTime = Date()
-        questionStartTime = Date()
-
-        if isArcadeMode {
-            arcadeLives = 3
-            arcadeScore = 0
+        #if !os(tvOS)
+        if session.isArcade {
             arcadeTimeRemaining = configuration.arcadeTimer.duration ?? 0
-            #if !os(tvOS)
-            if configuration.arcadeTimer.duration != nil {
+            if session.hasArcadeTimer {
                 startArcadeTimer()
             }
-            #endif
         } else {
             timerRemaining = configuration.difficulty.timerDuration
-            #if !os(tvOS)
             startTimer()
+        }
+        #endif
+    }
+}
+
+// MARK: - Feedback
+extension QuizSessionScreen {
+    /// The haptic, the spoken result, the streak burst, and the reveal that follow every answer, then the next
+    /// question; an arcade game out of lives ends instead.
+    func showAnswerFeedback(
+        isCorrect: Bool,
+        question: QuizQuestion,
+        announcement: String? = nil,
+        advanceAfter delay: Duration
+    ) {
+        if isCorrect {
+            hapticsService.notification(.success)
+            if session.streak >= 2 {
+                showStreakBurst = true
+                streakBurstEnd.schedule(after: .seconds(0.3)) { showStreakBurst = false }
+            }
+        } else {
+            hapticsService.impact(.light)
+        }
+        AccessibilityNotification.Announcement(announcement ?? spokenResult(isCorrect: isCorrect, question: question))
+            .post()
+
+        withAnimation(.easeInOut(duration: 0.3)) {
+            showFeedback = true
+        }
+
+        if session.isOutOfLives {
+            #if !os(tvOS)
+            transition.schedule(after: .seconds(1)) { finishArcade() }
             #endif
+        } else {
+            transition.schedule(after: delay) { advanceToNext() }
         }
     }
 
-    public var isArcadeMode: Bool {
-        configuration.gameMode == .arcade
-    }
-
-    public var hasArcadeTimer: Bool {
-        configuration.arcadeTimer.duration != nil
+    func spokenResult(isCorrect: Bool, question: QuizQuestion) -> String {
+        guard isCorrect else { return "Incorrect. The answer is \(session.correctAnswerText(for: question))." }
+        return session.streak >= 2 ? "Correct. \(session.streak) in a row." : "Correct."
     }
 }
