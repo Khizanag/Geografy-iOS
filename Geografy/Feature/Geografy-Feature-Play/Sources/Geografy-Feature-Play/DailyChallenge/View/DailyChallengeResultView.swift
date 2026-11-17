@@ -8,7 +8,6 @@ import SwiftUI
 public struct DailyChallengeResultView: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let score: Int
     public let maxScore: Int
@@ -16,7 +15,6 @@ public struct DailyChallengeResultView: View {
     public let timeSpent: Double
     public let streak: Int
 
-    @State private var animatedScore: Int = 0
     @State private var showShareCard = false
 
     // MARK: - Init
@@ -40,7 +38,7 @@ public struct DailyChallengeResultView: View {
             .navigationTitle("Results")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-            .onAppear { animateScore() }
+            .onAppear { announceScore() }
             .sheet(isPresented: $showShareCard) {
                 CoordinatedNavigationStack(showCloseButton: true) {
                     shareCardSheet
@@ -52,71 +50,34 @@ public struct DailyChallengeResultView: View {
 // MARK: - Content
 private extension DailyChallengeResultView {
     var resultContent: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                scoreSection
-                statsRow
-                streakBadge
-            }
-            .padding(.vertical, DesignSystem.Spacing.lg)
-            .padding(.horizontal, DesignSystem.Spacing.md)
-        }
-        .safeAreaBar(edge: .bottom) { actionButtons }
+        GameResultLayout(
+            title: Text(scoreMessage),
+            message: Text("\(score) of \(maxScore) points"),
+            xpEarned: XPRules.dailyChallenge(score: score, maxScore: maxScore),
+            primaryAction: GameResultAction("Share Result", systemImage: "square.and.arrow.up") {
+                showShareCard = true
+            },
+            onDone: { dismiss() },
+            hero: {
+                ScoreRingView(progress: Double(score) / Double(maxScore))
+                    .accessibilityLabel("Score: \(score) out of \(maxScore) points")
+            },
+            stats: { stats },
+            details: { streakBadge }
+        )
         .screenBackground()
     }
-}
 
-// MARK: - Score Section
-private extension DailyChallengeResultView {
-    var scoreSection: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            ScoreRingView(progress: Double(score) / Double(maxScore))
-                .accessibilityLabel("Score: \(score) out of \(maxScore) points")
-            Text(scoreMessage)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .accessibilityAddTraits(.isHeader)
-            Text("\(animatedScore) / \(maxScore) points")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.accent)
-                .contentTransition(.numericText())
-        }
-        .padding(.top, DesignSystem.Spacing.lg)
-    }
-}
-
-// MARK: - Stats Row
-private extension DailyChallengeResultView {
-    var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.lg) {
-            CardView {
-                ResultStatItem(
-                    icon: "star.fill",
-                    value: "\(score)",
-                    label: "Score",
-                    color: DesignSystem.Color.orange
-                )
-                .padding(DesignSystem.Spacing.sm)
-            }
-            CardView {
-                ResultStatItem(
-                    icon: "clock.fill",
-                    value: formattedTime,
-                    label: "Time",
-                    color: DesignSystem.Color.warning
-                )
-                .padding(DesignSystem.Spacing.sm)
-            }
-            CardView {
-                ResultStatItem(
-                    icon: challengeType.iconName,
-                    value: challengeType.title,
-                    label: "Type",
-                    color: DesignSystem.Color.indigo
-                )
-                .padding(DesignSystem.Spacing.sm)
-            }
-        }
+    @ViewBuilder
+    var stats: some View {
+        StatTile(value: "\(score)", label: "Score", icon: "star.fill", color: DesignSystem.Color.orange)
+        StatTile(value: formattedTime, label: "Time", icon: "clock.fill", color: DesignSystem.Color.blue)
+        StatTile(
+            value: challengeType.title,
+            label: "Challenge",
+            icon: challengeType.iconName,
+            color: DesignSystem.Color.indigo
+        )
     }
 }
 
@@ -143,29 +104,8 @@ private extension DailyChallengeResultView {
     }
 }
 
-// MARK: - Action Buttons
+// MARK: - Share
 private extension DailyChallengeResultView {
-    var actionButtons: some View {
-        ButtonRow {
-            doneButton
-            shareButton
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
-    }
-
-    var shareButton: some View {
-        GlassButton("Share Result", systemImage: "square.and.arrow.up", fullWidth: true) {
-            showShareCard = true
-        }
-    }
-
-    var doneButton: some View {
-        GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
-            dismiss()
-        }
-    }
-
     var shareCardSheet: some View {
         DailyChallengeShareCard(
             score: score,
@@ -201,8 +141,7 @@ private extension DailyChallengeResultView {
         return "\(seconds)s"
     }
 
-    func animateScore() {
-        animatedScore = score
+    func announceScore() {
         AccessibilityNotification.Announcement("\(scoreMessage) \(score) out of \(maxScore) points").post()
     }
 }

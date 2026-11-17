@@ -7,14 +7,13 @@ import SwiftUI
 struct MapPuzzleScreen: View {
     // MARK: - Properties
     #if !os(tvOS)
+    @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
     @Environment(XPService.self) private var xpService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    @ScaledMetric(relativeTo: .largeTitle) private var summaryIconSize: CGFloat = 64
     @ScaledMetric(relativeTo: .body) private var mapHeight: CGFloat = 220
 
     let continent: Country.Continent
@@ -241,84 +240,49 @@ private extension MapPuzzleScreen {
 // MARK: - Summary
 private extension MapPuzzleScreen {
     var summaryView: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-            summaryIcon
-            summaryText
-            scoreCard
-            Spacer()
-            restartButton
-        }
-        .padding(DesignSystem.Spacing.md)
+        let isPassing = correctCount >= questions.count / 2
+        return GameResultLayout(
+            title: Text(summaryTitle),
+            message: Text("You got \(correctCount) out of \(questions.count) correct"),
+            xpEarned: XPRules.mapPuzzle(questions: questions.count, correct: correctCount),
+            primaryAction: .playAgain { reset() },
+            onDone: { dismiss() },
+            hero: {
+                IconBadge(
+                    isPassing ? "star.fill" : "arrow.counterclockwise",
+                    color: isPassing ? DesignSystem.Color.warning : gameColor,
+                    size: .hero
+                )
+                .accessibilityHidden(true)
+            },
+            stats: { summaryStats }
+        )
         .onAppear {
             let announcement = "\(summaryTitle) You got \(correctCount) out of \(questions.count) correct."
             AccessibilityNotification.Announcement(announcement).post()
         }
     }
 
-    var summaryIcon: some View {
-        let isPassing = correctCount >= questions.count / 2
-        return Image(systemName: isPassing ? "star.fill" : "arrow.clockwise.circle.fill")
-            .font(DesignSystem.Font.system(size: summaryIconSize, weight: .bold))
-            .foregroundStyle(isPassing ? DesignSystem.Color.warning : gameColor)
-            .accessibilityHidden(true)
-    }
-
-    var summaryText: some View {
-        VStack(spacing: DesignSystem.Spacing.xs) {
-            Text(summaryTitle)
-                .font(DesignSystem.Font.title)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .accessibilityAddTraits(.isHeader)
-            Text("You got \(correctCount) out of \(questions.count) correct")
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .multilineTextAlignment(.center)
-    }
-
-    var scoreCard: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.md))
-            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.lg))
-        let incorrectCount = questions.count - correctCount
-        return CardView {
-            layout {
-                scoreStatView(value: "\(correctCount)", label: "Correct", color: DesignSystem.Color.success)
-                Divider()
-                scoreStatView(value: "\(incorrectCount)", label: "Incorrect", color: DesignSystem.Color.error)
-                Divider()
-                scoreStatView(
-                    value: "\(Int((Double(correctCount) / Double(questions.count)) * 100))%",
-                    label: "Accuracy",
-                    color: gameColor
-                )
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
-    }
-
-    func scoreStatView(value: String, label: String, color: Color) -> some View {
-        VStack(spacing: 2) {
-            Text(value)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(color)
-            Text(label)
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(label)
-        .accessibilityValue(value)
-    }
-
-    var restartButton: some View {
-        GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true) {
-            reset()
-        }
+    @ViewBuilder
+    var summaryStats: some View {
+        StatTile(
+            value: "\(correctCount)",
+            label: "Correct",
+            icon: "checkmark.circle.fill",
+            color: DesignSystem.Color.success
+        )
+        StatTile(
+            value: "\(questions.count - correctCount)",
+            label: "Wrong",
+            icon: "xmark.circle.fill",
+            color: DesignSystem.Color.error
+        )
+        StatTile(
+            value: "\(Int((Double(correctCount) / Double(max(questions.count, 1))) * 100))%",
+            label: "Accuracy",
+            icon: "chart.bar.fill",
+            color: gameColor
+        )
     }
 }
 

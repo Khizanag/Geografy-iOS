@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 
 /// How a Pin Drop guess turns into points.
 ///
@@ -109,6 +110,17 @@ struct PinDropScore: Equatable, Sendable {
             default: .far
             }
         }
+    }
+}
+
+// MARK: - XP
+extension PinDropScoring {
+    /// What a finished game earns: by rounds played and how close the pins were on average.
+    static func xp(for results: [PinDropGame.Result]) -> Int {
+        guard !results.isEmpty else { return 0 }
+        let total = results.reduce(0) { $0 + Double($1.score.accuracyPoints) }
+        let averageAccuracy = total / Double(results.count * maxAccuracyPoints)
+        return XPRules.pinDrop(rounds: results.count, averageAccuracy: averageAccuracy)
     }
 }
 

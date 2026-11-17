@@ -19,17 +19,20 @@ struct PinDropResultsView: View {
 
     // MARK: - Body
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: DesignSystem.Spacing.lg) {
-                gradeBadge
-                scoreBlock
-                stats
-                roundList
-            }
-            .padding(DesignSystem.Spacing.lg)
-        }
-        .scrollBounceBehavior(.basedOnSize)
-        .safeAreaBar(edge: .bottom) { buttons }
+        GameResultLayout(
+            title: Text(grade.message),
+            xpEarned: PinDropScoring.xp(for: results),
+            primaryAction: .playAgain(onPlayAgain),
+            onDone: onDone,
+            hero: {
+                VStack(spacing: DesignSystem.Spacing.md) {
+                    gradeBadge
+                    scoreBlock
+                }
+            },
+            stats: { stats },
+            details: { roundList }
+        )
         .glassEffect(.regular, in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
         .onAppear(perform: reveal)
     }
@@ -73,10 +76,6 @@ private extension PinDropResultsView {
             }
             .font(DesignSystem.Font.roundedXL)
             .foregroundStyle(DesignSystem.Color.textPrimary)
-            Text(grade.message)
-                .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-                .multilineTextAlignment(.center)
             recordLabel
         }
         .accessibilityElement(children: .combine)
@@ -100,27 +99,26 @@ private extension PinDropResultsView {
         }
     }
 
+    @ViewBuilder
     var stats: some View {
-        StatTileRow {
-            StatTile(
-                value: "\(results.count { $0.isInside })/\(roundCount)",
-                label: "Bullseyes",
-                icon: "scope",
-                color: DesignSystem.Color.success
-            )
-            StatTile(
-                value: PinDropStyle.distance(averageMiss, locale: locale),
-                label: "Average Miss",
-                icon: "ruler",
-                color: DesignSystem.Color.blue
-            )
-            StatTile(
-                value: "\(results.map(\.score.streak).max() ?? 0)",
-                label: "Best Streak",
-                icon: "flame.fill",
-                color: DesignSystem.Color.orange
-            )
-        }
+        StatTile(
+            value: "\(results.count { $0.isInside })/\(roundCount)",
+            label: "Bullseyes",
+            icon: "scope",
+            color: DesignSystem.Color.success
+        )
+        StatTile(
+            value: PinDropStyle.distance(averageMiss, locale: locale),
+            label: "Average Miss",
+            icon: "ruler",
+            color: DesignSystem.Color.blue
+        )
+        StatTile(
+            value: "\(results.map(\.score.streak).max() ?? 0)",
+            label: "Best Streak",
+            icon: "flame.fill",
+            color: DesignSystem.Color.orange
+        )
     }
 
     var averageMiss: Double {
@@ -169,14 +167,6 @@ private extension PinDropResultsView {
 
     func missText(_ result: PinDropGame.Result) -> String {
         PinDropStyle.distance(result.distanceKilometers, locale: locale)
-    }
-
-    var buttons: some View {
-        ButtonRow {
-            GlassButton("Done", role: .secondary, fullWidth: true, action: onDone)
-            GlassButton("Play Again", systemImage: "arrow.clockwise", fullWidth: true, action: onPlayAgain)
-        }
-        .padding(DesignSystem.Spacing.md)
     }
 
     func reveal() {

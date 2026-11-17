@@ -446,12 +446,7 @@ private extension PinDropScreen {
     }
 
     func finish(_ game: PinDropGame) {
-        let accuracies = game.results.map { Double($0.score.accuracyPoints) / Double(PinDropScoring.maxAccuracyPoints) }
-        let averageAccuracy = accuracies.isEmpty ? 0 : accuracies.reduce(0, +) / Double(accuracies.count)
-        xpService.award(
-            XPRules.pinDrop(rounds: game.results.count, averageAccuracy: averageAccuracy),
-            source: .pinDropCompleted
-        )
+        xpService.award(PinDropScoring.xp(for: game.results), source: .pinDropCompleted)
         isNewBest = records.record(game.totalScore, for: configuration)
         bestScore = max(bestScore, game.totalScore)
         SoundService.shared.play(isNewBest ? .levelUp : .sessionComplete)

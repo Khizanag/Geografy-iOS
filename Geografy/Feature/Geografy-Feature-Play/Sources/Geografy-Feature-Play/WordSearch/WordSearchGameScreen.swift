@@ -180,10 +180,10 @@ private extension WordSearchGameScreen {
 
     var resultFooter: some View {
         ButtonRow {
-            GlassButton("Close", systemImage: "xmark", role: .secondary, fullWidth: true) {
+            GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
                 dismiss()
             }
-            GlassButton("Try Again", systemImage: "arrow.clockwise", fullWidth: true) {
+            GlassButton("Play Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
                 startPuzzle()
             }
         }

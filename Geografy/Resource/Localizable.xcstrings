@@ -546,7 +546,8 @@
     },
     "%lld XP earned" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "%lld bordering countries" : {
       "localizations" : {
@@ -961,6 +962,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld %2$lld მოდულიდან დასრულებული"
+          }
+        }
+      }
+    },
+    "%lld of %lld points" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld points"
           }
         }
       }
@@ -2564,6 +2577,10 @@
           }
         }
       }
+    },
+    "Challenge" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Challenge Streak" : {
       "extractionState" : "manual",
@@ -6404,7 +6421,8 @@
     },
     "Missed" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Missed Countries" : {
       "extractionState" : "manual",
@@ -6662,7 +6680,8 @@
     },
     "Named" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Natural Wonders" : {
       "localizations" : {
