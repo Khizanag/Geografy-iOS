@@ -129,7 +129,7 @@ private extension SpeedRunSessionScreen {
             text: $inputText,
             isFocused: $isInputFocused,
             systemImage: "keyboard",
-            color: DesignSystem.Color.error,
+            color: DesignSystem.Color.pink,
             feedback: inputFeedback,
             message: inputMessage,
             showsSendButton: false,
@@ -242,7 +242,7 @@ private extension SpeedRunSessionScreen {
 
             Text(SpeedRunClock.formatted(elapsedTime))
                 .font(DesignSystem.Font.system(size: resultTimeFontSize, weight: .bold, design: .monospaced))
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.pink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
                 .accessibilityLabel("Time")

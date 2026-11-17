@@ -5,14 +5,14 @@ public struct ResultStatItem: View {
     public let icon: String
     public let value: String
     public let label: String
-    public var color: Color = DesignSystem.Color.accent
+    public var color: Color = DesignSystem.Color.blue
 
     // MARK: - Init
     public init(
         icon: String,
         value: String,
         label: String,
-        color: Color = DesignSystem.Color.accent
+        color: Color = DesignSystem.Color.blue
     ) {
         self.icon = icon
         self.value = value

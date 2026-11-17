@@ -16,7 +16,7 @@ public struct ShareBar: View {
     /// - Parameters:
     ///   - fraction: How much of the bar is filled, from 0 to 1.
     ///   - delay: How long it waits before growing in, to stagger a column of bars.
-    public init(fraction: Double, color: Color = DesignSystem.Color.accent, delay: Double = 0.3) {
+    public init(fraction: Double, color: Color = DesignSystem.Color.blue, delay: Double = 0.3) {
         self.fraction = fraction
         self.color = color
         self.delay = delay

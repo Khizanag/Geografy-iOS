@@ -67,16 +67,16 @@ private extension QuizResultsScreen {
                 HStack(spacing: DesignSystem.Spacing.xxs) {
                     Image(systemName: "star.fill")
                         .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.warning)
                         .accessibilityHidden(true)
                     Text("+\(xpEarned) XP")
                         .font(DesignSystem.Font.headline)
                         .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.accent)
+                        .foregroundStyle(DesignSystem.Color.warning)
                 }
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(DesignSystem.Color.accent.opacity(0.15), in: Capsule())
+                .background(DesignSystem.Color.warning.opacity(0.15), in: Capsule())
                 .transition(reduceMotion ? .opacity : .scale(scale: 0.7).combined(with: .opacity))
                 .animation(
                     reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.7).delay(0.5),

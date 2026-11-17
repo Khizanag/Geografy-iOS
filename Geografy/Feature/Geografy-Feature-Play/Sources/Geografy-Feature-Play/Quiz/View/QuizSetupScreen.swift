@@ -23,7 +23,7 @@ public struct QuizSetupScreen: View {
     @AppStorage("quiz_gameMode") private var selectedGameMode: QuizGameMode = .standard
     @AppStorage("quiz_arcadeTimer") private var selectedArcadeTimer: ArcadeTimer = .sixty
 
-    private let color = DesignSystem.Color.accent
+    private let color = DesignSystem.Color.blue
 
     // MARK: - Init
     public init() {}

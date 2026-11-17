@@ -85,11 +85,11 @@ private extension LocalMultiplayerLobbyScreen {
             TypeSelectionGrid(
                 items: [QuizType.flagQuiz, .capitalQuiz, .reverseFlag, .reverseCapital],
                 selectedIDs: [coordinator.quizType.id],
-                color: DesignSystem.Color.error,
+                color: LocalMultiplayerEntryScreen.color,
                 onSelect: { coordinator.quizType = $0 }
             )
 
-            RegionPicker(selectedRegion: $coordinator.region, color: DesignSystem.Color.error)
+            RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
 
             HStack(spacing: DesignSystem.Spacing.sm) {
                 Picker("Difficulty", selection: $coordinator.difficulty) {
@@ -154,7 +154,7 @@ private extension LocalMultiplayerLobbyScreen {
                 PulsingCirclesView(
                     icon: "antenna.radiowaves.left.and.right",
                     isAnimating: true,
-                    color: DesignSystem.Color.error
+                    color: LocalMultiplayerEntryScreen.color
                 )
                     .scaleEffect(0.6)
                     .frame(height: 160)
@@ -192,7 +192,7 @@ private extension LocalMultiplayerLobbyScreen {
                     HStack(spacing: DesignSystem.Spacing.md) {
                         Image(systemName: "wifi")
                             .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.accent)
+                            .foregroundStyle(LocalMultiplayerEntryScreen.color)
                             .accessibilityHidden(true)
                         Text(peer.displayName)
                             .font(DesignSystem.Font.headline)
@@ -201,7 +201,7 @@ private extension LocalMultiplayerLobbyScreen {
                         Text("Join")
                             .font(DesignSystem.Font.caption)
                             .fontWeight(.semibold)
-                            .foregroundStyle(DesignSystem.Color.accent)
+                            .foregroundStyle(LocalMultiplayerEntryScreen.color)
                     }
                     .padding(DesignSystem.Spacing.md)
                 }

@@ -28,7 +28,7 @@ private extension LocalMultiplayerCountdownView {
                     .foregroundStyle(
                         remaining > 0
                             ? DesignSystem.Color.textPrimary
-                            : DesignSystem.Color.accent
+                            : LocalMultiplayerEntryScreen.color
                     )
                     .contentTransition(.numericText())
                     .animation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.6), value: remaining)

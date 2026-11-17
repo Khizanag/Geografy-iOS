@@ -43,7 +43,7 @@ private extension ProfileScreen {
                     .foregroundStyle(scoreColor(accuracy: record.accuracy))
                 Text("+\(record.xpEarned) XP")
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.warning)
             }
         }
         .padding(DesignSystem.Spacing.sm)

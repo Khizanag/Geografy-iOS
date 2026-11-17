@@ -93,7 +93,8 @@ private extension DailyChallengeResultView {
                 ResultStatItem(
                     icon: "star.fill",
                     value: "\(score)",
-                    label: "Score"
+                    label: "Score",
+                    color: DesignSystem.Color.orange
                 )
                 .padding(DesignSystem.Spacing.sm)
             }

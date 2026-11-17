@@ -42,7 +42,7 @@ public struct AnswerField: View {
         text: Binding<String>,
         isFocused: FocusState<Bool>.Binding,
         systemImage: String? = nil,
-        color: Color = DesignSystem.Color.accent,
+        color: Color = DesignSystem.Color.blue,
         feedback: Feedback = .none,
         message: String? = nil,
         capitalization: TextInputAutocapitalization = .words,

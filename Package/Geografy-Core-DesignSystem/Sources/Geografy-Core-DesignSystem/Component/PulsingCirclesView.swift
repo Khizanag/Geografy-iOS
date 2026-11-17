@@ -10,7 +10,7 @@ public struct PulsingCirclesView: View {
 
     // MARK: - Init
     /// - Parameter color: The screen's game color, for the icon and the rings.
-    public init(icon: String, isAnimating: Bool, color: Color = DesignSystem.Color.accent) {
+    public init(icon: String, isAnimating: Bool, color: Color = DesignSystem.Color.blue) {
         self.icon = icon
         self.isAnimating = isAnimating
         self.color = color

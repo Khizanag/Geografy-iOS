@@ -40,7 +40,7 @@ public struct IconBadge: View {
     private let size: Size
 
     // MARK: - Init
-    public init(_ systemImage: String, color: Color = DesignSystem.Color.accent, size: Size = .medium) {
+    public init(_ systemImage: String, color: Color = DesignSystem.Color.blue, size: Size = .medium) {
         self.systemImage = systemImage
         self.color = color
         self.size = size

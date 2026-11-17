@@ -139,8 +139,12 @@ private extension LocalMultiplayerEntryScreen {
             .padding(.bottom, DesignSystem.Spacing.md)
         }
     }
+}
 
-    static let color = DesignSystem.Color.error
+// MARK: - Game Color
+extension LocalMultiplayerEntryScreen {
+    /// Multiplayer's color, the same as its Play tile, shared by every multiplayer screen.
+    static let color = DesignSystem.Color.teal
 }
 
 // MARK: - Actions

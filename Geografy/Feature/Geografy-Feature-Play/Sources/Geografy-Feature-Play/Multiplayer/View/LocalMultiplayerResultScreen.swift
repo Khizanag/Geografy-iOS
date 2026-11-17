@@ -73,7 +73,7 @@ private extension LocalMultiplayerResultScreen {
                 label: "You",
                 score: coordinator.playerScore,
                 total: coordinator.questions.count,
-                color: DesignSystem.Color.accent,
+                color: PairSide.left.color,
                 isWinner: coordinator.playerScore > coordinator.opponentScore
             )
             Text("vs")
@@ -84,7 +84,7 @@ private extension LocalMultiplayerResultScreen {
                 label: coordinator.opponent?.displayName ?? "Opponent",
                 score: coordinator.opponentScore,
                 total: coordinator.questions.count,
-                color: DesignSystem.Color.error,
+                color: PairSide.right.color,
                 isWinner: coordinator.opponentScore > coordinator.playerScore
             )
         }

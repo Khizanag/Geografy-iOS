@@ -65,9 +65,9 @@ private extension TravelJournalStatsView {
 
     var statsRow: some View {
         StatTileRow {
-            StatTile(value: "\(uniqueCountries)", label: "Countries", icon: "globe")
-            StatTile(value: "\(totalPhotos)", label: "Photos", icon: "photo.fill")
-            StatTile(value: formattedRating, label: "Avg Rating", icon: "star.fill")
+            StatTile(value: "\(uniqueCountries)", label: "Countries", icon: "globe", color: DesignSystem.Color.teal)
+            StatTile(value: "\(totalPhotos)", label: "Photos", icon: "photo.fill", color: DesignSystem.Color.teal)
+            StatTile(value: formattedRating, label: "Avg Rating", icon: "star.fill", color: DesignSystem.Color.teal)
         }
     }
 

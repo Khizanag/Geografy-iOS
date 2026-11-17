@@ -46,7 +46,8 @@ private extension FlashcardStatsView {
             ResultStatItem(
                 icon: "rectangle.on.rectangle",
                 value: "\(cardsReviewed)",
-                label: "Reviewed"
+                label: "Reviewed",
+                color: DesignSystem.Color.purple
             )
             ResultStatItem(
                 icon: "checkmark.circle.fill",

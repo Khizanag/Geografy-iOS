@@ -22,7 +22,7 @@ public struct StatTile: View {
         value: String,
         label: LocalizedStringKey,
         icon: String? = nil,
-        color: Color = DesignSystem.Color.accent
+        color: Color = DesignSystem.Color.blue
     ) {
         self.value = value
         self.label = label

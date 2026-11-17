@@ -172,7 +172,8 @@ private extension WordSearchGameScreen {
             ResultStatItem(
                 icon: "timer",
                 value: formattedTime,
-                label: "Time"
+                label: "Time",
+                color: DesignSystem.Color.indigo
             )
         }
     }

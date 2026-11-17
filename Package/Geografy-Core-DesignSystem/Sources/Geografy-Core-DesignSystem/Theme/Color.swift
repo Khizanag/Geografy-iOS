@@ -32,6 +32,8 @@ public extension DesignSystem {
         public static let blue = SwiftUI.Color("GeoBlue")
         public static let purple = SwiftUI.Color("GeoPurple")
         public static let orange = SwiftUI.Color("GeoOrange")
+        public static let pink = SwiftUI.Color("GeoPink")
+        public static let teal = SwiftUI.Color("GeoTeal")
 
         // Semantic tokens for adaptive borders, overlays, and scrim
         public static let dividerSubtle = SwiftUI.Color("DividerSubtle")

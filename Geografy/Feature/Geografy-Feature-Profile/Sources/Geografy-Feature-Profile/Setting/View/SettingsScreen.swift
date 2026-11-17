@@ -174,7 +174,7 @@ private extension SettingsScreen {
         Button { coordinator.push(ProfileLocalRoute.signIn) } label: {
             SettingsNavigationRow(
                 icon: "person.badge.plus",
-                iconColor: DesignSystem.Color.accent,
+                iconColor: DesignSystem.Color.blue,
                 title: "Sign In"
             )
         }
@@ -407,7 +407,7 @@ private extension SettingsScreen {
 
                 SettingsToggleRow(
                     icon: "iphone.radiowaves.left.and.right",
-                    iconColor: DesignSystem.Color.success,
+                    iconColor: DesignSystem.Color.pink,
                     title: "Haptic feedback",
                     isOn: $hapticFeedbackEnabled
                 )

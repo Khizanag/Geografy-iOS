@@ -137,34 +137,34 @@ enum HubItem: Identifiable, CaseIterable {
 
     var color: Color {
         switch self {
-        case .profile: DesignSystem.Color.accent
-        case .quiz: DesignSystem.Color.accent
-        case .trueOrFalse: DesignSystem.Color.blue
-        case .neighbors: DesignSystem.Color.error
-        case .mysteryCountry: DesignSystem.Color.orange
+        case .profile: DesignSystem.Color.indigo
+        case .quiz: DesignSystem.Color.blue
+        case .trueOrFalse: DesignSystem.Color.indigo
+        case .neighbors: DesignSystem.Color.teal
+        case .mysteryCountry: DesignSystem.Color.purple
         case .mapPuzzle: DesignSystem.Color.purple
         case .pinDrop: DesignSystem.Color.orange
-        case .worldFacts: DesignSystem.Color.ocean
+        case .worldFacts: DesignSystem.Color.teal
         case .countries: DesignSystem.Color.blue
-        case .orgs: DesignSystem.Color.indigo
-        case .favorites: DesignSystem.Color.error
-        case .travel: TravelStatus.visited.color
+        case .orgs: DesignSystem.Color.purple
+        case .favorites: DesignSystem.Color.pink
+        case .travel: DesignSystem.Color.teal
         case .dailyChallenge: DesignSystem.Color.orange
         case .compare: DesignSystem.Color.blue
-        case .quizPacks: DesignSystem.Color.purple
-        case .multiplayer: DesignSystem.Color.error
-        case .speedRun: DesignSystem.Color.error
-        case .distanceCalculator: DesignSystem.Color.blue
-        case .currencyConverter: DesignSystem.Color.success
+        case .quizPacks: DesignSystem.Color.blue
+        case .multiplayer: DesignSystem.Color.teal
+        case .speedRun: DesignSystem.Color.pink
+        case .distanceCalculator: DesignSystem.Color.orange
+        case .currencyConverter: DesignSystem.Color.teal
         case .timeZones: DesignSystem.Color.indigo
         case .timeline: DesignSystem.Color.indigo
         case .achievements: DesignSystem.Color.warning
-        case .leaderboards: DesignSystem.Color.success
+        case .leaderboards: DesignSystem.Color.orange
         case .settings: DesignSystem.Color.textSecondary
-        case .search: DesignSystem.Color.accent
+        case .search: DesignSystem.Color.textSecondary
         case .wordSearch: DesignSystem.Color.indigo
-        case .srsStudy: DesignSystem.Color.accent
-        case .learningPath: DesignSystem.Color.success
+        case .srsStudy: DesignSystem.Color.purple
+        case .learningPath: DesignSystem.Color.blue
         }
     }
 

@@ -32,7 +32,7 @@ struct QuickStatsRow: View {
                 icon: "star.fill",
                 value: String(localized: "Lv. \(level)", in: locale),
                 label: String(localized: "level", in: locale),
-                color: DesignSystem.Color.accent,
+                color: DesignSystem.Color.warning,
                 action: onLevelTap
             )
 
@@ -40,7 +40,7 @@ struct QuickStatsRow: View {
                 icon: "globe.americas.fill",
                 value: "\(countriesExplored)",
                 label: String(localized: "explored", in: locale),
-                color: DesignSystem.Color.success,
+                color: DesignSystem.Color.blue,
                 action: onCountriesTap
             )
         }

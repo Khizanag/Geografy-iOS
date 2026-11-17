@@ -146,7 +146,7 @@ private extension ContinentOverviewScreen {
                 value: "\(Int(totalArea / 1_000_000))M km²",
                 label: "Total Area",
                 icon: "map.fill",
-                color: DesignSystem.Color.success
+                color: DesignSystem.Color.blue
             )
         }
         if let largest = countries.max(by: { $0.area < $1.area }) {

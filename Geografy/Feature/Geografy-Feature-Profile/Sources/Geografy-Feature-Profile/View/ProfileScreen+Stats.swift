@@ -58,7 +58,7 @@ private extension ProfileScreen {
             value: "\(statistics?.countriesVisited ?? 0)",
             label: "Visited",
             icon: "airplane.departure",
-            color: DesignSystem.Color.success
+            color: DesignSystem.Color.teal
         )
         StatTile(
             value: "\(achievementService.unlockedAchievements.count)",

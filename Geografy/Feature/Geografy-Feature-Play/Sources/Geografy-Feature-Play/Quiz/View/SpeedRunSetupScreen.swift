@@ -13,7 +13,7 @@ public struct SpeedRunSetupScreen: View {
 
     @AppStorage("speedrun_selectedRegion") private var selectedRegion: QuizRegion = .world
 
-    private let color = DesignSystem.Color.error
+    private let color = DesignSystem.Color.pink
 
     // MARK: - Init
     public init() {}

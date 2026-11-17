@@ -31,14 +31,14 @@ public struct LocalMultiplayerMatchScreen: View {
 private extension LocalMultiplayerMatchScreen {
     var scoreBar: some View {
         HStack {
-            scorePill(label: "You", score: coordinator.playerScore, color: DesignSystem.Color.accent)
+            scorePill(label: "You", score: coordinator.playerScore, color: PairSide.left.color)
             Spacer()
             QuestionCounterPill(current: coordinator.currentIndex + 1, total: coordinator.questions.count)
             Spacer()
             scorePill(
                 label: coordinator.opponent?.displayName ?? "Opponent",
                 score: coordinator.opponentScore,
-                color: DesignSystem.Color.error
+                color: PairSide.right.color
             )
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
