@@ -16,7 +16,7 @@ final class AppDependencies {
     let currencyService = CurrencyService()
     let databaseManager: DatabaseManager
     let entitlementService = EntitlementService()
-    let explorationService = ExplorationService()
+    let explorationService: ExplorationService
     let favoritesService: FavoritesService
     let flashcardService = FlashcardService()
     let gameCenterService = GameCenterService()
@@ -49,6 +49,7 @@ final class AppDependencies {
         favoritesService = FavoritesService(container: database.container, userID: userID)
         learningPathService = LearningPathService()
         travelService = TravelService()
+        explorationService = ExplorationService()
         widgetDataBridge = WidgetDataBridge(countryDataService: countryDataService)
     }
 }

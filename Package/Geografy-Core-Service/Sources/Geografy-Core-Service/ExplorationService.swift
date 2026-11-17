@@ -50,16 +50,18 @@ private extension ExplorationService {
         UserDefaults.standard.set(Array(values), forKey: UserScope.key(base))
     }
 
-    /// Countries were once kept under `explored_countries_<user ID>`; that set is moved under the scoped key the
+    /// Countries were once kept under `explored_countries_<user ID>`; that set is merged into the scoped one the
     /// first time it's read, so nobody's progress is lost.
     static func loadCountries() -> Set<String> {
         let defaults = UserDefaults.standard
         let legacyKey = "\(countriesKey)_\(UserScope.currentUserID)"
         let scopedKey = UserScope.key(countriesKey)
-        if defaults.object(forKey: scopedKey) == nil, let legacy = defaults.stringArray(forKey: legacyKey) {
-            defaults.set(legacy, forKey: scopedKey)
+        var codes = Set(defaults.stringArray(forKey: scopedKey) ?? [])
+        if let legacy = defaults.stringArray(forKey: legacyKey) {
+            codes.formUnion(legacy)
+            defaults.set(Array(codes), forKey: scopedKey)
             defaults.removeObject(forKey: legacyKey)
         }
-        return Set(defaults.stringArray(forKey: scopedKey) ?? [])
+        return codes
     }
 }
