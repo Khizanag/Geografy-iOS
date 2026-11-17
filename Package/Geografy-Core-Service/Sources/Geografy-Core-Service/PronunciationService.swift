@@ -8,13 +8,16 @@ public final class PronunciationService {
     public private(set) var isSpeaking = false
     public private(set) var currentText = ""
 
-    private let synthesizer = AVSpeechSynthesizer()
-    private var speechDelegate: SpeechDelegate?
+    /// Made on the first word spoken rather than at launch: building a synthesizer loads the speech engine.
+    @ObservationIgnored private lazy var synthesizer: AVSpeechSynthesizer = {
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.delegate = speechDelegate
+        return synthesizer
+    }()
+    private let speechDelegate = SpeechDelegate()
 
     public init() {
-        let delegate = SpeechDelegate()
-        speechDelegate = delegate
-        synthesizer.delegate = delegate
+        let delegate = speechDelegate
         delegate.onDidFinish = { [weak self] in
             Task { @MainActor in
                 self?.isSpeaking = false
@@ -43,7 +46,9 @@ public final class PronunciationService {
     }
 
     public func stop() {
-        synthesizer.stopSpeaking(at: .immediate)
+        if isSpeaking {
+            synthesizer.stopSpeaking(at: .immediate)
+        }
         isSpeaking = false
         currentText = ""
     }
