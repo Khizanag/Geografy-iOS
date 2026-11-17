@@ -19,84 +19,98 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [gameColors, resultScreens, speedRunXP, settingsRows, profileFixes]
+        [emptyStates, countryLists, liquidGlass, forms, achievementCount, tabsInBar]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var gameColors: BuildNote {
+    var emptyStates: BuildNote {
         BuildNote(
-            commit: "2270c9d3",
-            title: "Colors that don't mean right or wrong",
+            commit: "595da86f",
+            title: "Empty states with a way out",
             howToTest: """
-                Hub tiles and games use blue, pink, teal, and purple; green shows only success and red only \
-                errors or deleting. XP and levels are gold everywhere.
+                In Timeline, set a filter that hides every event: Clear Filters brings them back. A quiz with \
+                no questions for its region offers Choose a Region.
                 """,
-            systemImage: "paintpalette.fill",
-            color: DesignSystem.Color.pink
-        ) {
-            go.selectTab(.play)
-        }
-    }
-
-    var resultScreens: BuildNote {
-        BuildNote(
-            commit: "39779839",
-            title: "One results screen for every game",
-            howToTest: """
-                Finish a quiz, Speed Run, Daily Challenge, Map Puzzle, Pin Drop, and a two-player game: each \
-                shows the same title, gold XP badge, stat tiles, and Done beside the main action.
-                """,
-            systemImage: "flag.checkered",
+            systemImage: "tray",
             color: DesignSystem.Color.blue
         ) {
-            go.open(.quiz)
+            go.open(.timeline)
         }
     }
 
-    var speedRunXP: BuildNote {
+    var countryLists: BuildNote {
         BuildNote(
-            commit: "0d3c6926",
-            title: "No XP for giving up a Speed Run",
+            commit: "4ec35d45",
+            title: "Countries listed in one card",
             howToTest: """
-                Start a Speed Run and give up at once: +0 XP and no streak day. Name some countries first and \
-                the XP matches how many.
+                Travel, an organization's members, a continent's countries, and Speed Run's missed list show \
+                one card with dividers instead of a card per country. Long lists scroll smoothly.
                 """,
-            systemImage: "stopwatch.fill",
-            color: DesignSystem.Color.pink
+            systemImage: "list.bullet.rectangle",
+            color: DesignSystem.Color.teal
         ) {
-            go.open(.speedRun)
+            go.open(.travel)
         }
     }
 
-    var settingsRows: BuildNote {
+    var liquidGlass: BuildNote {
         BuildNote(
-            commit: "78dff61d",
-            title: "Sign Out asks first",
+            commit: "c2d8e35c",
+            title: "Glass only where it floats",
             howToTest: """
-                Sign Out and Delete Account are red in Settings and Profile, and both ask before acting. \
-                Territorial Disputes and Storage share one red Reset button.
+                The timeline slider, map headers, and achievement banner are Liquid Glass; Leaderboards and \
+                the multiplayer lobby use plain cards. Stats everywhere use the same tile.
                 """,
-            systemImage: "rectangle.portrait.and.arrow.right",
-            color: DesignSystem.Color.destructive
-        ) {
-            go.open(.settings)
-        }
-    }
-
-    var profileFixes: BuildNote {
-        BuildNote(
-            commit: "78dff61d",
-            title: "Profile counts explored countries",
-            howToTest: """
-                Profile's Explored stat matches the Profile tab, achievement names no longer cut off, and \
-                Recent Quizzes is one card.
-                """,
-            systemImage: "person.crop.circle.fill",
+            systemImage: "square.on.square",
             color: DesignSystem.Color.indigo
         ) {
-            go.selectTab(.profile)
+            go.open(.timeline)
+        }
+    }
+
+    var forms: BuildNote {
+        BuildNote(
+            commit: "18ad2101",
+            title: "One text field and a checkmark to save",
+            howToTest: """
+                Add a travel journal entry: title and notes share one field style, and Save is the checkmark \
+                at the top, greyed until a country is chosen.
+                """,
+            systemImage: "square.and.pencil",
+            color: DesignSystem.Color.purple
+        ) {
+            go.open(.travel)
+        }
+    }
+
+    var achievementCount: BuildNote {
+        BuildNote(
+            commit: "395505bd",
+            title: "Achievement counts agree",
+            howToTest: """
+                Profile's achievement count matches the Unlocked tile on the Achievements screen.
+                """,
+            systemImage: "trophy.fill",
+            color: DesignSystem.Color.warning
+        ) {
+            go.open(.achievements)
+        }
+    }
+
+    var tabsInBar: BuildNote {
+        BuildNote(
+            commit: "232ed46c",
+            title: "Tabs in the bar",
+            howToTest: """
+                World Facts and Time Zones switch tabs from the navigation bar, like Explore. Pin Drop and \
+                Map Puzzle pick regions with the same tiles as the quiz.
+                """,
+            systemImage: "rectangle.split.3x1",
+            color: DesignSystem.Color.pink
+        ) {
+            go.open(.worldFacts)
         }
     }
 }
