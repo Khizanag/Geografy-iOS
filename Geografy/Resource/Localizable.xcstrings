@@ -1726,6 +1726,10 @@
         }
       }
     },
+    "Add a note…" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Add items from country details, oceans, languages, and more." : {
       "localizations" : {
         "ka" : {
@@ -2191,7 +2195,8 @@
     },
     "Avg Depth" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Avg GDP per Capita" : {
       "extractionState" : "manual",
@@ -2219,7 +2224,8 @@
     },
     "Avg. Think Time" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Back" : {
       "extractionState" : "manual",
@@ -4771,7 +4777,8 @@
     },
     "Flight time" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Flip card" : {
       "extractionState" : "manual",
@@ -4787,7 +4794,8 @@
     },
     "Found" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Found, %@" : {
       "extractionState" : "manual",
@@ -5190,7 +5198,8 @@
     },
     "Heading" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Heading %@, %lld degrees" : {
       "extractionState" : "manual",
@@ -6397,7 +6406,8 @@
     },
     "Max Depth" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Maximum level reached!" : {
       "extractionState" : "manual",
@@ -7426,7 +7436,8 @@
     },
     "Of the equator" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "On a country, tap Continent, then Open … Map: the map zooms to that country and selects it." : {},
     "One of you hosts and picks the quiz. The other joins from their phone." : {
@@ -9043,7 +9054,8 @@
     },
     "Revealed" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Revealed, %@" : {
       "extractionState" : "manual",
@@ -11926,6 +11938,10 @@
       }
     },
     "What changed since the last build, and how to try it. Tap a change to go where it is." : {},
+    "What happened on this trip?" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "What is the capital?" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

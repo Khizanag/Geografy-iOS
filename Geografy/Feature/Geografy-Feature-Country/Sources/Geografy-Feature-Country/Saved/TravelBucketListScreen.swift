@@ -434,17 +434,7 @@ private extension BucketListCountryDetailView {
     var noteSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Notes")
-            CardView {
-                TextField(
-                    "Add a note...",
-                    text: $note,
-                    axis: .vertical
-                )
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .lineLimit(4...8)
-                .padding(DesignSystem.Spacing.sm)
-            }
+            FormField("Add a note…", text: $note, lineLimit: 4...8)
         }
     }
 }

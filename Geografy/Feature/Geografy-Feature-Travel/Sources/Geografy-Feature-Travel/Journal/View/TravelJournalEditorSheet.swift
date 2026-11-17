@@ -89,17 +89,9 @@ private extension TravelJournalEditorSheet {
     }
 
     var saveButton: some View {
-        Button {
+        Button("Save", systemImage: "checkmark", role: .confirm) {
             hapticsService.notification(.success)
             saveEntry()
-        } label: {
-            Text("Save")
-                .font(DesignSystem.Font.headline)
-                .foregroundStyle(
-                    canSave
-                        ? DesignSystem.Color.accent
-                        : DesignSystem.Color.textSecondary
-                )
         }
         .disabled(!canSave)
     }

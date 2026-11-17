@@ -66,13 +66,7 @@ extension TravelJournalEditorSheet {
             spacing: DesignSystem.Spacing.xs
         ) {
             SectionHeaderView(title: "Title", icon: "pencil")
-            CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-                TextField("Trip title", text: $title)
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .tint(DesignSystem.Color.accent)
-                    .padding(DesignSystem.Spacing.sm)
-            }
+            FormField("Trip title", text: $title)
         }
     }
 
@@ -176,15 +170,7 @@ extension TravelJournalEditorSheet {
     }
 
     var notesEditor: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
-            TextEditor(text: $notes)
-                .font(DesignSystem.Font.body)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .tint(DesignSystem.Color.accent)
-                .scrollContentBackground(.hidden)
-                .frame(minHeight: 120)
-                .padding(DesignSystem.Spacing.sm)
-        }
+        FormField("What happened on this trip?", text: $notes, lineLimit: 5...12)
     }
 
     var photosSection: some View {

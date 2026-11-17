@@ -130,18 +130,7 @@ private extension CustomQuizBuilderScreen {
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
 
-            TextField("e.g. European Capitals", text: $quizName)
-                .font(DesignSystem.Font.body)
-                .padding(DesignSystem.Spacing.sm)
-                .background(DesignSystem.Color.cardBackground)
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                        .strokeBorder(
-                            nameValidationColor,
-                            lineWidth: 1,
-                        )
-                )
+            FormField("e.g. European Capitals", text: $quizName, isInvalid: isDuplicateName)
 
             if isDuplicateName {
                 Text("A quiz with this name already exists")
@@ -365,16 +354,6 @@ private extension CustomQuizBuilderScreen {
             Text(subtitle)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-    }
-
-    var nameValidationColor: Color {
-        if quizName.isEmpty {
-            DesignSystem.Color.cardBackgroundHighlighted
-        } else if isDuplicateName {
-            DesignSystem.Color.error
-        } else {
-            DesignSystem.Color.accent.opacity(0.5)
         }
     }
 
