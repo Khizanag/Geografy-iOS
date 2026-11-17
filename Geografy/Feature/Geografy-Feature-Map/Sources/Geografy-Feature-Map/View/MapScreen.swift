@@ -133,6 +133,11 @@ private extension MapScreen {
 
     var isWorldMap: Bool { continentFilter == nil }
 
+    /// The continent shown, when it's one Map Puzzle can be played on.
+    var filteredContinent: Country.Continent? {
+        Country.Continent.allCases.first { $0.displayName == continentFilter && $0 != .antarctica }
+    }
+
     /// Whether the world repeats sideways. Only a rectangular world can: Equal Earth's curved edges can't meet.
     var wrapsWorld: Bool { isWorldMap && projection == MapProjectionKind.mercator.rawValue }
 
@@ -220,6 +225,13 @@ private extension MapScreen {
                 Label("Map Colors", systemImage: "paintpalette")
             }
             .pickerStyle(.menu)
+        }
+        if let continent = filteredContinent {
+            ToolbarItem(placement: .secondaryAction) {
+                Button("Play Map Puzzle", systemImage: "puzzlepiece") {
+                    coordinator.push(PlayRoute.mapPuzzleGame(continent: continent))
+                }
+            }
         }
         ToolbarItem(placement: .secondaryAction) {
             Toggle(isOn: $showsVisitedCountries) {

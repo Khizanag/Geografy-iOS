@@ -4,7 +4,6 @@ Open tasks only. Completed work is in git history; the plan for the next phases 
 
 ## Features
 
-- [ ] Country-on-map quiz: highlight a country, name it (audit phase 6)
 - [ ] Physical map type with terrain and elevation
 - [ ] Reorder quiz: drag countries into order by population or area
 - [ ] Game Center friends

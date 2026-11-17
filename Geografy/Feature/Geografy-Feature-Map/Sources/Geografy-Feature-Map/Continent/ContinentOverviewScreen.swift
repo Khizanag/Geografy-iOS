@@ -36,6 +36,13 @@ public struct ContinentOverviewScreen: View {
                             .foregroundStyle(DesignSystem.Color.iconPrimary)
                     }
                 }
+                if continent != .antarctica {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button("Play Map Puzzle", systemImage: "puzzlepiece.fill") {
+                            coordinator.push(PlayRoute.mapPuzzleGame(continent: continent))
+                        }
+                    }
+                }
             }
     }
 }

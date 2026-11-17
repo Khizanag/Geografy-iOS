@@ -6468,7 +6468,8 @@
     },
     "Missed Answers" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Missed Countries" : {
       "extractionState" : "manual",
@@ -8115,6 +8116,10 @@
         }
       }
     },
+    "Play Map Puzzle" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Play Nearby" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9140,7 +9145,8 @@
     },
     "Review %lld Missed" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Review Streak" : {
       "extractionState" : "manual",
