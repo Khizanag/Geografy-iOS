@@ -113,15 +113,11 @@ private extension GameCenterService {
     func enqueue(_ item: PendingSubmission) {
         var queue = loadQueue()
         queue.append(item)
-        guard let data = try? JSONEncoder().encode(queue) else { return }
-        UserDefaults.standard.set(data, forKey: pendingKey)
+        UserDefaults.standard.setEncoded(queue, forKey: pendingKey)
     }
 
     func loadQueue() -> [PendingSubmission] {
-        guard let data = UserDefaults.standard.data(forKey: pendingKey),
-              let items = try? JSONDecoder().decode([PendingSubmission].self, from: data)
-        else { return [] }
-        return items
+        UserDefaults.standard.decoded([PendingSubmission].self, forKey: pendingKey) ?? []
     }
 
     func clearQueue() {

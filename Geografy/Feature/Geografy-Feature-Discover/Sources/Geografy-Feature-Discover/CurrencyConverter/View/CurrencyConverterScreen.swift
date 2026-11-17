@@ -188,21 +188,21 @@ private extension CurrencyConverterScreen {
 
     func clearRecents() {
         recentPairs = []
-        CurrencyRecents.save(recentPairs)
+        CurrencyRecents.list().save(recentPairs)
     }
 }
 
 // MARK: - Recents
 private extension CurrencyConverterScreen {
     func loadRecents() {
-        recentPairs = CurrencyRecents.load()
+        recentPairs = CurrencyRecents.list().load()
     }
 
     func saveIfBothSelected() {
         guard let fromCurrency, let toCurrency else { return }
         let pair = CurrencyPair(fromCode: fromCurrency.code, toCode: toCurrency.code)
-        recentPairs = CurrencyRecents.inserting(pair, into: recentPairs)
-        CurrencyRecents.save(recentPairs)
+        recentPairs = CurrencyRecents.list().adding(pair, to: recentPairs)
+        CurrencyRecents.list().save(recentPairs)
     }
 }
 

@@ -20,7 +20,10 @@ public struct CompareScreen: View {
     private let preselectedCountry: Country?
 
     private static let recentLimit = 5
-    private static let recentStorageKey = "compare_recent_pairs"
+    /// The same two countries in either order count as one entry.
+    private static let recents = RecentList<ComparisonPair>(storageKey: "compare_recent_pairs", limit: recentLimit) {
+        $0.matches($1)
+    }
 
     // MARK: - Init
     public init(preselectedCountry: Country? = nil) {
@@ -190,23 +193,15 @@ private extension CompareScreen {
 private extension CompareScreen {
     func saveIfBothSelected() {
         guard let leftCountry, let rightCountry else { return }
-        let pair = ComparisonPair(left: leftCountry, right: rightCountry)
-        recentPairs.removeAll { $0.matches(pair) }
-        recentPairs.insert(pair, at: 0)
-        recentPairs = Array(recentPairs.prefix(Self.recentLimit))
+        recentPairs = Self.recents.adding(ComparisonPair(left: leftCountry, right: rightCountry), to: recentPairs)
         saveRecentPairs()
     }
 
     func saveRecentPairs() {
-        guard let data = try? JSONEncoder().encode(recentPairs) else { return }
-        UserDefaults.standard.set(data, forKey: UserScope.key(Self.recentStorageKey))
+        Self.recents.save(recentPairs)
     }
 
     func loadRecentPairs() {
-        guard let data = UserDefaults.standard.data(forKey: UserScope.key(Self.recentStorageKey)),
-              let decoded = try? JSONDecoder().decode([ComparisonPair].self, from: data) else {
-            return
-        }
-        recentPairs = decoded
+        recentPairs = Self.recents.load()
     }
 }

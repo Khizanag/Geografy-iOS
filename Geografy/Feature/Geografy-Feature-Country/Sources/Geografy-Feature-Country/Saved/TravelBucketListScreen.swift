@@ -241,25 +241,20 @@ private extension TravelBucketListScreen {
     }
 
     func loadPersistedData() {
-        if let priorityData = UserDefaults.standard.data(forKey: UserScope.key(prioritiesKey)),
-           let decoded = try? JSONDecoder().decode([String: String].self, from: priorityData) {
+        if let decoded = UserDefaults.standard.decoded([String: String].self, forKey: UserScope.key(prioritiesKey)) {
             priorities = decoded.compactMapValues { BucketListPriority(rawValue: $0) }
         }
-        if let notesData = UserDefaults.standard.data(forKey: UserScope.key(notesKey)),
-           let decoded = try? JSONDecoder().decode([String: String].self, from: notesData) {
+        if let decoded = UserDefaults.standard.decoded([String: String].self, forKey: UserScope.key(notesKey)) {
             notes = decoded
         }
     }
 
     func persistPriorities() {
-        let raw = priorities.mapValues(\.rawValue)
-        guard let data = try? JSONEncoder().encode(raw) else { return }
-        UserDefaults.standard.set(data, forKey: UserScope.key(prioritiesKey))
+        UserDefaults.standard.setEncoded(priorities.mapValues(\.rawValue), forKey: UserScope.key(prioritiesKey))
     }
 
     func persistNotes() {
-        guard let data = try? JSONEncoder().encode(notes) else { return }
-        UserDefaults.standard.set(data, forKey: UserScope.key(notesKey))
+        UserDefaults.standard.setEncoded(notes, forKey: UserScope.key(notesKey))
     }
 
     func shareableText(_ countries: [Country]) -> String {

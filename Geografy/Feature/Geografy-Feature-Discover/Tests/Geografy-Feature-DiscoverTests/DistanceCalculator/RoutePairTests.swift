@@ -1,3 +1,4 @@
+import Geografy_Core_Common
 @testable import Geografy_Feature_Discover
 import Testing
 
@@ -14,33 +15,21 @@ struct RoutePairTests {
 
     @Test("A new route goes to the front")
     func newRouteFirst() {
-        let recents = RoutePair.recents(
-            [Self.route("GB", "US")],
-            adding: Self.route("JP", "AU"),
-            limit: 5
-        )
+        let recents = Self.recents(limit: 5).adding(Self.route("JP", "AU"), to: [Self.route("GB", "US")])
 
         #expect(recents.map(\.id) == ["JP-AU", "GB-US"])
     }
 
     @Test("A repeated route moves to the front in its newest direction")
     func repeatedRouteMoves() {
-        let recents = RoutePair.recents(
-            [Self.route("GB", "US"), Self.route("JP", "AU")],
-            adding: Self.route("AU", "JP"),
-            limit: 5
-        )
+        let recents = Self.recents(limit: 5).adding(Self.route("AU", "JP"), to: [Self.route("GB", "US"), Self.route("JP", "AU")])
 
         #expect(recents.map(\.id) == ["AU-JP", "GB-US"])
     }
 
     @Test("Only the newest routes up to the limit are kept")
     func keepsLimit() {
-        let recents = RoutePair.recents(
-            [Self.route("GB", "US"), Self.route("JP", "AU"), Self.route("FR", "DE")],
-            adding: Self.route("BR", "PT"),
-            limit: 3
-        )
+        let recents = Self.recents(limit: 3).adding(Self.route("BR", "PT"), to: [Self.route("GB", "US"), Self.route("JP", "AU"), Self.route("FR", "DE")])
 
         #expect(recents.map(\.id) == ["BR-PT", "GB-US", "JP-AU"])
     }
@@ -48,6 +37,10 @@ struct RoutePairTests {
 
 // MARK: - Fixtures
 private extension RoutePairTests {
+    static func recents(limit: Int) -> RecentList<RoutePair> {
+        RecentList(storageKey: "routes", limit: limit) { $0.matches($1) }
+    }
+
     static func route(_ originCode: String, _ destinationCode: String) -> RoutePair {
         RoutePair(originCode: originCode, destinationCode: destinationCode)
     }

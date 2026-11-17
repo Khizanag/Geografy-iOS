@@ -279,8 +279,7 @@ extension AchievementService {
         if let cachedProgress, cachedProgressKey == key {
             return cachedProgress
         }
-        let decoded = UserDefaults.standard.data(forKey: key)
-            .flatMap { try? JSONDecoder().decode([String: AchievementProgress].self, from: $0) } ?? [:]
+        let decoded = UserDefaults.standard.decoded([String: AchievementProgress].self, forKey: key) ?? [:]
         cachedProgress = decoded
         cachedProgressKey = key
         return decoded
@@ -290,8 +289,7 @@ extension AchievementService {
         let key = progressKey
         cachedProgress = progress
         cachedProgressKey = key
-        guard let data = try? JSONEncoder().encode(progress) else { return }
-        UserDefaults.standard.set(data, forKey: key)
+        UserDefaults.standard.setEncoded(progress, forKey: key)
     }
 
     public func loadPinnedIDs() {

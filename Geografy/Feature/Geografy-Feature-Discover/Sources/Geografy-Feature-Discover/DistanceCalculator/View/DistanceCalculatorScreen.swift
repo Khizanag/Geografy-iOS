@@ -19,7 +19,10 @@ public struct DistanceCalculatorScreen: View {
     @State private var recentRoutes: [RoutePair] = []
 
     private static let recentLimit = 5
-    private static let recentStorageKey = "distance_recent_routes"
+    /// A route and its reverse count as one entry.
+    private static let recents = RecentList<RoutePair>(storageKey: "distance_recent_routes", limit: recentLimit) {
+        $0.matches($1)
+    }
 
     // MARK: - Init
     public init() {}
@@ -184,7 +187,7 @@ private extension DistanceCalculatorScreen {
 
     func routeDidChange() {
         guard let route = currentRoute else { return }
-        recentRoutes = RoutePair.recents(recentRoutes, adding: route.pair, limit: Self.recentLimit)
+        recentRoutes = Self.recents.adding(route.pair, to: recentRoutes)
         saveRecentRoutes()
         announce(route)
     }
@@ -221,15 +224,10 @@ private extension DistanceCalculatorScreen {
 // MARK: - Recents
 private extension DistanceCalculatorScreen {
     func saveRecentRoutes() {
-        guard let data = try? JSONEncoder().encode(recentRoutes) else { return }
-        UserDefaults.standard.set(data, forKey: UserScope.key(Self.recentStorageKey))
+        Self.recents.save(recentRoutes)
     }
 
     func loadRecentRoutes() {
-        guard let data = UserDefaults.standard.data(forKey: UserScope.key(Self.recentStorageKey)),
-              let decoded = try? JSONDecoder().decode([RoutePair].self, from: data) else {
-            return
-        }
-        recentRoutes = decoded
+        recentRoutes = Self.recents.load()
     }
 }

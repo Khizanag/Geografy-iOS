@@ -45,13 +45,11 @@ private extension TravelService {
     }
 
     func persist() {
-        guard let data = try? JSONEncoder().encode(entries) else { return }
-        UserDefaults.standard.set(data, forKey: UserScope.key(storageKey))
+        UserDefaults.standard.setEncoded(entries, forKey: UserScope.key(storageKey))
     }
 
     static func loadEntries(storageKey: String) -> [String: TravelStatus] {
-        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
-              let raw = try? JSONDecoder().decode([String: String].self, from: data) else {
+        guard let raw = UserDefaults.standard.decoded([String: String].self, forKey: UserScope.key(storageKey)) else {
             return [:]
         }
         return raw.compactMapValues { TravelStatus(rawValue: $0) }

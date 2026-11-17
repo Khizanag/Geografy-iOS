@@ -21,12 +21,3 @@ struct RoutePair: Identifiable, Codable, Equatable {
         Set([originCode, destinationCode]) == Set([other.originCode, other.destinationCode])
     }
 }
-
-// MARK: - Recents
-extension RoutePair {
-    /// `routes` with `route` moved to the front, its reverse dropped, and at most `limit` kept.
-    static func recents(_ routes: [RoutePair], adding route: RoutePair, limit: Int) -> [RoutePair] {
-        let others = routes.filter { !$0.matches(route) }
-        return Array(([route] + others).prefix(limit))
-    }
-}

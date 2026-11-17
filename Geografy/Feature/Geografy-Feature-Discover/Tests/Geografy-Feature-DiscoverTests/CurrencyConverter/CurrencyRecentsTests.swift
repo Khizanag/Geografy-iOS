@@ -10,14 +10,14 @@ struct CurrencyRecentsTests {
 
     @Test("A new pair goes first")
     func insertsFirst() {
-        let recents = CurrencyRecents.inserting(Self.gbpJpy, into: [Self.usdEur])
+        let recents = CurrencyRecents.list().adding(Self.gbpJpy, to: [Self.usdEur])
 
         #expect(recents == [Self.gbpJpy, Self.usdEur])
     }
 
     @Test("The same currencies in the other direction replace the older entry")
     func replacesReversedPair() {
-        let recents = CurrencyRecents.inserting(Self.eurUsd, into: [Self.gbpJpy, Self.usdEur])
+        let recents = CurrencyRecents.list().adding(Self.eurUsd, to: [Self.gbpJpy, Self.usdEur])
 
         #expect(recents == [Self.eurUsd, Self.gbpJpy])
     }
@@ -25,8 +25,9 @@ struct CurrencyRecentsTests {
     @Test("The list keeps only the newest pairs")
     func keepsLimit() {
         let codes = ["AUD", "CAD", "CHF", "CNY", "GBP", "JPY"]
+        let list = CurrencyRecents.list(limit: 3)
         let recents = codes.reduce(into: [CurrencyPair]()) { recents, code in
-            recents = CurrencyRecents.inserting(CurrencyPair(fromCode: "USD", toCode: code), into: recents, limit: 3)
+            recents = list.adding(CurrencyPair(fromCode: "USD", toCode: code), to: recents)
         }
 
         #expect(recents.map(\.toCode) == ["JPY", "GBP", "CNY"])
@@ -38,10 +39,12 @@ struct CurrencyRecentsTests {
         let defaults = try #require(UserDefaults(suiteName: suiteName))
         defer { defaults.removePersistentDomain(forName: suiteName) }
 
-        CurrencyRecents.save([Self.gbpJpy, Self.usdEur], to: defaults, key: "recents")
+        let list = CurrencyRecents.list(defaults: defaults)
+        #expect(list.load().isEmpty)
 
-        #expect(CurrencyRecents.load(from: defaults, key: "recents") == [Self.gbpJpy, Self.usdEur])
-        #expect(CurrencyRecents.load(from: defaults, key: "missing").isEmpty)
+        list.save([Self.gbpJpy, Self.usdEur])
+
+        #expect(list.load() == [Self.gbpJpy, Self.usdEur])
     }
 
     @Test("Resolving drops pairs whose currencies aren't known")

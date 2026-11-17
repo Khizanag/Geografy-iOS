@@ -49,15 +49,14 @@ private extension LearningPathService {
         let encoded = progressData.map { moduleID, lessons in
             [moduleID: Dictionary(uniqueKeysWithValues: lessons)]
         }
-        if let data = try? JSONEncoder().encode(encoded) {
-            UserDefaults.standard.set(data, forKey: UserScope.key(storageKey))
-        }
+        UserDefaults.standard.setEncoded(encoded, forKey: UserScope.key(storageKey))
     }
 
     func loadProgress() {
-        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
-              let encoded = try? JSONDecoder().decode([[String: [String: Bool]]].self, from: data)
-        else { return }
+        guard let encoded = UserDefaults.standard.decoded(
+            [[String: [String: Bool]]].self,
+            forKey: UserScope.key(storageKey)
+        ) else { return }
 
         let progressMap = Dictionary(
             uniqueKeysWithValues: encoded.flatMap { $0 }

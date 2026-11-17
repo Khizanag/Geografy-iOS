@@ -9,13 +9,10 @@ public final class QuizPackService {
     public init() {}
 
     public func loadProgress() {
-        guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
-              let decoded = try? JSONDecoder().decode(
-                  [String: QuizPackProgress].self,
-                  from: data
-              ) else {
-            return
-        }
+        guard let decoded = UserDefaults.standard.decoded(
+            [String: QuizPackProgress].self,
+            forKey: UserScope.key(storageKey)
+        ) else { return }
         progressByLevel = decoded
     }
 
@@ -84,12 +81,7 @@ public final class QuizPackService {
 // MARK: - Persistence
 private extension QuizPackService {
     func saveProgress() {
-        guard let encoded = try? JSONEncoder().encode(
-            progressByLevel
-        ) else {
-            return
-        }
-        UserDefaults.standard.set(encoded, forKey: UserScope.key(storageKey))
+        UserDefaults.standard.setEncoded(progressByLevel, forKey: UserScope.key(storageKey))
     }
 }
 
