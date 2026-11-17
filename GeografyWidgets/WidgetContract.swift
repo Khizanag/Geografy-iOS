@@ -23,6 +23,20 @@ enum WidgetContract {
         static let countryOfDayDate = "widget_country_of_day_date"
     }
 
+    /// The links that open the app at a place: `geografy://country/{code}` and `geografy://daily`, plus the
+    /// tab links older widgets used.
+    enum Link {
+        static let scheme = "geografy"
+        static let countryHost = "country"
+        static let dailyHost = "daily"
+
+        static func country(_ code: String) -> URL? {
+            URL(string: "\(scheme)://\(countryHost)/\(code)")
+        }
+
+        static let daily = URL(string: "\(scheme)://\(dailyHost)")
+    }
+
     /// The country of the day as the widget shows it.
     struct CountryOfDay: Codable {
         let code: String

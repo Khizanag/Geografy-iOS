@@ -35,23 +35,6 @@ final class AppCoordinator {
         }
     }
 
-    func handleDeepLink(_ url: URL) {
-        guard url.scheme == "geografy" else { return }
-        switch url.host {
-        case "home", "countries": selectedTab = .explore
-        case "map", "maps": selectedTab = .map
-        case "quiz", "play": selectedTab = .play
-        case "more": selectedTab = .profile
-        case "streak", "profile":
-            selectedTab = .profile
-            profileNavigator.push(ProfileRoute.profile)
-        case "progress":
-            selectedTab = .profile
-            profileNavigator.push(ProfileRoute.leaderboards)
-        default: break
-        }
-    }
-
     func handle(_ request: AppRequest, countries: [Country]) {
         switch request {
         case .tab(let tab):
@@ -72,6 +55,16 @@ final class AppCoordinator {
             guard let country = countries.randomElement() else { return }
             selectedTab = .explore
             exploreNavigator.push(CountryRoute.countryDetail(country))
+        case .country(let code):
+            guard let country = countries.first(where: { $0.code == code }) else { return }
+            selectedTab = .explore
+            exploreNavigator.push(CountryRoute.countryDetail(country))
+        case .profile:
+            selectedTab = .profile
+            profileNavigator.push(ProfileRoute.profile)
+        case .leaderboards:
+            selectedTab = .profile
+            profileNavigator.push(ProfileRoute.leaderboards)
         case .firstRunFinished(let homeCountryCode):
             mapFocusCode = homeCountryCode
             handle(.dailyChallenge, countries: countries)
@@ -98,13 +91,4 @@ final class AppCoordinator {
         exploreNavigator.push(item.destination)
     }
     #endif
-
-    @MainActor
-    func handleSpotlightActivity(_ identifier: String, countryDataService: CountryDataService) {
-        guard identifier.hasPrefix("country-") else { return }
-        let code = String(identifier.dropFirst("country-".count))
-        guard let country = countryDataService.country(for: code) else { return }
-        selectedTab = .explore
-        exploreNavigator.push(CountryRoute.countryDetail(country))
-    }
 }

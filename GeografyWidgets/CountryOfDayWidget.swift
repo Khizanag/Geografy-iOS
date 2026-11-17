@@ -88,7 +88,7 @@ private extension CountryOfDayWidgetView {
         .containerBackground(for: .widget) {
             Color(.systemBackground)
         }
-        .widgetURL(URL(string: "geografy://home"))
+        .widgetURL(WidgetContract.Link.country(entry.countryCode))
     }
 
     var smallViewHeader: some View {
@@ -149,7 +149,7 @@ private extension CountryOfDayWidgetView {
         .containerBackground(for: .widget) {
             AccessoryWidgetBackground()
         }
-        .widgetURL(URL(string: "geografy://home"))
+        .widgetURL(WidgetContract.Link.country(entry.countryCode))
     }
 
     var rectangularView: some View {
@@ -184,7 +184,7 @@ private extension CountryOfDayWidgetView {
         .containerBackground(for: .widget) {
             AccessoryWidgetBackground()
         }
-        .widgetURL(URL(string: "geografy://home"))
+        .widgetURL(WidgetContract.Link.country(entry.countryCode))
     }
 }
 

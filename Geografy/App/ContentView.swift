@@ -45,12 +45,11 @@ struct ContentView: View {
                 if currentBannerAchievement == nil { showNextBanner() }
             }
             // Initially too: a Shortcut that launched the app sent its request before this view existed.
-            .onChange(of: AppRequests.shared.pending, initial: true) {
-                if let request = AppRequests.shared.take() {
-                    appCoordinator.handle(request, countries: countryDataService.countries)
-                }
+            .onChange(of: AppRequests.shared.pending, initial: true) { handlePendingRequest() }
+            .onChange(of: countryDataService.countries.isEmpty) { handlePendingRequest() }
+            .onOpenURL { url in
+                if let request = AppRequest(url: url) { AppRequests.shared.send(request) }
             }
-            .onOpenURL { appCoordinator.handleDeepLink($0) }
             #if DEBUG
             .task { appCoordinator.openHubItemFromLaunchArguments() }
             .testingLab(
@@ -61,19 +60,14 @@ struct ContentView: View {
             )
             #endif
             .onContinueUserActivity(CSSearchableItemActionType) { activity in
-                if let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
-                    appCoordinator.handleSpotlightActivity(
-                        identifier,
-                        countryDataService: countryDataService
-                    )
+                if let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
+                   identifier.hasPrefix("country-") {
+                    AppRequests.shared.send(.country(code: String(identifier.dropFirst("country-".count))))
                 }
             }
             .onContinueUserActivity("com.khizanag.geografy.viewCountry") { activity in
                 if let code = activity.userInfo?["countryCode"] as? String {
-                    appCoordinator.handleSpotlightActivity(
-                        "country-\(code)",
-                        countryDataService: countryDataService
-                    )
+                    AppRequests.shared.send(.country(code: code))
                 }
             }
     }
@@ -164,6 +158,18 @@ private extension ContentView {
     }
 }
 #endif
+
+// MARK: - Requests
+private extension ContentView {
+    /// Handles what a Shortcut, link, or notification asked for; one that needs countries waits until they load.
+    func handlePendingRequest() {
+        guard let request = AppRequests.shared.pending else { return }
+        let countries = countryDataService.countries
+        guard !request.needsCountries || !countries.isEmpty else { return }
+        _ = AppRequests.shared.take()
+        appCoordinator.handle(request, countries: countries)
+    }
+}
 
 // MARK: - First Run
 private extension ContentView {
