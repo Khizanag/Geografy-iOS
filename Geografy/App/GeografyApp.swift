@@ -145,6 +145,8 @@ private extension GeografyApp {
         await NotificationService.syncReminders(
             enabled: UserDefaults.standard.bool(forKey: NotificationService.preferenceKey)
         )
+        // Waits for the countries: launch tasks race their load, and indexing none would never be retried.
+        await dependencies.countryDataService.loadCountries()
         SpotlightIndexer.indexCountriesIfNeeded(dependencies.countryDataService.countries)
         #endif
     }

@@ -7,7 +7,7 @@ public enum SpotlightIndexer {
 
     public static func indexCountriesIfNeeded(_ countries: [Country]) {
         let previousCount = UserDefaults.standard.integer(forKey: indexedCountKey)
-        guard previousCount != countries.count else { return }
+        guard !countries.isEmpty, previousCount != countries.count else { return }
         indexCountries(countries)
     }
 
