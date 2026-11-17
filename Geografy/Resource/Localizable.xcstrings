@@ -3482,6 +3482,7 @@
         }
       }
     },
+    "Daily Challenge, Pin Drop, Map Puzzle, Flashcards, lessons, and Word Search now earn XP: watch Total XP below rise after each. Only the first 25 visited countries pay travel XP." : {},
     "Daily reminders" : {},
     "Dark" : {
       "comment" : "A theme option in the settings menu.",
@@ -9038,6 +9039,7 @@
         }
       }
     },
+    "Review shows at most 10 new cards a day, biggest countries first, plus any reviewed cards that are due." : {},
     "Reviewed" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9670,6 +9672,7 @@
       }
     },
     "Set Streak" : {},
+    "Set Streak to No streak below, then reopen the app: it stays at 0. Finish any quiz, game, lesson, or review: Profile shows 1." : {},
     "Set travel status" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10151,6 +10154,7 @@
         }
       }
     },
+    "Smarter reminders" : {},
     "So Close!" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10568,6 +10572,7 @@
         }
       }
     },
+    "Streak counts learning" : {},
     "Submit" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10817,6 +10822,7 @@
         }
       }
     },
+    "Ten new flashcards a day" : {},
     "Terms of Service" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11961,6 +11967,7 @@
         }
       }
     },
+    "With reminders on in Settings, none come on a day you've already played. Tapping the 9:00 one opens today's challenge; the 19:00 one opens Play." : {},
     "Word Search" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -12041,6 +12048,7 @@
         }
       }
     },
+    "XP for every game" : {},
     "Year" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
