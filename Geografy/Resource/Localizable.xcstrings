@@ -912,6 +912,18 @@
         }
       }
     },
+    "%lld of %lld countries mastered" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld countries mastered"
+          }
+        }
+      }
+    },
     "%lld of %lld lessons" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -944,6 +956,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld %2$lld დონიდან, %3$lld %4$lld ვარსკვლავიდან"
+          }
+        }
+      }
+    },
+    "%lld of %lld mastered" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld mastered"
           }
         }
       }
@@ -4507,6 +4531,10 @@
         }
       }
     },
+    "Familiar" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Famous for: %@" : {
       "localizations" : {
         "ka" : {
@@ -5893,6 +5921,10 @@
       }
     },
     "Learn the world, one flag at a time." : {},
+    "Learning" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Learning Path" : {
       "localizations" : {
         "ka" : {
@@ -6360,6 +6392,14 @@
           }
         }
       }
+    },
+    "Mastered" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
+    "Mastery" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Match" : {
       "extractionState" : "manual",
@@ -7347,6 +7387,10 @@
         }
       }
     },
+    "Not Seen" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Not found" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8118,7 +8162,8 @@
     },
     "Play Map Puzzle" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Play Nearby" : {
       "extractionState" : "manual",

@@ -45,6 +45,8 @@ private extension SRSStudyScreen {
                 } else {
                     dueCountriesSection
                 }
+
+                KnowledgeMapSection()
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
             .padding(.top, DesignSystem.Spacing.lg)

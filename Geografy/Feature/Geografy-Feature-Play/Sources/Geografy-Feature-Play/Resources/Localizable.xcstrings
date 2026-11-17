@@ -278,6 +278,16 @@
         }
       }
     },
+    "%lld of %lld countries mastered" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld countries mastered"
+          }
+        }
+      }
+    },
     "%lld of %lld lessons" : {
       "localizations" : {
         "en" : {
@@ -306,6 +316,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld %2$lld დონიდან, %3$lld %4$lld ვარსკვლავიდან"
+          }
+        }
+      }
+    },
+    "%lld of %lld mastered" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld mastered"
           }
         }
       }
@@ -1385,6 +1405,9 @@
         }
       }
     },
+    "Familiar" : {
+
+    },
     "Find" : {
       "localizations" : {
         "ka" : {
@@ -1799,6 +1822,9 @@
         }
       }
     },
+    "Learning" : {
+
+    },
     "Learning Path" : {
       "localizations" : {
         "ka" : {
@@ -1964,6 +1990,12 @@
           }
         }
       }
+    },
+    "Mastered" : {
+
+    },
+    "Mastery" : {
+
     },
     "Match History" : {
       "extractionState" : "stale",
@@ -2328,6 +2360,9 @@
           }
         }
       }
+    },
+    "Not Seen" : {
+
     },
     "Not found" : {
       "localizations" : {

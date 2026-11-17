@@ -63,6 +63,14 @@ public final class FlashcardService {
         }
     }
 
+    /// How well the country is known, from its best card of any kind.
+    public func knowledge(of countryCode: String) -> CountryKnowledge {
+        let repetitions = FlashcardType.allCases.compactMap {
+            spacedRepetitionStore[FlashcardItem.id(countryCode: countryCode, type: $0)]?.repetitions
+        }
+        return CountryKnowledge(repetitions: repetitions.max())
+    }
+
     /// Writes reviews still waiting on the save delay; call when a session ends.
     public func persistPendingChanges() {
         guard let pendingSave else { return }

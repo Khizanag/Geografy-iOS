@@ -48,5 +48,25 @@ extension UserScopedTests {
             #expect(FlashcardType(quizType: .reverseCapital) == .capitalToCountry)
             #expect(FlashcardType(quizType: .neighbors) == nil)
         }
+
+        @Test("A country's level rises with right answers in a row on any of its cards")
+        func knowledgeLevels() {
+            let service = FlashcardTestFixtures.makeService(userID: UUID().uuidString)
+            #expect(service.knowledge(of: "FR") == .unseen)
+
+            service.recordGameAnswer(countryCode: "FR", type: .flagToCountry, isCorrect: false)
+            #expect(service.knowledge(of: "FR") == .learning)
+
+            let capitalCard = FlashcardItem.id(countryCode: "FR", type: .countryToCapital)
+            for _ in 0..<CountryKnowledge.familiarStreak {
+                service.recordReview(cardID: capitalCard, result: .good)
+            }
+            #expect(service.knowledge(of: "FR") == .familiar)
+
+            for _ in CountryKnowledge.familiarStreak..<CountryKnowledge.knownStreak {
+                service.recordReview(cardID: capitalCard, result: .good)
+            }
+            #expect(service.knowledge(of: "FR") == .known)
+        }
     }
 }

@@ -19,12 +19,21 @@ public struct ContinentOutlineView: View {
     let outline: ContinentOutline
     let fill: Color
     var highlight: Highlight?
+    var countryColors: [String: Color] = [:]
 
     // MARK: - Init
-    public init(outline: ContinentOutline, fill: Color, highlight: Highlight? = nil) {
+    /// - Parameter countryColors: Fills for any number of countries, such as each one's mastery; the rest take
+    ///   `fill`.
+    public init(
+        outline: ContinentOutline,
+        fill: Color,
+        highlight: Highlight? = nil,
+        countryColors: [String: Color] = [:]
+    ) {
         self.outline = outline
         self.fill = fill
         self.highlight = highlight
+        self.countryColors = countryColors
     }
 
     // MARK: - Body
@@ -36,6 +45,10 @@ public struct ContinentOutlineView: View {
             mapContext.clip(to: Path(outline.viewport))
             let path = Path(outline.path)
             mapContext.fill(path, with: .color(fill))
+            for (countryCode, color) in countryColors {
+                guard let countryPath = outline.countryPaths[countryCode] else { continue }
+                mapContext.fill(Path(countryPath), with: .color(color))
+            }
 
             if let highlight, let countryPath = outline.countryPaths[highlight.countryCode] {
                 mapContext.fill(Path(countryPath), with: .color(highlight.color))
