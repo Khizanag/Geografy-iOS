@@ -2580,7 +2580,8 @@
     },
     "Challenge" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Challenge Streak" : {
       "extractionState" : "manual",

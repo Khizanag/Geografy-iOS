@@ -26,7 +26,7 @@ private extension ProfileScreen {
                 .font(DesignSystem.Font.title3)
                 .foregroundStyle(
                     streakService.currentStreak > 0
-                        ? DesignSystem.Color.error
+                        ? DesignSystem.Color.orange
                         : DesignSystem.Color.textTertiary
                 )
                 .accessibilityHidden(true)
@@ -69,7 +69,7 @@ private extension ProfileScreen {
                 .fontWeight(isToday ? .bold : .regular)
                 .foregroundStyle(
                     isToday
-                        ? DesignSystem.Color.accent
+                        ? DesignSystem.Color.orange
                         : DesignSystem.Color.textSecondary
                 )
         }
@@ -114,17 +114,17 @@ private struct WeekdayIndicator: View {
             Circle()
                 .fill(
                     isActive
-                        ? DesignSystem.Color.success.opacity(0.18)
+                        ? DesignSystem.Color.orange.opacity(0.18)
                         : DesignSystem.Color.cardBackgroundHighlighted
                 )
 
             Image(systemName: symbolName)
                 .font(isToday ? DesignSystem.Font.subheadline.bold() : DesignSystem.Font.caption.bold())
-                .foregroundStyle(isActive ? DesignSystem.Color.success : DesignSystem.Color.textSecondary)
+                .foregroundStyle(isActive ? DesignSystem.Color.orange : DesignSystem.Color.textSecondary)
 
             if isToday {
                 Circle()
-                    .strokeBorder(DesignSystem.Color.accent, lineWidth: 2)
+                    .strokeBorder(DesignSystem.Color.orange, lineWidth: 2)
             }
         }
         .frame(width: diameter, height: diameter)

@@ -67,7 +67,7 @@ private extension XPProgressBar {
                 Text("MAX")
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.warning)
             }
         }
     }
@@ -97,7 +97,7 @@ private extension XPProgressBar {
 
     var progressGradient: LinearGradient {
         LinearGradient(
-            colors: [DesignSystem.Color.accent, DesignSystem.Color.accentDark],
+            colors: [DesignSystem.Color.warning, DesignSystem.Color.orange],
             startPoint: .leading,
             endPoint: .trailing
         )

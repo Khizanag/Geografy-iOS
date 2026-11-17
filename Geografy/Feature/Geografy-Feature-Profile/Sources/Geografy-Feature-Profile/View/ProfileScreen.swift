@@ -14,7 +14,7 @@ public struct ProfileScreen: View {
     @Environment(StreakService.self) var streakService
     @Environment(AchievementService.self) var achievementService
     @Environment(TravelService.self) var travelService
-    @Environment(FavoritesService.self) var favoritesService
+    @Environment(ExplorationService.self) var explorationService
     @Environment(DatabaseManager.self) var database
     @Environment(HapticsService.self) var hapticsService
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -24,6 +24,9 @@ public struct ProfileScreen: View {
     @State var quizTotals: QuizTotals?
     @State var statistics: UserStatistics?
     @State var showDeleteAlert = false
+    @State var showSignOutAlert = false
+    /// Wide enough for a two-line achievement name, growing with the text size.
+    @ScaledMetric(relativeTo: .caption2) var achievementTitleWidth: CGFloat = 84
     @State var selectedAchievement: AchievementDefinition?
 
     // MARK: - Init
@@ -36,6 +39,12 @@ public struct ProfileScreen: View {
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
+            .confirmationDialog("Sign Out", isPresented: $showSignOutAlert, titleVisibility: .visible) {
+                Button("Sign Out", role: .destructive) { authService.signOut() }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("You can sign back in anytime to restore your progress.")
+            }
             .alert("Delete Account", isPresented: $showDeleteAlert) {
                 deleteAlertActions
             } message: {
@@ -111,7 +120,7 @@ private extension ProfileScreen {
             perfectScores: totals.perfectScores,
             currentStreak: streakService.currentStreak,
             longestStreak: longestStreak,
-            countriesExplored: favoritesService.favoriteCodes.count,
+            countriesExplored: explorationService.exploredCountryCodes.count,
             countriesVisited: travelService.visitedCodes.count,
             totalXP: xpService.totalXP,
             memberSince: authService.currentProfile?.createdAt ?? .now

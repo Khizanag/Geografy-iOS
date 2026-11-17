@@ -34,13 +34,13 @@ private extension ProfileScreen {
             value: "\(statistics?.perfectScores ?? 0)",
             label: "Perfect",
             icon: "checkmark.seal.fill",
-            color: DesignSystem.Color.accent
+            color: DesignSystem.Color.success
         )
         StatTile(
             value: "\(statistics?.longestStreak ?? 0)",
             label: "Best Streak",
             icon: "flame.fill",
-            color: DesignSystem.Color.error
+            color: DesignSystem.Color.orange
         )
         StatTile(
             value: "\(statistics?.totalQuizzes ?? 0)",

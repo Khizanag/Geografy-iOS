@@ -32,7 +32,7 @@ private extension ProfileScreen {
                 .trim(from: 0, to: xpService.progressFraction)
                 .stroke(
                     LinearGradient(
-                        colors: [DesignSystem.Color.accent, DesignSystem.Color.indigo],
+                        colors: [DesignSystem.Color.warning, DesignSystem.Color.orange],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
@@ -67,7 +67,7 @@ private extension ProfileScreen {
             } else {
                 Text("Maximum level reached!")
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.accent)
+                    .foregroundStyle(DesignSystem.Color.warning)
             }
         }
     }
@@ -76,7 +76,7 @@ private extension ProfileScreen {
         VStack(spacing: 2) {
             Text("\(xpService.totalXP)")
                 .font(DesignSystem.Font.roundedSmall)
-                .foregroundStyle(DesignSystem.Color.accent)
+                .foregroundStyle(DesignSystem.Color.warning)
             Text("Total XP")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)

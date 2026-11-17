@@ -8,10 +8,11 @@ extension ProfileScreen {
     public var quizHistorySection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Recent Quizzes")
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(recentQuizzes.prefix(3), id: \.id) { record in
-                    quizHistoryRow(record)
-                }
+            RowListCard(
+                Array(recentQuizzes.prefix(3)),
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.iconBadgeWidth)
+            ) { record in
+                quizHistoryRow(record)
             }
         }
     }
@@ -46,11 +47,7 @@ private extension ProfileScreen {
                     .foregroundStyle(DesignSystem.Color.warning)
             }
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(
-            cornerRadius: DesignSystem.CornerRadius.medium,
-            style: .continuous
-        ))
+        .rowListCardRow()
         .accessibilityElement(children: .combine)
     }
 
@@ -66,78 +63,32 @@ private extension ProfileScreen {
 // MARK: - Account Section
 extension ProfileScreen {
     public var accountSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Account")
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                if authService.isGuest {
-                    signInRow
-                } else {
-                    signOutRow
+        SettingsGroup("Account") {
+            if authService.isGuest {
+                Button { coordinator.push(ProfileLocalRoute.signIn) } label: {
+                    SettingsNavigationRow(
+                        icon: "person.badge.plus",
+                        iconColor: DesignSystem.Color.blue,
+                        title: "Sign In"
+                    )
                 }
-                if !authService.isGuest {
-                    deleteAccountRow
+                .buttonStyle(PressButtonStyle())
+            } else {
+                Button { showSignOutAlert = true } label: {
+                    SettingsActionRow(
+                        icon: "rectangle.portrait.and.arrow.right",
+                        title: "Sign Out",
+                        isDestructive: true
+                    )
                 }
+                .buttonStyle(PressButtonStyle())
+                SettingsDivider()
+                Button { showDeleteAlert = true } label: {
+                    SettingsActionRow(icon: "trash.fill", title: "Delete Account", isDestructive: true)
+                }
+                .buttonStyle(PressButtonStyle())
             }
         }
-    }
-}
-
-// MARK: - Account Subviews
-private extension ProfileScreen {
-    var signInRow: some View {
-        Button {
-            coordinator.push(ProfileLocalRoute.signIn)
-        } label: {
-            accountRowLabel(
-                icon: "person.badge.plus.fill",
-                title: "Sign In",
-                color: DesignSystem.Color.accent
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    var signOutRow: some View {
-        Button {
-            authService.signOut()
-        } label: {
-            accountRowLabel(
-                icon: "arrow.right.square.fill",
-                title: "Sign Out",
-                color: DesignSystem.Color.textSecondary
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    var deleteAccountRow: some View {
-        Button {
-            showDeleteAlert = true
-        } label: {
-            accountRowLabel(
-                icon: "trash.fill",
-                title: "Delete Account",
-                color: DesignSystem.Color.error
-            )
-        }
-        .buttonStyle(PressButtonStyle())
-    }
-
-    func accountRowLabel(icon: String, title: String, color: Color) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            IconBadge(icon, color: color, size: .small)
-            Text(title)
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(color)
-            Spacer()
-            RowChevron()
-        }
-        .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(
-            cornerRadius: DesignSystem.CornerRadius.medium,
-            style: .continuous
-        ))
     }
 }
 #endif

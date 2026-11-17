@@ -183,31 +183,14 @@ private extension SettingsScreen {
 
     var signOutRow: some View {
         Button { showSignOutConfirmation = true } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(
-                    systemImage: "rectangle.portrait.and.arrow.right",
-                    color: DesignSystem.Color.warning
-                )
-                Text("Sign Out")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Spacer()
-            }
-            .settingsRowPadding()
+            SettingsActionRow(icon: "rectangle.portrait.and.arrow.right", title: "Sign Out", isDestructive: true)
         }
         .buttonStyle(PressButtonStyle())
     }
 
     var deleteAccountRow: some View {
         Button { showDeleteConfirmation = true } label: {
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                SettingsIconBadge(systemImage: "trash.fill", color: DesignSystem.Color.error)
-                Text("Delete Account")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.error)
-                Spacer()
-            }
-            .settingsRowPadding()
+            SettingsActionRow(icon: "trash.fill", title: "Delete Account", isDestructive: true)
         }
         .buttonStyle(PressButtonStyle())
     }
@@ -569,13 +552,7 @@ private extension SettingsScreen {
     }
 
     func settingsGroup(header: LocalizedStringKey, @ViewBuilder content: () -> some View) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            EyebrowLabel(header, color: DesignSystem.Color.textTertiary)
-                .padding(.horizontal, DesignSystem.Spacing.xs)
-            CardView {
-                content()
-            }
-        }
+        SettingsGroup(header, content: content)
     }
 }
 

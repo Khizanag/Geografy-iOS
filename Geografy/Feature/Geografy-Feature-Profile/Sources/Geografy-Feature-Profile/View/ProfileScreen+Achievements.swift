@@ -43,7 +43,7 @@ private extension ProfileScreen {
 
     var achievementsScrollRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DesignSystem.Spacing.sm) {
+            HStack(alignment: .top, spacing: DesignSystem.Spacing.sm) {
                 ForEach(recentUnlockedAchievements) { definition in
                     Button {
                         hapticsService.impact(.light)
@@ -86,12 +86,13 @@ private extension ProfileScreen {
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .frame(width: 76, height: 32, alignment: .top)
+                .lineLimit(2, reservesSpace: true)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(width: achievementTitleWidth, alignment: .top)
         }
         .padding(DesignSystem.Spacing.sm)
         .background(
-            .ultraThinMaterial,
+            DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
         )
     }
