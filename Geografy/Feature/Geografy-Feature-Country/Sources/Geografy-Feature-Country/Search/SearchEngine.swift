@@ -2,13 +2,28 @@ import Foundation
 import Geografy_Core_Common
 
 /// Finds countries, capitals, and organizations for a query, best matches first.
+///
+/// Every name is folded once, when the engine is made, so a keystroke compares the query against ready text
+/// instead of folding hundreds of names again. Keep one engine for as long as the countries don't change.
 struct SearchEngine {
     // MARK: - Properties
-    let countries: [Country]
-    let organizations: [Organization]
+    private let countries: [(country: Country, name: String)]
+    private let capitals: [(country: Country, name: String, folded: String)]
+    private let organizations: [(organization: Organization, names: [String])]
 
     /// How many of each kind "All" shows before the person narrows the scope.
     private static let allScopeLimit = 5
+
+    // MARK: - Init
+    init(countries: [Country], organizations: [Organization]) {
+        self.countries = countries.map { ($0, Self.fold($0.name)) }
+        self.capitals = countries.flatMap { country in
+            country.allCapitals.map { (country, $0.name, Self.fold($0.name)) }
+        }
+        self.organizations = organizations.map { organization in
+            (organization, [organization.displayName, organization.fullName].map(Self.fold))
+        }
+    }
 
     // MARK: - Search
     func results(for query: String, scope: SearchScope) -> SearchResults {
@@ -66,9 +81,9 @@ private extension SearchEngine {
 
     func countryMatches(for foldedQuery: String) -> [Match] {
         Self.sorted(
-            countries.compactMap { country in
-                Self.rank(of: country.name, for: foldedQuery).map {
-                    Match(row: .country(country), rank: $0, name: country.name)
+            countries.compactMap { entry in
+                Self.rank(ofFolded: entry.name, for: foldedQuery).map {
+                    Match(row: .country(entry.country), rank: $0, name: entry.country.name)
                 }
             }
         )
@@ -76,11 +91,9 @@ private extension SearchEngine {
 
     func capitalMatches(for foldedQuery: String) -> [Match] {
         Self.sorted(
-            countries.flatMap { country in
-                country.allCapitals.compactMap { capital in
-                    Self.rank(of: capital.name, for: foldedQuery).map {
-                        Match(row: .capital(country: country, capitalName: capital.name), rank: $0, name: capital.name)
-                    }
+            capitals.compactMap { entry in
+                Self.rank(ofFolded: entry.folded, for: foldedQuery).map {
+                    Match(row: .capital(country: entry.country, capitalName: entry.name), rank: $0, name: entry.name)
                 }
             }
         )
@@ -88,12 +101,10 @@ private extension SearchEngine {
 
     func organizationMatches(for foldedQuery: String) -> [Match] {
         Self.sorted(
-            organizations.compactMap { organization in
-                let ranks = [organization.displayName, organization.fullName].compactMap {
-                    Self.rank(of: $0, for: foldedQuery)
-                }
+            organizations.compactMap { entry in
+                let ranks = entry.names.compactMap { Self.rank(ofFolded: $0, for: foldedQuery) }
                 return ranks.min().map {
-                    Match(row: .organization(organization), rank: $0, name: organization.fullName)
+                    Match(row: .organization(entry.organization), rank: $0, name: entry.organization.fullName)
                 }
             }
         )
@@ -116,8 +127,7 @@ private extension SearchEngine {
         }
     }
 
-    static func rank(of text: String, for foldedQuery: String) -> Rank? {
-        let folded = fold(text)
+    static func rank(ofFolded folded: String, for foldedQuery: String) -> Rank? {
         if folded == foldedQuery { return .exact }
         if folded.hasPrefix(foldedQuery) { return .prefix }
         let words = folded.split { !$0.isLetter && !$0.isNumber }

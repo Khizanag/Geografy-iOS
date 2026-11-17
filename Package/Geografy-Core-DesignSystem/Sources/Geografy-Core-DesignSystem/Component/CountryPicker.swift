@@ -19,7 +19,7 @@ public struct CountryPicker<Accessory: View>: View {
 
     // MARK: - Body
     public var body: some View {
-        countryList
+        countryList(sections)
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .searchable(
@@ -95,7 +95,8 @@ private extension CountryPicker {
 
 // MARK: - Subviews
 private extension CountryPicker {
-    var countryList: some View {
+    /// Takes the sections from `body`, which works them out once per render for both the list and its empty state.
+    func countryList(_ sections: [LetterSection]) -> some View {
         ScrollViewReader { proxy in
             List {
                 ForEach(sections, id: \.letter) { section in

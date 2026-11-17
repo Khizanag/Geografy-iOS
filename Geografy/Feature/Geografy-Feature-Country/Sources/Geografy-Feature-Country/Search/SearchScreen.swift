@@ -13,6 +13,7 @@ public struct SearchScreen: View {
     @State private var query = ""
     @State private var scope: SearchScope = .all
     @State private var results: SearchResults = .empty
+    @State private var engine: (countryCount: Int, engine: SearchEngine)?
     @State private var recentService = RecentSearchesService()
     @State private var hasFocusedOnOpen = false
     @FocusState private var isSearchFocused: Bool
@@ -82,8 +83,16 @@ private extension SearchScreen {
 private extension SearchScreen {
     // Local data, so results update on every keystroke with no debounce or spinner.
     func search() {
-        results = SearchEngine(countries: countryService.countries, organizations: Organization.all)
-            .results(for: trimmedQuery, scope: scope)
+        results = currentEngine().results(for: trimmedQuery, scope: scope)
+    }
+
+    /// Made once and kept, so a keystroke doesn't fold every name again; made anew once countries load.
+    func currentEngine() -> SearchEngine {
+        let countries = countryService.countries
+        if let engine, engine.countryCount == countries.count { return engine.engine }
+        let made = SearchEngine(countries: countries, organizations: Organization.all)
+        engine = (countries.count, made)
+        return made
     }
 
     // Opening Search means the person is about to type. Coming back from a result keeps the keyboard down.
