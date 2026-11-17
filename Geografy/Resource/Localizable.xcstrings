@@ -4379,6 +4379,7 @@
         }
       }
     },
+    "Every map pans smoothly" : {},
     "Every type's name fits, with no extra space before Flag Quiz's icon." : {},
     "Expanded" : {
       "extractionState" : "manual",
@@ -6021,6 +6022,7 @@
         }
       }
     },
+    "Lighter launch" : {},
     "Lisbon" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6995,7 +6997,8 @@
     },
     "No Countries Found" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "No Countries Here" : {
       "extractionState" : "manual",
@@ -7021,7 +7024,8 @@
     },
     "No Events in %@" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "No Favorites Yet" : {
       "extractionState" : "manual",
@@ -7061,7 +7065,8 @@
     },
     "No Matching Events" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "No Packs Found" : {
       "localizations" : {
@@ -7195,7 +7200,8 @@
     },
     "No events in %@ match these filters." : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "No historical data" : {
       "extractionState" : "manual",
@@ -7457,6 +7463,7 @@
       "localizations" : {}
     },
     "On a country, tap Continent, then Open … Map: the map zooms to that country and selects it." : {},
+    "On the main map, tap country after country: the outline moves at once. Turn names on and pan: they slide with the map; pinch and they resize." : {},
     "One of you hosts and picks the quiz. The other joins from their phone." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7832,6 +7839,7 @@
         }
       }
     },
+    "Pan and pinch the Travel map, an organization's map, and the Historical map: they move as smoothly as the main map, pinch around your fingers, and stop at the edge of the world." : {},
     "Parsing geographic data" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8465,6 +8473,7 @@
         }
       }
     },
+    "Quit and reopen the app: the map appears without a hitch. Map colors, flags, sound, and speech are now prepared off the main thread or when first needed." : {},
     "Quiz" : {
       "localizations" : {
         "ka" : {
@@ -9559,6 +9568,7 @@
         }
       }
     },
+    "Search keeps up with typing" : {},
     "Search languages..." : {
       "localizations" : {
         "ka" : {
@@ -9771,6 +9781,7 @@
         }
       }
     },
+    "Selecting a country is instant" : {},
     "Session Complete" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10258,7 +10269,8 @@
     },
     "Slide to another year to see what happened then." : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Smallest Country" : {
       "extractionState" : "manual",
@@ -11130,7 +11142,8 @@
     },
     "This quiz has no questions for this region. Pick World or another continent." : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "This region has no countries to find at this difficulty." : {
       "extractionState" : "manual",
@@ -11158,7 +11171,8 @@
     },
     "This region's map couldn't be loaded. Pick another region." : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "This route can't be measured: a capital's location is missing." : {
       "extractionState" : "manual",
@@ -11577,7 +11591,8 @@
     },
     "Try a different spelling or search term." : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Try adjusting filters or selecting a different year" : {
       "extractionState" : "manual",
@@ -11647,6 +11662,7 @@
         }
       }
     },
+    "Type quickly in Search: results update on every keystroke with no lag." : {},
     "Type your answer" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

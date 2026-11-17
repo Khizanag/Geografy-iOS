@@ -24,7 +24,6 @@ public extension DesignSystem {
         public static let displayXL: SwiftUI.Font = .system(size: 80, weight: .bold)
         public static let displayLarge: SwiftUI.Font = .system(size: 72, weight: .bold)
         public static let display: SwiftUI.Font = .system(size: 64, weight: .bold)
-        public static let displayMedium: SwiftUI.Font = .system(size: 56, weight: .bold)
         public static let displaySmall: SwiftUI.Font = .system(size: 48, weight: .bold)
         public static let displayXS: SwiftUI.Font = .system(size: 44, weight: .bold)
         public static let displayXXS: SwiftUI.Font = .system(size: 40, weight: .bold)
@@ -36,36 +35,22 @@ public extension DesignSystem {
         public static var iconDefault: SwiftUI.Font { scaled(22) }
         public static var iconSmall: SwiftUI.Font { scaled(18) }
         public static var iconXS: SwiftUI.Font { scaled(14) }
-        public static var iconXXS: SwiftUI.Font { scaled(10) }
 
         // MARK: - Rounded (game scores, XP, level badges)
         public static let roundedHero: SwiftUI.Font = .system(size: 56, weight: .black, design: .rounded)
         public static let roundedXL: SwiftUI.Font = .system(size: 44, weight: .bold, design: .rounded)
-        public static let roundedLarge: SwiftUI.Font = .system(size: 40, weight: .bold, design: .rounded)
-        public static let roundedTitle: SwiftUI.Font = .system(size: 36, weight: .bold, design: .rounded)
         public static let roundedHeadline: SwiftUI.Font = .system(.largeTitle, design: .rounded, weight: .black)
-        public static let roundedTitle2: SwiftUI.Font = .system(size: 32, weight: .black, design: .rounded)
-        public static let roundedBrand: SwiftUI.Font = .system(size: 30, weight: .black, design: .rounded)
         public static let roundedBody: SwiftUI.Font = .system(.title, design: .rounded, weight: .bold)
-        public static let roundedCallout: SwiftUI.Font = .system(.title2, design: .rounded, weight: .bold)
         public static let roundedSubheadline: SwiftUI.Font = .system(.title2, design: .rounded, weight: .black)
         public static let roundedSmall: SwiftUI.Font = .system(.title3, design: .rounded, weight: .black)
-        public static let roundedFootnote: SwiftUI.Font = .system(.headline, design: .rounded, weight: .black)
-        public static let roundedCaption: SwiftUI.Font = .system(.callout, design: .rounded, weight: .black)
-        public static let roundedCaption2: SwiftUI.Font = .system(.footnote, design: .rounded, weight: .black)
         public static let roundedMicro: SwiftUI.Font = .system(.footnote, design: .rounded, weight: .black)
         public static let roundedMicro2: SwiftUI.Font = .system(.footnote, design: .rounded, weight: .bold)
         public static let roundedNano: SwiftUI.Font = .system(.caption2, design: .rounded, weight: .black)
         public static let roundedPico: SwiftUI.Font = .system(size: 10, weight: .bold, design: .rounded)
 
         // MARK: - Monospaced (timers, codes, grids)
-        public static let monoLarge: SwiftUI.Font = .system(size: 44, weight: .bold, design: .monospaced)
-        public static let monoMedium: SwiftUI.Font = .system(size: 40, weight: .bold, design: .monospaced)
-        public static let monoTitle: SwiftUI.Font = .title3.monospacedDigit().weight(.semibold)
-        public static let monoBody: SwiftUI.Font = .title3.monospacedDigit().weight(.bold)
         public static let monoSmall: SwiftUI.Font = .headline.monospacedDigit().weight(.semibold)
         public static let monoCaption: SwiftUI.Font = .footnote.monospacedDigit().weight(.medium)
-        public static let monoCaption2: SwiftUI.Font = .footnote.monospacedDigit().weight(.bold)
 
         // MARK: - Serif (editorial, Wikipedia)
         public static let serifBody: SwiftUI.Font = .system(.title3, design: .serif, weight: .bold)

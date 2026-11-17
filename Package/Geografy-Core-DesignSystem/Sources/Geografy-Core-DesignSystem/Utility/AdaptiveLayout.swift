@@ -11,12 +11,6 @@ public extension DesignSystem {
 
         /// Max content width for full-width cards/sections
         public static let maxWideContentWidth: CGFloat = 960
-
-        /// Grid column minimum width for adaptive grids
-        public static let gridItemMinWidth: CGFloat = 100
-
-        /// Grid column minimum width for card-style grids on wide screens
-        public static let wideGridItemMinWidth: CGFloat = 160
     }
 }
 
@@ -72,56 +66,3 @@ public extension View {
 }
 
 // MARK: - Adaptive Grid Helper
-public extension View {
-    /// Returns adaptive grid columns based on horizontal size class
-    func adaptiveGridColumns(
-        minimum: CGFloat = DesignSystem.AdaptiveLayout.gridItemMinWidth,
-        wideMinimum: CGFloat = DesignSystem.AdaptiveLayout.wideGridItemMinWidth
-    ) -> [GridItem] {
-        [GridItem(.adaptive(minimum: minimum), spacing: DesignSystem.Spacing.sm)]
-    }
-}
-
-/// A grid whose columns get wider as text gets bigger, so it steps down from three columns to two to one.
-public struct AdaptiveGrid<Content: View>: View {
-    // MARK: - Properties
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @ScaledMetric(relativeTo: .caption) private var textScale: CGFloat = 1
-
-    let compactMinimum: CGFloat
-    let regularMinimum: CGFloat
-    let spacing: CGFloat
-    @ViewBuilder let content: () -> Content
-
-    // MARK: - Init
-    public init(
-        compactMinimum: CGFloat = 100,
-        regularMinimum: CGFloat = 140,
-        spacing: CGFloat = DesignSystem.Spacing.sm,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
-        self.compactMinimum = compactMinimum
-        self.regularMinimum = regularMinimum
-        self.spacing = spacing
-        self.content = content
-    }
-
-    // MARK: - Body
-    public var body: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(
-                    .adaptive(minimum: baseMinimum * textScale),
-                    spacing: spacing
-                ),
-            ],
-            spacing: spacing
-        ) {
-            content()
-        }
-    }
-
-    private var baseMinimum: CGFloat {
-        horizontalSizeClass == .regular ? regularMinimum : compactMinimum
-    }
-}

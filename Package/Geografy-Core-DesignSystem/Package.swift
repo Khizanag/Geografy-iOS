@@ -16,14 +16,12 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Geografy-Core-Common"),
-        .package(url: "https://github.com/airbnb/lottie-ios", from: "4.5.0"),
     ],
     targets: [
         .target(
             name: "Geografy-Core-DesignSystem",
             dependencies: [
                 .product(name: "Geografy-Core-Common", package: "Geografy-Core-Common"),
-                .product(name: "Lottie", package: "lottie-ios"),
             ],
             resources: [
                 .process("Resources"),

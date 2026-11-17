@@ -1,3 +1,4 @@
+#if DEBUG
 import Geografy_Core_DesignSystem
 import SwiftUI
 
@@ -116,3 +117,4 @@ private extension TestChecklistSheet {
         UserDefaults.standard.set(Array(newValue), forKey: storageKey)
     }
 }
+#endif

@@ -3,8 +3,10 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
+#if DEBUG
 // One for the app: tab roots rebuild this screen often, and the checklists never change.
 @MainActor private let testChecklistService = TestChecklistService()
+#endif
 
 /// A tab root: a large title over a ``HubGrid``.
 struct HubScreen<Header: View>: View {
@@ -36,6 +38,7 @@ struct HubGrid<Header: View>: View {
     // MARK: - Body
     var body: some View {
         itemList
+            #if DEBUG
             .sheet(item: $testChecklistSheet) { item in
                 CoordinatedNavigationStack(showCloseButton: true) {
                     TestChecklistSheet(
@@ -48,6 +51,7 @@ struct HubGrid<Header: View>: View {
                     .presentationDetents([.medium, .large])
                 }
             }
+            #endif
     }
 }
 
@@ -135,8 +139,10 @@ private extension HubGrid {
         .anchorPreference(key: TestBadgeAnchorKey.self, value: .topTrailing) { [sheet: $0] }
     }
 
+    /// Testing Mode is a debug tool, so release builds never draw the badges.
     @ViewBuilder
     func testBadges(for items: [HubItem], at anchors: [HubItem: Anchor<CGPoint>]) -> some View {
+        #if DEBUG
         if testingModeService.isEnabled {
             GeometryReader { proxy in
                 ForEach(items) { item in
@@ -153,6 +159,7 @@ private extension HubGrid {
                 }
             }
         }
+        #endif
     }
 
     /// A glass button half over the tile's top-trailing corner.

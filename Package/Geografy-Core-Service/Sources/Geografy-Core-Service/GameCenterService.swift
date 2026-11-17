@@ -96,31 +96,6 @@ public extension GameCenterService {
         public static let speedRunSouthAmerica = "com.khizanag.geografy.leaderboard.speedrun.southamerica"
         public static let speedRunOceania = "com.khizanag.geografy.leaderboard.speedrun.oceania"
     }
-
-    enum AchievementID {
-        public static let quizFirst = "geografy.achievement.first_quiz"
-        public static let quizPerfect = "geografy.achievement.perfect_score"
-        public static let quizFanatic = "geografy.achievement.quiz_fanatic"
-        public static let quizLegend = "geografy.achievement.quiz_legend"
-        public static let speedDemon = "geografy.achievement.speed_demon"
-        public static let allTypes = "geografy.achievement.all_types"
-        public static let streak3 = "geografy.achievement.getting_started"
-        public static let streak7 = "geografy.achievement.week_warrior"
-        public static let streak30 = "geografy.achievement.monthly_champion"
-        public static let streak100 = "geografy.achievement.dedicated_scholar"
-        public static let level2 = "geografy.achievement.continental_explorer"
-        public static let level5 = "geografy.achievement.world_traveler"
-        public static let level10 = "geografy.achievement.globe_trotter"
-        public static let travel1 = "geografy.achievement.first_stamp"
-        public static let travel10 = "geografy.achievement.frequent_flyer"
-        public static let travel50 = "geografy.achievement.world_adventurer"
-        public static let dailyFirst = "geografy.achievement.first_steps"
-        public static let flagCollector = "geografy.achievement.flag_collector"
-        public static let capitalExpert = "geografy.achievement.capital_expert"
-        public static let orgScholar = "geografy.achievement.org_scholar"
-        public static let bucketList = "geografy.achievement.bucket_list"
-        public static let expertExplorer = "geografy.achievement.master_explorer"
-    }
 }
 
 // MARK: - Retry Queue
