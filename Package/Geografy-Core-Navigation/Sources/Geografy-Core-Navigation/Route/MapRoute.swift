@@ -4,7 +4,8 @@ import Geografy_Core_Common
 public enum MapRoute: Route {
     case continents
     case continentOverview(Country.Continent)
-    case map(continentFilter: Country.Continent? = nil)
+    /// - Parameter focusCountryCode: A country the map zooms to and selects once it's laid out.
+    case map(continentFilter: Country.Continent? = nil, focusCountryCode: String? = nil)
     case mapColors
     case organizationMap(Organization)
 }

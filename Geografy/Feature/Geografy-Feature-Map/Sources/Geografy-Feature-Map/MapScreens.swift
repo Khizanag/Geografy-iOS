@@ -8,7 +8,8 @@ public extension RouteRegistry {
             switch route {
             case .continents: ContinentsScreen()
             case .continentOverview(let continent): ContinentOverviewScreen(continent: continent)
-            case .map(let continent): MapScreen(continentFilter: continent?.displayName)
+            case let .map(continent, focusCode):
+                MapScreen(continentFilter: continent?.displayName, focusCountryCode: focusCode)
             case .mapColors: MapColorsScreen()
             case .organizationMap(let organization): OrganizationMapScreen(organization: organization)
             }

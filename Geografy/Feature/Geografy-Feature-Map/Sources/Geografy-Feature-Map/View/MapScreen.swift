@@ -23,10 +23,13 @@ public struct MapScreen: View {
     @AppStorage(MapPreferences.paletteKey) private var palette = MapPalette.default.rawValue
 
     public var continentFilter: String?
+    public var focusCountryCode: String?
 
     // MARK: - Init
-    public init(continentFilter: String? = nil) {
+    /// - Parameter focusCountryCode: A country to zoom to and select once the map is laid out.
+    public init(continentFilter: String? = nil, focusCountryCode: String? = nil) {
         self.continentFilter = continentFilter
+        self.focusCountryCode = focusCountryCode
     }
 
     @Namespace private var flagNamespace
@@ -36,6 +39,7 @@ public struct MapScreen: View {
     @State private var showsFinder = false
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
+    @State private var hasFocusedRequestedCountry = false
     /// The projection the shown shapes were laid out in. Until it matches the chosen one, the map hides behind
     /// the loading view, so a switch never shows old shapes inside the new projection's outline and grid.
     @State private var loadedProjection: String?
@@ -59,6 +63,7 @@ public struct MapScreen: View {
             }
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
+            .onChange(of: isInitialized) { focusRequestedCountry() }
             // Again when the projection or colors change in Settings: the Map tab stays alive behind it.
             .task(id: "\(projection)-\(palette)-\(geoJSONCache.revision)") {
                 isInitialized = false
@@ -418,6 +423,13 @@ private extension MapScreen {
 private extension MapScreen {
     /// Flies the map to a country and selects it. The drawn map moves during the flight and is drawn sharp
     /// again when it lands, the same way a pinch works.
+    func focusRequestedCountry() {
+        guard isInitialized, !hasFocusedRequestedCountry, let code = focusCountryCode,
+              let shape = mapState.countryShapes.first(where: { $0.id == code }) else { return }
+        hasFocusedRequestedCountry = true
+        focus(on: shape)
+    }
+
     func focus(on shape: CountryShape) {
         mapState.beginGesture()
         withAnimation(reduceMotion ? nil : .smooth(duration: 0.6)) {
