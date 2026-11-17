@@ -102,7 +102,13 @@ private extension LearningPathService {
                 makeLesson("continents-4", "Europe — The Peninsula", .reading, europeContent),
                 makeLesson("continents-5", "The Americas", .reading, americasContent),
                 makeLesson("continents-6", "Oceania & Antarctica", .reading, oceaniaContent),
-                makeLesson("continents-7", "Continent Quiz", .quiz, "Test your continent knowledge."),
+                makeLesson(
+                    "continents-7",
+                    "Continent Quiz",
+                    .quiz,
+                    "Name countries from every continent by their flags.",
+                    quiz: LessonQuiz(.flagQuiz)
+                ),
             ],
             isUnlocked: true
         )
@@ -118,8 +124,20 @@ private extension LearningPathService {
                 makeLesson("europe-1", "Western Europe", .reading, westernEuropeContent),
                 makeLesson("europe-2", "Eastern Europe", .reading, easternEuropeContent),
                 makeLesson("europe-3", "Scandinavian Nations", .reading, scandinaviaContent),
-                makeLesson("europe-4", "Capitals Quiz", .quiz, "Match European capitals."),
-                makeLesson("europe-5", "Flags Matching", .matching, "Match the flag to the country."),
+                makeLesson(
+                    "europe-4",
+                    "Capitals Quiz",
+                    .quiz,
+                    "Match European capitals.",
+                    quiz: LessonQuiz(.capitalQuiz, regions: [.europe])
+                ),
+                makeLesson(
+                    "europe-5",
+                    "Flags Matching",
+                    .matching,
+                    "Match the flag to the country.",
+                    quiz: LessonQuiz(.flagQuiz, regions: [.europe])
+                ),
             ],
             isUnlocked: false
         )
@@ -136,7 +154,13 @@ private extension LearningPathService {
                 makeLesson("asia-2", "Southeast Asia", .reading, southeastAsiaContent),
                 makeLesson("asia-3", "Central Asia", .reading, centralAsiaContent),
                 makeLesson("asia-4", "Middle East", .reading, middleEastContent),
-                makeLesson("asia-5", "Asia Quiz", .quiz, "Test your Asia knowledge."),
+                makeLesson(
+                    "asia-5",
+                    "Asia Quiz",
+                    .quiz,
+                    "Name Asian countries by their flags.",
+                    quiz: LessonQuiz(.flagQuiz, regions: [.asia])
+                ),
             ],
             isUnlocked: false
         )
@@ -153,7 +177,13 @@ private extension LearningPathService {
                 makeLesson("africa-2", "Sub-Saharan Africa", .reading, subSaharanContent),
                 makeLesson("africa-3", "East African Nations", .reading, eastAfricaContent),
                 makeLesson("africa-4", "Southern Africa", .reading, southernAfricaContent),
-                makeLesson("africa-5", "Africa Quiz", .quiz, "Test your Africa knowledge."),
+                makeLesson(
+                    "africa-5",
+                    "Africa Quiz",
+                    .quiz,
+                    "Name African countries by their flags.",
+                    quiz: LessonQuiz(.flagQuiz, regions: [.africa])
+                ),
             ],
             isUnlocked: false
         )
@@ -169,7 +199,13 @@ private extension LearningPathService {
                 makeLesson("americas-1", "North America", .reading, northAmericaContent),
                 makeLesson("americas-2", "Central America & Caribbean", .reading, centralAmericaContent),
                 makeLesson("americas-3", "South America", .reading, southAmericaContent),
-                makeLesson("americas-4", "Americas Quiz", .quiz, "Test your Americas knowledge."),
+                makeLesson(
+                    "americas-4",
+                    "Americas Quiz",
+                    .quiz,
+                    "Name countries of North and South America by their flags.",
+                    quiz: LessonQuiz(.flagQuiz, regions: [.northAmerica, .southAmerica])
+                ),
             ],
             isUnlocked: false
         )
@@ -185,7 +221,13 @@ private extension LearningPathService {
                 makeLesson("islands-1", "Pacific Island Nations", .reading, pacificIslandsContent),
                 makeLesson("islands-2", "Caribbean Islands", .reading, caribbeanContent),
                 makeLesson("islands-3", "Atlantic & Indian Ocean", .reading, atlanticIslandsContent),
-                makeLesson("islands-4", "Island Nations Quiz", .quiz, "Test your island knowledge."),
+                makeLesson(
+                    "islands-4",
+                    "Island Nations Quiz",
+                    .quiz,
+                    "Name island nations by their flags.",
+                    quiz: LessonQuiz(.flagQuiz, countryCodes: Self.islandNationCodes)
+                ),
             ],
             isUnlocked: false
         )
@@ -198,11 +240,41 @@ private extension LearningPathService {
             description: "Master the capitals of every country in the world.",
             icon: "building.columns.fill",
             lessons: [
-                makeLesson("capitals-1", "Europe Capitals", .quiz, "Match European countries to their capitals."),
-                makeLesson("capitals-2", "Asia Capitals", .quiz, "Match Asian countries to their capitals."),
-                makeLesson("capitals-3", "Africa Capitals", .quiz, "Match African countries to their capitals."),
-                makeLesson("capitals-4", "Americas Capitals", .quiz, "Match Americas countries to their capitals."),
-                makeLesson("capitals-5", "Grand Final", .quiz, "Master quiz covering all capitals."),
+                makeLesson(
+                    "capitals-1",
+                    "Europe Capitals",
+                    .quiz,
+                    "Match European countries to their capitals.",
+                    quiz: LessonQuiz(.capitalQuiz, regions: [.europe], questionCount: .twenty)
+                ),
+                makeLesson(
+                    "capitals-2",
+                    "Asia Capitals",
+                    .quiz,
+                    "Match Asian countries to their capitals.",
+                    quiz: LessonQuiz(.capitalQuiz, regions: [.asia], questionCount: .twenty)
+                ),
+                makeLesson(
+                    "capitals-3",
+                    "Africa Capitals",
+                    .quiz,
+                    "Match African countries to their capitals.",
+                    quiz: LessonQuiz(.capitalQuiz, regions: [.africa], questionCount: .twenty)
+                ),
+                makeLesson(
+                    "capitals-4",
+                    "Americas Capitals",
+                    .quiz,
+                    "Match countries of the Americas to their capitals.",
+                    quiz: LessonQuiz(.capitalQuiz, regions: [.northAmerica, .southAmerica], questionCount: .twenty)
+                ),
+                makeLesson(
+                    "capitals-5",
+                    "Grand Final",
+                    .quiz,
+                    "Capitals from every continent.",
+                    quiz: LessonQuiz(.capitalQuiz, questionCount: .thirty)
+                ),
             ],
             isUnlocked: false
         )
@@ -212,14 +284,22 @@ private extension LearningPathService {
         _ id: String,
         _ title: String,
         _ type: Lesson.LessonType,
-        _ content: String
+        _ content: String,
+        quiz: LessonQuiz? = nil
     ) -> Lesson {
-        Lesson(id: id, title: title, type: type, content: content, isCompleted: false)
+        Lesson(id: id, title: title, type: type, content: content, quiz: quiz, isCompleted: false)
     }
 }
 
 // MARK: - Lesson Content
 private extension LearningPathService {
+    /// Island nations of the Pacific, the Caribbean, and the Atlantic and Indian Oceans.
+    static let islandNationCodes = [
+        "FJ", "WS", "TO", "VU", "SB", "KI", "TV", "NR", "PW", "FM", "MH",
+        "JM", "BS", "BB", "TT", "DM", "LC", "VC", "GD", "AG", "KN", "CU", "HT", "DO",
+        "IS", "CV", "ST", "MV", "MU", "SC", "KM", "MG", "LK",
+    ]
+
     var continentsIntroContent: String {
         "A continent is one of Earth's large landmasses. Geographers recognize seven continents: "
         + "Africa, Antarctica, Asia, Australia (Oceania), Europe, North America, and South America.\n\n"

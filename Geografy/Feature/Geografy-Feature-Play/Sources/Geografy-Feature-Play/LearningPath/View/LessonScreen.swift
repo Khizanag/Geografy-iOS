@@ -17,10 +17,15 @@ public struct LessonScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(XPService.self) private var xpService
     @Environment(LearningPathService.self) private var learningPathService
+    @Environment(CountryDataService.self) private var countryDataService
+    @Environment(Navigator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let module: LearningModule
     public let lesson: Lesson
+
+    @State private var playingQuizID: UUID?
+    @State private var lastAccuracy: Double?
 
     // MARK: - Body
     public var body: some View {
@@ -31,9 +36,18 @@ public struct LessonScreen: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .safeAreaBar(edge: .bottom) {
-                completeButton
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-                    .padding(.vertical, DesignSystem.Spacing.sm)
+                Group {
+                    if let quiz = lesson.quiz, !isCompleted {
+                        startQuizButton(quiz)
+                    } else {
+                        completeButton
+                    }
+                }
+                .padding(.horizontal, DesignSystem.Spacing.md)
+                .padding(.vertical, DesignSystem.Spacing.sm)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: QuizConfiguration.finishedNotification)) {
+                recordQuiz($0)
             }
     }
 }
@@ -45,6 +59,9 @@ private extension LessonScreen {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 lessonTypeTag
                 lessonContent
+                if lesson.quiz != nil {
+                    quizRequirement
+                }
             }
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
@@ -66,14 +83,42 @@ private extension LessonScreen {
     }
 
     var completeButton: some View {
-        GlassButton(lesson.isCompleted ? "Already Completed" : "Mark as Complete", fullWidth: true) {
-            if learningPathService.completeLesson(moduleID: module.id, lessonID: lesson.id) {
-                xpService.award(XPRules.lessonCompleted, source: .lessonCompleted)
-            }
+        GlassButton(isCompleted ? "Already Completed" : "Mark as Complete", fullWidth: true) {
+            complete()
             dismiss()
         }
-        .disabled(lesson.isCompleted)
-        .opacity(lesson.isCompleted ? 0.5 : 1)
+        .disabled(isCompleted)
+    }
+
+    func startQuizButton(_ quiz: LessonQuiz) -> some View {
+        GlassButton(lastAccuracy == nil ? "Start Quiz" : "Try Again", systemImage: "play.fill", fullWidth: true) {
+            let configuration = quiz.configuration(countries: countryDataService.countries)
+            playingQuizID = configuration.id
+            coordinator.cover(PlayRoute.quizSession(configuration))
+        }
+        .disabled(countryDataService.countries.isEmpty)
+    }
+
+    /// What passing takes, and how the last try went.
+    var quizRequirement: some View {
+        let passPercent = Int(LessonQuiz.passingAccuracy * 100)
+        return HStack(spacing: DesignSystem.Spacing.sm) {
+            Image(systemName: isCompleted ? "checkmark.seal.fill" : "target")
+                .foregroundStyle(isCompleted ? DesignSystem.Color.success : DesignSystem.Color.blue)
+                .accessibilityHidden(true)
+            Group {
+                if isCompleted {
+                    Text("Passed. This lesson is complete.")
+                } else if let lastAccuracy {
+                    Text("You scored \(Int(lastAccuracy * 100))%. Score \(passPercent)% or more to complete it.")
+                } else {
+                    Text("Score \(passPercent)% or more on the quiz to complete this lesson.")
+                }
+            }
+            .font(DesignSystem.Font.subheadline)
+            .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+        .accessibilityElement(children: .combine)
     }
     var typeIcon: String {
         switch lesson.type {
@@ -88,6 +133,35 @@ private extension LessonScreen {
         case .reading: "Reading"
         case .quiz: "Quiz"
         case .matching: "Matching"
+        }
+    }
+}
+
+// MARK: - Completion
+private extension LessonScreen {
+    /// Read live, so the screen shows the lesson as complete the moment its quiz is passed.
+    var isCompleted: Bool {
+        learningPathService.modules
+            .first { $0.id == module.id }?
+            .lessons.first { $0.id == lesson.id }?
+            .isCompleted ?? lesson.isCompleted
+    }
+
+    func complete() {
+        if learningPathService.completeLesson(moduleID: module.id, lessonID: lesson.id) {
+            xpService.award(XPRules.lessonCompleted, source: .lessonCompleted)
+        }
+    }
+
+    func recordQuiz(_ notification: Notification) {
+        guard let playingQuizID,
+              notification.object as? UUID == playingQuizID,
+              let accuracy = notification.userInfo?[QuizConfiguration.accuracyKey] as? Double
+        else { return }
+        self.playingQuizID = nil
+        lastAccuracy = accuracy
+        if LessonQuiz.passes(accuracy: accuracy) {
+            complete()
         }
     }
 }

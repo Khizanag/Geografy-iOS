@@ -4533,7 +4533,8 @@
     },
     "Familiar" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Famous for: %@" : {
       "localizations" : {
@@ -5923,7 +5924,8 @@
     "Learn the world, one flag at a time." : {},
     "Learning" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Learning Path" : {
       "localizations" : {
@@ -6395,11 +6397,13 @@
     },
     "Mastered" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Mastery" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Match" : {
       "extractionState" : "manual",
@@ -7389,7 +7393,8 @@
     },
     "Not Seen" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Not found" : {
       "extractionState" : "manual",
@@ -7902,6 +7907,10 @@
           }
         }
       }
+    },
+    "Passed. This lesson is complete." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Pause" : {
       "comment" : "A button that pauses the quiz.",
@@ -9428,6 +9437,10 @@
           }
         }
       }
+    },
+    "Score %lld%% or more on the quiz to complete this lesson." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Score: %lld" : {
       "localizations" : {
@@ -12360,6 +12373,18 @@
       "extractionState" : "manual",
       "generatesSymbol" : false,
       "localizations" : {}
+    },
+    "You scored %lld%%. Score %lld%% or more to complete it." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You scored %1$lld%%. Score %2$lld%% or more to complete it."
+          }
+        }
+      }
     },
     "You'll see your results and missed countries." : {
       "extractionState" : "manual",

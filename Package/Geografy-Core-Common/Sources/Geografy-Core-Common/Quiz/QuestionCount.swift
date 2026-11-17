@@ -1,6 +1,6 @@
 import Foundation
 
-public enum QuestionCount: Int, CaseIterable, Identifiable, Sendable {
+public enum QuestionCount: Int, CaseIterable, Codable, Identifiable, Sendable {
     case five = 5
     case ten = 10
     case twenty = 20
