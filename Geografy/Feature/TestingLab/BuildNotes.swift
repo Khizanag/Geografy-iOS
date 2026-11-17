@@ -19,69 +19,84 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [xpForEveryGame, learningStreak, reminders, flashcardCap]
+        [gameColors, resultScreens, speedRunXP, settingsRows, profileFixes]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var xpForEveryGame: BuildNote {
+    var gameColors: BuildNote {
         BuildNote(
-            commit: "44f3caea",
-            title: "XP for every game",
+            commit: "2270c9d3",
+            title: "Colors that don't mean right or wrong",
             howToTest: """
-                Daily Challenge, Pin Drop, Map Puzzle, Flashcards, lessons, and Word Search now earn XP: watch \
-                Total XP below rise after each. Only the first 25 visited countries pay travel XP.
+                Hub tiles and games use blue, pink, teal, and purple; green shows only success and red only \
+                errors or deleting. XP and levels are gold everywhere.
                 """,
-            systemImage: "star.fill",
-            color: DesignSystem.Color.warning
+            systemImage: "paintpalette.fill",
+            color: DesignSystem.Color.pink
         ) {
-            go.open(.mapPuzzle)
+            go.selectTab(.play)
         }
     }
 
-    var learningStreak: BuildNote {
+    var resultScreens: BuildNote {
         BuildNote(
-            commit: "b51a7460",
-            title: "Streak counts learning",
+            commit: "39779839",
+            title: "One results screen for every game",
             howToTest: """
-                Set Streak to No streak below, then reopen the app: it stays at 0. Finish any quiz, game, \
-                lesson, or review: Profile shows 1.
+                Finish a quiz, Speed Run, Daily Challenge, Map Puzzle, Pin Drop, and a two-player game: each \
+                shows the same title, gold XP badge, stat tiles, and Done beside the main action.
                 """,
-            systemImage: "flame.fill",
-            color: DesignSystem.Color.orange
+            systemImage: "flag.checkered",
+            color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.profile)
+            go.open(.quiz)
         }
     }
 
-    var reminders: BuildNote {
+    var speedRunXP: BuildNote {
         BuildNote(
-            commit: "39ef4e6b",
-            title: "Smarter reminders",
+            commit: "0d3c6926",
+            title: "No XP for giving up a Speed Run",
             howToTest: """
-                With reminders on in Settings, none come on a day you've already played. Tapping the 9:00 one \
-                opens today's challenge; the 19:00 one opens Play.
+                Start a Speed Run and give up at once: +0 XP and no streak day. Name some countries first and \
+                the XP matches how many.
                 """,
-            systemImage: "bell.badge.fill",
-            color: DesignSystem.Color.indigo
+            systemImage: "stopwatch.fill",
+            color: DesignSystem.Color.pink
+        ) {
+            go.open(.speedRun)
+        }
+    }
+
+    var settingsRows: BuildNote {
+        BuildNote(
+            commit: "78dff61d",
+            title: "Sign Out asks first",
+            howToTest: """
+                Sign Out and Delete Account are red in Settings and Profile, and both ask before acting. \
+                Territorial Disputes and Storage share one red Reset button.
+                """,
+            systemImage: "rectangle.portrait.and.arrow.right",
+            color: DesignSystem.Color.destructive
         ) {
             go.open(.settings)
         }
     }
 
-    var flashcardCap: BuildNote {
+    var profileFixes: BuildNote {
         BuildNote(
-            commit: "41bc8d54",
-            title: "Ten new flashcards a day",
+            commit: "78dff61d",
+            title: "Profile counts explored countries",
             howToTest: """
-                Review shows at most 10 new cards a day, biggest countries first, plus any reviewed cards that \
-                are due.
+                Profile's Explored stat matches the Profile tab, achievement names no longer cut off, and \
+                Recent Quizzes is one card.
                 """,
-            systemImage: "rectangle.on.rectangle.angled",
-            color: DesignSystem.Color.purple
+            systemImage: "person.crop.circle.fill",
+            color: DesignSystem.Color.indigo
         ) {
-            go.open(.srsStudy)
+            go.selectTab(.profile)
         }
     }
 }
