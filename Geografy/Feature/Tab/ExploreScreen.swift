@@ -10,6 +10,7 @@ struct ExploreScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(\.displayScale) private var displayScale
 
     @State private var mode: Mode = .countries
     @State private var countryListState = CountryListState()
@@ -19,6 +20,7 @@ struct ExploreScreen: View {
         modePages
             .segmentedTabs("View", selection: $mode, tabs: Mode.allCases) { $0.title }
             .navigationTitle("Explore")
+            .task(id: countryDataService.countries.count, priority: .utility) { await prewarmListFlags() }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { coordinator.push(CountryRoute.search) } label: {
@@ -77,5 +79,18 @@ private extension ExploreScreen {
             }
             .buttonStyle(PressButtonStyle())
         }
+    }
+}
+
+// MARK: - Flags
+private extension ExploreScreen {
+    /// The country list draws every flag at row size, so decoding them when Explore first opens keeps the first
+    /// scroll smooth without slowing launch, which opens on the map.
+    func prewarmListFlags() async {
+        await FlagImageCache.shared.prewarm(
+            countryCodes: countryDataService.countries.map(\.code),
+            pointHeight: DesignSystem.Size.Flag.row,
+            displayScale: displayScale
+        )
     }
 }
