@@ -30,6 +30,16 @@ struct StreakServiceTests {
         #expect(!streak.hasPlayedToday)
         #expect(streak.currentStreak == 0)
     }
+
+    @Test("A game that earns nothing, such as one given up at once, doesn't count")
+    func zeroXPDoesNotCount() {
+        let (xp, streak) = Self.makeServices()
+
+        xp.award(0, source: .speedRunCompleted)
+
+        #expect(!streak.hasPlayedToday)
+        #expect(xp.totalXP == 0)
+    }
 }
 
 // MARK: - Helpers

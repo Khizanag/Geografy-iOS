@@ -22,7 +22,10 @@ public enum XPRules {
         }
     }
 
+    /// Up to 100 for the share named; finishing adds 50 and a speed bonus, so giving up at once earns nothing.
     public static func speedRun(completionRate: Double, elapsedSeconds: TimeInterval) -> Int {
+        let named = Int(clamped(completionRate) * 100)
+        guard completionRate >= 1 else { return named }
         let speedBonus = switch elapsedSeconds {
         case ..<60: 100
         case ..<120: 60
@@ -30,7 +33,7 @@ public enum XPRules {
         case ..<600: 15
         default: 5
         }
-        return 50 + Int(clamped(completionRate) * 100) + speedBonus
+        return named + 50 + speedBonus
     }
 
     public static func multiplayer(won: Bool) -> Int {

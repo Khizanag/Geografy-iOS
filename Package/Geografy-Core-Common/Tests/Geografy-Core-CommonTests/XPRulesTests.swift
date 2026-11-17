@@ -13,10 +13,11 @@ struct XPRulesTests {
         #expect(XPRules.quiz(difficulty: difficulty, accuracy: accuracy, isTyping: isTyping) == expected)
     }
 
-    @Test("Speed Run XP is unchanged by the move into XPRules")
+    @Test("Speed Run pays for countries named, and the bonuses only for finishing")
     func speedRun() {
         #expect(XPRules.speedRun(completionRate: 1, elapsedSeconds: 50) == 250)
-        #expect(XPRules.speedRun(completionRate: 0.5, elapsedSeconds: 700) == 105)
+        #expect(XPRules.speedRun(completionRate: 0.5, elapsedSeconds: 700) == 50)
+        #expect(XPRules.speedRun(completionRate: 0, elapsedSeconds: 5) == 0)
     }
 
     @Test("The Daily Challenge pays 25 to finish and up to 25 more for the score")

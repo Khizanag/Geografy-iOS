@@ -37,6 +37,8 @@ public final class XPService {
     }
 
     public func award(_ amount: Int, source: XPSource, metadata: [String: String]? = nil) {
+        // Nothing earned is nothing done: no record, and no streak day for giving up at once.
+        guard amount > 0 else { return }
         let metadataString: String? = metadata.flatMap { dict in
             (try? JSONSerialization.data(withJSONObject: dict)).flatMap { String(data: $0, encoding: .utf8) }
         }
