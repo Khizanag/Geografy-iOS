@@ -10,7 +10,7 @@ struct ProfileTabScreen: View {
     @Environment(AuthService.self) private var authService
     @Environment(XPService.self) private var xpService
     @Environment(StreakService.self) private var streakService
-    @Environment(FavoritesService.self) private var favoritesService
+    @Environment(ExplorationService.self) private var explorationService
 
     // MARK: - Body
     var body: some View {
@@ -20,10 +20,10 @@ struct ProfileTabScreen: View {
                 QuickStatsRow(
                     streakDays: streakService.currentStreak,
                     level: xpService.currentLevel.level,
-                    countriesExplored: favoritesService.favoriteCodes.count,
+                    countriesExplored: explorationService.exploredCountryCodes.count,
                     onStreakTap: { coordinator.push(ProfileRoute.profile) },
                     onLevelTap: { coordinator.push(ProfileRoute.profile) },
-                    onCountriesTap: { coordinator.push(CountryRoute.saved(.favorites)) }
+                    onCountriesTap: { coordinator.push(CountryRoute.countries) }
                 )
             }
         }
