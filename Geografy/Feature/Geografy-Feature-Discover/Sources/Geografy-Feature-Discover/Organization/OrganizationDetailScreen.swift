@@ -140,7 +140,10 @@ private extension OrganizationDetailScreen {
             SectionHeaderView(title: "Member Countries")
                 .padding(.horizontal, DesignSystem.Spacing.xxs)
 
-            ForEach(members) { country in
+            RowListCard(
+                members,
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
+            ) { country in
                 memberCountryRow(country)
             }
         }
@@ -148,12 +151,10 @@ private extension OrganizationDetailScreen {
 
     func memberCountryRow(_ country: Country) -> some View {
         Button { coordinator.push(CountryRoute.countryDetail(country)) } label: {
-            CardView {
-                CountryListRow(country: country, subtitle: country.capital) {
-                    RowChevron()
-                }
-                .padding(DesignSystem.Spacing.sm)
+            CountryListRow(country: country, subtitle: country.capital) {
+                RowChevron()
             }
+            .rowListCardRow()
         }
         .buttonStyle(PressButtonStyle())
     }

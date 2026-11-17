@@ -248,15 +248,13 @@ private extension SpeedRunSessionScreen {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Missed Countries", icon: "xmark.circle")
 
-            LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                ForEach(missedCountries) { country in
-                    CardView(cornerRadius: DesignSystem.CornerRadius.small) {
-                        CountryListRow(country: country)
-                            .padding(.horizontal, DesignSystem.Spacing.sm)
-                            .padding(.vertical, DesignSystem.Spacing.xs)
-                    }
+            RowListCard(
+                missedCountries,
+                dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
+            ) { country in
+                CountryListRow(country: country)
+                    .rowListCardRow()
                     .accessibilityElement(children: .combine)
-                }
             }
         }
     }

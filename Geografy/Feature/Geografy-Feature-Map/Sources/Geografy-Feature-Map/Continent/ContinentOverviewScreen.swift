@@ -211,17 +211,17 @@ private extension ContinentOverviewScreen {
     }
 
     func countryListRows(_ countries: [Country]) -> some View {
-        ForEach(Array(countries.enumerated()), id: \.element.code) { index, country in
+        RowListCard(
+            countries,
+            dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
+        ) { country in
             Button { navigateToCountry(country) } label: {
-                CardView {
-                    CountryListRow(country: country) {
-                        RowChevron()
-                    }
-                    .padding(DesignSystem.Spacing.sm)
+                CountryListRow(country: country) {
+                    RowChevron()
                 }
+                .rowListCardRow()
             }
             .buttonStyle(PressButtonStyle())
-            .phaseEntrance(index: index, stagger: 0.03)
         }
     }
 }

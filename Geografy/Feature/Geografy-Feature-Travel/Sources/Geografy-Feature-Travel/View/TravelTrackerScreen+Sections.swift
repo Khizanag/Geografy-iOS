@@ -11,9 +11,12 @@ extension TravelTrackerScreen {
             if results.isEmpty {
                 noResultsState
             } else {
-                LazyVStack(spacing: DesignSystem.Spacing.xs) {
+                LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                     searchResultsHeader(count: results.count)
-                    ForEach(results) { country in
+                    RowListCard(
+                        results,
+                        dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
+                    ) { country in
                         searchResultRow(country)
                     }
                 }
@@ -37,12 +40,10 @@ extension TravelTrackerScreen {
             hapticsService.impact(.light)
             selectedCountry = country
         } label: {
-            CardView {
-                CountryListRow(country: country, subtitle: country.continent.displayName) {
-                    searchRowTrailing(status)
-                }
-                .padding(DesignSystem.Spacing.sm)
+            CountryListRow(country: country, subtitle: country.continent.displayName) {
+                searchRowTrailing(status)
             }
+            .rowListCardRow()
         }
         .buttonStyle(PressButtonStyle())
     }

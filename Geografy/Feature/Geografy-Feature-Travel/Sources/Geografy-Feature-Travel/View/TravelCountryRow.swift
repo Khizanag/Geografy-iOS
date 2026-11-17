@@ -27,13 +27,11 @@ public struct TravelCountryRow: View {
 // MARK: - Subviews
 private extension TravelCountryRow {
     var rowContent: some View {
-        CardView {
-            CountryListRow(country: country, subtitle: country.continent.displayName) {
-                statusBadge
-                RowChevron()
-            }
-            .padding(DesignSystem.Spacing.sm)
+        CountryListRow(country: country, subtitle: country.continent.displayName) {
+            statusBadge
+            RowChevron()
         }
+        .rowListCardRow()
     }
 
     var statusBadge: some View {

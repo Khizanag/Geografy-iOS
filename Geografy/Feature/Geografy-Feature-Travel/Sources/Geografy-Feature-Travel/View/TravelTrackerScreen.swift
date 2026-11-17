@@ -226,14 +226,14 @@ private extension TravelTrackerScreen {
             if countries.isEmpty {
                 emptyState
             } else {
-                LazyVStack(spacing: DesignSystem.Spacing.xs) {
-                    ForEach(countries) { country in
+                LazyVStack(spacing: DesignSystem.Spacing.sm) {
+                    RowListCard(
+                        countries,
+                        dividerInset: RowListCardLayout.dividerInset(after: RowListCardLayout.flagWidth)
+                    ) { country in
                         if let status = travelService.status(for: country.code) {
                             TravelCountryRow(country: country, status: status)
-                                .transition(reduceMotion ? .opacity : .asymmetric(
-                                    insertion: .push(from: .trailing),
-                                    removal: .push(from: .leading)
-                                ))
+                                .transition(.opacity)
                         }
                     }
                     addCountryFooter
