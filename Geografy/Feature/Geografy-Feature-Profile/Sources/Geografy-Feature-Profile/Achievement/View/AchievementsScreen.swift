@@ -207,7 +207,7 @@ private extension AchievementsScreen {
     }
 
     var unlockedCount: Int {
-        AchievementCatalog.all.filter { achievementService.isUnlocked($0.id) }.count
+        achievementService.unlockedCount
     }
 
     var pinnedCount: Int {

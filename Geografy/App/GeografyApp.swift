@@ -264,7 +264,7 @@ private extension GeografyApp {
 private extension GeografyApp {
     func requestReviewIfAppropriate() {
         let key = "app_review_milestone"
-        let unlocked = dependencies.achievementService.unlockedAchievements.count
+        let unlocked = dependencies.achievementService.unlockedCount
         let lastMilestone = UserDefaults.standard.integer(forKey: key)
         let milestones = [3, 7, 15]
         guard let milestone = milestones.first(where: { unlocked >= $0 && lastMilestone < $0 }) else { return }

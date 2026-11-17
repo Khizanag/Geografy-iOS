@@ -61,7 +61,7 @@ private extension ProfileScreen {
             color: DesignSystem.Color.teal
         )
         StatTile(
-            value: "\(achievementService.unlockedAchievements.count)",
+            value: "\(achievementService.unlockedCount)",
             label: "Badges",
             icon: "star.fill",
             color: DesignSystem.Color.warning

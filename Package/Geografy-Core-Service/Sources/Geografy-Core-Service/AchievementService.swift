@@ -11,6 +11,11 @@ public final class AchievementService {
         didSet { unlockedIDs = Set(unlockedAchievements.map(\.id)) }
     }
     private var unlockedIDs: Set<String> = []
+
+    /// Unlocked achievements still in the catalog. Stored unlocks can include retired ones, so count with this.
+    public var unlockedCount: Int {
+        AchievementCatalog.all.count { unlockedIDs.contains($0.id) }
+    }
     public private(set) var pinnedIDs: [String] = []
 
     public let unlockPublisher = PassthroughSubject<AchievementDefinition, Never>()

@@ -110,7 +110,7 @@ private extension GeografyLabSections {
     var achievementsSection: some View {
         Section("Achievements") {
             LabeledContent {
-                Text("\(achievementService.unlockedAchievements.count) of \(AchievementCatalog.all.count)")
+                Text("\(achievementService.unlockedCount) of \(AchievementCatalog.all.count)")
             } label: {
                 LabRow("Unlocked", systemImage: "trophy.fill", color: DesignSystem.Color.warning)
             }

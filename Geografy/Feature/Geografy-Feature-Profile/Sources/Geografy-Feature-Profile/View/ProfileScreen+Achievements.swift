@@ -30,7 +30,7 @@ private extension ProfileScreen {
                 coordinator.push(ProfileRoute.achievements)
             } label: {
                 HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Text("\(achievementService.unlockedAchievements.count)/\(AchievementCatalog.all.count)")
+                    Text("\(achievementService.unlockedCount)/\(AchievementCatalog.all.count)")
                         .font(DesignSystem.Font.caption)
                         .fontWeight(.semibold)
                         .foregroundStyle(DesignSystem.Color.textSecondary)

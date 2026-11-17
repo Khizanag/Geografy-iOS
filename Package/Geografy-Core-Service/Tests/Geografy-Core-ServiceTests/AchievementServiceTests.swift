@@ -1,4 +1,5 @@
 import Foundation
+import Geografy_Core_Common
 @testable import Geografy_Core_Service
 import Testing
 
@@ -38,6 +39,24 @@ struct AchievementServiceTests {
 
         #expect(service.progress(for: "explorer_5").currentValue == 2)
         #expect(!service.isUnlocked("explorer_5"))
+    }
+
+    @Test("The unlocked count leaves out achievements no longer in the catalog")
+    func unlockedCountSkipsRetired() {
+        let userID = UUID().uuidString
+        let database = DatabaseManager(inMemory: true)
+        let service = AchievementService(
+            db: database,
+            xpService: XPService(db: database, userID: userID),
+            userID: userID
+        )
+        service.switchUser(id: userID)
+        service.checkExplorerAchievements(totalExplored: 5)
+        database.mainContext.insert(UnlockedAchievement(id: "retired_achievement", userID: userID))
+        service.refreshUnlocked()
+
+        #expect(service.unlockedAchievements.count == 2)
+        #expect(service.unlockedCount == 1)
     }
 }
 
