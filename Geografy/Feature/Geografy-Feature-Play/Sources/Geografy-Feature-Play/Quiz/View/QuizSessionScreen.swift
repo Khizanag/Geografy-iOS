@@ -57,6 +57,7 @@ public struct QuizSessionScreen: View {
             .navigationTitle(configuration.type.displayName)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
+            .hideNavigationCloseButton()
             .task(id: countryDataService.countries.isEmpty) { loadQuiz() }
             .onDisappear {
                 stopTimer()
@@ -66,10 +67,11 @@ public struct QuizSessionScreen: View {
             .navigationDestination(item: $navigateToResult) { result in
                 resultsDestination(for: result)
             }
-            .alert("Quit Quiz?", isPresented: $showQuitAlert) {
-                quitAlertActions
+            .alert("Give Up?", isPresented: $showQuitAlert) {
+                Button("Give Up", role: .destructive) { dismiss() }
+                Button("Continue", role: .cancel) {}
             } message: {
-                Text("Your progress will be lost.")
+                Text("Your answers so far won't be saved.")
             }
             .zoomableViewer(isPresented: $showFlagPreview, title: nil) {
                 if let flagCode = currentQuestion?.promptFlag {
@@ -97,29 +99,15 @@ private extension QuizSessionScreen {
 
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            GiveUpButton { showQuitAlert = true }
+        }
         if configuration.difficulty.hasTimer {
-            ToolbarItem(placement: .topBarLeading) {
-                pauseButton
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Pause", systemImage: "pause.fill") { togglePause() }
+                    .disabled(showFeedback)
             }
         }
-    }
-
-    var pauseButton: some View {
-        Button { togglePause() } label: {
-            Image(systemName: "pause.fill")
-                .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .buttonStyle(.plain)
-        .disabled(showFeedback)
-        .opacity(showFeedback ? 0.4 : 1)
-        .accessibilityLabel("Pause")
-    }
-
-    @ViewBuilder
-    var quitAlertActions: some View {
-        Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { dismiss() }
     }
 
     func resultsDestination(for result: QuizResult) -> some View {

@@ -29,11 +29,16 @@ public struct DailyChallengeSessionScreen: View {
         challengeContent
             .navigationTitle(challenge.type.title)
             .navigationBarTitleDisplayMode(.inline)
-            .alert("Quit Challenge?", isPresented: $showQuitAlert) {
-                Button("Cancel", role: .cancel) {}
-                Button("Quit", role: .destructive) { dismiss() }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    GiveUpButton { showQuitAlert = true }
+                }
+            }
+            .alert("Give Up?", isPresented: $showQuitAlert) {
+                Button("Give Up", role: .destructive) { dismiss() }
+                Button("Continue", role: .cancel) {}
             } message: {
-                Text("Your progress will be lost.")
+                Text("Today's challenge stays open; you can try it again.")
             }
     }
 }

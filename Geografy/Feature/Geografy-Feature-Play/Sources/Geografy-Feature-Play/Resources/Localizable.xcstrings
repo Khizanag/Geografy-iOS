@@ -3704,6 +3704,9 @@
         }
       }
     },
+    "Today's challenge stays open; you can try it again." : {
+
+    },
     "Try Again" : {
       "localizations" : {
         "ka" : {
@@ -3991,6 +3994,9 @@
           }
         }
       }
+    },
+    "Your answers so far won't be saved." : {
+
     },
     "Your progress will be lost." : {
       "localizations" : {

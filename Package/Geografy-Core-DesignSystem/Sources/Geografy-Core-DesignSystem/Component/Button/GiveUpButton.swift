@@ -12,9 +12,8 @@ public struct GiveUpButton: View {
 
     // MARK: - Body
     public var body: some View {
-        Button(action: action) {
-            Label("Give Up", systemImage: "flag.fill")
-                .foregroundStyle(DesignSystem.Color.error)
-        }
+        Button("Give Up", systemImage: "flag.fill", action: action)
+            // A toolbar draws its buttons in their tint, not in the label's foreground style.
+            .tint(DesignSystem.Color.error)
     }
 }

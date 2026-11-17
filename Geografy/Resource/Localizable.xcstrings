@@ -11107,6 +11107,10 @@
         }
       }
     },
+    "Today's challenge stays open; you can try it again." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Top Hit" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -12152,6 +12156,10 @@
           }
         }
       }
+    },
+    "Your answers so far won't be saved." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Your data" : {
       "extractionState" : "manual",

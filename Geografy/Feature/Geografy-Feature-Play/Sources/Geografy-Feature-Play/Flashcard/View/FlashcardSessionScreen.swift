@@ -23,7 +23,6 @@ public struct FlashcardSessionScreen: View {
     @State private var showResults = false
     @State private var correctCount = 0
     @State private var cardExit: FlashcardCardExit?
-    @State private var showQuitAlert = false
 
     @State private var showGuide = false
     @State private var cardShownAt: Date = .now
@@ -42,11 +41,6 @@ public struct FlashcardSessionScreen: View {
             .closeButtonPlacementLeading()
             .toolbar { toolbarContent }
             .sheet(isPresented: $showGuide) { FlashcardGuideSheet() }
-            .alert("Quit Session?", isPresented: $showQuitAlert) {
-                quitAlertActions
-            } message: {
-                Text("Your progress will be saved.")
-            }
             .onDisappear { flashcardService.persistPendingChanges() }
     }
 }
@@ -104,12 +98,6 @@ private extension FlashcardSessionScreen {
             }
             .buttonStyle(.plain)
         }
-    }
-
-    @ViewBuilder
-    var quitAlertActions: some View {
-        Button("Cancel", role: .cancel) {}
-        Button("Quit", role: .destructive) { dismiss() }
     }
 }
 
