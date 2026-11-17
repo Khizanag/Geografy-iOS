@@ -249,48 +249,70 @@ private extension AuthService {
         currentUserID = newID
         state = .guest(profile)
     }
+}
 
+// MARK: - User Data
+extension AuthService {
+    /// Hands a guest's progress to the account they sign in to: every record in the store and everything kept
+    /// per user in `UserDefaults`.
     func migrateGuestData(from guestID: String, to newID: String) {
-        let xpDescriptor = FetchDescriptor<XPRecord>(predicate: #Predicate { $0.userID == guestID })
-        let xpRecords = (try? db.mainContext.fetch(xpDescriptor)) ?? []
-        for record in xpRecords { record.userID = newID }
-
-        let quizDescriptor = FetchDescriptor<QuizHistoryRecord>(predicate: #Predicate { $0.userID == guestID })
-        let quizRecords = (try? db.mainContext.fetch(quizDescriptor)) ?? []
-        for record in quizRecords { record.userID = newID }
-
-        let achievementDescriptor = FetchDescriptor<UnlockedAchievement>(predicate: #Predicate { $0.userID == guestID })
-        let achievements = (try? db.mainContext.fetch(achievementDescriptor)) ?? []
-        for record in achievements { record.userID = newID }
-
-        let streakDescriptor = FetchDescriptor<StreakRecord>(predicate: #Predicate { $0.userID == guestID })
-        let streaks = (try? db.mainContext.fetch(streakDescriptor)) ?? []
-        for record in streaks { record.userID = newID }
-
-        db.mainContext.saveOrLog()
+        let context = db.mainContext
+        for record in Self.records(XPRecord.self, matching: #Predicate { $0.userID == guestID }, in: context) {
+            record.userID = newID
+        }
+        for record in Self.records(QuizHistoryRecord.self, matching: #Predicate { $0.userID == guestID }, in: context) {
+            record.userID = newID
+        }
+        let achievements = Self.records(
+            UnlockedAchievement.self,
+            matching: #Predicate { $0.userID == guestID },
+            in: context
+        )
+        for record in achievements {
+            record.userID = newID
+        }
+        for record in Self.records(StreakRecord.self, matching: #Predicate { $0.userID == guestID }, in: context) {
+            record.userID = newID
+        }
+        for record in Self.records(FavoriteEntry.self, matching: #Predicate { $0.userID == guestID }, in: context) {
+            record.userID = newID
+        }
+        for record in Self.records(CollectionItem.self, matching: #Predicate { $0.userID == guestID }, in: context) {
+            record.userID = newID
+        }
+        for record in Self.records(SavedCollection.self, matching: #Predicate { $0.userID == guestID }, in: context) {
+            record.userID = newID
+        }
+        context.saveOrLog()
+        UserScope.moveData(from: guestID, to: newID)
     }
 
+    /// Deletes everything the user has: every record in the store, their profile, and everything kept per user
+    /// in `UserDefaults`.
     func deleteAllUserData(for userID: String) {
-        let xpDescriptor = FetchDescriptor<XPRecord>(predicate: #Predicate { $0.userID == userID })
-        let xpRecords = (try? db.mainContext.fetch(xpDescriptor)) ?? []
-        for record in xpRecords { db.mainContext.delete(record) }
+        let context = db.mainContext
+        let models: [[any PersistentModel]] = [
+            Self.records(XPRecord.self, matching: #Predicate { $0.userID == userID }, in: context),
+            Self.records(QuizHistoryRecord.self, matching: #Predicate { $0.userID == userID }, in: context),
+            Self.records(UnlockedAchievement.self, matching: #Predicate { $0.userID == userID }, in: context),
+            Self.records(StreakRecord.self, matching: #Predicate { $0.userID == userID }, in: context),
+            Self.records(FavoriteEntry.self, matching: #Predicate { $0.userID == userID }, in: context),
+            Self.records(CollectionItem.self, matching: #Predicate { $0.userID == userID }, in: context),
+            Self.records(SavedCollection.self, matching: #Predicate { $0.userID == userID }, in: context),
+            Self.records(UserProfile.self, matching: #Predicate { $0.id == userID }, in: context),
+        ]
+        for model in models.joined() {
+            context.delete(model)
+        }
+        context.saveOrLog()
+        UserScope.removeData(of: userID)
+    }
 
-        let quizDescriptor = FetchDescriptor<QuizHistoryRecord>(predicate: #Predicate { $0.userID == userID })
-        let quizRecords = (try? db.mainContext.fetch(quizDescriptor)) ?? []
-        for record in quizRecords { db.mainContext.delete(record) }
-
-        let achievementDescriptor = FetchDescriptor<UnlockedAchievement>(predicate: #Predicate { $0.userID == userID })
-        let achievements = (try? db.mainContext.fetch(achievementDescriptor)) ?? []
-        for record in achievements { db.mainContext.delete(record) }
-
-        let streakDescriptor = FetchDescriptor<StreakRecord>(predicate: #Predicate { $0.userID == userID })
-        let streaks = (try? db.mainContext.fetch(streakDescriptor)) ?? []
-        for record in streaks { db.mainContext.delete(record) }
-
-        let profileDescriptor = FetchDescriptor<UserProfile>(predicate: #Predicate { $0.id == userID })
-        let profiles = (try? db.mainContext.fetch(profileDescriptor)) ?? []
-        for profile in profiles { db.mainContext.delete(profile) }
-
-        db.mainContext.saveOrLog()
+    static func records<Model: PersistentModel>(
+        _ type: Model.Type,
+        matching predicate: Predicate<Model>,
+        in context: ModelContext
+    ) -> [Model] {
+        (try? context.fetch(FetchDescriptor(predicate: predicate))) ?? []
     }
 }

@@ -38,6 +38,37 @@ struct UserScopeTests {
 
         #expect(defaults.object(forKey: bobKey) == nil)
     }
+
+    @Test("Moving data hands a guest's keys to the account and keeps what the account already had")
+    func moveData() {
+        let defaults = Self.makeDefaults()
+        defaults.set("guest trips", forKey: "trips.user.guest")
+        defaults.set("guest cards", forKey: "cards.user.guest")
+        defaults.set("account cards", forKey: "cards.user.account")
+        defaults.set("someone else", forKey: "trips.user.other")
+
+        UserScope.moveData(from: "guest", to: "account", defaults: defaults)
+
+        #expect(defaults.string(forKey: "trips.user.account") == "guest trips")
+        #expect(defaults.string(forKey: "cards.user.account") == "account cards")
+        #expect(defaults.object(forKey: "trips.user.guest") == nil)
+        #expect(defaults.object(forKey: "cards.user.guest") == nil)
+        #expect(defaults.string(forKey: "trips.user.other") == "someone else")
+    }
+
+    @Test("Removing data clears only that user's keys")
+    func removeData() {
+        let defaults = Self.makeDefaults()
+        defaults.set(1, forKey: "trips.user.leaving")
+        defaults.set(2, forKey: "cards.user.leaving")
+        defaults.set(3, forKey: "trips.user.staying")
+
+        UserScope.removeData(of: "leaving", defaults: defaults)
+
+        #expect(defaults.object(forKey: "trips.user.leaving") == nil)
+        #expect(defaults.object(forKey: "cards.user.leaving") == nil)
+        #expect(defaults.integer(forKey: "trips.user.staying") == 3)
+    }
 }
 
 // MARK: - Helpers
