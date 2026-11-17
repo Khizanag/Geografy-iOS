@@ -40,6 +40,8 @@ public struct MapScreen: View {
     @State private var screenSize: CGSize = .zero
     @State private var isInitialized = false
     @State private var hasFocusedRequestedCountry = false
+    /// What the shown shapes were loaded for, so returning to the Map tab keeps its zoom instead of reloading.
+    @State private var loadedMapDataKey: String?
     /// The projection the shown shapes were laid out in. Until it matches the chosen one, the map hides behind
     /// the loading view, so a switch never shows old shapes inside the new projection's outline and grid.
     @State private var loadedProjection: String?
@@ -64,10 +66,13 @@ public struct MapScreen: View {
             .toolbarBackground(.clear, for: .navigationBar)
             .toolbar { toolbarContent }
             .onChange(of: isInitialized) { focusRequestedCountry() }
+            .onChange(of: focusCountryCode) { focusRequestedCountry() }
             // Again when the projection or colors change in Settings: the Map tab stays alive behind it.
-            .task(id: "\(projection)-\(palette)-\(geoJSONCache.revision)") {
+            .task(id: mapDataKey) {
+                guard mapDataKey != loadedMapDataKey else { return }
                 isInitialized = false
                 await loadMapData()
+                if !Task.isCancelled { loadedMapDataKey = mapDataKey }
             }
             .sheet(isPresented: $showsFinder) {
                 CoordinatedNavigationStack(showCloseButton: true) {
@@ -344,6 +349,12 @@ private extension MapScreen {
 
 // MARK: - Actions
 private extension MapScreen {
+    /// A task re-runs whenever its view reappears, such as on returning to the Map tab; this changes only when
+    /// the map itself must be redrawn.
+    var mapDataKey: String {
+        "\(projection)-\(palette)-\(geoJSONCache.revision)"
+    }
+
     /// Flies the map to a country and selects it. The drawn map moves during the flight and is drawn sharp
     /// again when it lands, the same way a pinch works.
     func focusRequestedCountry() {
