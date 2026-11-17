@@ -1,4 +1,4 @@
-struct CountryCultureEntry: Sendable {
+struct CountryCultureEntry: Decodable, Sendable {
     let cuisine: String?
     let music: String?
     let dance: String?

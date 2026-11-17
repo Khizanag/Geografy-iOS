@@ -1,0 +1,3810 @@
+{
+  "AD" : [
+    {
+      "name" : "Andorran",
+      "percentage" : 33.1
+    },
+    {
+      "name" : "Spanish",
+      "percentage" : 29
+    },
+    {
+      "name" : "Portuguese",
+      "percentage" : 16.4
+    },
+    {
+      "name" : "French",
+      "percentage" : 8.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 12.9
+    }
+  ],
+  "AE" : [
+    {
+      "name" : "South Asian",
+      "percentage" : 59.4
+    },
+    {
+      "name" : "Emirati Arab",
+      "percentage" : 11.5
+    },
+    {
+      "name" : "Egyptian Arab",
+      "percentage" : 10.2
+    },
+    {
+      "name" : "Filipino",
+      "percentage" : 9.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.1
+    }
+  ],
+  "AF" : [
+    {
+      "name" : "Pashtun",
+      "percentage" : 42
+    },
+    {
+      "name" : "Tajik",
+      "percentage" : 27
+    },
+    {
+      "name" : "Hazara",
+      "percentage" : 9
+    },
+    {
+      "name" : "Uzbek",
+      "percentage" : 9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 13
+    }
+  ],
+  "AG" : [
+    {
+      "name" : "Afro-Caribbean",
+      "percentage" : 87.3
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 4.7
+    },
+    {
+      "name" : "Hispanic",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "White",
+      "percentage" : 1.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.7
+    }
+  ],
+  "AL" : [
+    {
+      "name" : "Albanian",
+      "percentage" : 82.6
+    },
+    {
+      "name" : "Greek",
+      "percentage" : 0.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 16.5
+    }
+  ],
+  "AM" : [
+    {
+      "name" : "Armenian",
+      "percentage" : 98.1
+    },
+    {
+      "name" : "Yazidi",
+      "percentage" : 1.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.7
+    }
+  ],
+  "AO" : [
+    {
+      "name" : "Ovimbundu",
+      "percentage" : 37
+    },
+    {
+      "name" : "Kimbundu",
+      "percentage" : 25
+    },
+    {
+      "name" : "Bakongo",
+      "percentage" : 13
+    },
+    {
+      "name" : "Mestico",
+      "percentage" : 2
+    },
+    {
+      "name" : "European",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 22
+    }
+  ],
+  "AR" : [
+    {
+      "name" : "European (Spanish/Italian)",
+      "percentage" : 97
+    },
+    {
+      "name" : "Mestizo",
+      "percentage" : 2
+    },
+    {
+      "name" : "Amerindian",
+      "percentage" : 1
+    }
+  ],
+  "AT" : [
+    {
+      "name" : "Austrian",
+      "percentage" : 80.8
+    },
+    {
+      "name" : "German",
+      "percentage" : 2.6
+    },
+    {
+      "name" : "Bosnian",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Turkish",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Serbian",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11.4
+    }
+  ],
+  "AU" : [
+    {
+      "name" : "Australian/European",
+      "percentage" : 67.4
+    },
+    {
+      "name" : "Asian",
+      "percentage" : 19.5
+    },
+    {
+      "name" : "Aboriginal/Torres Strait",
+      "percentage" : 3.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.8
+    }
+  ],
+  "AZ" : [
+    {
+      "name" : "Azerbaijani",
+      "percentage" : 91.6
+    },
+    {
+      "name" : "Lezgin",
+      "percentage" : 2
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Armenian",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.8
+    }
+  ],
+  "BA" : [
+    {
+      "name" : "Bosniak",
+      "percentage" : 50.1
+    },
+    {
+      "name" : "Serb",
+      "percentage" : 30.8
+    },
+    {
+      "name" : "Croat",
+      "percentage" : 15.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.7
+    }
+  ],
+  "BB" : [
+    {
+      "name" : "Afro-Barbadian",
+      "percentage" : 92.4
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 3.1
+    },
+    {
+      "name" : "White",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "Indian",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.5
+    }
+  ],
+  "BD" : [
+    {
+      "name" : "Bengali",
+      "percentage" : 98
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "BE" : [
+    {
+      "name" : "Belgian (Flemish)",
+      "percentage" : 58
+    },
+    {
+      "name" : "Belgian (Walloon)",
+      "percentage" : 31
+    },
+    {
+      "name" : "Belgian (German)",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10
+    }
+  ],
+  "BF" : [
+    {
+      "name" : "Mossi",
+      "percentage" : 52
+    },
+    {
+      "name" : "Fulani",
+      "percentage" : 8.4
+    },
+    {
+      "name" : "Gurma",
+      "percentage" : 7
+    },
+    {
+      "name" : "Bobo",
+      "percentage" : 4.9
+    },
+    {
+      "name" : "Gurunsi",
+      "percentage" : 4.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 23.1
+    }
+  ],
+  "BG" : [
+    {
+      "name" : "Bulgarian",
+      "percentage" : 76.9
+    },
+    {
+      "name" : "Turkish",
+      "percentage" : 8
+    },
+    {
+      "name" : "Roma",
+      "percentage" : 4.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10.7
+    }
+  ],
+  "BH" : [
+    {
+      "name" : "Bahraini Arab",
+      "percentage" : 46
+    },
+    {
+      "name" : "South Asian",
+      "percentage" : 45.5
+    },
+    {
+      "name" : "Other Arab",
+      "percentage" : 4.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.8
+    }
+  ],
+  "BI" : [
+    {
+      "name" : "Hutu",
+      "percentage" : 85
+    },
+    {
+      "name" : "Tutsi",
+      "percentage" : 14
+    },
+    {
+      "name" : "Twa",
+      "percentage" : 1
+    }
+  ],
+  "BJ" : [
+    {
+      "name" : "Fon",
+      "percentage" : 38.4
+    },
+    {
+      "name" : "Adja",
+      "percentage" : 15.1
+    },
+    {
+      "name" : "Yoruba",
+      "percentage" : 12
+    },
+    {
+      "name" : "Bariba",
+      "percentage" : 9.6
+    },
+    {
+      "name" : "Fulani",
+      "percentage" : 8.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 16.3
+    }
+  ],
+  "BN" : [
+    {
+      "name" : "Malay",
+      "percentage" : 65.7
+    },
+    {
+      "name" : "Chinese",
+      "percentage" : 10.3
+    },
+    {
+      "name" : "Other indigenous",
+      "percentage" : 3.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 20.6
+    }
+  ],
+  "BO" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 68
+    },
+    {
+      "name" : "Quechua/Aymara",
+      "percentage" : 20
+    },
+    {
+      "name" : "White",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7
+    }
+  ],
+  "BR" : [
+    {
+      "name" : "Mixed (Pardo)",
+      "percentage" : 46.7
+    },
+    {
+      "name" : "White",
+      "percentage" : 43.1
+    },
+    {
+      "name" : "Black",
+      "percentage" : 9.1
+    },
+    {
+      "name" : "Asian",
+      "percentage" : 1.1
+    }
+  ],
+  "BS" : [
+    {
+      "name" : "Afro-Bahamian",
+      "percentage" : 90.6
+    },
+    {
+      "name" : "White",
+      "percentage" : 4.7
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.6
+    }
+  ],
+  "BT" : [
+    {
+      "name" : "Ngalop (Bhote)",
+      "percentage" : 50
+    },
+    {
+      "name" : "Ethnic Nepali (Lhotshampa)",
+      "percentage" : 35
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 15
+    }
+  ],
+  "BW" : [
+    {
+      "name" : "Tswana",
+      "percentage" : 79
+    },
+    {
+      "name" : "Kalanga",
+      "percentage" : 11
+    },
+    {
+      "name" : "Basarwa",
+      "percentage" : 3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7
+    }
+  ],
+  "BY" : [
+    {
+      "name" : "Belarusian",
+      "percentage" : 83.7
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 8.3
+    },
+    {
+      "name" : "Polish",
+      "percentage" : 3.1
+    },
+    {
+      "name" : "Ukrainian",
+      "percentage" : 1.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.2
+    }
+  ],
+  "BZ" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 52.9
+    },
+    {
+      "name" : "Creole",
+      "percentage" : 25.9
+    },
+    {
+      "name" : "Maya",
+      "percentage" : 11.3
+    },
+    {
+      "name" : "Garifuna",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.8
+    }
+  ],
+  "CA" : [
+    {
+      "name" : "European descent",
+      "percentage" : 72.9
+    },
+    {
+      "name" : "South Asian",
+      "percentage" : 5.6
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 4.9
+    },
+    {
+      "name" : "Chinese",
+      "percentage" : 3.9
+    },
+    {
+      "name" : "Black",
+      "percentage" : 3.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.2
+    }
+  ],
+  "CD" : [
+    {
+      "name" : "Bantu (Mongo, Luba, Kongo)",
+      "percentage" : 45
+    },
+    {
+      "name" : "Mangbetu-Azande",
+      "percentage" : 20
+    },
+    {
+      "name" : "Other (200+ groups)",
+      "percentage" : 35
+    }
+  ],
+  "CF" : [
+    {
+      "name" : "Baya",
+      "percentage" : 33
+    },
+    {
+      "name" : "Banda",
+      "percentage" : 27
+    },
+    {
+      "name" : "Mandjia",
+      "percentage" : 13
+    },
+    {
+      "name" : "Sara",
+      "percentage" : 10
+    },
+    {
+      "name" : "Mboum",
+      "percentage" : 7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10
+    }
+  ],
+  "CG" : [
+    {
+      "name" : "Kongo",
+      "percentage" : 49.9
+    },
+    {
+      "name" : "Sangha",
+      "percentage" : 20.1
+    },
+    {
+      "name" : "Teke",
+      "percentage" : 17.4
+    },
+    {
+      "name" : "M'Bochi",
+      "percentage" : 11.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.1
+    }
+  ],
+  "CH" : [
+    {
+      "name" : "German-speaking Swiss",
+      "percentage" : 63
+    },
+    {
+      "name" : "French-speaking Swiss",
+      "percentage" : 23.5
+    },
+    {
+      "name" : "Italian-speaking Swiss",
+      "percentage" : 8.1
+    },
+    {
+      "name" : "Romansh",
+      "percentage" : 0.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.9
+    }
+  ],
+  "CI" : [
+    {
+      "name" : "Akan",
+      "percentage" : 28.9
+    },
+    {
+      "name" : "Gur",
+      "percentage" : 16.1
+    },
+    {
+      "name" : "Northern Mande",
+      "percentage" : 14.5
+    },
+    {
+      "name" : "Kru",
+      "percentage" : 8.5
+    },
+    {
+      "name" : "Lagoon",
+      "percentage" : 7.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 24.9
+    }
+  ],
+  "CL" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 88.9
+    },
+    {
+      "name" : "White",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "Mapuche/Indigenous",
+      "percentage" : 4.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.8
+    }
+  ],
+  "CM" : [
+    {
+      "name" : "Cameroon Highlanders",
+      "percentage" : 31
+    },
+    {
+      "name" : "Equatorial Bantu",
+      "percentage" : 19
+    },
+    {
+      "name" : "Kirdi",
+      "percentage" : 11
+    },
+    {
+      "name" : "Fulani",
+      "percentage" : 10
+    },
+    {
+      "name" : "Northwestern Bantu",
+      "percentage" : 8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 21
+    }
+  ],
+  "CN" : [
+    {
+      "name" : "Han Chinese",
+      "percentage" : 91.6
+    },
+    {
+      "name" : "Zhuang",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Manchu",
+      "percentage" : 0.8
+    },
+    {
+      "name" : "Hui",
+      "percentage" : 0.8
+    },
+    {
+      "name" : "Miao",
+      "percentage" : 0.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.7
+    }
+  ],
+  "CO" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 49
+    },
+    {
+      "name" : "White",
+      "percentage" : 37
+    },
+    {
+      "name" : "Mulato/Afro-Colombian",
+      "percentage" : 10.6
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 3.4
+    }
+  ],
+  "CR" : [
+    {
+      "name" : "Mestizo/White",
+      "percentage" : 83.6
+    },
+    {
+      "name" : "Mulato",
+      "percentage" : 6.7
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 2.4
+    },
+    {
+      "name" : "Afro-Costa Rican",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.2
+    }
+  ],
+  "CU" : [
+    {
+      "name" : "White",
+      "percentage" : 64.1
+    },
+    {
+      "name" : "Mulatto/Mestizo",
+      "percentage" : 26.6
+    },
+    {
+      "name" : "Black",
+      "percentage" : 9.3
+    }
+  ],
+  "CV" : [
+    {
+      "name" : "Creole (Afro-European)",
+      "percentage" : 71
+    },
+    {
+      "name" : "African",
+      "percentage" : 28
+    },
+    {
+      "name" : "European",
+      "percentage" : 1
+    }
+  ],
+  "CY" : [
+    {
+      "name" : "Greek Cypriot",
+      "percentage" : 77
+    },
+    {
+      "name" : "Turkish Cypriot",
+      "percentage" : 18
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "CZ" : [
+    {
+      "name" : "Czech",
+      "percentage" : 63.7
+    },
+    {
+      "name" : "Moravian",
+      "percentage" : 4.9
+    },
+    {
+      "name" : "Slovak",
+      "percentage" : 1.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 30
+    }
+  ],
+  "DE" : [
+    {
+      "name" : "German",
+      "percentage" : 80
+    },
+    {
+      "name" : "Turkish",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other European",
+      "percentage" : 10
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "DJ" : [
+    {
+      "name" : "Somali (Issa)",
+      "percentage" : 60
+    },
+    {
+      "name" : "Afar",
+      "percentage" : 35
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "DK" : [
+    {
+      "name" : "Danish",
+      "percentage" : 86.3
+    },
+    {
+      "name" : "Turkish",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Polish",
+      "percentage" : 1
+    },
+    {
+      "name" : "German",
+      "percentage" : 0.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11.1
+    }
+  ],
+  "DM" : [
+    {
+      "name" : "Afro-Dominican",
+      "percentage" : 86.6
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 9.1
+    },
+    {
+      "name" : "Indigenous (Kalinago)",
+      "percentage" : 2.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.4
+    }
+  ],
+  "DO" : [
+    {
+      "name" : "Mixed",
+      "percentage" : 70.4
+    },
+    {
+      "name" : "Black",
+      "percentage" : 15.8
+    },
+    {
+      "name" : "White",
+      "percentage" : 13.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.3
+    }
+  ],
+  "DZ" : [
+    {
+      "name" : "Arab-Berber",
+      "percentage" : 99
+    },
+    {
+      "name" : "European",
+      "percentage" : 1
+    }
+  ],
+  "EC" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 71.9
+    },
+    {
+      "name" : "Montubio",
+      "percentage" : 7.4
+    },
+    {
+      "name" : "Afro-Ecuadorian",
+      "percentage" : 7.2
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 7
+    },
+    {
+      "name" : "White",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.4
+    }
+  ],
+  "EE" : [
+    {
+      "name" : "Estonian",
+      "percentage" : 68.5
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 25.1
+    },
+    {
+      "name" : "Ukrainian",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Belarusian",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.3
+    }
+  ],
+  "EG" : [
+    {
+      "name" : "Egyptian",
+      "percentage" : 91
+    },
+    {
+      "name" : "Nubian",
+      "percentage" : 2
+    },
+    {
+      "name" : "Bedouin",
+      "percentage" : 2
+    },
+    {
+      "name" : "Beja",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4
+    }
+  ],
+  "ER" : [
+    {
+      "name" : "Tigrinya",
+      "percentage" : 55
+    },
+    {
+      "name" : "Tigre",
+      "percentage" : 30
+    },
+    {
+      "name" : "Saho",
+      "percentage" : 4
+    },
+    {
+      "name" : "Kunama",
+      "percentage" : 2
+    },
+    {
+      "name" : "Rashaida",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7
+    }
+  ],
+  "ES" : [
+    {
+      "name" : "Spanish",
+      "percentage" : 84.8
+    },
+    {
+      "name" : "Catalan",
+      "percentage" : 8
+    },
+    {
+      "name" : "Galician",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "Basque",
+      "percentage" : 2.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.2
+    }
+  ],
+  "ET" : [
+    {
+      "name" : "Oromo",
+      "percentage" : 34.4
+    },
+    {
+      "name" : "Amhara",
+      "percentage" : 27
+    },
+    {
+      "name" : "Somali",
+      "percentage" : 6.2
+    },
+    {
+      "name" : "Tigray",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "Sidama",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 22.3
+    }
+  ],
+  "FI" : [
+    {
+      "name" : "Finnish",
+      "percentage" : 86.9
+    },
+    {
+      "name" : "Swedish",
+      "percentage" : 5.2
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.6
+    }
+  ],
+  "FJ" : [
+    {
+      "name" : "iTaukei (Fijian)",
+      "percentage" : 56.8
+    },
+    {
+      "name" : "Indo-Fijian",
+      "percentage" : 37.5
+    },
+    {
+      "name" : "Rotuman",
+      "percentage" : 1.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.5
+    }
+  ],
+  "FM" : [
+    {
+      "name" : "Chuukese",
+      "percentage" : 48.8
+    },
+    {
+      "name" : "Pohnpeian",
+      "percentage" : 24.2
+    },
+    {
+      "name" : "Kosraean",
+      "percentage" : 6.2
+    },
+    {
+      "name" : "Yapese",
+      "percentage" : 5.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 15.6
+    }
+  ],
+  "FR" : [
+    {
+      "name" : "French (Celtic/Latin/Teutonic)",
+      "percentage" : 87
+    },
+    {
+      "name" : "North African",
+      "percentage" : 4
+    },
+    {
+      "name" : "Sub-Saharan African",
+      "percentage" : 3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6
+    }
+  ],
+  "GA" : [
+    {
+      "name" : "Fang",
+      "percentage" : 28.6
+    },
+    {
+      "name" : "Punu/Shira",
+      "percentage" : 10
+    },
+    {
+      "name" : "Nzabi/Duma",
+      "percentage" : 8.9
+    },
+    {
+      "name" : "Mbete/Teke",
+      "percentage" : 4.3
+    },
+    {
+      "name" : "Other Bantu",
+      "percentage" : 41.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.5
+    }
+  ],
+  "GB" : [
+    {
+      "name" : "White British/Irish",
+      "percentage" : 87.2
+    },
+    {
+      "name" : "Asian/Asian British",
+      "percentage" : 6.9
+    },
+    {
+      "name" : "Black/African/Caribbean",
+      "percentage" : 3
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.9
+    }
+  ],
+  "GD" : [
+    {
+      "name" : "Afro-Grenadian",
+      "percentage" : 82.4
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 13.3
+    },
+    {
+      "name" : "East Indian",
+      "percentage" : 2.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.1
+    }
+  ],
+  "GE" : [
+    {
+      "name" : "Georgian",
+      "percentage" : 86.8
+    },
+    {
+      "name" : "Azeri",
+      "percentage" : 6.3
+    },
+    {
+      "name" : "Armenian",
+      "percentage" : 4.5
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 0.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.7
+    }
+  ],
+  "GH" : [
+    {
+      "name" : "Akan",
+      "percentage" : 47.5
+    },
+    {
+      "name" : "Mole-Dagbani",
+      "percentage" : 16.6
+    },
+    {
+      "name" : "Ewe",
+      "percentage" : 13.9
+    },
+    {
+      "name" : "Ga-Dangme",
+      "percentage" : 7.4
+    },
+    {
+      "name" : "Gurma",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.9
+    }
+  ],
+  "GM" : [
+    {
+      "name" : "Mandinka/Jahanka",
+      "percentage" : 33.8
+    },
+    {
+      "name" : "Fula/Tukulur",
+      "percentage" : 22.1
+    },
+    {
+      "name" : "Wolof",
+      "percentage" : 12.2
+    },
+    {
+      "name" : "Jola/Karoninka",
+      "percentage" : 10.9
+    },
+    {
+      "name" : "Serahule",
+      "percentage" : 7.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 13.8
+    }
+  ],
+  "GN" : [
+    {
+      "name" : "Fulani (Peuhl)",
+      "percentage" : 33.4
+    },
+    {
+      "name" : "Malinke",
+      "percentage" : 29.4
+    },
+    {
+      "name" : "Soussou",
+      "percentage" : 21.2
+    },
+    {
+      "name" : "Guerze",
+      "percentage" : 7.8
+    },
+    {
+      "name" : "Kissi",
+      "percentage" : 6.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "GQ" : [
+    {
+      "name" : "Fang",
+      "percentage" : 85.7
+    },
+    {
+      "name" : "Bubi",
+      "percentage" : 6.5
+    },
+    {
+      "name" : "Ndowe",
+      "percentage" : 3.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.2
+    }
+  ],
+  "GR" : [
+    {
+      "name" : "Greek",
+      "percentage" : 91.6
+    },
+    {
+      "name" : "Albanian",
+      "percentage" : 4.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4
+    }
+  ],
+  "GT" : [
+    {
+      "name" : "Ladino (Mestizo)",
+      "percentage" : 56
+    },
+    {
+      "name" : "Maya",
+      "percentage" : 41.7
+    },
+    {
+      "name" : "Xinca",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Garifuna",
+      "percentage" : 0.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.4
+    }
+  ],
+  "GW" : [
+    {
+      "name" : "Balanta",
+      "percentage" : 30
+    },
+    {
+      "name" : "Fula",
+      "percentage" : 20
+    },
+    {
+      "name" : "Mandinka",
+      "percentage" : 14
+    },
+    {
+      "name" : "Papel",
+      "percentage" : 9
+    },
+    {
+      "name" : "Manjaco",
+      "percentage" : 9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 18
+    }
+  ],
+  "GY" : [
+    {
+      "name" : "East Indian",
+      "percentage" : 39.8
+    },
+    {
+      "name" : "African descent",
+      "percentage" : 29.3
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 19.9
+    },
+    {
+      "name" : "Amerindian",
+      "percentage" : 10.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.5
+    }
+  ],
+  "HN" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 90
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 7
+    },
+    {
+      "name" : "Black",
+      "percentage" : 2
+    },
+    {
+      "name" : "White",
+      "percentage" : 1
+    }
+  ],
+  "HR" : [
+    {
+      "name" : "Croat",
+      "percentage" : 90.4
+    },
+    {
+      "name" : "Serb",
+      "percentage" : 4.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5.2
+    }
+  ],
+  "HT" : [
+    {
+      "name" : "Black",
+      "percentage" : 95.5
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 4.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.3
+    }
+  ],
+  "HU" : [
+    {
+      "name" : "Hungarian",
+      "percentage" : 85.6
+    },
+    {
+      "name" : "Roma",
+      "percentage" : 3.2
+    },
+    {
+      "name" : "German",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Slovak",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.2
+    }
+  ],
+  "ID" : [
+    {
+      "name" : "Javanese",
+      "percentage" : 40.1
+    },
+    {
+      "name" : "Sundanese",
+      "percentage" : 15.5
+    },
+    {
+      "name" : "Batak",
+      "percentage" : 3.6
+    },
+    {
+      "name" : "Sulawesi",
+      "percentage" : 3.2
+    },
+    {
+      "name" : "Madurese",
+      "percentage" : 3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 34.6
+    }
+  ],
+  "IE" : [
+    {
+      "name" : "Irish",
+      "percentage" : 82.2
+    },
+    {
+      "name" : "Other White",
+      "percentage" : 9.5
+    },
+    {
+      "name" : "Asian",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Black",
+      "percentage" : 1.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.8
+    }
+  ],
+  "IL" : [
+    {
+      "name" : "Jewish",
+      "percentage" : 74.2
+    },
+    {
+      "name" : "Arab",
+      "percentage" : 20.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.9
+    }
+  ],
+  "IN" : [
+    {
+      "name" : "Indo-Aryan",
+      "percentage" : 72
+    },
+    {
+      "name" : "Dravidian",
+      "percentage" : 25
+    },
+    {
+      "name" : "Mongoloid & Other",
+      "percentage" : 3
+    }
+  ],
+  "IQ" : [
+    {
+      "name" : "Arab",
+      "percentage" : 75
+    },
+    {
+      "name" : "Kurdish",
+      "percentage" : 20
+    },
+    {
+      "name" : "Turkmen",
+      "percentage" : 3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "IR" : [
+    {
+      "name" : "Persian",
+      "percentage" : 61
+    },
+    {
+      "name" : "Azeri",
+      "percentage" : 16
+    },
+    {
+      "name" : "Kurd",
+      "percentage" : 10
+    },
+    {
+      "name" : "Lur",
+      "percentage" : 6
+    },
+    {
+      "name" : "Baloch",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "IS" : [
+    {
+      "name" : "Icelandic",
+      "percentage" : 91.7
+    },
+    {
+      "name" : "Polish",
+      "percentage" : 2.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5.5
+    }
+  ],
+  "IT" : [
+    {
+      "name" : "Italian",
+      "percentage" : 91.5
+    },
+    {
+      "name" : "Romanian",
+      "percentage" : 3.7
+    },
+    {
+      "name" : "Moroccan",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Albanian",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.3
+    }
+  ],
+  "JM" : [
+    {
+      "name" : "Afro-Jamaican",
+      "percentage" : 92.1
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "East Indian",
+      "percentage" : 0.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "JO" : [
+    {
+      "name" : "Jordanian Arab",
+      "percentage" : 69.3
+    },
+    {
+      "name" : "Syrian",
+      "percentage" : 13.3
+    },
+    {
+      "name" : "Palestinian",
+      "percentage" : 6.7
+    },
+    {
+      "name" : "Egyptian",
+      "percentage" : 6.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4
+    }
+  ],
+  "JP" : [
+    {
+      "name" : "Japanese",
+      "percentage" : 97.9
+    },
+    {
+      "name" : "Chinese",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Korean",
+      "percentage" : 0.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.1
+    }
+  ],
+  "KE" : [
+    {
+      "name" : "Kikuyu",
+      "percentage" : 17.1
+    },
+    {
+      "name" : "Luhya",
+      "percentage" : 14.3
+    },
+    {
+      "name" : "Kalenjin",
+      "percentage" : 13.4
+    },
+    {
+      "name" : "Luo",
+      "percentage" : 10.7
+    },
+    {
+      "name" : "Kamba",
+      "percentage" : 10.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 34.4
+    }
+  ],
+  "KG" : [
+    {
+      "name" : "Kyrgyz",
+      "percentage" : 73.5
+    },
+    {
+      "name" : "Uzbek",
+      "percentage" : 14.7
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 5.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.3
+    }
+  ],
+  "KH" : [
+    {
+      "name" : "Khmer",
+      "percentage" : 97.6
+    },
+    {
+      "name" : "Cham",
+      "percentage" : 1.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.2
+    }
+  ],
+  "KI" : [
+    {
+      "name" : "Micronesian (I-Kiribati)",
+      "percentage" : 96.2
+    },
+    {
+      "name" : "Part Micronesian",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "KM" : [
+    {
+      "name" : "Comorian",
+      "percentage" : 85.9
+    },
+    {
+      "name" : "Makua",
+      "percentage" : 4.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.8
+    }
+  ],
+  "KN" : [
+    {
+      "name" : "Afro-Caribbean",
+      "percentage" : 92.5
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 3
+    },
+    {
+      "name" : "White",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "East Indian",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.9
+    }
+  ],
+  "KP" : [
+    {
+      "name" : "Korean",
+      "percentage" : 99
+    },
+    {
+      "name" : "Chinese",
+      "percentage" : 1
+    }
+  ],
+  "KR" : [
+    {
+      "name" : "Korean",
+      "percentage" : 96.6
+    },
+    {
+      "name" : "Chinese",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.6
+    }
+  ],
+  "KW" : [
+    {
+      "name" : "Kuwaiti Arab",
+      "percentage" : 30.4
+    },
+    {
+      "name" : "Other Arab",
+      "percentage" : 39.2
+    },
+    {
+      "name" : "South Asian",
+      "percentage" : 20
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10.4
+    }
+  ],
+  "KZ" : [
+    {
+      "name" : "Kazakh",
+      "percentage" : 68
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 19.3
+    },
+    {
+      "name" : "Uzbek",
+      "percentage" : 3.2
+    },
+    {
+      "name" : "Uyghur",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8
+    }
+  ],
+  "LA" : [
+    {
+      "name" : "Lao",
+      "percentage" : 53.2
+    },
+    {
+      "name" : "Khmou",
+      "percentage" : 11
+    },
+    {
+      "name" : "Hmong",
+      "percentage" : 9.2
+    },
+    {
+      "name" : "Phouthay",
+      "percentage" : 3.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 23.2
+    }
+  ],
+  "LB" : [
+    {
+      "name" : "Arab",
+      "percentage" : 95
+    },
+    {
+      "name" : "Armenian",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "LC" : [
+    {
+      "name" : "African descent",
+      "percentage" : 85.3
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 10.9
+    },
+    {
+      "name" : "East Indian",
+      "percentage" : 2.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.6
+    }
+  ],
+  "LI" : [
+    {
+      "name" : "Liechtensteiner",
+      "percentage" : 65.6
+    },
+    {
+      "name" : "Swiss",
+      "percentage" : 9.7
+    },
+    {
+      "name" : "Austrian",
+      "percentage" : 5.8
+    },
+    {
+      "name" : "German",
+      "percentage" : 4.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 14.6
+    }
+  ],
+  "LK" : [
+    {
+      "name" : "Sinhalese",
+      "percentage" : 74.9
+    },
+    {
+      "name" : "Sri Lankan Tamil",
+      "percentage" : 11.2
+    },
+    {
+      "name" : "Sri Lankan Moors",
+      "percentage" : 9.2
+    },
+    {
+      "name" : "Indian Tamil",
+      "percentage" : 4.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.5
+    }
+  ],
+  "LR" : [
+    {
+      "name" : "Kpelle",
+      "percentage" : 20.3
+    },
+    {
+      "name" : "Bassa",
+      "percentage" : 13.4
+    },
+    {
+      "name" : "Grebo",
+      "percentage" : 10
+    },
+    {
+      "name" : "Gio",
+      "percentage" : 8
+    },
+    {
+      "name" : "Mano",
+      "percentage" : 7.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 40.4
+    }
+  ],
+  "LS" : [
+    {
+      "name" : "Sotho",
+      "percentage" : 99.7
+    },
+    {
+      "name" : "European",
+      "percentage" : 0.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.1
+    }
+  ],
+  "LT" : [
+    {
+      "name" : "Lithuanian",
+      "percentage" : 84.2
+    },
+    {
+      "name" : "Polish",
+      "percentage" : 6.6
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 5.8
+    },
+    {
+      "name" : "Belarusian",
+      "percentage" : 1.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.2
+    }
+  ],
+  "LU" : [
+    {
+      "name" : "Luxembourgish",
+      "percentage" : 52.1
+    },
+    {
+      "name" : "Portuguese",
+      "percentage" : 15.7
+    },
+    {
+      "name" : "French",
+      "percentage" : 7.7
+    },
+    {
+      "name" : "Italian",
+      "percentage" : 3.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 20.9
+    }
+  ],
+  "LV" : [
+    {
+      "name" : "Latvian",
+      "percentage" : 62.1
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 25.1
+    },
+    {
+      "name" : "Belarusian",
+      "percentage" : 3.3
+    },
+    {
+      "name" : "Ukrainian",
+      "percentage" : 2.2
+    },
+    {
+      "name" : "Polish",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5.2
+    }
+  ],
+  "LY" : [
+    {
+      "name" : "Arab-Berber",
+      "percentage" : 97
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3
+    }
+  ],
+  "MA" : [
+    {
+      "name" : "Arab-Berber",
+      "percentage" : 99
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "MC" : [
+    {
+      "name" : "French",
+      "percentage" : 21.6
+    },
+    {
+      "name" : "Monegasque",
+      "percentage" : 21.6
+    },
+    {
+      "name" : "Italian",
+      "percentage" : 19.4
+    },
+    {
+      "name" : "British",
+      "percentage" : 7.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 29.9
+    }
+  ],
+  "MD" : [
+    {
+      "name" : "Moldovan/Romanian",
+      "percentage" : 75.1
+    },
+    {
+      "name" : "Ukrainian",
+      "percentage" : 6.6
+    },
+    {
+      "name" : "Gagauz",
+      "percentage" : 4.6
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 4.1
+    },
+    {
+      "name" : "Bulgarian",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.7
+    }
+  ],
+  "ME" : [
+    {
+      "name" : "Montenegrin",
+      "percentage" : 44.98
+    },
+    {
+      "name" : "Serbian",
+      "percentage" : 28.73
+    },
+    {
+      "name" : "Bosniak",
+      "percentage" : 8.65
+    },
+    {
+      "name" : "Albanian",
+      "percentage" : 4.91
+    },
+    {
+      "name" : "Other",
+      "percentage" : 12.73
+    }
+  ],
+  "MG" : [
+    {
+      "name" : "Merina",
+      "percentage" : 26
+    },
+    {
+      "name" : "Betsimisaraka",
+      "percentage" : 15
+    },
+    {
+      "name" : "Betsileo",
+      "percentage" : 12
+    },
+    {
+      "name" : "Tsimihety",
+      "percentage" : 6
+    },
+    {
+      "name" : "Sakalava",
+      "percentage" : 6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 35
+    }
+  ],
+  "MH" : [
+    {
+      "name" : "Marshallese",
+      "percentage" : 92.1
+    },
+    {
+      "name" : "Mixed (Marshallese/non-Marshallese)",
+      "percentage" : 5.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "MK" : [
+    {
+      "name" : "Macedonian",
+      "percentage" : 64.2
+    },
+    {
+      "name" : "Albanian",
+      "percentage" : 25.2
+    },
+    {
+      "name" : "Turkish",
+      "percentage" : 3.9
+    },
+    {
+      "name" : "Romani",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "Serb",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.2
+    }
+  ],
+  "ML" : [
+    {
+      "name" : "Bambara",
+      "percentage" : 33.3
+    },
+    {
+      "name" : "Fulani (Peul)",
+      "percentage" : 13.3
+    },
+    {
+      "name" : "Sarakole/Soninke",
+      "percentage" : 9.8
+    },
+    {
+      "name" : "Senufo",
+      "percentage" : 9.6
+    },
+    {
+      "name" : "Malinke",
+      "percentage" : 8.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 25.2
+    }
+  ],
+  "MM" : [
+    {
+      "name" : "Bamar",
+      "percentage" : 68
+    },
+    {
+      "name" : "Shan",
+      "percentage" : 9
+    },
+    {
+      "name" : "Karen",
+      "percentage" : 7
+    },
+    {
+      "name" : "Rakhine",
+      "percentage" : 4
+    },
+    {
+      "name" : "Chinese",
+      "percentage" : 3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9
+    }
+  ],
+  "MN" : [
+    {
+      "name" : "Khalkh Mongol",
+      "percentage" : 84.5
+    },
+    {
+      "name" : "Kazakh",
+      "percentage" : 3.9
+    },
+    {
+      "name" : "Dorvod",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "Bayad",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.9
+    }
+  ],
+  "MR" : [
+    {
+      "name" : "Haratin",
+      "percentage" : 40
+    },
+    {
+      "name" : "Bidhan",
+      "percentage" : 30
+    },
+    {
+      "name" : "Sub-Saharan African",
+      "percentage" : 30
+    }
+  ],
+  "MT" : [
+    {
+      "name" : "Maltese",
+      "percentage" : 95.6
+    },
+    {
+      "name" : "British",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.1
+    }
+  ],
+  "MU" : [
+    {
+      "name" : "Indo-Mauritian",
+      "percentage" : 67.3
+    },
+    {
+      "name" : "Creole",
+      "percentage" : 27
+    },
+    {
+      "name" : "Sino-Mauritian",
+      "percentage" : 3
+    },
+    {
+      "name" : "Franco-Mauritian",
+      "percentage" : 2.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.4
+    }
+  ],
+  "MV" : [
+    {
+      "name" : "South Asian (mixed)",
+      "percentage" : 100
+    }
+  ],
+  "MW" : [
+    {
+      "name" : "Chewa",
+      "percentage" : 34.9
+    },
+    {
+      "name" : "Tumbuka",
+      "percentage" : 8.8
+    },
+    {
+      "name" : "Lomwe",
+      "percentage" : 8.6
+    },
+    {
+      "name" : "Yao",
+      "percentage" : 8
+    },
+    {
+      "name" : "Ngoni",
+      "percentage" : 6.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 33
+    }
+  ],
+  "MX" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 62
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 21
+    },
+    {
+      "name" : "White (European)",
+      "percentage" : 12.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.7
+    }
+  ],
+  "MY" : [
+    {
+      "name" : "Malay",
+      "percentage" : 69.6
+    },
+    {
+      "name" : "Chinese",
+      "percentage" : 22.6
+    },
+    {
+      "name" : "Indian",
+      "percentage" : 6.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "MZ" : [
+    {
+      "name" : "Makhuwa",
+      "percentage" : 15.3
+    },
+    {
+      "name" : "Tsonga",
+      "percentage" : 8.6
+    },
+    {
+      "name" : "Makonde",
+      "percentage" : 8.5
+    },
+    {
+      "name" : "Sena/Nsenga",
+      "percentage" : 6.5
+    },
+    {
+      "name" : "Zhuawo",
+      "percentage" : 5.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 55.8
+    }
+  ],
+  "NA" : [
+    {
+      "name" : "Ovambo",
+      "percentage" : 49.5
+    },
+    {
+      "name" : "Kavango",
+      "percentage" : 9.1
+    },
+    {
+      "name" : "Herero",
+      "percentage" : 7.4
+    },
+    {
+      "name" : "Damara",
+      "percentage" : 7.4
+    },
+    {
+      "name" : "Coloured",
+      "percentage" : 6.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 19.8
+    }
+  ],
+  "NE" : [
+    {
+      "name" : "Hausa",
+      "percentage" : 53.1
+    },
+    {
+      "name" : "Zarma/Songhai",
+      "percentage" : 21.2
+    },
+    {
+      "name" : "Tuareg",
+      "percentage" : 11
+    },
+    {
+      "name" : "Fulani",
+      "percentage" : 6.5
+    },
+    {
+      "name" : "Kanuri",
+      "percentage" : 5.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.3
+    }
+  ],
+  "NG" : [
+    {
+      "name" : "Hausa",
+      "percentage" : 30
+    },
+    {
+      "name" : "Yoruba",
+      "percentage" : 15.5
+    },
+    {
+      "name" : "Igbo",
+      "percentage" : 15.2
+    },
+    {
+      "name" : "Fulani",
+      "percentage" : 6
+    },
+    {
+      "name" : "Tiv",
+      "percentage" : 2.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 30.9
+    }
+  ],
+  "NI" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 69
+    },
+    {
+      "name" : "White",
+      "percentage" : 17
+    },
+    {
+      "name" : "Black",
+      "percentage" : 9
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 5
+    }
+  ],
+  "NL" : [
+    {
+      "name" : "Dutch",
+      "percentage" : 76.9
+    },
+    {
+      "name" : "EU other",
+      "percentage" : 6.4
+    },
+    {
+      "name" : "Turkish",
+      "percentage" : 2.4
+    },
+    {
+      "name" : "Moroccan",
+      "percentage" : 2.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11.9
+    }
+  ],
+  "NO" : [
+    {
+      "name" : "Norwegian",
+      "percentage" : 81.5
+    },
+    {
+      "name" : "Other European",
+      "percentage" : 8.6
+    },
+    {
+      "name" : "Asian",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "African",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.7
+    }
+  ],
+  "NP" : [
+    {
+      "name" : "Chhetri",
+      "percentage" : 16.5
+    },
+    {
+      "name" : "Brahman (Hill)",
+      "percentage" : 12.2
+    },
+    {
+      "name" : "Magar",
+      "percentage" : 7.1
+    },
+    {
+      "name" : "Tharu",
+      "percentage" : 6.6
+    },
+    {
+      "name" : "Tamang",
+      "percentage" : 5.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 51.8
+    }
+  ],
+  "NR" : [
+    {
+      "name" : "Nauruan",
+      "percentage" : 88.9
+    },
+    {
+      "name" : "Pacific Islander",
+      "percentage" : 10.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.6
+    }
+  ],
+  "NZ" : [
+    {
+      "name" : "European",
+      "percentage" : 64.1
+    },
+    {
+      "name" : "Māori",
+      "percentage" : 16.5
+    },
+    {
+      "name" : "Asian",
+      "percentage" : 15.1
+    },
+    {
+      "name" : "Pacific peoples",
+      "percentage" : 8.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.5
+    }
+  ],
+  "OM" : [
+    {
+      "name" : "Arab",
+      "percentage" : 74
+    },
+    {
+      "name" : "South Asian",
+      "percentage" : 22.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.5
+    }
+  ],
+  "PA" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 65
+    },
+    {
+      "name" : "Native Amerindian",
+      "percentage" : 12.3
+    },
+    {
+      "name" : "Black/Afro-Panamanian",
+      "percentage" : 9.2
+    },
+    {
+      "name" : "Mulatto",
+      "percentage" : 6.8
+    },
+    {
+      "name" : "White",
+      "percentage" : 6.7
+    }
+  ],
+  "PE" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 60.2
+    },
+    {
+      "name" : "Amerindian",
+      "percentage" : 25.8
+    },
+    {
+      "name" : "White",
+      "percentage" : 5.9
+    },
+    {
+      "name" : "African descent",
+      "percentage" : 3.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.4
+    }
+  ],
+  "PG" : [
+    {
+      "name" : "Melanesian",
+      "percentage" : 87.3
+    },
+    {
+      "name" : "Papuan",
+      "percentage" : 8.4
+    },
+    {
+      "name" : "Negritos",
+      "percentage" : 1.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.1
+    }
+  ],
+  "PH" : [
+    {
+      "name" : "Tagalog",
+      "percentage" : 28.1
+    },
+    {
+      "name" : "Cebuano",
+      "percentage" : 13.1
+    },
+    {
+      "name" : "Ilocano",
+      "percentage" : 9
+    },
+    {
+      "name" : "Bisaya/Binisaya",
+      "percentage" : 7.6
+    },
+    {
+      "name" : "Hiligaynon",
+      "percentage" : 7.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 34.7
+    }
+  ],
+  "PK" : [
+    {
+      "name" : "Punjabi",
+      "percentage" : 44.7
+    },
+    {
+      "name" : "Pashtun",
+      "percentage" : 15.4
+    },
+    {
+      "name" : "Sindhi",
+      "percentage" : 14.1
+    },
+    {
+      "name" : "Saraiki",
+      "percentage" : 8.4
+    },
+    {
+      "name" : "Muhajirs",
+      "percentage" : 7.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.8
+    }
+  ],
+  "PL" : [
+    {
+      "name" : "Polish",
+      "percentage" : 97
+    },
+    {
+      "name" : "German",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Belarusian",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Ukrainian",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.7
+    }
+  ],
+  "PT" : [
+    {
+      "name" : "Portuguese",
+      "percentage" : 95
+    },
+    {
+      "name" : "Brazilian",
+      "percentage" : 1.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.6
+    }
+  ],
+  "PW" : [
+    {
+      "name" : "Palauan",
+      "percentage" : 70.6
+    },
+    {
+      "name" : "Asian",
+      "percentage" : 26.5
+    },
+    {
+      "name" : "Carolinian",
+      "percentage" : 1.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.7
+    }
+  ],
+  "PY" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 95
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "QA" : [
+    {
+      "name" : "Qatari Arab",
+      "percentage" : 15
+    },
+    {
+      "name" : "South Asian",
+      "percentage" : 45
+    },
+    {
+      "name" : "Other Arab",
+      "percentage" : 25
+    },
+    {
+      "name" : "Other",
+      "percentage" : 15
+    }
+  ],
+  "RO" : [
+    {
+      "name" : "Romanian",
+      "percentage" : 83.5
+    },
+    {
+      "name" : "Hungarian",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "Roma",
+      "percentage" : 3.1
+    },
+    {
+      "name" : "Ukrainian",
+      "percentage" : 0.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7
+    }
+  ],
+  "RS" : [
+    {
+      "name" : "Serbian",
+      "percentage" : 83.3
+    },
+    {
+      "name" : "Hungarian",
+      "percentage" : 3.5
+    },
+    {
+      "name" : "Romani",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Bosniak",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.1
+    }
+  ],
+  "RU" : [
+    {
+      "name" : "Russian",
+      "percentage" : 77.7
+    },
+    {
+      "name" : "Tatar",
+      "percentage" : 3.7
+    },
+    {
+      "name" : "Ukrainian",
+      "percentage" : 1.4
+    },
+    {
+      "name" : "Bashkir",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Chuvash",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 15.1
+    }
+  ],
+  "RW" : [
+    {
+      "name" : "Hutu",
+      "percentage" : 85
+    },
+    {
+      "name" : "Tutsi",
+      "percentage" : 14
+    },
+    {
+      "name" : "Twa",
+      "percentage" : 1
+    }
+  ],
+  "SA" : [
+    {
+      "name" : "Arab",
+      "percentage" : 90
+    },
+    {
+      "name" : "Afro-Asian",
+      "percentage" : 10
+    }
+  ],
+  "SB" : [
+    {
+      "name" : "Melanesian",
+      "percentage" : 95.3
+    },
+    {
+      "name" : "Polynesian",
+      "percentage" : 3.1
+    },
+    {
+      "name" : "Micronesian",
+      "percentage" : 1.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.4
+    }
+  ],
+  "SD" : [
+    {
+      "name" : "Arab",
+      "percentage" : 70
+    },
+    {
+      "name" : "Fur",
+      "percentage" : 13
+    },
+    {
+      "name" : "Beja",
+      "percentage" : 6
+    },
+    {
+      "name" : "Nuba",
+      "percentage" : 6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "SE" : [
+    {
+      "name" : "Swedish",
+      "percentage" : 80.3
+    },
+    {
+      "name" : "Finnish",
+      "percentage" : 5
+    },
+    {
+      "name" : "Immigrant/Other",
+      "percentage" : 14.7
+    }
+  ],
+  "SG" : [
+    {
+      "name" : "Chinese",
+      "percentage" : 74.2
+    },
+    {
+      "name" : "Malay",
+      "percentage" : 13.7
+    },
+    {
+      "name" : "Indian",
+      "percentage" : 8.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.2
+    }
+  ],
+  "SI" : [
+    {
+      "name" : "Slovenian",
+      "percentage" : 83.1
+    },
+    {
+      "name" : "Serb",
+      "percentage" : 2
+    },
+    {
+      "name" : "Croat",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Bosniak",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 12
+    }
+  ],
+  "SK" : [
+    {
+      "name" : "Slovak",
+      "percentage" : 80.7
+    },
+    {
+      "name" : "Hungarian",
+      "percentage" : 8.5
+    },
+    {
+      "name" : "Roma",
+      "percentage" : 2
+    },
+    {
+      "name" : "Czech",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.2
+    }
+  ],
+  "SL" : [
+    {
+      "name" : "Temne",
+      "percentage" : 35.5
+    },
+    {
+      "name" : "Mende",
+      "percentage" : 33.2
+    },
+    {
+      "name" : "Limbas",
+      "percentage" : 6.4
+    },
+    {
+      "name" : "Konos",
+      "percentage" : 5.4
+    },
+    {
+      "name" : "Fullah",
+      "percentage" : 3.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 16.1
+    }
+  ],
+  "SM" : [
+    {
+      "name" : "Sammarinese",
+      "percentage" : 81.6
+    },
+    {
+      "name" : "Italian",
+      "percentage" : 17.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.3
+    }
+  ],
+  "SN" : [
+    {
+      "name" : "Wolof",
+      "percentage" : 37.1
+    },
+    {
+      "name" : "Pular",
+      "percentage" : 26.2
+    },
+    {
+      "name" : "Serer",
+      "percentage" : 17
+    },
+    {
+      "name" : "Mandinka",
+      "percentage" : 5.6
+    },
+    {
+      "name" : "Jola",
+      "percentage" : 4.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.9
+    }
+  ],
+  "SO" : [
+    {
+      "name" : "Somali",
+      "percentage" : 85
+    },
+    {
+      "name" : "Bantu and other non-Somali",
+      "percentage" : 15
+    }
+  ],
+  "SR" : [
+    {
+      "name" : "East Indian",
+      "percentage" : 27.4
+    },
+    {
+      "name" : "Maroon",
+      "percentage" : 21.7
+    },
+    {
+      "name" : "Creole",
+      "percentage" : 15.7
+    },
+    {
+      "name" : "Javanese",
+      "percentage" : 13.7
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 13.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.1
+    }
+  ],
+  "SS" : [
+    {
+      "name" : "Dinka",
+      "percentage" : 35.8
+    },
+    {
+      "name" : "Nuer",
+      "percentage" : 15.6
+    },
+    {
+      "name" : "Shilluk",
+      "percentage" : 4.5
+    },
+    {
+      "name" : "Bari",
+      "percentage" : 4.7
+    },
+    {
+      "name" : "Kakwa",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 35.4
+    }
+  ],
+  "ST" : [
+    {
+      "name" : "Mestico/Forro",
+      "percentage" : 74
+    },
+    {
+      "name" : "Cape Verdean",
+      "percentage" : 3.4
+    },
+    {
+      "name" : "Angolar",
+      "percentage" : 3.4
+    },
+    {
+      "name" : "European",
+      "percentage" : 3.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 15.8
+    }
+  ],
+  "SV" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 86.3
+    },
+    {
+      "name" : "White",
+      "percentage" : 12.7
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 0.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.8
+    }
+  ],
+  "SY" : [
+    {
+      "name" : "Arab",
+      "percentage" : 90.3
+    },
+    {
+      "name" : "Kurdish",
+      "percentage" : 6.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.3
+    }
+  ],
+  "TD" : [
+    {
+      "name" : "Sara",
+      "percentage" : 27.7
+    },
+    {
+      "name" : "Arab",
+      "percentage" : 12.3
+    },
+    {
+      "name" : "Mayo-Kebbi",
+      "percentage" : 11.5
+    },
+    {
+      "name" : "Kanem-Bornou",
+      "percentage" : 9
+    },
+    {
+      "name" : "Ouaddai",
+      "percentage" : 8.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 30.8
+    }
+  ],
+  "TG" : [
+    {
+      "name" : "Ewe",
+      "percentage" : 30.6
+    },
+    {
+      "name" : "Mina",
+      "percentage" : 14
+    },
+    {
+      "name" : "Tem",
+      "percentage" : 9.2
+    },
+    {
+      "name" : "Kabye",
+      "percentage" : 8.8
+    },
+    {
+      "name" : "Waama",
+      "percentage" : 6.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 31.2
+    }
+  ],
+  "TH" : [
+    {
+      "name" : "Thai",
+      "percentage" : 97.5
+    },
+    {
+      "name" : "Burmese",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.2
+    }
+  ],
+  "TJ" : [
+    {
+      "name" : "Tajik",
+      "percentage" : 84.3
+    },
+    {
+      "name" : "Uzbek",
+      "percentage" : 13.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.9
+    }
+  ],
+  "TL" : [
+    {
+      "name" : "Austronesian (mixed)",
+      "percentage" : 99.2
+    },
+    {
+      "name" : "Portuguese",
+      "percentage" : 0.8
+    }
+  ],
+  "TM" : [
+    {
+      "name" : "Turkmen",
+      "percentage" : 85
+    },
+    {
+      "name" : "Uzbek",
+      "percentage" : 5
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6
+    }
+  ],
+  "TN" : [
+    {
+      "name" : "Arab-Berber",
+      "percentage" : 98
+    },
+    {
+      "name" : "European",
+      "percentage" : 1
+    },
+    {
+      "name" : "Jewish",
+      "percentage" : 0.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.9
+    }
+  ],
+  "TO" : [
+    {
+      "name" : "Tongan",
+      "percentage" : 97
+    },
+    {
+      "name" : "Part Tongan",
+      "percentage" : 0.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.2
+    }
+  ],
+  "TR" : [
+    {
+      "name" : "Turkish",
+      "percentage" : 72
+    },
+    {
+      "name" : "Kurdish",
+      "percentage" : 19
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9
+    }
+  ],
+  "TT" : [
+    {
+      "name" : "East Indian",
+      "percentage" : 35.4
+    },
+    {
+      "name" : "African descent",
+      "percentage" : 34.2
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 15.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 15.1
+    }
+  ],
+  "TV" : [
+    {
+      "name" : "Tuvaluan",
+      "percentage" : 96
+    },
+    {
+      "name" : "Micronesian",
+      "percentage" : 4
+    }
+  ],
+  "TW" : [
+    {
+      "name" : "Taiwanese (Hoklo)",
+      "percentage" : 70
+    },
+    {
+      "name" : "Hakka",
+      "percentage" : 14
+    },
+    {
+      "name" : "Mainland Chinese",
+      "percentage" : 11
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 2.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.6
+    }
+  ],
+  "TZ" : [
+    {
+      "name" : "Sukuma",
+      "percentage" : 16
+    },
+    {
+      "name" : "Nyamwezi",
+      "percentage" : 8
+    },
+    {
+      "name" : "Chaga",
+      "percentage" : 5.1
+    },
+    {
+      "name" : "Haya",
+      "percentage" : 6
+    },
+    {
+      "name" : "Makonde",
+      "percentage" : 4.6
+    },
+    {
+      "name" : "Other African",
+      "percentage" : 60.3
+    }
+  ],
+  "UA" : [
+    {
+      "name" : "Ukrainian",
+      "percentage" : 77.8
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 17.3
+    },
+    {
+      "name" : "Belarusian",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Moldovan",
+      "percentage" : 0.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.8
+    }
+  ],
+  "UG" : [
+    {
+      "name" : "Baganda",
+      "percentage" : 16.5
+    },
+    {
+      "name" : "Banyankole",
+      "percentage" : 9.6
+    },
+    {
+      "name" : "Basoga",
+      "percentage" : 8.8
+    },
+    {
+      "name" : "Bakiga",
+      "percentage" : 7.1
+    },
+    {
+      "name" : "Iteso",
+      "percentage" : 7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 51
+    }
+  ],
+  "US" : [
+    {
+      "name" : "White",
+      "percentage" : 57.8
+    },
+    {
+      "name" : "Hispanic/Latino",
+      "percentage" : 18.7
+    },
+    {
+      "name" : "Black/African American",
+      "percentage" : 13.6
+    },
+    {
+      "name" : "Asian",
+      "percentage" : 6
+    },
+    {
+      "name" : "Native American",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.6
+    }
+  ],
+  "UY" : [
+    {
+      "name" : "White",
+      "percentage" : 87.7
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 5.3
+    },
+    {
+      "name" : "Black",
+      "percentage" : 4.6
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 2.4
+    }
+  ],
+  "UZ" : [
+    {
+      "name" : "Uzbek",
+      "percentage" : 83.8
+    },
+    {
+      "name" : "Tajik",
+      "percentage" : 4.8
+    },
+    {
+      "name" : "Kazakh",
+      "percentage" : 2.5
+    },
+    {
+      "name" : "Russian",
+      "percentage" : 2.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.6
+    }
+  ],
+  "VA" : [
+    {
+      "name" : "Italian, Swiss & other nationalities",
+      "percentage" : 100
+    }
+  ],
+  "VC" : [
+    {
+      "name" : "African descent",
+      "percentage" : 71.2
+    },
+    {
+      "name" : "Mixed",
+      "percentage" : 23
+    },
+    {
+      "name" : "East Indian",
+      "percentage" : 3
+    },
+    {
+      "name" : "European",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.7
+    }
+  ],
+  "VE" : [
+    {
+      "name" : "Mestizo",
+      "percentage" : 51.6
+    },
+    {
+      "name" : "White",
+      "percentage" : 43.6
+    },
+    {
+      "name" : "Black",
+      "percentage" : 3.6
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 1.2
+    }
+  ],
+  "VN" : [
+    {
+      "name" : "Kinh (Viet)",
+      "percentage" : 85.7
+    },
+    {
+      "name" : "Tay",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Thai",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Muong",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.1
+    }
+  ],
+  "VU" : [
+    {
+      "name" : "Ni-Vanuatu (Melanesian)",
+      "percentage" : 97.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.4
+    }
+  ],
+  "WS" : [
+    {
+      "name" : "Samoan",
+      "percentage" : 96.2
+    },
+    {
+      "name" : "Samoan/New Zealander",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.1
+    }
+  ],
+  "XK" : [
+    {
+      "name" : "Albanian",
+      "percentage" : 92.9
+    },
+    {
+      "name" : "Bosniak",
+      "percentage" : 1.6
+    },
+    {
+      "name" : "Serb",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Gorani",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.9
+    }
+  ],
+  "YE" : [
+    {
+      "name" : "Arab",
+      "percentage" : 99
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "ZA" : [
+    {
+      "name" : "Black African",
+      "percentage" : 80.8
+    },
+    {
+      "name" : "Coloured",
+      "percentage" : 8.8
+    },
+    {
+      "name" : "White",
+      "percentage" : 7.8
+    },
+    {
+      "name" : "Indian/Asian",
+      "percentage" : 2.6
+    }
+  ],
+  "ZM" : [
+    {
+      "name" : "Bemba",
+      "percentage" : 21
+    },
+    {
+      "name" : "Tonga",
+      "percentage" : 13.6
+    },
+    {
+      "name" : "Chewa",
+      "percentage" : 7.4
+    },
+    {
+      "name" : "Lozi",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "Nsenga",
+      "percentage" : 5.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 47
+    }
+  ],
+  "ZW" : [
+    {
+      "name" : "Shona",
+      "percentage" : 82.8
+    },
+    {
+      "name" : "Ndebele",
+      "percentage" : 13.5
+    },
+    {
+      "name" : "Ndau",
+      "percentage" : 2.5
+    },
+    {
+      "name" : "European",
+      "percentage" : 0.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.8
+    }
+  ]
+}

@@ -30,6 +30,9 @@ let package = Package(
                 .product(name: "Geografy-Core-Map", package: "Geografy-Core-Map"),
                 .product(name: "Geografy-Core-Navigation", package: "Geografy-Core-Navigation"),
                 .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(

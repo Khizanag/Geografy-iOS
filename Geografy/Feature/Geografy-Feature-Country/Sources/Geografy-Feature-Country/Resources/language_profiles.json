@@ -1,0 +1,557 @@
+[
+  {
+    "countries" : [
+      "CN",
+      "TW",
+      "SG"
+    ],
+    "family" : "Sino-Tibetan",
+    "funFact" : "Mandarin has four tones — the same syllable in different tones means different things.",
+    "id" : "zh",
+    "name" : "Mandarin Chinese",
+    "nativeName" : "普通话",
+    "script" : "Chinese Characters",
+    "speakerCount" : 1118
+  },
+  {
+    "countries" : [
+      "ES",
+      "MX",
+      "CO",
+      "AR",
+      "PE",
+      "VE",
+      "CL",
+      "EC",
+      "GT",
+      "CU",
+      "BO",
+      "DO",
+      "HN",
+      "PY",
+      "SV",
+      "NI",
+      "CR",
+      "PA",
+      "UY",
+      "GQ"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Spanish is the official language of 20 countries — more than any other language.",
+    "id" : "es",
+    "name" : "Spanish",
+    "nativeName" : "Español",
+    "script" : "Latin",
+    "speakerCount" : 485
+  },
+  {
+    "countries" : [
+      "US",
+      "GB",
+      "CA",
+      "AU",
+      "NZ",
+      "ZA",
+      "IE",
+      "IN",
+      "NG",
+      "PH"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "English borrows from over 350 languages and adds roughly 1,000 new words every year.",
+    "id" : "en",
+    "name" : "English",
+    "nativeName" : "English",
+    "script" : "Latin",
+    "speakerCount" : 380
+  },
+  {
+    "countries" : [
+      "IN"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Hindi and Urdu sound alike in speech but use entirely different writing systems.",
+    "id" : "hi",
+    "name" : "Hindi",
+    "nativeName" : "हिन्दी",
+    "script" : "Devanagari",
+    "speakerCount" : 344
+  },
+  {
+    "countries" : [
+      "SA",
+      "EG",
+      "DZ",
+      "IQ",
+      "MA",
+      "LY",
+      "JO",
+      "AE",
+      "LB",
+      "TN",
+      "YE",
+      "SY",
+      "SD",
+      "KW",
+      "BH",
+      "QA",
+      "OM"
+    ],
+    "family" : "Afro-Asiatic",
+    "funFact" : "Arabic is written right-to-left and is the root of English words like algebra and algorithm.",
+    "id" : "ar",
+    "name" : "Arabic",
+    "nativeName" : "العربية",
+    "script" : "Arabic",
+    "speakerCount" : 332
+  },
+  {
+    "countries" : [
+      "BD",
+      "IN"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Bengali was central to the 1952 Language Movement, now International Mother Language Day.",
+    "id" : "bn",
+    "name" : "Bengali",
+    "nativeName" : "বাংলা",
+    "script" : "Bengali",
+    "speakerCount" : 234
+  },
+  {
+    "countries" : [
+      "PT",
+      "BR",
+      "AO",
+      "MZ",
+      "CV",
+      "ST",
+      "GW",
+      "TL"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Brazil alone accounts for over half of all Portuguese speakers in the world.",
+    "id" : "pt",
+    "name" : "Portuguese",
+    "nativeName" : "Português",
+    "script" : "Latin",
+    "speakerCount" : 236
+  },
+  {
+    "countries" : [
+      "RU",
+      "BY",
+      "KZ",
+      "KG"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Russian is one of six UN official languages and the most spoken Slavic language.",
+    "id" : "ru",
+    "name" : "Russian",
+    "nativeName" : "Русский",
+    "script" : "Cyrillic",
+    "speakerCount" : 148
+  },
+  {
+    "countries" : [
+      "JP"
+    ],
+    "family" : "Japonic",
+    "funFact" : "Japanese uses three writing systems simultaneously — often in the same sentence.",
+    "id" : "ja",
+    "name" : "Japanese",
+    "nativeName" : "日本語",
+    "script" : "Hiragana, Katakana, Kanji",
+    "speakerCount" : 123
+  },
+  {
+    "countries" : [
+      "PK",
+      "IN"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Punjabi is the most widely spoken language in Pakistan and the 10th most spoken globally.",
+    "id" : "pa",
+    "name" : "Punjabi",
+    "nativeName" : "ਪੰਜਾਬੀ",
+    "script" : "Gurmukhi / Shahmukhi",
+    "speakerCount" : 113
+  },
+  {
+    "countries" : [
+      "DE",
+      "AT",
+      "CH",
+      "LU",
+      "LI"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "German forms unlimited compounds — 'Donaudampfschifffahrtsgesellschaft' is a real word.",
+    "id" : "de",
+    "name" : "German",
+    "nativeName" : "Deutsch",
+    "script" : "Latin",
+    "speakerCount" : 100
+  },
+  {
+    "countries" : [
+      "ID"
+    ],
+    "family" : "Austronesian",
+    "funFact" : "Javanese has distinct speech levels — words change based on the listener's social status.",
+    "id" : "jv",
+    "name" : "Javanese",
+    "nativeName" : "Basa Jawa",
+    "script" : "Latin / Javanese",
+    "speakerCount" : 98
+  },
+  {
+    "countries" : [
+      "CN"
+    ],
+    "family" : "Sino-Tibetan",
+    "funFact" : "Shanghainese is not intelligible with Mandarin — they are both Chinese but very different.",
+    "id" : "wuu",
+    "name" : "Wu Chinese",
+    "nativeName" : "吴语",
+    "script" : "Chinese Characters",
+    "speakerCount" : 82
+  },
+  {
+    "countries" : [
+      "MY",
+      "ID",
+      "BN",
+      "SG"
+    ],
+    "family" : "Austronesian",
+    "funFact" : "Malay and Indonesian are so similar that speakers can understand each other perfectly.",
+    "id" : "ms",
+    "name" : "Malay",
+    "nativeName" : "Bahasa Melayu",
+    "script" : "Latin / Arabic",
+    "speakerCount" : 80
+  },
+  {
+    "countries" : [
+      "IN"
+    ],
+    "family" : "Dravidian",
+    "funFact" : "Telugu is known as the 'Italian of the East' because almost all its words end in vowels.",
+    "id" : "te",
+    "name" : "Telugu",
+    "nativeName" : "తెలుగు",
+    "script" : "Telugu",
+    "speakerCount" : 83
+  },
+  {
+    "countries" : [
+      "VN"
+    ],
+    "family" : "Austroasiatic",
+    "funFact" : "Vietnamese uses a Latin alphabet with diacritical marks to indicate its six distinct tones.",
+    "id" : "vi",
+    "name" : "Vietnamese",
+    "nativeName" : "Tiếng Việt",
+    "script" : "Latin",
+    "speakerCount" : 86
+  },
+  {
+    "countries" : [
+      "KR",
+      "KP"
+    ],
+    "family" : "Koreanic",
+    "funFact" : "Hangul (invented 1443) is considered one of the most scientific writing systems ever created.",
+    "id" : "ko",
+    "name" : "Korean",
+    "nativeName" : "한국어",
+    "script" : "Hangul",
+    "speakerCount" : 82
+  },
+  {
+    "countries" : [
+      "FR",
+      "BE",
+      "CH",
+      "CA",
+      "SN",
+      "CI",
+      "CM",
+      "MG",
+      "BF",
+      "ML",
+      "RW",
+      "BI",
+      "DJ",
+      "KM"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "French was the global language of diplomacy for centuries and still influences English today.",
+    "id" : "fr",
+    "name" : "French",
+    "nativeName" : "Français",
+    "script" : "Latin",
+    "speakerCount" : 80
+  },
+  {
+    "countries" : [
+      "IN"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Marathi is one of India's oldest literary languages, with records dating back to 1000 AD.",
+    "id" : "mr",
+    "name" : "Marathi",
+    "nativeName" : "मराठी",
+    "script" : "Devanagari",
+    "speakerCount" : 83
+  },
+  {
+    "countries" : [
+      "IN",
+      "LK",
+      "SG"
+    ],
+    "family" : "Dravidian",
+    "funFact" : "Tamil is one of the world's oldest living languages, with literature over 2,000 years old.",
+    "id" : "ta",
+    "name" : "Tamil",
+    "nativeName" : "தமிழ்",
+    "script" : "Tamil",
+    "speakerCount" : 78
+  },
+  {
+    "countries" : [
+      "PK",
+      "IN"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Urdu and Hindi share the same spoken form but use entirely different scripts.",
+    "id" : "ur",
+    "name" : "Urdu",
+    "nativeName" : "اردو",
+    "script" : "Nastaliq (Arabic)",
+    "speakerCount" : 70
+  },
+  {
+    "countries" : [
+      "TR",
+      "CY"
+    ],
+    "family" : "Turkic",
+    "funFact" : "Turkish uses vowel harmony — all vowels in a word follow a pattern set by the first vowel.",
+    "id" : "tr",
+    "name" : "Turkish",
+    "nativeName" : "Türkçe",
+    "script" : "Latin",
+    "speakerCount" : 79
+  },
+  {
+    "countries" : [
+      "IT",
+      "CH",
+      "SM",
+      "VA"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Italian is closest to Latin and is the language of classical music notation worldwide.",
+    "id" : "it",
+    "name" : "Italian",
+    "nativeName" : "Italiano",
+    "script" : "Latin",
+    "speakerCount" : 68
+  },
+  {
+    "countries" : [
+      "TH"
+    ],
+    "family" : "Kra-Dai",
+    "funFact" : "Thai has 44 consonants, 15 vowel symbols, 5 tones — and no spaces between words.",
+    "id" : "th",
+    "name" : "Thai",
+    "nativeName" : "ภาษาไทย",
+    "script" : "Thai",
+    "speakerCount" : 61
+  },
+  {
+    "countries" : [
+      "IN"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Mahatma Gandhi's native language was Gujarati, spoken by millions in the Indian diaspora.",
+    "id" : "gu",
+    "name" : "Gujarati",
+    "nativeName" : "ગુજરાતી",
+    "script" : "Gujarati",
+    "speakerCount" : 57
+  },
+  {
+    "countries" : [
+      "IR",
+      "AF",
+      "TJ"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Persian was Asia's common tongue for centuries and shaped Turkish, Hindi, and Urdu deeply.",
+    "id" : "fa",
+    "name" : "Persian",
+    "nativeName" : "فارسی",
+    "script" : "Arabic",
+    "speakerCount" : 57
+  },
+  {
+    "countries" : [
+      "PL"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Polish has seven grammatical cases and one of the most complex consonant clusters in Europe.",
+    "id" : "pl",
+    "name" : "Polish",
+    "nativeName" : "Polski",
+    "script" : "Latin",
+    "speakerCount" : 45
+  },
+  {
+    "countries" : [
+      "UA"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Ukrainian is one of the most melodic Slavic languages and has won language beauty contests.",
+    "id" : "uk",
+    "name" : "Ukrainian",
+    "nativeName" : "Українська",
+    "script" : "Cyrillic",
+    "speakerCount" : 41
+  },
+  {
+    "countries" : [
+      "NL",
+      "BE",
+      "SR"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Dutch gave English words like cookie, boss, coleslaw, and yankee during colonial contact.",
+    "id" : "nl",
+    "name" : "Dutch",
+    "nativeName" : "Nederlands",
+    "script" : "Latin",
+    "speakerCount" : 25
+  },
+  {
+    "countries" : [
+      "NG",
+      "NE",
+      "GH",
+      "CM"
+    ],
+    "family" : "Afro-Asiatic",
+    "funFact" : "Hausa is the dominant language of West Africa and a key trade tongue across the Sahel region.",
+    "id" : "ha",
+    "name" : "Hausa",
+    "nativeName" : "هَوُسَ",
+    "script" : "Latin / Arabic",
+    "speakerCount" : 85
+  },
+  {
+    "countries" : [
+      "GE"
+    ],
+    "family" : "Kartvelian",
+    "funFact" : "Georgian has its own unique alphabet with 33 letters, unrelated to any other writing system.",
+    "id" : "ka",
+    "name" : "Georgian",
+    "nativeName" : "ქართული",
+    "script" : "Georgian (Mkhedruli)",
+    "speakerCount" : 4
+  },
+  {
+    "countries" : [
+      "TZ",
+      "KE",
+      "UG",
+      "RW",
+      "CD"
+    ],
+    "family" : "Niger-Congo",
+    "funFact" : "Swahili is the most widely spoken African language and a lingua franca across East Africa.",
+    "id" : "sw",
+    "name" : "Swahili",
+    "nativeName" : "Kiswahili",
+    "script" : "Latin",
+    "speakerCount" : 100
+  },
+  {
+    "countries" : [
+      "GR",
+      "CY"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Greek has been written for 3,400+ years — the longest documented history of any language.",
+    "id" : "el",
+    "name" : "Greek",
+    "nativeName" : "Ελληνικά",
+    "script" : "Greek",
+    "speakerCount" : 13
+  },
+  {
+    "countries" : [
+      "IL"
+    ],
+    "family" : "Afro-Asiatic",
+    "funFact" : "Hebrew was revived from a liturgical to a living national language in the 20th century.",
+    "id" : "he",
+    "name" : "Hebrew",
+    "nativeName" : "עברית",
+    "script" : "Hebrew",
+    "speakerCount" : 9
+  },
+  {
+    "countries" : [
+      "HU"
+    ],
+    "family" : "Uralic",
+    "funFact" : "Hungarian is unrelated to its neighbors — it arrived in Europe from the Ural Mountains.",
+    "id" : "hu",
+    "name" : "Hungarian",
+    "nativeName" : "Magyar",
+    "script" : "Latin",
+    "speakerCount" : 13
+  },
+  {
+    "countries" : [
+      "FI"
+    ],
+    "family" : "Uralic",
+    "funFact" : "Finnish has 15 cases and no grammatical gender — one pronoun covers he, she, and it.",
+    "id" : "fi",
+    "name" : "Finnish",
+    "nativeName" : "Suomi",
+    "script" : "Latin",
+    "speakerCount" : 5
+  },
+  {
+    "countries" : [
+      "ET"
+    ],
+    "family" : "Afro-Asiatic",
+    "funFact" : "Amharic uses the Ge'ez script with 231 characters — each consonant has 7 vowel forms.",
+    "id" : "am",
+    "name" : "Amharic",
+    "nativeName" : "አማርኛ",
+    "script" : "Ge'ez (Ethiopic)",
+    "speakerCount" : 32
+  },
+  {
+    "countries" : [
+      "RO",
+      "MD"
+    ],
+    "family" : "Indo-European",
+    "funFact" : "Romanian is the closest living language to Latin, preserving more grammar than any other.",
+    "id" : "ro",
+    "name" : "Romanian",
+    "nativeName" : "Română",
+    "script" : "Latin",
+    "speakerCount" : 24
+  }
+]

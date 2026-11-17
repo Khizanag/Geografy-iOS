@@ -1,0 +1,3482 @@
+{
+  "AD" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 88.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11.8
+    }
+  ],
+  "AE" : [
+    {
+      "name" : "Islam",
+      "percentage" : 76
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 9
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 6.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.5
+    }
+  ],
+  "AF" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 84.7
+    },
+    {
+      "name" : "Shia Islam",
+      "percentage" : 15
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.3
+    }
+  ],
+  "AG" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 95
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "AL" : [
+    {
+      "name" : "Islam",
+      "percentage" : 56.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 16.9
+    },
+    {
+      "name" : "Atheist/Agnostic",
+      "percentage" : 16.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10.1
+    }
+  ],
+  "AM" : [
+    {
+      "name" : "Armenian Apostolic",
+      "percentage" : 92.6
+    },
+    {
+      "name" : "Other Christian",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.4
+    }
+  ],
+  "AO" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 90
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5
+    }
+  ],
+  "AR" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 62.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 18.9
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 15.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.9
+    }
+  ],
+  "AT" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 55.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 25.3
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11.5
+    }
+  ],
+  "AU" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 43.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 38.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 17.2
+    }
+  ],
+  "AZ" : [
+    {
+      "name" : "Shia Islam",
+      "percentage" : 68
+    },
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 23
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6
+    }
+  ],
+  "BA" : [
+    {
+      "name" : "Islam",
+      "percentage" : 51
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 30.7
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 15.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.1
+    }
+  ],
+  "BB" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 66.3
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 3.8
+    },
+    {
+      "name" : "None",
+      "percentage" : 20.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.3
+    }
+  ],
+  "BD" : [
+    {
+      "name" : "Islam",
+      "percentage" : 88.4
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 10.5
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.5
+    }
+  ],
+  "BE" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 52.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 32.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.7
+    }
+  ],
+  "BF" : [
+    {
+      "name" : "Islam",
+      "percentage" : 61.5
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 22.9
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 15.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.3
+    }
+  ],
+  "BG" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 59.4
+    },
+    {
+      "name" : "None",
+      "percentage" : 25.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 7.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.4
+    }
+  ],
+  "BH" : [
+    {
+      "name" : "Shia Islam",
+      "percentage" : 45
+    },
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 28.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 9.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 17
+    }
+  ],
+  "BI" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 62.1
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 23.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 2.5
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.4
+    }
+  ],
+  "BJ" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 48.5
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 27.7
+    },
+    {
+      "name" : "Traditional/Voodoo",
+      "percentage" : 17.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.2
+    }
+  ],
+  "BN" : [
+    {
+      "name" : "Islam",
+      "percentage" : 78.8
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 8.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 8.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.4
+    }
+  ],
+  "BO" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 70
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 17.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 9.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.5
+    }
+  ],
+  "BR" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 50
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 31
+    },
+    {
+      "name" : "None",
+      "percentage" : 10
+    },
+    {
+      "name" : "Spiritism",
+      "percentage" : 3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6
+    }
+  ],
+  "BS" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 95.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.8
+    }
+  ],
+  "BT" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 74.7
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 22.6
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 0.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.9
+    }
+  ],
+  "BW" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 79.1
+    },
+    {
+      "name" : "None",
+      "percentage" : 8.3
+    },
+    {
+      "name" : "Badimo",
+      "percentage" : 4.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.5
+    }
+  ],
+  "BY" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 48.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 41.1
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 7.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.5
+    }
+  ],
+  "BZ" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 40.1
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 31.5
+    },
+    {
+      "name" : "None",
+      "percentage" : 15.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 12.9
+    }
+  ],
+  "CA" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 29.9
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 18.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 34.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 17.2
+    }
+  ],
+  "CD" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 50
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 20
+    },
+    {
+      "name" : "Kimbanguist",
+      "percentage" : 10
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 10
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10
+    }
+  ],
+  "CF" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 46.7
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 17.6
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 8.7
+    },
+    {
+      "name" : "Indigenous",
+      "percentage" : 8.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 18.5
+    }
+  ],
+  "CG" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 88.5
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 2
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 9.5
+    }
+  ],
+  "CH" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 34.4
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 22.5
+    },
+    {
+      "name" : "None",
+      "percentage" : 29.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 5.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.3
+    }
+  ],
+  "CI" : [
+    {
+      "name" : "Islam",
+      "percentage" : 42.9
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 33.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 19.6
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 3.6
+    }
+  ],
+  "CL" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 45
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 18
+    },
+    {
+      "name" : "None",
+      "percentage" : 30
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7
+    }
+  ],
+  "CM" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 69.2
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 20.9
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 5.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.3
+    }
+  ],
+  "CN" : [
+    {
+      "name" : "Folk Religion",
+      "percentage" : 21.9
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 15.1
+    },
+    {
+      "name" : "None/Atheist",
+      "percentage" : 52
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6
+    }
+  ],
+  "CO" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 79
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 13
+    },
+    {
+      "name" : "None",
+      "percentage" : 6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "CR" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 47.5
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 19.8
+    },
+    {
+      "name" : "None",
+      "percentage" : 27.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.9
+    }
+  ],
+  "CU" : [
+    {
+      "name" : "None/Atheist",
+      "percentage" : 23
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 17.4
+    },
+    {
+      "name" : "Santería",
+      "percentage" : 17
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 37.6
+    }
+  ],
+  "CV" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 77.3
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 9.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 13.6
+    }
+  ],
+  "CY" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 73
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 25
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "CZ" : [
+    {
+      "name" : "None/Atheist",
+      "percentage" : 46.4
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 10.4
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 42.1
+    }
+  ],
+  "DE" : [
+    {
+      "name" : "Roman Catholic/Protestant",
+      "percentage" : 53.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 36.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 3.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.6
+    }
+  ],
+  "DJ" : [
+    {
+      "name" : "Islam",
+      "percentage" : 94
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 6
+    }
+  ],
+  "DK" : [
+    {
+      "name" : "Lutheran",
+      "percentage" : 74.7
+    },
+    {
+      "name" : "None",
+      "percentage" : 16.7
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 5.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.2
+    }
+  ],
+  "DM" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 61.4
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 28.6
+    },
+    {
+      "name" : "None",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.9
+    }
+  ],
+  "DO" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 47.8
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 21.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 26.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.2
+    }
+  ],
+  "DZ" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 99
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "EC" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 74
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 10.4
+    },
+    {
+      "name" : "None",
+      "percentage" : 11.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.1
+    }
+  ],
+  "EE" : [
+    {
+      "name" : "None",
+      "percentage" : 54.1
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 16.2
+    },
+    {
+      "name" : "Lutheran",
+      "percentage" : 9.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 19.8
+    }
+  ],
+  "EG" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 90
+    },
+    {
+      "name" : "Coptic Christianity",
+      "percentage" : 9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "ER" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 46.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 45.6
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 4.7
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 2.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.1
+    }
+  ],
+  "ES" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 58.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 37.1
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.6
+    }
+  ],
+  "ET" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 43.8
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 22.3
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 31.3
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 2.6
+    }
+  ],
+  "FI" : [
+    {
+      "name" : "Lutheran",
+      "percentage" : 67.8
+    },
+    {
+      "name" : "None",
+      "percentage" : 28.5
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.6
+    }
+  ],
+  "FJ" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 64.4
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 27.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 6.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.4
+    }
+  ],
+  "FM" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 54.7
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 41.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.2
+    }
+  ],
+  "FR" : [
+    {
+      "name" : "None",
+      "percentage" : 57
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 29.7
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 5.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.5
+    }
+  ],
+  "GA" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 41.8
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 13.4
+    },
+    {
+      "name" : "None",
+      "percentage" : 27.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 9.8
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 7.1
+    }
+  ],
+  "GB" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 59.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 25.1
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 4.9
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.9
+    }
+  ],
+  "GD" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 44.6
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 44
+    },
+    {
+      "name" : "None",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5.7
+    }
+  ],
+  "GE" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 83.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 10.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5.9
+    }
+  ],
+  "GH" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 71.2
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 19.9
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 3.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 5.7
+    }
+  ],
+  "GM" : [
+    {
+      "name" : "Islam",
+      "percentage" : 95.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.3
+    }
+  ],
+  "GN" : [
+    {
+      "name" : "Islam",
+      "percentage" : 84.2
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 13.4
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 2.4
+    }
+  ],
+  "GQ" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 80
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 5
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11
+    }
+  ],
+  "GR" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 90
+    },
+    {
+      "name" : "None",
+      "percentage" : 4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.3
+    }
+  ],
+  "GT" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 42.1
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 42
+    },
+    {
+      "name" : "None",
+      "percentage" : 11.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.1
+    }
+  ],
+  "GW" : [
+    {
+      "name" : "Islam",
+      "percentage" : 45.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 22.1
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 30.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.9
+    }
+  ],
+  "GY" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 34.8
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 24.8
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 7.1
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 6.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 26.5
+    }
+  ],
+  "HN" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 46
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 41
+    },
+    {
+      "name" : "None",
+      "percentage" : 10.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.1
+    }
+  ],
+  "HR" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 86.3
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 4.4
+    },
+    {
+      "name" : "None",
+      "percentage" : 3.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5.5
+    }
+  ],
+  "HT" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 55
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 28.5
+    },
+    {
+      "name" : "Voodoo",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "None",
+      "percentage" : 11.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.1
+    }
+  ],
+  "HU" : [
+    {
+      "name" : "None",
+      "percentage" : 46.8
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 37.2
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 11.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.4
+    }
+  ],
+  "ID" : [
+    {
+      "name" : "Islam",
+      "percentage" : 87.2
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 7
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 2.9
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 1.7
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 0.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.5
+    }
+  ],
+  "IE" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 69.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 14.5
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 4.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 12.1
+    }
+  ],
+  "IL" : [
+    {
+      "name" : "Judaism",
+      "percentage" : 73.6
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 18.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Druze",
+      "percentage" : 1.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.8
+    }
+  ],
+  "IN" : [
+    {
+      "name" : "Hinduism",
+      "percentage" : 79.8
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 14.2
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 2.3
+    },
+    {
+      "name" : "Sikhism",
+      "percentage" : 1.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "IQ" : [
+    {
+      "name" : "Shia Islam",
+      "percentage" : 64
+    },
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 29.5
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.5
+    }
+  ],
+  "IR" : [
+    {
+      "name" : "Shia Islam",
+      "percentage" : 90.1
+    },
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 9.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.8
+    }
+  ],
+  "IS" : [
+    {
+      "name" : "Lutheran",
+      "percentage" : 67.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 26.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.4
+    }
+  ],
+  "IT" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 72.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 21.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 1.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4
+    }
+  ],
+  "JM" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 64.8
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 2.2
+    },
+    {
+      "name" : "Rastafari",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "None",
+      "percentage" : 21.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10.6
+    }
+  ],
+  "JO" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 97.2
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 2.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.6
+    }
+  ],
+  "JP" : [
+    {
+      "name" : "Buddhism/Shinto",
+      "percentage" : 71.4
+    },
+    {
+      "name" : "None",
+      "percentage" : 25.8
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.3
+    }
+  ],
+  "KE" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 47.7
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 23.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 11.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 17.7
+    }
+  ],
+  "KG" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 88.8
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 6.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.4
+    }
+  ],
+  "KH" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 96.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.2
+    }
+  ],
+  "KI" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 57
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 34
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9
+    }
+  ],
+  "KM" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 98.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.7
+    }
+  ],
+  "KN" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 74.4
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 6.7
+    },
+    {
+      "name" : "None",
+      "percentage" : 15.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.6
+    }
+  ],
+  "KP" : [
+    {
+      "name" : "None",
+      "percentage" : 71.3
+    },
+    {
+      "name" : "Shamanism/Folk",
+      "percentage" : 12.9
+    },
+    {
+      "name" : "Chondoism",
+      "percentage" : 12.2
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 4.5
+    }
+  ],
+  "KR" : [
+    {
+      "name" : "None",
+      "percentage" : 56.9
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 19.7
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 15.5
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 7.9
+    }
+  ],
+  "KW" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 45
+    },
+    {
+      "name" : "Shia Islam",
+      "percentage" : 30
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 18.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.8
+    }
+  ],
+  "KZ" : [
+    {
+      "name" : "Islam",
+      "percentage" : 70.2
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 19.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 10.5
+    }
+  ],
+  "LA" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 64.7
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 31.4
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 1.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.2
+    }
+  ],
+  "LB" : [
+    {
+      "name" : "Shia Islam",
+      "percentage" : 31.4
+    },
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 30.6
+    },
+    {
+      "name" : "Maronite Christian",
+      "percentage" : 21
+    },
+    {
+      "name" : "Druze",
+      "percentage" : 5.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11.8
+    }
+  ],
+  "LC" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 61.5
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 25.5
+    },
+    {
+      "name" : "None",
+      "percentage" : 5.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.1
+    }
+  ],
+  "LI" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 73.4
+    },
+    {
+      "name" : "None",
+      "percentage" : 16.6
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 6.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.7
+    }
+  ],
+  "LK" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 70.2
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 12.6
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 9.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 7.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.1
+    }
+  ],
+  "LR" : [
+    {
+      "name" : "Christian",
+      "percentage" : 85.5
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 12.2
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.7
+    }
+  ],
+  "LS" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 34.7
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 34.2
+    },
+    {
+      "name" : "Zion Church",
+      "percentage" : 11.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 19.6
+    }
+  ],
+  "LT" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 74.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 11.7
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 3.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 10.4
+    }
+  ],
+  "LU" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 62.7
+    },
+    {
+      "name" : "None",
+      "percentage" : 31.5
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 2.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.5
+    }
+  ],
+  "LV" : [
+    {
+      "name" : "None",
+      "percentage" : 47.1
+    },
+    {
+      "name" : "Lutheran",
+      "percentage" : 19.9
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 15.3
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 14.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.3
+    }
+  ],
+  "LY" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 96.6
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.7
+    }
+  ],
+  "MA" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 99
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 0.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.4
+    }
+  ],
+  "MC" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 85.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 8.7
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.5
+    }
+  ],
+  "MD" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 90.1
+    },
+    {
+      "name" : "None",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.2
+    }
+  ],
+  "ME" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 72.1
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 19.1
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 3.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 5.4
+    }
+  ],
+  "MG" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 43.5
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 25.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 19.3
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 8
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 3.9
+    }
+  ],
+  "MH" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 54.8
+    },
+    {
+      "name" : "Assembly of God",
+      "percentage" : 25.8
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 8.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11
+    }
+  ],
+  "MK" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 64.8
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 33.3
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 0.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.5
+    }
+  ],
+  "ML" : [
+    {
+      "name" : "Islam",
+      "percentage" : 93.9
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 2.8
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.3
+    }
+  ],
+  "MM" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 87.9
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 6.2
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 4.3
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 0.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.1
+    }
+  ],
+  "MN" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 51.7
+    },
+    {
+      "name" : "None",
+      "percentage" : 40.6
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 3.2
+    },
+    {
+      "name" : "Shamanism",
+      "percentage" : 2.5
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.7
+    }
+  ],
+  "MR" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 99.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.9
+    }
+  ],
+  "MT" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 88.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 10.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.6
+    }
+  ],
+  "MU" : [
+    {
+      "name" : "Hinduism",
+      "percentage" : 48.5
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 26.3
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 17.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.9
+    }
+  ],
+  "MV" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 100
+    }
+  ],
+  "MW" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 33.5
+    },
+    {
+      "name" : "Evangelical/Pentecostal",
+      "percentage" : 27.5
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 17.2
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 13.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8
+    }
+  ],
+  "MX" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 77.7
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 11.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 8.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3
+    }
+  ],
+  "MY" : [
+    {
+      "name" : "Islam",
+      "percentage" : 63.5
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 18.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 9.1
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.6
+    }
+  ],
+  "MZ" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 27.2
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 17.9
+    },
+    {
+      "name" : "Zionist",
+      "percentage" : 15.5
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 12.5
+    },
+    {
+      "name" : "None",
+      "percentage" : 18.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.2
+    }
+  ],
+  "NA" : [
+    {
+      "name" : "Lutheran",
+      "percentage" : 47.5
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 17.3
+    },
+    {
+      "name" : "Other Christian",
+      "percentage" : 15.6
+    },
+    {
+      "name" : "None",
+      "percentage" : 11.1
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 6.2
+    },
+    {
+      "name" : "Anglican",
+      "percentage" : 2.3
+    }
+  ],
+  "NE" : [
+    {
+      "name" : "Islam",
+      "percentage" : 99.3
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 0.3
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 0.4
+    }
+  ],
+  "NG" : [
+    {
+      "name" : "Islam",
+      "percentage" : 53.5
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 45.9
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 0.6
+    }
+  ],
+  "NI" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 55.6
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 21.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 18.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4
+    }
+  ],
+  "NL" : [
+    {
+      "name" : "None",
+      "percentage" : 50.7
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 20.1
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 14.8
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.4
+    }
+  ],
+  "NO" : [
+    {
+      "name" : "Lutheran",
+      "percentage" : 68.7
+    },
+    {
+      "name" : "None",
+      "percentage" : 20.2
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 3.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.4
+    }
+  ],
+  "NP" : [
+    {
+      "name" : "Hinduism",
+      "percentage" : 81.3
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 4.4
+    },
+    {
+      "name" : "Kirat",
+      "percentage" : 3.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 1.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.8
+    }
+  ],
+  "NR" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 60.4
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 33
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.6
+    }
+  ],
+  "NZ" : [
+    {
+      "name" : "None",
+      "percentage" : 48.2
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 37.3
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 2.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.8
+    }
+  ],
+  "OM" : [
+    {
+      "name" : "Ibadi Islam",
+      "percentage" : 45
+    },
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 30
+    },
+    {
+      "name" : "Shia Islam",
+      "percentage" : 11
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 6.5
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 5.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.8
+    }
+  ],
+  "PA" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 48.6
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 30.5
+    },
+    {
+      "name" : "None",
+      "percentage" : 18.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.4
+    }
+  ],
+  "PE" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 60
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 14.6
+    },
+    {
+      "name" : "None",
+      "percentage" : 18.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.3
+    }
+  ],
+  "PG" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 69.4
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 27
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.6
+    }
+  ],
+  "PH" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 79.5
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 11.3
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 5.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.6
+    }
+  ],
+  "PK" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 85
+    },
+    {
+      "name" : "Shia Islam",
+      "percentage" : 10
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 2.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 1.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.3
+    }
+  ],
+  "PL" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 85.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 10.3
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 1.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.5
+    }
+  ],
+  "PT" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 78.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 14.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.2
+    }
+  ],
+  "PW" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 46.9
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 36
+    },
+    {
+      "name" : "Modekngei",
+      "percentage" : 8.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.4
+    }
+  ],
+  "PY" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 88.3
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 6.7
+    },
+    {
+      "name" : "None",
+      "percentage" : 1.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.9
+    }
+  ],
+  "QA" : [
+    {
+      "name" : "Islam",
+      "percentage" : 65.2
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 13.8
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 13.7
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 3.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.2
+    }
+  ],
+  "RO" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 81.9
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 6.4
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 4.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 5.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.3
+    }
+  ],
+  "RS" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 84.5
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 5
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 3.1
+    },
+    {
+      "name" : "None",
+      "percentage" : 3.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.1
+    }
+  ],
+  "RU" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 47.4
+    },
+    {
+      "name" : "None",
+      "percentage" : 44.1
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 6.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "RW" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 43.7
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 37.7
+    },
+    {
+      "name" : "Adventist",
+      "percentage" : 11.8
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.8
+    }
+  ],
+  "SA" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 85
+    },
+    {
+      "name" : "Shia Islam",
+      "percentage" : 15
+    }
+  ],
+  "SB" : [
+    {
+      "name" : "Church of Melanesia",
+      "percentage" : 31.9
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 19.6
+    },
+    {
+      "name" : "South Sea Evangelical",
+      "percentage" : 17.1
+    },
+    {
+      "name" : "Seventh Day Adventist",
+      "percentage" : 11.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 19.7
+    }
+  ],
+  "SD" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 90.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 5.4
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 4
+    }
+  ],
+  "SE" : [
+    {
+      "name" : "Church of Sweden",
+      "percentage" : 57.7
+    },
+    {
+      "name" : "None",
+      "percentage" : 36.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 4.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.8
+    }
+  ],
+  "SG" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 31.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 18.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 15.6
+    },
+    {
+      "name" : "Taoism",
+      "percentage" : 8.8
+    },
+    {
+      "name" : "Hinduism",
+      "percentage" : 5
+    },
+    {
+      "name" : "None",
+      "percentage" : 18.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2.1
+    }
+  ],
+  "SI" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 57.8
+    },
+    {
+      "name" : "None",
+      "percentage" : 25.2
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 2.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 14.6
+    }
+  ],
+  "SK" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 55.8
+    },
+    {
+      "name" : "None",
+      "percentage" : 23.8
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 6.9
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.5
+    }
+  ],
+  "SL" : [
+    {
+      "name" : "Islam",
+      "percentage" : 77.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 22.9
+    }
+  ],
+  "SM" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 90.5
+    },
+    {
+      "name" : "None",
+      "percentage" : 5.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 4.4
+    }
+  ],
+  "SN" : [
+    {
+      "name" : "Islam",
+      "percentage" : 96.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 3.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.3
+    }
+  ],
+  "SO" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 99.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.2
+    }
+  ],
+  "SR" : [
+    {
+      "name" : "Hinduism",
+      "percentage" : 22.3
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 25.2
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 21.6
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 13.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 17.1
+    }
+  ],
+  "SS" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 60.5
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 32.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 6.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.4
+    }
+  ],
+  "ST" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 55.7
+    },
+    {
+      "name" : "Evangelical",
+      "percentage" : 6.6
+    },
+    {
+      "name" : "Adventist",
+      "percentage" : 4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 33.7
+    }
+  ],
+  "SV" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 46.6
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 33
+    },
+    {
+      "name" : "None",
+      "percentage" : 16.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.6
+    }
+  ],
+  "SY" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 74
+    },
+    {
+      "name" : "Alawi/Shia",
+      "percentage" : 13
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 10
+    },
+    {
+      "name" : "Druze",
+      "percentage" : 3
+    }
+  ],
+  "TD" : [
+    {
+      "name" : "Islam",
+      "percentage" : 52.1
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 44.1
+    },
+    {
+      "name" : "Animist",
+      "percentage" : 0.3
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.5
+    }
+  ],
+  "TG" : [
+    {
+      "name" : "Traditional",
+      "percentage" : 35.6
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 28.7
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 27.2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 8.5
+    }
+  ],
+  "TH" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 94.6
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 4.3
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.1
+    }
+  ],
+  "TJ" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 96.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.3
+    }
+  ],
+  "TL" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 97.6
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.4
+    }
+  ],
+  "TM" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 89
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 2
+    }
+  ],
+  "TN" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 99.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 0.9
+    }
+  ],
+  "TO" : [
+    {
+      "name" : "Methodist",
+      "percentage" : 36.6
+    },
+    {
+      "name" : "Mormon",
+      "percentage" : 18.6
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 15.9
+    },
+    {
+      "name" : "Free Church of Tonga",
+      "percentage" : 11.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 17.5
+    }
+  ],
+  "TR" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 90
+    },
+    {
+      "name" : "Alevi Islam",
+      "percentage" : 9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1
+    }
+  ],
+  "TT" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 32.1
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 21.6
+    },
+    {
+      "name" : "Hindu",
+      "percentage" : 18.2
+    },
+    {
+      "name" : "Pentecostal",
+      "percentage" : 12
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 11.1
+    }
+  ],
+  "TV" : [
+    {
+      "name" : "Church of Tuvalu",
+      "percentage" : 92.4
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7.6
+    }
+  ],
+  "TW" : [
+    {
+      "name" : "Buddhism",
+      "percentage" : 35.1
+    },
+    {
+      "name" : "Taoism",
+      "percentage" : 33.2
+    },
+    {
+      "name" : "None",
+      "percentage" : 18.7
+    },
+    {
+      "name" : "Christianity",
+      "percentage" : 3.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.1
+    }
+  ],
+  "TZ" : [
+    {
+      "name" : "Christianity",
+      "percentage" : 61.4
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 35.2
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 1.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.6
+    }
+  ],
+  "UA" : [
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 65
+    },
+    {
+      "name" : "None",
+      "percentage" : 16.3
+    },
+    {
+      "name" : "Greek Catholic",
+      "percentage" : 10
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 1.9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.8
+    }
+  ],
+  "UG" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 39.3
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 35.9
+    },
+    {
+      "name" : "Islam",
+      "percentage" : 13.7
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 1.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9.6
+    }
+  ],
+  "US" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 43
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 20
+    },
+    {
+      "name" : "None",
+      "percentage" : 26
+    },
+    {
+      "name" : "Judaism",
+      "percentage" : 2
+    },
+    {
+      "name" : "Other",
+      "percentage" : 9
+    }
+  ],
+  "UY" : [
+    {
+      "name" : "None",
+      "percentage" : 47.1
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 40.4
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 11.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.4
+    }
+  ],
+  "UZ" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 88
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 9
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3
+    }
+  ],
+  "VA" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 100
+    }
+  ],
+  "VC" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 75
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 13.9
+    },
+    {
+      "name" : "None",
+      "percentage" : 7.5
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.6
+    }
+  ],
+  "VE" : [
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 71.4
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 17.5
+    },
+    {
+      "name" : "None",
+      "percentage" : 7.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 3.4
+    }
+  ],
+  "VN" : [
+    {
+      "name" : "None/Folk Religion",
+      "percentage" : 45.3
+    },
+    {
+      "name" : "Buddhism",
+      "percentage" : 16.4
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 6.6
+    },
+    {
+      "name" : "Hoa Hao",
+      "percentage" : 1.7
+    },
+    {
+      "name" : "Cao Dai",
+      "percentage" : 0.9
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 28.1
+    }
+  ],
+  "VU" : [
+    {
+      "name" : "Presbyterian",
+      "percentage" : 31.4
+    },
+    {
+      "name" : "Anglican",
+      "percentage" : 13.4
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 13.1
+    },
+    {
+      "name" : "Seventh Day Adventist",
+      "percentage" : 10.8
+    },
+    {
+      "name" : "Other",
+      "percentage" : 31.3
+    }
+  ],
+  "WS" : [
+    {
+      "name" : "Congregationalist",
+      "percentage" : 31.8
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 19.6
+    },
+    {
+      "name" : "Assembly of God",
+      "percentage" : 15.2
+    },
+    {
+      "name" : "Methodist",
+      "percentage" : 13.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 19.7
+    }
+  ],
+  "XK" : [
+    {
+      "name" : "Islam",
+      "percentage" : 95.6
+    },
+    {
+      "name" : "Orthodox Christianity",
+      "percentage" : 2.2
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 2.2
+    }
+  ],
+  "YE" : [
+    {
+      "name" : "Sunni Islam",
+      "percentage" : 65
+    },
+    {
+      "name" : "Shia Islam (Zaydi)",
+      "percentage" : 35
+    }
+  ],
+  "ZA" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 36.6
+    },
+    {
+      "name" : "Pentecostal",
+      "percentage" : 8.2
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 7.1
+    },
+    {
+      "name" : "Methodist",
+      "percentage" : 6.8
+    },
+    {
+      "name" : "Other Christian",
+      "percentage" : 28.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 6.1
+    },
+    {
+      "name" : "Other",
+      "percentage" : 6.9
+    }
+  ],
+  "ZM" : [
+    {
+      "name" : "Protestant",
+      "percentage" : 75.3
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 20.2
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 2.7
+    },
+    {
+      "name" : "Other",
+      "percentage" : 1.8
+    }
+  ],
+  "ZW" : [
+    {
+      "name" : "Apostolic",
+      "percentage" : 37.5
+    },
+    {
+      "name" : "Protestant",
+      "percentage" : 21.8
+    },
+    {
+      "name" : "Pentecostal",
+      "percentage" : 12.8
+    },
+    {
+      "name" : "Roman Catholic",
+      "percentage" : 10
+    },
+    {
+      "name" : "Traditional",
+      "percentage" : 5.3
+    },
+    {
+      "name" : "None",
+      "percentage" : 5.6
+    },
+    {
+      "name" : "Other",
+      "percentage" : 7
+    }
+  ]
+}

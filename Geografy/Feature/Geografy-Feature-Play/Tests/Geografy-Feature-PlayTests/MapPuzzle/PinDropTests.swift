@@ -282,6 +282,8 @@ struct PinDropRecordsTests {
     func keepsBest() throws {
         let suite = "PinDropRecordsTests.keepsBest"
         let defaults = try #require(UserDefaults(suiteName: suite))
+        // Cleared first too, so a run that crashed before its cleanup can't leave a record behind.
+        defaults.removePersistentDomain(forName: suite)
         defer { defaults.removePersistentDomain(forName: suite) }
         let records = PinDropRecords(defaults: defaults)
         let configuration = PinDropConfiguration()

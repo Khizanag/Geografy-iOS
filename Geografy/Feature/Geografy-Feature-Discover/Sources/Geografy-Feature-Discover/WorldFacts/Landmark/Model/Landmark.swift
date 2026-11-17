@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Landmark: Identifiable, Sendable {
+public struct Landmark: Decodable, Identifiable, Sendable {
     public let id: String
     public let name: String
     public let countryCode: String
@@ -14,7 +14,7 @@ public struct Landmark: Identifiable, Sendable {
     public let accentColor: String
 }
 
-public enum LandmarkCategory: String, Sendable, CaseIterable {
+public enum LandmarkCategory: String, CaseIterable, Decodable, Sendable {
     case monument
     case nature
     case cultural

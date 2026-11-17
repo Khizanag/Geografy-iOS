@@ -1,4 +1,4 @@
-public struct PercentageItem: Sendable {
+public struct PercentageItem: Codable, Sendable {
     public let name: String
     public let percentage: Double
 

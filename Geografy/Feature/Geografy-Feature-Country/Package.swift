@@ -28,6 +28,9 @@ let package = Package(
                 .product(name: "Geografy-Core-DesignSystem", package: "Geografy-Core-DesignSystem"),
                 .product(name: "Geografy-Core-Navigation", package: "Geografy-Core-Navigation"),
                 .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(
