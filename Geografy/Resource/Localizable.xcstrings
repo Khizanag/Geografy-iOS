@@ -1454,6 +1454,7 @@
         }
       }
     },
+    "13 achievements now unlock" : {},
     "3 lives" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -2841,6 +2842,7 @@
         }
       }
     },
+    "Close Geografy, then run Start Daily Challenge or Start Quiz from Shortcuts or Siri: the app opens right on it." : {},
     "Close photo" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -3095,6 +3097,7 @@
         }
       }
     },
+    "Continents, Global Citizen, Org Scholar (all 29 organizations), flashcard mastery, sharing a Daily Challenge, and a full World Speed Run. Check progress on Achievements." : {},
     "Continue" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -3233,6 +3236,7 @@
         }
       }
     },
+    "Countries in Spotlight" : {},
     "Countries that share a border never share a color. Of the colors left, each country takes the one that looks most different from its neighbors, then keeps away from countries just across the sea, so the colors spread evenly over the map." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -3444,6 +3448,7 @@
         }
       }
     },
+    "Currency tile text" : {},
     "Currency, code, or country" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4403,6 +4408,7 @@
         }
       }
     },
+    "Explore ▸ Discover ▸ Tools: the converter says daily rates, not live ones." : {},
     "Explored" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4415,6 +4421,7 @@
         }
       }
     },
+    "Explored count on Profile" : {},
     "Fact #%lld" : {
       "localizations" : {
         "ka" : {
@@ -4955,6 +4962,7 @@
         }
       }
     },
+    "Give Up asks first" : {},
     "Give Up?" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6196,6 +6204,7 @@
         }
       }
     },
+    "Map opens on the country" : {},
     "Map projection" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7327,6 +7336,7 @@
         }
       }
     },
+    "On a country, tap Continent, then Open … Map: the map zooms to that country and selects it." : {},
     "One of you hosts and picks the quiz. The other joins from their phone." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9276,6 +9286,7 @@
         }
       }
     },
+    "Search a country's name from the Home Screen: Geografy's result appears and opens it." : {},
     "Search above or tap + to add countries you've visited" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9770,6 +9781,7 @@
         }
       }
     },
+    "Shortcuts on a cold launch" : {},
     "Shortcuts open full screens" : {},
     "Shortest Path — %lld hops" : {
       "extractionState" : "manual",
@@ -10374,6 +10386,7 @@
         }
       }
     },
+    "Start a quiz, then the Daily Challenge: each has a red flag that asks before quitting. Flashcards close at once, since every card is already saved." : {},
     "Start exploring to earn achievements!" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10889,6 +10902,7 @@
         }
       }
     },
+    "The count is the countries whose pages you've opened, including ones from before this build, and goes up as you open new ones. Tapping it opens Countries." : {},
     "The countries didn't load, so there's nothing to build it from yet." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
