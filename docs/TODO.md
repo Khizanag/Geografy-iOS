@@ -1,44 +1,29 @@
 # Geografy iOS — TODO
 
-Open tasks only. Completed work is tracked in git history.
+Open tasks only. Completed work is in git history; the plan for the next phases is in the [2026-11-17 audit](audit/2026-11-17-app-audit.md).
 
-## Map
-- [ ] Physical map type (terrain/elevation)
-- [ ] Country-on-map quiz type (highlight country, guess name)
-- [ ] Standardize all map instances into single configurable MapScreen
+## Features
 
-## Auth
-- [ ] Real Google Cloud Console Client ID
+- [ ] Country-on-map quiz: highlight a country, name it (audit phase 6)
+- [ ] Physical map type with terrain and elevation
+- [ ] Reorder quiz: drag countries into order by population or area
+- [ ] Game Center friends
 
-## Quiz
-- [ ] Country-on-map quiz
-- [ ] Reorder quiz (drag countries by population/area)
+## Product decisions
 
-## Gamification
-- [ ] Game Center Friends list integration
-- [ ] Leaderboard improvements
+- [ ] Monetization: whether to charge, and how (nothing is integrated until decided)
+- [ ] Word Search and Distance Calculator: keep or cut
+- [ ] Mac Catalyst: ship it or turn it off before review
+- [ ] tvOS: keep the parked target or cut it
 
-## Travel
-- [ ] Travel statistics (% of world visited)
+## Polish
 
-## UI/UX
-- [ ] Fix flag aspect ratios across all FlagView usages
-- [ ] Smooth flag transition (Map banner to full-screen preview)
-- [ ] Orientation locking (needs AppDelegate)
-- [ ] Language/Localization support (String Catalogs)
-- [ ] iPad layout optimization
+- [ ] Smooth flag transition from the map banner to the full-screen flag
+- [ ] iPad layouts beyond the readable-width column
+- [ ] Map drawing on older devices with the detailed outlines
 
-## Monetization
-- [ ] Real App Store Connect product IDs
-- [ ] Decide pricing model
+## Engineering
 
-## Technical
-- [ ] Remove CountryBasicInfo (redundant with countries.json)
-- [ ] Optimize Canvas rendering for 10m GeoJSON on older devices
-- [ ] Add unit tests
-- [ ] CI/CD pipeline
-
-## Known Gaps
-- **SubscriptionService** — StoreKit 2 products not configured; debug override active
-- **Coin System** — Purchase integration not wired
-- **QuizPack** — Content and differentiation from CustomQuiz unclear
+- [ ] `#Index` on `userID`, which needs a new schema version and a migration stage
+- [ ] CI that runs the build, lint, and every package's tests
+- [ ] Quiz Library opened at cold launch shows packs with no levels until the screen is rebuilt
