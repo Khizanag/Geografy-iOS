@@ -153,7 +153,11 @@ private extension ContentView {
             open: { appCoordinator.open($0) },
             selectTab: { appCoordinator.selectedTab = $0 },
             showLevelUp: { xpService.levelUpPublisher.send(xpService.currentLevel) },
-            enableTestingMode: { testingModeService.isEnabled = true }
+            enableTestingMode: { testingModeService.isEnabled = true },
+            showFirstRun: {
+                hasCompletedFirstRun = false
+                isFirstRunForced = true
+            }
         )
     }
 }

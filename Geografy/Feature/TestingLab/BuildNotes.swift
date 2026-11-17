@@ -10,6 +10,7 @@ struct BuildNoteRoutes {
     let showLevelUp: @MainActor () -> Void
     /// For changes only Testing Mode shows.
     let enableTestingMode: @MainActor () -> Void
+    let showFirstRun: @MainActor () -> Void
 }
 
 // MARK: - This Build
@@ -19,81 +20,120 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [accountData, quizFlow, speedRunStart, wordSearch, noSound]
+        [shareResults, links, firstRun, mapZoom, lessonQuizzes, knowledgeMap, continentPuzzle, gameReviews]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var accountData: BuildNote {
+    var shareResults: BuildNote {
         BuildNote(
-            commit: "b1cb3cdb",
-            title: "Delete Account removes everything",
+            commit: "95ed0e04",
+            title: "Share any result",
             howToTest: """
-                Sign in with the test account in the Testing Lab, add a favorite and a visited country, then \
-                Delete Account: favorites, travel, and progress are all gone for the fresh guest.
+                Finish a quiz, a Speed Run, a Pin Drop game, or the Daily Challenge, then tap the share button \
+                beside Done: the share sheet shows a card with your score.
                 """,
-            systemImage: "trash.fill",
-            color: DesignSystem.Color.destructive
-        ) {
-            go.open(.settings)
-        }
-    }
-
-    var quizFlow: BuildNote {
-        BuildNote(
-            commit: "671a245b",
-            title: "Quizzes play as before",
-            howToTest: """
-                The quiz's rules moved into a tested model. Play a quiz, an arcade game, and a typed one: \
-                streaks, lives, the score, and results should all behave as before.
-                """,
-            systemImage: "questionmark.circle.fill",
-            color: DesignSystem.Color.blue
+            systemImage: "square.and.arrow.up",
+            color: DesignSystem.Color.indigo
         ) {
             go.open(.quiz)
         }
     }
 
-    var speedRunStart: BuildNote {
+    var links: BuildNote {
         BuildNote(
-            commit: "44b7520a",
-            title: "Speed Run starts at once",
+            commit: "ff918aff",
+            title: "Links and widget taps open the right place",
             howToTest: """
-                Tap Start Speed Run: the run covers the screen with no pause, and closing it returns to Play.
+                Tap the Country of the Day widget: the app opens on that country. In Safari, \
+                geografy://country/jp opens Japan and geografy://daily opens today's challenge.
                 """,
-            systemImage: "bolt.fill",
-            color: DesignSystem.Color.pink
+            systemImage: "link",
+            color: DesignSystem.Color.blue
         ) {
-            go.open(.speedRun)
+            go.selectTab(.explore)
         }
     }
 
-    var wordSearch: BuildNote {
+    var firstRun: BuildNote {
         BuildNote(
-            commit: "f8982bf4",
-            title: "Word Search clock fits",
+            commit: "cdb144ef",
+            title: "First run for new players",
             howToTest: """
-                Start a puzzle: the clock at the top left shows the time in full instead of a squeezed circle.
+                Opens the welcome now. Pick a home country and finish: today's Daily Challenge opens, home is \
+                marked visited, and the Map tab flies to it.
                 """,
-            systemImage: "textformat.abc",
+            systemImage: "sparkles",
+            color: DesignSystem.Color.orange
+        ) {
+            go.showFirstRun()
+        }
+    }
+
+    var mapZoom: BuildNote {
+        BuildNote(
+            commit: "3de648c0",
+            title: "The map keeps its zoom",
+            howToTest: "Zoom into the world map, switch to another tab and back: the map stays where you left it.",
+            systemImage: "map.fill",
             color: DesignSystem.Color.teal
         ) {
-            go.open(.wordSearch)
+            go.selectTab(.map)
         }
     }
 
-    var noSound: BuildNote {
+    var lessonQuizzes: BuildNote {
         BuildNote(
-            commit: "cfa7cf9b",
-            title: "No more silent sound toggle",
+            commit: "b2095c93",
+            title: "Learning Path quizzes are real",
             howToTest: """
-                Settings no longer has a Sound effects switch, which did nothing; haptics and pronunciation stay.
+                Open a module's quiz lesson and start it: it completes only at 80% or more, and shows your last \
+                score with Try Again below that.
                 """,
-            systemImage: "speaker.slash.fill",
-            color: DesignSystem.Color.indigo
+            systemImage: "graduationcap.fill",
+            color: DesignSystem.Color.purple
         ) {
-            go.open(.settings)
+            go.open(.learningPath)
+        }
+    }
+
+    var knowledgeMap: BuildNote {
+        BuildNote(
+            commit: "c5f1d242",
+            title: "How well you know each continent",
+            howToTest: "Spaced Repetition shows each continent's countries colored by how well you know them.",
+            systemImage: "square.grid.2x2.fill",
+            color: DesignSystem.Color.pink
+        ) {
+            go.open(.srsStudy)
+        }
+    }
+
+    var continentPuzzle: BuildNote {
+        BuildNote(
+            commit: "a8af94d0",
+            title: "Map Puzzle from a continent",
+            howToTest: "On a continent's map or overview, the menu has Play Map Puzzle for that continent.",
+            systemImage: "puzzlepiece.fill",
+            color: DesignSystem.Color.orange
+        ) {
+            go.selectTab(.map)
+        }
+    }
+
+    var gameReviews: BuildNote {
+        BuildNote(
+            commit: "b843de8b",
+            title: "Games count toward flashcard reviews",
+            howToTest: """
+                Play a flag or capital quiz and miss some: the results offer Review Missed, and those cards are \
+                due in Spaced Repetition.
+                """,
+            systemImage: "rectangle.on.rectangle.angled",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.quiz)
         }
     }
 }
