@@ -4,22 +4,6 @@ import Geografy_Core_Navigation
 import Geografy_Core_Service
 import SwiftUI
 
-private enum SortOption: String, CaseIterable {
-    case name = "Name"
-    case population = "Population"
-    case area = "Area"
-    case gdp = "GDP"
-
-    var icon: String {
-        switch self {
-        case .name: "textformat"
-        case .population: "person.3"
-        case .area: "map"
-        case .gdp: "chart.bar"
-        }
-    }
-}
-
 public struct ContinentOverviewScreen: View {
     // MARK: - Init
     public init(
@@ -33,7 +17,7 @@ public struct ContinentOverviewScreen: View {
 
     public let continent: Country.Continent
 
-    @State private var sortBy: SortOption = .name
+    @State private var sortBy: ContinentSortOption = .name
 
     // MARK: - Body
     public var body: some View {
@@ -70,14 +54,7 @@ private extension ContinentOverviewScreen {
     }
 
     func sorted(_ countries: [Country]) -> [Country] {
-        countries.sorted { lhs, rhs in
-            switch sortBy {
-            case .name: lhs.name < rhs.name
-            case .population: lhs.population > rhs.population
-            case .area: lhs.area > rhs.area
-            case .gdp: (lhs.gdpPerCapita ?? 0) > (rhs.gdpPerCapita ?? 0)
-            }
-        }
+        sortBy.sorted(countries)
     }
 
     func averageGDPPerCapita(of countries: [Country]) -> Double? {
@@ -202,7 +179,7 @@ private extension ContinentOverviewScreen {
             SectionHeaderView(title: "Countries", icon: "list.bullet")
             Spacer()
             MenuPicker("Sort by", selection: $sortBy, selectedTitle: Text(sortBy.rawValue)) {
-                ForEach(SortOption.allCases, id: \.self) { option in
+                ForEach(ContinentSortOption.allCases, id: \.self) { option in
                     Label(option.rawValue, systemImage: option.icon)
                         .tag(option)
                 }

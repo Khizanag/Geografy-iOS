@@ -322,27 +322,8 @@ private extension MapScreen {
 
     // Returns a viewport rect for continents that span the antimeridian or
     // have outlier territories that would skew the computed bounding box.
-    func continentViewportBounds(for filter: String) -> CGRect? {
-        typealias Bounds = (minLng: Double, maxLng: Double, minLat: Double, maxLat: Double)
-        let lookup: [String: Bounds] = [
-            "Europe": (-25, 40, 34, 72),
-            "North America": (-140, -52, 7, 72),
-            "Oceania": (112, 178, -50, 10),
-            "Asia": (26, 145, -11, 78),
-            "Africa": (-20, 55, -35, 38),
-            "South America": (-82, -34, -56, 13),
-        ]
-        guard let b = lookup[filter] else { return nil }
-        return MapProjection.boundingRect(
-            minLongitude: b.minLng,
-            maxLongitude: b.maxLng,
-            minLatitude: b.minLat,
-            maxLatitude: b.maxLat
-        )
-    }
-
     var effectiveViewportBounds: CGRect {
-        if let filter = continentFilter, let vp = continentViewportBounds(for: filter) {
+        if let filter = continentFilter, let vp = ContinentViewport.rect(for: filter) {
             return vp
         }
         return MapProjection.worldBounds(around: mapState.contentBounds)

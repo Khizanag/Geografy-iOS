@@ -32,6 +32,10 @@ let package = Package(
                 .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
             ]
         ),
+        .testTarget(
+            name: "Geografy-Feature-MapTests",
+            dependencies: ["Geografy-Feature-Map"]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
