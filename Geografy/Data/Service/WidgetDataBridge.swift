@@ -8,7 +8,6 @@ import WidgetKit
 @Observable
 @MainActor
 final class WidgetDataBridge {
-    private static let defaults: UserDefaults? = UserDefaults(suiteName: "group.com.khizanag.geografy.dev")
     private static let reloadDebounceInterval: TimeInterval = 2
 
     private let countryDataService: CountryDataService
@@ -25,15 +24,15 @@ final class WidgetDataBridge {
         progressFraction: Double,
         visitedCount: Int
     ) async {
-        guard let defaults = Self.defaults else { return }
+        guard let defaults = WidgetContract.defaults else { return }
 
-        defaults.set(streak, forKey: "widget_streak")
-        defaults.set(totalXP, forKey: "widget_xp")
-        defaults.set(level.level, forKey: "widget_level")
-        defaults.set(level.title, forKey: "widget_level_title")
-        defaults.set(progressFraction, forKey: "widget_progress_fraction")
-        defaults.set(visitedCount, forKey: "widget_visited_count")
-        defaults.set(197, forKey: "widget_total_countries")
+        defaults.set(streak, forKey: WidgetContract.Key.streak)
+        defaults.set(totalXP, forKey: WidgetContract.Key.totalXP)
+        defaults.set(level.level, forKey: WidgetContract.Key.level)
+        defaults.set(level.title, forKey: WidgetContract.Key.levelTitle)
+        defaults.set(progressFraction, forKey: WidgetContract.Key.progressFraction)
+        defaults.set(visitedCount, forKey: WidgetContract.Key.visitedCount)
+        defaults.set(197, forKey: WidgetContract.Key.totalCountries)
 
         await writeCountryOfDayIfNeeded(to: defaults)
 
@@ -67,15 +66,15 @@ private extension WidgetDataBridge {
         guard !countryDataService.countries.isEmpty else { return }
 
         let todayKey = todayDateKey()
-        if let existing = defaults.string(forKey: "widget_country_of_day_date"),
+        if let existing = defaults.string(forKey: WidgetContract.Key.countryOfDayDate),
            existing == todayKey,
-           defaults.data(forKey: "widget_country_of_day") != nil {
+           defaults.data(forKey: WidgetContract.Key.countryOfDay) != nil {
             return
         }
 
         guard let country = countryDataService.countryOfTheDay() else { return }
 
-        let data = WidgetCountryData(
+        let data = WidgetContract.CountryOfDay(
             code: country.code,
             name: country.name,
             capital: country.capital,
@@ -85,8 +84,8 @@ private extension WidgetDataBridge {
         )
 
         if let encoded = try? JSONEncoder().encode(data) {
-            defaults.set(encoded, forKey: "widget_country_of_day")
-            defaults.set(todayKey, forKey: "widget_country_of_day_date")
+            defaults.set(encoded, forKey: WidgetContract.Key.countryOfDay)
+            defaults.set(todayKey, forKey: WidgetContract.Key.countryOfDayDate)
         }
     }
 
@@ -101,15 +100,5 @@ private extension WidgetDataBridge {
         let area = country.area.formatArea()
         return "Population \(population) · \(area)"
     }
-}
-
-// MARK: - Shared Data Model
-struct WidgetCountryData: Codable {
-    let code: String
-    let name: String
-    let capital: String
-    let continent: String
-    let flagEmoji: String
-    let funFact: String
 }
 #endif
