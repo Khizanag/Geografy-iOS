@@ -386,7 +386,6 @@ private extension MapScreen {
                     #if !os(tvOS)
                     hapticsService.selection()
                     #endif
-                    SoundService.shared.play(.tap)
                 }
             }
             return

@@ -402,7 +402,6 @@ private extension PinDropScreen {
             hapticsService.impact(.medium)
             #endif
         }
-        SoundService.shared.play(.tap)
     }
 
     func lockIn() {
@@ -430,7 +429,6 @@ private extension PinDropScreen {
         #if !os(tvOS)
         hapticsService.notification(isGood ? .success : rating == .far ? .error : .warning)
         #endif
-        SoundService.shared.play(isGood ? .correct : rating == .far ? .wrong : .tap)
     }
 
     func advance() {
@@ -451,7 +449,6 @@ private extension PinDropScreen {
         xpService.award(PinDropScoring.xp(for: game.results), source: .pinDropCompleted)
         isNewBest = records.record(game.totalScore, for: configuration)
         bestScore = max(bestScore, game.totalScore)
-        SoundService.shared.play(isNewBest ? .levelUp : .sessionComplete)
         #if !os(tvOS)
         hapticsService.notification(.success)
         #endif
