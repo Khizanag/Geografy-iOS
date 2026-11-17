@@ -127,46 +127,23 @@ private extension OceanExplorerScreen {
     }
 
     func statsGrid(ocean: Ocean) -> some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            statTile(
-                label: "Area",
+        StatTileRow {
+            StatTile(
                 value: formatArea(ocean.area),
-                icon: "square.dashed"
-            )
-            statTile(
-                label: "Avg Depth",
+                label: "Area",
+                icon: "square.dashed",
+                style: .plain            )
+            StatTile(
                 value: formatDepth(ocean.averageDepth),
-                icon: "arrow.down.to.line"
-            )
-            statTile(
-                label: "Max Depth",
+                label: "Avg Depth",
+                icon: "arrow.down.to.line",
+                style: .plain            )
+            StatTile(
                 value: formatDepth(ocean.maxDepth),
-                icon: "arrow.down.circle"
-            )
+                label: "Max Depth",
+                icon: "arrow.down.circle",
+                style: .plain            )
         }
-    }
-
-    func statTile(label: String, value: String, icon: String) -> some View {
-        VStack(spacing: DesignSystem.Spacing.xxs) {
-            Image(systemName: icon)
-                .font(DesignSystem.Font.iconXS)
-                .foregroundStyle(DesignSystem.Color.blue)
-            Text(value)
-                .font(DesignSystem.Font.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .minimumScaleFactor(0.7)
-                .lineLimit(1)
-            Text(label)
-                .font(DesignSystem.Font.caption2)
-                .foregroundStyle(DesignSystem.Color.textSecondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(
-            DesignSystem.Color.blue.opacity(0.08),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-        )
     }
 
     func borderingContinentsRow(ocean: Ocean) -> some View {

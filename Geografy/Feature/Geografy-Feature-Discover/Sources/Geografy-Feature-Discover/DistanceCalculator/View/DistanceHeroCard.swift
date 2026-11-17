@@ -96,25 +96,25 @@ private extension DistanceHeroCard {
             ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.md))
             : AnyLayout(HStackLayout(alignment: .top, spacing: DesignSystem.Spacing.xs))
         return layout {
-            ResultStatItem(
-                icon: "airplane",
+            StatTile(
                 value: flightTime,
                 label: "Flight time",
-                color: DesignSystem.Color.textSecondary
-            )
-            ResultStatItem(
-                icon: "safari",
+                icon: "airplane",
+                color: DesignSystem.Color.textSecondary,
+                style: .plain            )
+            StatTile(
                 value: metrics.direction.abbreviation,
                 label: "Heading",
-                color: DesignSystem.Color.textSecondary
-            )
+                icon: "safari",
+                color: DesignSystem.Color.textSecondary,
+                style: .plain            )
             .accessibilityLabel("Heading \(metrics.direction.name), \(Int(metrics.initialBearing.rounded())) degrees")
-            ResultStatItem(
-                icon: "globe.europe.africa.fill",
+            StatTile(
                 value: earthShare,
                 label: "Of the equator",
-                color: DesignSystem.Color.textSecondary
-            )
+                icon: "globe.europe.africa.fill",
+                color: DesignSystem.Color.textSecondary,
+                style: .plain            )
         }
     }
 }

@@ -154,24 +154,24 @@ private extension WordSearchGameScreen {
 
     var resultStats: some View {
         statsLayout {
-            ResultStatItem(
-                icon: "checkmark.circle.fill",
+            StatTile(
                 value: "\(foundWordIDs.count)",
                 label: "Found",
-                color: DesignSystem.Color.success
-            )
-            ResultStatItem(
-                icon: "eye.fill",
+                icon: "checkmark.circle.fill",
+                color: DesignSystem.Color.success,
+                style: .plain            )
+            StatTile(
                 value: "\(revealedCount)",
                 label: "Revealed",
-                color: DesignSystem.Color.warning
-            )
-            ResultStatItem(
-                icon: "timer",
+                icon: "eye.fill",
+                color: DesignSystem.Color.warning,
+                style: .plain            )
+            StatTile(
                 value: formattedTime,
                 label: "Time",
-                color: DesignSystem.Color.indigo
-            )
+                icon: "timer",
+                color: DesignSystem.Color.indigo,
+                style: .plain            )
         }
     }
 

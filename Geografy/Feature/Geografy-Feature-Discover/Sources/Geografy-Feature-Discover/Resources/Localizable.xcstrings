@@ -279,6 +279,12 @@
         }
       }
     },
+    "Area" : {
+
+    },
+    "Avg Depth" : {
+
+    },
     "Bordering Continents" : {
       "localizations" : {
         "ka" : {
@@ -519,6 +525,9 @@
         }
       }
     },
+    "Flight time" : {
+
+    },
     "From %@ to %@" : {
       "localizations" : {
         "en" : {
@@ -564,6 +573,9 @@
           }
         }
       }
+    },
+    "Heading" : {
+
     },
     "Heading %@, %lld degrees" : {
       "localizations" : {
@@ -687,6 +699,9 @@
         }
       }
     },
+    "Max Depth" : {
+
+    },
     "Member Countries" : {
       "localizations" : {
         "ka" : {
@@ -736,6 +751,9 @@
           }
         }
       }
+    },
+    "Of the equator" : {
+
     },
     "Open Map" : {
       "localizations" : {

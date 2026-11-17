@@ -2189,6 +2189,10 @@
         }
       }
     },
+    "Avg Depth" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Avg GDP per Capita" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -2212,6 +2216,10 @@
           }
         }
       }
+    },
+    "Avg. Think Time" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Back" : {
       "extractionState" : "manual",
@@ -2993,6 +3001,7 @@
         }
       }
     },
+    "Colors that don't mean right or wrong" : {},
     "Coming Soon" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4690,6 +4699,7 @@
         }
       }
     },
+    "Finish a quiz, Speed Run, Daily Challenge, Map Puzzle, Pin Drop, and a two-player game: each shows the same title, gold XP badge, stat tiles, and Done beside the main action." : {},
     "Finish today's challenge to start your history." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4759,6 +4769,10 @@
         }
       }
     },
+    "Flight time" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Flip card" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4770,6 +4784,10 @@
           }
         }
       }
+    },
+    "Found" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Found, %@" : {
       "extractionState" : "manual",
@@ -5170,6 +5188,10 @@
         }
       }
     },
+    "Heading" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Heading %@, %lld degrees" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5388,6 +5410,7 @@
         }
       }
     },
+    "Hub tiles and games use blue, pink, teal, and purple; green shows only success and red only errors or deleting. XP and levels are gold everywhere." : {},
     "Hues that stay distinct with common color blindness." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6372,6 +6395,10 @@
         }
       }
     },
+    "Max Depth" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Maximum level reached!" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7047,6 +7074,7 @@
         }
       }
     },
+    "No XP for giving up a Speed Run" : {},
     "No XP recorded" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7396,6 +7424,10 @@
         }
       }
     },
+    "Of the equator" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "On a country, tap Continent, then Open … Map: the map zooms to that country and selects it." : {},
     "One of you hosts and picks the quiz. The other joins from their phone." : {
       "extractionState" : "manual",
@@ -7409,6 +7441,7 @@
         }
       }
     },
+    "One results screen for every game" : {},
     "One warm sand color in six shades, for a calm map." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -8145,6 +8178,8 @@
         }
       }
     },
+    "Profile counts explored countries" : {},
+    "Profile's Explored stat matches the Profile tab, achievement names no longer cut off, and Recent Quizzes is one card." : {},
     "Progress" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9005,6 +9040,10 @@
           }
         }
       }
+    },
+    "Revealed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Revealed, %@" : {
       "extractionState" : "manual",
@@ -10080,6 +10119,8 @@
         }
       }
     },
+    "Sign Out and Delete Account are red in Settings and Profile, and both ask before acting. Territorial Disputes and Storage share one red Reset button." : {},
+    "Sign Out asks first" : {},
     "Sign in to Game Center" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -10454,6 +10495,7 @@
         }
       }
     },
+    "Start a Speed Run and give up at once: +0 XP and no streak day. Name some countries first and the XP matches how many." : {},
     "Start a quiz, then the Daily Challenge: each has a red flag that asks before quitting. Flashcards close at once, since every card is already saved." : {},
     "Start exploring to earn achievements!" : {
       "extractionState" : "manual",

@@ -43,30 +43,30 @@ private extension FlashcardStatsView {
             ],
             spacing: DesignSystem.Spacing.sm
         ) {
-            ResultStatItem(
-                icon: "rectangle.on.rectangle",
+            StatTile(
                 value: "\(cardsReviewed)",
                 label: "Reviewed",
-                color: DesignSystem.Color.purple
-            )
-            ResultStatItem(
-                icon: "checkmark.circle.fill",
+                icon: "rectangle.on.rectangle",
+                color: DesignSystem.Color.purple,
+                style: .plain            )
+            StatTile(
                 value: "\(correctCount)",
                 label: "Correct",
-                color: DesignSystem.Color.success
-            )
-            ResultStatItem(
-                icon: "chart.bar.fill",
+                icon: "checkmark.circle.fill",
+                color: DesignSystem.Color.success,
+                style: .plain            )
+            StatTile(
                 value: "\(accuracyPercentage)%",
                 label: "Accuracy",
-                color: DesignSystem.Color.indigo
-            )
-            ResultStatItem(
-                icon: "brain.fill",
+                icon: "chart.bar.fill",
+                color: DesignSystem.Color.indigo,
+                style: .plain            )
+            StatTile(
                 value: formattedThinkingTime,
                 label: "Avg. Think Time",
-                color: DesignSystem.Color.purple
-            )
+                icon: "brain.fill",
+                color: DesignSystem.Color.purple,
+                style: .plain            )
         }
     }
 

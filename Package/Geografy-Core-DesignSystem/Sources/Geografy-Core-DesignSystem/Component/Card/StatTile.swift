@@ -12,6 +12,14 @@ public struct StatTile: View {
     private let label: LocalizedStringKey
     private let icon: String?
     private let color: Color
+    private let style: Style
+
+    public enum Style: Sendable {
+        /// A card of its own, for tiles side by side on the page.
+        case card
+        /// No card, for stats inside a card that's already there.
+        case plain
+    }
 
     // MARK: - Init
     /// - Parameters:
@@ -22,47 +30,63 @@ public struct StatTile: View {
         value: String,
         label: LocalizedStringKey,
         icon: String? = nil,
-        color: Color = DesignSystem.Color.blue
+        color: Color = DesignSystem.Color.blue,
+        style: Style = .card
     ) {
         self.value = value
         self.label = label
         self.icon = icon
         self.color = color
+        self.style = style
     }
 
     // MARK: - Body
     public var body: some View {
-        CardView(cornerRadius: DesignSystem.CornerRadius.large) {
-            VStack(spacing: DesignSystem.Spacing.xxs) {
-                if let icon {
-                    Image(systemName: icon)
-                        .font(DesignSystem.Font.headline)
-                        .foregroundStyle(color)
-                        .frame(height: iconHeight)
-                        .accessibilityHidden(true)
+        Group {
+            switch style {
+            case .card:
+                CardView(cornerRadius: DesignSystem.CornerRadius.large) {
+                    content
+                        .padding(.vertical, DesignSystem.Spacing.md)
+                        .padding(.horizontal, DesignSystem.Spacing.xs)
                 }
-                Text(verbatim: value)
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .monospacedDigit()
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .contentTransition(.numericText())
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                Text(label)
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.75)
+            case .plain:
+                content
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.vertical, DesignSystem.Spacing.md)
-            .padding(.horizontal, DesignSystem.Spacing.xs)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(label))
         .accessibilityValue(Text(verbatim: value))
+    }
+}
+
+// MARK: - Subviews
+private extension StatTile {
+    var content: some View {
+        VStack(spacing: DesignSystem.Spacing.xxs) {
+            if let icon {
+                Image(systemName: icon)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(color)
+                    .frame(height: iconHeight)
+                    .accessibilityHidden(true)
+            }
+            Text(verbatim: value)
+                .font(DesignSystem.Font.title2)
+                .fontWeight(.bold)
+                .monospacedDigit()
+                .foregroundStyle(DesignSystem.Color.textPrimary)
+                .contentTransition(.numericText())
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(label)
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.75)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

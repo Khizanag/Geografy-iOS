@@ -789,6 +789,9 @@
         }
       }
     },
+    "Avg. Think Time" : {
+
+    },
     "Back" : {
       "localizations" : {
         "ka" : {
@@ -1482,6 +1485,9 @@
           }
         }
       }
+    },
+    "Found" : {
+
     },
     "Found, %@" : {
       "localizations" : {
@@ -2908,6 +2914,9 @@
           }
         }
       }
+    },
+    "Revealed" : {
+
     },
     "Revealed, %@" : {
       "localizations" : {
