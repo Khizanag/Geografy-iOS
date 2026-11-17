@@ -41,25 +41,12 @@ struct ContentView: View {
                 bannerQueue.append(achievement)
                 if currentBannerAchievement == nil { showNextBanner() }
             }
-            .onReceive(NotificationCenter.default.publisher(for: .switchTab)) { notification in
-                if let rawValue = notification.object as? Int, let tab = AppTab(rawValue: rawValue) {
-                    appCoordinator.selectedTab = tab
+            // Initially too: a Shortcut that launched the app sent its request before this view existed.
+            .onChange(of: AppRequests.shared.pending, initial: true) {
+                if let request = AppRequests.shared.take() {
+                    appCoordinator.handle(request, countries: countryDataService.countries)
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: .startQuiz)) { _ in
-                appCoordinator.selectedTab = .play
-                appCoordinator.playNavigator.push(PlayRoute.quizSetup)
-            }
-            .onReceive(NotificationCenter.default.publisher(for: .startDailyChallenge)) { _ in
-                appCoordinator.selectedTab = .play
-                appCoordinator.playNavigator.push(PlayRoute.dailyChallenge)
-            }
-            #if targetEnvironment(macCatalyst)
-            .onReceive(NotificationCenter.default.publisher(for: .macOpenSearch)) { _ in
-                appCoordinator.selectedTab = .explore
-                appCoordinator.exploreNavigator.push(CountryRoute.search)
-            }
-            #endif
             .onOpenURL { appCoordinator.handleDeepLink($0) }
             .task(id: countryDataService.countries.count, priority: .utility) { await prewarmListFlags() }
             #if DEBUG

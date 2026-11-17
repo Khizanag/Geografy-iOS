@@ -1,4 +1,3 @@
-import Geografy_Core_Navigation
 #if os(iOS)
 import AppIntents
 
@@ -12,10 +11,7 @@ struct OpenGeografyIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult {
-        NotificationCenter.default.post(
-            name: .switchTab,
-            object: destination.tabIndex
-        )
+        AppRequests.shared.send(.tab(destination.tab))
         return .result()
     }
 }

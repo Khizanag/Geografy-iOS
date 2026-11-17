@@ -267,9 +267,7 @@ private extension GeografyApp {
         CommandGroup(replacing: .newItem) {}
 
         CommandGroup(replacing: .appSettings) {
-            Button("Settings...") {
-                NotificationCenter.default.post(name: .switchTab, object: AppTab.profile.rawValue)
-            }
+            Button("Settings…") { AppRequests.shared.send(.settings) }
             .keyboardShortcut(",", modifiers: .command)
         }
 
@@ -282,9 +280,7 @@ private extension GeografyApp {
         }
 
         CommandMenu("Quiz") {
-            Button("Start Quick Quiz") {
-                NotificationCenter.default.post(name: .startQuiz, object: nil)
-            }
+            Button("Start Quick Quiz") { AppRequests.shared.send(.quiz) }
             .keyboardShortcut("q", modifiers: [.command, .shift])
         }
 
@@ -295,32 +291,21 @@ private extension GeografyApp {
 
     @ViewBuilder
     var navigateMenuItems: some View {
-        Button("Map") { NotificationCenter.default.post(name: .switchTab, object: AppTab.map.rawValue) }
+        Button("Map") { AppRequests.shared.send(.tab(.map)) }
             .keyboardShortcut("1", modifiers: .command)
-        Button("Explore") { NotificationCenter.default.post(name: .switchTab, object: AppTab.explore.rawValue) }
+        Button("Explore") { AppRequests.shared.send(.tab(.explore)) }
             .keyboardShortcut("2", modifiers: .command)
-        Button("Play") { NotificationCenter.default.post(name: .switchTab, object: AppTab.play.rawValue) }
+        Button("Play") { AppRequests.shared.send(.tab(.play)) }
             .keyboardShortcut("3", modifiers: .command)
-        Button("Profile") { NotificationCenter.default.post(name: .switchTab, object: AppTab.profile.rawValue) }
+        Button("Profile") { AppRequests.shared.send(.tab(.profile)) }
             .keyboardShortcut("4", modifiers: .command)
 
         Divider()
 
-        Button("Search") { NotificationCenter.default.post(name: .macOpenSearch, object: nil) }
+        Button("Search") { AppRequests.shared.send(.search) }
             .keyboardShortcut("f", modifiers: .command)
-        Button("Random Country") { NotificationCenter.default.post(name: .macRandomCountry, object: nil) }
+        Button("Random Country") { AppRequests.shared.send(.randomCountry) }
             .keyboardShortcut("r", modifiers: .command)
     }
 }
 #endif
-
-// MARK: - Notification Names
-extension Notification.Name {
-    static let switchTab = Notification.Name("switchTab")
-    static let startQuiz = Notification.Name("startQuiz")
-    static let startDailyChallenge = Notification.Name("startDailyChallenge")
-    #if targetEnvironment(macCatalyst)
-    static let macRandomCountry = Notification.Name("macRandomCountry")
-    static let macOpenSearch = Notification.Name("macOpenSearch")
-    #endif
-}

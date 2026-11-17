@@ -1,4 +1,3 @@
-import Geografy_Core_Navigation
 #if os(iOS)
 import AppIntents
 
@@ -9,7 +8,7 @@ struct StartQuizIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult {
-        NotificationCenter.default.post(name: .startQuiz, object: nil)
+        AppRequests.shared.send(.quiz)
         return .result()
     }
 }

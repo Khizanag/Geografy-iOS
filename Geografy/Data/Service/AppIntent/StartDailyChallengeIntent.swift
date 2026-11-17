@@ -1,4 +1,3 @@
-import Geografy_Core_Navigation
 #if os(iOS)
 import AppIntents
 
@@ -9,7 +8,7 @@ struct StartDailyChallengeIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult {
-        NotificationCenter.default.post(name: .startDailyChallenge, object: nil)
+        AppRequests.shared.send(.dailyChallenge)
         return .result()
     }
 }

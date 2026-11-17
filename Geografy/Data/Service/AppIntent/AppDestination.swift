@@ -16,12 +16,12 @@ enum AppDestination: String, AppEnum {
         .profile: "Profile",
     ]
 
-    var tabIndex: Int {
+    var tab: AppTab {
         switch self {
-        case .map: AppTab.map.rawValue
-        case .explore: AppTab.explore.rawValue
-        case .play: AppTab.play.rawValue
-        case .profile: AppTab.profile.rawValue
+        case .map: .map
+        case .explore: .explore
+        case .play: .play
+        case .profile: .profile
         }
     }
 }

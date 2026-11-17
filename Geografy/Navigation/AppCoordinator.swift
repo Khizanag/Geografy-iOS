@@ -45,6 +45,29 @@ final class AppCoordinator {
         }
     }
 
+    func handle(_ request: AppRequest, countries: [Country]) {
+        switch request {
+        case .tab(let tab):
+            selectedTab = tab
+        case .quiz:
+            selectedTab = .play
+            playNavigator.push(PlayRoute.quizSetup)
+        case .dailyChallenge:
+            selectedTab = .play
+            playNavigator.push(PlayRoute.dailyChallenge)
+        case .settings:
+            selectedTab = .profile
+            profileNavigator.push(ProfileRoute.settings)
+        case .search:
+            selectedTab = .explore
+            exploreNavigator.push(CountryRoute.search)
+        case .randomCountry:
+            guard let country = countries.randomElement() else { return }
+            selectedTab = .explore
+            exploreNavigator.push(CountryRoute.countryDetail(country))
+        }
+    }
+
     #if DEBUG
     /// Launching with `-openHub <testKey>` opens that hub screen, so UI checks don't need to tap through tabs.
     func openHubItemFromLaunchArguments() {
