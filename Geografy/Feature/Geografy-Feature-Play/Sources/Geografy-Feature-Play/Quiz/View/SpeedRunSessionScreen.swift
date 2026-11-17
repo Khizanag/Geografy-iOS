@@ -427,17 +427,8 @@ private extension SpeedRunSessionScreen {
     }
 
     func calculateXP() -> Int {
-        let completionRate = Double(completedCodes.count) / Double(targetCountries.count)
-        let base = 50
-        let completionBonus = Int(completionRate * 100)
-        let speedBonus: Int = switch elapsedTime {
-        case ..<60: 100
-        case ..<120: 60
-        case ..<300: 30
-        case ..<600: 15
-        default: 5
-        }
-        return base + completionBonus + speedBonus
+        let completionRate = targetCountries.isEmpty ? 0 : Double(completedCodes.count) / Double(targetCountries.count)
+        return XPRules.speedRun(completionRate: completionRate, elapsedSeconds: elapsedTime)
     }
 
     func restart() {

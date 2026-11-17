@@ -1,6 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Navigation
+import Geografy_Core_Service
 import SwiftUI
 
 public struct LessonScreen: View {
@@ -14,6 +15,7 @@ public struct LessonScreen: View {
     }
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(XPService.self) private var xpService
     @Environment(LearningPathService.self) private var learningPathService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -65,7 +67,9 @@ private extension LessonScreen {
 
     var completeButton: some View {
         GlassButton(lesson.isCompleted ? "Already Completed" : "Mark as Complete", fullWidth: true) {
-            learningPathService.completeLesson(moduleID: module.id, lessonID: lesson.id)
+            if learningPathService.completeLesson(moduleID: module.id, lessonID: lesson.id) {
+                xpService.award(XPRules.lessonCompleted, source: .lessonCompleted)
+            }
             dismiss()
         }
         .disabled(lesson.isCompleted)

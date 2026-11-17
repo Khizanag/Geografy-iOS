@@ -8,6 +8,7 @@ public struct DailyChallengeSessionScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(\.dismiss) private var dismiss
+    @Environment(XPService.self) private var xpService
     @Environment(GameCenterService.self) private var gameCenterService
 
     public let challenge: DailyChallenge
@@ -119,6 +120,7 @@ private extension DailyChallengeSessionScreen {
     func finishChallenge() {
         let timeSpent = Date().timeIntervalSince(startTime)
         service.saveResult(score: score, timeSpent: timeSpent)
+        xpService.award(XPRules.dailyChallenge(score: score, maxScore: 1_000), source: .dailyChallengeCompleted)
 
         // The leaderboard ranks how many challenges people have completed, not one day's score.
         let completedCount = service.history.count

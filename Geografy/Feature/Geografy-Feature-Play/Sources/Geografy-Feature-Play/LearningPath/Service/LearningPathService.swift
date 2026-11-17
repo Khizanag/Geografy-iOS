@@ -17,14 +17,18 @@ public final class LearningPathService {
         loadProgress()
     }
 
-    public func completeLesson(moduleID: String, lessonID: String) {
+    /// Returns whether the lesson was new, so it's rewarded once.
+    @discardableResult
+    public func completeLesson(moduleID: String, lessonID: String) -> Bool {
         guard let moduleIndex = modules.firstIndex(where: { $0.id == moduleID }),
-              let lessonIndex = modules[moduleIndex].lessons.firstIndex(where: { $0.id == lessonID })
-        else { return }
+              let lessonIndex = modules[moduleIndex].lessons.firstIndex(where: { $0.id == lessonID }),
+              !modules[moduleIndex].lessons[lessonIndex].isCompleted
+        else { return false }
 
         modules[moduleIndex].lessons[lessonIndex].isCompleted = true
         unlockNextModuleIfNeeded(after: moduleIndex)
         saveProgress()
+        return true
     }
 }
 

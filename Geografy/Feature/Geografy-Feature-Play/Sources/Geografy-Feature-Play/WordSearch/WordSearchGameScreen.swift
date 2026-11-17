@@ -7,6 +7,7 @@ import SwiftUI
 public struct WordSearchGameScreen: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(XPService.self) private var xpService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     @Environment(\.colorSchemeContrast) private var contrast
@@ -439,6 +440,10 @@ private extension WordSearchGameScreen {
             foundWordIDs.insert(wordItem.id)
             if allFound(puzzle) {
                 timerActive = false
+                xpService.award(
+                    XPRules.wordSearch(wordsFound: foundWordIDs.count, foundAll: true),
+                    source: .wordSearchCompleted
+                )
                 #if !os(tvOS)
                 hapticsService.notification(.success)
                 #endif
@@ -474,6 +479,10 @@ private extension WordSearchGameScreen {
     func revealAllWords() {
         timerActive = false
         isRevealed = true
+        xpService.award(
+            XPRules.wordSearch(wordsFound: foundWordIDs.count, foundAll: false),
+            source: .wordSearchCompleted
+        )
         AccessibilityNotification.Announcement("All words revealed.").post()
         #if !os(tvOS)
         hapticsService.impact(.light)

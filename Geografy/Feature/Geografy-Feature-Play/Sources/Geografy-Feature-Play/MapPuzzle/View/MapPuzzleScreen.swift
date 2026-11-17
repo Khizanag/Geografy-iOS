@@ -8,6 +8,7 @@ struct MapPuzzleScreen: View {
     // MARK: - Properties
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(XPService.self) private var xpService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(GeoJSONCache.self) private var geoJSONCache
@@ -228,6 +229,10 @@ private extension MapPuzzleScreen {
                 selectedOptionIndex = nil
             } else {
                 showSummary = true
+                xpService.award(
+                    XPRules.mapPuzzle(questions: questions.count, correct: correctCount),
+                    source: .mapPuzzleCompleted
+                )
             }
         }
     }

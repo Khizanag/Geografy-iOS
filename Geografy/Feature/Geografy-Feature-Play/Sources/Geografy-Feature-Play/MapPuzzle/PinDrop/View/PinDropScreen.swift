@@ -9,6 +9,7 @@ import SwiftUI
 struct PinDropScreen: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
+    @Environment(XPService.self) private var xpService
     @Environment(\.locale) private var locale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(CountryDataService.self) private var countryDataService
@@ -445,6 +446,12 @@ private extension PinDropScreen {
     }
 
     func finish(_ game: PinDropGame) {
+        let accuracies = game.results.map { Double($0.score.accuracyPoints) / Double(PinDropScoring.maxAccuracyPoints) }
+        let averageAccuracy = accuracies.isEmpty ? 0 : accuracies.reduce(0, +) / Double(accuracies.count)
+        xpService.award(
+            XPRules.pinDrop(rounds: game.results.count, averageAccuracy: averageAccuracy),
+            source: .pinDropCompleted
+        )
         isNewBest = records.record(game.totalScore, for: configuration)
         bestScore = max(bestScore, game.totalScore)
         SoundService.shared.play(isNewBest ? .levelUp : .sessionComplete)

@@ -94,7 +94,7 @@ extension CountryDetailScreen {
 extension CountryDetailScreen {
     func trackExploration() {
         guard explorationService.markExplored(country.code) else { return }
-        xpService.award(5, source: .countryExplored)
+        xpService.award(XPRules.countryExplored, source: .countryExplored)
         achievementService.checkExplorationAchievements(
             exploredCodes: explorationService.exploredCountryCodes,
             countries: countryDataService.countries

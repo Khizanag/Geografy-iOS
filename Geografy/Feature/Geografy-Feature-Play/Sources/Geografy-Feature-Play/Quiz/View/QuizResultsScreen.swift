@@ -203,16 +203,11 @@ private extension QuizResultsScreen {
 private extension QuizResultsScreen {
     func processQuizResult() {
         let difficulty = result.configuration.difficulty
-        let base: Int
-        let maxBonus: Int
-        let source: XPSource
-        switch difficulty {
-        case .easy: base = 15; maxBonus = 10; source = .quizCompletedEasy
-        case .medium: base = 25; maxBonus = 15; source = .quizCompletedMedium
-        case .hard: base = 40; maxBonus = 20; source = .quizCompletedHard
-        }
-        let typingMultiplier = result.configuration.answerMode == .typing ? 1.5 : 1.0
-        let earnedXP = Int(Double(base + Int(result.accuracy * Double(maxBonus))) * typingMultiplier)
+        let earnedXP = XPRules.quiz(
+            difficulty: difficulty,
+            accuracy: result.accuracy,
+            isTyping: result.configuration.answerMode == .typing
+        )
 
         let record = QuizHistoryRecord(
             userID: xpService.currentUserID,
@@ -227,7 +222,7 @@ private extension QuizResultsScreen {
         database.mainContext.insert(record)
         try? database.mainContext.save()
 
-        xpService.award(earnedXP, source: source)
+        xpService.award(earnedXP, source: XPRules.quizSource(for: difficulty))
         xpEarned = earnedXP
 
         let quizScore = Int(result.accuracy * 100)

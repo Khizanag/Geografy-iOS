@@ -13,4 +13,10 @@ public enum XPSource: String, Sendable {
     case streakMilestone30
     case streakMilestone100
     case speedRunCompleted
+    case dailyChallengeCompleted
+    case pinDropCompleted
+    case mapPuzzleCompleted
+    case flashcardSession
+    case lessonCompleted
+    case wordSearchCompleted
 }

@@ -9,6 +9,7 @@ public struct FlashcardSessionScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
     @Environment(\.dismiss) private var dismiss
+    @Environment(XPService.self) private var xpService
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(AchievementService.self) private var achievementService
     @Environment(GameCenterService.self) private var gameCenterService
@@ -254,6 +255,7 @@ private extension FlashcardSessionScreen {
     func showNextCard() {
         guard currentIndex + 1 < cards.count else {
             showResults = true
+            xpService.award(XPRules.flashcardSession(cardsReviewed: cards.count), source: .flashcardSession)
             achievementService.checkFlashcardAchievements(proficientCount: flashcardService.proficientCount)
             return
         }

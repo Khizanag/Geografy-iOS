@@ -1,4 +1,5 @@
 #if !os(tvOS)
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Service
 import SwiftUI
@@ -146,11 +147,9 @@ private extension LocalMultiplayerResultScreen {
         let scores = "You \(coordinator.playerScore), \(opponentName) \(coordinator.opponentScore)."
         let announcement = "\(resultTitle) \(scores)"
         AccessibilityNotification.Announcement(announcement).post()
+        xpService.award(XPRules.multiplayer(won: isWin), source: isWin ? .quizCompletedMedium : .quizCompletedEasy)
         if isWin {
-            xpService.award(25, source: .quizCompletedMedium)
             hapticsService.notification(.success)
-        } else {
-            xpService.award(10, source: .quizCompletedEasy)
         }
     }
 }

@@ -34,13 +34,11 @@ private extension TravelStatusRecorder {
         var awarded = Set(UserDefaults.standard.stringArray(forKey: UserScope.key(Self.awardedKey)) ?? [])
         let entryKey = "\(countryCode):\(status.rawValue)"
         guard !awarded.contains(entryKey) else { return }
+        let alreadyRewarded = awarded.count { $0.hasSuffix(":\(status.rawValue)") }
         awarded.insert(entryKey)
         UserDefaults.standard.set(Array(awarded), forKey: UserScope.key(Self.awardedKey))
-        switch status {
-        case .visited:
-            xpService.award(20, source: .travelVisited)
-        case .wantToVisit:
-            xpService.award(5, source: .travelWantToVisit)
-        }
+        let amount = XPRules.travel(status, alreadyRewarded: alreadyRewarded)
+        guard amount > 0 else { return }
+        xpService.award(amount, source: status == .visited ? .travelVisited : .travelWantToVisit)
     }
 }
