@@ -256,7 +256,7 @@ extension AchievementService {
 
         let record = UnlockedAchievement(id: achievementID, userID: currentUserID)
         db.mainContext.insert(record)
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
 
         if definition.xpReward > 0 {
             xpService.award(definition.xpReward, source: .achievementUnlocked)

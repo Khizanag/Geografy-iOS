@@ -59,7 +59,7 @@ extension FavoritesService {
     }
 
     public func save() {
-        try? modelContext.save()
+        modelContext.saveOrLog()
     }
 }
 

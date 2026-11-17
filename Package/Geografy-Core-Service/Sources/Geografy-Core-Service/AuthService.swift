@@ -79,7 +79,7 @@ extension AuthService {
             existingProfile.isGuest = false
             existingProfile.lastLoginAt = .now
             if let email { existingProfile.email = email }
-            try? db.mainContext.save()
+            db.mainContext.saveOrLog()
             currentUserID = appleUserID
             state = .authenticated(existingProfile)
         } else if case .guest(let guestProfile) = state {
@@ -90,7 +90,7 @@ extension AuthService {
             if !fullName.isEmpty { guestProfile.displayName = fullName }
             if let email { guestProfile.email = email }
             guestProfile.lastLoginAt = .now
-            try? db.mainContext.save()
+            db.mainContext.saveOrLog()
             currentUserID = appleUserID
             state = .authenticated(guestProfile)
         } else {
@@ -101,7 +101,7 @@ extension AuthService {
                 isGuest: false
             )
             db.mainContext.insert(profile)
-            try? db.mainContext.save()
+            db.mainContext.saveOrLog()
             currentUserID = appleUserID
             state = .authenticated(profile)
         }
@@ -123,7 +123,7 @@ extension AuthService {
             existing.displayName = "Giga"
             existing.email = "giga.khizanishvili@gmail.com"
             existing.lastLoginAt = .now
-            try? db.mainContext.save()
+            db.mainContext.saveOrLog()
             currentUserID = debugID
             state = .authenticated(existing)
         } else {
@@ -134,7 +134,7 @@ extension AuthService {
                 guestProfile.displayName = "Giga"
                 guestProfile.email = "giga.khizanishvili@gmail.com"
                 guestProfile.lastLoginAt = .now
-                try? db.mainContext.save()
+                db.mainContext.saveOrLog()
                 currentUserID = debugID
                 state = .authenticated(guestProfile)
             } else {
@@ -145,7 +145,7 @@ extension AuthService {
                     isGuest: false
                 )
                 db.mainContext.insert(profile)
-                try? db.mainContext.save()
+                db.mainContext.saveOrLog()
                 currentUserID = debugID
                 state = .authenticated(profile)
             }
@@ -222,7 +222,7 @@ private extension AuthService {
         }
         let profile = UserProfile(id: id, displayName: "Explorer", isGuest: true)
         db.mainContext.insert(profile)
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
         return profile
     }
 
@@ -245,7 +245,7 @@ private extension AuthService {
         KeychainService.save(newID, for: .guestUUID)
         let profile = UserProfile(id: newID, displayName: "Explorer", isGuest: true)
         db.mainContext.insert(profile)
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
         currentUserID = newID
         state = .guest(profile)
     }
@@ -267,7 +267,7 @@ private extension AuthService {
         let streaks = (try? db.mainContext.fetch(streakDescriptor)) ?? []
         for record in streaks { record.userID = newID }
 
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
     }
 
     func deleteAllUserData(for userID: String) {
@@ -291,6 +291,6 @@ private extension AuthService {
         let profiles = (try? db.mainContext.fetch(profileDescriptor)) ?? []
         for profile in profiles { db.mainContext.delete(profile) }
 
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
     }
 }

@@ -131,7 +131,7 @@ private extension QuizResultsScreen {
             xpEarned: earnedXP
         )
         database.mainContext.insert(record)
-        try? database.mainContext.save()
+        database.mainContext.saveOrLog()
 
         xpService.award(earnedXP, source: XPRules.quizSource(for: difficulty))
         xpEarned = earnedXP

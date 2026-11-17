@@ -185,6 +185,6 @@ private extension CollectionService {
     }
 
     func save() {
-        try? modelContext?.save()
+        modelContext?.saveOrLog()
     }
 }

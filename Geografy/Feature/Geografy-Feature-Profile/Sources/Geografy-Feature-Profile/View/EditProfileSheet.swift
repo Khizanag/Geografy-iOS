@@ -87,7 +87,7 @@ private extension EditProfileSheet {
         hapticsService.notification(.success)
         if let profile = authService.currentProfile {
             profile.displayName = trimmed
-            try? database.mainContext.save()
+            database.mainContext.saveOrLog()
         }
         dismiss()
     }

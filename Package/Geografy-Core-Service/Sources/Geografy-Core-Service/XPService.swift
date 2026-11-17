@@ -50,7 +50,7 @@ public final class XPService {
             metadata: metadataString
         )
         db.mainContext.insert(record)
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
 
         // Add to the running total rather than refetching every record the user has ever earned.
         let previousLevel = currentLevel

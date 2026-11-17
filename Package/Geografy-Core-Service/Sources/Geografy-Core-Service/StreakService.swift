@@ -45,7 +45,7 @@ public final class StreakService {
 
         let record = StreakRecord(userID: userID, date: today)
         db.mainContext.insert(record)
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
 
         xpService.award(10, source: .dailyBonus)
 
@@ -130,6 +130,6 @@ extension StreakService {
         if currentStreak > profile.longestStreak {
             profile.longestStreak = currentStreak
         }
-        try? db.mainContext.save()
+        db.mainContext.saveOrLog()
     }
 }

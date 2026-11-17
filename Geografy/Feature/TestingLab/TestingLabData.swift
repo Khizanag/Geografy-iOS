@@ -27,7 +27,7 @@ struct TestingLabData {
     func resetXP() {
         let userID = userID
         try? context.delete(model: XPRecord.self, where: #Predicate { $0.userID == userID })
-        try? context.save()
+        context.saveOrLog()
         xpService.refreshXP()
     }
 
@@ -41,7 +41,7 @@ struct TestingLabData {
     func resetAchievements() {
         let userID = userID
         try? context.delete(model: UnlockedAchievement.self, where: #Predicate { $0.userID == userID })
-        try? context.save()
+        context.saveOrLog()
         achievementService.saveProgress([:])
         achievementService.pinnedIDs.forEach(achievementService.togglePin)
         achievementService.refreshUnlocked()
@@ -57,7 +57,7 @@ struct TestingLabData {
             guard let date = Calendar.current.date(byAdding: .day, value: -offset, to: today) else { continue }
             context.insert(StreakRecord(userID: userID, date: date))
         }
-        try? context.save()
+        context.saveOrLog()
         streakService.refreshStreak()
     }
 
