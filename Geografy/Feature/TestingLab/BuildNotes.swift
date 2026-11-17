@@ -19,98 +19,68 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [emptyStates, countryLists, liquidGlass, forms, achievementCount, tabsInBar]
+        [smoothMaps, tapRedraw, fasterLaunch, fasterSearch]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var emptyStates: BuildNote {
+    var smoothMaps: BuildNote {
         BuildNote(
-            commit: "595da86f",
-            title: "Empty states with a way out",
+            commit: "0244d243",
+            title: "Every map pans smoothly",
             howToTest: """
-                In Timeline, set a filter that hides every event: Clear Filters brings them back. A quiz with \
-                no questions for its region offers Choose a Region.
+                Pan and pinch the Travel map, an organization's map, and the Historical map: they move as \
+                smoothly as the main map, pinch around your fingers, and stop at the edge of the world.
                 """,
-            systemImage: "tray",
-            color: DesignSystem.Color.blue
-        ) {
-            go.open(.timeline)
-        }
-    }
-
-    var countryLists: BuildNote {
-        BuildNote(
-            commit: "4ec35d45",
-            title: "Countries listed in one card",
-            howToTest: """
-                Travel, an organization's members, a continent's countries, and Speed Run's missed list show \
-                one card with dividers instead of a card per country. Long lists scroll smoothly.
-                """,
-            systemImage: "list.bullet.rectangle",
+            systemImage: "hand.draw.fill",
             color: DesignSystem.Color.teal
         ) {
             go.open(.travel)
         }
     }
 
-    var liquidGlass: BuildNote {
+    var tapRedraw: BuildNote {
         BuildNote(
-            commit: "c2d8e35c",
-            title: "Glass only where it floats",
+            commit: "9dba2923",
+            title: "Selecting a country is instant",
             howToTest: """
-                The timeline slider, map headers, and achievement banner are Liquid Glass; Leaderboards and \
-                the multiplayer lobby use plain cards. Stats everywhere use the same tile.
+                On the main map, tap country after country: the outline moves at once. Turn names on and pan: \
+                they slide with the map; pinch and they resize.
                 """,
-            systemImage: "square.on.square",
-            color: DesignSystem.Color.indigo
+            systemImage: "hand.tap.fill",
+            color: DesignSystem.Color.blue
         ) {
-            go.open(.timeline)
+            go.selectTab(.map)
         }
     }
 
-    var forms: BuildNote {
+    var fasterLaunch: BuildNote {
         BuildNote(
-            commit: "18ad2101",
-            title: "One text field and a checkmark to save",
+            commit: "9106b6b5",
+            title: "Lighter launch",
             howToTest: """
-                Add a travel journal entry: title and notes share one field style, and Save is the checkmark \
-                at the top, greyed until a country is chosen.
+                Quit and reopen the app: the map appears without a hitch. Map colors, flags, sound, and speech \
+                are now prepared off the main thread or when first needed.
                 """,
-            systemImage: "square.and.pencil",
-            color: DesignSystem.Color.purple
-        ) {
-            go.open(.travel)
-        }
-    }
-
-    var achievementCount: BuildNote {
-        BuildNote(
-            commit: "395505bd",
-            title: "Achievement counts agree",
-            howToTest: """
-                Profile's achievement count matches the Unlocked tile on the Achievements screen.
-                """,
-            systemImage: "trophy.fill",
+            systemImage: "bolt.fill",
             color: DesignSystem.Color.warning
         ) {
-            go.open(.achievements)
+            go.selectTab(.map)
         }
     }
 
-    var tabsInBar: BuildNote {
+    var fasterSearch: BuildNote {
         BuildNote(
-            commit: "232ed46c",
-            title: "Tabs in the bar",
+            commit: "3bd4c65f",
+            title: "Search keeps up with typing",
             howToTest: """
-                World Facts and Time Zones switch tabs from the navigation bar, like Explore. Pin Drop and \
-                Map Puzzle pick regions with the same tiles as the quiz.
+                Type quickly in Search: results update on every keystroke with no lag.
                 """,
-            systemImage: "rectangle.split.3x1",
-            color: DesignSystem.Color.pink
+            systemImage: "magnifyingglass",
+            color: DesignSystem.Color.purple
         ) {
-            go.open(.worldFacts)
+            go.open(.search)
         }
     }
 }
