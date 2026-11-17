@@ -162,21 +162,8 @@ private extension TravelStatsCard {
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    Capsule()
-                        .fill(TravelStatus.visited.color)
-                        .frame(width: geo.size.width * fraction)
-                        .animation(
-                            reduceMotion ? .easeOut(duration: 0.2) : .spring(response: 0.6, dampingFraction: 0.7),
-                            value: fraction
-                        )
-                }
-            }
-            .frame(height: 5)
-            .accessibilityHidden(true)
+            ShareBar(fraction: fraction, color: TravelStatus.visited.color)
+                .accessibilityHidden(true)
         }
     }
 }

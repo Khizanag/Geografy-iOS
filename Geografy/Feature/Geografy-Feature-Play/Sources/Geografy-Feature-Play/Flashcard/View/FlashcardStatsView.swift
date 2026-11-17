@@ -75,18 +75,7 @@ private extension FlashcardStatsView {
             Text("Accuracy")
                 .font(DesignSystem.Font.caption)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(DesignSystem.Color.cardBackgroundHighlighted)
-                    Capsule()
-                        .fill(accuracyColor)
-                        .frame(
-                            width: geometry.size.width * accuracyFraction
-                        )
-                }
-            }
-            .frame(height: 8)
+            ShareBar(fraction: accuracyFraction, color: accuracyColor)
         }
     }
 }

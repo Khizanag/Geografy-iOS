@@ -29,8 +29,10 @@ public struct TravelJournalPhotoGrid: View {
                 photoCell(at: index)
             }
         }
-        .fullScreenCover(item: $selectedPhotoIndex) { selected in
-            fullScreenPhoto(at: selected.value)
+        .zoomableViewer(isPresented: isViewingPhoto, title: viewerTitle) {
+            if let selectedPhotoIndex {
+                fullScreenPhoto(at: selectedPhotoIndex.value)
+            }
         }
     }
 }
@@ -86,32 +88,27 @@ private extension TravelJournalPhotoGrid {
     }
 
     func fullScreenPhoto(at index: Int) -> some View {
-        ZStack {
-            DesignSystem.Color.background
-                .ignoresSafeArea()
-            FullScreenPhoto(
-                preview: images[index],
-                label: "Photo \(index + 1) of \(images.count)"
-            ) { minimumPixelSide in
-                await loadFullImage?(index, minimumPixelSide)
-            }
-            .ignoresSafeArea()
+        FullScreenPhoto(
+            preview: images[index],
+            label: "Photo \(index + 1) of \(images.count)"
+        ) { minimumPixelSide in
+            await loadFullImage?(index, minimumPixelSide)
         }
-        .overlay(alignment: .topTrailing) {
-            closeButton
+    }
+}
+
+// MARK: - Helpers
+private extension TravelJournalPhotoGrid {
+    var isViewingPhoto: Binding<Bool> {
+        Binding {
+            selectedPhotoIndex != nil
+        } set: { isPresented in
+            if !isPresented { selectedPhotoIndex = nil }
         }
     }
 
-    var closeButton: some View {
-        Button {
-            selectedPhotoIndex = nil
-        } label: {
-            Image(systemName: "xmark.circle.fill")
-                .font(DesignSystem.Font.iconLarge)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .padding(DesignSystem.Spacing.md)
-        }
-        .accessibilityLabel("Close photo")
+    var viewerTitle: String? {
+        selectedPhotoIndex.map { String(localized: "Photo \($0.value + 1) of \(images.count)") }
     }
 }
 
