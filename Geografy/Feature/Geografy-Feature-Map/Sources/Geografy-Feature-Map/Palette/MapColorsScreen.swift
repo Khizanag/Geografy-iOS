@@ -108,7 +108,7 @@ private extension MapColorsScreen {
                     .frame(width: 26, height: 18)
                     .overlay {
                         RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small / 2)
-                            .strokeBorder(DesignSystem.Color.textPrimary.opacity(0.08))
+                            .strokeBorder(DesignSystem.Color.textPrimary.opacity(DesignSystem.Opacity.faint))
                     }
             }
         }

@@ -37,7 +37,7 @@ public struct FlagPairRow: View {
                 }
                 .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     Text(title)
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textPrimary)

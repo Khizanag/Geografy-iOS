@@ -99,9 +99,9 @@ private extension TravelJournalDetailScreen {
     var countryRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: entry.countryCode, height: 40)
-                .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(countryName)
                     .font(DesignSystem.Font.title2)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -245,7 +245,7 @@ private extension TravelJournalDetailScreen {
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
-                DesignSystem.Color.error.opacity(0.1),
+                DesignSystem.Color.error.opacity(DesignSystem.Opacity.faint),
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
             )
         }

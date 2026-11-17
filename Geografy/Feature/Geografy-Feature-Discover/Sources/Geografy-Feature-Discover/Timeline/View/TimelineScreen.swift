@@ -138,7 +138,7 @@ private extension TimelineScreen {
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .frame(minHeight: 36)
         .glassEffect(
-            isActive ? .regular.tint(DesignSystem.Color.accent.opacity(0.45)) : .regular,
+            isActive ? .regular.tint(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.half)) : .regular,
             in: .capsule
         )
     }

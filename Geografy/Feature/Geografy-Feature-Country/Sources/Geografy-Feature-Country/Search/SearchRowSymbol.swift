@@ -45,7 +45,7 @@ private extension SearchRowSymbol {
                 .foregroundStyle(organization.highlightColor)
                 .frame(width: size.width, height: size.height)
                 .background(
-                    organization.highlightColor.opacity(0.15),
+                    organization.highlightColor.opacity(DesignSystem.Opacity.tint),
                     in: RoundedRectangle(cornerRadius: size.height * 0.22, style: .continuous)
                 )
         }

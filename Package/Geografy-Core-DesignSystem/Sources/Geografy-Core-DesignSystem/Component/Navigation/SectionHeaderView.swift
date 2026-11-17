@@ -103,7 +103,7 @@ private extension SectionHeaderView {
 
     /// Neutral, so a screen's own colors carry meaning and headers don't compete with them.
     var leadingBar: some View {
-        RoundedRectangle(cornerRadius: 2, style: .continuous)
+        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous)
             .fill(DesignSystem.Color.textTertiary)
             .frame(width: 3, height: 18)
     }

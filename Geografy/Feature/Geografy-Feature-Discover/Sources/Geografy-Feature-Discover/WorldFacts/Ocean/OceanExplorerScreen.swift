@@ -92,7 +92,7 @@ private extension OceanExplorerScreen {
     }
 
     func oceanSummary(ocean: Ocean) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
             Text(ocean.name)
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.semibold)
@@ -163,7 +163,7 @@ private extension OceanExplorerScreen {
             Image(systemName: "lightbulb.fill")
                 .font(DesignSystem.Font.iconXS)
                 .foregroundStyle(DesignSystem.Color.warning)
-                .padding(.top, 2)
+                .padding(.top, DesignSystem.Spacing.xxxs)
             Text(ocean.funFact)
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -171,7 +171,7 @@ private extension OceanExplorerScreen {
         }
         .padding(DesignSystem.Spacing.sm)
         .background(
-            DesignSystem.Color.warning.opacity(0.08),
+            DesignSystem.Color.warning.opacity(DesignSystem.Opacity.faint),
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
     }

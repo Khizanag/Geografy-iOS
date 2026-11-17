@@ -94,8 +94,8 @@ private extension ModuleLessonsScreen {
             Circle()
                 .fill(
                     isCompleted
-                        ? DesignSystem.Color.success.opacity(0.15)
-                        : DesignSystem.Color.accent.opacity(0.12)
+                        ? DesignSystem.Color.success.opacity(DesignSystem.Opacity.tint)
+                        : DesignSystem.Color.accent.opacity(DesignSystem.Opacity.tint)
                 )
                 .frame(width: 36, height: 36)
             if isCompleted {
@@ -112,7 +112,7 @@ private extension ModuleLessonsScreen {
     }
 
     func lessonInfo(lesson: Lesson) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
             Text(lesson.title)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)

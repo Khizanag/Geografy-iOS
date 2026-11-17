@@ -157,7 +157,7 @@ private extension CountryDeepDiveSections {
                 minWidth: DesignSystem.Size.xxl,
                 minHeight: DesignSystem.Size.xxl
             )
-            .background(DesignSystem.Color.accent.opacity(0.1))
+            .background(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.faint))
             .clipShape(Capsule())
             .overlay {
                 if colorSchemeContrast == .increased {
@@ -198,7 +198,7 @@ private extension CountryDeepDiveSections {
                 Text(title)
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     ForEach(items, id: \.self) { item in
                         Text("• \(item)")
                             .font(DesignSystem.Font.caption2)

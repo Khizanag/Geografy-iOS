@@ -37,7 +37,10 @@ private extension LandmarkDetailView {
     var heroSection: some View {
         ZStack {
             LinearGradient(
-                colors: [accentSwiftUIColor.opacity(0.6), accentSwiftUIColor.opacity(0.2)],
+                colors: [
+                    accentSwiftUIColor.opacity(DesignSystem.Opacity.strong),
+                    accentSwiftUIColor.opacity(DesignSystem.Opacity.soft),
+                ],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -48,7 +51,9 @@ private extension LandmarkDetailView {
                     .geoShadow(.elevated)
                 HStack(spacing: DesignSystem.Spacing.sm) {
                     FlagView(countryCode: landmark.countryCode, height: 24)
-                        .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous)
+                        )
                     Text(landmark.city)
                         .font(DesignSystem.Font.subheadline)
                         .foregroundStyle(DesignSystem.Color.textSecondary)
@@ -115,7 +120,7 @@ private extension LandmarkDetailView {
                     Image(systemName: "lightbulb.fill")
                         .font(DesignSystem.Font.iconDefault)
                         .foregroundStyle(DesignSystem.Color.warning)
-                        .padding(.top, 2)
+                        .padding(.top, DesignSystem.Spacing.xxxs)
                     Text(landmark.funFact)
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textPrimary)

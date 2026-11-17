@@ -181,7 +181,7 @@ private extension AchievementsScreen {
             Circle()
                 .strokeBorder(
                     isUnlocked ? definition.rarity.borderGradient : LinearGradient(
-                        colors: [DesignSystem.Color.textTertiary.opacity(0.2)],
+                        colors: [DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.soft)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),

@@ -51,7 +51,7 @@ private extension TravelStatusLegend {
 
     func swatch(for status: TravelStatus) -> some View {
         Capsule()
-            .fill(status.color.opacity(0.35))
+            .fill(status.color.opacity(DesignSystem.Opacity.soft))
             .overlay {
                 Capsule()
                     .strokeBorder(

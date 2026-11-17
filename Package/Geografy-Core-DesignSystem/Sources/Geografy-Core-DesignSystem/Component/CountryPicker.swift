@@ -127,7 +127,7 @@ private extension CountryPicker {
         Button { select(country) } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: country.code, height: 24, fixedWidth: true)
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     Text(country.name)
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textPrimary)

@@ -73,7 +73,7 @@ private extension DailyChallengeShareCard {
 
             Text("Daily Challenge")
                 .font(DesignSystem.Font.caption)
-                .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.8))
+                .foregroundStyle(DesignSystem.Color.onAccent.opacity(DesignSystem.Opacity.heavy))
         }
     }
 
@@ -84,7 +84,7 @@ private extension DailyChallengeShareCard {
                 .foregroundStyle(DesignSystem.Color.onAccent)
             Text("out of \(maxScore)")
                 .font(DesignSystem.Font.subheadline)
-                .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.7))
+                .foregroundStyle(DesignSystem.Color.onAccent.opacity(DesignSystem.Opacity.strong))
         }
     }
 
@@ -111,13 +111,13 @@ private extension DailyChallengeShareCard {
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
         }
-        .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.9))
+        .foregroundStyle(DesignSystem.Color.onAccent.opacity(DesignSystem.Opacity.heavy))
     }
 
     var cardFooter: some View {
         Text(date.formatted(date: .abbreviated, time: .omitted))
             .font(DesignSystem.Font.caption2)
-            .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.6))
+            .foregroundStyle(DesignSystem.Color.onAccent.opacity(DesignSystem.Opacity.strong))
     }
 
     var cardGradient: some View {

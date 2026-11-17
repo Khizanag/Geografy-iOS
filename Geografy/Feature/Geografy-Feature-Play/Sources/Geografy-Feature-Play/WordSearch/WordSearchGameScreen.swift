@@ -273,8 +273,8 @@ private extension WordSearchGameScreen {
                         end: last,
                         cellSize: cellSize,
                         color: isUserFound
-                            ? DesignSystem.Color.success.opacity(0.5)
-                            : DesignSystem.Color.warning.opacity(0.4),
+                            ? DesignSystem.Color.success.opacity(DesignSystem.Opacity.half)
+                            : DesignSystem.Color.warning.opacity(DesignSystem.Opacity.half),
                         dashedOutline: isUserFound ? nil : DesignSystem.Color.warning
                     )
                 }
@@ -334,8 +334,10 @@ private extension WordSearchGameScreen {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             isUserFound
-                ? DesignSystem.Color.success.opacity(0.12)
-                : (isRevealedOnly ? DesignSystem.Color.warning.opacity(0.12) : DesignSystem.Color.cardBackground),
+                ? DesignSystem.Color.success.opacity(DesignSystem.Opacity.tint)
+                : (isRevealedOnly
+                    ? DesignSystem.Color.warning.opacity(DesignSystem.Opacity.tint)
+                    : DesignSystem.Color.cardBackground),
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )
         .overlay {

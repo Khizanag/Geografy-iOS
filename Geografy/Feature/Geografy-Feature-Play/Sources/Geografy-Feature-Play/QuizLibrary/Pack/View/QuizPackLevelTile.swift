@@ -59,7 +59,7 @@ private extension QuizPackLevelTile {
     }
 
     var starRow: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: DesignSystem.Spacing.xxxs) {
             ForEach(1...3, id: \.self) { index in
                 Image(systemName: index <= stars ? "star.fill" : "star")
                     .font(DesignSystem.Font.caption2)

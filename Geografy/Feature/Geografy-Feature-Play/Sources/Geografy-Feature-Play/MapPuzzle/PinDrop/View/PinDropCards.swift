@@ -81,7 +81,9 @@ struct PinDropPromptCard: View {
 
     private func dotColor(at index: Int) -> Color {
         if ratings.indices.contains(index) { return ratings[index].color }
-        return index == roundIndex ? PinDropStyle.gameColor : DesignSystem.Color.textTertiary.opacity(0.35)
+        return index == roundIndex
+            ? PinDropStyle.gameColor
+            : DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.soft)
     }
 }
 
@@ -123,7 +125,7 @@ struct PinDropRevealCard: View {
                 .symbolEffect(.bounce, value: isCounted)
                 .frame(width: 44)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(rating.title)
                     .font(DesignSystem.Font.title2)
                     .fontWeight(.bold)
@@ -188,7 +190,7 @@ struct PinDropRevealCard: View {
         .lineLimit(1)
         .padding(.horizontal, DesignSystem.Spacing.sm)
         .padding(.vertical, DesignSystem.Spacing.xxs + 2)
-        .background(color.opacity(0.14), in: .capsule)
+        .background(color.opacity(DesignSystem.Opacity.tint), in: .capsule)
     }
 
     private func count() {

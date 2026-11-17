@@ -27,7 +27,7 @@ private extension ProfileScreen {
                 color: DesignSystem.Color.purple,
                 size: .small
             )
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(QuizType(rawValue: record.quizType)?.displayName ?? record.quizType)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -37,7 +37,7 @@ private extension ProfileScreen {
                     .foregroundStyle(DesignSystem.Color.textTertiary)
             }
             Spacer()
-            VStack(alignment: .trailing, spacing: 2) {
+            VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxxs) {
                 Text("\(record.correctCount)/\(record.totalCount)")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.bold)

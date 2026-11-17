@@ -205,7 +205,7 @@ private extension QuizSessionScreen {
                         .foregroundStyle(
                             index < arcadeLives
                                 ? DesignSystem.Color.error
-                                : DesignSystem.Color.error.opacity(0.3)
+                                : DesignSystem.Color.error.opacity(DesignSystem.Opacity.soft)
                         )
                 }
             }
@@ -252,7 +252,7 @@ private extension QuizSessionScreen {
             ),
             in: Capsule()
         )
-        .shadow(color: DesignSystem.Color.error.opacity(0.4), radius: 8, y: 2)
+        .shadow(color: DesignSystem.Color.error.opacity(DesignSystem.Opacity.half), radius: 8, y: 2)
         .scaleEffect(showStreakBurst && !reduceMotion ? 1.25 : 1.0)
         .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.5), value: showStreakBurst)
         .accessibilityElement(children: .ignore)

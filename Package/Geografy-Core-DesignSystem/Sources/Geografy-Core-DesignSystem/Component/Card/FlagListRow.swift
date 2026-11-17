@@ -21,7 +21,7 @@ public struct FlagListRow<Trailing: View>: View {
     public var body: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: flagCode, height: DesignSystem.Size.Flag.inline, fixedWidth: true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(title)
                     .font(DesignSystem.Font.body)
                     .foregroundStyle(DesignSystem.Color.textPrimary)

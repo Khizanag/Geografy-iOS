@@ -17,7 +17,7 @@ public struct SkeletonView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    public init(_ shape: Shape = .rectangle(cornerRadius: 12)) {
+    public init(_ shape: Shape = .rectangle(cornerRadius: DesignSystem.CornerRadius.medium)) {
         self.shape = shape
     }
 
@@ -104,7 +104,7 @@ private extension SkeletonView {
         return LinearGradient(
             stops: [
                 .init(color: .white.opacity(0), location: max(0, phase - 0.3)),
-                .init(color: .white.opacity(0.18), location: phase),
+                .init(color: .white.opacity(DesignSystem.Opacity.tint), location: phase),
                 .init(color: .white.opacity(0), location: min(1, phase + 0.3)),
             ],
             startPoint: .leading,

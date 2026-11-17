@@ -85,7 +85,7 @@ private extension StepProgressBar {
         var backgroundColor: Color {
             switch self {
             case .completed: DesignSystem.Color.accent
-            case .active: DesignSystem.Color.accent.opacity(0.2)
+            case .active: DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft)
             case .upcoming: DesignSystem.Color.cardBackgroundHighlighted
             }
         }

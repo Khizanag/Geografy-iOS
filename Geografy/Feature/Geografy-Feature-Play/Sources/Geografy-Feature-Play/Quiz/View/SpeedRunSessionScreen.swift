@@ -180,7 +180,7 @@ private extension SpeedRunSessionScreen {
         .padding(.vertical, DesignSystem.Spacing.xs)
         .background(
             isFlashing
-                ? DesignSystem.Color.success.opacity(0.18)
+                ? DesignSystem.Color.success.opacity(DesignSystem.Opacity.tint)
                 : DesignSystem.Color.cardBackground,
             in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
         )

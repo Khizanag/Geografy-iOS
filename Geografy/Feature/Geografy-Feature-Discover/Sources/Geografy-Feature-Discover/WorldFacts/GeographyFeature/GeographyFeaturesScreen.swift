@@ -110,9 +110,9 @@ private extension GeographyFeaturesScreen {
         HStack(spacing: -6) {
             ForEach(codes.prefix(3), id: \.self) { code in
                 FlagView(countryCode: code, height: 24)
-                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous))
                     .overlay(
-                        RoundedRectangle(cornerRadius: 3, style: .continuous)
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous)
                             .stroke(DesignSystem.Color.cardBackground, lineWidth: 1)
                     )
             }
@@ -120,7 +120,7 @@ private extension GeographyFeaturesScreen {
     }
 
     func featureInfo(feature: GeographyFeature) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
             Text(feature.name)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)

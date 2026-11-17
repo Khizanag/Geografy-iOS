@@ -48,7 +48,7 @@ private extension SessionProgressBar {
                         LinearGradient(
                             colors: [
                                 DesignSystem.Color.accent,
-                                DesignSystem.Color.accent.opacity(0.7),
+                                DesignSystem.Color.accent.opacity(DesignSystem.Opacity.strong),
                             ],
                             startPoint: .leading,
                             endPoint: .trailing
@@ -56,7 +56,7 @@ private extension SessionProgressBar {
                     )
                     .frame(width: max(geometry.size.width * animatedProgress, 0))
                     .shadow(
-                        color: DesignSystem.Color.accent.opacity(0.5),
+                        color: DesignSystem.Color.accent.opacity(DesignSystem.Opacity.half),
                         radius: 6,
                         x: 4
                     )

@@ -81,7 +81,7 @@ private extension PairSlot {
                 .font(DesignSystem.Font.headline)
                 .foregroundStyle(side.color)
                 .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
-                .background(side.color.opacity(0.15), in: Circle())
+                .background(side.color.opacity(DesignSystem.Opacity.tint), in: Circle())
                 .accessibilityHidden(true)
 
             Text(placeholder)
@@ -98,14 +98,14 @@ private extension PairSlot {
             Self.shape
                 .fill(DesignSystem.Color.cardBackground)
                 .overlay {
-                    Self.shape.strokeBorder(side.color.opacity(0.6), lineWidth: 1.5)
+                    Self.shape.strokeBorder(side.color.opacity(DesignSystem.Opacity.strong), lineWidth: 1.5)
                 }
         } else {
             Self.shape
-                .fill(side.color.opacity(0.06))
+                .fill(side.color.opacity(DesignSystem.Opacity.faint))
                 .overlay {
                     Self.shape.strokeBorder(
-                        side.color.opacity(0.5),
+                        side.color.opacity(DesignSystem.Opacity.half),
                         style: StrokeStyle(lineWidth: 1.5, dash: [6, 5])
                     )
                 }

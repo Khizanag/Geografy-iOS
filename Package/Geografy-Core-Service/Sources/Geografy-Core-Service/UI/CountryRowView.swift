@@ -88,7 +88,7 @@ private extension CountryRowView {
                 flag
             }
 
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 if isStacked {
                     stackedTopLine
                 }
@@ -124,7 +124,7 @@ private extension CountryRowView {
     }
 
     func capitalLabel(_ capitals: [String]) -> some View {
-        HStack(spacing: 3) {
+        HStack(spacing: DesignSystem.Spacing.xxxs) {
             Image(systemName: "star.fill")
                 .font(DesignSystem.Font.pico.bold())
                 .foregroundStyle(DesignSystem.Color.accent)
@@ -212,7 +212,7 @@ private extension CountryRowView {
     }
 
     func stat(icon: String, value: String) -> some View {
-        HStack(spacing: 3) {
+        HStack(spacing: DesignSystem.Spacing.xxxs) {
             Image(systemName: icon)
                 .accessibilityHidden(true)
             Text(value)

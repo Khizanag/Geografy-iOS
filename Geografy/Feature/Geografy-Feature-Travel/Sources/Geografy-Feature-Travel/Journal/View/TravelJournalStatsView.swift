@@ -36,7 +36,7 @@ private extension TravelJournalStatsView {
                 .font(DesignSystem.Font.title2)
                 .foregroundStyle(DesignSystem.Color.accent)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text("Journal Stats")
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -50,7 +50,7 @@ private extension TravelJournalStatsView {
     }
 
     var starsDisplay: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: DesignSystem.Spacing.xxxs) {
             ForEach(1...5, id: \.self) { star in
                 Image(systemName: starImageName(for: star))
                     .font(DesignSystem.Font.micro)
@@ -83,7 +83,7 @@ private extension TravelJournalStatsView {
             Spacer(minLength: 0)
             FlagView(countryCode: countryCode, height: 18)
                 .clipShape(
-                    RoundedRectangle(cornerRadius: 3, style: .continuous)
+                    RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous)
                 )
                 .accessibilityLabel(Locale.current.localizedString(forRegionCode: countryCode) ?? countryCode)
         }

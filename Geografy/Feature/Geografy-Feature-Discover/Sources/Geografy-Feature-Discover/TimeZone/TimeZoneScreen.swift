@@ -110,7 +110,7 @@ private struct WorldClockView: View {
                 }
             }
             .listRowBackground(DesignSystem.Color.cardBackground)
-            .listRowSeparatorTint(DesignSystem.Color.textTertiary.opacity(0.2))
+            .listRowSeparatorTint(DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.soft))
         }
     }
 
@@ -124,7 +124,7 @@ private struct WorldClockView: View {
         let offsetLabel = item.utcOffsetLabel
         let time = ZoneClockFormatter.time(date, in: item.timeZone)
         return CountryListRow(country: item.country, subtitle: offsetLabel) {
-            VStack(alignment: .trailing, spacing: 2) {
+            VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxxs) {
                 Text(time)
                     .font(DesignSystem.Font.monoSmall)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -190,7 +190,7 @@ private struct AllZonesView: View {
 
     private func offsetHeader(offset: Double) -> some View {
         HStack(spacing: DesignSystem.Spacing.xs) {
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous)
                 .fill(zoneColor(for: offset))
                 .frame(width: 3, height: 18)
                 .accessibilityHidden(true)

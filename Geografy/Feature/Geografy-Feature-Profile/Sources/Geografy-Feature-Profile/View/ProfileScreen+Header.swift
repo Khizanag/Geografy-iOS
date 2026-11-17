@@ -52,7 +52,7 @@ private extension ProfileScreen {
                 color: DesignSystem.Color.warning,
                 size: .medium
             )
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text("Save your progress")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.bold)
@@ -70,10 +70,10 @@ private extension ProfileScreen {
         .padding(DesignSystem.Spacing.md)
         .background(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .fill(DesignSystem.Color.warning.opacity(0.08))
+                .fill(DesignSystem.Color.warning.opacity(DesignSystem.Opacity.faint))
                 .overlay(
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                        .strokeBorder(DesignSystem.Color.warning.opacity(0.30), lineWidth: 1)
+                        .strokeBorder(DesignSystem.Color.warning.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
                 )
         )
     }
@@ -92,7 +92,7 @@ private extension ProfileScreen {
                     lineWidth: 3
                 )
                 .frame(width: 76, height: 76)
-                .opacity(0.6)
+                .opacity(DesignSystem.Opacity.strong)
 
             ProfileAvatarView(name: displayName, size: 66)
                 .geoShadow(.card)

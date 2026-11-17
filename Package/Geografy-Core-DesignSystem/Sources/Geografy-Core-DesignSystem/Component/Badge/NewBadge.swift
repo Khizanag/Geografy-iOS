@@ -11,7 +11,7 @@ public struct NewBadge: View {
             .fontWeight(.bold)
             .foregroundStyle(DesignSystem.Color.onAccent)
             .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, 2)
+            .padding(.vertical, DesignSystem.Spacing.xxxs)
             .background(DesignSystem.Color.accent, in: Capsule())
         .accessibilityLabel("New")
     }

@@ -114,7 +114,7 @@ private struct WeekdayIndicator: View {
             Circle()
                 .fill(
                     isActive
-                        ? DesignSystem.Color.orange.opacity(0.18)
+                        ? DesignSystem.Color.orange.opacity(DesignSystem.Opacity.tint)
                         : DesignSystem.Color.cardBackgroundHighlighted
                 )
 

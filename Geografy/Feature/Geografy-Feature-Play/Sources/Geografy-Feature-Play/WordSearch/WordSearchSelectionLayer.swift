@@ -33,7 +33,7 @@ private extension WordSearchSelectionLayer {
                 start: selectionStart,
                 end: selectionEnd,
                 cellSize: cellSize,
-                color: DesignSystem.Color.accent.opacity(0.5)
+                color: DesignSystem.Color.accent.opacity(DesignSystem.Opacity.half)
             )
         }
     }

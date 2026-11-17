@@ -55,7 +55,7 @@ private extension TappableFunFactCard {
     var numberCircle: some View {
         ZStack {
             Circle()
-                .fill(DesignSystem.Color.warning.opacity(0.15))
+                .fill(DesignSystem.Color.warning.opacity(DesignSystem.Opacity.tint))
                 .frame(width: 36, height: 36)
             Text("\(index + 1)")
                 .font(DesignSystem.Font.footnote)

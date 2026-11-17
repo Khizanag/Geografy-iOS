@@ -64,7 +64,7 @@ private extension ZoomableOrgLogoView {
             default:
                 ZStack {
                     Circle()
-                        .fill(organization.highlightColor.opacity(0.15))
+                        .fill(organization.highlightColor.opacity(DesignSystem.Opacity.tint))
                         .frame(width: 140, height: 140)
                     Image(systemName: organization.icon)
                         .font(DesignSystem.IconSize.xxLarge)

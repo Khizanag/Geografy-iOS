@@ -27,7 +27,7 @@ private struct SelectableTileBackground: ViewModifier {
                     .fill(DesignSystem.Color.cardBackground)
                     .overlay {
                         if isSelected {
-                            shape.fill(color.opacity(0.12))
+                            shape.fill(color.opacity(DesignSystem.Opacity.tint))
                         }
                     }
             }

@@ -107,7 +107,7 @@ private extension GuideSheet {
         HStack(spacing: DesignSystem.Spacing.sm) {
             ZStack {
                 Circle()
-                    .fill(DesignSystem.Color.accent.opacity(0.12))
+                    .fill(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.tint))
                     .frame(width: 44, height: 44)
                 Image(systemName: step.icon)
                     .font(DesignSystem.Font.headline)

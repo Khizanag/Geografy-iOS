@@ -34,7 +34,7 @@ public struct ListRowSkeleton: View {
 
     public var body: some View {
         HStack(spacing: DesignSystem.Spacing.md) {
-            SkeletonView(.rectangle(cornerRadius: 4))
+            SkeletonView(.rectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall))
                 .frame(width: DesignSystem.Size.Flag.row, height: DesignSystem.Size.Flag.row * 0.6)
 
             VStack(alignment: .leading, spacing: 6) {

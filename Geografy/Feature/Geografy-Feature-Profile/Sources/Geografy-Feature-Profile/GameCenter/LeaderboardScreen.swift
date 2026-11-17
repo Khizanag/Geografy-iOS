@@ -75,7 +75,7 @@ private extension LeaderboardScreen {
         HStack(spacing: DesignSystem.Spacing.sm) {
             IconBadge("checkmark.seal.fill", color: DesignSystem.Color.success, size: .small)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text("Connected to Game Center")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -123,7 +123,7 @@ private extension LeaderboardScreen {
                 .foregroundStyle(info.color)
                 .frame(width: DesignSystem.Size.xl, height: DesignSystem.Size.xl)
                 .background(
-                    info.color.opacity(0.18),
+                    info.color.opacity(DesignSystem.Opacity.tint),
                     in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                 )
                 .accessibilityHidden(true)

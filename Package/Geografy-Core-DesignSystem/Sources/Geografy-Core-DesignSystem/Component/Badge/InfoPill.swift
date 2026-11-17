@@ -65,9 +65,9 @@ private extension InfoPill {
 
     var background: Color {
         switch style {
-        case .onColor: DesignSystem.Color.onAccent.opacity(0.18)
+        case .onColor: DesignSystem.Color.onAccent.opacity(DesignSystem.Opacity.tint)
         case .neutral: DesignSystem.Color.cardBackgroundHighlighted
-        case .tinted(let color): color.opacity(0.15)
+        case .tinted(let color): color.opacity(DesignSystem.Opacity.tint)
         }
     }
 }

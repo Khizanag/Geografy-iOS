@@ -104,7 +104,7 @@ private extension CollectionDetailScreen {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 itemIcon(item)
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     Text(itemName(for: item))
                         .font(DesignSystem.Font.subheadline)
                         .fontWeight(.semibold)

@@ -251,7 +251,7 @@ private extension WorldBankChartSheet {
         .foregroundStyle(
             LinearGradient(
                 colors: [
-                    DesignSystem.Color.accent.opacity(0.3),
+                    DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft),
                     DesignSystem.Color.accent.opacity(0.0),
                 ],
                 startPoint: .top,
@@ -319,7 +319,7 @@ private extension WorldBankChartSheet {
                     path.addLine(to: CGPoint(x: 0, y: plot.height))
                 }
                 .stroke(
-                    DesignSystem.Color.textSecondary.opacity(0.6),
+                    DesignSystem.Color.textSecondary.opacity(DesignSystem.Opacity.strong),
                     style: StrokeStyle(lineWidth: 1, dash: [4, 4])
                 )
                 .frame(width: 1, height: plot.height)

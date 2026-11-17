@@ -48,14 +48,14 @@ private extension DailyActionCard {
     var iconCircle: some View {
         ZStack {
             Circle()
-                .fill(action.color.opacity(0.2))
+                .fill(action.color.opacity(DesignSystem.Opacity.soft))
                 .frame(
                     width: DesignSystem.Size.xxl,
                     height: DesignSystem.Size.xxl
                 )
 
             Circle()
-                .fill(action.color.opacity(0.08))
+                .fill(action.color.opacity(DesignSystem.Opacity.faint))
                 .frame(
                     width: DesignSystem.Size.xxxl,
                     height: DesignSystem.Size.xxxl
@@ -87,7 +87,7 @@ private extension DailyActionCard {
         Image(systemName: "chevron.right")
             .font(DesignSystem.Font.iconSmall)
             .fontWeight(.semibold)
-            .foregroundStyle(action.color.opacity(0.6))
+            .foregroundStyle(action.color.opacity(DesignSystem.Opacity.strong))
             .accessibilityHidden(true)
     }
 
@@ -96,8 +96,8 @@ private extension DailyActionCard {
             DesignSystem.Color.cardBackground
             LinearGradient(
                 colors: [
-                    action.color.opacity(0.22),
-                    action.color.opacity(0.08),
+                    action.color.opacity(DesignSystem.Opacity.soft),
+                    action.color.opacity(DesignSystem.Opacity.faint),
                 ],
                 startPoint: .leading,
                 endPoint: .trailing

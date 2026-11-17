@@ -89,7 +89,7 @@ private extension GameIntroHeader {
             .foregroundStyle(color)
             .frame(width: iconSize, height: iconSize)
             .background(
-                color.opacity(0.15),
+                color.opacity(DesignSystem.Opacity.tint),
                 in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
             )
             .accessibilityHidden(true)

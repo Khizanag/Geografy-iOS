@@ -38,7 +38,7 @@ private extension FlashcardDeckCard {
     var backgroundIcon: some View {
         Image(systemName: deck.icon)
             .font(DesignSystem.IconSize.hero)
-            .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.10))
+            .foregroundStyle(DesignSystem.Color.onAccent.opacity(DesignSystem.Opacity.faint))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 24, y: -12)
             .clipped()

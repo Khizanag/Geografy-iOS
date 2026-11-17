@@ -208,7 +208,7 @@ private extension SignInMapHero {
     var map: some View {
         WorldMapThumbnail()
             .frame(height: Self.mapHeight)
-            .opacity(0.75)
+            .opacity(DesignSystem.Opacity.strong)
             .mask {
                 LinearGradient(
                     stops: [

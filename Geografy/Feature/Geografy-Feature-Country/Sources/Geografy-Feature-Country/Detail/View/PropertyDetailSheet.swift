@@ -82,7 +82,7 @@ struct SheetIconHeader: View {
                 .fill(
                     RadialGradient(
                         colors: [
-                            DesignSystem.Color.accent.opacity(0.2),
+                            DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft),
                             DesignSystem.Color.accent.opacity(0.0),
                         ],
                         center: .center,

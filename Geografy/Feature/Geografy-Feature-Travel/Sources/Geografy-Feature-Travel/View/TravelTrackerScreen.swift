@@ -186,7 +186,7 @@ private extension TravelTrackerScreen {
                         .fontWeight(.bold)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 1)
-                        .background(.primary.opacity(0.15), in: Capsule())
+                        .background(.primary.opacity(DesignSystem.Opacity.tint), in: Capsule())
                 }
             }
             .foregroundStyle(isActive ? DesignSystem.Color.onAccent : DesignSystem.Color.textSecondary)

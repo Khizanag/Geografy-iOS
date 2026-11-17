@@ -94,7 +94,9 @@ private extension PinDropScreen {
                 dropCount: dropCount,
                 result: game?.phase == .aiming ? nil : game?.lastResult,
                 lineProgress: lineProgress,
-                borderColor: configuration.showsBorders ? DesignSystem.Color.background.opacity(0.7) : nil
+                borderColor: configuration.showsBorders
+                    ? DesignSystem.Color.background.opacity(DesignSystem.Opacity.strong)
+                    : nil
             )
             .contentShape(Rectangle())
             #if !os(tvOS)

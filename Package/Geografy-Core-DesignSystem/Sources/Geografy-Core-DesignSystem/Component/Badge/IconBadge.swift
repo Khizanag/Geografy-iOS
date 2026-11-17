@@ -52,7 +52,7 @@ public struct IconBadge: View {
             .font(.system(size: size.iconPoints * scale, weight: .semibold))
             .foregroundStyle(color)
             .frame(width: size.diameter * scale, height: size.diameter * scale)
-            .background(color.opacity(0.15), in: Circle())
+            .background(color.opacity(DesignSystem.Opacity.tint), in: Circle())
             .accessibilityHidden(true)
     }
 

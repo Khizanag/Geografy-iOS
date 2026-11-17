@@ -41,7 +41,11 @@ public extension DesignSystem {
         public static let dividerSubtle = SwiftUI.Color("DividerSubtle")
         /// Dims what's behind a modal card. Black in both appearances: the primary color is white in Dark Mode,
         /// which would brighten the screen instead.
-        public static let overlayScrim = SwiftUI.Color.black.opacity(0.4)
+        public static let overlayScrim = SwiftUI.Color.black.opacity(DesignSystem.Opacity.half)
+        /// The outline of a pin or marker on a map, white in both appearances so it stands out on any land color.
+        public static let markerOutline = SwiftUI.Color.white
+        /// The shadow under a map marker, black in both appearances.
+        public static let markerShadow = SwiftUI.Color.black.opacity(DesignSystem.Opacity.soft)
 
         // 8 perceptually distinct hues, each ~45° apart on the color wheel,
         // tuned for vibrant appearance on a dark background.

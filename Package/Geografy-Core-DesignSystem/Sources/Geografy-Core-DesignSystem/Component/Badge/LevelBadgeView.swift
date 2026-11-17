@@ -99,8 +99,8 @@ private extension LevelBadgeView {
             .fill(
                 RadialGradient(
                     stops: [
-                        .init(color: glowColor.opacity(0.5), location: edge),
-                        .init(color: glowColor.opacity(0.16), location: middle),
+                        .init(color: glowColor.opacity(DesignSystem.Opacity.half), location: edge),
+                        .init(color: glowColor.opacity(DesignSystem.Opacity.tint), location: middle),
                         .init(color: glowColor.opacity(0), location: 1),
                     ],
                     center: .center,

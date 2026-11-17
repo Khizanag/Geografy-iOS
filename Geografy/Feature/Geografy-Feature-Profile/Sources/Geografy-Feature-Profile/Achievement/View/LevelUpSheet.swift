@@ -107,7 +107,7 @@ private extension LevelUpSheet {
             }
             .padding(DesignSystem.Spacing.md)
             .background(
-                DesignSystem.Color.cardBackgroundHighlighted.opacity(0.5),
+                DesignSystem.Color.cardBackgroundHighlighted.opacity(DesignSystem.Opacity.half),
                 in: .rect(cornerRadius: DesignSystem.CornerRadius.large)
             )
         } else {

@@ -136,7 +136,7 @@ private extension TerritorialDisputesScreen {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 flagBadge(dispute.flag)
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     Text(dispute.name)
                         .font(DesignSystem.Font.headline)
                         .foregroundStyle(DesignSystem.Color.textPrimary)

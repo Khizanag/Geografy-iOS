@@ -63,7 +63,7 @@ private extension AchievementDetailSheet {
                     isUnlocked
                         ? definition.rarity.borderGradient
                         : LinearGradient(
-                            colors: [DesignSystem.Color.textTertiary.opacity(0.2)],
+                            colors: [DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.soft)],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
@@ -181,11 +181,11 @@ private extension AchievementDetailSheet {
         }
         .padding(DesignSystem.Spacing.md)
         .frame(maxWidth: .infinity)
-        .background(DesignSystem.Color.success.opacity(0.1))
+        .background(DesignSystem.Color.success.opacity(DesignSystem.Opacity.faint))
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .strokeBorder(DesignSystem.Color.success.opacity(0.3), lineWidth: 1)
+                .strokeBorder(DesignSystem.Color.success.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
         )
         .accessibilityElement(children: .combine)
     }
@@ -236,7 +236,7 @@ private extension AchievementDetailSheet {
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
-                (isPinned ? DesignSystem.Color.error : DesignSystem.Color.accent).opacity(0.12)
+                (isPinned ? DesignSystem.Color.error : DesignSystem.Color.accent).opacity(DesignSystem.Opacity.tint)
             )
             .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
         }

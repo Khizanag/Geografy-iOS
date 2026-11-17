@@ -51,7 +51,10 @@ public struct CountryFlagTile: View {
         }
         .overlay {
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                .strokeBorder(isHighlighted ? DesignSystem.Color.accent.opacity(0.5) : .clear, lineWidth: 1.5)
+                .strokeBorder(
+                    isHighlighted ? DesignSystem.Color.accent.opacity(DesignSystem.Opacity.half) : .clear,
+                    lineWidth: 1.5
+                )
         }
     }
 }

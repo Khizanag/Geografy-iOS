@@ -117,7 +117,9 @@ private extension TravelStatusPickerSheet {
         }
         .buttonStyle(.plain)
         .glassEffect(
-            isSelected ? .regular.tint(status.color.opacity(0.3)).interactive() : .regular.interactive(),
+            isSelected
+                ? .regular.tint(status.color.opacity(DesignSystem.Opacity.soft)).interactive()
+                : .regular.interactive(),
             in: shape
         )
         .accessibilityAddTraits(isSelected ? .isSelected : [])

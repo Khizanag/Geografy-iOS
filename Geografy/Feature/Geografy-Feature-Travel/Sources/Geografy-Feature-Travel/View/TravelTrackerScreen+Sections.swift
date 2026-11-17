@@ -55,7 +55,7 @@ extension TravelTrackerScreen {
         } else {
             Image(systemName: "plus.circle")
                 .font(DesignSystem.Font.headline)
-                .foregroundStyle(DesignSystem.Color.accent.opacity(0.7))
+                .foregroundStyle(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.strong))
         }
     }
 }

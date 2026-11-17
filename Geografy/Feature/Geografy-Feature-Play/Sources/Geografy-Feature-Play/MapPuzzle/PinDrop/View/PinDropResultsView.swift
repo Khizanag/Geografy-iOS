@@ -51,7 +51,10 @@ private extension PinDropResultsView {
     var gradeBadge: some View {
         ZStack {
             Circle()
-                .strokeBorder(grade.color.opacity(0.5), style: StrokeStyle(lineWidth: 3, dash: [4, 7]))
+                .strokeBorder(
+                    grade.color.opacity(DesignSystem.Opacity.half),
+                    style: StrokeStyle(lineWidth: 3, dash: [4, 7])
+                )
                 .frame(width: 132, height: 132)
                 .rotationEffect(.degrees(isRevealed && !reduceMotion ? 360 : 0))
                 .animation(
@@ -61,10 +64,10 @@ private extension PinDropResultsView {
             Circle()
                 .fill(grade.color.gradient)
                 .frame(width: 108, height: 108)
-                .shadow(color: grade.color.opacity(0.5), radius: 16, y: 6)
+                .shadow(color: grade.color.opacity(DesignSystem.Opacity.half), radius: 16, y: 6)
             Text(verbatim: grade.rawValue)
                 .font(DesignSystem.Font.roundedHero)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Color.onAccent)
         }
         .scaleEffect(isRevealed ? 1 : 0.3)
         .opacity(isRevealed ? 1 : 0)
@@ -94,7 +97,7 @@ private extension PinDropResultsView {
                 .foregroundStyle(DesignSystem.Color.warning)
                 .padding(.horizontal, DesignSystem.Spacing.sm)
                 .padding(.vertical, DesignSystem.Spacing.xxs)
-                .background(DesignSystem.Color.warning.opacity(0.15), in: .capsule)
+                .background(DesignSystem.Color.warning.opacity(DesignSystem.Opacity.tint), in: .capsule)
                 .symbolEffect(.bounce, value: isRevealed)
         } else if bestScore > 0 {
             Text("Best: \(PinDropStyle.points(Double(bestScore), locale: locale))")
@@ -144,7 +147,7 @@ private extension PinDropResultsView {
     func roundRow(_ result: PinDropGame.Result) -> some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: result.round.id, height: 18, isOutlined: true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(result.round.country.name)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)

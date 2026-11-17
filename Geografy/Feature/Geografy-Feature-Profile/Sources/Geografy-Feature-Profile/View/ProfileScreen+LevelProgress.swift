@@ -55,7 +55,7 @@ private extension ProfileScreen {
     }
 
     var levelInfo: some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
             Text(xpService.currentLevel.title)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.bold)
@@ -73,7 +73,7 @@ private extension ProfileScreen {
     }
 
     var xpBadge: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: DesignSystem.Spacing.xxxs) {
             Text("\(xpService.totalXP)")
                 .font(DesignSystem.Font.roundedSmall)
                 .foregroundStyle(DesignSystem.Color.warning)

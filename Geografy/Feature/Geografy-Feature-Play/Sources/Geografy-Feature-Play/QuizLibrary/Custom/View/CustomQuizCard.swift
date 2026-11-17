@@ -16,7 +16,7 @@ public struct CustomQuizCard: View {
         }
         .frame(minHeight: 140)
         .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
-        .shadow(color: accentColor.opacity(0.4), radius: 12, y: 5)
+        .shadow(color: accentColor.opacity(DesignSystem.Opacity.half), radius: 12, y: 5)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(quiz.name)
         .accessibilityValue("\(quiz.countryCodes.count) countries, \(quiz.questionTypes.count) question types")
@@ -27,7 +27,7 @@ public struct CustomQuizCard: View {
 private extension CustomQuizCard {
     var gradient: some View {
         LinearGradient(
-            colors: [accentColor, accentColor.opacity(0.7)],
+            colors: [accentColor, accentColor.opacity(DesignSystem.Opacity.strong)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing,
         )
@@ -36,7 +36,7 @@ private extension CustomQuizCard {
     var backgroundIcon: some View {
         Image(systemName: quiz.icon)
             .font(DesignSystem.IconSize.hero)
-            .foregroundStyle(DesignSystem.Color.onAccent.opacity(0.10))
+            .foregroundStyle(DesignSystem.Color.onAccent.opacity(DesignSystem.Opacity.faint))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .offset(x: 24, y: -12)
             .clipped()

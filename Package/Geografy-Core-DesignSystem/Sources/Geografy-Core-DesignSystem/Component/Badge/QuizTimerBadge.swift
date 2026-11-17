@@ -25,8 +25,8 @@ public struct QuizTimerBadge: View {
             .foregroundStyle(timerColor)
             .padding(.horizontal, style == .compact ? DesignSystem.Spacing.xs : DesignSystem.Spacing.sm)
             .padding(.vertical, style == .compact ? 3 : DesignSystem.Spacing.xxs)
-            .background(timerColor.opacity(0.15), in: Capsule())
-            .overlay(Capsule().strokeBorder(timerColor.opacity(0.25), lineWidth: 1))
+            .background(timerColor.opacity(DesignSystem.Opacity.tint), in: Capsule())
+            .overlay(Capsule().strokeBorder(timerColor.opacity(DesignSystem.Opacity.soft), lineWidth: 1))
             .scaleEffect(isUrgent && !reduceMotion ? 1.06 : 1.0)
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: seconds)
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: timerColor)
@@ -72,7 +72,7 @@ private extension QuizTimerBadge {
     func progressRing(progress: CGFloat) -> some View {
         ZStack {
             Circle()
-                .stroke(timerColor.opacity(0.2), lineWidth: 2)
+                .stroke(timerColor.opacity(DesignSystem.Opacity.soft), lineWidth: 2)
             Circle()
                 .trim(from: 0, to: progress)
                 .stroke(timerColor, style: StrokeStyle(lineWidth: 2, lineCap: .round))

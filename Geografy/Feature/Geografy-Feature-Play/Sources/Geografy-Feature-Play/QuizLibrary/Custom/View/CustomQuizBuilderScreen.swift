@@ -167,7 +167,7 @@ private extension CustomQuizBuilderScreen {
                 Circle()
                     .fill(
                         isSelected
-                            ? DesignSystem.Color.accent.opacity(0.2)
+                            ? DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft)
                             : DesignSystem.Color.cardBackground
                     )
                 Circle()

@@ -41,10 +41,10 @@ private extension TravelJournalEntryCard {
     var headerRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             FlagView(countryCode: entry.countryCode, height: 28)
-                .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous))
                 .frame(width: 42)
                 .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(entry.title)
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
@@ -59,7 +59,7 @@ private extension TravelJournalEntryCard {
     }
 
     var ratingStars: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: DesignSystem.Spacing.xxxs) {
             ForEach(1...5, id: \.self) { star in
                 Image(
                     systemName: star <= entry.rating

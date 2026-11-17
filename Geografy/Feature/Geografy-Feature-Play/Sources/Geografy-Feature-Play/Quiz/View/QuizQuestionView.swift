@@ -85,7 +85,7 @@ private extension QuizQuestionView {
                     ZStack {
                         if !reduceTransparency {
                             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                                .fill(DesignSystem.Color.accent.opacity(0.12))
+                                .fill(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.tint))
                                 .blur(radius: 24)
                                 .padding(.horizontal, DesignSystem.Spacing.md)
                                 .padding(.vertical, DesignSystem.Spacing.xs)

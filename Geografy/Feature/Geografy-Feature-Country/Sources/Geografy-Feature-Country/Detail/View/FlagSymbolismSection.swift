@@ -63,7 +63,7 @@ private extension FlagSymbolismCard {
         HStack(spacing: DesignSystem.Spacing.sm) {
             IconBadge("flag.fill", size: .small)
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text("Colors & Symbols")
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
@@ -92,14 +92,14 @@ private extension FlagSymbolismCard {
     }
 
     var colorSwatchRow: some View {
-        HStack(spacing: 3) {
+        HStack(spacing: DesignSystem.Spacing.xxxs) {
             ForEach(Array(symbolism.colors.prefix(4).enumerated()), id: \.offset) { _, colorEntry in
-                RoundedRectangle(cornerRadius: 3, style: .continuous)
+                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous)
                     .fill(Color(hex: colorEntry.hex))
                     .frame(width: 14, height: 20)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 3, style: .continuous)
-                            .stroke(.primary.opacity(0.15), lineWidth: 0.5)
+                        RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous)
+                            .stroke(.primary.opacity(DesignSystem.Opacity.tint), lineWidth: 0.5)
                     )
             }
         }
@@ -178,10 +178,10 @@ private extension FlagSymbolismCard {
                 .frame(width: 32, height: 32)
                 .overlay(
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-                        .stroke(.primary.opacity(0.15), lineWidth: 0.5)
+                        .stroke(.primary.opacity(DesignSystem.Opacity.tint), lineWidth: 0.5)
                 )
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(entry.name)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)
@@ -207,7 +207,7 @@ private extension FlagSymbolismCard {
                     .foregroundStyle(DesignSystem.Color.accent)
             }
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text(emblem.name)
                     .font(DesignSystem.Font.caption)
                     .fontWeight(.semibold)

@@ -116,7 +116,7 @@ private extension MapPuzzleScreen {
                 if let outline {
                     ContinentOutlineView(
                         outline: outline,
-                        fill: DesignSystem.Color.textTertiary.opacity(0.5),
+                        fill: DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.half),
                         highlight: ContinentOutlineView.Highlight(countryCode: question.country.code, color: gameColor)
                     )
                     .frame(height: mapHeight)
@@ -359,8 +359,8 @@ private extension MapPuzzleScreen {
 
     func optionBackground(isSelected: Bool, isCorrect: Bool, revealed: Bool) -> Color {
         guard revealed else { return .clear }
-        if isCorrect { return DesignSystem.Color.success.opacity(0.12) }
-        if isSelected { return DesignSystem.Color.error.opacity(0.12) }
+        if isCorrect { return DesignSystem.Color.success.opacity(DesignSystem.Opacity.tint) }
+        if isSelected { return DesignSystem.Color.error.opacity(DesignSystem.Opacity.tint) }
         return .clear
     }
 }

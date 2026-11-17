@@ -112,9 +112,9 @@ private extension PinDropMapLayer {
     func guessMarker(at mapPoint: CGPoint) -> some View {
         Circle()
             .fill(PinDropStyle.gameColor)
-            .overlay { Circle().strokeBorder(.white, lineWidth: 2.5) }
+            .overlay { Circle().strokeBorder(DesignSystem.Color.markerOutline, lineWidth: 2.5) }
             .frame(width: 14, height: 14)
-            .shadow(color: .black.opacity(0.3), radius: 3, y: 2)
+            .shadow(color: DesignSystem.Color.markerShadow, radius: 3, y: 2)
             .position(screenPoint(mapPoint))
             .allowsHitTesting(false)
             .accessibilityHidden(true)
@@ -133,14 +133,17 @@ private extension PinDropMapLayer {
         return ZStack {
             line
                 .trim(from: 0, to: lineProgress)
-                .stroke(.black.opacity(0.35), style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .stroke(DesignSystem.Color.markerShadow, style: StrokeStyle(lineWidth: 5, lineCap: .round))
             line
                 .trim(from: 0, to: lineProgress)
-                .stroke(.white, style: StrokeStyle(lineWidth: 2.5, lineCap: .round, dash: [7, 6]))
+                .stroke(
+                    DesignSystem.Color.markerOutline,
+                    style: StrokeStyle(lineWidth: 2.5, lineCap: .round, dash: [7, 6])
+                )
             Circle()
-                .fill(.white)
+                .fill(DesignSystem.Color.markerOutline)
                 .frame(width: 9, height: 9)
-                .shadow(color: .black.opacity(0.3), radius: 2)
+                .shadow(color: DesignSystem.Color.markerShadow, radius: 2)
                 .position(end)
                 .opacity(lineProgress >= 1 ? 1 : 0)
         }
@@ -180,18 +183,18 @@ private extension PinDropMapLayer {
                 path.move(to: center)
                 path.addLine(to: CGPoint(x: center.x, y: center.y - stem))
             }
-            .stroke(.white, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-            .shadow(color: .black.opacity(0.3), radius: 1.5)
+            .stroke(DesignSystem.Color.markerOutline, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+            .shadow(color: DesignSystem.Color.markerShadow, radius: 1.5)
             Circle()
-                .fill(.white)
+                .fill(DesignSystem.Color.markerOutline)
                 .frame(width: 7, height: 7)
-                .shadow(color: .black.opacity(0.3), radius: 1.5)
+                .shadow(color: DesignSystem.Color.markerShadow, radius: 1.5)
                 .position(center)
             FlagView(countryCode: result.round.id, height: 22)
                 .frame(width: 30, height: 30)
                 .clipShape(.circle)
-                .overlay { Circle().strokeBorder(.white, lineWidth: 2.5) }
-                .shadow(color: .black.opacity(0.35), radius: 5, y: 3)
+                .overlay { Circle().strokeBorder(DesignSystem.Color.markerOutline, lineWidth: 2.5) }
+                .shadow(color: DesignSystem.Color.markerShadow, radius: 5, y: 3)
                 .position(x: center.x, y: center.y - stem - 15)
         }
         .transition(.scale.combined(with: .opacity))

@@ -31,7 +31,7 @@ private extension CountryTimelineView {
     func timelineIndicator(isFirst: Bool, isLast: Bool) -> some View {
         VStack(spacing: 0) {
             Rectangle()
-                .fill(isFirst ? .clear : DesignSystem.Color.accent.opacity(0.3))
+                .fill(isFirst ? .clear : DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft))
                 .frame(width: 2)
 
             Circle()
@@ -42,7 +42,7 @@ private extension CountryTimelineView {
                 )
 
             Rectangle()
-                .fill(isLast ? .clear : DesignSystem.Color.accent.opacity(0.3))
+                .fill(isLast ? .clear : DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft))
                 .frame(width: 2)
         }
         .frame(width: DesignSystem.Spacing.md)

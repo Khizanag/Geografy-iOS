@@ -41,7 +41,7 @@ private extension LearningPathScreen {
         CardView {
             VStack(spacing: DesignSystem.Spacing.sm) {
                 HStack {
-                    VStack(alignment: .leading, spacing: 2) {
+                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                         Text("Your Journey")
                             .font(DesignSystem.Font.headline)
                             .fontWeight(.bold)
@@ -88,8 +88,8 @@ private extension LearningPathScreen {
         Rectangle()
             .fill(
                 unlocked
-                    ? DesignSystem.Color.accent.opacity(0.5)
-                    : DesignSystem.Color.textTertiary.opacity(0.25)
+                    ? DesignSystem.Color.accent.opacity(DesignSystem.Opacity.half)
+                    : DesignSystem.Color.textTertiary.opacity(DesignSystem.Opacity.soft)
             )
             .frame(width: 2, height: DesignSystem.Spacing.lg)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -132,7 +132,7 @@ private extension LearningPathScreen {
     }
 
     func moduleInfo(module: LearningModule) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
             Text(module.title)
                 .font(DesignSystem.Font.headline)
                 .fontWeight(.bold)
@@ -146,7 +146,7 @@ private extension LearningPathScreen {
     }
 
     func moduleProgress(module: LearningModule) -> some View {
-        VStack(alignment: .trailing, spacing: 2) {
+        VStack(alignment: .trailing, spacing: DesignSystem.Spacing.xxxs) {
             if module.isCompleted {
                 Image(systemName: "checkmark.circle.fill")
                     .font(DesignSystem.Font.iconDefault)

@@ -85,7 +85,7 @@ private extension SearchResultsView {
         } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 SearchRowSymbol(row: row, size: .row)
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     Text(highlighted(row.title))
                         .font(DesignSystem.Font.body)
                         .foregroundStyle(DesignSystem.Color.textPrimary)

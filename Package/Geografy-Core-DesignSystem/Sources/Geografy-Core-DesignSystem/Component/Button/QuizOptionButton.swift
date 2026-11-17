@@ -145,7 +145,10 @@ private extension QuizOptionButton {
             .font(DesignSystem.Font.footnote.weight(.black))
             .foregroundStyle(badgeTextColor)
             .frame(width: DesignSystem.Size.md, height: DesignSystem.Size.md)
-            .background(badgeBackground, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
+            .background(
+                badgeBackground,
+                in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
+            )
             .accessibilityHidden(true)
     }
 
@@ -174,13 +177,13 @@ private extension QuizOptionButton {
             Image(systemName: "checkmark.circle.fill")
                 .font(DesignSystem.Font.title)
                 .foregroundStyle(DesignSystem.Color.onAccent)
-                .shadow(color: DesignSystem.Color.success.opacity(0.8), radius: 8)
+                .shadow(color: DesignSystem.Color.success.opacity(DesignSystem.Opacity.heavy), radius: 8)
                 .transition(.scale.combined(with: .opacity))
         case .incorrect:
             Image(systemName: "xmark.circle.fill")
                 .font(DesignSystem.Font.title)
                 .foregroundStyle(DesignSystem.Color.onAccent)
-                .shadow(color: DesignSystem.Color.error.opacity(0.8), radius: 8)
+                .shadow(color: DesignSystem.Color.error.opacity(DesignSystem.Opacity.heavy), radius: 8)
                 .transition(.scale.combined(with: .opacity))
         default:
             EmptyView()
@@ -215,17 +218,17 @@ private extension QuizOptionButton {
     var overlayColor: Color {
         switch state {
         case .default:      .clear
-        case .correct:      DesignSystem.Color.success.opacity(0.30)
-        case .incorrect:    DesignSystem.Color.error.opacity(0.28)
-        case .disabled:     .primary.opacity(0.08)
+        case .correct:      DesignSystem.Color.success.opacity(DesignSystem.Opacity.soft)
+        case .incorrect:    DesignSystem.Color.error.opacity(DesignSystem.Opacity.soft)
+        case .disabled:     .primary.opacity(DesignSystem.Opacity.faint)
         }
     }
 
     var borderColor: Color {
         switch state {
-        case .default:      .primary.opacity(0.08)
-        case .correct:      DesignSystem.Color.success.opacity(0.70)
-        case .incorrect:    DesignSystem.Color.error.opacity(0.60)
+        case .default:      .primary.opacity(DesignSystem.Opacity.faint)
+        case .correct:      DesignSystem.Color.success.opacity(DesignSystem.Opacity.strong)
+        case .incorrect:    DesignSystem.Color.error.opacity(DesignSystem.Opacity.strong)
         case .disabled:     .clear
         }
     }
@@ -265,9 +268,9 @@ private extension QuizOptionButton {
 
     var badgeBackground: Color {
         switch state {
-        case .correct:   DesignSystem.Color.success.opacity(0.5)
-        case .incorrect: DesignSystem.Color.error.opacity(0.4)
-        case .disabled:  DesignSystem.Color.cardBackground.opacity(0.5)
+        case .correct:   DesignSystem.Color.success.opacity(DesignSystem.Opacity.half)
+        case .incorrect: DesignSystem.Color.error.opacity(DesignSystem.Opacity.half)
+        case .disabled:  DesignSystem.Color.cardBackground.opacity(DesignSystem.Opacity.half)
         default:         DesignSystem.Color.cardBackgroundHighlighted
         }
     }

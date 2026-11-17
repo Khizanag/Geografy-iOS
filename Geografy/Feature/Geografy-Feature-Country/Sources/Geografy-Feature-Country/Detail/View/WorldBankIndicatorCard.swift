@@ -111,10 +111,10 @@ private extension WorldBankIndicatorCard {
 
     var loadingView: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                 .fill(DesignSystem.Color.cardBackgroundHighlighted)
                 .frame(width: 100, height: 32)
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
                 .fill(DesignSystem.Color.cardBackgroundHighlighted)
                 .frame(maxWidth: .infinity)
                 .frame(height: 90)
@@ -218,7 +218,7 @@ private extension WorldBankIndicatorCard {
             let changeText = String(format: "%.0f%%", abs(change))
             let verdict = isGood ? "better" : "worse"
 
-            HStack(spacing: 3) {
+            HStack(spacing: DesignSystem.Spacing.xxxs) {
                 Image(systemName: isPositive ? "arrow.up.right" : "arrow.down.right")
                     .font(DesignSystem.Font.nano.bold())
                     .accessibilityHidden(true)
@@ -230,12 +230,12 @@ private extension WorldBankIndicatorCard {
                     .fontWeight(.semibold)
                 Text("10yr")
                     .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(color.opacity(0.7))
+                    .foregroundStyle(color.opacity(DesignSystem.Opacity.strong))
             }
             .foregroundStyle(color)
             .padding(.horizontal, DesignSystem.Spacing.xs)
-            .padding(.vertical, 3)
-            .background(color.opacity(0.12))
+            .padding(.vertical, DesignSystem.Spacing.xxxs)
+            .background(color.opacity(DesignSystem.Opacity.tint))
             .clipShape(Capsule())
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(
@@ -255,7 +255,7 @@ private extension WorldBankIndicatorCard {
             .foregroundStyle(
                 LinearGradient(
                     colors: [
-                        DesignSystem.Color.accent.opacity(0.25),
+                        DesignSystem.Color.accent.opacity(DesignSystem.Opacity.soft),
                         DesignSystem.Color.accent.opacity(0.0),
                     ],
                     startPoint: .top,
@@ -312,7 +312,7 @@ private extension WorldBankIndicatorCard {
                 .foregroundStyle(DesignSystem.Color.textSecondary)
             Spacer()
             if let age = cacheAge {
-                HStack(spacing: 3) {
+                HStack(spacing: DesignSystem.Spacing.xxxs) {
                     Image(systemName: "arrow.clockwise")
                         .font(DesignSystem.Font.pico)
                         .accessibilityHidden(true)

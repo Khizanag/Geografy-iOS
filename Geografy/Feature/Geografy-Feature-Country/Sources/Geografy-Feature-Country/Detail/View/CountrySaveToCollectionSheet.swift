@@ -60,7 +60,7 @@ private extension CountrySaveToCollectionSheet {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 FlagView(countryCode: countryCode, height: 28)
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     Text(countryName)
                         .font(DesignSystem.Font.headline)
                         .fontWeight(.semibold)

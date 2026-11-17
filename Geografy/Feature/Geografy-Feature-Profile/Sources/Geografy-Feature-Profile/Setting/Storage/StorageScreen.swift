@@ -197,7 +197,7 @@ private struct StorageBar: View {
     var body: some View {
         GeometryReader { geometry in
             let total = max(segments.reduce(0) { $0 + $1.bytes }, 1)
-            HStack(spacing: 2) {
+            HStack(spacing: DesignSystem.Spacing.xxxs) {
                 ForEach(Array(segments.enumerated()), id: \.offset) { _, segment in
                     if segment.bytes > 0 {
                         segment.color

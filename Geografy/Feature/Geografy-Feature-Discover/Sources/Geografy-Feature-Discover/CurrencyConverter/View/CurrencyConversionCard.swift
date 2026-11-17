@@ -104,7 +104,7 @@ private extension CurrencyConversionCard {
     var rateSection: some View {
         if let rate, rate > 0 {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     rateLine(from: from.code, to: to.code, rate: rate)
                     rateLine(from: to.code, to: from.code, rate: 1 / rate)
                 }

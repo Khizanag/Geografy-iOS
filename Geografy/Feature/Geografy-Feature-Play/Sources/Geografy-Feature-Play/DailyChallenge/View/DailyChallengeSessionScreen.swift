@@ -72,7 +72,7 @@ private extension DailyChallengeSessionScreen {
             }
             .padding(.horizontal, DesignSystem.Spacing.sm)
             .padding(.vertical, DesignSystem.Spacing.xs)
-            .background(DesignSystem.Color.accent.opacity(0.12), in: Capsule())
+            .background(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.tint), in: Capsule())
             .accessibilityElement(children: .combine)
             .accessibilityLabel("Score: \(score) points")
 

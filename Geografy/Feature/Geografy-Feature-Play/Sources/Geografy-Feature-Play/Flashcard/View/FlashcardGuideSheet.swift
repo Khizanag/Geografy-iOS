@@ -92,7 +92,7 @@ private extension FlashcardGuideSheet {
     var proTipsIllustration: some View {
         ZStack {
             Circle()
-                .fill(DesignSystem.Color.accent.opacity(0.08))
+                .fill(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.faint))
                 .frame(width: 160, height: 160)
                 .scaleEffect(animating ? 1.1 : 0.9)
             Image(systemName: "lightbulb.fill")
@@ -128,7 +128,7 @@ private extension FlashcardGuideSheet {
     var handIcon: some View {
         Image(systemName: "hand.tap.fill")
             .font(DesignSystem.Font.iconLarge)
-            .foregroundStyle(DesignSystem.Color.accent.opacity(0.6))
+            .foregroundStyle(DesignSystem.Color.accent.opacity(DesignSystem.Opacity.strong))
             .offset(x: 50, y: 40)
     }
 
@@ -151,13 +151,13 @@ private extension FlashcardGuideSheet {
         .foregroundStyle(color)
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(color.opacity(0.12), in: RoundedRectangle(
+        .background(color.opacity(DesignSystem.Opacity.tint), in: RoundedRectangle(
             cornerRadius: DesignSystem.CornerRadius.medium,
             style: .continuous
         ))
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .strokeBorder(color.opacity(0.25), lineWidth: 1)
+                .strokeBorder(color.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
         )
     }
 }

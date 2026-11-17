@@ -54,7 +54,7 @@ private extension CountrySpotlightCard {
                     Ellipse()
                         .fill(
                             RadialGradient(
-                                colors: [continentColor.opacity(0.3), .clear],
+                                colors: [continentColor.opacity(DesignSystem.Opacity.soft), .clear],
                                 center: .center,
                                 startRadius: 0,
                                 endRadius: 60,
@@ -136,7 +136,7 @@ private extension CountrySpotlightCard {
             Image(systemName: "lightbulb.fill")
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.warning)
-                .padding(.top, 2)
+                .padding(.top, DesignSystem.Spacing.xxxs)
                 .accessibilityHidden(true)
             Text(fact)
                 .font(DesignSystem.Font.caption)
@@ -147,7 +147,7 @@ private extension CountrySpotlightCard {
         .padding(DesignSystem.Spacing.sm)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            DesignSystem.Color.warning.opacity(0.12),
+            DesignSystem.Color.warning.opacity(DesignSystem.Opacity.tint),
             in: Self.panelShape
         )
         .overlay {
@@ -162,7 +162,7 @@ private extension CountrySpotlightCard {
 // MARK: - Helpers
 private extension CountrySpotlightCard {
     func statCell(icon: String, value: String, label: String) -> some View {
-        VStack(spacing: 3) {
+        VStack(spacing: DesignSystem.Spacing.xxxs) {
             Image(systemName: icon)
                 .font(DesignSystem.Font.caption2)
                 .foregroundStyle(DesignSystem.Color.textSecondary)

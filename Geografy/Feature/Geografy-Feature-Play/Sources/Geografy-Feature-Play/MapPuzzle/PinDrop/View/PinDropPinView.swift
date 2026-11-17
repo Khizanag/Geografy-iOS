@@ -71,14 +71,14 @@ private extension PinDropPinView {
             .fill(color.gradient)
             .overlay {
                 Circle()
-                    .fill(.white)
+                    .fill(DesignSystem.Color.markerOutline)
                     .frame(width: Self.headDiameter * 0.34)
             }
             .overlay {
-                Circle().strokeBorder(.white, lineWidth: 2.5)
+                Circle().strokeBorder(DesignSystem.Color.markerOutline, lineWidth: 2.5)
             }
             .frame(width: Self.headDiameter, height: Self.headDiameter)
-            .shadow(color: .black.opacity(0.3), radius: 4, y: 3)
+            .shadow(color: DesignSystem.Color.markerShadow, radius: 4, y: 3)
     }
 
     var needle: some View {
@@ -89,7 +89,7 @@ private extension PinDropPinView {
 
     var groundShadow: some View {
         Ellipse()
-            .fill(.black.opacity(0.28))
+            .fill(DesignSystem.Color.markerShadow)
             .frame(width: 14, height: 5)
             .blur(radius: 1.5)
             .offset(y: 2.5)

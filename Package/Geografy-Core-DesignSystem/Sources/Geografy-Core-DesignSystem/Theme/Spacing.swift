@@ -2,6 +2,8 @@ import Foundation
 
 public extension DesignSystem {
     enum Spacing {
+        /// Between lines of text that belong together, such as a title and its subtitle.
+        public static let xxxs: CGFloat = 2
         public static let xxs: CGFloat = 4
         public static let xs: CGFloat = 8
         public static let sm: CGFloat = 12

@@ -178,7 +178,7 @@ private extension FlashcardSessionScreen {
             .frame(maxWidth: .infinity)
             .padding(.vertical, DesignSystem.Spacing.sm)
             .background(
-                result.color.opacity(0.12),
+                result.color.opacity(DesignSystem.Opacity.tint),
                 in: RoundedRectangle(
                     cornerRadius: DesignSystem.CornerRadius.medium
                 )
@@ -187,7 +187,7 @@ private extension FlashcardSessionScreen {
                 RoundedRectangle(
                     cornerRadius: DesignSystem.CornerRadius.medium
                 )
-                .strokeBorder(result.color.opacity(0.25), lineWidth: 1)
+                .strokeBorder(result.color.opacity(DesignSystem.Opacity.soft), lineWidth: 1)
             )
         }
         .buttonStyle(.plain)

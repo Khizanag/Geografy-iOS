@@ -55,7 +55,7 @@ private extension AchievementUnlockedBanner {
         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
-                .strokeBorder(categoryColor.opacity(0.5), lineWidth: 1)
+                .strokeBorder(categoryColor.opacity(DesignSystem.Opacity.half), lineWidth: 1)
         )
         .padding(.horizontal, DesignSystem.Spacing.md)
         .onTapGesture {
@@ -68,7 +68,7 @@ private extension AchievementUnlockedBanner {
     }
 
     var textContent: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
             Text("Achievement Unlocked!")
                 .font(DesignSystem.Font.caption)
                 .fontWeight(.semibold)

@@ -46,7 +46,7 @@ private extension LocalMultiplayerMatchScreen {
     }
 
     func scorePill(label: String, score: Int, color: Color) -> some View {
-        VStack(spacing: 2) {
+        VStack(spacing: DesignSystem.Spacing.xxxs) {
             Text("\(score)")
                 .font(DesignSystem.Font.title2)
                 .fontWeight(.black)

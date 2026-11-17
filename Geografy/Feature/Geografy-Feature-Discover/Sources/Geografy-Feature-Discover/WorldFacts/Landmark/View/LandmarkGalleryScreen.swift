@@ -95,7 +95,10 @@ private extension LandmarkGalleryScreen {
     func landmarkThumbnail(_ landmark: Landmark, accentColor: Color) -> some View {
         ZStack {
             LinearGradient(
-                colors: [accentColor.opacity(0.4), accentColor.opacity(0.1)],
+                colors: [
+                    accentColor.opacity(DesignSystem.Opacity.half),
+                    accentColor.opacity(DesignSystem.Opacity.faint),
+                ],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -117,7 +120,7 @@ private extension LandmarkGalleryScreen {
                 .lineLimit(2)
             HStack(spacing: DesignSystem.Spacing.xxs) {
                 FlagView(countryCode: landmark.countryCode, height: 14, fixedWidth: true)
-                    .clipShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.extraSmall, style: .continuous))
                 Text(landmark.city)
                     .font(DesignSystem.Font.caption2)
                     .foregroundStyle(DesignSystem.Color.textSecondary)

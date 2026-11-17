@@ -73,7 +73,7 @@ extension CountryDetailScreen {
                     if memberCount > 0 {
                         Text("\(memberCount) members")
                             .font(DesignSystem.Font.caption2)
-                            .foregroundStyle(org.highlightColor.opacity(0.8))
+                            .foregroundStyle(org.highlightColor.opacity(DesignSystem.Opacity.heavy))
                     }
                 }
 
@@ -99,7 +99,7 @@ private extension CountryDetailScreen {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 38, height: 38)
-                        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous))
                 default:
                     orgRowIconFallback(org)
                 }
@@ -112,8 +112,8 @@ private extension CountryDetailScreen {
 
     func orgRowIconFallback(_ org: Organization) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(org.highlightColor.opacity(0.15))
+            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+                .fill(org.highlightColor.opacity(DesignSystem.Opacity.tint))
                 .frame(width: 38, height: 38)
             Image(systemName: org.icon)
                 .font(DesignSystem.Font.callout.weight(.medium))

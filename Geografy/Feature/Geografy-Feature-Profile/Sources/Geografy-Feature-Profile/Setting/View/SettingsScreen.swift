@@ -136,7 +136,7 @@ private extension SettingsScreen {
                     name: authService.currentProfile?.displayName ?? "Explorer",
                     size: DesignSystem.Size.md
                 )
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                     Text(authService.currentProfile?.displayName ?? "Explorer")
                         .font(DesignSystem.Font.body)
                         .fontWeight(.medium)
@@ -156,7 +156,7 @@ private extension SettingsScreen {
     var guestProfileRow: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             SettingsIconBadge(systemImage: "person.fill", color: DesignSystem.Color.textSecondary)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
                 Text("Guest")
                     .font(DesignSystem.Font.body)
                     .fontWeight(.medium)

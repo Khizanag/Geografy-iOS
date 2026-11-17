@@ -22,7 +22,7 @@ public struct XPBadge: View {
         .foregroundStyle(DesignSystem.Color.warning)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.xs)
-        .background(DesignSystem.Color.warning.opacity(0.15), in: .capsule)
+        .background(DesignSystem.Color.warning.opacity(DesignSystem.Opacity.tint), in: .capsule)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(xp) XP earned"))
     }

@@ -60,7 +60,7 @@ private extension WikipediaSection {
     var iconView: some View {
         ZStack {
             Circle()
-                .fill(DesignSystem.Color.textSecondary.opacity(0.12))
+                .fill(DesignSystem.Color.textSecondary.opacity(DesignSystem.Opacity.tint))
                 .frame(width: DesignSystem.Size.xxl, height: DesignSystem.Size.xxl)
             Text("W")
                 .font(DesignSystem.Font.serifBody)
