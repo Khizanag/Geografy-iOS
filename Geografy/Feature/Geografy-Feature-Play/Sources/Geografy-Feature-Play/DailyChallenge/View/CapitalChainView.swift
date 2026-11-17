@@ -16,6 +16,7 @@ public struct CapitalChainView: View {
     public let onFinish: () -> Void
 
     @State private var selectedOption: Country?
+    @State private var nextStep = PendingAction()
     @State private var showFeedback = false
     @State private var correctCount = 0
 
@@ -153,9 +154,7 @@ private extension CapitalChainView {
 
         showFeedback = true
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            advance()
-        }
+        nextStep.schedule(after: .seconds(1)) { advance() }
     }
 
     func advance() {

@@ -21,6 +21,7 @@ public struct FlashcardSessionScreen: View {
     public let cards: [FlashcardItem]
 
     @State private var currentIndex = 0
+    @State private var nextCard = PendingAction()
     @State private var isFlipped = false
     @State private var showResults = false
     @State private var correctCount = 0
@@ -247,9 +248,7 @@ private extension FlashcardSessionScreen {
     func exitCard(towards offscreenX: CGFloat, duration: Double, delay: Double) {
         cardExit = FlashcardCardExit(offscreenX: offscreenX, duration: duration)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + (reduceMotion ? 0.15 : delay)) {
-            showNextCard()
-        }
+        nextCard.schedule(after: .seconds(reduceMotion ? 0.15 : delay)) { showNextCard() }
     }
 
     func showNextCard() {

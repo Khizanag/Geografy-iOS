@@ -121,10 +121,12 @@ private extension SpeedRunSetupScreen {
     var startButton: some View {
         GlassButton("Start Speed Run", systemImage: "bolt.fill", fullWidth: true) {
             hapticsService.impact(.light)
-            dismiss()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                coordinator.cover(PlayLocalRoute.speedRunSession(region: selectedRegion))
-            }
+            // The run covers the screen at once; setup leaves the stack underneath it, so closing the run
+            // returns to where Speed Run was opened from.
+            coordinator.cover(PlayLocalRoute.speedRunSession(region: selectedRegion))
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) { dismiss() }
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)

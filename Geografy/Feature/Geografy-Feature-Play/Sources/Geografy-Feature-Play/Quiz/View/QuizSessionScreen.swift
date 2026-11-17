@@ -23,7 +23,7 @@ public struct QuizSessionScreen: View {
     @State var timerRemaining: TimeInterval = 0
     @State var timerDeadline: Date?
     @State var timerTask: Task<Void, Never>?
-    @State var pendingTransition: Task<Void, Never>?
+    @State var transition = PendingAction()
     @State var startTime = Date()
     @State var questionStartTime = Date()
     @State private var showQuitAlert = false
@@ -38,6 +38,7 @@ public struct QuizSessionScreen: View {
     @State var typingWasSkipped = false
     @State var currentStreak: Int = 0
     @State var showStreakBurst = false
+    @State var streakBurstEnd = PendingAction()
 
     // Arcade mode
     @State var arcadeLives = 3
@@ -62,7 +63,7 @@ public struct QuizSessionScreen: View {
             .onDisappear {
                 stopTimer()
                 stopArcadeTimer()
-                pendingTransition?.cancel()
+                transition.cancel()
             }
             .navigationDestination(item: $navigateToResult) { result in
                 resultsDestination(for: result)

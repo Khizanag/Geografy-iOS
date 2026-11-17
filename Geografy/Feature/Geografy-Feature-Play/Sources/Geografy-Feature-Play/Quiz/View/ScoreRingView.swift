@@ -24,7 +24,7 @@ public struct ScoreRingView: View {
             percentageLabel
         }
         .frame(width: ringSize, height: ringSize)
-        .onAppear { startCountUp() }
+        .task { await countUp() }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Score")
         .accessibilityValue("\(Int(progress * 100)) percent, \(ratingDescription)")
@@ -86,7 +86,8 @@ private extension ScoreRingView {
         }
     }
 
-    func startCountUp() {
+    /// Counts the number up beside the ring's sweep. A task, so it stops if the ring leaves the screen mid-count.
+    func countUp() async {
         let targetPercent = Int(progress * 100)
         guard targetPercent > 0 else { return }
 
@@ -105,10 +106,9 @@ private extension ScoreRingView {
         let interval = totalDuration / Double(stepCount)
 
         for step in 1...stepCount {
-            DispatchQueue.main.asyncAfter(deadline: .now() + interval * Double(step)) {
-                withAnimation(.interactiveSpring(response: 0.15, dampingFraction: 0.8)) {
-                    displayPercent = step
-                }
+            guard (try? await Task.sleep(for: .seconds(interval))) != nil else { return }
+            withAnimation(.interactiveSpring(response: 0.15, dampingFraction: 0.8)) {
+                displayPercent = step
             }
         }
     }

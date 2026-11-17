@@ -16,6 +16,7 @@ public struct FlagSequenceView: View {
     public let onFinish: () -> Void
 
     @State private var options: [[Country]] = []
+    @State private var nextStep = PendingAction()
     @State private var selectedOption: Country?
     @State private var showFeedback = false
     @State private var correctCount = 0
@@ -128,9 +129,7 @@ private extension FlagSequenceView {
 
         showFeedback = true
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            advance()
-        }
+        nextStep.schedule(after: .seconds(1)) { advance() }
     }
 
     func advance() {

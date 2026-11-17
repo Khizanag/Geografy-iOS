@@ -50,7 +50,7 @@ extension QuizSessionScreen {
 
         if isArcadeMode, arcadeLives <= 0 { return }
 
-        scheduleTransition(after: .seconds(1.3)) { advanceToNext() }
+        transition.schedule(after: .seconds(1.3)) { advanceToNext() }
     }
 
     public func handleAnswerFeedback(isCorrect: Bool) {
@@ -62,9 +62,7 @@ extension QuizSessionScreen {
             }
             if currentStreak >= 2 {
                 showStreakBurst = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    showStreakBurst = false
-                }
+                streakBurstEnd.schedule(after: .seconds(0.3)) { showStreakBurst = false }
             }
         } else {
             hapticsService.impact(.light)
@@ -73,7 +71,7 @@ extension QuizSessionScreen {
                 arcadeLives -= 1
                 if arcadeLives <= 0 {
                     #if !os(tvOS)
-                    scheduleTransition(after: .seconds(1)) { finishArcade() }
+                    transition.schedule(after: .seconds(1)) { finishArcade() }
                     #endif
                 }
             }
@@ -138,7 +136,7 @@ extension QuizSessionScreen {
 
         if isArcadeMode, arcadeLives <= 0 { return }
 
-        scheduleTransition(after: .seconds(1.5)) { advanceToNext() }
+        transition.schedule(after: .seconds(1.5)) { advanceToNext() }
     }
 
     public func skipSpellingBee() {
@@ -171,7 +169,7 @@ extension QuizSessionScreen {
 
         if isArcadeMode, arcadeLives <= 0 { return }
 
-        scheduleTransition(after: .seconds(1.5)) { advanceToNext() }
+        transition.schedule(after: .seconds(1.5)) { advanceToNext() }
     }
 
     func announceAnswer(isCorrect: Bool, question: QuizQuestion) {
@@ -205,19 +203,6 @@ extension QuizSessionScreen {
         arcadeDeadline = nil
         arcadeTimerTask?.cancel()
         arcadeTimerTask = nil
-    }
-
-    // A stored task, unlike asyncAfter, is cancelled when the session disappears.
-    func scheduleTransition(after delay: Duration, perform action: @escaping @MainActor () -> Void) {
-        pendingTransition?.cancel()
-        pendingTransition = Task {
-            do {
-                try await Task.sleep(for: delay)
-            } catch {
-                return
-            }
-            action()
-        }
     }
 
     public func finishQuiz() {

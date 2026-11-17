@@ -44,7 +44,7 @@ extension QuizSessionScreen {
             showFeedback = true
         }
 
-        scheduleTransition(after: .seconds(1.3)) { advanceToNext() }
+        transition.schedule(after: .seconds(1.3)) { advanceToNext() }
     }
 
     public func startArcadeTimer() {

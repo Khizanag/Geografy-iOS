@@ -1,3 +1,4 @@
+import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import SwiftUI
 
@@ -20,6 +21,7 @@ public struct CountryBannerView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var dragOffset: CGFloat = 0
+    @State private var dismissal = PendingAction()
 
     // MARK: - Init
     public init(
@@ -175,9 +177,7 @@ private extension CountryBannerView {
                     withAnimation(reduceMotion ? nil : .easeOut(duration: 0.2)) {
                         dragOffset = 200
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        onDismiss()
-                    }
+                    dismissal.schedule(after: .seconds(0.2)) { onDismiss() }
                 } else {
                     withAnimation(reduceMotion ? nil : .spring(response: 0.3)) {
                         dragOffset = 0
