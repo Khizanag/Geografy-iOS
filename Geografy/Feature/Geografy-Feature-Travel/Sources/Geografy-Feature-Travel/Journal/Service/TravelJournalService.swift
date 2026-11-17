@@ -1,5 +1,6 @@
 import Foundation
 import Geografy_Core_Common
+import Geografy_Core_Service
 import Observation
 import OSLog
 import SwiftData
@@ -130,44 +131,13 @@ private extension TravelJournalService {
     static let logger = Logger(subsystem: "com.khizanag.geografy", category: "TravelJournal")
 
     static func makeContainer(isStoredInMemoryOnly: Bool, storeURL: URL?) -> ModelContainer {
-        let schema = Schema(versionedSchema: TravelJournalSchemaV2.self)
-        do {
-            let configuration = makeConfiguration(
-                schema: schema,
-                isStoredInMemoryOnly: isStoredInMemoryOnly,
-                storeURL: storeURL
-            )
-            return try ModelContainer(
-                for: schema,
-                migrationPlan: TravelJournalMigrationPlan.self,
-                configurations: [configuration]
-            )
-        } catch {
-            logger.error("Journal store failed to open, using memory: \(error.localizedDescription)")
-            return makeInMemoryContainer(schema: schema)
-        }
-    }
-
-    static func makeConfiguration(schema: Schema, isStoredInMemoryOnly: Bool, storeURL: URL?) -> ModelConfiguration {
-        if let storeURL {
-            return ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)
-        }
-        return ModelConfiguration(
-            "TravelJournal",
-            schema: schema,
-            isStoredInMemoryOnly: isStoredInMemoryOnly,
-            cloudKitDatabase: .none
-        )
-    }
-
-    static func makeInMemoryContainer(schema: Schema) -> ModelContainer {
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
-        do {
-            return try ModelContainer(for: schema, configurations: [configuration])
-        } catch {
-            // An in-memory store with a schema that just compiled cannot fail to open.
-            fatalError("In-memory journal store failed to open: \(error)")
-        }
+        StoreOpener.open(
+            TravelJournalSchemaV2.self,
+            migrationPlan: TravelJournalMigrationPlan.self,
+            name: "TravelJournal",
+            storeURL: storeURL,
+            inMemory: isStoredInMemoryOnly
+        ).container
     }
 
     func saveContext() {
