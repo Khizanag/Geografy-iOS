@@ -166,13 +166,49 @@ public final class AchievementService {
         updateProgress("flashcard_200", value: proficientCount)
     }
 
-    public func checkContinentAchievement(continentID: String) {
-        updateProgress("continent_\(continentID)", value: 1)
+    /// The explorer count, each continent once all its countries are explored (the Americas count North and
+    /// South together), and how many continents have at least one.
+    public func checkExplorationAchievements(exploredCodes: Set<String>, countries: [Country]) {
+        checkExplorerAchievements(totalExplored: exploredCodes.count)
+        let byContinent = Dictionary(grouping: countries, by: \.continent)
+        let goals: [(id: String, continents: [Country.Continent])] = [
+            ("continent_europe", [.europe]),
+            ("continent_asia", [.asia]),
+            ("continent_africa", [.africa]),
+            ("continent_americas", [.northAmerica, .southAmerica]),
+            ("continent_oceania", [.oceania]),
+        ]
+        for goal in goals {
+            let members = goal.continents.flatMap { byContinent[$0] ?? [] }
+            if !members.isEmpty, members.allSatisfy({ exploredCodes.contains($0.code) }) {
+                updateProgress(goal.id, value: 1)
+            }
+        }
+        let reached = Set(
+            countries
+                .filter { exploredCodes.contains($0.code) && $0.continent != .antarctica }
+                .map(\.continent)
+        )
+        updateProgress("all_continents", value: reached.count)
     }
 
     public func checkSocialAchievements(shareCount: Int) {
         updateProgress("share_1", value: shareCount)
         updateProgress("share_10", value: shareCount)
+    }
+
+    /// Counts a result shared from the app toward the sharing achievements.
+    public func recordShare() {
+        let key = UserScope.key("shared_results")
+        let count = UserDefaults.standard.integer(forKey: key) + 1
+        UserDefaults.standard.set(count, forKey: key)
+        checkSocialAchievements(shareCount: count)
+    }
+
+    public func checkSpeedRunAchievements(region: QuizRegion, namedEveryCountry: Bool) {
+        if region == .world, namedEveryCountry {
+            updateProgress("speed_run_world", value: 1)
+        }
     }
 }
 

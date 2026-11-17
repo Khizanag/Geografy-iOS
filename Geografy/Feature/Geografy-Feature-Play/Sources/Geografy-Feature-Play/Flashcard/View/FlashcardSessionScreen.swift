@@ -10,6 +10,7 @@ public struct FlashcardSessionScreen: View {
     @Environment(Navigator.self) private var coordinator
     @Environment(\.dismiss) private var dismiss
     @Environment(FlashcardService.self) private var flashcardService
+    @Environment(AchievementService.self) private var achievementService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
     @Environment(CountryDataService.self) private var countryDataService
@@ -253,6 +254,7 @@ private extension FlashcardSessionScreen {
     func showNextCard() {
         guard currentIndex + 1 < cards.count else {
             showResults = true
+            achievementService.checkFlashcardAchievements(proficientCount: flashcardService.proficientCount)
             return
         }
         var transaction = Transaction()

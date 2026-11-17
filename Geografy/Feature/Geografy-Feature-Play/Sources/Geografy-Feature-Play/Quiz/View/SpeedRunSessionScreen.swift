@@ -11,6 +11,7 @@ public struct SpeedRunSessionScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
+    @Environment(AchievementService.self) private var achievementService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -402,6 +403,10 @@ private extension SpeedRunSessionScreen {
         if completedCodes.count == targetCountries.count {
             SpeedRunRecords.record(elapsedTime, for: region)
         }
+        achievementService.checkSpeedRunAchievements(
+            region: region,
+            namedEveryCountry: completedCodes.count == targetCountries.count
+        )
 
         let earned = calculateXP()
         xpEarned = earned

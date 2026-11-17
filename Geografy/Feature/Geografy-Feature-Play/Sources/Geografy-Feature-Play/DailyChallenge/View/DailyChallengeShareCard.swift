@@ -1,9 +1,12 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 public struct DailyChallengeShareCard: View {
     // MARK: - Properties
+    @Environment(AchievementService.self) private var achievementService
+
     public let score: Int
     public let maxScore: Int
     public let challengeType: DailyChallengeType
@@ -148,6 +151,8 @@ private extension DailyChallengeShareCard {
             .padding(.vertical, DesignSystem.Spacing.sm)
         }
         .buttonStyle(.glass)
+        // ShareLink doesn't report what happens in the share sheet, so opening it counts as sharing.
+        .simultaneousGesture(TapGesture().onEnded { achievementService.recordShare() })
         #else
         EmptyView()
         #endif

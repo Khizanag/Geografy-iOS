@@ -15,7 +15,8 @@ public struct CountryDetailScreen: View {
     @Environment(HapticsService.self) var hapticsService
     @Environment(WorldBankService.self) private var worldBankService
     @Environment(PronunciationService.self) private var pronunciationService
-    @Environment(CountryDataService.self) private var countryDataService
+    @Environment(CountryDataService.self) var countryDataService
+    @Environment(ExplorationService.self) var explorationService
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Environment(\.colorSchemeContrast) var colorSchemeContrast

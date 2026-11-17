@@ -97,6 +97,11 @@ public final class FlashcardService {
         return totalProficiency / Double(items.count)
     }
 
+    /// Cards reviewed often and easily enough to count as mastered.
+    public var proficientCount: Int {
+        spacedRepetitionStore.values.count { $0.proficiencyLevel == .proficient }
+    }
+
     public func reviewedTodayCount() -> Int {
         reviewsPerDay()[Calendar.current.startOfDay(for: .now)] ?? 0
     }

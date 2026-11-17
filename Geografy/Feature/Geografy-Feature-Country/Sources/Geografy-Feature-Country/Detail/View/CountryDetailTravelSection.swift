@@ -93,12 +93,11 @@ extension CountryDetailScreen {
 // MARK: - Gamification
 extension CountryDetailScreen {
     func trackExploration() {
-        let key = "explored_countries_\(xpService.currentUserID)"
-        var explored = Set(UserDefaults.standard.stringArray(forKey: key) ?? [])
-        guard !explored.contains(country.code) else { return }
-        explored.insert(country.code)
-        UserDefaults.standard.set(Array(explored), forKey: key)
+        guard explorationService.markExplored(country.code) else { return }
         xpService.award(5, source: .countryExplored)
-        achievementService.checkExplorerAchievements(totalExplored: explored.count)
+        achievementService.checkExplorationAchievements(
+            exploredCodes: explorationService.exploredCountryCodes,
+            countries: countryDataService.countries
+        )
     }
 }

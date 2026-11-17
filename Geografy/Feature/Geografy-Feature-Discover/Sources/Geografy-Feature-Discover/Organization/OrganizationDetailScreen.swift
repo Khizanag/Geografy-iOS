@@ -17,6 +17,8 @@ public struct OrganizationDetailScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(ExplorationService.self) private var explorationService
+    @Environment(AchievementService.self) private var achievementService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public let organization: Organization
@@ -160,7 +162,8 @@ private extension OrganizationDetailScreen {
 // MARK: - Gamification
 private extension OrganizationDetailScreen {
     func trackOrgView() {
-        // Achievement tracking handled at app level
+        guard explorationService.markOpened(organizationID: organization.id) else { return }
+        achievementService.checkKnowledgeAchievements(orgsOpened: explorationService.openedOrganizationIDs.count)
     }
 }
 

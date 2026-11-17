@@ -16,6 +16,7 @@ final class AppDependencies {
     let currencyService = CurrencyService()
     let databaseManager: DatabaseManager
     let entitlementService = EntitlementService()
+    let explorationService = ExplorationService()
     let favoritesService: FavoritesService
     let flashcardService = FlashcardService()
     let gameCenterService = GameCenterService()
@@ -63,6 +64,7 @@ extension View {
             .environment(dependencies.currencyService)
             .environment(dependencies.databaseManager)
             .environment(dependencies.entitlementService)
+            .environment(dependencies.explorationService)
             .environment(dependencies.favoritesService)
             .environment(dependencies.flashcardService)
             .environment(dependencies.gameCenterService)

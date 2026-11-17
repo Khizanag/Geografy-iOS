@@ -181,7 +181,7 @@ private extension AchievementCatalog {
             id: "org_all", title: "Org Scholar",
             description: "Explore all organizations",
             category: .knowledge, rarity: .rare, iconName: "building.2.fill",
-            requirement: "Open all organizations", targetValue: 16,
+            requirement: "Open all organizations", targetValue: Organization.all.count,
             xpReward: 75, gameCenterID: "geografy.achievement.org_scholar"
         ),
     ]

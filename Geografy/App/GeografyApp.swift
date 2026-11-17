@@ -174,6 +174,7 @@ private extension GeografyApp {
         dependencies.favoritesService.switchUser(id: newUserID)
         dependencies.collectionService.switchUser(id: newUserID)
         dependencies.travelService.reload()
+        dependencies.explorationService.reload()
         dependencies.learningPathService.reload()
         dependencies.flashcardService.loadData()
         dependencies.xpService.switchUser(id: newUserID)
