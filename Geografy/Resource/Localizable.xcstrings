@@ -10887,6 +10887,10 @@
         }
       }
     },
+    "The countries didn't load, so there's nothing to build it from yet." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "The highlighted country is %@." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11106,6 +11110,10 @@
           }
         }
       }
+    },
+    "Today's challenge isn't ready" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Today's challenge stays open; you can try it again." : {
       "extractionState" : "manual",

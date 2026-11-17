@@ -3624,6 +3624,9 @@
         }
       }
     },
+    "The countries didn't load, so there's nothing to build it from yet." : {
+
+    },
     "The highlighted country is %@." : {
       "localizations" : {
         "ka" : {
@@ -3703,6 +3706,9 @@
           }
         }
       }
+    },
+    "Today's challenge isn't ready" : {
+
     },
     "Today's challenge stays open; you can try it again." : {
 

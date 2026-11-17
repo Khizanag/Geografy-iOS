@@ -83,7 +83,8 @@ public final class DailyChallengeService {
 
 // MARK: - State
 private extension DailyChallengeService {
-    func challenge(forDateKey dateKey: String) -> DailyChallenge {
+    /// Nil while the countries haven't loaded, so an empty challenge is never kept for the day.
+    func challenge(forDateKey dateKey: String) -> DailyChallenge? {
         if let cached = Self.cachedChallenge, cached.id == dateKey {
             return cached
         }
@@ -109,7 +110,7 @@ private extension DailyChallengeService {
 
 // MARK: - Challenge Generation
 private extension DailyChallengeService {
-    func generateChallenge(for date: Date) -> DailyChallenge {
+    func generateChallenge(for date: Date) -> DailyChallenge? {
         let type = DailyChallengeType.forDate(date)
         let seed = makeSeed(for: date)
         let dateKey = DailyChallengeResult.dateKey(for: date)
@@ -118,14 +119,15 @@ private extension DailyChallengeService {
             .filter { $0.continent != .antarctica }
             .sorted(by: \.code)
         let shuffled = countries.seededShuffle(seed: seed)
+        guard let first = shuffled.first else { return nil }
 
         let content: DailyChallenge.ChallengeContent = switch type {
         case .mysteryCountry:
-            .mysteryCountry(generateMysteryCountry(from: shuffled))
+            .mysteryCountry(generateMysteryCountry(target: first, in: shuffled))
         case .flagSequence:
             .flagSequence(generateFlagSequence(from: shuffled))
         case .capitalChain:
-            .capitalChain(generateCapitalChain(from: shuffled, seed: seed))
+            .capitalChain(generateCapitalChain(starter: first, from: shuffled, seed: seed))
         }
 
         return DailyChallenge(
@@ -147,9 +149,9 @@ private extension DailyChallengeService {
     }
 
     func generateMysteryCountry(
-        from shuffled: [Country]
+        target: Country,
+        in shuffled: [Country]
     ) -> DailyChallenge.MysteryCountryContent {
-        let target = shuffled[0]
         let clues = buildClues(for: target, in: shuffled)
         return DailyChallenge.MysteryCountryContent(
             targetCountry: target,
@@ -235,10 +237,10 @@ private extension DailyChallengeService {
     }
 
     func generateCapitalChain(
+        starter: Country,
         from shuffled: [Country],
         seed: UInt64
     ) -> DailyChallenge.CapitalChainContent {
-        let starter = shuffled[0]
         var usedContinents: Set<Country.Continent> = [starter.continent]
         var chainSteps: [DailyChallenge.ChainStep] = []
 
@@ -249,9 +251,7 @@ private extension DailyChallengeService {
             where !usedContinents.contains(continent) {
             guard continent != .antarctica else { continue }
             let candidates = remaining.filter { $0.continent == continent }
-            guard !candidates.isEmpty else { continue }
-
-            let target = candidates[0]
+            guard let target = candidates.first else { continue }
             let distractors = remaining
                 .filter {
                     $0.continent == continent && $0.code != target.code

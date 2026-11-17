@@ -62,6 +62,15 @@ private extension DailyChallengeScreen {
     func loadedSections(service: DailyChallengeService) -> some View {
         if let challenge = service.todayChallenge {
             DailyChallengeTodayCard(challenge: challenge, result: service.todayResult)
+        } else {
+            EmptyStateView(
+                icon: "exclamationmark.triangle",
+                title: "Today's challenge isn't ready",
+                message: "The countries didn't load, so there's nothing to build it from yet.",
+                actionTitle: "Try Again"
+            ) {
+                Task { await loadData() }
+            }
         }
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Streak")
