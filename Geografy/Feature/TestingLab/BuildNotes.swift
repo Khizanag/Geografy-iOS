@@ -19,68 +19,81 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [smoothMaps, tapRedraw, fasterLaunch, fasterSearch]
+        [accountData, quizFlow, speedRunStart, wordSearch, noSound]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var smoothMaps: BuildNote {
+    var accountData: BuildNote {
         BuildNote(
-            commit: "0244d243",
-            title: "Every map pans smoothly",
+            commit: "b1cb3cdb",
+            title: "Delete Account removes everything",
             howToTest: """
-                Pan and pinch the Travel map, an organization's map, and the Historical map: they move as \
-                smoothly as the main map, pinch around your fingers, and stop at the edge of the world.
+                Sign in with the test account in the Testing Lab, add a favorite and a visited country, then \
+                Delete Account: favorites, travel, and progress are all gone for the fresh guest.
                 """,
-            systemImage: "hand.draw.fill",
-            color: DesignSystem.Color.teal
+            systemImage: "trash.fill",
+            color: DesignSystem.Color.destructive
         ) {
-            go.open(.travel)
+            go.open(.settings)
         }
     }
 
-    var tapRedraw: BuildNote {
+    var quizFlow: BuildNote {
         BuildNote(
-            commit: "9dba2923",
-            title: "Selecting a country is instant",
+            commit: "671a245b",
+            title: "Quizzes play as before",
             howToTest: """
-                On the main map, tap country after country: the outline moves at once. Turn names on and pan: \
-                they slide with the map; pinch and they resize.
+                The quiz's rules moved into a tested model. Play a quiz, an arcade game, and a typed one: \
+                streaks, lives, the score, and results should all behave as before.
                 """,
-            systemImage: "hand.tap.fill",
+            systemImage: "questionmark.circle.fill",
             color: DesignSystem.Color.blue
         ) {
-            go.selectTab(.map)
+            go.open(.quiz)
         }
     }
 
-    var fasterLaunch: BuildNote {
+    var speedRunStart: BuildNote {
         BuildNote(
-            commit: "9106b6b5",
-            title: "Lighter launch",
+            commit: "44b7520a",
+            title: "Speed Run starts at once",
             howToTest: """
-                Quit and reopen the app: the map appears without a hitch. Map colors, flags, sound, and speech \
-                are now prepared off the main thread or when first needed.
+                Tap Start Speed Run: the run covers the screen with no pause, and closing it returns to Play.
                 """,
             systemImage: "bolt.fill",
-            color: DesignSystem.Color.warning
+            color: DesignSystem.Color.pink
         ) {
-            go.selectTab(.map)
+            go.open(.speedRun)
         }
     }
 
-    var fasterSearch: BuildNote {
+    var wordSearch: BuildNote {
         BuildNote(
-            commit: "3bd4c65f",
-            title: "Search keeps up with typing",
+            commit: "f8982bf4",
+            title: "Word Search clock fits",
             howToTest: """
-                Type quickly in Search: results update on every keystroke with no lag.
+                Start a puzzle: the clock at the top left shows the time in full instead of a squeezed circle.
                 """,
-            systemImage: "magnifyingglass",
-            color: DesignSystem.Color.purple
+            systemImage: "textformat.abc",
+            color: DesignSystem.Color.teal
         ) {
-            go.open(.search)
+            go.open(.wordSearch)
+        }
+    }
+
+    var noSound: BuildNote {
+        BuildNote(
+            commit: "cfa7cf9b",
+            title: "No more silent sound toggle",
+            howToTest: """
+                Settings no longer has a Sound effects switch, which did nothing; haptics and pronunciation stay.
+                """,
+            systemImage: "speaker.slash.fill",
+            color: DesignSystem.Color.indigo
+        ) {
+            go.open(.settings)
         }
     }
 }
