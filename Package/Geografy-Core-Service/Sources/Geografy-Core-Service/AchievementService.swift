@@ -30,6 +30,8 @@ public final class AchievementService {
     /// The decoded progress for `cachedProgressKey`, so screens asking per row don't decode storage each time.
     @ObservationIgnored private var cachedProgress: [String: AchievementProgress]?
     @ObservationIgnored private var cachedProgressKey = ""
+    /// Set while a check updates several achievements, so their progress is written to storage once at the end.
+    @ObservationIgnored private var isBatchingSaves = false
 
     public init(db: DatabaseManager, xpService: XPService, userID: String) {
         self.db = db
@@ -93,7 +95,25 @@ public final class AchievementService {
         }
 
         allProgress[achievementID] = entry
-        saveProgress(allProgress)
+        if isBatchingSaves {
+            cachedProgress = allProgress
+            cachedProgressKey = progressKey
+        } else {
+            saveProgress(allProgress)
+        }
+    }
+
+    /// Runs several progress updates and writes them to storage once, instead of encoding every achievement's
+    /// progress again for each.
+    private func savingOnce(_ updates: () -> Void) {
+        guard !isBatchingSaves else {
+            updates()
+            return
+        }
+        isBatchingSaves = true
+        updates()
+        isBatchingSaves = false
+        saveProgress(loadProgress())
     }
 
     // MARK: - Pinning
@@ -108,57 +128,65 @@ public final class AchievementService {
 
     // MARK: - Check Methods
     public func checkExplorerAchievements(totalExplored: Int) {
-        let milestones: [(Int, String)] = [
-            (5, "explorer_5"),
-            (10, "explorer_10"),
-            (50, "explorer_50"),
-            (100, "explorer_100"),
-            (195, "explorer_195"),
-        ]
-        for (_, id) in milestones {
-            updateProgress(id, value: totalExplored)
+        savingOnce {
+            let milestones: [(Int, String)] = [
+                (5, "explorer_5"),
+                (10, "explorer_10"),
+                (50, "explorer_50"),
+                (100, "explorer_100"),
+                (195, "explorer_195"),
+            ]
+            for (_, id) in milestones {
+                updateProgress(id, value: totalExplored)
+            }
         }
     }
 
     public func checkQuizAchievements(history: [QuizHistoryRecord]) {
-        let total = history.count
-        updateProgress("quiz_1", value: total)
-        updateProgress("quiz_10", value: total)
-        updateProgress("quiz_50", value: total)
-        updateProgress("quiz_100", value: total)
+        savingOnce {
+            let total = history.count
+            updateProgress("quiz_1", value: total)
+            updateProgress("quiz_10", value: total)
+            updateProgress("quiz_50", value: total)
+            updateProgress("quiz_100", value: total)
 
-        let completedTypes = Set(history.map { $0.quizType })
-        updateProgress("all_types", value: completedTypes.count)
+            let completedTypes = Set(history.map { $0.quizType })
+            updateProgress("all_types", value: completedTypes.count)
 
-        let perfectCount = history.filter { $0.accuracy == 1.0 }.count
-        updateProgress("perfect_1", value: perfectCount)
-        updateProgress("perfect_5", value: perfectCount)
-        updateProgress("perfect_20", value: perfectCount)
+            let perfectCount = history.filter { $0.accuracy == 1.0 }.count
+            updateProgress("perfect_1", value: perfectCount)
+            updateProgress("perfect_5", value: perfectCount)
+            updateProgress("perfect_20", value: perfectCount)
 
-        let flagCount = history.filter { $0.quizType == QuizType.flagQuiz.rawValue }.count
-        updateProgress("flag_5", value: flagCount)
+            let flagCount = history.filter { $0.quizType == QuizType.flagQuiz.rawValue }.count
+            updateProgress("flag_5", value: flagCount)
 
-        let capitalCount = history.filter { $0.quizType == QuizType.capitalQuiz.rawValue }.count
-        updateProgress("capital_5", value: capitalCount)
+            let capitalCount = history.filter { $0.quizType == QuizType.capitalQuiz.rawValue }.count
+            updateProgress("capital_5", value: capitalCount)
 
-        let hardFast = history.contains {
-            $0.difficulty == QuizDifficulty.hard.rawValue && $0.totalTimeSeconds < 60
+            let hardFast = history.contains {
+                $0.difficulty == QuizDifficulty.hard.rawValue && $0.totalTimeSeconds < 60
+            }
+            if hardFast { updateProgress("speed_60", value: 1) }
         }
-        if hardFast { updateProgress("speed_60", value: 1) }
     }
 
     public func checkTravelAchievements(visitedCount: Int, wantCount: Int) {
-        updateProgress("travel_1", value: visitedCount)
-        updateProgress("travel_10", value: visitedCount)
-        updateProgress("travel_50", value: visitedCount)
-        updateProgress("bucket_5", value: wantCount)
+        savingOnce {
+            updateProgress("travel_1", value: visitedCount)
+            updateProgress("travel_10", value: visitedCount)
+            updateProgress("travel_50", value: visitedCount)
+            updateProgress("bucket_5", value: wantCount)
+        }
     }
 
     public func checkStreakAchievements(streak: Int) {
-        updateProgress("streak_3", value: streak)
-        updateProgress("streak_7", value: streak)
-        updateProgress("streak_30", value: streak)
-        updateProgress("streak_100", value: streak)
+        savingOnce {
+            updateProgress("streak_3", value: streak)
+            updateProgress("streak_7", value: streak)
+            updateProgress("streak_30", value: streak)
+            updateProgress("streak_100", value: streak)
+        }
     }
 
     public func checkKnowledgeAchievements(orgsOpened: Int) {
@@ -174,27 +202,29 @@ public final class AchievementService {
     /// The explorer count, each continent once all its countries are explored (the Americas count North and
     /// South together), and how many continents have at least one.
     public func checkExplorationAchievements(exploredCodes: Set<String>, countries: [Country]) {
-        checkExplorerAchievements(totalExplored: exploredCodes.count)
-        let byContinent = Dictionary(grouping: countries, by: \.continent)
-        let goals: [(id: String, continents: [Country.Continent])] = [
-            ("continent_europe", [.europe]),
-            ("continent_asia", [.asia]),
-            ("continent_africa", [.africa]),
-            ("continent_americas", [.northAmerica, .southAmerica]),
-            ("continent_oceania", [.oceania]),
-        ]
-        for goal in goals {
-            let members = goal.continents.flatMap { byContinent[$0] ?? [] }
-            if !members.isEmpty, members.allSatisfy({ exploredCodes.contains($0.code) }) {
-                updateProgress(goal.id, value: 1)
+        savingOnce {
+            checkExplorerAchievements(totalExplored: exploredCodes.count)
+            let byContinent = Dictionary(grouping: countries, by: \.continent)
+            let goals: [(id: String, continents: [Country.Continent])] = [
+                ("continent_europe", [.europe]),
+                ("continent_asia", [.asia]),
+                ("continent_africa", [.africa]),
+                ("continent_americas", [.northAmerica, .southAmerica]),
+                ("continent_oceania", [.oceania]),
+            ]
+            for goal in goals {
+                let members = goal.continents.flatMap { byContinent[$0] ?? [] }
+                if !members.isEmpty, members.allSatisfy({ exploredCodes.contains($0.code) }) {
+                    updateProgress(goal.id, value: 1)
+                }
             }
+            let reached = Set(
+                countries
+                    .filter { exploredCodes.contains($0.code) && $0.continent != .antarctica }
+                    .map(\.continent)
+            )
+            updateProgress("all_continents", value: reached.count)
         }
-        let reached = Set(
-            countries
-                .filter { exploredCodes.contains($0.code) && $0.continent != .antarctica }
-                .map(\.continent)
-        )
-        updateProgress("all_continents", value: reached.count)
     }
 
     public func checkSocialAchievements(shareCount: Int) {

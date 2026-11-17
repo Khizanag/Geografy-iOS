@@ -116,7 +116,7 @@ private extension ProfileScreen {
                 if authService.isGuest {
                     guestPill
                 } else {
-                    LevelBadgeView(level: xpService.currentLevel, size: .small, animated: true)
+                    LevelBadgeView(level: xpService.currentLevel, size: .small, animated: false)
                 }
             }
         }

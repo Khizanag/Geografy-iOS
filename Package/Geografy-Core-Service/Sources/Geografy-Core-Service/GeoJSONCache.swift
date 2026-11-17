@@ -2,9 +2,9 @@ import Foundation
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 
-/// The world's country outlines, parsed once per projection, colored from the chosen palette,
-/// and kept for every map. Switching back to a projection already seen, or to another palette, needs no parse,
-/// and later launches read the outlines saved on disk instead of parsing the map again.
+/// The world's country outlines in the chosen projection, colored from the chosen palette, and kept for every
+/// map. Outlines are saved on disk once parsed, so a later launch or a switch back to a projection already seen
+/// reads them instead of parsing the map again; another palette only colors them again.
 @Observable
 @MainActor
 public final class GeoJSONCache {
@@ -53,7 +53,9 @@ public final class GeoJSONCache {
                     return shapes
                 }
                 outlines = parsed.shapes
-                outlinesByProjection[projection] = parsed.shapes
+                // Only the projection on screen is kept; switching back reads the saved outlines from disk,
+                // so a second world's outlines don't sit in memory for a switch that rarely comes.
+                outlinesByProjection = [projection: parsed.shapes]
                 adjacency = adjacency ?? parsed.adjacency
             }
             self.projection = projection

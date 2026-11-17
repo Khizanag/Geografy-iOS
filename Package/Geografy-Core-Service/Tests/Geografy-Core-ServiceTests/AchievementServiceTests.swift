@@ -58,6 +58,17 @@ struct AchievementServiceTests {
         #expect(service.unlockedAchievements.count == 2)
         #expect(service.unlockedCount == 1)
     }
+
+    @Test("Progress from a check is saved, so the next session reads it")
+    func checkProgressIsSaved() {
+        let userID = UUID().uuidString
+        let service = Self.makeService(userID: userID)
+        service.checkExplorerAchievements(totalExplored: 7)
+
+        let nextSession = Self.makeService(userID: userID)
+
+        #expect(nextSession.progress(for: "explorer_10").currentValue == 7)
+    }
 }
 
 // MARK: - Helpers
