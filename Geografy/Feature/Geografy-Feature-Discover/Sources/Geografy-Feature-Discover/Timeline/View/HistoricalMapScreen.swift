@@ -80,15 +80,26 @@ private extension HistoricalMapScreen {
     }
 
     func mapContent(in size: CGSize) -> some View {
-        HistoricalMapCanvas(mapState: mapState, canvasSize: size)
-            .accessibilityLabel("Historical map, \(String(selectedYear))")
-            .accessibilityValue(selectedCountryDescription.map { "Selected: \($0)" } ?? "No country selected")
-            .accessibilityHint("Double tap to select a country")
-            .gesture(dragGesture)
-            .gesture(magnifyGesture)
-            .onTapGesture { location in
-                handleTap(at: location, in: size)
+        InteractiveMapViewport(
+            mapState: mapState,
+            viewSize: size,
+            bounds: MapProjection.worldBounds(around: mapState.contentBounds),
+            onTap: { handleTap(at: $0, in: size) },
+            canvas: { frame, canvasSize in
+                MapCanvasView(
+                    countryShapes: mapState.countryShapes,
+                    scale: frame.scale,
+                    offset: frame.offset,
+                    selectedCountryCode: mapState.selectedCountryCode,
+                    showLabels: mapState.showLabels,
+                    canvasSize: canvasSize,
+                    wrapsHorizontally: false
+                )
             }
+        )
+        .accessibilityLabel("Historical map, \(String(selectedYear))")
+        .accessibilityValue(selectedCountryDescription.map { "Selected: \($0)" } ?? "No country selected")
+        .accessibilityHint("Double tap to select a country")
     }
 
     var footerOverlay: some View {
@@ -237,53 +248,6 @@ private extension HistoricalMapScreen {
                 .font(DesignSystem.Font.body)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
         }
-    }
-}
-
-// MARK: - Gestures
-private extension HistoricalMapScreen {
-    var magnifyGesture: some Gesture {
-        MagnifyGesture()
-            .onChanged { value in
-                let newScale = min(
-                    max(mapState.lastScale * value.magnification, mapState.minScale),
-                    20.0
-                )
-                let scaleRatio = newScale / mapState.scale
-                mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio,
-                    height: mapState.offset.height * scaleRatio
-                )
-                mapState.scale = newScale
-            }
-            .onEnded { _ in
-                clampOffset()
-                mapState.lastScale = mapState.scale
-                mapState.lastOffset = mapState.offset
-            }
-    }
-
-    /// Keeps the map's land on screen; the historical map doesn't repeat sideways.
-    func clampOffset() {
-        mapState.clampOffset(
-            to: MapProjection.worldBounds(around: mapState.contentBounds),
-            in: screenSize,
-            horizontally: true
-        )
-    }
-
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                mapState.offset = CGSize(
-                    width: mapState.lastOffset.width + value.translation.width,
-                    height: mapState.lastOffset.height + value.translation.height
-                )
-                clampOffset()
-            }
-            .onEnded { _ in
-                mapState.lastOffset = mapState.offset
-            }
     }
 }
 

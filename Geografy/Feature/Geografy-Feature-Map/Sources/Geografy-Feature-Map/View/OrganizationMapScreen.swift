@@ -97,26 +97,28 @@ private extension OrganizationMapScreen {
     }
 
     func mapCanvas(in size: CGSize) -> some View {
-        MapCanvasView(
-            countryShapes: mapState.countryShapes,
-            scale: mapState.scale,
-            offset: mapState.offset,
-            selectedCountryCode: mapState.selectedCountryCode,
-            showLabels: mapState.showLabels,
-            canvasSize: size,
-            capitalPoint: selectedCapitalPoint
+        InteractiveMapViewport(
+            mapState: mapState,
+            viewSize: size,
+            bounds: MapProjection.worldBounds(around: mapState.contentBounds),
+            wrapsHorizontally: wrapsWorld,
+            onTap: { handleTap(at: $0, in: size) },
+            canvas: { frame, canvasSize in
+                MapCanvasView(
+                    countryShapes: mapState.countryShapes,
+                    scale: frame.scale,
+                    offset: frame.offset,
+                    selectedCountryCode: mapState.selectedCountryCode,
+                    showLabels: mapState.showLabels,
+                    canvasSize: canvasSize,
+                    capitalPoint: selectedCapitalPoint,
+                    wrapsHorizontally: wrapsWorld
+                )
+            }
         )
-        .overlay { MapGraticuleView(scale: mapState.scale, offset: mapState.offset) }
         .accessibilityLabel("Map of \(organization.displayName) members")
         .accessibilityValue(selectedCountryName.map { "Selected: \($0)" } ?? "No country selected")
         .accessibilityHint("Double tap to select a country")
-        #if !os(tvOS)
-        .gesture(dragGesture)
-        .gesture(magnifyGesture)
-        .onTapGesture(count: 1) { location in
-            handleTap(at: location, in: size)
-        }
-        #endif
     }
 
     var selectedCountryName: String? {
@@ -247,56 +249,6 @@ private extension OrganizationMapScreen {
         }
     }
 }
-
-#if !os(tvOS)
-// MARK: - Gestures
-private extension OrganizationMapScreen {
-    var magnifyGesture: some Gesture {
-        MagnifyGesture()
-            .onChanged { value in
-                let newScale = min(
-                    max(mapState.lastScale * value.magnification, mapState.minScale),
-                    MapState.maxScale
-                )
-                let scaleRatio = newScale / mapState.scale
-
-                let anchor = value.startLocation
-                let screenCenter = CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
-                let anchorOffset = CGSize(
-                    width: anchor.x - screenCenter.x,
-                    height: anchor.y - screenCenter.y
-                )
-
-                mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio - anchorOffset.width * (scaleRatio - 1),
-                    height: mapState.offset.height * scaleRatio - anchorOffset.height * (scaleRatio - 1)
-                )
-                mapState.scale = newScale
-                clampOffset()
-            }
-            .onEnded { _ in
-                if wrapsWorld { mapState.wrapHorizontalOffset() }
-                mapState.lastScale = mapState.scale
-                mapState.lastOffset = mapState.offset
-            }
-    }
-
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                mapState.offset = CGSize(
-                    width: mapState.lastOffset.width + value.translation.width,
-                    height: mapState.lastOffset.height + value.translation.height
-                )
-                clampOffset()
-            }
-            .onEnded { _ in
-                if wrapsWorld { mapState.wrapHorizontalOffset() }
-                mapState.lastOffset = mapState.offset
-            }
-    }
-}
-#endif
 
 // MARK: - Actions
 private extension OrganizationMapScreen {

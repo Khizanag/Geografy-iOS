@@ -148,29 +148,29 @@ private extension MapScreen {
     }
 
     func mapCanvas(in size: CGSize) -> some View {
-        MapViewport(mapState: mapState, viewSize: size) { frame, canvasSize in
-            MapCanvasView(
-                countryShapes: mapState.countryShapes,
-                scale: frame.scale,
-                offset: frame.offset,
-                selectedCountryCode: mapState.selectedCountryCode,
-                showLabels: mapState.showLabels,
-                canvasSize: canvasSize,
-                capitalPoint: selectedCapitalPoint,
-                highlightedCodes: showsVisitedCountries ? travelService.visitedCodes : [],
-                wrapsHorizontally: wrapsWorld
-            )
-        }
+        InteractiveMapViewport(
+            mapState: mapState,
+            viewSize: size,
+            bounds: effectiveViewportBounds,
+            wrapsHorizontally: wrapsWorld,
+            onTap: { handleTap(at: $0, in: size) },
+            canvas: { frame, canvasSize in
+                MapCanvasView(
+                    countryShapes: mapState.countryShapes,
+                    scale: frame.scale,
+                    offset: frame.offset,
+                    selectedCountryCode: mapState.selectedCountryCode,
+                    showLabels: mapState.showLabels,
+                    canvasSize: canvasSize,
+                    capitalPoint: selectedCapitalPoint,
+                    highlightedCodes: showsVisitedCountries ? travelService.visitedCodes : [],
+                    wrapsHorizontally: wrapsWorld
+                )
+            }
+        )
         .accessibilityLabel(continentFilter.map { "Interactive map of \($0)" } ?? "Interactive world map")
         .accessibilityValue(selectedCountryName.map { "Selected: \($0)" } ?? "No country selected")
         .accessibilityHint("Double tap to select a country")
-        #if !os(tvOS)
-        .gesture(dragGesture)
-        .gesture(magnifyGesture)
-        .onTapGesture(count: 1) { location in
-            handleTap(at: location, in: size)
-        }
-        #endif
     }
 }
 
@@ -266,76 +266,6 @@ private extension MapScreen {
         }
     }
 }
-
-#if !os(tvOS)
-// MARK: - Gestures
-private extension MapScreen {
-    var magnifyGesture: some Gesture {
-        MagnifyGesture()
-            .onChanged { value in
-                mapState.beginGesture()
-                let newScale = min(
-                    max(mapState.lastScale * value.magnification, mapState.minScale),
-                    MapState.maxScale
-                )
-                let scaleRatio = newScale / mapState.scale
-
-                let anchor = value.startLocation
-                let screenCenter = CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
-                let anchorOffset = CGSize(
-                    width: anchor.x - screenCenter.x,
-                    height: anchor.y - screenCenter.y
-                )
-
-                mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio - anchorOffset.width * (scaleRatio - 1),
-                    height: mapState.offset.height * scaleRatio - anchorOffset.height * (scaleRatio - 1)
-                )
-                mapState.scale = newScale
-                clampOffset()
-                redrawIfNeeded()
-            }
-            .onEnded { _ in
-                finishGesture()
-                mapState.lastScale = mapState.scale
-            }
-    }
-
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                mapState.beginGesture()
-                mapState.offset = CGSize(
-                    width: mapState.lastOffset.width + value.translation.width,
-                    height: mapState.lastOffset.height + value.translation.height
-                )
-                clampOffset()
-                redrawIfNeeded()
-            }
-            .onEnded { _ in
-                finishGesture()
-            }
-    }
-
-    /// Redraws mid-gesture only once the moved map would show an edge or blur.
-    /// The world map wraps sideways just before, so the redraw lands on the copy nearest the view.
-    func redrawIfNeeded() {
-        guard mapState.needsRedraw(in: screenSize) else { return }
-        if wrapsWorld {
-            mapState.wrapHorizontalOffset()
-        }
-        mapState.redrawGestureFrame()
-    }
-
-    func finishGesture() {
-        if wrapsWorld {
-            mapState.wrapHorizontalOffset()
-        }
-        mapState.lastOffset = mapState.offset
-        mapState.endGesture()
-    }
-}
-#endif
 
 // MARK: - Map Geometry
 private extension MapScreen {

@@ -77,13 +77,25 @@ private extension TravelMapScreen {
     }
 
     func mapCanvas(in size: CGSize) -> some View {
-        TravelMapCanvas(
+        let wrapsWorld = MapProjection.current == .mercator
+        return InteractiveMapViewport(
             mapState: mapState,
-            countryShapes: styledShapes,
-            travelStatuses: highlightedStatuses,
-            showLabels: showLabels,
-            canvasSize: size
-        )
+            viewSize: size,
+            bounds: MapProjection.worldBounds(around: mapState.contentBounds),
+            wrapsHorizontally: wrapsWorld
+        ) { frame, canvasSize in
+            MapCanvasView(
+                countryShapes: styledShapes,
+                scale: frame.scale,
+                offset: frame.offset,
+                selectedCountryCode: nil,
+                showLabels: showLabels,
+                canvasSize: canvasSize,
+                capitalPoint: nil,
+                travelStatuses: highlightedStatuses,
+                wrapsHorizontally: wrapsWorld
+            )
+        }
         .accessibilityLabel("Travel map showing \(travelCount) countries")
         .accessibilityHint("Pinch to zoom, drag to pan")
     }
@@ -227,68 +239,3 @@ private extension TravelMapScreen {
         }
     }
 }
-
-// MARK: - TravelMapCanvas
-/// Reads pan and zoom on its own, so a gesture redraws the map without re-running the screen around it.
-private struct TravelMapCanvas: View {
-    // MARK: - Properties
-    let mapState: MapState
-    let countryShapes: [CountryShape]
-    let travelStatuses: [String: TravelStatus]
-    let showLabels: Bool
-    let canvasSize: CGSize
-
-    // MARK: - Body
-    var body: some View {
-        MapCanvasView(
-            countryShapes: countryShapes,
-            scale: mapState.scale,
-            offset: mapState.offset,
-            selectedCountryCode: nil,
-            showLabels: showLabels,
-            canvasSize: canvasSize,
-            capitalPoint: nil,
-            travelStatuses: travelStatuses
-        )
-        .overlay { MapGraticuleView(scale: mapState.scale, offset: mapState.offset) }
-        #if !os(tvOS)
-        .gesture(dragGesture)
-        .gesture(magnifyGesture)
-        #endif
-    }
-}
-
-// MARK: - Gestures
-#if !os(tvOS)
-private extension TravelMapCanvas {
-    var magnifyGesture: some Gesture {
-        MagnifyGesture()
-            .onChanged { value in
-                let newScale = min(max(mapState.lastScale * value.magnification, mapState.minScale), 20.0)
-                let scaleRatio = newScale / mapState.scale
-                mapState.offset = CGSize(
-                    width: mapState.offset.width * scaleRatio,
-                    height: mapState.offset.height * scaleRatio
-                )
-                mapState.scale = newScale
-            }
-            .onEnded { _ in
-                mapState.lastScale = mapState.scale
-                mapState.lastOffset = mapState.offset
-            }
-    }
-
-    var dragGesture: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                mapState.offset = CGSize(
-                    width: mapState.lastOffset.width + value.translation.width,
-                    height: mapState.lastOffset.height + value.translation.height
-                )
-            }
-            .onEnded { _ in
-                mapState.lastOffset = mapState.offset
-            }
-    }
-}
-#endif
