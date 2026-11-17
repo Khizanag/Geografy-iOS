@@ -115,7 +115,7 @@ private extension TimelineScreen {
             Image(systemName: "xmark")
                 .font(DesignSystem.Font.caption.weight(.semibold))
                 .foregroundStyle(DesignSystem.Color.textSecondary)
-                .frame(width: 36, height: 36)
+                .frame(width: 44, height: 44)
                 .contentShape(Circle())
         }
         .buttonStyle(.plain)

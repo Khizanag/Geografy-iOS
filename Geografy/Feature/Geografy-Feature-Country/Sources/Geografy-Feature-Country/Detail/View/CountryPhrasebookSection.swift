@@ -34,6 +34,8 @@ private struct PhraseChip: View {
     let phrase: CountryPhrase
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// Grows with the text size, so a two-line phrase still fits at large sizes.
+    @ScaledMetric(relativeTo: .subheadline) private var chipWidth: CGFloat = 140
 
     @State private var flipped = false
 
@@ -64,7 +66,7 @@ private extension PhraseChip {
                         englishSide
                     }
                 }
-                .frame(width: 140, alignment: .leading)
+                .frame(width: chipWidth, alignment: .leading)
                 .padding(DesignSystem.Spacing.sm)
             }
         }

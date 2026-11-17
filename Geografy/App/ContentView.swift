@@ -17,6 +17,7 @@ struct ContentView: View {
     @Environment(AchievementService.self) private var achievementService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.displayScale) private var displayScale
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     #if DEBUG
     @Environment(DatabaseManager.self) private var databaseManager
     @Environment(StreakService.self) private var streakService
@@ -93,7 +94,7 @@ private extension ContentView {
                 )
                 .zIndex(50)
                 .padding(.top, 8)
-                .transition(.move(edge: .top).combined(with: .opacity))
+                .transition(reduceMotion ? .opacity : .move(edge: .top).combined(with: .opacity))
             }
 
             if let level = levelUpLevel {
@@ -104,7 +105,10 @@ private extension ContentView {
                 .transition(.opacity)
             }
         }
-        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: currentBannerAchievement?.id)
+        .animation(
+            reduceMotion ? .easeOut(duration: 0.2) : .spring(response: 0.4, dampingFraction: 0.7),
+            value: currentBannerAchievement?.id
+        )
         .animation(.easeOut(duration: 0.3), value: levelUpLevel != nil)
     }
 

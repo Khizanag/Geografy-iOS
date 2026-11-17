@@ -4,6 +4,9 @@ import SwiftUI
 
 public struct TimelineSlider: View {
     // MARK: - Properties
+    @ScaledMetric(relativeTo: .body) private var wheelWidth: CGFloat = 120
+    @ScaledMetric(relativeTo: .body) private var wheelHeight: CGFloat = 100
+
     @Binding var selectedYear: Int
     public let range: ClosedRange<Int>
     public let decades: [Int]
@@ -35,7 +38,7 @@ private extension TimelineSlider {
                 }
             }
             .pickerStyle(.wheel)
-            .frame(width: 120, height: 100)
+            .frame(width: wheelWidth, height: wheelHeight)
 
             Spacer(minLength: 0)
 

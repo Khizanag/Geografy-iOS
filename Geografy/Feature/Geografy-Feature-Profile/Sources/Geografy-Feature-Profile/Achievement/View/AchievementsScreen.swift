@@ -11,6 +11,8 @@ public struct AchievementsScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 48
+
     @State private var selectedCategory: AchievementCategory?
     @State private var appeared = false
 
@@ -175,8 +177,10 @@ private extension AchievementsScreen {
     func achievementIcon(_ definition: AchievementDefinition, isUnlocked: Bool) -> some View {
         ZStack {
             Circle()
-                .fill(definition.category.themeColor.opacity(isUnlocked ? 0.2 : 0.08))
-                .frame(width: 48, height: 48)
+                .fill(definition.category.themeColor.opacity(
+                    isUnlocked ? DesignSystem.Opacity.tint : DesignSystem.Opacity.faint
+                ))
+                .frame(width: iconSize, height: iconSize)
 
             Circle()
                 .strokeBorder(
@@ -187,7 +191,7 @@ private extension AchievementsScreen {
                     ),
                     lineWidth: isUnlocked ? definition.rarity.borderWidth : 1
                 )
-                .frame(width: 48, height: 48)
+                .frame(width: iconSize, height: iconSize)
 
             Image(systemName: isUnlocked ? definition.iconName : "lock.fill")
                 .font(DesignSystem.Font.title2)
