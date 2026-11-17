@@ -30,7 +30,6 @@ public struct SpeedRunSessionScreen: View {
     @State private var rejectedInput: String?
     @State private var isFinished = false
     @State private var xpEarned = 0
-    @State private var showXPBadge = false
     @State private var showGiveUpAlert = false
 
     @FocusState private var isInputFocused: Bool
@@ -193,53 +192,26 @@ private extension SpeedRunSessionScreen {
 // MARK: - Results
 private extension SpeedRunSessionScreen {
     var resultsView: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                resultsHeader
-
-                resultsStats
-
-                xpBadge
-
+        GameResultLayout(
+            title: Text(completionMessage),
+            xpEarned: xpEarned,
+            primaryAction: .playAgain { restart() },
+            onDone: { dismiss() },
+            hero: { resultsHero },
+            stats: { resultsStats },
+            details: {
                 if !missedCountries.isEmpty {
                     missedSection
                 }
             }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.vertical, DesignSystem.Spacing.lg)
-        }
-        .safeAreaBar(edge: .bottom) {
-            resultsActions
-        }
+        )
     }
 
-    var resultsActions: some View {
-        ButtonRow {
-            GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
-                dismiss()
-            }
-
-            GlassButton("Try Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
-                restart()
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.bottom, DesignSystem.Spacing.md)
-    }
-
-    var resultsHeader: some View {
+    var resultsHero: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             IconBadge("trophy.fill", color: DesignSystem.Color.warning, size: .hero)
                 .symbolEffect(.bounce, isActive: !reduceMotion)
                 .accessibilityHidden(true)
-
-            Text(completionMessage)
-                .font(DesignSystem.Font.title2)
-                .fontWeight(.bold)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .multilineTextAlignment(.center)
-                .accessibilityAddTraits(.isHeader)
-
             Text(SpeedRunClock.formatted(elapsedTime))
                 .font(DesignSystem.Font.system(size: resultTimeFontSize, weight: .bold, design: .monospaced))
                 .foregroundStyle(DesignSystem.Color.pink)
@@ -248,55 +220,28 @@ private extension SpeedRunSessionScreen {
                 .accessibilityLabel("Time")
                 .accessibilityValue(SpeedRunClock.spokenValue(elapsedTime, isComplete: isComplete))
         }
-        .frame(maxWidth: .infinity)
-        .padding(.top, DesignSystem.Spacing.xl)
-    }
-
-    var resultsStats: some View {
-        CardView {
-            HStack(spacing: 0) {
-                ResultStatItem(
-                    icon: "checkmark.circle.fill",
-                    value: "\(completedCodes.count)",
-                    label: "Named",
-                    color: DesignSystem.Color.success
-                )
-                ResultStatItem(
-                    icon: "globe",
-                    value: "\(targetCountries.count - completedCodes.count)",
-                    label: "Missed",
-                    color: DesignSystem.Color.error
-                )
-                ResultStatItem(
-                    icon: "chart.bar.fill",
-                    value: "\(Int(progressFraction * 100))%",
-                    label: "Accuracy",
-                    color: DesignSystem.Color.indigo
-                )
-            }
-            .padding(DesignSystem.Spacing.md)
-        }
     }
 
     @ViewBuilder
-    var xpBadge: some View {
-        if showXPBadge, xpEarned > 0 {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: "star.fill")
-                    .foregroundStyle(DesignSystem.Color.warning)
-                    .accessibilityHidden(true)
-                Text("+\(xpEarned) XP")
-                    .font(DesignSystem.Font.headline)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-            }
-            .padding(.horizontal, DesignSystem.Spacing.lg)
-            .padding(.vertical, DesignSystem.Spacing.sm)
-            .background(DesignSystem.Color.warning.opacity(0.12), in: Capsule())
-            .transition(reduceMotion ? .opacity : .scale(scale: 0.7).combined(with: .opacity))
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel("Earned \(xpEarned) XP")
-        }
+    var resultsStats: some View {
+        StatTile(
+            value: "\(completedCodes.count)",
+            label: "Named",
+            icon: "checkmark.circle.fill",
+            color: DesignSystem.Color.success
+        )
+        StatTile(
+            value: "\(targetCountries.count - completedCodes.count)",
+            label: "Missed",
+            icon: "xmark.circle.fill",
+            color: DesignSystem.Color.error
+        )
+        StatTile(
+            value: "\(Int(progressFraction * 100))%",
+            label: "Done",
+            icon: "chart.bar.fill",
+            color: DesignSystem.Color.blue
+        )
     }
 
     var missedSection: some View {
@@ -420,10 +365,6 @@ private extension SpeedRunSessionScreen {
 
         let announcement = "\(completionMessage) Named \(completedCodes.count) of \(targetCountries.count) countries."
         AccessibilityNotification.Announcement(announcement).post()
-
-        withAnimation(reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.7).delay(0.6)) {
-            showXPBadge = true
-        }
     }
 
     func calculateXP() -> Int {
@@ -440,7 +381,6 @@ private extension SpeedRunSessionScreen {
         rejectedInput = nil
         elapsedTime = 0
         isFinished = false
-        showXPBadge = false
         xpEarned = 0
         flashingCode = nil
         startDate = .now

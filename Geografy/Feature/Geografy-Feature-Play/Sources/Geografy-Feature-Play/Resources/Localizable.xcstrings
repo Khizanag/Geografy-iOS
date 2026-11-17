@@ -252,6 +252,16 @@
         }
       }
     },
+    "%lld of %lld correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld correct"
+          }
+        }
+      }
+    },
     "%lld of %lld countries" : {
       "localizations" : {
         "en" : {
@@ -1967,6 +1977,9 @@
         }
       }
     },
+    "Missed" : {
+
+    },
     "Missed Countries" : {
       "localizations" : {
         "ka" : {
@@ -2056,6 +2069,9 @@
           }
         }
       }
+    },
+    "Named" : {
+
     },
     "Nearby Hosts" : {
       "localizations" : {

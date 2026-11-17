@@ -1,7 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {},
+    "" : {
+
+    },
     "%@ · %@" : {
       "localizations" : {
         "en" : {
@@ -63,6 +65,9 @@
           }
         }
       }
+    },
+    "%lld XP earned" : {
+
     },
     "%lld of %lld XP" : {
       "localizations" : {
@@ -135,6 +140,9 @@
           }
         }
       }
+    },
+    "+%lld XP" : {
+
     },
     "Alphabet index" : {
       "localizations" : {
@@ -275,6 +283,9 @@
           }
         }
       }
+    },
+    "Done" : {
+
     },
     "Double tap for more details" : {
       "localizations" : {
@@ -553,6 +564,9 @@
         }
       }
     },
+    "Play Again" : {
+
+    },
     "Premium" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -713,7 +727,9 @@
         }
       }
     },
-    "·" : {}
+    "·" : {
+
+    }
   },
   "version" : "1.0"
 }

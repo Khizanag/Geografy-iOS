@@ -544,6 +544,10 @@
         }
       }
     },
+    "%lld XP earned" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "%lld bordering countries" : {
       "localizations" : {
         "ka" : {
@@ -873,6 +877,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$lld of %2$lld checked"
+          }
+        }
+      }
+    },
+    "%lld of %lld correct" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld correct"
           }
         }
       }
@@ -6386,6 +6402,10 @@
         }
       }
     },
+    "Missed" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Missed Countries" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -6639,6 +6659,10 @@
           }
         }
       }
+    },
+    "Named" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Natural Wonders" : {
       "localizations" : {

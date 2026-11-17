@@ -20,121 +20,55 @@ public struct QuizResultsScreen: View {
     public let onPlayAgain: () -> Void
     public let onDone: () -> Void
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     @State private var xpEarned = 0
-    @State private var showXPBadge = false
 
     // MARK: - Body
     public var body: some View {
-        scrollContent
-            .screenBackground()
-            .navigationTitle("Results")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden()
-            .safeAreaBar(edge: .bottom) {
-                actionButtons
-                    .padding(.horizontal, DesignSystem.Spacing.md)
-            }
-            .task { processQuizResult() }
+        GameResultLayout(
+            title: Text(scoreMessage),
+            message: Text("\(result.correctCount) of \(result.answers.count) correct"),
+            xpEarned: xpEarned,
+            primaryAction: .playAgain {
+                #if !os(tvOS)
+                hapticsService.impact(.light)
+                #endif
+                onPlayAgain()
+            },
+            onDone: onDone,
+            hero: { ScoreRingView(progress: result.accuracy) },
+            stats: { stats },
+            details: { answersSection }
+        )
+        .screenBackground()
+        .navigationTitle("Results")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        .task { processQuizResult() }
     }
 }
 
 // MARK: - Subviews
 private extension QuizResultsScreen {
-    var scrollContent: some View {
-        ScrollView {
-            VStack(spacing: DesignSystem.Spacing.xl) {
-                scoreSection
-                statsRow
-                answersSection
-            }
-            .padding(.vertical, DesignSystem.Spacing.lg)
-            .readableContentWidth()
-        }
-    }
-
-    var scoreSection: some View {
-        VStack(spacing: DesignSystem.Spacing.md) {
-            ScoreRingView(progress: result.accuracy)
-
-            Text(scoreMessage)
-                .font(DesignSystem.Font.title2)
-                .foregroundStyle(DesignSystem.Color.textPrimary)
-                .accessibilityAddTraits(.isHeader)
-
-            if showXPBadge, xpEarned > 0 {
-                HStack(spacing: DesignSystem.Spacing.xxs) {
-                    Image(systemName: "star.fill")
-                        .font(DesignSystem.Font.caption)
-                        .foregroundStyle(DesignSystem.Color.warning)
-                        .accessibilityHidden(true)
-                    Text("+\(xpEarned) XP")
-                        .font(DesignSystem.Font.headline)
-                        .fontWeight(.bold)
-                        .foregroundStyle(DesignSystem.Color.warning)
-                }
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.xs)
-                .background(DesignSystem.Color.warning.opacity(0.15), in: Capsule())
-                .transition(reduceMotion ? .opacity : .scale(scale: 0.7).combined(with: .opacity))
-                .animation(
-                    reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.7).delay(0.5),
-                    value: showXPBadge
-                )
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel("Earned \(xpEarned) XP")
-            }
-        }
-        .padding(.top, DesignSystem.Spacing.lg)
-    }
-
-    var statsRow: some View {
-        HStack(spacing: DesignSystem.Spacing.sm) {
-            statItem(
-                icon: "checkmark.circle.fill",
-                value: "\(result.correctCount)",
-                color: DesignSystem.Color.success
-            )
-            statItem(
-                icon: "xmark.circle.fill",
-                value: "\(result.incorrectCount)",
-                color: DesignSystem.Color.error
-            )
-            statItem(
-                icon: "clock.fill",
-                value: formattedTime,
-                color: DesignSystem.Color.warning
-            )
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-    }
-
-    func statItem(icon: String, value: String, color: Color) -> some View {
-        CardView {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                Image(systemName: icon)
-                    .font(DesignSystem.Font.title2)
-                    .foregroundStyle(color)
-                    .accessibilityHidden(true)
-
-                Text(value)
-                    .font(DesignSystem.Font.headline)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(DesignSystem.Spacing.md)
-        }
-        .accessibilityElement(children: .combine)
+    @ViewBuilder
+    var stats: some View {
+        StatTile(
+            value: "\(result.correctCount)",
+            label: "Correct",
+            icon: "checkmark.circle.fill",
+            color: DesignSystem.Color.success
+        )
+        StatTile(
+            value: "\(result.incorrectCount)",
+            label: "Wrong",
+            icon: "xmark.circle.fill",
+            color: DesignSystem.Color.error
+        )
+        StatTile(value: formattedTime, label: "Time", icon: "clock.fill", color: DesignSystem.Color.blue)
     }
 
     var answersSection: some View {
         LazyVStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
             SectionHeaderView(title: "Answers")
-                .padding(.horizontal, DesignSystem.Spacing.md)
 
             ForEach(Array(result.answers.enumerated()), id: \.element.id) { index, answer in
                 answerRow(index: index + 1, answer: answer)
@@ -169,33 +103,10 @@ private extension QuizResultsScreen {
             }
             .padding(DesignSystem.Spacing.sm)
         }
-        .padding(.horizontal, DesignSystem.Spacing.md)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             "\(index). \(answer.question.correctCountry.name), \(answer.isCorrect ? "correct" : "incorrect")"
         )
-    }
-
-    var actionButtons: some View {
-        ButtonRow {
-            doneButton
-            playAgainButton
-        }
-    }
-
-    var playAgainButton: some View {
-        GlassButton("Play Again", systemImage: "arrow.counterclockwise", fullWidth: true) {
-            #if !os(tvOS)
-            hapticsService.impact(.light)
-            #endif
-            onPlayAgain()
-        }
-    }
-
-    var doneButton: some View {
-        GlassButton("Done", systemImage: "checkmark", role: .secondary, fullWidth: true) {
-            onDone()
-        }
     }
 }
 
@@ -240,8 +151,6 @@ private extension QuizResultsScreen {
         descriptor.fetchLimit = 200
         let history = (try? database.mainContext.fetch(descriptor)) ?? []
         achievementService.checkQuizAchievements(history: history)
-
-        showXPBadge = true
 
         #if !os(tvOS)
         if result.accuracy >= 0.7 {
