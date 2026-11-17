@@ -73,7 +73,7 @@ private extension DailyChallengeScreen {
             }
         }
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Streak")
+            SectionHeaderView(title: "Challenge Streak")
             DailyChallengeStreakCard(streak: service.streakSummary)
         }
         DailyChallengeHistorySection(results: service.sortedHistory)
@@ -132,7 +132,7 @@ private extension DailyChallengeScreen {
         }
         let streak = service.streakSummary
         return [
-            GameIntroHeader.Fact("\(streak.current)-day streak", systemImage: "flame.fill"),
+            GameIntroHeader.Fact("\(streak.current)-day challenge streak", systemImage: "flame.fill"),
             GameIntroHeader.Fact("Best streak \(streak.best)", systemImage: "trophy.fill"),
             GameIntroHeader.Fact("\(streak.completedCount) completed", systemImage: "checkmark.seal.fill"),
         ]

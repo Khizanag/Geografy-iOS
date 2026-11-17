@@ -20,6 +20,7 @@ public final class StreakService {
         self.xpService = xpService
         self.achievementService = achievementService
         self.currentUserID = userID
+        xpService.onLearned = { [weak self] in self?.recordLearning() }
     }
 
     /// Activity dates for the past 7 calendar days (Mon–Sun of the current week).
@@ -30,8 +31,9 @@ public final class StreakService {
         refreshStreak()
     }
 
-    /// Call on every app foreground event.
-    public func recordDailyLogin() {
+    /// Counts today toward the streak the first time something is learned today, and pays the daily bonus.
+    /// Opening the app doesn't count; ``refreshStreak()`` on foreground only notices a missed day.
+    public func recordLearning() {
         let today = Calendar.current.startOfDay(for: .now)
         let userID = currentUserID
 
@@ -45,7 +47,7 @@ public final class StreakService {
         db.mainContext.insert(record)
         try? db.mainContext.save()
 
-        xpService.award(10, source: .dailyLogin)
+        xpService.award(10, source: .dailyBonus)
 
         refreshStreak()
         checkMilestones()

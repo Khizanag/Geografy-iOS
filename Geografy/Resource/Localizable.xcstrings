@@ -8994,6 +8994,10 @@
         }
       }
     },
+    "Review Streak" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Review again" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

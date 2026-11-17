@@ -84,10 +84,10 @@ private extension GeografyLabSections {
             } label: {
                 LabRow("Total XP", systemImage: "star.fill", color: DesignSystem.Color.warning)
             }
-            Button { xpService.award(100, source: .dailyLogin) } label: {
+            Button { xpService.award(100, source: .dailyBonus) } label: {
                 LabRow("Add 100 XP", systemImage: "plus", color: DesignSystem.Color.warning)
             }
-            Button { xpService.award(1_000, source: .dailyLogin) } label: {
+            Button { xpService.award(1_000, source: .dailyBonus) } label: {
                 LabRow("Add 1,000 XP", systemImage: "forward.fill", color: DesignSystem.Color.warning)
             }
             Button { closeTestingLab { data.reachNextLevel() } } label: {

@@ -221,7 +221,7 @@ private extension GeografyApp {
 
     func handleScenePhaseChange(_ newPhase: ScenePhase) {
         if newPhase == .active {
-            dependencies.streakService.recordDailyLogin()
+            dependencies.streakService.refreshStreak()
         }
         #if os(iOS)
         if newPhase == .background {

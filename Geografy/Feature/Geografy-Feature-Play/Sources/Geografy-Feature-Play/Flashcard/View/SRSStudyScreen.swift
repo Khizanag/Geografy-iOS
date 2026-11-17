@@ -85,7 +85,7 @@ private extension SRSStudyScreen {
             )
             StatTile(
                 value: "\(flashcardService.currentStreak())",
-                label: "Day Streak",
+                label: "Review Streak",
                 icon: "flame",
                 color: DesignSystem.Color.warning
             )

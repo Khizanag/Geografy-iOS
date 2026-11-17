@@ -13,7 +13,7 @@ struct XPServiceTests {
         service.refreshXP()
 
         service.award(30, source: .quizCompletedEasy)
-        service.award(45, source: .dailyLogin)
+        service.award(45, source: .dailyBonus)
         let runningTotal = service.totalXP
         service.refreshXP()
 

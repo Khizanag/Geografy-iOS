@@ -19,6 +19,8 @@ public final class XPService {
     }
 
     public let levelUpPublisher = PassthroughSubject<UserLevel, Never>()
+    /// Called after XP is earned by learning, so the streak can count the day.
+    @ObservationIgnored public var onLearned: (@MainActor () -> Void)?
 
     public var currentUserID: String
 
@@ -55,6 +57,9 @@ public final class XPService {
 
         if currentLevel.level > previousLevel.level {
             levelUpPublisher.send(currentLevel)
+        }
+        if source.countsAsLearning {
+            onLearned?()
         }
     }
 }

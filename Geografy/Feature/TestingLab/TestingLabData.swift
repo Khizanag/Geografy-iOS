@@ -21,7 +21,7 @@ struct TestingLabData {
     func reachNextLevel() {
         let level = xpService.currentLevel
         guard level.maxXP != Int.max else { return }
-        xpService.award(level.maxXP - xpService.totalXP, source: .dailyLogin)
+        xpService.award(level.maxXP - xpService.totalXP, source: .dailyBonus)
     }
 
     func resetXP() {
