@@ -48,25 +48,29 @@ private extension FlashcardStatsView {
                 label: "Reviewed",
                 icon: "rectangle.on.rectangle",
                 color: DesignSystem.Color.purple,
-                style: .plain            )
+                style: .plain
+            )
             StatTile(
                 value: "\(correctCount)",
                 label: "Correct",
                 icon: "checkmark.circle.fill",
                 color: DesignSystem.Color.success,
-                style: .plain            )
+                style: .plain
+            )
             StatTile(
                 value: "\(accuracyPercentage)%",
                 label: "Accuracy",
                 icon: "chart.bar.fill",
                 color: DesignSystem.Color.indigo,
-                style: .plain            )
+                style: .plain
+            )
             StatTile(
                 value: formattedThinkingTime,
                 label: "Avg. Think Time",
                 icon: "brain.fill",
                 color: DesignSystem.Color.purple,
-                style: .plain            )
+                style: .plain
+            )
         }
     }
 

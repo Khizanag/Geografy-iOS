@@ -10,8 +10,6 @@ public struct WordSearchGameScreen: View {
     @Environment(XPService.self) private var xpService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
-    @Environment(\.colorSchemeContrast) private var contrast
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
     #endif
@@ -57,7 +55,9 @@ private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
+            // At its natural width; alone in the item, the bar would otherwise squeeze it into a circle.
             WordSearchClockLabel(stopwatch: stopwatch)
+                .fixedSize()
         }
         if timerActive {
             ToolbarItem(placement: .topBarTrailing) {
@@ -96,12 +96,12 @@ private extension WordSearchGameScreen {
                 progressSection(puzzle)
 
                 if gameFinished {
-                    resultBanner(puzzle)
+                    resultCard(puzzle)
                 }
 
                 gridSection(puzzle)
 
-                wordListSection(puzzle)
+                wordList(puzzle)
 
                 if !gameFinished {
                     VStack(spacing: DesignSystem.Spacing.sm) {
@@ -133,46 +133,23 @@ private extension WordSearchGameScreen {
         }
     }
 
-    func resultBanner(_ puzzle: WordSearchPuzzle) -> some View {
-        CardView {
-            VStack(spacing: DesignSystem.Spacing.sm) {
-                Image(systemName: allFound(puzzle) ? "trophy.fill" : "flag.checkered")
-                    .font(DesignSystem.Font.iconXL)
-                    .foregroundStyle(allFound(puzzle) ? DesignSystem.Color.warning : DesignSystem.Color.textSecondary)
-                    .accessibilityHidden(true)
-                Text(allFound(puzzle) ? "All Words Found!" : "Puzzle Complete")
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .accessibilityAddTraits(.isHeader)
-                resultStats
-            }
-            .padding(DesignSystem.Spacing.lg)
-            .frame(maxWidth: .infinity)
-        }
+    func wordList(_ puzzle: WordSearchPuzzle) -> some View {
+        WordSearchWordList(
+            words: puzzle.words,
+            foundIDs: foundWordIDs,
+            hintRevealedIDs: hintRevealedIDs,
+            showsAll: isRevealed,
+            canReveal: !gameFinished
+        ) { revealHint($0) }
     }
 
-    var resultStats: some View {
-        statsLayout {
-            StatTile(
-                value: "\(foundWordIDs.count)",
-                label: "Found",
-                icon: "checkmark.circle.fill",
-                color: DesignSystem.Color.success,
-                style: .plain            )
-            StatTile(
-                value: "\(revealedCount)",
-                label: "Revealed",
-                icon: "eye.fill",
-                color: DesignSystem.Color.warning,
-                style: .plain            )
-            StatTile(
-                value: formattedTime,
-                label: "Time",
-                icon: "timer",
-                color: DesignSystem.Color.indigo,
-                style: .plain            )
-        }
+    func resultCard(_ puzzle: WordSearchPuzzle) -> some View {
+        WordSearchResultCard(
+            foundAll: allFound(puzzle),
+            foundCount: foundWordIDs.count,
+            revealedCount: revealedCount,
+            time: formattedTime
+        )
     }
 
     var resultFooter: some View {
@@ -281,94 +258,10 @@ private extension WordSearchGameScreen {
             }
         }
     }
-
-    func wordListSection(_ puzzle: WordSearchPuzzle) -> some View {
-        CardView {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                SectionHeaderView(title: "Find These Words")
-                    .padding(.horizontal, DesignSystem.Spacing.sm)
-                    .padding(.top, DesignSystem.Spacing.sm)
-                LazyVGrid(
-                    columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    spacing: DesignSystem.Spacing.xs
-                ) {
-                    ForEach(puzzle.words) { wordItem in
-                        wordChip(wordItem)
-                    }
-                }
-                .padding(.horizontal, DesignSystem.Spacing.sm)
-                .padding(.bottom, DesignSystem.Spacing.sm)
-            }
-        }
-    }
-
-    func wordChip(_ wordItem: WordSearchWord) -> some View {
-        let isUserFound = foundWordIDs.contains(wordItem.id)
-        let isHintRevealed = hintRevealedIDs.contains(wordItem.id)
-        let isRevealedOnly = (isRevealed || isHintRevealed) && !isUserFound
-
-        return HStack(spacing: DesignSystem.Spacing.xxs) {
-            if isUserFound {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.success)
-                    .accessibilityHidden(true)
-            } else if isRevealedOnly {
-                Image(systemName: "eye.fill")
-                    .font(DesignSystem.Font.caption2)
-                    .foregroundStyle(DesignSystem.Color.warning)
-                    .accessibilityHidden(true)
-            }
-            Text(wordItem.word)
-                .font(DesignSystem.Font.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(
-                    isUserFound
-                        ? DesignSystem.Color.success
-                        : (isRevealedOnly ? DesignSystem.Color.warning : DesignSystem.Color.textPrimary)
-                )
-                .strikethrough(isUserFound || isRevealedOnly)
-        }
-        .padding(.horizontal, DesignSystem.Spacing.sm)
-        .padding(.vertical, DesignSystem.Spacing.xxs)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            isUserFound
-                ? DesignSystem.Color.success.opacity(DesignSystem.Opacity.tint)
-                : (isRevealedOnly
-                    ? DesignSystem.Color.warning.opacity(DesignSystem.Opacity.tint)
-                    : DesignSystem.Color.cardBackground),
-            in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-        )
-        .overlay {
-            if contrast == .increased {
-                RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.small, style: .continuous)
-                    .strokeBorder(DesignSystem.Color.dividerSubtle, lineWidth: 1)
-            }
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(wordItem.word)
-        .accessibilityValue(
-            isUserFound
-                ? "Found, \(wordItem.spokenLocation)"
-                : (isRevealedOnly ? "Revealed, \(wordItem.spokenLocation)" : "Not found")
-        )
-        .accessibilityAction(named: "Reveal location") {
-            guard !isUserFound, !gameFinished else { return }
-            revealHint(wordItem)
-        }
-    }
 }
 
 // MARK: - Helpers
 private extension WordSearchGameScreen {
-    func statsLayout<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: DesignSystem.Spacing.md))
-            : AnyLayout(HStackLayout(spacing: DesignSystem.Spacing.md))
-        return layout(content)
-    }
-
     var revealedCount: Int {
         guard let puzzle else { return 0 }
         let autoRevealed = isRevealed ? puzzle.words.count - foundWordIDs.count - hintRevealedIDs.count : 0
@@ -406,24 +299,6 @@ private extension WordSearchGameScreen {
         timerActive = true
     }
 
-    func selectedCells(from start: GridCoord, to end: GridCoord) -> [GridCoord] {
-        let rowDelta = end.row - start.row
-        let colDelta = end.col - start.col
-        let steps = max(abs(rowDelta), abs(colDelta))
-        guard steps > 0 else { return [start] }
-
-        let rowStep = rowDelta == 0 ? 0 : rowDelta / abs(rowDelta)
-        let colStep = colDelta == 0 ? 0 : colDelta / abs(colDelta)
-
-        guard abs(rowDelta) == 0 || abs(colDelta) == 0 || abs(rowDelta) == abs(colDelta) else {
-            return [start]
-        }
-
-        return (0...steps).map { index in
-            GridCoord(row: start.row + rowStep * index, col: start.col + colStep * index)
-        }
-    }
-
     func wordCoversCells(_ wordItem: WordSearchWord) -> [GridCoord] {
         let (rowDelta, colDelta) = service.delta(for: wordItem.direction)
         return (0..<wordItem.word.count).map { index in
@@ -432,7 +307,7 @@ private extension WordSearchGameScreen {
     }
 
     func checkSelection(from start: GridCoord, to end: GridCoord, puzzle: WordSearchPuzzle) {
-        let cells = selectedCells(from: start, to: end)
+        let cells = GridCoord.line(from: start, to: end)
         for wordItem in puzzle.words where !foundWordIDs.contains(wordItem.id) {
             let wordCells = wordCoversCells(wordItem)
             guard wordCells.count == cells.count else { continue }

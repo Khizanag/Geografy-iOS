@@ -101,20 +101,23 @@ private extension DistanceHeroCard {
                 label: "Flight time",
                 icon: "airplane",
                 color: DesignSystem.Color.textSecondary,
-                style: .plain            )
+                style: .plain
+            )
             StatTile(
                 value: metrics.direction.abbreviation,
                 label: "Heading",
                 icon: "safari",
                 color: DesignSystem.Color.textSecondary,
-                style: .plain            )
+                style: .plain
+            )
             .accessibilityLabel("Heading \(metrics.direction.name), \(Int(metrics.initialBearing.rounded())) degrees")
             StatTile(
                 value: earthShare,
                 label: "Of the equator",
                 icon: "globe.europe.africa.fill",
                 color: DesignSystem.Color.textSecondary,
-                style: .plain            )
+                style: .plain
+            )
         }
     }
 }

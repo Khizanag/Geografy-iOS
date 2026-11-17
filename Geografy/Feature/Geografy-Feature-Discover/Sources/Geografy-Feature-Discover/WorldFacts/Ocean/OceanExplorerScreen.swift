@@ -132,17 +132,20 @@ private extension OceanExplorerScreen {
                 value: formatArea(ocean.area),
                 label: "Area",
                 icon: "square.dashed",
-                style: .plain            )
+                style: .plain
+            )
             StatTile(
                 value: formatDepth(ocean.averageDepth),
                 label: "Avg Depth",
                 icon: "arrow.down.to.line",
-                style: .plain            )
+                style: .plain
+            )
             StatTile(
                 value: formatDepth(ocean.maxDepth),
                 label: "Max Depth",
                 icon: "arrow.down.circle",
-                style: .plain            )
+                style: .plain
+            )
         }
     }
 
