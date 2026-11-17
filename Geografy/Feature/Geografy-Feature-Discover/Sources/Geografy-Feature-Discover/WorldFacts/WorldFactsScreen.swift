@@ -14,30 +14,18 @@ public struct WorldFactsScreen: View {
 
     // MARK: - Body
     public var body: some View {
-        topicContent
-            .safeAreaInset(edge: .top) { topicPicker }
+        SegmentedTabContent(selection: topic, tabs: WorldFactsTopic.allCases) { content(for: $0) }
+            .segmentedTabs("World Facts", selection: $topic, tabs: WorldFactsTopic.allCases) {
+                LocalizedStringKey($0.title)
+            }
             .navigationTitle("World Facts")
-            #if !os(tvOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
     }
 }
 
 // MARK: - Subviews
 private extension WorldFactsScreen {
-    var topicPicker: some View {
-        Picker("Topic", selection: $topic) {
-            ForEach(WorldFactsTopic.allCases) { topic in
-                Text(topic.title).tag(topic)
-            }
-        }
-        .pickerStyle(.segmented)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.xs)
-    }
-
     @ViewBuilder
-    var topicContent: some View {
+    func content(for topic: WorldFactsTopic) -> some View {
         switch topic {
         case .records: WorldRecordsScreen()
         case .oceans: OceanExplorerScreen()

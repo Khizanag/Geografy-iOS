@@ -12,7 +12,7 @@ public enum WorldFactsTopic: String, CaseIterable, Hashable, Identifiable, Senda
         case .records: "Records"
         case .oceans: "Oceans"
         case .features: "Features"
-        case .landmarks: "Landmarks"
+        case .landmarks: "Sights"
         }
     }
 }

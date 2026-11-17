@@ -52,6 +52,13 @@ private extension LocalMultiplayerLobbyScreen {
 // MARK: - Connection Status
 private extension LocalMultiplayerLobbyScreen {
     var connectionStatus: some View {
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            connectionStatusContent
+                .padding(DesignSystem.Spacing.sm)
+        }
+    }
+
+    var connectionStatusContent: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Circle()
                 .fill(coordinator.opponent != nil ? DesignSystem.Color.success : DesignSystem.Color.warning)
@@ -68,11 +75,6 @@ private extension LocalMultiplayerLobbyScreen {
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
-        .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(
-            cornerRadius: DesignSystem.CornerRadius.medium,
-            style: .continuous
-        ))
     }
 }
 
@@ -91,20 +93,22 @@ private extension LocalMultiplayerLobbyScreen {
 
             RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
 
-            HStack(spacing: DesignSystem.Spacing.sm) {
-                Picker("Difficulty", selection: $coordinator.difficulty) {
-                    ForEach(QuizDifficulty.allCases) { difficulty in
-                        Text(difficulty.displayName).tag(difficulty)
-                    }
+            CardView {
+                VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+                    OptionPickerRow(
+                        "Difficulty",
+                        selection: $coordinator.difficulty,
+                        options: QuizDifficulty.allCases,
+                        label: \.displayName
+                    )
+                    OptionPickerRow(
+                        "Questions",
+                        selection: $coordinator.questionCount,
+                        options: QuestionCount.allCases,
+                        label: \.displayName
+                    )
                 }
-                .pickerStyle(.segmented)
-
-                Picker("Questions", selection: $coordinator.questionCount) {
-                    ForEach(QuestionCount.allCases) { count in
-                        Text(count.displayName).tag(count)
-                    }
-                }
-                .pickerStyle(.menu)
+                .padding(DesignSystem.Spacing.md)
             }
         }
     }

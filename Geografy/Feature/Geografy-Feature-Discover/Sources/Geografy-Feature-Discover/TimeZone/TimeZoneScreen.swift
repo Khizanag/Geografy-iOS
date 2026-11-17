@@ -25,9 +25,7 @@ public struct TimeZoneScreen: View {
     // MARK: - Body
     public var body: some View {
         mainContent
-            .screenBackground()
             .navigationTitle("Time Zones")
-            .navigationBarTitleDisplayMode(.inline)
             .onChange(of: countryDataService.countries.count, initial: true) {
                 buildZones()
             }
@@ -36,21 +34,16 @@ public struct TimeZoneScreen: View {
 
 // MARK: - Tab Enum
 private extension TimeZoneScreen {
-    enum TimeZoneTab: CaseIterable {
+    enum TimeZoneTab: CaseIterable, Identifiable {
         case worldClock
         case allZones
+
+        var id: Self { self }
 
         var label: String {
             switch self {
             case .worldClock: "World Clock"
             case .allZones: "By Zone"
-            }
-        }
-
-        var icon: String {
-            switch self {
-            case .worldClock: "clock.fill"
-            case .allZones: "list.bullet.rectangle"
             }
         }
     }
@@ -59,27 +52,15 @@ private extension TimeZoneScreen {
 // MARK: - Subviews
 private extension TimeZoneScreen {
     var mainContent: some View {
-        VStack(spacing: 0) {
-            tabPicker
-            tabContent
-        }
-    }
-
-    var tabPicker: some View {
-        Picker("", selection: $selectedTab) {
-            ForEach(TimeZoneTab.allCases, id: \.label) { tab in
-                Label(tab.label, systemImage: tab.icon)
-                    .tag(tab)
+        SegmentedTabContent(selection: selectedTab, tabs: TimeZoneTab.allCases) { content(for: $0) }
+            .segmentedTabs("Time Zones", selection: $selectedTab, tabs: TimeZoneTab.allCases) {
+                LocalizedStringKey($0.label)
             }
-        }
-        .pickerStyle(.segmented)
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .padding(.vertical, DesignSystem.Spacing.sm)
     }
 
     @ViewBuilder
-    var tabContent: some View {
-        switch selectedTab {
+    func content(for tab: TimeZoneTab) -> some View {
+        switch tab {
         case .worldClock:
             WorldClockView(countries: countriesWithZones)
         case .allZones:

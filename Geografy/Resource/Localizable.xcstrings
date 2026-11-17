@@ -1728,7 +1728,8 @@
     },
     "Add a note…" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Add items from country details, oceans, languages, and more." : {
       "localizations" : {
@@ -11940,7 +11941,8 @@
     "What changed since the last build, and how to try it. Tap a change to go where it is." : {},
     "What happened on this trip?" : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "What is the capital?" : {
       "extractionState" : "manual",
