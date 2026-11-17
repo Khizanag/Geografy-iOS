@@ -52,10 +52,7 @@ private extension AchievementUnlockedBanner {
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.vertical, DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(
-            cornerRadius: DesignSystem.CornerRadius.large,
-            style: .continuous
-        ))
+        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous)
                 .strokeBorder(categoryColor.opacity(0.5), lineWidth: 1)

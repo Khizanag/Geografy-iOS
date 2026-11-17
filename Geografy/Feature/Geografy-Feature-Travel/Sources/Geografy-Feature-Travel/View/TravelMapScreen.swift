@@ -108,8 +108,7 @@ private extension TravelMapScreen {
             Spacer()
         }
         .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
+        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.large, style: .continuous))
         .padding(.horizontal, DesignSystem.Spacing.md)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.3), value: selectedFilter)
         .accessibilityElement(children: .combine)

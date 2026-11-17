@@ -65,6 +65,13 @@ private extension LeaderboardScreen {
     }
 
     var statusCard: some View {
+        CardView(cornerRadius: DesignSystem.CornerRadius.medium) {
+            statusContent
+                .padding(DesignSystem.Spacing.sm)
+        }
+    }
+
+    var statusContent: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             IconBadge("checkmark.seal.fill", color: DesignSystem.Color.success, size: .small)
                 .accessibilityHidden(true)
@@ -84,11 +91,6 @@ private extension LeaderboardScreen {
                 .accessibilityHidden(true)
         }
         .accessibilityElement(children: .combine)
-        .padding(DesignSystem.Spacing.sm)
-        .background(.ultraThinMaterial, in: RoundedRectangle(
-            cornerRadius: DesignSystem.CornerRadius.medium,
-            style: .continuous
-        ))
     }
 
     func leaderboardCard(_ info: LeaderboardInfo) -> some View {
@@ -184,7 +186,7 @@ private extension LeaderboardScreen {
             LeaderboardInfo(
                 id: GameCenterService.LeaderboardID.longestStreak,
                 title: "Longest Streak",
-                subtitle: "The longest consecutive daily login streak you've achieved",
+                subtitle: "Your longest run of days learning something new",
                 icon: "flame.fill",
                 color: DesignSystem.Color.orange
             ),

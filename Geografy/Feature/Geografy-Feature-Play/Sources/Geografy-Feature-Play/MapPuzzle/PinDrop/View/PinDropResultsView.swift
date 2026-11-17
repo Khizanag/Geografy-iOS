@@ -33,7 +33,11 @@ struct PinDropResultsView: View {
             stats: { stats },
             details: { roundList }
         )
-        .glassEffect(.regular, in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))
+        // Solid, so the glass buttons inside aren't glass on glass.
+        .background(
+            DesignSystem.Color.background,
+            in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge)
+        )
         .onAppear(perform: reveal)
     }
 }
