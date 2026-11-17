@@ -158,7 +158,7 @@ private extension StorageScreen {
                 .frame(maxWidth: .infinity, minHeight: 44)
             }
             .buttonStyle(.glass)
-            .tint(DesignSystem.Color.error)
+            .tint(DesignSystem.Color.destructive)
             .disabled(isClearing || (usage?.cache ?? 0) == 0)
 
             Text("Your progress and travel journal are kept.")

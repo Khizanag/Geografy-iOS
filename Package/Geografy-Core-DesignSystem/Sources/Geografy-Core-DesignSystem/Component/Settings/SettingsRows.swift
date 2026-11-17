@@ -19,6 +19,7 @@ public struct SettingsGroup<Content: View>: View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             EyebrowLabel(header, color: DesignSystem.Color.textTertiary)
                 .padding(.horizontal, DesignSystem.Spacing.xs)
+                .accessibilityAddTraits(.isHeader)
             CardView {
                 VStack(spacing: 0) {
                     content

@@ -97,22 +97,11 @@ private extension TerritorialDisputesScreen {
     }
 
     func regionSection(_ region: TerritorialDispute.Region, disputes: [TerritorialDispute]) -> some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
-            EyebrowLabel(region.rawValue, color: DesignSystem.Color.textSecondary)
-                .padding(.horizontal, DesignSystem.Spacing.xs)
-                .accessibilityAddTraits(.isHeader)
-
-            CardView {
-                VStack(spacing: 0) {
-                    ForEach(Array(disputes.enumerated()), id: \.element.id) { index, dispute in
-                        disputeRow(dispute)
-
-                        if index < disputes.count - 1 {
-                            Divider()
-                                .background(DesignSystem.Color.cardBackgroundHighlighted)
-                                .padding(.leading, 56)
-                        }
-                    }
+        SettingsGroup(LocalizedStringKey(region.rawValue)) {
+            ForEach(Array(disputes.enumerated()), id: \.element.id) { index, dispute in
+                disputeRow(dispute)
+                if index < disputes.count - 1 {
+                    SettingsDivider()
                 }
             }
         }
@@ -186,15 +175,12 @@ private extension TerritorialDisputesScreen {
         Button {
             showingResetAlert = true
         } label: {
-            CardView(cornerRadius: DesignSystem.CornerRadius.large) {
-                Text("Reset to Defaults")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.error)
-                    .frame(maxWidth: .infinity)
-                    .padding(DesignSystem.Spacing.md)
-            }
+            Text("Reset to Defaults")
+                .font(DesignSystem.Font.headline)
+                .frame(maxWidth: .infinity, minHeight: 44)
         }
-        .buttonStyle(PressButtonStyle())
+        .buttonStyle(.glass)
+        .tint(DesignSystem.Color.destructive)
     }
 }
 
