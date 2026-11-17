@@ -70,9 +70,11 @@ public final class XPService {
 extension XPService {
     public func refreshXP() {
         let userID = currentUserID
-        let descriptor = FetchDescriptor<XPRecord>(
+        var descriptor = FetchDescriptor<XPRecord>(
             predicate: #Predicate { $0.userID == userID }
         )
+        // Only the amounts are summed, so only they're read, not every record's source, date, and metadata.
+        descriptor.propertiesToFetch = [\.amount]
         let records = (try? db.mainContext.fetch(descriptor)) ?? []
         totalXP = records.reduce(0) { $0 + $1.amount }
         currentLevel = UserLevel.level(for: totalXP)
