@@ -9,7 +9,7 @@ public struct QuizPackBrowserScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var packService = QuizPackService()
+    @Environment(QuizPackService.self) private var packService
     @State private var selectedCategory: QuizPackCategory?
     @State private var allPacks: [QuizPack] = []
     @State private var appeared = false

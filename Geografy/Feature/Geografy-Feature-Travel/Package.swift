@@ -20,7 +20,6 @@ let package = Package(
         .package(path: "../../../Package/Geografy-Core-Map"),
         .package(path: "../../../Package/Geografy-Core-Navigation"),
         .package(path: "../../../Package/Geografy-Core-Service"),
-        .package(path: "../Geografy-Feature-Country"),
         .package(path: "../Geografy-Feature-Map"),
     ],
     targets: [
@@ -32,7 +31,6 @@ let package = Package(
                 .product(name: "Geografy-Core-Map", package: "Geografy-Core-Map"),
                 .product(name: "Geografy-Core-Navigation", package: "Geografy-Core-Navigation"),
                 .product(name: "Geografy-Core-Service", package: "Geografy-Core-Service"),
-                .product(name: "Geografy-Feature-Country", package: "Geografy-Feature-Country"),
                 .product(name: "Geografy-Feature-Map", package: "Geografy-Feature-Map"),
             ]
         ),

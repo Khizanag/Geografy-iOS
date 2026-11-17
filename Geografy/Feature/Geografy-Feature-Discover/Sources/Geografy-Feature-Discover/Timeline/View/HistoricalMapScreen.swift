@@ -25,7 +25,7 @@ public struct HistoricalMapScreen: View {
     public let initialYear: Int
 
     @State private var mapState = MapState()
-    @State private var timelineService = TimelineService()
+    @Environment(TimelineService.self) private var timelineService
     @State private var selectedYear = 1_960
     @State private var allShapes: [CountryShape] = []
     @State private var dimmedCodes: Set<String> = []

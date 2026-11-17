@@ -1,6 +1,7 @@
 import Geografy_Core_Common
 import Geografy_Core_DesignSystem
 import Geografy_Core_Service
+import Geografy_Feature_Discover
 import Geografy_Feature_Play
 import SwiftUI
 
@@ -14,6 +15,9 @@ final class AppDependencies {
     let collectionService = CollectionService()
     let countryDataService = CountryDataService()
     let currencyService = CurrencyService()
+    #if !os(tvOS)
+    let customQuizService = CustomQuizService()
+    #endif
     let databaseManager: DatabaseManager
     let entitlementService = EntitlementService()
     let explorationService: ExplorationService
@@ -25,8 +29,10 @@ final class AppDependencies {
     let languageService = LanguageService()
     let learningPathService: LearningPathService
     let pronunciationService = PronunciationService()
+    let quizPackService = QuizPackService()
     let streakService: StreakService
     let testingModeService = TestingModeService()
+    let timelineService = TimelineService()
     let travelService: TravelService
     let widgetDataBridge: WidgetDataBridge
     let worldBankService = WorldBankService()
@@ -63,6 +69,9 @@ extension View {
             .environment(dependencies.collectionService)
             .environment(dependencies.countryDataService)
             .environment(dependencies.currencyService)
+            #if !os(tvOS)
+            .environment(dependencies.customQuizService)
+            #endif
             .environment(dependencies.databaseManager)
             .environment(dependencies.entitlementService)
             .environment(dependencies.explorationService)
@@ -74,8 +83,10 @@ extension View {
             .environment(dependencies.languageService)
             .environment(dependencies.learningPathService)
             .environment(dependencies.pronunciationService)
+            .environment(dependencies.quizPackService)
             .environment(dependencies.streakService)
             .environment(dependencies.testingModeService)
+            .environment(dependencies.timelineService)
             .environment(dependencies.travelService)
             .environment(dependencies.worldBankService)
             .environment(dependencies.xpService)

@@ -196,6 +196,10 @@ private extension GeografyApp {
         dependencies.explorationService.reload()
         dependencies.learningPathService.reload()
         dependencies.flashcardService.loadData()
+        dependencies.quizPackService.loadProgress()
+        #if !os(tvOS)
+        dependencies.customQuizService.loadQuizzes()
+        #endif
         dependencies.xpService.switchUser(id: newUserID)
         dependencies.streakService.switchUser(id: newUserID)
         dependencies.achievementService.switchUser(id: newUserID)

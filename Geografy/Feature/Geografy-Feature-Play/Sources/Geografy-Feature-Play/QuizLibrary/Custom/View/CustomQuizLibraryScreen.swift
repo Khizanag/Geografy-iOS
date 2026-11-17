@@ -11,7 +11,7 @@ public struct CustomQuizLibraryScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var quizService = CustomQuizService()
+    @Environment(CustomQuizService.self) private var quizService
     @State private var showBuilder = false
     @State private var editingQuiz: CustomQuiz?
     @State private var quizToDelete: CustomQuiz?

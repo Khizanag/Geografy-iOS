@@ -12,7 +12,7 @@ public struct TimelineScreen: View {
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var timelineService = TimelineService()
+    @Environment(TimelineService.self) private var timelineService
     @State private var selectedYear = 1_960
     @State private var filter = TimelineFilter()
     @State private var selectedEvent: HistoricalEvent?

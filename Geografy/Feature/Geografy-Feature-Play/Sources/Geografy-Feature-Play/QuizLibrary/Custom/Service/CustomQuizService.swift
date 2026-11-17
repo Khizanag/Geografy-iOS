@@ -7,6 +7,8 @@ public final class CustomQuizService {
     private(set) var quizzes: [CustomQuiz] = []
     private let storageKey = "custom_quizzes"
 
+    public init() {}
+
     public func loadQuizzes() {
         guard let data = UserDefaults.standard.data(forKey: UserScope.key(storageKey)),
               let decoded = try? JSONDecoder.iso8601.decode(

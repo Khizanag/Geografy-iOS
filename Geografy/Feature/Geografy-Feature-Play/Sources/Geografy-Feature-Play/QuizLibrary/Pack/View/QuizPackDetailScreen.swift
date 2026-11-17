@@ -12,7 +12,7 @@ public struct QuizPackDetailScreen: View {
 
     public let packID: String
 
-    @State private var packService = QuizPackService()
+    @Environment(QuizPackService.self) private var packService
     @State private var allPacks: [QuizPack] = []
     /// The quiz started from this screen and the level it plays, so its result is recorded against that level.
     @State private var playing: (quizID: UUID, levelID: String)?
