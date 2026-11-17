@@ -172,15 +172,9 @@ private extension TerritorialDisputesScreen {
     }
 
     var resetButton: some View {
-        Button {
+        GlassButton("Reset to Defaults", role: .destructive, fullWidth: true) {
             showingResetAlert = true
-        } label: {
-            Text("Reset to Defaults")
-                .font(DesignSystem.Font.headline)
-                .frame(maxWidth: .infinity, minHeight: 44)
         }
-        .buttonStyle(.glass)
-        .tint(DesignSystem.Color.destructive)
     }
 }
 

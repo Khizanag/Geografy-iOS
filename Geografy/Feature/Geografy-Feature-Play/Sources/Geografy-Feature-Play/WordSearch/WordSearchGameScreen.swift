@@ -57,18 +57,15 @@ private extension WordSearchGameScreen {
     @ToolbarContentBuilder
     var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            HStack(spacing: DesignSystem.Spacing.xs) {
-                WordSearchClockLabel(stopwatch: stopwatch)
-
-                if timerActive {
-                    Button {
-                        isPaused.toggle()
-                    } label: {
-                        Image(systemName: isPaused ? "play.fill" : "pause.fill")
-                            .foregroundStyle(DesignSystem.Color.iconPrimary)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel(isPaused ? "Resume" : "Pause")
+            WordSearchClockLabel(stopwatch: stopwatch)
+        }
+        if timerActive {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(
+                    isPaused ? "Resume" : "Pause",
+                    systemImage: isPaused ? "play.fill" : "pause.fill"
+                ) {
+                    isPaused.toggle()
                 }
             }
         }

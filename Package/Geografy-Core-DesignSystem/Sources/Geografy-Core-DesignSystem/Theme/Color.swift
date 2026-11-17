@@ -24,9 +24,11 @@ public extension DesignSystem {
 
         public static let success = SwiftUI.Color("Success")
         public static let warning = SwiftUI.Color("Warning")
-        public static let error = SwiftUI.Color("Error")
-        /// The system red that menus and dialogs give `role: .destructive` labels; use it for their icons too.
-        public static let destructive = SwiftUI.Color.red
+        /// The app's one red: the system red that menus and dialogs give `role: .destructive` labels, so icons and
+        /// labels drawn by the app match those drawn by the system.
+        public static let error = SwiftUI.Color.red
+        /// Deleting, signing out, or resetting. The same red as ``error``, named for what it marks.
+        public static let destructive = error
 
         public static let indigo = SwiftUI.Color("GeoIndigo")
         public static let blue = SwiftUI.Color("GeoBlue")

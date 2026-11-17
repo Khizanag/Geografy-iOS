@@ -11,6 +11,8 @@ public struct GlassButton: View {
     public enum Role {
         case primary
         case secondary
+        /// Deletes, resets, or signs out: the label is red. Confirm before acting.
+        case destructive
     }
 
     // MARK: - Init
@@ -84,7 +86,7 @@ private extension GlassButton {
             }
         }
         .font(font)
-        .foregroundStyle(DesignSystem.Color.textPrimary)
+        .foregroundStyle(labelColor)
         .frame(maxWidth: .infinity)
         .padding(.vertical, DesignSystem.Spacing.xxs)
         .hoverEffect(.highlight)
@@ -98,7 +100,7 @@ private extension GlassButton {
             title
         }
         .font(font)
-        .foregroundStyle(DesignSystem.Color.textPrimary)
+        .foregroundStyle(labelColor)
         .padding(.horizontal, DesignSystem.Spacing.lg)
         .padding(.vertical, DesignSystem.Spacing.sm)
         .hoverEffect(.highlight)
@@ -107,8 +109,12 @@ private extension GlassButton {
     /// Secondary ranks below primary by weight, not by a grey label that reads as disabled.
     var font: Font {
         switch role {
-        case .primary: DesignSystem.Font.headline
+        case .primary, .destructive: DesignSystem.Font.headline
         case .secondary: DesignSystem.Font.body.weight(.medium)
         }
+    }
+
+    var labelColor: Color {
+        role == .destructive ? DesignSystem.Color.destructive : DesignSystem.Color.textPrimary
     }
 }

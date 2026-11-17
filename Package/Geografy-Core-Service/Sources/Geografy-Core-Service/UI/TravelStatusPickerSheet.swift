@@ -125,18 +125,11 @@ private extension TravelStatusPickerSheet {
     }
 
     var removeButton: some View {
-        Button(role: .destructive) {
+        GlassButton("Remove Status", systemImage: "xmark", role: .destructive, fullWidth: true) {
             hapticsService.impact(.light)
             travelService.set(status: nil, for: country.code)
             dismiss()
-        } label: {
-            Label("Remove Status", systemImage: "xmark")
-                .font(DesignSystem.Font.subheadline.weight(.semibold))
-                .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.glass)
-        .controlSize(.large)
-        .tint(DesignSystem.Color.destructive)
     }
 }
 
