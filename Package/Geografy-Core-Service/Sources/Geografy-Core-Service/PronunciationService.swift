@@ -14,23 +14,12 @@ public final class PronunciationService {
         synthesizer.delegate = speechDelegate
         return synthesizer
     }()
-    private let speechDelegate = SpeechDelegate()
-
-    public init() {
-        let delegate = speechDelegate
-        delegate.onDidFinish = { [weak self] in
-            Task { @MainActor in
-                self?.isSpeaking = false
-                self?.currentText = ""
-            }
-        }
-        delegate.onDidCancel = { [weak self] in
-            Task { @MainActor in
-                self?.isSpeaking = false
-                self?.currentText = ""
-            }
-        }
+    /// The synthesizer holds its delegate weakly, so it's kept here.
+    @ObservationIgnored private lazy var speechDelegate = SpeechDelegate { [weak self] in
+        Task { @MainActor in self?.speechEnded() }
     }
+
+    public init() {}
 
     public func speak(text: String, countryCode: String) {
         guard isEnabled else { return }
@@ -43,6 +32,11 @@ public final class PronunciationService {
         currentText = text
         isSpeaking = true
         synthesizer.speak(utterance)
+    }
+
+    private func speechEnded() {
+        isSpeaking = false
+        currentText = ""
     }
 
     public func stop() {
@@ -275,21 +269,20 @@ private extension PronunciationService {
 }
 
 // MARK: - SpeechDelegate
-private final class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate, @unchecked Sendable {
-    nonisolated(unsafe) var onDidFinish: (() -> Void)?
-    nonisolated(unsafe) var onDidCancel: (() -> Void)?
+/// Tells the service when speech stops. The synthesizer calls it on its own queue, so its one callback is set
+/// once, at creation, and never changes; nothing here can race.
+private final class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate, Sendable {
+    private let onEnd: @Sendable () -> Void
 
-    func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didFinish utterance: AVSpeechUtterance
-    ) {
-        onDidFinish?()
+    init(onEnd: @escaping @Sendable () -> Void) {
+        self.onEnd = onEnd
     }
 
-    func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didCancel utterance: AVSpeechUtterance
-    ) {
-        onDidCancel?()
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        onEnd()
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        onEnd()
     }
 }

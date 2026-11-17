@@ -2,9 +2,9 @@ import Foundation
 import Geografy_Core_Common
 
 @Observable
-public final class NationalSymbolsService {
+public final class NationalSymbolsService: Sendable {
     public init() {}
-    public private(set) var symbols: [NationalSymbol] = NationalSymbolsService.allSymbols
+    public let symbols: [NationalSymbol] = NationalSymbolsService.allSymbols
 
     public func symbol(for countryCode: String) -> NationalSymbol? {
         symbols.first { $0.countryCode == countryCode }

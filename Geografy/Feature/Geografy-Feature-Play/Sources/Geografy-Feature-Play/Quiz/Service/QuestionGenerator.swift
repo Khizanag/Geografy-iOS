@@ -3,7 +3,7 @@ import Geografy_Core_Common
 
 public enum QuestionGenerator {
     #if !os(tvOS)
-    nonisolated(unsafe) private static let symbolsService = NationalSymbolsService()
+    private static let symbolsService = NationalSymbolsService()
     #endif
 
     public static func generate(
