@@ -1524,6 +1524,7 @@
         }
       }
     },
+    "A Daily Nudge" : {},
     "A daily nudge keeps your streak alive. You can change this in Settings at any time." : {},
     "A glass card with the tier badge, the level's title, and progress to the next level. In Dark Mode the screen behind darkens." : {},
     "A new Daily Challenge is waiting for you." : {
@@ -2732,6 +2733,7 @@
         }
       }
     },
+    "Choose Your Country" : {},
     "Choose a Country" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -4930,6 +4932,7 @@
       }
     },
     "Game setups go back to each game's defaults." : {},
+    "Game setups go back to each game's defaults. Show First Run replays the welcome, even with progress." : {},
     "Geografy" : {
       "localizations" : {
         "ka" : {
@@ -5016,6 +5019,7 @@
         }
       }
     },
+    "Get Started" : {},
     "Get ready, %lld" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -5909,6 +5913,7 @@
         }
       }
     },
+    "Learn every country's flag, capital, and place on the map, a few minutes a day." : {},
     "Learn more about %@" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7391,6 +7396,7 @@
         }
       }
     },
+    "Not Now" : {},
     "Not Seen" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7520,6 +7526,7 @@
     },
     "On a country, tap Continent, then Open … Map: the map zooms to that country and selects it." : {},
     "On the main map, tap country after country: the outline moves at once. Turn names on and pan: they slide with the map; pinch and they resize." : {},
+    "One for the Daily Challenge, and one in the evening if your streak is about to end." : {},
     "One of you hosts and picks the quiz. The other joins from their phone." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7910,7 +7917,8 @@
     },
     "Passed. This lesson is complete." : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Pause" : {
       "comment" : "A button that pauses the quiz.",
@@ -8934,6 +8942,7 @@
         }
       }
     },
+    "Remind Me" : {},
     "Remove" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -9440,7 +9449,8 @@
     },
     "Score %lld%% or more on the quiz to complete this lesson." : {
       "extractionState" : "manual",
-      "generatesSymbol" : false
+      "generatesSymbol" : false,
+      "localizations" : {}
     },
     "Score: %lld" : {
       "localizations" : {
@@ -10053,6 +10063,7 @@
         }
       }
     },
+    "Show First Run" : {},
     "Show Latitude & Longitude" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -12044,6 +12055,7 @@
         }
       }
     },
+    "We'll mark it as your first visited country." : {},
     "We'll put your region first on the home feed." : {},
     "We're working on something great." : {
       "extractionState" : "manual",
@@ -12057,6 +12069,7 @@
         }
       }
     },
+    "Welcome to Geografy" : {},
     "Well Played!" : {
       "localizations" : {
         "ka" : {
@@ -12097,6 +12110,7 @@
       }
     },
     "Where are you from?" : {},
+    "Where's Home?" : {},
     "Which country does this flag belong to?" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -12422,6 +12436,7 @@
         }
       }
     },
+    "Your Home Country" : {},
     "Your Journey" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

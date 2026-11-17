@@ -211,10 +211,18 @@ private extension GeografyLabSections {
             Button(role: .destructive) { TestingLabData.resetGameSetups() } label: {
                 LabRow("Reset Game Setups", systemImage: "slider.horizontal.3", isDestructive: true)
             }
+            Button {
+                closeTestingLab {
+                    UserDefaults.standard.set(false, forKey: FirstRunScreen.completedKey)
+                    UserDefaults.standard.set(true, forKey: FirstRunScreen.forcedKey)
+                }
+            } label: {
+                LabRow("Show First Run", systemImage: "sparkles", color: DesignSystem.Color.blue)
+            }
         } header: {
             Text("Reset")
         } footer: {
-            Text("Game setups go back to each game's defaults.")
+            Text("Game setups go back to each game's defaults. Show First Run replays the welcome, even with progress.")
         }
     }
 }

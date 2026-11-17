@@ -13,6 +13,13 @@ enum AppTab: Int, Hashable {
 @Observable
 final class AppCoordinator {
     var selectedTab: AppTab = .map
+    /// A country the Map tab flies to once, such as home after the first run.
+    var mapFocusCode: String?
+
+    /// `mapFocusCode`, handed over only while the Map tab shows, since a hidden map can't zoom.
+    var mapTabFocusCode: String? {
+        selectedTab == .map ? mapFocusCode : nil
+    }
 
     let exploreNavigator = Navigator()
     let mapNavigator = Navigator()
@@ -65,6 +72,9 @@ final class AppCoordinator {
             guard let country = countries.randomElement() else { return }
             selectedTab = .explore
             exploreNavigator.push(CountryRoute.countryDetail(country))
+        case .firstRunFinished(let homeCountryCode):
+            mapFocusCode = homeCountryCode
+            handle(.dailyChallenge, countries: countries)
         }
     }
 

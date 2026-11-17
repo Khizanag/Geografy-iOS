@@ -8,6 +8,8 @@ enum AppRequest: Equatable {
     case settings
     case search
     case randomCountry
+    /// The first run is done: fly the map to home, if one was chosen, and open today's challenge.
+    case firstRunFinished(homeCountryCode: String?)
 }
 
 /// Holds a request until the root view handles it, so one made while the app is still launching, before any view

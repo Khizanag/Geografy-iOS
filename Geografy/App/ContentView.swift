@@ -24,6 +24,8 @@ struct ContentView: View {
     #endif
 
     @AppStorage("selectedTheme") private var selectedTheme = "Auto"
+    @AppStorage(FirstRunScreen.completedKey) private var hasCompletedFirstRun = false
+    @AppStorage(FirstRunScreen.forcedKey) private var isFirstRunForced = false
 
     @State private var appCoordinator = AppCoordinator()
     @State private var levelUpLevel: UserLevel?
@@ -36,6 +38,7 @@ struct ContentView: View {
             .tint(DesignSystem.Color.accent)
             .preferredColorScheme(colorScheme)
             .toolbarBackgroundVisibility(.hidden, for: .tabBar)
+            .fullScreenCover(isPresented: showsFirstRun) { NavigationStack { FirstRunScreen() } }
             .onReceive(xpService.levelUpPublisher) { levelUpLevel = $0 }
             .onReceive(achievementService.unlockPublisher) { achievement in
                 bannerQueue.append(achievement)
@@ -114,7 +117,7 @@ private extension ContentView {
         TabView(selection: $appCoordinator.selectedTab) {
             Tab("Map", systemImage: "map.fill", value: AppTab.map) {
                 CoordinatedNavigationStack(navigator: appCoordinator.mapNavigator) {
-                    MapTabScreen()
+                    MapTabScreen(focusCountryCode: appCoordinator.mapTabFocusCode)
                 }
             }
 
@@ -161,6 +164,18 @@ private extension ContentView {
     }
 }
 #endif
+
+// MARK: - First Run
+private extension ContentView {
+    /// Only for someone new: a player who already has XP from before the first run existed never sees it.
+    var showsFirstRun: Binding<Bool> {
+        Binding {
+            !hasCompletedFirstRun && (xpService.totalXP == 0 || isFirstRunForced)
+        } set: { isShown in
+            if !isShown { hasCompletedFirstRun = true }
+        }
+    }
+}
 
 // MARK: - Helpers
 private extension ContentView {

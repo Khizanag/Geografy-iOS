@@ -7,9 +7,11 @@ struct MapTabScreen: View {
     // MARK: - Properties
     @Environment(Navigator.self) private var coordinator
 
+    var focusCountryCode: String?
+
     // MARK: - Body
     var body: some View {
-        MapScreen()
+        MapScreen(focusCountryCode: focusCountryCode)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { coordinator.push(MapRoute.continents) } label: {
