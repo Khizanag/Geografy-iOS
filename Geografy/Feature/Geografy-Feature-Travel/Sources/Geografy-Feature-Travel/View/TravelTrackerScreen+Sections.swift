@@ -76,10 +76,10 @@ extension TravelTrackerScreen {
     }
 
     var noResultsState: some View {
-        ContentUnavailableView(
-            "No countries found",
-            systemImage: "magnifyingglass",
-            description: Text("Try a different spelling or search term")
+        EmptyStateView(
+            icon: "magnifyingglass",
+            title: "No Countries Found",
+            message: "Try a different spelling or search term."
         )
         .padding(.top, DesignSystem.Spacing.xl)
     }

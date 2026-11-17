@@ -6993,6 +6993,10 @@
         }
       }
     },
+    "No Countries Found" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "No Countries Here" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -7014,6 +7018,10 @@
           }
         }
       }
+    },
+    "No Events in %@" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "No Favorites Yet" : {
       "extractionState" : "manual",
@@ -7050,6 +7058,10 @@
           }
         }
       }
+    },
+    "No Matching Events" : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "No Packs Found" : {
       "localizations" : {
@@ -7180,6 +7192,10 @@
           }
         }
       }
+    },
+    "No events in %@ match these filters." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "No historical data" : {
       "extractionState" : "manual",
@@ -10240,6 +10256,10 @@
         }
       }
     },
+    "Slide to another year to see what happened then." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "Smallest Country" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11108,6 +11128,10 @@
         }
       }
     },
+    "This quiz has no questions for this region. Pick World or another continent." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
+    },
     "This region has no countries to find at this difficulty." : {
       "extractionState" : "manual",
       "generatesSymbol" : false,
@@ -11131,6 +11155,10 @@
           }
         }
       }
+    },
+    "This region's map couldn't be loaded. Pick another region." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "This route can't be measured: a capital's location is missing." : {
       "extractionState" : "manual",
@@ -11546,6 +11574,10 @@
           }
         }
       }
+    },
+    "Try a different spelling or search term." : {
+      "extractionState" : "manual",
+      "generatesSymbol" : false
     },
     "Try adjusting filters or selecting a different year" : {
       "extractionState" : "manual",

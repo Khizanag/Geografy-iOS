@@ -3698,6 +3698,9 @@
         }
       }
     },
+    "This quiz has no questions for this region. Pick World or another continent." : {
+
+    },
     "This region has no countries to find at this difficulty." : {
       "localizations" : {
         "ka" : {
@@ -3717,6 +3720,9 @@
           }
         }
       }
+    },
+    "This region's map couldn't be loaded. Pick another region." : {
+
     },
     "Time" : {
       "localizations" : {

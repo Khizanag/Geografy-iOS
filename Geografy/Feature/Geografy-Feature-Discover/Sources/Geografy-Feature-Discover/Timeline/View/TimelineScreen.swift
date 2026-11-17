@@ -180,12 +180,24 @@ private extension TimelineScreen {
         }
     }
 
+    @ViewBuilder
     var emptyStateView: some View {
-        ContentUnavailableView(
-            "No events in \(String(selectedYear))",
-            systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
-            description: Text("Try adjusting filters or selecting a different year")
-        )
+        if filter.isActive {
+            EmptyStateView(
+                icon: "line.3.horizontal.decrease.circle",
+                title: "No Matching Events",
+                message: "No events in \(String(selectedYear)) match these filters.",
+                actionTitle: "Clear Filters"
+            ) {
+                withAnimation(reduceMotion ? nil : .default) { filter = TimelineFilter() }
+            }
+        } else {
+            EmptyStateView(
+                icon: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+                title: "No Events in \(String(selectedYear))",
+                message: "Slide to another year to see what happened then."
+            )
+        }
     }
 
     @ViewBuilder

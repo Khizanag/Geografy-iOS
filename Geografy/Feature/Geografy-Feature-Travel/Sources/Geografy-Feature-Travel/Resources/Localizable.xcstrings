@@ -533,6 +533,9 @@
         }
       }
     },
+    "No Countries Found" : {
+
+    },
     "No bucket list yet" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -983,6 +986,9 @@
           }
         }
       }
+    },
+    "Try a different spelling or search term." : {
+
     },
     "View on Map" : {
       "localizations" : {

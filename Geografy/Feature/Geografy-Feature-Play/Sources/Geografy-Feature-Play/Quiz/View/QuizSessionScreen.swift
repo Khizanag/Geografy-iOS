@@ -319,11 +319,14 @@ private extension QuizSessionScreen {
                 .transition(questionTransition)
             }
         } else if hasLoadedQuestions, questions.isEmpty {
-            ContentUnavailableView(
-                "No Questions",
-                systemImage: "globe",
-                description: Text("This quiz has no questions for the selected region. Try World.")
-            )
+            EmptyStateView(
+                icon: "globe",
+                title: "No Questions",
+                message: "This quiz has no questions for this region. Pick World or another continent.",
+                actionTitle: "Choose a Region"
+            ) {
+                dismiss()
+            }
         }
     }
 

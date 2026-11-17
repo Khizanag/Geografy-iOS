@@ -203,10 +203,10 @@ private extension FavoritesScreen {
     @ViewBuilder
     var emptyState: some View {
         if !searchText.isEmpty || continentFilter != nil {
-            ContentUnavailableView(
-                "No Results",
-                systemImage: "magnifyingglass",
-                description: Text("Try a different search or filter.")
+            EmptyStateView(
+                icon: "magnifyingglass",
+                title: "No Results",
+                message: "Try a different search or filter."
             )
         } else {
             EmptyStateView(

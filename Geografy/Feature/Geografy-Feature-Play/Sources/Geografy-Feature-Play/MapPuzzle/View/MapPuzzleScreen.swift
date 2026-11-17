@@ -53,11 +53,14 @@ private extension MapPuzzleScreen {
             summaryView
         } else if questions.isEmpty {
             if hasLoaded {
-                ContentUnavailableView(
-                    "Map Unavailable",
-                    systemImage: "map",
-                    description: Text("This region's map couldn't be loaded.")
-                )
+                EmptyStateView(
+                    icon: "map",
+                    title: "Map Unavailable",
+                    message: "This region's map couldn't be loaded. Pick another region.",
+                    actionTitle: "Choose a Region"
+                ) {
+                    dismiss()
+                }
             } else {
                 loadingView
             }

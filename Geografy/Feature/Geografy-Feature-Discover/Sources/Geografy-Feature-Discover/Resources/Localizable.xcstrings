@@ -712,6 +712,12 @@
         }
       }
     },
+    "No Events in %@" : {
+
+    },
+    "No Matching Events" : {
+
+    },
     "No country selected" : {
       "localizations" : {
         "ka" : {
@@ -731,6 +737,9 @@
           }
         }
       }
+    },
+    "No events in %@ match these filters." : {
+
     },
     "No rates yet. Connect to the internet once to download them." : {
       "localizations" : {
@@ -951,6 +960,9 @@
           }
         }
       }
+    },
+    "Slide to another year to see what happened then." : {
+
     },
     "Sort" : {
       "comment" : "A label for sorting options in the settings menu.",
