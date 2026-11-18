@@ -1901,7 +1901,6 @@
         }
       }
     },
-    "All Screens" : {},
     "All Types" : {
       "extractionState" : "manual",
       "generatesSymbol" : false,

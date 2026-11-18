@@ -181,15 +181,12 @@ private extension GeografyLabSections {
 
     var screensSection: some View {
         Section("Open a Screen") {
-            DisclosureGroup {
-                ForEach(HubItem.allCases.sorted { $0.label < $1.label }, id: \.self) { item in
-                    Button { closeTestingLab { onOpen(item) } } label: {
-                        LabRow(verbatim: item.label, systemImage: item.icon, color: item.color)
-                    }
-                }
-            } label: {
-                LabRow("All Screens", systemImage: "square.grid.2x2.fill", color: DesignSystem.Color.textSecondary)
-            }
+            AllScreens(
+                HubItem.allCases.map { item in
+                    LabDestination(title: item.label, systemImage: item.icon, color: item.color) { onOpen(item) }
+                },
+                color: DesignSystem.Color.textSecondary,
+            )
         }
     }
 
