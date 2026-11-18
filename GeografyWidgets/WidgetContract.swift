@@ -3,11 +3,13 @@ import Foundation
 /// What the app writes for its widgets and the widgets read. Both targets compile this one file, so the app
 /// group, the keys, and the country model can't drift apart.
 enum WidgetContract {
-    static let appGroup = "group.com.khizanag.geografy.dev"
+    /// The app group both targets read from their Info.plist, where the build fills it in, so Debug and Release
+    /// builds each use their own.
+    static let appGroup = Bundle.main.object(forInfoDictionaryKey: "GeografyAppGroup") as? String
 
     /// The shared defaults, nil when the app group isn't set up for this build.
     static var defaults: UserDefaults? {
-        UserDefaults(suiteName: appGroup)
+        appGroup.flatMap(UserDefaults.init(suiteName:))
     }
 
     enum Key {

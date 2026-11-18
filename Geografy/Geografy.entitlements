@@ -10,7 +10,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.khizanag.geografy.dev</string>
+		<string>$(GEOGRAFY_APP_GROUP)</string>
 	</array>
 </dict>
 </plist>
