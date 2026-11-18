@@ -348,15 +348,25 @@ private extension SpeedRunSessionScreen {
         nameIndex.codes(named: normalized).contains { completedCodes.contains($0) }
     }
 
+    /// Posted in tenths of a second, which the leaderboards show as elapsed time.
+    func submitTime() {
+        let leaderboardID = speedRunLeaderboardID
+        let timeScore = Int(elapsedTime * 10)
+        Task {
+            await gameCenterService.submitScore(timeScore, to: leaderboardID)
+        }
+    }
+
     func finishRun() {
         elapsedTime = Date.now.timeIntervalSince(startDate)
         isFinished = true
         isInputFocused = false
         hapticsService.notification(.success)
 
-        // Only a run that names every country counts as a personal best.
-        if completedCodes.count == targetCountries.count {
+        // Only a run that names every country counts as a personal best or a leaderboard time.
+        if isComplete {
             SpeedRunRecords.record(elapsedTime, for: region)
+            submitTime()
         }
         achievementService.checkSpeedRunAchievements(
             region: region,
@@ -366,12 +376,6 @@ private extension SpeedRunSessionScreen {
         let earned = calculateXP()
         xpEarned = earned
         xpService.award(earned, source: .speedRunCompleted)
-
-        let leaderboardID = speedRunLeaderboardID
-        let timeScore = Int(elapsedTime * 10)
-        Task {
-            await gameCenterService.submitScore(timeScore, to: leaderboardID)
-        }
 
         let announcement = "\(completionMessage) Named \(completedCodes.count) of \(targetCountries.count) countries."
         AccessibilityNotification.Announcement(announcement).post()

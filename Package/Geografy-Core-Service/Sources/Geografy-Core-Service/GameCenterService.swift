@@ -85,7 +85,6 @@ public extension GameCenterService {
         public static let totalXP = "com.khizanag.geografy.leaderboard.totalxp"
         public static let longestStreak = "com.khizanag.geografy.leaderboard.longeststreak"
         public static let quizHighScore = "com.khizanag.geografy.leaderboard.quizhighscore"
-        public static let quizPerfectRuns = "com.khizanag.geografy.leaderboard.quizperfectruns"
         public static let countriesVisited = "com.khizanag.geografy.leaderboard.countriesvisited"
         public static let dailyChallengesWon = "com.khizanag.geografy.leaderboard.dailychallengeswon"
         public static let speedRunWorld = "com.khizanag.geografy.leaderboard.speedrun.world"
