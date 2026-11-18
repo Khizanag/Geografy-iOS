@@ -6,6 +6,7 @@ import SwiftUI
 public struct FlagSequenceView: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     @Environment(FlashcardService.self) private var flashcardService
 
     public let content: DailyChallenge.FlagSequenceContent
@@ -122,10 +123,12 @@ private extension FlagSequenceView {
         if isCorrect {
             correctCount += 1
             hapticsService.notification(.success)
+            soundService.play(.correct)
             AccessibilityNotification.Announcement("Correct.").post()
         } else {
             score = max(0, score - 200)
             hapticsService.impact(.light)
+            soundService.play(.wrong)
             AccessibilityNotification.Announcement("Incorrect. The answer is \(correct.name).").post()
         }
 

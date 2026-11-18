@@ -14,6 +14,7 @@ public struct FlashcardSessionScreen: View {
     @Environment(AchievementService.self) private var achievementService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -277,6 +278,9 @@ private extension FlashcardSessionScreen {
 
     func showSwipeFeedback(_ type: SwipeFeedback) {
         hapticsService.notification(type == .wrong ? .warning : .success)
+        if type != .wrong {
+            soundService.play(.correct)
+        }
     }
 
     func submitFlashcardAccuracy() {

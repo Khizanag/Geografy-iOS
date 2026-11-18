@@ -5,11 +5,14 @@ import SwiftUI
 /// sets one, or a panel over a map puts it on glass.
 public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
     // MARK: - Properties
+    @Environment(SoundService.self) private var soundService
+
     private let title: Text
     private let message: Text?
     private let xpEarned: Int
     private let primaryAction: GameResultAction?
     private let share: ResultShare?
+    private let sound: SoundEffect
     private let onDone: () -> Void
     private let hero: Hero
     private let stats: Stats
@@ -20,12 +23,14 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
     ///   - xpEarned: Shown as a badge when above zero.
     ///   - primaryAction: Beside Done, nearest the thumb; usually ``GameResultAction/playAgain(_:)``.
     ///   - share: Adds a share button before Done, which takes the main place when there's no `primaryAction`.
+    ///   - sound: Plays when the result appears.
     public init(
         title: Text,
         message: Text? = nil,
         xpEarned: Int = 0,
         primaryAction: GameResultAction?,
         share: ResultShare? = nil,
+        sound: SoundEffect = .complete,
         onDone: @escaping () -> Void,
         @ViewBuilder hero: () -> Hero,
         @ViewBuilder stats: () -> Stats,
@@ -36,6 +41,7 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
         self.xpEarned = xpEarned
         self.primaryAction = primaryAction
         self.share = share
+        self.sound = sound
         self.onDone = onDone
         self.hero = hero()
         self.stats = stats()
@@ -60,6 +66,7 @@ public struct GameResultLayout<Hero: View, Stats: View, Details: View>: View {
         }
         .scrollBounceBehavior(.basedOnSize)
         .safeAreaBar(edge: .bottom) { buttons }
+        .onAppear { soundService.play(sound) }
     }
 }
 
@@ -70,6 +77,7 @@ public extension GameResultLayout where Details == EmptyView {
         xpEarned: Int = 0,
         primaryAction: GameResultAction?,
         share: ResultShare? = nil,
+        sound: SoundEffect = .complete,
         onDone: @escaping () -> Void,
         @ViewBuilder hero: () -> Hero,
         @ViewBuilder stats: () -> Stats
@@ -80,6 +88,7 @@ public extension GameResultLayout where Details == EmptyView {
             xpEarned: xpEarned,
             primaryAction: primaryAction,
             share: share,
+            sound: sound,
             onDone: onDone,
             hero: hero,
             stats: stats,

@@ -6,6 +6,7 @@ import SwiftUI
 public struct AchievementUnlockedBanner: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
 
@@ -26,6 +27,7 @@ public struct AchievementUnlockedBanner: View {
             .offset(y: reduceMotion ? 0 : slideOffset)
             .onAppear {
                 hapticsService.impact(.light)
+                soundService.play(.celebrate)
                 withAnimation(reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.7)) {
                     slideOffset = 0
                 }

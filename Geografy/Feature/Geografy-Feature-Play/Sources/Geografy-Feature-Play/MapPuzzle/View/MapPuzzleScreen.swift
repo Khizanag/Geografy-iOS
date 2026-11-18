@@ -9,6 +9,7 @@ struct MapPuzzleScreen: View {
     #if !os(tvOS)
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     @Environment(XPService.self) private var xpService
     #endif
     @Environment(CountryDataService.self) private var countryDataService
@@ -176,11 +177,13 @@ private extension MapPuzzleScreen {
                 #if !os(tvOS)
                 hapticsService.notification(.success)
                 #endif
+                soundService.play(.correct)
                 AccessibilityNotification.Announcement("Correct.").post()
             } else {
                 #if !os(tvOS)
                 hapticsService.notification(.error)
                 #endif
+                soundService.play(.wrong)
                 AccessibilityNotification.Announcement("Incorrect. The answer is \(question.country.name).").post()
             }
         } label: {

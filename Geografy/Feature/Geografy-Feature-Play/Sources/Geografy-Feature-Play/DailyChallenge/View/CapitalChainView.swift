@@ -6,6 +6,7 @@ import SwiftUI
 public struct CapitalChainView: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     @Environment(FlashcardService.self) private var flashcardService
     @Environment(\.colorSchemeContrast) private var contrast
 
@@ -150,10 +151,12 @@ private extension CapitalChainView {
         if isCorrect {
             correctCount += 1
             hapticsService.notification(.success)
+            soundService.play(.correct)
             AccessibilityNotification.Announcement("Correct.").post()
         } else {
             score = max(0, score - 250)
             hapticsService.impact(.light)
+            soundService.play(.wrong)
             let announcement = "Incorrect. The answer is \(step.expectedCountry.name)."
             AccessibilityNotification.Announcement(announcement).post()
         }

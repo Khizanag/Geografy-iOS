@@ -16,6 +16,7 @@ struct PinDropScreen: View {
     @Environment(GeoJSONCache.self) private var geoJSONCache
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     #endif
 
     let configuration: PinDropConfiguration
@@ -429,6 +430,11 @@ private extension PinDropScreen {
         #if !os(tvOS)
         hapticsService.notification(isGood ? .success : rating == .far ? .error : .warning)
         #endif
+        if isGood {
+            soundService.play(.correct)
+        } else if rating == .far {
+            soundService.play(.wrong)
+        }
     }
 
     func advance() {

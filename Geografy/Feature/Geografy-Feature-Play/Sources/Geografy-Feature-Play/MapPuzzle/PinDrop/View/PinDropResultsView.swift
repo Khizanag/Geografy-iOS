@@ -26,6 +26,7 @@ struct PinDropResultsView: View {
             xpEarned: PinDropScoring.xp(for: results),
             primaryAction: .playAgain(onPlayAgain),
             share: resultShare,
+            sound: isNewBest ? .celebrate : .complete,
             onDone: onDone,
             hero: {
                 VStack(spacing: DesignSystem.Spacing.md) {

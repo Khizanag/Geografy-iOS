@@ -20,6 +20,7 @@ public struct SettingsScreen: View {
     #endif
 
     @AppStorage("hapticFeedbackEnabled") private var hapticFeedbackEnabled = true
+    @AppStorage(SoundService.enabledKey) private var soundEffectsEnabled = true
     @AppStorage(MapPreferences.showsGraticuleKey) private var showsGraticule = false
     @AppStorage(MapPreferences.projectionKey) private var projection = MapProjectionKind.mercator.rawValue
     @AppStorage("pronunciationEnabled") private var pronunciationEnabled = true
@@ -301,6 +302,15 @@ private extension SettingsScreen {
     var soundAndHapticsSection: some View {
         settingsGroup(header: "Sound & Haptics") {
             VStack(spacing: 0) {
+                SettingsToggleRow(
+                    icon: "speaker.wave.2.fill",
+                    iconColor: DesignSystem.Color.blue,
+                    title: "Sound effects",
+                    isOn: $soundEffectsEnabled
+                )
+
+                settingsDivider
+
                 SettingsToggleRow(
                     icon: "iphone.radiowaves.left.and.right",
                     iconColor: DesignSystem.Color.pink,

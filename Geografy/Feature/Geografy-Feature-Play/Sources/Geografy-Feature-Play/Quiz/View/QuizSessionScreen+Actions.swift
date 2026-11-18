@@ -143,6 +143,7 @@ extension QuizSessionScreen {
         announcement: String? = nil,
         advanceAfter delay: Duration
     ) {
+        soundService.play(isCorrect ? .correct : .wrong)
         if isCorrect {
             hapticsService.notification(.success)
             if session.streak >= 2 {

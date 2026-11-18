@@ -30,6 +30,7 @@ final class AppDependencies {
     let learningPathService: LearningPathService
     let pronunciationService = PronunciationService()
     let quizPackService = QuizPackService()
+    let soundService = SoundService()
     let streakService: StreakService
     let testingModeService = TestingModeService()
     let timelineService = TimelineService()
@@ -84,6 +85,7 @@ extension View {
             .environment(dependencies.learningPathService)
             .environment(dependencies.pronunciationService)
             .environment(dependencies.quizPackService)
+            .environment(dependencies.soundService)
             .environment(dependencies.streakService)
             .environment(dependencies.testingModeService)
             .environment(dependencies.timelineService)

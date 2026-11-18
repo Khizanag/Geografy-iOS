@@ -9,6 +9,7 @@ public struct SpeedRunSessionScreen: View {
     @Environment(\.locale) private var locale
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     @Environment(GameCenterService.self) private var gameCenterService
     @Environment(XPService.self) private var xpService
     @Environment(AchievementService.self) private var achievementService
@@ -301,6 +302,7 @@ private extension SpeedRunSessionScreen {
         inputFeedback = .correct
         flashingCode = match.code
         hapticsService.notification(.success)
+        soundService.play(.correct)
         let announcement = "\(match.name). \(completedCodes.count) of \(targetCountries.count)."
         AccessibilityNotification.Announcement(announcement).post()
 
@@ -328,6 +330,7 @@ private extension SpeedRunSessionScreen {
         rejectedInput = normalized
         inputFeedback = .incorrect
         hapticsService.notification(.error)
+        soundService.play(.wrong)
         isInputFocused = true
         if let inputMessage {
             AccessibilityNotification.Announcement(inputMessage).post()

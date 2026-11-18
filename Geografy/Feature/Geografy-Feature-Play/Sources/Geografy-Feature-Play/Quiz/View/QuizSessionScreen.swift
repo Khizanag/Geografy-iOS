@@ -8,6 +8,7 @@ public struct QuizSessionScreen: View {
     // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @Environment(HapticsService.self) var hapticsService
+    @Environment(SoundService.self) var soundService
     @Environment(CountryDataService.self) var countryDataService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency

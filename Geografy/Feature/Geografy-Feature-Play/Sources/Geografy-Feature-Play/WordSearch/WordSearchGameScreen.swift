@@ -12,6 +12,7 @@ public struct WordSearchGameScreen: View {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     #if !os(tvOS)
     @Environment(HapticsService.self) private var hapticsService
+    @Environment(SoundService.self) private var soundService
     #endif
 
     public let theme: WordSearchTheme
@@ -322,12 +323,14 @@ private extension WordSearchGameScreen {
                 #if !os(tvOS)
                 hapticsService.notification(.success)
                 #endif
+                soundService.play(.complete)
                 let announcement = "Found \(wordItem.word). All words found in \(formattedTime)."
                 AccessibilityNotification.Announcement(announcement).post()
             } else {
                 #if !os(tvOS)
                 hapticsService.impact(.medium)
                 #endif
+                soundService.play(.correct)
                 let announcement = "Found \(wordItem.word). \(foundWordIDs.count) of \(puzzle.words.count)."
                 AccessibilityNotification.Announcement(announcement).post()
             }
