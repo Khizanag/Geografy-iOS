@@ -11,7 +11,6 @@ Open tasks only. Completed work is in git history; the plan for the next phases 
 ## Product decisions
 
 - [ ] Monetization: whether to charge, and how (nothing is integrated until decided)
-- [ ] Word Search and Distance Calculator: keep or cut
 - [ ] Mac Catalyst: ship it or turn it off before review
 - [ ] tvOS: keep the parked target or cut it
 
