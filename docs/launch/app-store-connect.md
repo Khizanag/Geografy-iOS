@@ -76,7 +76,7 @@ Quiz High Score takes the accuracy percent of any quiz or flashcard session, so 
 ## 4. Privacy
 
 - [ ] **App Privacy: Data Not Collected.** Geografy has no server and no analytics. A Sign in with Apple profile stays on the device; Game Center is Apple's own service. The only network requests fetch exchange rates (`open.er-api.com`), World Bank data (`api.worldbank.org`), and Wikipedia images, and send nothing about the player.
-- [ ] **Privacy policy and terms pages.** Settings links to `https://khizanag.github.io/geografy/privacy` and `/terms`; both return 404. The site repo has no Geografy pages, and its Joker privacy pages aren't live either, so the site's build may not publish that folder.
+- [ ] **Privacy policy and terms pages.** Settings links to `https://khizanag.github.io/privacy/geografy` and `/terms/geografy`, published from the site repo.
 
 ## 5. Review notes
 
