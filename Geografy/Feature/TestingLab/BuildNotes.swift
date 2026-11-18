@@ -43,7 +43,7 @@ private extension BuildNotes {
 
     var speedRunLeaderboard: BuildNote {
         BuildNote(
-            commit: "2230c3f2",
+            commit: "f04d87ea",
             title: "Giving up a Speed Run posts no time",
             howToTest: """
                 Start a Speed Run and Give Up: the run ends as before, but no time goes to Game Center. A run \
