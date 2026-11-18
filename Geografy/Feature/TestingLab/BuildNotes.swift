@@ -20,39 +20,55 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [widgets, speedRunLeaderboard]
+        [soundEffects, soundSetting, legalLinks]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
-    var widgets: BuildNote {
+    var soundEffects: BuildNote {
         BuildNote(
-            commit: "3e63da13",
-            title: "Widgets still show your progress",
+            commit: "3023329a",
+            title: "Games play sounds",
             howToTest: """
-                The widgets now find the app's shared data through the build settings. Play a quiz, then check \
-                the streak, progress, and Country of the Day widgets still show your numbers.
+                Turn the ring switch on and play a quiz: a right answer chimes, a wrong one plays two low notes, \
+                and the result plays a short tune. A new best in Pin Drop, a level up, or an achievement plays a \
+                longer one. With the switch on silent, nothing plays.
                 """,
-            systemImage: "square.grid.2x2.fill",
+            systemImage: "speaker.wave.2.fill",
             color: DesignSystem.Color.blue
         ) {
             go.open(.quiz)
         }
     }
 
-    var speedRunLeaderboard: BuildNote {
+    var soundSetting: BuildNote {
         BuildNote(
-            commit: "f04d87ea",
-            title: "Giving up a Speed Run posts no time",
+            commit: "3023329a",
+            title: "Settings has a Sound effects switch",
             howToTest: """
-                Start a Speed Run and Give Up: the run ends as before, but no time goes to Game Center. A run \
-                that names every country still posts.
+                Settings, Sound & Haptics: turn Sound effects off, then play a quiz. It stays silent, and the \
+                haptics still play.
                 """,
-            systemImage: "timer",
-            color: DesignSystem.Color.pink
+            systemImage: "switch.2",
+            color: DesignSystem.Color.purple
         ) {
-            go.open(.speedRun)
+            go.open(.settings)
+        }
+    }
+
+    var legalLinks: BuildNote {
+        BuildNote(
+            commit: "38f70b7b",
+            title: "Privacy Policy and Terms of Service open",
+            howToTest: """
+                Settings, About: Privacy Policy and Terms of Service open Geografy's own pages instead of a missing \
+                page.
+                """,
+            systemImage: "doc.text.fill",
+            color: DesignSystem.Color.indigo
+        ) {
+            go.open(.settings)
         }
     }
 }
