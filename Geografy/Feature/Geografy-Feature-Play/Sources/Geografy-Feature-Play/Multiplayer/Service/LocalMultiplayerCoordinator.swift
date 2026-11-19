@@ -1,5 +1,6 @@
 import Geografy_Core_Common
 #if !os(tvOS)
+import Geografy_Core_Map
 import Geografy_Core_Service
 import MultipeerConnectivity
 import SwiftUI
@@ -44,6 +45,21 @@ public final class LocalMultiplayerCoordinator {
     public var difficulty: QuizDifficulty = .easy { didSet { shareSettings() } }
     public var questionCount: QuestionCount = .ten { didSet { shareSettings() } }
     public var comparisonMetric: ComparisonMetric = .population { didSet { shareSettings() } }
+    public var game: LocalGame = .quiz { didSet { shareSettings() } }
+    public var pinDropConfiguration = PinDropConfiguration(region: .world) { didSet { shareSettings() } }
+
+    /// The countries a Pin Drop match finds, in order, chosen by the host.
+    private(set) var pinDropCodes: [String] = []
+    private var opponentLockedRounds: Set<Int> = []
+    private var hasFinishedPinDropRounds = false
+
+    var activeGame: LocalGame {
+        isHost ? game : matchConfig?.game ?? game
+    }
+
+    var activePinDropConfiguration: PinDropConfiguration {
+        isHost ? pinDropConfiguration : matchConfig?.pinDrop ?? pinDropConfiguration
+    }
 
     /// The quiz being played: the host's own choice, or the settings the host sent.
     var activeQuizType: QuizType {
@@ -55,6 +71,7 @@ public final class LocalMultiplayerCoordinator {
     }
 
     private let countryDataService: CountryDataService
+    private let geoJSONCache: GeoJSONCache
     private var opponentAnswers: [Int: (optionID: UUID, timeSpent: TimeInterval)] = [:]
     private var playerAnswers: [Int: (optionID: UUID, timeSpent: TimeInterval)] = [:]
     private var countdownTask: Task<Void, Never>?
@@ -64,10 +81,11 @@ public final class LocalMultiplayerCoordinator {
     private var isAdvancing = false
     private var xpAwarded = false
 
-    public init(playerName: String, countryDataService: CountryDataService) {
+    public init(playerName: String, countryDataService: CountryDataService, geoJSONCache: GeoJSONCache) {
         self.playerName = playerName
         self.sessionManager = MultipeerSessionManager(displayName: playerName)
         self.countryDataService = countryDataService
+        self.geoJSONCache = geoJSONCache
         sessionManager.onMessageReceived = { [weak self] _, message in
             self?.handleMessage(message)
         }
@@ -89,6 +107,10 @@ extension LocalMultiplayerCoordinator {
 
     public func startMatch() {
         guard isHost, opponent?.isReady == true else { return }
+        if game == .pinDrop {
+            startPinDropMatch()
+            return
+        }
 
         let regionCountries = region.filter(countryDataService.countries)
         let generated = QuestionGenerator.generate(
@@ -203,6 +225,8 @@ private extension LocalMultiplayerCoordinator {
         case .lobbySettings(let config): handleLobbySettings(config)
         case .lobbyReady: handleLobbyReady()
         case let .startMatch(config, serialized): handleStartMatch(config, serialized)
+        case let .startPinDrop(config, codes): handleStartPinDrop(config, codes)
+        case let .pinDropLocked(round, points): handlePinDropLocked(round, points: points)
         case let .answerSubmitted(index, optionID, _): handleOpponentAnswer(index, optionID: optionID)
         case .timedOut(let index): handleOpponentTimeout(index)
         case .advanceToNext(let index): handleAdvance(index)
@@ -217,6 +241,20 @@ private extension LocalMultiplayerCoordinator {
     func handlePlayerInfo(_ name: String) {
         guard state == .lobby || state == .advertising || state == .browsing else { return }
         opponent?.displayName = name
+    }
+
+    func handleStartPinDrop(_ config: PeerMessage.MatchConfig, _ codes: [String]) {
+        guard state == .lobby, !codes.isEmpty else { return }
+        matchConfig = config
+        pinDropCodes = codes
+        beginCountdown()
+    }
+
+    func handlePinDropLocked(_ round: Int, points: Int) {
+        guard state == .playing, !opponentLockedRounds.contains(round) else { return }
+        opponentLockedRounds.insert(round)
+        opponentScore += points
+        finishPinDropIfDone()
     }
 
     func handleLobbySettings(_ config: PeerMessage.MatchConfig) {
@@ -400,6 +438,7 @@ private extension LocalMultiplayerCoordinator {
 
     func startQuestionTimer() {
         questionTimerTask?.cancel()
+        guard activeGame == .quiz else { return }
         guard activeDifficulty.hasTimer else { return }
         let duration = activeDifficulty.timerDuration
         questionTimerTask = Task { [weak self] in
@@ -435,6 +474,8 @@ private extension LocalMultiplayerCoordinator {
 
     var currentConfig: PeerMessage.MatchConfig {
         PeerMessage.MatchConfig(
+            game: game,
+            pinDrop: pinDropConfiguration,
             quizType: quizType,
             region: region,
             difficulty: difficulty,
@@ -456,10 +497,71 @@ private extension LocalMultiplayerCoordinator {
         questions = []
         xpAwarded = false
         isReady = false
+        pinDropCodes = []
+        opponentLockedRounds = []
+        hasFinishedPinDropRounds = false
         rematchRequested = false
         isAwaitingRematch = false
         rematchDeclined = false
         opponentLeftAfterMatch = false
+    }
+}
+// MARK: - Pin Drop
+extension LocalMultiplayerCoordinator: PinDropMatch {
+    var pinDropCountryCodes: [String] { pinDropCodes }
+
+    var pinDropOpponentName: String {
+        opponent?.displayName ?? String(localized: "Opponent", bundle: .module)
+    }
+
+    var pinDropOpponentScore: Int { opponentScore }
+
+    func hasOpponentLockedIn(round: Int) -> Bool {
+        opponentLockedRounds.contains(round)
+    }
+
+    func didLockIn(round: Int, points: Int) {
+        guard state == .playing else { return }
+        playerScore += points
+        sessionManager.send(.pinDropLocked(round: round, points: points))
+    }
+
+    func didFinishRounds() {
+        hasFinishedPinDropRounds = true
+        finishPinDropIfDone()
+    }
+}
+
+private extension LocalMultiplayerCoordinator {
+    /// Picks the countries once the map's shapes are loaded, the same way a solo game does, then sends them.
+    func startPinDropMatch() {
+        startTask?.cancel()
+        startTask = Task { [weak self] in
+            guard let self else { return }
+            let shapes = await geoJSONCache.loadShapes()
+            guard !Task.isCancelled, state == .lobby else { return }
+            var generator = SystemRandomNumberGenerator()
+            let rounds = PinDropGame.makeRounds(
+                for: pinDropConfiguration,
+                countries: countryDataService.countries,
+                shapes: shapes,
+                using: &generator
+            )
+            guard !rounds.isEmpty else { return }
+            pinDropCodes = rounds.map(\.country.code)
+            matchConfig = currentConfig
+            sessionManager.send(.startPinDrop(config: currentConfig, countryCodes: pinDropCodes))
+            beginCountdown()
+        }
+    }
+
+    /// Ends the match once both players have played every round.
+    func finishPinDropIfDone() {
+        guard activeGame == .pinDrop,
+              hasFinishedPinDropRounds,
+              opponentLockedRounds.count >= pinDropCodes.count
+        else { return }
+        state = .finished
     }
 }
 #endif

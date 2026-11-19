@@ -4,7 +4,7 @@ import Geografy_Core_Common
 import Observation
 
 /// How a Pin Drop game is set up.
-public struct PinDropConfiguration: Hashable, Sendable {
+public struct PinDropConfiguration: Hashable, Codable, Sendable {
     public var region: PinDropRegion
     public var difficulty: PinDropDifficulty
     public var roundCount: Int
@@ -28,7 +28,7 @@ public struct PinDropConfiguration: Hashable, Sendable {
 }
 
 /// Which countries can be asked.
-public enum PinDropDifficulty: String, CaseIterable, Identifiable, Sendable {
+public enum PinDropDifficulty: String, CaseIterable, Codable, Identifiable, Sendable {
     /// Countries big enough to see without zooming.
     case standard
     /// Every country, microstates and islands included.

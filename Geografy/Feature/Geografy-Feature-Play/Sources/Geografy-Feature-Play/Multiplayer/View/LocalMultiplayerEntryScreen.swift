@@ -9,6 +9,7 @@ public struct LocalMultiplayerEntryScreen: View {
     @Environment(AuthService.self) private var authService
     @Environment(CountryDataService.self) private var countryDataService
     @Environment(DatabaseManager.self) private var database
+    @Environment(GeoJSONCache.self) private var geoJSONCache
 
     // Created on each Host or Join tap: building one opens a peer identity under the name typed here, so the
     // screen's init (re-run on every parent render) must not.
@@ -150,7 +151,11 @@ private extension LocalMultiplayerEntryScreen {
             profile.displayName = name
             database.mainContext.saveOrLog()
         }
-        let created = LocalMultiplayerCoordinator(playerName: name, countryDataService: countryDataService)
+        let created = LocalMultiplayerCoordinator(
+            playerName: name,
+            countryDataService: countryDataService,
+            geoJSONCache: geoJSONCache
+        )
         coordinator = created
         if hosting {
             created.startHosting()

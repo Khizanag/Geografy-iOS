@@ -36,7 +36,12 @@ private extension LocalMultiplayerFlowView {
         case .countdown:
             LocalMultiplayerCountdownView(coordinator: coordinator)
         case .playing:
-            LocalMultiplayerMatchScreen(coordinator: coordinator)
+            switch coordinator.activeGame {
+            case .quiz:
+                LocalMultiplayerMatchScreen(coordinator: coordinator)
+            case .pinDrop:
+                PinDropScreen(configuration: coordinator.activePinDropConfiguration, match: coordinator)
+            }
         case .finished:
             LocalMultiplayerResultScreen(coordinator: coordinator)
         case .disconnected:

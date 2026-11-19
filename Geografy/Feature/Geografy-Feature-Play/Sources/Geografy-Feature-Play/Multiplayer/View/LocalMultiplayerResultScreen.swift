@@ -9,6 +9,7 @@ public struct LocalMultiplayerResultScreen: View {
     @Environment(HapticsService.self) private var hapticsService
     @Environment(XPService.self) private var xpService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.locale) private var locale
 
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
@@ -45,15 +46,14 @@ public struct LocalMultiplayerResultScreen: View {
 private extension LocalMultiplayerResultScreen {
     @ViewBuilder
     var scores: some View {
-        let total = coordinator.questions.count
         StatTile(
-            value: "\(coordinator.playerScore)/\(total)",
+            value: scoreText(coordinator.playerScore),
             label: "You",
             icon: coordinator.playerScore > coordinator.opponentScore ? "crown.fill" : "person.fill",
             color: PairSide.left.color
         )
         StatTile(
-            value: "\(coordinator.opponentScore)/\(total)",
+            value: scoreText(coordinator.opponentScore),
             label: LocalizedStringKey(coordinator.opponent?.displayName ?? "Opponent"),
             icon: coordinator.opponentScore > coordinator.playerScore ? "crown.fill" : "person.fill",
             color: PairSide.right.color
@@ -80,6 +80,14 @@ private extension LocalMultiplayerResultScreen {
 
 // MARK: - Helpers
 private extension LocalMultiplayerResultScreen {
+    /// Right answers out of the questions in a quiz; points in Pin Drop.
+    func scoreText(_ score: Int) -> String {
+        switch coordinator.activeGame {
+        case .quiz: "\(score)/\(coordinator.questions.count)"
+        case .pinDrop: PinDropStyle.points(Double(score), locale: locale)
+        }
+    }
+
     var opponentName: String {
         coordinator.opponent?.displayName ?? String(localized: "Opponent", bundle: .module)
     }

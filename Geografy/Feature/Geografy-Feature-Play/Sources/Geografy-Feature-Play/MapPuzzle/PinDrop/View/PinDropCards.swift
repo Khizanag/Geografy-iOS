@@ -95,6 +95,8 @@ struct PinDropRevealCard: View {
 
     let result: PinDropGame.Result
     let isLastRound: Bool
+    /// The other player, in a match, while they still have to lock in this round.
+    var waitingFor: String?
     let onNext: () -> Void
 
     @State private var isCounted = false
@@ -103,12 +105,17 @@ struct PinDropRevealCard: View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
             header
             chips
-            GlassButton(
-                isLastRound ? "See Results" : "Next Round",
-                systemImage: isLastRound ? "flag.checkered" : "arrow.right",
-                fullWidth: true,
-                action: onNext
-            )
+            if let waitingFor {
+                GlassButton("Waiting for \(waitingFor)...", systemImage: "hourglass", fullWidth: true) {}
+                    .disabled(true)
+            } else {
+                GlassButton(
+                    isLastRound ? "See Results" : "Next Round",
+                    systemImage: isLastRound ? "flag.checkered" : "arrow.right",
+                    fullWidth: true,
+                    action: onNext
+                )
+            }
         }
         .padding(DesignSystem.Spacing.md)
         .glassEffect(.regular, in: .rect(cornerRadius: DesignSystem.CornerRadius.extraLarge))

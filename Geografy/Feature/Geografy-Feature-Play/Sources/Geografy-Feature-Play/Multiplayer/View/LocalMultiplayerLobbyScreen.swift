@@ -111,20 +111,32 @@ private extension LocalMultiplayerLobbyScreen {
 private extension LocalMultiplayerLobbyScreen {
     var hostConfigSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Quiz Settings")
+            SectionHeaderView(title: "Game")
+            Picker("Game", selection: $coordinator.game) {
+                ForEach(LocalGame.allCases) { game in
+                    Label(game.title, systemImage: game.systemImage).tag(game)
+                }
+            }
+            .pickerStyle(.segmented)
 
-            TypeSelectionGrid(
-                items: QuizType.allCases,
-                selectedIDs: [coordinator.quizType.id],
-                color: LocalMultiplayerEntryScreen.color,
-                layout: .grid,
-                onSelect: { coordinator.quizType = $0 }
-            )
-
-            RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
-
-            matchOptionsCard
+            switch coordinator.game {
+            case .quiz: quizSettings
+            case .pinDrop: PinDropSettingsSections(configuration: $coordinator.pinDropConfiguration)
+            }
         }
+    }
+
+    @ViewBuilder
+    var quizSettings: some View {
+        TypeSelectionGrid(
+            items: QuizType.allCases,
+            selectedIDs: [coordinator.quizType.id],
+            color: LocalMultiplayerEntryScreen.color,
+            layout: .grid,
+            onSelect: { coordinator.quizType = $0 }
+        )
+        RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
+        matchOptionsCard
     }
 
     var matchOptionsCard: some View {
@@ -306,7 +318,25 @@ private extension LocalMultiplayerLobbyScreen {
         }
     }
 
+    func gameIcon(_ config: PeerMessage.MatchConfig) -> String {
+        config.game == .quiz ? config.quizType.icon : LocalGame.pinDrop.systemImage
+    }
+
+    func gameTitle(_ config: PeerMessage.MatchConfig) -> String {
+        config.game == .quiz ? config.quizType.displayName : String(localized: "Pin Drop", bundle: .module)
+    }
+
     func settingsSummary(_ config: PeerMessage.MatchConfig) -> String {
+        if config.game == .pinDrop {
+            let pinDrop = config.pinDrop
+            let map = pinDrop.showsBorders
+                ? String(localized: "Borders", bundle: .module)
+                : String(localized: "Coastlines only", bundle: .module)
+            return String(
+                localized: "\(pinDrop.region.displayName) · \(pinDrop.roundCount) rounds · \(map)",
+                bundle: .module
+            )
+        }
         let region = config.region.displayName
         let difficulty = config.difficulty.displayName
         return String(localized: "\(region) · \(difficulty) · \(config.questionCount) questions", bundle: .module)
@@ -317,7 +347,7 @@ private extension LocalMultiplayerLobbyScreen {
         CardView {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
                 EyebrowLabel("Match Settings")
-                Label(config.quizType.displayName, systemImage: config.quizType.icon)
+                Label(gameTitle(config), systemImage: gameIcon(config))
                     .font(DesignSystem.Font.headline)
                     .foregroundStyle(DesignSystem.Color.textPrimary)
                 Text(settingsSummary(config))

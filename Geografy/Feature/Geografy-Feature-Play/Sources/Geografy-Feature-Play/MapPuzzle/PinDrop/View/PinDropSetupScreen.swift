@@ -35,12 +35,22 @@ private extension PinDropSetupScreen {
         PinDropConfiguration(region: region, difficulty: difficulty, roundCount: roundCount, showsBorders: showsBorders)
     }
 
+    var configurationBinding: Binding<PinDropConfiguration> {
+        Binding {
+            configuration
+        } set: { new in
+            region = new.region
+            difficulty = new.difficulty
+            roundCount = new.roundCount
+            showsBorders = new.showsBorders
+        }
+    }
+
     var scrollContent: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: DesignSystem.Spacing.xl) {
                 header
-                regionSection
-                optionsSection
+                PinDropSettingsSections(configuration: configurationBinding)
             }
             .padding(DesignSystem.Spacing.md)
             .readableContentWidth()
@@ -73,68 +83,6 @@ private extension PinDropSetupScreen {
         return facts
     }
 
-    var regionSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Region")
-            RegionPicker(
-                selection: $region,
-                regions: PinDropRegion.allCases,
-                color: PinDropStyle.gameColor,
-                continent: \.continent
-            ) { country in
-                country.area >= difficulty.minimumArea
-            }
-        }
-    }
-
-    var optionsSection: some View {
-        VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-            SectionHeaderView(title: "Game")
-            CardView {
-                VStack(spacing: DesignSystem.Spacing.md) {
-                    OptionPickerRow(
-                        "Rounds",
-                        selection: roundOption,
-                        options: PinDropConfiguration.roundCounts.map(RoundOption.init)
-                    ) { "\($0.count)" }
-                    OptionPickerRow(
-                        "Countries",
-                        selection: $difficulty,
-                        options: PinDropDifficulty.allCases,
-                        note: difficulty == .expert ? "Microstates and islands included" : nil
-                    ) { option in
-                        switch option {
-                        case .standard: "Large"
-                        case .expert: "All"
-                        }
-                    }
-                    Divider()
-                    bordersToggle
-                }
-                .padding(DesignSystem.Spacing.md)
-            }
-        }
-    }
-
-    var bordersToggle: some View {
-        Toggle(isOn: $showsBorders.animation()) {
-            VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxs) {
-                Text("Show Borders")
-                    .font(DesignSystem.Font.body)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                Text(
-                    showsBorders
-                        ? "Countries are outlined and tinted apart"
-                        : "Only coastlines. Harder, with its own record"
-                )
-                    .font(DesignSystem.Font.caption)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .contentTransition(.opacity)
-            }
-        }
-        .tint(PinDropStyle.gameColor)
-    }
-
     var startButton: some View {
         GlassButton("Start", systemImage: "mappin.and.ellipse", fullWidth: true) {
             coordinator.push(PlayLocalRoute.pinDropGame(configuration))
@@ -151,24 +99,6 @@ private extension PinDropSetupScreen {
         countryDataService.countries.count { country in
             (option.continent.map { country.continent == $0 } ?? true)
                 && country.area >= difficulty.minimumArea
-        }
-    }
-}
-
-// MARK: - Round Option
-private extension PinDropSetupScreen {
-    /// A round count as a picker option, which needs to be identifiable.
-    struct RoundOption: Hashable, Identifiable {
-        let count: Int
-
-        var id: Int { count }
-    }
-
-    var roundOption: Binding<RoundOption> {
-        Binding {
-            RoundOption(count: roundCount)
-        } set: { option in
-            roundCount = option.count
         }
     }
 }
