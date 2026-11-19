@@ -20,12 +20,27 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [soundEffects, soundSetting, legalLinks]
+        [typeCarouselAlignment, soundEffects, soundSetting, legalLinks]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var typeCarouselAlignment: BuildNote {
+        BuildNote(
+            commit: "1dd39908",
+            title: "Quiz type tiles line up with the page",
+            howToTest: """
+                Local Play, Host Game: the first quiz type tile starts at the same edge as Quiz Settings and the \
+                region cards. Custom Quiz's question types line up the same way.
+                """,
+            systemImage: "align.horizontal.left.fill",
+            color: DesignSystem.Color.orange
+        ) {
+            go.open(.multiplayer)
+        }
+    }
+
     var soundEffects: BuildNote {
         BuildNote(
             commit: "3023329a",
