@@ -20,12 +20,44 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [localPlayDiscovery, typeCarouselAlignment, soundEffects, soundSetting, legalLinks]
+        [localPlayNames, localPlayLeaving, localPlayDiscovery, typeCarouselAlignment, soundEffects, legalLinks]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var localPlayNames: BuildNote {
+        BuildNote(
+            commit: "38f165fa",
+            title: "Local Play shows your names",
+            howToTest: """
+                Each of you types a name before Host or Join. The guest sees the host's name under Nearby \
+                Hosts, both see each other's name in the lobby and the match, and the guest sees the host's quiz \
+                settings change live.
+                """,
+            systemImage: "person.2.fill",
+            color: DesignSystem.Color.teal
+        ) {
+            go.open(.multiplayer)
+        }
+    }
+
+    var localPlayLeaving: BuildNote {
+        BuildNote(
+            commit: "38f165fa",
+            title: "Leaving a match tells the other player",
+            howToTest: """
+                There's no back button any more. In a match, Give Up asks first, then the other phone shows that \
+                you gave up. Close a lobby with someone in it: they see it closed. A guest leaving keeps the \
+                host's lobby open. After a result, Done leaves and the other result says so.
+                """,
+            systemImage: "flag.fill",
+            color: DesignSystem.Color.orange
+        ) {
+            go.open(.multiplayer)
+        }
+    }
+
     var localPlayDiscovery: BuildNote {
         BuildNote(
             commit: "f0c0b1b2",
@@ -70,21 +102,6 @@ private extension BuildNotes {
             color: DesignSystem.Color.blue
         ) {
             go.open(.quiz)
-        }
-    }
-
-    var soundSetting: BuildNote {
-        BuildNote(
-            commit: "3023329a",
-            title: "Settings has a Sound effects switch",
-            howToTest: """
-                Settings, Sound & Haptics: turn Sound effects off, then play a quiz. It stays silent, and the \
-                haptics still play.
-                """,
-            systemImage: "switch.2",
-            color: DesignSystem.Color.purple
-        ) {
-            go.open(.settings)
         }
     }
 
