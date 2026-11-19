@@ -81,7 +81,6 @@ private extension TypeSelectionGrid {
             .fixedSize(horizontal: false, vertical: true)
             .scrollTargetLayout()
         }
-        .contentMargins(.horizontal, DesignSystem.Spacing.md, for: .scrollContent)
         .scrollTargetBehavior(.viewAligned)
         .scrollPosition(id: $scrolledID, anchor: .center)
         .scrollClipDisabled()
