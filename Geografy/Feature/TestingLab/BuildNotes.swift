@@ -20,12 +20,28 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [localPlayNames, localPlayLeaving, localPlayDiscovery, typeCarouselAlignment, soundEffects, legalLinks]
+        [localPlayQuizTypes, localPlayNames, localPlayLeaving, localPlayDiscovery, soundEffects, legalLinks]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var localPlayQuizTypes: BuildNote {
+        BuildNote(
+            commit: "8197e05e",
+            title: "Every quiz type in Local Play",
+            howToTest: """
+                Host any of the eleven quiz types. Capital and reverse capital questions now show the country or \
+                capital, the answers sit at the bottom on glass, and the score bar shows when the other player \
+                has answered.
+                """,
+            systemImage: "rectangle.grid.2x2.fill",
+            color: DesignSystem.Color.teal
+        ) {
+            go.open(.multiplayer)
+        }
+    }
+
     var localPlayNames: BuildNote {
         BuildNote(
             commit: "38f165fa",
@@ -69,21 +85,6 @@ private extension BuildNotes {
                 """,
             systemImage: "antenna.radiowaves.left.and.right",
             color: DesignSystem.Color.blue
-        ) {
-            go.open(.multiplayer)
-        }
-    }
-
-    var typeCarouselAlignment: BuildNote {
-        BuildNote(
-            commit: "1dd39908",
-            title: "Quiz type tiles line up with the page",
-            howToTest: """
-                Local Play, Host Game: the first quiz type tile starts at the same edge as Quiz Settings and the \
-                region cards. Custom Quiz's question types line up the same way.
-                """,
-            systemImage: "align.horizontal.left.fill",
-            color: DesignSystem.Color.orange
         ) {
             go.open(.multiplayer)
         }
