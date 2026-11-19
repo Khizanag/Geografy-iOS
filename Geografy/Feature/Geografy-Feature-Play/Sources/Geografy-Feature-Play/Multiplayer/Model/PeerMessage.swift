@@ -4,6 +4,8 @@ import Foundation
 
 public enum PeerMessage: Codable {
     case playerInfo(name: String)
+    /// The host's quiz settings, sent on joining and whenever the host changes them.
+    case lobbySettings(config: MatchConfig)
     case lobbyReady
     case startMatch(config: MatchConfig, questions: [SerializableQuestion])
     case answerSubmitted(questionIndex: Int, optionID: UUID, timeSpent: TimeInterval)
@@ -12,6 +14,7 @@ public enum PeerMessage: Codable {
     case matchFinished(hostScore: Int, guestScore: Int)
     case rematchRequest
     case rematchAccepted
+    case rematchDeclined
     case disconnecting
 }
 

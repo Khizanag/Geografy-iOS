@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import Geografy_Core_DesignSystem
+import Geografy_Core_Service
 import SwiftUI
 
 // MARK: - Guest Banner
@@ -39,7 +40,7 @@ extension ProfileScreen {
     }
 
     public var displayName: String {
-        authService.currentProfile?.displayName ?? "Explorer"
+        authService.currentProfile?.displayName ?? AuthService.defaultDisplayName
     }
 }
 

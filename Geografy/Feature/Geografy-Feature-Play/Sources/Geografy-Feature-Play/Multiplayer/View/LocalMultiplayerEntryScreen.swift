@@ -6,12 +6,15 @@ import SwiftUI
 public struct LocalMultiplayerEntryScreen: View {
     // MARK: - Properties
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(AuthService.self) private var authService
     @Environment(CountryDataService.self) private var countryDataService
+    @Environment(DatabaseManager.self) private var database
 
-    // Created on the first Host or Join tap: building one opens a peer identity, so the
+    // Created on each Host or Join tap: building one opens a peer identity under the name typed here, so the
     // screen's init (re-run on every parent render) must not.
     @State private var coordinator: LocalMultiplayerCoordinator?
     @State private var appeared = false
+    @State private var playerName = ""
 
     // MARK: - Init
     public init() {}
@@ -20,7 +23,10 @@ public struct LocalMultiplayerEntryScreen: View {
     public var body: some View {
         extractedContent
             .animation(.easeInOut(duration: 0.3), value: coordinator?.state)
-            .onAppear { appeared = true }
+            .onAppear {
+                appeared = true
+                if playerName.isEmpty { playerName = savedName }
+            }
     }
 }
 
@@ -29,41 +35,28 @@ private extension LocalMultiplayerEntryScreen {
     var extractedContent: some View {
         Group {
             if let coordinator, coordinator.state != .idle {
-                matchFlowContent(coordinator)
+                LocalMultiplayerFlowView(coordinator: coordinator)
             } else {
                 entryContent
             }
         }
     }
 
-    @ViewBuilder
-    func matchFlowContent(_ coordinator: LocalMultiplayerCoordinator) -> some View {
-        switch coordinator.state {
-        case .idle:
-            EmptyView()
-        case .advertising, .browsing, .lobby:
-            LocalMultiplayerLobbyScreen(coordinator: coordinator)
-        case .countdown:
-            LocalMultiplayerCountdownView(coordinator: coordinator)
-        case .playing:
-            LocalMultiplayerMatchScreen(coordinator: coordinator)
-        case .finished:
-            LocalMultiplayerResultScreen(coordinator: coordinator)
-        case .disconnected:
-            disconnectedView(coordinator)
-        }
-    }
-
     var entryContent: some View {
         ScrollView(showsIndicators: false) {
-            heroSection
-                .padding(.horizontal, DesignSystem.Spacing.md)
-                .padding(.vertical, DesignSystem.Spacing.lg)
-                .containerRelativeFrame(.vertical, alignment: .center) { length, _ in
-                    max(length - DesignSystem.Spacing.xl, 0)
-                }
+            VStack(spacing: DesignSystem.Spacing.xl) {
+                heroSection
+                nameField
+            }
+            .padding(.horizontal, DesignSystem.Spacing.md)
+            .padding(.vertical, DesignSystem.Spacing.lg)
+            .readableContentWidth()
+            .containerRelativeFrame(.vertical, alignment: .center) { length, _ in
+                max(length - DesignSystem.Spacing.xl, 0)
+            }
         }
         .scrollBounceBehavior(.basedOnSize)
+        .scrollDismissesKeyboard(.interactively)
         .screenBackground()
         .navigationTitle("Local Play")
         .navigationBarTitleDisplayMode(.inline)
@@ -98,46 +91,34 @@ private extension LocalMultiplayerEntryScreen {
         .phaseEntrance()
     }
 
+    var nameField: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+            EyebrowLabel("Your Name")
+                .accessibilityHidden(true)
+            FormField("Enter your name", text: $playerName)
+                .textContentType(.nickname)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(.words)
+                .submitLabel(.done)
+                .accessibilityLabel("Your name")
+            Text("The other player sees this name.")
+                .font(DesignSystem.Font.caption)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+        }
+    }
+
     var roleButtons: some View {
         VStack(spacing: DesignSystem.Spacing.sm) {
             GlassButton("Host Game", systemImage: "antenna.radiowaves.left.and.right", fullWidth: true) {
-                resolvedCoordinator().startHosting()
+                start(hosting: true)
             }
             GlassButton("Join Game", systemImage: "magnifyingglass", role: .secondary, fullWidth: true) {
-                resolvedCoordinator().startBrowsing()
+                start(hosting: false)
             }
         }
+        .disabled(trimmedName.isEmpty)
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
-    }
-
-    func disconnectedView(_ coordinator: LocalMultiplayerCoordinator) -> some View {
-        VStack(spacing: DesignSystem.Spacing.lg) {
-            PulsingCirclesView(icon: "wifi.slash", isAnimating: true, color: Self.color)
-                .accessibilityHidden(true)
-
-            VStack(spacing: DesignSystem.Spacing.xs) {
-                Text("Disconnected")
-                    .font(DesignSystem.Font.title2)
-                    .fontWeight(.bold)
-                    .foregroundStyle(DesignSystem.Color.textPrimary)
-                    .accessibilityAddTraits(.isHeader)
-                Text("The connection to your opponent was lost.")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
-                    .multilineTextAlignment(.center)
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.md)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .screenBackground()
-        .safeAreaBar(edge: .bottom) {
-            GlassButton("Back to Menu", systemImage: "arrow.left", fullWidth: true) {
-                coordinator.leave()
-            }
-            .padding(.horizontal, DesignSystem.Spacing.md)
-            .padding(.bottom, DesignSystem.Spacing.md)
-        }
     }
 }
 
@@ -147,15 +128,35 @@ extension LocalMultiplayerEntryScreen {
     static let color = DesignSystem.Color.teal
 }
 
-// MARK: - Actions
+// MARK: - Helpers
 private extension LocalMultiplayerEntryScreen {
-    func resolvedCoordinator() -> LocalMultiplayerCoordinator {
-        if let coordinator {
-            return coordinator
+    var trimmedName: String {
+        playerName.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// The profile's name, unless it's still the default every new profile gets, which would give both players
+    /// the same name.
+    var savedName: String {
+        guard let name = authService.currentProfile?.displayName, name != AuthService.defaultDisplayName else {
+            return ""
         }
-        let created = LocalMultiplayerCoordinator(countryDataService: countryDataService)
+        return name
+    }
+
+    func start(hosting: Bool) {
+        let name = trimmedName
+        guard !name.isEmpty else { return }
+        if let profile = authService.currentProfile, profile.displayName != name {
+            profile.displayName = name
+            database.mainContext.saveOrLog()
+        }
+        let created = LocalMultiplayerCoordinator(playerName: name, countryDataService: countryDataService)
         coordinator = created
-        return created
+        if hosting {
+            created.startHosting()
+        } else {
+            created.startBrowsing()
+        }
     }
 }
 #endif

@@ -2,6 +2,7 @@ import Geografy_Core_Common
 #if !os(tvOS)
 import Geografy_Core_DesignSystem
 import Geografy_Core_Service
+import MultipeerConnectivity
 import SwiftUI
 
 public struct LocalMultiplayerLobbyScreen: View {
@@ -74,6 +75,10 @@ private extension LocalMultiplayerLobbyScreen {
                 Button("Settings", action: openSettings)
                     .font(DesignSystem.Font.subheadline)
                     .fontWeight(.semibold)
+            } else if coordinator.state == .advertising, let departed = coordinator.departedPlayerName {
+                Text("\(departed) left")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             } else if coordinator.state == .browsing {
                 Text("\(coordinator.sessionManager.discoveredPeers.count) found")
                     .font(DesignSystem.Font.caption)
@@ -90,8 +95,9 @@ private extension LocalMultiplayerLobbyScreen {
     }
 
     var statusTitle: LocalizedStringKey {
-        if coordinator.opponent != nil { return "Connected" }
-        return isDiscoveryBlocked ? "Turn on Local Network for Geografy" : "Searching..."
+        if let opponent = coordinator.opponent { return "Connected to \(opponent.displayName)" }
+        if isDiscoveryBlocked { return "Turn on Local Network for Geografy" }
+        return coordinator.isHost ? "Waiting for a player" : "Searching..."
     }
 
     var statusColor: Color {
@@ -154,7 +160,7 @@ private extension LocalMultiplayerLobbyScreen {
                         .font(DesignSystem.Font.headline)
                         .fontWeight(.bold)
                         .foregroundStyle(DesignSystem.Color.textPrimary)
-                    Text(opponent.isReady ? "Ready" : "Waiting...")
+                    Text(opponentStatus(opponent))
                         .font(DesignSystem.Font.caption)
                         .foregroundStyle(
                             opponent.isReady
@@ -177,6 +183,11 @@ private extension LocalMultiplayerLobbyScreen {
         .accessibilityElement(children: .combine)
     }
 
+    func opponentStatus(_ opponent: PeerPlayer) -> LocalizedStringKey {
+        if !coordinator.isHost { return "Host" }
+        return opponent.isReady ? "Ready" : "Getting ready..."
+    }
+
     var waitingSection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             if coordinator.state == .browsing {
@@ -190,9 +201,15 @@ private extension LocalMultiplayerLobbyScreen {
                     .scaleEffect(0.6)
                     .frame(height: 160)
                     .accessibilityHidden(true)
-                Text("Waiting for a player to join...")
-                    .font(DesignSystem.Font.subheadline)
-                    .foregroundStyle(DesignSystem.Color.textSecondary)
+                VStack(spacing: DesignSystem.Spacing.xxs) {
+                    Text("Waiting for a player to join...")
+                        .font(DesignSystem.Font.subheadline)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                    Text("Nearby players see you as \(coordinator.playerName).")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                }
+                .multilineTextAlignment(.center)
             }
         }
     }
@@ -204,6 +221,11 @@ private extension LocalMultiplayerLobbyScreen {
                 searchingIndicator
             } else {
                 discoveredPeerRows
+            }
+            if let failed = coordinator.failedJoinName {
+                Text("Couldn't join \(failed). Their game may already be full.")
+                    .font(DesignSystem.Font.caption)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
     }
@@ -219,26 +241,38 @@ private extension LocalMultiplayerLobbyScreen {
                 hapticsService.impact(.light)
                 coordinator.joinHost(peer)
             } label: {
-                CardView {
-                    HStack(spacing: DesignSystem.Spacing.md) {
-                        Image(systemName: "wifi")
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(LocalMultiplayerEntryScreen.color)
-                            .accessibilityHidden(true)
-                        Text(peer.displayName)
-                            .font(DesignSystem.Font.headline)
-                            .foregroundStyle(DesignSystem.Color.textPrimary)
-                        Spacer()
-                        Text("Join")
-                            .font(DesignSystem.Font.caption)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(LocalMultiplayerEntryScreen.color)
-                    }
-                    .padding(DesignSystem.Spacing.md)
-                }
+                peerRow(peer)
             }
             .buttonStyle(PressButtonStyle())
+            .disabled(coordinator.joiningPeer != nil)
             .accessibilityLabel("Join \(peer.displayName)")
+        }
+    }
+
+    func peerRow(_ peer: MCPeerID) -> some View {
+        CardView {
+            HStack(spacing: DesignSystem.Spacing.md) {
+                Image(systemName: "wifi")
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(LocalMultiplayerEntryScreen.color)
+                    .accessibilityHidden(true)
+                Text(peer.displayName)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Spacer()
+                if coordinator.joiningPeer == peer {
+                    ProgressView()
+                    Text("Joining...")
+                        .font(DesignSystem.Font.caption)
+                        .foregroundStyle(DesignSystem.Color.textSecondary)
+                } else {
+                    Text("Join")
+                        .font(DesignSystem.Font.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(LocalMultiplayerEntryScreen.color)
+                }
+            }
+            .padding(DesignSystem.Spacing.md)
         }
     }
 }
@@ -248,28 +282,47 @@ private extension LocalMultiplayerLobbyScreen {
     var guestReadySection: some View {
         VStack(spacing: DesignSystem.Spacing.md) {
             if let config = coordinator.matchConfig {
-                CardView {
-                    VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
-                        Text("Match Settings")
-                            .font(DesignSystem.Font.caption)
-                            .foregroundStyle(DesignSystem.Color.textSecondary)
-                        HStack {
-                            Label(config.quizType.displayName, systemImage: config.quizType.icon)
-                            Spacer()
-                            Text("\(config.questionCount) questions")
-                        }
-                        .font(DesignSystem.Font.subheadline)
-                        .foregroundStyle(DesignSystem.Color.textPrimary)
-                    }
-                    .padding(DesignSystem.Spacing.md)
+                matchSettingsCard(config)
+            }
+            if coordinator.isReady {
+                Label(
+                    "You're ready. Waiting for \(coordinator.opponent?.displayName ?? "the host") to start.",
+                    systemImage: "checkmark.circle.fill"
+                )
+                .font(DesignSystem.Font.subheadline)
+                .foregroundStyle(DesignSystem.Color.textSecondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            } else {
+                GlassButton("I'm Ready", systemImage: "hand.thumbsup.fill", fullWidth: true) {
+                    hapticsService.impact(.light)
+                    coordinator.markReady()
                 }
             }
-
-            GlassButton("I'm Ready", systemImage: "hand.thumbsup.fill", fullWidth: true) {
-                hapticsService.impact(.light)
-                coordinator.markReady()
-            }
         }
+    }
+
+    func settingsSummary(_ config: PeerMessage.MatchConfig) -> String {
+        let region = config.region.displayName
+        let difficulty = config.difficulty.displayName
+        return String(localized: "\(region) · \(difficulty) · \(config.questionCount) questions", bundle: .module)
+    }
+
+    /// The host's choices, so the guest knows what they're about to play.
+    func matchSettingsCard(_ config: PeerMessage.MatchConfig) -> some View {
+        CardView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.sm) {
+                EyebrowLabel("Match Settings")
+                Label(config.quizType.displayName, systemImage: config.quizType.icon)
+                    .font(DesignSystem.Font.headline)
+                    .foregroundStyle(DesignSystem.Color.textPrimary)
+                Text(settingsSummary(config))
+                    .font(DesignSystem.Font.subheadline)
+                    .foregroundStyle(DesignSystem.Color.textSecondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(DesignSystem.Spacing.md)
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 

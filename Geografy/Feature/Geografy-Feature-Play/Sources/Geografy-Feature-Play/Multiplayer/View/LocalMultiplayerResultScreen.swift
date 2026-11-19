@@ -19,12 +19,9 @@ public struct LocalMultiplayerResultScreen: View {
     public var body: some View {
         GameResultLayout(
             title: Text(resultTitle),
-            message: Text(resultSubtitle),
+            message: Text(message),
             xpEarned: xpAwarded ? XPRules.multiplayer(won: isWin) : 0,
-            primaryAction: GameResultAction("Rematch", systemImage: "arrow.2.squarepath") {
-                hapticsService.impact(.light)
-                coordinator.requestRematch()
-            },
+            primaryAction: rematchAction,
             onDone: { coordinator.leave() },
             hero: {
                 IconBadge(resultIcon, color: resultColor, size: .hero)
@@ -36,10 +33,10 @@ public struct LocalMultiplayerResultScreen: View {
         .screenBackground()
         .onAppear { awardXPOnce() }
         .alert("Rematch?", isPresented: $coordinator.rematchRequested) {
-            Button("Accept") { coordinator.acceptRematch() }
-            Button("Decline", role: .cancel) { coordinator.declineRematch() }
+            Button("Play Again") { coordinator.acceptRematch() }
+            Button("Not Now", role: .cancel) { coordinator.declineRematch() }
         } message: {
-            Text("\(coordinator.opponent?.displayName ?? "Opponent") wants a rematch!")
+            Text("\(opponentName) wants to play again with the same settings.")
         }
     }
 }
@@ -83,6 +80,35 @@ private extension LocalMultiplayerResultScreen {
 
 // MARK: - Helpers
 private extension LocalMultiplayerResultScreen {
+    var opponentName: String {
+        coordinator.opponent?.displayName ?? String(localized: "Opponent", bundle: .module)
+    }
+
+    /// Rematch until the other player leaves; while waiting for their answer, a button that says so.
+    var rematchAction: GameResultAction? {
+        if coordinator.opponentLeftAfterMatch { return nil }
+        if coordinator.isAwaitingRematch {
+            return GameResultAction("Waiting...", systemImage: "hourglass") {}
+        }
+        return GameResultAction("Rematch", systemImage: "arrow.2.squarepath") {
+            hapticsService.impact(.light)
+            coordinator.requestRematch()
+        }
+    }
+
+    var message: String {
+        if coordinator.opponentLeftAfterMatch {
+            return String(localized: "\(opponentName) left, so there's no rematch.", bundle: .module)
+        }
+        if coordinator.rematchDeclined {
+            return String(localized: "\(opponentName) doesn't want a rematch right now.", bundle: .module)
+        }
+        if coordinator.isAwaitingRematch {
+            return String(localized: "Asked \(opponentName) for a rematch.", bundle: .module)
+        }
+        return resultSubtitle
+    }
+
     var isWin: Bool { coordinator.playerScore > coordinator.opponentScore }
     var isDraw: Bool { coordinator.playerScore == coordinator.opponentScore }
 

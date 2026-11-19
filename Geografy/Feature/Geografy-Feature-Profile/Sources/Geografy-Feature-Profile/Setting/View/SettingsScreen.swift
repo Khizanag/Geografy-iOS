@@ -129,11 +129,11 @@ private extension SettingsScreen {
         Button { coordinator.sheet(ProfileRoute.profile) } label: {
             HStack(spacing: DesignSystem.Spacing.sm) {
                 ProfileAvatarView(
-                    name: authService.currentProfile?.displayName ?? "Explorer",
+                    name: authService.currentProfile?.displayName ?? AuthService.defaultDisplayName,
                     size: DesignSystem.Size.md
                 )
                 VStack(alignment: .leading, spacing: DesignSystem.Spacing.xxxs) {
-                    Text(authService.currentProfile?.displayName ?? "Explorer")
+                    Text(authService.currentProfile?.displayName ?? AuthService.defaultDisplayName)
                         .font(DesignSystem.Font.body)
                         .fontWeight(.medium)
                         .foregroundStyle(DesignSystem.Color.textPrimary)

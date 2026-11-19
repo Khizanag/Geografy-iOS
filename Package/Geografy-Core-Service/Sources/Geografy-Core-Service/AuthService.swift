@@ -7,6 +7,9 @@ import SwiftData
 @Observable
 @MainActor
 public final class AuthService {
+    /// The name a profile starts with until its owner sets one.
+    public static let defaultDisplayName = "Explorer"
+
     public enum AuthState {
         case guest(UserProfile)
         case authenticating
@@ -96,7 +99,7 @@ extension AuthService {
         } else {
             let profile = UserProfile(
                 id: appleUserID,
-                displayName: fullName.isEmpty ? "Explorer" : fullName,
+                displayName: fullName.isEmpty ? Self.defaultDisplayName : fullName,
                 email: email,
                 isGuest: false
             )
@@ -220,7 +223,7 @@ private extension AuthService {
         if let existing = (try? db.mainContext.fetch(descriptor))?.first {
             return existing
         }
-        let profile = UserProfile(id: id, displayName: "Explorer", isGuest: true)
+        let profile = UserProfile(id: id, displayName: Self.defaultDisplayName, isGuest: true)
         db.mainContext.insert(profile)
         db.mainContext.saveOrLog()
         return profile
@@ -243,7 +246,7 @@ private extension AuthService {
     func transitionToFreshGuest() {
         let newID = UUID().uuidString
         KeychainService.save(newID, for: .guestUUID)
-        let profile = UserProfile(id: newID, displayName: "Explorer", isGuest: true)
+        let profile = UserProfile(id: newID, displayName: Self.defaultDisplayName, isGuest: true)
         db.mainContext.insert(profile)
         db.mainContext.saveOrLog()
         currentUserID = newID

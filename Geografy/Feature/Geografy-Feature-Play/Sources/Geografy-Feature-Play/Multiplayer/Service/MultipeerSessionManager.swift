@@ -21,9 +21,17 @@ public final class MultipeerSessionManager: NSObject, @unchecked Sendable {
     public var onMessageReceived: ((MCPeerID, PeerMessage) -> Void)?
     public var onPeerStateChanged: ((MCPeerID, MCSessionState) -> Void)?
 
-    override init() {
-        self.myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    /// - Parameter displayName: The name nearby players see. iOS caps it at 63 bytes.
+    init(displayName: String) {
+        self.myPeerID = MCPeerID(displayName: Self.peerName(displayName))
         super.init()
+    }
+
+    /// Closes the connection when the screen that owns the match goes away mid-game, so the other phone hears it.
+    isolated deinit {
+        advertiser?.stopAdvertisingPeer()
+        browser?.stopBrowsingForPeers()
+        session?.disconnect()
     }
 }
 
@@ -74,8 +82,23 @@ extension MultipeerSessionManager {
         try? session.send(data, toPeers: session.connectedPeers, with: .reliable)
     }
 
+    /// Tells the other player you're leaving, then closes the connection once the message has had time to go out.
     public func disconnect() {
         send(.disconnecting)
+        let closing = session
+        stopAdvertising()
+        stopBrowsing()
+        connectedPeers = []
+        discoveredPeers = []
+        session = nil
+        Task {
+            try? await Task.sleep(for: .milliseconds(500))
+            closing?.disconnect()
+        }
+    }
+
+    /// Closes the connection without a goodbye, for when the other player is already gone.
+    public func closeSession() {
         session?.disconnect()
         stopAdvertising()
         stopBrowsing()
@@ -85,12 +108,24 @@ extension MultipeerSessionManager {
     }
 }
 
+// MARK: - Helpers
+private extension MultipeerSessionManager {
+    static func peerName(_ name: String) -> String {
+        var trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        while trimmed.utf8.count > 63 { trimmed.removeLast() }
+        return trimmed.isEmpty ? "Player" : trimmed
+    }
+}
+
 // MARK: - MCSessionDelegate
 extension MultipeerSessionManager: MCSessionDelegate {
     nonisolated public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         nonisolated(unsafe) let peers = session.connectedPeers
         nonisolated(unsafe) let capturedPeer = peerID
+        nonisolated(unsafe) let changedSession = session
         Task { @MainActor in
+            // A connection already closed can still report late; only the current one speaks for the match.
+            guard changedSession === self.session else { return }
             self.connectedPeers = peers
             self.onPeerStateChanged?(capturedPeer, state)
         }

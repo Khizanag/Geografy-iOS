@@ -7,7 +7,9 @@ import SwiftUI
 @MainActor
 @Observable
 public final class LocalMultiplayerCoordinator {
-    public let sessionManager = MultipeerSessionManager()
+    public let sessionManager: MultipeerSessionManager
+    /// The name the other player sees.
+    public let playerName: String
 
     private(set) var state: LocalMatchState = .idle
     private(set) var isHost = false
@@ -19,13 +21,28 @@ public final class LocalMultiplayerCoordinator {
     private(set) var opponentHasAnswered = false
     private(set) var playerAnsweredCurrent = false
     private(set) var matchConfig: PeerMessage.MatchConfig?
+    /// The other player asked for a rematch and is waiting for an answer.
     public var rematchRequested = false
+    /// This player asked for a rematch and is waiting for the other's answer.
+    private(set) var isAwaitingRematch = false
+    private(set) var rematchDeclined = false
     private(set) var questionTimerExpired = false
+    /// The guest said they're ready; the host waits for it before starting.
+    private(set) var isReady = false
+    /// The host the guest tapped, while the invitation is out.
+    private(set) var joiningPeer: MCPeerID?
+    /// The host that didn't let the guest in, to say so under Nearby Hosts.
+    private(set) var failedJoinName: String?
+    /// A guest who left the host's lobby, so the host knows why it's waiting again.
+    private(set) var departedPlayerName: String?
+    /// The other player left after the result, so a rematch can't happen.
+    private(set) var opponentLeftAfterMatch = false
+    private(set) var ending: LocalMatchEnding?
 
-    public var quizType: QuizType = .flagQuiz
-    public var region: QuizRegion = .world
-    public var difficulty: QuizDifficulty = .easy
-    public var questionCount: QuestionCount = .ten
+    public var quizType: QuizType = .flagQuiz { didSet { shareSettings() } }
+    public var region: QuizRegion = .world { didSet { shareSettings() } }
+    public var difficulty: QuizDifficulty = .easy { didSet { shareSettings() } }
+    public var questionCount: QuestionCount = .ten { didSet { shareSettings() } }
 
     private let countryDataService: CountryDataService
     private var opponentAnswers: [Int: (optionID: UUID, timeSpent: TimeInterval)] = [:]
@@ -37,7 +54,9 @@ public final class LocalMultiplayerCoordinator {
     private var isAdvancing = false
     private var xpAwarded = false
 
-    public init(countryDataService: CountryDataService) {
+    public init(playerName: String, countryDataService: CountryDataService) {
+        self.playerName = playerName
+        self.sessionManager = MultipeerSessionManager(displayName: playerName)
         self.countryDataService = countryDataService
         sessionManager.onMessageReceived = { [weak self] _, message in
             self?.handleMessage(message)
@@ -52,6 +71,8 @@ public final class LocalMultiplayerCoordinator {
 extension LocalMultiplayerCoordinator {
     public func startHosting() {
         isHost = true
+        ending = nil
+        departedPlayerName = nil
         state = .advertising
         sessionManager.startAdvertising()
     }
@@ -87,16 +108,22 @@ extension LocalMultiplayerCoordinator {
 extension LocalMultiplayerCoordinator {
     public func startBrowsing() {
         isHost = false
+        ending = nil
+        failedJoinName = nil
         state = .browsing
         sessionManager.startBrowsing()
     }
 
     public func joinHost(_ peerID: MCPeerID) {
+        guard joiningPeer == nil else { return }
+        joiningPeer = peerID
+        failedJoinName = nil
         sessionManager.invitePeer(peerID)
     }
 
     public func markReady() {
-        guard opponent?.isReady != true else { return }
+        guard state == .lobby, !isReady else { return }
+        isReady = true
         sessionManager.send(.lobbyReady)
     }
 }
@@ -137,6 +164,9 @@ extension LocalMultiplayerCoordinator {
     }
 
     public func requestRematch() {
+        guard !isAwaitingRematch, !opponentLeftAfterMatch else { return }
+        isAwaitingRematch = true
+        rematchDeclined = false
         sessionManager.send(.rematchRequest)
     }
 
@@ -147,12 +177,15 @@ extension LocalMultiplayerCoordinator {
 
     public func declineRematch() {
         rematchRequested = false
+        sessionManager.send(.rematchDeclined)
     }
 
+    /// Leaves the lobby, the match, or the result. The other phone hears why.
     public func leave() {
         cancelAllTasks()
         sessionManager.disconnect()
         state = .idle
+        opponent = nil
         resetMatchState()
     }
 }
@@ -162,15 +195,17 @@ private extension LocalMultiplayerCoordinator {
     func handleMessage(_ message: PeerMessage) {
         switch message {
         case .playerInfo(let name): handlePlayerInfo(name)
+        case .lobbySettings(let config): handleLobbySettings(config)
         case .lobbyReady: handleLobbyReady()
         case let .startMatch(config, serialized): handleStartMatch(config, serialized)
         case let .answerSubmitted(index, optionID, _): handleOpponentAnswer(index, optionID: optionID)
         case .timedOut(let index): handleOpponentTimeout(index)
         case .advanceToNext(let index): handleAdvance(index)
         case let .matchFinished(hostScore, guestScore): handleMatchFinished(hostScore, guestScore)
-        case .rematchRequest: rematchRequested = true
+        case .rematchRequest: handleRematchRequest()
         case .rematchAccepted: resetForRematch()
-        case .disconnecting: handleDisconnect()
+        case .rematchDeclined: handleRematchDeclined()
+        case .disconnecting: handleOpponentGone(saidGoodbye: true)
         }
     }
 
@@ -179,9 +214,30 @@ private extension LocalMultiplayerCoordinator {
         opponent?.displayName = name
     }
 
+    func handleLobbySettings(_ config: PeerMessage.MatchConfig) {
+        guard !isHost, state == .lobby else { return }
+        matchConfig = config
+    }
+
     func handleLobbyReady() {
         guard state == .lobby else { return }
         opponent?.isReady = true
+    }
+
+    func handleRematchRequest() {
+        guard state == .finished else { return }
+        // Both asked at once: that's a yes from each side.
+        if isAwaitingRematch {
+            acceptRematch()
+        } else {
+            rematchRequested = true
+        }
+    }
+
+    func handleRematchDeclined() {
+        guard isAwaitingRematch else { return }
+        isAwaitingRematch = false
+        rematchDeclined = true
     }
 
     func handleStartMatch(_ config: PeerMessage.MatchConfig, _ serialized: [SerializableQuestion]) {
@@ -189,6 +245,8 @@ private extension LocalMultiplayerCoordinator {
         matchConfig = config
         questions = serialized.compactMap { $0.toQuizQuestion(using: countryDataService) }
         guard questions.count == serialized.count else {
+            ending = .questionsFailed
+            sessionManager.disconnect()
             state = .disconnected
             return
         }
@@ -231,15 +289,22 @@ private extension LocalMultiplayerCoordinator {
     func handlePeerStateChange(_ peerID: MCPeerID, state peerState: MCSessionState) {
         switch peerState {
         case .connected:
-            if opponent == nil {
-                opponent = PeerPlayer(peerID: peerID)
-                state = .lobby
-                sessionManager.send(.playerInfo(name: UIDevice.current.name))
-                sessionManager.stopAdvertising()
-                sessionManager.stopBrowsing()
-            }
+            guard opponent == nil else { return }
+            opponent = PeerPlayer(peerID: peerID)
+            joiningPeer = nil
+            departedPlayerName = nil
+            state = .lobby
+            sessionManager.send(.playerInfo(name: playerName))
+            shareSettings()
+            sessionManager.stopAdvertising()
+            sessionManager.stopBrowsing()
         case .notConnected:
-            handleDisconnect()
+            if peerID == joiningPeer {
+                joiningPeer = nil
+                failedJoinName = peerID.displayName
+            }
+            guard peerID == opponent?.peerID else { return }
+            handleOpponentGone(saidGoodbye: false)
         case .connecting:
             break
         @unknown default:
@@ -247,10 +312,34 @@ private extension LocalMultiplayerCoordinator {
         }
     }
 
-    func handleDisconnect() {
-        guard state != .idle, state != .disconnected else { return }
+    /// The other player left or dropped. A host's lobby opens again for someone new; a result stays on screen;
+    /// anything else ends with a screen that says what happened.
+    func handleOpponentGone(saidGoodbye: Bool) {
+        guard let opponent else { return }
+        let name = opponent.displayName
         cancelAllTasks()
-        state = .disconnected
+        // A result keeps the opponent, so their name and score stay on screen.
+        if state != .finished { self.opponent = nil }
+        switch state {
+        case .finished:
+            opponentLeftAfterMatch = true
+            rematchRequested = false
+            isAwaitingRematch = false
+            sessionManager.closeSession()
+        case .lobby where isHost:
+            departedPlayerName = name
+            sessionManager.closeSession()
+            state = .advertising
+            sessionManager.startAdvertising()
+        case .lobby:
+            ending = saidGoodbye ? .hostClosedLobby(name: name) : .connectionLost(name: name)
+            sessionManager.closeSession()
+            state = .disconnected
+        default:
+            ending = saidGoodbye ? .opponentGaveUp(name: name) : .connectionLost(name: name)
+            sessionManager.closeSession()
+            state = .disconnected
+        }
     }
 }
 
@@ -330,8 +419,18 @@ private extension LocalMultiplayerCoordinator {
         cancelAllTasks()
         resetMatchState()
         opponent?.isReady = false
-        rematchRequested = false
         state = .lobby
+        shareSettings()
+    }
+
+    func shareSettings() {
+        guard isHost, state == .lobby else { return }
+        sessionManager.send(.lobbySettings(config: PeerMessage.MatchConfig(
+            quizType: quizType,
+            region: region,
+            difficulty: difficulty,
+            questionCount: questionCount.rawValue
+        )))
     }
 
     func resetMatchState() {
@@ -346,6 +445,11 @@ private extension LocalMultiplayerCoordinator {
         opponentAnswers = [:]
         questions = []
         xpAwarded = false
+        isReady = false
+        rematchRequested = false
+        isAwaitingRematch = false
+        rematchDeclined = false
+        opponentLeftAfterMatch = false
     }
 }
 #endif
