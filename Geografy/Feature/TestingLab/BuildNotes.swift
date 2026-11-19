@@ -20,12 +20,28 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [localPlayQuizTypes, localPlayNames, localPlayLeaving, localPlayDiscovery, soundEffects, legalLinks]
+        [localPlayPinDrop, localPlayQuizTypes, localPlayNames, localPlayLeaving, soundEffects]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var localPlayPinDrop: BuildNote {
+        BuildNote(
+            commit: "c4ae246e",
+            title: "Pin Drop against each other",
+            howToTest: """
+                Host, pick Pin Drop, and choose a region. Both of you find the same countries; a chip shows the \
+                other player's points and whether they've locked in, Next Round waits for them, and the result \
+                compares points.
+                """,
+            systemImage: "mappin.and.ellipse",
+            color: DesignSystem.Color.orange
+        ) {
+            go.open(.multiplayer)
+        }
+    }
+
     var localPlayQuizTypes: BuildNote {
         BuildNote(
             commit: "8197e05e",
@@ -74,22 +90,6 @@ private extension BuildNotes {
         }
     }
 
-    var localPlayDiscovery: BuildNote {
-        BuildNote(
-            commit: "f0c0b1b2",
-            title: "Local Play finds the other phone",
-            howToTest: """
-                On two phones, open Local Play: one hosts, the other joins. Allow Local Network on both when \
-                asked. The host appears under Nearby Hosts on the other phone, and tapping it connects. With \
-                Local Network off, the lobby says so and links to Settings.
-                """,
-            systemImage: "antenna.radiowaves.left.and.right",
-            color: DesignSystem.Color.blue
-        ) {
-            go.open(.multiplayer)
-        }
-    }
-
     var soundEffects: BuildNote {
         BuildNote(
             commit: "3023329a",
@@ -103,21 +103,6 @@ private extension BuildNotes {
             color: DesignSystem.Color.blue
         ) {
             go.open(.quiz)
-        }
-    }
-
-    var legalLinks: BuildNote {
-        BuildNote(
-            commit: "38f70b7b",
-            title: "Privacy Policy and Terms of Service open",
-            howToTest: """
-                Settings, About: Privacy Policy and Terms of Service open Geografy's own pages instead of a missing \
-                page.
-                """,
-            systemImage: "doc.text.fill",
-            color: DesignSystem.Color.indigo
-        ) {
-            go.open(.settings)
         }
     }
 }
