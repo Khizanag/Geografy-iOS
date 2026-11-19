@@ -8,6 +8,8 @@ public struct SerializableQuestion: Codable, Identifiable {
     public let promptText: String
     public let promptSubject: String?
     public let promptFlag: String?
+    public let promptDetails: [String]
+    public let explanation: String?
     public let options: [SerializableOption]
     public let correctOptionID: UUID
     public let correctCountryName: String
@@ -28,6 +30,8 @@ extension SerializableQuestion {
         self.promptText = question.promptText
         self.promptSubject = question.promptSubject
         self.promptFlag = question.promptFlag
+        self.promptDetails = question.promptDetails
+        self.explanation = question.explanation
         self.options = question.options.map { SerializableOption(id: $0.id, text: $0.text, flagCode: $0.flagCode) }
         self.correctOptionID = question.correctOptionID
         self.correctCountryName = question.correctCountry.name
@@ -42,9 +46,11 @@ extension SerializableQuestion {
             promptText: promptText,
             promptSubject: promptSubject,
             promptFlag: promptFlag,
+            promptDetails: promptDetails,
             options: options.map { QuizOption(id: $0.id, text: $0.text, flagCode: $0.flagCode) },
             correctOptionID: correctOptionID,
-            correctCountry: country
+            correctCountry: country,
+            explanation: explanation
         )
     }
 }

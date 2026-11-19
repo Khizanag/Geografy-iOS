@@ -43,6 +43,16 @@ public final class LocalMultiplayerCoordinator {
     public var region: QuizRegion = .world { didSet { shareSettings() } }
     public var difficulty: QuizDifficulty = .easy { didSet { shareSettings() } }
     public var questionCount: QuestionCount = .ten { didSet { shareSettings() } }
+    public var comparisonMetric: ComparisonMetric = .population { didSet { shareSettings() } }
+
+    /// The quiz being played: the host's own choice, or the settings the host sent.
+    var activeQuizType: QuizType {
+        isHost ? quizType : matchConfig?.quizType ?? quizType
+    }
+
+    var activeDifficulty: QuizDifficulty {
+        isHost ? difficulty : matchConfig?.difficulty ?? difficulty
+    }
 
     private let countryDataService: CountryDataService
     private var opponentAnswers: [Int: (optionID: UUID, timeSpent: TimeInterval)] = [:]
@@ -85,21 +95,16 @@ extension LocalMultiplayerCoordinator {
             type: quizType,
             countries: regionCountries,
             count: questionCount.rawValue,
-            optionCount: difficulty.optionCount > 0 ? difficulty.optionCount : 4
+            optionCount: max(difficulty.optionCount, 4),
+            comparisonMetric: comparisonMetric
         )
 
         guard !generated.isEmpty else { return }
         questions = generated
 
         let serialized = generated.map { SerializableQuestion(from: $0) }
-        let matchCfg = PeerMessage.MatchConfig(
-            quizType: quizType,
-            region: region,
-            difficulty: difficulty,
-            questionCount: questionCount.rawValue
-        )
-
-        sessionManager.send(.startMatch(config: matchCfg, questions: serialized))
+        matchConfig = currentConfig
+        sessionManager.send(.startMatch(config: currentConfig, questions: serialized))
         beginCountdown()
     }
 }
@@ -395,8 +400,8 @@ private extension LocalMultiplayerCoordinator {
 
     func startQuestionTimer() {
         questionTimerTask?.cancel()
-        guard difficulty.hasTimer else { return }
-        let duration = difficulty.timerDuration
+        guard activeDifficulty.hasTimer else { return }
+        let duration = activeDifficulty.timerDuration
         questionTimerTask = Task { [weak self] in
             try? await Task.sleep(for: .seconds(duration))
             guard !Task.isCancelled else { return }
@@ -425,12 +430,17 @@ private extension LocalMultiplayerCoordinator {
 
     func shareSettings() {
         guard isHost, state == .lobby else { return }
-        sessionManager.send(.lobbySettings(config: PeerMessage.MatchConfig(
+        sessionManager.send(.lobbySettings(config: currentConfig))
+    }
+
+    var currentConfig: PeerMessage.MatchConfig {
+        PeerMessage.MatchConfig(
             quizType: quizType,
             region: region,
             difficulty: difficulty,
-            questionCount: questionCount.rawValue
-        )))
+            questionCount: questionCount.rawValue,
+            comparisonMetric: comparisonMetric
+        )
     }
 
     func resetMatchState() {

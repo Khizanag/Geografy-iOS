@@ -27,6 +27,8 @@ public struct QuizOptionButton: View {
 
     @State private var shakeOffset: CGFloat = 0
 
+    private static let shape = RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
+
     // MARK: - Body
     public var body: some View {
         Button(action: action) {
@@ -34,8 +36,7 @@ public struct QuizOptionButton: View {
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, DesignSystem.Spacing.md)
                 .padding(.vertical, DesignSystem.Spacing.sm + 2)
-                .background { backgroundLayer }
-                .clipShape(RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous))
+                .glassEffect(glass, in: Self.shape)
                 .overlay {
                     RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
                         .strokeBorder(borderColor, lineWidth: 1.5)
@@ -202,14 +203,10 @@ private extension QuizOptionButton {
         }
     }
 
-    @ViewBuilder
-    var backgroundLayer: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .fill(.ultraThinMaterial)
-            RoundedRectangle(cornerRadius: DesignSystem.CornerRadius.medium, style: .continuous)
-                .fill(overlayColor)
-        }
+    /// Liquid Glass, tinted green or red once the answer shows; it falls back to a frosted fill on its own when
+    /// Reduce Transparency is on.
+    var glass: Glass {
+        overlayColor == .clear ? .regular.interactive() : .regular.tint(overlayColor)
     }
 }
 

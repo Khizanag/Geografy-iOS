@@ -25,6 +25,7 @@ extension PeerMessage {
         public let region: QuizRegion
         public let difficulty: QuizDifficulty
         public let questionCount: Int
+        public let comparisonMetric: ComparisonMetric
     }
 }
 

@@ -19,11 +19,7 @@ public struct LocalMultiplayerLobbyScreen: View {
             .screenBackground()
             .navigationTitle(coordinator.isHost ? "Host Lobby" : "Join Lobby")
             .navigationBarTitleDisplayMode(.inline)
-            .safeAreaBar(edge: .bottom) {
-                if coordinator.isHost, coordinator.opponent?.isReady == true {
-                    startButton
-                }
-            }
+            .safeAreaBar(edge: .bottom) { bottomAction }
     }
 }
 
@@ -118,31 +114,45 @@ private extension LocalMultiplayerLobbyScreen {
             SectionHeaderView(title: "Quiz Settings")
 
             TypeSelectionGrid(
-                items: [QuizType.flagQuiz, .capitalQuiz, .reverseFlag, .reverseCapital],
+                items: QuizType.allCases,
                 selectedIDs: [coordinator.quizType.id],
                 color: LocalMultiplayerEntryScreen.color,
+                layout: .grid,
                 onSelect: { coordinator.quizType = $0 }
             )
 
             RegionPicker(selectedRegion: $coordinator.region, color: LocalMultiplayerEntryScreen.color)
 
-            CardView {
-                VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+            matchOptionsCard
+        }
+    }
+
+    var matchOptionsCard: some View {
+        CardView {
+            VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+                OptionPickerRow(
+                    "Difficulty",
+                    selection: $coordinator.difficulty,
+                    options: QuizDifficulty.allCases,
+                    label: \.displayName
+                )
+                OptionPickerRow(
+                    "Questions",
+                    selection: $coordinator.questionCount,
+                    options: QuestionCount.allCases,
+                    label: \.displayName
+                )
+                if coordinator.quizType.hasComparisonMetric {
                     OptionPickerRow(
-                        "Difficulty",
-                        selection: $coordinator.difficulty,
-                        options: QuizDifficulty.allCases,
-                        label: \.displayName
-                    )
-                    OptionPickerRow(
-                        "Questions",
-                        selection: $coordinator.questionCount,
-                        options: QuestionCount.allCases,
-                        label: \.displayName
+                        "Metric",
+                        selection: $coordinator.comparisonMetric,
+                        options: ComparisonMetric.allCases,
+                        style: .menu,
+                        label: \.rawValue
                     )
                 }
-                .padding(DesignSystem.Spacing.md)
             }
+            .padding(DesignSystem.Spacing.md)
         }
     }
 }
@@ -292,11 +302,6 @@ private extension LocalMultiplayerLobbyScreen {
                 .font(DesignSystem.Font.subheadline)
                 .foregroundStyle(DesignSystem.Color.textSecondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                GlassButton("I'm Ready", systemImage: "hand.thumbsup.fill", fullWidth: true) {
-                    hapticsService.impact(.light)
-                    coordinator.markReady()
-                }
             }
         }
     }
@@ -326,12 +331,22 @@ private extension LocalMultiplayerLobbyScreen {
     }
 }
 
-// MARK: - Start
+// MARK: - Bottom Action
 private extension LocalMultiplayerLobbyScreen {
-    var startButton: some View {
-        GlassButton("Start Match", systemImage: "play.fill", fullWidth: true) {
+    /// The lobby's next step, in thumb reach: the host starts once the guest is ready; the guest says they're ready.
+    @ViewBuilder
+    var bottomAction: some View {
+        if coordinator.isHost, coordinator.opponent?.isReady == true {
+            bottomButton("Start Match", systemImage: "play.fill") { coordinator.startMatch() }
+        } else if !coordinator.isHost, coordinator.opponent != nil, !coordinator.isReady {
+            bottomButton("I'm Ready", systemImage: "hand.thumbsup.fill") { coordinator.markReady() }
+        }
+    }
+
+    func bottomButton(_ title: LocalizedStringKey, systemImage: String, action: @escaping () -> Void) -> some View {
+        GlassButton(title, systemImage: systemImage, fullWidth: true) {
             hapticsService.impact(.light)
-            coordinator.startMatch()
+            action()
         }
         .padding(.horizontal, DesignSystem.Spacing.md)
         .padding(.bottom, DesignSystem.Spacing.md)
