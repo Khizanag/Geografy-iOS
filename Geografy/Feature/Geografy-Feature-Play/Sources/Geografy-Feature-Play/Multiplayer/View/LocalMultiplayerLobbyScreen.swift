@@ -8,6 +8,7 @@ public struct LocalMultiplayerLobbyScreen: View {
     // MARK: - Properties
     @Environment(HapticsService.self) private var hapticsService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.openURL) private var openURL
 
     @Bindable var coordinator: LocalMultiplayerCoordinator
 
@@ -61,20 +62,46 @@ private extension LocalMultiplayerLobbyScreen {
     var connectionStatusContent: some View {
         HStack(spacing: DesignSystem.Spacing.sm) {
             Circle()
-                .fill(coordinator.opponent != nil ? DesignSystem.Color.success : DesignSystem.Color.warning)
+                .fill(statusColor)
                 .frame(width: DesignSystem.Spacing.xs, height: DesignSystem.Spacing.xs)
                 .accessibilityHidden(true)
-            Text(coordinator.opponent != nil ? "Connected" : "Searching...")
+            Text(statusTitle)
                 .font(DesignSystem.Font.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignSystem.Color.textPrimary)
             Spacer()
-            if coordinator.state == .browsing {
+            if isDiscoveryBlocked {
+                Button("Settings", action: openSettings)
+                    .font(DesignSystem.Font.subheadline)
+                    .fontWeight(.semibold)
+            } else if coordinator.state == .browsing {
                 Text("\(coordinator.sessionManager.discoveredPeers.count) found")
                     .font(DesignSystem.Font.caption)
                     .foregroundStyle(DesignSystem.Color.textSecondary)
             }
         }
+    }
+}
+
+// MARK: - Helpers
+private extension LocalMultiplayerLobbyScreen {
+    var isDiscoveryBlocked: Bool {
+        coordinator.opponent == nil && coordinator.sessionManager.isDiscoveryBlocked
+    }
+
+    var statusTitle: LocalizedStringKey {
+        if coordinator.opponent != nil { return "Connected" }
+        return isDiscoveryBlocked ? "Turn on Local Network for Geografy" : "Searching..."
+    }
+
+    var statusColor: Color {
+        if coordinator.opponent != nil { return DesignSystem.Color.success }
+        return isDiscoveryBlocked ? DesignSystem.Color.error : DesignSystem.Color.warning
+    }
+
+    func openSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        openURL(url)
     }
 }
 
@@ -187,7 +214,7 @@ private extension LocalMultiplayerLobbyScreen {
     }
 
     var discoveredPeerRows: some View {
-        ForEach(coordinator.sessionManager.discoveredPeers, id: \.displayName) { peer in
+        ForEach(coordinator.sessionManager.discoveredPeers, id: \.self) { peer in
             Button {
                 hapticsService.impact(.light)
                 coordinator.joinHost(peer)

@@ -1,5 +1,6 @@
 #if !os(tvOS)
 import MultipeerConnectivity
+import os
 
 @MainActor
 @Observable
@@ -7,12 +8,15 @@ public final class MultipeerSessionManager: NSObject, @unchecked Sendable {
     private(set) var connectedPeers: [MCPeerID] = []
     private(set) var discoveredPeers: [MCPeerID] = []
     private(set) var lastReceivedMessage: (peer: MCPeerID, message: PeerMessage)?
+    /// iOS refused to advertise or browse, usually because Local Network access is off for the app.
+    private(set) var isDiscoveryBlocked = false
 
     private let serviceType = "geografy-quiz"
     private let myPeerID: MCPeerID
     private var session: MCSession?
     private var advertiser: MCNearbyServiceAdvertiser?
     private var browser: MCNearbyServiceBrowser?
+    private let logger = Logger(subsystem: "com.khizanag.geografy", category: "multipeer")
 
     public var onMessageReceived: ((MCPeerID, PeerMessage) -> Void)?
     public var onPeerStateChanged: ((MCPeerID, MCSessionState) -> Void)?
@@ -32,6 +36,7 @@ extension MultipeerSessionManager {
 
         let newAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
         newAdvertiser.delegate = self
+        isDiscoveryBlocked = false
         newAdvertiser.startAdvertisingPeer()
         advertiser = newAdvertiser
     }
@@ -48,6 +53,7 @@ extension MultipeerSessionManager {
 
         let newBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
         newBrowser.delegate = self
+        isDiscoveryBlocked = false
         newBrowser.startBrowsingForPeers()
         browser = newBrowser
     }
@@ -143,6 +149,14 @@ extension MultipeerSessionManager: MCNearbyServiceBrowserDelegate {
             self.discoveredPeers.removeAll { $0 == capturedPeer }
         }
     }
+
+    nonisolated public func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: any Error) {
+        let reason = error.localizedDescription
+        Task { @MainActor in
+            self.logger.error("Browsing didn't start: \(reason, privacy: .public)")
+            self.isDiscoveryBlocked = true
+        }
+    }
 }
 
 // MARK: - MCNearbyServiceAdvertiserDelegate
@@ -157,6 +171,17 @@ extension MultipeerSessionManager: MCNearbyServiceAdvertiserDelegate {
         Task { @MainActor in
             let hasOpponent = !(self.session?.connectedPeers.isEmpty ?? true)
             handler(!hasOpponent, hasOpponent ? nil : self.session)
+        }
+    }
+
+    nonisolated public func advertiser(
+        _ advertiser: MCNearbyServiceAdvertiser,
+        didNotStartAdvertisingPeer error: any Error
+    ) {
+        let reason = error.localizedDescription
+        Task { @MainActor in
+            self.logger.error("Advertising didn't start: \(reason, privacy: .public)")
+            self.isDiscoveryBlocked = true
         }
     }
 }
