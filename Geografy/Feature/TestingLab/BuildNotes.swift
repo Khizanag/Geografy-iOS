@@ -20,12 +20,28 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [typeCarouselAlignment, soundEffects, soundSetting, legalLinks]
+        [localPlayDiscovery, typeCarouselAlignment, soundEffects, soundSetting, legalLinks]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var localPlayDiscovery: BuildNote {
+        BuildNote(
+            commit: "f0c0b1b2",
+            title: "Local Play finds the other phone",
+            howToTest: """
+                On two phones, open Local Play: one hosts, the other joins. Allow Local Network on both when \
+                asked. The host appears under Nearby Hosts on the other phone, and tapping it connects. With \
+                Local Network off, the lobby says so and links to Settings.
+                """,
+            systemImage: "antenna.radiowaves.left.and.right",
+            color: DesignSystem.Color.blue
+        ) {
+            go.open(.multiplayer)
+        }
+    }
+
     var typeCarouselAlignment: BuildNote {
         BuildNote(
             commit: "1dd39908",
