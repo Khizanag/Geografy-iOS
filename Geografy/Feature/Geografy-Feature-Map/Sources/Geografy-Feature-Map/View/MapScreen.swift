@@ -202,15 +202,14 @@ private extension MapScreen {
             .disabled(isLoading)
         }
         ToolbarItem(placement: .primaryAction) {
-            ToolbarToggle("Country labels", isOn: mapState.showLabels) {
+            ToolbarToggle("Country labels", systemImage: "textformat", isOn: mapState.showLabels) {
                 mapState.showLabels.toggle()
                 #if !os(tvOS)
                 hapticsService.impact(.light)
                 #endif
-            } label: {
-                Text(verbatim: "Aa")
             }
         }
+        .sharedBackgroundVisibility(.hidden)
         ToolbarItem(placement: .secondaryAction) {
             Picker(selection: $projection) {
                 ForEach(MapProjectionKind.allCases) { kind in

@@ -146,15 +146,14 @@ private extension OrganizationMapScreen {
             }
         }
         ToolbarItem(placement: .primaryAction) {
-            ToolbarToggle("Country labels", isOn: mapState.showLabels) {
+            ToolbarToggle("Country labels", systemImage: "textformat", isOn: mapState.showLabels) {
                 mapState.showLabels.toggle()
                 #if !os(tvOS)
                 hapticsService.impact(.light)
                 #endif
-            } label: {
-                Text(verbatim: "Aa")
             }
         }
+        .sharedBackgroundVisibility(.hidden)
     }
 }
 

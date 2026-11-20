@@ -135,17 +135,16 @@ private extension TravelMapScreen {
         ToolbarItem(placement: .primaryAction) {
             labelsToggle
         }
+        .sharedBackgroundVisibility(.hidden)
         ToolbarItem(placement: .primaryAction) {
             filterMenu
         }
     }
 
     var labelsToggle: some View {
-        ToolbarToggle("Country labels", isOn: showLabels) {
+        ToolbarToggle("Country labels", systemImage: "textformat", isOn: showLabels) {
             showLabels.toggle()
             hapticsService.impact(.light)
-        } label: {
-            Text(verbatim: "Aa")
         }
     }
 
