@@ -36,11 +36,11 @@ struct BuildNotes {
 private extension BuildNotes {
     var labelsToggle: BuildNote {
         BuildNote(
-            commit: "2673153c",
+            commit: "8ad08367",
             title: "Native labels toggle",
             howToTest: """
-                Open the World Map and tap Aa. While labels show, it's a green prominent glass button of its own; \
-                tap again and it goes back to a plain bar button next to More.
+                Open the World Map and tap Aa. It stays a glass circle like the bar's other buttons and turns \
+                green while labels show; More next to it doesn't move.
                 """,
             systemImage: "textformat",
             color: DesignSystem.Color.accent
