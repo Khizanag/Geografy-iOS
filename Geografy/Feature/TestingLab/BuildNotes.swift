@@ -20,12 +20,27 @@ struct BuildNotes {
     let go: BuildNoteRoutes
 
     var current: [BuildNote] {
-        [localPlayPinDrop, localPlayQuizTypes, localPlayNames, localPlayLeaving, soundEffects]
+        [pinDropPanning, localPlayPinDrop, localPlayQuizTypes, localPlayNames, localPlayLeaving, soundEffects]
     }
 }
 
 // MARK: - Notes
 private extension BuildNotes {
+    var pinDropPanning: BuildNote {
+        BuildNote(
+            commit: "35c45d3d",
+            title: "Pan to every edge in Pin Drop",
+            howToTest: """
+                Start Pin Drop on the World, zoom in a lot, and pan all the way left and right. Alaska, New Zealand, \
+                and Japan are now reachable; a pan stops once the region's edge reaches the middle of the screen.
+                """,
+            systemImage: "arrow.left.and.right",
+            color: DesignSystem.Color.orange
+        ) {
+            go.open(.pinDrop)
+        }
+    }
+
     var localPlayPinDrop: BuildNote {
         BuildNote(
             commit: "c4ae246e",
